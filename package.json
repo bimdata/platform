@@ -10,6 +10,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@bimdata/bimdata-api-client": "^6.8.0",
+    "@bimdata/design-system": "0.0.53",
+    "@bimdata/utils": "^0.2.15",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
