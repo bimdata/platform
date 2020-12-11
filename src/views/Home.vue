@@ -14,10 +14,6 @@
 import { useOidcState } from '@/state/oidcState';
 
 export default {
-  // name: "Home",
-  // methods: {
-  //   ...mapActions([ 'signOutOidc' ])
-  // }
   setup() {
     const { signOutOidc } = useOidcState();
     return {
