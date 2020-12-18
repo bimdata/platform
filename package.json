@@ -16,6 +16,7 @@
     "@bimdata/utils": "^0.2.15",
     "oidc-client": "^1.10.1",
     "vue": "^3.0.0",
+    "vue-i18n": "^9.0.0-beta.14",
     "vue-router": "^4.0.0-0",
     "vuex-oidc": "github:bimdata/vuex-oidc"
   },
