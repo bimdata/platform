@@ -12,6 +12,7 @@
   "dependencies": {
     "@bimdata/bimdata-api-client": "^6.8.0",
     "@bimdata/design-system": "0.0.53",
+    "@bimdata/design-system-next": "github:bimdata/design-system#dist/platform-next",
     "@bimdata/utils": "^0.2.15",
     "oidc-client": "^1.10.1",
     "vue": "^3.0.0",
