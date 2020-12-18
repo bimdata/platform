@@ -6,18 +6,26 @@
       height="150"
     />
     <h1>Welcome to BIMData Platform !</h1>
-    <button @click="signOutOidc">Log Out</button>
+    <BIMDataButton color="primary" fill radius @click="signOut">
+      <BIMDataIcon name="close" size="xxxs" /><span>Log Out</span>
+    </BIMDataButton>
   </div>
 </template>
 
 <script>
+import BIMDataButton from "@bimdata/design-system-next/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system-next/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import { useOidcState } from '@/state/oidcState';
 
 export default {
+  components: {
+    BIMDataButton,
+    BIMDataIcon
+  },
   setup() {
     const { signOutOidc } = useOidcState();
     return {
-      signOutOidc
+      signOut: signOutOidc
     };
   }
 };
