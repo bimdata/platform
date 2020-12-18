@@ -1,20 +1,33 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import { createRouter, createWebHistory } from 'vue-router';
+import { vuexOidcCreateReactiveStateRouterMiddleware } from 'vuex-oidc';
+import Home from '@/views/Home';
+import OidcCallback from '@/views/OidcCallback';
+import OidcCallbackError from '@/views/OidcCallbackError';
+import { useOidcState } from '@/state/oidcState';
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: '/',
+    name: '',
+    component: Home,
+    meta: {
+      isPublic: false
+    }
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function() {
-      return import(/* webpackChunkName: "about" */ "../views/About.vue");
+    path: '/oidc-callback', // Needs to match redirect_uri in your oidcSettings
+    name: 'oidcCallback',
+    component: OidcCallback,
+    meta: {
+      isOidcCallback: true
+    }
+  },
+  {
+    path: '/oidc-callback-error',
+    name: 'oidcCallbackError',
+    component: OidcCallbackError,
+    meta: {
+      isPublic: true
     }
   }
 ];
@@ -23,5 +36,11 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+router.beforeEach(
+  vuexOidcCreateReactiveStateRouterMiddleware(
+    useOidcState()
+  )
+);
 
 export default router;

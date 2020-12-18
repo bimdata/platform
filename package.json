@@ -13,14 +13,17 @@
     "@bimdata/bimdata-api-client": "^6.8.0",
     "@bimdata/design-system": "0.0.53",
     "@bimdata/utils": "^0.2.15",
+    "oidc-client": "^1.10.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuex-oidc": "github:bimdata/vuex-oidc"
   },
   "devDependencies": {
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-plugin-vuex": "^4.5.9",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",

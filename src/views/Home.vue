@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="home-view">
+    <img alt="BIMData Platform logo"
+      src="../assets/logo.svg"
+      width="330"
+      height="150"
+    />
+    <h1>Welcome to BIMData Platform !</h1>
+    <button @click="signOutOidc">Log Out</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { useOidcState } from '@/state/oidcState';
 
 export default {
-  name: "Home",
-  components: {
-    HelloWorld
+  setup() {
+    const { signOutOidc } = useOidcState();
+    return {
+      signOutOidc
+    };
   }
 };
 </script>
