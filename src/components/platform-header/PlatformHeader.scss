@@ -1,0 +1,10 @@
+.platform-header {
+  display: flex;
+  align-items: center;
+  padding: $spacing-unit/2 $spacing-unit*2;
+  background-color: $color-white;
+
+  .user-menu {
+    margin-left: auto;
+  }
+}

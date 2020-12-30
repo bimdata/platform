@@ -1,21 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { vuexOidcCreateReactiveStateRouterMiddleware } from 'vuex-oidc';
-import Home from '@/views/Home';
-import OidcCallback from '@/views/OidcCallback';
-import OidcCallbackError from '@/views/OidcCallbackError';
+import Layout from '@/Layout';
+// import Home from '@/views/home/Home';
+import Spaces from '@/views/spaces/Spaces';
+import OidcCallback from '@/views/oidc-callback/OidcCallback';
+import OidcCallbackError from '@/views/oidc-callback-error/OidcCallbackError';
 import { useOidcState } from '@/state/oidcState';
 
 const routes = [
   {
     path: '/',
     name: '',
-    component: Home,
+    component: Layout,
     meta: {
       isPublic: false
-    }
+    },
+    children: [
+      {
+        path: '',
+        component: Spaces
+      }
+    ]
   },
   {
-    path: '/oidc-callback', // Needs to match redirect_uri in your oidcSettings
+    path: '/oidc-callback', // Needs to match `redirect_uri` in oidcSettings
     name: 'oidcCallback',
     component: OidcCallback,
     meta: {

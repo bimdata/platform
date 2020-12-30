@@ -1,20 +1,24 @@
 <template>
-  <div>OIDC Callback view</div>
+  <div class="oidc-callback-view">
+    OIDC Callback view
+  </div>
 </template>
 
 <script>
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { setupApiClient } from '@/api';
 import { useOidcState } from '@/state/oidcState';
 
 export default {
   setup() {
+    const { oidcSignInCallback, oidcAccessToken } = useOidcState();
     const router = useRouter();
-    const { oidcSignInCallback } = useOidcState();
 
     onMounted(() => {
       oidcSignInCallback()
         .then((redirectPath) => {
+          setupApiClient(oidcAccessToken.value);
           router.push(redirectPath);
         })
         .catch((err) => {
