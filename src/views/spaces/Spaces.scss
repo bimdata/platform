@@ -1,0 +1,8 @@
+.space-view {
+  display: flex;
+
+  & > .bimdata-card {
+    display: inline-block;
+    margin: $spacing-unit;
+  }
+}

@@ -3,10 +3,10 @@
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code. */
 export const oidcSettings = {
-  authority: process.env.VUE_APP_BD_OIDC_IP + '/auth/realms/bimdata',
+  authority: process.env.VUE_APP_BD_OIDC_BASE_URL + '/auth/realms/bimdata',
   client_id: process.env.VUE_APP_BD_OIDC_CLIENT_ID,
-  redirect_uri: process.env.VUE_APP_BD_APP_URL + '/oidc-callback',
-  post_logout_redirect_uri: process.env.VUE_APP_BD_APP_URL,
+  redirect_uri: process.env.VUE_APP_BD_APP_BASE_URL + '/oidc-callback',
+  post_logout_redirect_uri: process.env.VUE_APP_BD_APP_BASE_URL,
   response_type: 'code',
   scope: 'openid profile email',
   revokeAccessTokenOnSignout: true,
