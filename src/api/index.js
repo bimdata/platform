@@ -13,7 +13,7 @@ export function setupApiClient(accessToken) {
   // Get client instance
   const apiClientInstance = bimdataApiClient.ApiClient.instance;
   // Set instance base URL
-  apiClientInstance.basePath = process.env.VUE_APP_BD_API_BASE_URL;
+  apiClientInstance.basePath = process.env.VUE_APP_API_BASE_URL;
   // Set instance authorization
   const bearer = apiClientInstance.authentications.Bearer;
   bearer.type = 'oauth2';

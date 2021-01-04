@@ -7,24 +7,17 @@
 <script>
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { setupApiClient } from '@/api';
-import { useOidcState } from '@/state/oidcState';
+import { useGlobalState } from '@/state/globalState';
 
 export default {
   setup() {
-    const { oidcSignInCallback, oidcAccessToken } = useOidcState();
     const router = useRouter();
+    const { signInCallback } = useGlobalState();
 
     onMounted(() => {
-      oidcSignInCallback()
-        .then((redirectPath) => {
-          setupApiClient(oidcAccessToken.value);
-          router.push(redirectPath);
-        })
-        .catch((err) => {
-          console.error(err);
-          router.push('/oidc-callback-error');
-        });
+      signInCallback().then(result => {
+        router.push({ path: result.state ? result.state : '/' });
+      });
     });
   }
 }
