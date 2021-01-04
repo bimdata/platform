@@ -50,6 +50,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import './UserMenu.scss';
-</style>
+<style scoped lang="scss" src="./UserMenu.scss"></style>

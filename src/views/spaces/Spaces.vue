@@ -32,6 +32,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import './Spaces.scss';
-</style>
+<style scoped lang="scss" src="./Spaces.scss"></style>

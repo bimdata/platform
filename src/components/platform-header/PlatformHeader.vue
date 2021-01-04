@@ -21,6 +21,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import './PlatformHeader.scss';
-</style>
+<style scoped lang="scss" src="./PlatformHeader.scss"></style>

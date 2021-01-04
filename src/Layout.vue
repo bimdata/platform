@@ -15,3 +15,5 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss" src="./Layout.scss"></style>
