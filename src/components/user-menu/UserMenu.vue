@@ -4,8 +4,8 @@
       class="user-menu-btn"
       @click="isOpen = !isOpen">
       <span class="user-menu-btn__picture">NN</span>
-      <span class="user-menu-btn__fullname">{{ `${user.given_name} ${user.family_name}` }}</span>
-      <span class="user-menu-btn__email">user.email@bimdata.io</span>
+      <span class="user-menu-btn__fullname">{{ `${user.profile.given_name} ${user.profile.family_name}` }}</span>
+      <span class="user-menu-btn__email">{{ user.profile.email }}</span>
     </BIMDataButton>
     <transition name="fade">
       <div class="user-menu-content" v-show="isOpen">
@@ -26,7 +26,7 @@
 
 <script>
 import { ref } from 'vue';
-import { useOidcState } from '@/state/oidcState';
+import { useGlobalState } from '@/state/globalState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
@@ -39,11 +39,11 @@ export default {
     BIMDataSelect
   },
   setup() {
-    const { user, signOutOidc } = useOidcState();
+    const { user, signOut } = useGlobalState();
     const isOpen = ref(false);
     return {
       user,
-      signOut: signOutOidc,
+      signOut,
       isOpen
     };
   }

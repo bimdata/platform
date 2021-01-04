@@ -1,6 +1,5 @@
 <template>
   <div class="spaces-view">
-    <!-- <div v-for="space in spaces" :key="space.id">{{ space.name }}</div> -->
     <BIMDataCard v-for="space in spaces" :key="space.id"
       :titleHeader="space.name"
       :submenuText="`${space.creator.firstname} ${space.creator.lastname}`">

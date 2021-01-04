@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { vuexOidcCreateReactiveStateRouterMiddleware } from 'vuex-oidc';
+import { useGlobalState } from '@/state/globalState';
+// Components
 import Layout from '@/Layout';
-// import Home from '@/views/home/Home';
-import Spaces from '@/views/spaces/Spaces';
 import OidcCallback from '@/views/oidc-callback/OidcCallback';
 import OidcCallbackError from '@/views/oidc-callback-error/OidcCallbackError';
-import { useOidcState } from '@/state/oidcState';
+import Spaces from '@/views/spaces/Spaces';
 
 const routes = [
   {
@@ -13,7 +12,7 @@ const routes = [
     name: '',
     component: Layout,
     meta: {
-      isPublic: false
+      requiresAuth: true
     },
     children: [
       {
@@ -23,20 +22,14 @@ const routes = [
     ]
   },
   {
-    path: '/oidc-callback', // Needs to match `redirect_uri` in oidcSettings
-    name: 'oidcCallback',
-    component: OidcCallback,
-    meta: {
-      isOidcCallback: true
-    }
+    path: '/oidc-callback', // Should match `redirect_uri` in oidcConfig
+    name: 'oidc-callback',
+    component: OidcCallback
   },
   {
     path: '/oidc-callback-error',
-    name: 'oidcCallbackError',
-    component: OidcCallbackError,
-    meta: {
-      isPublic: true
-    }
+    name: 'oidc-callback-error',
+    component: OidcCallbackError
   }
 ];
 
@@ -45,10 +38,16 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(
-  vuexOidcCreateReactiveStateRouterMiddleware(
-    useOidcState()
-  )
-);
+router.beforeEach(async (to, from, next) => {
+  const { isAuthenticated, authenticate } = useGlobalState()
+  if (isAuthenticated.value) {
+    next();
+  } else if (to.matched.some(r => r.meta.requiresAuth)) {
+    await authenticate(to.path);
+    next();
+  } else {
+    next();
+  }
+});
 
 export default router;
