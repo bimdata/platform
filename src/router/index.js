@@ -39,7 +39,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const { isAuthenticated, authenticate } = useGlobalState()
+  const { isAuthenticated, authenticate } = useGlobalState();
   if (isAuthenticated.value) {
     next();
   } else if (to.matched.some(r => r.meta.requiresAuth)) {

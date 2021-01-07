@@ -1,17 +1,18 @@
-import { reactive, toRefs } from 'vue';
+import { reactive, readonly, toRefs } from 'vue';
 import SpacesService from '@/api/SpacesService';
 
 const state = reactive({
   spaces: []
 });
 
-export function useSpacesState() {
-  const fetchSpaces = () => SpacesService.fetchUserSpaces().then(
-    spaces => state.spaces = spaces
-  );
+const fetchSpaces = () => SpacesService.fetchUserSpaces().then(
+  spaces => state.spaces = spaces
+);
 
+export function useSpacesState() {
+  const readonlyState = readonly(state);
   return {
-    ...toRefs(state),
+    ...toRefs(readonlyState),
     fetchSpaces
   };
 }

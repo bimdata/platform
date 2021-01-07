@@ -1,5 +1,5 @@
 import { UserManager, WebStorageStateStore } from 'oidc-client';
-import { reactive, toRefs, watch } from 'vue';
+import { reactive, readonly, toRefs, watchEffect } from 'vue';
 import { setupApiClient } from '@/api';
 import { oidcConfig } from '@/config/oidcConfig';
 
@@ -17,10 +17,12 @@ const userManager = new UserManager({
 const authenticate = async (redirectPath) => {
   const user = await getUser();
   if (user) {
-    state.isAuthenticated = true;
-    state.user = user;
+    if (!state.isAuthenticated) {
+      state.isAuthenticated = true;
+      state.user = user;
+    }
   } else {
-    await signIn(redirectPath)
+    await signIn(redirectPath);
   }
 };
 
@@ -32,11 +34,16 @@ const signInCallback = () => userManager.signinRedirectCallback();
 
 const signOut = () => userManager.signoutRedirect();
 
-watch(() => state.user && setupApiClient(state.user.access_token));
+watchEffect(() => {
+  if (state.user) {
+    setupApiClient(state.user.access_token);
+  }
+});
 
 export function useGlobalState() {
+  const readonlyState = readonly(state);
   return {
-    ...toRefs(state),
+    ...toRefs(readonlyState),
     authenticate,
     signIn,
     signInCallback,
