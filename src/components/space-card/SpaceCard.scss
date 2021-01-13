@@ -1,0 +1,45 @@
+.space-card {
+  width: 215px;
+  height: 275px;
+  margin: $spacing-unit*2;
+  transition-duration: 0.35s;
+
+  & /deep/ {
+    .bimdata-card__submenu {
+      position: relative;
+      top: $spacing-unit*2;
+      z-index: 1;
+      height: 0;
+      padding: 0 $spacing-unit/2;
+    }
+
+    .bimdata-card__content {
+      overflow: hidden;
+      height: 196px;
+      padding: 0;
+    }
+
+    .bimdata-card__footer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: calc(100% - 196px);
+      padding: 0;
+
+      .title-underline {
+        height: 1px;
+        width: 50px;
+        margin-top: $spacing-unit;
+        background-color: $color-tertiary;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    .space-image {
+      transform: translateY($spacing-unit/3) scale(1.04);
+    }
+  }
+}

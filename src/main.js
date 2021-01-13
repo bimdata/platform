@@ -1,9 +1,12 @@
 import { createApp } from 'vue';
-import App from './App.vue';
+import vueClickAway from 'vue3-click-away';
 import i18n from './i18n';
 import router from './router';
 
+import App from './App.vue';
+
 createApp(App)
-  .use(router)
+  .use(vueClickAway)
   .use(i18n)
+  .use(router)
   .mount('#app');

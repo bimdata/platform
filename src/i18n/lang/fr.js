@@ -1,11 +1,33 @@
 export default {
-  Home: {
-    welcome: 'Bienvenue sur BIMData Platform !',
-    selectLocaleLabel: 'Sélectionner la langue',
-    logout: 'Se Déconnecter',
-  },
   oidc: {
     callbackMessage: 'OIDC callback message',
-    callbackErrorMessage: 'OIDC callbacl error message'
+    callbackErrorMessage: 'OIDC callback error message'
+  },
+  Header: {
+    selectLanguage: 'Sélectionner la langue',
+    logout: 'Se Déconnecter',
+    back: 'Retour'
+  },
+  Spaces: {
+    searchSpaces: 'Rechercher un espace',
+    sortSpaces: '',
+    createSpace: 'Créer un espace',
+    SpaceCreationCard: {
+      title: 'Nouvel espace',
+      inputName: 'Nom',
+      buttonCreate: 'Créer'
+    },
+    SpaceActionMenu: {
+      rename: 'Renommer',
+      changeImage: 'Changer l\'image',
+      deleteImage: 'Supprimer l\'image',
+      leave: 'Quitter cet espace',
+      delete: 'Supprimer cet espace'
+    },
+    SpaceRenameForm: {
+      title: 'Renommer l\'espace',
+      inputName: 'Nom',
+      buttonRename: 'Renommer'
+    }
   }
 };

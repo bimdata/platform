@@ -9,7 +9,7 @@ import Spaces from '@/views/spaces/Spaces';
 const routes = [
   {
     path: '/',
-    name: '',
+    name: 'root',
     component: Layout,
     meta: {
       requiresAuth: true
@@ -17,6 +17,12 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'dashboard',
+        component: Spaces
+      },
+      {
+        path: '/spaces',
+        name: 'spaces',
         component: Spaces
       }
     ]

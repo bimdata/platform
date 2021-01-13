@@ -1,8 +1,39 @@
-.space-view {
-  display: flex;
+.spaces-view {
+  padding: 0 $spacing-unit*2;
 
-  & > .bimdata-card {
-    display: inline-block;
-    margin: $spacing-unit;
+  .sub-header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-unit/2 $spacing-unit*2;
+
+    > * {
+      margin: 0 $spacing-unit/2;
+    }
+
+    &__search-input {
+      margin-left: auto;
+      background-color: $color-white;
+    }
+
+    &__sort-btn {
+      margin-left: auto;
+    }
+  }
+
+  .space-list {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
+
+// Transition classes
+.pop-in-enter-from { opacity: 0.4; transform: scale(0.1); }
+.pop-in-enter-to, .pop-in-leave-from { opacity: 1; transform: scale(1); }
+.pop-in-leave-to { opacity: 0; transform: scale(0.7); }
+.pop-in-enter-active { transition: all 0.6s cubic-bezier(0.4, 1.5, 0.56, 1); }
+.pop-in-leave-active { transition: all 0.4s ease-in; }
+
+.space-list-enter-from, .space-list-leave-to { opacity: 0; }
+.space-list-enter-active { transition: all 0.5s ease-out; }
+.space-list-leave-active { transition: all 0.4s ease-in; }
+.space-list-move { transition: all 0.6s ease; }

@@ -1,8 +1,8 @@
 <template>
-  <div class="user-menu">
+  <div class="user-menu" v-click-away="close">
     <BIMDataButton color="default" outline radius
       class="user-menu-btn"
-      @click="isOpen = !isOpen">
+      @click="toggle">
       <span class="user-menu-btn__picture">NN</span>
       <span class="user-menu-btn__fullname">{{ `${user.profile.given_name} ${user.profile.family_name}` }}</span>
       <span class="user-menu-btn__email">{{ user.profile.email }}</span>
@@ -10,14 +10,14 @@
     <transition name="fade">
       <div class="user-menu-content" v-show="isOpen">
         <BIMDataSelect
-          :label="$t('Home.selectLocaleLabel')"
+          :label="$t('Header.selectLanguage')"
           :options="$i18n.availableLocales"
           v-model="$i18n.locale"
         />
         <BIMDataButton color="primary" fill radius
           @click="signOut">
           <BIMDataIcon name="close" size="xxxs" />
-          <span>{{ $t('Home.logout') }}</span>
+          <span>{{ $t('Header.logout') }}</span>
         </BIMDataButton>
       </div>
     </transition>
@@ -41,10 +41,14 @@ export default {
   setup() {
     const { user, signOut } = useGlobalState();
     const isOpen = ref(false);
+    const close = () => isOpen.value = false;
+    const toggle = () => isOpen.value = !isOpen.value;
     return {
       user,
-      signOut,
-      isOpen
+      isOpen,
+      close,
+      toggle,
+      signOut
     };
   }
 }
