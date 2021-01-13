@@ -2,7 +2,7 @@
   <BIMDataCard class="space-creation-card"
     :submenuText="$t('Spaces.SpaceCreationCard.title')">
     <template #right>
-      <BIMDataButton ghost rounded
+      <BIMDataButton ghost rounded icon
         @click="close">
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>

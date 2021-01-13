@@ -7,10 +7,10 @@
         v-model="searchText"
         clear
       />
-      <BIMDataButton fill squared
+      <BIMDataButton fill squared icon
         class="sub-header__sort-btn"
         @click="sortSpaces">
-        <BIMDataIcon name="listManage" size="xxxs" />
+        <BIMDataIcon name="alphabeticalSort" size="s" />
       </BIMDataButton>
       <BIMDataButton fill radius color="primary"
         class="sub-header__create-btn"
