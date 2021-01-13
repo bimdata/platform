@@ -2,8 +2,20 @@ import { collaborationApiClient } from './index';
 
 class SpacesService {
 
-  async fetchUserSpaces() {
-    return await collaborationApiClient.getClouds();
+  fetchUserSpaces() {
+    return collaborationApiClient.getClouds();
+  }
+
+  createSpace(space) {
+    return collaborationApiClient.createCloud(space);
+  }
+
+  updateSpace(space) {
+    return collaborationApiClient.updateCloud(space.id, space);
+  }
+
+  deleteSpace(space) {
+    return collaborationApiClient.deleteCloud(space.id);
   }
 
 }

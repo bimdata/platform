@@ -1,5 +1,5 @@
 <template>
   <div class="oidc-callback-error-view">
-    OIDC Callback Error view
+    {{ $t('oidc.callbackErrorMessage') }}
   </div>
 </template>
