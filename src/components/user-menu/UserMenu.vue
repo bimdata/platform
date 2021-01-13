@@ -16,7 +16,7 @@
         />
         <BIMDataButton color="primary" fill radius
           @click="signOut">
-          <BIMDataIcon name="close" size="xxxs" />
+          <BIMDataIcon name="logout" size="xxs" />
           <span>{{ $t('Header.logout') }}</span>
         </BIMDataButton>
       </div>

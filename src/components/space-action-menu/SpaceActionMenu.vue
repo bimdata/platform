@@ -1,9 +1,9 @@
 <template>
   <div class="space-action-menu" v-click-away="closeMenu">
-    <BIMDataButton color="default" fill rounded
+    <BIMDataButton color="default" ghost rounded icon
       class="space-action-menu__btn"
       @click="toggleMenu">
-      <BIMDataIcon name="burgerMenu" size="xxxs" />
+      <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
     <transition name="fade">
       <div class="space-action-menu__container" v-show="isOpen">
@@ -28,7 +28,7 @@
             <span class="update-form__title">
               {{ $t('Spaces.SpaceRenameForm.title') }}
             </span>
-            <BIMDataButton ghost rounded
+            <BIMDataButton ghost rounded icon
               class="update-form__cancel-btn"
               @click="closeUpdate">
               <BIMDataIcon name="close" size="xxxs" />
