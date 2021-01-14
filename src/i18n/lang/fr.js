@@ -20,7 +20,7 @@ export default {
     SpaceActionMenu: {
       rename: 'Renommer',
       changeImage: 'Changer l\'image',
-      deleteImage: 'Supprimer l\'image',
+      removeImage: 'Supprimer l\'image',
       leave: 'Quitter cet espace',
       delete: 'Supprimer cet espace'
     },

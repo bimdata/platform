@@ -13,6 +13,8 @@
     "@bimdata/bimdata-api-client": "^6.8.0",
     "@bimdata/design-system": "0.1.4",
     "@bimdata/utils": "^0.2.15",
+    "@uppy/core": "^1.15.0",
+    "@uppy/xhr-upload": "^1.6.8",
     "oidc-client": "^1.10.1",
     "seedrandom": "^3.0.5",
     "vue": "^3.0.0",
