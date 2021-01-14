@@ -31,10 +31,8 @@ export default {
     const randomNumber = () => Math.abs(rng.int32());
     const color = colors[randomNumber() % colors.length];
     let fallbackImage = '';
-    if (!props.space.image) {
-      const fallbackImageNames = Object.keys(fallbackImages);
-      fallbackImage = fallbackImageNames[randomNumber() % fallbackImageNames.length];
-    }
+    const fallbackImageNames = Object.keys(fallbackImages);
+    fallbackImage = fallbackImageNames[randomNumber() % fallbackImageNames.length];
     return {
       fallbackImage,
       ...color

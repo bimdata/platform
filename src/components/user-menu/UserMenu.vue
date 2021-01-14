@@ -1,11 +1,11 @@
 <template>
-  <div class="user-menu" v-click-away="close">
+  <div class="user-menu" v-click-away="closeMenu">
     <BIMDataButton color="default" outline radius
       class="user-menu-btn"
-      @click="toggle">
-      <span class="user-menu-btn__picture">NN</span>
-      <span class="user-menu-btn__fullname">{{ `${user.profile.given_name} ${user.profile.family_name}` }}</span>
-      <span class="user-menu-btn__email">{{ user.profile.email }}</span>
+      @click="toggleMenu">
+      <span class="user-menu-btn__picture">{{ initials }}</span>
+      <span class="user-menu-btn__fullname">{{ `${firstName} ${lastName}` }}</span>
+      <span class="user-menu-btn__email">{{ email }}</span>
     </BIMDataButton>
     <transition name="fade">
       <div class="user-menu-content" v-show="isOpen">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useGlobalState } from '@/state/globalState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -40,14 +40,26 @@ export default {
   },
   setup() {
     const { user, signOut } = useGlobalState();
+
     const isOpen = ref(false);
-    const close = () => isOpen.value = false;
-    const toggle = () => isOpen.value = !isOpen.value;
+    const firstName = ref(user.value.profile.given_name);
+    const lastName = ref(user.value.profile.family_name);
+    const email = ref(user.value.profile.email);
+    const initials = computed(() => `${firstName.value[0]}${lastName.value[0]}`.toUpperCase());
+
+    const closeMenu = () => isOpen.value = false;
+    const toggleMenu = () => isOpen.value = !isOpen.value;
+
     return {
-      user,
+      // References
       isOpen,
-      close,
-      toggle,
+      firstName,
+      lastName,
+      email,
+      initials,
+      // Methods
+      closeMenu,
+      toggleMenu,
       signOut
     };
   }

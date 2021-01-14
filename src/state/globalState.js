@@ -32,7 +32,10 @@ const signIn = (redirectPath) => userManager.signinRedirect(redirectPath ? { sta
 
 const signInCallback = () => userManager.signinRedirectCallback();
 
-const signOut = () => userManager.signoutRedirect();
+const signOut = () => userManager.signoutRedirect().then(() => {
+  state.isAuthenticated = false;
+  state.user = null;
+});
 
 watchEffect(() => {
   if (state.user) {

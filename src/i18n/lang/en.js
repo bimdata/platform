@@ -19,7 +19,7 @@ export default {
     SpaceActionMenu: {
       rename: 'Rename',
       changeImage: 'Upload image',
-      deleteImage: 'Delete image',
+      removeImage: 'Delete image',
       leave: 'Leave',
       delete: 'Delete',
       inputName: 'Nom'

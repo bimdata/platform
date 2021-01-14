@@ -13,7 +13,7 @@
     object-fit: cover;
   }
 
-  & /deep/ svg {
+  &:deep() svg {
     fill: currentColor;
     .icon-dark-color {
       fill: var(--dark-color);

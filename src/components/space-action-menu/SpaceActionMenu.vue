@@ -13,11 +13,16 @@
               @click="openUpdate">
               {{ $t('Spaces.SpaceActionMenu.rename') }}
             </BIMDataButton>
-            <BIMDataButton ghost squared>
+            <BIMDataButton ghost squared
+              @click="selectSpaceImage">
               {{ $t('Spaces.SpaceActionMenu.changeImage') }}
+              <input hidden ref="fileInput" type="file"
+                @change="uploadSpaceImage"
+              />
             </BIMDataButton>
-            <BIMDataButton ghost squared>
-              {{ $t('Spaces.SpaceActionMenu.deleteImage') }}
+            <BIMDataButton ghost squared
+              @click="removeSpaceImage">
+              {{ $t('Spaces.SpaceActionMenu.removeImage') }}
             </BIMDataButton>
             <BIMDataButton ghost squared
               @click="deleteSpace(space)">
@@ -51,7 +56,10 @@
 </template>
 
 <script>
+import Uppy from '@uppy/core';
+import XHRUpload from '@uppy/xhr-upload';
 import { ref } from 'vue';
+import { useGlobalState } from '@/state/globalState';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -71,29 +79,84 @@ export default {
     }
   },
   setup(props) {
-    const { deleteSpace, updateSpace } = useSpacesState();
+    const { user } = useGlobalState();
+    const { deleteSpace, updateSpace, softUpdateSpace } = useSpacesState();
 
     const nameInput = ref(null);
+    const fileInput = ref(null);
     const isOpen = ref(false);
     const onUpdate = ref(false);
     const spaceName = ref(props.space.name);
+
+    const uppy = new Uppy({
+      id: `space-image-${props.space.id}`,
+      autoProceed: true,
+      allowMultipleUploads: false,
+      restrictions: {
+        maxFileSize: process.env.VUE_APP_MAX_UPLOAD_SIZE,
+        maxNumberOfFiles: 1,
+        minNumberOfFiles: 1,
+        allowedFileTypes: null
+      }
+    });
+    uppy.use(XHRUpload, {
+      method: 'patch',
+      endpoint: `${process.env.VUE_APP_API_BASE_URL}/cloud/${props.space.id}`,
+      fieldName: 'image',
+      metaFields: [],
+      headers: {
+        'Authorization': `Bearer ${user.value.access_token}`
+      }
+    });
+    uppy.on('upload-error', (file, error) => {
+      // TODO: properly handle error
+      console.log('An error occurred while uploading file: ' + file.name);
+      console.error(error);
+    });
+    uppy.on('complete', ({ successful:[{ response:{ body:{ image }}}] }) => {
+      softUpdateSpace({ ...props.space, image });
+      fileInput.value.value = ""; // reset file input
+      uppy.reset(); // reset Uppy instance
+      closeMenu();
+    });
 
     const closeMenu = () => { isOpen.value = false; closeUpdate(); };
     const toggleMenu = () => { isOpen.value = !isOpen.value; closeUpdate(); };
     const openUpdate = () => { onUpdate.value = true; setTimeout(() => nameInput.value.focus(), 400); };
     const closeUpdate = () => onUpdate.value = false;
+
     const renameSpace = () => updateSpace({ ...props.space, name: spaceName.value }).then(closeMenu);
+    const selectSpaceImage = () => fileInput.value.click();
+    const uploadSpaceImage = ({ target: { files: [ file ] } }) => {
+      if (file) {
+        uppy.addFile({
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          data: file
+        });
+      }
+    };
+    const removeSpaceImage = () => {
+      updateSpace({ ...props.space, image: null }).then(closeMenu);
+    };
 
     return {
+      // References
       nameInput,
+      fileInput,
       isOpen,
       onUpdate,
       spaceName,
+      // Methods
       closeMenu,
       toggleMenu,
       openUpdate,
       closeUpdate,
       renameSpace,
+      selectSpaceImage,
+      uploadSpaceImage,
+      removeSpaceImage,
       deleteSpace,
     };
   }

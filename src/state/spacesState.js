@@ -19,6 +19,10 @@ const updateSpace = (space) => SpacesService.updateSpace(space).then(
   )
 );
 
+const softUpdateSpace = (space) => state.spaces = state.spaces.map(
+  s => s.id === space.id ? space : s
+);
+
 const deleteSpace = (space) => SpacesService.deleteSpace(space).then(
   () => state.spaces = state.spaces.filter(s => s.id !== space.id)
 );
@@ -30,6 +34,7 @@ export function useSpacesState() {
     fetchSpaces,
     createSpace,
     updateSpace,
+    softUpdateSpace,
     deleteSpace
   };
 }
