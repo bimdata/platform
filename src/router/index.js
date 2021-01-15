@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useGlobalState } from '@/state/globalState';
 // Components
 import Layout from '@/Layout';
+import Dashboard from '@/views/dashboard/Dashboard';
 import OidcCallback from '@/views/oidc-callback/OidcCallback';
 import OidcCallbackError from '@/views/oidc-callback-error/OidcCallbackError';
 import Spaces from '@/views/spaces/Spaces';
@@ -18,7 +19,7 @@ const routes = [
       {
         path: '',
         name: 'dashboard',
-        component: Spaces
+        component: Dashboard
       },
       {
         path: '/spaces',
