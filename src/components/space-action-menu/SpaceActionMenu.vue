@@ -137,9 +137,7 @@ export default {
         });
       }
     };
-    const removeSpaceImage = () => {
-      updateSpace({ ...props.space, image: null }).then(closeMenu);
-    };
+    const removeSpaceImage = () => updateSpace({ ...props.space, image: null }).then(closeMenu);
 
     return {
       // References

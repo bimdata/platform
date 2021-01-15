@@ -8,6 +8,15 @@ export default {
     logout: 'Se Déconnecter',
     back: 'Retour'
   },
+  Dashboard: {
+    welcomeTitle: 'Dashboard',
+    welcomeMessage: 'Bonjour {name}, content de vous revoir !',
+    activeSpaces: 'Espaces',
+    viewSpaces: 'Mes espaces',
+    activeProjects: 'Projets',
+    viewProjects: 'Mes projets',
+    security: 'Security'
+  },
   Spaces: {
     searchSpaces: 'Rechercher un espace',
     sortSpaces: '',

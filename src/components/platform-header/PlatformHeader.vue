@@ -2,7 +2,7 @@
   <div class="platform-header">
     <img
       alt="BIMData Platform logo"
-      src="@/assets/logo.svg"
+      src="@/assets/header-logo.svg"
       width="110"
       height="50"
     />
