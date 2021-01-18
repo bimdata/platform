@@ -21,6 +21,7 @@
     }
 
     &.clickable {
+      cursor: pointer;
       transition-duration: 0.35s;
       &:hover {
         transform: scale(1.02);

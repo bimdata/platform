@@ -11,7 +11,15 @@ class SpacesService {
   }
 
   updateSpace(space) {
-    return collaborationApiClient.updateCloud(space.id, space);
+    return collaborationApiClient.updateCloud(space.id, {
+      name: space.name
+    });
+  }
+
+  removeSpaceImage(space) {
+    return collaborationApiClient.updateCloud(space.id, {
+      image: null
+    });
   }
 
   deleteSpace(space) {

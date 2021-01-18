@@ -10,17 +10,19 @@ const fetchSpaces = () => SpacesService.fetchUserSpaces().then(
 );
 
 const createSpace = (space) => SpacesService.createSpace(space).then(
-  createdSpace => state.spaces = state.spaces.concat(createdSpace)
+  createdSpace => state.spaces = [createdSpace].concat(state.spaces)
 );
 
 const updateSpace = (space) => SpacesService.updateSpace(space).then(
-  updatedSpace => state.spaces = state.spaces.map(
-    s => s.id === updatedSpace.id ? updatedSpace : s
-  )
+  softUpdateSpace
 );
 
 const softUpdateSpace = (space) => state.spaces = state.spaces.map(
   s => s.id === space.id ? space : s
+);
+
+const removeSpaceImage = (space) => SpacesService.removeSpaceImage(space).then(
+  softUpdateSpace
 );
 
 const deleteSpace = (space) => SpacesService.deleteSpace(space).then(
@@ -35,6 +37,7 @@ export function useSpacesState() {
     createSpace,
     updateSpace,
     softUpdateSpace,
-    deleteSpace
+    removeSpaceImage,
+    deleteSpace,
   };
 }

@@ -1,12 +1,18 @@
 export default {
+  Commons: {
+    cancel: 'Cancel',
+    close: 'Close',
+    no: 'No',
+    yes: 'Yes',
+  },
   oidc: {
     callbackMessage: 'OIDC callback message',
-    callbackErrorMessage: 'OIDC callback error message'
+    callbackErrorMessage: 'OIDC callback error message',
   },
   Header: {
     selectLanguage: 'Choose a language',
     logout: 'Log Out',
-    back: 'Back'
+    back: 'Back',
   },
   Dashboard: {
     welcomeTitle: 'Dashboard',
@@ -15,7 +21,7 @@ export default {
     viewSpaces: 'View spaces',
     activeProjects: 'Active Projects',
     viewProjects: 'View projects',
-    security: 'Security'
+    security: 'Security',
   },
   Spaces: {
     searchSpaces: 'Search spaces',
@@ -24,19 +30,24 @@ export default {
     SpaceCreationCard: {
       title: 'New space',
       inputName: 'Name',
-      buttonCreate: 'Create'
+      buttonCreate: 'Create',
     },
     SpaceActionMenu: {
       rename: 'Rename',
       changeImage: 'Upload image',
       removeImage: 'Remove image',
       leave: 'Leave',
-      delete: 'Delete'
+      delete: 'Delete',
     },
     SpaceRenameForm: {
       title: 'Rename space',
       inputName: 'Name',
-      buttonRename: 'Rename'
+      buttonRename: 'Rename',
+    },
+    SpaceDeleteGuard: {
+      title: 'Delete space',
+      message: 'Are you sure ?',
+      buttonDelete: 'Delete',
     }
   }
 };
