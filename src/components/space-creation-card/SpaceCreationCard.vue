@@ -2,20 +2,30 @@
   <BIMDataCard class="space-creation-card"
     :submenuText="$t('Spaces.SpaceCreationCard.title')">
     <template #right>
-      <BIMDataButton ghost rounded icon
+      <BIMDataButton ghost rounded icon v-show="!loading"
         @click="close">
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>
     </template>
     <template #content>
-      <BIMDataInput ref="nameInput"
-        :placeholder="$t('Spaces.SpaceCreationCard.inputName')"
-        v-model="newSpace.name"
-      />
-      <BIMDataButton fill radius color="primary"
-        @click="createSpace">
-        {{ $t('Spaces.SpaceCreationCard.buttonCreate') }}
-      </BIMDataButton>
+      <transition name="fade" mode="out-in">
+
+        <div class="action-loader"  v-if="loading">
+          <BIMDataLoading />
+        </div>
+
+        <div class="creation-form" v-else>
+          <BIMDataInput ref="nameInput"
+            :placeholder="$t('Spaces.SpaceCreationCard.inputName')"
+            v-model="newSpace.name"
+          />
+          <BIMDataButton fill radius color="primary"
+            @click="createSpace">
+            {{ $t('Spaces.SpaceCreationCard.buttonCreate') }}
+          </BIMDataButton>
+        </div>
+
+      </transition>
     </template>
   </BIMDataCard>
 </template>
@@ -28,13 +38,15 @@ import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
+import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
 
 export default {
   components: {
     BIMDataCard,
     BIMDataButton,
     BIMDataIcon,
-    BIMDataInput
+    BIMDataInput,
+    BIMDataLoading,
   },
   emits: [
     'close'
@@ -42,17 +54,32 @@ export default {
   setup(props, { emit }) {
     const { createSpace: create } = useSpacesState();
 
+    const loading = ref(false);
     const nameInput = ref(null);
     const newSpace = reactive({ name: '' });
 
-    const close = () => emit('close');
-    const createSpace = () => create(newSpace).then(close);
+    const createSpace = () => {
+      loading.value = true;
+      create(newSpace).then(() => {
+        loading.value = false;
+        close();
+      });
+    };
+    
+    const close = () => {
+      emit('close');
+    };
 
-    onMounted(() => nameInput.value.focus());
+    onMounted(
+      () => setTimeout(() => nameInput.value.focus(), 400)
+    );
 
     return {
+      // References
+      loading,
       nameInput,
       newSpace,
+      // Methods
       close,
       createSpace
     };

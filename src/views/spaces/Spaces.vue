@@ -21,7 +21,7 @@
     </div>
     <div class="space-list">
       <transition name="pop-in">
-        <SpaceCreationCard v-if="onCreate" @close="onCreate = false" />
+        <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
       </transition>
       <transition-group name="space-list">
         <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
@@ -55,7 +55,7 @@ export default {
 
     const displayedSpaces = ref([]);
     const searchText = ref('');
-    const onCreate = ref(false);
+    const showCreationCard = ref(false);
     let sortOrder = 'none';
 
     const filterSpaces = (value) => {
@@ -76,7 +76,7 @@ export default {
       );
     };
     const createSpace = () => {
-      onCreate.value = true;
+      showCreationCard.value = true;
     };
 
     watch(
@@ -91,9 +91,11 @@ export default {
     onMounted(() => fetchSpaces());
 
     return {
+      // References
       spaces: displayedSpaces,
-      onCreate,
       searchText,
+      showCreationCard,
+      // Methods
       filterSpaces,
       sortSpaces,
       createSpace

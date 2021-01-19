@@ -13,13 +13,14 @@
     </div>
     <BIMDataButton fill radius color="high"
       class="space-delete-guard__submit-btn"
-      @click="deleteSpace(space)">
+      @click="removeSpace">
       {{ $t('Spaces.SpaceDeleteGuard.buttonDelete') }}
     </BIMDataButton>
   </div>
 </template>
 
 <script>
+import { useLoadingContext } from '@/state/loadingState';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -42,6 +43,13 @@ export default {
   setup(props, { emit }) {
     const { deleteSpace } = useSpacesState();
 
+    const loading = useLoadingContext(`space-action-${props.space.id}`);
+
+    const removeSpace = () => {
+      loading.value = true;
+      deleteSpace({ ...props.space });
+    };
+
     const close = () => {
       emit('close');
     };
@@ -49,7 +57,7 @@ export default {
     return {
       // Methods
       close,
-      deleteSpace
+      removeSpace
     };
   }
 }

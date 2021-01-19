@@ -9,9 +9,14 @@
       <div class="space-action-menu__container" v-show="showMenu">
         <transition name="fade" mode="out-in">
 
-          <SpaceUpdateForm v-if="showUpdateForm"
+          <div class="action-loader" v-if="loading">
+            <BIMDataLoading />
+          </div>
+
+          <SpaceUpdateForm v-else-if="showUpdateForm"
             :space="space"
             @close="closeUpdateForm"
+            @success="closeMenu"
           />
 
           <SpaceDeleteGuard v-else-if="showDeleteGuard"
@@ -46,10 +51,12 @@
 
 <script>
 import { ref } from 'vue';
+import { createLoadingContext } from '@/state/loadingState'
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
+import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
 import SpaceDeleteGuard from '@/components/space-delete-guard/SpaceDeleteGuard';
 import SpaceImageInput from '@/components/space-image-input/SpaceImageInput';
 import SpaceUpdateForm from '@/components/space-update-form/SpaceUpdateForm';
@@ -58,6 +65,7 @@ export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
+    BIMDataLoading,
     SpaceDeleteGuard,
     SpaceImageInput,
     SpaceUpdateForm,
@@ -71,15 +79,19 @@ export default {
   setup(props) {
     const { removeSpaceImage } = useSpacesState();
 
+    const loading = createLoadingContext(`space-action-${props.space.id}`);
+
     const showMenu = ref(false);
     const closeMenu = () => {
       closeUpdateForm();
       closeDeleteGuard();
+      loading.value = false;
       showMenu.value = false;
     };
     const toggleMenu = () => {
       closeUpdateForm();
       closeDeleteGuard();
+      loading.value = false;
       showMenu.value = !showMenu.value;
     };
 
@@ -105,6 +117,7 @@ export default {
 
     return {
       // References
+      loading,
       showDeleteGuard,
       showMenu,
       showUpdateForm,
