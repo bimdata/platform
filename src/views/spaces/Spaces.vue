@@ -1,32 +1,37 @@
 <template>
   <div class="spaces-view">
-    <div class="sub-header">
-      <GoBackButton />
-      <BIMDataSearch :placeholder="$t('Spaces.searchSpaces')" width="300px"
-        class="sub-header__search-input"
-        v-model="searchText"
-        clear
-      />
-      <BIMDataButton fill squared icon
-        class="sub-header__sort-btn"
-        @click="sortSpaces">
-        <BIMDataIcon name="alphabeticalSort" size="s" />
-      </BIMDataButton>
-      <BIMDataButton fill radius color="primary"
-        class="sub-header__create-btn"
-        @click="createSpace">
-        <BIMDataIcon name="plus" size="xxxs" />
-        <span>{{ $t('Spaces.createSpace') }}</span>
-      </BIMDataButton>
-    </div>
-    <div class="space-list">
-      <transition name="pop-in">
-        <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
-      </transition>
-      <transition-group name="space-list">
-        <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-      </transition-group>
-    </div>
+
+    <BIMDataSpinner class="loader" v-if="loading" />
+
+    <template v-else>
+      <div class="sub-header">
+        <GoBackButton />
+        <BIMDataSearch :placeholder="$t('Spaces.searchSpaces')" width="300px"
+          class="sub-header__search-input"
+          v-model="searchText"
+          clear
+        />
+        <BIMDataButton fill squared icon
+          class="sub-header__sort-btn"
+          @click="sortSpaces">
+          <BIMDataIcon name="alphabeticalSort" size="s" />
+        </BIMDataButton>
+        <BIMDataButton fill radius color="primary"
+          class="sub-header__create-btn"
+          @click="createSpace">
+          <BIMDataIcon name="plus" size="xxxs" />
+          <span>{{ $t('Spaces.createSpace') }}</span>
+        </BIMDataButton>
+      </div>
+      <div class="space-list">
+        <transition name="pop-in">
+          <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
+        </transition>
+        <transition-group name="space-list">
+          <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+        </transition-group>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -37,6 +42,7 @@ import { useSpacesState } from '@/state/spacesState';
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataSearch from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js';
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import GoBackButton from '@/components/go-back-button/GoBackButton';
 import SpaceCard from '@/components/space-card/SpaceCard';
 import SpaceCreationCard from '@/components/space-creation-card/SpaceCreationCard';
@@ -46,12 +52,15 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
+    BIMDataSpinner,
     GoBackButton,
     SpaceCard,
-    SpaceCreationCard
+    SpaceCreationCard,
   },
   setup() {
     const { spaces, fetchSpaces } = useSpacesState();
+
+    const loading = ref(false);
 
     const displayedSpaces = ref([]);
     const searchText = ref('');
@@ -88,10 +97,16 @@ export default {
       (searchText) => filterSpaces(searchText)
     );
 
-    onMounted(() => fetchSpaces());
+    onMounted(() => {
+      loading.value = true;
+      fetchSpaces().then(() => {
+        loading.value = false;
+      });
+    });
 
     return {
       // References
+      loading,
       spaces: displayedSpaces,
       searchText,
       showCreationCard,
