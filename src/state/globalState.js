@@ -1,6 +1,6 @@
 import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { reactive, readonly, toRefs, watchEffect } from 'vue';
-import { setupApiClient } from '@/api';
+import apiClient from '@/api';
 import { oidcConfig } from '@/config/oidcConfig';
 
 const state = reactive({
@@ -39,7 +39,7 @@ const signOut = () => userManager.signoutRedirect().then(() => {
 
 watchEffect(() => {
   if (state.user) {
-    setupApiClient(state.user.access_token);
+    apiClient.accessToken = state.user.access_token;
   }
 });
 

@@ -1,29 +1,39 @@
-import { collaborationApiClient } from './index';
+import apiClient from './index';
 
 class SpacesService {
 
   fetchUserSpaces() {
-    return collaborationApiClient.getClouds();
+    return apiClient.collaborationApi.getClouds();
   }
 
   createSpace(space) {
-    return collaborationApiClient.createCloud(space);
+    return apiClient.collaborationApi.createCloud({
+      data: space
+    });
   }
 
   updateSpace(space) {
-    return collaborationApiClient.updateCloud(space.id, {
-      name: space.name
+    return apiClient.collaborationApi.updateCloud({
+      id: space.id,
+      data: {
+        name: space.name
+      }
     });
   }
 
   removeSpaceImage(space) {
-    return collaborationApiClient.updateCloud(space.id, {
-      image: null
+    return apiClient.collaborationApi.updateCloud({
+      id: space.id,
+      data: {
+        image: null
+      }
     });
   }
 
   deleteSpace(space) {
-    return collaborationApiClient.deleteCloud(space.id);
+    return apiClient.collaborationApi.deleteCloud({
+      id: space.id
+    });
   }
 
 }
