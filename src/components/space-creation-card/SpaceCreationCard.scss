@@ -13,11 +13,33 @@
     }
 
     .bimdata-card__content {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
       height: calc(100% - #{$spacing-unit*4});
-      padding: $spacing-unit;
+
+      .action-loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .bimdata-loading {
+          background: transparent;
+          color: $color-primary;
+          &--square {
+            border-color: $color-primary;
+          }
+        }
+      }
+
+      .creation-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+        padding: $spacing-unit;
+      }
     }
   }
 }
+
+// Transition classes
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+.fade-enter-active { transition: opacity 0.1s ease-out; }
+.fade-leave-active { transition: opacity 0.1s ease-in; }

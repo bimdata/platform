@@ -12,6 +12,19 @@
     background-color: $color-white;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 
+    .action-loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      :deep() .bimdata-loading {
+        background: transparent;
+        color: $color-primary;
+        &--square {
+          border-color: $color-primary;
+        }
+      }
+    }
+
     .action-menu {
       display: flex;
       flex-direction: column;

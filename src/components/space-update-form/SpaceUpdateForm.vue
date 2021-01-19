@@ -23,6 +23,7 @@
 
 <script>
 import { onMounted, ref } from 'vue';
+import { useLoadingContext } from '@/state/loadingState';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -42,15 +43,22 @@ export default {
     }
   },
   emits: [
-    'close'
+    'close',
+    'success',
+    'error',
   ],
   setup(props, { emit }) {
     const { updateSpace } = useSpacesState();
 
+    const loading = useLoadingContext(`space-action-${props.space.id}`);
+
     const nameInput = ref(null);
     const spaceName = ref(props.space.name);
     const renameSpace = () => {
-      updateSpace({ ...props.space, name: spaceName.value }).then(close);
+      loading.value = true;
+      updateSpace({ ...props.space, name: spaceName.value })
+        .then(() => emit('success'))
+        .catch((error) => emit('error', error));
     };
 
     const close = () => {

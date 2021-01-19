@@ -14,6 +14,7 @@ import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import { ref } from 'vue';
 import { useGlobalState } from '@/state/globalState';
+import { useLoadingContext } from '@/state/loadingState';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -35,6 +36,8 @@ export default {
   setup(props, { emit }) {
     const { user } = useGlobalState();
     const { softUpdateSpace } = useSpacesState();
+
+    const loading = useLoadingContext(`space-action-${props.space.id}`);
 
     const fileInput = ref(null);
 
@@ -58,14 +61,14 @@ export default {
         'Authorization': `Bearer ${user.value.access_token}`
       }
     });
+    uppy.on('file-added', () => {
+      loading.value = true;
+    });
     uppy.on('upload-error', (file, error) => {
-      // TODO: properly handle error
-      console.log('An error occurred while uploading file: ' + file.name);
-      console.error(error);
+      emit('error', error);
     });
     uppy.on('complete', ({ successful:[{ response:{ body:{ image }}}] }) => {
       softUpdateSpace({ ...props.space, image });
-      fileInput.value.value = ""; // reset file input
       uppy.reset(); // reset Uppy instance
       emit('success');
     });
