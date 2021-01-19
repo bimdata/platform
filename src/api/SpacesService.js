@@ -22,12 +22,24 @@ class SpacesService {
   }
 
   removeSpaceImage(space) {
-    return apiClient.collaborationApi.updateCloud({
-      id: space.id,
-      data: {
+    // return apiClient.collaborationApi.updateCloud({
+    //   id: space.id,
+    //   data: {
+    //     image: null
+    //   }
+    // });
+    return fetch(`${apiClient.config.basePath}/cloud/${space.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': apiClient.config.accessToken(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         image: null
-      }
-    });
+      })
+    }).then(
+      res => res.json()
+    );
   }
 
   deleteSpace(space) {
