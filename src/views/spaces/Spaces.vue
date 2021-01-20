@@ -4,6 +4,7 @@
     <BIMDataSpinner class="loader" v-if="loading" />
 
     <template v-else>
+
       <div class="sub-header">
         <GoBackButton />
         <BIMDataSearch :placeholder="$t('Spaces.searchSpaces')" width="300px"
@@ -23,14 +24,18 @@
           <span>{{ $t('Spaces.createSpace') }}</span>
         </BIMDataButton>
       </div>
-      <div class="space-list">
-        <transition name="pop-in">
-          <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
-        </transition>
-        <transition-group name="space-list">
-          <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-        </transition-group>
-      </div>
+
+      <transition name="fade" appear>
+        <div class="space-list">
+          <transition name="pop-in">
+            <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
+          </transition>
+          <transition-group name="space-list">
+            <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+          </transition-group>
+        </div>
+      </transition>
+
     </template>
   </div>
 </template>
@@ -100,7 +105,7 @@ export default {
     onMounted(() => {
       loading.value = true;
       fetchSpaces().then(() => {
-        loading.value = false;
+        loading.value = false
       });
     });
 
