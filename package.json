@@ -15,6 +15,7 @@
     "@bimdata/utils": "^0.2.15",
     "@uppy/core": "^1.15.0",
     "@uppy/xhr-upload": "^1.6.8",
+    "detect-browser": "^5.2.0",
     "oidc-client": "^1.10.1",
     "seedrandom": "^3.0.5",
     "vue": "^3.0.0",

@@ -49,5 +49,8 @@ export default {
       message: 'Are you sure ?',
       buttonDelete: 'Delete',
     }
-  }
+  },
+  RecentSpacesList: {
+    title: 'Espaces récents'
+  },
 };
