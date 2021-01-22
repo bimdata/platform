@@ -1,0 +1,46 @@
+.dashboard-button-tile {
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+  padding: $spacing-unit*2;
+  border-radius: $spacing-unit;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: $color-white;
+
+  &__title {
+    font-size: $font-size*3/2;
+    font-weight: bold;
+  }
+
+  &__number {
+    font-size: $font-size*3;
+    font-weight: bold;
+  }
+
+  &__text {
+    align-self: end;
+    text-transform: uppercase;
+    .arrow-icon {
+      transform: rotate(180deg);
+      margin-left: $spacing-unit;
+      vertical-align: text-bottom;
+    }
+  }
+
+  cursor: pointer;
+  transition-duration: 0.35s;
+  &:hover {
+    transform: scale(1.02);
+  }
+
+
+  &.primary {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+
+  &.secondary {
+    background-color: $color-secondary;
+    color: $color-primary;
+  }
+
+}

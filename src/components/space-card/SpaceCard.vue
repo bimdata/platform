@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard class="space-card">
     <template #right>
-      <SpaceActionMenu :space="space" />
+      <SpaceActionMenu v-if="actionMenu" :space="space" />
     </template>
     <template #content>
       <SpaceImage :space="space" />
@@ -29,6 +29,10 @@ export default {
     space: {
       type: Object,
       required: true
+    },
+    actionMenu: {
+      type: Boolean,
+      default: true
     }
   }
 }
