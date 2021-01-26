@@ -104,4 +104,4 @@ export default [
     color: '#A8BFFF',
     colorLight: '#E5F0FF'
   }
-]
+];
