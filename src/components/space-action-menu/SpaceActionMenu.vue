@@ -2,6 +2,7 @@
   <div class="space-action-menu" v-click-away="closeMenu">
     <BIMDataButton color="default" ghost rounded icon
       class="space-action-menu__btn"
+      :class="{ clicked }"
       @click="toggleMenu">
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
@@ -81,6 +82,12 @@ export default {
 
     const loading = createLoadingContext(`space-action-${props.space.id}`);
 
+    const clicked = ref(false);
+    const rippleEffect = () => {
+      clicked.value = true;
+      setTimeout(() => clicked.value = false, 500);
+    };
+
     const showMenu = ref(false);
     const closeMenu = () => {
       closeUpdateForm();
@@ -89,6 +96,7 @@ export default {
       showMenu.value = false;
     };
     const toggleMenu = () => {
+      rippleEffect();
       closeUpdateForm();
       closeDeleteGuard();
       loading.value = false;
@@ -117,6 +125,7 @@ export default {
 
     return {
       // References
+      clicked,
       loading,
       showDeleteGuard,
       showMenu,
