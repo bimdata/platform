@@ -32,19 +32,3 @@
     flex-wrap: wrap;
   }
 }
-
-// Transition classes
-.fade-enter-from, .fade-leave-to { opacity: 0; }
-.fade-enter-active { transition: opacity 0.25s ease-out; }
-.fade-leave-active { transition: opacity 0.15s ease-in; }
-
-.pop-in-enter-from { opacity: 0.4; transform: scale(0.1); }
-.pop-in-enter-to, .pop-in-leave-from { opacity: 1; transform: scale(1); }
-.pop-in-leave-to { opacity: 0; transform: scale(0.7); }
-.pop-in-enter-active { transition: all 0.6s cubic-bezier(0.4, 1.5, 0.56, 1); }
-.pop-in-leave-active { transition: all 0.4s ease-in; }
-
-.space-list-enter-from, .space-list-leave-to { opacity: 0; }
-.space-list-enter-active { transition: all 0.5s ease-out; }
-.space-list-leave-active { transition: all 0.4s ease-in; }
-.space-list-move { transition: all 0.6s ease; }
