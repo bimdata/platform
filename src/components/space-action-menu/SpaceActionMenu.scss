@@ -1,6 +1,10 @@
 .space-action-menu {
   position: relative;
 
+  &__btn {
+    color: $color-tertiary-dark;
+  }
+
   &__container {
     position: absolute;
     right: 0;

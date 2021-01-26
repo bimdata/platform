@@ -3,7 +3,7 @@
     <BIMDataButton color="default" ghost rounded icon
       class="space-action-menu__btn"
       @click="toggleMenu">
-      <BIMDataIcon name="ellipsis" size="l" class="fill-tertiary-darkest" />
+      <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
     <transition name="fade">
       <div class="space-action-menu__container" v-show="showMenu">
