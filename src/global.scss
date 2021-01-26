@@ -2,9 +2,12 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
+html {
   font-family: $primary-font;
   font-size: $font-size;
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
 }
