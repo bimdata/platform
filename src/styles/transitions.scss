@@ -1,0 +1,47 @@
+// "fade" transition
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: opacity 0.1s ease-out;
+}
+.fade-leave-active {
+  transition: opacity 0.1s ease-in;
+}
+
+// "pop-in" transition
+.pop-in-enter-from {
+  opacity: 0.4;
+  transform: scale(0.1);
+}
+.pop-in-enter-to,
+.pop-in-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+.pop-in-leave-to {
+  opacity: 0;
+  transform: scale(0.7);
+}
+.pop-in-enter-active {
+  transition: all 0.6s cubic-bezier(0.4, 1.5, 0.56, 1);
+}
+.pop-in-leave-active {
+  transition: all 0.4s ease-in;
+}
+
+// "card-list" transition
+.card-list-enter-from,
+.card-list-leave-to {
+  opacity: 0;
+}
+.card-list-enter-active {
+  transition: all 0.5s ease-out;
+}
+.card-list-leave-active {
+  transition: all 0.4s ease-in;
+}
+.card-list-move {
+  transition: all 0.6s ease;
+}

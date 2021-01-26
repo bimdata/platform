@@ -1,14 +1,14 @@
 <template>
   <div class="user-menu" v-click-away="closeMenu">
     <BIMDataButton color="default" outline radius
-      class="user-menu-btn"
+      class="user-menu__btn"
       @click="toggleMenu">
-      <span class="user-menu-btn__picture">{{ initials }}</span>
-      <span class="user-menu-btn__fullname">{{ `${firstName} ${lastName}` }}</span>
-      <span class="user-menu-btn__email">{{ email }}</span>
+      <span class="user-menu__btn__picture">{{ initials }}</span>
+      <span class="user-menu__btn__fullname">{{ `${firstName} ${lastName}` }}</span>
+      <span class="user-menu__btn__email">{{ email }}</span>
     </BIMDataButton>
     <transition name="fade">
-      <div class="user-menu-content" v-show="isOpen">
+      <div class="user-menu__container" v-show="isOpen">
         <BIMDataSelect
           :label="$t('Header.selectLanguage')"
           :options="$i18n.availableLocales"

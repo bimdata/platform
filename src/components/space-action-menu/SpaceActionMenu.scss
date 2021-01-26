@@ -52,8 +52,3 @@
     }
   }
 }
-
-// Transition classes
-.fade-enter-from, .fade-leave-to { opacity: 0; }
-.fade-enter-active { transition: opacity 0.25s ease-out; }
-.fade-leave-active { transition: opacity 0.15s ease-in; }

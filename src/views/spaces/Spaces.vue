@@ -30,7 +30,7 @@
           <transition name="pop-in">
             <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
           </transition>
-          <transition-group name="space-list">
+          <transition-group name="card-list">
             <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
           </transition-group>
         </div>
