@@ -15,6 +15,7 @@
 
     .bimdata-card__content {
       height: calc(100% - #{$spacing-unit*4});
+      font-size: 1rem;
 
       .action-loader {
         display: flex;
