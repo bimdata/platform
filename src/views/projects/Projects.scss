@@ -1,3 +1,25 @@
 .projects-view {
-  // TODO
+  padding: 0 $spacing-unit*2;
+
+  .loader {
+    position: absolute;
+    top: calc(50% - 6px);
+    left: calc(50% - 6px);
+    transform: scale(3);
+  }
+
+  .sub-header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-unit/2 $spacing-unit*2;
+
+    > * {
+      margin: 0 $spacing-unit/2;
+    }
+  }
+
+  .projects-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

@@ -26,7 +26,7 @@
       </div>
 
       <transition name="fade" appear>
-        <div class="space-list">
+        <div class="spaces-list">
           <transition name="pop-in">
             <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
           </transition>
@@ -104,9 +104,9 @@ export default {
 
     onMounted(() => {
       loading.value = true;
-      fetchSpaces().then(() => {
-        loading.value = false
-      });
+      fetchSpaces().then(
+        () => loading.value = false
+      );
     });
 
     return {
