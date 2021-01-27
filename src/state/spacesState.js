@@ -7,19 +7,19 @@ const state = reactive({
 });
 
 const fetchSpaces = () => {
-  SpacesService.fetchUserSpaces().then(
+  return SpacesService.fetchUserSpaces().then(
     spaces => state.spaces = spaces
   );
 };
 
 const createSpace = (space) => {
-  SpacesService.createSpace(space).then(
+  return SpacesService.createSpace(space).then(
     newSpace => state.spaces = [newSpace].concat(state.spaces)
   );
 };
 
 const updateSpace = (space) => {
-  SpacesService.updateSpace(space).then(softUpdateSpace);
+  return SpacesService.updateSpace(space).then(softUpdateSpace);
 };
 
 const softUpdateSpace = (space) => {
@@ -27,11 +27,11 @@ const softUpdateSpace = (space) => {
 };
 
 const removeSpaceImage = (space) => {
-  SpacesService.removeSpaceImage(space).then(softUpdateSpace);
+  return SpacesService.removeSpaceImage(space).then(softUpdateSpace);
 };
 
 const deleteSpace = (space) => {
-  SpacesService.deleteSpace(space).then(
+  return SpacesService.deleteSpace(space).then(
     () => state.spaces = state.spaces.filter(s => s.id !== space.id)
   );
 };
