@@ -49,7 +49,7 @@ export default {
 
     onMounted(() => {
       loading.value = true;
-      fetchProjects(currentSpace).then(
+      fetchProjects(currentSpace.value).then(
         () => loading.value = false
       );
     });

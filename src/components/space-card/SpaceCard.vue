@@ -1,5 +1,5 @@
 <template>
-  <BIMDataCard class="space-card">
+  <BIMDataCard class="space-card" @click="goToProjects">
     <template #right>
       <SpaceActionMenu v-if="actionMenu" :space="space" />
     </template>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
 // Components
 import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js';
 import SpaceActionMenu from '@/components/space-action-menu/SpaceActionMenu';
@@ -34,6 +35,17 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  setup(props) {
+    const router = useRouter();
+
+    const goToProjects = () => {
+      router.push({ name: 'projects', params: { spaceID: props.space.id } });
+    };
+
+    return {
+      goToProjects
+    };
   }
 }
 </script>

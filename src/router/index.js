@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useGlobalState } from '@/state/globalState';
+import { useSpacesState } from '@/state/spacesState';
 // Components
 import Layout from '@/Layout';
 import Dashboard from '@/views/dashboard/Dashboard';
@@ -66,6 +67,16 @@ router.beforeEach(async (to, from, next) => {
     next();
   } else {
     next();
+  }
+});
+
+router.beforeResolve(({
+  params: {
+    spaceID
+  }
+}) => {
+  if (spaceID) {
+    useSpacesState().selectSpace(+spaceID);
   }
 });
 

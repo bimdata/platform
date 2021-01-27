@@ -1,5 +1,8 @@
 <template>
-  <div class="space-action-menu" v-click-away="closeMenu">
+  <div class="space-action-menu"
+    @click.stop="() => {}"
+    v-click-away="closeMenu">
+
     <BIMDataButton color="default" ghost rounded icon
       class="space-action-menu__btn"
       :class="{ clicked }"
@@ -47,6 +50,7 @@
         </transition>
       </div>
     </transition>
+
   </div>
 </template>
 
