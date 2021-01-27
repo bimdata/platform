@@ -5,6 +5,7 @@ import Layout from '@/Layout';
 import Dashboard from '@/views/dashboard/Dashboard';
 import OidcCallback from '@/views/oidc-callback/OidcCallback';
 import OidcCallbackError from '@/views/oidc-callback-error/OidcCallbackError';
+import Projects from '@/views/projects/Projects';
 import Spaces from '@/views/spaces/Spaces';
 
 const routes = [
@@ -25,11 +26,17 @@ const routes = [
         path: '/spaces',
         name: 'spaces',
         component: Spaces
+      },
+      {
+        path: '/spaces/:spaceID(\\d+)/projects',
+        name: 'projects',
+        component: Projects
       }
     ]
   },
   {
-    path: '/oidc-callback', // Should match `redirect_uri` in oidcConfig
+    // Should match `redirect_uri` path in oidcConfig
+    path: '/oidc-callback',
     name: 'oidc-callback',
     component: OidcCallback
   },
@@ -37,6 +44,11 @@ const routes = [
     path: '/oidc-callback-error',
     name: 'oidc-callback-error',
     component: OidcCallbackError
+  },
+  {
+    // Redirect every unknown route to the root
+    path: '/:path(.*)*',
+    beforeEnter: (to, from, next) => next('/')
   }
 ];
 

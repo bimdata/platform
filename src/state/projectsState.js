@@ -7,19 +7,19 @@ const state = reactive({
 });
 
 const fetchProjects = (space) => {
-  ProjectsService.fetchSpaceProjects(space).then(
+  return ProjectsService.fetchSpaceProjects(space).then(
     projects => state.projects = projects
   );
 };
 
 const createProject = (space, project) => {
-  ProjectsService.createProject(space, project).then(
+  return ProjectsService.createProject(space, project).then(
     newProject => state.projects = [newProject].concat(state.projects)
   );
 };
 
 const updateProject = (space, project) => {
-  ProjectsService.updateProject(space, project).then(softUpdateProject);
+  return ProjectsService.updateProject(space, project).then(softUpdateProject);
 };
 
 const softUpdateProject = (project) => {
@@ -27,7 +27,7 @@ const softUpdateProject = (project) => {
 };
 
 const deleteProject = (space, project) => {
-  ProjectsService.deleteProject(space, project).then(
+  return ProjectsService.deleteProject(space, project).then(
     () => state.projects = state.projects.filter(p => p.id !== project.id)
   );
 };
