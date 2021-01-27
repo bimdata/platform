@@ -29,7 +29,7 @@ export default {
       fetchSpaces().then(() => {
         recentSpaces.value = spaces.value.slice()
           .sort((a, b) => a.updatedAt < b.updatedAt ? 1 : -1)
-          .slice(0, 10);
+          .slice(0, 7);
       });
     });
 
