@@ -37,6 +37,7 @@
   }
 
   &:hover {
+    cursor: pointer;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
     .space-image {
       transform: translateY($spacing-unit/3) scale(1.04);
