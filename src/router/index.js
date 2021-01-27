@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useGlobalState } from '@/state/globalState';
-import { useSpacesState } from '@/state/spacesState';
+import { dashboardResolver, projectsResolver, spacesResolver } from './resolvers';
 // Components
 import Layout from '@/Layout';
 import Dashboard from '@/views/dashboard/Dashboard';
@@ -21,17 +21,26 @@ const routes = [
       {
         path: '',
         name: 'dashboard',
-        component: Dashboard
+        component: Dashboard,
+        meta: {
+          resolver: dashboardResolver
+        }
       },
       {
         path: '/spaces',
         name: 'spaces',
-        component: Spaces
+        component: Spaces,
+        meta: {
+          resolver: spacesResolver
+        }
       },
       {
         path: '/spaces/:spaceID(\\d+)/projects',
         name: 'projects',
-        component: Projects
+        component: Projects,
+        meta: {
+          resolver: projectsResolver
+        }
       }
     ]
   },
@@ -70,14 +79,12 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 
-router.beforeResolve(({
-  params: {
-    spaceID
-  }
-}) => {
-  if (spaceID) {
-    useSpacesState().selectSpace(+spaceID);
-  }
+router.beforeResolve(to => {
+  to.matched.filter(
+    r => r.meta && r.meta.resolver
+  ).reduce(
+    (chain, r) => chain.then(() => r.meta.resolver(to)), Promise.resolve()
+  );
 });
 
 export default router;

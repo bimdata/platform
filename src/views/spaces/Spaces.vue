@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -63,7 +63,7 @@ export default {
     SpaceCreationCard,
   },
   setup() {
-    const { spaces, fetchSpaces } = useSpacesState();
+    const { spaces } = useSpacesState();
 
     const loading = ref(false);
 
@@ -101,13 +101,6 @@ export default {
       () => searchText.value,
       (searchText) => filterSpaces(searchText)
     );
-
-    onMounted(() => {
-      loading.value = true;
-      fetchSpaces().then(
-        () => loading.value = false
-      );
-    });
 
     return {
       // References

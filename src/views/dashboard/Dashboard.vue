@@ -21,8 +21,9 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSpacesState } from '@/state/spacesState';
 // Components
 import DashboardButtonTile from '@/components/dashboard-button-tile/DashboardButtonTile';
 import DashboardInfoTile from '@/components/dashboard-info-tile/DashboardInfoTile';
@@ -38,15 +39,24 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const nbSpaces = ref(72);
-    const nbProjects = ref(235);
+    const { spaces } = useSpacesState();
 
-    const goToSpaces = () => router.push('/spaces');
+    const nbSpaces = ref(0);
+    watchEffect(() => {
+      if (spaces.value) {
+        nbSpaces.value = spaces.value.length;
+      }
+    });
+    const goToSpaces = () => {
+      router.push('/spaces');
+    };
+    
+    const nbProjects = ref(235);
 
     return {
       // References
-      nbSpaces,
       nbProjects,
+      nbSpaces,
       // Methods
       goToSpaces
     };
