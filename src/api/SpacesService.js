@@ -22,12 +22,6 @@ class SpacesService {
   }
 
   removeSpaceImage(space) {
-    // return apiClient.collaborationApi.updateCloud({
-    //   id: space.id,
-    //   data: {
-    //     image: null
-    //   }
-    // });
     return fetch(`${apiClient.config.basePath}/cloud/${space.id}`, {
       method: 'PATCH',
       headers: {
