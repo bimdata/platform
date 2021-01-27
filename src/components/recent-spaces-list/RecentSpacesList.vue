@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import SpaceCard from '@/components/space-card/SpaceCard';
@@ -21,16 +21,17 @@ export default {
     SpaceCard
   },
   setup() {
-    const { spaces, fetchSpaces } = useSpacesState();
+    const { spaces } = useSpacesState();
 
     const recentSpaces = ref([]);
 
-    onMounted(() => {
-      fetchSpaces().then(() => {
-        recentSpaces.value = spaces.value.slice()
-          .sort((a, b) => a.updatedAt < b.updatedAt ? 1 : -1)
-          .slice(0, 7);
-      });
+    watchEffect(() => {
+      if (spaces.value) {
+        recentSpaces.value = 
+          spaces.value.slice()
+            .sort((a, b) => a.updatedAt < b.updatedAt ? 1 : -1)
+            .slice(0, 7);
+      }
     });
 
     return {
