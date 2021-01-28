@@ -6,38 +6,43 @@ const state = reactive({
   currentSpace: null,
 });
 
-const fetchSpaces = () => {
-  return SpacesService.fetchUserSpaces().then(
-    spaces => state.spaces = spaces
-  );
+const fetchSpaces = async () => {
+  const spaces = await SpacesService.fetchUserSpaces();
+  state.spaces = spaces;
+  return spaces;
 };
 
-const createSpace = (space) => {
-  return SpacesService.createSpace(space).then(
-    newSpace => state.spaces = [newSpace].concat(state.spaces)
-  );
+const createSpace = async (space) => {
+  const newSpace = await SpacesService.createSpace(space);
+  state.spaces = [newSpace].concat(state.spaces);
+  return newSpace;
 };
 
-const updateSpace = (space) => {
-  return SpacesService.updateSpace(space).then(softUpdateSpace);
+const updateSpace = async (space) => {
+  const newSpace = await SpacesService.updateSpace(space);
+  softUpdateSpace(newSpace);
+  return newSpace;
 };
 
 const softUpdateSpace = (space) => {
   state.spaces = state.spaces.map(s => s.id === space.id ? space : s);
 };
 
-const removeSpaceImage = (space) => {
-  return SpacesService.removeSpaceImage(space).then(softUpdateSpace);
+const removeSpaceImage = async (space) => {
+  const newSpace = await SpacesService.removeSpaceImage(space);
+  softUpdateSpace(newSpace);
+  return newSpace;
 };
 
-const deleteSpace = (space) => {
-  return SpacesService.deleteSpace(space).then(
-    () => state.spaces = state.spaces.filter(s => s.id !== space.id)
-  );
+const deleteSpace =  async (space) => {
+  await SpacesService.deleteSpace(space);
+  state.spaces = state.spaces.filter(s => s.id !== space.id);
+  return space;
 };
 
 const selectSpace = (id) => {
   state.currentSpace = state.spaces.find(s => s.id === id) || null;
+  return state.currentSpace;
 };
 
 export function useSpacesState() {
