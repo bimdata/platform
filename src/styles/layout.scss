@@ -1,5 +1,11 @@
-#layout {
+.platform-layout {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background-color: $color-tertiary-lightest;
+
+  .view-container {
+    height: calc(100% - #{$platform-header-height});
+    padding: $spacing-unit*2;
+    overflow-y: auto;
+  }
 }

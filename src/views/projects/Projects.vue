@@ -6,8 +6,15 @@
     <template v-else>
 
       <div class="sub-header">
-        <GoBackButton />
-        <!-- TODO -->
+        <div class="sub-header--left">
+          <GoBackButton />
+        </div>
+        <div class="sub-header--center">
+          <!-- TODO -->
+        </div>
+        <div class="sub-header-right">
+          <!-- TODO -->
+        </div>
       </div>
 
       <transition name="fade" appear>

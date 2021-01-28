@@ -4,6 +4,7 @@ module.exports = {
       sass: {
         prependData: `
           @import '~@bimdata/design-system/dist/scss/BIMDataVariables.scss';
+          @import '@/styles/variables.scss';
         `
       }
     }
