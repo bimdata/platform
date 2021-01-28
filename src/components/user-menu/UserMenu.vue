@@ -26,7 +26,7 @@
 
 <script>
 import { computed, ref } from 'vue';
-import { useGlobalState } from '@/state/globalState';
+import { useGlobalState } from '@/state/global';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';

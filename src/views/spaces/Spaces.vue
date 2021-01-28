@@ -41,7 +41,7 @@
 
 <script>
 import { ref, watchEffect } from 'vue';
-import { useSpacesState } from '@/state/spacesState';
+import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
@@ -60,7 +60,7 @@ export default {
     SpaceCreationCard,
   },
   setup() {
-    const { spaces } = useSpacesState();
+    const { spaces } = useSpaces();
 
     const displayedSpaces = ref([]);
     watchEffect(

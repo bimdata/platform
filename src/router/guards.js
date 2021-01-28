@@ -1,4 +1,4 @@
-import { useGlobalState } from '@/state/globalState';
+import { useGlobalState } from '@/state/global';
 
 const authGuard = async (to, from, next) => {
   const { isAuthenticated, authenticate } = useGlobalState();

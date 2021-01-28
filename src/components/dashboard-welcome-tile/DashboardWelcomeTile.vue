@@ -15,7 +15,7 @@
 
 <script>
 import { ref } from 'vue';
-import { useGlobalState } from '@/state/globalState';
+import { useGlobalState } from '@/state/global';
 
 export default {
   setup() {

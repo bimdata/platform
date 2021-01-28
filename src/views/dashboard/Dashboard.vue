@@ -23,7 +23,7 @@
 <script>
 import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-import { useSpacesState } from '@/state/spacesState';
+import { useSpaces } from '@/state/spaces';
 // Components
 import DashboardButtonTile from '@/components/dashboard-button-tile/DashboardButtonTile';
 import DashboardInfoTile from '@/components/dashboard-info-tile/DashboardInfoTile';
@@ -39,7 +39,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const { spaces } = useSpacesState();
+    const { spaces } = useSpaces();
 
     const nbSpaces = ref(0);
     watchEffect(() => {
