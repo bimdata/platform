@@ -1,57 +1,51 @@
 <template>
   <div class="spaces-view">
 
-    <BIMDataSpinner class="loader" v-if="loading" />
-
-    <template v-else>
-
-      <div class="sub-header">
-        <div class="sub-header--left">
-          <GoBackButton />
-        </div>
-        <div class="sub-header--center">
-          <BIMDataSearch width="300px"
-            :placeholder="$t('Spaces.searchSpaces')"
-            v-model="searchText"
-            clear
-          />
-        </div>
-        <div class="sub-header--right">
-          <BIMDataButton fill squared icon
-            @click="sortSpaces">
-            <BIMDataIcon name="alphabeticalSort" size="s" />
-          </BIMDataButton>
-          <BIMDataButton fill radius color="primary"
-            @click="createSpace">
-            <BIMDataIcon name="plus" size="xxxs" />
-            <span>{{ $t('Spaces.createSpace') }}</span>
-          </BIMDataButton>
-        </div>
+    <div class="sub-header">
+      <div class="sub-header--left">
+        <GoBackButton />
       </div>
+      <div class="sub-header--center">
+        <BIMDataSearch width="300px"
+          :placeholder="$t('Spaces.searchSpaces')"
+          v-model="searchText"
+          clear
+        />
+      </div>
+      <div class="sub-header--right">
+        <BIMDataButton fill squared icon
+          @click="sortSpaces">
+          <BIMDataIcon name="alphabeticalSort" size="s" />
+        </BIMDataButton>
+        <BIMDataButton fill radius color="primary"
+          @click="createSpace">
+          <BIMDataIcon name="plus" size="xxxs" />
+          <span>{{ $t('Spaces.createSpace') }}</span>
+        </BIMDataButton>
+      </div>
+    </div>
 
-      <transition name="fade" appear>
-        <div class="spaces-list">
-          <transition name="pop-in">
-            <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
-          </transition>
-          <transition-group name="card-list">
-            <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-          </transition-group>
-        </div>
-      </transition>
+    <transition name="fade" appear>
+      <div class="spaces-list">
+        <transition name="pop-in">
+          <SpaceCreationCard v-if="showCreationCard" @close="showCreationCard = false" />
+        </transition>
+        <transition-group name="card-list">
+          <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+        </transition-group>
+      </div>
+    </transition>
 
-    </template>
   </div>
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useSpacesState } from '@/state/spacesState';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataSearch from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js';
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import GoBackButton from '@/components/go-back-button/GoBackButton';
 import SpaceCard from '@/components/space-card/SpaceCard';
 import SpaceCreationCard from '@/components/space-creation-card/SpaceCreationCard';
@@ -61,15 +55,12 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
-    BIMDataSpinner,
     GoBackButton,
     SpaceCard,
     SpaceCreationCard,
   },
   setup() {
     const { spaces } = useSpacesState();
-
-    const loading = ref(false);
 
     const displayedSpaces = ref([]);
     const searchText = ref('');
@@ -97,18 +88,15 @@ export default {
       showCreationCard.value = true;
     };
 
-    watch(
-      () => spaces.value,
-      (spaces) => displayedSpaces.value = spaces
+    watchEffect(
+      () => displayedSpaces.value = spaces.value
     );
-    watch(
-      () => searchText.value,
-      (searchText) => filterSpaces(searchText)
+    watchEffect(
+      () => filterSpaces(searchText.value)
     );
 
     return {
       // References
-      loading,
       spaces: displayedSpaces,
       searchText,
       showCreationCard,

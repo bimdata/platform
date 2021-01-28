@@ -4,8 +4,16 @@
   background-color: $color-tertiary-lightest;
 
   .view-container {
+    position: relative;
     height: calc(100% - #{$platform-header-height});
     padding: $spacing-unit*2;
     overflow-y: auto;
+
+    .loader {
+      position: absolute;
+      top: calc(50% - 6px);
+      left: calc(50% - 6px);
+      transform: scale(3);
+    }
   }
 }
