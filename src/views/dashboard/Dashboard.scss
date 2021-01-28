@@ -1,10 +1,6 @@
 .dashboard-view {
-  height: calc(100% - 62px);
-  padding: $spacing-unit*2;
-
   &__head {
     display: grid;
-    // grid-template-rows: repeat( auto-fill, 220px );
     grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
     gap: $spacing-unit*2;
   }

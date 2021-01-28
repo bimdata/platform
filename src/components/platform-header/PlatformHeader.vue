@@ -4,8 +4,6 @@
       class="platform-header__logo"
       alt="BIMData Platform logo"
       src="@/assets/header-logo.svg"
-      width="110"
-      height="50"
       @click="goToDashboard"
     />
     <UserMenu

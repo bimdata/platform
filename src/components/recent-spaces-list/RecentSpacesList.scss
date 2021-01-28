@@ -1,10 +1,13 @@
 .recent-spaces-list {
+  
   &__title {
     padding: $spacing-unit/2 $spacing-unit;
   }
-
+  
   &__content {
     display: flex;
+    gap: $spacing-unit*2;
+    padding: $spacing-unit;
     overflow-x: auto;
   }
 }

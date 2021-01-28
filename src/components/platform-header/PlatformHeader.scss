@@ -1,12 +1,14 @@
 .platform-header {
   display: flex;
   align-items: center;
-  padding: $spacing-unit/2 $spacing-unit*2;
+  height: $platform-header-height;
+  padding: 0 $spacing-unit*2;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   background-color: $color-white;
 
   &__logo {
     cursor: pointer;
+    height: $platform-header-height - $spacing-unit;
   }
 
   &__user-menu {

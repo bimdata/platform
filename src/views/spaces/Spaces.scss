@@ -1,6 +1,4 @@
 .spaces-view {
-  padding: $spacing-unit*2;
-
   .loader {
     position: absolute;
     top: calc(50% - 6px);
@@ -29,17 +27,13 @@
     &--right {
       margin-left: auto;
       display: flex;
-
-      .bimdata-btn {
-        margin-left: $spacing-unit;
-      }
+      gap: $spacing-unit;
     }
-
   }
 
   .spaces-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 215px);
+    grid-template-columns: repeat(auto-fill, $platform-space-card-width);
     justify-content: space-between;
     gap: $spacing-unit*3 $spacing-unit*2;
     padding: $spacing-unit*2 0;

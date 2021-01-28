@@ -1,7 +1,9 @@
 <template>
-  <div id="layout">
+  <div class="platform-layout">
     <PlatformHeader />
-    <router-view></router-view>
+    <div class="view-container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

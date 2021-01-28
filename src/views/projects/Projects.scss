@@ -1,6 +1,4 @@
 .projects-view {
-  padding: 0 $spacing-unit*2;
-
   .loader {
     position: absolute;
     top: calc(50% - 6px);
@@ -11,15 +9,33 @@
   .sub-header {
     display: flex;
     align-items: center;
-    padding: $spacing-unit/2 $spacing-unit*2;
 
-    > * {
-      margin: 0 $spacing-unit/2;
+    &--left {
+      margin-right: auto;
+      display: flex;
+    }
+
+    &--center {
+      margin: 0 auto;
+      display: flex;
+
+      .bimdata-search-bar {
+        background-color: $color-white;
+      }
+    }
+
+    &--right {
+      margin-left: auto;
+      display: flex;
+      gap: $spacing-unit;
     }
   }
 
   .projects-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, $platform-project-card-width);
+    justify-content: space-between;
+    gap: $spacing-unit*3 $spacing-unit*2;
+    padding: $spacing-unit*2 0;
   }
 }
