@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useGlobalState } from '@/state/globalState';
+import { authGuard } from './guards';
 import { dashboardResolver, projectsResolver, spacesResolver } from './resolvers';
 // Components
 import Layout from '@/Layout';
@@ -15,6 +15,7 @@ const routes = [
     name: 'root',
     component: Layout,
     meta: {
+      // Protect this route and all its children with authentication
       requiresAuth: true
     },
     children: [
@@ -67,23 +68,16 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  const { isAuthenticated, authenticate } = useGlobalState();
-  if (isAuthenticated.value) {
-    next();
-  } else if (to.matched.some(r => r.meta.requiresAuth)) {
-    await authenticate(to.path);
-    next();
-  } else {
-    next();
-  }
-});
+router.beforeEach( authGuard );
 
 router.beforeResolve(to => {
   to.matched.filter(
     r => r.meta && r.meta.resolver
   ).reduce(
-    (chain, r) => chain.then(() => r.meta.resolver(to)), Promise.resolve()
+    (chain, r) => chain.then(
+      () => r.meta.resolver(to)
+    ),
+    Promise.resolve()
   );
 });
 
