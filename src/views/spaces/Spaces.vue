@@ -6,23 +6,27 @@
     <template v-else>
 
       <div class="sub-header">
-        <GoBackButton />
-        <BIMDataSearch :placeholder="$t('Spaces.searchSpaces')" width="300px"
-          class="sub-header__search-input"
-          v-model="searchText"
-          clear
-        />
-        <BIMDataButton fill squared icon
-          class="sub-header__sort-btn"
-          @click="sortSpaces">
-          <BIMDataIcon name="alphabeticalSort" size="s" />
-        </BIMDataButton>
-        <BIMDataButton fill radius color="primary"
-          class="sub-header__create-btn"
-          @click="createSpace">
-          <BIMDataIcon name="plus" size="xxxs" />
-          <span>{{ $t('Spaces.createSpace') }}</span>
-        </BIMDataButton>
+        <div class="sub-header--left">
+          <GoBackButton />
+        </div>
+        <div class="sub-header--center">
+          <BIMDataSearch width="300px"
+            :placeholder="$t('Spaces.searchSpaces')"
+            v-model="searchText"
+            clear
+          />
+        </div>
+        <div class="sub-header--right">
+          <BIMDataButton fill squared icon
+            @click="sortSpaces">
+            <BIMDataIcon name="alphabeticalSort" size="s" />
+          </BIMDataButton>
+          <BIMDataButton fill radius color="primary"
+            @click="createSpace">
+            <BIMDataIcon name="plus" size="xxxs" />
+            <span>{{ $t('Spaces.createSpace') }}</span>
+          </BIMDataButton>
+        </div>
       </div>
 
       <transition name="fade" appear>
