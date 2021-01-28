@@ -1,25 +1,38 @@
+import { useLoadingContext } from '@/state/loadingState';
 import { useProjectsState } from '@/state/projectsState';
 import { useSpacesState } from '@/state/spacesState';
 
-const dashboardResolver = () => {
-  return useSpacesState().fetchSpaces();
+const createViewResolver = (resolver) => {
+  return (route) => {
+    const loading = useLoadingContext('view-container');
+    loading.value = true;
+    return resolver(route).then(
+      () => loading.value = false
+    );
+  };
 };
 
-const spacesResolver = () => {
-  return useSpacesState().fetchSpaces();
-};
+const dashboardResolver = createViewResolver(
+  () => useSpacesState().fetchSpaces()
+);
 
-const projectsResolver = (route) => {
-  const { currentSpace, fetchSpaces, selectSpace } = useSpacesState();
-  const { fetchProjects } = useProjectsState();
+const spacesResolver = createViewResolver(
+  () => useSpacesState().fetchSpaces()
+);
 
-  return fetchSpaces()
-    .then(() => selectSpace(+route.params.spaceID))
-    .then(() => fetchProjects(currentSpace.value));
-};
+const projectsResolver = createViewResolver(
+  (route) => {
+    const { currentSpace, fetchSpaces, selectSpace } = useSpacesState();
+    const { fetchProjects } = useProjectsState();
+
+    return fetchSpaces()
+      .then(() => selectSpace(+route.params.spaceID))
+      .then(() => fetchProjects(currentSpace.value));
+  }
+);
 
 export {
   dashboardResolver,
   spacesResolver,
   projectsResolver,
-}
+};
