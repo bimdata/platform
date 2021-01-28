@@ -45,7 +45,7 @@ const selectSpace = (id) => {
   return state.currentSpace;
 };
 
-export function useSpacesState() {
+export function useSpaces() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),

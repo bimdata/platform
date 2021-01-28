@@ -12,7 +12,7 @@
 
 <script>
 import { ref, watchEffect } from 'vue';
-import { useSpacesState } from '@/state/spacesState';
+import { useSpaces } from '@/state/spaces';
 // Components
 import SpaceCard from '@/components/space-card/SpaceCard';
 
@@ -21,7 +21,7 @@ export default {
     SpaceCard
   },
   setup() {
-    const { spaces } = useSpacesState();
+    const { spaces } = useSpaces();
 
     const recentSpaces = ref([]);
 

@@ -32,7 +32,7 @@
 
 <script>
 import { onMounted, reactive, ref } from 'vue';
-import { useSpacesState } from '@/state/spacesState';
+import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js';
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -52,7 +52,7 @@ export default {
     'close'
   ],
   setup(props, { emit }) {
-    const { createSpace: create } = useSpacesState();
+    const { createSpace: create } = useSpaces();
 
     const loading = ref(false);
     const nameInput = ref(null);

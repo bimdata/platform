@@ -23,8 +23,8 @@
 
 <script>
 import { onMounted, ref } from 'vue';
-import { useLoadingContext } from '@/state/loadingState';
-import { useSpacesState } from '@/state/spacesState';
+import { useLoadingContext } from '@/state/loading';
+import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
@@ -48,7 +48,7 @@ export default {
     'error',
   ],
   setup(props, { emit }) {
-    const { updateSpace } = useSpacesState();
+    const { updateSpace } = useSpaces();
 
     const loading = useLoadingContext(`space-action-${props.space.id}`);
 

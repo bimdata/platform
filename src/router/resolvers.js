@@ -1,6 +1,6 @@
-import { useLoadingContext } from '@/state/loadingState';
-import { useProjectsState } from '@/state/projectsState';
-import { useSpacesState } from '@/state/spacesState';
+import { useLoadingContext } from '@/state/loading';
+import { useProjects } from '@/state/projects';
+import { useSpaces } from '@/state/spaces';
 
 const createViewResolver = (resolver) => {
   return (route) => {
@@ -13,17 +13,17 @@ const createViewResolver = (resolver) => {
 };
 
 const dashboardResolver = createViewResolver(
-  () => useSpacesState().fetchSpaces()
+  () => useSpaces().fetchSpaces()
 );
 
 const spacesResolver = createViewResolver(
-  () => useSpacesState().fetchSpaces()
+  () => useSpaces().fetchSpaces()
 );
 
 const projectsResolver = createViewResolver(
   (route) => {
-    const { currentSpace, fetchSpaces, selectSpace } = useSpacesState();
-    const { fetchProjects } = useProjectsState();
+    const { currentSpace, fetchSpaces, selectSpace } = useSpaces();
+    const { fetchProjects } = useProjects();
 
     return fetchSpaces()
       .then(() => selectSpace(+route.params.spaceID))

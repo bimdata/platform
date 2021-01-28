@@ -39,7 +39,7 @@ const selectProject = (id) => {
   return state.currentProject;
 };
 
-export function useProjectsState() {
+export function useProjects() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),

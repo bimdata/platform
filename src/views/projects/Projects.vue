@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { useProjectsState } from '@/state/projectsState';
+import { useProjects } from '@/state/projects';
 // Components
 import GoBackButton from '@/components/go-back-button/GoBackButton';
 import ProjectCard from '@/components/project-card/ProjectCard';
@@ -39,7 +39,7 @@ export default {
     ProjectCreationCard,
   },
   setup() {
-    const { projects } = useProjectsState();
+    const { projects } = useProjects();
 
     return {
       // References

@@ -56,8 +56,8 @@
 
 <script>
 import { ref } from 'vue';
-import { createLoadingContext } from '@/state/loadingState'
-import { useSpacesState } from '@/state/spacesState';
+import { createLoadingContext } from '@/state/loading'
+import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
@@ -82,7 +82,7 @@ export default {
     }
   },
   setup(props) {
-    const { removeSpaceImage } = useSpacesState();
+    const { removeSpaceImage } = useSpaces();
 
     const loading = createLoadingContext(`space-action-${props.space.id}`);
 

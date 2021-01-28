@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { useLoadingContext } from '@/state/loadingState';
+import { useLoadingContext } from '@/state/loading';
 // Components
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import PlatformHeader from '@/components/platform-header/PlatformHeader';
