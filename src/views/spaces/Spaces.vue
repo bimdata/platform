@@ -63,10 +63,11 @@ export default {
     const { spaces } = useSpacesState();
 
     const displayedSpaces = ref([]);
-    const searchText = ref('');
-    const showCreationCard = ref(false);
-    let sortOrder = 'none';
+    watchEffect(
+      () => displayedSpaces.value = spaces.value
+    );
 
+    const searchText = ref('');
     const filterSpaces = (value) => {
       const text = value.trim().toLowerCase();
       if (text) {
@@ -77,6 +78,11 @@ export default {
         displayedSpaces.value = spaces.value;
       }
     };
+    watchEffect(
+      () => filterSpaces(searchText.value)
+    );
+
+    let sortOrder = 'none';
     const sortSpaces = () => {
       sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
       const n = sortOrder === 'desc' ? -1 : 1;
@@ -84,26 +90,21 @@ export default {
         (a, b) => (a.name < b.name ? -1 : 1) * n
       );
     };
+
+    const showCreationCard = ref(false);
     const createSpace = () => {
       showCreationCard.value = true;
     };
 
-    watchEffect(
-      () => displayedSpaces.value = spaces.value
-    );
-    watchEffect(
-      () => filterSpaces(searchText.value)
-    );
-
     return {
       // References
-      spaces: displayedSpaces,
       searchText,
       showCreationCard,
+      spaces: displayedSpaces,
       // Methods
+      createSpace,
       filterSpaces,
       sortSpaces,
-      createSpace
     };
   }
 }
