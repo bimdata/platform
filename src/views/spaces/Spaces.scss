@@ -1,5 +1,5 @@
 .spaces-view {
-  padding: 0 $spacing-unit*2;
+  padding: $spacing-unit*2;
 
   .loader {
     position: absolute;
@@ -11,24 +11,37 @@
   .sub-header {
     display: flex;
     align-items: center;
-    padding: $spacing-unit/2 $spacing-unit*2;
 
-    > * {
-      margin: 0 $spacing-unit/2;
+    &--left {
+      margin-right: auto;
+      display: flex;
     }
 
-    &__search-input {
+    &--center {
+      margin: 0 auto;
+      display: flex;
+
+      .bimdata-search-bar {
+        background-color: $color-white;
+      }
+    }
+
+    &--right {
       margin-left: auto;
-      background-color: $color-white;
+      display: flex;
+
+      .bimdata-btn {
+        margin-left: $spacing-unit;
+      }
     }
 
-    &__sort-btn {
-      margin-left: auto;
-    }
   }
 
   .spaces-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 215px);
+    justify-content: space-between;
+    gap: $spacing-unit*3 $spacing-unit*2;
+    padding: $spacing-unit*2 0;
   }
 }
