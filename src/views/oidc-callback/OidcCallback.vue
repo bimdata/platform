@@ -1,6 +1,6 @@
 <template>
   <div class="oidc-callback-view">
-    <BIMDataBigSpinner style="transform: translateX(130px);" />
+    <BIMDataBigSpinner width="88" height="146" />
   </div>
 </template>
 
