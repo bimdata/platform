@@ -13,7 +13,7 @@
       :placeholder="$t('Spaces.SpaceRenameForm.inputName')"
       v-model="spaceName"
       :error="error"
-      :errorMessage="errorMessage"
+      :errorMessage="$t('Spaces.SpaceRenameForm.errorMessage')"
     />
     <BIMDataButton fill radius color="primary"
       class="space-update-form__submit-btn"
@@ -57,7 +57,6 @@ export default {
     const nameInput = ref(null);
     const spaceName = ref(props.space.name);
     const error = ref(false);
-    const errorMessage = ref('');
     const renameSpace = () => {
       if (spaceName.value) {
         loading.value = true;
@@ -67,13 +66,11 @@ export default {
       } else {
         nameInput.value.focus();
         error.value = true;
-        errorMessage.value = 'You must provide a name for the space !';
       }
     };
 
     const close = () => {
       error.value = false;
-      errorMessage.value = '';
       emit('close');
     };
 
@@ -84,7 +81,6 @@ export default {
     return {
       // References
       error,
-      errorMessage,
       nameInput,
       spaceName,
       // Methods

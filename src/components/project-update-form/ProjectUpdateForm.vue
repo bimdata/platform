@@ -13,7 +13,7 @@
       :placeholder="$t('Projects.ProjectUpdateForm.inputName')"
       v-model="projectName"
       :error="error"
-      :errorMessage="errorMessage"
+      :errorMessage="$t('Projects.ProjectUpdateForm.errorMessage')"
     />
     <BIMDataButton fill radius color="primary"
       class="project-update-form__submit-btn"
@@ -58,7 +58,6 @@ export default {
     const nameInput = ref(null);
     const projectName = ref(props.project.name);
     const error = ref(false);
-    const errorMessage = ref('');
     const renameProject = () => {
       if (projectName.value) {
         loading.value = true;
@@ -68,13 +67,11 @@ export default {
       } else {
         nameInput.value.focus();
         error.value = true;
-        errorMessage.value = 'You must provide a name for the project !';
       }
     };
 
     const close = () => {
       error.value = false;
-      errorMessage.value = '';
       emit('close');
     };
 
@@ -85,7 +82,6 @@ export default {
     return {
       // References
       error,
-      errorMessage,
       nameInput,
       projectName,
       // Methods

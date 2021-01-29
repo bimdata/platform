@@ -33,6 +33,7 @@ export default {
       title: 'New space',
       inputName: 'Name',
       buttonCreate: 'Create',
+      errorMessage: 'You must provide a name for the space !',
     },
     SpaceActionMenu: {
       rename: 'Rename',
@@ -45,6 +46,7 @@ export default {
       title: 'Rename space',
       inputName: 'Name',
       buttonRename: 'Rename',
+      errorMessage: 'Invalid space name.',
     },
     SpaceDeleteGuard: {
       title: 'Delete space',
@@ -58,10 +60,11 @@ export default {
   Projects: {
     searchProjects: 'Search projets',
     ProjectCreationCard: {
+      text: 'Create a new project',
       title: 'New project',
       inputName: 'Name',
       buttonCreate: 'Create',
-      text: 'Create a new project',
+      errorMessage: 'You must provide a name for the project !',
     },
     ProjectActionMenu: {
       rename: 'Rename',
@@ -71,6 +74,7 @@ export default {
       title: 'Rename project',
       inputName: 'Name',
       buttonRename: 'Rename',
+      errorMessage: 'Invalid project name.',
     },
     ProjectDeleteGuard: {
       title: 'Supprimer le projet',

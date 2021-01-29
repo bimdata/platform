@@ -33,6 +33,7 @@ export default {
       title: 'Nouvel espace',
       inputName: 'Nom',
       buttonCreate: 'Créer',
+      errorMessage: 'Vous devez donner un nom à l\'espace !',
     },
     SpaceActionMenu: {
       rename: 'Renommer',
@@ -45,6 +46,7 @@ export default {
       title: 'Renommer l\'espace',
       inputName: 'Nom',
       buttonRename: 'Renommer',
+      errorMessage: 'Ce nom d\'espace n\'est pas valide.',
     },
     SpaceDeleteGuard: {
       title: 'Supprimer l\'espace',
@@ -58,10 +60,11 @@ export default {
   Projects: {
     searchProjects: 'Rechercher un projet',
     ProjectCreationCard: {
+      text: 'Créer un nouveau projet',
       title: 'Nouveau projet',
       inputName: 'Nom',
       buttonCreate: 'Créer',
-      text: 'Créer un nouveau projet',
+      errorMessage: 'Vous devez donner un nom au projet !',
     },
     ProjectActionMenu: {
       rename: 'Renommer',
@@ -71,6 +74,7 @@ export default {
       title: 'Renommer le projet',
       inputName: 'Nom',
       buttonRename: 'Renommer',
+      errorMessage: 'Ce nom de projet n\'est pas valide.',
     },
     ProjectDeleteGuard: {
       title: 'Supprimer le projet',
