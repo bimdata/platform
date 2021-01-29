@@ -12,7 +12,7 @@
 
     <transition name="fade">
       <div class="project-action-menu__container" v-show="showMenu">
-        <!-- <transition name="fade" mode="out-in"> -->
+        <transition name="fade" mode="out-in">
 
           <div class="action-loader" v-if="loading">
             <BIMDataLoading />
@@ -24,12 +24,10 @@
             @success="closeMenu"
           />
 
-          <!--
           <ProjectDeleteGuard v-else-if="showDeleteGuard"
             :project="project"
             @close="closeDeleteGuard"
           />
-          -->
 
           <div class="action-menu" v-else>
             <BIMDataButton ghost squared
@@ -42,7 +40,7 @@
             </BIMDataButton>
           </div>
 
-        <!-- </transition> -->
+        </transition>
       </div>
     </transition>
 
@@ -55,7 +53,7 @@ import { provide, ref } from 'vue';
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataLoading from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js';
-// import ProjectDeleteGuard from '@/components/project-delete-guard/ProjectDeleteGuard';
+import ProjectDeleteGuard from '@/components/project-delete-guard/ProjectDeleteGuard';
 import ProjectUpdateForm from '@/components/project-update-form/ProjectUpdateForm';
 
 export default {
@@ -63,6 +61,7 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataLoading,
+    ProjectDeleteGuard,
     ProjectUpdateForm,
   },
   props: {
