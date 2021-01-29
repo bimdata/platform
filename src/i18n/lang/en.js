@@ -53,4 +53,10 @@ export default {
   RecentSpacesList: {
     title: 'Espaces récents'
   },
+  Projects: {
+    ProjectActionMenu: {
+      rename: 'Rename',
+      delete: 'Delete',
+    },
+  }
 };

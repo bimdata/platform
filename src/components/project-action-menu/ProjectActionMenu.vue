@@ -1,54 +1,50 @@
 <template>
-  <div class="space-action-menu"
+  <div class="project-action-menu"
     @click.stop="() => {}"
     v-click-away="closeMenu">
 
     <BIMDataButton color="default" ghost rounded icon
-      class="space-action-menu__btn"
+      class="project-action-menu__btn"
       :class="{ clicked }"
       @click="toggleMenu">
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="space-action-menu__container" v-show="showMenu">
-        <transition name="fade" mode="out-in">
+      <div class="project-action-menu__container" v-show="showMenu">
+        <!-- <transition name="fade" mode="out-in"> -->
 
           <div class="action-loader" v-if="loading">
             <BIMDataLoading />
           </div>
 
-          <SpaceUpdateForm v-else-if="showUpdateForm"
-            :space="space"
+          <!--
+          <ProjectUpdateForm v-else-if="showUpdateForm"
+            :project="project"
             @close="closeUpdateForm"
             @success="closeMenu"
           />
+          -->
 
-          <SpaceDeleteGuard v-else-if="showDeleteGuard"
-            :space="space"
+          <!--
+          <ProjectDeleteGuard v-else-if="showDeleteGuard"
+            :project="project"
             @close="closeDeleteGuard"
           />
+          -->
 
           <div class="action-menu" v-else>
             <BIMDataButton ghost squared
               @click="openUpdateForm">
-              {{ $t('Spaces.SpaceActionMenu.rename') }}
-            </BIMDataButton>
-            <SpaceImageInput
-              :space="space"
-              @success="closeMenu"
-            />
-            <BIMDataButton ghost squared
-              @click="removeImage">
-              {{ $t('Spaces.SpaceActionMenu.removeImage') }}
+              {{ $t('Projects.ProjectActionMenu.rename') }}
             </BIMDataButton>
             <BIMDataButton ghost squared
               @click="openDeleteGuard">
-              {{ $t('Spaces.SpaceActionMenu.delete') }}
+              {{ $t('Projects.ProjectActionMenu.delete') }}
             </BIMDataButton>
           </div>
 
-        </transition>
+        <!-- </transition> -->
       </div>
     </transition>
 
@@ -56,36 +52,27 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { createLoadingContext } from '@/state/loading'
-import { useSpaces } from '@/state/spaces';
+import { provide, ref } from 'vue';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
-import SpaceDeleteGuard from '@/components/space-delete-guard/SpaceDeleteGuard';
-import SpaceImageInput from '@/components/space-image-input/SpaceImageInput';
-import SpaceUpdateForm from '@/components/space-update-form/SpaceUpdateForm';
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
     BIMDataLoading,
-    SpaceDeleteGuard,
-    SpaceImageInput,
-    SpaceUpdateForm,
   },
   props: {
-    space: {
+    project: {
       type: Object,
       required: true
     }
   },
-  setup(props) {
-    const { removeSpaceImage } = useSpaces();
-
-    const loading = createLoadingContext(`space-action-${props.space.id}`);
+  setup() {
+    const loading = ref(false);
+    provide('loading', loading);
 
     const clicked = ref(false);
     const rippleEffect = () => {
@@ -116,10 +103,6 @@ export default {
       showUpdateForm.value = false;
     };
 
-    const removeImage = () => {
-      removeSpaceImage({ ...props.space }).then(closeMenu);
-    };
-
     const showDeleteGuard = ref(false);
     const openDeleteGuard = () => {
       showDeleteGuard.value = true;
@@ -141,11 +124,10 @@ export default {
       closeUpdateForm,
       openDeleteGuard,
       openUpdateForm,
-      removeImage,
       toggleMenu,
     };
   }
 }
 </script>
 
-<style scoped lang="scss" src="./SpaceActionMenu.scss"></style>
+<style scoped lang="scss" src="./ProjectActionMenu.scss"></style>

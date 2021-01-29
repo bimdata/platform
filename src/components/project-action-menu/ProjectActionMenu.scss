@@ -1,4 +1,4 @@
-.space-action-menu {
+.project-action-menu {
   position: relative;
 
   &__btn {
@@ -25,8 +25,8 @@
   &__container {
     position: absolute;
     right: 0;
-    width: $platform-space-card-width - $spacing-unit;
-    min-height: 132px;
+    width: $platform-project-card-width - $spacing-unit;
+    // min-height: 132px;
     margin-top: $spacing-unit/2;
     padding: $spacing-unit/2 0;
     border-radius: 4px;
