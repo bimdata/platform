@@ -63,5 +63,10 @@ export default {
       inputName: 'Name',
       buttonRename: 'Rename',
     },
+    ProjectDeleteGuard: {
+      title: 'Supprimer le projet',
+      message: 'Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?',
+      buttonDelete: 'Supprimer',
+    }
   }
 };
