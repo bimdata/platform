@@ -1,5 +1,10 @@
+// Import Design System variables
+@import '~@bimdata/design-system/dist/scss/BIMDataVariables.scss';
+
 // Color variables
-$platform-background-color: #F2F2F2;
+$platform-background: #F2F2F2;
+$platform-space-card-background: $color-tertiary-lightest;
+$platform-project-card-background: $color-tertiary-lightest;
 
 // Sizing variables
 $platform-header-height: 62px;
@@ -10,3 +15,4 @@ $platform-space-card-content-height: 180px;
 
 $platform-project-card-width: 320px;
 $platform-project-card-height: 261px;
+$platform-project-card-content-height: 205px;

@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     transform: translateY($spacing-unit/3);
-    background-color: #F0F0F0;
+    background-color: $platform-space-card-background;
   }
 
   img {

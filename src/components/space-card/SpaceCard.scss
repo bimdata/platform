@@ -3,8 +3,6 @@
   height: $platform-space-card-height;
   transition-duration: 0.35s;
 
-  $content-height: 180px;
-
   &:deep() {
     .bimdata-card__submenu {
       position: relative;
@@ -16,7 +14,7 @@
 
     .bimdata-card__content {
       overflow: hidden;
-      height: $content-height;
+      height: $platform-space-card-content-height;
       padding: 0;
     }
 
@@ -25,7 +23,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: calc(100% - #{$content-height});
+      height: calc(100% - #{$platform-space-card-content-height});
       padding: 0;
 
       .title-underline {
