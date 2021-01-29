@@ -12,6 +12,8 @@
       class="project-update-form__input"
       :placeholder="$t('Projects.ProjectUpdateForm.inputName')"
       v-model="projectName"
+      :error="error"
+      :errorMessage="errorMessage"
     />
     <BIMDataButton fill radius color="primary"
       class="project-update-form__submit-btn"
@@ -55,14 +57,24 @@ export default {
 
     const nameInput = ref(null);
     const projectName = ref(props.project.name);
+    const error = ref(false);
+    const errorMessage = ref('');
     const renameProject = () => {
-      loading.value = true;
-      updateProject(currentSpace.value, { ...props.project, name: projectName.value })
-        .then(() => emit('success'))
-        .catch((error) => emit('error', error));
+      if (projectName.value) {
+        loading.value = true;
+        updateProject(currentSpace.value, { ...props.project, name: projectName.value })
+          .then(() => emit('success'))
+          .catch((error) => emit('error', error));
+      } else {
+        nameInput.value.focus();
+        error.value = true;
+        errorMessage.value = 'You must provide a name for the project !';
+      }
     };
 
     const close = () => {
+      error.value = false;
+      errorMessage.value = '';
       emit('close');
     };
 
@@ -72,6 +84,8 @@ export default {
 
     return {
       // References
+      error,
+      errorMessage,
       nameInput,
       projectName,
       // Methods
