@@ -103,7 +103,6 @@ export default {
       spaces: displayedSpaces,
       // Methods
       createSpace,
-      filterSpaces,
       sortSpaces,
     };
   }

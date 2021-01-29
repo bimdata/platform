@@ -12,6 +12,8 @@ export default {
   Header: {
     selectLanguage: 'Choose a language',
     logout: 'Log Out',
+  },
+  Breadcrumb: {
     back: 'Back',
   },
   Dashboard: {
@@ -54,6 +56,7 @@ export default {
     title: 'Espaces récents'
   },
   Projects: {
+    searchProjects: 'Search projets',
     ProjectCreationCard: {
       title: 'New project',
       inputName: 'Name',
@@ -73,6 +76,6 @@ export default {
       title: 'Supprimer le projet',
       message: 'Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?',
       buttonDelete: 'Supprimer',
-    }
+    },
   }
 };
