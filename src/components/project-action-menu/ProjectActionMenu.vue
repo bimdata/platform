@@ -18,13 +18,11 @@
             <BIMDataLoading />
           </div>
 
-          <!--
           <ProjectUpdateForm v-else-if="showUpdateForm"
             :project="project"
             @close="closeUpdateForm"
             @success="closeMenu"
           />
-          -->
 
           <!--
           <ProjectDeleteGuard v-else-if="showDeleteGuard"
@@ -56,13 +54,16 @@ import { provide, ref } from 'vue';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
+import BIMDataLoading from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js';
+// import ProjectDeleteGuard from '@/components/project-delete-guard/ProjectDeleteGuard';
+import ProjectUpdateForm from '@/components/project-update-form/ProjectUpdateForm';
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
     BIMDataLoading,
+    ProjectUpdateForm,
   },
   props: {
     project: {

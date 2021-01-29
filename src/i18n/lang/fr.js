@@ -58,5 +58,10 @@ export default {
       rename: 'Renommer',
       delete: 'Supprimer',
     },
+    ProjectUpdateForm: {
+      title: 'Renommer le projet',
+      inputName: 'Nom',
+      buttonRename: 'Renommer',
+    },
   }
 };
