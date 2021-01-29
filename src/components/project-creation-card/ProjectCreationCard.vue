@@ -1,18 +1,102 @@
 <template>
-  <BIMDataCard class="project-creation-card">
-    <!-- TODO -->
-    <template #content>
-      Project Creation Card
-    </template>
-  </BIMDataCard>
+  <div class="project-creation-card"
+    @click="openCreationForm">
+
+    <transition name="fade" mode="out-in">
+
+      <div class="action-loader" v-if="loading">
+        <BIMDataLoading />
+      </div>
+
+      <div class="creation-form" v-else-if="showCreationForm">
+        <span class="creation-form__title">
+          {{ $t('Projects.ProjectCreationCard.title') }}
+        </span>
+        <BIMDataButton ghost rounded icon
+          class="creation-form__close-btn"
+          @click.stop="closeCreationForm">
+          <BIMDataIcon name="close" size="xxxs" />
+        </BIMDataButton>
+        <BIMDataInput ref="nameInput"
+          class="creation-form__input"
+          :placeholder="$t('Projects.ProjectCreationCard.inputName')"
+          v-model="newProject.name"
+        />
+        <BIMDataButton fill radius color="primary"
+          class="creation-form__submit-btn"
+          @click="createProject">
+          {{ $t('Projects.ProjectCreationCard.buttonCreate') }}
+        </BIMDataButton>
+      </div>
+
+      <div class="action-btn" v-else>
+        <div class="plus-icon">
+          <BIMDataIcon name="plus" size="l" />
+        </div>
+        <div>
+          {{ $t('Projects.ProjectCreationCard.text') }}
+        </div>
+      </div>
+
+    </transition>
+
+  </div>
 </template>
 
 <script>
-import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js';
+import { reactive, ref } from 'vue';
+import { useProjects } from '@/state/projects';
+import { useSpaces } from '@/state/spaces';
+// Components
+import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
+import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
+import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
+import BIMDataLoading from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js';
 
 export default {
   components: {
-    BIMDataCard,
+    BIMDataButton,
+    BIMDataIcon,
+    BIMDataInput,
+    BIMDataLoading,
+  },
+  setup() {
+    const { currentSpace } = useSpaces();
+    const { createProject: create } = useProjects();
+
+    const loading = ref(false);
+    const nameInput = ref(null);
+    const newProject = reactive({ name: '' });
+
+    const createProject = () => {
+      loading.value = true;
+      create(currentSpace.value, newProject).then(() => {
+        loading.value = false;
+        closeCreationForm();
+      });
+    };
+
+    const showCreationForm = ref(false);
+    const openCreationForm = () => {
+      showCreationForm.value = true;
+      () => setTimeout(() => nameInput.value.focus(), 400)
+    };
+    const closeCreationForm = () => {
+      showCreationForm.value = false;
+      newProject.name = '';
+    };
+
+    return {
+      // References
+      loading,
+      nameInput,
+      newProject,
+      showCreationForm,
+      // Methods
+      closeCreationForm,
+      createProject,
+      openCreationForm
+    };
   }
 }
 </script>

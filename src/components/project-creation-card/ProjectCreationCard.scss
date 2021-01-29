@@ -1,4 +1,70 @@
 .project-creation-card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: $platform-project-card-width;
   height: $platform-project-card-height;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: $color-white;
+  color: $color-primary;
+  transition-duration: 0.35s;
+
+  .action-loader:deep() {
+    .bimdata-loading {
+      background: transparent;
+      color: $color-primary;
+      &--square {
+        border-color: $color-primary;
+        background-color: $color-primary;
+      }
+      &--text {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .creation-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+    padding: $spacing-unit;
+
+    &__title {
+      position: absolute;
+      top: 0;
+      padding: $spacing-unit*3/4 0;
+      font-weight: bold;
+    }
+  
+    &__close-btn {
+      position: absolute;
+      top: 0;
+      right: $spacing-unit/2;
+    }
+  }
+
+  .action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .plus-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 64px;
+      height: 64px;
+      margin: $spacing-unit*3;
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+  }
 }

@@ -54,6 +54,12 @@ export default {
     title: 'Espaces récents'
   },
   Projects: {
+    ProjectCreationCard: {
+      title: 'Nouveau projet',
+      inputName: 'Nom',
+      buttonCreate: 'Créer',
+      text: 'Créer un nouveau projet',
+    },
     ProjectActionMenu: {
       rename: 'Renommer',
       delete: 'Supprimer',
