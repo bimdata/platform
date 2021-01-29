@@ -9,7 +9,7 @@ class ProjectsService {
   }
 
   createProject(space, project) {
-    return apiClient.collaborationApi.createPoject({
+    return apiClient.collaborationApi.createProject({
       cloudPk: space.id,
       data: project
     });
