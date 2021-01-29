@@ -56,8 +56,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { createLoadingContext } from '@/state/loading'
+import { provide, ref } from 'vue';
 import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -85,7 +84,8 @@ export default {
   setup(props) {
     const { removeSpaceImage } = useSpaces();
 
-    const loading = createLoadingContext(`space-action-${props.space.id}`);
+    const loading = ref(false);
+    provide('loading', loading);
 
     const clicked = ref(false);
     const rippleEffect = () => {

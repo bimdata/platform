@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { useLoadingContext } from '@/state/loading';
+import { inject } from 'vue';
 import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -43,7 +43,7 @@ export default {
   setup(props, { emit }) {
     const { deleteSpace } = useSpaces();
 
-    const loading = useLoadingContext(`space-action-${props.space.id}`);
+    const loading = inject('loading', false);
 
     const removeSpace = () => {
       loading.value = true;

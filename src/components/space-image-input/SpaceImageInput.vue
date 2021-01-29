@@ -12,9 +12,8 @@
 <script>
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useGlobalState } from '@/state/global';
-import { useLoadingContext } from '@/state/loading';
 import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -37,7 +36,7 @@ export default {
     const { user } = useGlobalState();
     const { softUpdateSpace } = useSpaces();
 
-    const loading = useLoadingContext(`space-action-${props.space.id}`);
+    const loading = inject('loading', false);
 
     const fileInput = ref(null);
 

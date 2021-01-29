@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-import { useLoadingContext } from '@/state/loading';
+import { inject, onMounted, ref } from 'vue';
 import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
@@ -52,7 +51,7 @@ export default {
   setup(props, { emit }) {
     const { updateSpace } = useSpaces();
 
-    const loading = useLoadingContext(`space-action-${props.space.id}`);
+    const loading = inject('loading', false);
 
     const nameInput = ref(null);
     const spaceName = ref(props.space.name);
