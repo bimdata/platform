@@ -18,6 +18,8 @@
           <BIMDataInput ref="nameInput"
             :placeholder="$t('Spaces.SpaceCreationCard.inputName')"
             v-model="newSpace.name"
+            :error="error"
+            :errorMessage="errorMessage"
           />
           <BIMDataButton fill radius color="primary"
             @click="createSpace">
@@ -57,16 +59,27 @@ export default {
     const loading = ref(false);
     const nameInput = ref(null);
     const newSpace = reactive({ name: '' });
+    const error = ref(false);
+    const errorMessage = ref('');
 
     const createSpace = () => {
-      loading.value = true;
-      create(newSpace).then(() => {
-        loading.value = false;
-        close();
-      });
+      if (newSpace.name) {
+        loading.value = true;
+        create(newSpace).then(() => {
+          loading.value = false;
+          close();
+        });
+      } else {
+        nameInput.value.focus();
+        error.value = true;
+        errorMessage.value = 'You must provide a name for the space !';
+      }
     };
     
     const close = () => {
+      newSpace.name = '';
+      error.value = false;
+      errorMessage.value = '';
       emit('close');
     };
 
@@ -76,6 +89,8 @@ export default {
 
     return {
       // References
+      error,
+      errorMessage,
       loading,
       nameInput,
       newSpace,
