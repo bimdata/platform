@@ -21,6 +21,8 @@
           class="creation-form__input"
           :placeholder="$t('Projects.ProjectCreationCard.inputName')"
           v-model="newProject.name"
+          :error="error"
+          :errorMessage="errorMessage"
         />
         <BIMDataButton fill radius color="primary"
           class="creation-form__submit-btn"
@@ -66,14 +68,22 @@ export default {
 
     const loading = ref(false);
     const nameInput = ref(null);
-    const newProject = reactive({ name: '' });
 
+    const newProject = reactive({ name: '' });
+    const error = ref(false);
+    const errorMessage = ref('');
     const createProject = () => {
-      loading.value = true;
-      create(currentSpace.value, newProject).then(() => {
-        loading.value = false;
-        closeCreationForm();
-      });
+      if (newProject.name) {
+        loading.value = true;
+        create(currentSpace.value, newProject).then(() => {
+          loading.value = false;
+          closeCreationForm();
+        });
+      } else {
+        nameInput.value.focus();
+        error.value = true;
+        errorMessage.value = 'You must provide a name for the project !';
+      }
     };
 
     const showCreationForm = ref(false);
@@ -82,12 +92,16 @@ export default {
       () => setTimeout(() => nameInput.value.focus(), 400)
     };
     const closeCreationForm = () => {
-      showCreationForm.value = false;
       newProject.name = '';
+      error.value = false;
+      errorMessage.value = '';
+      showCreationForm.value = false;
     };
 
     return {
       // References
+      error,
+      errorMessage,
       loading,
       nameInput,
       newProject,
