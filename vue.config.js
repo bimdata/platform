@@ -2,8 +2,8 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
+        // Make SCSS variables available everywhere
         prependData: `
-          @import '~@bimdata/design-system/dist/scss/BIMDataVariables.scss';
           @import '@/styles/variables.scss';
         `
       }
