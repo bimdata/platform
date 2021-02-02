@@ -27,7 +27,7 @@
   &:deep() {
     .bimdata-card__brand {
       position: relative;
-      top: $spacing-unit*2;
+      top: $spacing-unit * 2;
       z-index: 2;
       height: 0;
       padding: 0 $spacing-unit/2;
@@ -57,6 +57,5 @@
   &:hover {
     cursor: pointer;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
-    transform: scale(1.02);
   }
 }

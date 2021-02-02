@@ -6,7 +6,7 @@
     <template #content>
       <div class="left-stripe"></div>
       <div class="status-badge">Status</div>
-      <ProjectModelPreview />
+      <ProjectModelPreview :project="project" />
     </template>
     <template #footer>
       <div>{{ project.name }}</div>

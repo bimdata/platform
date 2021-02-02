@@ -1,10 +1,16 @@
 .project-model-preview {
-  // TODO
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   background-color: $platform-project-card-background;
-  color: $color-primary;
-  font-weight: bold;
+
+  &__wrapper {
+    width: $platform-project-card-content-height;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
 }
