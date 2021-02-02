@@ -22,6 +22,10 @@
       margin-left: auto;
       display: flex;
       gap: $spacing-unit;
+
+      .bimdata-btn[color=default] {
+        color: $color-tertiary-dark;
+      }
     }
   }
 
