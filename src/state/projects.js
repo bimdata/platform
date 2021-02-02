@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from 'vue';
-import ProjectsService from '@/api/ProjectsService';
+import ProjectsService from '@/api/ProjectService';
 
 const state = reactive({
   projects: [],

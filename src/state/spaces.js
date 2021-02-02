@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from 'vue';
-import SpacesService from '@/api/SpacesService';
+import SpacesService from '@/api/SpaceService';
 
 const state = reactive({
   spaces: [],
