@@ -3,9 +3,8 @@
     @click.stop="() => {}"
     v-click-away="closeMenu">
 
-    <BIMDataButton color="default" ghost rounded icon
+    <BIMDataButton color="default" ripple rounded icon
       class="space-action-menu__btn"
-      :class="{ clicked }"
       @click="toggleMenu">
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
@@ -61,7 +60,7 @@ import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
+import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
 import SpaceDeleteGuard from '@/components/space-delete-guard/SpaceDeleteGuard';
 import SpaceImageInput from '@/components/space-image-input/SpaceImageInput';
 import SpaceUpdateForm from '@/components/space-update-form/SpaceUpdateForm';
@@ -87,12 +86,6 @@ export default {
     const loading = ref(false);
     provide('loading', loading);
 
-    const clicked = ref(false);
-    const rippleEffect = () => {
-      clicked.value = true;
-      setTimeout(() => clicked.value = false, 500);
-    };
-
     const showMenu = ref(false);
     const closeMenu = () => {
       closeUpdateForm();
@@ -101,7 +94,6 @@ export default {
       showMenu.value = false;
     };
     const toggleMenu = () => {
-      rippleEffect();
       closeUpdateForm();
       closeDeleteGuard();
       loading.value = false;
@@ -130,7 +122,6 @@ export default {
 
     return {
       // References
-      clicked,
       loading,
       showDeleteGuard,
       showMenu,

@@ -10,7 +10,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@bimdata/design-system": "0.1.4",
+    "@bimdata/design-system": "0.1.7",
     "@bimdata/typescript-fetch-api-client": "^1.0.0",
     "@bimdata/utils": "^0.2.15",
     "@uppy/core": "^1.15.0",
@@ -40,6 +40,6 @@
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-alpha.8"
   }
 }

@@ -3,9 +3,8 @@
     @click.stop="() => {}"
     v-click-away="closeMenu">
 
-    <BIMDataButton color="default" ghost rounded icon
+    <BIMDataButton color="default" ripple rounded icon
       class="project-action-menu__btn"
-      :class="{ clicked }"
       @click="toggleMenu">
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
@@ -74,12 +73,6 @@ export default {
     const loading = ref(false);
     provide('loading', loading);
 
-    const clicked = ref(false);
-    const rippleEffect = () => {
-      clicked.value = true;
-      setTimeout(() => clicked.value = false, 500);
-    };
-
     const showMenu = ref(false);
     const closeMenu = () => {
       closeUpdateForm();
@@ -88,7 +81,6 @@ export default {
       showMenu.value = false;
     };
     const toggleMenu = () => {
-      rippleEffect();
       closeUpdateForm();
       closeDeleteGuard();
       loading.value = false;
@@ -113,7 +105,6 @@ export default {
 
     return {
       // References
-      clicked,
       loading,
       showDeleteGuard,
       showMenu,
