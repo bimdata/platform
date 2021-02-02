@@ -3,7 +3,7 @@
     <img
       class="dashboard-welcome-tile__logo"
       alt="Platform Dashboard logo"
-      src="@/assets/dashboard-logo.svg"
+      src="/static/dashboard-logo.svg"
     />
     <span class="dashboard-welcome-tile__title">
       {{ $t("Dashboard.welcomeTitle") }}

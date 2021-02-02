@@ -6,15 +6,17 @@
       @mousemove="translate"
     >
       <img
+        :src="image || '/static/default-model-preview.png'"
         :style="{ transform: `translateX(-${translation}px)` }"
-        src="@/assets/default-model-preview.png"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useProjects } from "@/state/projects";
+import { useSpaces } from "@/state/spaces";
 
 export default {
   props: {
@@ -23,11 +25,12 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const { currentSpace } = useSpaces();
+    const { fetchProjectPreviewImage } = useProjects();
+
     const nbSlices = 15;
-
     const previewWrapper = ref(null);
-
     const translation = ref(0);
     const translate = event => {
       if (previewWrapper.value) {
@@ -42,8 +45,16 @@ export default {
       }
     };
 
+    const image = ref(null);
+    onMounted(() => {
+      fetchProjectPreviewImage(currentSpace.value, props.project).then(
+        imageURL => (image.value = imageURL)
+      );
+    });
+
     return {
       // References
+      image,
       previewWrapper,
       translation,
       // Methods

@@ -3,7 +3,7 @@
     <img
       class="platform-header__logo"
       alt="BIMData Platform logo"
-      src="@/assets/header-logo.svg"
+      src="/static/header-logo.svg"
       @click="goToDashboard"
     />
     <UserMenu class="platform-header__user-menu" />

@@ -1,4 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
+import IfcService from "@/api/IfcService";
 import ProjectsService from "@/api/ProjectService";
 
 const state = reactive({
@@ -39,6 +40,13 @@ const selectProject = id => {
   return state.currentProject;
 };
 
+const fetchProjectPreviewImage = async (space, project) => {
+  let ifcs = await IfcService.fetchProjectIfcs(space, project);
+  ifcs = ifcs.filter(ifc => ifc.viewer_360_file);
+  ifcs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  return ifcs.length ? ifcs[0].viewer_360_file : null;
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -48,6 +56,7 @@ export function useProjects() {
     updateProject,
     softUpdateProject,
     deleteProject,
-    selectProject
+    selectProject,
+    fetchProjectPreviewImage
   };
 }
