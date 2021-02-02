@@ -10,18 +10,8 @@
   color: $color-primary;
   transition-duration: 0.35s;
 
-  .action-loader:deep() {
-    .bimdata-loading {
-      background: transparent;
-      color: $color-primary;
-      &--square {
-        border-color: $color-primary;
-        background-color: $color-primary;
-      }
-      &--text {
-        margin-bottom: 0;
-      }
-    }
+  .action-loader {
+    transform: scale(2);
   }
 
   .creation-form {

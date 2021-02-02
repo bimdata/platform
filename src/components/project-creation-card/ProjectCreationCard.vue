@@ -5,7 +5,7 @@
     <transition name="fade" mode="out-in">
 
       <div class="action-loader" v-if="loading">
-        <BIMDataLoading />
+        <BIMDataSpinner />
       </div>
 
       <div class="creation-form" v-else-if="showCreationForm">
@@ -53,14 +53,14 @@ import { useSpaces } from '@/state/spaces';
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
-import BIMDataLoading from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js';
+import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
     BIMDataInput,
-    BIMDataLoading,
+    BIMDataSpinner,
   },
   setup() {
     const { currentSpace } = useSpaces();
@@ -87,7 +87,7 @@ export default {
     const showCreationForm = ref(false);
     const openCreationForm = () => {
       showCreationForm.value = true;
-      () => setTimeout(() => nameInput.value.focus(), 400)
+      () => setTimeout(() => nameInput.value.focus(), 400);
     };
     const closeCreationForm = () => {
       newProject.name = '';

@@ -21,16 +21,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        .bimdata-loading {
-          background: transparent;
-          color: $color-primary;
-          &--square {
-            border-color: $color-primary;
-            background-color: $color-primary;
-          }
-          &--text {
-            margin-bottom: 0;
-          }
+        height: 100%;
+        .bimdata-spinner {
+          transform: scale(2);
         }
       }
 

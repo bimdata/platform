@@ -11,7 +11,7 @@
       <transition name="fade" mode="out-in">
 
         <div class="action-loader"  v-if="loading">
-          <BIMDataLoading />
+          <BIMDataSpinner />
         </div>
 
         <div class="creation-form" v-else>
@@ -40,7 +40,7 @@ import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
 import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
-import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
+import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
 
 export default {
   components: {
@@ -48,7 +48,7 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataInput,
-    BIMDataLoading,
+    BIMDataSpinner,
   },
   emits: [
     'close'

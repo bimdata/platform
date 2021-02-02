@@ -15,7 +15,7 @@
         <transition name="fade" mode="out-in">
 
           <div class="action-loader" v-if="loading">
-            <BIMDataLoading />
+            <BIMDataSpinner />
           </div>
 
           <ProjectUpdateForm v-else-if="showUpdateForm"
@@ -52,7 +52,7 @@ import { provide, ref } from 'vue';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataLoading from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js';
+import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
 import ProjectDeleteGuard from '@/components/project-delete-guard/ProjectDeleteGuard';
 import ProjectUpdateForm from '@/components/project-update-form/ProjectUpdateForm';
 
@@ -60,7 +60,7 @@ export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
-    BIMDataLoading,
+    BIMDataSpinner,
     ProjectDeleteGuard,
     ProjectUpdateForm,
   },

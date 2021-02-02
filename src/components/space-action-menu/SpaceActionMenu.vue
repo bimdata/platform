@@ -15,7 +15,7 @@
         <transition name="fade" mode="out-in">
 
           <div class="action-loader" v-if="loading">
-            <BIMDataLoading />
+            <BIMDataSpinner />
           </div>
 
           <SpaceUpdateForm v-else-if="showUpdateForm"
@@ -61,7 +61,7 @@ import { useSpaces } from '@/state/spaces';
 // Components
 import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
 import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import SpaceDeleteGuard from '@/components/space-delete-guard/SpaceDeleteGuard';
 import SpaceImageInput from '@/components/space-image-input/SpaceImageInput';
 import SpaceUpdateForm from '@/components/space-update-form/SpaceUpdateForm';
@@ -70,7 +70,7 @@ export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
-    BIMDataLoading,
+    BIMDataSpinner,
     SpaceDeleteGuard,
     SpaceImageInput,
     SpaceUpdateForm,
