@@ -1,46 +1,45 @@
 <template>
-  <BIMDataCard class="space-creation-card"
-    :submenuText="$t('Spaces.SpaceCreationCard.title')">
+  <BIMDataCard
+    class="space-creation-card"
+    :submenuText="$t('Spaces.SpaceCreationCard.title')"
+  >
     <template #right>
-      <BIMDataButton ghost rounded icon v-show="!loading"
-        @click="close">
+      <BIMDataButton ghost rounded icon v-show="!loading" @click="close">
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>
     </template>
     <template #content>
       <transition name="fade" mode="out-in">
-
-        <div class="action-loader"  v-if="loading">
+        <div class="action-loader" v-if="loading">
           <BIMDataSpinner />
         </div>
 
         <div class="creation-form" v-else>
-          <BIMDataInput ref="nameInput"
+          <BIMDataInput
+            ref="nameInput"
             :placeholder="$t('Spaces.SpaceCreationCard.inputName')"
             v-model="newSpace.name"
             :error="error"
             :errorMessage="$t('Spaces.SpaceCreationCard.errorMessage')"
           />
-          <BIMDataButton fill radius color="primary"
-            @click="createSpace">
-            {{ $t('Spaces.SpaceCreationCard.buttonCreate') }}
+          <BIMDataButton fill radius color="primary" @click="createSpace">
+            {{ $t("Spaces.SpaceCreationCard.buttonCreate") }}
           </BIMDataButton>
         </div>
-
       </transition>
     </template>
   </BIMDataCard>
 </template>
 
 <script>
-import { onMounted, reactive, ref } from 'vue';
-import { useSpaces } from '@/state/spaces';
+import { onMounted, reactive, ref } from "vue";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js';
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
-import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
+import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 
 export default {
   components: {
@@ -48,17 +47,15 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataInput,
-    BIMDataSpinner,
+    BIMDataSpinner
   },
-  emits: [
-    'close'
-  ],
+  emits: ["close"],
   setup(props, { emit }) {
     const { createSpace: create } = useSpaces();
 
     const loading = ref(false);
     const nameInput = ref(null);
-    const newSpace = reactive({ name: '' });
+    const newSpace = reactive({ name: "" });
     const error = ref(false);
 
     const createSpace = () => {
@@ -73,16 +70,14 @@ export default {
         error.value = true;
       }
     };
-    
+
     const close = () => {
-      newSpace.name = '';
+      newSpace.name = "";
       error.value = false;
-      emit('close');
+      emit("close");
     };
 
-    onMounted(
-      () => setTimeout(() => nameInput.value.focus(), 400)
-    );
+    onMounted(() => setTimeout(() => nameInput.value.focus(), 400));
 
     return {
       // References
@@ -95,7 +90,7 @@ export default {
       createSpace
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./SpaceCreationCard.scss"></style>

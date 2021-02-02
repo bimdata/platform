@@ -6,16 +6,14 @@
       src="@/assets/header-logo.svg"
       @click="goToDashboard"
     />
-    <UserMenu
-      class="platform-header__user-menu"
-    />
+    <UserMenu class="platform-header__user-menu" />
   </div>
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 // Components
-import UserMenu from '@/components/user-menu/UserMenu';
+import UserMenu from "@/components/user-menu/UserMenu";
 
 export default {
   components: {
@@ -25,14 +23,14 @@ export default {
     const router = useRouter();
 
     const goToDashboard = () => {
-      router.push({ name: 'dashboard' });
+      router.push({ name: "dashboard" });
     };
 
     return {
       goToDashboard
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./PlatformHeader.scss"></style>

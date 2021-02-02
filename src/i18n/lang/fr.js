@@ -1,85 +1,87 @@
 export default {
   Commons: {
-    cancel: 'Annuler',
-    close: 'Fermer',
-    no: 'Non',
-    yes: 'Oui',
+    cancel: "Annuler",
+    close: "Fermer",
+    no: "Non",
+    yes: "Oui"
   },
   oidc: {
-    callbackMessage: 'OIDC callback message',
-    callbackErrorMessage: 'OIDC callback error message',
+    callbackMessage: "OIDC callback message",
+    callbackErrorMessage: "OIDC callback error message"
   },
   Header: {
-    selectLanguage: 'Sélectionner la langue',
-    logout: 'Se Déconnecter',
+    selectLanguage: "Sélectionner la langue",
+    logout: "Se Déconnecter"
   },
   Breadcrumb: {
-    back: 'Retour',
+    back: "Retour"
   },
   Dashboard: {
-    welcomeTitle: 'Dashboard',
-    welcomeMessage: 'Bonjour {name}, content de vous revoir !',
-    activeSpaces: 'Espaces',
-    viewSpaces: 'Mes espaces',
-    activeProjects: 'Projets',
-    viewProjects: 'Mes projets',
-    security: 'Security',
+    welcomeTitle: "Dashboard",
+    welcomeMessage: "Bonjour {name}, content de vous revoir !",
+    activeSpaces: "Espaces",
+    viewSpaces: "Mes espaces",
+    activeProjects: "Projets",
+    viewProjects: "Mes projets",
+    security: "Security"
   },
   Spaces: {
-    searchSpaces: 'Rechercher un espace',
-    sortSpaces: '',
-    createSpace: 'Créer un espace',
+    searchSpaces: "Rechercher un espace",
+    sortSpaces: "",
+    createSpace: "Créer un espace",
     SpaceCreationCard: {
-      title: 'Nouvel espace',
-      inputName: 'Nom',
-      buttonCreate: 'Créer',
-      errorMessage: 'Vous devez donner un nom à l\'espace !',
+      title: "Nouvel espace",
+      inputName: "Nom",
+      buttonCreate: "Créer",
+      errorMessage: "Vous devez donner un nom à l'espace !"
     },
     SpaceActionMenu: {
-      rename: 'Renommer',
-      changeImage: 'Changer l\'image',
-      removeImage: 'Supprimer l\'image',
-      leave: 'Quitter cet espace',
-      delete: 'Supprimer cet espace',
+      rename: "Renommer",
+      changeImage: "Changer l'image",
+      removeImage: "Supprimer l'image",
+      leave: "Quitter cet espace",
+      delete: "Supprimer cet espace"
     },
     SpaceRenameForm: {
-      title: 'Renommer l\'espace',
-      inputName: 'Nom',
-      buttonRename: 'Renommer',
-      errorMessage: 'Ce nom d\'espace n\'est pas valide.',
+      title: "Renommer l'espace",
+      inputName: "Nom",
+      buttonRename: "Renommer",
+      errorMessage: "Ce nom d'espace n'est pas valide."
     },
     SpaceDeleteGuard: {
-      title: 'Supprimer l\'espace',
-      message: 'Êtes vous sûr de vouloir supprimer (définitivement) cet espace ?',
-      buttonDelete: 'Supprimer',
+      title: "Supprimer l'espace",
+      message:
+        "Êtes vous sûr de vouloir supprimer (définitivement) cet espace ?",
+      buttonDelete: "Supprimer"
     }
   },
   RecentSpacesList: {
-    title: 'Espaces récents'
+    title: "Espaces récents"
   },
   Projects: {
-    searchProjects: 'Rechercher un projet',
+    searchProjects: "Rechercher un projet",
     ProjectCreationCard: {
-      text: 'Créer un nouveau projet',
-      title: 'Nouveau projet',
-      inputName: 'Nom',
-      buttonCreate: 'Créer',
-      errorMessage: 'Vous devez donner un nom au projet !',
+      text: "Créer un nouveau projet",
+      title: "Nouveau projet",
+      inputName: "Nom",
+      buttonCreate: "Créer",
+      errorMessage: "Vous devez donner un nom au projet !"
     },
     ProjectActionMenu: {
-      rename: 'Renommer',
-      delete: 'Supprimer',
+      rename: "Renommer",
+      delete: "Supprimer"
     },
     ProjectUpdateForm: {
-      title: 'Renommer le projet',
-      inputName: 'Nom',
-      buttonRename: 'Renommer',
-      errorMessage: 'Ce nom de projet n\'est pas valide.',
+      title: "Renommer le projet",
+      inputName: "Nom",
+      buttonRename: "Renommer",
+      errorMessage: "Ce nom de projet n'est pas valide."
     },
     ProjectDeleteGuard: {
-      title: 'Supprimer le projet',
-      message: 'Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?',
-      buttonDelete: 'Supprimer',
-    },
+      title: "Supprimer le projet",
+      message:
+        "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
+      buttonDelete: "Supprimer"
+    }
   }
 };

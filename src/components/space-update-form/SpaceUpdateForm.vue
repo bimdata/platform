@@ -1,41 +1,50 @@
 <template>
   <div class="space-update-form">
     <div class="space-update-form__title">
-      {{ $t('Spaces.SpaceRenameForm.title') }}
+      {{ $t("Spaces.SpaceRenameForm.title") }}
     </div>
-    <BIMDataButton ghost rounded icon
+    <BIMDataButton
+      ghost
+      rounded
+      icon
       class="space-update-form__close-btn"
-      @click="close">
+      @click="close"
+    >
       <BIMDataIcon name="close" size="xxxs" />
     </BIMDataButton>
-    <BIMDataInput ref="nameInput"
+    <BIMDataInput
+      ref="nameInput"
       class="space-update-form__input"
       :placeholder="$t('Spaces.SpaceRenameForm.inputName')"
       v-model="spaceName"
       :error="error"
       :errorMessage="$t('Spaces.SpaceRenameForm.errorMessage')"
     />
-    <BIMDataButton fill radius color="primary"
+    <BIMDataButton
+      fill
+      radius
+      color="primary"
       class="space-update-form__submit-btn"
-      @click="renameSpace">
-      {{ $t('Spaces.SpaceRenameForm.buttonRename') }}
+      @click="renameSpace"
+    >
+      {{ $t("Spaces.SpaceRenameForm.buttonRename") }}
     </BIMDataButton>
   </div>
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
-import { useSpaces } from '@/state/spaces';
+import { inject, onMounted, ref } from "vue";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
-    BIMDataInput,
+    BIMDataInput
   },
   props: {
     space: {
@@ -43,15 +52,11 @@ export default {
       required: true
     }
   },
-  emits: [
-    'close',
-    'success',
-    'error',
-  ],
+  emits: ["close", "success", "error"],
   setup(props, { emit }) {
     const { updateSpace } = useSpaces();
 
-    const loading = inject('loading', false);
+    const loading = inject("loading", false);
 
     const nameInput = ref(null);
     const spaceName = ref(props.space.name);
@@ -60,8 +65,8 @@ export default {
       if (spaceName.value) {
         loading.value = true;
         updateSpace({ ...props.space, name: spaceName.value })
-          .then(() => emit('success'))
-          .catch((error) => emit('error', error));
+          .then(() => emit("success"))
+          .catch(error => emit("error", error));
       } else {
         nameInput.value.focus();
         error.value = true;
@@ -70,12 +75,10 @@ export default {
 
     const close = () => {
       error.value = false;
-      emit('close');
+      emit("close");
     };
 
-    onMounted(
-      () => setTimeout(() => nameInput.value.focus(), 400)
-    );
+    onMounted(() => setTimeout(() => nameInput.value.focus(), 400));
 
     return {
       // References
@@ -84,10 +87,10 @@ export default {
       spaceName,
       // Methods
       close,
-      renameSpace,
+      renameSpace
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./SpaceUpdateForm.scss"></style>

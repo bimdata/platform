@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 // Components
-import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js';
-import SpaceActionMenu from '@/components/space-action-menu/SpaceActionMenu';
-import SpaceImage from '@/components/space-image/SpaceImage';
+import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import SpaceActionMenu from "@/components/space-action-menu/SpaceActionMenu";
+import SpaceImage from "@/components/space-image/SpaceImage";
 
 export default {
   components: {
@@ -40,14 +40,14 @@ export default {
     const router = useRouter();
 
     const goToProjects = () => {
-      router.push({ name: 'projects', params: { spaceID: props.space.id } });
+      router.push({ name: "projects", params: { spaceID: props.space.id } });
     };
 
     return {
       goToProjects
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./SpaceCard.scss"></style>

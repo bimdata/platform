@@ -1,69 +1,68 @@
 <template>
-  <div class="space-action-menu"
+  <div
+    class="space-action-menu"
     @click.stop="() => {}"
-    v-click-away="closeMenu">
-
-    <BIMDataButton color="default" ripple rounded icon
+    v-click-away="closeMenu"
+  >
+    <BIMDataButton
+      color="default"
+      ripple
+      rounded
+      icon
       class="space-action-menu__btn"
-      @click="toggleMenu">
+      @click="toggleMenu"
+    >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
 
     <transition name="fade">
       <div class="space-action-menu__container" v-show="showMenu">
         <transition name="fade" mode="out-in">
-
           <div class="action-loader" v-if="loading">
             <BIMDataSpinner />
           </div>
 
-          <SpaceUpdateForm v-else-if="showUpdateForm"
+          <SpaceUpdateForm
+            v-else-if="showUpdateForm"
             :space="space"
             @close="closeUpdateForm"
             @success="closeMenu"
           />
 
-          <SpaceDeleteGuard v-else-if="showDeleteGuard"
+          <SpaceDeleteGuard
+            v-else-if="showDeleteGuard"
             :space="space"
             @close="closeDeleteGuard"
           />
 
           <div class="action-menu" v-else>
-            <BIMDataButton ghost squared
-              @click="openUpdateForm">
-              {{ $t('Spaces.SpaceActionMenu.rename') }}
+            <BIMDataButton ghost squared @click="openUpdateForm">
+              {{ $t("Spaces.SpaceActionMenu.rename") }}
             </BIMDataButton>
-            <SpaceImageInput
-              :space="space"
-              @success="closeMenu"
-            />
-            <BIMDataButton ghost squared
-              @click="removeImage">
-              {{ $t('Spaces.SpaceActionMenu.removeImage') }}
+            <SpaceImageInput :space="space" @success="closeMenu" />
+            <BIMDataButton ghost squared @click="removeImage">
+              {{ $t("Spaces.SpaceActionMenu.removeImage") }}
             </BIMDataButton>
-            <BIMDataButton ghost squared
-              @click="openDeleteGuard">
-              {{ $t('Spaces.SpaceActionMenu.delete') }}
+            <BIMDataButton ghost squared @click="openDeleteGuard">
+              {{ $t("Spaces.SpaceActionMenu.delete") }}
             </BIMDataButton>
           </div>
-
         </transition>
       </div>
     </transition>
-
   </div>
 </template>
 
 <script>
-import { provide, ref } from 'vue';
-import { useSpaces } from '@/state/spaces';
+import { provide, ref } from "vue";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
-import SpaceDeleteGuard from '@/components/space-delete-guard/SpaceDeleteGuard';
-import SpaceImageInput from '@/components/space-image-input/SpaceImageInput';
-import SpaceUpdateForm from '@/components/space-update-form/SpaceUpdateForm';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
+import SpaceDeleteGuard from "@/components/space-delete-guard/SpaceDeleteGuard";
+import SpaceImageInput from "@/components/space-image-input/SpaceImageInput";
+import SpaceUpdateForm from "@/components/space-update-form/SpaceUpdateForm";
 
 export default {
   components: {
@@ -72,7 +71,7 @@ export default {
     BIMDataSpinner,
     SpaceDeleteGuard,
     SpaceImageInput,
-    SpaceUpdateForm,
+    SpaceUpdateForm
   },
   props: {
     space: {
@@ -84,7 +83,7 @@ export default {
     const { removeSpaceImage } = useSpaces();
 
     const loading = ref(false);
-    provide('loading', loading);
+    provide("loading", loading);
 
     const showMenu = ref(false);
     const closeMenu = () => {
@@ -133,10 +132,10 @@ export default {
       openDeleteGuard,
       openUpdateForm,
       removeImage,
-      toggleMenu,
+      toggleMenu
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./SpaceActionMenu.scss"></style>

@@ -1,22 +1,18 @@
 <template>
-  <BIMDataButton ghost squared
-    class="space-image-input"
-    @click="selectImage">
-    {{ $t('Spaces.SpaceActionMenu.changeImage') }}
-    <input hidden ref="fileInput" type="file"
-      @change="uploadImage"
-    />
+  <BIMDataButton ghost squared class="space-image-input" @click="selectImage">
+    {{ $t("Spaces.SpaceActionMenu.changeImage") }}
+    <input hidden ref="fileInput" type="file" @change="uploadImage" />
   </BIMDataButton>
 </template>
 
 <script>
-import Uppy from '@uppy/core';
-import XHRUpload from '@uppy/xhr-upload';
-import { inject, ref } from 'vue';
-import { useGlobalState } from '@/state/global';
-import { useSpaces } from '@/state/spaces';
+import Uppy from "@uppy/core";
+import XHRUpload from "@uppy/xhr-upload";
+import { inject, ref } from "vue";
+import { useGlobalState } from "@/state/global";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 
 export default {
   components: {
@@ -28,15 +24,12 @@ export default {
       required: true
     }
   },
-  emits: [
-    'success',
-    'error',
-  ],
+  emits: ["success", "error"],
   setup(props, { emit }) {
     const { user } = useGlobalState();
     const { softUpdateSpace } = useSpaces();
 
-    const loading = inject('loading', false);
+    const loading = inject("loading", false);
 
     const fileInput = ref(null);
 
@@ -52,30 +45,45 @@ export default {
       }
     });
     uppy.use(XHRUpload, {
-      method: 'PATCH',
+      method: "PATCH",
       endpoint: `${process.env.VUE_APP_API_BASE_URL}/cloud/${props.space.id}`,
-      fieldName: 'image',
+      fieldName: "image",
       metaFields: [],
       headers: {
-        'Authorization': `Bearer ${user.value.access_token}`
+        Authorization: `Bearer ${user.value.access_token}`
       }
     });
-    uppy.on('file-added', () => {
+    uppy.on("file-added", () => {
       loading.value = true;
     });
-    uppy.on('upload-error', (file, error) => {
-      emit('error', error);
+    uppy.on("upload-error", (file, error) => {
+      emit("error", error);
     });
-    uppy.on('complete', ({ successful:[{ response:{ body:{ image }}}] }) => {
-      softUpdateSpace({ ...props.space, image });
-      uppy.reset(); // reset Uppy instance
-      emit('success');
-    });
+    uppy.on(
+      "complete",
+      ({
+        successful: [
+          {
+            response: {
+              body: { image }
+            }
+          }
+        ]
+      }) => {
+        softUpdateSpace({ ...props.space, image });
+        uppy.reset(); // reset Uppy instance
+        emit("success");
+      }
+    );
 
     const selectImage = () => {
       fileInput.value.click();
     };
-    const uploadImage = ({ target: { files: [ file ] } }) => {
+    const uploadImage = ({
+      target: {
+        files: [file]
+      }
+    }) => {
       if (file) {
         uppy.addFile({
           name: file.name,
@@ -91,8 +99,8 @@ export default {
       fileInput,
       // Methods
       selectImage,
-      uploadImage,
+      uploadImage
     };
   }
-}
+};
 </script>

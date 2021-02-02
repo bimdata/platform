@@ -1,42 +1,51 @@
 <template>
   <div class="project-update-form">
     <div class="project-update-form__title">
-      {{ $t('Projects.ProjectUpdateForm.title') }}
+      {{ $t("Projects.ProjectUpdateForm.title") }}
     </div>
-    <BIMDataButton ghost rounded icon
+    <BIMDataButton
+      ghost
+      rounded
+      icon
       class="project-update-form__close-btn"
-      @click="close">
+      @click="close"
+    >
       <BIMDataIcon name="close" size="xxxs" />
     </BIMDataButton>
-    <BIMDataInput ref="nameInput"
+    <BIMDataInput
+      ref="nameInput"
       class="project-update-form__input"
       :placeholder="$t('Projects.ProjectUpdateForm.inputName')"
       v-model="projectName"
       :error="error"
       :errorMessage="$t('Projects.ProjectUpdateForm.errorMessage')"
     />
-    <BIMDataButton fill radius color="primary"
+    <BIMDataButton
+      fill
+      radius
+      color="primary"
       class="project-update-form__submit-btn"
-      @click="renameProject">
-      {{ $t('Projects.ProjectUpdateForm.buttonRename') }}
+      @click="renameProject"
+    >
+      {{ $t("Projects.ProjectUpdateForm.buttonRename") }}
     </BIMDataButton>
   </div>
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
-import { useProjects } from '@/state/projects';
-import { useSpaces } from '@/state/spaces';
+import { inject, onMounted, ref } from "vue";
+import { useProjects } from "@/state/projects";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
-    BIMDataInput,
+    BIMDataInput
   },
   props: {
     project: {
@@ -44,16 +53,12 @@ export default {
       required: true
     }
   },
-  emits: [
-    'close',
-    'success',
-    'error',
-  ],
+  emits: ["close", "success", "error"],
   setup(props, { emit }) {
     const { currentSpace } = useSpaces();
     const { updateProject } = useProjects();
 
-    const loading = inject('loading', false);
+    const loading = inject("loading", false);
 
     const nameInput = ref(null);
     const projectName = ref(props.project.name);
@@ -61,9 +66,12 @@ export default {
     const renameProject = () => {
       if (projectName.value) {
         loading.value = true;
-        updateProject(currentSpace.value, { ...props.project, name: projectName.value })
-          .then(() => emit('success'))
-          .catch((error) => emit('error', error));
+        updateProject(currentSpace.value, {
+          ...props.project,
+          name: projectName.value
+        })
+          .then(() => emit("success"))
+          .catch(error => emit("error", error));
       } else {
         nameInput.value.focus();
         error.value = true;
@@ -72,12 +80,10 @@ export default {
 
     const close = () => {
       error.value = false;
-      emit('close');
+      emit("close");
     };
 
-    onMounted(
-      () => setTimeout(() => nameInput.value.focus(), 400)
-    );
+    onMounted(() => setTimeout(() => nameInput.value.focus(), 400));
 
     return {
       // References
@@ -86,10 +92,10 @@ export default {
       projectName,
       // Methods
       close,
-      renameProject,
+      renameProject
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./ProjectUpdateForm.scss"></style>

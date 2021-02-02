@@ -15,15 +15,15 @@
 </template>
 
 <script>
-import BIMDataCard from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js';
-import ProjectActionBar from '@/components/project-action-bar/ProjectActionBar';
-import ProjectModelPreview from '@/components/project-model-preview/ProjectModelPreview';
+import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import ProjectActionBar from "@/components/project-action-bar/ProjectActionBar";
+import ProjectModelPreview from "@/components/project-model-preview/ProjectModelPreview";
 
 export default {
   components: {
     BIMDataCard,
     ProjectActionBar,
-    ProjectModelPreview,
+    ProjectModelPreview
   },
   props: {
     project: {
@@ -31,7 +31,7 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./ProjectCard.scss"></style>

@@ -1,9 +1,9 @@
-import { reactive, readonly, toRefs } from 'vue';
-import SpacesService from '@/api/SpaceService';
+import { reactive, readonly, toRefs } from "vue";
+import SpacesService from "@/api/SpaceService";
 
 const state = reactive({
   spaces: [],
-  currentSpace: null,
+  currentSpace: null
 });
 
 const fetchSpaces = async () => {
@@ -12,35 +12,35 @@ const fetchSpaces = async () => {
   return spaces;
 };
 
-const createSpace = async (space) => {
+const createSpace = async space => {
   const newSpace = await SpacesService.createSpace(space);
   state.spaces = [newSpace].concat(state.spaces);
   return newSpace;
 };
 
-const updateSpace = async (space) => {
+const updateSpace = async space => {
   const newSpace = await SpacesService.updateSpace(space);
   softUpdateSpace(newSpace);
   return newSpace;
 };
 
-const softUpdateSpace = (space) => {
-  state.spaces = state.spaces.map(s => s.id === space.id ? space : s);
+const softUpdateSpace = space => {
+  state.spaces = state.spaces.map(s => (s.id === space.id ? space : s));
 };
 
-const removeSpaceImage = async (space) => {
+const removeSpaceImage = async space => {
   const newSpace = await SpacesService.removeSpaceImage(space);
   softUpdateSpace(newSpace);
   return newSpace;
 };
 
-const deleteSpace =  async (space) => {
+const deleteSpace = async space => {
   await SpacesService.deleteSpace(space);
   state.spaces = state.spaces.filter(s => s.id !== space.id);
   return space;
 };
 
-const selectSpace = (id) => {
+const selectSpace = id => {
   state.currentSpace = state.spaces.find(s => s.id === id) || null;
   return state.currentSpace;
 };
@@ -55,6 +55,6 @@ export function useSpaces() {
     softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
-    selectSpace,
+    selectSpace
   };
 }

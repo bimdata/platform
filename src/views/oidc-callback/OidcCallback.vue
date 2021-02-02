@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useGlobalState } from '@/state/global';
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useGlobalState } from "@/state/global";
 // Components
-import BIMDataBigSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataBigSpinner.js';
+import BIMDataBigSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataBigSpinner.js";
 
 export default {
   components: {
@@ -20,12 +20,12 @@ export default {
     const { signInCallback } = useGlobalState();
 
     onMounted(() => {
-      signInCallback().then(
-        result => router.push({ path: result.state ? result.state : '/' })
+      signInCallback().then(result =>
+        router.push({ path: result.state ? result.state : "/" })
       );
     });
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./OidcCallback.scss"></style>

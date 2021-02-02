@@ -1,6 +1,6 @@
-import { reactive, readonly, toRefs, watchEffect } from 'vue';
-import apiClient from '@/api';
-import UserService from '@/api/UserService';
+import { reactive, readonly, toRefs, watchEffect } from "vue";
+import apiClient from "@/api";
+import UserService from "@/api/UserService";
 
 const state = reactive({
   isAuthenticated: false,
@@ -8,7 +8,7 @@ const state = reactive({
   user: null
 });
 
-const authenticate = async (redirectPath) => {
+const authenticate = async redirectPath => {
   const user = await UserService.getUser();
   if (user) {
     if (!state.isAuthenticated) {
@@ -20,7 +20,7 @@ const authenticate = async (redirectPath) => {
   }
 };
 
-const signIn = async (redirectPath) => {
+const signIn = async redirectPath => {
   await UserService.signIn(redirectPath);
 };
 

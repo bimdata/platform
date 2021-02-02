@@ -1,30 +1,38 @@
 <template>
   <div class="space-delete-guard">
     <div class="space-delete-guard__title">
-      {{ $t('Spaces.SpaceDeleteGuard.title') }}
+      {{ $t("Spaces.SpaceDeleteGuard.title") }}
     </div>
-    <BIMDataButton ghost rounded icon
+    <BIMDataButton
+      ghost
+      rounded
+      icon
       class="space-delete-guard__close-btn"
-      @click="close">
+      @click="close"
+    >
       <BIMDataIcon name="close" size="xxxs" />
     </BIMDataButton>
     <div class="space-delete-guard__message">
-      {{ $t('Spaces.SpaceDeleteGuard.message') }}
+      {{ $t("Spaces.SpaceDeleteGuard.message") }}
     </div>
-    <BIMDataButton fill radius color="high"
+    <BIMDataButton
+      fill
+      radius
+      color="high"
       class="space-delete-guard__submit-btn"
-      @click="removeSpace">
-      {{ $t('Spaces.SpaceDeleteGuard.buttonDelete') }}
+      @click="removeSpace"
+    >
+      {{ $t("Spaces.SpaceDeleteGuard.buttonDelete") }}
     </BIMDataButton>
   </div>
 </template>
 
 <script>
-import { inject } from 'vue';
-import { useSpaces } from '@/state/spaces';
+import { inject } from "vue";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
   components: {
@@ -37,13 +45,11 @@ export default {
       required: true
     }
   },
-  emits: [
-    'close'
-  ],
+  emits: ["close"],
   setup(props, { emit }) {
     const { deleteSpace } = useSpaces();
 
-    const loading = inject('loading', false);
+    const loading = inject("loading", false);
 
     const removeSpace = () => {
       loading.value = true;
@@ -51,7 +57,7 @@ export default {
     };
 
     const close = () => {
-      emit('close');
+      emit("close");
     };
 
     return {
@@ -60,7 +66,7 @@ export default {
       removeSpace
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./SpaceDeleteGuard.scss"></style>

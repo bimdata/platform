@@ -1,33 +1,39 @@
 <template>
-  <div class="project-creation-card"
-    @click="openCreationForm">
-
+  <div class="project-creation-card" @click="openCreationForm">
     <transition name="fade" mode="out-in">
-
       <div class="action-loader" v-if="loading">
         <BIMDataSpinner />
       </div>
 
       <div class="creation-form" v-else-if="showCreationForm">
         <span class="creation-form__title">
-          {{ $t('Projects.ProjectCreationCard.title') }}
+          {{ $t("Projects.ProjectCreationCard.title") }}
         </span>
-        <BIMDataButton ghost rounded icon
+        <BIMDataButton
+          ghost
+          rounded
+          icon
           class="creation-form__close-btn"
-          @click.stop="closeCreationForm">
+          @click.stop="closeCreationForm"
+        >
           <BIMDataIcon name="close" size="xxxs" />
         </BIMDataButton>
-        <BIMDataInput ref="nameInput"
+        <BIMDataInput
+          ref="nameInput"
           class="creation-form__input"
           :placeholder="$t('Projects.ProjectCreationCard.inputName')"
           v-model="newProject.name"
           :error="error"
           :errorMessage="$t('Projects.ProjectCreationCard.errorMessage')"
         />
-        <BIMDataButton fill radius color="primary"
+        <BIMDataButton
+          fill
+          radius
+          color="primary"
           class="creation-form__submit-btn"
-          @click="createProject">
-          {{ $t('Projects.ProjectCreationCard.buttonCreate') }}
+          @click="createProject"
+        >
+          {{ $t("Projects.ProjectCreationCard.buttonCreate") }}
         </BIMDataButton>
       </div>
 
@@ -36,31 +42,29 @@
           <BIMDataIcon name="plus" size="l" />
         </div>
         <div>
-          {{ $t('Projects.ProjectCreationCard.text') }}
+          {{ $t("Projects.ProjectCreationCard.text") }}
         </div>
       </div>
-
     </transition>
-
   </div>
 </template>
 
 <script>
-import { reactive, ref } from 'vue';
-import { useProjects } from '@/state/projects';
-import { useSpaces } from '@/state/spaces';
+import { reactive, ref } from "vue";
+import { useProjects } from "@/state/projects";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataInput from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js';
-import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
     BIMDataInput,
-    BIMDataSpinner,
+    BIMDataSpinner
   },
   setup() {
     const { currentSpace } = useSpaces();
@@ -69,7 +73,7 @@ export default {
     const loading = ref(false);
     const nameInput = ref(null);
 
-    const newProject = reactive({ name: '' });
+    const newProject = reactive({ name: "" });
     const error = ref(false);
     const createProject = () => {
       if (newProject.name) {
@@ -90,7 +94,7 @@ export default {
       () => setTimeout(() => nameInput.value.focus(), 400);
     };
     const closeCreationForm = () => {
-      newProject.name = '';
+      newProject.name = "";
       error.value = false;
       showCreationForm.value = false;
     };
@@ -108,7 +112,7 @@ export default {
       openCreationForm
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./ProjectCreationCard.scss"></style>

@@ -1,7 +1,6 @@
-import apiClient from './index';
+import apiClient from "./index";
 
 class SpacesService {
-
   fetchUserSpaces() {
     return apiClient.collaborationApi.getClouds();
   }
@@ -23,17 +22,15 @@ class SpacesService {
 
   removeSpaceImage(space) {
     return fetch(`${apiClient.config.basePath}/cloud/${space.id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Authorization': apiClient.config.accessToken(),
-        'Content-Type': 'application/json'
+        Authorization: apiClient.config.accessToken(),
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         image: null
       })
-    }).then(
-      res => res.json()
-    );
+    }).then(res => res.json());
   }
 
   deleteSpace(space) {
@@ -41,7 +38,6 @@ class SpacesService {
       id: space.id
     });
   }
-
 }
 
 const service = new SpacesService();

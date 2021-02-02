@@ -1,4 +1,5 @@
 module.exports = {
+  lintOnSave: "warning",
   css: {
     loaderOptions: {
       sass: {
@@ -9,4 +10,4 @@ module.exports = {
       }
     }
   }
-}
+};

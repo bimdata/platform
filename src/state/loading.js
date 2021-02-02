@@ -1,24 +1,20 @@
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const state = {
-  'view-container': { loading: ref(false) }
+  "view-container": { loading: ref(false) }
 };
 
-const createLoadingContext = (contextID) => {
+const createLoadingContext = contextID => {
   state[contextID] = { loading: ref(false) };
   return state[contextID].loading;
 };
 
-const removeLoadingContext = (contextID) => {
+const removeLoadingContext = contextID => {
   delete state[contextID];
 };
 
-const useLoadingContext = (contextID) => {
+const useLoadingContext = contextID => {
   return state[contextID].loading;
 };
 
-export {
-  createLoadingContext,
-  removeLoadingContext,
-  useLoadingContext
-};
+export { createLoadingContext, removeLoadingContext, useLoadingContext };

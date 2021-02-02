@@ -1,36 +1,44 @@
 <template>
   <div class="project-delete-guard">
     <div class="project-delete-guard__title">
-      {{ $t('Projects.ProjectDeleteGuard.title') }}
+      {{ $t("Projects.ProjectDeleteGuard.title") }}
     </div>
-    <BIMDataButton ghost rounded icon
+    <BIMDataButton
+      ghost
+      rounded
+      icon
       class="project-delete-guard__close-btn"
-      @click="close">
+      @click="close"
+    >
       <BIMDataIcon name="close" size="xxxs" />
     </BIMDataButton>
     <div class="project-delete-guard__message">
-      {{ $t('Projects.ProjectDeleteGuard.message') }}
+      {{ $t("Projects.ProjectDeleteGuard.message") }}
     </div>
-    <BIMDataButton fill radius color="high"
+    <BIMDataButton
+      fill
+      radius
+      color="high"
       class="project-delete-guard__submit-btn"
-      @click="removeProject">
-      {{ $t('Projects.ProjectDeleteGuard.buttonDelete') }}
+      @click="removeProject"
+    >
+      {{ $t("Projects.ProjectDeleteGuard.buttonDelete") }}
     </BIMDataButton>
   </div>
 </template>
 
 <script>
-import { useProjects } from '@/state/projects';
-import { useSpaces } from '@/state/spaces';
+import { useProjects } from "@/state/projects";
+import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import { inject } from 'vue';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import { inject } from "vue";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon,
+    BIMDataIcon
   },
   props: {
     project: {
@@ -38,14 +46,12 @@ export default {
       required: true
     }
   },
-  emits: [
-    'close'
-  ],
+  emits: ["close"],
   setup(props, { emit }) {
     const { currentSpace } = useSpaces();
     const { deleteProject } = useProjects();
 
-    const loading = inject('loading', false);
+    const loading = inject("loading", false);
 
     const removeProject = () => {
       loading.value = true;
@@ -53,7 +59,7 @@ export default {
     };
 
     const close = () => {
-      emit('close');
+      emit("close");
     };
 
     return {
@@ -62,7 +68,7 @@ export default {
       removeProject
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./ProjectDeleteGuard.scss"></style>

@@ -1,59 +1,62 @@
 <template>
-  <div class="project-action-menu"
+  <div
+    class="project-action-menu"
     @click.stop="() => {}"
-    v-click-away="closeMenu">
-
-    <BIMDataButton color="default" ripple rounded icon
+    v-click-away="closeMenu"
+  >
+    <BIMDataButton
+      color="default"
+      ripple
+      rounded
+      icon
       class="project-action-menu__btn"
-      @click="toggleMenu">
+      @click="toggleMenu"
+    >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
 
     <transition name="fade">
       <div class="project-action-menu__container" v-show="showMenu">
         <transition name="fade" mode="out-in">
-
           <div class="action-loader" v-if="loading">
             <BIMDataSpinner />
           </div>
 
-          <ProjectUpdateForm v-else-if="showUpdateForm"
+          <ProjectUpdateForm
+            v-else-if="showUpdateForm"
             :project="project"
             @close="closeUpdateForm"
             @success="closeMenu"
           />
 
-          <ProjectDeleteGuard v-else-if="showDeleteGuard"
+          <ProjectDeleteGuard
+            v-else-if="showDeleteGuard"
             :project="project"
             @close="closeDeleteGuard"
           />
 
           <div class="action-menu" v-else>
-            <BIMDataButton ghost squared
-              @click="openUpdateForm">
-              {{ $t('Projects.ProjectActionMenu.rename') }}
+            <BIMDataButton ghost squared @click="openUpdateForm">
+              {{ $t("Projects.ProjectActionMenu.rename") }}
             </BIMDataButton>
-            <BIMDataButton ghost squared
-              @click="openDeleteGuard">
-              {{ $t('Projects.ProjectActionMenu.delete') }}
+            <BIMDataButton ghost squared @click="openDeleteGuard">
+              {{ $t("Projects.ProjectActionMenu.delete") }}
             </BIMDataButton>
           </div>
-
         </transition>
       </div>
     </transition>
-
   </div>
 </template>
 
 <script>
-import { provide, ref } from 'vue';
+import { provide, ref } from "vue";
 // Components
-import BIMDataButton from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js';
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
-import BIMDataSpinner from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js';
-import ProjectDeleteGuard from '@/components/project-delete-guard/ProjectDeleteGuard';
-import ProjectUpdateForm from '@/components/project-update-form/ProjectUpdateForm';
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
+import ProjectDeleteGuard from "@/components/project-delete-guard/ProjectDeleteGuard";
+import ProjectUpdateForm from "@/components/project-update-form/ProjectUpdateForm";
 
 export default {
   components: {
@@ -61,7 +64,7 @@ export default {
     BIMDataIcon,
     BIMDataSpinner,
     ProjectDeleteGuard,
-    ProjectUpdateForm,
+    ProjectUpdateForm
   },
   props: {
     project: {
@@ -71,7 +74,7 @@ export default {
   },
   setup() {
     const loading = ref(false);
-    provide('loading', loading);
+    provide("loading", loading);
 
     const showMenu = ref(false);
     const closeMenu = () => {
@@ -115,10 +118,10 @@ export default {
       closeUpdateForm,
       openDeleteGuard,
       openUpdateForm,
-      toggleMenu,
+      toggleMenu
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./ProjectActionMenu.scss"></style>

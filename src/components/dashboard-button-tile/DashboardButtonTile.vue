@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-button-tile" :class="color">
     <span class="dashboard-button-tile__title">
-      <slot name=title></slot>
+      <slot name="title"></slot>
     </span>
     <span class="dashboard-button-tile__number">
       <slot name="number"></slot>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import BIMDataIcon from '@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js';
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
   components: {
@@ -23,10 +23,10 @@ export default {
   props: {
     color: {
       type: String,
-      default: ''
+      default: ""
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./DashboardButtonTile.scss"></style>

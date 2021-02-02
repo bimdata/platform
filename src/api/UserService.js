@@ -1,5 +1,5 @@
-import { UserManager, WebStorageStateStore } from 'oidc-client';
-import { oidcConfig } from '@/config/oidcConfig';
+import { UserManager, WebStorageStateStore } from "oidc-client";
+import { oidcConfig } from "@/config/oidcConfig";
 
 const userManager = new UserManager({
   ...oidcConfig,
@@ -7,7 +7,6 @@ const userManager = new UserManager({
 });
 
 class UserServive {
-  
   getUser() {
     return userManager.getUser();
   }
@@ -25,7 +24,6 @@ class UserServive {
   signOut() {
     return userManager.signoutRedirect();
   }
-
 }
 
 const service = new UserServive();

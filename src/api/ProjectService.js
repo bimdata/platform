@@ -1,7 +1,6 @@
-import apiClient from './index';
+import apiClient from "./index";
 
 class ProjectsService {
-
   fetchSpaceProjects(space) {
     return apiClient.collaborationApi.getProjects({
       cloudPk: space.id
@@ -29,7 +28,6 @@ class ProjectsService {
       id: project.id
     });
   }
-
 }
 
 const service = new ProjectsService();

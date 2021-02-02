@@ -6,16 +6,16 @@ file that was distributed with this source code. */
 const APP_BASE_URL = process.env.VUE_APP_BASE_URL;
 const AUTHORITY = `${process.env.VUE_APP_IAM_BASE_URL}/auth/realms/bimdata`;
 const OIDC_ENDPOINT = `${AUTHORITY}/protocol/openid-connect`;
-const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID
+const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID;
 
 export const oidcConfig = {
   authority: AUTHORITY,
-  response_type: 'code',
+  response_type: "code",
   client_id: CLIENT_ID,
   redirect_uri: `${APP_BASE_URL}/oidc-callback`,
-  scope: 'openid profile email',
+  scope: "openid profile email",
   post_logout_redirect_uri: APP_BASE_URL,
-  extraQueryParams: { kc_idp_hint: 'bimdataconnect' },
+  extraQueryParams: { kc_idp_hint: "bimdataconnect" },
   automaticSilentRenew: true,
   revokeAccessTokenOnSignout: true,
   clockSkew: 900,
@@ -25,6 +25,6 @@ export const oidcConfig = {
     token_endpoint: `${OIDC_ENDPOINT}/token`,
     userinfo_endpoint: `${OIDC_ENDPOINT}/userinfo`,
     end_session_endpoint: `${OIDC_ENDPOINT}/logout`,
-    jwks_uri: `${OIDC_ENDPOINT}/certs`,
+    jwks_uri: `${OIDC_ENDPOINT}/certs`
   }
 };

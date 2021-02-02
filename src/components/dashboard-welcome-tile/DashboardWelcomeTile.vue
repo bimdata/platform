@@ -1,21 +1,22 @@
 <template>
   <div class="dashboard-welcome-tile">
-    <img class="dashboard-welcome-tile__logo" 
-      alt="Platform Dashboard logo" 
+    <img
+      class="dashboard-welcome-tile__logo"
+      alt="Platform Dashboard logo"
       src="@/assets/dashboard-logo.svg"
     />
     <span class="dashboard-welcome-tile__title">
-      {{ $t('Dashboard.welcomeTitle') }}
+      {{ $t("Dashboard.welcomeTitle") }}
     </span>
     <span class="dashboard-welcome-tile__message">
-      {{ $t('Dashboard.welcomeMessage', { name: firstName }) }}
+      {{ $t("Dashboard.welcomeMessage", { name: firstName }) }}
     </span>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useGlobalState } from '@/state/global';
+import { ref } from "vue";
+import { useGlobalState } from "@/state/global";
 
 export default {
   setup() {
@@ -25,10 +26,10 @@ export default {
 
     return {
       // References
-      firstName,
+      firstName
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./DashboardWelcomeTile.scss"></style>
