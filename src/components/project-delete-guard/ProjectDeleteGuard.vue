@@ -29,7 +29,6 @@
 
 <script>
 import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -48,14 +47,13 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { currentSpace } = useSpaces();
     const { deleteProject } = useProjects();
 
     const loading = inject("loading", false);
 
     const removeProject = () => {
       loading.value = true;
-      deleteProject(currentSpace.value, { ...props.project });
+      deleteProject(props.project);
     };
 
     const close = () => {

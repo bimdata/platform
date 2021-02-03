@@ -1,7 +1,7 @@
-import { useGlobalState } from "@/state/global";
+import { useUser } from "@/state/user";
 
 const authGuard = async (to, from, next) => {
-  const { isAuthenticated, authenticate } = useGlobalState();
+  const { isAuthenticated, authenticate } = useUser();
   if (isAuthenticated.value) {
     next();
   } else if (to.matched.some(r => r.meta.requiresAuth)) {

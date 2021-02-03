@@ -1,9 +1,9 @@
 import apiClient from "./index";
 
 class IfcService {
-  fetchProjectIfcs(space, project) {
+  fetchProjectIfcs(project) {
     return apiClient.ifcApi.getIfcs({
-      cloudPk: space.id,
+      cloudPk: project.cloud.id,
       projectPk: project.id
     });
   }

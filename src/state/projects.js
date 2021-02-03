@@ -3,14 +3,17 @@ import IfcService from "@/api/IfcService";
 import ProjectsService from "@/api/ProjectService";
 
 const state = reactive({
+  loaded: false,
   projects: [],
   currentProject: null
 });
 
-const fetchProjects = async space => {
-  const projects = await ProjectsService.fetchSpaceProjects(space);
-  state.projects = projects;
-  return projects;
+const loadProjects = async (space, options = {}) => {
+  if (!state.loaded || options.forceFetch) {
+    state.projects = await ProjectsService.fetchSpaceProjects(space);
+    state.loaded = true;
+  }
+  return state.projects;
 };
 
 const createProject = async (space, project) => {
@@ -19,8 +22,8 @@ const createProject = async (space, project) => {
   return newProject;
 };
 
-const updateProject = async (space, project) => {
-  const newProject = await ProjectsService.updateProject(space, project);
+const updateProject = async project => {
+  const newProject = await ProjectsService.updateProject(project);
   softUpdateProject(newProject);
   return newProject;
 };
@@ -29,8 +32,8 @@ const softUpdateProject = project => {
   state.projects = state.projects.map(p => (p.id === project.id ? project : p));
 };
 
-const deleteProject = async (space, project) => {
-  await ProjectsService.deleteProject(space, project);
+const deleteProject = async project => {
+  await ProjectsService.deleteProject(project);
   state.projects = state.projects.filter(p => p.id !== project.id);
   return project;
 };
@@ -40,8 +43,8 @@ const selectProject = id => {
   return state.currentProject;
 };
 
-const fetchProjectPreviewImage = async (space, project) => {
-  let ifcs = await IfcService.fetchProjectIfcs(space, project);
+const fetchProjectPreviewImage = async project => {
+  let ifcs = await IfcService.fetchProjectIfcs(project);
   ifcs = ifcs.filter(ifc => ifc.viewer_360_file);
   ifcs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   return ifcs.length ? ifcs[0].viewer_360_file : null;
@@ -51,7 +54,7 @@ export function useProjects() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),
-    fetchProjects,
+    loadProjects,
     createProject,
     updateProject,
     softUpdateProject,

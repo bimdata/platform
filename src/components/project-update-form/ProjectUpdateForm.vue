@@ -35,7 +35,6 @@
 <script>
 import { inject, onMounted, ref } from "vue";
 import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -55,7 +54,6 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
-    const { currentSpace } = useSpaces();
     const { updateProject } = useProjects();
 
     const loading = inject("loading", false);
@@ -66,7 +64,7 @@ export default {
     const renameProject = () => {
       if (projectName.value) {
         loading.value = true;
-        updateProject(currentSpace.value, {
+        updateProject({
           ...props.project,
           name: projectName.value
         })

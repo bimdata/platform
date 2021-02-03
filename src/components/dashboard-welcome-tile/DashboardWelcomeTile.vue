@@ -16,11 +16,11 @@
 
 <script>
 import { ref } from "vue";
-import { useGlobalState } from "@/state/global";
+import { useUser } from "@/state/user";
 
 export default {
   setup() {
-    const { user } = useGlobalState();
+    const { user } = useUser();
 
     const firstName = ref(user.value.profile.given_name);
 

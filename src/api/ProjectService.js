@@ -14,17 +14,17 @@ class ProjectsService {
     });
   }
 
-  updateProject(space, project) {
+  updateProject(project) {
     return apiClient.collaborationApi.updateProject({
-      cloudPk: space.id,
+      cloudPk: project.cloud.id,
       id: project.id,
       data: project
     });
   }
 
-  deleteProject(space, project) {
+  deleteProject(project) {
     return apiClient.collaborationApi.deleteProject({
-      cloudPk: space.id,
+      cloudPk: project.cloud.id,
       id: project.id
     });
   }

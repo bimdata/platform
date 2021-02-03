@@ -31,7 +31,7 @@
 
 <script>
 import { computed, ref } from "vue";
-import { useGlobalState } from "@/state/global";
+import { useUser } from "@/state/user";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -44,7 +44,7 @@ export default {
     BIMDataSelect
   },
   setup() {
-    const { user, signOut } = useGlobalState();
+    const { user, signOut } = useUser();
 
     const isOpen = ref(false);
     const firstName = ref(user.value.profile.given_name);

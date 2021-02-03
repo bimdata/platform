@@ -1,4 +1,5 @@
 module.exports = {
+  // Avoid compilation failure on linter errors
   lintOnSave: "warning",
   css: {
     loaderOptions: {

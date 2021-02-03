@@ -2,14 +2,17 @@ import { reactive, readonly, toRefs } from "vue";
 import SpacesService from "@/api/SpaceService";
 
 const state = reactive({
+  loaded: false,
   spaces: [],
   currentSpace: null
 });
 
-const fetchSpaces = async () => {
-  const spaces = await SpacesService.fetchUserSpaces();
-  state.spaces = spaces;
-  return spaces;
+const loadSpaces = async (options = {}) => {
+  if (!state.loaded || options.forceFetch) {
+    state.spaces = await SpacesService.fetchUserSpaces();
+    state.loaded = true;
+  }
+  return state.spaces;
 };
 
 const createSpace = async space => {
@@ -49,7 +52,7 @@ export function useSpaces() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),
-    fetchSpaces,
+    loadSpaces,
     createSpace,
     updateSpace,
     softUpdateSpace,

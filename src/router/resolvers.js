@@ -10,17 +10,17 @@ const createViewResolver = resolver => {
   };
 };
 
-const dashboardResolver = createViewResolver(() => useSpaces().fetchSpaces());
+const dashboardResolver = createViewResolver(() => useSpaces().loadSpaces());
 
-const spacesResolver = createViewResolver(() => useSpaces().fetchSpaces());
+const spacesResolver = createViewResolver(() => useSpaces().loadSpaces());
 
 const projectsResolver = createViewResolver(route => {
-  const { currentSpace, fetchSpaces, selectSpace } = useSpaces();
-  const { fetchProjects } = useProjects();
+  const { currentSpace, loadSpaces, selectSpace } = useSpaces();
+  const { loadProjects } = useProjects();
 
-  return fetchSpaces()
+  return loadSpaces()
     .then(() => selectSpace(+route.params.spaceID))
-    .then(() => fetchProjects(currentSpace.value));
+    .then(() => loadProjects(currentSpace.value));
 });
 
 export { dashboardResolver, spacesResolver, projectsResolver };

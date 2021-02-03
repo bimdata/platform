@@ -16,7 +16,6 @@
 <script>
 import { onMounted, ref } from "vue";
 import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
 
 export default {
   props: {
@@ -26,7 +25,6 @@ export default {
     }
   },
   setup(props) {
-    const { currentSpace } = useSpaces();
     const { fetchProjectPreviewImage } = useProjects();
 
     const nbSlices = 15;
@@ -47,7 +45,7 @@ export default {
 
     const image = ref(null);
     onMounted(() => {
-      fetchProjectPreviewImage(currentSpace.value, props.project).then(
+      fetchProjectPreviewImage(props.project).then(
         imageURL => (image.value = imageURL)
       );
     });

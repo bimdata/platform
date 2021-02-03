@@ -4,7 +4,6 @@ import UserService from "@/api/UserService";
 
 const state = reactive({
   isAuthenticated: false,
-  loading: false,
   user: null
 });
 
@@ -42,7 +41,7 @@ watchEffect(() => {
   }
 });
 
-export function useGlobalState() {
+export function useUser() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),
