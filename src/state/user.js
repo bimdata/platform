@@ -12,7 +12,12 @@ const authenticate = async redirectPath => {
   if (user) {
     if (!state.isAuthenticated) {
       state.isAuthenticated = true;
-      state.user = user;
+      state.user = {
+        accessToken: user.access_token,
+        firstName: user.profile.given_name,
+        lastName: user.profile.family_name,
+        email: user.profile.email
+      };
     }
   } else {
     await UserService.signIn(redirectPath);
@@ -37,7 +42,7 @@ const signOut = async () => {
 // Keep access token up to date across refresh
 watchEffect(() => {
   if (state.user) {
-    apiClient.accessToken = state.user.access_token;
+    apiClient.accessToken = state.user.accessToken;
   }
 });
 

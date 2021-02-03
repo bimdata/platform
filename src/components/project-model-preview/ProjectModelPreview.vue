@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -44,11 +44,9 @@ export default {
     };
 
     const image = ref(null);
-    onMounted(() => {
-      fetchProjectPreviewImage(props.project).then(
-        imageURL => (image.value = imageURL)
-      );
-    });
+    fetchProjectPreviewImage(props.project).then(
+      imageURL => (image.value = imageURL)
+    );
 
     return {
       // References

@@ -45,9 +45,10 @@ const selectProject = id => {
 
 const fetchProjectPreviewImage = async project => {
   let ifcs = await IfcService.fetchProjectIfcs(project);
-  ifcs = ifcs.filter(ifc => ifc.viewer_360_file);
-  ifcs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  return ifcs.length ? ifcs[0].viewer_360_file : null;
+  ifcs = ifcs.filter(ifc => ifc.viewer360File);
+  ifcs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const imageURL = ifcs.length ? ifcs[0].viewer360File : null;
+  return imageURL;
 };
 
 export function useProjects() {

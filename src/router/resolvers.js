@@ -20,7 +20,7 @@ const projectsResolver = createViewResolver(route => {
 
   return loadSpaces()
     .then(() => selectSpace(+route.params.spaceID))
-    .then(() => loadProjects(currentSpace.value));
+    .then(() => loadProjects(currentSpace.value, { forceFetch: true }));
 });
 
 export { dashboardResolver, spacesResolver, projectsResolver };

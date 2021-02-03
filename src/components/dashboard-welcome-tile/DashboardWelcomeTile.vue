@@ -22,7 +22,7 @@ export default {
   setup() {
     const { user } = useUser();
 
-    const firstName = ref(user.value.profile.given_name);
+    const firstName = ref(user.value.firstName);
 
     return {
       // References

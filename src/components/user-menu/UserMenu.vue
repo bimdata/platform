@@ -7,14 +7,18 @@
       class="user-menu__btn"
       @click="toggleMenu"
     >
-      <span class="user-menu__btn__picture">{{ initials }}</span>
-      <span class="user-menu__btn__fullname">{{
-        `${firstName} ${lastName}`
-      }}</span>
-      <span class="user-menu__btn__email">{{ email }}</span>
+      <span class="user-menu__btn__picture">
+        {{ initials }}
+      </span>
+      <span class="user-menu__btn__fullname">
+        {{ `${firstName} ${lastName}` }}
+      </span>
+      <span class="user-menu__btn__email">
+        {{ email }}
+      </span>
     </BIMDataButton>
     <transition name="fade">
-      <div class="user-menu__container" v-show="isOpen">
+      <div class="user-menu__container" v-show="showMenu">
         <BIMDataSelect
           :label="$t('Header.selectLanguage')"
           :options="$i18n.availableLocales"
@@ -30,7 +34,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useUser } from "@/state/user";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -46,24 +50,31 @@ export default {
   setup() {
     const { user, signOut } = useUser();
 
-    const isOpen = ref(false);
-    const firstName = ref(user.value.profile.given_name);
-    const lastName = ref(user.value.profile.family_name);
-    const email = ref(user.value.profile.email);
+    const showMenu = ref(false);
+    const closeMenu = () => (showMenu.value = false);
+    const toggleMenu = () => (showMenu.value = !showMenu.value);
+
+    const firstName = ref("");
+    const lastName = ref("");
+    const email = ref("");
     const initials = computed(() =>
       `${firstName.value[0]}${lastName.value[0]}`.toUpperCase()
     );
-
-    const closeMenu = () => (isOpen.value = false);
-    const toggleMenu = () => (isOpen.value = !isOpen.value);
+    watchEffect(() => {
+      if (user.value) {
+        firstName.value = user.value.firstName;
+        lastName.value = user.value.lastName;
+        email.value = user.value.email;
+      }
+    });
 
     return {
       // References
-      isOpen,
-      firstName,
-      lastName,
       email,
+      firstName,
       initials,
+      lastName,
+      showMenu,
       // Methods
       closeMenu,
       toggleMenu,
