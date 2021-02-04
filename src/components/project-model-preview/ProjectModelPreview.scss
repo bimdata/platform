@@ -1,4 +1,6 @@
 .project-model-preview {
+  @include noselect;
+
   height: 100%;
   background-color: $platform-project-card-background;
 

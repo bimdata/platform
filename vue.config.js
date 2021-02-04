@@ -4,9 +4,10 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        // Make SCSS variables available everywhere
+        // Make variables and mixins available everywhere
         prependData: `
-          @import '@/styles/variables.scss';
+          @import "@/styles/variables.scss";
+          @import "@/styles/mixins.scss";
         `
       }
     }
