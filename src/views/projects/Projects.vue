@@ -2,7 +2,7 @@
   <div class="projects-view">
     <div class="sub-header">
       <div class="sub-header--left">
-        <GoBackButton />
+        <Breadcrumb />
       </div>
       <div class="sub-header--center">
         <BIMDataSearch
@@ -47,7 +47,7 @@ import { useProjects } from "@/state/projects";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-import GoBackButton from "@/components/go-back-button/GoBackButton";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import ProjectCard from "@/components/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/project-creation-card/ProjectCreationCard";
 
@@ -56,7 +56,7 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
-    GoBackButton,
+    Breadcrumb,
     ProjectCard,
     ProjectCreationCard
   },
