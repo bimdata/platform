@@ -1,35 +1,66 @@
 <template>
-  <BIMDataCard class="project-card">
-    <template #left>
-      <ProjectActionBar :project="project" />
+  <FlipableCard
+    class="project-card"
+    :flipped="showMenu"
+    v-click-away="closeMenu"
+  >
+    <template #front-face>
+      <BIMDataCard>
+        <template #left>
+          <ProjectActionBar :project="project" @open-menu="openMenu" />
+        </template>
+        <template #content>
+          <div class="left-stripe"></div>
+          <div class="status-badge">Status</div>
+          <ProjectModelPreview :project="project" />
+        </template>
+        <template #footer>
+          <div>{{ project.name }}</div>
+        </template>
+      </BIMDataCard>
     </template>
-    <template #content>
-      <div class="left-stripe"></div>
-      <div class="status-badge">Status</div>
-      <ProjectModelPreview :project="project" />
+
+    <template #back-face>
+      <ProjectActionMenu :project="project" @close-menu="closeMenu" />
     </template>
-    <template #footer>
-      <div>{{ project.name }}</div>
-    </template>
-  </BIMDataCard>
+  </FlipableCard>
 </template>
 
 <script>
+import { ref } from "vue";
+// Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import FlipableCard from "@/components/flipable-card/FlipableCard";
 import ProjectActionBar from "@/components/project-action-bar/ProjectActionBar";
 import ProjectModelPreview from "@/components/project-model-preview/ProjectModelPreview";
+import ProjectActionMenu from "@/components/project-action-menu/ProjectActionMenu";
 
 export default {
   components: {
     BIMDataCard,
     ProjectActionBar,
-    ProjectModelPreview
+    ProjectModelPreview,
+    ProjectActionMenu,
+    FlipableCard
   },
   props: {
     project: {
       type: Object,
       required: true
     }
+  },
+  setup() {
+    const showMenu = ref(false);
+    const openMenu = () => (showMenu.value = true);
+    const closeMenu = () => (showMenu.value = false);
+
+    return {
+      // References
+      showMenu,
+      // Methods
+      closeMenu,
+      openMenu
+    };
   }
 };
 </script>

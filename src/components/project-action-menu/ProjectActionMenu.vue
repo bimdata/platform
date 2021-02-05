@@ -1,49 +1,36 @@
 <template>
-  <div
-    class="project-action-menu"
-    @click.stop="() => {}"
-    v-click-away="closeMenu"
-  >
-    <BIMDataButton
-      color="default"
-      ripple
-      rounded
-      icon
-      class="project-action-menu__btn"
-      @click="toggleMenu"
-    >
-      <BIMDataIcon name="ellipsis" size="l" />
-    </BIMDataButton>
+  <div class="project-action-menu" v-click-away="resetMenu">
+    <transition name="fade" mode="out-in">
+      <div class="action-loader" v-if="loading">
+        <BIMDataSpinner />
+      </div>
 
-    <transition name="fade">
-      <div class="project-action-menu__container" v-show="showMenu">
-        <transition name="fade" mode="out-in">
-          <div class="action-loader" v-if="loading">
-            <BIMDataSpinner />
-          </div>
+      <ProjectUpdateForm
+        v-else-if="showUpdateForm"
+        :project="project"
+        @close="closeUpdateForm"
+        @success="closeMenu"
+      />
 
-          <ProjectUpdateForm
-            v-else-if="showUpdateForm"
-            :project="project"
-            @close="closeUpdateForm"
-            @success="closeMenu"
-          />
+      <ProjectDeleteGuard
+        v-else-if="showDeleteGuard"
+        :project="project"
+        @close="closeDeleteGuard"
+      />
 
-          <ProjectDeleteGuard
-            v-else-if="showDeleteGuard"
-            :project="project"
-            @close="closeDeleteGuard"
-          />
-
-          <div class="action-menu" v-else>
-            <BIMDataButton ghost squared @click="openUpdateForm">
-              {{ $t("Projects.ProjectActionMenu.rename") }}
-            </BIMDataButton>
-            <BIMDataButton ghost squared @click="openDeleteGuard">
-              {{ $t("Projects.ProjectActionMenu.delete") }}
-            </BIMDataButton>
-          </div>
-        </transition>
+      <div class="action-menu" v-else>
+        <div class="action-menu__title">
+          {{ project.name }}
+          <BIMDataButton ghost rounded icon @click="closeMenu">
+            <BIMDataIcon name="close" size="xxxs" />
+          </BIMDataButton>
+        </div>
+        <BIMDataButton ghost squared @click="openUpdateForm">
+          {{ $t("Projects.ProjectActionMenu.rename") }}
+        </BIMDataButton>
+        <BIMDataButton ghost squared @click="openDeleteGuard">
+          {{ $t("Projects.ProjectActionMenu.delete") }}
+        </BIMDataButton>
       </div>
     </transition>
   </div>
@@ -72,23 +59,10 @@ export default {
       required: true
     }
   },
-  setup() {
+  emits: ["close-menu"],
+  setup(props, { emit }) {
     const loading = ref(false);
     provide("loading", loading);
-
-    const showMenu = ref(false);
-    const closeMenu = () => {
-      closeUpdateForm();
-      closeDeleteGuard();
-      loading.value = false;
-      showMenu.value = false;
-    };
-    const toggleMenu = () => {
-      closeUpdateForm();
-      closeDeleteGuard();
-      loading.value = false;
-      showMenu.value = !showMenu.value;
-    };
 
     const showUpdateForm = ref(false);
     const openUpdateForm = () => {
@@ -106,11 +80,21 @@ export default {
       showDeleteGuard.value = false;
     };
 
+    const resetMenu = () => {
+      closeUpdateForm();
+      closeDeleteGuard();
+      loading.value = false;
+    };
+
+    const closeMenu = () => {
+      resetMenu();
+      emit("close-menu");
+    };
+
     return {
       // References
       loading,
       showDeleteGuard,
-      showMenu,
       showUpdateForm,
       // Methods
       closeMenu,
@@ -118,7 +102,7 @@ export default {
       closeUpdateForm,
       openDeleteGuard,
       openUpdateForm,
-      toggleMenu
+      resetMenu
     };
   }
 };

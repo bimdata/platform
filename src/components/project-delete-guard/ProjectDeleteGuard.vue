@@ -2,16 +2,10 @@
   <div class="project-delete-guard">
     <div class="project-delete-guard__title">
       {{ $t("Projects.ProjectDeleteGuard.title") }}
+      <BIMDataButton ghost rounded icon @click="close">
+        <BIMDataIcon name="close" size="xxxs" />
+      </BIMDataButton>
     </div>
-    <BIMDataButton
-      ghost
-      rounded
-      icon
-      class="project-delete-guard__close-btn"
-      @click="close"
-    >
-      <BIMDataIcon name="close" size="xxxs" />
-    </BIMDataButton>
     <div class="project-delete-guard__message">
       {{ $t("Projects.ProjectDeleteGuard.message") }}
     </div>
@@ -28,11 +22,11 @@
 </template>
 
 <script>
+import { inject } from "vue";
 import { useProjects } from "@/state/projects";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import { inject } from "vue";
 
 export default {
   components: {
