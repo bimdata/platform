@@ -1,10 +1,6 @@
 <template>
-  <div class="project-model-preview">
-    <div
-      class="project-model-preview__wrapper"
-      ref="previewWrapper"
-      @mousemove="translate"
-    >
+  <div class="project-model-preview" ref="container" @mousemove="translate">
+    <div class="project-model-preview__wrapper" ref="viewport">
       <img
         :src="image || '/static/default-model-preview.png'"
         :style="{ transform: `translateX(-${translation}px)` }"
@@ -28,18 +24,19 @@ export default {
     const { fetchProjectPreviewImage } = useProjects();
 
     const nbSlices = 15;
-    const previewWrapper = ref(null);
+    const container = ref(null);
+    const viewport = ref(null);
+
     const translation = ref(0);
     const translate = event => {
-      if (previewWrapper.value) {
-        const wrapper = previewWrapper.value.getBoundingClientRect();
+      if (container.value && viewport.value) {
+        const c = container.value.getBoundingClientRect();
+        const v = viewport.value.getBoundingClientRect();
         let index = Math.abs(
-          Math.ceil(
-            nbSlices * (1 - (event.clientX - wrapper.x) / wrapper.width)
-          )
+          Math.ceil(nbSlices * (1 - (event.clientX - c.x) / c.width))
         );
         index = Math.min(index, nbSlices);
-        translation.value = (index - 1) * wrapper.width;
+        translation.value = (index - 1) * v.width;
       }
     };
 
@@ -50,9 +47,10 @@ export default {
 
     return {
       // References
+      container,
       image,
-      previewWrapper,
       translation,
+      viewport,
       // Methods
       translate
     };
