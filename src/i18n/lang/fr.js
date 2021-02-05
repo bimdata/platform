@@ -6,8 +6,9 @@ export default {
     yes: "Oui"
   },
   oidc: {
-    callbackMessage: "OIDC callback message",
-    callbackErrorMessage: "OIDC callback error message"
+    callbackErrorMessage:
+      "Une erreur s'est produite lors de l'authentification...",
+    tryAgain: "Réessayer"
   },
   Header: {
     selectLanguage: "Sélectionner la langue",

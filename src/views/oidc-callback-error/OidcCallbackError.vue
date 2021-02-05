@@ -1,5 +1,31 @@
 <template>
   <div class="oidc-callback-error-view">
-    {{ $t("oidc.callbackErrorMessage") }}
+    <h1>{{ $t("oidc.callbackErrorMessage") }}</h1>
+    <BIMDataButton fill radius color="primary" @click="goToRoot">
+      {{ $t("oidc.tryAgain") }}
+    </BIMDataButton>
   </div>
 </template>
+
+<script>
+import { useRouter } from "vue-router";
+// Components
+import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+
+export default {
+  components: {
+    BIMDataButton
+  },
+  setup() {
+    const router = useRouter();
+
+    const goToRoot = () => router.push("/");
+
+    return {
+      goToRoot
+    };
+  }
+};
+</script>
+
+<style scoped lang="scss" src="./OidcCallbackError.scss"></style>

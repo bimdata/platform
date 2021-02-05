@@ -6,7 +6,7 @@ const authGuard = async (to, from, next) => {
     next();
   } else if (to.matched.some(r => r.meta.requiresAuth)) {
     await authenticate(to.path);
-    next();
+    next(isAuthenticated.value);
   } else {
     next();
   }

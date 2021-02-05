@@ -6,8 +6,8 @@ export default {
     yes: "Yes"
   },
   oidc: {
-    callbackMessage: "OIDC callback message",
-    callbackErrorMessage: "OIDC callback error message"
+    callbackErrorMessage: "An error occured during authentication...",
+    tryAgain: "Try Again"
   },
   Header: {
     selectLanguage: "Choose a language",
@@ -77,10 +77,9 @@ export default {
       errorMessage: "Invalid project name."
     },
     ProjectDeleteGuard: {
-      title: "Supprimer le projet",
-      message:
-        "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
-      buttonDelete: "Supprimer"
+      title: "Delete project",
+      message: "Are you sure you want to (permanently) delete this project ?",
+      buttonDelete: "Delete"
     }
   }
 };
