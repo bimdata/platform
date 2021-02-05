@@ -2,16 +2,10 @@
   <div class="project-update-form">
     <div class="project-update-form__title">
       {{ $t("Projects.ProjectUpdateForm.title") }}
+      <BIMDataButton ghost rounded icon @click="close">
+        <BIMDataIcon name="close" size="xxxs" />
+      </BIMDataButton>
     </div>
-    <BIMDataButton
-      ghost
-      rounded
-      icon
-      class="project-update-form__close-btn"
-      @click="close"
-    >
-      <BIMDataIcon name="close" size="xxxs" />
-    </BIMDataButton>
     <BIMDataInput
       ref="nameInput"
       class="project-update-form__input"

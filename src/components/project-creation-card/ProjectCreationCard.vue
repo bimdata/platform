@@ -1,23 +1,21 @@
 <template>
-  <div class="project-creation-card" @click="openCreationForm">
+  <div
+    class="project-creation-card"
+    v-click-away="closeCreationForm"
+    @click="openCreationForm"
+  >
     <transition name="fade" mode="out-in">
       <div class="action-loader" v-if="loading">
         <BIMDataSpinner />
       </div>
 
       <div class="creation-form" v-else-if="showCreationForm">
-        <span class="creation-form__title">
+        <div class="creation-form__title">
           {{ $t("Projects.ProjectCreationCard.title") }}
-        </span>
-        <BIMDataButton
-          ghost
-          rounded
-          icon
-          class="creation-form__close-btn"
-          @click.stop="closeCreationForm"
-        >
-          <BIMDataIcon name="close" size="xxxs" />
-        </BIMDataButton>
+          <BIMDataButton ghost rounded icon @click.stop="closeCreationForm">
+            <BIMDataIcon name="close" size="xxxs" />
+          </BIMDataButton>
+        </div>
         <BIMDataInput
           ref="nameInput"
           class="creation-form__input"
