@@ -45,7 +45,7 @@ const routes = [
         component: Projects,
         meta: {
           resolver: projectsResolver,
-          breadcrumb: ["BreadcrumbSpaceList"]
+          breadcrumb: ["BreadcrumbSpaceSelector"]
         }
       }
     ]

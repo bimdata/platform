@@ -1,0 +1,49 @@
+.breadcrumb-selector {
+  position: relative;
+
+  &__header {
+    padding: $spacing-unit/2;
+    &__icon {
+      margin-left: $spacing-unit/2;
+      vertical-align: bottom;
+    }
+  }
+
+  &__list {
+    position: absolute;
+    z-index: 1;
+    width: 244px;
+    margin-top: $spacing-unit/2;
+    padding-bottom: $spacing-unit/2;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: $color-white;
+
+    .bimdata-search-bar {
+      margin: $spacing-unit;
+      background-color: $color-tertiary-lightest;
+      &.focus {
+        background-color: $color-white;
+      }
+    }
+
+    &__item {
+      padding: $spacing-unit/2;
+      text-align: center;
+      &:hover {
+        background-color: $color-tertiary-lightest;
+      }
+    }
+  }
+
+  &.active {
+    .breadcrumb-selector__header {
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+      background-color: $color-white;
+
+      .breadcrumb-selector__header__icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

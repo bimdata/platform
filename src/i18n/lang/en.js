@@ -14,7 +14,8 @@ export default {
     logout: "Log Out"
   },
   Breadcrumb: {
-    back: "Back"
+    back: "Back",
+    search: "Search"
   },
   Dashboard: {
     welcomeTitle: "Dashboard",

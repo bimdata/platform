@@ -11,12 +11,12 @@
 <script>
 import { useRoute } from "vue-router";
 // Components
-import BreadcrumbSpaceList from "@/components/breadcrumb-space-list/BreadcrumbSpaceList";
+import BreadcrumbSpaceSelector from "@/components/breadcrumb-space-selector/BreadcrumbSpaceSelector";
 import GoBackButton from "@/components/go-back-button/GoBackButton";
 
 export default {
   components: {
-    BreadcrumbSpaceList,
+    BreadcrumbSpaceSelector,
     GoBackButton
   },
   setup() {

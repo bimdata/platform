@@ -15,7 +15,8 @@ export default {
     logout: "Se Déconnecter"
   },
   Breadcrumb: {
-    back: "Retour"
+    back: "Retour",
+    search: "Rechercher"
   },
   Dashboard: {
     welcomeTitle: "Dashboard",
