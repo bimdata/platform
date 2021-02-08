@@ -1,10 +1,26 @@
 .project-model-preview {
   @include noselect;
 
+  position: relative;
   height: 100%;
   background-color: $platform-project-card-background;
 
-  &__wrapper {
+  &__switcher {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin: 0 calc((100% - 100px) / 2);
+    margin-top: 16px;
+
+    .icon-previous {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__viewport {
     width: $platform-project-card-content-height;
     height: 100%;
     margin: auto;

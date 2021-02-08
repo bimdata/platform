@@ -43,12 +43,18 @@ const selectProject = id => {
   return state.currentProject;
 };
 
-const fetchProjectPreviewImage = async project => {
-  let ifcs = await IfcService.fetchProjectIfcs(project);
-  ifcs = ifcs.filter(ifc => ifc.viewer360File);
-  ifcs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  const imageURL = ifcs.length ? ifcs[0].viewer360File : null;
-  return imageURL;
+const fetchProjectPreviewImages = async project => {
+  // let ifcs = await IfcService.fetchProjectIfcs(project);
+  // ifcs = ifcs.filter(ifc => ifc.viewer360File);
+  // ifcs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  // const imageURL = ifcs.length ? ifcs[0].viewer360File : null;
+  // return imageURL;
+
+  const ifcs = await IfcService.fetchProjectIfcs(project);
+  const images = ifcs
+    .filter(ifc => ifc.viewer360File)
+    .map(ifc => ifc.viewer360File);
+  return images;
 };
 
 export function useProjects() {
@@ -61,6 +67,6 @@ export function useProjects() {
     softUpdateProject,
     deleteProject,
     selectProject,
-    fetchProjectPreviewImage
+    fetchProjectPreviewImages
   };
 }
