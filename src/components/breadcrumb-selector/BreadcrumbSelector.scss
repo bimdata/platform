@@ -5,6 +5,7 @@
     padding: $spacing-unit/2;
     &__icon {
       margin-left: $spacing-unit/2;
+      margin-bottom: 1px;
       vertical-align: bottom;
     }
   }
@@ -31,6 +32,7 @@
       padding: $spacing-unit/2;
       text-align: center;
       &:hover {
+        cursor: pointer;
         background-color: $color-tertiary-lightest;
       }
     }
