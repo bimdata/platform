@@ -23,6 +23,7 @@
 <script>
 import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 import { useSpaces } from "@/state/spaces";
 // Components
 import DashboardButtonTile from "@/components/dashboard-button-tile/DashboardButtonTile";
@@ -48,7 +49,7 @@ export default {
       }
     });
     const goToSpaces = () => {
-      router.push("/spaces");
+      router.push({ name: routeNames.spaces });
     };
 
     const nbProjects = ref(235);

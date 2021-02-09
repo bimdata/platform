@@ -12,6 +12,7 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import UserMenu from "@/components/user-menu/UserMenu";
 
@@ -23,7 +24,7 @@ export default {
     const router = useRouter();
 
     const goToDashboard = () => {
-      router.push({ name: "dashboard" });
+      router.push({ name: routeNames.dashboard });
     };
 
     return {
