@@ -1,7 +1,12 @@
 import { ref } from "vue";
 
+// Pre-defined loading contexts
+const contextIDs = Object.freeze({
+  viewContainer: "view-container"
+});
+
 const state = {
-  "view-container": { loading: ref(false) }
+  [contextIDs.viewContainer]: { loading: ref(false) }
 };
 
 const createLoadingContext = contextID => {
@@ -17,4 +22,9 @@ const useLoadingContext = contextID => {
   return state[contextID].loading;
 };
 
-export { createLoadingContext, removeLoadingContext, useLoadingContext };
+export {
+  contextIDs,
+  createLoadingContext,
+  removeLoadingContext,
+  useLoadingContext
+};
