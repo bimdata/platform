@@ -1,5 +1,5 @@
 <template>
-  <div class="projects-view">
+  <div class="space-board-view">
     <div class="sub-header">
       <div class="sub-header--left">
         <Breadcrumb />
@@ -100,4 +100,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./Projects.scss"></style>
+<style scoped lang="scss" src="./SpaceBoard.scss"></style>

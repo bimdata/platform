@@ -1,10 +1,10 @@
-import { useLoadingContext } from "@/state/loading";
+import { contextIDs, useLoadingContext } from "@/state/loading";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 
 const createViewResolver = resolve => {
   return async route => {
-    const loading = useLoadingContext("view-container");
+    const loading = useLoadingContext(contextIDs.viewContainer);
     loading.value = true;
     await resolve(route);
     loading.value = false;
@@ -16,7 +16,7 @@ const dashboardResolver = createViewResolver(() => useSpaces().loadSpaces());
 
 const spacesResolver = createViewResolver(() => useSpaces().loadSpaces());
 
-const projectsResolver = createViewResolver(route => {
+const spaceBoardResolver = createViewResolver(route => {
   const { currentSpace, loadSpaces, selectSpace } = useSpaces();
   const { loadProjects } = useProjects();
 
@@ -25,4 +25,4 @@ const projectsResolver = createViewResolver(route => {
     .then(() => loadProjects(currentSpace.value, { forceFetch: true }));
 });
 
-export { dashboardResolver, spacesResolver, projectsResolver };
+export { dashboardResolver, spacesResolver, spaceBoardResolver };
