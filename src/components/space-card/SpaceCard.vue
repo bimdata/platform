@@ -15,6 +15,7 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import SpaceActionMenu from "@/components/space-action-menu/SpaceActionMenu";
@@ -40,7 +41,10 @@ export default {
     const router = useRouter();
 
     const goToProjects = () => {
-      router.push({ name: "projects", params: { spaceID: props.space.id } });
+      router.push({
+        name: routeNames.spaceBoard,
+        params: { spaceID: props.space.id }
+      });
     };
 
     return {

@@ -2,11 +2,13 @@ import { useLoadingContext } from "@/state/loading";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 
-const createViewResolver = resolver => {
-  return route => {
+const createViewResolver = resolve => {
+  return async route => {
     const loading = useLoadingContext("view-container");
     loading.value = true;
-    return resolver(route).then(() => (loading.value = false));
+    await resolve(route);
+    loading.value = false;
+    return;
   };
 };
 

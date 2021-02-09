@@ -13,10 +13,19 @@ import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
 import Projects from "@/views/projects/Projects";
 import Spaces from "@/views/spaces/Spaces";
 
+const routeNames = Object.freeze({
+  root: "root",
+  oidcCallback: "oidc-callback",
+  oidcCallbackError: "oidc-callback-error",
+  dashboard: "dashboard",
+  spaces: "spaces",
+  spaceBoard: "space-board"
+});
+
 const routes = [
   {
     path: "/",
-    name: "root",
+    name: routeNames.root,
     component: Layout,
     meta: {
       // Protect this route and all its children with authentication
@@ -25,7 +34,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "dashboard",
+        name: routeNames.dashboard,
         component: Dashboard,
         meta: {
           resolver: dashboardResolver
@@ -33,15 +42,15 @@ const routes = [
       },
       {
         path: "/spaces",
-        name: "spaces",
+        name: routeNames.spaces,
         component: Spaces,
         meta: {
           resolver: spacesResolver
         }
       },
       {
-        path: "/spaces/:spaceID(\\d+)/projects",
-        name: "projects",
+        path: "/spaces/:spaceID(\\d+)",
+        name: routeNames.spaceBoard,
         component: Projects,
         meta: {
           resolver: projectsResolver,
@@ -53,12 +62,12 @@ const routes = [
   {
     // Should match `redirect_uri` path in oidcConfig
     path: "/oidc-callback",
-    name: "oidc-callback",
+    name: routeNames.oidcCallback,
     component: OidcCallback
   },
   {
     path: "/oidc-callback-error",
-    name: "oidc-callback-error",
+    name: routeNames.oidcCallbackError,
     component: OidcCallbackError
   },
   {
@@ -83,5 +92,7 @@ router.beforeResolve(to => {
       Promise.resolve()
     );
 });
+
+export { routeNames };
 
 export default router;
