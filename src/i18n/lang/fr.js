@@ -84,6 +84,9 @@ export default {
       message:
         "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
       buttonDelete: "Supprimer"
+    },
+    SpaceUsersManager: {
+      title: "Gestion administrateur espace"
     }
   }
 };
