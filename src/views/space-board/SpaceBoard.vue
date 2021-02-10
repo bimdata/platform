@@ -25,8 +25,14 @@
       </div>
     </div>
 
+    <transition name="fade">
+      <div class="side-panel">
+        <SpaceUsersManager :space="space" />
+      </div>
+    </transition>
+
     <transition name="fade" appear>
-      <div class="projects-list">
+      <div class="main-container">
         <ProjectCreationCard />
         <transition-group name="card-list">
           <ProjectCard
@@ -43,6 +49,7 @@
 <script>
 import { ref, watchEffect } from "vue";
 import { useProjects } from "@/state/projects";
+import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -50,6 +57,7 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import ProjectCard from "@/components/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/project-creation-card/ProjectCreationCard";
+import SpaceUsersManager from "@/components/space-users-manager/SpaceUsersManager";
 
 export default {
   components: {
@@ -58,9 +66,11 @@ export default {
     BIMDataSearch,
     Breadcrumb,
     ProjectCard,
-    ProjectCreationCard
+    ProjectCreationCard,
+    SpaceUsersManager
   },
   setup() {
+    const { currentSpace } = useSpaces();
     const { projects } = useProjects();
 
     const displayedProjects = ref([]);
@@ -92,6 +102,7 @@ export default {
       // References
       projects: displayedProjects,
       searchText,
+      space: currentSpace,
       // Methods
       filterProjects,
       sortProjects

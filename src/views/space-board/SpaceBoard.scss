@@ -28,7 +28,16 @@
     }
   }
 
-  .projects-list {
+  .side-panel {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    width: 450px;
+    height: 100vh;
+  }
+
+  .main-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, $platform-project-card-width);
     // justify-content: space-between;
