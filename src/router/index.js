@@ -84,13 +84,14 @@ const router = createRouter({
 
 router.beforeEach(authGuard);
 
-router.beforeResolve(to => {
-  to.matched
+router.beforeResolve(async to => {
+  const resolvers = to.matched
     .filter(r => r.meta && r.meta.resolver)
-    .reduce(
-      (chain, r) => chain.then(() => r.meta.resolver(to)),
-      Promise.resolve()
-    );
+    .map(r => r.meta.resolver);
+
+  for (const resolver of resolvers) {
+    await resolver(to);
+  }
 });
 
 export { routeNames };

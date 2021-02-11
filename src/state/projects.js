@@ -2,16 +2,19 @@ import { reactive, readonly, toRefs } from "vue";
 import IfcService from "@/api/IfcService";
 import ProjectsService from "@/api/ProjectService";
 
+const loaded = {
+  projects: false
+};
+
 const state = reactive({
-  loaded: false,
   projects: [],
   currentProject: null
 });
 
 const loadProjects = async (space, options = {}) => {
-  if (!state.loaded || options.forceFetch) {
+  if (!loaded.projects || options.forceFetch) {
     state.projects = await ProjectsService.fetchSpaceProjects(space);
-    state.loaded = true;
+    loaded.projects = true;
   }
   return state.projects;
 };
@@ -44,12 +47,6 @@ const selectProject = id => {
 };
 
 const fetchProjectPreviewImages = async project => {
-  // let ifcs = await IfcService.fetchProjectIfcs(project);
-  // ifcs = ifcs.filter(ifc => ifc.viewer360File);
-  // ifcs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  // const imageURL = ifcs.length ? ifcs[0].viewer360File : null;
-  // return imageURL;
-
   const ifcs = await IfcService.fetchProjectIfcs(project);
   const images = ifcs
     .filter(ifc => ifc.viewer360File)
