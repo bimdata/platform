@@ -1,6 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
-import IfcService from "@/api/IfcService";
-import ProjectsService from "@/api/ProjectService";
+import IfcService from "@/server/IfcService";
+import ProjectsService from "@/server/ProjectService";
 
 const loaded = {
   projects: false

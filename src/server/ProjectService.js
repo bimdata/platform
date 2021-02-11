@@ -1,4 +1,4 @@
-import apiClient from "./index";
+import apiClient from "./api-client";
 
 class ProjectsService {
   fetchSpaceProjects(space) {
