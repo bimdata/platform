@@ -4,6 +4,7 @@ import SpacesService from "@/server/SpaceService";
 const state = reactive({
   spaces: [],
   currentSpace: null,
+  currentSpaceAdmins: [],
   currentSpaceUsers: []
 });
 
@@ -13,8 +14,10 @@ const loadSpaces = async (options = {}) => {
 };
 
 const loadSpaceUsers = async (space, options = {}) => {
-  state.currentSpaceUsers = await SpacesService.fetchSpaceUsers(space, options);
-  return state.currentSpaceUsers;
+  const users = await SpacesService.fetchSpaceUsers(space, options);
+  state.currentSpaceAdmins = users.filter(u => u.cloudRole === 100);
+  state.currentSpaceUsers = users.filter(u => u.cloudRole === 50);
+  return users;
 };
 
 const createSpace = async space => {

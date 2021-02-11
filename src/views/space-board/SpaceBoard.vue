@@ -19,15 +19,15 @@
         <BIMDataButton fill squared icon @click="sortProjects">
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
-        <BIMDataButton fill squared icon>
+        <BIMDataButton fill squared icon @click="openUsersManager">
           <BIMDataIcon name="addUser" size="s" />
         </BIMDataButton>
       </div>
     </div>
 
     <transition name="fade">
-      <div class="side-panel" v-show="false">
-        <SpaceUsersManager :space="space" />
+      <div class="side-panel" v-show="showUsersManager">
+        <SpaceUsersManager @close="closeUsersManager" />
       </div>
     </transition>
 
@@ -98,13 +98,24 @@ export default {
         .sort((a, b) => (a.name < b.name ? -1 : 1) * n);
     };
 
+    const showUsersManager = ref(false);
+    const openUsersManager = () => {
+      showUsersManager.value = true;
+    };
+    const closeUsersManager = () => {
+      showUsersManager.value = false;
+    };
+
     return {
       // References
       projects: displayedProjects,
       searchText,
+      showUsersManager,
       space: currentSpace,
       // Methods
+      closeUsersManager,
       filterProjects,
+      openUsersManager,
       sortProjects
     };
   }
