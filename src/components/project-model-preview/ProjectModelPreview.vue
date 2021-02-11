@@ -4,16 +4,11 @@
       <BIMDataIcon
         name="chevron"
         size="xs"
-        class="icon-previous"
+        :rotate="180"
         @click="previousImage"
       />
       <span>{{ `${image.index} / ${images.length}` }}</span>
-      <BIMDataIcon
-        name="chevron"
-        size="xs"
-        class="icon-next"
-        @click="nextImage"
-      />
+      <BIMDataIcon name="chevron" size="xs" @click="nextImage" />
     </div>
     <div class="project-model-preview__viewport" ref="viewport">
       <img

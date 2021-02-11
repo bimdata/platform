@@ -7,9 +7,16 @@
       </BIMDataButton>
     </div>
     <div class="space-users-manager__content">
-      <!-- tabs -->
-      <!-- search -->
-      <!-- user list -->
+      <!-- <BIMDataTabs
+        :tabs="[ 'Administarteurs', 'Utilisateurs' ]"
+        width="100%"
+        height="40px"
+        tabSize="50%"
+      /> -->
+      <BIMDataSearch />
+      <div>
+        <!-- user list -->
+      </div>
     </div>
   </div>
 </template>
@@ -19,12 +26,14 @@
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
+// import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch
+    // BIMDataTabs
   },
   props: {
     space: {
@@ -32,7 +41,7 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
     // TODO
   }
 };
