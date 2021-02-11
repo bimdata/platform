@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import SpacesService from "@/api/SpaceService";
+import SpacesService from "@/server/SpaceService";
 
 const loaded = {
   spaces: false,

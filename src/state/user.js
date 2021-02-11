@@ -1,6 +1,6 @@
 import { reactive, readonly, toRefs, watchEffect } from "vue";
-import apiClient from "@/api";
-import UserService from "@/api/UserService";
+import apiClient from "@/server/api-client";
+import UserService from "@/server/UserService";
 
 const state = reactive({
   isAuthenticated: false,
