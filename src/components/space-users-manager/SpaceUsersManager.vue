@@ -2,7 +2,7 @@
   <div class="space-users-manager">
     <div class="space-users-manager__title">
       {{ $t("Projects.SpaceUsersManager.title") }}
-      <BIMDataButton ghost rounded icon>
+      <BIMDataButton ghost rounded icon @click="close">
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>
     </div>
@@ -15,13 +15,17 @@
       /> -->
       <BIMDataSearch />
       <div>
-        <!-- user list -->
+        <div v-for="user in users" :key="user.id">
+          {{ `${user.firstname} ${user.lastname} (${user.email})` }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -35,14 +39,22 @@ export default {
     BIMDataSearch
     // BIMDataTabs
   },
-  props: {
-    space: {
-      type: Object,
-      required: true
-    }
-  },
-  setup(props) {
-    // TODO
+  emits: ["close"],
+  setup(props, { emit }) {
+    const { currentSpace, currentSpaceAdmins, currentSpaceUsers } = useSpaces();
+
+    // const users = ref([]);
+    // users.value = currentSpaceAdmins.value;
+
+    const close = () => emit("close");
+
+    return {
+      // Refrences,
+      space: currentSpace,
+      users: currentSpaceAdmins,
+      // Methods
+      close
+    };
   }
 };
 </script>
