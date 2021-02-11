@@ -2,20 +2,13 @@ import { reactive, readonly, toRefs } from "vue";
 import IfcService from "@/server/IfcService";
 import ProjectsService from "@/server/ProjectService";
 
-const loaded = {
-  projects: false
-};
-
 const state = reactive({
   projects: [],
   currentProject: null
 });
 
 const loadProjects = async (space, options = {}) => {
-  if (!loaded.projects || options.forceFetch) {
-    state.projects = await ProjectsService.fetchSpaceProjects(space);
-    loaded.projects = true;
-  }
+  state.projects = await ProjectsService.fetchSpaceProjects(space, options);
   return state.projects;
 };
 

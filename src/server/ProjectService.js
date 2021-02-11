@@ -1,10 +1,19 @@
 import apiClient from "./api-client";
 
-class ProjectsService {
-  fetchSpaceProjects(space) {
-    return apiClient.collaborationApi.getProjects({
-      cloudPk: space.id
-    });
+class ProjectService {
+  constructor() {
+    this.data = {
+      projects: undefined
+    };
+  }
+
+  async fetchSpaceProjects(space, options = {}) {
+    if (!this.data.projects || options.forceFetch) {
+      this.data.projects = await apiClient.collaborationApi.getProjects({
+        cloudPk: space.id
+      });
+    }
+    return this.data.projects;
   }
 
   createProject(space, project) {
@@ -30,6 +39,6 @@ class ProjectsService {
   }
 }
 
-const service = new ProjectsService();
+const service = new ProjectService();
 
 export default service;
