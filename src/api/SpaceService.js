@@ -5,6 +5,12 @@ class SpacesService {
     return apiClient.collaborationApi.getClouds();
   }
 
+  fetchSpaceUsers(space) {
+    return apiClient.collaborationApi.getCloudUsers({
+      cloudPk: space.id
+    });
+  }
+
   createSpace(space) {
     return apiClient.collaborationApi.createCloud({
       data: space

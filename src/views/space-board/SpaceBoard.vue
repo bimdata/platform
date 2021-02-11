@@ -26,7 +26,7 @@
     </div>
 
     <transition name="fade">
-      <div class="side-panel">
+      <div class="side-panel" v-show="false">
         <SpaceUsersManager :space="space" />
       </div>
     </transition>
