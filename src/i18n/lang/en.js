@@ -81,9 +81,11 @@ export default {
       title: "Delete project",
       message: "Are you sure you want to (permanently) delete this project ?",
       buttonDelete: "Delete"
-    },
-    SpaceUsersManager: {
-      title: "Manage space admins"
     }
+  },
+  SpaceUsersManager: {
+    title: "Manage space admins",
+    searchUsers: "Search user",
+    addUserButton: "Add new admin"
   }
 };

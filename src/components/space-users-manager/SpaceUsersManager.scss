@@ -1,14 +1,19 @@
 .space-users-manager {
-  background-color: $color-white;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 2;
+  height: 100%;
 
-  &__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
+  .bimdata-search-bar {
+    background-color: $color-tertiary-lightest;
+    &.focus {
+      background-color: $color-white;
+    }
   }
 
-  &__content {
-    // TODO
+  .list-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
 }

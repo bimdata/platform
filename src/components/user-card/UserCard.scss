@@ -1,0 +1,39 @@
+.user-card {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  height: 64px;
+
+  &__avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: $color-tertiary-lightest;
+  }
+
+  &__info {
+    flex-grow: 1;
+    padding: 0 $spacing-unit;
+    line-height: 18px;
+
+    &__name {
+      font-weight: bold;
+    }
+
+    &__email {
+      font-size: 12px;
+      color: $color-tertiary-dark;
+    }
+  }
+
+  &__menu-btn {
+    color: $color-tertiary-dark;
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+}

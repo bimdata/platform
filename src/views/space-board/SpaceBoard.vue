@@ -26,13 +26,17 @@
     </div>
 
     <transition name="fade">
-      <div class="side-panel" v-show="showUsersManager">
-        <SpaceUsersManager @close="closeUsersManager" />
-      </div>
+      <SidePanel
+        v-show="showUsersManager"
+        :title="$t('SpaceUsersManager.title')"
+        @close="closeUsersManager"
+      >
+        <SpaceUsersManager />
+      </SidePanel>
     </transition>
 
     <transition name="fade" appear>
-      <div class="main-container">
+      <div class="list-container">
         <ProjectCreationCard />
         <transition-group name="card-list">
           <ProjectCard
@@ -57,6 +61,7 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import ProjectCard from "@/components/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/project-creation-card/ProjectCreationCard";
+import SidePanel from "@/components/side-panel/SidePanel";
 import SpaceUsersManager from "@/components/space-users-manager/SpaceUsersManager";
 
 export default {
@@ -67,6 +72,7 @@ export default {
     Breadcrumb,
     ProjectCard,
     ProjectCreationCard,
+    SidePanel,
     SpaceUsersManager
   },
   setup() {

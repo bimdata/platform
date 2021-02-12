@@ -24,7 +24,7 @@
     </div>
 
     <transition name="fade" appear>
-      <div class="spaces-list">
+      <div class="list-container">
         <transition name="pop-in">
           <SpaceCreationCard
             v-if="showCreationCard"
