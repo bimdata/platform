@@ -1,5 +1,4 @@
 .spaces-view {
-
   .sub-header {
     display: flex;
     align-items: center;
@@ -23,17 +22,17 @@
       display: flex;
       gap: $spacing-unit;
 
-      .bimdata-btn[color=default] {
+      .bimdata-btn[color="default"] {
         color: $color-tertiary-dark;
       }
     }
   }
 
-  .spaces-list {
+  .list-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, $platform-space-card-width);
     justify-content: space-between;
-    gap: $spacing-unit*3 $spacing-unit*2;
-    padding: $spacing-unit*2 0;
+    gap: $spacing-unit * 3 $spacing-unit * 2;
+    padding: $spacing-unit * 2 0;
   }
 }

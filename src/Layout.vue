@@ -1,6 +1,7 @@
 <template>
   <div class="platform-layout">
     <PlatformHeader />
+
     <div class="view-container">
       <BIMDataSpinner class="loader" v-if="loading" />
 
@@ -21,8 +22,10 @@ export default {
     PlatformHeader
   },
   setup() {
+    const loading = useLoadingContext(contextIDs.viewContainer);
+
     return {
-      loading: useLoadingContext(contextIDs.viewContainer)
+      loading
     };
   }
 };

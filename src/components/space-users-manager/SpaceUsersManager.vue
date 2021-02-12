@@ -1,59 +1,95 @@
 <template>
   <div class="space-users-manager">
-    <div class="space-users-manager__title">
-      {{ $t("Projects.SpaceUsersManager.title") }}
-      <BIMDataButton ghost rounded icon @click="close">
-        <BIMDataIcon name="close" size="xxxs" />
-      </BIMDataButton>
-    </div>
-    <div class="space-users-manager__content">
-      <!-- <BIMDataTabs
-        :tabs="[ 'Administarteurs', 'Utilisateurs' ]"
-        width="100%"
-        height="40px"
-        tabSize="50%"
-      /> -->
-      <BIMDataSearch />
-      <div>
-        <div v-for="user in users" :key="user.id">
-          {{ `${user.firstname} ${user.lastname} (${user.email})` }}
-        </div>
-      </div>
+    <BIMDataTabs
+      width="100%"
+      height="40px"
+      tabSize="50%"
+      :tabs="tabs"
+      :selected="0"
+      @tab-click="swicthUserList"
+    />
+    <BIMDataSearch
+      width="100%"
+      :placeholder="$t('SpaceUsersManager.searchUsers')"
+      v-model="searchText"
+      clear
+    />
+    <BIMDataButton outline radius icon color="primary">
+      <BIMDataIcon name="plus" size="xxxs" />
+      <span>{{ $t("SpaceUsersManager.addUserButton") }}</span>
+    </BIMDataButton>
+    <div class="list-container">
+      <transition-group name="item-list">
+        <UserCard v-for="user in displayedUsers" :key="user.id" :user="user" />
+      </transition-group>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-// import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import UserCard from "@/components/user-card/UserCard";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
-    BIMDataSearch
-    // BIMDataTabs
+    BIMDataSearch,
+    BIMDataTabs,
+    UserCard
   },
-  emits: ["close"],
-  setup(props, { emit }) {
+  setup() {
     const { currentSpace, currentSpaceAdmins, currentSpaceUsers } = useSpaces();
 
-    // const users = ref([]);
-    // users.value = currentSpaceAdmins.value;
+    const tabs = [
+      { id: "admins", label: "Administrateurs" },
+      { id: "users", label: "Utilisateurs" }
+    ];
 
-    const close = () => emit("close");
+    const userList = ref(currentSpaceAdmins.value);
+    const displayedUsers = ref([]);
+    watchEffect(() => {
+      displayedUsers.value = userList.value;
+    });
+
+    const swicthUserList = tab => {
+      userList.value =
+        tab.id === "admins"
+          ? currentSpaceAdmins.value
+          : currentSpaceUsers.value;
+    };
+
+    const searchText = ref("");
+    const filterUsers = value => {
+      const text = value.trim().toLowerCase();
+      if (text) {
+        displayedUsers.value = userList.value.filter(
+          ({ firstname, lastname, email }) =>
+            [firstname, lastname, email]
+              .join(" ")
+              .toLowerCase()
+              .includes(text)
+        );
+      } else {
+        displayedUsers.value = userList.value;
+      }
+    };
+    watchEffect(() => filterUsers(searchText.value));
 
     return {
-      // Refrences,
+      // Refrences
+      displayedUsers,
+      searchText,
       space: currentSpace,
-      users: currentSpaceAdmins,
+      tabs,
       // Methods
-      close
+      swicthUserList
     };
   }
 };
