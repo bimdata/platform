@@ -8,13 +8,13 @@ const state = reactive({
   currentSpaceUsers: []
 });
 
-const loadSpaces = async (options = {}) => {
-  state.spaces = await SpacesService.fetchUserSpaces(options);
+const loadSpaces = async () => {
+  state.spaces = await SpacesService.fetchUserSpaces();
   return state.spaces;
 };
 
-const loadSpaceUsers = async (space, options = {}) => {
-  const users = await SpacesService.fetchSpaceUsers(space, options);
+const loadSpaceUsers = async space => {
+  const users = await SpacesService.fetchSpaceUsers(space);
   state.currentSpaceAdmins = users.filter(u => u.cloudRole === 100);
   state.currentSpaceUsers = users.filter(u => u.cloudRole === 50);
   return users;

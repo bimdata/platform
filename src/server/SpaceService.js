@@ -1,27 +1,14 @@
 import apiClient from "./api-client";
 
 class SpaceService {
-  constructor() {
-    this.data = {
-      spaces: undefined,
-      spaceUsers: undefined
-    };
+  fetchUserSpaces() {
+    return apiClient.collaborationApi.getClouds();
   }
 
-  async fetchUserSpaces(options = {}) {
-    if (!this.data.spaces || options.forceFetch) {
-      this.data.spaces = await apiClient.collaborationApi.getClouds();
-    }
-    return this.data.spaces;
-  }
-
-  async fetchSpaceUsers(space, options = {}) {
-    if (!this.data.spaceUsers || options.forceFetch) {
-      this.data.spaceUsers = await apiClient.collaborationApi.getCloudUsers({
-        cloudPk: space.id
-      });
-    }
-    return this.data.spaceUsers;
+  fetchSpaceUsers(space) {
+    return apiClient.collaborationApi.getCloudUsers({
+      cloudPk: space.id
+    });
   }
 
   createSpace(space) {
