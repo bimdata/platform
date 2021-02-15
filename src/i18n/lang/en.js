@@ -87,5 +87,9 @@ export default {
     title: "Manage space admins",
     searchUsers: "Search user",
     addUserButton: "Add new admin"
+  },
+  SpaceInvitationForm: {
+    inputEmail: "Enter email",
+    errorMessage: "Invalid email"
   }
 };

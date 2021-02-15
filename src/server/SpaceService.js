@@ -44,6 +44,16 @@ class SpaceService {
       id: space.id
     });
   }
+
+  inviteSpaceUser(space, email) {
+    return apiClient.collaborationApi.inviteCloudUser({
+      cloudPk: space.id,
+      data: {
+        email,
+        redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
+      }
+    });
+  }
 }
 
 const service = new SpaceService();

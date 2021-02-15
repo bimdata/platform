@@ -79,7 +79,9 @@ export default {
       emit("close");
     };
 
-    onMounted(() => setTimeout(() => nameInput.value.focus(), 400));
+    onMounted(() => {
+      setTimeout(() => nameInput.value.focus(), 400);
+    });
 
     return {
       // References
