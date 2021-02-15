@@ -35,7 +35,7 @@
 
 <script>
 import { computed, ref, watchEffect } from "vue";
-import { useUser } from "@/state/user";
+import { useAuth } from "@/state/auth";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -48,7 +48,7 @@ export default {
     BIMDataSelect
   },
   setup() {
-    const { user, signOut } = useUser();
+    const { user, signOut } = useAuth();
 
     const showMenu = ref(false);
     const closeMenu = () => (showMenu.value = false);
