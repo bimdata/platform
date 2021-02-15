@@ -1,6 +1,6 @@
 import { reactive, readonly, toRefs, watchEffect } from "vue";
 import apiClient from "@/server/api-client";
-import UserService from "@/server/UserService";
+import AuthService from "@/server/AuthService";
 
 const state = reactive({
   isAuthenticated: false,
@@ -8,7 +8,7 @@ const state = reactive({
 });
 
 const authenticate = async redirectPath => {
-  const user = await UserService.getUser();
+  const user = await AuthService.getUser();
   if (user) {
     if (!state.isAuthenticated) {
       state.isAuthenticated = true;
@@ -20,21 +20,21 @@ const authenticate = async redirectPath => {
       };
     }
   } else {
-    await UserService.signIn(redirectPath);
+    await AuthService.signIn(redirectPath);
   }
 };
 
 const signIn = async redirectPath => {
-  await UserService.signIn(redirectPath);
+  await AuthService.signIn(redirectPath);
 };
 
 const signInCallback = async () => {
-  const user = await UserService.signInCallback();
+  const user = await AuthService.signInCallback();
   return user;
 };
 
 const signOut = async () => {
-  await UserService.signOut();
+  await AuthService.signOut();
   state.isAuthenticated = false;
   state.user = null;
 };
@@ -46,7 +46,7 @@ watchEffect(() => {
   }
 });
 
-export function useUser() {
+export function useAuth() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),

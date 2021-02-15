@@ -6,7 +6,7 @@ const userManager = new UserManager({
   userStore: new WebStorageStateStore({ store: window.localStorage })
 });
 
-class UserServive {
+class AuthServive {
   getUser() {
     return userManager.getUser();
   }
@@ -26,6 +26,6 @@ class UserServive {
   }
 }
 
-const service = new UserServive();
+const service = new AuthServive();
 
 export default service;

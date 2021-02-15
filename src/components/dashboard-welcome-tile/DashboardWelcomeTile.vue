@@ -16,11 +16,11 @@
 
 <script>
 import { ref } from "vue";
-import { useUser } from "@/state/user";
+import { useAuth } from "@/state/auth";
 
 export default {
   setup() {
-    const { user } = useUser();
+    const { user } = useAuth();
 
     const firstName = ref(user.value.firstName);
 

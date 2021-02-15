@@ -9,7 +9,7 @@
 import Uppy from "@uppy/core";
 import XHRUpload from "@uppy/xhr-upload";
 import { inject, ref } from "vue";
-import { useUser } from "@/state/user";
+import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -26,7 +26,7 @@ export default {
   },
   emits: ["success", "error"],
   setup(props, { emit }) {
-    const { user } = useUser();
+    const { user } = useAuth();
     const { softUpdateSpace } = useSpaces();
 
     const loading = inject("loading", false);
