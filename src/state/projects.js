@@ -7,8 +7,8 @@ const state = reactive({
   currentProject: null
 });
 
-const loadProjects = async (space, options = {}) => {
-  state.projects = await ProjectsService.fetchSpaceProjects(space, options);
+const loadProjects = async space => {
+  state.projects = await ProjectsService.fetchSpaceProjects(space);
   return state.projects;
 };
 

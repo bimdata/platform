@@ -1,19 +1,10 @@
 import apiClient from "./api-client";
 
 class ProjectService {
-  constructor() {
-    this.data = {
-      projects: undefined
-    };
-  }
-
-  async fetchSpaceProjects(space, options = {}) {
-    if (!this.data.projects || options.forceFetch) {
-      this.data.projects = await apiClient.collaborationApi.getProjects({
-        cloudPk: space.id
-      });
-    }
-    return this.data.projects;
+  fetchSpaceProjects(space) {
+    return apiClient.collaborationApi.getProjects({
+      cloudPk: space.id
+    });
   }
 
   createProject(space, project) {

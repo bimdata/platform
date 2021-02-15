@@ -16,14 +16,15 @@ const dashboardResolver = createViewResolver(() => useSpaces().loadSpaces());
 
 const spacesResolver = createViewResolver(() => useSpaces().loadSpaces());
 
-const spaceBoardResolver = createViewResolver(route => {
+const spaceBoardResolver = createViewResolver(async route => {
   const { currentSpace, loadSpaces, loadSpaceUsers, selectSpace } = useSpaces();
   const { loadProjects } = useProjects();
 
-  return loadSpaces()
-    .then(() => selectSpace(+route.params.spaceID))
-    .then(() => loadSpaceUsers(currentSpace.value, { forceFetch: true }))
-    .then(() => loadProjects(currentSpace.value, { forceFetch: true }));
+  await loadSpaces();
+  await selectSpace(+route.params.spaceID);
+  await loadSpaceUsers(currentSpace.value);
+  await loadProjects(currentSpace.value);
+  return;
 });
 
 export { dashboardResolver, spacesResolver, spaceBoardResolver };
