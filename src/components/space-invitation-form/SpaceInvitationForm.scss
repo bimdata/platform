@@ -1,0 +1,21 @@
+.space-invitation-form {
+  display: flex;
+  padding: 0 $spacing-unit/2;
+
+  &__input {
+    width: 100%;
+    margin: 0;
+  }
+
+  .bimdata-btn {
+    margin: 0 $spacing-unit/3;
+  }
+
+  &__submit-btn {
+    color: $color-success;
+  }
+
+  &__close-btn {
+    color: $color-high;
+  }
+}

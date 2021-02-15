@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import SpacesService from "@/server/SpaceService";
+import SpaceService from "@/server/SpaceService";
 
 const state = reactive({
   spaces: [],
@@ -9,25 +9,25 @@ const state = reactive({
 });
 
 const loadSpaces = async () => {
-  state.spaces = await SpacesService.fetchUserSpaces();
+  state.spaces = await SpaceService.fetchUserSpaces();
   return state.spaces;
 };
 
 const loadSpaceUsers = async space => {
-  const users = await SpacesService.fetchSpaceUsers(space);
+  const users = await SpaceService.fetchSpaceUsers(space);
   state.currentSpaceAdmins = users.filter(u => u.cloudRole === 100);
   state.currentSpaceUsers = users.filter(u => u.cloudRole === 50);
   return users;
 };
 
 const createSpace = async space => {
-  const newSpace = await SpacesService.createSpace(space);
+  const newSpace = await SpaceService.createSpace(space);
   state.spaces = [newSpace].concat(state.spaces);
   return newSpace;
 };
 
 const updateSpace = async space => {
-  const newSpace = await SpacesService.updateSpace(space);
+  const newSpace = await SpaceService.updateSpace(space);
   softUpdateSpace(newSpace);
   return newSpace;
 };
@@ -37,13 +37,13 @@ const softUpdateSpace = space => {
 };
 
 const removeSpaceImage = async space => {
-  const newSpace = await SpacesService.removeSpaceImage(space);
+  const newSpace = await SpaceService.removeSpaceImage(space);
   softUpdateSpace(newSpace);
   return newSpace;
 };
 
 const deleteSpace = async space => {
-  await SpacesService.deleteSpace(space);
+  await SpaceService.deleteSpace(space);
   state.spaces = state.spaces.filter(s => s.id !== space.id);
   return space;
 };
@@ -51,6 +51,11 @@ const deleteSpace = async space => {
 const selectSpace = id => {
   state.currentSpace = state.spaces.find(s => s.id === id) || null;
   return state.currentSpace;
+};
+
+const inviteSpaceUser = async (space, email) => {
+  const invitation = await SpaceService.inviteSpaceUser(space, email);
+  return invitation;
 };
 
 export function useSpaces() {
@@ -64,6 +69,7 @@ export function useSpaces() {
     softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
-    selectSpace
+    selectSpace,
+    inviteSpaceUser
   };
 }

@@ -8,16 +8,35 @@
       :selected="0"
       @tab-click="swicthUserList"
     />
+
     <BIMDataSearch
       width="100%"
       :placeholder="$t('SpaceUsersManager.searchUsers')"
       v-model="searchText"
       clear
     />
-    <BIMDataButton outline radius icon color="primary">
-      <BIMDataIcon name="plus" size="xxxs" />
-      <span>{{ $t("SpaceUsersManager.addUserButton") }}</span>
-    </BIMDataButton>
+
+    <transition name="fade" mode="out-in">
+      <SpaceInvitationForm
+        v-if="showInvitationForm"
+        :space="space"
+        @close="closeInvitationForm"
+        @success="closeInvitationForm"
+      />
+
+      <BIMDataButton
+        v-else
+        outline
+        radius
+        icon
+        color="primary"
+        @click="openInvitationForm"
+      >
+        <BIMDataIcon name="plus" size="xxxs" />
+        <span>{{ $t("SpaceUsersManager.addUserButton") }}</span>
+      </BIMDataButton>
+    </transition>
+
     <div class="list-container">
       <transition-group name="item-list">
         <UserCard v-for="user in displayedUsers" :key="user.id" :user="user" />
@@ -34,6 +53,7 @@ import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import SpaceInvitationForm from "@/components/space-invitation-form/SpaceInvitationForm";
 import UserCard from "@/components/user-card/UserCard";
 
 export default {
@@ -42,6 +62,7 @@ export default {
     BIMDataIcon,
     BIMDataSearch,
     BIMDataTabs,
+    SpaceInvitationForm,
     UserCard
   },
   setup() {
@@ -82,13 +103,24 @@ export default {
     };
     watchEffect(() => filterUsers(searchText.value));
 
+    const showInvitationForm = ref(false);
+    const openInvitationForm = () => {
+      showInvitationForm.value = true;
+    };
+    const closeInvitationForm = () => {
+      showInvitationForm.value = false;
+    };
+
     return {
       // Refrences
       displayedUsers,
       searchText,
+      showInvitationForm,
       space: currentSpace,
       tabs,
       // Methods
+      closeInvitationForm,
+      openInvitationForm,
       swicthUserList
     };
   }

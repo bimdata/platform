@@ -90,5 +90,9 @@ export default {
     title: "Gestion administrateur espace",
     searchUsers: "Rechercher un utilisateur",
     addUserButton: "Ajouter un utilisateur"
+  },
+  SpaceInvitationForm: {
+    inputEmail: "Email de l'utilisateur",
+    errorMessage: "Email invalide"
   }
 };
