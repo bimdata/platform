@@ -4,7 +4,10 @@
       {{ initials }}
     </div>
     <div class="user-card__info">
-      <div class="user-card__info__name">{{ `${firstName} ${lastName}` }}</div>
+      <div class="user-card__info__name">
+        {{ `${firstName} ${lastName}` }}
+        <span class="admin-badge" v-if="isAdmin">Admin</span>
+      </div>
       <div class="user-card__info__email">{{ email }}</div>
     </div>
     <BIMDataButton class="user-card__menu-btn" ripple rounded icon>
@@ -34,6 +37,7 @@ export default {
     const firstName = ref("");
     const lastName = ref("");
     const email = ref("");
+    const isAdmin = ref(false);
     const initials = computed(() =>
       `${firstName.value[0]}${lastName.value[0]}`.toUpperCase()
     );
@@ -42,6 +46,7 @@ export default {
         firstName.value = props.user.firstname || " ";
         lastName.value = props.user.lastname || " ";
         email.value = props.user.email || "";
+        isAdmin.value = props.user.cloudRole === 100;
       }
     });
 
@@ -50,6 +55,7 @@ export default {
       email,
       firstName,
       initials,
+      isAdmin,
       lastName
     };
   }

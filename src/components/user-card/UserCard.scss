@@ -21,6 +21,16 @@
 
     &__name {
       font-weight: bold;
+
+      .admin-badge {
+        border-radius: 4px;
+        margin-left: $spacing-unit;
+        padding: 2px 6px;
+        font-size: 12px;
+        font-weight: normal;
+        background-color: $color-primary;
+        color: $color-white;
+      }
     }
 
     &__email {
