@@ -23,6 +23,7 @@
           v-model="newProject.name"
           :error="error"
           :errorMessage="$t('Projects.ProjectCreationCard.errorMessage')"
+          @keyup.enter.stop="createProject"
         />
         <BIMDataButton
           fill

@@ -19,6 +19,7 @@
       v-model="spaceName"
       :error="error"
       :errorMessage="$t('Spaces.SpaceRenameForm.errorMessage')"
+      @keyup.enter.stop="renameSpace"
     />
     <BIMDataButton
       fill
