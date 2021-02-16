@@ -9,7 +9,11 @@ export default {
     callbackErrorMessage: "An error occured during authentication...",
     tryAgain: "Try Again"
   },
-  Header: {
+  UserMenu: {
+    settings: "Account settings",
+    connect: "BIMData Connect",
+    documentation: "Documentation",
+    marketplace: "Marketplace",
     selectLanguage: "Choose a language",
     logout: "Log Out"
   },

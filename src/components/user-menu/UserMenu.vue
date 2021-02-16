@@ -1,5 +1,5 @@
 <template>
-  <div class="user-menu" v-click-away="closeMenu">
+  <div class="user-menu">
     <BIMDataDropdownMenu width="0">
       <template #header>
         <div class="user-menu__btn">
@@ -16,14 +16,33 @@
       </template>
       <template #element>
         <div class="user-menu__container" @click.stop="() => {}">
-          <BIMDataSelect
-            :label="$t('Header.selectLanguage')"
-            :options="$i18n.availableLocales"
-            v-model="$i18n.locale"
-          />
-          <BIMDataButton color="primary" fill radius @click="signOut">
+          <BIMDataButton ghost squared>
+            {{ $t("UserMenu.settings") }}
+          </BIMDataButton>
+          <BIMDataButton ghost squared @click="openBIMDataConnect">
+            {{ $t("UserMenu.connect") }}
+          </BIMDataButton>
+          <div class="separator"></div>
+          <BIMDataButton ghost squared @click="openDocumentation">
+            {{ $t("UserMenu.documentation") }}
+          </BIMDataButton>
+          <BIMDataButton ghost squared @click="openMarketplace">
+            {{ $t("UserMenu.marketplace") }}
+          </BIMDataButton>
+          <div class="separator"></div>
+          <BIMDataButton class="lang-btn" ghost squared>
+            <span>{{ $t("UserMenu.selectLanguage") }}</span>
+            <span class="lang-badge">{{ $i18n.locale }}</span>
+          </BIMDataButton>
+          <BIMDataButton
+            class="logout-btn"
+            color="primary"
+            fill
+            radius
+            @click="signOut"
+          >
             <BIMDataIcon name="logout" size="xxs" />
-            <span>{{ $t("Header.logout") }}</span>
+            <span>{{ $t("UserMenu.logout") }}</span>
           </BIMDataButton>
         </div>
       </template>
@@ -38,14 +57,12 @@ import { useAuth } from "@/state/auth";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSelect.js";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataDropdownMenu,
-    BIMDataIcon,
-    BIMDataSelect
+    BIMDataIcon
   },
   setup() {
     const { user, signOut } = useAuth();
@@ -64,6 +81,18 @@ export default {
       }
     });
 
+    const openBIMDataConnect = () => {
+      window.open(`${process.env.VUE_APP_URL_BIMDATACONNECT}`);
+    };
+
+    const openDocumentation = () => {
+      window.open(`${process.env.VUE_APP_URL_DOCUMENTATION}`);
+    };
+
+    const openMarketplace = () => {
+      window.open(`${process.env.VUE_APP_URL_MARKETPLACE}`);
+    };
+
     return {
       // References
       email,
@@ -71,6 +100,9 @@ export default {
       initials,
       lastName,
       // Methods
+      openBIMDataConnect,
+      openDocumentation,
+      openMarketplace,
       signOut
     };
   }

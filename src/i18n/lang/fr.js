@@ -10,8 +10,12 @@ export default {
       "Une erreur s'est produite lors de l'authentification...",
     tryAgain: "Réessayer"
   },
-  Header: {
-    selectLanguage: "Sélectionner la langue",
+  UserMenu: {
+    settings: "Paramètres du compte",
+    connect: "BIMData Connect",
+    documentation: "Documentation",
+    marketplace: "Marketplace",
+    selectLanguage: "Choix de la langue",
     logout: "Se Déconnecter"
   },
   Breadcrumb: {
