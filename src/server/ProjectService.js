@@ -1,6 +1,10 @@
 import apiClient from "./api-client";
 
 class ProjectService {
+  fetchUserProjects() {
+    return apiClient.collaborationApi.getSelfProjects();
+  }
+
   fetchSpaceProjects(space) {
     return apiClient.collaborationApi.getProjects({
       cloudPk: space.id

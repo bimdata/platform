@@ -7,7 +7,11 @@
     <template #front-face>
       <BIMDataCard>
         <template #left>
-          <ProjectActionBar :project="project" @open-menu="openMenu" />
+          <ProjectActionBar
+            v-if="actionMenu"
+            :project="project"
+            @open-menu="openMenu"
+          />
         </template>
         <template #content>
           <div class="left-stripe"></div>
@@ -47,6 +51,10 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    actionMenu: {
+      type: Boolean,
+      default: true
     }
   },
   setup() {

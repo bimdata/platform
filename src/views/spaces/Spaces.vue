@@ -60,20 +60,20 @@ export default {
     SpaceCreationCard
   },
   setup() {
-    const { spaces } = useSpaces();
+    const { userSpaces } = useSpaces();
 
     const displayedSpaces = ref([]);
-    watchEffect(() => (displayedSpaces.value = spaces.value));
+    watchEffect(() => (displayedSpaces.value = userSpaces.value));
 
     const searchText = ref("");
     const filterSpaces = value => {
       const text = value.trim().toLowerCase();
       if (text) {
-        displayedSpaces.value = spaces.value.filter(a =>
+        displayedSpaces.value = userSpaces.value.filter(a =>
           a.name.toLowerCase().includes(text)
         );
       } else {
-        displayedSpaces.value = spaces.value;
+        displayedSpaces.value = userSpaces.value;
       }
     };
     watchEffect(() => filterSpaces(searchText.value));

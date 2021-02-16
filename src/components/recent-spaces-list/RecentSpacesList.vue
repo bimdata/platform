@@ -25,13 +25,13 @@ export default {
     SpaceCard
   },
   setup() {
-    const { spaces } = useSpaces();
+    const { userSpaces } = useSpaces();
 
     const recentSpaces = ref([]);
 
     watchEffect(() => {
-      if (spaces.value) {
-        recentSpaces.value = spaces.value
+      if (userSpaces.value) {
+        recentSpaces.value = userSpaces.value
           .slice()
           .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
           .slice(0, 7);

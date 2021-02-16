@@ -1,41 +1,49 @@
 import { reactive, readonly, toRefs } from "vue";
 import IfcService from "@/server/IfcService";
-import ProjectsService from "@/server/ProjectService";
+import ProjectService from "@/server/ProjectService";
 
 const state = reactive({
-  projects: [],
+  userProjects: [],
+  spaceProjects: [],
   currentProject: null
 });
 
-const loadProjects = async space => {
-  state.projects = await ProjectsService.fetchSpaceProjects(space);
-  return state.projects;
+const loadUserProjects = async () => {
+  state.userProjects = await ProjectService.fetchUserProjects();
+  return state.userProjects;
+};
+
+const loadSpaceProjects = async space => {
+  state.spaceProjects = await ProjectService.fetchSpaceProjects(space);
+  return state.spaceProjects;
 };
 
 const createProject = async (space, project) => {
-  const newProject = await ProjectsService.createProject(space, project);
-  state.projects = [newProject].concat(state.projects);
+  const newProject = await ProjectService.createProject(space, project);
+  state.spaceProjects = [newProject].concat(state.spaceProjects);
   return newProject;
 };
 
 const updateProject = async project => {
-  const newProject = await ProjectsService.updateProject(project);
+  const newProject = await ProjectService.updateProject(project);
   softUpdateProject(newProject);
   return newProject;
 };
 
 const softUpdateProject = project => {
-  state.projects = state.projects.map(p => (p.id === project.id ? project : p));
+  state.spaceProjects = state.spaceProjects.map(p =>
+    p.id === project.id ? project : p
+  );
 };
 
 const deleteProject = async project => {
-  await ProjectsService.deleteProject(project);
-  state.projects = state.projects.filter(p => p.id !== project.id);
+  await ProjectService.deleteProject(project);
+  state.spaceProjects = state.spaceProjects.filter(p => p.id !== project.id);
   return project;
 };
 
 const selectProject = id => {
-  state.currentProject = state.projects.find(p => p.id === id) || null;
+  state.currentProject = state.spaceProjects.find(p => p.id === id) || null;
   return state.currentProject;
 };
 
@@ -51,7 +59,8 @@ export function useProjects() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),
-    loadProjects,
+    loadUserProjects,
+    loadSpaceProjects,
     createProject,
     updateProject,
     softUpdateProject,
