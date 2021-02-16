@@ -1,35 +1,33 @@
 <template>
   <div class="user-menu" v-click-away="closeMenu">
-    <BIMDataButton
-      color="default"
-      outline
-      radius
-      class="user-menu__btn"
-      @click="toggleMenu"
-    >
-      <span class="user-menu__btn__picture">
-        {{ initials }}
-      </span>
-      <span class="user-menu__btn__fullname">
-        {{ `${firstName} ${lastName}` }}
-      </span>
-      <span class="user-menu__btn__email">
-        {{ email }}
-      </span>
-    </BIMDataButton>
-    <transition name="fade">
-      <div class="user-menu__container" v-show="showMenu">
-        <BIMDataSelect
-          :label="$t('Header.selectLanguage')"
-          :options="$i18n.availableLocales"
-          v-model="$i18n.locale"
-        />
-        <BIMDataButton color="primary" fill radius @click="signOut">
-          <BIMDataIcon name="logout" size="xxs" />
-          <span>{{ $t("Header.logout") }}</span>
-        </BIMDataButton>
-      </div>
-    </transition>
+    <BIMDataDropdownMenu width="0">
+      <template #header>
+        <div class="user-menu__btn">
+          <span class="user-menu__btn__picture">
+            {{ initials }}
+          </span>
+          <span class="user-menu__btn__fullname">
+            {{ `${firstName} ${lastName}` }}
+          </span>
+          <span class="user-menu__btn__email">
+            {{ email }}
+          </span>
+        </div>
+      </template>
+      <template #element>
+        <div class="user-menu__container" @click.stop="() => {}">
+          <BIMDataSelect
+            :label="$t('Header.selectLanguage')"
+            :options="$i18n.availableLocales"
+            v-model="$i18n.locale"
+          />
+          <BIMDataButton color="primary" fill radius @click="signOut">
+            <BIMDataIcon name="logout" size="xxs" />
+            <span>{{ $t("Header.logout") }}</span>
+          </BIMDataButton>
+        </div>
+      </template>
+    </BIMDataDropdownMenu>
   </div>
 </template>
 
@@ -38,21 +36,19 @@ import { computed, ref, watchEffect } from "vue";
 import { useAuth } from "@/state/auth";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSelect.js";
 
 export default {
   components: {
     BIMDataButton,
+    BIMDataDropdownMenu,
     BIMDataIcon,
     BIMDataSelect
   },
   setup() {
     const { user, signOut } = useAuth();
-
-    const showMenu = ref(false);
-    const closeMenu = () => (showMenu.value = false);
-    const toggleMenu = () => (showMenu.value = !showMenu.value);
 
     const firstName = ref("");
     const lastName = ref("");
@@ -74,10 +70,7 @@ export default {
       firstName,
       initials,
       lastName,
-      showMenu,
       // Methods
-      closeMenu,
-      toggleMenu,
       signOut
     };
   }
