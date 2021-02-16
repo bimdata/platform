@@ -12,18 +12,35 @@ const createViewResolver = resolve => {
   };
 };
 
-const dashboardResolver = createViewResolver(() => useSpaces().loadSpaces());
+const dashboardResolver = createViewResolver(async () => {
+  const { loadUserSpaces } = useSpaces();
+  const { loadUserProjects } = useProjects();
 
-const spacesResolver = createViewResolver(() => useSpaces().loadSpaces());
+  await loadUserSpaces();
+  await loadUserProjects();
+  return;
+});
+
+const spacesResolver = createViewResolver(async () => {
+  const { loadUserSpaces } = useSpaces();
+
+  await loadUserSpaces();
+  return;
+});
 
 const spaceBoardResolver = createViewResolver(async route => {
-  const { currentSpace, loadSpaces, loadSpaceUsers, selectSpace } = useSpaces();
-  const { loadProjects } = useProjects();
+  const {
+    currentSpace,
+    loadUserSpaces,
+    loadSpaceUsers,
+    selectSpace
+  } = useSpaces();
+  const { loadSpaceProjects } = useProjects();
 
-  await loadSpaces();
+  await loadUserSpaces();
   await selectSpace(+route.params.spaceID);
   await loadSpaceUsers(currentSpace.value);
-  await loadProjects(currentSpace.value);
+  await loadSpaceProjects(currentSpace.value);
   return;
 });
 

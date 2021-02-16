@@ -20,7 +20,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const { spaces, currentSpace } = useSpaces();
+    const { userSpaces, currentSpace } = useSpaces();
 
     const changeSpace = space => {
       router.push({
@@ -32,7 +32,7 @@ export default {
     return {
       // References
       currentSpace,
-      spaces,
+      spaces: userSpaces,
       // Methods
       changeSpace
     };

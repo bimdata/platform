@@ -60,6 +60,9 @@ export default {
   RecentSpacesList: {
     title: "Espaces récents"
   },
+  RecentProjectsList: {
+    title: "Projets récents"
+  },
   Projects: {
     searchProjects: "Rechercher un projet",
     ProjectCreationCard: {

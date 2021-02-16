@@ -1,16 +1,20 @@
 .dashboard-view {
   &__head {
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
-    gap: $spacing-unit*2;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-unit * 2;
   }
 
   &__main {
     display: flex;
     flex-direction: column;
-    margin: $spacing-unit*2 0;
+    margin: $spacing-unit * 2 0;
     padding: $spacing-unit;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: $color-white;
+
+    .recent-projects-list {
+      margin-top: $spacing-unit * 2;
+    }
   }
 }

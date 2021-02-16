@@ -77,20 +77,20 @@ export default {
   },
   setup() {
     const { currentSpace } = useSpaces();
-    const { projects } = useProjects();
+    const { spaceProjects } = useProjects();
 
     const displayedProjects = ref([]);
-    watchEffect(() => (displayedProjects.value = projects.value));
+    watchEffect(() => (displayedProjects.value = spaceProjects.value));
 
     const searchText = ref("");
     const filterProjects = value => {
       const text = value.trim().toLowerCase();
       if (text) {
-        displayedProjects.value = projects.value.filter(a =>
+        displayedProjects.value = spaceProjects.value.filter(a =>
           a.name.toLowerCase().includes(text)
         );
       } else {
-        displayedProjects.value = projects.value;
+        displayedProjects.value = spaceProjects.value;
       }
     };
     watchEffect(() => filterProjects(searchText.value));

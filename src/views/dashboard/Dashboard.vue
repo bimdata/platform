@@ -16,6 +16,7 @@
     </div>
     <div class="dashboard-view__main">
       <RecentSpacesList />
+      <RecentProjectsList />
     </div>
   </div>
 </template>
@@ -24,11 +25,13 @@
 import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
+import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import DashboardButtonTile from "@/components/dashboard-button-tile/DashboardButtonTile";
 import DashboardInfoTile from "@/components/dashboard-info-tile/DashboardInfoTile";
 import DashboardWelcomeTile from "@/components/dashboard-welcome-tile/DashboardWelcomeTile";
+import RecentProjectsList from "@/components/recent-projects-list/RecentProjectsList";
 import RecentSpacesList from "@/components/recent-spaces-list/RecentSpacesList";
 
 export default {
@@ -36,23 +39,30 @@ export default {
     DashboardButtonTile,
     DashboardInfoTile,
     DashboardWelcomeTile,
+    RecentProjectsList,
     RecentSpacesList
   },
   setup() {
     const router = useRouter();
-    const { spaces } = useSpaces();
+    const { userSpaces } = useSpaces();
+    const { userProjects } = useProjects();
 
     const nbSpaces = ref(0);
     watchEffect(() => {
-      if (spaces.value) {
-        nbSpaces.value = spaces.value.length;
+      if (userSpaces.value) {
+        nbSpaces.value = userSpaces.value.length;
       }
     });
     const goToSpaces = () => {
       router.push({ name: routeNames.spaces });
     };
 
-    const nbProjects = ref(235);
+    const nbProjects = ref(0);
+    watchEffect(() => {
+      if (userProjects.value) {
+        nbProjects.value = userProjects.value.length;
+      }
+    });
 
     return {
       // References

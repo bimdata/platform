@@ -56,7 +56,10 @@ export default {
     }
   },
   RecentSpacesList: {
-    title: "Espaces récents"
+    title: "Recent spaces"
+  },
+  RecentProjectsList: {
+    title: "Recent projects"
   },
   Projects: {
     searchProjects: "Search projets",
