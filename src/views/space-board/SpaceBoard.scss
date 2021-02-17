@@ -31,7 +31,7 @@
   .list-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, $platform-project-card-width);
-    // justify-content: space-between;
+    justify-content: space-between;
     gap: $spacing-unit * 3;
     padding: $spacing-unit * 2 0;
   }
