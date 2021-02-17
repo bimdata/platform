@@ -34,7 +34,7 @@ export default {
         recentProjects.value = userProjects.value
           .slice()
           .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
-          .slice(0, 7);
+          .slice(0, 4);
       }
     });
 
