@@ -16,7 +16,7 @@
       <div class="breadcrumb-selector__list" v-show="isActive">
         <BIMDataSearch
           radius
-          width="220px"
+          width="204px"
           :placeholder="$t('Breadcrumb.search')"
           v-model="searchText"
         />
