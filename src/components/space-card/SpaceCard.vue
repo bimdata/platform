@@ -9,13 +9,19 @@
     <template #footer>
       <div>{{ space.name }}</div>
       <div class="title-underline"></div>
+      <div class="sub-title">
+        <div class="sub-title__text">{{ $t("Spaces.projects") }}</div>
+        <div class="sub-title__number">{{ nbProjects }}</div>
+      </div>
     </template>
   </BIMDataCard>
 </template>
 
 <script>
+import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
+import { useProjects } from "@/state/projects";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import SpaceActionMenu from "@/components/space-action-menu/SpaceActionMenu";
@@ -39,6 +45,14 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const { userProjects } = useProjects();
+
+    const nbProjects = ref(0);
+    watchEffect(() => {
+      nbProjects.value = userProjects.value.filter(
+        p => p.cloud.id === props.space.id
+      ).length;
+    });
 
     const goToProjects = () => {
       router.push({
@@ -48,6 +62,9 @@ export default {
     };
 
     return {
+      // References
+      nbProjects,
+      // Methods
       goToProjects
     };
   }

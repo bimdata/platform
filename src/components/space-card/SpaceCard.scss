@@ -6,7 +6,7 @@
   &:deep() {
     .bimdata-card__submenu {
       position: relative;
-      top: $spacing-unit*2;
+      top: $spacing-unit * 2;
       z-index: 1;
       height: 0;
       padding: 0 $spacing-unit/2;
@@ -29,8 +29,22 @@
       .title-underline {
         height: 1px;
         width: 50px;
-        margin-top: $spacing-unit;
+        margin: $spacing-unit * 2/3 0;
         background-color: $color-tertiary;
+      }
+
+      .sub-title {
+        text-align: center;
+        line-height: 14px;
+
+        &__text {
+          font-size: 10px;
+          color: $color-tertiary-dark;
+        }
+        &__number {
+          font-size: 14px;
+          font-weight: bold;
+        }
       }
     }
   }

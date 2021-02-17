@@ -23,8 +23,10 @@ const dashboardResolver = createViewResolver(async () => {
 
 const spacesResolver = createViewResolver(async () => {
   const { loadUserSpaces } = useSpaces();
+  const { loadUserProjects } = useProjects();
 
   await loadUserSpaces();
+  await loadUserProjects();
   return;
 });
 
