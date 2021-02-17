@@ -13,15 +13,17 @@
   &__list {
     position: absolute;
     z-index: 1;
-    width: 244px;
+    width: 220px;
+    max-height: 360px;
     margin-top: $spacing-unit/2;
     padding-bottom: $spacing-unit/2;
     border-radius: 4px;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: $color-white;
+    overflow-y: auto;
 
     .bimdata-search-bar {
-      margin: $spacing-unit;
+      margin: 8px;
       background-color: $color-tertiary-lightest;
       &.focus {
         background-color: $color-white;
@@ -29,8 +31,7 @@
     }
 
     &__item {
-      padding: $spacing-unit/2;
-      text-align: center;
+      padding: 8px;
       &:hover {
         cursor: pointer;
         background-color: $color-tertiary-lightest;
@@ -40,9 +41,6 @@
 
   &.active {
     .breadcrumb-selector__header {
-      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-      background-color: $color-white;
-
       .breadcrumb-selector__header__icon {
         transform: rotate(90deg);
       }
