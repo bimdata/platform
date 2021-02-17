@@ -50,7 +50,7 @@ export default {
       fieldName: "image",
       metaFields: [],
       headers: {
-        Authorization: `Bearer ${user.value.access_token}`
+        Authorization: `Bearer ${user.value.accessToken}`
       }
     });
     uppy.on("file-added", () => {
