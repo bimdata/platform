@@ -6,7 +6,7 @@
   .view-container {
     position: relative;
     height: calc(100% - #{$platform-header-height});
-    padding: $spacing-unit*2;
+    padding: $spacing-unit * 7/2;
     overflow-y: auto;
 
     .loader {
