@@ -34,6 +34,7 @@ export default {
     searchSpaces: "Search spaces",
     sortSpaces: "",
     createSpace: "Create a space",
+    projects: "PROJECTS",
     SpaceCreationCard: {
       title: "New space",
       inputName: "Name",
