@@ -1,6 +1,4 @@
 .user-menu {
-  position: relative;
-
   .bimdata-dropdown:deep() {
     .bimdata-dropdown__content {
       padding: 0;
@@ -35,10 +33,11 @@
   }
 
   &__container {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
-    font-size: 1rem;
+    font-size: 12px;
 
     .separator {
       height: 1px;

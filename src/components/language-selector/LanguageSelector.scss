@@ -1,0 +1,44 @@
+.language-selector {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0 $spacing-unit/2;
+  background-color: $color-white;
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-unit;
+    font-weight: bold;
+  }
+
+  &__content {
+    $badge-size: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, $badge-size);
+    justify-content: space-between;
+    gap: $spacing-unit;
+
+    .lang-badge {
+      cursor: pointer;
+      width: $badge-size;
+      height: $badge-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 2px;
+      text-transform: uppercase;
+
+      &.selected {
+        background-color: $color-secondary;
+      }
+
+      &:hover:not(.selected) {
+        background-color: $color-tertiary-lightest;
+      }
+    }
+  }
+}

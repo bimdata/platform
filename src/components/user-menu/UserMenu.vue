@@ -30,7 +30,12 @@
             {{ $t("UserMenu.marketplace") }}
           </BIMDataButton>
           <div class="separator"></div>
-          <BIMDataButton class="lang-btn" ghost squared>
+          <BIMDataButton
+            class="lang-btn"
+            ghost
+            squared
+            @click="openLanguageSelector"
+          >
             <span>{{ $t("UserMenu.selectLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
@@ -44,6 +49,14 @@
             <BIMDataIcon name="logout" size="xxs" />
             <span>{{ $t("UserMenu.logout") }}</span>
           </BIMDataButton>
+
+          <transition name="fade">
+            <LanguageSelector
+              v-show="showLanguageSelector"
+              v-click-away="closeLanguageSelector"
+              @close="closeLanguageSelector"
+            />
+          </transition>
         </div>
       </template>
     </BIMDataDropdownMenu>
@@ -57,12 +70,14 @@ import { useAuth } from "@/state/auth";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import LanguageSelector from "@/components/language-selector/LanguageSelector";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataDropdownMenu,
-    BIMDataIcon
+    BIMDataIcon,
+    LanguageSelector
   },
   setup() {
     const { user, signOut } = useAuth();
@@ -93,15 +108,26 @@ export default {
       window.open(`${process.env.VUE_APP_URL_MARKETPLACE}`);
     };
 
+    const showLanguageSelector = ref(false);
+    const openLanguageSelector = () => {
+      showLanguageSelector.value = true;
+    };
+    const closeLanguageSelector = () => {
+      showLanguageSelector.value = false;
+    };
+
     return {
       // References
       email,
       firstName,
       initials,
       lastName,
+      showLanguageSelector,
       // Methods
+      closeLanguageSelector,
       openBIMDataConnect,
       openDocumentation,
+      openLanguageSelector,
       openMarketplace,
       signOut
     };
