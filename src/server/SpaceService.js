@@ -67,6 +67,21 @@ class SpaceService {
       id: invitation.id
     });
   }
+
+  updateSpaceUser(space, user) {
+    return apiClient.collaborationApi.updateCloudUser({
+      cloudPk: space.id,
+      id: user.id,
+      data: user
+    });
+  }
+
+  removeSpaceUser(space, user) {
+    return apiClient.collaborationApi.deleteCloudUser({
+      cloudPk: space.id,
+      id: user.id
+    });
+  }
 }
 
 const service = new SpaceService();

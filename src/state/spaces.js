@@ -76,6 +76,28 @@ const cancelSpaceInvitation = async (space, invitation) => {
   return invitation;
 };
 
+const updateSpaceUser = async (space, user) => {
+  const newUser = await SpaceService.updateSpaceUser(space, user);
+  state.currentSpaceAdmins = state.currentSpaceAdmins.map(u =>
+    u.id === user.id ? newUser : u
+  );
+  state.currentSpaceUsers = state.currentSpaceUsers.map(u =>
+    u.id === user.id ? newUser : u
+  );
+  return newUser;
+};
+
+const removeSpaceUser = async (space, user) => {
+  await SpaceService.removeSpaceUser(space, user);
+  state.currentSpaceAdmins = state.currentSpaceAdmins.filter(
+    u => u.id !== user.id
+  );
+  state.currentSpaceUsers = state.currentSpaceUsers.filter(
+    u => u.id !== user.id
+  );
+  return user;
+};
+
 export function useSpaces() {
   const readonlyState = readonly(state);
   return {
@@ -90,6 +112,8 @@ export function useSpaces() {
     deleteSpace,
     selectSpace,
     sendSpaceInvitation,
-    cancelSpaceInvitation
+    cancelSpaceInvitation,
+    updateSpaceUser,
+    removeSpaceUser
   };
 }
