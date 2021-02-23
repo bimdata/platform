@@ -80,7 +80,7 @@ export default {
     };
 
     onMounted(() => {
-      setTimeout(() => nameInput.value.focus(), 400);
+      setTimeout(() => nameInput.value.focus(), 200);
     });
 
     return {

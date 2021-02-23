@@ -90,7 +90,7 @@ export default {
     const showCreationForm = ref(false);
     const openCreationForm = () => {
       showCreationForm.value = true;
-      () => setTimeout(() => nameInput.value.focus(), 400);
+      setTimeout(() => nameInput.value.focus(), 200);
     };
     const closeCreationForm = () => {
       newProject.name = "";
