@@ -7,7 +7,7 @@
         <template #number>{{ nbSpaces }}</template>
         <template #text>{{ $t("Dashboard.viewSpaces") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile color="secondary">
+      <DashboardButtonTile color="secondary" @click="goToProjects">
         <template #title>{{ $t("Dashboard.activeProjects") }}</template>
         <template #number>{{ nbProjects }}</template>
         <template #text>{{ $t("Dashboard.viewProjects") }}</template>
@@ -63,12 +63,16 @@ export default {
         nbProjects.value = userProjects.value.length;
       }
     });
+    const goToProjects = () => {
+      router.push({ name: routeNames.projects });
+    };
 
     return {
       // References
       nbProjects,
       nbSpaces,
       // Methods
+      goToProjects,
       goToSpaces
     };
   }

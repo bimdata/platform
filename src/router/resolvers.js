@@ -48,4 +48,16 @@ const spaceBoardResolver = createViewResolver(async route => {
   return;
 });
 
-export { dashboardResolver, spacesResolver, spaceBoardResolver };
+const projectsResolver = createViewResolver(async () => {
+  const { loadUserProjects } = useProjects();
+
+  await loadUserProjects();
+  return;
+});
+
+export {
+  dashboardResolver,
+  spacesResolver,
+  spaceBoardResolver,
+  projectsResolver
+};

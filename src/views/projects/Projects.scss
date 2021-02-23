@@ -1,0 +1,38 @@
+.projects-view {
+  .sub-header {
+    display: flex;
+    align-items: center;
+
+    &--left {
+      margin-right: auto;
+      display: flex;
+    }
+
+    &--center {
+      margin: 0 auto;
+      display: flex;
+
+      .bimdata-search-bar {
+        background-color: $color-white;
+      }
+    }
+
+    &--right {
+      margin-left: auto;
+      display: flex;
+      gap: $spacing-unit;
+
+      .bimdata-btn[color="default"] {
+        color: $color-tertiary-dark;
+      }
+    }
+  }
+
+  .list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, $platform-project-card-width);
+    justify-content: space-between;
+    gap: $spacing-unit * 3;
+    padding: $spacing-unit * 2 0;
+  }
+}

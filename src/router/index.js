@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { authGuard } from "./guards";
 import {
   dashboardResolver,
+  projectsResolver,
   spaceBoardResolver,
   spacesResolver
 } from "./resolvers";
@@ -10,6 +11,7 @@ import Layout from "@/Layout";
 import Dashboard from "@/views/dashboard/Dashboard";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
+import Projects from "@/views/projects/Projects";
 import SpaceBoard from "@/views/space-board/SpaceBoard";
 import Spaces from "@/views/spaces/Spaces";
 
@@ -19,7 +21,8 @@ const routeNames = Object.freeze({
   oidcCallbackError: "oidc-callback-error",
   dashboard: "dashboard",
   spaces: "spaces",
-  spaceBoard: "space-board"
+  spaceBoard: "space-board",
+  projects: "projects"
 });
 
 const routes = [
@@ -55,6 +58,14 @@ const routes = [
         meta: {
           resolver: spaceBoardResolver,
           breadcrumb: ["BreadcrumbSpaceSelector"]
+        }
+      },
+      {
+        path: "/projects",
+        name: routeNames.projects,
+        component: Projects,
+        meta: {
+          resolver: projectsResolver
         }
       }
     ]
