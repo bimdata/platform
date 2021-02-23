@@ -6,7 +6,7 @@
     <div class="user-card__info">
       <div class="user-card__info__name">
         {{ `${firstName} ${lastName}` }}
-        <span class="admin-badge" v-if="isAdmin">Admin</span>
+        <UserRoleBadge :role="role" />
       </div>
       <div class="user-card__info__email">{{ email }}</div>
     </div>
@@ -21,11 +21,13 @@ import { computed, ref, watchEffect } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import UserRoleBadge from "@/components/user-role-badge/UserRoleBadge";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon
+    BIMDataIcon,
+    UserRoleBadge
   },
   props: {
     user: {
@@ -37,7 +39,7 @@ export default {
     const firstName = ref("");
     const lastName = ref("");
     const email = ref("");
-    const isAdmin = ref(false);
+    const role = ref(0);
     const initials = computed(() =>
       `${firstName.value[0]}${lastName.value[0]}`.toUpperCase()
     );
@@ -46,7 +48,7 @@ export default {
         firstName.value = props.user.firstname || " ";
         lastName.value = props.user.lastname || " ";
         email.value = props.user.email || "";
-        isAdmin.value = props.user.cloudRole === 100;
+        role.value = props.user.cloudRole;
       }
     });
 
@@ -55,8 +57,8 @@ export default {
       email,
       firstName,
       initials,
-      isAdmin,
-      lastName
+      lastName,
+      role
     };
   }
 };

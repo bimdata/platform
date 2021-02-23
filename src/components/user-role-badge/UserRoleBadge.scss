@@ -1,0 +1,21 @@
+.user-role-badge {
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: normal;
+
+  &.admin {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+
+  &.user {
+    background-color: $color-success;
+    color: $color-white;
+  }
+
+  &.guest {
+    background-color: $color-tertiary-dark;
+    color: $color-white;
+  }
+}

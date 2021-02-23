@@ -102,5 +102,10 @@ export default {
   SpaceInvitationForm: {
     inputEmail: "Email de l'utilisateur",
     errorMessage: "Email invalide"
+  },
+  User: {
+    admin: "Admin",
+    user: "User",
+    guest: "Guest"
   }
 };
