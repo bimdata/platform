@@ -1,5 +1,5 @@
 <template>
-  <div class="invitation-card">
+  <div class="space-invitation-card">
     <div class="invitation-card__avatar">
       <img src="/static/pending-invitation-avatar.svg" />
     </div>
