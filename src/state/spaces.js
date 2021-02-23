@@ -5,7 +5,8 @@ const state = reactive({
   userSpaces: [],
   currentSpace: null,
   currentSpaceAdmins: [],
-  currentSpaceUsers: []
+  currentSpaceUsers: [],
+  currentSpaceInvitations: []
 });
 
 const loadUserSpaces = async () => {
@@ -18,6 +19,12 @@ const loadSpaceUsers = async space => {
   state.currentSpaceAdmins = users.filter(u => u.cloudRole === 100);
   state.currentSpaceUsers = users.filter(u => u.cloudRole === 50);
   return users;
+};
+
+const loadSpaceInvitations = async space => {
+  const invitations = await SpaceService.fetchSpaceInvitations(space);
+  state.currentSpaceInvitations = invitations;
+  return state.currentSpaceInvitations;
 };
 
 const createSpace = async space => {
@@ -53,8 +60,19 @@ const selectSpace = id => {
   return state.currentSpace;
 };
 
-const inviteSpaceUser = async (space, email) => {
-  const invitation = await SpaceService.inviteSpaceUser(space, email);
+const sendSpaceInvitation = async (space, email) => {
+  const invitation = await SpaceService.sendSpaceInvitation(space, email);
+  state.currentSpaceInvitations = [invitation].concat(
+    state.currentSpaceInvitations
+  );
+  return invitation;
+};
+
+const cancelSpaceInvitation = async (space, invitation) => {
+  await SpaceService.cancelSpaceInvitation(space, invitation);
+  state.currentSpaceInvitations = state.currentSpaceInvitations.filter(
+    i => i.id !== invitation.id
+  );
   return invitation;
 };
 
@@ -64,12 +82,14 @@ export function useSpaces() {
     ...toRefs(readonlyState),
     loadUserSpaces,
     loadSpaceUsers,
+    loadSpaceInvitations,
     createSpace,
     updateSpace,
     softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
     selectSpace,
-    inviteSpaceUser
+    sendSpaceInvitation,
+    cancelSpaceInvitation
   };
 }

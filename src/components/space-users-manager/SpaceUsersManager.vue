@@ -38,6 +38,11 @@
     </transition>
 
     <div class="list-container">
+      <SpaceInvitationCard
+        v-for="invitation in invitations"
+        :key="invitation.id"
+        :invitation="invitation"
+      />
       <transition-group name="item-list">
         <UserCard v-for="user in displayedUsers" :key="user.id" :user="user" />
       </transition-group>
@@ -53,6 +58,7 @@ import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import SpaceInvitationCard from "@/components/space-invitation-card/SpaceInvitationCard";
 import SpaceInvitationForm from "@/components/space-invitation-form/SpaceInvitationForm";
 import UserCard from "@/components/user-card/UserCard";
 
@@ -62,11 +68,17 @@ export default {
     BIMDataIcon,
     BIMDataSearch,
     BIMDataTabs,
+    SpaceInvitationCard,
     SpaceInvitationForm,
     UserCard
   },
   setup() {
-    const { currentSpace, currentSpaceAdmins, currentSpaceUsers } = useSpaces();
+    const {
+      currentSpace,
+      currentSpaceAdmins,
+      currentSpaceUsers,
+      currentSpaceInvitations
+    } = useSpaces();
 
     const tabs = [
       { id: "admins", label: "Administrateurs" },
@@ -114,6 +126,7 @@ export default {
     return {
       // Refrences
       displayedUsers,
+      invitations: currentSpaceInvitations,
       searchText,
       showInvitationForm,
       space: currentSpace,

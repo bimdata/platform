@@ -11,6 +11,12 @@ class SpaceService {
     });
   }
 
+  fetchSpaceInvitations(space) {
+    return apiClient.collaborationApi.getCloudInvitations({
+      cloudPk: space.id
+    });
+  }
+
   createSpace(space) {
     return apiClient.collaborationApi.createCloud({
       data: space
@@ -45,13 +51,20 @@ class SpaceService {
     });
   }
 
-  inviteSpaceUser(space, email) {
+  sendSpaceInvitation(space, email) {
     return apiClient.collaborationApi.inviteCloudUser({
       cloudPk: space.id,
       data: {
         email,
         redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
       }
+    });
+  }
+
+  cancelSpaceInvitation(space, invitation) {
+    return apiClient.collaborationApi.cancelCloudUserInvitation({
+      cloudPk: space.id,
+      id: invitation.id
     });
   }
 }

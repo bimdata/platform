@@ -52,14 +52,14 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
-    const { inviteSpaceUser } = useSpaces();
+    const { sendSpaceInvitation } = useSpaces();
 
     const emailInput = ref(null);
     const email = ref("");
     const error = ref(false);
     const inviteUser = () => {
       if (email.value) {
-        inviteSpaceUser(props.space, email.value)
+        sendSpaceInvitation(props.space, email.value)
           .then(() => emit("success"))
           .catch(error => emit("error", error));
       } else {

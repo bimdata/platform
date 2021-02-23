@@ -8,10 +8,12 @@
         {{ `${firstName} ${lastName}` }}
         <UserRoleBadge :role="role" />
       </div>
-      <div class="user-card__info__email">{{ email }}</div>
+      <div class="user-card__info__email">
+        {{ email }}
+      </div>
     </div>
     <BIMDataButton class="user-card__menu-btn" ripple rounded icon>
-      <BIMDataIcon name="ellipsis" size="l" class="fill-tertiary-dark" />
+      <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
   </div>
 </template>

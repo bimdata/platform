@@ -104,5 +104,9 @@ export default {
     admin: "Admin",
     user: "User",
     guest: "Guest"
+  },
+  Invitation: {
+    pending: "Invited - Pending.",
+    sendAgain: "Send invitation again ?"
   }
 };
