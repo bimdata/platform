@@ -5,7 +5,7 @@ The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.o
 
 ## Install & Run
 
-Follow the below instructions to get a fresh up and running platform in your
+Here are the instructions to get the platform up and running on your
 development environment:
 
 - **(1)** Get the sources
@@ -29,10 +29,9 @@ $ cp .env.example .env.local
 
 Open `.env.local` with your favorite text editor and set the variable `VUE_APP_OIDC_CLIENT_ID`
 to one of your client ID.
-
-If you don't know what a 'client ID' is then you should have a look at
+If you don't know what a _"client ID"_ is then you should have a look at
 [the documentation](https://developers.bimdata.io/api/guides/application.html#create-your-application)
-and follow the steps to create one.
+and follow the steps to create an application.
 
 - **(4)** Run the platform
 
@@ -40,7 +39,7 @@ and follow the steps to create one.
 $ npm run serve
 ```
 
-- **(5)** Make you a coffee and start coding... :coffee:
+- **(5)** Make you a coffee and start coding... :coffee: `</>`
 
 ## Documentation
 
