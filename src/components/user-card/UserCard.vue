@@ -12,23 +12,19 @@
         {{ email }}
       </div>
     </div>
-    <BIMDataButton class="user-card__menu-btn" ripple rounded icon>
-      <BIMDataIcon name="ellipsis" size="l" />
-    </BIMDataButton>
+    <UserActionMenu :user="user" />
   </div>
 </template>
 
 <script>
 import { computed, ref, watchEffect } from "vue";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import UserActionMenu from "@/components/user-action-menu/UserActionMenu";
 import UserRoleBadge from "@/components/user-role-badge/UserRoleBadge";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
+    UserActionMenu,
     UserRoleBadge
   },
   props: {

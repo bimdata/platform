@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 42px;
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -31,10 +32,6 @@
       font-size: 12px;
       color: $color-tertiary-dark;
     }
-  }
-
-  &__menu-btn {
-    color: $color-tertiary-dark;
   }
 
   &:hover {

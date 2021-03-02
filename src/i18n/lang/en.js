@@ -103,7 +103,10 @@ export default {
   User: {
     admin: "Admin",
     user: "User",
-    guest: "Guest"
+    guest: "Guest",
+    UserActionMenu: {
+      delete: "Delete"
+    }
   },
   Invitation: {
     pending: "Invited - Pending.",
