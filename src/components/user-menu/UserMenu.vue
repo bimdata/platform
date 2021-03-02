@@ -66,6 +66,7 @@
 <script>
 import { computed, ref, watchEffect } from "vue";
 import { useAuth } from "@/state/auth";
+import { useUser } from "@/state/user";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
@@ -80,7 +81,8 @@ export default {
     LanguageSelector
   },
   setup() {
-    const { user, signOut } = useAuth();
+    const { signOut } = useAuth();
+    const { user } = useUser();
 
     const firstName = ref("");
     const lastName = ref("");
@@ -90,8 +92,8 @@ export default {
     );
     watchEffect(() => {
       if (user.value) {
-        firstName.value = user.value.firstName;
-        lastName.value = user.value.lastName;
+        firstName.value = user.value.firstname;
+        lastName.value = user.value.lastname;
         email.value = user.value.email;
       }
     });
