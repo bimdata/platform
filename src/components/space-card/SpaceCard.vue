@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard class="space-card" @click="goToProjects">
     <template #right>
-      <SpaceActionMenu v-if="actionMenu" :space="space" />
+      <SpaceActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
     </template>
     <template #content>
       <SpaceImage :space="space" />
