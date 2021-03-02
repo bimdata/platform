@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
 import IfcService from "@/server/IfcService";
 import ProjectService from "@/server/ProjectService";
+import { useUser } from "@/state/user";
 
 const state = reactive({
   userProjects: [],
@@ -9,7 +10,14 @@ const state = reactive({
 });
 
 const loadUserProjects = async () => {
-  state.userProjects = await ProjectService.fetchUserProjects();
+  const { user } = useUser();
+  const projects = await ProjectService.fetchUserProjects();
+  state.userProjects = projects.map(project => ({
+    ...project,
+    isAdmin: user.value.projects.some(
+      role => role.cloud === project.id && role.role === 100
+    )
+  }));
   return state.userProjects;
 };
 

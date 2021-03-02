@@ -5,6 +5,7 @@
     </BIMDataButton>
 
     <BIMDataButton
+      v-if="project.isAdmin"
       color="default"
       ripple
       rounded
