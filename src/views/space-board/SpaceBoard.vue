@@ -19,7 +19,13 @@
         <BIMDataButton fill squared icon @click="sortProjects">
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
-        <BIMDataButton fill squared icon @click="openUsersManager">
+        <BIMDataButton
+          v-if="isAdmin"
+          fill
+          squared
+          icon
+          @click="openUsersManager"
+        >
           <BIMDataIcon name="addUser" size="s" />
         </BIMDataButton>
       </div>
@@ -79,6 +85,9 @@ export default {
     const { currentSpace } = useSpaces();
     const { spaceProjects } = useProjects();
 
+    const isAdmin = ref(false);
+    watchEffect(() => (isAdmin.value = currentSpace.value.isAdmin));
+
     const displayedProjects = ref([]);
     watchEffect(() => (displayedProjects.value = spaceProjects.value));
 
@@ -114,6 +123,7 @@ export default {
 
     return {
       // References
+      isAdmin,
       projects: displayedProjects,
       searchText,
       showUsersManager,
