@@ -5,8 +5,8 @@
       height="40px"
       tabSize="50%"
       :tabs="tabs"
-      :selected="0"
-      @tab-click="swicthUserList"
+      selected="admins"
+      @tab-click="selectTab"
     />
 
     <BIMDataSearch
@@ -38,12 +38,14 @@
     </transition>
 
     <div class="list-container">
-      <SpaceInvitationCard
-        v-for="invitation in invitations"
-        :key="invitation.id"
-        :invitation="invitation"
-      />
       <transition-group name="item-list">
+        <template v-if="showInvitations">
+          <SpaceInvitationCard
+            v-for="invitation in invitations"
+            :key="invitation.id"
+            :invitation="invitation"
+          />
+        </template>
         <UserCard v-for="user in displayedUsers" :key="user.id" :user="user" />
       </transition-group>
     </div>
@@ -51,7 +53,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -84,19 +86,24 @@ export default {
       { id: "admins", label: "Administrateurs" },
       { id: "users", label: "Utilisateurs" }
     ];
+    const currentTab = ref("admins");
+    const selectTab = tab => {
+      currentTab.value = tab.id;
+    };
+    const showInvitations = computed(() => currentTab.value === "admins");
 
-    const userList = ref(currentSpaceAdmins.value);
+    const userList = ref([]);
+    watchEffect(() => {
+      userList.value =
+        currentTab.value === "admins"
+          ? currentSpaceAdmins.value
+          : currentSpaceUsers.value;
+    });
+
     const displayedUsers = ref([]);
     watchEffect(() => {
       displayedUsers.value = userList.value;
     });
-
-    const swicthUserList = tab => {
-      userList.value =
-        tab.id === "admins"
-          ? currentSpaceAdmins.value
-          : currentSpaceUsers.value;
-    };
 
     const searchText = ref("");
     const filterUsers = value => {
@@ -125,16 +132,18 @@ export default {
 
     return {
       // Refrences
+      currentTab,
       displayedUsers,
       invitations: currentSpaceInvitations,
       searchText,
       showInvitationForm,
+      showInvitations,
       space: currentSpace,
       tabs,
       // Methods
       closeInvitationForm,
       openInvitationForm,
-      swicthUserList
+      selectTab
     };
   }
 };

@@ -68,11 +68,13 @@ const selectSpace = id => {
   return state.currentSpace;
 };
 
-const sendSpaceInvitation = async (space, email) => {
+const sendSpaceInvitation = async (space, email, options = {}) => {
   const invitation = await SpaceService.sendSpaceInvitation(space, email);
-  state.currentSpaceInvitations = [invitation].concat(
-    state.currentSpaceInvitations
-  );
+  if (!options.resend) {
+    state.currentSpaceInvitations = [invitation].concat(
+      state.currentSpaceInvitations
+    );
+  }
   return invitation;
 };
 
@@ -86,23 +88,29 @@ const cancelSpaceInvitation = async (space, invitation) => {
 
 const updateSpaceUser = async (space, user) => {
   const newUser = await SpaceService.updateSpaceUser(space, user);
-  state.currentSpaceAdmins = state.currentSpaceAdmins.map(u =>
-    u.id === user.id ? newUser : u
-  );
-  state.currentSpaceUsers = state.currentSpaceUsers.map(u =>
-    u.id === user.id ? newUser : u
-  );
+  if (space.isAdmin) {
+    state.currentSpaceAdmins = state.currentSpaceAdmins.map(u =>
+      u.id === user.id ? newUser : u
+    );
+  } else {
+    state.currentSpaceUsers = state.currentSpaceUsers.map(u =>
+      u.id === user.id ? newUser : u
+    );
+  }
   return newUser;
 };
 
-const removeSpaceUser = async (space, user) => {
-  await SpaceService.removeSpaceUser(space, user);
-  state.currentSpaceAdmins = state.currentSpaceAdmins.filter(
-    u => u.id !== user.id
-  );
-  state.currentSpaceUsers = state.currentSpaceUsers.filter(
-    u => u.id !== user.id
-  );
+const deleteSpaceUser = async (space, user) => {
+  await SpaceService.deleteSpaceUser(space, user);
+  if (space.isAdmin) {
+    state.currentSpaceAdmins = state.currentSpaceAdmins.filter(
+      u => u.id !== user.id
+    );
+  } else {
+    state.currentSpaceUsers = state.currentSpaceUsers.filter(
+      u => u.id !== user.id
+    );
+  }
   return user;
 };
 
@@ -122,6 +130,6 @@ export function useSpaces() {
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,
-    removeSpaceUser
+    deleteSpaceUser
   };
 }

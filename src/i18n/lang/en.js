@@ -104,8 +104,9 @@ export default {
     admin: "Admin",
     user: "User",
     guest: "Guest",
-    UserActionMenu: {
-      delete: "Delete"
+    UserDeleteGuard: {
+      message: "Remove {name} from this space ?",
+      buttonDelete: "Remove"
     }
   },
   Invitation: {

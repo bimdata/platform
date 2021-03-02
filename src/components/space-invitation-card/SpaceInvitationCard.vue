@@ -1,19 +1,19 @@
 <template>
   <div class="space-invitation-card">
-    <div class="invitation-card__avatar">
+    <div class="sapce-invitation-card__avatar">
       <img src="/static/pending-invitation-avatar.svg" />
     </div>
-    <div class="invitation-card__info">
+    <div class="space-invitation-card__info">
       <div class="invitation-card__info__email">
         {{ invitation.email }}
       </div>
-      <div class="invitation-card__info__text">
+      <div class="space-invitation-card__info__text">
         {{ $t("Invitation.pending") }}
-        <a @click="sendInvitation">{{ $t("Invitation.sendAgain") }}</a>
+        <a @click="resendInvitation">{{ $t("Invitation.sendAgain") }}</a>
       </div>
     </div>
     <BIMDataButton
-      class="invitation-card__cancel-btn"
+      class="space-invitation-card__cancel-btn"
       ghost
       rounded
       icon
@@ -48,8 +48,10 @@ export default {
       cancelSpaceInvitation
     } = useSpaces();
 
-    const sendInvitation = () => {
-      sendSpaceInvitation(currentSpace.value, props.invotation.email);
+    const resendInvitation = () => {
+      sendSpaceInvitation(currentSpace.value, props.invitation.email, {
+        resend: true
+      });
     };
     const cancelInvitation = () => {
       cancelSpaceInvitation(currentSpace.value, props.invitation);
@@ -57,7 +59,7 @@ export default {
 
     return {
       cancelInvitation,
-      sendInvitation
+      resendInvitation
     };
   }
 };

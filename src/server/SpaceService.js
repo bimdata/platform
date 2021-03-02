@@ -76,7 +76,7 @@ class SpaceService {
     });
   }
 
-  removeSpaceUser(space, user) {
+  deleteSpaceUser(space, user) {
     return apiClient.collaborationApi.deleteCloudUser({
       cloudPk: space.id,
       id: user.id

@@ -16,10 +16,10 @@
 
     <transition name="fade">
       <div class="user-action-menu__container" v-show="showMenu">
-        <BIMDataButton ghost rounded icon @click="() => {}">
+        <BIMDataButton ghost rounded icon @click="$emit('open-update')">
           <BIMDataIcon name="edit" size="xxs" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="() => {}">
+        <BIMDataButton ghost rounded icon @click="$emit('open-delete')">
           <BIMDataIcon name="delete" size="xxs" />
         </BIMDataButton>
       </div>
@@ -38,12 +38,7 @@ export default {
     BIMDataButton,
     BIMDataIcon
   },
-  props: {
-    user: {
-      type: Object,
-      required: true
-    }
-  },
+  emits: ["open-update", "open-delete"],
   setup() {
     const showMenu = ref(false);
     const closeMenu = () => {
