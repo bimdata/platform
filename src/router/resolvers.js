@@ -1,6 +1,14 @@
 import { contextIDs, useLoadingContext } from "@/state/loading";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
+import { useUser } from "@/state/user";
+
+const rootResolver = async () => {
+  const { loadUser } = useUser();
+
+  await loadUser();
+  return;
+};
 
 const createViewResolver = resolve => {
   return async route => {
@@ -56,6 +64,7 @@ const projectsResolver = createViewResolver(async () => {
 });
 
 export {
+  rootResolver,
   dashboardResolver,
   spacesResolver,
   spaceBoardResolver,

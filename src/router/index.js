@@ -3,6 +3,7 @@ import { authGuard } from "./guards";
 import {
   dashboardResolver,
   projectsResolver,
+  rootResolver,
   spaceBoardResolver,
   spacesResolver
 } from "./resolvers";
@@ -32,7 +33,8 @@ const routes = [
     component: Layout,
     meta: {
       // Protect this route and all its children with authentication
-      requiresAuth: true
+      requiresAuth: true,
+      resolver: rootResolver
     },
     children: [
       {
@@ -95,13 +97,13 @@ const router = createRouter({
 
 router.beforeEach(authGuard);
 
-router.beforeResolve(async to => {
-  const resolvers = to.matched
-    .filter(r => r.meta && r.meta.resolver)
-    .map(r => r.meta.resolver);
+router.beforeResolve(async targetRoute => {
+  const resolvers = targetRoute.matched
+    .filter(route => route.meta && route.meta.resolver)
+    .map(route => route.meta.resolver);
 
   for (const resolver of resolvers) {
-    await resolver(to);
+    await resolver(targetRoute);
   }
 });
 
