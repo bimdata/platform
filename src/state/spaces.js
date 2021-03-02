@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/server/SpaceService";
+import { useUser } from "@/state/user";
 
 const state = reactive({
   userSpaces: [],
@@ -10,14 +11,22 @@ const state = reactive({
 });
 
 const loadUserSpaces = async () => {
-  state.userSpaces = await SpaceService.fetchUserSpaces();
+  const { user } = useUser();
+
+  const spaces = await SpaceService.fetchUserSpaces();
+  state.userSpaces = spaces.map(space => ({
+    ...space,
+    isAdmin: user.value.clouds.some(
+      role => role.cloud === space.id && role.role === 100
+    )
+  }));
   return state.userSpaces;
 };
 
 const loadSpaceUsers = async space => {
   const users = await SpaceService.fetchSpaceUsers(space);
-  state.currentSpaceAdmins = users.filter(u => u.cloudRole === 100);
-  state.currentSpaceUsers = users.filter(u => u.cloudRole === 50);
+  state.currentSpaceAdmins = users.filter(user => user.cloudRole === 100);
+  state.currentSpaceUsers = users.filter(user => user.cloudRole === 50);
   return users;
 };
 
@@ -56,7 +65,7 @@ const deleteSpace = async space => {
 };
 
 const selectSpace = id => {
-  state.currentSpace = state.userSpaces.find(s => s.id === id) || null;
+  state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
   return state.currentSpace;
 };
 
