@@ -43,7 +43,7 @@
 
     <transition name="fade" appear>
       <div class="list-container">
-        <ProjectCreationCard />
+        <ProjectCreationCard v-if="isAdmin" />
         <transition-group name="card-list">
           <ProjectCard
             v-for="project in projects"
