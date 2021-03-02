@@ -12,7 +12,6 @@ const state = reactive({
 
 const loadUserSpaces = async () => {
   const { user } = useUser();
-
   const spaces = await SpaceService.fetchUserSpaces();
   state.userSpaces = spaces.map(space => ({
     ...space,
