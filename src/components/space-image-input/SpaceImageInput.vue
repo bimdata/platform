@@ -26,7 +26,7 @@ export default {
   },
   emits: ["success", "error"],
   setup(props, { emit }) {
-    const { user } = useAuth();
+    const { accessToken } = useAuth();
     const { softUpdateSpace } = useSpaces();
 
     const loading = inject("loading", false);
@@ -50,7 +50,7 @@ export default {
       fieldName: "image",
       metaFields: [],
       headers: {
-        Authorization: `Bearer ${user.value.accessToken}`
+        Authorization: `Bearer ${accessToken.value}`
       }
     });
     uppy.on("file-added", () => {
