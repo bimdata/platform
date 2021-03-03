@@ -36,18 +36,7 @@
       }
 
       &__content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: $spacing-unit/2;
-        height: calc(100% - 40px);
         padding: $spacing-unit;
-
-        &__actions {
-          display: flex;
-          gap: $spacing-unit;
-        }
       }
 
       &--models {
