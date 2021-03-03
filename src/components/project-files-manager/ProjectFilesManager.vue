@@ -1,13 +1,15 @@
 <template>
   <div class="project-files-manager">
-    <img src="/static/empty-project-illustration-files.svg" />
-    <div>Téléverser votre premier fichier</div>
+    <img src="/static/project-files-manager-illustration.svg" />
+    <div>
+      {{ $t("ProjectBoard.ProjectFilesManager.onboardingText") }}
+    </div>
     <div class="project-files-manager__actions">
       <BIMDataButton color="primary" fill radius>
-        Téléversement
+        {{ $t("ProjectBoard.ProjectFilesManager.buttonUploadFile") }}
       </BIMDataButton>
       <BIMDataButton color="primary" fill radius>
-        Créer un dossier
+        {{ $t("ProjectBoard.ProjectFilesManager.buttonCreateFolder") }}
       </BIMDataButton>
     </div>
   </div>

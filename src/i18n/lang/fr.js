@@ -115,5 +115,24 @@ export default {
   Invitation: {
     pending: "Invité - Sans réponse.",
     sendAgain: "Renvoyer l'invitation ?"
+  },
+  ProjectBoard: {
+    addIFC: "Ajouter un IFC",
+    ProjectModelsManager: {
+      title: "Modèles du projet",
+      onboardingText: "Téléverser votre premier IFC",
+      buttonUpload: "Téléversement"
+    },
+    ProjectUsersManager: {
+      title: "Utilisateurs",
+      onboardingText: "Inviter votre premier collaborateur",
+      buttonInvite: "Invitation"
+    },
+    ProjectFilesManager: {
+      title: "Documents du projet",
+      onboardingText: "Téléverser votre premier fichier",
+      buttonUploadFile: "Téléversement",
+      buttonCreateFolder: "Créer un dossier"
+    }
   }
 };
