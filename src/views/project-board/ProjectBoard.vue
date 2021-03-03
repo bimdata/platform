@@ -19,26 +19,32 @@
       <div class="sub-header--right">
         <BIMDataButton color="primary" fill radius>
           <BIMDataIcon name="plus" size="xxxs" />
-          <span>Ajouter un IFC</span>
+          <span>{{ $t("ProjectBoard.addIFC") }}</span>
         </BIMDataButton>
       </div>
     </div>
 
     <div class="container">
       <div class="block block--models">
-        <div class="block__title">Modèles du projet</div>
+        <div class="block__title">
+          {{ $t("ProjectBoard.ProjectModelsManager.title") }}
+        </div>
         <div class="block__content">
           <ProjectModelsManager :project="project" />
         </div>
       </div>
       <div class="block block--users">
-        <div class="block__title">Utilisateurs</div>
+        <div class="block__title">
+          {{ $t("ProjectBoard.ProjectUsersManager.title") }}
+        </div>
         <div class="block__content">
           <ProjectUsersManager :project="project" />
         </div>
       </div>
       <div class="block block--files">
-        <div class="block__title">Documents du projet</div>
+        <div class="block__title">
+          {{ $t("ProjectBoard.ProjectFilesManager.title") }}
+        </div>
         <div class="block__content">
           <ProjectFilesManager :project="project" />
         </div>

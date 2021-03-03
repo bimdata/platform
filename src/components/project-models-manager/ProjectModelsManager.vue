@@ -1,10 +1,12 @@
 <template>
   <div class="project-models-manager">
-    <img src="/static/empty-project-illustration-ifcs.svg" />
-    <div>Téléverser votre premier IFC</div>
+    <img src="/static/project-models-manager-illustration.svg" />
+    <div>
+      {{ $t("ProjectBoard.ProjectModelsManager.onboardingText") }}
+    </div>
     <div class="project-models-manager__actions">
       <BIMDataButton color="primary" fill radius>
-        Téléversement
+        {{ $t("ProjectBoard.ProjectModelsManager.buttonUpload") }}
       </BIMDataButton>
     </div>
   </div>

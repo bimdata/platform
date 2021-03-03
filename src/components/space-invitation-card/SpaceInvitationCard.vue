@@ -1,7 +1,7 @@
 <template>
   <div class="space-invitation-card">
     <div class="sapce-invitation-card__avatar">
-      <img src="/static/pending-invitation-avatar.svg" />
+      <img src="/static/invitation-avatar.svg" />
     </div>
     <div class="space-invitation-card__info">
       <div class="invitation-card__info__email">

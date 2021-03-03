@@ -1,10 +1,12 @@
 <template>
   <div class="project-users-manager">
-    <img src="/static/empty-project-illustration-users.svg" />
-    <div>Inviter votre premier collaborateur</div>
+    <img src="/static/project-users-manager-illustration.svg" />
+    <div>
+      {{ $t("ProjectBoard.ProjectUsersManager.onboardingText") }}
+    </div>
     <div class="project-users-manager__actions">
       <BIMDataButton color="primary" fill radius>
-        Invitation
+        {{ $t("ProjectBoard.ProjectUsersManager.buttonInvite") }}
       </BIMDataButton>
     </div>
   </div>

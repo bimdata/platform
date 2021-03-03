@@ -112,5 +112,24 @@ export default {
   Invitation: {
     pending: "Invited - Pending.",
     sendAgain: "Send invitation again ?"
+  },
+  ProjectBoard: {
+    addIFC: "Add an IFC",
+    ProjectModelsManager: {
+      title: "Project Models",
+      onboardingText: "Upload your first IFC",
+      buttonUpload: "Upload IFC"
+    },
+    ProjectUsersManager: {
+      title: "Project Users",
+      onboardingText: "Invite your first collaborator",
+      buttonInvite: "Invite"
+    },
+    ProjectFilesManager: {
+      title: "Project Files",
+      onboardingText: "Upload your first file",
+      buttonUploadFile: "Upload",
+      buttonCreateFolder: "Create a folder"
+    }
   }
 };
