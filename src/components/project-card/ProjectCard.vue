@@ -5,7 +5,7 @@
     v-click-away="closeMenu"
   >
     <template #front-face>
-      <BIMDataCard>
+      <BIMDataCard @click="goToProjectBoard">
         <template #left>
           <ProjectActionBar
             v-if="actionMenu"
@@ -32,6 +32,8 @@
 
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import FlipableCard from "@/components/flipable-card/FlipableCard";
@@ -57,16 +59,29 @@ export default {
       default: true
     }
   },
-  setup() {
+  setup(props) {
+    const router = useRouter();
+
     const showMenu = ref(false);
     const openMenu = () => (showMenu.value = true);
     const closeMenu = () => (showMenu.value = false);
+
+    const goToProjectBoard = () => {
+      router.push({
+        name: routeNames.projectBoard,
+        params: {
+          spaceID: props.project.cloud.id,
+          projectID: props.project.id
+        }
+      });
+    };
 
     return {
       // References
       showMenu,
       // Methods
       closeMenu,
+      goToProjectBoard,
       openMenu
     };
   }

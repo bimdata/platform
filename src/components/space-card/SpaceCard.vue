@@ -1,5 +1,5 @@
 <template>
-  <BIMDataCard class="space-card" @click="goToProjects">
+  <BIMDataCard class="space-card" @click="goToSpaceBoard">
     <template #right>
       <SpaceActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
     </template>
@@ -54,7 +54,7 @@ export default {
       ).length;
     });
 
-    const goToProjects = () => {
+    const goToSpaceBoard = () => {
       router.push({
         name: routeNames.spaceBoard,
         params: { spaceID: props.space.id }
@@ -65,7 +65,7 @@ export default {
       // References
       nbProjects,
       // Methods
-      goToProjects
+      goToSpaceBoard
     };
   }
 };

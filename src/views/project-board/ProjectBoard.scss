@@ -1,0 +1,66 @@
+.project-board-view {
+  .sub-header {
+    display: flex;
+    align-items: center;
+
+    &--left {
+      margin-right: auto;
+    }
+
+    &--center {
+      margin: 0 auto;
+    }
+
+    &--right {
+      margin-left: auto;
+    }
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: $spacing-unit * 2;
+    grid-template-areas:
+      "models models users"
+      "files  files  files";
+    padding: $spacing-unit * 2 0;
+
+    .block {
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+      background-color: $color-white;
+
+      &__title {
+        padding: $spacing-unit;
+        background-color: $color-tertiary-lightest;
+      }
+
+      &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: $spacing-unit/2;
+        height: calc(100% - 40px);
+        padding: $spacing-unit;
+
+        &__actions {
+          display: flex;
+          gap: $spacing-unit;
+        }
+      }
+
+      &--models {
+        grid-area: models;
+      }
+
+      &--users {
+        grid-area: users;
+      }
+
+      &--files {
+        grid-area: files;
+      }
+    }
+  }
+}
