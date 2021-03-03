@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { authGuard } from "./guards";
 import {
   dashboardResolver,
+  projectBoardResolver,
   projectsResolver,
   rootResolver,
   spaceBoardResolver,
@@ -12,6 +13,7 @@ import Layout from "@/Layout";
 import Dashboard from "@/views/dashboard/Dashboard";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
+import ProjectBoard from "@/views/project-board/ProjectBoard";
 import Projects from "@/views/projects/Projects";
 import SpaceBoard from "@/views/space-board/SpaceBoard";
 import Spaces from "@/views/spaces/Spaces";
@@ -23,7 +25,8 @@ const routeNames = Object.freeze({
   dashboard: "dashboard",
   spaces: "spaces",
   spaceBoard: "space-board",
-  projects: "projects"
+  projects: "projects",
+  projectBoard: "project-board"
 });
 
 const routes = [
@@ -54,6 +57,14 @@ const routes = [
         }
       },
       {
+        path: "/projects",
+        name: routeNames.projects,
+        component: Projects,
+        meta: {
+          resolver: projectsResolver
+        }
+      },
+      {
         path: "/spaces/:spaceID(\\d+)",
         name: routeNames.spaceBoard,
         component: SpaceBoard,
@@ -63,11 +74,12 @@ const routes = [
         }
       },
       {
-        path: "/projects",
-        name: routeNames.projects,
-        component: Projects,
+        path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)",
+        name: routeNames.projectBoard,
+        component: ProjectBoard,
         meta: {
-          resolver: projectsResolver
+          resolver: projectBoardResolver,
+          breadcrumb: []
         }
       }
     ]

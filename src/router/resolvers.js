@@ -38,6 +38,13 @@ const spacesResolver = createViewResolver(async () => {
   return;
 });
 
+const projectsResolver = createViewResolver(async () => {
+  const { loadUserProjects } = useProjects();
+
+  await loadUserProjects();
+  return;
+});
+
 const spaceBoardResolver = createViewResolver(async route => {
   const {
     currentSpace,
@@ -58,10 +65,12 @@ const spaceBoardResolver = createViewResolver(async route => {
   return;
 });
 
-const projectsResolver = createViewResolver(async () => {
-  const { loadUserProjects } = useProjects();
+const projectBoardResolver = createViewResolver(async route => {
+  const { currentSpace, selectSpace } = useSpaces();
+  const { currentProject, selectProject } = useProjects();
 
-  await loadUserProjects();
+  await selectSpace(+route.params.spaceID);
+  await selectProject(+route.params.projectID);
   return;
 });
 
@@ -69,6 +78,7 @@ export {
   rootResolver,
   dashboardResolver,
   spacesResolver,
+  projectsResolver,
   spaceBoardResolver,
-  projectsResolver
+  projectBoardResolver
 };
