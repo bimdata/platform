@@ -70,7 +70,7 @@ const routes = [
         component: SpaceBoard,
         meta: {
           resolver: spaceBoardResolver,
-          breadcrumb: ["BreadcrumbSpaceSelector"]
+          breadcrumb: "BreadcrumbSpaceSelector"
         }
       },
       {
@@ -79,7 +79,7 @@ const routes = [
         component: ProjectBoard,
         meta: {
           resolver: projectBoardResolver,
-          breadcrumb: []
+          breadcrumb: "BreadcrumbProjectSelector"
         }
       }
     ]

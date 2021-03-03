@@ -25,7 +25,7 @@
             class="breadcrumb-selector__list__item"
             v-for="item in displayedItems"
             :key="item[keyProp]"
-            @click="$emit('item-click', item)"
+            @click="() => selectItem(item)"
           >
             {{ item[labelProp] }}
           </div>
@@ -64,8 +64,8 @@ export default {
       default: () => []
     }
   },
-  emits: ["item-click"],
-  setup(props) {
+  emits: ["item-selected"],
+  setup(props, { emit }) {
     const isActive = ref(false);
     const closeList = () => {
       isActive.value = false;
@@ -90,6 +90,11 @@ export default {
     };
     watchEffect(() => filterItems(searchText.value));
 
+    const selectItem = item => {
+      closeList();
+      emit("item-selected", item);
+    };
+
     return {
       // References
       displayedItems,
@@ -98,6 +103,7 @@ export default {
       // Methods
       closeList,
       filterItems,
+      selectItem,
       toggleList
     };
   }

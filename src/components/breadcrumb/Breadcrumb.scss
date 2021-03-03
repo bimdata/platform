@@ -1,8 +1,9 @@
-.breadcrumb {
+.breadcrumb:deep() {
   display: flex;
   align-items: center;
+  height: 32px;
 
-  .separator {
+  .breadcrumb-separator {
     width: 0;
     height: calc(100% - #{$spacing-unit});
     margin: 0 $spacing-unit;

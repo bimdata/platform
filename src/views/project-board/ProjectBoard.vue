@@ -7,7 +7,7 @@
       <div class="sub-header--center">
         <BIMDataTabs
           width="200px"
-          height="36px"
+          height="32px"
           tabSize="50%"
           selected="project"
           :tabs="[

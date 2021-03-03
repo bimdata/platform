@@ -1,21 +1,21 @@
 <template>
   <div class="breadcrumb">
     <GoBackButton />
-    <template v-for="component in breadcrumb" :key="component">
-      <div class="separator"></div>
-      <component :is="component" />
-    </template>
+    <div class="breadcrumb-separator"></div>
+    <component :is="breadcrumb" />
   </div>
 </template>
 
 <script>
 import { useRoute } from "vue-router";
 // Components
+import BreadcrumbProjectSelector from "@/components/breadcrumb-project-selector/BreadcrumbProjectSelector";
 import BreadcrumbSpaceSelector from "@/components/breadcrumb-space-selector/BreadcrumbSpaceSelector";
 import GoBackButton from "@/components/go-back-button/GoBackButton";
 
 export default {
   components: {
+    BreadcrumbProjectSelector,
     BreadcrumbSpaceSelector,
     GoBackButton
   },

@@ -14,7 +14,8 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "vue/no-v-for-template-key": "off"
+    "vue/no-v-for-template-key": "off",
+    "vue/no-multiple-template-root": "off"
   },
   overrides: [
     {
