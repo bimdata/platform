@@ -67,9 +67,10 @@ const spaceBoardResolver = createViewResolver(async route => {
 
 const projectBoardResolver = createViewResolver(async route => {
   const { currentSpace, loadUserSpaces, selectSpace } = useSpaces();
-  const { loadSpaceProjects, selectProject } = useProjects();
+  const { loadUserProjects, loadSpaceProjects, selectProject } = useProjects();
 
   await loadUserSpaces();
+  await loadUserProjects();
   await selectSpace(+route.params.spaceID);
   await loadSpaceProjects(currentSpace.value);
   await selectProject(+route.params.projectID);

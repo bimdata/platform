@@ -1,9 +1,9 @@
 <template>
   <BreadcrumbSelector
-    :header="currentSpace.name"
+    :header="selectedSpace.name"
     :list="spaces"
     labelProp="name"
-    @item-click="changeSpace"
+    @item-selected="changeSpace"
   />
 </template>
 
@@ -31,7 +31,7 @@ export default {
 
     return {
       // References
-      currentSpace,
+      selectedSpace: currentSpace,
       spaces: userSpaces,
       // Methods
       changeSpace
