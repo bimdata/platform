@@ -1,0 +1,67 @@
+.app-header-menu {
+  .bimdata-dropdown:deep() {
+    .bimdata-dropdown__content {
+      padding: 0;
+    }
+  }
+
+  &__btn {
+    display: grid;
+    grid-template-columns: 36px auto;
+    grid-template-rows: 14px 14px;
+    align-items: center;
+    gap: 2px 4px;
+    padding: $spacing-unit/2;
+    text-align: left;
+
+    &__picture {
+      $size: 34px;
+
+      grid-row: 1 / span 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $size;
+      height: $size;
+      border-radius: 50%;
+      background-color: $color-primary;
+      color: $color-white;
+    }
+    &__fullname {
+      font-weight: bold;
+    }
+  }
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 12px;
+
+    .separator {
+      height: 1px;
+      margin: $spacing-unit/2 $spacing-unit;
+      background-color: $color-tertiary;
+    }
+
+    .bimdata-btn {
+      justify-content: flex-start;
+    }
+
+    .lang-btn {
+      .lang-badge {
+        margin-left: $spacing-unit/2;
+        padding: $spacing-unit/4 $spacing-unit/2;
+        border-radius: 2px;
+        background-color: $color-tertiary;
+        text-transform: uppercase;
+      }
+    }
+
+    .logout-btn {
+      margin: $spacing-unit/2 $spacing-unit;
+      justify-content: center;
+    }
+  }
+}

@@ -2,7 +2,7 @@
   <div class="projects-view">
     <div class="sub-header">
       <div class="sub-header--left">
-        <Breadcrumb />
+        <AppBreadcrumb />
       </div>
       <div class="sub-header--center">
         <BIMDataSearch
@@ -22,17 +22,15 @@
       </div>
     </div>
 
-    <transition name="fade" appear>
-      <div class="list-container">
-        <transition-group name="card-list">
-          <ProjectCard
-            v-for="project in projects"
-            :key="project.id"
-            :project="project"
-          />
-        </transition-group>
-      </div>
-    </transition>
+    <div class="list-container">
+      <transition-group name="card-list">
+        <ProjectCard
+          v-for="project in projects"
+          :key="project.id"
+          :project="project"
+        />
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -43,15 +41,15 @@ import { useProjects } from "@/state/projects";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
-import ProjectCard from "@/components/project-card/ProjectCard";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 
 export default {
   components: {
+    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
-    Breadcrumb,
     ProjectCard
   },
   setup() {

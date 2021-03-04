@@ -1,0 +1,13 @@
+.dashboard-project-list {
+  &__title {
+    padding: $spacing-unit/2 $spacing-unit;
+    font-weight: bold;
+  }
+
+  &__content {
+    display: flex;
+    gap: 64px;
+    padding: $spacing-unit;
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,74 @@
+<template>
+  <BIMDataCard class="space-card" @click="goToSpaceBoard">
+    <template #right>
+      <SpaceActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
+    </template>
+    <template #content>
+      <SpaceImage :space="space" />
+    </template>
+    <template #footer>
+      <div>{{ space.name }}</div>
+      <div class="title-underline"></div>
+      <div class="sub-title">
+        <div class="sub-title__text">{{ $t("Spaces.projects") }}</div>
+        <div class="sub-title__number">{{ nbProjects }}</div>
+      </div>
+    </template>
+  </BIMDataCard>
+</template>
+
+<script>
+import { ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
+import { useProjects } from "@/state/projects";
+// Components
+import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import SpaceActionMenu from "@/components/specific/spaces/space-action-menu/SpaceActionMenu";
+import SpaceImage from "@/components/specific/spaces/space-image/SpaceImage";
+
+export default {
+  components: {
+    BIMDataCard,
+    SpaceActionMenu,
+    SpaceImage
+  },
+  props: {
+    space: {
+      type: Object,
+      required: true
+    },
+    actionMenu: {
+      type: Boolean,
+      default: true
+    }
+  },
+  setup(props) {
+    const router = useRouter();
+    const { userProjects } = useProjects();
+
+    const nbProjects = ref(0);
+    watchEffect(() => {
+      nbProjects.value = userProjects.value.filter(
+        p => p.cloud.id === props.space.id
+      ).length;
+    });
+
+    const goToSpaceBoard = () => {
+      router.push({
+        name: routeNames.spaceBoard,
+        params: { spaceID: props.space.id }
+      });
+    };
+
+    return {
+      // References
+      nbProjects,
+      // Methods
+      goToSpaceBoard
+    };
+  }
+};
+</script>
+
+<style scoped lang="scss" src="./SpaceCard.scss"></style>

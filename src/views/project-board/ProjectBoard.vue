@@ -2,7 +2,7 @@
   <div class="project-board-view">
     <div class="sub-header">
       <div class="sub-header--left">
-        <Breadcrumb />
+        <AppBreadcrumb />
       </div>
       <div class="sub-header--center">
         <BIMDataTabs
@@ -59,17 +59,17 @@ import { useProjects } from "@/state/projects";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
-import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
-import ProjectFilesManager from "@/components/project-files-manager/ProjectFilesManager";
-import ProjectModelsManager from "@/components/project-models-manager/ProjectModelsManager";
-import ProjectUsersManager from "@/components/project-users-manager/ProjectUsersManager";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
+import ProjectFilesManager from "@/components/specific/projects/project-files-manager/ProjectFilesManager";
+import ProjectModelsManager from "@/components/specific/projects/project-models-manager/ProjectModelsManager";
+import ProjectUsersManager from "@/components/specific/projects/project-users-manager/ProjectUsersManager";
 
 export default {
   components: {
+    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataTabs,
-    Breadcrumb,
     ProjectFilesManager,
     ProjectModelsManager,
     ProjectUsersManager

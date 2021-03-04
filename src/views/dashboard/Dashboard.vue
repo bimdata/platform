@@ -14,9 +14,9 @@
       </DashboardButtonTile>
       <DashboardInfoTile />
     </div>
-    <div class="dashboard-view__main">
-      <RecentSpacesList />
-      <RecentProjectsList />
+    <div class="dashboard-view__body">
+      <DashboardSpaceList />
+      <DashboardProjectList />
     </div>
   </div>
 </template>
@@ -28,19 +28,19 @@ import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
-import DashboardButtonTile from "@/components/dashboard-button-tile/DashboardButtonTile";
-import DashboardInfoTile from "@/components/dashboard-info-tile/DashboardInfoTile";
-import DashboardWelcomeTile from "@/components/dashboard-welcome-tile/DashboardWelcomeTile";
-import RecentProjectsList from "@/components/recent-projects-list/RecentProjectsList";
-import RecentSpacesList from "@/components/recent-spaces-list/RecentSpacesList";
+import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile";
+import DashboardInfoTile from "@/components/specific/dashboard/dashboard-info-tile/DashboardInfoTile";
+import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile";
+import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList";
+import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList";
 
 export default {
   components: {
     DashboardButtonTile,
     DashboardInfoTile,
     DashboardWelcomeTile,
-    RecentProjectsList,
-    RecentSpacesList
+    DashboardProjectList,
+    DashboardSpaceList
   },
   setup() {
     const router = useRouter();

@@ -2,7 +2,7 @@
   <div class="space-board-view">
     <div class="sub-header">
       <div class="sub-header--left">
-        <Breadcrumb />
+        <AppBreadcrumb />
       </div>
       <div class="sub-header--center">
         <BIMDataSearch
@@ -41,18 +41,16 @@
       </SidePanel>
     </transition>
 
-    <transition name="fade" appear>
-      <div class="list-container">
-        <ProjectCreationCard v-if="isAdmin" />
-        <transition-group name="card-list">
-          <ProjectCard
-            v-for="project in projects"
-            :key="project.id"
-            :project="project"
-          />
-        </transition-group>
-      </div>
-    </transition>
+    <div class="list-container">
+      <ProjectCreationCard v-if="isAdmin" />
+      <transition-group name="card-list">
+        <ProjectCard
+          v-for="project in projects"
+          :key="project.id"
+          :project="project"
+        />
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -64,18 +62,18 @@ import { useSpaces } from "@/state/spaces";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
-import ProjectCard from "@/components/project-card/ProjectCard";
-import ProjectCreationCard from "@/components/project-creation-card/ProjectCreationCard";
-import SidePanel from "@/components/side-panel/SidePanel";
-import SpaceUsersManager from "@/components/space-users-manager/SpaceUsersManager";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
+import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
+import SidePanel from "@/components/generic/side-panel/SidePanel";
+import SpaceUsersManager from "@/components/specific/spaces/space-users-manager/SpaceUsersManager";
 
 export default {
   components: {
+    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
-    Breadcrumb,
     ProjectCard,
     ProjectCreationCard,
     SidePanel,

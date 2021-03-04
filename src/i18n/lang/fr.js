@@ -10,7 +10,7 @@ export default {
       "Une erreur s'est produite lors de l'authentification...",
     tryAgain: "Réessayer"
   },
-  UserMenu: {
+  AppHeaderMenu: {
     settings: "Paramètres du compte",
     connect: "BIMData Connect",
     documentation: "Documentation",
@@ -30,6 +30,9 @@ export default {
     activeProjects: "Projets",
     viewProjects: "Mes projets",
     security: "Security"
+  },
+  LanguageSelector: {
+    title: "Choix de la langue"
   },
   Spaces: {
     searchSpaces: "Rechercher un espace",
@@ -62,10 +65,10 @@ export default {
       buttonDelete: "Supprimer"
     }
   },
-  RecentSpacesList: {
+  DashboardSpaceList: {
     title: "Espaces récents"
   },
-  RecentProjectsList: {
+  DashboardProjectList: {
     title: "Projets récents"
   },
   Projects: {

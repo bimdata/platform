@@ -1,0 +1,12 @@
+.app-breadcrumb:deep() {
+  display: flex;
+  align-items: center;
+  height: 32px;
+
+  .breadcrumb-separator {
+    width: 0;
+    height: calc(100% - #{$spacing-unit});
+    margin: 0 $spacing-unit;
+    border: 0.5px solid $color-primary;
+  }
+}

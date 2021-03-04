@@ -9,7 +9,7 @@ export default {
     callbackErrorMessage: "An error occured during authentication...",
     tryAgain: "Try Again"
   },
-  UserMenu: {
+  AppHeaderMenu: {
     settings: "Account settings",
     connect: "BIMData Connect",
     documentation: "Documentation",
@@ -29,6 +29,9 @@ export default {
     activeProjects: "Active Projects",
     viewProjects: "View projects",
     security: "Security"
+  },
+  LanguageSelector: {
+    title: "Choose a language"
   },
   Spaces: {
     searchSpaces: "Search spaces",
@@ -60,10 +63,10 @@ export default {
       buttonDelete: "Delete"
     }
   },
-  RecentSpacesList: {
+  DashboardSpaceList: {
     title: "Recent spaces"
   },
-  RecentProjectsList: {
+  DashboardProjectList: {
     title: "Recent projects"
   },
   Projects: {

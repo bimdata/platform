@@ -2,7 +2,7 @@
   <div class="spaces-view">
     <div class="sub-header">
       <div class="sub-header--left">
-        <GoBackButton />
+        <AppBreadcrumb />
       </div>
       <div class="sub-header--center">
         <BIMDataSearch
@@ -23,19 +23,17 @@
       </div>
     </div>
 
-    <transition name="fade" appear>
-      <div class="list-container">
-        <transition name="pop-in">
-          <SpaceCreationCard
-            v-if="showCreationCard"
-            @close="showCreationCard = false"
-          />
-        </transition>
-        <transition-group name="card-list">
-          <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-        </transition-group>
-      </div>
-    </transition>
+    <div class="list-container">
+      <transition name="pop-in">
+        <SpaceCreationCard
+          v-if="showCreationCard"
+          @close="showCreationCard = false"
+        />
+      </transition>
+      <transition-group name="card-list">
+        <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -46,16 +44,16 @@ import { useSpaces } from "@/state/spaces";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-import GoBackButton from "@/components/go-back-button/GoBackButton";
-import SpaceCard from "@/components/space-card/SpaceCard";
-import SpaceCreationCard from "@/components/space-creation-card/SpaceCreationCard";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
+import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
+import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard";
 
 export default {
   components: {
+    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
-    GoBackButton,
     SpaceCard,
     SpaceCreationCard
   },
