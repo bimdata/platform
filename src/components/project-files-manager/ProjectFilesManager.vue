@@ -1,6 +1,10 @@
 <template>
   <div class="project-files-manager">
-    <img src="/static/project-files-manager-illustration.svg" />
+    <img
+      width="260"
+      height="260"
+      src="/static/project-files-manager-illustration.svg"
+    />
     <div>
       {{ $t("ProjectBoard.ProjectFilesManager.onboardingText") }}
     </div>

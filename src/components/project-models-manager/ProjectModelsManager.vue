@@ -1,6 +1,10 @@
 <template>
   <div class="project-models-manager">
-    <img src="/static/project-models-manager-illustration.svg" />
+    <img
+      width="260"
+      height="260"
+      src="/static/project-models-manager-illustration.svg"
+    />
     <div>
       {{ $t("ProjectBoard.ProjectModelsManager.onboardingText") }}
     </div>

@@ -19,7 +19,7 @@
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 480px 560px;
     gap: $spacing-unit * 2;
     grid-template-areas:
       "models models users"
@@ -36,6 +36,7 @@
       }
 
       &__content {
+        height: calc(100% - 40px);
         padding: $spacing-unit;
       }
 
