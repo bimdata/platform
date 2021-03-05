@@ -4,7 +4,11 @@
     ref="container"
     @mousemove="translate"
   >
-    <div class="project-card-model-preview__switcher" v-if="images.length > 1">
+    <div
+      v-if="images.length > 1"
+      class="project-card-model-preview__switcher"
+      @click.stop="() => {}"
+    >
       <BIMDataIcon
         name="chevron"
         size="xs"

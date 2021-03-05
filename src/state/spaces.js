@@ -59,6 +59,11 @@ const removeSpaceImage = async space => {
 
 const deleteSpace = async space => {
   await SpaceService.deleteSpace(space);
+  softDeleteSpace(space);
+  return space;
+};
+
+const softDeleteSpace = space => {
   state.userSpaces = state.userSpaces.filter(s => s.id !== space.id);
   return space;
 };
@@ -126,6 +131,7 @@ export function useSpaces() {
     softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
+    softDeleteSpace,
     selectSpace,
     sendSpaceInvitation,
     cancelSpaceInvitation,

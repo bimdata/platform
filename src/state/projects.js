@@ -15,19 +15,33 @@ const loadUserProjects = async () => {
   state.userProjects = projects.map(project => ({
     ...project,
     isAdmin: user.value.projects.some(
-      role => role.cloud === project.id && role.role === 100
+      role => role.project === project.id && role.role === 100
     )
   }));
+  state.userProjects = state.userProjects
+    .slice()
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   return state.userProjects;
 };
 
 const loadSpaceProjects = async space => {
-  state.spaceProjects = await ProjectService.fetchSpaceProjects(space);
+  const { user } = useUser();
+  const projects = await ProjectService.fetchSpaceProjects(space);
+  state.spaceProjects = projects.map(project => ({
+    ...project,
+    isAdmin: user.value.projects.some(
+      role => role.project === project.id && role.role === 100
+    )
+  }));
+  state.spaceProjects = state.spaceProjects
+    .slice()
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   return state.spaceProjects;
 };
 
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
+  state.userProjects = [newProject].concat(state.userProjects);
   state.spaceProjects = [newProject].concat(state.spaceProjects);
   return newProject;
 };
@@ -39,18 +53,33 @@ const updateProject = async project => {
 };
 
 const softUpdateProject = project => {
-  state.spaceProjects = state.spaceProjects.map(p =>
-    p.id === project.id ? project : p
+  state.userProjects = state.userProjects.map(p =>
+    p.id === project.id ? { ...p, ...project } : p
   );
+  state.spaceProjects = state.spaceProjects.map(p =>
+    p.id === project.id ? { ...p, ...project } : p
+  );
+  return project;
 };
 
 const deleteProject = async project => {
   await ProjectService.deleteProject(project);
+  softDeleteProject(project);
+  return project;
+};
+
+const softDeleteProject = project => {
+  state.userProjects = state.userProjects.filter(p => p.id !== project.id);
   state.spaceProjects = state.spaceProjects.filter(p => p.id !== project.id);
   return project;
 };
 
-const selectProject = id => {
+const selectUserProject = id => {
+  state.currentProject = state.userProjects.find(p => p.id === id) || null;
+  return state.currentProject;
+};
+
+const selectSpaceProject = id => {
   state.currentProject = state.spaceProjects.find(p => p.id === id) || null;
   return state.currentProject;
 };
@@ -73,7 +102,9 @@ export function useProjects() {
     updateProject,
     softUpdateProject,
     deleteProject,
-    selectProject,
+    softDeleteProject,
+    selectUserProject,
+    selectProject: selectSpaceProject,
     fetchProjectPreviewImages
   };
 }
