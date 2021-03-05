@@ -1,0 +1,19 @@
+.user-card-action-menu {
+  position: relative;
+
+  &__btn {
+    color: $color-tertiary-dark;
+  }
+
+  &__container {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    display: flex;
+    gap: $spacing-unit/2;
+    margin-right: $spacing-unit/2;
+    border-radius: 4px;
+    background-color: $color-white;
+    box-shadow: 0 0 4px 14px white;
+  }
+}

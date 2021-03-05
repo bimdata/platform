@@ -5,7 +5,7 @@
         <BIMDataSpinner />
       </div>
 
-      <UserDeleteGuard
+      <UserCardDeleteGuard
         v-else-if="showDeleteGuard"
         :user="user"
         @close="closeDeleteGuard"
@@ -24,7 +24,7 @@
             {{ email }}
           </div>
         </div>
-        <UserActionMenu
+        <UserCardActionMenu
           @open-update="() => {}"
           @open-delete="openDeleteGuard"
         />
@@ -37,15 +37,15 @@
 import { computed, provide, ref, watchEffect } from "vue";
 // Components
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
-import UserActionMenu from "@/components/specific/users/user-action-menu/UserActionMenu";
-import UserDeleteGuard from "@/components/specific/users/user-delete-guard/UserDeleteGuard";
+import UserCardActionMenu from "@/components/specific/users/user-card-action-menu/UserCardActionMenu";
+import UserCardDeleteGuard from "@/components/specific/users/user-card-delete-guard/UserCardDeleteGuard";
 import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge";
 
 export default {
   components: {
     BIMDataSpinner,
-    UserActionMenu,
-    UserDeleteGuard,
+    UserCardActionMenu,
+    UserCardDeleteGuard,
     UserRoleBadge
   },
   props: {

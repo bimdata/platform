@@ -1,0 +1,21 @@
+.project-card-update-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: $spacing-unit;
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-weight: bold;
+  }
+
+  &__input,
+  &__submit-btn {
+    width: calc(100% - #{$spacing-unit * 2});
+  }
+}

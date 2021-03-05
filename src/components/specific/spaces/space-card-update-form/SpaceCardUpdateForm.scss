@@ -1,0 +1,22 @@
+.space-card-update-form {
+  position: relative;
+  padding: 0 $spacing-unit/2;
+
+  &__title {
+    padding: $spacing-unit * 3/4 0;
+    font-weight: bold;
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 0;
+    right: $spacing-unit/2;
+  }
+
+  &__input,
+  &__submit-btn {
+    width: calc(100% - #{$spacing-unit});
+    margin-left: $spacing-unit/2;
+    margin-bottom: $spacing-unit;
+  }
+}

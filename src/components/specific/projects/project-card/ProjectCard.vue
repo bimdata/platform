@@ -7,7 +7,7 @@
     <template #front-face>
       <BIMDataCard @click="goToProjectBoard">
         <template #left>
-          <ProjectActionBar
+          <ProjectCardActionBar
             v-if="actionMenu"
             :project="project"
             @open-menu="openMenu"
@@ -16,7 +16,7 @@
         <template #content>
           <div class="left-stripe"></div>
           <div class="status-badge">Status</div>
-          <ProjectModelPreview :project="project" />
+          <ProjectCardModelPreview :project="project" />
         </template>
         <template #footer>
           <div>{{ project.name }}</div>
@@ -25,7 +25,7 @@
     </template>
 
     <template #back-face>
-      <ProjectActionMenu :project="project" @close-menu="closeMenu" />
+      <ProjectCardActionMenu :project="project" @close="closeMenu" />
     </template>
   </FlipableCard>
 </template>
@@ -37,17 +37,17 @@ import { routeNames } from "@/router";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import FlipableCard from "@/components/generic/flipable-card/FlipableCard";
-import ProjectActionBar from "@/components/specific/projects/project-action-bar/ProjectActionBar";
-import ProjectModelPreview from "@/components/specific/projects/project-model-preview/ProjectModelPreview";
-import ProjectActionMenu from "@/components/specific/projects/project-action-menu/ProjectActionMenu";
+import ProjectCardActionBar from "@/components/specific/projects/project-card-action-bar/ProjectCardActionBar";
+import ProjectCardActionMenu from "@/components/specific/projects/project-card-action-menu/ProjectCardActionMenu";
+import ProjectCardModelPreview from "@/components/specific/projects/project-card-model-preview/ProjectCardModelPreview";
 
 export default {
   components: {
     BIMDataCard,
     FlipableCard,
-    ProjectActionBar,
-    ProjectModelPreview,
-    ProjectActionMenu
+    ProjectCardActionBar,
+    ProjectCardActionMenu,
+    ProjectCardModelPreview
   },
   props: {
     project: {

@@ -1,10 +1,10 @@
 <template>
   <BIMDataCard class="space-card" @click="goToSpaceBoard">
     <template #right>
-      <SpaceActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
+      <SpaceCardActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
     </template>
     <template #content>
-      <SpaceImage :space="space" />
+      <SpaceCardImage :space="space" />
     </template>
     <template #footer>
       <div>{{ space.name }}</div>
@@ -24,14 +24,14 @@ import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import SpaceActionMenu from "@/components/specific/spaces/space-action-menu/SpaceActionMenu";
-import SpaceImage from "@/components/specific/spaces/space-image/SpaceImage";
+import SpaceCardActionMenu from "@/components/specific/spaces/space-card-action-menu/SpaceCardActionMenu";
+import SpaceCardImage from "@/components/specific/spaces/space-card-image/SpaceCardImage";
 
 export default {
   components: {
     BIMDataCard,
-    SpaceActionMenu,
-    SpaceImage
+    SpaceCardActionMenu,
+    SpaceCardImage
   },
   props: {
     space: {

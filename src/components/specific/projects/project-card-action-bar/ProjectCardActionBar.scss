@@ -1,0 +1,10 @@
+.project-card-action-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 4px;
+
+  &__menu-btn {
+    color: $color-tertiary-dark;
+  }
+}
