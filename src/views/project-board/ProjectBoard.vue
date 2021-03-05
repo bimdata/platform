@@ -1,10 +1,10 @@
 <template>
   <div class="project-board-view">
-    <div class="sub-header">
-      <div class="sub-header--left">
+    <ViewHeader>
+      <template #left>
         <AppBreadcrumb />
-      </div>
-      <div class="sub-header--center">
+      </template>
+      <template #center>
         <BIMDataTabs
           width="200px"
           height="32px"
@@ -15,14 +15,14 @@
             { id: 'bcf', label: 'BCF' }
           ]"
         />
-      </div>
-      <div class="sub-header--right">
+      </template>
+      <template #right>
         <BIMDataButton color="primary" fill radius>
           <BIMDataIcon name="plus" size="xxxs" />
           <span>{{ $t("ProjectBoard.addIFC") }}</span>
         </BIMDataButton>
-      </div>
-    </div>
+      </template>
+    </ViewHeader>
 
     <div class="container">
       <div class="block block--models">
@@ -59,6 +59,7 @@ import { useProjects } from "@/state/projects";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectFilesManager from "@/components/specific/projects/project-files-manager/ProjectFilesManager";
 import ProjectModelsManager from "@/components/specific/projects/project-models-manager/ProjectModelsManager";
@@ -66,10 +67,11 @@ import ProjectUsersManager from "@/components/specific/projects/project-users-ma
 
 export default {
   components: {
-    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataTabs,
+    ViewHeader,
+    AppBreadcrumb,
     ProjectFilesManager,
     ProjectModelsManager,
     ProjectUsersManager

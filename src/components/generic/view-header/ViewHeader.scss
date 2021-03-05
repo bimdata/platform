@@ -1,0 +1,23 @@
+.view-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &__slot {
+    display: flex;
+    gap: $spacing-unit;
+    width: calc(100% / 3);
+
+    &--left {
+      justify-content: flex-start;
+    }
+
+    &--center {
+      justify-content: center;
+    }
+
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+}

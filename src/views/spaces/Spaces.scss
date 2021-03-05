@@ -1,38 +1,11 @@
 .spaces-view {
-  .sub-header {
-    display: flex;
-    align-items: center;
-
-    &--left {
-      margin-right: auto;
-      display: flex;
+  &__header {
+    &__search {
+      background-color: $color-white;
     }
 
-    &--center {
-      margin: 0 auto;
-      display: flex;
-
-      .bimdata-search-bar {
-        background-color: $color-white;
-      }
+    &__sort-btn {
+      color: $color-tertiary-dark;
     }
-
-    &--right {
-      margin-left: auto;
-      display: flex;
-      gap: $spacing-unit;
-
-      .bimdata-btn[color="default"] {
-        color: $color-tertiary-dark;
-      }
-    }
-  }
-
-  .list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, $platform-space-card-width);
-    justify-content: space-between;
-    gap: $spacing-unit * 3 $spacing-unit * 2;
-    padding: $spacing-unit * 2 0;
   }
 }

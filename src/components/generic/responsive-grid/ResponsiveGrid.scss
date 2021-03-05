@@ -1,0 +1,7 @@
+.responsive-grid {
+  display: grid;
+  justify-content: space-between;
+  row-gap: $spacing-unit * 3;
+  column-gap: $spacing-unit * 3;
+  padding: $spacing-unit * 2 0;
+}

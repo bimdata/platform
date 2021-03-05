@@ -1,36 +1,46 @@
 <template>
   <div class="projects-view">
-    <div class="sub-header">
-      <div class="sub-header--left">
+    <ViewHeader class="projects-view__header">
+      <template #left>
         <AppBreadcrumb />
-      </div>
-      <div class="sub-header--center">
+      </template>
+      <template #center>
         <BIMDataSearch
+          class="projects-view__header__search"
           width="300px"
           :placeholder="$t('Projects.searchProjects')"
           v-model="searchText"
           clear
         />
-      </div>
-      <div class="sub-header--right">
-        <BIMDataButton fill squared icon>
+      </template>
+      <template #right>
+        <BIMDataButton
+          class="projects-view__header__filter-btn"
+          fill
+          squared
+          icon
+        >
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton>
-        <BIMDataButton fill squared icon @click="sortProjects">
+        <BIMDataButton
+          class="projects-view__header__sort-btn"
+          fill
+          squared
+          icon
+          @click="sortProjects"
+        >
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
-      </div>
-    </div>
+      </template>
+    </ViewHeader>
 
-    <div class="list-container">
-      <transition-group name="card-list">
-        <ProjectCard
-          v-for="project in projects"
-          :key="project.id"
-          :project="project"
-        />
-      </transition-group>
-    </div>
+    <ResponsiveGrid itemWidth="320px">
+      <ProjectCard
+        v-for="project in projects"
+        :key="project.id"
+        :project="project"
+      />
+    </ResponsiveGrid>
   </div>
 </template>
 
@@ -41,15 +51,19 @@ import { useProjects } from "@/state/projects";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
+import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 
 export default {
   components: {
-    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
+    ResponsiveGrid,
+    ViewHeader,
+    AppBreadcrumb,
     ProjectCard
   },
   setup() {

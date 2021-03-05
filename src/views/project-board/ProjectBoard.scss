@@ -1,21 +1,4 @@
 .project-board-view {
-  .sub-header {
-    display: flex;
-    align-items: center;
-
-    &--left {
-      margin-right: auto;
-    }
-
-    &--center {
-      margin: 0 auto;
-    }
-
-    &--right {
-      margin-left: auto;
-    }
-  }
-
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

@@ -1,39 +1,43 @@
 <template>
   <div class="spaces-view">
-    <div class="sub-header">
-      <div class="sub-header--left">
+    <ViewHeader class="spaces-view__header">
+      <template #left>
         <AppBreadcrumb />
-      </div>
-      <div class="sub-header--center">
+      </template>
+      <template #center>
         <BIMDataSearch
+          class="spaces-view__header__search"
           width="300px"
           :placeholder="$t('Spaces.searchSpaces')"
           v-model="searchText"
           clear
         />
-      </div>
-      <div class="sub-header--right">
-        <BIMDataButton fill squared icon @click="sortSpaces">
+      </template>
+      <template #right>
+        <BIMDataButton
+          class="spaces-view__header__sort-btn"
+          fill
+          squared
+          icon
+          @click="sortSpaces"
+        >
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
-        <BIMDataButton fill radius color="primary" @click="createSpace">
+        <BIMDataButton color="primary" fill radius @click="createSpace">
           <BIMDataIcon name="plus" size="xxxs" />
           <span>{{ $t("Spaces.createSpace") }}</span>
         </BIMDataButton>
-      </div>
-    </div>
+      </template>
+    </ViewHeader>
 
-    <div class="list-container">
-      <transition name="pop-in">
-        <SpaceCreationCard
-          v-if="showCreationCard"
-          @close="showCreationCard = false"
-        />
-      </transition>
-      <transition-group name="card-list">
-        <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-      </transition-group>
-    </div>
+    <ResponsiveGrid itemWidth="215px">
+      <SpaceCreationCard
+        :key="-1"
+        v-if="showCreationCard"
+        @close="showCreationCard = false"
+      />
+      <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+    </ResponsiveGrid>
   </div>
 </template>
 
@@ -44,16 +48,20 @@ import { useSpaces } from "@/state/spaces";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
+import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
 import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard";
 
 export default {
   components: {
-    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
+    ResponsiveGrid,
+    ViewHeader,
+    AppBreadcrumb,
     SpaceCard,
     SpaceCreationCard
   },

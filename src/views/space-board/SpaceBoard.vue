@@ -1,26 +1,39 @@
 <template>
   <div class="space-board-view">
-    <div class="sub-header">
-      <div class="sub-header--left">
+    <ViewHeader class="space-board-view__header">
+      <template #left>
         <AppBreadcrumb />
-      </div>
-      <div class="sub-header--center">
+      </template>
+      <template #center>
         <BIMDataSearch
+          class="space-board-view__header__search"
           width="300px"
           :placeholder="$t('Projects.searchProjects')"
           v-model="searchText"
           clear
         />
-      </div>
-      <div class="sub-header--right">
-        <BIMDataButton fill squared icon>
+      </template>
+      <template #right>
+        <BIMDataButton
+          class="space-board-view__header__filter-btn"
+          fill
+          squared
+          icon
+        >
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton>
-        <BIMDataButton fill squared icon @click="sortProjects">
+        <BIMDataButton
+          class="space-board-view__header__sort-btn"
+          fill
+          squared
+          icon
+          @click="sortProjects"
+        >
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
         <BIMDataButton
           v-if="isAdmin"
+          class="space-board-view__header__users-btn"
           fill
           squared
           icon
@@ -28,8 +41,8 @@
         >
           <BIMDataIcon name="addUser" size="s" />
         </BIMDataButton>
-      </div>
-    </div>
+      </template>
+    </ViewHeader>
 
     <transition name="fade">
       <SidePanel
@@ -41,16 +54,14 @@
       </SidePanel>
     </transition>
 
-    <div class="list-container">
-      <ProjectCreationCard v-if="isAdmin" />
-      <transition-group name="card-list">
-        <ProjectCard
-          v-for="project in projects"
-          :key="project.id"
-          :project="project"
-        />
-      </transition-group>
-    </div>
+    <ResponsiveGrid itemWidth="320px">
+      <ProjectCreationCard :key="-1" v-if="isAdmin" />
+      <ProjectCard
+        v-for="project in projects"
+        :key="project.id"
+        :project="project"
+      />
+    </ResponsiveGrid>
   </div>
 </template>
 
@@ -62,21 +73,25 @@ import { useSpaces } from "@/state/spaces";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
+import SidePanel from "@/components/generic/side-panel/SidePanel";
+import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
-import SidePanel from "@/components/generic/side-panel/SidePanel";
 import SpaceUsersManager from "@/components/specific/spaces/space-users-manager/SpaceUsersManager";
 
 export default {
   components: {
-    AppBreadcrumb,
     BIMDataButton,
     BIMDataIcon,
     BIMDataSearch,
+    ResponsiveGrid,
+    SidePanel,
+    ViewHeader,
+    AppBreadcrumb,
     ProjectCard,
     ProjectCreationCard,
-    SidePanel,
     SpaceUsersManager
   },
   setup() {
