@@ -1,6 +1,6 @@
 <template>
   <div class="project-card-delete-guard">
-    <div class="project-delete-guard__title">
+    <div class="project-card-delete-guard__title">
       {{ $t("Projects.ProjectDeleteGuard.title") }}
       <BIMDataButton ghost rounded icon @click="close">
         <BIMDataIcon name="close" size="xxxs" />

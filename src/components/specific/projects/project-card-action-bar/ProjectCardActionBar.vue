@@ -1,17 +1,23 @@
 <template>
   <div class="project-card-action-bar">
-    <BIMDataButton ghost rounded icon>
+    <BIMDataButton
+      class="project-card-action-bar__action-btn"
+      ghost
+      rounded
+      icon
+      @click.stop="() => {}"
+    >
       <BIMDataIcon name="show" size="s" />
     </BIMDataButton>
 
     <BIMDataButton
       v-if="project.isAdmin"
-      class="project-card-action-bar__menu-btn"
+      class="project-card-action-bar__action-btn"
       color="default"
       ripple
       rounded
       icon
-      @click="$emit('open-menu')"
+      @click.stop="$emit('open-menu')"
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
