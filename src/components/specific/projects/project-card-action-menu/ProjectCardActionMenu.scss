@@ -11,15 +11,22 @@
   }
 
   &__menu {
+    position: relative;
     display: flex;
     flex-direction: column;
-    padding: $spacing-unit;
+    justify-content: center;
+    height: 100%;
+    padding: $spacing-unit * 2;
 
     &__title {
+      position: absolute;
+      top: 0;
+      left: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      padding: $spacing-unit;
       font-weight: bold;
     }
   }

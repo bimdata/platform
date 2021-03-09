@@ -22,7 +22,7 @@
         <div class="project-card-action-menu__menu__title">
           {{ project.name }}
           <BIMDataButton ghost rounded icon @click="closeMenu">
-            <BIMDataIcon name="close" size="xxxs" />
+            <BIMDataIcon name="close" size="xxs" />
           </BIMDataButton>
         </div>
         <BIMDataButton ghost squared @click="openUpdateForm">

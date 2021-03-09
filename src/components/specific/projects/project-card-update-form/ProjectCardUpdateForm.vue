@@ -3,7 +3,7 @@
     <div class="project-card-update-form__title">
       {{ $t("Projects.ProjectUpdateForm.title") }}
       <BIMDataButton ghost rounded icon @click="close">
-        <BIMDataIcon name="close" size="xxxs" />
+        <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
     </div>
     <BIMDataInput
