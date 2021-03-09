@@ -1,18 +1,18 @@
 <template>
-  <div class="project-files-manager">
+  <div class="empty-files-manager">
     <img
       width="260"
       height="260"
-      src="/static/project-files-manager-illustration.svg"
+      src="/static/empty-files-manager-illustration.svg"
     />
     <div>
       {{ $t("ProjectBoard.ProjectFilesManager.onboardingText") }}
     </div>
-    <div class="project-files-manager__actions">
-      <BIMDataButton color="primary" fill radius>
+    <div class="empty-files-manager__actions">
+      <BIMDataButton color="primary" fill radius @click="uploadFile">
         {{ $t("ProjectBoard.ProjectFilesManager.buttonUploadFile") }}
       </BIMDataButton>
-      <BIMDataButton color="primary" fill radius>
+      <BIMDataButton color="primary" fill radius @click="createFolder">
         {{ $t("ProjectBoard.ProjectFilesManager.buttonCreateFolder") }}
       </BIMDataButton>
     </div>
@@ -34,9 +34,16 @@ export default {
     }
   },
   setup() {
-    // TODO
+    const uploadFile = () => {};
+    const createFolder = () => {};
+
+    return {
+      // Methods
+      createFolder,
+      uploadFile
+    };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./ProjectFilesManager.scss"></style>
+<style scoped lang="scss" src="./EmptyFilesManager.scss"></style>

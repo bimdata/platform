@@ -54,7 +54,7 @@ export default {
       }
     });
     const goToSpaces = () => {
-      router.push({ name: routeNames.spaces });
+      router.push({ name: routeNames.userSpaces });
     };
 
     const nbProjects = ref(0);
@@ -64,7 +64,7 @@ export default {
       }
     });
     const goToProjects = () => {
-      router.push({ name: routeNames.projects });
+      router.push({ name: routeNames.userProjects });
     };
 
     return {

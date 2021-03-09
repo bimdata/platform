@@ -1,8 +1,8 @@
 <template>
-  <div class="space-invitation-form">
+  <div class="invitation-form">
     <BIMDataInput
       ref="emailInput"
-      class="space-invitation-form__input"
+      class="invitation-form__input"
       :placeholder="$t('SpaceInvitationForm.inputEmail')"
       v-model="email"
       :error="error"
@@ -10,7 +10,7 @@
       @keyup.enter.stop="inviteUser"
     />
     <BIMDataButton
-      class="space-invitation-form__submit-btn"
+      class="invitation-form__submit-btn"
       ghost
       rounded
       icon
@@ -19,7 +19,7 @@
       <BIMDataIcon name="validate" size="xxs" />
     </BIMDataButton>
     <BIMDataButton
-      class="space-invitation-form__close-btn"
+      class="invitation-form__close-btn"
       ghost
       rounded
       icon
@@ -90,4 +90,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./SpaceInvitationForm.scss"></style>
+<style scoped lang="scss" src="./InvitationForm.scss"></style>

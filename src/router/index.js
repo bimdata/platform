@@ -3,10 +3,10 @@ import { authGuard } from "./guards";
 import {
   dashboardResolver,
   projectBoardResolver,
-  projectsResolver,
+  userProjectsResolver,
   rootResolver,
   spaceBoardResolver,
-  spacesResolver
+  userSpacesResolver
 } from "./resolvers";
 // Components
 import Layout from "@/Layout";
@@ -14,18 +14,18 @@ import Dashboard from "@/views/dashboard/Dashboard";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
 import ProjectBoard from "@/views/project-board/ProjectBoard";
-import Projects from "@/views/projects/Projects";
+import UserProjects from "@/views/user-projects/UserProjects";
 import SpaceBoard from "@/views/space-board/SpaceBoard";
-import Spaces from "@/views/spaces/Spaces";
+import UserSpaces from "@/views/user-spaces/UserSpaces";
 
 const routeNames = Object.freeze({
   root: "root",
   oidcCallback: "oidc-callback",
   oidcCallbackError: "oidc-callback-error",
   dashboard: "dashboard",
-  spaces: "spaces",
+  userSpaces: "user-spaces",
   spaceBoard: "space-board",
-  projects: "projects",
+  userProjects: "user-projects",
   projectBoard: "project-board"
 });
 
@@ -50,18 +50,18 @@ const routes = [
       },
       {
         path: "/spaces",
-        name: routeNames.spaces,
-        component: Spaces,
+        name: routeNames.userSpaces,
+        component: UserSpaces,
         meta: {
-          resolver: spacesResolver
+          resolver: userSpacesResolver
         }
       },
       {
         path: "/projects",
-        name: routeNames.projects,
-        component: Projects,
+        name: routeNames.userProjects,
+        component: UserProjects,
         meta: {
-          resolver: projectsResolver
+          resolver: userProjectsResolver
         }
       },
       {

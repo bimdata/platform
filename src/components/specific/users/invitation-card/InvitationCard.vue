@@ -1,19 +1,19 @@
 <template>
-  <div class="space-invitation-card">
-    <div class="sapce-invitation-card__avatar">
+  <div class="invitation-card">
+    <div class="invitation-card__avatar">
       <img src="/static/invitation-avatar.svg" />
     </div>
-    <div class="space-invitation-card__info">
+    <div class="invitation-card__info">
       <div class="invitation-card__info__email">
         {{ invitation.email }}
       </div>
-      <div class="space-invitation-card__info__text">
+      <div class="invitation-card__info__text">
         {{ $t("Invitation.pending") }}
         <a @click="resendInvitation">{{ $t("Invitation.sendAgain") }}</a>
       </div>
     </div>
     <BIMDataButton
-      class="space-invitation-card__cancel-btn"
+      class="invitation-card__cancel-btn"
       ghost
       rounded
       icon
@@ -65,4 +65,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./SpaceInvitationCard.scss"></style>
+<style scoped lang="scss" src="./InvitationCard.scss"></style>
