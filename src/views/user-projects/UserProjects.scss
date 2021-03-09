@@ -1,9 +1,10 @@
-.spaces-view {
+.user-projects-view {
   &__header {
     &__search {
       background-color: $color-white;
     }
 
+    &__filter-btn,
     &__sort-btn {
       color: $color-tertiary-dark;
     }

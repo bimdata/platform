@@ -79,7 +79,7 @@ import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
-import SpaceUsersManager from "@/components/specific/spaces/space-users-manager/SpaceUsersManager";
+import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
 
 export default {
   components: {

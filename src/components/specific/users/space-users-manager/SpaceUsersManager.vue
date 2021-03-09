@@ -17,7 +17,7 @@
     />
 
     <transition name="fade" mode="out-in">
-      <SpaceInvitationForm
+      <InvitationForm
         v-if="showInvitationForm"
         :space="space"
         @close="closeInvitationForm"
@@ -40,7 +40,7 @@
     <div class="list-container">
       <transition-group name="item-list">
         <template v-if="showInvitations">
-          <SpaceInvitationCard
+          <InvitationCard
             v-for="invitation in invitations"
             :key="invitation.id"
             :invitation="invitation"
@@ -60,8 +60,8 @@ import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
-import SpaceInvitationCard from "@/components/specific/spaces/space-invitation-card/SpaceInvitationCard";
-import SpaceInvitationForm from "@/components/specific/spaces/space-invitation-form/SpaceInvitationForm";
+import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
+import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
 import UserCard from "@/components/specific/users/user-card/UserCard";
 
 export default {
@@ -70,8 +70,8 @@ export default {
     BIMDataIcon,
     BIMDataSearch,
     BIMDataTabs,
-    SpaceInvitationCard,
-    SpaceInvitationForm,
+    InvitationCard,
+    InvitationForm,
     UserCard
   },
   setup() {

@@ -1,49 +1,52 @@
 <template>
-  <div class="spaces-view">
-    <ViewHeader class="spaces-view__header">
+  <div class="user-projects-view">
+    <ViewHeader class="user-projects-view__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
-          class="spaces-view__header__search"
+          class="user-projects-view__header__search"
           width="300px"
-          :placeholder="$t('Spaces.searchSpaces')"
+          :placeholder="$t('Projects.searchProjects')"
           v-model="searchText"
           clear
         />
       </template>
       <template #right>
         <BIMDataButton
-          class="spaces-view__header__sort-btn"
+          class="user-projects-view__header__filter-btn"
           fill
           squared
           icon
-          @click="sortSpaces"
+        >
+          <BIMDataIcon name="filter" size="s" />
+        </BIMDataButton>
+        <BIMDataButton
+          class="user-projects-view__header__sort-btn"
+          fill
+          squared
+          icon
+          @click="sortProjects"
         >
           <BIMDataIcon name="alphabeticalSort" size="s" />
-        </BIMDataButton>
-        <BIMDataButton color="primary" fill radius @click="createSpace">
-          <BIMDataIcon name="plus" size="xxxs" />
-          <span>{{ $t("Spaces.createSpace") }}</span>
         </BIMDataButton>
       </template>
     </ViewHeader>
 
-    <ResponsiveGrid itemWidth="215px">
-      <SpaceCreationCard
-        :key="-1"
-        v-if="showCreationCard"
-        @close="showCreationCard = false"
+    <ResponsiveGrid itemWidth="320px">
+      <ProjectCard
+        v-for="project in projects"
+        :key="project.id"
+        :project="project"
       />
-      <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
     </ResponsiveGrid>
   </div>
 </template>
 
 <script>
 import { ref, watchEffect } from "vue";
-import { useSpaces } from "@/state/spaces";
+import { useProjects } from "@/state/projects";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -51,8 +54,7 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
-import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 
 export default {
   components: {
@@ -62,53 +64,46 @@ export default {
     ResponsiveGrid,
     ViewHeader,
     AppBreadcrumb,
-    SpaceCard,
-    SpaceCreationCard
+    ProjectCard
   },
   setup() {
-    const { userSpaces } = useSpaces();
+    const { userProjects } = useProjects();
 
-    const displayedSpaces = ref([]);
-    watchEffect(() => (displayedSpaces.value = userSpaces.value));
+    const displayedProjects = ref([]);
+    watchEffect(() => (displayedProjects.value = userProjects.value));
 
     const searchText = ref("");
-    const filterSpaces = value => {
+    const filterProjects = value => {
       const text = value.trim().toLowerCase();
       if (text) {
-        displayedSpaces.value = userSpaces.value.filter(a =>
+        displayedProjects.value = userProjects.value.filter(a =>
           a.name.toLowerCase().includes(text)
         );
       } else {
-        displayedSpaces.value = userSpaces.value;
+        displayedProjects.value = userProjects.value;
       }
     };
-    watchEffect(() => filterSpaces(searchText.value));
+    watchEffect(() => filterProjects(searchText.value));
 
     let sortOrder = "none";
-    const sortSpaces = () => {
+    const sortProjects = () => {
       sortOrder = sortOrder === "asc" ? "desc" : "asc";
       const n = sortOrder === "desc" ? -1 : 1;
-      displayedSpaces.value = displayedSpaces.value
+      displayedProjects.value = displayedProjects.value
         .slice()
         .sort((a, b) => (a.name < b.name ? -1 : 1) * n);
     };
 
-    const showCreationCard = ref(false);
-    const createSpace = () => {
-      showCreationCard.value = true;
-    };
-
     return {
       // References
+      projects: displayedProjects,
       searchText,
-      showCreationCard,
-      spaces: displayedSpaces,
       // Methods
-      createSpace,
-      sortSpaces
+      filterProjects,
+      sortProjects
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./Spaces.scss"></style>
+<style scoped lang="scss" src="./UserProjects.scss"></style>
