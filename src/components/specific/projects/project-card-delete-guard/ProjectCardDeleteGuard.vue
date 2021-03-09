@@ -3,7 +3,7 @@
     <div class="project-card-delete-guard__title">
       {{ $t("Projects.ProjectDeleteGuard.title") }}
       <BIMDataButton ghost rounded icon @click="close">
-        <BIMDataIcon name="close" size="xxxs" />
+        <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
     </div>
     <div class="project-card-delete-guard__message">
