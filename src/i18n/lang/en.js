@@ -118,6 +118,9 @@ export default {
   },
   ProjectBoard: {
     addIFC: "Add an IFC",
+    ProjectModelsOverview: {
+      title: "Project Models Overview"
+    },
     ProjectModelsManager: {
       title: "Project Models",
       onboardingText: "Upload your first IFC",

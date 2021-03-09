@@ -25,8 +25,9 @@
     </ViewHeader>
 
     <div class="container">
-      <ProjectModelsManager class="block--models" :project="project" />
+      <ProjectModelsOverview class="block--overview" :project="project" />
       <ProjectUsersManager class="block--users" :project="project" />
+      <!-- <ProjectModelsManager class="block--models" :project="project" /> -->
       <ProjectFilesManager class="block--files" :project="project" />
     </div>
   </div>
@@ -41,7 +42,8 @@ import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectFilesManager from "@/components/specific/files/project-files-manager/ProjectFilesManager";
-import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
+// import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
+import ProjectModelsOverview from "@/components/specific/models/project-models-overview/ProjectModelsOverview";
 import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager";
 
 export default {
@@ -52,7 +54,8 @@ export default {
     ViewHeader,
     AppBreadcrumb,
     ProjectFilesManager,
-    ProjectModelsManager,
+    // ProjectModelsManager,
+    ProjectModelsOverview,
     ProjectUsersManager
   },
   setup() {
