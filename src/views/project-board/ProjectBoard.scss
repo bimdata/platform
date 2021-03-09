@@ -2,14 +2,19 @@
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 480px 560px;
+    grid-template-rows: 480px 560px /*560px*/;
     gap: $spacing-unit * 2;
     grid-template-areas:
-      "models models users"
-      "files  files  files";
+      "overview overview users"
+      // "models   models   models"
+      "files    files    files";
     padding: $spacing-unit * 2 0;
 
     .block {
+      &--overview {
+        grid-area: overview;
+      }
+
       &--models {
         grid-area: models;
       }

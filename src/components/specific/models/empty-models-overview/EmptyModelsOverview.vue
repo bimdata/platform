@@ -1,14 +1,14 @@
 <template>
-  <div class="empty-models-manager">
+  <div class="empty-models-overview">
     <img
       width="260"
       height="260"
-      src="/static/empty-models-manager-illustration.svg"
+      src="/static/empty-models-overview-illustration.svg"
     />
     <div>
       {{ $t("ProjectBoard.ProjectModelsManager.onboardingText") }}
     </div>
-    <div class="empty-models-manager__actions">
+    <div class="empty-models-overview__actions">
       <BIMDataButton color="primary" fill radius>
         {{ $t("ProjectBoard.ProjectModelsManager.buttonUpload") }}
       </BIMDataButton>
@@ -36,4 +36,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./EmptyModelsManager.scss"></style>
+<style scoped lang="scss" src="./EmptyModelsOverview.scss"></style>

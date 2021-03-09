@@ -1,10 +1,10 @@
 <template>
   <BIMDataCard
-    class="project-models-manager"
-    :titleHeader="$t('ProjectBoard.ProjectModelsManager.title')"
+    class="project-models-overview"
+    :titleHeader="$t('ProjectBoard.ProjectModelsOverview.title')"
   >
     <template #content>
-      <!-- TODO -->
+      <EmptyModelsOverview :project="project" />
     </template>
   </BIMDataCard>
 </template>
@@ -12,10 +12,12 @@
 <script>
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import EmptyModelsOverview from "@/components/specific/models/empty-models-overview/EmptyModelsOverview";
 
 export default {
   components: {
-    BIMDataCard
+    BIMDataCard,
+    EmptyModelsOverview
   },
   props: {
     project: {
@@ -29,4 +31,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ProjectModelsManager.scss"></style>
+<style scoped lang="scss" src="./ProjectModelsOverview.scss"></style>
