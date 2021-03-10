@@ -140,5 +140,11 @@ export default {
       buttonUploadFile: "Téléversement",
       buttonCreateFolder: "Créer un dossier"
     }
+  },
+  ViewerCard: {
+    buttonOpen: "Ouvrir"
+  },
+  ViewerCardModelPreview: {
+    noPreview: "Aucune prévisualisation"
   }
 };

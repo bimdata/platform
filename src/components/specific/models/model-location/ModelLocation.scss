@@ -1,0 +1,8 @@
+.model-location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  height: $platform-viewer-card-height;
+  background-color: $color-tertiary-lightest;
+}
