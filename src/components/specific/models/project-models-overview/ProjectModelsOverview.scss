@@ -1,7 +1,9 @@
 .project-models-overview {
-  &:deep() {
-    .bimdata-card__content {
-      height: calc(100% - 35px);
-    }
+  &.bimdata-card:deep() > .bimdata-card__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: calc(100% - 35px);
+    padding: $spacing-unit * 2;
   }
 }

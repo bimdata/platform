@@ -1,4 +1,5 @@
 import { contextIDs, useLoadingContext } from "@/state/loading";
+import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 import { useUser } from "@/state/user";
@@ -67,13 +68,20 @@ const spaceBoardResolver = createViewResolver(async route => {
 
 const projectBoardResolver = createViewResolver(async route => {
   const { currentSpace, loadUserSpaces, selectSpace } = useSpaces();
-  const { loadUserProjects, loadSpaceProjects, selectProject } = useProjects();
+  const {
+    currentProject,
+    loadUserProjects,
+    loadSpaceProjects,
+    selectProject
+  } = useProjects();
+  const { loadProjectModels } = useModels();
 
   await loadUserSpaces();
   await loadUserProjects();
   await selectSpace(+route.params.spaceID);
   await loadSpaceProjects(currentSpace.value);
   await selectProject(+route.params.projectID);
+  await loadProjectModels(currentProject.value);
   return;
 });
 

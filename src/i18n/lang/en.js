@@ -137,5 +137,11 @@ export default {
       buttonUploadFile: "Upload",
       buttonCreateFolder: "Create a folder"
     }
+  },
+  ViewerCard: {
+    buttonOpen: "Open"
+  },
+  ViewerCardModelPreview: {
+    noPreview: "No preview available"
   }
 };
