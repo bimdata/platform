@@ -42,7 +42,12 @@ const loadSpaceProjects = async space => {
 };
 
 const loadProjectUsers = async project => {
-  state.currentProjectUsers = await ProjectService.fetchProjectUsers(project);
+  const { user: currentUser } = useUser();
+  const users = await ProjectService.fetchProjectUsers(project);
+  state.currentProjectUsers = users.map(user => ({
+    ...user,
+    isSelf: user.id === currentUser.value.id
+  }));
   return state.currentProjectUsers;
 };
 
@@ -106,6 +111,27 @@ const fetchProjectPreviewImages = async project => {
   return images;
 };
 
+const sendProjectInvitation = async (project, invitation, options = {}) => {
+  const newInvitation = await ProjectService.sendProjectInvitation(
+    project,
+    invitation
+  );
+  if (!options.resend) {
+    state.currentProjectInvitations = [newInvitation].concat(
+      state.currentProjectInvitations
+    );
+  }
+  return newInvitation;
+};
+
+const cancelProjectInvitation = async (project, invitation) => {
+  await ProjectService.cancelProjectInvitation(project, invitation);
+  state.currentProjectInvitations = state.currentProjectInvitations.filter(
+    i => i.id !== invitation.id
+  );
+  return invitation;
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -121,6 +147,8 @@ export function useProjects() {
     softDeleteProject,
     selectUserProject,
     selectProject: selectSpaceProject,
-    fetchProjectPreviewImages
+    fetchProjectPreviewImages,
+    sendProjectInvitation,
+    cancelProjectInvitation
   };
 }

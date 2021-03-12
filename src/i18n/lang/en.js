@@ -99,16 +99,22 @@ export default {
     searchUsers: "Search user",
     addUserButton: "Add new admin"
   },
-  SpaceInvitationForm: {
-    inputEmail: "Enter email",
-    errorMessage: "Invalid email"
+  InvitationForm: {
+    inputEmail: "Mail address",
+    errorMessage: "Invalid email",
+    buttonCancel: "Cancel",
+    buttonSubmit: "Send invitation"
   },
   User: {
+    self: "you",
     admin: "Admin",
     user: "User",
     guest: "Guest",
     UserDeleteGuard: {
-      message: "Remove {name} from this space ?",
+      message: {
+        space: "Remove {name} from this space ?",
+        project: "Remove {name} from this project ?"
+      },
       buttonDelete: "Remove"
     }
   },

@@ -4,7 +4,7 @@
     :titleHeader="$t('ProjectBoard.ProjectUsersManager.title')"
   >
     <template #content>
-      <template v-if="users.length > 0">
+      <template v-if="users.length > 1">
         <BIMDataCard class="project-users-manager__manager">
           <template #left>
             <BIMDataButton ghost rounded icon @click="() => {}">
@@ -29,11 +29,13 @@
                   v-for="invitation in invitations"
                   :key="`invitation-${invitation.id}`"
                   :invitation="invitation"
+                  :project="project"
                 />
                 <UserCard
                   v-for="user in displayedUsers"
                   :key="`user-${user.id}`"
                   :user="user"
+                  :project="project"
                 />
               </transition-group>
             </div>

@@ -1,7 +1,11 @@
 <template>
   <div class="user-card-delete-guard">
     <span class="user-card-delete-guard__message">
-      {{ $t("User.UserDeleteGuard.message", { name: user.firstname }) }}
+      {{
+        $t(`User.UserDeleteGuard.message.${!!project ? "project" : "space"}`, {
+          name: user.firstname
+        })
+      }}
     </span>
     <BIMDataButton
       class="user-card-delete-guard__delete-btn"
@@ -28,6 +32,7 @@
 
 <script>
 import { inject } from "vue";
+import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -42,17 +47,31 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    space: {
+      type: Object,
+      default: null
+    },
+    project: {
+      type: Object,
+      default: null
     }
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { currentSpace, deleteSpaceUser } = useSpaces();
+    const { deleteSpaceUser } = useSpaces();
+    const { deleteProjectUser } = useProjects();
 
     const loading = inject("loading", false);
 
-    const removeSpaceUser = () => {
-      loading.value = true;
-      deleteSpaceUser(currentSpace.value, props.user);
+    const removeSpaceUser = async () => {
+      if (props.project) {
+        loading.value = true;
+        await deleteProjectUser(props.project, props.user);
+      } else if (props.space) {
+        loading.value = true;
+        await deleteSpaceUser(props.space, props.user);
+      }
     };
 
     const close = () => {
