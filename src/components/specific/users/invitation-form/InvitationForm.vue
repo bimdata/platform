@@ -1,14 +1,24 @@
 <template>
   <div class="invitation-form">
-    <BIMDataInput
-      ref="emailInput"
-      class="invitation-form__input"
-      :placeholder="$t('InvitationForm.inputEmail')"
-      v-model="email"
-      :error="error"
-      :errorMessage="$t('InvitationForm.errorMessage')"
-      @keyup.enter.stop="inviteUser"
-    />
+    <div class="invitation-form__input">
+      <BIMDataInput
+        ref="emailInput"
+        class="invitation-form__input__email"
+        :placeholder="$t('InvitationForm.inputEmail')"
+        v-model="email"
+        :error="error"
+        :errorMessage="$t('InvitationForm.errorMessage')"
+        @keyup.enter.stop="inviteUser"
+      />
+      <BIMDataSelect
+        v-if="project"
+        class="invitation-form__input__role"
+        :label="$t('InvitationForm.inputRole')"
+        :options="roles"
+        optionKey="name"
+        v-model="role"
+      />
+    </div>
     <BIMDataButton
       class="invitation-form__btn-cancel"
       ghost
@@ -30,17 +40,20 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
+import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSelect.js";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataInput
+    BIMDataInput,
+    BIMDataSelect
   },
   props: {
     space: {
@@ -54,19 +67,32 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
+    const { t } = useI18n();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
 
     const emailInput = ref(null);
     const email = ref("");
     const error = ref(false);
+
+    const roles = ref([]);
+    const role = ref(null);
+    watchEffect(() => {
+      roles.value = [
+        { value: 100, name: t("InvitationForm.roles.admin") },
+        { value: 50, name: t("InvitationForm.roles.user") },
+        { value: 25, name: t("InvitationForm.roles.guest") }
+      ];
+      role.value = roles.value[0];
+    });
+
     const inviteUser = async () => {
       if (email.value) {
         try {
           if (props.project) {
             await sendProjectInvitation(props.project, {
               email: email.value,
-              role: null
+              role: role.value.value
             });
           } else if (props.space) {
             await sendSpaceInvitation(props.space, { email: email.value });
@@ -95,6 +121,8 @@ export default {
       email,
       emailInput,
       error,
+      role,
+      roles,
       // Methods
       close,
       inviteUser

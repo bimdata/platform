@@ -33,6 +33,21 @@
         overflow-x: hidden;
         overflow-y: auto;
 
+        .bimdata-search-bar {
+          min-width: calc(100% - #{$spacing-unit * 2});
+          margin: $spacing-unit;
+          font-size: 1rem;
+          background-color: $color-tertiary-lightest;
+          &.focus {
+            background-color: $color-white;
+          }
+        }
+
+        .invitation-form {
+          padding: $spacing-unit;
+          padding-top: $spacing-unit * 2;
+        }
+
         .invitation-card {
           padding: 0 $spacing-unit/2;
           border-bottom: 1px solid $color-tertiary-lightest;
