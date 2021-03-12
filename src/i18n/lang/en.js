@@ -134,7 +134,7 @@ export default {
     ProjectFilesManager: {
       title: "Project Files",
       onboardingText: "Upload your first file",
-      buttonUploadFile: "Upload",
+      buttonUploadFile: "Upload a file",
       buttonCreateFolder: "Create a folder"
     }
   },
@@ -143,5 +143,13 @@ export default {
   },
   ViewerCardModelPreview: {
     noPreview: "No preview available"
+  },
+  ModelLocation: {
+    noLocationMessage: "No location data available",
+    buttonAddLocation: "Fill in"
+  },
+  ModelLocationForm: {
+    inputAddress: "Enter address",
+    buttonValidate: "Validate"
   }
 };

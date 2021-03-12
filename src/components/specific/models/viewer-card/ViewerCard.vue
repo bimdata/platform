@@ -7,7 +7,10 @@
       </BIMDataButton>
     </template>
     <template #content>
-      <ViewerCardModelPreview :project="project" />
+      <ViewerCardModelPreview
+        :models="models"
+        @model-change="$emit('model-change', $event)"
+      />
     </template>
   </BIMDataCard>
 </template>
@@ -30,8 +33,13 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    models: {
+      type: Array,
+      required: true
     }
   },
+  emits: ["model-change"],
   setup() {
     const goToViewer = () => {};
 

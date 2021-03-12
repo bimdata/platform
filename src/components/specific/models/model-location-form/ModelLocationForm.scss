@@ -1,0 +1,29 @@
+.model-location-form {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &__form-control {
+    position: absolute;
+    z-index: 1;
+    bottom: $spacing-unit * 3;
+    left: calc(50% - 310px);
+    width: 620px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: $color-white;
+
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit;
+    padding: $spacing-unit/2 $spacing-unit;
+
+    &__input {
+      flex-grow: 1;
+      font-size: 1rem;
+    }
+
+    &__close-btn {
+      color: $color-tertiary-dark;
+    }
+  }
+}

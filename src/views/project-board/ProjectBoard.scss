@@ -1,5 +1,5 @@
 .project-board-view {
-  .container {
+  &__container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 480px 560px /*560px*/;
@@ -10,7 +10,7 @@
       "files    files    files";
     padding: $spacing-unit * 2 0;
 
-    .block {
+    &__block {
       &--overview {
         grid-area: overview;
       }

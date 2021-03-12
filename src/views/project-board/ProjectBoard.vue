@@ -24,16 +24,33 @@
       </template>
     </ViewHeader>
 
-    <div class="container">
-      <ProjectModelsOverview class="block--overview" :project="project" />
-      <ProjectUsersManager class="block--users" :project="project" />
-      <!-- <ProjectModelsManager class="block--models" :project="project" /> -->
-      <ProjectFilesManager class="block--files" :project="project" />
+    <div class="project-board-view__container">
+      <ProjectModelsOverview
+        class="project-board-view__container__block--overview"
+        :project="project"
+        :models="models"
+      />
+      <ProjectUsersManager
+        class="project-board-view__container__block--users"
+        :project="project"
+      />
+      <!--
+      <ProjectModelsManager
+        class="project-board-view__container__block--models"
+        :project="project"
+        :models="models"
+      />
+      -->
+      <ProjectFilesManager
+        class="project-board-view__container__block--files"
+        :project="project"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -60,9 +77,11 @@ export default {
   },
   setup() {
     const { currentProject } = useProjects();
+    const { projectModels } = useModels();
 
     return {
-      project: currentProject
+      project: currentProject,
+      models: projectModels
     };
   }
 };

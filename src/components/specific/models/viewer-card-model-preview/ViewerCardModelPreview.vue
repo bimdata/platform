@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
-import { useModels } from "@/state/models";
+import { ref, watch, watchEffect } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -65,14 +64,13 @@ export default {
     BIMDataIcon
   },
   props: {
-    project: {
-      type: Object,
+    models: {
+      type: Array,
       required: true
     }
   },
-  setup() {
-    const { projectModels } = useModels();
-
+  emits: ["model-change"],
+  setup(props, { emit }) {
     const nbSlices = 15;
     const container = ref(null);
     const viewport = ref(null);
@@ -90,29 +88,31 @@ export default {
       }
     };
 
-    let index = 0;
-    const image = ref(null);
     const images = ref([]);
-    const nextImage = () => {
-      if (index < images.value.length - 1) {
-        image.value = images.value[++index];
-      }
-    };
+    const image = ref(null);
+    const index = ref(0);
+
+    watch(index, i => {
+      image.value = images.value[i];
+      emit("model-change", props.models[i]);
+    });
     const previousImage = () => {
-      if (index > 0) {
-        image.value = images.value[--index];
-      }
+      if (index.value > 0) index.value--;
     };
-    watchEffect(
-      () => (image.value = images.value.length > 0 ? images.value[0] : null)
-    );
+    const nextImage = () => {
+      if (index.value < images.value.length - 1) index.value++;
+    };
+
     watchEffect(() => {
-      images.value = projectModels.value.map((model, i) => ({
+      images.value = props.models.map((model, i) => ({
         index: i + 1,
         name: model.name,
         url: model.viewer360File
       }));
     });
+    watchEffect(
+      () => (image.value = images.value.length > 0 ? images.value[0] : null)
+    );
 
     return {
       // References

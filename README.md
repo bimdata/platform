@@ -39,7 +39,7 @@ and follow the steps to create an application.
 $ npm run serve
 ```
 
-- **(5)** Make you a coffee and start coding... :coffee: `</>`
+- **(5)** Have a coffee and start coding... :coffee: `</>`
 
 ## Documentation
 
