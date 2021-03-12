@@ -48,7 +48,7 @@ class ProjectService {
   }
 
   sendProjectInvitation(project, invitation) {
-    return apiClient.collaborationApi.inviteCloudUser({
+    return apiClient.collaborationApi.inviteProjectUser({
       cloudPk: project.cloud.id,
       projectPk: project.id,
       data: {

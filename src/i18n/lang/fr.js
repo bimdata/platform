@@ -105,6 +105,12 @@ export default {
   InvitationForm: {
     inputEmail: "Email de l'utilisateur",
     errorMessage: "Email invalide",
+    inputRole: "Rôle",
+    roles: {
+      admin: "Administrateur",
+      user: "Utilisateur",
+      guest: "Invité"
+    },
     buttonCancel: "Annuler",
     buttonSubmit: "Inviter"
   },
@@ -138,7 +144,8 @@ export default {
     ProjectUsersManager: {
       title: "Utilisateurs",
       onboardingText: "Inviter votre premier collaborateur",
-      buttonInvite: "Invitation"
+      buttonInvite: "Invitation",
+      searchUsers: "Rechercher un utilisateur"
     },
     ProjectFilesManager: {
       title: "Documents du projet",
