@@ -137,7 +137,7 @@ export default {
     ProjectFilesManager: {
       title: "Documents du projet",
       onboardingText: "Téléverser votre premier fichier",
-      buttonUploadFile: "Téléversement",
+      buttonUploadFile: "Téléverser un fichier",
       buttonCreateFolder: "Créer un dossier"
     }
   },
@@ -146,5 +146,13 @@ export default {
   },
   ViewerCardModelPreview: {
     noPreview: "Aucune prévisualisation"
+  },
+  ModelLocation: {
+    noLocationMessage: "Aucune données de localisation disponible",
+    buttonAddLocation: "Renseigner"
+  },
+  ModelLocationForm: {
+    inputAddress: "Entrer une adresse",
+    buttonValidate: "Valider"
   }
 };

@@ -10,10 +10,20 @@ const loadProjectModels = async project => {
   return state.projectModels;
 };
 
+const fetchModelSites = async (project, model) => {
+  const sites = await ModelService.fetchIfcElementsByType(
+    project,
+    model,
+    "IfcSite"
+  );
+  return sites;
+};
+
 export function useModels() {
   const readonlyState = readonly(state);
   return {
     ...toRefs(readonlyState),
-    loadProjectModels
+    loadProjectModels,
+    fetchModelSites
   };
 }
