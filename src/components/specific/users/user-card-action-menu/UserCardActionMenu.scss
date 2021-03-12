@@ -12,8 +12,9 @@
     display: flex;
     gap: $spacing-unit/2;
     margin-right: $spacing-unit/2;
+    padding: 0 $spacing-unit/2;
     border-radius: 4px;
     background-color: $color-white;
-    box-shadow: 0 0 4px 14px white;
+    box-shadow: 0 2px 10px 0 $color-white;
   }
 }

@@ -33,6 +33,8 @@
       <ProjectUsersManager
         class="project-board-view__container__block--users"
         :project="project"
+        :users="users"
+        :invitations="invitations"
       />
       <!--
       <ProjectModelsManager
@@ -76,12 +78,18 @@ export default {
     ProjectUsersManager
   },
   setup() {
-    const { currentProject } = useProjects();
+    const {
+      currentProject,
+      currentProjectUsers,
+      currentProjectInvitations
+    } = useProjects();
     const { projectModels } = useModels();
 
     return {
+      models: projectModels,
+      invitations: currentProjectInvitations,
       project: currentProject,
-      models: projectModels
+      users: currentProjectUsers
     };
   }
 };

@@ -2,6 +2,8 @@
   position: relative;
   min-height: 64px;
   height: 64px;
+  font-size: 1rem;
+  color: $color-primary;
 
   &__loader {
     display: flex;
@@ -46,9 +48,5 @@
         color: $color-tertiary-dark;
       }
     }
-  }
-
-  &:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   }
 }
