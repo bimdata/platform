@@ -6,7 +6,9 @@ import { useUser } from "@/state/user";
 const state = reactive({
   userProjects: [],
   spaceProjects: [],
-  currentProject: null
+  currentProject: null,
+  currentProjectUsers: [],
+  currentProjectInvitations: []
 });
 
 const loadUserProjects = async () => {
@@ -37,6 +39,18 @@ const loadSpaceProjects = async space => {
     .slice()
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   return state.spaceProjects;
+};
+
+const loadProjectUsers = async project => {
+  state.currentProjectUsers = await ProjectService.fetchProjectUsers(project);
+  return state.currentProjectUsers;
+};
+
+const loadProjectInvitations = async project => {
+  state.currentProjectInvitations = await ProjectService.fetchProjectInvitations(
+    project
+  );
+  return state.currentProjectInvitations;
 };
 
 const createProject = async (space, project) => {
@@ -98,6 +112,8 @@ export function useProjects() {
     ...toRefs(readonlyState),
     loadUserProjects,
     loadSpaceProjects,
+    loadProjectUsers,
+    loadProjectInvitations,
     createProject,
     updateProject,
     softUpdateProject,

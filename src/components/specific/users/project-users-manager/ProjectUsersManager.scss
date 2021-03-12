@@ -1,7 +1,51 @@
 .project-users-manager {
-  &:deep() {
-    .bimdata-card__content {
-      height: calc(100% - 35px);
+  &.bimdata-card:deep() > .bimdata-card__content {
+    height: calc(100% - 35px);
+    padding: 0;
+  }
+
+  &__manager {
+    height: 100%;
+    box-shadow: none;
+
+    &:deep() {
+      .bimdata-card__brand {
+        display: flex;
+        gap: $spacing-unit/2;
+        padding: 0 $spacing-unit/2;
+
+        &--left {
+          margin-right: auto;
+        }
+      }
+
+      .bimdata-card__content {
+        height: calc(100% - 32px);
+        padding: 0;
+      }
+
+      .project-users-manager__list-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: $spacing-unit/2;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .invitation-card {
+          padding: 0 $spacing-unit/2;
+          border-bottom: 1px solid $color-tertiary-lightest;
+        }
+
+        .user-card {
+          padding: 0 $spacing-unit/2;
+          border-bottom: 1px solid $color-tertiary-lightest;
+          &:hover {
+            background-color: $color-tertiary-lightest;
+          }
+        }
+      }
     }
   }
 }

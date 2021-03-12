@@ -3,6 +3,8 @@
   align-items: center;
   min-height: 64px;
   height: 64px;
+  font-size: 1rem;
+  color: $color-primary;
 
   &__avatar {
     display: flex;

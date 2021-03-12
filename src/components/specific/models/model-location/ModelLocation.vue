@@ -22,6 +22,7 @@
         <div class="model-location__map">
           <MapboxWrapper :longitude="longitude" :latitude="latitude" />
           <BIMDataButton
+            v-if="project.isAdmin"
             class="model-location__map__edit-btn"
             width="36px"
             height="36px"

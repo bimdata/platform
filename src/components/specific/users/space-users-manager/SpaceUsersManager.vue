@@ -42,11 +42,15 @@
         <template v-if="showInvitations">
           <InvitationCard
             v-for="invitation in invitations"
-            :key="invitation.id"
+            :key="`invitation-${invitation.id}`"
             :invitation="invitation"
           />
         </template>
-        <UserCard v-for="user in displayedUsers" :key="user.id" :user="user" />
+        <UserCard
+          v-for="user in displayedUsers"
+          :key="`user-${user.id}`"
+          :user="user"
+        />
       </transition-group>
     </div>
   </div>
