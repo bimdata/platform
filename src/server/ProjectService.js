@@ -46,6 +46,34 @@ class ProjectService {
       id: project.id
     });
   }
+
+  sendProjectInvitation(project, invitation) {
+    return apiClient.collaborationApi.inviteCloudUser({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      data: {
+        email: invitation.email,
+        role: invitation.role,
+        redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
+      }
+    });
+  }
+
+  cancelProjectInvitation(project, invitation) {
+    return apiClient.collaborationApi.cancelProjectUserInvitation({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id: invitation.id
+    });
+  }
+
+  deleteProjectUser(project, user) {
+    return apiClient.collaborationApi.deleteProjectUser({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id: user.id
+    });
+  }
 }
 
 const service = new ProjectService();

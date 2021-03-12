@@ -3,65 +3,78 @@
     <BIMDataInput
       ref="emailInput"
       class="invitation-form__input"
-      :placeholder="$t('SpaceInvitationForm.inputEmail')"
+      :placeholder="$t('InvitationForm.inputEmail')"
       v-model="email"
       :error="error"
-      :errorMessage="$t('SpaceInvitationForm.errorMessage')"
+      :errorMessage="$t('InvitationForm.errorMessage')"
       @keyup.enter.stop="inviteUser"
     />
     <BIMDataButton
-      class="invitation-form__submit-btn"
+      class="invitation-form__btn-cancel"
       ghost
-      rounded
-      icon
-      @click="inviteUser"
-    >
-      <BIMDataIcon name="validate" size="xxs" />
-    </BIMDataButton>
-    <BIMDataButton
-      class="invitation-form__close-btn"
-      ghost
-      rounded
-      icon
+      radius
       @click="close"
     >
-      <BIMDataIcon name="close" size="xxs" />
+      {{ $t("InvitationForm.buttonCancel") }}
+    </BIMDataButton>
+    <BIMDataButton
+      class="invitation-form__btn-submit"
+      color="primary"
+      fill
+      radius
+      @click="inviteUser"
+    >
+      {{ $t("InvitationForm.buttonSubmit") }}
     </BIMDataButton>
   </div>
 </template>
 
 <script>
 import { onMounted, ref } from "vue";
+import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon,
     BIMDataInput
   },
   props: {
     space: {
       type: Object,
-      required: true
+      default: null
+    },
+    project: {
+      type: Object,
+      default: null
     }
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
     const { sendSpaceInvitation } = useSpaces();
+    const { sendProjectInvitation } = useProjects();
 
     const emailInput = ref(null);
     const email = ref("");
     const error = ref(false);
-    const inviteUser = () => {
+    const inviteUser = async () => {
       if (email.value) {
-        sendSpaceInvitation(props.space, email.value)
-          .then(() => emit("success"))
-          .catch(error => emit("error", error));
+        try {
+          if (props.project) {
+            await sendProjectInvitation(props.project, {
+              email: email.value,
+              role: null
+            });
+          } else if (props.space) {
+            await sendSpaceInvitation(props.space, { email: email.value });
+          }
+          emit("success");
+        } catch (error) {
+          emit("error", error);
+        }
       } else {
         emailInput.value.focus();
         error.value = true;

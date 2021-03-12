@@ -23,7 +23,12 @@ const loadUserSpaces = async () => {
 };
 
 const loadSpaceUsers = async space => {
-  const users = await SpaceService.fetchSpaceUsers(space);
+  const { user: currentUser } = useUser();
+  let users = await SpaceService.fetchSpaceUsers(space);
+  users = users.map(user => ({
+    ...user,
+    isSelf: user.id === currentUser.value.id
+  }));
   state.currentSpaceAdmins = users.filter(user => user.cloudRole === 100);
   state.currentSpaceUsers = users.filter(user => user.cloudRole === 50);
   return users;
@@ -73,14 +78,17 @@ const selectSpace = id => {
   return state.currentSpace;
 };
 
-const sendSpaceInvitation = async (space, email, options = {}) => {
-  const invitation = await SpaceService.sendSpaceInvitation(space, email);
+const sendSpaceInvitation = async (space, invitation, options = {}) => {
+  const newInvitation = await SpaceService.sendSpaceInvitation(
+    space,
+    invitation
+  );
   if (!options.resend) {
-    state.currentSpaceInvitations = [invitation].concat(
+    state.currentSpaceInvitations = [newInvitation].concat(
       state.currentSpaceInvitations
     );
   }
-  return invitation;
+  return newInvitation;
 };
 
 const cancelSpaceInvitation = async (space, invitation) => {

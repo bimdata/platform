@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -39,22 +40,37 @@ export default {
     invitation: {
       type: Object,
       required: true
+    },
+    space: {
+      type: Object,
+      default: null
+    },
+    project: {
+      type: Object,
+      default: null
     }
   },
   setup(props) {
-    const {
-      currentSpace,
-      sendSpaceInvitation,
-      cancelSpaceInvitation
-    } = useSpaces();
+    const { sendSpaceInvitation, cancelSpaceInvitation } = useSpaces();
+    const { sendProjectInvitation, cancelProjectInvitation } = useProjects();
 
     const resendInvitation = () => {
-      sendSpaceInvitation(currentSpace.value, props.invitation.email, {
-        resend: true
-      });
+      if (props.project) {
+        sendProjectInvitation(props.project, props.invitation, {
+          resend: true
+        });
+      } else if (props.space) {
+        sendSpaceInvitation(props.space, props.invitation.email, {
+          resend: true
+        });
+      }
     };
     const cancelInvitation = () => {
-      cancelSpaceInvitation(currentSpace.value, props.invitation);
+      if (props.project) {
+        cancelProjectInvitation(props.project, props.invitation);
+      } else if (props.space) {
+        cancelSpaceInvitation(props.space, props.invitation);
+      }
     };
 
     return {

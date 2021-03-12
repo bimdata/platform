@@ -8,16 +8,22 @@
       <UserCardDeleteGuard
         v-else-if="showDeleteGuard"
         :user="user"
+        :space="space"
+        :project="project"
         @close="closeDeleteGuard"
       />
 
       <div class="user-card__content" v-else>
         <div class="user-card__content__avatar">
-          {{ initials }}
+          <template v-if="initials">
+            {{ initials }}
+          </template>
+          <BIMDataIcon v-else name="user" size="s" />
         </div>
         <div class="user-card__content__info">
           <div class="user-card__content__info__name">
             {{ `${firstName} ${lastName}` }}
+            {{ user.isSelf ? `(${$t("User.self")})` : "" }}
             <UserRoleBadge :role="role" />
           </div>
           <div class="user-card__content__info__email">
@@ -25,6 +31,7 @@
           </div>
         </div>
         <UserCardActionMenu
+          v-if="!user.isSelf"
           @open-update="() => {}"
           @open-delete="openDeleteGuard"
         />
@@ -36,6 +43,7 @@
 <script>
 import { computed, provide, ref, watchEffect } from "vue";
 // Components
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import UserCardActionMenu from "@/components/specific/users/user-card-action-menu/UserCardActionMenu";
 import UserCardDeleteGuard from "@/components/specific/users/user-card-delete-guard/UserCardDeleteGuard";
@@ -43,6 +51,7 @@ import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleB
 
 export default {
   components: {
+    BIMDataIcon,
     BIMDataSpinner,
     UserCardActionMenu,
     UserCardDeleteGuard,
@@ -52,6 +61,14 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    space: {
+      type: Object,
+      default: null
+    },
+    project: {
+      type: Object,
+      default: null
     }
   },
   setup(props) {
@@ -60,7 +77,7 @@ export default {
     const email = ref("");
     const role = ref(0);
     const initials = computed(() =>
-      `${firstName.value[0]}${lastName.value[0]}`.toUpperCase()
+      `${firstName.value[0]}${lastName.value[0]}`.trim().toUpperCase()
     );
     watchEffect(() => {
       if (props.user) {

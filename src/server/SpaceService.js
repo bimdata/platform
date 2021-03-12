@@ -51,11 +51,11 @@ class SpaceService {
     });
   }
 
-  sendSpaceInvitation(space, email) {
+  sendSpaceInvitation(space, invitation) {
     return apiClient.collaborationApi.inviteCloudUser({
       cloudPk: space.id,
       data: {
-        email,
+        email: invitation.email,
         redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
       }
     });

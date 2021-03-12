@@ -44,12 +44,14 @@
             v-for="invitation in invitations"
             :key="`invitation-${invitation.id}`"
             :invitation="invitation"
+            :space="space"
           />
         </template>
         <UserCard
           v-for="user in displayedUsers"
           :key="`user-${user.id}`"
           :user="user"
+          :space="space"
         />
       </transition-group>
     </div>
