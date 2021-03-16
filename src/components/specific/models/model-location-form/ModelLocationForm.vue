@@ -5,16 +5,27 @@
       :latitude="coordinates.latitude"
     />
     <div class="model-location-form__form-control">
-      <BIMDataInput
+      <AddressInput
         class="model-location-form__form-control__input"
         :placeholder="$t('ModelLocationForm.inputAddress')"
-        v-model="address"
-        @keyup.enter.stop="checkAddress"
         :loading="checkLoading"
+        :disabled="isSubmitStep"
+        v-model="inputAddress"
+        @address-selected="checkAddress"
       />
-      <BIMDataButton color="primary" fill radius @click="checkAddress">
-        {{ $t("ModelLocationForm.buttonValidate") }}
-      </BIMDataButton>
+      <template v-if="!isSubmitStep">
+        <BIMDataButton color="primary" fill radius @click="checkAddress">
+          {{ $t("ModelLocationForm.buttonCheck") }}
+        </BIMDataButton>
+      </template>
+      <template v-else>
+        <BIMDataButton color="primary" fill radius @click="submitAddress">
+          {{ $t("ModelLocationForm.buttonSubmit") }}
+        </BIMDataButton>
+        <BIMDataButton color="default" outline radius @click="cancel">
+          {{ $t("ModelLocationForm.buttonCancel") }}
+        </BIMDataButton>
+      </template>
       <BIMDataButton
         class="model-location-form__form-control__close-btn"
         ghost
@@ -34,14 +45,14 @@ import { getCoordinatesFromAddress } from "@/utils/coordinate";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
+import AddressInput from "@/components/generic/address-input/AddressInput";
 import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
-    BIMDataInput,
+    AddressInput,
     MapboxWrapper
   },
   props: {
@@ -51,6 +62,10 @@ export default {
     },
     model: {
       type: Object
+    },
+    address: {
+      type: String,
+      default: ""
     },
     longitude: {
       type: Number,
@@ -63,45 +78,66 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
+    const isSubmitStep = ref(false);
     const checkLoading = ref(false);
     const submitLoading = inject("loading", false);
 
+    const inputAddress = ref("");
     const coordinates = reactive({
       longitude: 0,
       latitude: 0
     });
     watchEffect(() => {
-      coordinates.longitude = props.longitude;
-      coordinates.latitude = props.latitude;
+      if (props.address) {
+        inputAddress.value = props.address;
+        checkAddress();
+      } else if (props.longitude && props.latitude) {
+        coordinates.longitude = props.longitude;
+        coordinates.latitude = props.latitude;
+      }
     });
 
-    const address = ref("");
     const checkAddress = async () => {
-      if (address.value) {
+      if (inputAddress.value) {
         checkLoading.value = true;
-        const coord = await getCoordinatesFromAddress(address.value);
-        coordinates.longitude = coord.longitude;
-        coordinates.latitude = coord.latitude;
+        const coord = await getCoordinatesFromAddress(inputAddress.value);
         checkLoading.value = false;
+        if (coord.longitude && coord.latitude) {
+          coordinates.longitude = coord.longitude;
+          coordinates.latitude = coord.latitude;
+          isSubmitStep.value = true;
+        }
       }
     };
     const submitAddress = () => {
-      // TODO
+      submitLoading.value = true;
+      // TODO: set IFC site properties
+      console.log("Address: ", inputAddress.value);
+      console.log("Longitude: ", coordinates.longitude);
+      console.log("Latitude: ", coordinates.latitude);
+      submitLoading.value = false;
     };
 
+    const cancel = () => {
+      isSubmitStep.value = false;
+    };
     const close = () => {
-      address.value = "";
+      inputAddress.value = "";
+      isSubmitStep.value = false;
       emit("close");
     };
 
     return {
       // References
-      address,
+      inputAddress,
       checkLoading,
       coordinates,
+      isSubmitStep,
       // Methods
+      cancel,
       checkAddress,
-      close
+      close,
+      submitAddress
     };
   }
 };

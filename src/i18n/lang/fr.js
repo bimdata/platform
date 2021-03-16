@@ -166,6 +166,8 @@ export default {
   },
   ModelLocationForm: {
     inputAddress: "Entrer une adresse",
-    buttonValidate: "Valider"
+    buttonCheck: "Vérifier",
+    buttonSubmit: "Valider",
+    buttonCancel: "Changer"
   }
 };

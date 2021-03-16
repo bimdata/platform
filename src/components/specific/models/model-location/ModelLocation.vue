@@ -12,6 +12,7 @@
           class="model-location__form"
           :project="project"
           :model="model"
+          :address="address"
           :longitude="longitude"
           :latitude="latitude"
           @close="closeLocationForm"
@@ -97,12 +98,14 @@ export default {
       showLocationForm.value = false;
     };
 
+    const address = ref("");
     const longitude = ref(null);
     const latitude = ref(null);
 
     watchEffect(async () => {
       loading.value = false;
       showLocationForm.value = false;
+      address.value = "";
       longitude.value = null;
       latitude.value = null;
 
@@ -136,6 +139,7 @@ export default {
             properties.find(p => p.definition.name === "SiteAddress") || {}
           ).value;
           if (siteAddress) {
+            address.value = siteAddress;
             const coord = await getCoordinatesFromAddress(siteAddress);
             longitude.value = coord.longitude;
             latitude.value = coord.latitude;
@@ -149,6 +153,7 @@ export default {
 
     return {
       // References
+      address,
       latitude,
       loading,
       longitude,
