@@ -42,13 +42,28 @@ function DD2DMS(value) {
 const getCoordinatesFromAddress = async address => {
   const formattedAddress = address.replace(/ /g, "+");
   const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${formattedAddress}&format=json&polygon=1&addressdetails=1`
+    `https://nominatim.openstreetmap.org/search?q=${formattedAddress}&format=json`
   );
-  const data = await response.json().then(json => json[0]);
-  return {
-    longitude: data ? +data.lon : null,
-    latitude: data ? +data.lat : null
-  };
+  const data = await response.json().then(json => ({
+    longitude: json[0] ? +json[0].lon : undefined,
+    latitude: json[0] ? +json[0].lat : undefined
+  }));
+  return data;
 };
 
-export { DMS2DD, DD2DMS, getCoordinatesFromAddress };
+const getAdressesFromSearchText = async searchText => {
+  const formattedSearchText = searchText.replace(/ /g, "+");
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?q=${formattedSearchText}&format=json`
+  );
+  const data = await response.json().then(json =>
+    json.map(result => ({
+      longitude: +result.lon,
+      latitude: +result.lat,
+      address: result.display_name
+    }))
+  );
+  return data;
+};
+
+export { DMS2DD, DD2DMS, getCoordinatesFromAddress, getAdressesFromSearchText };

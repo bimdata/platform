@@ -163,6 +163,8 @@ export default {
   },
   ModelLocationForm: {
     inputAddress: "Enter address",
-    buttonValidate: "Validate"
+    buttonCheck: "Check",
+    buttonSubmit: "Validate",
+    buttonCancel: "Change"
   }
 };
