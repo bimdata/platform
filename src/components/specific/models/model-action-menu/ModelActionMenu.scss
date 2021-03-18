@@ -1,0 +1,21 @@
+.model-action-menu {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: $spacing-unit;
+
+  &__btn {
+    color: $color-tertiary-dark;
+  }
+
+  &__container {
+    position: absolute;
+    right: 32px + $spacing-unit;
+    width: 180px;
+    padding: $spacing-unit/2 0;
+    border-radius: 4px;
+    background-color: $color-white;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  }
+}

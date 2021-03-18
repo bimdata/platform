@@ -3,4 +3,8 @@
     height: calc(100% - 35px);
     padding: $spacing-unit;
   }
+
+  &__table {
+    margin-top: $spacing-unit * 3;
+  }
 }

@@ -4,17 +4,17 @@
   font-size: 12px;
   font-weight: normal;
 
-  &.admin {
+  &--admin {
     background-color: $color-primary;
     color: $color-white;
   }
 
-  &.user {
+  &--user {
     background-color: $color-success;
     color: $color-white;
   }
 
-  &.guest {
+  &--guest {
     background-color: $color-tertiary-dark;
     color: $color-white;
   }

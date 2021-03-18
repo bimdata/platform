@@ -13,20 +13,29 @@
       />
 
       <GenericTable
+        class="project-models-manager__table"
         :columns="columns"
         :rows="rows"
         :selectable="true"
         @selection-change="() => {}"
       >
-        <template #cell-version>0</template>
+        <template #cell-version>?</template>
         <template #cell-creator="{ row: { creator } }">
           {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "" }}
         </template>
-        <template #cell-lastupdate="{ row: model }">
-          {{ model.updatedAt.toISOString().slice(0, -5) }}
+        <template #cell-lastupdate="{ row: { updatedAt } }">
+          {{
+            updatedAt
+              .toISOString()
+              .slice(0, -5)
+              .replace("T", " at ")
+          }}
         </template>
-        <template #cell-status="{ row: model }">
-          {{ model.status }}
+        <template #cell-status="{ row: { status } }">
+          <ModelStatusBadge :status="status" />
+        </template>
+        <template #cell-actions="{ row: model }">
+          <ModelActionMenu :model="model" />
         </template>
       </GenericTable>
     </template>
@@ -39,13 +48,16 @@ import { ref, watchEffect } from "vue";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
+import ModelActionMenu from "@/components/specific/models/model-action-menu/ModelActionMenu";
+import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
 
 export default {
   components: {
     BIMDataCard,
-    // BIMDataTable,
     BIMDataTabs,
-    GenericTable
+    GenericTable,
+    ModelActionMenu,
+    ModelStatusBadge
   },
   props: {
     project: {
@@ -66,12 +78,13 @@ export default {
     ];
 
     const columns = [
-      { id: "id", label: "ID" },
+      { id: "id", label: "ID", width: "100px", align: "center" },
       { id: "name", label: "Nom" },
-      { id: "version", label: "Version" },
-      { id: "creator", label: "Creator" },
-      { id: "lastupdate", label: "Modifié le" },
-      { id: "status", label: "Statut" }
+      { id: "version", label: "Version", align: "center" },
+      { id: "creator", label: "Creator", align: "center" },
+      { id: "lastupdate", label: "Modifié le", align: "center" },
+      { id: "status", label: "Statut", align: "center" },
+      { id: "actions", label: " ", width: "300px" }
     ];
     const rows = ref([]);
     watchEffect(() => {
