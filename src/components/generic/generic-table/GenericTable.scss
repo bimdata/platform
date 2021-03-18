@@ -12,11 +12,15 @@
       background-color: $color-tertiary-lightest;
     }
 
-    th, td {
+    th,
+    td {
       min-height: $spacing-unit * 2;
       height: 50px;
       padding: 0 $spacing-unit;
-      text-align: left;
+
+      &.cell-checkbox:deep() {
+        width: 42px;
+      }
     }
 
     th {

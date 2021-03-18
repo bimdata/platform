@@ -1,0 +1,19 @@
+.model-status-badge {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin: $spacing-unit/2;
+
+  &--pending,
+  &--in-progress {
+    color: $color-neutral;
+  }
+
+  &--completed {
+    color: $color-success;
+  }
+
+  &--error {
+    color: $color-high;
+  }
+}

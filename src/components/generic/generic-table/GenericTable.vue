@@ -1,29 +1,43 @@
 <template>
   <div class="generic-table">
-    <table class="generic-table__table">
+    <table>
       <thead>
-        <tr>
-          <th v-if="selectable">
+        <tr key="head-row-0">
+          <th class="cell-checkbox" v-if="selectable">
             <BIMDataCheckbox
               :modelValue="selection.size === rows.length"
               @update:modelValue="toggleFullSelection"
             />
           </th>
-          <th v-for="(column, j) of columns" :key="`head-row-0-col-${j}`">
-            {{ column.id ? column.label || column.id : column }}
-          </th>
+          <template v-for="(column, j) of columns" :key="`head-row-0-col-${j}`">
+            <th
+              :style="{
+                width: column.width || 'auto',
+                textAlign: column.align || 'left'
+              }"
+            >
+              {{ column.id ? column.label || column.id : column }}
+            </th>
+          </template>
         </tr>
       </thead>
       <tbody>
         <template v-for="(row, i) of rows" :key="`body-row-${i}`">
           <tr v-if="row">
-            <td v-if="selectable">
+            <td class="cell-checkbox" v-if="selectable">
               <BIMDataCheckbox
                 :modelValue="selection.has(i)"
                 @update:modelValue="toggleSelection(i)"
               />
             </td>
-            <td v-for="(column, j) of columns" :key="`body-row-${i}-col-${j}`">
+            <td
+              v-for="(column, j) of columns"
+              :key="`body-row-${i}-col-${j}`"
+              :style="{
+                width: column.width || 'auto',
+                textAlign: column.align || 'left'
+              }"
+            >
               <slot :name="`cell-${column.id}`" :row="row">
                 {{ row[column.id] || row[j] || "" }}
               </slot>

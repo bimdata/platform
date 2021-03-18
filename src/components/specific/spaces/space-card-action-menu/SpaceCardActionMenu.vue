@@ -5,11 +5,10 @@
     v-click-away="closeMenu"
   >
     <BIMDataButton
-      color="default"
+      class="space-card-action-menu__btn"
       ripple
       rounded
       icon
-      class="space-card-action-menu__btn"
       @click="toggleMenu"
     >
       <BIMDataIcon name="ellipsis" size="l" />

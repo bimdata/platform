@@ -1,5 +1,5 @@
 <template>
-  <span class="user-role-badge" :class="roleName">
+  <span class="user-role-badge" :class="`user-role-badge--${roleName}`">
     {{ $t(`User.${roleName}`) }}
   </span>
 </template>
