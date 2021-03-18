@@ -4,7 +4,9 @@
     padding: $spacing-unit;
   }
 
-  &__table {
+  &__table-container {
+    max-height: calc(100% - 92px);
     margin-top: $spacing-unit * 3;
+    overflow-y: auto;
   }
 }

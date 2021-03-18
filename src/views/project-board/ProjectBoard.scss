@@ -1,4 +1,10 @@
 .project-board-view {
+  &__header:deep() {
+    .bimdata-tabs__container__tab.active {
+      background-color: transparent;
+    }
+  }
+
   &__container {
     display: flex;
     flex-wrap: wrap;
