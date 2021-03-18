@@ -10,10 +10,7 @@
           height="32px"
           tabSize="50%"
           selected="project"
-          :tabs="[
-            { id: 'project', label: 'Projet' },
-            { id: 'bcf', label: 'BCF' }
-          ]"
+          :tabs="tabs"
         />
       </template>
       <template #right>
@@ -36,13 +33,12 @@
         :users="users"
         :invitations="invitations"
       />
-      <!--
       <ProjectModelsManager
+        v-if="models.length > 0"
         class="project-board-view__container__block--models"
         :project="project"
         :models="models"
       />
-      -->
       <ProjectFilesManager
         class="project-board-view__container__block--files"
         :project="project"
@@ -61,7 +57,7 @@ import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectFilesManager from "@/components/specific/files/project-files-manager/ProjectFilesManager";
-// import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
+import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
 import ProjectModelsOverview from "@/components/specific/models/project-models-overview/ProjectModelsOverview";
 import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager";
 
@@ -73,7 +69,7 @@ export default {
     ViewHeader,
     AppBreadcrumb,
     ProjectFilesManager,
-    // ProjectModelsManager,
+    ProjectModelsManager,
     ProjectModelsOverview,
     ProjectUsersManager
   },
@@ -85,11 +81,17 @@ export default {
     } = useProjects();
     const { projectModels } = useModels();
 
+    const tabs = [
+      { id: "project", label: "Projet" },
+      { id: "bcf", label: "BCF" }
+    ];
+
     return {
-      models: projectModels,
-      invitations: currentProjectInvitations,
+      tabs,
       project: currentProject,
-      users: currentProjectUsers
+      models: projectModels,
+      users: currentProjectUsers,
+      invitations: currentProjectInvitations
     };
   }
 };
