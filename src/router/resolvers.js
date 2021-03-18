@@ -54,15 +54,16 @@ const spaceBoardResolver = createViewResolver(async route => {
     loadSpaceInvitations,
     selectSpace
   } = useSpaces();
-  const { loadSpaceProjects } = useProjects();
+  const { loadUserProjects, loadSpaceProjects } = useProjects();
 
   await loadUserSpaces();
+  await loadUserProjects();
   await selectSpace(+route.params.spaceID);
+  loadSpaceProjects(currentSpace.value);
   if (currentSpace.value.isAdmin) {
     await loadSpaceUsers(currentSpace.value);
     await loadSpaceInvitations(currentSpace.value);
   }
-  await loadSpaceProjects(currentSpace.value);
   return;
 });
 
@@ -81,7 +82,7 @@ const projectBoardResolver = createViewResolver(async route => {
   await loadUserSpaces();
   await loadUserProjects();
   await selectSpace(+route.params.spaceID);
-  await loadSpaceProjects(currentSpace.value);
+  loadSpaceProjects(currentSpace.value);
   await selectProject(+route.params.projectID);
   if (currentProject.value.isAdmin) {
     await loadProjectUsers(currentProject.value);

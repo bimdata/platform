@@ -5,21 +5,21 @@ import { useUser } from "@/state/user";
 const state = reactive({
   userSpaces: [],
   currentSpace: null,
-  currentSpaceAdmins: [],
   currentSpaceUsers: [],
   currentSpaceInvitations: []
 });
 
 const loadUserSpaces = async () => {
   const { user } = useUser();
-  const spaces = await SpaceService.fetchUserSpaces();
-  state.userSpaces = spaces.map(space => ({
+  let spaces = await SpaceService.fetchUserSpaces();
+  spaces = spaces.map(space => ({
     ...space,
     isAdmin: user.value.clouds.some(
       role => role.cloud === space.id && role.role === 100
     )
   }));
-  return state.userSpaces;
+  state.userSpaces = spaces;
+  return spaces;
 };
 
 const loadSpaceUsers = async space => {
@@ -29,15 +29,14 @@ const loadSpaceUsers = async space => {
     ...user,
     isSelf: user.id === currentUser.value.id
   }));
-  state.currentSpaceAdmins = users.filter(user => user.cloudRole === 100);
-  state.currentSpaceUsers = users.filter(user => user.cloudRole === 50);
+  state.currentSpaceUsers = users;
   return users;
 };
 
 const loadSpaceInvitations = async space => {
   const invitations = await SpaceService.fetchSpaceInvitations(space);
   state.currentSpaceInvitations = invitations;
-  return state.currentSpaceInvitations;
+  return invitations;
 };
 
 const createSpace = async space => {
@@ -54,6 +53,7 @@ const updateSpace = async space => {
 
 const softUpdateSpace = space => {
   state.userSpaces = state.userSpaces.map(s => (s.id === space.id ? space : s));
+  return space;
 };
 
 const removeSpaceImage = async space => {
@@ -75,7 +75,7 @@ const softDeleteSpace = space => {
 
 const selectSpace = id => {
   state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
-  return state.currentSpace;
+  return readonly(state.currentSpace);
 };
 
 const sendSpaceInvitation = async (space, invitation, options = {}) => {

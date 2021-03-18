@@ -44,7 +44,7 @@ export default {
     }
   },
   setup(props) {
-    const { fetchProjectPreviewImages } = useProjects();
+    const { loadProjectModelPreviews } = useProjects();
 
     const nbSlices = 15;
     const container = ref(null);
@@ -79,7 +79,7 @@ export default {
     watchEffect(
       () => (image.value = images.value.length > 0 ? images.value[0] : null)
     );
-    fetchProjectPreviewImages(props.project).then(
+    loadProjectModelPreviews(props.project).then(
       urls => (images.value = urls.map((url, i) => ({ index: i + 1, url })))
     );
 

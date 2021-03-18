@@ -2,12 +2,12 @@
   <div class="dashboard-view">
     <div class="dashboard-view__head">
       <DashboardWelcomeTile />
-      <DashboardButtonTile color="primary" @click="goToSpaces">
+      <DashboardButtonTile color="primary" @click="goToUserSpaces">
         <template #title>{{ $t("Dashboard.activeSpaces") }}</template>
         <template #number>{{ nbSpaces }}</template>
         <template #text>{{ $t("Dashboard.viewSpaces") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile color="secondary" @click="goToProjects">
+      <DashboardButtonTile color="secondary" @click="goToUserProjects">
         <template #title>{{ $t("Dashboard.activeProjects") }}</template>
         <template #number>{{ nbProjects }}</template>
         <template #text>{{ $t("Dashboard.viewProjects") }}</template>
@@ -15,8 +15,8 @@
       <DashboardInfoTile />
     </div>
     <div class="dashboard-view__body">
-      <DashboardSpaceList />
-      <DashboardProjectList />
+      <DashboardSpaceList :spaces="spaces" />
+      <DashboardProjectList :projects="projects" />
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
         nbSpaces.value = userSpaces.value.length;
       }
     });
-    const goToSpaces = () => {
+    const goToUserSpaces = () => {
       router.push({ name: routeNames.userSpaces });
     };
 
@@ -63,7 +63,7 @@ export default {
         nbProjects.value = userProjects.value.length;
       }
     });
-    const goToProjects = () => {
+    const goToUserProjects = () => {
       router.push({ name: routeNames.userProjects });
     };
 
@@ -71,9 +71,11 @@ export default {
       // References
       nbProjects,
       nbSpaces,
+      projects: userProjects,
+      spaces: userSpaces,
       // Methods
-      goToProjects,
-      goToSpaces
+      goToUserProjects,
+      goToUserSpaces
     };
   }
 };

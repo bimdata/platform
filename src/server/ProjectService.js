@@ -1,6 +1,12 @@
 import apiClient from "./api-client";
 
 class ProjectService {
+  constructor() {
+    this.cache = {
+      modelPreviews: new Map()
+    };
+  }
+
   fetchUserProjects() {
     return apiClient.collaborationApi.getSelfProjects();
   }
@@ -23,6 +29,23 @@ class ProjectService {
       cloudPk: project.cloud.id,
       projectPk: project.id
     });
+  }
+
+  async fetchProjectModelPreviews(project) {
+    const cacheKey = `${project.cloud.id}-${project.id}`;
+    if (this.cache.modelPreviews.has(cacheKey)) {
+      return this.cache.modelPreviews.get(cacheKey);
+    } else {
+      const models = await apiClient.ifcApi.getIfcs({
+        cloudPk: project.cloud.id,
+        projectPk: project.id
+      });
+      const modelPreviews = models
+        .filter(model => model.viewer360File)
+        .map(model => model.viewer360File);
+      this.cache.modelPreviews.set(cacheKey, modelPreviews);
+      return modelPreviews;
+    }
   }
 
   createProject(space, project) {
