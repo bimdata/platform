@@ -1,6 +1,6 @@
 <template>
   <div class="project-board-view">
-    <ViewHeader>
+    <ViewHeader class="project-board-view__header">
       <template #left>
         <AppBreadcrumb />
       </template>
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 // Components
@@ -74,6 +76,7 @@ export default {
     ProjectUsersManager
   },
   setup() {
+    const { t } = useI18n();
     const {
       currentProject,
       currentProjectUsers,
@@ -81,10 +84,13 @@ export default {
     } = useProjects();
     const { projectModels } = useModels();
 
-    const tabs = [
-      { id: "project", label: "Projet" },
-      { id: "bcf", label: "BCF" }
-    ];
+    const tabs = ref([]);
+    watchEffect(() => {
+      tabs.value = [
+        { id: "project", label: t("ProjectBoard.projectTabLabel") },
+        { id: "bcf", label: t("ProjectBoard.bcfTabLabel") }
+      ];
+    });
 
     return {
       tabs,

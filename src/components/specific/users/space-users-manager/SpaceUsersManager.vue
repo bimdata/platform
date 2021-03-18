@@ -60,6 +60,7 @@
 
 <script>
 import { computed, ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -81,6 +82,7 @@ export default {
     UserCard
   },
   setup() {
+    const { t } = useI18n();
     const {
       currentSpace,
       currentSpaceAdmins,
@@ -88,10 +90,13 @@ export default {
       currentSpaceInvitations
     } = useSpaces();
 
-    const tabs = [
-      { id: "admins", label: "Administrateurs" },
-      { id: "users", label: "Utilisateurs" }
-    ];
+    const tabs = ref([]);
+    watchEffect(() => {
+      tabs.value = [
+        { id: "admins", label: t("SpaceUsersManager.adminTabLabel") },
+        { id: "users", label: t("SpaceUsersManager.userTabLabel") }
+      ];
+    });
     const currentTab = ref("admins");
     const selectTab = tab => {
       currentTab.value = tab.id;

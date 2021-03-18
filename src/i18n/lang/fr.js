@@ -3,7 +3,8 @@ export default {
     cancel: "Annuler",
     close: "Fermer",
     no: "Non",
-    yes: "Oui"
+    yes: "Oui",
+    at: "à"
   },
   oidc: {
     callbackErrorMessage:
@@ -98,6 +99,8 @@ export default {
     }
   },
   SpaceUsersManager: {
+    adminTabLabel: "Administrateurs",
+    userTabLabel: "Utilisateurs",
     title: "Gestion administrateur espace",
     searchUsers: "Rechercher un utilisateur",
     addUserButton: "Ajouter un utilisateur"
@@ -132,6 +135,8 @@ export default {
     sendAgain: "Renvoyer l'invitation ?"
   },
   ProjectBoard: {
+    projectTabLabel: "Projet",
+    bcfTabLabel: "BCF",
     addIFC: "Ajouter un IFC",
     ProjectModelsOverview: {
       title: "Project Models Overview"
@@ -139,7 +144,21 @@ export default {
     ProjectModelsManager: {
       title: "Modèles du projet",
       onboardingText: "Téléverser votre premier IFC",
-      buttonUpload: "Téléversement"
+      buttonUpload: "Téléversement",
+      tabs: {
+        ifc: "IFC",
+        split: "Split / Export",
+        merge: "Merge",
+        archive: "Archives"
+      },
+      table: {
+        id: "ID",
+        name: "Nom",
+        version: "Version",
+        creator: "Crée par",
+        lastupdate: "Modifié le",
+        status: "Statut"
+      }
     },
     ProjectUsersManager: {
       title: "Utilisateurs",

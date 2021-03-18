@@ -3,7 +3,8 @@ export default {
     cancel: "Cancel",
     close: "Close",
     no: "No",
-    yes: "Yes"
+    yes: "Yes",
+    at: "at"
   },
   oidc: {
     callbackErrorMessage: "An error occured during authentication...",
@@ -95,6 +96,8 @@ export default {
     }
   },
   SpaceUsersManager: {
+    adminTabLabel: "Administrators",
+    userTabLabel: "Users",
     title: "Manage space admins",
     searchUsers: "Search user",
     addUserButton: "Add new admin"
@@ -129,6 +132,8 @@ export default {
     sendAgain: "Send invitation again ?"
   },
   ProjectBoard: {
+    projectTabLabel: "Project",
+    bcfTabLabel: "BCF",
     addIFC: "Add an IFC",
     ProjectModelsOverview: {
       title: "Project Models Overview"
@@ -136,7 +141,21 @@ export default {
     ProjectModelsManager: {
       title: "Project Models",
       onboardingText: "Upload your first IFC",
-      buttonUpload: "Upload IFC"
+      buttonUpload: "Upload IFC",
+      tabs: {
+        ifc: "IFC",
+        split: "Split / Export",
+        merge: "Merge",
+        archive: "Archives"
+      },
+      table: {
+        id: "ID",
+        name: "Name",
+        version: "Version",
+        creator: "Creator",
+        lastupdate: "Last modified",
+        status: "Status"
+      }
     },
     ProjectUsersManager: {
       title: "Project Users",
