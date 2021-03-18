@@ -1,0 +1,32 @@
+.generic-table {
+  width: 100%;
+  font-size: 0.9rem;
+  background-color: $color-white;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    tbody tr:nth-child(odd) {
+      background-color: $color-tertiary-lightest;
+    }
+
+    th, td {
+      min-height: $spacing-unit * 2;
+      height: 50px;
+      padding: 0 $spacing-unit;
+      text-align: left;
+    }
+
+    th {
+      font-weight: bold;
+      text-transform: capitalize;
+      color: $color-primary;
+    }
+
+    td {
+      color: $color-tertiary-darkest;
+    }
+  }
+}
