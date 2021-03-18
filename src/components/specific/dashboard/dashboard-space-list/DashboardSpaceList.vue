@@ -5,7 +5,7 @@
     </div>
     <div class="dashboard-space-list__content">
       <SpaceCard
-        v-for="space in recentSpaces"
+        v-for="space in displayedSpaces"
         :key="space.id"
         :space="space"
         :actionMenu="false"
@@ -16,7 +16,6 @@
 
 <script>
 import { ref, watchEffect } from "vue";
-import { useSpaces } from "@/state/spaces";
 // Components
 import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
 
@@ -24,14 +23,18 @@ export default {
   components: {
     SpaceCard
   },
-  setup() {
-    const { userSpaces } = useSpaces();
-
-    const recentSpaces = ref([]);
+  props: {
+    spaces: {
+      type: Array,
+      required: true
+    }
+  },
+  setup(props) {
+    const displayedSpaces = ref([]);
 
     watchEffect(() => {
-      if (userSpaces.value) {
-        recentSpaces.value = userSpaces.value
+      if (props.spaces) {
+        displayedSpaces.value = props.spaces
           .slice()
           .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
           .slice(0, 7);
@@ -39,7 +42,7 @@ export default {
     });
 
     return {
-      recentSpaces
+      displayedSpaces
     };
   }
 };

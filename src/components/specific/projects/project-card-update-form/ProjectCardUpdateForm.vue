@@ -13,6 +13,7 @@
       v-model="projectName"
       :error="error"
       :errorMessage="$t('Projects.ProjectUpdateForm.errorMessage')"
+      @keyup.esc.stop="close"
       @keyup.enter.stop="renameProject"
     />
     <BIMDataButton

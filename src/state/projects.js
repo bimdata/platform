@@ -1,5 +1,4 @@
-import { reactive, readonly, toRefs } from "vue";
-import IfcService from "@/server/IfcService";
+import { reactive, readonly, toRefs, watchEffect } from "vue";
 import ProjectService from "@/server/ProjectService";
 import { useUser } from "@/state/user";
 
@@ -13,55 +12,59 @@ const state = reactive({
 
 const loadUserProjects = async () => {
   const { user } = useUser();
-  const projects = await ProjectService.fetchUserProjects();
-  state.userProjects = projects.map(project => ({
+  let projects = await ProjectService.fetchUserProjects();
+  projects = projects.map(project => ({
     ...project,
     isAdmin: user.value.projects.some(
       role => role.project === project.id && role.role === 100
     )
   }));
-  state.userProjects = state.userProjects
+  projects = projects
     .slice()
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  return state.userProjects;
+  state.userProjects = projects;
+  return projects;
 };
 
-const loadSpaceProjects = async space => {
-  const { user } = useUser();
-  const projects = await ProjectService.fetchSpaceProjects(space);
-  state.spaceProjects = projects.map(project => ({
-    ...project,
-    isAdmin: user.value.projects.some(
-      role => role.project === project.id && role.role === 100
-    )
-  }));
-  state.spaceProjects = state.spaceProjects
-    .slice()
-    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  return state.spaceProjects;
+let stopWatchingSpaceProjects;
+const loadSpaceProjects = space => {
+  if (typeof stopWatchingSpaceProjects === "function") {
+    stopWatchingSpaceProjects();
+  }
+  stopWatchingSpaceProjects = watchEffect(() => {
+    state.spaceProjects = state.userProjects.filter(
+      project => project.cloud.id === space.id
+    );
+  });
 };
 
 const loadProjectUsers = async project => {
   const { user: currentUser } = useUser();
-  const users = await ProjectService.fetchProjectUsers(project);
-  state.currentProjectUsers = users.map(user => ({
+  let users = await ProjectService.fetchProjectUsers(project);
+  users = users.map(user => ({
     ...user,
     isSelf: user.id === currentUser.value.id
   }));
-  return state.currentProjectUsers;
+  state.currentProjectUsers = users;
+  return users;
 };
 
 const loadProjectInvitations = async project => {
-  state.currentProjectInvitations = await ProjectService.fetchProjectInvitations(
-    project
-  );
-  return state.currentProjectInvitations;
+  const invitations = await ProjectService.fetchProjectInvitations(project);
+  state.currentProjectInvitations = invitations;
+  return invitations;
+};
+
+const loadProjectModelPreviews = async project => {
+  const images = await ProjectService.fetchProjectModelPreviews(project);
+  return images;
 };
 
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
-  state.userProjects = [newProject].concat(state.userProjects);
-  state.spaceProjects = [newProject].concat(state.spaceProjects);
+  state.userProjects = [{ ...newProject, isAdmin: true }].concat(
+    state.userProjects
+  );
   return newProject;
 };
 
@@ -73,9 +76,6 @@ const updateProject = async project => {
 
 const softUpdateProject = project => {
   state.userProjects = state.userProjects.map(p =>
-    p.id === project.id ? { ...p, ...project } : p
-  );
-  state.spaceProjects = state.spaceProjects.map(p =>
     p.id === project.id ? { ...p, ...project } : p
   );
   return project;
@@ -93,22 +93,9 @@ const softDeleteProject = project => {
   return project;
 };
 
-const selectUserProject = id => {
+const selectProject = id => {
   state.currentProject = state.userProjects.find(p => p.id === id) || null;
-  return state.currentProject;
-};
-
-const selectSpaceProject = id => {
-  state.currentProject = state.spaceProjects.find(p => p.id === id) || null;
-  return state.currentProject;
-};
-
-const fetchProjectPreviewImages = async project => {
-  const ifcs = await IfcService.fetchProjectIfcs(project);
-  const images = ifcs
-    .filter(ifc => ifc.viewer360File)
-    .map(ifc => ifc.viewer360File);
-  return images;
+  return readonly(state.currentProject);
 };
 
 const sendProjectInvitation = async (project, invitation, options = {}) => {
@@ -140,14 +127,13 @@ export function useProjects() {
     loadSpaceProjects,
     loadProjectUsers,
     loadProjectInvitations,
+    loadProjectModelPreviews,
     createProject,
     updateProject,
     softUpdateProject,
     deleteProject,
     softDeleteProject,
-    selectUserProject,
-    selectProject: selectSpaceProject,
-    fetchProjectPreviewImages,
+    selectProject,
     sendProjectInvitation,
     cancelProjectInvitation
   };

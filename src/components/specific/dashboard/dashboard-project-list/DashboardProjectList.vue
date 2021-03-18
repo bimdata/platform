@@ -5,7 +5,7 @@
     </div>
     <div class="dashboard-project-list__content">
       <ProjectCard
-        v-for="project in recentProjects"
+        v-for="project in displayedProjects"
         :key="project.id"
         :project="project"
         :actionMenu="false"
@@ -16,7 +16,6 @@
 
 <script>
 import { ref, watchEffect } from "vue";
-import { useProjects } from "@/state/projects";
 // Components
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 
@@ -24,14 +23,18 @@ export default {
   components: {
     ProjectCard
   },
-  setup() {
-    const { userProjects } = useProjects();
-
-    const recentProjects = ref([]);
+  props: {
+    projects: {
+      type: Array,
+      required: true
+    }
+  },
+  setup(props) {
+    const displayedProjects = ref([]);
 
     watchEffect(() => {
-      if (userProjects.value) {
-        recentProjects.value = userProjects.value
+      if (props.projects) {
+        displayedProjects.value = props.projects
           .slice()
           .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
           .slice(0, 4);
@@ -39,7 +42,7 @@ export default {
     });
 
     return {
-      recentProjects
+      displayedProjects
     };
   }
 };

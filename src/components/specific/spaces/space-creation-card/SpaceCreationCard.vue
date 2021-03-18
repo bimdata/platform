@@ -21,6 +21,7 @@
             v-model="newSpace.name"
             :error="error"
             :errorMessage="$t('Spaces.SpaceCreationCard.errorMessage')"
+            @keyup.esc.stop="close"
             @keyup.enter.stop="createSpace"
           />
           <BIMDataButton fill radius color="primary" @click="createSpace">

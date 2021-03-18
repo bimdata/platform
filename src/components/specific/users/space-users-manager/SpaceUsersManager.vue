@@ -61,7 +61,6 @@
 <script>
 import { computed, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -81,14 +80,22 @@ export default {
     InvitationForm,
     UserCard
   },
-  setup() {
+  props: {
+    space: {
+      type: Object,
+      required: true
+    },
+    users: {
+      type: Array,
+      required: true
+    },
+    invitations: {
+      type: Array,
+      required: true
+    }
+  },
+  setup(props) {
     const { t } = useI18n();
-    const {
-      currentSpace,
-      currentSpaceAdmins,
-      currentSpaceUsers,
-      currentSpaceInvitations
-    } = useSpaces();
 
     const tabs = ref([]);
     watchEffect(() => {
@@ -101,26 +108,25 @@ export default {
     const selectTab = tab => {
       currentTab.value = tab.id;
     };
-    const showInvitations = computed(() => currentTab.value === "admins");
 
-    const userList = ref([]);
-    watchEffect(() => {
-      userList.value =
-        currentTab.value === "admins"
-          ? currentSpaceAdmins.value
-          : currentSpaceUsers.value;
-    });
-
+    let admins = [];
+    let users = [];
+    const list = ref([]);
     const displayedUsers = ref([]);
     watchEffect(() => {
-      displayedUsers.value = userList.value;
+      admins = props.users.filter(user => user.cloudRole === 100);
+      users = props.users.filter(user => user.cloudRole === 50);
+    });
+    watchEffect(() => {
+      list.value = currentTab.value === "admins" ? admins : users;
+      displayedUsers.value = list.value;
     });
 
     const searchText = ref("");
     const filterUsers = value => {
       const text = value.trim().toLowerCase();
       if (text) {
-        displayedUsers.value = userList.value.filter(
+        displayedUsers.value = list.value.filter(
           ({ firstname, lastname, email }) =>
             [firstname, lastname, email]
               .join(" ")
@@ -128,10 +134,12 @@ export default {
               .includes(text)
         );
       } else {
-        displayedUsers.value = userList.value;
+        displayedUsers.value = list.value;
       }
     };
     watchEffect(() => filterUsers(searchText.value));
+
+    const showInvitations = computed(() => currentTab.value === "admins");
 
     const showInvitationForm = ref(false);
     const openInvitationForm = () => {
@@ -145,11 +153,9 @@ export default {
       // Refrences
       currentTab,
       displayedUsers,
-      invitations: currentSpaceInvitations,
       searchText,
       showInvitationForm,
       showInvitations,
-      space: currentSpace,
       tabs,
       // Methods
       closeInvitationForm,

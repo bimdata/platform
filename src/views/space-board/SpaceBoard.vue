@@ -15,7 +15,7 @@
       </template>
       <template #right>
         <BIMDataButton
-          class="space-board-view__header__filter-btn"
+          class="space-board-view__header__btn-filter"
           fill
           squared
           icon
@@ -23,7 +23,7 @@
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton>
         <BIMDataButton
-          class="space-board-view__header__sort-btn"
+          class="space-board-view__header__btn-sort"
           fill
           squared
           icon
@@ -32,8 +32,8 @@
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
         <BIMDataButton
-          v-if="isAdmin"
-          class="space-board-view__header__users-btn"
+          v-if="space.isAdmin"
+          class="space-board-view__header__btn-users"
           fill
           squared
           icon
@@ -50,12 +50,16 @@
         :title="$t('SpaceUsersManager.title')"
         @close="closeUsersManager"
       >
-        <SpaceUsersManager />
+        <SpaceUsersManager
+          :space="space"
+          :users="users"
+          :invitations="invitations"
+        />
       </SidePanel>
     </transition>
 
     <ResponsiveGrid itemWidth="320px">
-      <ProjectCreationCard :key="-1" v-if="isAdmin" />
+      <ProjectCreationCard v-if="space.isAdmin" :key="-1" :space="space" />
       <ProjectCard
         v-for="project in projects"
         :key="project.id"
@@ -95,11 +99,12 @@ export default {
     SpaceUsersManager
   },
   setup() {
-    const { currentSpace } = useSpaces();
+    const {
+      currentSpace,
+      currentSpaceUsers,
+      currentSpaceInvitations
+    } = useSpaces();
     const { spaceProjects } = useProjects();
-
-    const isAdmin = ref(false);
-    watchEffect(() => (isAdmin.value = currentSpace.value.isAdmin));
 
     const displayedProjects = ref([]);
     watchEffect(() => (displayedProjects.value = spaceProjects.value));
@@ -136,11 +141,12 @@ export default {
 
     return {
       // References
-      isAdmin,
+      invitations: currentSpaceInvitations,
       projects: displayedProjects,
       searchText,
       showUsersManager,
       space: currentSpace,
+      users: currentSpaceUsers,
       // Methods
       closeUsersManager,
       filterProjects,

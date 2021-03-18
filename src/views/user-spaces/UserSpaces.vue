@@ -23,7 +23,7 @@
         >
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
-        <BIMDataButton color="primary" fill radius @click="createSpace">
+        <BIMDataButton color="primary" fill radius @click="openCreationForm">
           <BIMDataIcon name="plus" size="xxxs" />
           <span>{{ $t("Spaces.createSpace") }}</span>
         </BIMDataButton>
@@ -33,8 +33,8 @@
     <ResponsiveGrid itemWidth="215px">
       <SpaceCreationCard
         :key="-1"
-        v-if="showCreationCard"
-        @close="showCreationCard = false"
+        v-if="showCreationForm"
+        @close="closeCreationForm"
       />
       <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
     </ResponsiveGrid>
@@ -93,18 +93,22 @@ export default {
         .sort((a, b) => (a.name < b.name ? -1 : 1) * n);
     };
 
-    const showCreationCard = ref(false);
-    const createSpace = () => {
-      showCreationCard.value = true;
+    const showCreationForm = ref(false);
+    const openCreationForm = () => {
+      showCreationForm.value = true;
+    };
+    const closeCreationForm = () => {
+      showCreationForm.value = false;
     };
 
     return {
       // References
       searchText,
-      showCreationCard,
+      showCreationForm,
       spaces: displayedSpaces,
       // Methods
-      createSpace,
+      closeCreationForm,
+      openCreationForm,
       sortSpaces
     };
   }
