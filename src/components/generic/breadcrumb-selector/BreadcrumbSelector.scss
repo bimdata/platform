@@ -3,6 +3,8 @@
 
   &__header {
     padding: $spacing-unit/2;
+    cursor: pointer;
+
     &__icon {
       margin-left: $spacing-unit/2;
       margin-bottom: 1px;

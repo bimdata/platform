@@ -98,13 +98,13 @@ export default {
     const { t } = useI18n();
 
     const tabs = ref([]);
+    const currentTab = ref("admins");
     watchEffect(() => {
       tabs.value = [
         { id: "admins", label: t("SpaceUsersManager.adminTabLabel") },
         { id: "users", label: t("SpaceUsersManager.userTabLabel") }
       ];
     });
-    const currentTab = ref("admins");
     const selectTab = tab => {
       currentTab.value = tab.id;
     };

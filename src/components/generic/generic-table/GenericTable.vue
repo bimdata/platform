@@ -5,7 +5,8 @@
         <tr key="head-row-0">
           <th class="cell-checkbox" v-if="selectable">
             <BIMDataCheckbox
-              :modelValue="selection.size === rows.length"
+              :disabled="rows.length === 0"
+              :modelValue="rows.length > 0 && selection.size === rows.length"
               @update:modelValue="toggleFullSelection"
             />
           </th>

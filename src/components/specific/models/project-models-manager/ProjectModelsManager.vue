@@ -8,8 +8,9 @@
         width="100%"
         height="44px"
         tabSize="180px"
-        selected="ifc"
         :tabs="tabs"
+        selected="ifc"
+        @tab-click="selectTab"
       />
 
       <div class="project-models-manager__table-container">
@@ -32,8 +33,8 @@
                 .replace("T", ` ${$t("Commons.at")} `)
             }}
           </template>
-          <template #cell-status="{ row: { status } }">
-            <ModelStatusBadge :status="status" />
+          <template #cell-status="{ row: model }">
+            <ModelStatusBadge :model="model" />
           </template>
           <template #cell-actions="{ row: model }">
             <ModelActionMenu :model="model" />
@@ -45,7 +46,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { reactive, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
@@ -76,6 +77,7 @@ export default {
     const { t } = useI18n();
 
     const tabs = ref([]);
+    const currentTab = ref("ifc");
     watchEffect(() => {
       tabs.value = [
         {
@@ -96,6 +98,9 @@ export default {
         }
       ];
     });
+    const selectTab = tab => {
+      currentTab.value = tab.id;
+    };
 
     const columns = ref([]);
     watchEffect(() => {
@@ -138,16 +143,35 @@ export default {
       ];
     });
 
+    const models = reactive({
+      ifc: [],
+      merge: [],
+      split: [],
+      archive: []
+    });
+    watchEffect(() => {
+      models.ifc = props.models.filter(model => model.source === "UPLOAD");
+      models.merge = props.models.filter(model => model.source === "MERGE");
+      models.split = props.models.filter(model =>
+        ["SPLIT", "EXPORT"].includes(model.source)
+      );
+      models.archive = props.models.filter(
+        model => !["UPLOAD", "MERGE", "SPLIT", "EXPORT"].includes(model.source)
+      );
+    });
+
     const rows = ref([]);
     watchEffect(() => {
-      rows.value = props.models;
+      rows.value = models[currentTab.value];
     });
 
     return {
       // References
       columns,
       rows,
-      tabs
+      tabs,
+      // Methods
+      selectTab
     };
   }
 };
