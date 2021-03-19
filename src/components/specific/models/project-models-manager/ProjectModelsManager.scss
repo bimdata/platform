@@ -6,7 +6,9 @@
 
   &__table-container {
     max-height: calc(100% - 92px);
-    margin-top: $spacing-unit * 3;
+    margin-top: $spacing-unit * 2;
+    padding: $spacing-unit 0;
+    overflow-x: hidden;
     overflow-y: auto;
   }
 }
