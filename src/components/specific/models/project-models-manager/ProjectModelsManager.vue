@@ -17,12 +17,14 @@
         <GenericTable
           :columns="columns"
           :rows="rows"
+          :paginated="true"
+          :perPage="6"
           :selectable="true"
           @selection-change="() => {}"
         >
           <template #cell-version>?</template>
           <template #cell-creator="{ row: { creator } }">
-            {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "" }}
+            {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
           </template>
           <template #cell-lastupdate="{ row: { updatedAt } }">
             {{
