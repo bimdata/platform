@@ -16,9 +16,6 @@
       th,
       td {
         min-height: $spacing-unit * 2;
-        min-height: 50px;
-        max-height: 50px;
-        height: 50px;
         padding: 0 $spacing-unit;
 
         &.cell-checkbox:deep() {
@@ -35,13 +32,23 @@
         color: $color-tertiary-darkest;
       }
     }
+
+    &__placeholder {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: $spacing-unit;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: $color-tertiary-lightest;
+    }
   }
 
   &__page-nav {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: $spacing-unit/2 $spacing-unit;
+    padding: $spacing-unit;
 
     &__text {
       margin: 0 $spacing-unit;

@@ -2,11 +2,13 @@
   <div class="generic-table">
     <div
       class="generic-table__container"
-      :style="{ minHeight: paginated ? `${(perPage + 1) * 50}px` : undefined }"
+      :style="{
+        height: paginated ? `${(perPage + 1) * rowHeight}px` : undefined
+      }"
     >
       <table>
         <thead>
-          <tr key="head-row-0">
+          <tr key="head-row-0" :style="{ height: `${rowHeight}px` }">
             <th class="cell-checkbox" v-if="selectable">
               <BIMDataCheckbox
                 :disabled="rows.length === 0"
@@ -31,7 +33,11 @@
         </thead>
         <tbody>
           <template v-for="(row, i) of rows" :key="`body-row-${i}`">
-            <tr v-if="row" v-show="displayedRows.includes(i)">
+            <tr
+              v-if="row"
+              v-show="displayedRows.includes(i)"
+              :style="{ height: `${rowHeight}px` }"
+            >
               <td class="cell-checkbox" v-if="selectable">
                 <BIMDataCheckbox
                   :modelValue="selection.has(i)"
@@ -54,6 +60,15 @@
           </template>
         </tbody>
       </table>
+      <div
+        class="generic-table__container__placeholder"
+        v-if="rows.length === 0 && placeholder"
+        :style="{
+          height: `calc(100% - ${rowHeight}px)`
+        }"
+      >
+        {{ placeholder }}
+      </div>
     </div>
     <div
       class="generic-table__page-nav"
@@ -113,6 +128,10 @@ export default {
       type: Array,
       required: true
     },
+    rowHeight: {
+      type: Number,
+      default: 50
+    },
     selectable: {
       type: Boolean,
       default: false
@@ -124,10 +143,14 @@ export default {
     perPage: {
       type: Number,
       default: 10
+    },
+    placeholder: {
+      type: String,
+      default: ""
     }
   },
   emits: [
-    "selection-change",
+    "selection-changed",
     "row-selected",
     "row-unselected",
     "all-selected",
@@ -136,7 +159,7 @@ export default {
   setup(props, { emit }) {
     const selection = ref(new Map());
     watch(selection, map => {
-      emit("selection-change", Array.from(map.values()));
+      emit("selection-changed", Array.from(map.values()));
     });
 
     let selectionRefs;
@@ -175,6 +198,13 @@ export default {
       }
     });
 
+    const toggleSelection = i => {
+      selectionRefs[i].value = !selectionRefs[i].value;
+    };
+    const toggleFullSelection = () => {
+      fullSelectionRef.value = !fullSelectionRef.value;
+    };
+
     const displayedRows = ref([]);
     const pageIndex = ref(0);
     const pageStartIndex = ref(1);
@@ -186,6 +216,12 @@ export default {
         buildSelectionRefs(props.rows, false);
       },
       { immediate: true }
+    );
+    watch(
+      () => props.perPage,
+      () => {
+        pageIndex.value = 0;
+      }
     );
     watch(
       [() => props.rows, () => props.paginated, () => props.perPage, pageIndex],
@@ -204,14 +240,6 @@ export default {
       },
       { immediate: true }
     );
-
-    const toggleSelection = i => {
-      selectionRefs[i].value = !selectionRefs[i].value;
-    };
-
-    const toggleFullSelection = () => {
-      fullSelectionRef.value = !fullSelectionRef.value;
-    };
 
     return {
       // Refrences

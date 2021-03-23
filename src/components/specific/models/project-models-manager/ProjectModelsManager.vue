@@ -20,7 +20,10 @@
           :paginated="true"
           :perPage="6"
           :selectable="true"
-          @selection-change="() => {}"
+          @selection-changed="() => {}"
+          :placeholder="
+            $t('ProjectBoard.ProjectModelsManager.tablePlaceholder')
+          "
         >
           <template #cell-version>?</template>
           <template #cell-creator="{ row: { creator } }">
@@ -120,27 +123,31 @@ export default {
         {
           id: "version",
           label: t("ProjectBoard.ProjectModelsManager.table.version"),
+          width: "100px",
           align: "center"
         },
         {
           id: "creator",
           label: t("ProjectBoard.ProjectModelsManager.table.creator"),
+          width: "200px",
           align: "center"
         },
         {
           id: "lastupdate",
           label: t("ProjectBoard.ProjectModelsManager.table.lastupdate"),
+          width: "200px",
           align: "center"
         },
         {
           id: "status",
           label: t("ProjectBoard.ProjectModelsManager.table.status"),
+          width: "100px",
           align: "center"
         },
         {
           id: "actions",
           label: " ",
-          width: "300px"
+          width: "500px"
         }
       ];
     });
