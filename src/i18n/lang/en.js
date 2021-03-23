@@ -185,5 +185,8 @@ export default {
     buttonCheck: "Check",
     buttonSubmit: "Validate",
     buttonCancel: "Change"
+  },
+  GenericTable: {
+    pagination: "{start} - {end} of {total}"
   }
 };
