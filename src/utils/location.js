@@ -13,7 +13,7 @@
 function DMS2DD([degrees, minutes, seconds, secondsFraction]) {
   degrees = +degrees;
   minutes = +minutes;
-  seconds = parseFloat(`${seconds}.${secondsFraction || 0}`);
+  seconds = parseFloat(`${seconds}.${Math.abs(secondsFraction) || 0}`);
   return degrees + minutes / 60 + seconds / 3600;
 }
 
@@ -28,13 +28,20 @@ function DD2DMS(value) {
   const degrees = Math.trunc(value);
   const minutes = Math.trunc(60 * Math.abs(value - degrees));
   const seconds = 3600 * Math.abs(value - degrees) - 60 * minutes;
-  return [degrees, minutes, seconds];
+  return [
+    degrees,
+    minutes,
+    ...seconds
+      .toString()
+      .split(".")
+      .map(s => +s)
+  ];
 }
 
 /**
- * Get the DD coordinates of a given address using Open Street Map API.
- * The returned valu is an object with a "longitude" and "latitude" fields.
- * If no coordinates are found, "longitude" and "latitude" will be null.
+ * Get the DD coordinates of a given address using OpenStreetMapAPI.
+ * The returned value is an object with a "longitude" and "latitude" fields.
+ * If no coordinates are found, "longitude" and "latitude" will be undefined.
  *
  * @param {String} address a postal address
  * @returns {Object} DD coordinates
@@ -51,6 +58,13 @@ const getCoordinatesFromAddress = async address => {
   return data;
 };
 
+/**
+ * Given an address fragment (search text), get a list of address suggestions
+ * (along with corresponding coordinates) from OpenStreetMap API.
+ *
+ * @param {String} searchText a postal address fragment
+ * @returns {Array} a list of search results
+ */
 const getAdressesFromSearchText = async searchText => {
   const formattedSearchText = searchText.replace(/ /g, "+");
   const response = await fetch(

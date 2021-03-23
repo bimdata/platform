@@ -12,9 +12,11 @@
           class="model-location__form"
           :project="project"
           :model="model"
+          :site="site"
           :address="address"
           :longitude="longitude"
           :latitude="latitude"
+          @success="setLocation"
           @close="closeLocationForm"
         />
       </template>
@@ -57,9 +59,9 @@
 </template>
 
 <script>
-import { provide, ref, watchEffect } from "vue";
+import { provide, ref, watch } from "vue";
 import { useModels } from "@/state/models";
-import { DMS2DD, getCoordinatesFromAddress } from "@/utils/coordinate";
+import { DMS2DD, getCoordinatesFromAddress } from "@/utils/location";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -98,58 +100,76 @@ export default {
       showLocationForm.value = false;
     };
 
+    const site = ref(null);
     const address = ref("");
-    const longitude = ref(null);
-    const latitude = ref(null);
+    const longitude = ref(0);
+    const latitude = ref(0);
 
-    watchEffect(async () => {
+    const reset = () => {
       loading.value = false;
       showLocationForm.value = false;
+      site.value = null;
       address.value = "";
-      longitude.value = null;
-      latitude.value = null;
+      longitude.value = 0;
+      latitude.value = 0;
+    };
 
-      if (props.model) {
-        loading.value = true;
-        const [site] = await fetchModelSites(props.project, props.model);
-        if (site && site.attributes) {
-          const {
-            attributes: { properties }
-          } = site;
+    const setLocation = async () => {
+      reset();
+      loading.value = true;
+      const [modelSite] = await fetchModelSites(props.project, props.model);
+      site.value = modelSite;
+      if (modelSite && modelSite.attributes) {
+        // Extract RefLongitude, RefLatitude and SiteAddress from
+        // model site attributes.
+        const {
+          attributes: { properties }
+        } = modelSite;
+        const refLongitude = (
+          properties.find(p => p.definition.name === "RefLongitude") || {}
+        ).value;
+        const refLatitude = (
+          properties.find(p => p.definition.name === "RefLatitude") || {}
+        ).value;
+        const siteAddress = (
+          properties.find(p => p.definition.name === "SiteAddress") || {}
+        ).value;
 
-          // Look for RefLongitude and RefLatitude in site properties
-          // and, if found, set longitude/latitude accordingly.
-          const refLongitude = (
-            properties.find(p => p.definition.name === "RefLongitude") || {}
-          ).value;
-          const refLatitude = (
-            properties.find(p => p.definition.name === "RefLatitude") || {}
-          ).value;
-          if (refLongitude && refLatitude) {
-            longitude.value = DMS2DD(refLongitude);
-            latitude.value = DMS2DD(refLatitude);
-            loading.value = false;
-            return; // Stop here
-          }
-
-          // If no RefLongitude and RefLatitude are set, look for SiteAddress
-          // in site properties and, if found, retrieve coordinates from this
-          // address to set longitude/latitude.
-          const siteAddress = (
-            properties.find(p => p.definition.name === "SiteAddress") || {}
-          ).value;
-          if (siteAddress) {
-            address.value = siteAddress;
-            const coord = await getCoordinatesFromAddress(siteAddress);
-            longitude.value = coord.longitude;
-            latitude.value = coord.latitude;
-            loading.value = false;
-            return; // Stop here
-          }
+        // If RefLongitude and RefLatitude are set,
+        // set longitude/latitude accordingly.
+        if (refLongitude && refLatitude) {
+          address.value = siteAddress || ""; // Also set address if SiteAddress is set
+          longitude.value = DMS2DD(refLongitude);
+          latitude.value = DMS2DD(refLatitude);
+          loading.value = false;
+          return; // Stop here
         }
-        loading.value = false;
+
+        // If RefLongitude and RefLatitude are not set, check for SiteAddress.
+        // If SiteAddress is set, set address accordingly then
+        // retrieve coordinates from this address to set longitude/latitude.
+        if (siteAddress) {
+          address.value = siteAddress;
+          const coord = await getCoordinatesFromAddress(siteAddress);
+          longitude.value = coord.longitude;
+          latitude.value = coord.latitude;
+          loading.value = false;
+          return; // Stop here
+        }
       }
-    });
+      loading.value = false;
+    };
+
+    watch(
+      () => props.model,
+      () => {
+        reset();
+        if (props.model) {
+          setLocation();
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       // References
@@ -158,9 +178,11 @@ export default {
       loading,
       longitude,
       showLocationForm,
+      site,
       // Methods
       closeLocationForm,
-      openLocationForm
+      openLocationForm,
+      setLocation
     };
   }
 };

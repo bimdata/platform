@@ -1,9 +1,6 @@
 <template>
   <div class="model-location-form">
-    <MapboxWrapper
-      :longitude="coordinates.longitude"
-      :latitude="coordinates.latitude"
-    />
+    <MapboxWrapper :longitude="inputLongitude" :latitude="inputLatitude" />
     <div class="model-location-form__form-control">
       <AddressInput
         class="model-location-form__form-control__input"
@@ -40,8 +37,9 @@
 </template>
 
 <script>
-import { inject, reactive, ref, watchEffect } from "vue";
-import { getCoordinatesFromAddress } from "@/utils/coordinate";
+import { inject, ref, watch } from "vue";
+import { useModels } from "@/state/models";
+import { DD2DMS, getCoordinatesFromAddress } from "@/utils/location";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -63,6 +61,9 @@ export default {
     model: {
       type: Object
     },
+    site: {
+      type: Object
+    },
     address: {
       type: String,
       default: ""
@@ -76,26 +77,17 @@ export default {
       default: 0
     }
   },
-  emits: ["close"],
+  emits: ["close", "success", "error"],
   setup(props, { emit }) {
+    const { setModelSite, updateModelSite } = useModels();
+
     const isSubmitStep = ref(false);
     const checkLoading = ref(false);
     const submitLoading = inject("loading", false);
 
     const inputAddress = ref("");
-    const coordinates = reactive({
-      longitude: 0,
-      latitude: 0
-    });
-    watchEffect(() => {
-      if (props.address) {
-        inputAddress.value = props.address;
-        checkAddress();
-      } else if (props.longitude && props.latitude) {
-        coordinates.longitude = props.longitude;
-        coordinates.latitude = props.latitude;
-      }
-    });
+    const inputLongitude = ref(0);
+    const inputLatitude = ref(0);
 
     const checkAddress = async () => {
       if (inputAddress.value) {
@@ -103,19 +95,38 @@ export default {
         const coord = await getCoordinatesFromAddress(inputAddress.value);
         checkLoading.value = false;
         if (coord.longitude && coord.latitude) {
-          coordinates.longitude = coord.longitude;
-          coordinates.latitude = coord.latitude;
+          inputLongitude.value = coord.longitude;
+          inputLatitude.value = coord.latitude;
           isSubmitStep.value = true;
         }
       }
     };
-    const submitAddress = () => {
-      submitLoading.value = true;
-      // TODO: set IFC site properties
-      console.log("Address: ", inputAddress.value);
-      console.log("Longitude: ", coordinates.longitude);
-      console.log("Latitude: ", coordinates.latitude);
-      submitLoading.value = false;
+
+    const submitAddress = async () => {
+      const location = {
+        address: inputAddress.value,
+        longitude: DD2DMS(inputLongitude.value),
+        latitude: DD2DMS(inputLatitude.value)
+      };
+      try {
+        // submitLoading.value = true;
+        if (props.site) {
+          await updateModelSite(
+            props.project,
+            props.model,
+            props.site,
+            location
+          );
+        } else {
+          await setModelSite(props.project, props.model, location);
+        }
+        // submitLoading.value = false;
+        emit("success");
+      } catch (error) {
+        // submitLoading.value = false;
+        console.log(error);
+        emit("error", error);
+      }
     };
 
     const cancel = () => {
@@ -127,11 +138,26 @@ export default {
       emit("close");
     };
 
+    watch(
+      [() => props.address, () => props.longitude, () => props.latitude],
+      () => {
+        if (props.address) {
+          inputAddress.value = props.address;
+          checkAddress();
+        } else if (props.longitude && props.latitude) {
+          inputLongitude.value = props.longitude;
+          inputLatitude.value = props.latitude;
+        }
+      },
+      { immediate: true }
+    );
+
     return {
       // References
-      inputAddress,
       checkLoading,
-      coordinates,
+      inputAddress,
+      inputLatitude,
+      inputLongitude,
       isSubmitStep,
       // Methods
       cancel,
