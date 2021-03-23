@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { reactive, ref, watchEffect } from "vue";
+import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
@@ -149,16 +149,21 @@ export default {
       split: [],
       archive: []
     });
-    watchEffect(() => {
-      models.ifc = props.models.filter(model => model.source === "UPLOAD");
-      models.merge = props.models.filter(model => model.source === "MERGE");
-      models.split = props.models.filter(model =>
-        ["SPLIT", "EXPORT"].includes(model.source)
-      );
-      models.archive = props.models.filter(
-        model => !["UPLOAD", "MERGE", "SPLIT", "EXPORT"].includes(model.source)
-      );
-    });
+    watch(
+      () => props.models,
+      () => {
+        models.ifc = props.models.filter(model => model.source === "UPLOAD");
+        models.merge = props.models.filter(model => model.source === "MERGE");
+        models.split = props.models.filter(model =>
+          ["SPLIT", "EXPORT"].includes(model.source)
+        );
+        models.archive = props.models.filter(
+          model =>
+            !["UPLOAD", "MERGE", "SPLIT", "EXPORT"].includes(model.source)
+        );
+      },
+      { immediate: true }
+    );
 
     const rows = ref([]);
     watchEffect(() => {
