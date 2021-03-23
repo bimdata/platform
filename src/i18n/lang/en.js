@@ -155,7 +155,8 @@ export default {
         creator: "Creator",
         lastupdate: "Last modified",
         status: "Status"
-      }
+      },
+      tablePlaceholder: "No model"
     },
     ProjectUsersManager: {
       title: "Project Users",

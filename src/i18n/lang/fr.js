@@ -158,7 +158,8 @@ export default {
         creator: "Crée par",
         lastupdate: "Modifié le",
         status: "Statut"
-      }
+      },
+      tablePlaceholder: "Aucun modèle"
     },
     ProjectUsersManager: {
       title: "Utilisateurs",
