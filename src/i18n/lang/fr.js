@@ -192,5 +192,17 @@ export default {
   },
   GenericTable: {
     pagination: "{start} - {end} sur {total}"
+  },
+  ModelActionBar: {
+    delete: "Supprimer",
+    archive: "Archiver",
+    download: "Télécharger",
+    merge: "Fusionner"
+  },
+  ModelActionMenu: {
+    buttonAddTags: "Ajouter des tags",
+    buttonRename: "Renommer",
+    buttonArchive: "Archiver",
+    buttonDelete: "Supprimer"
   }
 };
