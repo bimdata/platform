@@ -28,6 +28,12 @@
         @selection-changed="setSelection"
         :placeholder="$t('ProjectBoard.ProjectModelsManager.tablePlaceholder')"
       >
+        <template #cell-name="{ row: { name } }">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <BIMDataIcon name="ifc" size="xs" />
+            <span>{{ name }}</span>
+          </div>
+        </template>
         <template #cell-version>?</template>
         <template #cell-creator="{ row: { creator } }">
           {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
@@ -57,6 +63,7 @@ import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import ModelActionBar from "@/components/specific/models/model-action-bar/ModelActionBar";
@@ -66,6 +73,7 @@ import ModelStatusBadge from "@/components/specific/models/model-status-badge/Mo
 export default {
   components: {
     BIMDataCard,
+    BIMDataIcon,
     BIMDataTabs,
     GenericTable,
     ModelActionBar,
