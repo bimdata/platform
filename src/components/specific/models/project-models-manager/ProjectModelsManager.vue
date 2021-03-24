@@ -13,39 +13,41 @@
         @tab-click="selectTab"
       />
 
-      <div class="project-models-manager__table-container">
-        <GenericTable
-          :columns="columns"
-          :rows="rows"
-          :paginated="true"
-          :perPage="6"
-          :selectable="true"
-          @selection-changed="() => {}"
-          :placeholder="
-            $t('ProjectBoard.ProjectModelsManager.tablePlaceholder')
-          "
-        >
-          <template #cell-version>?</template>
-          <template #cell-creator="{ row: { creator } }">
-            {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
-          </template>
-          <template #cell-lastupdate="{ row: { updatedAt } }">
-            {{
-              updatedAt
-                .toISOString()
-                .slice(0, -5)
-                .replace(/-/g, "/")
-                .replace("T", ` ${$t("Commons.at")} `)
-            }}
-          </template>
-          <template #cell-status="{ row: model }">
-            <ModelStatusBadge :model="model" />
-          </template>
-          <template #cell-actions="{ row: model }">
-            <ModelActionMenu :model="model" />
-          </template>
-        </GenericTable>
-      </div>
+      <ModelActionBar
+        class="project-models-manager__action-bar"
+        :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
+        :models="selection"
+      />
+
+      <GenericTable
+        :columns="columns"
+        :rows="rows"
+        :paginated="true"
+        :perPage="6"
+        :selectable="true"
+        @selection-changed="setSelection"
+        :placeholder="$t('ProjectBoard.ProjectModelsManager.tablePlaceholder')"
+      >
+        <template #cell-version>?</template>
+        <template #cell-creator="{ row: { creator } }">
+          {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
+        </template>
+        <template #cell-lastupdate="{ row: { updatedAt } }">
+          {{
+            updatedAt
+              .toISOString()
+              .slice(0, -5)
+              .replace(/-/g, "/")
+              .replace("T", ` ${$t("Commons.at")} `)
+          }}
+        </template>
+        <template #cell-status="{ row: model }">
+          <ModelStatusBadge :model="model" />
+        </template>
+        <template #cell-actions="{ row: model }">
+          <ModelActionMenu :model="model" />
+        </template>
+      </GenericTable>
     </template>
   </BIMDataCard>
 </template>
@@ -57,6 +59,7 @@ import { useI18n } from "vue-i18n";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
+import ModelActionBar from "@/components/specific/models/model-action-bar/ModelActionBar";
 import ModelActionMenu from "@/components/specific/models/model-action-menu/ModelActionMenu";
 import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
 
@@ -65,6 +68,7 @@ export default {
     BIMDataCard,
     BIMDataTabs,
     GenericTable,
+    ModelActionBar,
     ModelActionMenu,
     ModelStatusBadge
   },
@@ -179,13 +183,20 @@ export default {
       rows.value = models[currentTab.value];
     });
 
+    const selection = ref([]);
+    const setSelection = models => {
+      selection.value = models;
+    };
+
     return {
       // References
       columns,
       rows,
+      selection,
       tabs,
       // Methods
-      selectTab
+      selectTab,
+      setSelection
     };
   }
 };

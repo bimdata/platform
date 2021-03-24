@@ -1,6 +1,28 @@
 <template>
   <div class="model-action-menu" v-click-away="closeMenu">
     <BIMDataButton
+      class="model-action-menu__btn model-action-menu__btn--viewer"
+      color="primary"
+      outline
+      radius
+      icon
+      :disabled="true"
+      @click="() => {}"
+    >
+      2D
+    </BIMDataButton>
+    <BIMDataButton
+      class="model-action-menu__btn model-action-menu__btn--viewer"
+      color="primary"
+      outline
+      radius
+      icon
+      :disabled="true"
+      @click="() => {}"
+    >
+      3D
+    </BIMDataButton>
+    <BIMDataButton
       class="model-action-menu__btn"
       ripple
       rounded
@@ -21,8 +43,18 @@
 
     <transition name="fade">
       <div class="model-action-menu__container" v-show="showMenu">
-        <!-- TODO -->
-        <span>Model Action Menu</span>
+        <BIMDataButton class="model-action-menu__container__btn" ghost squared>
+          {{ $t("ModelActionMenu.buttonAddTags") }}
+        </BIMDataButton>
+        <BIMDataButton class="model-action-menu__container__btn" ghost squared>
+          {{ $t("ModelActionMenu.buttonRename") }}
+        </BIMDataButton>
+        <BIMDataButton class="model-action-menu__container__btn" ghost squared>
+          {{ $t("ModelActionMenu.buttonArchive") }}
+        </BIMDataButton>
+        <BIMDataButton class="model-action-menu__container__btn" ghost squared>
+          {{ $t("ModelActionMenu.buttonDelete") }}
+        </BIMDataButton>
       </div>
     </transition>
   </div>
