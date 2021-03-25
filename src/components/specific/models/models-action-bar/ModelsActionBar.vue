@@ -1,20 +1,20 @@
 <template>
-  <div class="model-action-bar">
+  <div class="models-action-bar">
     <BIMDataButton color="high" ghost squared>
       <BIMDataIcon name="delete" size="xs" />
-      <span>{{ $t("ModelActionBar.delete") }}</span>
+      <span>{{ $t("ModelsActionBar.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared>
       <BIMDataIcon name="import" size="xs" />
-      <span>{{ $t("ModelActionBar.archive") }}</span>
+      <span>{{ $t("ModelsActionBar.archive") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared>
       <BIMDataIcon name="cloud" size="xs" />
-      <span>{{ $t("ModelActionBar.download") }}</span>
+      <span>{{ $t("ModelsActionBar.download") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared>
       <BIMDataIcon name="union" size="xs" />
-      <span>{{ $t("ModelActionBar.merge") }}</span>
+      <span>{{ $t("ModelsActionBar.merge") }}</span>
     </BIMDataButton>
   </div>
 </template>
@@ -30,6 +30,10 @@ export default {
     BIMDataIcon
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     models: {
       type: Array,
       require: true
@@ -41,4 +45,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelActionBar.scss"></style>
+<style scoped lang="scss" src="./ModelsActionBar.scss"></style>

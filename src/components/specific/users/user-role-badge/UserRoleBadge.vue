@@ -6,6 +6,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { SPACE_ROLE, PROJECT_ROLE } from "@/utils/users";
 
 export default {
   props: {
@@ -19,13 +20,15 @@ export default {
 
     watchEffect(() => {
       switch (props.role) {
-        case 100:
+        case SPACE_ROLE.ADMIN:
+        case PROJECT_ROLE.ADMIN:
           roleName.value = "admin";
           break;
-        case 50:
+        case SPACE_ROLE.USER:
+        case PROJECT_ROLE.USER:
           roleName.value = "user";
           break;
-        case 25:
+        case PROJECT_ROLE.GUEST:
           roleName.value = "guest";
           break;
       }

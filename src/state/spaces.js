@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/server/SpaceService";
 import { useUser } from "@/state/user";
+import { SPACE_ROLE } from "@/utils/users";
 
 const state = reactive({
   userSpaces: [],
@@ -15,7 +16,7 @@ const loadUserSpaces = async () => {
   spaces = spaces.map(space => ({
     ...space,
     isAdmin: user.value.clouds.some(
-      role => role.cloud === space.id && role.role === 100
+      role => role.cloud === space.id && role.role === SPACE_ROLE.ADMIN
     )
   }));
   spaces = spaces.slice().sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));

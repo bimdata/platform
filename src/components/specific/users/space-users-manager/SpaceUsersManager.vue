@@ -61,6 +61,7 @@
 <script>
 import { computed, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
+import { SPACE_ROLE } from "@/utils/users";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -114,8 +115,8 @@ export default {
     const list = ref([]);
     const displayedUsers = ref([]);
     watchEffect(() => {
-      admins = props.users.filter(user => user.cloudRole === 100);
-      users = props.users.filter(user => user.cloudRole === 50);
+      admins = props.users.filter(user => user.cloudRole === SPACE_ROLE.ADMIN);
+      users = props.users.filter(user => user.cloudRole === SPACE_ROLE.USER);
     });
     watchEffect(() => {
       list.value = currentTab.value === "admins" ? admins : users;

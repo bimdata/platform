@@ -13,9 +13,10 @@
         @tab-click="selectTab"
       />
 
-      <ModelActionBar
+      <ModelsActionBar
         class="project-models-manager__action-bar"
         :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
+        :project="project"
         :models="selection"
       />
 
@@ -51,7 +52,7 @@
           <ModelStatusBadge :model="model" />
         </template>
         <template #cell-actions="{ row: model }">
-          <ModelActionMenu :model="model" />
+          <ModelActionMenu :project="project" :model="model" />
         </template>
       </GenericTable>
     </template>
@@ -61,12 +62,13 @@
 <script>
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
+import { MODEL_SOURCE } from "@/utils/models";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
-import ModelActionBar from "@/components/specific/models/model-action-bar/ModelActionBar";
+import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
 import ModelActionMenu from "@/components/specific/models/model-action-menu/ModelActionMenu";
 import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
 
@@ -76,7 +78,7 @@ export default {
     BIMDataIcon,
     BIMDataTabs,
     GenericTable,
-    ModelActionBar,
+    ModelsActionBar,
     ModelActionMenu,
     ModelStatusBadge
   },
@@ -173,14 +175,23 @@ export default {
     watch(
       () => props.models,
       () => {
-        models.ifc = props.models.filter(model => model.source === "UPLOAD");
-        models.merge = props.models.filter(model => model.source === "MERGE");
+        models.ifc = props.models.filter(
+          model => model.source === MODEL_SOURCE.UPLOAD
+        );
+        models.merge = props.models.filter(
+          model => model.source === MODEL_SOURCE.MERGE
+        );
         models.split = props.models.filter(model =>
-          ["SPLIT", "EXPORT"].includes(model.source)
+          [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
         );
         models.archive = props.models.filter(
           model =>
-            !["UPLOAD", "MERGE", "SPLIT", "EXPORT"].includes(model.source)
+            ![
+              MODEL_SOURCE.UPLOAD,
+              MODEL_SOURCE.MERGE,
+              MODEL_SOURCE.SPLIT,
+              MODEL_SOURCE.EXPORT
+            ].includes(model.source)
         );
       },
       { immediate: true }

@@ -193,7 +193,7 @@ export default {
   GenericTable: {
     pagination: "{start} - {end} sur {total}"
   },
-  ModelActionBar: {
+  ModelsActionBar: {
     delete: "Supprimer",
     archive: "Archiver",
     download: "Télécharger",

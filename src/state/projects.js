@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs, watchEffect } from "vue";
 import ProjectService from "@/server/ProjectService";
 import { useUser } from "@/state/user";
+import { PROJECT_ROLE } from "@/utils/users";
 
 const state = reactive({
   userProjects: [],
@@ -16,7 +17,7 @@ const loadUserProjects = async () => {
   projects = projects.map(project => ({
     ...project,
     isAdmin: user.value.projects.some(
-      role => role.project === project.id && role.role === 100
+      role => role.project === project.id && role.role === PROJECT_ROLE.ADMIN
     )
   }));
   projects = projects

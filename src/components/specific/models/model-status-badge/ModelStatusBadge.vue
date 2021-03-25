@@ -7,6 +7,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { MODEL_STATUS } from "@/utils/models";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
@@ -28,17 +29,17 @@ export default {
 
     watchEffect(() => {
       switch (props.model.status) {
-        case "P":
+        case MODEL_STATUS.PENDING:
           statusName.value = "pending";
           break;
-        case "I":
+        case MODEL_STATUS.IN_PROGRESS:
           statusName.value = "in-progress";
           break;
-        case "C":
+        case MODEL_STATUS.COMPLETED:
           statusName.value = "completed";
           statusIcon.value = "success";
           break;
-        case "E":
+        case MODEL_STATUS.ERROR:
           statusName.value = "error";
           statusIcon.value = "failed";
           break;

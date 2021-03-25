@@ -190,7 +190,7 @@ export default {
   GenericTable: {
     pagination: "{start} - {end} of {total}"
   },
-  ModelActionBar: {
+  ModelsActionBar: {
     delete: "Delete",
     archive: "Archive",
     download: "Download",
