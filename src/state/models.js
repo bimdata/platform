@@ -6,13 +6,13 @@ const state = reactive({
 });
 
 const loadProjectModels = async project => {
-  const models = await ModelService.fetchProjectModels(project);
+  const models = await ModelService.fetchModels(project);
   state.projectModels = models;
   return models;
 };
 
 const updateModel = async (project, model) => {
-  const newModel = await ModelService.updateModel(project, model);
+  const newModel = await ModelService.updateModels(project, model);
   softUpdateModel(newModel);
   return newModel;
 };
@@ -24,16 +24,37 @@ const softUpdateModel = model => {
   return model;
 };
 
-const fetchModelSites = async (project, model) => {
-  const sites = await ModelService.fetchModelElementsByType(
+const fetchModelSite = async (project, model) => {
+  const [site] = await ModelService.fetchModelElementsByType(
     project,
     model,
     "IfcSite"
   );
-  return sites;
+  if (site && site.attributes) {
+    // Extract SiteAddress, RefLongitude and RefLatitude
+    // from model site attributes.
+    const {
+      attributes: { properties }
+    } = site;
+    var siteAddress = (
+      properties.find(p => p.definition.name === "SiteAddress") || {}
+    ).value;
+    var refLongitude = (
+      properties.find(p => p.definition.name === "RefLongitude") || {}
+    ).value;
+    var refLatitude = (
+      properties.find(p => p.definition.name === "RefLatitude") || {}
+    ).value;
+  }
+  return {
+    site,
+    address: siteAddress,
+    longitude: refLongitude,
+    latitude: refLatitude
+  };
 };
 
-const setModelSite = async (
+const createModelSite = async (
   project,
   model,
   { address, longitude, latitude }
@@ -69,16 +90,15 @@ const updateModelSite = async (
   { address, longitude, latitude }
 ) => {
   const properties = [
-    { name: "SiteAddress", value: address },
-    { name: "RefLongitude", value: longitude },
-    { name: "RefLatitude", value: latitude }
+    { id: undefined, name: "SiteAddress", value: address },
+    { id: undefined, name: "RefLongitude", value: longitude },
+    { id: undefined, name: "RefLatitude", value: latitude }
   ];
-  const newProperties = await ModelService.setModelElementAttributesProperties(
+  const newProperties = await ModelService.updateModelElementAttrProperties(
     project,
     model,
     site,
-    properties,
-    { update: true }
+    properties
   );
   return newProperties;
 };
@@ -90,8 +110,8 @@ export function useModels() {
     loadProjectModels,
     updateModel,
     softUpdateModel,
-    fetchModelSites,
-    setModelSite,
+    fetchModelSite,
+    createModelSite,
     updateModelSite
   };
 }

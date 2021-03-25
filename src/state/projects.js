@@ -26,12 +26,12 @@ const loadUserProjects = async () => {
   return projects;
 };
 
-let stopWatchingSpaceProjects;
+let stopSpaceProjectsWatcher;
 const loadSpaceProjects = space => {
-  if (typeof stopWatchingSpaceProjects === "function") {
-    stopWatchingSpaceProjects();
+  if (typeof stopSpaceProjectsWatcher === "function") {
+    stopSpaceProjectsWatcher();
   }
-  stopWatchingSpaceProjects = watchEffect(() => {
+  stopSpaceProjectsWatcher = watchEffect(() => {
     state.spaceProjects = state.userProjects.filter(
       project => project.cloud.id === space.id
     );

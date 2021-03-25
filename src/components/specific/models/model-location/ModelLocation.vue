@@ -87,7 +87,7 @@ export default {
     }
   },
   setup(props) {
-    const { fetchModelSites } = useModels();
+    const { fetchModelSite } = useModels();
 
     const loading = ref(false);
     provide("loading", loading);
@@ -117,46 +117,26 @@ export default {
     const setLocation = async () => {
       reset();
       loading.value = true;
-      const [modelSite] = await fetchModelSites(props.project, props.model);
-      site.value = modelSite;
-      if (modelSite && modelSite.attributes) {
-        // Extract RefLongitude, RefLatitude and SiteAddress from
-        // model site attributes.
-        const {
-          attributes: { properties }
-        } = modelSite;
-        const refLongitude = (
-          properties.find(p => p.definition.name === "RefLongitude") || {}
-        ).value;
-        const refLatitude = (
-          properties.find(p => p.definition.name === "RefLatitude") || {}
-        ).value;
-        const siteAddress = (
-          properties.find(p => p.definition.name === "SiteAddress") || {}
-        ).value;
+      const modelSite = await fetchModelSite(props.project, props.model);
+      site.value = modelSite.site;
 
-        // If RefLongitude and RefLatitude are set,
+      if (modelSite.longitude && modelSite.latitude) {
+        // If site coordinates are set,
         // set longitude/latitude accordingly.
-        if (refLongitude && refLatitude) {
-          address.value = siteAddress || ""; // Also set address if SiteAddress is set
-          longitude.value = DMS2DD(refLongitude);
-          latitude.value = DMS2DD(refLatitude);
-          loading.value = false;
-          return; // Stop here
-        }
-
-        // If RefLongitude and RefLatitude are not set, check for SiteAddress.
-        // If SiteAddress is set, set address accordingly then
+        // Also set address if site address is set.
+        address.value = modelSite.address || "";
+        longitude.value = DMS2DD(modelSite.longitude);
+        latitude.value = DMS2DD(modelSite.latitude);
+      } else if (modelSite.address) {
+        // If site coordinates are not set, check for site address.
+        // If site address is set, set address accordingly then
         // retrieve coordinates from this address to set longitude/latitude.
-        if (siteAddress) {
-          address.value = siteAddress;
-          const coord = await getCoordinatesFromAddress(siteAddress);
-          longitude.value = coord.longitude;
-          latitude.value = coord.latitude;
-          loading.value = false;
-          return; // Stop here
-        }
+        address.value = modelSite.address;
+        const coord = await getCoordinatesFromAddress(modelSite.address);
+        longitude.value = coord.longitude;
+        latitude.value = coord.latitude;
       }
+
       loading.value = false;
     };
 

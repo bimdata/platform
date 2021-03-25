@@ -18,6 +18,7 @@ const loadUserSpaces = async () => {
       role => role.cloud === space.id && role.role === 100
     )
   }));
+  spaces = spaces.slice().sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   state.userSpaces = spaces;
   return spaces;
 };

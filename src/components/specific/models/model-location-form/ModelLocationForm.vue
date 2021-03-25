@@ -79,7 +79,7 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
-    const { setModelSite, updateModelSite } = useModels();
+    const { createModelSite, updateModelSite } = useModels();
 
     const isSubmitStep = ref(false);
     const checkLoading = ref(false);
@@ -118,7 +118,7 @@ export default {
             location
           );
         } else {
-          await setModelSite(props.project, props.model, location);
+          await createModelSite(props.project, props.model, location);
         }
         // submitLoading.value = false;
         emit("success");

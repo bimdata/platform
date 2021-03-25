@@ -1,19 +1,37 @@
 import apiClient from "./api-client";
 
 class ModelService {
-  fetchProjectModels(project) {
+  fetchModels(project) {
     return apiClient.ifcApi.getIfcs({
       cloudPk: project.cloud.id,
       projectPk: project.id
     });
   }
 
-  updateModel(project, model) {
-    return apiClient.ifcApi.updateIfc({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: model.id
-    });
+  updateModels(project, models) {
+    models = [].concat(models);
+    return Promise.all(
+      models.map(model =>
+        apiClient.ifcApi.updateIfc({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          id: model.id
+        })
+      )
+    );
+  }
+
+  deleteModels(project, models) {
+    models = [].concat(models);
+    return Promise.all(
+      models.map(model =>
+        apiClient.ifcApi.deleteIfc({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          id: model.id
+        })
+      )
+    );
   }
 
   fetchModelElements(project, model, params = {}) {
@@ -39,69 +57,153 @@ class ModelService {
     });
   }
 
-  updateModelElements(project, model, element) {
-    return apiClient.ifcApi.updateElement({
+  updateModelElements(project, model, elements) {
+    elements = [].concat(elements);
+    return apiClient.ifcApi.bulkUpdateElements({
       cloudPk: project.cloud.id,
       projectPk: project.id,
       ifcPk: model.id,
-      uuid: element.uuid,
-      data: element
+      data: elements
     });
   }
 
-  /**
-   * @param {Object} project a project
-   * @param {Object} model a model of the project
-   * @param {Object} element an element of the model
-   * @param {Object} pset a property set of this element
-   * @param {Array} properties a list of property name/value pairs
-   * @param {Object} options an (optional) otpions object
-   * @returns {Promise}
-   */
-  setModelElementPsetProperties(
-    project,
-    model,
-    element,
-    pset,
-    properties,
-    options = {}
-  ) {
-    const propsData = properties.map(({ name, value }) => ({
-      definition: { name },
-      value
-    }));
-    const requestMethod = options.update
-      ? "updateElementPropertySetProperty"
-      : "createElementPropertySetProperty";
+  deleteModelElements(project, model, elements) {
+    elements = [].concat(elements);
     return Promise.all(
-      propsData.map(data =>
-        apiClient.ifcApi[requestMethod]({
+      elements.map(element =>
+        apiClient.ifcApi.deleteElement({
           cloudPk: project.cloud.id,
           projectPk: project.id,
           ifcPk: model.id,
-          elementUuid: element.uuid,
-          propertysetPk: pset.id,
-          data
+          uuid: element.uuid
         })
       )
     );
   }
 
-  setModelElementAttributesProperties(
-    project,
-    model,
-    element,
-    properties,
-    options = {}
-  ) {
-    return this.setModelElementPsetProperties(
+  createModelElementPsetProperties(project, model, element, pset, properties) {
+    properties = [].concat(properties);
+    properties = properties.map(({ name, value }) => ({
+      definition: { name },
+      value
+    }));
+    return Promise.all(
+      properties.map(property =>
+        apiClient.ifcApi.createElementPropertySetProperty({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          ifcPk: model.id,
+          elementUuid: element.uuid,
+          propertysetPk: pset.id,
+          data: property
+        })
+      )
+    );
+  }
+
+  updateModelElementPsetProperties(project, model, element, pset, properties) {
+    properties = [].concat(properties);
+    properties = properties.map(({ id, name, value }) => ({
+      id,
+      definition: { name },
+      value
+    }));
+    return Promise.all(
+      properties.map(property =>
+        apiClient.ifcApi.updateElementPropertySetProperty({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          ifcPk: model.id,
+          elementUuid: element.uuid,
+          propertysetPk: pset.id,
+          id: property.id,
+          data: property
+        })
+      )
+    );
+  }
+
+  deleteModelElementPsetProperties(project, model, element, pset, properties) {
+    properties = [].concat(properties);
+    return Promise.all(
+      properties.map(property =>
+        apiClient.ifcApi.removeElementPropertySetProperty({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          ifcPk: model.id,
+          elementUuid: element.uuid,
+          propertysetPk: pset.id,
+          id: property.id
+        })
+      )
+    );
+  }
+
+  createModelElementAttrProperties(project, model, element, properties) {
+    return this.createModelElementPsetProperties(
       project,
       model,
       element,
       element.attributes,
-      properties,
-      options
+      properties
     );
+  }
+
+  updateModelElementAttrProperties(project, model, element, properties) {
+    return this.updateModelElementPsetProperties(
+      project,
+      model,
+      element,
+      element.attributes,
+      properties
+    );
+  }
+
+  deleteModelElementAttrProperties(project, model, element, properties) {
+    return this.deleteModelElementPsetProperties(
+      project,
+      model,
+      element,
+      element.attributes,
+      properties
+    );
+  }
+
+  optimizeModel(project, model) {
+    return apiClient.ifcApi.optimizeIfc({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id: model.id,
+      data: {}
+    });
+  }
+
+  reprocessModel(project, model) {
+    return apiClient.ifcApi.reprocessIfc({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id: model.id
+    });
+  }
+
+  exportModel(project, model, modelExport) {
+    return apiClient.ifcApi.exportIfc({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id: model.id,
+      data: modelExport
+    });
+  }
+
+  mergeModels(project, models, name) {
+    return apiClient.ifcApi.mergeIfcs({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      data: {
+        ifcIds: models.map(model => model.id),
+        exportName: name
+      }
+    });
   }
 }
 
