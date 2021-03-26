@@ -17,6 +17,13 @@ class ProjectService {
     });
   }
 
+  fetchProjectByID(space, id) {
+    return apiClient.collaborationApi.getProject({
+      cloudPk: space.id,
+      id
+    });
+  }
+
   fetchProjectUsers(project) {
     return apiClient.collaborationApi.getProjectUsers({
       cloudPk: project.cloud.id,

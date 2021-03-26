@@ -5,6 +5,10 @@ class SpaceService {
     return apiClient.collaborationApi.getClouds();
   }
 
+  fetchSpaceByID(id) {
+    return apiClient.collaborationApi.getCloud({ id });
+  }
+
   fetchSpaceUsers(space) {
     return apiClient.collaborationApi.getCloudUsers({
       cloudPk: space.id
