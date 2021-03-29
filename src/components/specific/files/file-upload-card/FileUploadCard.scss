@@ -1,0 +1,35 @@
+.file-upload-card {
+  display: flex;
+  align-items: center;
+  padding: $spacing-unit/2;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: $color-white;
+
+  &--left {
+  }
+
+  &--center {
+    flex-grow: 1;
+  }
+
+  &--right {
+  }
+
+  &__info {
+    &__file-name {
+      // TODO
+    }
+
+    &__progress-bar {
+      // TODO
+    }
+
+    &__progress {
+      // TODO
+    }
+
+    &__upload-rate {
+      // TODO
+    }
+  }
+}

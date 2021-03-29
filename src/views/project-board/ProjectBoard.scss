@@ -12,6 +12,10 @@
     padding: $spacing-unit * 2 0;
 
     &__block {
+      &--upload {
+        width: 100%;
+      }
+
       &--overview {
         flex-grow: 1;
         height: 480px;

@@ -20,7 +20,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, $badge-size);
     justify-content: space-between;
-    gap: $spacing-unit;
+    gap: $spacing-unit/2;
 
     .lang-badge {
       cursor: pointer;

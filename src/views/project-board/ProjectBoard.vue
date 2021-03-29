@@ -14,7 +14,7 @@
         />
       </template>
       <template #right>
-        <BIMDataButton color="primary" fill radius>
+        <BIMDataButton color="primary" fill radius @click="toggleFileUploader">
           <BIMDataIcon name="plus" size="xxxs" />
           <span>{{ $t("ProjectBoard.addIFC") }}</span>
         </BIMDataButton>
@@ -22,6 +22,14 @@
     </ViewHeader>
 
     <div class="project-board-view__container">
+      <transition name="fade">
+        <ProjectFileUploader
+          v-show="showFileUploader"
+          class="project-board-view__container__block--upload"
+          :project="project"
+          @close="closeFileUploader"
+        />
+      </transition>
       <ProjectModelsOverview
         class="project-board-view__container__block--overview"
         :project="project"
@@ -59,6 +67,7 @@ import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectFilesManager from "@/components/specific/files/project-files-manager/ProjectFilesManager";
+import ProjectFileUploader from "@/components/specific/files/project-file-uploader/ProjectFileUploader";
 import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
 import ProjectModelsOverview from "@/components/specific/models/project-models-overview/ProjectModelsOverview";
 import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager";
@@ -71,6 +80,7 @@ export default {
     ViewHeader,
     AppBreadcrumb,
     ProjectFilesManager,
+    ProjectFileUploader,
     ProjectModelsManager,
     ProjectModelsOverview,
     ProjectUsersManager
@@ -92,12 +102,25 @@ export default {
       ];
     });
 
+    const showFileUploader = ref(false);
+    const closeFileUploader = () => {
+      showFileUploader.value = false;
+    };
+    const toggleFileUploader = () => {
+      showFileUploader.value = !showFileUploader.value;
+    };
+
     return {
-      tabs,
-      project: currentProject,
+      // References
+      invitations: currentProjectInvitations,
       models: projectModels,
+      project: currentProject,
+      showFileUploader,
+      tabs,
       users: currentProjectUsers,
-      invitations: currentProjectInvitations
+      // Methods
+      closeFileUploader,
+      toggleFileUploader
     };
   }
 };

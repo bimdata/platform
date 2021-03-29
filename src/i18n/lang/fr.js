@@ -204,5 +204,10 @@ export default {
     buttonRename: "Renommer",
     buttonArchive: "Archiver",
     buttonDelete: "Supprimer"
+  },
+  ProjectFileUploader: {
+    uploadAreaText: "Cliquer/Glisser vos fichiers ici",
+    separatorText: "ou",
+    buttonUpload: "Selectionner un fichier"
   }
 };

@@ -201,5 +201,10 @@ export default {
     buttonRename: "Rename",
     buttonArchive: "Archive",
     buttonDelete: "Delete"
+  },
+  ProjectFileUploader: {
+    uploadAreaText: "Drag and drop to store your project assets",
+    separatorText: "or",
+    buttonUpload: "Select file"
   }
 };
