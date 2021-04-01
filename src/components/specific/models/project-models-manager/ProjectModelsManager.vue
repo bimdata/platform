@@ -175,8 +175,8 @@ export default {
     watch(
       () => props.models,
       () => {
-        models.ifc = props.models.filter(
-          model => model.source === MODEL_SOURCE.UPLOAD
+        models.ifc = props.models.filter(model =>
+          [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
         );
         models.merge = props.models.filter(
           model => model.source === MODEL_SOURCE.MERGE
@@ -184,15 +184,7 @@ export default {
         models.split = props.models.filter(model =>
           [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
         );
-        models.archive = props.models.filter(
-          model =>
-            ![
-              MODEL_SOURCE.UPLOAD,
-              MODEL_SOURCE.MERGE,
-              MODEL_SOURCE.SPLIT,
-              MODEL_SOURCE.EXPORT
-            ].includes(model.source)
-        );
+        models.archive = props.models.filter(model => model.archived);
       },
       { immediate: true }
     );
