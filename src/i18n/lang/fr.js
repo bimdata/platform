@@ -209,5 +209,9 @@ export default {
     uploadAreaText: "Cliquer/Glisser vos fichiers ici",
     separatorText: "ou",
     buttonUpload: "Selectionner un fichier"
+  },
+  ModelNameCell: {
+    inputErrorMessage: "Nom de modèle invalide",
+    buttonSubmit: "Valider"
   }
 };

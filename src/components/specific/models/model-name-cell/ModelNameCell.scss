@@ -1,0 +1,28 @@
+.model-name-cell {
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__update-form {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit;
+
+    &__input {
+      flex-grow: 1;
+      margin: 0;
+    }
+
+    &__btn-close {
+      color: $color-tertiary-dark;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit / 2;
+  }
+}

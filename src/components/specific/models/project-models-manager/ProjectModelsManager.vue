@@ -18,6 +18,10 @@
         :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
         :project="project"
         :models="selection"
+        @delete-clicked="() => {}"
+        @archive-clicked="() => {}"
+        @download-clicked="() => {}"
+        @merge-clicked="() => {}"
       />
 
       <GenericTable
@@ -29,11 +33,13 @@
         @selection-changed="setSelection"
         :placeholder="$t('ProjectBoard.ProjectModelsManager.tablePlaceholder')"
       >
-        <template #cell-name="{ row: { name } }">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <BIMDataIcon name="ifc" size="xs" />
-            <span>{{ name }}</span>
-          </div>
+        <template #cell-name="{ row: model }">
+          <ModelNameCell
+            :project="project"
+            :model="model"
+            :editMode="nameEditMode[model.id]"
+            @close="nameEditMode[model.id] = false"
+          />
         </template>
         <template #cell-version>?</template>
         <template #cell-creator="{ row: { creator } }">
@@ -52,7 +58,14 @@
           <ModelStatusBadge :model="model" />
         </template>
         <template #cell-actions="{ row: model }">
-          <ModelActionMenu :project="project" :model="model" />
+          <ModelActionMenu
+            :project="project"
+            :model="model"
+            @download-clicked="() => {}"
+            @update-clicked="nameEditMode[model.id] = true"
+            @archive-clicked="() => {}"
+            @delete-clicked="() => {}"
+          />
         </template>
       </GenericTable>
     </template>
@@ -65,22 +78,22 @@ import { useI18n } from "vue-i18n";
 import { MODEL_SOURCE } from "@/utils/models";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
-import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
 import ModelActionMenu from "@/components/specific/models/model-action-menu/ModelActionMenu";
+import ModelNameCell from "@/components/specific/models/model-name-cell/ModelNameCell";
 import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
+import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
 
 export default {
   components: {
     BIMDataCard,
-    BIMDataIcon,
     BIMDataTabs,
     GenericTable,
-    ModelsActionBar,
     ModelActionMenu,
-    ModelStatusBadge
+    ModelNameCell,
+    ModelStatusBadge,
+    ModelsActionBar
   },
   props: {
     project: {
@@ -199,9 +212,20 @@ export default {
       selection.value = models;
     };
 
+    let nameEditMode;
+    watch(
+      rows,
+      () => {
+        nameEditMode = reactive({});
+        rows.value.forEach(row => (nameEditMode[row.id] = false));
+      },
+      { immediate: true }
+    );
+
     return {
       // References
       columns,
+      nameEditMode,
       rows,
       selection,
       tabs,

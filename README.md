@@ -36,7 +36,7 @@ and follow the steps to create an application.
 - **(4)** Run the platform
 
 ```
-$ npm run serve
+$ npm run dev
 ```
 
 - **(5)** Have a coffee and start coding... :coffee: `</>`

@@ -52,7 +52,7 @@
                   textAlign: column.align || 'left'
                 }"
               >
-                <slot :name="`cell-${column.id}`" :row="row">
+                <slot :name="`cell-${column.id}`" :index="i" :row="row">
                   {{ row[column.id] || row[j] || "" }}
                 </slot>
               </td>

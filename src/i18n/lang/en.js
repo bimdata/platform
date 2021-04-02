@@ -206,5 +206,9 @@ export default {
     uploadAreaText: "Drag and drop to store your project assets",
     separatorText: "or",
     buttonUpload: "Select file"
+  },
+  ModelNameCell: {
+    inputErrorMessage: "Invalid model name",
+    buttonSubmit: "Validate"
   }
 };

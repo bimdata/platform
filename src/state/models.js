@@ -11,17 +11,33 @@ const loadProjectModels = async project => {
   return models;
 };
 
-const updateModel = async (project, model) => {
-  const newModel = await ModelService.updateModels(project, model);
-  softUpdateModel(newModel);
-  return newModel;
+const updateModels = async (project, models) => {
+  const newModels = await ModelService.updateModels(project, models);
+  softUpdateModels(newModels);
+  return newModels;
 };
 
-const softUpdateModel = model => {
-  state.projectModels = state.projectModels.map(m =>
-    m.id === model.id ? { ...m, ...model } : m
+const softUpdateModels = models => {
+  for (const model of [].concat(models)) {
+    state.projectModels = state.projectModels.map(m =>
+      m.id === model.id ? { ...m, ...model } : m
+    );
+  }
+  return models;
+};
+
+const deleteModels = async (project, models) => {
+  await ModelService.deleteModels(project, models);
+  softDeleteModels(models);
+  return models;
+};
+
+const softDeleteModels = models => {
+  const modelIDs = [].concat(models).map(m => m.id);
+  state.projectModels = state.projectModels.filter(
+    model => !modelIDs.includes(model.id)
   );
-  return model;
+  return models;
 };
 
 const fetchModelSite = async (project, model) => {
@@ -108,8 +124,10 @@ export function useModels() {
   return {
     ...toRefs(readonlyState),
     loadProjectModels,
-    updateModel,
-    softUpdateModel,
+    updateModels,
+    softUpdateModels,
+    deleteModels,
+    softDeleteModels,
     fetchModelSite,
     createModelSite,
     updateModelSite

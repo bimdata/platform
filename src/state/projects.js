@@ -90,7 +90,6 @@ const deleteProject = async project => {
 
 const softDeleteProject = project => {
   state.userProjects = state.userProjects.filter(p => p.id !== project.id);
-  state.spaceProjects = state.spaceProjects.filter(p => p.id !== project.id);
   return project;
 };
 
