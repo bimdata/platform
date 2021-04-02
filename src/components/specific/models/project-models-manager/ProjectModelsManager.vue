@@ -16,58 +16,20 @@
       <ModelsActionBar
         class="project-models-manager__action-bar"
         :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
-        :project="project"
-        :models="selection"
-        @delete-clicked="() => {}"
         @archive-clicked="() => {}"
+        @delete-clicked="() => {}"
         @download-clicked="() => {}"
         @merge-clicked="() => {}"
       />
 
-      <GenericTable
-        :columns="columns"
-        :rows="rows"
-        :paginated="true"
-        :perPage="6"
-        :selectable="true"
+      <ModelsManagerTable
+        :project="project"
+        :models="displayedModels"
+        @archive-clicked="() => {}"
+        @delete-clicked="() => {}"
+        @download-clicked="() => {}"
         @selection-changed="setSelection"
-        :placeholder="$t('ProjectBoard.ProjectModelsManager.tablePlaceholder')"
-      >
-        <template #cell-name="{ row: model }">
-          <ModelNameCell
-            :project="project"
-            :model="model"
-            :editMode="nameEditMode[model.id]"
-            @close="nameEditMode[model.id] = false"
-          />
-        </template>
-        <template #cell-version>?</template>
-        <template #cell-creator="{ row: { creator } }">
-          {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
-        </template>
-        <template #cell-lastupdate="{ row: { updatedAt } }">
-          {{
-            updatedAt
-              .toISOString()
-              .slice(0, -5)
-              .replace(/-/g, "/")
-              .replace("T", ` ${$t("Commons.at")} `)
-          }}
-        </template>
-        <template #cell-status="{ row: model }">
-          <ModelStatusBadge :model="model" />
-        </template>
-        <template #cell-actions="{ row: model }">
-          <ModelActionsCell
-            :project="project"
-            :model="model"
-            @download-clicked="() => {}"
-            @update-clicked="nameEditMode[model.id] = true"
-            @archive-clicked="() => {}"
-            @delete-clicked="() => {}"
-          />
-        </template>
-      </GenericTable>
+      />
     </template>
   </BIMDataCard>
 </template>
@@ -75,25 +37,20 @@
 <script>
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
+import { useModels } from "@/state/models";
 import { MODEL_SOURCE } from "@/utils/models";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
-import GenericTable from "@/components/generic/generic-table/GenericTable";
-import ModelActionsCell from "@/components/specific/models/model-actions-cell/ModelActionsCell";
-import ModelNameCell from "@/components/specific/models/model-name-cell/ModelNameCell";
-import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
 import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
+import ModelsManagerTable from "@/components/specific/models/models-manager-table/ModelsManagerTable";
 
 export default {
   components: {
     BIMDataCard,
     BIMDataTabs,
-    GenericTable,
-    ModelActionsCell,
-    ModelNameCell,
-    ModelStatusBadge,
-    ModelsActionBar
+    ModelsActionBar,
+    ModelsManagerTable
   },
   props: {
     project: {
@@ -107,6 +64,7 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
+    const { updateModels, deleteModels } = useModels();
 
     const tabs = ref([]);
     const currentTab = ref("ifc");
@@ -134,51 +92,6 @@ export default {
       currentTab.value = tab.id;
     };
 
-    const columns = ref([]);
-    watchEffect(() => {
-      columns.value = [
-        {
-          id: "id",
-          label: t("ProjectBoard.ProjectModelsManager.table.id"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "name",
-          label: t("ProjectBoard.ProjectModelsManager.table.name")
-        },
-        {
-          id: "version",
-          label: t("ProjectBoard.ProjectModelsManager.table.version"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "creator",
-          label: t("ProjectBoard.ProjectModelsManager.table.creator"),
-          width: "200px",
-          align: "center"
-        },
-        {
-          id: "lastupdate",
-          label: t("ProjectBoard.ProjectModelsManager.table.lastupdate"),
-          width: "200px",
-          align: "center"
-        },
-        {
-          id: "status",
-          label: t("ProjectBoard.ProjectModelsManager.table.status"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "actions",
-          label: " ",
-          width: "500px"
-        }
-      ];
-    });
-
     const models = reactive({
       ifc: [],
       merge: [],
@@ -202,9 +115,9 @@ export default {
       { immediate: true }
     );
 
-    const rows = ref([]);
+    const displayedModels = ref([]);
     watchEffect(() => {
-      rows.value = models[currentTab.value];
+      displayedModels.value = models[currentTab.value];
     });
 
     const selection = ref([]);
@@ -212,21 +125,17 @@ export default {
       selection.value = models;
     };
 
-    let nameEditMode;
-    watch(
-      rows,
-      () => {
-        nameEditMode = reactive({});
-        rows.value.forEach(row => (nameEditMode[row.id] = false));
-      },
-      { immediate: true }
-    );
+    const removeModels = models => {};
+
+    const archiveModels = models => {};
+
+    const downloadModels = models => {};
+
+    const mergeModels = models => {};
 
     return {
       // References
-      columns,
-      nameEditMode,
-      rows,
+      displayedModels,
       selection,
       tabs,
       // Methods

@@ -15,7 +15,8 @@ class ModelService {
         apiClient.ifcApi.updateIfc({
           cloudPk: project.cloud.id,
           projectPk: project.id,
-          id: model.id
+          id: model.id,
+          data: model
         })
       )
     );

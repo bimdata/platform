@@ -1,7 +1,7 @@
 <template>
   <div class="model-name-cell">
     <transition name="fade" mode="out-in">
-      <div v-if="loading" class="model-update-form__loader">
+      <div v-if="loading" class="model-name-cell__loader">
         <BIMDataSpinner />
       </div>
 
@@ -36,8 +36,14 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <BIMDataIcon name="ifc" size="xs" />
-        <span>{{ model.name }}</span>
+        <BIMDataIcon
+          class="model-name-cell__content__icon"
+          name="ifc"
+          size="xs"
+        />
+        <span class="model-name-cell__content__text">
+          {{ model.name }}
+        </span>
       </div>
     </transition>
   </div>
@@ -87,7 +93,10 @@ export default {
       try {
         if (modelName.value) {
           loading.value = true;
-          // await updateModels(props.project, { ...props.model, name: modelName.value });
+          await updateModels(props.project, {
+            ...props.model,
+            name: modelName.value
+          });
           closeUpdateForm();
           emit("success");
         } else {
@@ -95,6 +104,7 @@ export default {
           nameInput.value.focus();
         }
       } catch (error) {
+        console.log(error);
         emit("error", error);
       } finally {
         loading.value = false;

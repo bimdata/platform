@@ -78,7 +78,6 @@
 
 <script>
 import { ref } from "vue";
-import { useModels } from "@/state/models";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -105,8 +104,6 @@ export default {
     "delete-clicked"
   ],
   setup(props, { emit }) {
-    const { updateModels } = useModels();
-
     const showMenu = ref(false);
     const closeMenu = () => {
       showMenu.value = false;

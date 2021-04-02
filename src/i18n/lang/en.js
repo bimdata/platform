@@ -147,16 +147,7 @@ export default {
         split: "Split / Export",
         merge: "Merge",
         archive: "Archives"
-      },
-      table: {
-        id: "ID",
-        name: "Name",
-        version: "Version",
-        creator: "Creator",
-        lastupdate: "Last modified",
-        status: "Status"
-      },
-      tablePlaceholder: "No model"
+      }
     },
     ProjectUsersManager: {
       title: "Project Users",
@@ -210,5 +201,16 @@ export default {
   ModelNameCell: {
     inputErrorMessage: "Invalid model name",
     buttonSubmit: "Validate"
+  },
+  ModelsManagerTable: {
+    tablePlaceholder: "No model",
+    header: {
+      id: "ID",
+      name: "Name",
+      version: "Version",
+      creator: "Creator",
+      lastupdate: "Last modified",
+      status: "Status"
+    }
   }
 };
