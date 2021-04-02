@@ -1,7 +1,7 @@
 <template>
-  <div class="model-action-menu" v-click-away="closeMenu">
+  <div class="model-actions-cell" v-click-away="closeMenu">
     <BIMDataButton
-      class="model-action-menu__btn model-action-menu__btn--viewer"
+      class="model-actions-cell__btn model-actions-cell__btn--viewer"
       color="primary"
       outline
       radius
@@ -12,7 +12,7 @@
       2D
     </BIMDataButton>
     <BIMDataButton
-      class="model-action-menu__btn model-action-menu__btn--viewer"
+      class="model-actions-cell__btn model-actions-cell__btn--viewer"
       color="primary"
       outline
       radius
@@ -23,7 +23,7 @@
       3D
     </BIMDataButton>
     <BIMDataButton
-      class="model-action-menu__btn"
+      class="model-actions-cell__btn"
       ripple
       rounded
       icon
@@ -32,7 +32,7 @@
       <BIMDataIcon name="cloud" size="s" />
     </BIMDataButton>
     <BIMDataButton
-      class="model-action-menu__btn"
+      class="model-actions-cell__btn"
       ripple
       rounded
       icon
@@ -42,12 +42,12 @@
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="model-action-menu__container" v-show="showMenu">
-        <BIMDataButton class="model-action-menu__container__btn" ghost squared>
+      <div class="model-actions-cell__menu" v-show="showMenu">
+        <BIMDataButton class="model-actions-cell__menu__btn" ghost squared>
           {{ $t("ModelActionMenu.buttonAddTags") }}
         </BIMDataButton>
         <BIMDataButton
-          class="model-action-menu__container__btn"
+          class="model-actions-cell__menu__btn"
           ghost
           squared
           @click="onUpdateClick"
@@ -56,7 +56,7 @@
         </BIMDataButton>
         <BIMDataButton
           v-if="!model.archived"
-          class="model-action-menu__container__btn"
+          class="model-actions-cell__menu__btn"
           ghost
           squared
           @click="onArchiveClick"
@@ -64,7 +64,7 @@
           {{ $t("ModelActionMenu.buttonArchive") }}
         </BIMDataButton>
         <BIMDataButton
-          class="model-action-menu__container__btn"
+          class="model-actions-cell__menu__btn"
           ghost
           squared
           @click="onDeleteClick"
@@ -149,4 +149,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelActionMenu.scss"></style>
+<style scoped lang="scss" src="./ModelActionsCell.scss"></style>

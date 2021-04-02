@@ -58,7 +58,7 @@
           <ModelStatusBadge :model="model" />
         </template>
         <template #cell-actions="{ row: model }">
-          <ModelActionMenu
+          <ModelActionsCell
             :project="project"
             :model="model"
             @download-clicked="() => {}"
@@ -80,7 +80,7 @@ import { MODEL_SOURCE } from "@/utils/models";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
-import ModelActionMenu from "@/components/specific/models/model-action-menu/ModelActionMenu";
+import ModelActionsCell from "@/components/specific/models/model-actions-cell/ModelActionsCell";
 import ModelNameCell from "@/components/specific/models/model-name-cell/ModelNameCell";
 import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
 import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
@@ -90,7 +90,7 @@ export default {
     BIMDataCard,
     BIMDataTabs,
     GenericTable,
-    ModelActionMenu,
+    ModelActionsCell,
     ModelNameCell,
     ModelStatusBadge,
     ModelsActionBar
