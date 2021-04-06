@@ -3,7 +3,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: $spacing-unit;
+  gap: $spacing-unit * 3/2;
 
   &__btn {
     color: $color-tertiary-dark;

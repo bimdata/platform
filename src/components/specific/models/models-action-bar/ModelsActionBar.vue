@@ -10,11 +10,11 @@
       <span>{{ $t("ModelsActionBar.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared @click="$emit('archive-clicked', models)">
-      <BIMDataIcon name="import" size="xs" />
+      <BIMDataIcon name="archive" size="xs" />
       <span>{{ $t("ModelsActionBar.archive") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared @click="$emit('download-clicked', models)">
-      <BIMDataIcon name="cloud" size="xs" />
+      <BIMDataIcon name="download" size="s" />
       <span>{{ $t("ModelsActionBar.download") }}</span>
     </BIMDataButton>
     <BIMDataButton

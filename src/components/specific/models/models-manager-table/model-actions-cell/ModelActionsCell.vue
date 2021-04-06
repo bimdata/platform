@@ -29,7 +29,7 @@
       icon
       @click="onDownloadClick"
     >
-      <BIMDataIcon name="cloud" size="s" />
+      <BIMDataIcon name="download" size="m" />
     </BIMDataButton>
     <BIMDataButton
       class="model-actions-cell__btn"
