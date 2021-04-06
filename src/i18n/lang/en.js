@@ -225,5 +225,8 @@ export default {
     inputName: "Name of your merge",
     inputError: "You must provide a name for the file",
     buttonSubmit: "Export"
+  },
+  BreadcrumbProjectSelector: {
+    noProject: "< No project >"
   }
 };

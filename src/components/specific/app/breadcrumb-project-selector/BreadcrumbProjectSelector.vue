@@ -13,6 +13,9 @@
     labelProp="name"
     @item-selected="changeProject"
   />
+  <div v-else>
+    {{ $t("BreadcrumbProjectSelector.noProject") }}
+  </div>
 </template>
 
 <script>
@@ -37,15 +40,6 @@ export default {
     const selectedSpace = ref(currentSpace.value);
     const selectedProject = ref(currentProject.value);
 
-    const changeSpace = space => {
-      selectedSpace.value = space;
-      projects.value = userProjects.value.filter(
-        proj => proj.cloud.id === space.id
-      );
-      selectedProject.value =
-        projects.value.length > 0 ? projects.value[0] : {};
-    };
-
     const changeProject = project => {
       router.push({
         name: routeNames.projectBoard,
@@ -54,6 +48,22 @@ export default {
           projectID: project.id
         }
       });
+    };
+
+    const changeSpace = space => {
+      selectedSpace.value = space;
+      projects.value = userProjects.value.filter(
+        proj => proj.cloud.id === space.id
+      );
+      if (projects.value.length === 1) {
+        // Automatically change project if there is only one
+        // in the selected space
+        selectedProject.value = projects.value[0];
+        changeProject(projects.value[0]);
+      } else {
+        selectedProject.value =
+          projects.value.length > 0 ? projects.value[0] : {};
+      }
     };
 
     return {

@@ -228,5 +228,8 @@ export default {
     inputName: "Nom de votre fusion d'ifc",
     inputError: "Vous devez renseigner un nom pour le fichier",
     buttonSubmit: "Exporter"
+  },
+  BreadcrumbProjectSelector: {
+    noProject: "< Aucun projet >"
   }
 };
