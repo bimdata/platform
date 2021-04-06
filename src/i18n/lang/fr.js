@@ -215,5 +215,18 @@ export default {
       lastupdate: "Modifié le",
       status: "Statut"
     }
+  },
+  ModelsDeleteModal: {
+    title: "Attention !",
+    message: "Cette action est irresversible. Cela supprimera :",
+    buttonCancel: "Annuler",
+    buttonDelete: "Supprimer",
+    loadingMessage: "Suppression en cours..."
+  },
+  ModelsMergeModal: {
+    title: "Fusionner la sélection",
+    inputName: "Nom de votre fusion d'ifc",
+    inputError: "Vous devez renseigner un nom pour le fichier",
+    buttonSubmit: "Exporter"
   }
 };

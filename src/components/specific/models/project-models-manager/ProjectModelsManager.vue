@@ -16,20 +16,39 @@
       <ModelsActionBar
         class="project-models-manager__action-bar"
         :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
-        @archive-clicked="() => {}"
-        @delete-clicked="() => {}"
-        @download-clicked="() => {}"
-        @merge-clicked="() => {}"
+        :models="selection"
+        @archive-clicked="archiveModels"
+        @delete-clicked="openDeleteModal"
+        @download-clicked="downloadModels"
+        @merge-clicked="openMergeModal"
       />
 
       <ModelsManagerTable
         :project="project"
         :models="displayedModels"
-        @archive-clicked="() => {}"
-        @delete-clicked="() => {}"
-        @download-clicked="() => {}"
+        @archive-clicked="archiveModels([$event])"
+        @delete-clicked="openDeleteModal([$event])"
+        @download-clicked="downloadModels([$event])"
         @selection-changed="setSelection"
       />
+
+      <transition name="fade">
+        <ModelsDeleteModal
+          v-if="showDeleteModal"
+          :project="project"
+          :models="modelsToDelete"
+          @close="closeDeleteModal"
+        />
+      </transition>
+
+      <transition name="fade">
+        <ModelsMergeModal
+          v-if="showMergeModal"
+          :project="project"
+          :models="modelsToMerge"
+          @close="closeMergeModal"
+        />
+      </transition>
     </template>
   </BIMDataCard>
 </template>
@@ -44,13 +63,17 @@ import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
 import ModelsManagerTable from "@/components/specific/models/models-manager-table/ModelsManagerTable";
+import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
+import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
 
 export default {
   components: {
     BIMDataCard,
     BIMDataTabs,
     ModelsActionBar,
-    ModelsManagerTable
+    ModelsManagerTable,
+    ModelsDeleteModal,
+    ModelsMergeModal
   },
   props: {
     project: {
@@ -64,7 +87,7 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
-    const { updateModels, deleteModels } = useModels();
+    const { updateModels } = useModels();
 
     const tabs = ref([]);
     const currentTab = ref("ifc");
@@ -125,20 +148,65 @@ export default {
       selection.value = models;
     };
 
-    const removeModels = models => {};
+    const modelsToDelete = ref([]);
+    const showDeleteModal = ref(false);
+    const openDeleteModal = models => {
+      modelsToDelete.value = models;
+      showDeleteModal.value = true;
+    };
+    const closeDeleteModal = () => {
+      modelsToDelete.value = [];
+      showDeleteModal.value = false;
+    };
 
-    const archiveModels = models => {};
+    const modelsToMerge = ref([]);
+    const showMergeModal = ref(false);
+    const openMergeModal = models => {
+      modelsToMerge.value = models;
+      showMergeModal.value = true;
+    };
+    const closeMergeModal = () => {
+      modelsToMerge.value = [];
+      showMergeModal.value = false;
+    };
 
-    const downloadModels = models => {};
+    const archiveModels = async models => {
+      // TODO: fix model update (maybe on API side)
+      for (const model of models) {
+        model.archived = true;
+      }
+      await updateModels(props.project, models);
+    };
 
-    const mergeModels = models => {};
+    const downloadModels = models => {
+      // TODO: fix download for multiple files
+      const link = document.createElement("a");
+      link.style.display = "none";
+      link.download = "";
+      document.body.appendChild(link);
+      for (const model of models) {
+        link.href = model.document.file;
+        link.click();
+      }
+      document.body.removeChild(link);
+    };
 
     return {
       // References
       displayedModels,
+      modelsToDelete,
+      modelsToMerge,
       selection,
+      showDeleteModal,
+      showMergeModal,
       tabs,
       // Methods
+      archiveModels,
+      downloadModels,
+      closeDeleteModal,
+      closeMergeModal,
+      openDeleteModal,
+      openMergeModal,
       selectTab,
       setSelection
     };

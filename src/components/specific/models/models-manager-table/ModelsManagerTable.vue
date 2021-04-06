@@ -1,5 +1,6 @@
 <template>
   <GenericTable
+    class="models-manager-table"
     :columns="columns"
     :rows="models"
     :paginated="true"

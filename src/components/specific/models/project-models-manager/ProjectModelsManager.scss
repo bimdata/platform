@@ -1,4 +1,6 @@
 .project-models-manager {
+  position: relative;
+
   &.bimdata-card:deep() > .bimdata-card__content {
     height: calc(100% - 35px);
     padding: $spacing-unit;

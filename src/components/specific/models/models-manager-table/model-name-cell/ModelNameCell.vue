@@ -90,6 +90,7 @@ export default {
     const error = ref(false);
 
     const renameModel = async () => {
+      // TODO: fix model update (maybe on API side)
       try {
         if (modelName.value) {
           loading.value = true;

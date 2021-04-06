@@ -212,5 +212,18 @@ export default {
       lastupdate: "Last modified",
       status: "Status"
     }
+  },
+  ModelsDeleteModal: {
+    title: "Warning !",
+    message: "This action will permanently delete the following models :",
+    buttonCancel: "Cancel",
+    buttonDelete: "Delete",
+    loadingMessage: "Deleting..."
+  },
+  ModelsMergeModal: {
+    title: "Merge selection",
+    inputName: "Name of your merge",
+    inputError: "You must provide a name for the file",
+    buttonSubmit: "Export"
   }
 };

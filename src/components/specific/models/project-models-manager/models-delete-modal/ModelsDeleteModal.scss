@@ -1,0 +1,16 @@
+.models-delete-modal {
+  &__message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__list {
+      margin-right: auto;
+
+      &__item {
+        margin: $spacing-unit/3 0;
+      }
+    }
+  }
+}

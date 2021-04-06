@@ -1,0 +1,55 @@
+.generic-modal {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 0.9rem;
+  color: $color-primary;
+  background-color: rgba(47, 55, 74, 0.75);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    position: relative;
+    background-color: $color-white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__btn-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: $color-tertiary-dark;
+    }
+
+    &__title {
+      width: 100%;
+      padding: $spacing-unit * 2;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    &__text {
+      flex-grow: 1;
+      width: 100%;
+      padding: $spacing-unit;
+      overflow-y: auto;
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: $spacing-unit * 2;
+      width: 100%;
+      padding: $spacing-unit * 2;
+    }
+  }
+}
