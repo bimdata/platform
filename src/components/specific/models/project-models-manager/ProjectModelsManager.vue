@@ -61,8 +61,8 @@ import { MODEL_SOURCE } from "@/utils/models";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
-import ModelsActionBar from "@/components/specific/models/models-action-bar/ModelsActionBar";
 import ModelsManagerTable from "@/components/specific/models/models-manager-table/ModelsManagerTable";
+import ModelsActionBar from "./models-action-bar/ModelsActionBar";
 import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
 import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
 
@@ -70,8 +70,8 @@ export default {
   components: {
     BIMDataCard,
     BIMDataTabs,
-    ModelsActionBar,
     ModelsManagerTable,
+    ModelsActionBar,
     ModelsDeleteModal,
     ModelsMergeModal
   },
