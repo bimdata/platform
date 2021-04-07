@@ -1,4 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
+import FileService from "@/server/FileService";
 import ModelService from "@/server/ModelService";
 
 const state = reactive({
@@ -47,6 +48,16 @@ const softDeleteModels = models => {
     model => !modelIDs.includes(model.id)
   );
   return models;
+};
+
+const updateModelName = async (project, model, name) => {
+  // In order to update a model name we have to update the name
+  // of its assiociated document.
+  await FileService.updateDocuments(project, { id: model.documentId, name });
+  // Once the document name is updated we can fetch the new model data.
+  const newModel = await ModelService.fetchModelByID(project, model.id);
+  softUpdateModels(newModel);
+  return newModel;
 };
 
 const fetchModelSite = async (project, model) => {
@@ -139,6 +150,7 @@ export function useModels() {
     mergeModels,
     deleteModels,
     softDeleteModels,
+    updateModelName,
     fetchModelSite,
     createModelSite,
     updateModelSite

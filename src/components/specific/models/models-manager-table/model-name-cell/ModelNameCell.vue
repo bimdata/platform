@@ -81,23 +81,19 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
-    const { updateModels } = useModels();
+    const { updateModelName } = useModels();
 
     const loading = ref(false);
 
     const nameInput = ref(null);
-    const modelName = ref(props.model.name);
+    const modelName = ref("");
     const error = ref(false);
 
     const renameModel = async () => {
-      // TODO: fix model update (maybe on API side)
       try {
         if (modelName.value) {
           loading.value = true;
-          await updateModels(props.project, {
-            ...props.model,
-            name: modelName.value
-          });
+          await updateModelName(props.project, props.model, modelName.value);
           closeUpdateForm();
           emit("success");
         } else {
@@ -118,9 +114,18 @@ export default {
       setTimeout(() => nameInput.value.focus(), 200);
     };
     const closeUpdateForm = () => {
+      loading.value = false;
+      error.value = false;
       showUpdateForm.value = false;
       emit("close");
     };
+
+    watch(
+      () => props.model,
+      model => {
+        modelName.value = model.name;
+      }
+    );
 
     watch(
       () => props.editMode,
