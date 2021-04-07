@@ -117,23 +117,37 @@ export default {
 
     const models = reactive({
       ifc: [],
-      merge: [],
       split: [],
+      merge: [],
       archive: []
     });
     watch(
       () => props.models,
       () => {
-        models.ifc = props.models.filter(model =>
-          [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
-        );
-        models.merge = props.models.filter(
-          model => model.source === MODEL_SOURCE.MERGE
-        );
-        models.split = props.models.filter(model =>
-          [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
-        );
-        models.archive = props.models.filter(model => model.archived);
+        const filteredModels = {
+          ifc: [],
+          split: [],
+          merge: [],
+          archive: []
+        };
+        for (const model of props.models) {
+          if (model.archived) {
+            filteredModels.archive.push(model);
+          } else if (
+            [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
+          ) {
+            filteredModels.ifc.push(model);
+          } else if (
+            [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
+          ) {
+            filteredModels.split.push(model);
+          } else if (MODEL_SOURCE.MERGE === model.source) {
+            filteredModels.merge.push(model);
+          } else {
+            filteredModels.ifc.push(model);
+          }
+        }
+        Object.assign(models, filteredModels);
       },
       { immediate: true }
     );
@@ -171,7 +185,6 @@ export default {
     };
 
     const archiveModels = async models => {
-      // TODO: fix model update (maybe on API side)
       for (const model of models) {
         model.archived = true;
       }
