@@ -217,12 +217,9 @@ export default {
       },
       { immediate: true }
     );
-    watch(
-      () => props.perPage,
-      () => {
-        pageIndex.value = 0;
-      }
-    );
+    watch([() => props.rows, () => props.perPage], () => {
+      pageIndex.value = 0;
+    });
     watch(
       [() => props.rows, () => props.paginated, () => props.perPage, pageIndex],
       () => {
