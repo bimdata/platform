@@ -25,11 +25,10 @@
       <ModelLastupdateCell :model="model" />
     </template>
     <template #cell-status="{ row: model }">
-      <ModelStatusBadge :model="model" />
+      <ModelStatusBadge :project="project" :model="model" />
     </template>
     <template #cell-actions="{ row: model }">
       <ModelActionsCell
-        :project="project"
         :model="model"
         @archive-clicked="$emit('archive-clicked', $event)"
         @delete-clicked="$emit('delete-clicked', $event)"

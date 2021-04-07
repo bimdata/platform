@@ -88,10 +88,6 @@ export default {
     BIMDataIcon
   },
   props: {
-    project: {
-      type: Object,
-      required: true
-    },
     model: {
       type: Object,
       required: true

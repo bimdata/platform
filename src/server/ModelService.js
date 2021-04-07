@@ -8,6 +8,14 @@ class ModelService {
     });
   }
 
+  fetchModelByID(project, id) {
+    return apiClient.ifcApi.getIfc({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id
+    });
+  }
+
   updateModels(project, models) {
     models = [].concat(models);
     return Promise.all(

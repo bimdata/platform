@@ -7,6 +7,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { useModels } from "@/state/models";
 import { MODEL_STATUS } from "@/utils/models";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -18,17 +19,23 @@ export default {
     BIMDataSpinner
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     model: {
       type: Object,
       required: true
     }
   },
   setup(props) {
+    const { fetchModelByID, softUpdateModels } = useModels();
+
     const statusName = ref("");
     const statusIcon = ref("");
 
-    watchEffect(() => {
-      switch (props.model.status) {
+    const setStatus = status => {
+      switch (status) {
         case MODEL_STATUS.PENDING:
           statusName.value = "pending";
           break;
@@ -43,6 +50,25 @@ export default {
           statusName.value = "error";
           statusIcon.value = "failed";
           break;
+      }
+    };
+
+    watchEffect(() => {
+      // Set current model status
+      setStatus(props.model.status);
+
+      if (
+        [MODEL_STATUS.PENDING, MODEL_STATUS.IN_PROGRESS].includes(
+          props.model.status
+        )
+      ) {
+        // If model status is PENDING or IN_PROGRESS then wait 2 seconds
+        // and check status again (by updating model data in state and thus
+        // re-triggering this watcher callback).
+        setTimeout(async () => {
+          const model = await fetchModelByID(props.project, props.model.id);
+          softUpdateModels(model);
+        }, 2000);
       }
     });
 

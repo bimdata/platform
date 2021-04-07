@@ -11,6 +11,11 @@ const loadProjectModels = async project => {
   return models;
 };
 
+const fetchModelByID = async (project, id) => {
+  const model = await ModelService.fetchModelByID(project, id);
+  return model;
+};
+
 const updateModels = async (project, models) => {
   const newModels = await ModelService.updateModels(project, models);
   softUpdateModels(newModels);
@@ -128,6 +133,7 @@ export function useModels() {
   return {
     ...toRefs(readonlyState),
     loadProjectModels,
+    fetchModelByID,
     updateModels,
     softUpdateModels,
     mergeModels,
