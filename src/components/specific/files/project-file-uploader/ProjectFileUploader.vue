@@ -1,6 +1,18 @@
 <template>
   <div class="project-file-uploader">
-    <div class="project-file-uploader__upload-list"></div>
+    <div class="project-file-uploader__upload-list">
+      <transition-group name="card-list">
+        <FileUploadCard
+          v-for="(file, i) of filesToUpload"
+          :key="i"
+          :project="project"
+          :file="file"
+          @error="clean(i, 5000)"
+          @cancel="clean(i, 5000)"
+          @success="onSuccess(i)"
+        />
+      </transition-group>
+    </div>
     <div
       class="project-file-uploader__upload-area"
       @dragover.prevent="() => {}"
@@ -11,7 +23,7 @@
         ghost
         rounded
         icon
-        @click="$emit('close')"
+        @click="close"
       >
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>
@@ -48,11 +60,13 @@ import { ref } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon
+    BIMDataIcon,
+    FileUploadCard
   },
   props: {
     project: {
@@ -60,9 +74,10 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
-  setup() {
+  emits: ["close", "file-uploaded"],
+  setup(props, { emit }) {
     const fileInput = ref(null);
+    const filesToUpload = ref([]);
 
     const selectFiles = () => {
       fileInput.value.click();
@@ -71,18 +86,37 @@ export default {
     const uploadFiles = event => {
       let files = null;
       if (event.dataTransfer) {
+        // Files from drag & drop
         files = event.dataTransfer.files;
       } else {
+        // Files from input
         files = event.target.files;
       }
-      files = Array.from(files);
-      console.log(files);
+      filesToUpload.value = filesToUpload.value.concat(Array.from(files));
+    };
+
+    const onSuccess = index => {
+      clean(index, 2000);
+      emit("file-uploaded");
+    };
+
+    const clean = (index, timeout = 100) => {
+      setTimeout(() => filesToUpload.value.splice(index, 1), timeout);
+    };
+
+    const close = () => {
+      filesToUpload.value = [];
+      emit("close");
     };
 
     return {
       // References
       fileInput,
+      filesToUpload,
       //Methods
+      clean,
+      close,
+      onSuccess,
       selectFiles,
       uploadFiles
     };

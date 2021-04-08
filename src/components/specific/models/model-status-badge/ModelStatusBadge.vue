@@ -29,7 +29,7 @@ export default {
     }
   },
   setup(props) {
-    const { fetchModelByID, softUpdateModels } = useModels();
+    const { fetchModelByID } = useModels();
 
     const statusName = ref("");
     const statusIcon = ref("");
@@ -54,20 +54,24 @@ export default {
     };
 
     watchEffect(() => {
-      // Set current model status
       setStatus(props.model.status);
 
       if (
-        [MODEL_STATUS.PENDING, MODEL_STATUS.IN_PROGRESS].includes(
-          props.model.status
-        )
+        MODEL_STATUS.PENDING === props.model.status ||
+        MODEL_STATUS.IN_PROGRESS === props.model.status
       ) {
-        // If model status is PENDING or IN_PROGRESS then wait 2 seconds
-        // and check status again (by updating model data in state and thus
-        // re-triggering this watcher callback).
-        setTimeout(async () => {
+        // If model status is PENDING or IN_PROGRESS then check for status
+        // every 2 seconds until it's COMPLETED or ERROR.
+        let checkInterval = null;
+        checkInterval = setInterval(async () => {
           const model = await fetchModelByID(props.project, props.model.id);
-          softUpdateModels(model);
+          if (
+            MODEL_STATUS.PENDING !== model.status &&
+            MODEL_STATUS.IN_PROGRESS !== model.status
+          ) {
+            clearInterval(checkInterval);
+            setStatus(model.status);
+          }
         }, 2000);
       }
     });

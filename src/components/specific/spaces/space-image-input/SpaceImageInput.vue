@@ -1,7 +1,13 @@
 <template>
   <BIMDataButton ghost squared class="space-image-input" @click="selectImage">
     {{ $t("Spaces.SpaceActionMenu.changeImage") }}
-    <input hidden ref="fileInput" type="file" @change="uploadImage" />
+    <input
+      hidden
+      ref="fileInput"
+      type="file"
+      accept="image/*"
+      @change="uploadImage"
+    />
   </BIMDataButton>
 </template>
 
@@ -38,10 +44,9 @@ export default {
       autoProceed: true,
       allowMultipleUploads: false,
       restrictions: {
-        maxFileSize: process.env.VUE_APP_MAX_UPLOAD_SIZE,
+        maxFileSize: +process.env.VUE_APP_MAX_UPLOAD_SIZE,
         maxNumberOfFiles: 1,
-        minNumberOfFiles: 1,
-        allowedFileTypes: null
+        minNumberOfFiles: 1
       }
     });
     uppy.use(XHRUpload, {
@@ -88,7 +93,6 @@ export default {
         uppy.addFile({
           name: file.name,
           type: file.type,
-          size: file.size,
           data: file
         });
       }

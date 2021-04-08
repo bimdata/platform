@@ -136,6 +136,7 @@ export default {
   },
   ProjectBoard: {
     projectTabLabel: "Projet",
+    filesTabLabel: "GED",
     bcfTabLabel: "BCF",
     addIFC: "Ajouter un IFC",
     ProjectModelsOverview: {
@@ -231,5 +232,9 @@ export default {
   },
   BreadcrumbProjectSelector: {
     noProject: "< Aucun projet >"
+  },
+  FileUploadCard: {
+    cancelMessage: "Annulé",
+    errorMessage: "Le téléversement a échoué"
   }
 };

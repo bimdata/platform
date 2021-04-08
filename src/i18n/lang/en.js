@@ -133,6 +133,7 @@ export default {
   },
   ProjectBoard: {
     projectTabLabel: "Project",
+    filesTabLabel: "Files",
     bcfTabLabel: "BCF",
     addIFC: "Add an IFC",
     ProjectModelsOverview: {
@@ -228,5 +229,9 @@ export default {
   },
   BreadcrumbProjectSelector: {
     noProject: "< No project >"
+  },
+  FileUploadCard: {
+    cancelMessage: "Canceled",
+    errorMessage: "Upload failed"
   }
 };

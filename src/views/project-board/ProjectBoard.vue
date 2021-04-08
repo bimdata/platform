@@ -6,9 +6,9 @@
       </template>
       <template #center>
         <BIMDataTabs
-          width="200px"
+          width="300px"
           height="32px"
-          tabSize="50%"
+          tabSize="100px"
           selected="project"
           :tabs="tabs"
         />
@@ -27,6 +27,7 @@
           v-show="showFileUploader"
           class="project-board-view__container__block--upload"
           :project="project"
+          @file-uploaded="reloadModels"
           @close="closeFileUploader"
         />
       </transition>
@@ -47,10 +48,6 @@
         :project="project"
         :models="models"
       />
-      <ProjectFilesManager
-        class="project-board-view__container__block--files"
-        :project="project"
-      />
     </div>
   </div>
 </template>
@@ -66,7 +63,6 @@ import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectFilesManager from "@/components/specific/files/project-files-manager/ProjectFilesManager";
 import ProjectFileUploader from "@/components/specific/files/project-file-uploader/ProjectFileUploader";
 import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
 import ProjectModelsOverview from "@/components/specific/models/project-models-overview/ProjectModelsOverview";
@@ -79,7 +75,6 @@ export default {
     BIMDataTabs,
     ViewHeader,
     AppBreadcrumb,
-    ProjectFilesManager,
     ProjectFileUploader,
     ProjectModelsManager,
     ProjectModelsOverview,
@@ -92,15 +87,24 @@ export default {
       currentProjectUsers,
       currentProjectInvitations
     } = useProjects();
-    const { projectModels } = useModels();
+    const { projectModels, loadProjectModels } = useModels();
 
     const tabs = ref([]);
     watchEffect(() => {
       tabs.value = [
         { id: "project", label: t("ProjectBoard.projectTabLabel") },
+        { id: "files", label: t("ProjectBoard.filesTabLabel") },
         { id: "bcf", label: t("ProjectBoard.bcfTabLabel") }
       ];
     });
+
+    let reloadDebounce = null;
+    const reloadModels = () => {
+      clearTimeout(reloadDebounce);
+      reloadDebounce = setTimeout(async () => {
+        await loadProjectModels(currentProject.value);
+      }, 1000);
+    };
 
     const showFileUploader = ref(false);
     const closeFileUploader = () => {
@@ -120,6 +124,7 @@ export default {
       users: currentProjectUsers,
       // Methods
       closeFileUploader,
+      reloadModels,
       toggleFileUploader
     };
   }

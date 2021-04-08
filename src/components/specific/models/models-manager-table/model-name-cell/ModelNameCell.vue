@@ -124,7 +124,8 @@ export default {
       () => props.model,
       model => {
         modelName.value = model.name;
-      }
+      },
+      { immediate: true }
     );
 
     watch(
