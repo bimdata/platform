@@ -4,7 +4,7 @@
     :titleHeader="$t('ProjectBoard.ProjectUsersManager.title')"
   >
     <template #content>
-      <template v-if="users.length > 1">
+      <template v-if="users.length > 1 || invitations.length > 0">
         <BIMDataCard class="project-users-manager__manager">
           <template #left>
             <BIMDataButton ghost rounded icon @click="() => {}">
