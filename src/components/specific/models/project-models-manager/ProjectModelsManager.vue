@@ -185,9 +185,7 @@ export default {
     };
 
     const archiveModels = async models => {
-      for (const model of models) {
-        model.archived = true;
-      }
+      models = models.map(model => ({ ...model, archived: true }));
       await updateModels(props.project, models);
     };
 
