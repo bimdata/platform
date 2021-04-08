@@ -14,9 +14,22 @@
         />
       </template>
       <template #right>
-        <BIMDataButton color="primary" fill radius @click="toggleFileUploader">
-          <BIMDataIcon name="plus" size="xxxs" />
-          <span>{{ $t("ProjectBoard.addIFC") }}</span>
+        <BIMDataButton
+          width="120px"
+          :color="showFileUploader ? 'tertiary-darkest' : 'primary'"
+          fill
+          radius
+          @click="toggleFileUploader"
+        >
+          <BIMDataIcon
+            :name="showFileUploader ? 'close' : 'plus'"
+            size="xxxs"
+          />
+          <span>{{
+            showFileUploader
+              ? $t("ProjectBoard.closeFileUploader")
+              : $t("ProjectBoard.addIFC")
+          }}</span>
         </BIMDataButton>
       </template>
     </ViewHeader>
@@ -27,6 +40,7 @@
           v-show="showFileUploader"
           class="project-board-view__container__block--upload"
           :project="project"
+          :allowedFileTypes="['.ifc', '.ifczip']"
           @file-uploaded="reloadModels"
           @close="closeFileUploader"
         />

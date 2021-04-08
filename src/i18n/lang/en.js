@@ -136,6 +136,7 @@ export default {
     filesTabLabel: "Files",
     bcfTabLabel: "BCF",
     addIFC: "Add an IFC",
+    closeFileUploader: "Close",
     ProjectModelsOverview: {
       title: "Project Models Overview"
     },

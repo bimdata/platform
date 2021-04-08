@@ -38,7 +38,7 @@
             <BIMDataButton ghost squared @click="openUpdateForm">
               {{ $t("Spaces.SpaceActionMenu.rename") }}
             </BIMDataButton>
-            <SpaceImageInput :space="space" @success="closeMenu" />
+            <SpaceImageInput :space="space" @upload-completed="closeMenu" />
             <BIMDataButton ghost squared @click="removeImage">
               {{ $t("Spaces.SpaceActionMenu.removeImage") }}
             </BIMDataButton>

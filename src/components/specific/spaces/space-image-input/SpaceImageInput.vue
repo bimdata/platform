@@ -30,7 +30,7 @@ export default {
       required: true
     }
   },
-  emits: ["success", "error"],
+  emits: ["upload-completed", "upload-failed"],
   setup(props, { emit }) {
     const { accessToken } = useAuth();
     const { softUpdateSpace } = useSpaces();
@@ -61,8 +61,9 @@ export default {
     uppy.on("file-added", () => {
       loading.value = true;
     });
-    uppy.on("upload-error", (file, error) => {
-      emit("error", error);
+    uppy.on("upload-error", () => {
+      loading.value = false;
+      emit("upload-failed");
     });
     uppy.on(
       "complete",
@@ -77,7 +78,7 @@ export default {
       }) => {
         softUpdateSpace({ ...props.space, image });
         uppy.reset(); // reset Uppy instance
-        emit("success");
+        emit("upload-completed");
       }
     );
 

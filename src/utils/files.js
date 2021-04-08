@@ -1,3 +1,8 @@
+function fileExtension(fileName) {
+  const parts = fileName.split(".");
+  return parts.length > 1 ? parts[parts.length - 1] : "";
+}
+
 function formatBytes(bytes) {
   if (bytes / 1000000 >= 1) {
     return `${Number(bytes / 1000000).toFixed(2)} MB`;
@@ -8,4 +13,4 @@ function formatBytes(bytes) {
   return `${bytes} B`;
 }
 
-export { formatBytes };
+export { fileExtension, formatBytes };

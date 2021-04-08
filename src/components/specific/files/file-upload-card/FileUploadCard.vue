@@ -1,7 +1,7 @@
 <template>
   <div class="file-upload-card" :class="{ failed }">
     <div class="file-upload-card--left">
-      <FileIcon name="ifc" size="32" />
+      <FileIcon :name="fileExtension(file.name)" size="32" />
     </div>
     <div class="file-upload-card--center file-upload-card__info">
       <div class="file-upload-card__info__file-name">
@@ -58,7 +58,7 @@ import Uppy from "@uppy/core";
 import XHRUpload from "@uppy/xhr-upload";
 import { onMounted, reactive, ref } from "vue";
 import { useAuth } from "@/state/auth";
-import { formatBytes } from "@/utils/files";
+import { fileExtension, formatBytes } from "@/utils/files";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -82,7 +82,7 @@ export default {
       required: true
     }
   },
-  emits: ["cancel", "error", "success"],
+  emits: ["upload-completed", "upload-canceled", "upload-failed"],
   setup(props, { emit }) {
     const { accessToken } = useAuth();
 
@@ -115,12 +115,22 @@ export default {
     uppy.on("upload-error", () => {
       uploading.value = false;
       failed.value = true;
-      emit("error");
+      emit("upload-failed");
     });
-    uppy.on("complete", () => {
-      uploading.value = false;
-      emit("success");
-    });
+    uppy.on(
+      "complete",
+      ({
+        successful: [
+          {
+            response: { body: document }
+          }
+        ]
+      }) => {
+        uploading.value = false;
+        uppy.reset(); // reset Uppy instance
+        emit("upload-completed", document);
+      }
+    );
 
     const progress = reactive({
       percentage: 0,
@@ -144,7 +154,7 @@ export default {
       uppy.cancelAll();
       uploading.value = false;
       canceled.value = true;
-      emit("cancel");
+      emit("upload-canceled");
     };
 
     onMounted(() => {
@@ -163,6 +173,7 @@ export default {
       uploading,
       // Methods
       cancelUpload,
+      fileExtension,
       formatBytes
     };
   }

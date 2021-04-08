@@ -7,9 +7,9 @@
           :key="i"
           :project="project"
           :file="file"
-          @error="clean(i, 5000)"
-          @cancel="clean(i, 5000)"
-          @success="onSuccess(i)"
+          @upload-completed="onSuccess(i, $event)"
+          @upload-canceled="clean(i, 6000)"
+          @upload-failed="clean(i, 12000)"
         />
       </transition-group>
     </div>
@@ -48,6 +48,7 @@
           ref="fileInput"
           type="file"
           multiple
+          :accept="allowedFileTypes.join(',')"
           @change="uploadFiles"
         />
       </BIMDataButton>
@@ -57,6 +58,7 @@
 
 <script>
 import { ref } from "vue";
+import { fileExtension } from "@/utils/files";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -72,6 +74,14 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    allowedFileTypes: {
+      type: Array,
+      default: () => []
+    },
+    forbiddenFileTypes: {
+      type: Array,
+      default: () => []
     }
   },
   emits: ["close", "file-uploaded"],
@@ -92,16 +102,33 @@ export default {
         // Files from input
         files = event.target.files;
       }
-      filesToUpload.value = filesToUpload.value.concat(Array.from(files));
+      files = Array.from(files).filter(file => {
+        if (props.allowedFileTypes.length > 0) {
+          // Only keep allowed files
+          return (
+            props.allowedFileTypes.includes(file.type) ||
+            props.allowedFileTypes.includes("." + fileExtension(file.name))
+          );
+        }
+        if (props.forbiddenFileTypes.length > 0) {
+          // Discard forbidden files
+          return !(
+            props.forbiddenFileTypes.includes(file.type) ||
+            props.forbiddenFileTypes.includes("." + fileExtension(file.name))
+          );
+        }
+        return true;
+      });
+      filesToUpload.value = filesToUpload.value.concat(files);
     };
 
-    const onSuccess = index => {
-      clean(index, 2000);
-      emit("file-uploaded");
+    const onSuccess = (index, document) => {
+      clean(index, 3000);
+      emit("file-uploaded", document);
     };
 
-    const clean = (index, timeout = 100) => {
-      setTimeout(() => filesToUpload.value.splice(index, 1), timeout);
+    const clean = (index, delay = 100) => {
+      setTimeout(() => filesToUpload.value.splice(index, 1), delay);
     };
 
     const close = () => {
@@ -113,7 +140,7 @@ export default {
       // References
       fileInput,
       filesToUpload,
-      //Methods
+      // Methods
       clean,
       close,
       onSuccess,
