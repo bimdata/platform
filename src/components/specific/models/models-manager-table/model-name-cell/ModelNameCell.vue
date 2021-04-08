@@ -36,11 +36,7 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <BIMDataIcon
-          class="model-name-cell__content__icon"
-          name="ifc"
-          size="xs"
-        />
+        <img src="/static/ifc-logo.svg" />
         <span class="model-name-cell__content__text">
           {{ model.name }}
         </span>
