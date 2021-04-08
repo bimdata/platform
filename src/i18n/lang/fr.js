@@ -141,7 +141,7 @@ export default {
     addIFC: "Ajouter un IFC",
     closeFileUploader: "Fermer",
     ProjectModelsOverview: {
-      title: "Project Models Overview"
+      title: "Aperçu du projet"
     },
     ProjectModelsManager: {
       title: "Modèles du projet",
