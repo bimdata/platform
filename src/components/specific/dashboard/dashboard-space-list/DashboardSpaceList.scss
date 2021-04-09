@@ -1,13 +1,7 @@
 .dashboard-space-list {
-  &__title {
-    padding: $spacing-unit/2 $spacing-unit;
-    font-weight: bold;
-  }
+  padding: $spacing-unit * 2;
 
-  &__content {
-    display: flex;
-    gap: $spacing-unit * 2;
-    padding: $spacing-unit;
-    overflow-x: auto;
+  &__title {
+    font-weight: bold;
   }
 }

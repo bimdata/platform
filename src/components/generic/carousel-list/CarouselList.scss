@@ -1,0 +1,33 @@
+.carousel-list {
+  $button-size: 44px;
+
+  position: relative;
+  padding: $spacing-unit;
+
+  &__container {
+    overflow-x: hidden;
+
+    &__slider {
+      position: relative;
+      transition: transform 0.5s ease-out;
+    }
+  }
+
+  &__btn-previous,
+  &__btn-next {
+    position: absolute;
+    z-index: 2;
+    top: calc(50% - #{$button-size / 2});
+    width: $button-size;
+    height: $button-size;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &__btn-previous {
+    left: -$button-size / 2;
+  }
+
+  &__btn-next {
+    right: -$button-size / 2;
+  }
+}
