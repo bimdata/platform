@@ -3,24 +3,26 @@
     <div class="dashboard-space-list__title">
       {{ $t("DashboardSpaceList.title") }}
     </div>
-    <div class="dashboard-space-list__content">
+    <CarouselList>
       <SpaceCard
         v-for="space in displayedSpaces"
         :key="space.id"
         :space="space"
         :actionMenu="false"
       />
-    </div>
+    </CarouselList>
   </div>
 </template>
 
 <script>
 import { ref, watchEffect } from "vue";
 // Components
+import CarouselList from "@/components/generic/carousel-list/CarouselList";
 import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
 
 export default {
   components: {
+    CarouselList,
     SpaceCard
   },
   props: {
