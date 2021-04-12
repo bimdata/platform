@@ -6,12 +6,6 @@
   }
 
   &__body {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-unit * 2;
-    margin: $spacing-unit * 2 0;
-    padding: $spacing-unit;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-    background-color: $color-white;
+    margin: $spacing-unit * 3 0;
   }
 }
