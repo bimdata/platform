@@ -10,11 +10,11 @@
   color: $color-primary;
   transition-duration: 0.35s;
 
-  .action-loader {
+  &__loader {
     transform: scale(2);
   }
 
-  .creation-form {
+  &__form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -31,11 +31,15 @@
     }
   }
 
-  .action-btn {
+  &__btn {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    .plus-icon {
+    width: 100%;
+    height: 100%;
+
+    &__icon {
       display: flex;
       justify-content: center;
       align-items: center;

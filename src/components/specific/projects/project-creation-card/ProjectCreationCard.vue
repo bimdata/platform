@@ -1,16 +1,12 @@
 <template>
-  <div
-    class="project-creation-card"
-    v-click-away="closeCreationForm"
-    @click="openCreationForm"
-  >
+  <div class="project-creation-card" v-click-away="closeCreationForm">
     <transition name="fade" mode="out-in">
-      <div class="action-loader" v-if="loading">
+      <div v-if="loading" class="project-creation-card__loader">
         <BIMDataSpinner />
       </div>
 
-      <div class="creation-form" v-else-if="showCreationForm">
-        <div class="creation-form__title">
+      <div v-else-if="showCreationForm" class="project-creation-card__form">
+        <div class="project-creation-card__form__title">
           {{ $t("Projects.ProjectCreationCard.title") }}
           <BIMDataButton ghost rounded icon @click.stop="closeCreationForm">
             <BIMDataIcon name="close" size="xxxs" />
@@ -18,7 +14,7 @@
         </div>
         <BIMDataInput
           ref="nameInput"
-          class="creation-form__input"
+          class="project-creation-card__form__input"
           :placeholder="$t('Projects.ProjectCreationCard.inputName')"
           v-model="newProject.name"
           :error="error"
@@ -30,18 +26,18 @@
           fill
           radius
           color="primary"
-          class="creation-form__submit-btn"
+          class="project-creation-card__form__btn-submit"
           @click="createProject"
         >
           {{ $t("Projects.ProjectCreationCard.buttonCreate") }}
         </BIMDataButton>
       </div>
 
-      <div class="action-btn" v-else>
-        <div class="plus-icon">
+      <div v-else class="project-creation-card__btn" @click="openCreationForm">
+        <div class="project-creation-card__btn__icon">
           <BIMDataIcon name="plus" size="l" />
         </div>
-        <div>
+        <div class="project-creation-card__btn__text">
           {{ $t("Projects.ProjectCreationCard.text") }}
         </div>
       </div>
