@@ -43,7 +43,7 @@ const loadSpaceInvitations = async space => {
 
 const createSpace = async space => {
   const newSpace = await SpaceService.createSpace(space);
-  state.userSpaces = [newSpace].concat(state.userSpaces);
+  state.userSpaces = [{ ...newSpace, isAdmin: true }].concat(state.userSpaces);
   return newSpace;
 };
 
@@ -54,7 +54,9 @@ const updateSpace = async space => {
 };
 
 const softUpdateSpace = space => {
-  state.userSpaces = state.userSpaces.map(s => (s.id === space.id ? space : s));
+  state.userSpaces = state.userSpaces.map(s =>
+    s.id === space.id ? { ...s, ...space } : s
+  );
   return space;
 };
 

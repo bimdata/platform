@@ -6,12 +6,12 @@
   >
     {{ displayedText }}
     <div
-      v-if="displayedText !== text"
+      v-if="tooltip && displayedText !== text"
       v-show="showTooltip"
       class="text-box__tooltip"
       :class="[
         `text-box__tooltip--${tooltipPosition}`,
-        `text-box__tooltip--${color}`
+        `text-box__tooltip--${tooltipColor}`
       ]"
     >
       {{ text }}
@@ -41,12 +41,16 @@ export default {
       type: String,
       default: "..."
     },
+    tooltip: {
+      type: Boolean,
+      default: true
+    },
     tooltipPosition: {
       type: String,
       default: "bottom",
       validator: value => ["top", "right", "bottom", "left"].includes(value)
     },
-    color: {
+    tooltipColor: {
       type: String,
       default: "primary",
       validator: value => ["primary", "secondary", "tertiary"].includes(value)
