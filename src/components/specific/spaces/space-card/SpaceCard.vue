@@ -7,7 +7,7 @@
       <SpaceCardImage :space="space" />
     </template>
     <template #footer>
-      <div>{{ space.name }}</div>
+      <TextBox :text="space.name" :maxLength="30" />
       <div class="title-underline"></div>
       <div class="sub-title">
         <div class="sub-title__text">{{ $t("Spaces.projects") }}</div>
@@ -24,12 +24,14 @@ import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 import SpaceCardActionMenu from "@/components/specific/spaces/space-card-action-menu/SpaceCardActionMenu";
 import SpaceCardImage from "@/components/specific/spaces/space-card-image/SpaceCardImage";
 
 export default {
   components: {
     BIMDataCard,
+    TextBox,
     SpaceCardActionMenu,
     SpaceCardImage
   },

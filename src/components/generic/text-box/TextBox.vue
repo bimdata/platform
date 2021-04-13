@@ -1,0 +1,111 @@
+<template>
+  <div
+    class="text-box"
+    @mouseenter="showTooltip = true"
+    @mouseleave="showTooltip = false"
+  >
+    {{ displayedText }}
+    <div
+      v-if="displayedText !== text"
+      v-show="showTooltip"
+      class="text-box__tooltip"
+      :class="[
+        `text-box__tooltip--${tooltipPosition}`,
+        `text-box__tooltip--${color}`
+      ]"
+    >
+      {{ text }}
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, watch } from "vue";
+
+export default {
+  props: {
+    text: {
+      type: String,
+      required: true
+    },
+    maxLength: {
+      type: Number,
+      validator: value => value > 0
+    },
+    cutOn: {
+      type: String,
+      default: "middle",
+      validator: value => ["start", "middle", "end"].includes(value)
+    },
+    cutSymbol: {
+      type: String,
+      default: "..."
+    },
+    tooltipPosition: {
+      type: String,
+      default: "bottom",
+      validator: value => ["top", "right", "bottom", "left"].includes(value)
+    },
+    color: {
+      type: String,
+      default: "primary",
+      validator: value => ["primary", "secondary", "tertiary"].includes(value)
+    }
+  },
+  setup(props) {
+    const displayedText = ref("");
+    const showTooltip = ref(false);
+
+    watch(
+      [
+        () => props.text,
+        () => props.maxLength,
+        () => props.cutOn,
+        () => props.cutSymbol
+      ],
+      () => {
+        const l = props.text.length;
+        const c = props.cutSymbol.length;
+        const max = props.maxLength;
+        if (max && max < l && max > c) {
+          let cutIndex, head, tail;
+          switch (props.cutOn) {
+            case "start":
+              cutIndex = l - (max - c);
+              tail = props.text.slice(cutIndex);
+              displayedText.value = `${props.cutSymbol}${tail}`;
+              break;
+            case "middle":
+              cutIndex = (max - c) / 2;
+              head = props.text.slice(0, Math.ceil(cutIndex));
+              tail = props.text.slice(l - Math.floor(cutIndex));
+              displayedText.value = `${head}${props.cutSymbol}${tail}`;
+              break;
+            case "end":
+              cutIndex = max - c;
+              head = props.text.slice(0, cutIndex);
+              displayedText.value = `${head}${props.cutSymbol}`;
+              break;
+          }
+        } else {
+          displayedText.value = props.text;
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => props.tooltipPosition,
+      () => {},
+      { immediate: true }
+    );
+
+    return {
+      displayedText,
+      showTooltip
+    };
+  }
+};
+</script>
+
+<style scoped lang="scss" src="./TextBox.scss"></style>

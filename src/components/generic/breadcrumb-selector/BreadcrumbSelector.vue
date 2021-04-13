@@ -5,7 +5,7 @@
     v-click-away="closeList"
   >
     <div class="breadcrumb-selector__header" @click="toggleList">
-      {{ header }}
+      <TextBox :text="header" :maxLength="24" />
       <BIMDataIcon
         class="breadcrumb-selector__header__icon"
         name="chevron"
@@ -27,7 +27,7 @@
             :key="item[keyProp]"
             @click="() => selectItem(item)"
           >
-            {{ item[labelProp] }}
+            <TextBox :text="item[labelProp]" :maxLength="24" cutOn="end" />
           </div>
         </transition-group>
       </div>
@@ -40,11 +40,13 @@ import { ref, watchEffect } from "vue";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
     BIMDataIcon,
-    BIMDataSearch
+    BIMDataSearch,
+    TextBox
   },
   props: {
     header: {
