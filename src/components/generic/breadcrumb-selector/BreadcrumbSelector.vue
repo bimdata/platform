@@ -27,7 +27,12 @@
             :key="item[keyProp]"
             @click="() => selectItem(item)"
           >
-            <TextBox :text="item[labelProp]" :maxLength="24" cutOn="end" />
+            <TextBox
+              :text="item[labelProp]"
+              :maxLength="30"
+              cutOn="end"
+              :tooltip="false"
+            />
           </div>
         </transition-group>
       </div>
