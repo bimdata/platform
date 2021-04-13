@@ -17,7 +17,9 @@
         @close="nameEditMode[model.id] = false"
       />
     </template>
-    <template #cell-version>?</template>
+    <template #cell-version="{ row: { version } }">
+      {{ version ? version : "" }}
+    </template>
     <template #cell-creator="{ row: { creator } }">
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>

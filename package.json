@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@bimdata/design-system": "^0.3.2",
-    "@bimdata/typescript-fetch-api-client": "^6.9.0",
+    "@bimdata/typescript-fetch-api-client": "^6.10.0",
     "@uppy/core": "^1.15.0",
     "@uppy/xhr-upload": "^1.6.8",
     "detect-browser": "^5.2.0",
