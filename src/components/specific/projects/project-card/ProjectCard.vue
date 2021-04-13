@@ -19,7 +19,7 @@
           <ProjectCardModelPreview :project="project" />
         </template>
         <template #footer>
-          <div>{{ project.name }}</div>
+          <TextBox :text="project.name" :maxLength="30" />
         </template>
       </BIMDataCard>
     </template>
@@ -37,6 +37,7 @@ import { routeNames } from "@/router";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import FlipableCard from "@/components/generic/flipable-card/FlipableCard";
+import TextBox from "@/components/generic/text-box/TextBox";
 import ProjectCardActionBar from "@/components/specific/projects/project-card-action-bar/ProjectCardActionBar";
 import ProjectCardActionMenu from "@/components/specific/projects/project-card-action-menu/ProjectCardActionMenu";
 import ProjectCardModelPreview from "@/components/specific/projects/project-card-model-preview/ProjectCardModelPreview";
@@ -45,6 +46,7 @@ export default {
   components: {
     BIMDataCard,
     FlipableCard,
+    TextBox,
     ProjectCardActionBar,
     ProjectCardActionMenu,
     ProjectCardModelPreview
