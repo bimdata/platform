@@ -24,13 +24,14 @@
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>
     <template #cell-lastupdate="{ row: model }">
-      <ModelLastupdateCell :model="model" />
+      <ModelLastUpdateCell :model="model" />
     </template>
     <template #cell-status="{ row: model }">
       <ModelStatusBadge :project="project" :model="model" />
     </template>
     <template #cell-actions="{ row: model }">
       <ModelActionsCell
+        :project="project"
         :model="model"
         @archive-clicked="$emit('archive-clicked', $event)"
         @delete-clicked="$emit('delete-clicked', $event)"
@@ -48,14 +49,14 @@ import { useI18n } from "vue-i18n";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import ModelStatusBadge from "@/components/specific/models/model-status-badge/ModelStatusBadge";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell";
-import ModelLastupdateCell from "./model-lastupdate-cell/ModelLastupdateCell";
+import ModelLastUpdateCell from "./model-last-update-cell/ModelLastUpdateCell";
 import ModelNameCell from "./model-name-cell/ModelNameCell";
 
 export default {
   components: {
     GenericTable,
     ModelActionsCell,
-    ModelLastupdateCell,
+    ModelLastUpdateCell,
     ModelNameCell,
     ModelStatusBadge
   },

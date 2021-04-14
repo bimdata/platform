@@ -1,5 +1,5 @@
 <template>
-  <div class="model-lastupdate-cell">
+  <div class="model-last-update-cell">
     {{
       model.updatedAt
         .toISOString()

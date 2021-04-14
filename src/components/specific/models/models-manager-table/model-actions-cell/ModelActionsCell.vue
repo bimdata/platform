@@ -6,8 +6,8 @@
       outline
       radius
       icon
-      :disabled="true"
-      @click="() => {}"
+      :disabled="!isModelReady"
+      @click="goToModelViewer('2d')"
     >
       2D
     </BIMDataButton>
@@ -17,8 +17,8 @@
       outline
       radius
       icon
-      :disabled="true"
-      @click="() => {}"
+      :disabled="!isModelReady"
+      @click="goToModelViewer('3d')"
     >
       3D
     </BIMDataButton>
@@ -77,7 +77,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
+import { MODEL_STATUS } from "@/utils/models";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -88,6 +91,10 @@ export default {
     BIMDataIcon
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     model: {
       type: Object,
       required: true
@@ -100,12 +107,34 @@ export default {
     "delete-clicked"
   ],
   setup(props, { emit }) {
+    const router = useRouter();
+
     const showMenu = ref(false);
     const closeMenu = () => {
       showMenu.value = false;
     };
     const toggleMenu = () => {
       showMenu.value = !showMenu.value;
+    };
+
+    const isModelReady = computed(
+      () =>
+        MODEL_STATUS.PENDING !== props.model.status &&
+        MODEL_STATUS.IN_PROGRESS !== props.model.status
+    );
+
+    const goToModelViewer = window => {
+      router.push({
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: props.project.cloud.id,
+          projectID: props.project.id,
+          modelID: props.model.id
+        },
+        query: {
+          window
+        }
+      });
     };
 
     const onDownloadClick = () => {
@@ -129,9 +158,11 @@ export default {
 
     return {
       // References
+      isModelReady,
       showMenu,
       // Methods
       closeMenu,
+      goToModelViewer,
       onArchiveClick,
       onDeleteClick,
       onDownloadClick,
