@@ -57,8 +57,8 @@ const loadProjectInvitations = async project => {
 };
 
 const loadProjectModelPreviews = async project => {
-  const images = await ProjectService.fetchProjectModelPreviews(project);
-  return images;
+  const previews = await ProjectService.fetchProjectModelPreviews(project);
+  return previews;
 };
 
 const createProject = async (space, project) => {

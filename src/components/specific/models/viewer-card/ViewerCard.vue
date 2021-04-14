@@ -46,7 +46,9 @@ export default {
     const currentModel = ref();
     watch(
       () => props.models,
-      () => (currentModel.value = props.models[0]),
+      () => {
+        currentModel.value = props.models[0];
+      },
       { immediate: true }
     );
 

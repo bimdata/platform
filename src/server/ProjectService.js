@@ -47,11 +47,14 @@ class ProjectService {
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
-      const modelPreviews = models
+      const previews = models
         .filter(model => model.viewer360File)
-        .map(model => model.viewer360File);
-      this.cache.modelPreviews.set(cacheKey, modelPreviews);
-      return modelPreviews;
+        .map(model => ({
+          id: model.id,
+          url: model.viewer360File
+        }));
+      this.cache.modelPreviews.set(cacheKey, previews);
+      return previews;
     }
   }
 

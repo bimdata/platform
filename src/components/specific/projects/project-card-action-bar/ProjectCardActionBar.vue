@@ -5,7 +5,7 @@
       ghost
       rounded
       icon
-      @click.stop="() => {}"
+      @click.stop="$emit('open-viewer')"
     >
       <BIMDataIcon name="show" size="s" />
     </BIMDataButton>
@@ -39,7 +39,7 @@ export default {
       required: true
     }
   },
-  emits: ["open-menu"]
+  emits: ["open-viewer", "open-menu"]
 };
 </script>
 

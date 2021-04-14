@@ -10,13 +10,17 @@
           <ProjectCardActionBar
             v-if="actionMenu"
             :project="project"
+            @open-viewer="goToModelViewer"
             @open-menu="openMenu"
           />
         </template>
         <template #content>
           <div class="left-stripe"></div>
           <div class="status-badge">Status</div>
-          <ProjectCardModelPreview :project="project" />
+          <ProjectCardModelPreview
+            :previews="previews"
+            @preview-changed="onPreviewChange"
+          />
         </template>
         <template #footer>
           <TextBox :text="project.name" :maxLength="30" />
@@ -31,9 +35,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
+import { useProjects } from "@/state/projects";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import FlipableCard from "@/components/generic/flipable-card/FlipableCard";
@@ -63,10 +68,37 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const { loadProjectModelPreviews } = useProjects();
 
     const showMenu = ref(false);
     const openMenu = () => (showMenu.value = true);
     const closeMenu = () => (showMenu.value = false);
+
+    const previews = ref([]);
+    const currentPreview = ref();
+    watch(
+      () => props.project,
+      async () => {
+        previews.value = await loadProjectModelPreviews(props.project);
+        currentPreview.value = previews.value[0];
+      },
+      { immediate: true }
+    );
+
+    const onPreviewChange = preview => {
+      currentPreview.value = preview;
+    };
+
+    const goToModelViewer = () => {
+      router.push({
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: props.project.cloud.id,
+          projectID: props.project.id,
+          modelID: currentPreview.value.id
+        }
+      });
+    };
 
     const goToProjectBoard = () => {
       router.push({
@@ -80,10 +112,14 @@ export default {
 
     return {
       // References
+      currentPreview,
+      previews,
       showMenu,
       // Methods
       closeMenu,
+      goToModelViewer,
       goToProjectBoard,
+      onPreviewChange,
       openMenu
     };
   }

@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { ref, watch, watchEffect } from "vue";
+import { ref, watch } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -80,11 +80,11 @@ export default {
       if (container.value && viewport.value) {
         const c = container.value.getBoundingClientRect();
         const v = viewport.value.getBoundingClientRect();
-        let index = Math.abs(
+        let i = Math.abs(
           Math.ceil(nbSlices * (1 - (event.clientX - c.x) / c.width))
         );
-        index = Math.min(index, nbSlices);
-        translation.value = (index - 1) * v.width;
+        i = Math.min(i, nbSlices);
+        translation.value = (i - 1) * v.width;
       }
     };
 
@@ -92,10 +92,6 @@ export default {
     const image = ref(null);
     const index = ref(0);
 
-    watch(index, i => {
-      image.value = images.value[i];
-      emit("model-changed", props.models[i]);
-    });
     const previousImage = () => {
       if (index.value > 0) index.value--;
     };
@@ -103,16 +99,23 @@ export default {
       if (index.value < images.value.length - 1) index.value++;
     };
 
-    watchEffect(() => {
-      images.value = props.models.map((model, i) => ({
-        index: i + 1,
-        name: model.name,
-        url: model.viewer360File
-      }));
-    });
-    watchEffect(
-      () => (image.value = images.value.length > 0 ? images.value[0] : null)
+    watch(
+      () => props.models,
+      () => {
+        images.value = props.models.map((model, i) => ({
+          index: i + 1,
+          name: model.name,
+          url: model.viewer360File
+        }));
+        image.value = images.value.length > 0 ? images.value[0] : null;
+        index.value = 0;
+      },
+      { immediate: true }
     );
+    watch(index, i => {
+      image.value = images.value[i] || null;
+      emit("model-changed", props.models[i]);
+    });
 
     return {
       // References
