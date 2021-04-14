@@ -17,7 +17,6 @@ const createViewResolver = resolve => {
     loading.value = true;
     await resolve(route);
     loading.value = false;
-    return;
   };
 };
 
@@ -47,48 +46,58 @@ const userProjectsResolver = createViewResolver(async () => {
 });
 
 const spaceBoardResolver = createViewResolver(async route => {
-  const {
-    currentSpace,
-    loadUserSpaces,
-    loadSpaceUsers,
-    loadSpaceInvitations,
-    selectSpace
-  } = useSpaces();
-  const { loadUserProjects, loadSpaceProjects } = useProjects();
+  const spaces = useSpaces();
+  const projects = useProjects();
 
-  await loadUserSpaces();
-  await loadUserProjects();
-  await selectSpace(+route.params.spaceID);
-  loadSpaceProjects(currentSpace.value);
-  if (currentSpace.value.isAdmin) {
-    await loadSpaceUsers(currentSpace.value);
-    await loadSpaceInvitations(currentSpace.value);
+  await spaces.loadUserSpaces();
+  await projects.loadUserProjects();
+
+  spaces.selectSpace(+route.params.spaceID);
+  projects.loadSpaceProjects(spaces.currentSpace.value);
+
+  if (spaces.currentSpace.value.isAdmin) {
+    await spaces.loadSpaceUsers(spaces.currentSpace.value);
+    await spaces.loadSpaceInvitations(spaces.currentSpace.value);
   }
   return;
 });
 
 const projectBoardResolver = createViewResolver(async route => {
-  const { currentSpace, loadUserSpaces, selectSpace } = useSpaces();
-  const {
-    currentProject,
-    loadUserProjects,
-    loadSpaceProjects,
-    loadProjectUsers,
-    loadProjectInvitations,
-    selectProject
-  } = useProjects();
-  const { loadProjectModels } = useModels();
+  const spaces = useSpaces();
+  const projects = useProjects();
+  const models = useModels();
 
-  await loadUserSpaces();
-  await loadUserProjects();
-  await selectSpace(+route.params.spaceID);
-  loadSpaceProjects(currentSpace.value);
-  await selectProject(+route.params.projectID);
-  if (currentProject.value.isAdmin) {
-    await loadProjectUsers(currentProject.value);
-    await loadProjectInvitations(currentProject.value);
+  await spaces.loadUserSpaces();
+  await projects.loadUserProjects();
+
+  spaces.selectSpace(+route.params.spaceID);
+  projects.loadSpaceProjects(spaces.currentSpace.value);
+
+  projects.selectProject(+route.params.projectID);
+  await models.loadProjectModels(projects.currentProject.value);
+
+  if (projects.currentProject.value.isAdmin) {
+    await projects.loadProjectUsers(projects.currentProject.value);
+    await projects.loadProjectInvitations(projects.currentProject.value);
   }
-  await loadProjectModels(currentProject.value);
+  return;
+});
+
+const modelViewerResolver = createViewResolver(async route => {
+  const spaces = useSpaces();
+  const projects = useProjects();
+  const models = useModels();
+
+  await spaces.loadUserSpaces();
+  await projects.loadUserProjects();
+
+  spaces.selectSpace(+route.params.spaceID);
+  projects.loadSpaceProjects(spaces.currentSpace.value);
+
+  projects.selectProject(+route.params.projectID);
+  await models.loadProjectModels(projects.currentProject.value);
+
+  // models.selectModel(+route.params.modelID); ???
   return;
 });
 
@@ -98,5 +107,6 @@ export {
   userSpacesResolver,
   userProjectsResolver,
   spaceBoardResolver,
-  projectBoardResolver
+  projectBoardResolver,
+  modelViewerResolver
 };

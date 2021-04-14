@@ -2,20 +2,22 @@ import { createRouter, createWebHistory } from "vue-router";
 import { authGuard } from "./guards";
 import {
   dashboardResolver,
+  modelViewerResolver,
   projectBoardResolver,
-  userProjectsResolver,
   rootResolver,
   spaceBoardResolver,
+  userProjectsResolver,
   userSpacesResolver
 } from "./resolvers";
 // Components
 import Layout from "@/Layout";
 import Dashboard from "@/views/dashboard/Dashboard";
+import ModelViewer from "@/views/model-viewer/ModelViewer";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
 import ProjectBoard from "@/views/project-board/ProjectBoard";
-import UserProjects from "@/views/user-projects/UserProjects";
 import SpaceBoard from "@/views/space-board/SpaceBoard";
+import UserProjects from "@/views/user-projects/UserProjects";
 import UserSpaces from "@/views/user-spaces/UserSpaces";
 
 const routeNames = Object.freeze({
@@ -26,7 +28,8 @@ const routeNames = Object.freeze({
   userSpaces: "user-spaces",
   spaceBoard: "space-board",
   userProjects: "user-projects",
-  projectBoard: "project-board"
+  projectBoard: "project-board",
+  modelViewer: "model-viewer"
 });
 
 const routes = [
@@ -80,6 +83,15 @@ const routes = [
         meta: {
           resolver: projectBoardResolver,
           breadcrumb: "BreadcrumbProjectSelector"
+        }
+      },
+      {
+        path:
+          "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/viewer/:modelID(\\d+)",
+        name: routeNames.modelViewer,
+        component: ModelViewer,
+        meta: {
+          resolver: modelViewerResolver
         }
       }
     ]

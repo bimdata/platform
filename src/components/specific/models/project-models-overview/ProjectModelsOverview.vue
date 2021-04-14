@@ -8,7 +8,7 @@
         <ViewerCard
           :project="project"
           :models="models"
-          @model-change="onModelChange"
+          @model-changed="onModelChange"
         />
         <ModelLocation :project="project" :model="displayedModel" />
       </template>

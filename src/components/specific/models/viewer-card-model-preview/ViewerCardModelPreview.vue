@@ -69,7 +69,7 @@ export default {
       required: true
     }
   },
-  emits: ["model-change"],
+  emits: ["model-changed"],
   setup(props, { emit }) {
     const nbSlices = 15;
     const container = ref(null);
@@ -94,7 +94,7 @@ export default {
 
     watch(index, i => {
       image.value = images.value[i];
-      emit("model-change", props.models[i]);
+      emit("model-changed", props.models[i]);
     });
     const previousImage = () => {
       if (index.value > 0) index.value--;

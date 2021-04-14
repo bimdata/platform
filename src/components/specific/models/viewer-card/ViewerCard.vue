@@ -1,21 +1,21 @@
 <template>
   <BIMDataCard class="viewer-card">
     <template #left>
-      <BIMDataButton color="primary" fill radius @click="goToViewer">
+      <BIMDataButton color="primary" fill radius @click="goToModelViewer">
         <BIMDataIcon name="show" size="xs" />
         <span>{{ $t("ViewerCard.buttonOpen") }}</span>
       </BIMDataButton>
     </template>
     <template #content>
-      <ViewerCardModelPreview
-        :models="models"
-        @model-change="$emit('model-change', $event)"
-      />
+      <ViewerCardModelPreview :models="models" @model-changed="onModelChange" />
     </template>
   </BIMDataCard>
 </template>
 
 <script>
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
@@ -39,12 +39,36 @@ export default {
       required: true
     }
   },
-  emits: ["model-change"],
-  setup() {
-    const goToViewer = () => {};
+  emits: ["model-changed"],
+  setup(props, { emit }) {
+    const router = useRouter();
+
+    const currentModel = ref();
+    watch(
+      () => props.models,
+      () => (currentModel.value = props.models[0]),
+      { immediate: true }
+    );
+
+    const onModelChange = model => {
+      currentModel.value = model;
+      emit("model-changed", model);
+    };
+
+    const goToModelViewer = () => {
+      router.push({
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: props.project.cloud.id,
+          projectID: props.project.id,
+          modelID: currentModel.value.id
+        }
+      });
+    };
 
     return {
-      goToViewer
+      goToModelViewer,
+      onModelChange
     };
   }
 };
