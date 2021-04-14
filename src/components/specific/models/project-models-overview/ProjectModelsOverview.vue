@@ -13,7 +13,9 @@
         <ModelLocation :project="project" :model="displayedModel" />
       </template>
       <template v-else>
-        <EmptyModelsOverview :project="project" />
+        <EmptyModelsOverview
+          @open-file-uploader="$emit('open-file-uploader')"
+        />
       </template>
     </template>
   </BIMDataCard>
@@ -44,6 +46,7 @@ export default {
       required: true
     }
   },
+  emits: ["open-file-uploader"],
   setup(props) {
     const displayedModel = ref(null);
 

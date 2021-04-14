@@ -9,7 +9,12 @@
       {{ $t("ProjectBoard.ProjectModelsManager.onboardingText") }}
     </div>
     <div class="empty-models-overview__actions">
-      <BIMDataButton color="primary" fill radius>
+      <BIMDataButton
+        color="primary"
+        fill
+        radius
+        @click="$emit('open-file-uploader')"
+      >
         {{ $t("ProjectBoard.ProjectModelsManager.buttonUpload") }}
       </BIMDataButton>
     </div>
@@ -24,15 +29,7 @@ export default {
   components: {
     BIMDataButton
   },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    }
-  },
-  setup() {
-    // TODO
-  }
+  emits: ["open-file-uploader"]
 };
 </script>
 

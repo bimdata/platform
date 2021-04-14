@@ -49,6 +49,7 @@
         class="project-board-view__container__block--overview"
         :project="project"
         :models="models"
+        @open-file-uploader="openFileUploader"
       />
       <ProjectUsersManager
         class="project-board-view__container__block--users"
@@ -121,6 +122,9 @@ export default {
     };
 
     const showFileUploader = ref(false);
+    const openFileUploader = () => {
+      showFileUploader.value = true;
+    };
     const closeFileUploader = () => {
       showFileUploader.value = false;
     };
@@ -138,6 +142,7 @@ export default {
       users: currentProjectUsers,
       // Methods
       closeFileUploader,
+      openFileUploader,
       reloadModels,
       toggleFileUploader
     };
