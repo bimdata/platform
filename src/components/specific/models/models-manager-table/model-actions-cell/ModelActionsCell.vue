@@ -129,7 +129,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelID: props.model.id
+          modelIDs: props.model.id
         },
         query: {
           window

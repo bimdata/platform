@@ -3,6 +3,6 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - #{$spacing-unit});
-  margin-top: $spacing-unit;
+  height: 100%;
+  padding-top: $spacing-unit;
 }

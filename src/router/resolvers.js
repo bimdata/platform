@@ -8,7 +8,6 @@ const rootResolver = async () => {
   const { loadUser } = useUser();
 
   await loadUser();
-  return;
 };
 
 const createViewResolver = resolve => {
@@ -26,7 +25,6 @@ const dashboardResolver = createViewResolver(async () => {
 
   await loadUserSpaces();
   await loadUserProjects();
-  return;
 });
 
 const userSpacesResolver = createViewResolver(async () => {
@@ -35,14 +33,12 @@ const userSpacesResolver = createViewResolver(async () => {
 
   await loadUserSpaces();
   await loadUserProjects();
-  return;
 });
 
 const userProjectsResolver = createViewResolver(async () => {
   const { loadUserProjects } = useProjects();
 
   await loadUserProjects();
-  return;
 });
 
 const spaceBoardResolver = createViewResolver(async route => {
@@ -59,7 +55,6 @@ const spaceBoardResolver = createViewResolver(async route => {
     await spaces.loadSpaceUsers(spaces.currentSpace.value);
     await spaces.loadSpaceInvitations(spaces.currentSpace.value);
   }
-  return;
 });
 
 const projectBoardResolver = createViewResolver(async route => {
@@ -80,7 +75,6 @@ const projectBoardResolver = createViewResolver(async route => {
     await projects.loadProjectUsers(projects.currentProject.value);
     await projects.loadProjectInvitations(projects.currentProject.value);
   }
-  return;
 });
 
 const modelViewerResolver = createViewResolver(async route => {
@@ -96,9 +90,6 @@ const modelViewerResolver = createViewResolver(async route => {
 
   projects.selectProject(+route.params.projectID);
   await models.loadProjectModels(projects.currentProject.value);
-
-  // models.selectModel(+route.params.modelID); ???
-  return;
 });
 
 export {

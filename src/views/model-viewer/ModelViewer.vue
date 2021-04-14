@@ -35,7 +35,7 @@ export default {
     const apiUrl = process.env.VUE_APP_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
-    const modelID = +route.params.modelID;
+    const modelIDs = route.params.modelIDs.split(",").map(id => +id);
     const window = route.query.window || "3d";
 
     // Initial plugins config
@@ -79,7 +79,7 @@ export default {
           accessToken: accessToken.value,
           cloudId: spaceID,
           projectId: projectID,
-          ifcIds: [modelID]
+          ifcIds: modelIDs
         },
         plugins: pluginsConfig,
         locale: locale.value

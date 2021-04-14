@@ -95,7 +95,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelID: currentPreview.value.id
+          modelIDs: currentPreview.value.id
         }
       });
     };
