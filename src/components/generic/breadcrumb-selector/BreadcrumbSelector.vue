@@ -29,7 +29,7 @@
           >
             <TextBox
               :text="item[labelProp]"
-              :maxLength="30"
+              :maxLength="24"
               cutOn="end"
               :tooltip="false"
             />

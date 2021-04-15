@@ -24,18 +24,18 @@
         z-index: 0;
       }
     }
+  }
 
-    &.flipped {
-      transform: rotateY(180deg);
+  .card.flipped {
+    transform: rotateY(180deg);
 
-      &__face {
-        &--front {
-          z-index: 0;
-        }
+    .card__face {
+      &--front {
+        z-index: 0;
+      }
 
-        &--back {
-          z-index: 1;
-        }
+      &--back {
+        z-index: 1;
       }
     }
   }

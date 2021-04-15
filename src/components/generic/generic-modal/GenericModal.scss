@@ -23,8 +23,8 @@
 
     &__btn-close {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: $spacing-unit/2;
+      right: $spacing-unit/2;
       color: $color-tertiary-dark;
     }
 
