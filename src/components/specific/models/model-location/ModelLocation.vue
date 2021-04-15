@@ -42,7 +42,7 @@
       <template v-else>
         <div class="model-location__empty">
           <BIMDataIcon name="location" size="xxl" />
-          <div>{{ $t("ModelLocation.noLocationMessage") }}</div>
+          <div>{{ $t("ModelLocation.emptyLocationMessage") }}</div>
           <BIMDataButton
             v-if="project.isAdmin"
             color="primary"
@@ -50,7 +50,7 @@
             radius
             @click="openLocationForm"
           >
-            {{ $t("ModelLocation.buttonAddLocation") }}
+            {{ $t("ModelLocation.addLocationButtonText") }}
           </BIMDataButton>
         </div>
       </template>

@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard
     class="project-models-manager"
-    :titleHeader="$t('ProjectBoard.ProjectModelsManager.title')"
+    :titleHeader="$t('ProjectModelsManager.title')"
   >
     <template #content>
       <BIMDataTabs
@@ -95,19 +95,19 @@ export default {
       tabs.value = [
         {
           id: "ifc",
-          label: t("ProjectBoard.ProjectModelsManager.tabs.ifc")
+          label: t("ProjectModelsManager.tabs.ifc")
         },
         {
           id: "split",
-          label: t("ProjectBoard.ProjectModelsManager.tabs.split")
+          label: t("ProjectModelsManager.tabs.split")
         },
         {
           id: "merge",
-          label: t("ProjectBoard.ProjectModelsManager.tabs.merge")
+          label: t("ProjectModelsManager.tabs.merge")
         },
         {
           id: "archive",
-          label: t("ProjectBoard.ProjectModelsManager.tabs.archive")
+          label: t("ProjectModelsManager.tabs.archive")
         }
       ];
     });

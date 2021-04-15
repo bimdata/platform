@@ -1,6 +1,6 @@
 <template>
   <BIMDataButton ghost squared class="space-image-input" @click="selectImage">
-    {{ $t("Spaces.SpaceActionMenu.changeImage") }}
+    {{ $t("SpaceImageInput.changeImageButtonText") }}
     <input
       hidden
       ref="fileInput"

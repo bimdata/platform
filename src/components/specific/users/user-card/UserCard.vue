@@ -23,7 +23,7 @@
         <div class="user-card__content__info">
           <div class="user-card__content__info__name">
             {{ `${firstName} ${lastName}` }}
-            {{ user.isSelf ? `(${$t("User.self")})` : "" }}
+            {{ user.isSelf ? `(${$t("UserCard.self")})` : "" }}
             <UserRoleBadge :role="role" />
           </div>
           <div class="user-card__content__info__email">

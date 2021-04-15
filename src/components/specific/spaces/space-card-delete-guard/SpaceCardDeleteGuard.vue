@@ -1,7 +1,7 @@
 <template>
   <div class="space-card-delete-guard">
     <div class="space-card-delete-guard__title">
-      {{ $t("Spaces.SpaceDeleteGuard.title") }}
+      {{ $t("SpaceCardDeleteGuard.title") }}
     </div>
     <BIMDataButton
       ghost
@@ -13,7 +13,7 @@
       <BIMDataIcon name="close" size="xxxs" />
     </BIMDataButton>
     <div class="space-card-delete-guard__message">
-      {{ $t("Spaces.SpaceDeleteGuard.message") }}
+      {{ $t("SpaceCardDeleteGuard.message") }}
     </div>
     <BIMDataButton
       fill
@@ -22,7 +22,7 @@
       class="space-card-delete-guard__submit-btn"
       @click="removeSpace"
     >
-      {{ $t("Spaces.SpaceDeleteGuard.buttonDelete") }}
+      {{ $t("SpaceCardDeleteGuard.deleteButtonText") }}
     </BIMDataButton>
   </div>
 </template>

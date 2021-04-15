@@ -1,214 +1,166 @@
 export default {
-  Commons: {
-    cancel: "Annuler",
-    close: "Fermer",
-    no: "Non",
-    yes: "Oui",
-    at: "à"
-  },
-  oidc: {
-    callbackErrorMessage:
-      "Une erreur s'est produite lors de l'authentification...",
-    tryAgain: "Réessayer"
-  },
-  AppHeaderMenu: {
-    settings: "Paramètres du compte",
-    connect: "BIMData Connect",
-    documentation: "Documentation",
-    marketplace: "Marketplace",
-    selectLanguage: "Choix de la langue",
-    logout: "Se Déconnecter"
-  },
-  Breadcrumb: {
-    back: "Retour",
-    search: "Rechercher"
-  },
+  // ==========
+  // Views
   Dashboard: {
-    welcomeTitle: "Dashboard",
-    welcomeMessage: "Bonjour {name}, content de vous revoir !",
-    activeSpaces: "Espaces",
-    viewSpaces: "Mes espaces",
-    activeProjects: "Projets",
-    viewProjects: "Mes projets",
-    security: "Security"
+    spacesButtonTitle: "Espaces",
+    spacesButtonText: "Mes espaces",
+    projectsButtonTitle: "Projets",
+    projectsButtonText: "Mes projets"
+  },
+  OidcCallbackError: {
+    message: "Une erreur s'est produite lors de l'authentification...",
+    tryAgainButtonText: "Réessayer"
+  },
+  ProjectBoard: {
+    tabs: {
+      project: "Projet",
+      files: "GED",
+      bcf: "BCF"
+    },
+    openFileUploadButtonText: "Ajouter un IFC",
+    closeFileUploadButtonText: "Fermer"
+  },
+  SpaceBoard: {
+    searchInputPlaceholder: "Rechercher un projet"
+  },
+  UserProjects: {
+    searchInputPlaceholder: "Rechercher un projet"
+  },
+  UserSpaces: {
+    searchInputPlaceholder: "Rechercher un espace",
+    createButtonText: "Créer un espace"
+  },
+
+  // ==========
+  // Generic components
+  BreadcrumbSelector: {
+    inputPlaceholder: "Rechercher"
+  },
+  GenericTable: {
+    pagination: "{start} - {end} sur {total}"
+  },
+  GoBackButton: {
+    text: "Retour"
   },
   LanguageSelector: {
     title: "Choix de la langue"
   },
-  Spaces: {
-    searchSpaces: "Rechercher un espace",
-    sortSpaces: "",
-    createSpace: "Créer un espace",
-    projects: "PROJETS",
-    SpaceCreationCard: {
-      title: "Nouvel espace",
-      inputName: "Nom",
-      buttonCreate: "Créer",
-      errorMessage: "Vous devez donner un nom à l'espace !"
-    },
-    SpaceActionMenu: {
-      rename: "Renommer",
-      changeImage: "Changer l'image",
-      removeImage: "Supprimer l'image",
-      leave: "Quitter cet espace",
-      delete: "Supprimer cet espace"
-    },
-    SpaceRenameForm: {
-      title: "Renommer l'espace",
-      inputName: "Nom",
-      buttonRename: "Renommer",
-      errorMessage: "Ce nom d'espace n'est pas valide."
-    },
-    SpaceDeleteGuard: {
-      title: "Supprimer l'espace",
-      message:
-        "Êtes vous sûr de vouloir supprimer (définitivement) cet espace ?",
-      buttonDelete: "Supprimer"
-    }
+
+  // ==========
+  // Specific components
+  AppHeaderMenu: {
+    entrySettings: "Paramètres du compte",
+    entryConnect: "BIMData Connect",
+    entryDocumentation: "Documentation",
+    entryMarketplace: "Marketplace",
+    entryLanguage: "Choix de la langue",
+    logoutButtonText: "Se Déconnecter"
   },
-  DashboardSpaceList: {
-    title: "Espaces récents"
+
+  BreadcrumbProjectSelector: {
+    placeholder: "< Aucun projet >"
   },
+
+  DashboardInfoTile: {
+    title: "Securité"
+  },
+
   DashboardProjectList: {
     title: "Projets récents"
   },
-  Projects: {
-    searchProjects: "Rechercher un projet",
-    ProjectCreationCard: {
-      text: "Créer un nouveau projet",
-      title: "Nouveau projet",
-      inputName: "Nom",
-      buttonCreate: "Créer",
-      errorMessage: "Vous devez donner un nom au projet !"
-    },
-    ProjectActionMenu: {
-      rename: "Renommer",
-      delete: "Supprimer"
-    },
-    ProjectUpdateForm: {
-      title: "Renommer le projet",
-      inputName: "Nom",
-      buttonRename: "Renommer",
-      errorMessage: "Ce nom de projet n'est pas valide."
-    },
-    ProjectDeleteGuard: {
-      title: "Supprimer le projet",
-      message:
-        "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
-      buttonDelete: "Supprimer"
-    }
+
+  DashboardSpaceList: {
+    title: "Espaces récents"
   },
-  SpaceUsersManager: {
-    adminTabLabel: "Administrateurs",
-    userTabLabel: "Utilisateurs",
-    title: "Gestion administrateur espace",
-    searchUsers: "Rechercher un utilisateur",
-    addUserButton: "Ajouter un utilisateur"
+
+  DashboardWelcomeTile: {
+    title: "Dashboard",
+    message: "Bonjour {name}, content de vous revoir !"
   },
+
+  EmptyFilesManager: {
+    onboardingText: "Téléverser votre premier fichier",
+    uploadFileButtonText: "Téléverser un fichier",
+    createFolderButtonText: "Créer un dossier"
+  },
+
+  EmptyModelsOverview: {
+    onboardingText: "Téléverser votre premier IFC",
+    uploadButtonText: "Téléversement"
+  },
+
+  EmptyUsersManager: {
+    onboardingText: "Inviter votre premier collaborateur",
+    inviteButtonText: "Invitation"
+  },
+
+  FileUploadCard: {
+    cancelMessage: "Annulé",
+    errorMessage: "Le téléversement a échoué"
+  },
+
+  InvitationCard: {
+    pendingMessage: "Invité - Sans réponse.",
+    resendLinkText: "Renvoyer l'invitation ?"
+  },
+
   InvitationForm: {
-    inputEmail: "Email de l'utilisateur",
-    errorMessage: "Email invalide",
-    inputRole: "Rôle",
+    emailInputPlaceholder: "Email de l'utilisateur",
+    emailInputErrorMessage: "Email invalide",
+    roleInputLabel: "Rôle",
     roles: {
       admin: "Administrateur",
       user: "Utilisateur",
       guest: "Invité"
     },
-    buttonCancel: "Annuler",
-    buttonSubmit: "Inviter"
+    cancelButtonText: "Annuler",
+    submitButtonText: "Inviter"
   },
-  User: {
-    self: "vous",
-    admin: "Admin",
-    user: "User",
-    guest: "Guest",
-    UserDeleteGuard: {
-      message: {
-        space: "Supprimer {name} de cet espace ?",
-        project: "Supprimer {name} de ce projet ?"
-      },
-      buttonDelete: "Supprimer"
-    }
+
+  ModelActionsCell: {
+    addTagsButtonText: "Ajouter des tags",
+    renameButtonText: "Renommer",
+    archiveButtonText: "Archiver",
+    deleteButtonText: "Supprimer"
   },
-  Invitation: {
-    pending: "Invité - Sans réponse.",
-    sendAgain: "Renvoyer l'invitation ?"
+
+  ModelLastUpdateCell: {
+    at: "à"
   },
-  ProjectBoard: {
-    projectTabLabel: "Projet",
-    filesTabLabel: "GED",
-    bcfTabLabel: "BCF",
-    addIFC: "Ajouter un IFC",
-    closeFileUploader: "Fermer",
-    ProjectModelsOverview: {
-      title: "Aperçu du projet"
-    },
-    ProjectModelsManager: {
-      title: "Modèles du projet",
-      onboardingText: "Téléverser votre premier IFC",
-      buttonUpload: "Téléversement",
-      tabs: {
-        ifc: "IFC",
-        split: "Split / Export",
-        merge: "Merge",
-        archive: "Archives"
-      }
-    },
-    ProjectUsersManager: {
-      title: "Utilisateurs",
-      onboardingText: "Inviter votre premier collaborateur",
-      buttonInvite: "Invitation",
-      searchUsers: "Rechercher un utilisateur"
-    },
-    ProjectFilesManager: {
-      title: "Documents du projet",
-      onboardingText: "Téléverser votre premier fichier",
-      buttonUploadFile: "Téléverser un fichier",
-      buttonCreateFolder: "Créer un dossier"
-    }
-  },
-  ViewerCard: {
-    buttonOpen: "Ouvrir"
-  },
-  ViewerCardModelPreview: {
-    noPreview: "Aucune prévisualisation"
-  },
+
   ModelLocation: {
-    noLocationMessage: "Aucune données de localisation disponible",
-    buttonAddLocation: "Renseigner"
+    emptyLocationMessage: "Aucune données de localisation disponible",
+    addLocationButtonText: "Renseigner"
   },
+
   ModelLocationForm: {
-    inputAddress: "Entrer une adresse",
-    buttonCheck: "Vérifier",
-    buttonSubmit: "Valider",
-    buttonCancel: "Changer"
+    addressInputPlaceholder: "Entrer une adresse",
+    checkButtonText: "Vérifier",
+    submitButtonText: "Valider",
+    cancelButtonText: "Changer"
   },
-  GenericTable: {
-    pagination: "{start} - {end} sur {total}"
-  },
-  ModelsActionBar: {
-    delete: "Supprimer",
-    archive: "Archiver",
-    download: "Télécharger",
-    merge: "Fusionner"
-  },
-  ModelActionMenu: {
-    buttonAddTags: "Ajouter des tags",
-    buttonRename: "Renommer",
-    buttonArchive: "Archiver",
-    buttonDelete: "Supprimer"
-  },
-  ProjectFileUploader: {
-    uploadAreaText: "Cliquer/Glisser vos fichiers ici",
-    separatorText: "ou",
-    buttonUpload: "Selectionner un fichier"
-  },
+
   ModelNameCell: {
     inputErrorMessage: "Nom de modèle invalide",
-    buttonSubmit: "Valider"
+    submitButtonText: "Valider"
   },
+
+  ModelsActionBar: {
+    deleteButtonText: "Supprimer",
+    archiveButtonText: "Archiver",
+    downloadButtonText: "Télécharger",
+    mergeButtonText: "Fusionner"
+  },
+
+  ModelsDeleteModal: {
+    title: "Attention !",
+    message: "Cette action est irresversible. Cela supprimera :",
+    cancelButtonText: "Annuler",
+    deleteButtonText: "Supprimer"
+  },
+
   ModelsManagerTable: {
-    tablePlaceholder: "Aucun modèle",
+    emptyTablePlaceholder: "Aucun modèle",
     header: {
       id: "ID",
       name: "Nom",
@@ -218,24 +170,136 @@ export default {
       status: "Statut"
     }
   },
-  ModelsDeleteModal: {
-    title: "Attention !",
-    message: "Cette action est irresversible. Cela supprimera :",
-    buttonCancel: "Annuler",
-    buttonDelete: "Supprimer",
-    loadingMessage: "Suppression en cours..."
-  },
+
   ModelsMergeModal: {
     title: "Fusionner la sélection",
-    inputName: "Nom de votre fusion d'ifc",
-    inputError: "Vous devez renseigner un nom pour le fichier",
-    buttonSubmit: "Exporter"
+    inputPlaceholder: "Nom de votre fusion d'ifc",
+    inputErrorMessage: "Vous devez renseigner un nom pour le fichier",
+    submitButtonText: "Exporter"
   },
-  BreadcrumbProjectSelector: {
-    noProject: "< Aucun projet >"
+
+  ProjectCardActionMenu: {
+    renameButtonText: "Renommer",
+    deleteButtonText: "Supprimer"
   },
-  FileUploadCard: {
-    cancelMessage: "Annulé",
-    errorMessage: "Le téléversement a échoué"
+
+  ProjectCardDeleteGuard: {
+    title: "Supprimer le projet",
+    message: "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
+    deleteButtonText: "Supprimer"
+  },
+
+  ProjectCardUpdateForm: {
+    title: "Renommer le projet",
+    inputPlaceholder: "Nom",
+    inputErrorMessage: "Ce nom de projet n'est pas valide.",
+    renameButtonText: "Renommer"
+  },
+
+  ProjectCreationCard: {
+    title: "Nouveau projet",
+    text: "Créer un nouveau projet",
+    inputPlaceholder: "Nom",
+    inputErrorMessage: "Vous devez donner un nom au projet !",
+    createButtonText: "Créer"
+  },
+
+  ProjectFilesManager: {
+    title: "Documents du projet"
+  },
+
+  ProjectFileUploader: {
+    uploadAreaText: "Cliquer/Glisser vos fichiers ici",
+    separatorText: "ou",
+    uploadButtonText: "Selectionner un fichier"
+  },
+
+  ProjectModelsManager: {
+    title: "Modèles du projet",
+    tabs: {
+      ifc: "IFC",
+      split: "Split / Export",
+      merge: "Merge",
+      archive: "Archives"
+    }
+  },
+
+  ProjectModelsOverview: {
+    title: "Aperçu du projet"
+  },
+
+  ProjectUsersManager: {
+    title: "Utilisateurs",
+    searchInputPlaceholder: "Rechercher un utilisateur"
+  },
+
+  SpaceCard: {
+    projects: "PROJETS"
+  },
+
+  SpaceCardActionMenu: {
+    renameButtonText: "Renommer",
+    removeImageButtonText: "Supprimer l'image",
+    deleteButtonText: "Supprimer cet espace"
+  },
+
+  SpaceCardDeleteGuard: {
+    title: "Supprimer l'espace",
+    message: "Êtes vous sûr de vouloir supprimer (définitivement) cet espace ?",
+    deleteButtonText: "Supprimer"
+  },
+
+  SpaceCardUpdateForm: {
+    title: "Renommer l'espace",
+    inputPlaceholder: "Nom",
+    inputErrorMessage: "Ce nom d'espace n'est pas valide.",
+    submitButtonText: "Renommer"
+  },
+
+  SpaceCreationCard: {
+    title: "Nouvel espace",
+    inputPlaceholder: "Nom",
+    inputErrorMessage: "Vous devez donner un nom à l'espace !",
+    createButtonText: "Créer"
+  },
+
+  SpaceImageInput: {
+    changeImageButtonText: "Changer l'image"
+  },
+
+  SpaceUsersManager: {
+    title: "Gestion administrateur espace",
+    tabs: {
+      admins: "Administrateurs",
+      users: "Utilisateurs"
+    },
+    searchInputPlaceholder: "Rechercher un utilisateur",
+    addUserButtonText: "Ajouter un utilisateur"
+  },
+
+  UserCard: {
+    self: "vous"
+  },
+
+  UserCardDeleteGuard: {
+    message: {
+      space: "Supprimer {name} de cet espace ?",
+      project: "Supprimer {name} de ce projet ?"
+    },
+    deleteButtonText: "Supprimer"
+  },
+
+  UserRoleBadge: {
+    admin: "Admin",
+    user: "User",
+    guest: "Guest"
+  },
+
+  ViewerCard: {
+    openButtonText: "Ouvrir"
+  },
+
+  ViewerCardModelPreview: {
+    emptyPreviewPlaceholder: "Aucune prévisualisation"
   }
 };

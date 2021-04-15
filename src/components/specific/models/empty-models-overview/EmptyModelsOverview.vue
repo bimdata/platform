@@ -6,7 +6,7 @@
       src="/static/empty-models-overview-illustration.svg"
     />
     <div>
-      {{ $t("ProjectBoard.ProjectModelsManager.onboardingText") }}
+      {{ $t("EmptyModelsOverview.onboardingText") }}
     </div>
     <div class="empty-models-overview__actions">
       <BIMDataButton
@@ -15,7 +15,7 @@
         radius
         @click="$emit('open-file-uploader')"
       >
-        {{ $t("ProjectBoard.ProjectModelsManager.buttonUpload") }}
+        {{ $t("EmptyModelsOverview.uploadButtonText") }}
       </BIMDataButton>
     </div>
   </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="oidc-callback-error-view">
-    <h1>{{ $t("oidc.callbackErrorMessage") }}</h1>
+    <h1>{{ $t("OidcCallbackError.message") }}</h1>
     <BIMDataButton fill radius color="primary" @click="goToRoot">
-      {{ $t("oidc.tryAgain") }}
+      {{ $t("OidcCallbackError.tryAgainButtonText") }}
     </BIMDataButton>
   </div>
 </template>

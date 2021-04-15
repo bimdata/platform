@@ -6,14 +6,14 @@
       src="/static/empty-files-manager-illustration.svg"
     />
     <div>
-      {{ $t("ProjectBoard.ProjectFilesManager.onboardingText") }}
+      {{ $t("EmptyFilesManager.onboardingText") }}
     </div>
     <div class="empty-files-manager__actions">
       <BIMDataButton color="primary" fill radius @click="uploadFile">
-        {{ $t("ProjectBoard.ProjectFilesManager.buttonUploadFile") }}
+        {{ $t("EmptyFilesManager.uploadFileButtonText") }}
       </BIMDataButton>
       <BIMDataButton color="primary" fill radius @click="createFolder">
-        {{ $t("ProjectBoard.ProjectFilesManager.buttonCreateFolder") }}
+        {{ $t("EmptyFilesManager.createFolderButtonText") }}
       </BIMDataButton>
     </div>
   </div>

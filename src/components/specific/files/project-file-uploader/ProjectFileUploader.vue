@@ -42,7 +42,7 @@
         radius
         @click="selectFiles"
       >
-        {{ $t("ProjectFileUploader.buttonUpload") }}
+        {{ $t("ProjectFileUploader.uploadButtonText") }}
         <input
           hidden
           ref="fileInput"

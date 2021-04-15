@@ -4,7 +4,7 @@
     <div class="model-location-form__form-control">
       <AddressInput
         class="model-location-form__form-control__input"
-        :placeholder="$t('ModelLocationForm.inputAddress')"
+        :placeholder="$t('ModelLocationForm.addressInputPlaceholder')"
         :loading="checkLoading"
         :disabled="isSubmitStep"
         v-model="inputAddress"
@@ -12,15 +12,15 @@
       />
       <template v-if="!isSubmitStep">
         <BIMDataButton color="primary" fill radius @click="checkAddress">
-          {{ $t("ModelLocationForm.buttonCheck") }}
+          {{ $t("ModelLocationForm.checkButtonText") }}
         </BIMDataButton>
       </template>
       <template v-else>
         <BIMDataButton color="primary" fill radius @click="submitAddress">
-          {{ $t("ModelLocationForm.buttonSubmit") }}
+          {{ $t("ModelLocationForm.submitButtonText") }}
         </BIMDataButton>
         <BIMDataButton color="default" outline radius @click="cancel">
-          {{ $t("ModelLocationForm.buttonCancel") }}
+          {{ $t("ModelLocationForm.cancelButtonText") }}
         </BIMDataButton>
       </template>
       <BIMDataButton

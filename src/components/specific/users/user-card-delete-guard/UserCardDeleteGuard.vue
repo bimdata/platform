@@ -2,7 +2,7 @@
   <div class="user-card-delete-guard">
     <span class="user-card-delete-guard__message">
       {{
-        $t(`User.UserDeleteGuard.message.${!!project ? "project" : "space"}`, {
+        $t(`UserCardDeleteGuard.message.${!!project ? "project" : "space"}`, {
           name: user.firstname
         })
       }}
@@ -15,7 +15,7 @@
       radius
       @click="removeSpaceUser"
     >
-      {{ $t("User.UserDeleteGuard.buttonDelete") }}
+      {{ $t("UserCardDeleteGuard.deleteButtonText") }}
     </BIMDataButton>
     <BIMDataButton
       class="user-card-delete-guard__close-btn"

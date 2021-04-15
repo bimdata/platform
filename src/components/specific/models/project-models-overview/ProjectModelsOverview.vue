@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard
     class="project-models-overview"
-    :titleHeader="$t('ProjectBoard.ProjectModelsOverview.title')"
+    :titleHeader="$t('ProjectModelsOverview.title')"
   >
     <template #content>
       <template v-if="models.length > 0">

@@ -27,8 +27,8 @@
           />
           <span>{{
             showFileUploader
-              ? $t("ProjectBoard.closeFileUploader")
-              : $t("ProjectBoard.addIFC")
+              ? $t("ProjectBoard.closeFileUploadButtonText")
+              : $t("ProjectBoard.openFileUploadButtonText")
           }}</span>
         </BIMDataButton>
       </template>
@@ -107,9 +107,9 @@ export default {
     const tabs = ref([]);
     watchEffect(() => {
       tabs.value = [
-        { id: "project", label: t("ProjectBoard.projectTabLabel") },
-        { id: "files", label: t("ProjectBoard.filesTabLabel") },
-        { id: "bcf", label: t("ProjectBoard.bcfTabLabel") }
+        { id: "project", label: t("ProjectBoard.tabs.project") },
+        { id: "files", label: t("ProjectBoard.tabs.files") },
+        { id: "bcf", label: t("ProjectBoard.tabs.bcf") }
       ];
     });
 

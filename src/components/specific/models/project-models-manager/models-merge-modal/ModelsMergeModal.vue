@@ -12,16 +12,16 @@
       <BIMDataInput
         ref="mergeNameInput"
         class="models-merge-modal__input"
-        :placeholder="$t('ModelsMergeModal.inputName')"
+        :placeholder="$t('ModelsMergeModal.inputPlaceholder')"
         v-model="mergeName"
         @keyup.enter.stop="merge"
         :error="error"
-        :errorMessage="$t('ModelsMergeModal.inputError')"
+        :errorMessage="$t('ModelsMergeModal.inputErrorMessage')"
       />
     </template>
     <template #footer>
       <BIMDataButton color="primary" fill radius width="120px" @click="merge">
-        {{ $t("ModelsMergeModal.buttonSubmit") }}
+        {{ $t("ModelsMergeModal.submitButtonText") }}
       </BIMDataButton>
     </template>
   </GenericModal>

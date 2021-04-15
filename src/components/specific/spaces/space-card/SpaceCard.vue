@@ -10,7 +10,7 @@
       <TextBox :text="space.name" :maxLength="30" />
       <div class="title-underline"></div>
       <div class="sub-title">
-        <div class="sub-title__text">{{ $t("Spaces.projects") }}</div>
+        <div class="sub-title__text">{{ $t("SpaceCard.projects") }}</div>
         <div class="sub-title__number">{{ nbProjects }}</div>
       </div>
     </template>

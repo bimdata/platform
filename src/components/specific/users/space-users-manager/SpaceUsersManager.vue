@@ -11,7 +11,7 @@
 
     <BIMDataSearch
       width="100%"
-      :placeholder="$t('SpaceUsersManager.searchUsers')"
+      :placeholder="$t('SpaceUsersManager.searchInputPlaceholder')"
       v-model="searchText"
       clear
     />
@@ -33,7 +33,7 @@
         @click="openInvitationForm"
       >
         <BIMDataIcon name="plus" size="xxxs" />
-        <span>{{ $t("SpaceUsersManager.addUserButton") }}</span>
+        <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
       </BIMDataButton>
     </transition>
 
@@ -102,8 +102,8 @@ export default {
     const currentTab = ref("admins");
     watchEffect(() => {
       tabs.value = [
-        { id: "admins", label: t("SpaceUsersManager.adminTabLabel") },
-        { id: "users", label: t("SpaceUsersManager.userTabLabel") }
+        { id: "admins", label: t("SpaceUsersManager.tabs.admins") },
+        { id: "users", label: t("SpaceUsersManager.tabs.users") }
       ];
     });
     const selectTab = tab => {

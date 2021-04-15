@@ -7,7 +7,7 @@
 
       <div v-else-if="showCreationForm" class="project-creation-card__form">
         <div class="project-creation-card__form__title">
-          {{ $t("Projects.ProjectCreationCard.title") }}
+          {{ $t("ProjectCreationCard.title") }}
           <BIMDataButton ghost rounded icon @click.stop="closeCreationForm">
             <BIMDataIcon name="close" size="xxxs" />
           </BIMDataButton>
@@ -15,10 +15,10 @@
         <BIMDataInput
           ref="nameInput"
           class="project-creation-card__form__input"
-          :placeholder="$t('Projects.ProjectCreationCard.inputName')"
+          :placeholder="$t('ProjectCreationCard.inputPlaceholder')"
           v-model="newProject.name"
           :error="error"
-          :errorMessage="$t('Projects.ProjectCreationCard.errorMessage')"
+          :errorMessage="$t('ProjectCreationCard.inputErrorMessage')"
           @keyup.esc.stop="closeCreationForm"
           @keyup.enter.stop="createProject"
         />
@@ -29,7 +29,7 @@
           class="project-creation-card__form__btn-submit"
           @click="createProject"
         >
-          {{ $t("Projects.ProjectCreationCard.buttonCreate") }}
+          {{ $t("ProjectCreationCard.createButtonText") }}
         </BIMDataButton>
       </div>
 
@@ -38,7 +38,7 @@
           <BIMDataIcon name="plus" size="l" />
         </div>
         <div class="project-creation-card__btn__text">
-          {{ $t("Projects.ProjectCreationCard.text") }}
+          {{ $t("ProjectCreationCard.text") }}
         </div>
       </div>
     </transition>

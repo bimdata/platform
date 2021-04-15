@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard
     class="project-users-manager"
-    :titleHeader="$t('ProjectBoard.ProjectUsersManager.title')"
+    :titleHeader="$t('ProjectUsersManager.title')"
   >
     <template #content>
       <template v-if="users.length > 1 || invitations.length > 0">
@@ -29,7 +29,7 @@
                   v-if="showUserSearch"
                   key="user-search"
                   :placeholder="
-                    $t('ProjectBoard.ProjectUsersManager.searchUsers')
+                    $t('ProjectUsersManager.searchInputPlaceholder')
                   "
                   v-model="searchText"
                   clear

@@ -14,7 +14,7 @@
     @item-selected="changeProject"
   />
   <div v-else>
-    {{ $t("BreadcrumbProjectSelector.noProject") }}
+    {{ $t("BreadcrumbProjectSelector.placeholder") }}
   </div>
 </template>
 

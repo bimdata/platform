@@ -6,11 +6,11 @@
       src="/static/empty-users-manager-illustration.svg"
     />
     <div>
-      {{ $t("ProjectBoard.ProjectUsersManager.onboardingText") }}
+      {{ $t("EmptyUsersManager.onboardingText") }}
     </div>
     <div class="empty-users-manager__actions">
       <BIMDataButton color="primary" fill radius @click="openInvitationForm">
-        {{ $t("ProjectBoard.ProjectUsersManager.buttonInvite") }}
+        {{ $t("EmptyUsersManager.inviteButtonText") }}
       </BIMDataButton>
     </div>
     <transition name="fade">

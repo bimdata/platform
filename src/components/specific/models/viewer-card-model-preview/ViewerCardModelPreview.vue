@@ -20,7 +20,7 @@
         />
       </div>
       <div class="viewer-card-model-preview__container__no-preview">
-        {{ $t("ViewerCardModelPreview.noPreview") }}
+        {{ $t("ViewerCardModelPreview.emptyPreviewPlaceholder") }}
       </div>
     </div>
 

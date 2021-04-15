@@ -8,8 +8,10 @@
         {{ invitation.email }}
       </div>
       <div class="invitation-card__info__text">
-        {{ $t("Invitation.pending") }}
-        <a @click="resendInvitation">{{ $t("Invitation.sendAgain") }}</a>
+        {{ $t("InvitationCard.pendingMessage") }}
+        <a @click="resendInvitation">
+          {{ $t("InvitationCard.resendLinkText") }}
+        </a>
       </div>
     </div>
     <BIMDataButton

@@ -26,10 +26,10 @@
           </BIMDataButton>
         </div>
         <BIMDataButton ghost squared @click="openUpdateForm">
-          {{ $t("Projects.ProjectActionMenu.rename") }}
+          {{ $t("ProjectCardActionMenu.renameButtonText") }}
         </BIMDataButton>
         <BIMDataButton ghost squared @click="openDeleteGuard">
-          {{ $t("Projects.ProjectActionMenu.delete") }}
+          {{ $t("ProjectCardActionMenu.deleteButtonText") }}
         </BIMDataButton>
       </div>
     </transition>

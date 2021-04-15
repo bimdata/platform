@@ -6,10 +6,10 @@
       src="/static/dashboard-logo.svg"
     />
     <span class="dashboard-welcome-tile__title">
-      {{ $t("Dashboard.welcomeTitle") }}
+      {{ $t("DashboardWelcomeTile.title") }}
     </span>
     <span class="dashboard-welcome-tile__message">
-      {{ $t("Dashboard.welcomeMessage", { name: firstName }) }}
+      {{ $t("DashboardWelcomeTile.message", { name: firstName }) }}
     </span>
   </div>
 </template>

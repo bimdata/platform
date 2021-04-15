@@ -22,7 +22,7 @@
           radius
           @click="renameModel"
         >
-          {{ $t("ModelNameCell.buttonSubmit") }}
+          {{ $t("ModelNameCell.submitButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           class="model-name-cell__update-form__btn-close"

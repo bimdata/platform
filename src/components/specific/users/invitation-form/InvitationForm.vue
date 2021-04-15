@@ -4,16 +4,16 @@
       <BIMDataInput
         ref="emailInput"
         class="invitation-form__input__email"
-        :placeholder="$t('InvitationForm.inputEmail')"
+        :placeholder="$t('InvitationForm.emailInputPlaceholder')"
         v-model="email"
         :error="error"
-        :errorMessage="$t('InvitationForm.errorMessage')"
+        :errorMessage="$t('InvitationForm.emailInputErrorMessage')"
         @keyup.enter.stop="inviteUser"
       />
       <BIMDataSelect
         v-if="project"
         class="invitation-form__input__role"
-        :label="$t('InvitationForm.inputRole')"
+        :label="$t('InvitationForm.roleInputLabel')"
         :options="roles"
         optionKey="name"
         v-model="role"
@@ -25,7 +25,7 @@
       radius
       @click="close"
     >
-      {{ $t("InvitationForm.buttonCancel") }}
+      {{ $t("InvitationForm.cancelButtonText") }}
     </BIMDataButton>
     <BIMDataButton
       class="invitation-form__btn-submit"
@@ -34,7 +34,7 @@
       radius
       @click="inviteUser"
     >
-      {{ $t("InvitationForm.buttonSubmit") }}
+      {{ $t("InvitationForm.submitButtonText") }}
     </BIMDataButton>
   </div>
 </template>

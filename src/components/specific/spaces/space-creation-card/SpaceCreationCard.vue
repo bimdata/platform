@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard
     class="space-creation-card"
-    :submenuText="$t('Spaces.SpaceCreationCard.title')"
+    :submenuText="$t('SpaceCreationCard.title')"
   >
     <template #right>
       <BIMDataButton ghost rounded icon v-show="!loading" @click="close">
@@ -17,15 +17,15 @@
         <div class="creation-form" v-else>
           <BIMDataInput
             ref="nameInput"
-            :placeholder="$t('Spaces.SpaceCreationCard.inputName')"
+            :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
             v-model="newSpace.name"
             :error="error"
-            :errorMessage="$t('Spaces.SpaceCreationCard.errorMessage')"
+            :errorMessage="$t('SpaceCreationCard.inputErrorMessage')"
             @keyup.esc.stop="close"
             @keyup.enter.stop="createSpace"
           />
           <BIMDataButton fill radius color="primary" @click="createSpace">
-            {{ $t("Spaces.SpaceCreationCard.buttonCreate") }}
+            {{ $t("SpaceCreationCard.createButtonText") }}
           </BIMDataButton>
         </div>
       </transition>

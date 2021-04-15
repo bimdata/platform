@@ -17,7 +17,7 @@
         <BIMDataSearch
           radius
           width="204px"
-          :placeholder="$t('Breadcrumb.search')"
+          :placeholder="$t('BreadcrumbSelector.inputPlaceholder')"
           v-model="searchText"
         />
         <transition-group name="item-list">

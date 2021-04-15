@@ -1,7 +1,7 @@
 <template>
   <BIMDataCard
     class="project-files-manager"
-    :titleHeader="$t('ProjectBoard.ProjectFilesManager.title')"
+    :titleHeader="$t('ProjectFilesManager.title')"
   >
     <template #content>
       <EmptyFilesManager :project="project" />

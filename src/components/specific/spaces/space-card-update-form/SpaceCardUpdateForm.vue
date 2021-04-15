@@ -1,7 +1,7 @@
 <template>
   <div class="space-card-update-form">
     <div class="space-card-update-form__title">
-      {{ $t("Spaces.SpaceRenameForm.title") }}
+      {{ $t("SpaceCardUpdateForm.title") }}
     </div>
     <BIMDataButton
       ghost
@@ -15,10 +15,10 @@
     <BIMDataInput
       ref="nameInput"
       class="space-card-update-form__input"
-      :placeholder="$t('Spaces.SpaceRenameForm.inputName')"
+      :placeholder="$t('SpaceCardUpdateForm.inputPlaceholder')"
       v-model="spaceName"
       :error="error"
-      :errorMessage="$t('Spaces.SpaceRenameForm.errorMessage')"
+      :errorMessage="$t('SpaceCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="renameSpace"
     />
@@ -29,7 +29,7 @@
       class="space-card-update-form__submit-btn"
       @click="renameSpace"
     >
-      {{ $t("Spaces.SpaceRenameForm.buttonRename") }}
+      {{ $t("SpaceCardUpdateForm.submitButtonText") }}
     </BIMDataButton>
   </div>
 </template>

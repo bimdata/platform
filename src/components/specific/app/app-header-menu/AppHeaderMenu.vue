@@ -17,17 +17,17 @@
       <template #element>
         <div class="app-header-menu__container" @click.stop="() => {}">
           <BIMDataButton ghost squared>
-            {{ $t("AppHeaderMenu.settings") }}
+            {{ $t("AppHeaderMenu.entrySettings") }}
           </BIMDataButton>
           <BIMDataButton ghost squared @click="openBIMDataConnect">
-            {{ $t("AppHeaderMenu.connect") }}
+            {{ $t("AppHeaderMenu.entryConnect") }}
           </BIMDataButton>
           <div class="separator"></div>
           <BIMDataButton ghost squared @click="openDocumentation">
-            {{ $t("AppHeaderMenu.documentation") }}
+            {{ $t("AppHeaderMenu.entryDocumentation") }}
           </BIMDataButton>
           <BIMDataButton ghost squared @click="openMarketplace">
-            {{ $t("AppHeaderMenu.marketplace") }}
+            {{ $t("AppHeaderMenu.entryMarketplace") }}
           </BIMDataButton>
           <div class="separator"></div>
           <BIMDataButton
@@ -36,7 +36,7 @@
             squared
             @click="openLanguageSelector"
           >
-            <span>{{ $t("AppHeaderMenu.selectLanguage") }}</span>
+            <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
           <BIMDataButton
@@ -47,7 +47,7 @@
             @click="signOut"
           >
             <BIMDataIcon name="logout" size="xxs" />
-            <span>{{ $t("AppHeaderMenu.logout") }}</span>
+            <span>{{ $t("AppHeaderMenu.logoutButtonText") }}</span>
           </BIMDataButton>
 
           <transition name="fade">

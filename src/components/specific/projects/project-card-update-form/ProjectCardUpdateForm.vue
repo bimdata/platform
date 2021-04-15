@@ -1,7 +1,7 @@
 <template>
   <div class="project-card-update-form">
     <div class="project-card-update-form__title">
-      {{ $t("Projects.ProjectUpdateForm.title") }}
+      {{ $t("ProjectCardUpdateForm.title") }}
       <BIMDataButton ghost rounded icon @click="close">
         <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
@@ -9,10 +9,10 @@
     <BIMDataInput
       ref="nameInput"
       class="project-card-update-form__input"
-      :placeholder="$t('Projects.ProjectUpdateForm.inputName')"
+      :placeholder="$t('ProjectCardUpdateForm.inputPlaceholder')"
       v-model="projectName"
       :error="error"
-      :errorMessage="$t('Projects.ProjectUpdateForm.errorMessage')"
+      :errorMessage="$t('ProjectCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="renameProject"
     />
@@ -23,7 +23,7 @@
       class="project-card-update-form__submit-btn"
       @click="renameProject"
     >
-      {{ $t("Projects.ProjectUpdateForm.buttonRename") }}
+      {{ $t("ProjectCardUpdateForm.renameButtonText") }}
     </BIMDataButton>
   </div>
 </template>

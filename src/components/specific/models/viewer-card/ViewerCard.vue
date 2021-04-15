@@ -3,7 +3,7 @@
     <template #left>
       <BIMDataButton color="primary" fill radius @click="goToModelViewer">
         <BIMDataIcon name="show" size="xs" />
-        <span>{{ $t("ViewerCard.buttonOpen") }}</span>
+        <span>{{ $t("ViewerCard.openButtonText") }}</span>
       </BIMDataButton>
     </template>
     <template #content>

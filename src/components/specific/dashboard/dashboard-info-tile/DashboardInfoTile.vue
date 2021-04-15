@@ -2,7 +2,7 @@
   <div class="dashboard-info-tile">
     <div class="dashboard-info-tile__head">
       <span class="dashboard-info-tile__head__title">
-        {{ $t("Dashboard.security") }}
+        {{ $t("DashboardInfoTile.title") }}
       </span>
       <BIMDataIcon
         class="dashboard-info-tile__head__icon"

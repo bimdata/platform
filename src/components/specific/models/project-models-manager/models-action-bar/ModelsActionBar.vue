@@ -7,15 +7,15 @@
       @click="$emit('delete-clicked', models)"
     >
       <BIMDataIcon name="delete" size="xs" />
-      <span>{{ $t("ModelsActionBar.delete") }}</span>
+      <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared @click="$emit('archive-clicked', models)">
       <BIMDataIcon name="archive" size="xs" />
-      <span>{{ $t("ModelsActionBar.archive") }}</span>
+      <span>{{ $t("ModelsActionBar.archiveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton ghost squared @click="$emit('download-clicked', models)">
       <BIMDataIcon name="download" size="s" />
-      <span>{{ $t("ModelsActionBar.download") }}</span>
+      <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
       ghost
@@ -24,7 +24,7 @@
       :disabled="models.length < 2"
     >
       <BIMDataIcon name="union" size="xs" />
-      <span>{{ $t("ModelsActionBar.merge") }}</span>
+      <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>
     </BIMDataButton>
   </div>
 </template>

@@ -8,7 +8,7 @@
         <BIMDataSearch
           class="user-spaces-view__header__search"
           width="300px"
-          :placeholder="$t('Spaces.searchSpaces')"
+          :placeholder="$t('UserSpaces.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
@@ -25,7 +25,7 @@
         </BIMDataButton>
         <BIMDataButton color="primary" fill radius @click="openCreationForm">
           <BIMDataIcon name="plus" size="xxxs" />
-          <span>{{ $t("Spaces.createSpace") }}</span>
+          <span>{{ $t("UserSpaces.createButtonText") }}</span>
         </BIMDataButton>
       </template>
     </ViewHeader>

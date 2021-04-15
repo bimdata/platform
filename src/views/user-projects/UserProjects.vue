@@ -8,7 +8,7 @@
         <BIMDataSearch
           class="user-projects-view__header__search"
           width="300px"
-          :placeholder="$t('Projects.searchProjects')"
+          :placeholder="$t('UserProjects.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />

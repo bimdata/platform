@@ -7,7 +7,7 @@
     :perPage="6"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
-    :placeholder="$t('ModelsManagerTable.tablePlaceholder')"
+    :placeholder="$t('ModelsManagerTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: model }">
       <ModelNameCell

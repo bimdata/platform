@@ -23,7 +23,7 @@
     </template>
     <template #footer>
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
-        {{ $t("ModelsDeleteModal.buttonCancel") }}
+        {{ $t("ModelsDeleteModal.cancelButtonText") }}
       </BIMDataButton>
       <BIMDataButton
         color="high"
@@ -32,7 +32,7 @@
         width="120px"
         @click="removeModels"
       >
-        {{ $t("ModelsDeleteModal.buttonDelete") }}
+        {{ $t("ModelsDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
   </GenericModal>

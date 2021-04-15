@@ -3,14 +3,14 @@
     <div class="dashboard-view__head">
       <DashboardWelcomeTile />
       <DashboardButtonTile color="primary" @click="goToUserSpaces">
-        <template #title>{{ $t("Dashboard.activeSpaces") }}</template>
+        <template #title>{{ $t("Dashboard.spacesButtonTitle") }}</template>
         <template #number>{{ nbSpaces }}</template>
-        <template #text>{{ $t("Dashboard.viewSpaces") }}</template>
+        <template #text>{{ $t("Dashboard.spacesButtonText") }}</template>
       </DashboardButtonTile>
       <DashboardButtonTile color="secondary" @click="goToUserProjects">
-        <template #title>{{ $t("Dashboard.activeProjects") }}</template>
+        <template #title>{{ $t("Dashboard.projectsButtonTitle") }}</template>
         <template #number>{{ nbProjects }}</template>
-        <template #text>{{ $t("Dashboard.viewProjects") }}</template>
+        <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
       <DashboardInfoTile />
     </div>

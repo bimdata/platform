@@ -36,14 +36,14 @@
 
           <div class="space-card-action-menu__container__menu" v-else>
             <BIMDataButton ghost squared @click="openUpdateForm">
-              {{ $t("Spaces.SpaceActionMenu.rename") }}
+              {{ $t("SpaceCardActionMenu.renameButtonText") }}
             </BIMDataButton>
             <SpaceImageInput :space="space" @upload-completed="closeMenu" />
             <BIMDataButton ghost squared @click="removeImage">
-              {{ $t("Spaces.SpaceActionMenu.removeImage") }}
+              {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
             </BIMDataButton>
             <BIMDataButton ghost squared @click="openDeleteGuard">
-              {{ $t("Spaces.SpaceActionMenu.delete") }}
+              {{ $t("SpaceCardActionMenu.deleteButtonText") }}
             </BIMDataButton>
           </div>
         </transition>

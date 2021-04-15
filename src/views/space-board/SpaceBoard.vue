@@ -8,7 +8,7 @@
         <BIMDataSearch
           class="space-board-view__header__search"
           width="300px"
-          :placeholder="$t('Projects.searchProjects')"
+          :placeholder="$t('SpaceBoard.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />

@@ -44,7 +44,7 @@
     <transition name="fade">
       <div class="model-actions-cell__menu" v-show="showMenu">
         <BIMDataButton class="model-actions-cell__menu__btn" ghost squared>
-          {{ $t("ModelActionMenu.buttonAddTags") }}
+          {{ $t("ModelActionsCell.addTagsButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
@@ -52,7 +52,7 @@
           squared
           @click="onUpdateClick"
         >
-          {{ $t("ModelActionMenu.buttonRename") }}
+          {{ $t("ModelActionsCell.renameButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           v-if="!model.archived"
@@ -61,7 +61,7 @@
           squared
           @click="onArchiveClick"
         >
-          {{ $t("ModelActionMenu.buttonArchive") }}
+          {{ $t("ModelActionsCell.archiveButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
@@ -69,7 +69,7 @@
           squared
           @click="onDeleteClick"
         >
-          {{ $t("ModelActionMenu.buttonDelete") }}
+          {{ $t("ModelActionsCell.deleteButtonText") }}
         </BIMDataButton>
       </div>
     </transition>

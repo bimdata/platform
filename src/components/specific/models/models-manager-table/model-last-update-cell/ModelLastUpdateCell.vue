@@ -5,7 +5,7 @@
         .toISOString()
         .slice(0, -5)
         .replace(/-/g, "/")
-        .replace("T", ` ${$t("Commons.at")} `)
+        .replace("T", ` ${$t("ModelLastUpdateCell.at")} `)
     }}
   </div>
 </template>
