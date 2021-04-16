@@ -46,6 +46,11 @@ const loadProjectUsers = async project => {
     ...user,
     isSelf: user.id === currentUser.value.id
   }));
+  users = users
+    .slice()
+    .sort((a, b) =>
+      `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
+    );
   state.currentProjectUsers = users;
   return users;
 };
