@@ -20,13 +20,14 @@
       </BIMDataButton>
     </div>
     <transition name="fade">
-      <InvitationForm
-        v-show="showInvitationForm"
-        class="empty-users-manager__invitation-form"
-        :project="project"
-        @close="closeInvitationForm"
-        @success="closeInvitationForm"
-      />
+      <div v-show="showInvitationForm" class="empty-users-manager__overlay">
+        <InvitationForm
+          class="empty-users-manager__overlay__invitation-form"
+          :project="project"
+          @close="closeInvitationForm"
+          @success="closeInvitationForm"
+        />
+      </div>
     </transition>
   </div>
 </template>
