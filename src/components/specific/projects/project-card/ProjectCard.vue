@@ -15,8 +15,8 @@
           />
         </template>
         <template #content>
-          <div class="left-stripe"></div>
-          <div class="status-badge">Status</div>
+          <div class="project-card__left-stripe"></div>
+          <div class="project-card__status-badge">Active</div>
           <ProjectCardModelPreview
             :previews="previews"
             @preview-changed="onPreviewChange"

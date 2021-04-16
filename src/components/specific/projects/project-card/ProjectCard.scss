@@ -9,7 +9,7 @@
     height: 100%;
     transition-duration: 0.35s;
 
-    .left-stripe {
+    .project-card__left-stripe {
       position: absolute;
       z-index: 1;
       width: 4px;
@@ -17,12 +17,12 @@
       background-color: $color-primary;
     }
 
-    .status-badge {
+    .project-card__status-badge {
       position: absolute;
       z-index: 1;
       top: $platform-project-card-content-height - $spacing-unit - 24px;
       left: $spacing-unit + 4px;
-      height: 24px;
+      height: 24pxv;
       padding: $spacing-unit/2 $spacing-unit;
       background-color: $color-primary;
       line-height: 12px;
