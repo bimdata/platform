@@ -9,10 +9,22 @@
       {{ $t("EmptyFilesManager.onboardingText") }}
     </div>
     <div class="empty-files-manager__actions">
-      <BIMDataButton color="primary" fill radius @click="uploadFile">
+      <BIMDataButton
+        width="120px"
+        color="primary"
+        fill
+        radius
+        @click="uploadFile"
+      >
         {{ $t("EmptyFilesManager.uploadFileButtonText") }}
       </BIMDataButton>
-      <BIMDataButton color="primary" fill radius @click="createFolder">
+      <BIMDataButton
+        width="120px"
+        color="primary"
+        fill
+        radius
+        @click="createFolder"
+      >
         {{ $t("EmptyFilesManager.createFolderButtonText") }}
       </BIMDataButton>
     </div>

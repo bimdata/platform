@@ -9,7 +9,13 @@
       {{ $t("EmptyUsersManager.onboardingText") }}
     </div>
     <div class="empty-users-manager__actions">
-      <BIMDataButton color="primary" fill radius @click="openInvitationForm">
+      <BIMDataButton
+        width="120px"
+        color="primary"
+        fill
+        radius
+        @click="openInvitationForm"
+      >
         {{ $t("EmptyUsersManager.inviteButtonText") }}
       </BIMDataButton>
     </div>

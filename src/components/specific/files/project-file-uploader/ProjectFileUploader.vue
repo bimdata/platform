@@ -37,6 +37,7 @@
       </div>
       <BIMDataButton
         class="project-file-uploader__upload-area__btn-upload"
+        width="150px"
         color="primary"
         fill
         radius

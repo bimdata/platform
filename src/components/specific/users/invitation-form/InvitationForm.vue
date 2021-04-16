@@ -21,6 +21,7 @@
     </div>
     <BIMDataButton
       class="invitation-form__btn-cancel"
+      width="80px"
       ghost
       radius
       @click="close"
@@ -29,6 +30,7 @@
     </BIMDataButton>
     <BIMDataButton
       class="invitation-form__btn-submit"
+      width="80px"
       color="primary"
       fill
       radius

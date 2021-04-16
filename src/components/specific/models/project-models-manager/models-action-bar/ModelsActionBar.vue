@@ -1,6 +1,7 @@
 <template>
   <div class="models-action-bar">
     <BIMDataButton
+      width="120px"
       color="high"
       ghost
       squared
@@ -9,19 +10,30 @@
       <BIMDataIcon name="delete" size="xs" />
       <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
-    <BIMDataButton ghost squared @click="$emit('archive-clicked', models)">
+    <BIMDataButton
+      width="120px"
+      ghost
+      squared
+      @click="$emit('archive-clicked', models)"
+    >
       <BIMDataIcon name="archive" size="xs" />
       <span>{{ $t("ModelsActionBar.archiveButtonText") }}</span>
     </BIMDataButton>
-    <BIMDataButton ghost squared @click="$emit('download-clicked', models)">
+    <BIMDataButton
+      width="120px"
+      ghost
+      squared
+      @click="$emit('download-clicked', models)"
+    >
       <BIMDataIcon name="download" size="s" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
+      width="120px"
       ghost
       squared
-      @click="$emit('merge-clicked', models)"
       :disabled="models.length < 2"
+      @click="$emit('merge-clicked', models)"
     >
       <BIMDataIcon name="union" size="xs" />
       <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>

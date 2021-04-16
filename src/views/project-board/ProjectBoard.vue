@@ -58,7 +58,6 @@
         :invitations="invitations"
       />
       <ProjectModelsManager
-        v-if="models.length > 0"
         class="project-board-view__container__block--models"
         :project="project"
         :models="models"

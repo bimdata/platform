@@ -10,6 +10,7 @@
     </div>
     <div class="empty-models-overview__actions">
       <BIMDataButton
+        width="120px"
         color="primary"
         fill
         radius

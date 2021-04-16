@@ -45,6 +45,7 @@
           <div>{{ $t("ModelLocation.emptyLocationMessage") }}</div>
           <BIMDataButton
             v-if="project.isAdmin"
+            width="100px"
             color="primary"
             fill
             radius
