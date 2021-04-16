@@ -12,7 +12,7 @@
         size="xxs"
       />
     </div>
-    <transition name="dropdown">
+    <transition name="slide-fade-down">
       <div class="breadcrumb-selector__list" v-show="isActive">
         <BIMDataSearch
           radius
@@ -20,7 +20,7 @@
           :placeholder="$t('BreadcrumbSelector.inputPlaceholder')"
           v-model="searchText"
         />
-        <transition-group name="item-list">
+        <transition-group name="list">
           <div
             class="breadcrumb-selector__list__item"
             v-for="item in displayedItems"

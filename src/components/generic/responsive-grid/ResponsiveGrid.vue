@@ -3,7 +3,7 @@
     class="responsive-grid"
     :style="{ gridTemplateColumns: `repeat(auto-fill, ${itemWidth})` }"
   >
-    <transition-group name="card-list">
+    <transition-group name="grid">
       <slot></slot>
     </transition-group>
   </div>

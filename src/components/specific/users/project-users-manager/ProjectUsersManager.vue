@@ -24,7 +24,7 @@
           </template>
           <template #content>
             <div class="project-users-manager__list-container">
-              <transition-group name="item-list">
+              <transition-group name="list">
                 <BIMDataSearch
                   v-if="showUserSearch"
                   key="user-search"

@@ -12,12 +12,12 @@
       @keyup.enter.stop="selectAdress(selectionIndex)"
       @click.stop="selectionIndex = -1"
     />
-    <transition name="dropdown">
+    <transition name="slide-fade-down">
       <div
         v-if="showSuggestions && suggestions.length > 0"
         class="address-input__suggestions"
       >
-        <transition-group name="item-list">
+        <transition-group name="list">
           <div
             v-for="(result, i) in suggestions"
             :key="i"

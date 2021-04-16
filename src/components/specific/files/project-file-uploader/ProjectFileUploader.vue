@@ -1,7 +1,7 @@
 <template>
   <div class="project-file-uploader">
     <div class="project-file-uploader__upload-list">
-      <transition-group name="card-list">
+      <transition-group name="list">
         <FileUploadCard
           v-for="(file, i) of filesToUpload"
           :key="i"

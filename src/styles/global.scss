@@ -1,6 +1,5 @@
 @import "~@bimdata/design-system/dist/scss/elements/_BIMDataScrollbar.scss";
-
-@import "./transitions.scss";
+@import "~@bimdata/design-system/dist/scss/_BIMDataTransitions.scss";
 
 * {
   box-sizing: border-box;

@@ -38,7 +38,7 @@
     </transition>
 
     <div class="list-container">
-      <transition-group name="item-list">
+      <transition-group name="list">
         <template v-if="showInvitations">
           <InvitationCard
             v-for="invitation in invitations"
