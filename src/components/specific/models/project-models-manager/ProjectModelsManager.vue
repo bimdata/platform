@@ -57,6 +57,7 @@
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
+import { delay } from "@/utils/async";
 import { MODEL_SOURCE } from "@/utils/models";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
@@ -189,17 +190,18 @@ export default {
       await updateModels(props.project, models);
     };
 
-    const downloadModels = models => {
-      // TODO: fix download for multiple files
-      const link = document.createElement("a");
-      link.style.display = "none";
-      link.download = "";
-      document.body.appendChild(link);
+    const downloadModels = async models => {
       for (const model of models) {
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.download = model.document.fileName;
         link.href = model.document.file;
+        document.body.append(link);
         link.click();
+        await delay(100);
+        link.remove();
+        await delay(500);
       }
-      document.body.removeChild(link);
     };
 
     return {
