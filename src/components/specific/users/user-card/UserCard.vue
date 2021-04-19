@@ -100,8 +100,8 @@ export default {
     };
 
     const resetCard = () => {
-      closeDeleteGuard();
       loading.value = false;
+      closeDeleteGuard();
     };
 
     return {

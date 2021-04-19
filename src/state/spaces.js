@@ -110,29 +110,17 @@ const cancelSpaceInvitation = async (space, invitation) => {
 
 const updateSpaceUser = async (space, user) => {
   const newUser = await SpaceService.updateSpaceUser(space, user);
-  if (space.isAdmin) {
-    state.currentSpaceAdmins = state.currentSpaceAdmins.map(u =>
-      u.id === user.id ? newUser : u
-    );
-  } else {
-    state.currentSpaceUsers = state.currentSpaceUsers.map(u =>
-      u.id === user.id ? newUser : u
-    );
-  }
+  state.currentSpaceUsers = state.currentSpaceUsers.map(u =>
+    u.id === user.id ? newUser : u
+  );
   return newUser;
 };
 
 const deleteSpaceUser = async (space, user) => {
   await SpaceService.deleteSpaceUser(space, user);
-  if (space.isAdmin) {
-    state.currentSpaceAdmins = state.currentSpaceAdmins.filter(
-      u => u.id !== user.id
-    );
-  } else {
-    state.currentSpaceUsers = state.currentSpaceUsers.filter(
-      u => u.id !== user.id
-    );
-  }
+  state.currentSpaceUsers = state.currentSpaceUsers.filter(
+    u => u.id !== user.id
+  );
   return user;
 };
 

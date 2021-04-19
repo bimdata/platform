@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { SPACE_ROLE } from "@/utils/users";
 // Components
@@ -96,33 +96,43 @@ export default {
     }
   },
   setup(props) {
-    const { t } = useI18n();
+    const { locale, t } = useI18n();
 
     const tabs = ref([]);
     const currentTab = ref("admins");
-    watchEffect(() => {
-      tabs.value = [
-        { id: "admins", label: t("SpaceUsersManager.tabs.admins") },
-        { id: "users", label: t("SpaceUsersManager.tabs.users") }
-      ];
-    });
+    watch(
+      locale,
+      () => {
+        tabs.value = [
+          { id: "admins", label: t("SpaceUsersManager.tabs.admins") },
+          { id: "users", label: t("SpaceUsersManager.tabs.users") }
+        ];
+      },
+      { immediate: true }
+    );
     const selectTab = tab => {
       currentTab.value = tab.id;
     };
 
-    let admins = [];
-    let users = [];
-    const list = ref([]);
-    const displayedUsers = ref([]);
-    watchEffect(() => {
-      admins = props.users.filter(user => user.cloudRole === SPACE_ROLE.ADMIN);
-      users = props.users.filter(user => user.cloudRole === SPACE_ROLE.USER);
-    });
-    watchEffect(() => {
-      list.value = currentTab.value === "admins" ? admins : users;
-      displayedUsers.value = list.value;
-    });
+    const admins = ref([]);
+    const users = ref([]);
+    watch(
+      () => props.users,
+      () => {
+        admins.value = props.users.filter(
+          user => user.cloudRole === SPACE_ROLE.ADMIN
+        );
+        users.value = props.users.filter(
+          user => user.cloudRole === SPACE_ROLE.USER
+        );
+      },
+      { immediate: true }
+    );
 
+    const list = computed(() =>
+      currentTab.value === "admins" ? admins.value : users.value
+    );
+    const displayedUsers = ref([]);
     const searchText = ref("");
     const filterUsers = value => {
       const text = value.trim().toLowerCase();
@@ -138,7 +148,13 @@ export default {
         displayedUsers.value = list.value;
       }
     };
-    watchEffect(() => filterUsers(searchText.value));
+    watch(
+      [list, searchText],
+      () => {
+        filterUsers(searchText.value);
+      },
+      { immediate: true }
+    );
 
     const showInvitations = computed(() => currentTab.value === "admins");
 

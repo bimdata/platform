@@ -100,6 +100,15 @@ class ProjectService {
     });
   }
 
+  updateProjectUser(project, user) {
+    return apiClient.collaborationApi.updateProjectUser({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      id: user.id,
+      data: user
+    });
+  }
+
   deleteProjectUser(project, user) {
     return apiClient.collaborationApi.deleteProjectUser({
       cloudPk: project.cloud.id,

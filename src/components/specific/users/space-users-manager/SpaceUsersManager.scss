@@ -5,6 +5,7 @@
   height: 100%;
 
   .bimdata-search-bar {
+    min-height: 32px;
     background-color: $color-tertiary-lightest;
     &.focus {
       background-color: $color-white;

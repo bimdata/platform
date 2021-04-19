@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { ref, watch } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
@@ -104,10 +104,6 @@ export default {
   },
   setup(props) {
     const displayedUsers = ref([]);
-    watchEffect(() => {
-      displayedUsers.value = props.users;
-    });
-
     const searchText = ref("");
     const filterUsers = value => {
       const text = value.trim().toLowerCase();
@@ -123,7 +119,13 @@ export default {
         displayedUsers.value = props.users;
       }
     };
-    watchEffect(() => filterUsers(searchText.value));
+    watch(
+      [() => props.users, searchText],
+      () => {
+        filterUsers(searchText.value);
+      },
+      { immediate: true }
+    );
 
     const showInvitationForm = ref(false);
     const toggleInvitationForm = () => {

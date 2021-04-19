@@ -124,6 +124,22 @@ const cancelProjectInvitation = async (project, invitation) => {
   return invitation;
 };
 
+const updateProjectUser = async (project, user) => {
+  const newUser = await ProjectService.updateProjectUser(project, user);
+  state.currentProjectUsers = state.currentProjectUsers.map(u =>
+    u.id === user.id ? newUser : u
+  );
+  return newUser;
+};
+
+const deleteProjectUser = async (project, user) => {
+  await ProjectService.deleteProjectUser(project, user);
+  state.currentProjectUsers = state.currentProjectUsers.filter(
+    u => u.id !== user.id
+  );
+  return user;
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -140,6 +156,8 @@ export function useProjects() {
     softDeleteProject,
     selectProject,
     sendProjectInvitation,
-    cancelProjectInvitation
+    cancelProjectInvitation,
+    updateProjectUser,
+    deleteProjectUser
   };
 }

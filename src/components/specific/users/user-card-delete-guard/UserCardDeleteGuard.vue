@@ -65,13 +65,14 @@ export default {
     const loading = inject("loading", false);
 
     const removeSpaceUser = async () => {
+      loading.value = true;
       if (props.project) {
-        loading.value = true;
         await deleteProjectUser(props.project, props.user);
       } else if (props.space) {
-        loading.value = true;
         await deleteSpaceUser(props.space, props.user);
       }
+      loading.value = false;
+      close();
     };
 
     const close = () => {
