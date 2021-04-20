@@ -1,12 +1,12 @@
 <template>
-  <div class="user-spaces-view">
-    <ViewHeader class="user-spaces-view__header">
+  <div class="view user-spaces">
+    <ViewHeader class="user-spaces__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
-          class="user-spaces-view__header__search"
+          class="user-spaces__header__search"
           width="300px"
           :placeholder="$t('UserSpaces.searchInputPlaceholder')"
           v-model="searchText"
@@ -15,7 +15,7 @@
       </template>
       <template #right>
         <BIMDataButton
-          class="user-spaces-view__header__sort-btn"
+          class="user-spaces__header__sort-btn"
           fill
           squared
           icon

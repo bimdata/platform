@@ -1,0 +1,71 @@
+<template>
+  <BIMDataCard
+    class="models-overview"
+    :titleHeader="$t('ModelsOverview.title')"
+  >
+    <template #content>
+      <template v-if="models.length > 0">
+        <ModelsCard
+          :project="project"
+          :models="models"
+          @model-changed="onModelChange"
+        />
+        <ModelLocation :project="project" :model="displayedModel" />
+      </template>
+      <template v-else>
+        <ModelsOverviewOnboarding
+          @open-file-uploader="$emit('open-file-uploader')"
+        />
+      </template>
+    </template>
+  </BIMDataCard>
+</template>
+
+<script>
+import { ref, watchEffect } from "vue";
+// Components
+import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import ModelLocation from "@/components/specific/models/model-location/ModelLocation";
+import ModelsCard from "@/components/specific/models/models-card/ModelsCard";
+import ModelsOverviewOnboarding from "./models-overview-onboarding/ModelsOverviewOnboarding";
+
+export default {
+  components: {
+    BIMDataCard,
+    ModelLocation,
+    ModelsCard,
+    ModelsOverviewOnboarding
+  },
+  props: {
+    project: {
+      type: Object,
+      required: true
+    },
+    models: {
+      type: Array,
+      required: true
+    }
+  },
+  emits: ["open-file-uploader"],
+  setup(props) {
+    const displayedModel = ref(null);
+
+    watchEffect(() => {
+      displayedModel.value = props.models.length > 0 ? props.models[0] : null;
+    });
+
+    const onModelChange = model => {
+      displayedModel.value = model;
+    };
+
+    return {
+      // References
+      displayedModel,
+      // Methods
+      onModelChange
+    };
+  }
+};
+</script>
+
+<style scoped lang="scss" src="./ModelsOverview.scss"></style>

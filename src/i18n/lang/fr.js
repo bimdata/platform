@@ -78,25 +78,25 @@ export default {
     message: "Bonjour {name}, content de vous revoir !"
   },
 
-  EmptyFilesManager: {
-    onboardingText: "Téléverser votre premier fichier",
+  FilesManager: {
+    title: "Documents du projet"
+  },
+
+  FilesManagerOnboarding: {
+    text: "Téléverser votre premier fichier",
     uploadFileButtonText: "Téléverser un fichier",
     createFolderButtonText: "Créer un dossier"
-  },
-
-  EmptyModelsOverview: {
-    onboardingText: "Téléverser votre premier IFC",
-    uploadButtonText: "Téléversement"
-  },
-
-  EmptyUsersManager: {
-    onboardingText: "Inviter votre premier collaborateur",
-    inviteButtonText: "Invitation"
   },
 
   FileUploadCard: {
     cancelMessage: "Annulé",
     errorMessage: "Le téléversement a échoué"
+  },
+
+  FileUploader: {
+    uploadAreaText: "Cliquer/Glisser vos fichiers ici",
+    separatorText: "ou",
+    uploadButtonText: "Selectionner un fichier"
   },
 
   InvitationCard: {
@@ -152,6 +152,14 @@ export default {
     mergeButtonText: "Fusionner"
   },
 
+  ModelsCard: {
+    openButtonText: "Ouvrir"
+  },
+
+  ModelsCardModelPreview: {
+    emptyPreviewPlaceholder: "Aucune prévisualisation"
+  },
+
   ModelsDeleteModal: {
     title: "Attention !",
     message: "Cette action est irresversible. Cela supprimera :",
@@ -159,15 +167,13 @@ export default {
     deleteButtonText: "Supprimer"
   },
 
-  ModelsManagerTable: {
-    emptyTablePlaceholder: "Aucun modèle",
-    header: {
-      id: "ID",
-      name: "Nom",
-      version: "Version",
-      creator: "Crée par",
-      lastupdate: "Modifié le",
-      status: "Statut"
+  ModelsManager: {
+    title: "Modèles du projet",
+    tabs: {
+      ifc: "IFC",
+      split: "Split / Export",
+      merge: "Merge",
+      archive: "Archives"
     }
   },
 
@@ -176,6 +182,27 @@ export default {
     inputPlaceholder: "Nom de votre fusion d'ifc",
     inputErrorMessage: "Vous devez renseigner un nom pour le fichier",
     submitButtonText: "Exporter"
+  },
+
+  ModelsOverview: {
+    title: "Aperçu du projet"
+  },
+
+  ModelsOverviewOnboarding: {
+    text: "Téléverser votre premier IFC",
+    uploadButtonText: "Téléversement"
+  },
+
+  ModelsTable: {
+    emptyTablePlaceholder: "Aucun modèle",
+    headers: {
+      id: "ID",
+      name: "Nom",
+      version: "Version",
+      creator: "Crée par",
+      lastupdate: "Modifié le",
+      status: "Statut"
+    }
   },
 
   ProjectCardActionMenu: {
@@ -204,30 +231,6 @@ export default {
     createButtonText: "Créer"
   },
 
-  ProjectFilesManager: {
-    title: "Documents du projet"
-  },
-
-  ProjectFileUploader: {
-    uploadAreaText: "Cliquer/Glisser vos fichiers ici",
-    separatorText: "ou",
-    uploadButtonText: "Selectionner un fichier"
-  },
-
-  ProjectModelsManager: {
-    title: "Modèles du projet",
-    tabs: {
-      ifc: "IFC",
-      split: "Split / Export",
-      merge: "Merge",
-      archive: "Archives"
-    }
-  },
-
-  ProjectModelsOverview: {
-    title: "Aperçu du projet"
-  },
-
   ProjectUsersManager: {
     title: "Utilisateurs",
     searchInputPlaceholder: "Rechercher un utilisateur"
@@ -249,6 +252,10 @@ export default {
     deleteButtonText: "Supprimer"
   },
 
+  SpaceCardImageInput: {
+    changeImageButtonText: "Changer l'image"
+  },
+
   SpaceCardUpdateForm: {
     title: "Renommer l'espace",
     inputPlaceholder: "Nom",
@@ -261,10 +268,6 @@ export default {
     inputPlaceholder: "Nom",
     inputErrorMessage: "Vous devez donner un nom à l'espace !",
     createButtonText: "Créer"
-  },
-
-  SpaceImageInput: {
-    changeImageButtonText: "Changer l'image"
   },
 
   SpaceUsersManager: {
@@ -295,11 +298,8 @@ export default {
     guest: "Guest"
   },
 
-  ViewerCard: {
-    openButtonText: "Ouvrir"
-  },
-
-  ViewerCardModelPreview: {
-    emptyPreviewPlaceholder: "Aucune prévisualisation"
+  UsersManagerOnboarding: {
+    text: "Inviter votre premier collaborateur",
+    inviteButtonText: "Invitation"
   }
 };

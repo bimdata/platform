@@ -1,0 +1,14 @@
+.models-overview-onboarding {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-unit * 2;
+  width: 100%;
+  height: 100%;
+
+  &__actions {
+    display: flex;
+    gap: $spacing-unit;
+  }
+}

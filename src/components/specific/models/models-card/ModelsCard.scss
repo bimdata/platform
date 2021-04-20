@@ -1,0 +1,21 @@
+.models-card {
+  min-width: $platform-viewer-card-width;
+  width: $platform-viewer-card-width;
+  height: $platform-viewer-card-height;
+
+  &:deep() {
+    .bimdata-card__brand {
+      position: relative;
+      top: 28px;
+      z-index: 2;
+      height: 0;
+      padding: 0 $spacing-unit;
+    }
+
+    .bimdata-card__content {
+      overflow: hidden;
+      height: 100%;
+      padding: 0;
+    }
+  }
+}

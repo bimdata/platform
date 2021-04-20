@@ -59,7 +59,7 @@
         </BIMDataCard>
       </template>
       <template v-else>
-        <EmptyUsersManager :project="project" />
+        <UsersManagerOnboarding :project="project" />
       </template>
     </template>
   </BIMDataCard>
@@ -72,10 +72,10 @@ import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-import EmptyUsersManager from "@/components/specific/users/empty-users-manager/EmptyUsersManager";
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
 import UserCard from "@/components/specific/users/user-card/UserCard";
+import UsersManagerOnboarding from "./users-manager-onboarding/UsersManagerOnboarding";
 
 export default {
   components: {
@@ -83,10 +83,10 @@ export default {
     BIMDataCard,
     BIMDataIcon,
     BIMDataSearch,
-    EmptyUsersManager,
     InvitationCard,
     InvitationForm,
-    UserCard
+    UserCard,
+    UsersManagerOnboarding
   },
   props: {
     project: {

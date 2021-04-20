@@ -1,6 +1,6 @@
 <template>
-  <div class="project-board-view">
-    <ViewHeader class="project-board-view__header">
+  <div class="view project-board">
+    <ViewHeader class="project-board__header">
       <template #left>
         <AppBreadcrumb />
       </template>
@@ -34,31 +34,31 @@
       </template>
     </ViewHeader>
 
-    <div class="project-board-view__container">
+    <div class="project-board__container">
       <transition name="fade">
-        <ProjectFileUploader
+        <FileUploader
           v-show="showFileUploader"
-          class="project-board-view__container__block--upload"
+          class="project-board__container__block--upload"
           :project="project"
           :allowedFileTypes="['.ifc', '.ifczip']"
           @file-uploaded="reloadModels"
           @close="closeFileUploader"
         />
       </transition>
-      <ProjectModelsOverview
-        class="project-board-view__container__block--overview"
+      <ModelsOverview
+        class="project-board__container__block--overview"
         :project="project"
         :models="models"
         @open-file-uploader="openFileUploader"
       />
       <ProjectUsersManager
-        class="project-board-view__container__block--users"
+        class="project-board__container__block--users"
         :project="project"
         :users="users"
         :invitations="invitations"
       />
-      <ProjectModelsManager
-        class="project-board-view__container__block--models"
+      <ModelsManager
+        class="project-board__container__block--models"
         :project="project"
         :models="models"
       />
@@ -77,9 +77,9 @@ import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectFileUploader from "@/components/specific/files/project-file-uploader/ProjectFileUploader";
-import ProjectModelsManager from "@/components/specific/models/project-models-manager/ProjectModelsManager";
-import ProjectModelsOverview from "@/components/specific/models/project-models-overview/ProjectModelsOverview";
+import FileUploader from "@/components/specific/files/file-uploader/FileUploader";
+import ModelsManager from "@/components/specific/models/models-manager/ModelsManager";
+import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview";
 import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager";
 
 export default {
@@ -89,9 +89,9 @@ export default {
     BIMDataTabs,
     ViewHeader,
     AppBreadcrumb,
-    ProjectFileUploader,
-    ProjectModelsManager,
-    ProjectModelsOverview,
+    FileUploader,
+    ModelsManager,
+    ModelsOverview,
     ProjectUsersManager
   },
   setup() {

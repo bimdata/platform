@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard-view">
-    <div class="dashboard-view__head">
+  <div class="view dashboard">
+    <div class="dashboard__head">
       <DashboardWelcomeTile />
       <DashboardButtonTile color="primary" @click="goToUserSpaces">
         <template #title>{{ $t("Dashboard.spacesButtonTitle") }}</template>
@@ -14,7 +14,7 @@
       </DashboardButtonTile>
       <DashboardInfoTile />
     </div>
-    <div class="dashboard-view__body">
+    <div class="dashboard__body">
       <DashboardSpaceList :spaces="spaces" />
       <DashboardProjectList :projects="projects" />
     </div>

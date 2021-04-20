@@ -59,8 +59,8 @@ import { useSpaces } from "@/state/spaces";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
-import SpaceImageInput from "@/components/specific/spaces/space-image-input/SpaceImageInput";
 import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard";
+import SpaceCardImageInput from "../space-card-image-input/SpaceCardImageInput";
 import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm";
 
 export default {
@@ -68,8 +68,8 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataSpinner,
-    SpaceImageInput,
     SpaceCardDeleteGuard,
+    SpaceCardImageInput,
     SpaceCardUpdateForm
   },
   props: {

@@ -1,0 +1,25 @@
+.model-status-cell {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  margin: $spacing-unit/2;
+
+  &--pending,
+  &--in-progress {
+    color: $color-primary;
+  }
+
+  &--completed {
+    color: $color-success;
+  }
+
+  &--warning {
+    color: $color-warning;
+  }
+
+  &--error {
+    color: $color-high;
+  }
+}

@@ -78,25 +78,25 @@ export default {
     message: "Hi {name}, it's great to see you again !"
   },
 
-  EmptyFilesManager: {
-    onboardingText: "Upload your first file",
+  FilesManager: {
+    title: "Project Files"
+  },
+
+  FilesManagerOnboarding: {
+    text: "Upload your first file",
     uploadFileButtonText: "Upload a file",
     createFolderButtonText: "Create a folder"
-  },
-
-  EmptyModelsOverview: {
-    onboardingText: "Upload your first IFC",
-    uploadButtonText: "Upload IFC"
-  },
-
-  EmptyUsersManager: {
-    onboardingText: "Invite your first collaborator",
-    inviteButtonText: "Invite"
   },
 
   FileUploadCard: {
     cancelMessage: "Canceled",
     errorMessage: "Upload failed"
+  },
+
+  FileUploader: {
+    uploadAreaText: "Drag and drop to store your project assets",
+    separatorText: "or",
+    uploadButtonText: "Select file"
   },
 
   InvitationCard: {
@@ -152,6 +152,14 @@ export default {
     mergeButtonText: "Merge"
   },
 
+  ModelsCard: {
+    openButtonText: "Open"
+  },
+
+  ModelsCardModelPreview: {
+    emptyPreviewPlaceholder: "No preview available"
+  },
+
   ModelsDeleteModal: {
     title: "Warning !",
     message: "This action will permanently delete the following models :",
@@ -159,15 +167,13 @@ export default {
     deleteButtonText: "Delete"
   },
 
-  ModelsManagerTable: {
-    emptyTablePlaceholder: "No model",
-    header: {
-      id: "ID",
-      name: "Name",
-      version: "Version",
-      creator: "Creator",
-      lastupdate: "Last modified",
-      status: "Status"
+  ModelsManager: {
+    title: "Project Models",
+    tabs: {
+      ifc: "IFC",
+      split: "Split / Export",
+      merge: "Merge",
+      archive: "Archives"
     }
   },
 
@@ -176,6 +182,27 @@ export default {
     inputPlaceholder: "Name of your merge",
     inputErrorMessage: "You must provide a name for the file",
     submitButtonText: "Export"
+  },
+
+  ModelsOverview: {
+    title: "Project Models Overview"
+  },
+
+  ModelsOverviewOnboarding: {
+    text: "Upload your first IFC",
+    uploadButtonText: "Upload IFC"
+  },
+
+  ModelsTable: {
+    emptyTablePlaceholder: "No model",
+    headers: {
+      id: "ID",
+      name: "Name",
+      version: "Version",
+      creator: "Creator",
+      lastupdate: "Last modified",
+      status: "Status"
+    }
   },
 
   ProjectCardActionMenu: {
@@ -204,30 +231,6 @@ export default {
     createButtonText: "Create"
   },
 
-  ProjectFilesManager: {
-    title: "Project Files"
-  },
-
-  ProjectFileUploader: {
-    uploadAreaText: "Drag and drop to store your project assets",
-    separatorText: "or",
-    uploadButtonText: "Select file"
-  },
-
-  ProjectModelsManager: {
-    title: "Project Models",
-    tabs: {
-      ifc: "IFC",
-      split: "Split / Export",
-      merge: "Merge",
-      archive: "Archives"
-    }
-  },
-
-  ProjectModelsOverview: {
-    title: "Project Models Overview"
-  },
-
   ProjectUsersManager: {
     title: "Project Users",
     searchInputPlaceholder: "Search user"
@@ -249,6 +252,10 @@ export default {
     deleteButtonText: "Delete"
   },
 
+  SpaceCardImageInput: {
+    changeImageButtonText: "Upload image"
+  },
+
   SpaceCardUpdateForm: {
     title: "Rename space",
     inputPlaceholder: "Name",
@@ -261,10 +268,6 @@ export default {
     inputPlaceholder: "Name",
     inputErrorMessage: "You must provide a name for the space !",
     createButtonText: "Create"
-  },
-
-  SpaceImageInput: {
-    changeImageButtonText: "Upload image"
   },
 
   SpaceUsersManager: {
@@ -295,11 +298,8 @@ export default {
     guest: "Guest"
   },
 
-  ViewerCard: {
-    openButtonText: "Open"
-  },
-
-  ViewerCardModelPreview: {
-    emptyPreviewPlaceholder: "No preview available"
+  UsersManagerOnboarding: {
+    text: "Invite your first collaborator",
+    inviteButtonText: "Invite"
   }
 };

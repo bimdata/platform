@@ -1,0 +1,7 @@
+.files-manager {
+  &:deep() {
+    .bimdata-card__content {
+      height: calc(100% - 35px);
+    }
+  }
+}

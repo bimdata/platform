@@ -1,12 +1,12 @@
 <template>
-  <div class="space-board-view">
-    <ViewHeader class="space-board-view__header">
+  <div class="view space-board">
+    <ViewHeader class="space-board__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
-          class="space-board-view__header__search"
+          class="space-board__header__search"
           width="300px"
           :placeholder="$t('SpaceBoard.searchInputPlaceholder')"
           v-model="searchText"
@@ -15,7 +15,7 @@
       </template>
       <template #right>
         <BIMDataButton
-          class="space-board-view__header__btn-filter"
+          class="space-board__header__btn-filter"
           fill
           squared
           icon
@@ -23,7 +23,7 @@
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton>
         <BIMDataButton
-          class="space-board-view__header__btn-sort"
+          class="space-board__header__btn-sort"
           fill
           squared
           icon
@@ -33,7 +33,7 @@
         </BIMDataButton>
         <BIMDataButton
           v-if="space.isAdmin"
-          class="space-board-view__header__btn-users"
+          class="space-board__header__btn-users"
           fill
           squared
           icon

@@ -109,7 +109,7 @@ export default {
         latitude: DD2DMS(inputLatitude.value)
       };
       try {
-        // submitLoading.value = true;
+        submitLoading.value = true;
         if (props.site) {
           await updateModelSite(
             props.project,
@@ -120,12 +120,12 @@ export default {
         } else {
           await createModelSite(props.project, props.model, location);
         }
-        // submitLoading.value = false;
         emit("success");
       } catch (error) {
-        // submitLoading.value = false;
         console.log(error);
         emit("error", error);
+      } finally {
+        submitLoading.value = false;
       }
     };
 

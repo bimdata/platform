@@ -1,5 +1,5 @@
 <template>
-  <div class="oidc-callback-view">
+  <div class="view oidc-callback">
     <BIMDataBigSpinner width="88" height="146" />
   </div>
 </template>

@@ -1,0 +1,13 @@
+.files-manager-onboarding {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-unit * 2;
+  height: 100%;
+
+  &__actions {
+    display: flex;
+    gap: $spacing-unit;
+  }
+}
