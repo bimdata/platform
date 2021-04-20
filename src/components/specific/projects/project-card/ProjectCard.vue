@@ -43,9 +43,9 @@ import { useProjects } from "@/state/projects";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import FlipableCard from "@/components/generic/flipable-card/FlipableCard";
 import TextBox from "@/components/generic/text-box/TextBox";
-import ProjectCardActionBar from "@/components/specific/projects/project-card-action-bar/ProjectCardActionBar";
-import ProjectCardActionMenu from "@/components/specific/projects/project-card-action-menu/ProjectCardActionMenu";
-import ProjectCardModelPreview from "@/components/specific/projects/project-card-model-preview/ProjectCardModelPreview";
+import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar";
+import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu";
+import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview";
 
 export default {
   components: {

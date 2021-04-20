@@ -45,17 +45,17 @@ import { computed, provide, ref, watchEffect } from "vue";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
-import UserCardActionMenu from "@/components/specific/users/user-card-action-menu/UserCardActionMenu";
-import UserCardDeleteGuard from "@/components/specific/users/user-card-delete-guard/UserCardDeleteGuard";
 import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge";
+import UserCardActionMenu from "./user-card-action-menu/UserCardActionMenu";
+import UserCardDeleteGuard from "./user-card-delete-guard/UserCardDeleteGuard";
 
 export default {
   components: {
     BIMDataIcon,
     BIMDataSpinner,
+    UserRoleBadge,
     UserCardActionMenu,
-    UserCardDeleteGuard,
-    UserRoleBadge
+    UserCardDeleteGuard
   },
   props: {
     user: {

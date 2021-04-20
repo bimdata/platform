@@ -20,7 +20,7 @@ import { routeNames } from "@/router";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import ViewerCardModelPreview from "@/components/specific/models/viewer-card-model-preview/ViewerCardModelPreview";
+import ViewerCardModelPreview from "./viewer-card-model-preview/ViewerCardModelPreview";
 
 export default {
   components: {

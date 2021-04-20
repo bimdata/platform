@@ -42,8 +42,8 @@ import { provide, ref } from "vue";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
-import ProjectCardDeleteGuard from "@/components/specific/projects/project-card-delete-guard/ProjectCardDeleteGuard";
-import ProjectCardUpdateForm from "@/components/specific/projects/project-card-update-form/ProjectCardUpdateForm";
+import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard";
+import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm";
 
 export default {
   components: {
