@@ -10,22 +10,33 @@
 
 <script>
 import { useRoute } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import GoBackButton from "@/components/generic/go-back-button/GoBackButton";
-import BreadcrumbProjectSelector from "@/components/specific/app/breadcrumb-project-selector/BreadcrumbProjectSelector";
-import BreadcrumbSpaceSelector from "@/components/specific/app/breadcrumb-space-selector/BreadcrumbSpaceSelector";
+import BreadcrumbProjectSelector from "./breadcrumb-project-selector/BreadcrumbProjectSelector";
+import BreadcrumbSpaceSelector from "./breadcrumb-space-selector/BreadcrumbSpaceSelector";
 
 export default {
   components: {
+    GoBackButton,
     BreadcrumbProjectSelector,
-    BreadcrumbSpaceSelector,
-    GoBackButton
+    BreadcrumbSpaceSelector
   },
   setup() {
     const route = useRoute();
 
+    let breadcrumb;
+    switch (route.name) {
+      case routeNames.spaceBoard:
+        breadcrumb = "BreadcrumbSpaceSelector";
+        break;
+      case routeNames.projectBoard:
+        breadcrumb = "BreadcrumbProjectSelector";
+        break;
+    }
+
     return {
-      breadcrumb: route.meta.breadcrumb
+      breadcrumb
     };
   }
 };
