@@ -60,37 +60,36 @@ const updateModelName = async (project, model, name) => {
   return newModel;
 };
 
-const fetchModelSite = async (project, model) => {
+const fetchModelLocation = async (project, model) => {
   const [site] = await ModelService.fetchModelElementsByType(
     project,
     model,
     "IfcSite"
   );
+  let siteAddressValue, refLongitudeValue, refLatitudeValue;
   if (site && site.attributes) {
     // Extract SiteAddress, RefLongitude and RefLatitude
-    // from model site attributes.
-    const {
-      attributes: { properties }
-    } = site;
-    var siteAddress = (
+    // values from model site attributes.
+    const { properties } = site.attributes;
+    siteAddressValue = (
       properties.find(p => p.definition.name === "SiteAddress") || {}
     ).value;
-    var refLongitude = (
+    refLongitudeValue = (
       properties.find(p => p.definition.name === "RefLongitude") || {}
     ).value;
-    var refLatitude = (
+    refLatitudeValue = (
       properties.find(p => p.definition.name === "RefLatitude") || {}
     ).value;
   }
   return {
     site,
-    address: siteAddress,
-    longitude: refLongitude,
-    latitude: refLatitude
+    address: siteAddressValue,
+    longitude: refLongitudeValue,
+    latitude: refLatitudeValue
   };
 };
 
-const createModelSite = async (
+const createModelLocation = async (
   project,
   model,
   { address, longitude, latitude }
@@ -119,22 +118,34 @@ const createModelSite = async (
   return newSite;
 };
 
-const updateModelSite = async (
+const updateModelLocation = async (
   project,
   model,
-  site,
-  { address, longitude, latitude }
+  { site, address, longitude, latitude }
 ) => {
-  const properties = [
-    { id: undefined, name: "SiteAddress", value: address },
-    { id: undefined, name: "RefLongitude", value: longitude },
-    { id: undefined, name: "RefLatitude", value: latitude }
+  let siteAddressID, refLongitudeID, refLatitudeID;
+  // Extract SiteAddress, RefLongitude and RefLatitude
+  // IDs from model site attributes.
+  const { properties } = site.attributes;
+  siteAddressID = (
+    properties.find(p => p.definition.name === "SiteAddress") || {}
+  ).id;
+  refLongitudeID = (
+    properties.find(p => p.definition.name === "RefLongitude") || {}
+  ).id;
+  refLatitudeID = (
+    properties.find(p => p.definition.name === "RefLatitude") || {}
+  ).id;
+  const data = [
+    { id: siteAddressID, name: "SiteAddress", value: address },
+    { id: refLongitudeID, name: "RefLongitude", value: longitude },
+    { id: refLatitudeID, name: "RefLatitude", value: latitude }
   ];
   const newProperties = await ModelService.updateModelElementAttrProperties(
     project,
     model,
     site,
-    properties
+    data
   );
   return newProperties;
 };
@@ -151,8 +162,8 @@ export function useModels() {
     deleteModels,
     softDeleteModels,
     updateModelName,
-    fetchModelSite,
-    createModelSite,
-    updateModelSite
+    fetchModelLocation,
+    createModelLocation,
+    updateModelLocation
   };
 }

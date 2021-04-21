@@ -21,10 +21,10 @@ export default {
     closeFileUploadButtonText: "Close"
   },
   SpaceBoard: {
-    searchInputPlaceholder: "Search projets"
+    searchInputPlaceholder: "Search projects"
   },
   UserProjects: {
-    searchInputPlaceholder: "Search projets"
+    searchInputPlaceholder: "Search projects"
   },
   UserSpaces: {
     searchInputPlaceholder: "Search spaces",

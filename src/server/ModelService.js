@@ -118,17 +118,28 @@ class ModelService {
       value
     }));
     return Promise.all(
-      properties.map(property =>
-        apiClient.ifcApi.updateElementPropertySetProperty({
-          cloudPk: project.cloud.id,
-          projectPk: project.id,
-          ifcPk: model.id,
-          elementUuid: element.uuid,
-          propertysetPk: pset.id,
-          id: property.id,
-          data: property
-        })
-      )
+      properties.map(property => {
+        if (property.id) {
+          return apiClient.ifcApi.updateElementPropertySetProperty({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            ifcPk: model.id,
+            elementUuid: element.uuid,
+            propertysetPk: pset.id,
+            id: property.id,
+            data: property
+          });
+        } else {
+          return apiClient.ifcApi.createElementPropertySetProperty({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            ifcPk: model.id,
+            elementUuid: element.uuid,
+            propertysetPk: pset.id,
+            data: property
+          });
+        }
+      })
     );
   }
 

@@ -59,7 +59,8 @@ export default {
       required: true
     },
     model: {
-      type: Object
+      type: Object,
+      required: true
     },
     site: {
       type: Object
@@ -79,7 +80,7 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
-    const { createModelSite, updateModelSite } = useModels();
+    const { createModelLocation, updateModelLocation } = useModels();
 
     const isSubmitStep = ref(false);
     const checkLoading = ref(false);
@@ -104,6 +105,7 @@ export default {
 
     const submitAddress = async () => {
       const location = {
+        site: props.site,
         address: inputAddress.value,
         longitude: DD2DMS(inputLongitude.value),
         latitude: DD2DMS(inputLatitude.value)
@@ -111,14 +113,9 @@ export default {
       try {
         submitLoading.value = true;
         if (props.site) {
-          await updateModelSite(
-            props.project,
-            props.model,
-            props.site,
-            location
-          );
+          await updateModelLocation(props.project, props.model, location);
         } else {
-          await createModelSite(props.project, props.model, location);
+          await createModelLocation(props.project, props.model, location);
         }
         emit("success");
       } catch (error) {

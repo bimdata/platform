@@ -88,7 +88,7 @@ export default {
     }
   },
   setup(props) {
-    const { fetchModelSite } = useModels();
+    const { fetchModelLocation } = useModels();
 
     const loading = ref(false);
     provide("loading", loading);
@@ -118,22 +118,22 @@ export default {
     const setLocation = async () => {
       reset();
       loading.value = true;
-      const modelSite = await fetchModelSite(props.project, props.model);
-      site.value = modelSite.site;
+      const location = await fetchModelLocation(props.project, props.model);
+      site.value = location.site;
 
-      if (modelSite.longitude && modelSite.latitude) {
+      if (location.longitude && location.latitude) {
         // If site coordinates are set,
         // set longitude/latitude accordingly.
         // Also set address if site address is set.
-        address.value = modelSite.address || "";
-        longitude.value = DMS2DD(modelSite.longitude);
-        latitude.value = DMS2DD(modelSite.latitude);
-      } else if (modelSite.address) {
+        address.value = location.address || "";
+        longitude.value = DMS2DD(location.longitude);
+        latitude.value = DMS2DD(location.latitude);
+      } else if (location.address) {
         // If site coordinates are not set, check for site address.
         // If site address is set, set address accordingly then
         // retrieve coordinates from this address to set longitude/latitude.
-        address.value = modelSite.address;
-        const coord = await getCoordinatesFromAddress(modelSite.address);
+        address.value = location.address;
+        const coord = await getCoordinatesFromAddress(location.address);
         longitude.value = coord.longitude;
         latitude.value = coord.latitude;
       }
