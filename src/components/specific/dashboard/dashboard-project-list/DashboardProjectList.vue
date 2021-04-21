@@ -39,7 +39,7 @@ export default {
         displayedProjects.value = props.projects
           .slice()
           .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
-          .slice(0, 5);
+          .slice(0, 10);
       }
     });
 
