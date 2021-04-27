@@ -18,12 +18,12 @@ jobs:
   build-and-push:
     runs-on: self-hosted
     needs: test
-    # if: contains('
-    #   refs/heads/develop
-    #   refs/heads/next
-    #   refs/heads/master
-    #   refs/heads/main'
-    #   , github.ref)
+    if: contains('
+      refs/heads/develop
+      refs/heads/next
+      refs/heads/master
+      refs/heads/main'
+      , github.ref)
     steps:
       - uses: actions/checkout@v2
       - name: Login to BIMData Docker Registry
@@ -32,22 +32,22 @@ jobs:
           registry: docker-registry.bimdata.io
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
-      # - id: tag
-      #   name: Get docker tag
-      #   uses: bimdata/actions/get-docker-tag@v1
-      #   with:
-      #     branch: ${{ github.ref }}
+      - id: tag
+        name: Get docker tag
+        uses: bimdata/actions/get-docker-tag@v1
+        with:
+          branch: ${{ github.ref }}
       - name: Build with ansible
         uses: bimdata/actions/build-image@v1
         with:
-          inventory: staging
+          inventory: ${{ steps.tag.outputs.tag }}
           app: ${{ env.app }}
           vault-pass: ${{ secrets.ANSIBLE_VAULT_PASSWD }}
       - run: docker images
       - name: Push image to registry
         run: |
-          docker tag docker-registry.bimdata.io/bimdata/${{ env.app }}:staging docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
-          docker push docker-registry.bimdata.io/bimdata/${{ env.app }}:staging
+          docker tag docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }} docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
+          docker push docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }}
           docker push docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
 
   deploy:
@@ -60,14 +60,14 @@ jobs:
           registry: docker-registry.bimdata.io
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
-      # - id: tag
-      #   name: Get docker tag
-      #   uses: bimdata/actions/get-docker-tag@v1
-      #   with:
-      #     branch: ${{ github.ref }}
-      - name: Deploy on staging
+      - id: tag
+        name: Get docker tag
+        uses: bimdata/actions/get-docker-tag@v1
+        with:
+          branch: ${{ github.ref }}
+      - name: Deploy on ${{ steps.tag.outputs.tag }}
         uses: bimdata/actions/deployment@v1
         with:
-          inventory: staging
+          inventory: ${{ steps.tag.outputs.tag }}
           app: ${{ env.app }}
           vault-pass: ${{ secrets.ANSIBLE_VAULT_PASSWD }}
