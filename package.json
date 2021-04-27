@@ -6,7 +6,7 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -27,15 +27,16 @@
   },
   "devDependencies": {
     "@bimdata/eslint-config": "0.1.2",
-    "@vue/cli-plugin-e2e-cypress": "~4.5.12",
     "@vue/cli-plugin-router": "~4.5.12",
     "@vue/cli-plugin-unit-jest": "~4.5.12",
     "@vue/cli-service": "~4.5.12",
     "@vue/compiler-sfc": "^3.0.11",
     "@vue/test-utils": "^2.0.0-rc.4",
+    "cypress": "^7.1.0",
     "eslint": "^6.8.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
+    "start-server-and-test": "^1.12.1",
     "typescript": "~3.9.9",
     "vue-jest": "^5.0.0-alpha.8"
   }
