@@ -6,9 +6,7 @@ COPY package.json package-lock.json /opt/
 
 RUN npm ci
 
-COPY vue.config.js  /opt/
-COPY src            /opt/src
-COPY public         /opt/public
+COPY . /opt/
 
 ENV NODE_ENV production
 
