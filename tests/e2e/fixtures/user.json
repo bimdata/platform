@@ -1,0 +1,17 @@
+{
+  "id": 1001,
+  "email": "toto.labrico@bimdata.io",
+  "firstname": "Toto",
+  "lastname": "LABRICO",
+  "clouds": [
+    { "cloud": 100, "role": 100 },
+    { "cloud": 200, "role": 100 },
+    { "cloud": 300, "role": 50 }
+  ],
+  "projects": [
+    { "project": 100, "role": 100 },
+    { "project": 101, "role": 100 },
+    { "project": 200, "role": 100 },
+    { "project": 300, "role": 50 }
+  ]
+}
