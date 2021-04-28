@@ -6,6 +6,11 @@
   &__container {
     overflow-x: hidden;
 
+    // Here is a hack to make overflow-y visible
+    // See: https://stackoverflow.com/q/6421966/8298197
+    margin: -28px 0;
+    padding: 28px 0;
+
     &__slider {
       position: relative;
       transition: transform 0.5s ease-out;
