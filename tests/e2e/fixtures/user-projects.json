@@ -1,0 +1,38 @@
+[
+  {
+    "id": 100,
+    "name": "Project 100",
+    "created_at": "2021-04-01T09:00:00Z",
+    "updated_at": "2021-04-01T09:00:00Z",
+    "cloud": {
+      "id": 100
+    }
+  },
+  {
+    "id": 101,
+    "name": "Project 101",
+    "created_at": "2021-04-01T09:00:00Z",
+    "updated_at": "2021-04-01T09:00:00Z",
+    "cloud": {
+      "id": 100
+    }
+  },
+  {
+    "id": 200,
+    "name": "Project 200",
+    "created_at": "2021-04-02T09:00:00Z",
+    "updated_at": "2021-04-02T09:00:00Z",
+    "cloud": {
+      "id": 200
+    }
+  },
+  {
+    "id": 300,
+    "name": "Project 300",
+    "created_at": "2021-04-01T11:00:00Z",
+    "updated_at": "2021-04-01T12:00:00Z",
+    "cloud": {
+      "id": 300
+    }
+  }
+]

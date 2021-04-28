@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1001,
+    "email": "toto.labrico@test-e2e.cy",
+    "firstname": "Toto",
+    "lastname": "LABRICO"
+  },
+  {
+    "id": 1002,
+    "email": "tata.banana@test-inc.com",
+    "firstname": "Tata",
+    "lastname": "BANANA"
+  },
+  {
+    "id": 1010,
+    "email": "hugo@bimdata.io",
+    "firstname": "Hugo",
+    "lastname": "Duroux"
+  },
+  {
+    "id": 1011,
+    "email": "francois@bimdata.io",
+    "firstname": "François",
+    "lastname": "Thierry"
+  },
+  {
+    "id": 1012,
+    "email": "gabriel@bimdata.io",
+    "firstname": "Gabriel",
+    "lastname": "Cambreling"
+  },
+  {
+    "id": 1013,
+    "email": "stanislas@bimdata.io",
+    "firstname": "Stanislas",
+    "lastname": "Limouzi"
+  },
+  {
+    "id": 1014,
+    "email": "gaetan@bimdata.io",
+    "firstname": "Gaëtan",
+    "lastname": "LAGIER"
+  },
+  {
+    "id": 1015,
+    "email": "gaelle@bimdata.io",
+    "firstname": "Gaëlle",
+    "lastname": "LEROUX"
+  },
+  {
+    "id": 1016,
+    "email": "benjamin@bimdata.io",
+    "firstname": "Benjamin",
+    "lastname": "Daniere"
+  },
+  {
+    "id": 1017,
+    "email": "antoine@bimdata.io",
+    "firstname": "Antoine",
+    "lastname": "Mineau"
+  },
+  {
+    "id": 1018,
+    "email": "lou@bimdata.io",
+    "firstname": "Lou",
+    "lastname": "Duroux"
+  },
+  {
+    "id": 1019,
+    "email": "nicolas@bimdata.io",
+    "firstname": "Nicolas",
+    "lastname": "RICHEL"
+  }
+]

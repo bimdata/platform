@@ -4,21 +4,12 @@
 // ***********************************************
 
 Cypress.Commands.add("login", () => {
-  const key =
-    "user:https://iam-staging.bimdata.io/auth/realms/bimdata:ab5c58fa-2765-4e8b-be9f-c537c0c46d81";
-  const user = {
-    id_token: "id-token",
-    access_token: "access-token",
-    refresh_token: "refresh-token",
-    profile: {},
-    scope: "openid profile email"
-
-    // Unused fields
-    // expires_at: null,
-    // session_state: null,
-    // state: null,
-    // token_type: null,
-  };
+  const key = `oidc.user:${Cypress.env("IAM_BASE_URL")}/auth/realms/bimdata:${Cypress.env("OIDC_CLIENT_ID")}`;
+  const user = {};
 
   localStorage.setItem(key, JSON.stringify(user));
+});
+
+Cypress.Commands.add("logout", () => {
+  localStorage.clear();
 });
