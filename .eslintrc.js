@@ -1,5 +1,8 @@
 module.exports = {
-  extends: ["plugin:vue/base", "@bimdata/eslint-config"],
+  extends: [
+    "@bimdata/eslint-config",
+    "plugin:vue/vue3-essential"
+  ],
   rules: {
     "vue/no-v-for-template-key": "off",
     "vue/no-multiple-template-root": "off"
