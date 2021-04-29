@@ -1,10 +1,22 @@
 module.exports = {
+  root: true,
+  ignorePatterns: ["/dist", "/tests"],
+  env: {
+    browser: true,
+    node: true
+  },
   extends: [
-    "@bimdata/eslint-config",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
     "plugin:vue/vue3-essential"
   ],
   rules: {
-    "vue/no-v-for-template-key": "off",
-    "vue/no-multiple-template-root": "off"
+    "prettier/prettier": [
+      "error",
+      {
+        trailingComma: "none",
+        arrowParens: "avoid"
+      }
+    ]
   }
 };
