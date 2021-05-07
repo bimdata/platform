@@ -110,10 +110,7 @@ export default {
       if (text) {
         displayedUsers.value = props.users.filter(
           ({ firstname, lastname, email }) =>
-            [firstname, lastname, email]
-              .join(" ")
-              .toLowerCase()
-              .includes(text)
+            [firstname, lastname, email].join(" ").toLowerCase().includes(text)
         );
       } else {
         displayedUsers.value = props.users;

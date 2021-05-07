@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { computed, provide, ref, watchEffect } from "vue";
+import { computed, provide, ref, watch } from "vue";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
@@ -79,14 +79,20 @@ export default {
     const initials = computed(() =>
       `${firstName.value[0]}${lastName.value[0]}`.trim().toUpperCase()
     );
-    watchEffect(() => {
-      if (props.user) {
-        firstName.value = props.user.firstname || " ";
-        lastName.value = props.user.lastname || " ";
-        email.value = props.user.email || "";
-        role.value = props.user.cloudRole;
-      }
-    });
+    watch(
+      () => props.user,
+      () => {
+        if (props.user) {
+          firstName.value = props.user.firstname || " ";
+          lastName.value = props.user.lastname || " ";
+          email.value = props.user.email || "";
+          role.value = props.project
+            ? props.user.projectRole
+            : props.user.cloudRole;
+        }
+      },
+      { immediate: true }
+    );
 
     const loading = ref(false);
     provide("loading", loading);
