@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1020,
+    "uuid": "uuid-1020",
+    "type": "IfcSite",
+    "attributes": {
+      "id": 1020,
+      "properties": [
+        {
+          "id": 1021,
+          "definition": {
+            "name": "RefLongitude"
+          },
+          "value": [-71, -15, -29, -58837]
+        },
+        {
+          "id": 1022,
+          "definition": {
+            "name": "RefLatitude"
+          },
+          "value": [42, 24, 53, 508911]
+        }
+      ]
+    }
+  }
+]

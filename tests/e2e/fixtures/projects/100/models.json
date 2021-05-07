@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1001,
+    "name": "MyModel.ifc",
+    "created_at": "2021-04-27T12:56:56Z",
+    "updated_at": "2021-04-27T13:08:21Z",
+    "creator": {
+      "firstname": "François",
+      "lastname": "Thierry"
+    },
+    "source": "UPLOAD",
+    "status": "C",
+    "version": "IFC2X3",
+    "viewer_360_file": "https://api-staging.bimdata.io/model-preview/1001",
+    "document": {
+      "id": 1001,
+      "name": "MyModel.ifc",
+      "file": ""
+    },
+    "archived": false
+  },
+  {
+    "id": 1002,
+    "name": "AnotherModel-1234.ifc",
+    "created_at": "2021-04-27T12:56:56Z",
+    "updated_at": "2021-04-27T13:08:21Z",
+    "creator": {
+      "firstname": "Toto",
+      "lastname": "LABRICO"
+    },
+    "source": "UPLOAD",
+    "status": "C",
+    "version": "IFC2X3",
+    "viewer_360_file": "https://api-staging.bimdata.io/model-preview/1002",
+    "document": {
+      "id": 1002,
+      "name": "AnotherModel-1234.ifc",
+      "file": ""
+    },
+    "archived": false
+  }
+]
