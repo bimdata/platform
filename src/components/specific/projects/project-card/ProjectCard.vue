@@ -1,5 +1,6 @@
 <template>
   <FlipableCard
+    data-test="project-card"
     class="project-card"
     :flipped="showMenu"
     v-click-away="closeMenu"

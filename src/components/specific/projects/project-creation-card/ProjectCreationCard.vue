@@ -1,5 +1,9 @@
 <template>
-  <div class="project-creation-card" v-click-away="closeCreationForm">
+  <div
+    data-test="project-creation-card"
+    class="project-creation-card"
+    v-click-away="closeCreationForm"
+  >
     <transition name="fade" mode="out-in">
       <div v-if="loading" class="project-creation-card__loader">
         <BIMDataSpinner />
@@ -8,12 +12,19 @@
       <div v-else-if="showCreationForm" class="project-creation-card__form">
         <div class="project-creation-card__form__title">
           {{ $t("ProjectCreationCard.title") }}
-          <BIMDataButton ghost rounded icon @click.stop="closeCreationForm">
+          <BIMDataButton
+            data-test="btn-close-create"
+            ghost
+            rounded
+            icon
+            @click.stop="closeCreationForm"
+          >
             <BIMDataIcon name="close" size="xxxs" />
           </BIMDataButton>
         </div>
         <BIMDataInput
           ref="nameInput"
+          data-test="input-create-name"
           class="project-creation-card__form__input"
           :placeholder="$t('ProjectCreationCard.inputPlaceholder')"
           v-model="newProject.name"
@@ -23,21 +34,27 @@
           @keyup.enter.stop="createProject"
         />
         <BIMDataButton
+          data-test="btn-submit-create"
+          class="project-creation-card__form__btn-submit"
           fill
           radius
           color="primary"
-          class="project-creation-card__form__btn-submit"
           @click="createProject"
         >
           {{ $t("ProjectCreationCard.createButtonText") }}
         </BIMDataButton>
       </div>
 
-      <div v-else class="project-creation-card__btn" @click="openCreationForm">
-        <div class="project-creation-card__btn__icon">
+      <div
+        v-else
+        data-test="btn-open-create"
+        class="project-creation-card__btn-open"
+        @click="openCreationForm"
+      >
+        <div class="project-creation-card__btn-open__icon">
           <BIMDataIcon name="plus" size="l" />
         </div>
-        <div class="project-creation-card__btn__text">
+        <div class="project-creation-card__btn-open__text">
           {{ $t("ProjectCreationCard.text") }}
         </div>
       </div>

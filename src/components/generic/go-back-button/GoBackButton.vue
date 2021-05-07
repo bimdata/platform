@@ -1,5 +1,11 @@
 <template>
-  <BIMDataButton ghost radius class="go-back-button" @click="$router.back()">
+  <BIMDataButton
+    data-test="btn-back"
+    class="go-back-button"
+    ghost
+    radius
+    @click="$router.back()"
+  >
     <BIMDataIcon name="arrow" size="xxs" />
     <span>{{ $t("GoBackButton.text") }}</span>
   </BIMDataButton>

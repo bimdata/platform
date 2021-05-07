@@ -1,5 +1,5 @@
 <template>
-  <div class="view project-board">
+  <div data-test="project-board" class="view project-board">
     <ViewHeader class="project-board__header">
       <template #left>
         <AppBreadcrumb />
@@ -15,6 +15,7 @@
       </template>
       <template #right>
         <BIMDataButton
+          data-test="btn-toggle-upload"
           width="120px"
           :color="showFileUploader ? 'tertiary-darkest' : 'primary'"
           fill

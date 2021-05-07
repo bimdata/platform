@@ -2,12 +2,19 @@
   <div class="project-card-update-form">
     <div class="project-card-update-form__title">
       {{ $t("ProjectCardUpdateForm.title") }}
-      <BIMDataButton ghost rounded icon @click="close">
+      <BIMDataButton
+        data-test="btn-close-update"
+        ghost
+        rounded
+        icon
+        @click="close"
+      >
         <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
     </div>
     <BIMDataInput
       ref="nameInput"
+      data-test="input-update-name"
       class="project-card-update-form__input"
       :placeholder="$t('ProjectCardUpdateForm.inputPlaceholder')"
       v-model="projectName"
@@ -17,10 +24,11 @@
       @keyup.enter.stop="renameProject"
     />
     <BIMDataButton
+      data-test="btn-submit-update"
+      class="project-card-update-form__submit-btn"
+      color="primary"
       fill
       radius
-      color="primary"
-      class="project-card-update-form__submit-btn"
       @click="renameProject"
     >
       {{ $t("ProjectCardUpdateForm.renameButtonText") }}
@@ -57,15 +65,18 @@ export default {
     const nameInput = ref(null);
     const projectName = ref(props.project.name);
     const error = ref(false);
-    const renameProject = () => {
+    const renameProject = async () => {
       if (projectName.value) {
-        loading.value = true;
-        updateProject({
-          ...props.project,
-          name: projectName.value
-        })
-          .then(() => emit("success"))
-          .catch(error => emit("error", error));
+        try {
+          loading.value = true;
+          await updateProject({
+            ...props.project,
+            name: projectName.value
+          });
+          emit("success");
+        } catch (error) {
+          emit("error", error);
+        }
       } else {
         nameInput.value.focus();
         error.value = true;

@@ -5,6 +5,7 @@
     v-click-away="closeMenu"
   >
     <BIMDataButton
+      data-test="btn-toggle-menu"
       class="space-card-action-menu__btn"
       ripple
       rounded
@@ -35,14 +36,24 @@
           />
 
           <div class="space-card-action-menu__container__menu" v-else>
-            <BIMDataButton ghost squared @click="openUpdateForm">
+            <BIMDataButton
+              data-test="btn-open-update"
+              ghost
+              squared
+              @click="openUpdateForm"
+            >
               {{ $t("SpaceCardActionMenu.renameButtonText") }}
             </BIMDataButton>
             <SpaceCardImageInput :space="space" @upload-completed="closeMenu" />
             <BIMDataButton ghost squared @click="removeImage">
               {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
             </BIMDataButton>
-            <BIMDataButton ghost squared @click="openDeleteGuard">
+            <BIMDataButton
+              data-test="btn-open-delete"
+              ghost
+              squared
+              @click="openDeleteGuard"
+            >
               {{ $t("SpaceCardActionMenu.deleteButtonText") }}
             </BIMDataButton>
           </div>

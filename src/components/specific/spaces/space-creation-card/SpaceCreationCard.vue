@@ -1,10 +1,18 @@
 <template>
   <BIMDataCard
+    data-test="space-creation-card"
     class="space-creation-card"
     :submenuText="$t('SpaceCreationCard.title')"
   >
     <template #right>
-      <BIMDataButton ghost rounded icon v-show="!loading" @click="close">
+      <BIMDataButton
+        data-test="btn-close-create"
+        ghost
+        rounded
+        icon
+        v-show="!loading"
+        @click="close"
+      >
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>
     </template>
@@ -17,6 +25,7 @@
         <div class="creation-form" v-else>
           <BIMDataInput
             ref="nameInput"
+            data-test="input-create-name"
             :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
             v-model="newSpace.name"
             :error="error"
@@ -24,7 +33,13 @@
             @keyup.esc.stop="close"
             @keyup.enter.stop="createSpace"
           />
-          <BIMDataButton fill radius color="primary" @click="createSpace">
+          <BIMDataButton
+            data-test="btn-submit-create"
+            fill
+            radius
+            color="primary"
+            @click="createSpace"
+          >
             {{ $t("SpaceCreationCard.createButtonText") }}
           </BIMDataButton>
         </div>

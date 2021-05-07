@@ -1,11 +1,12 @@
 <template>
-  <div class="view user-spaces">
+  <div data-test="user-spaces" class="view user-spaces">
     <ViewHeader class="user-spaces__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
+          data-test="input-search"
           class="user-spaces__header__search"
           width="300px"
           :placeholder="$t('UserSpaces.searchInputPlaceholder')"
@@ -15,7 +16,8 @@
       </template>
       <template #right>
         <BIMDataButton
-          class="user-spaces__header__sort-btn"
+          data-test="btn-sort"
+          class="user-spaces__header__btn-sort"
           fill
           squared
           icon
@@ -23,7 +25,14 @@
         >
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
-        <BIMDataButton color="primary" fill radius @click="openCreationForm">
+        <BIMDataButton
+          data-test="btn-open-create"
+          class="user-spaces__header__btn-create"
+          color="primary"
+          fill
+          radius
+          @click="openCreationForm"
+        >
           <BIMDataIcon name="plus" size="xxxs" />
           <span>{{ $t("UserSpaces.createButtonText") }}</span>
         </BIMDataButton>
@@ -32,8 +41,8 @@
 
     <ResponsiveGrid itemWidth="215px">
       <SpaceCreationCard
-        :key="-1"
         v-if="showCreationForm"
+        :key="-1"
         @close="closeCreationForm"
       />
       <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />

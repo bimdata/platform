@@ -1,13 +1,21 @@
 <template>
-  <div class="view dashboard">
+  <div data-test="dashboard" class="view dashboard">
     <div class="dashboard__head">
       <DashboardWelcomeTile />
-      <DashboardButtonTile color="primary" @click="goToUserSpaces">
+      <DashboardButtonTile
+        data-test="btn-spaces"
+        color="primary"
+        @click="goToUserSpaces"
+      >
         <template #title>{{ $t("Dashboard.spacesButtonTitle") }}</template>
         <template #number>{{ nbSpaces }}</template>
         <template #text>{{ $t("Dashboard.spacesButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile color="secondary" @click="goToUserProjects">
+      <DashboardButtonTile
+        data-test="btn-projects"
+        color="secondary"
+        @click="goToUserProjects"
+      >
         <template #title>{{ $t("Dashboard.projectsButtonTitle") }}</template>
         <template #number>{{ nbProjects }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
