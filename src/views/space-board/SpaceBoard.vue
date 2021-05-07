@@ -1,11 +1,12 @@
 <template>
-  <div class="view space-board">
+  <div data-test="space-board" class="view space-board">
     <ViewHeader class="space-board__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
+          data-test="input-search"
           class="space-board__header__search"
           width="300px"
           :placeholder="$t('SpaceBoard.searchInputPlaceholder')"
@@ -15,6 +16,7 @@
       </template>
       <template #right>
         <BIMDataButton
+          data-test="btn-filter"
           class="space-board__header__btn-filter"
           fill
           squared
@@ -23,6 +25,7 @@
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton>
         <BIMDataButton
+          data-test="btn-sort"
           class="space-board__header__btn-sort"
           fill
           squared
@@ -32,6 +35,7 @@
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
         <BIMDataButton
+          data-test="btn-users"
           v-if="space.isAdmin"
           class="space-board__header__btn-users"
           fill
@@ -59,8 +63,14 @@
     </transition>
 
     <ResponsiveGrid itemWidth="320px">
-      <ProjectCreationCard v-if="space.isAdmin" :key="-1" :space="space" />
+      <ProjectCreationCard
+        data-test="creation-card"
+        v-if="space.isAdmin"
+        :key="-1"
+        :space="space"
+      />
       <ProjectCard
+        data-test="project-card"
         v-for="project in projects"
         :key="project.id"
         :project="project"

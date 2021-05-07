@@ -7,14 +7,14 @@
     font-weight: bold;
   }
 
-  &__close-btn {
+  &__btn-close {
     position: absolute;
     top: 0;
     right: $spacing-unit/2;
   }
 
   &__message,
-  &__submit-btn {
+  &__btn-submit {
     width: calc(100% - #{$spacing-unit});
     margin-left: $spacing-unit/2;
     margin-bottom: $spacing-unit;

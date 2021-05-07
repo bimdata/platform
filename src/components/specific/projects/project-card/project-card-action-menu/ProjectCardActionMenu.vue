@@ -21,14 +21,30 @@
       <div class="project-card-action-menu__menu" v-else>
         <div class="project-card-action-menu__menu__title">
           {{ project.name }}
-          <BIMDataButton ghost rounded icon @click="closeMenu">
+          <BIMDataButton
+            data-test="btn-close-menu"
+            ghost
+            rounded
+            icon
+            @click="closeMenu"
+          >
             <BIMDataIcon name="close" size="xxs" />
           </BIMDataButton>
         </div>
-        <BIMDataButton ghost squared @click="openUpdateForm">
+        <BIMDataButton
+          data-test="btn-open-update"
+          ghost
+          squared
+          @click="openUpdateForm"
+        >
           {{ $t("ProjectCardActionMenu.renameButtonText") }}
         </BIMDataButton>
-        <BIMDataButton ghost squared @click="openDeleteGuard">
+        <BIMDataButton
+          data-test="btn-open-delete"
+          ghost
+          squared
+          @click="openDeleteGuard"
+        >
           {{ $t("ProjectCardActionMenu.deleteButtonText") }}
         </BIMDataButton>
       </div>

@@ -1,5 +1,9 @@
 <template>
-  <BIMDataCard class="space-card" @click="goToSpaceBoard">
+  <BIMDataCard
+    data-test="space-card"
+    class="space-card"
+    @click="goToSpaceBoard"
+  >
     <template #right>
       <SpaceCardActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
     </template>

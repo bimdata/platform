@@ -2,7 +2,13 @@
   <div class="project-card-delete-guard">
     <div class="project-card-delete-guard__title">
       {{ $t("ProjectCardDeleteGuard.title") }}
-      <BIMDataButton ghost rounded icon @click="close">
+      <BIMDataButton
+        data-test="btn-close-delete"
+        ghost
+        rounded
+        icon
+        @click="close"
+      >
         <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
     </div>
@@ -10,10 +16,11 @@
       {{ $t("ProjectCardDeleteGuard.message") }}
     </div>
     <BIMDataButton
+      data-test="btn-submit-delete"
+      class="project-card-delete-guard__submit-btn"
+      color="high"
       fill
       radius
-      color="high"
-      class="project-card-delete-guard__submit-btn"
       @click="removeProject"
     >
       {{ $t("ProjectCardDeleteGuard.deleteButtonText") }}

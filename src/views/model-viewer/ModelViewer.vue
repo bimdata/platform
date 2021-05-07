@@ -1,5 +1,5 @@
 <template>
-  <div class="view model-viewer">
+  <div data-test="model-viewer" class="view model-viewer">
     <div id="viewer"></div>
   </div>
 </template>

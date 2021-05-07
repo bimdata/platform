@@ -1,5 +1,5 @@
 <template>
-  <div class="user-card" v-click-away="resetCard">
+  <div data-test="user-card" class="user-card" v-click-away="resetCard">
     <transition name="fade" mode="out-in">
       <div class="user-card__loader" v-if="loading">
         <BIMDataSpinner />

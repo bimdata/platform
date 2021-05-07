@@ -1,6 +1,7 @@
 <template>
   <div class="project-card-action-bar">
     <BIMDataButton
+      data-test="btn-open-viewer"
       class="project-card-action-bar__action-btn"
       ghost
       rounded
@@ -12,6 +13,7 @@
 
     <BIMDataButton
       v-if="project.isAdmin"
+      data-test="btn-open-menu"
       class="project-card-action-bar__action-btn"
       color="default"
       ripple

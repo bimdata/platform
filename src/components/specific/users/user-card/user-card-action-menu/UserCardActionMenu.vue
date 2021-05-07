@@ -1,11 +1,12 @@
 <template>
   <div class="user-card-action-menu" v-click-away="closeMenu">
     <BIMDataButton
+      data-test="btn-toggle-menu"
+      class="user-card-action-menu__btn"
       color="default"
       ripple
       rounded
       icon
-      class="user-card-action-menu__btn"
       @click="toggleMenu"
     >
       <BIMDataIcon
@@ -16,10 +17,22 @@
 
     <transition name="fade">
       <div class="user-card-action-menu__container" v-show="showMenu">
-        <BIMDataButton ghost rounded icon @click="$emit('open-update')">
+        <BIMDataButton
+          data-test="btn-open-update"
+          ghost
+          rounded
+          icon
+          @click="$emit('open-update')"
+        >
           <BIMDataIcon name="edit" size="xxs" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="$emit('open-delete')">
+        <BIMDataButton
+          data-test="btn-open-delete"
+          ghost
+          rounded
+          icon
+          @click="$emit('open-delete')"
+        >
           <BIMDataIcon name="delete" size="xxs" />
         </BIMDataButton>
       </div>

@@ -1,11 +1,12 @@
 <template>
-  <div class="view user-projects">
+  <div data-test="user-projects" class="view user-projects">
     <ViewHeader class="user-projects__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
+          data-test="input-search"
           class="user-projects__header__search"
           width="300px"
           :placeholder="$t('UserProjects.searchInputPlaceholder')"
@@ -15,7 +16,8 @@
       </template>
       <template #right>
         <BIMDataButton
-          class="user-projects__header__filter-btn"
+          data-test="btn-filter"
+          class="user-projects__header__btn-filter"
           fill
           squared
           icon
@@ -23,7 +25,8 @@
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton>
         <BIMDataButton
-          class="user-projects__header__sort-btn"
+          data-test="btn-sort"
+          class="user-projects__header__btn-sort"
           fill
           squared
           icon
