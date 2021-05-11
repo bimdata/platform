@@ -15,7 +15,9 @@ export const oidcConfig = {
   redirect_uri: `${APP_BASE_URL}/oidc-callback`,
   scope: "openid profile email",
   post_logout_redirect_uri: APP_BASE_URL,
-  extraQueryParams: { kc_idp_hint: "bimdataconnect" },
+  extraQueryParams: {
+    kc_idp_hint: "bimdataconnect"
+  },
   automaticSilentRenew: true,
   revokeAccessTokenOnSignout: true,
   clockSkew: 900,

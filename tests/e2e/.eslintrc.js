@@ -1,11 +1,9 @@
 module.exports = {
   root: true,
-  plugins: ["cypress"],
-  env: {
-    mocha: true,
-    "cypress/globals": true
-  },
+  extends: [
+    "plugin:cypress/recommended"
+  ],
   rules: {
-    strict: "off"
+    "cypress/require-data-selectors": "error"
   }
 };

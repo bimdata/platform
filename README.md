@@ -71,6 +71,16 @@ $ npm run test:e2e
 
 This command will start the platform locally on port `3030` and open Cypress.
 
+## Build
+
+The platform can be built for production like environment using the following command:
+
+```
+$ npm run build
+```
+
+This will create a `dist/` directory that contain the bundled application ready to be deployed.
+
 ## Documentation
 
 Coming soon...

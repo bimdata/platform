@@ -34,6 +34,7 @@
     "cypress": "^7.1.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.9.0",
     "node-sass": "^4.14.1",

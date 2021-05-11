@@ -5,6 +5,7 @@
 
 Cypress.Commands.add("getHook", names => {
   const selector = names.split(".").map(name => `[data-test=${name}]`).join(" ");
+  // eslint-disable-next-line cypress/require-data-selectors
   return cy.get(selector);
 });
 
@@ -20,10 +21,7 @@ Cypress.Commands.add("logout", () => {
 });
 
 Cypress.Commands.add("apiMock", ({ name, method = "GET", path, data }) => {
-  const intercept = cy.intercept(method, `${Cypress.env("API_BASE_URL")}${path}`, { fixture: data });
-  if (name) {
-    intercept.as(name);
-  }
+  cy.intercept(method, `${Cypress.env("API_BASE_URL")}${path}`, { fixture: data }).as(name);
 });
 
 Cypress.Commands.add("fileMock", ({ path, data }) => {
