@@ -1,6 +1,6 @@
 <template>
   <div class="space-card-image" :style="{ backgroundColor }">
-    <img v-if="space.image" :src="space.image" />
+    <img v-if="space.image" loading="lazy" :src="space.image" />
     <svg
       v-else
       viewBox="-37 -27.5 215 196"

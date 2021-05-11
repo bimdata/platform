@@ -20,6 +20,7 @@
     </div>
     <div class="project-card-model-preview__viewport" ref="viewport">
       <img
+        loading="lazy"
         :src="image ? image.url : '/static/default-model-preview.png'"
         :style="{ transform: `translateX(-${translation}px)` }"
       />
