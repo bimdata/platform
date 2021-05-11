@@ -10,10 +10,10 @@
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
   "dependencies": {
-    "@bimdata/design-system": "^0.3.2",
-    "@bimdata/typescript-fetch-api-client": "^6.10.0",
+    "@bimdata/design-system": "^0.3.4",
+    "@bimdata/typescript-fetch-api-client": "^6.12.0",
     "@bimdata/viewer": "^1.6.1",
-    "@uppy/core": "^1.17.0",
+    "@uppy/core": "^1.18.0",
     "@uppy/xhr-upload": "^1.7.2",
     "detect-browser": "^5.2.0",
     "lodash": "^4.17.21",
@@ -26,13 +26,13 @@
     "vue3-click-away": "^1.2.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-router": "~4.5.12",
-    "@vue/cli-plugin-unit-jest": "~4.5.12",
-    "@vue/cli-service": "~4.5.12",
+    "@vue/cli-plugin-router": "~4.5.13",
+    "@vue/cli-plugin-unit-jest": "~4.5.13",
+    "@vue/cli-service": "~4.5.13",
     "@vue/compiler-sfc": "^3.0.11",
-    "@vue/test-utils": "^2.0.0-rc.4",
-    "cypress": "^7.1.0",
-    "eslint": "^7.25.0",
+    "@vue/test-utils": "^2.0.0-rc.6",
+    "cypress": "^7.3.0",
+    "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-prettier": "^3.4.0",
@@ -41,6 +41,6 @@
     "sass-loader": "^8.0.2",
     "start-server-and-test": "^1.12.1",
     "typescript": "~3.9.9",
-    "vue-jest": "^5.0.0-alpha.8"
+    "vue-jest": "^5.0.0-alpha.9"
   }
 }
