@@ -3,6 +3,11 @@
 // https://docs.cypress.io/api/cypress-api/custom-commands
 // ***********************************************
 
+Cypress.Commands.add("getHook", names => {
+  const selector = names.split(".").map(name => `[data-test=${name}]`).join(" ");
+  return cy.get(selector);
+});
+
 Cypress.Commands.add("login", () => {
   const key = `oidc.user:${Cypress.env("IAM_BASE_URL")}/auth/realms/bimdata:${Cypress.env("OIDC_CLIENT_ID")}`;
   const user = {};
@@ -21,8 +26,12 @@ Cypress.Commands.add("apiMock", ({ name, method = "GET", path, data }) => {
   }
 });
 
-Cypress.Commands.add("setupApiMocks", () => {
-  const mocks = [
+Cypress.Commands.add("fileMock", ({ path, data }) => {
+  cy.intercept("GET", `https://file-storage${path}`, { fixture: data });
+});
+
+Cypress.Commands.add("setupMocks", () => {
+  const apiMocks = [
     { name: "user",                    path: "/user",                             data: "user.json" },
     { name: "spaces",                  path: "/cloud",                            data: "spaces.json" },
     { name: "projects",                path: "/user/projects",                    data: "projects.json" },
@@ -44,10 +53,14 @@ Cypress.Commands.add("setupApiMocks", () => {
     { name: "project-300-users",       path: "/cloud/300/project/300/user",       data: "projects/300/users.json" },
     { name: "project-300-invitations", path: "/cloud/300/project/300/invitation", data: "projects/300/invitations.json" },
     { name: "project-300-models",      path: "/cloud/300/project/300/ifc",        data: "projects/300/models.json" },
-    { name: "model-1001-preview",      path: "/model-preview/1001",               data: "models/1001/preview.png" },
     { name: "model-1001-site",         path: "/cloud/100/project/100/ifc/1001/element?type=IfcSite", data: "models/1001/ifc-site.json" },
-    { name: "model-1002-preview",      path: "/model-preview/1002",               data: "models/1002/preview.png" },
     { name: "model-1002-site",         path: "/cloud/100/project/100/ifc/1002/element?type=IfcSite", data: "models/1002/ifc-site.json" }
   ];
-  mocks.forEach(cy.apiMock);
+  const fileMocks = [
+    { path: "/space-image/100",    data: "spaces/100/image.jpg" },
+    { path: "/model-preview/1001", data: "models/1001/preview.png" },
+    { path: "/model-preview/1002", data: "models/1002/preview.png" }
+  ];
+  apiMocks.forEach(cy.apiMock);
+  fileMocks.forEach(cy.fileMock);
 });

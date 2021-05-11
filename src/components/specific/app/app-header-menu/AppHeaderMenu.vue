@@ -6,7 +6,7 @@
           <span class="app-header-menu__btn__picture">
             {{ initials }}
           </span>
-          <span class="app-header-menu__btn__fullname">
+          <span data-test="user-name" class="app-header-menu__btn__fullname">
             {{ `${firstName} ${lastName}` }}
           </span>
           <span class="app-header-menu__btn__email">
@@ -31,7 +31,7 @@
           </BIMDataButton>
           <div class="separator"></div>
           <BIMDataButton
-            class="lang-btn"
+            class="btn-lang"
             ghost
             squared
             @click="openLanguageSelector"
@@ -40,7 +40,8 @@
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
           <BIMDataButton
-            class="logout-btn"
+            data-test="btn-logout"
+            class="btn-logout"
             color="primary"
             fill
             radius

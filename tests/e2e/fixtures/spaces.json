@@ -4,7 +4,7 @@
     "name": "My First Space",
     "created_at": "2021-04-01T09:00:00Z",
     "updated_at": "2021-04-10T09:00:00Z",
-    "image": null
+    "image": "https://file-storage/space-image/100"
   },
   {
     "id": 200,

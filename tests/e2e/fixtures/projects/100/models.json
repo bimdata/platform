@@ -11,7 +11,7 @@
     "source": "UPLOAD",
     "status": "C",
     "version": "IFC2X3",
-    "viewer_360_file": "https://api-staging.bimdata.io/model-preview/1001",
+    "viewer_360_file": "https://file-storage/model-preview/1001",
     "document": {
       "id": 1001,
       "name": "MyModel.ifc",
@@ -31,7 +31,7 @@
     "source": "UPLOAD",
     "status": "C",
     "version": "IFC2X3",
-    "viewer_360_file": "https://api-staging.bimdata.io/model-preview/1002",
+    "viewer_360_file": "https://file-storage/model-preview/1002",
     "document": {
       "id": 1002,
       "name": "AnotherModel-1234.ifc",
