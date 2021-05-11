@@ -1,5 +1,14 @@
 # BIMData Platform, next generation
 
+> **Important Note**
+>
+> This project is the next generation BIMData platform.
+> It is still under development and we do not intend to provide any support
+> on this project for now.
+>
+> If you want to fork/work/give feedback on BIMData platform please go to the [currently
+> supported version](https://github.com/bimdata/platform).
+
 This repository host the BIMData Platform project.
 The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.org/).
 
@@ -40,6 +49,27 @@ $ npm run dev
 ```
 
 - **(5)** Have a coffee and start coding... :coffee: `</>`
+
+## Test
+
+This project comes with a set of end-to-end tests built with [Cypress](https://www.cypress.io/).
+
+Before you can run the tests you need to set Cypress environment variables.
+To do so copy the example env file:
+
+```
+$ cp cyress.env.example cypress.env.json
+```
+
+Then open it and set variables values as appropriate.
+
+Once you setup Cypress env vars run the tests using the following command:
+
+```
+$ npm run test:e2e
+```
+
+This command will start the platform locally on port `3030` and open Cypress.
 
 ## Documentation
 
