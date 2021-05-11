@@ -74,3 +74,10 @@ This command will start the platform locally on port `3030` and open Cypress.
 ## Documentation
 
 Coming soon...
+
+## License
+
+The content of this repository is published under the terms of the [GNU LGPL-3.0](./LICENSE).
+
+> You are free to copy, modify, and distribute BIMData Platform under the terms of the LGPL 3.0.  
+> See LICENSE for more details.
