@@ -49,7 +49,7 @@
       justify-content: flex-start;
     }
 
-    .lang-btn {
+    .btn-lang {
       .lang-badge {
         margin-left: $spacing-unit/2;
         padding: $spacing-unit/4 $spacing-unit/2;
@@ -59,7 +59,7 @@
       }
     }
 
-    .logout-btn {
+    .btn-logout {
       margin: $spacing-unit/2 $spacing-unit;
       justify-content: center;
     }
