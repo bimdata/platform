@@ -1,6 +1,6 @@
 # BIMData Platform, next generation
 
-> **Important Note**
+> :warning: **Important Note**
 >
 > This project is the next generation BIMData platform.
 > It is still under development and we do not intend to provide any support
@@ -8,6 +8,8 @@
 >
 > If you want to fork/work/give feedback on BIMData platform please go to the [currently
 > supported version](https://github.com/bimdata/platform).
+
+---
 
 This repository host the BIMData Platform project.
 The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.org/).
@@ -63,7 +65,7 @@ $ cp cyress.env.example cypress.env.json
 
 Then open it and set variables values as appropriate.
 
-Once you setup Cypress env vars run the tests using the following command:
+Once you have setup Cypress env vars run the tests using the following command:
 
 ```
 $ npm run test:e2e
@@ -83,7 +85,7 @@ This will create a `dist/` directory that contain the bundled application ready 
 
 ## Documentation
 
-Coming soon...
+A work in progress documentation is available [here](https://github.com/bimdata/platform-next/wiki).
 
 ## License
 
