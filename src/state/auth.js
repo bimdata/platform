@@ -8,14 +8,21 @@ const state = reactive({
 });
 
 const authenticate = async redirectPath => {
-  const user = await AuthService.getUser();
-  if (user) {
-    if (!state.isAuthenticated) {
-      state.isAuthenticated = true;
-      state.accessToken = user.access_token;
-    }
-  } else {
+  let user = await AuthService.getUser();
+  if (!user) {
     await AuthService.signIn(redirectPath);
+    return;
+  }
+  if (!state.isAuthenticated) {
+    if (user.expired) {
+      // Refresh access token silently
+      user = await AuthService.signInSilent();
+    }
+    // Keep access token up to date across refresh
+    AuthService.onUserLoaded(user => (state.accessToken = user.access_token));
+    // Set auth state
+    state.isAuthenticated = true;
+    state.accessToken = user.access_token;
   }
 };
 
@@ -30,11 +37,12 @@ const signInCallback = async () => {
 
 const signOut = async () => {
   await AuthService.signOut();
+  AuthService.offUserLoaded();
   state.isAuthenticated = false;
-  state.user = null;
+  state.accessToken = null;
 };
 
-// Keep access token up to date across refresh
+// Keep api client access token in sync with state
 watchEffect(() => (apiClient.accessToken = state.accessToken));
 
 export function useAuth() {

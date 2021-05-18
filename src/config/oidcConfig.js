@@ -1,7 +1,7 @@
-/* This file is part of the BIMData Platform package.
-(c) BIMData support@bimdata.io
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code. */
+/**
+ * OIDC Client Configuration
+ * See: https://github.com/IdentityModel/oidc-client-js/wiki#configuration
+ */
 
 const APP_BASE_URL = process.env.VUE_APP_BASE_URL;
 const AUTHORITY = `${process.env.VUE_APP_IAM_BASE_URL}/auth/realms/bimdata`;
@@ -9,18 +9,27 @@ const OIDC_ENDPOINT = `${AUTHORITY}/protocol/openid-connect`;
 const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID;
 
 export const oidcConfig = {
+  // Auth request config
   authority: AUTHORITY,
-  response_type: "code",
   client_id: CLIENT_ID,
-  redirect_uri: `${APP_BASE_URL}/oidc-callback`,
   scope: "openid profile email",
-  post_logout_redirect_uri: APP_BASE_URL,
+  response_type: "code",
+  redirect_uri: `${APP_BASE_URL}/oidc-callback`,
   extraQueryParams: {
     kc_idp_hint: "bimdataconnect"
   },
-  automaticSilentRenew: true,
+
+  // Logout config
+  post_logout_redirect_uri: APP_BASE_URL,
   revokeAccessTokenOnSignout: true,
+
+  // Enable access token refresh
+  automaticSilentRenew: true,
+
+  // Other options
   clockSkew: 900,
+
+  // Auth metadata
   metadata: {
     issuer: AUTHORITY,
     authorization_endpoint: `${OIDC_ENDPOINT}/auth`,

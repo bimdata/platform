@@ -17,12 +17,25 @@ class AuthServive {
     );
   }
 
+  signInSilent() {
+    return userManager.signinSilent();
+  }
+
   signInCallback() {
     return userManager.signinRedirectCallback();
   }
 
   signOut() {
     return userManager.signoutRedirect();
+  }
+
+  onUserLoaded(callback) {
+    this._userLoadedCallback = callback;
+    userManager.events.addUserLoaded(callback);
+  }
+
+  offUserLoaded() {
+    userManager.events.removeUserLoaded(this._userLoadedCallback);
   }
 }
 

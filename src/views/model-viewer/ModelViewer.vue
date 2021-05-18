@@ -6,7 +6,7 @@
 
 <script>
 import { merge, set } from "lodash";
-import { onMounted, watch } from "vue";
+import { onMounted, onUnmounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import makeBIMDataViewer from "@bimdata/viewer";
@@ -72,6 +72,9 @@ export default {
       .map(pluginName => availablePlugins[pluginName])
       .filter(Boolean); // keep only existing plugins
 
+    let unwatchAccessToken;
+    let unwatchLocale;
+
     onMounted(async () => {
       const bimdataViewer = makeBIMDataViewer({
         api: {
@@ -97,8 +100,17 @@ export default {
 
       const viewer = bimdataViewer.mount("#viewer", window);
 
-      watch(accessToken, token => viewer.setAccessToken(token));
-      watch(locale, lang => (viewer.$i18n.locale = lang));
+      unwatchAccessToken = watch(accessToken, token => {
+        viewer.setAccessToken(token);
+      });
+      unwatchLocale = watch(locale, lang => {
+        viewer.$i18n.locale = lang;
+      });
+    });
+
+    onUnmounted(() => {
+      unwatchAccessToken();
+      unwatchLocale();
     });
   }
 };
