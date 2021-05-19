@@ -84,8 +84,7 @@ const routes = [
         }
       },
       {
-        path:
-          "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/viewer/:modelIDs",
+        path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/viewer/:modelIDs",
         name: routeNames.modelViewer,
         component: ModelViewer,
         meta: {

@@ -97,11 +97,8 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const {
-      currentProject,
-      currentProjectUsers,
-      currentProjectInvitations
-    } = useProjects();
+    const { currentProject, currentProjectUsers, currentProjectInvitations } =
+      useProjects();
     const { projectModels, loadProjectModels } = useModels();
 
     const tabs = ref([]);

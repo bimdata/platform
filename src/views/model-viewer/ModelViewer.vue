@@ -6,7 +6,7 @@
 
 <script>
 import { merge, set } from "lodash";
-import { onMounted, onUnmounted, watch } from "vue";
+import { onBeforeUnmount, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import makeBIMDataViewer from "@bimdata/viewer";
@@ -108,7 +108,9 @@ export default {
         bimdataViewer.registerPlugin(pluginModule.default);
       });
 
-      const viewer = bimdataViewer.mount("#viewer", defaultWindow);
+      bimdataViewer.mount("#viewer", defaultWindow);
+
+      // Keep viewer access token and locale in sync with application
       unwatchAccessToken = watch(accessToken, token => {
         bimdataViewer.setAccessToken(token);
       });
@@ -117,7 +119,7 @@ export default {
       });
     });
 
-    onUnmounted(() => {
+    onBeforeUnmount(() => {
       unwatchAccessToken();
       unwatchLocale();
     });
