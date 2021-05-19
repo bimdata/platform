@@ -36,7 +36,7 @@ export default {
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs = route.params.modelIDs.split(",").map(id => +id);
-    const window = route.query.window || "3d";
+    const defaultWindow = route.query.window || "3d";
 
     // Initial plugins config
     const pluginsConfig = {
@@ -108,7 +108,7 @@ export default {
         bimdataViewer.registerPlugin(pluginModule.default);
       });
 
-      const viewer = bimdataViewer.mount("#viewer", window);
+      const viewer = bimdataViewer.mount("#viewer", defaultWindow);
       unwatchAccessToken = watch(accessToken, token => {
         bimdataViewer.setAccessToken(token);
       });
