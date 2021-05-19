@@ -76,14 +76,12 @@ export default {
     const appPlugins = currentSpace.value.marketplaceApps
       .filter(app => app.viewerPluginsUrls && app.viewerPluginsUrls.length)
       .map(app => app.viewerPluginsUrls)
-      .reduce((urls, acc) => {
-        urls.forEach(url => {
-          acc.push(url);
-        });
-        return acc;
-      }, []);
+      .reduce((set, urls) => {
+        urls.forEach(url => set.add(url));
+        return set;
+      }, new Set());
 
-    const pluginUrls = featurePlugins.concat(appPlugins);
+    const pluginUrls = featurePlugins.concat(Array.from(appPlugins));
 
     let unwatchAccessToken;
     let unwatchLocale;
