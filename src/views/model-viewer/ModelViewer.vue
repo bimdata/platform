@@ -65,16 +65,28 @@ export default {
 
     merge(pluginsConfig, spacePluginsConfig);
 
-    // Extract space specific plugins urls
-    const pluginUrls = currentSpace.value.features
+    // Extract space specific plugins urls from deprecated features
+    const featurePlugins = currentSpace.value.features
       .filter(feature => feature.name.startsWith("viewer-plugin-"))
       .map(feature => feature.name.split("viewer-plugin-")[1])
       .map(pluginName => availablePlugins[pluginName])
       .filter(Boolean); // keep only existing plugins
 
+    // Extract space specific plugins urls from marketplace
+    const appPlugins = currentSpace.value.marketplaceApps
+      .filter(app => app.viewerPluginsUrls && app.viewerPluginsUrls.length)
+      .map(app => app.viewerPluginsUrls)
+      .reduce((urls, acc) => {
+        urls.forEach(url => {
+          acc.push(url);
+        });
+        return acc;
+      }, []);
+
+    const pluginUrls = featurePlugins.concat(appPlugins);
+
     let unwatchAccessToken;
     let unwatchLocale;
-
     onMounted(async () => {
       const bimdataViewer = makeBIMDataViewer({
         api: {
@@ -99,12 +111,11 @@ export default {
       });
 
       const viewer = bimdataViewer.mount("#viewer", window);
-
       unwatchAccessToken = watch(accessToken, token => {
-        viewer.setAccessToken(token);
+        bimdataViewer.setAccessToken(token);
       });
       unwatchLocale = watch(locale, lang => {
-        viewer.$i18n.locale = lang;
+        bimdataViewer.setLocale(lang);
       });
     });
 
