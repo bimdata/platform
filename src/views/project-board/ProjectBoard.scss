@@ -4,4 +4,8 @@
       background-color: transparent;
     }
   }
+
+  &__body {
+    padding: $spacing-unit * 2 0;
+  }
 }

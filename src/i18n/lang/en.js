@@ -13,7 +13,7 @@ export default {
   },
   ProjectBoard: {
     tabs: {
-      project: "Project",
+      overview: "Project",
       files: "Files",
       bcf: "BCF"
     },
