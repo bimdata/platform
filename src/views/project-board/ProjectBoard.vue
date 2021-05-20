@@ -13,7 +13,10 @@
           :tabs="tabs"
         />
       </template>
-      <template #right>
+    </ViewHeader>
+
+    <div class="project-board__container">
+      <app-slot-content name="view-header-right">
         <BIMDataButton
           data-test="btn-toggle-upload"
           width="120px"
@@ -32,10 +35,8 @@
               : $t("ProjectBoard.openFileUploadButtonText")
           }}</span>
         </BIMDataButton>
-      </template>
-    </ViewHeader>
+      </app-slot-content>
 
-    <div class="project-board__container">
       <transition name="fade">
         <FileUploader
           v-show="showFileUploader"
@@ -76,6 +77,7 @@ import { useProjects } from "@/state/projects";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader";
@@ -88,6 +90,7 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataTabs,
+    AppSlotContent,
     ViewHeader,
     AppBreadcrumb,
     FileUploader,
