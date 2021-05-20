@@ -9,19 +9,27 @@
           width="300px"
           height="32px"
           tabSize="100px"
-          selected="project"
+          :selected="0"
           :tabs="tabs"
+          @tab-click="selectTab"
         />
       </template>
     </ViewHeader>
 
     <div class="project-board__body">
-      <ProjectOverview
-        :project="project"
-        :models="models"
-        :users="users"
-        :invitations="invitations"
-      />
+      <transition name="fade" mode="out-in">
+        <ProjectOverview
+          v-if="currentTab === 'overview'"
+          :project="project"
+          :models="models"
+          :users="users"
+          :invitations="invitations"
+        />
+
+        <ProjectFiles v-else-if="currentTab === 'files'" :project="project" />
+
+        <ProjectBcf v-else-if="currentTab === 'bcf'" :project="project" />
+      </transition>
     </div>
   </div>
 </template>
@@ -35,6 +43,8 @@ import { useProjects } from "@/state/projects";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
+import ProjectBcf from "./project-bcf/ProjectBcf";
+import ProjectFiles from "./project-files/ProjectFiles";
 import ProjectOverview from "./project-overview/ProjectOverview";
 
 export default {
@@ -42,6 +52,8 @@ export default {
     BIMDataTabs,
     ViewHeader,
     AppBreadcrumb,
+    ProjectBcf,
+    ProjectFiles,
     ProjectOverview
   },
   setup() {
@@ -51,21 +63,28 @@ export default {
     const { projectModels } = useModels();
 
     const tabs = ref([]);
+    const currentTab = ref("overview");
     watchEffect(() => {
       tabs.value = [
-        { id: "project", label: t("ProjectBoard.tabs.project") },
+        { id: "overview", label: t("ProjectBoard.tabs.overview") },
         { id: "files", label: t("ProjectBoard.tabs.files") },
         { id: "bcf", label: t("ProjectBoard.tabs.bcf") }
       ];
     });
+    const selectTab = tab => {
+      currentTab.value = tab.id;
+    };
 
     return {
       // References
+      currentTab,
       invitations: currentProjectInvitations,
       models: projectModels,
       project: currentProject,
       tabs,
-      users: currentProjectUsers
+      users: currentProjectUsers,
+      // Methods
+      selectTab
     };
   }
 };

@@ -1,8 +1,7 @@
 .project-overview {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
-  padding: $spacing-unit * 2 0;
+  gap: $spacing-unit * 2;
 
   &__block {
     &--upload {

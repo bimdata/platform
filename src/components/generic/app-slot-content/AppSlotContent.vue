@@ -1,5 +1,5 @@
 <script>
-import { onMounted } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import { useAppSlot } from "@/composables/app-slot";
 
 export default {
@@ -14,6 +14,10 @@ export default {
 
     onMounted(() => {
       targetSlot.value = slots.default;
+    });
+
+    onBeforeUnmount(() => {
+      targetSlot.value = null;
     });
   },
   render() {
