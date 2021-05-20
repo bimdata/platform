@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createApp } from "vue";
 import vueClickAway from "vue3-click-away";
 import i18n from "./i18n";
