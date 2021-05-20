@@ -1,0 +1,27 @@
+.project-overview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: $spacing-unit * 2 0;
+
+  &__block {
+    &--upload {
+      width: 100%;
+    }
+
+    &--overview {
+      flex-grow: 1;
+      height: 480px;
+    }
+
+    &--users {
+      width: 560px;
+      height: 480px;
+    }
+
+    &--models {
+      width: 100%;
+      height: 560px;
+    }
+  }
+}
