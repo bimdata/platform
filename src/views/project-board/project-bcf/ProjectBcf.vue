@@ -1,7 +1,7 @@
 <template>
   <div class="project-bcf">
     <!-- TODO -->
-    Project BCF
+    Project BCF view, coming soon...
   </div>
 </template>
 

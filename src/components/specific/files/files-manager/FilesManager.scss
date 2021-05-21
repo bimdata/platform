@@ -1,7 +1,39 @@
 .files-manager {
   &:deep() {
     .bimdata-card__content {
-      height: calc(100% - 35px);
+      height: calc(100% - 35px - 26px);
+
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      grid-template-rows: 32px 1fr;
+      gap: $spacing-unit;
+      grid-template-areas:
+        "actions actions"
+        "tree    table";
+
+      .files-manager__actions {
+        grid-area: actions;
+        display: flex;
+        gap: $spacing-unit;
+
+        &__input-search {
+          font-size: 1rem;
+          background-color: $color-tertiary-lightest;
+          &.focus {
+            background-color: $color-white;
+          }
+        }
+      }
+
+      .files-manager__tree {
+        grid-area: tree;
+        padding: $spacing-unit;
+        @include box-shadow;
+      }
+
+      .files-manager__table {
+        grid-area: table;
+      }
     }
   }
 }

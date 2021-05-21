@@ -3,7 +3,7 @@
     <div
       class="generic-table__container"
       :style="{
-        height: paginated ? `${(perPage + 1) * rowHeight}px` : undefined
+        height: paginated ? `${(perPage + 1) * rowHeight}px` : '100%'
       }"
     >
       <table>

@@ -1,0 +1,23 @@
+.file-tree {
+  &:deep() {
+    .file-tree-node {
+      &__node {
+        display: flex;
+        align-items: center;
+        gap: $spacing-unit * 2/3;
+        margin: $spacing-unit * 2/3 0;
+        color: $color-primary;
+        cursor: pointer;
+
+        &__name {
+          @include noselect;
+          align-self: flex-end;
+        }
+      }
+
+      &__children {
+        padding-left: $spacing-unit * 3/2;
+      }
+    }
+  }
+}

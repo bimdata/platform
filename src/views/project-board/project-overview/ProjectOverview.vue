@@ -12,8 +12,8 @@
         <BIMDataIcon :name="showFileUploader ? 'close' : 'plus'" size="xxxs" />
         <span>{{
           showFileUploader
-            ? $t("ProjectBoard.closeFileUploadButtonText")
-            : $t("ProjectBoard.openFileUploadButtonText")
+            ? $t("ProjectOverview.closeFileUploadButtonText")
+            : $t("ProjectOverview.openFileUploadButtonText")
         }}</span>
       </BIMDataButton>
     </app-slot-content>

@@ -16,9 +16,7 @@ export default {
       overview: "Projet",
       files: "GED",
       bcf: "BCF"
-    },
-    openFileUploadButtonText: "Ajouter un IFC",
-    closeFileUploadButtonText: "Fermer"
+    }
   },
   SpaceBoard: {
     searchInputPlaceholder: "Rechercher un projet"
@@ -29,6 +27,17 @@ export default {
   UserSpaces: {
     searchInputPlaceholder: "Rechercher un espace",
     createButtonText: "Créer un espace"
+  },
+
+  // ==========
+  // Sub Views
+  ProjectBcf: {},
+  ProjectFiles: {
+    groupsButtonText: "Gestion des groupes"
+  },
+  ProjectOverview: {
+    openFileUploadButtonText: "Ajouter un IFC",
+    closeFileUploadButtonText: "Fermer"
   },
 
   // ==========
@@ -79,13 +88,28 @@ export default {
   },
 
   FilesManager: {
-    title: "Documents du projet"
+    title: "Documents du projet",
+    searchInputPlaceholder: "Rechercher",
+    addFolderButtonText: "Nouveau dossier",
+    addFileButtonText: "Charger un fichier"
   },
 
   FilesManagerOnboarding: {
     text: "Téléverser votre premier fichier",
     uploadFileButtonText: "Téléverser un fichier",
     createFolderButtonText: "Créer un dossier"
+  },
+
+  FilesTable: {
+    emptyTablePlaceholder: "Dossier vide",
+    headers: {
+      name: "Nom",
+      type: "Type",
+      creator: "Crée par",
+      tags: "Tags",
+      lastupdate: "Modifié le",
+      size: "Taille"
+    }
   },
 
   FileUploadCard: {

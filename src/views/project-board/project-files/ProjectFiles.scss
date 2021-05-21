@@ -1,6 +1,11 @@
 .project-files {
-  // TODO
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  &__block {
+    &--files {
+      width: 100%;
+      min-height: 560px;
+      max-height: 100%;
+    }
+  }
 }

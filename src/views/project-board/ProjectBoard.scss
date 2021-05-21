@@ -1,4 +1,8 @@
 .project-board {
+  display: grid;
+  grid-template-rows: 32px 1fr;
+  min-height: 100%;
+
   &__header:deep() {
     .bimdata-tabs__container__tab.active {
       background-color: transparent;
@@ -6,6 +10,7 @@
   }
 
   &__body {
+    display: grid;
     padding: $spacing-unit * 2 0;
   }
 }
