@@ -17,7 +17,7 @@
         <template v-if="uploading">
           <span>{{
             `${formatBytes(progress.uploaded)} of ${formatBytes(file.size)}` +
-              ` (${progress.percentage}% done)`
+            ` (${progress.percentage}% done)`
           }}</span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""

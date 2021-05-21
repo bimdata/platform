@@ -1,6 +1,13 @@
 import apiClient from "./api-client";
 
 class FileService {
+  fetchFileStructure(project) {
+    return apiClient.collaborationApi.getProjectDMSTree({
+      cloudPk: project.cloud.id,
+      id: project.id
+    });
+  }
+
   fetchDocuments(project) {
     return apiClient.collaborationApi.getDocuments({
       cloudPk: project.cloud.id,

@@ -16,9 +16,7 @@ export default {
       overview: "Project",
       files: "Files",
       bcf: "BCF"
-    },
-    openFileUploadButtonText: "Add an IFC",
-    closeFileUploadButtonText: "Close"
+    }
   },
   SpaceBoard: {
     searchInputPlaceholder: "Search projects"
@@ -29,6 +27,17 @@ export default {
   UserSpaces: {
     searchInputPlaceholder: "Search spaces",
     createButtonText: "Create a space"
+  },
+
+  // ==========
+  // Sub Views
+  ProjectBcf: {},
+  ProjectFiles: {
+    groupsButtonText: "Manage groups"
+  },
+  ProjectOverview: {
+    openFileUploadButtonText: "Add an IFC",
+    closeFileUploadButtonText: "Close"
   },
 
   // ==========
@@ -79,13 +88,28 @@ export default {
   },
 
   FilesManager: {
-    title: "Project Files"
+    title: "Project Files",
+    searchInputPlaceholder: "Search",
+    addFolderButtonText: "New folder",
+    addFileButtonText: "Upload a file"
   },
 
   FilesManagerOnboarding: {
     text: "Upload your first file",
     uploadFileButtonText: "Upload a file",
     createFolderButtonText: "Create a folder"
+  },
+
+  FilesTable: {
+    emptyTablePlaceholder: "Empty folder",
+    headers: {
+      name: "Name",
+      type: "Type",
+      creator: "Created by",
+      tags: "Tags",
+      lastupdate: "Last Modified",
+      size: "Size"
+    }
   },
 
   FileUploadCard: {
