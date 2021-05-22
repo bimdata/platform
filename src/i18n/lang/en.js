@@ -87,6 +87,10 @@ export default {
     message: "Hi {name}, it's great to see you again !"
   },
 
+  FileLastUpdateCell: {
+    at: "at"
+  },
+
   FilesManager: {
     title: "Project Files",
     searchInputPlaceholder: "Search",
@@ -102,6 +106,7 @@ export default {
 
   FilesTable: {
     emptyTablePlaceholder: "Empty folder",
+    folder: "Folder",
     headers: {
       name: "Name",
       type: "Type",

@@ -6,7 +6,31 @@
     :selectable="true"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
-    <!-- TODO -->
+    <template #cell-name="{ row: file }">
+      <FileNameCell :file="file" />
+    </template>
+    <template #cell-type="{ row: file }">
+      {{
+        file.type === "Folder"
+          ? $t("FileTable.folder")
+          : "." + fileExtension(file.name)
+      }}
+    </template>
+    <template #cell-creator="{ row: { creator } }">
+      {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
+    </template>
+    <template #cell-tags>
+      <FileTagsCell />
+    </template>
+    <template #cell-lastupdate="{ row: file }">
+      <FileLastUpdateCell :file="file" />
+    </template>
+    <template #cell-size="{ row: file }">
+      {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
+    </template>
+    <template #cell-actions>
+      <FileActionsCell :file="file" />
+    </template>
   </GenericTable>
 </template>
 
@@ -14,12 +38,21 @@
 import { ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
 import { useI18n } from "vue-i18n";
+import { fileExtension, formatBytes } from "@/utils/files";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
+import FileActionsCell from "./file-actions-cell/FileActionsCell";
+import FileLastUpdateCell from "./file-last-update-cell/FileLastUpdateCell";
+import FileNameCell from "./file-name-cell/FileNameCell";
+import FileTagsCell from "./file-tags-cell/FileTagsCell";
 
 export default {
   components: {
-    GenericTable
+    GenericTable,
+    FileActionsCell,
+    FileLastUpdateCell,
+    FileNameCell,
+    FileTagsCell
   },
   props: {
     project: {
@@ -80,7 +113,11 @@ export default {
     });
 
     return {
-      columns
+      // References
+      columns,
+      // Methods
+      fileExtension,
+      formatBytes
     };
   }
 };

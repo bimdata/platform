@@ -27,7 +27,6 @@
 
       .files-manager__tree {
         grid-area: tree;
-        padding: $spacing-unit;
         @include box-shadow;
       }
 

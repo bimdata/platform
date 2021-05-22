@@ -1,7 +1,10 @@
 .file-tree {
+  padding: $spacing-unit;
+
   &:deep() {
     .file-tree-node {
       &__node {
+        position: relative;
         display: flex;
         align-items: center;
         gap: $spacing-unit * 2/3;
@@ -9,14 +12,34 @@
         color: $color-primary;
         cursor: pointer;
 
+        &__name,
+        &__icon-arrow,
+        &__icon-folder {
+          position: relative;
+          z-index: 1;
+        }
+
+        &__background {
+          position: absolute;
+          z-index: 0;
+          left: -$spacing-unit;
+          width: calc(100% + #{$spacing-unit * 2});
+          height: 26px;
+          background-color: $color-tertiary;
+          opacity: 0;
+          transition: opacity 0.2s ease-out;
+        }
+
         &__name {
           @include noselect;
           align-self: flex-end;
         }
       }
 
-      &__children {
-        padding-left: $spacing-unit * 3/2;
+      &__node.selected {
+        .file-tree-node__node__background {
+          opacity: 1;
+        }
       }
     }
   }

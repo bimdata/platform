@@ -18,6 +18,7 @@ FileTreeNode = {
   render() {
     const file = this.$props.file;
     const depth = this.$props.depth;
+
     const children = (file.children || []).filter(
       child => child.type === "Folder"
     );

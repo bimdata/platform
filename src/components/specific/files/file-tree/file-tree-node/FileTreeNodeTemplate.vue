@@ -1,6 +1,12 @@
 <template>
   <div class="file-tree-node">
-    <div class="file-tree-node__node">
+    <div
+      class="file-tree-node__node"
+      :class="{ selected: selectedFileID === file.id }"
+      :style="{ paddingLeft: `${depth * 18}px` }"
+      @click="select"
+    >
+      <div class="file-tree-node__node__background"></div>
       <BIMDataIcon
         class="file-tree-node__node__icon-arrow"
         name="chevron"
@@ -9,14 +15,14 @@
         :style="{
           visibility: hasChildren ? 'visible' : 'hidden'
         }"
-        @click="toggle"
+        @click.stop="toggle"
       />
       <BIMDataIcon
         class="file-tree-node__node__icon-folder"
         :name="isOpen ? 'folderOpen' : 'folder'"
         size="s"
       />
-      <span class="file-tree-node__node__name" @click="select">
+      <span class="file-tree-node__node__name">
         {{ file.name }}
       </span>
     </div>
@@ -53,6 +59,7 @@ export default {
   },
   setup(props) {
     const isOpen = ref(false);
+    const selectedFileID = inject("selectedFileID");
     const selectFile = inject("selectFile");
 
     const toggle = () => {
@@ -68,6 +75,7 @@ export default {
     return {
       // References
       isOpen,
+      selectedFileID,
       // Methods
       toggle,
       select
