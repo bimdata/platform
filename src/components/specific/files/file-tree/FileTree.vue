@@ -1,11 +1,11 @@
 <template>
   <div class="file-tree">
-    <FileTreeNode v-if="fileStructure" :file="fileStructure" />
+    <FileTreeNode :file="fileStructure" />
   </div>
 </template>
 
 <script>
-import { provide } from "@vue/runtime-core";
+import { provide, ref } from "@vue/runtime-core";
 import FileTreeNode from "./file-tree-node/FileTreeNode";
 
 export default {
@@ -24,9 +24,15 @@ export default {
   },
   emits: ["file-selected"],
   setup(props, { emit }) {
-    provide("selectFile", file => {
+    const selectedFileID = ref(props.fileStructure.id);
+
+    const selectFile = file => {
+      selectedFileID.value = file.id;
       emit("file-selected", file);
-    });
+    };
+
+    provide("selectedFileID", selectedFileID);
+    provide("selectFile", selectFile);
   }
 };
 </script>

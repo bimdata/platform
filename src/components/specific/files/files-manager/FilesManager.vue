@@ -5,13 +5,9 @@
     </template>
     <template #content>
       <div class="files-manager__actions">
-        <BIMDataSearch
-          class="files-manager__actions__input-search"
-          width="400px"
-          :placeholder="$t('FilesManager.searchInputPlaceholder')"
-        />
         <BIMDataButton
           class="files-manager__actions__btn-new-folder"
+          width="194px"
           color="primary"
           fill
           radius
@@ -22,6 +18,7 @@
         </BIMDataButton>
         <BIMDataButton
           class="files-manager__actions__btn-new-file"
+          width="194px"
           color="primary"
           fill
           radius
@@ -30,9 +27,15 @@
           <BIMDataIcon name="addFile" size="xs" />
           <span>{{ $t("FilesManager.addFileButtonText") }}</span>
         </BIMDataButton>
+        <BIMDataSearch
+          class="files-manager__actions__input-search"
+          width="400px"
+          :placeholder="$t('FilesManager.searchInputPlaceholder')"
+        />
       </div>
       <FileTree
         class="files-manager__tree"
+        v-if="fileStructure"
         :project="project"
         :fileStructure="fileStructure"
         @file-selected="onFileSelected"
@@ -95,6 +98,39 @@ const testFileStructure = {
               type: "Ifc"
             }
           ]
+        },
+        {
+          id: 1001,
+          name: "Sub Folder",
+          type: "Folder",
+          children: [
+            {
+              id: 1002,
+              name: "Sub Folder",
+              type: "Folder",
+              children: [
+                {
+                  id: 1003,
+                  name: "Sub Folder",
+                  type: "Folder",
+                  children: [
+                    {
+                      id: 1004,
+                      name: "Sub Folder",
+                      type: "Folder",
+                      children: [
+                        {
+                          id: 1005,
+                          name: "model-2",
+                          type: "Folder"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -105,6 +141,42 @@ const testFileStructure = {
       children: [
         {
           id: 24,
+          name: "Model 1234",
+          type: "Ifc"
+        }
+      ]
+    },
+    {
+      id: 14,
+      name: "Yet Another Folder",
+      type: "Folder",
+      children: [
+        {
+          id: 25,
+          name: "Model 1234",
+          type: "Ifc"
+        }
+      ]
+    },
+    {
+      id: 16,
+      name: "Folder 123",
+      type: "Folder",
+      children: [
+        {
+          id: 26,
+          name: "Model 1234",
+          type: "Ifc"
+        }
+      ]
+    },
+    {
+      id: 17,
+      name: "Folder ABC",
+      type: "Folder",
+      children: [
+        {
+          id: 27,
           name: "Model 1234",
           type: "Ifc"
         }

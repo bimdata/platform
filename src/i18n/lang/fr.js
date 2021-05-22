@@ -87,6 +87,10 @@ export default {
     message: "Bonjour {name}, content de vous revoir !"
   },
 
+  FileLastUpdateCell: {
+    at: "à"
+  },
+
   FilesManager: {
     title: "Documents du projet",
     searchInputPlaceholder: "Rechercher",
@@ -102,6 +106,7 @@ export default {
 
   FilesTable: {
     emptyTablePlaceholder: "Dossier vide",
+    folder: "Dossier",
     headers: {
       name: "Nom",
       type: "Type",

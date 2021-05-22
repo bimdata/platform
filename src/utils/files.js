@@ -4,10 +4,13 @@ function fileExtension(fileName) {
 }
 
 function formatBytes(bytes) {
-  if (bytes / 1000000 >= 1) {
+  if (bytes >= 1000000000) {
+    return `${Number(bytes / 1000000000).toFixed(2)} GB`;
+  }
+  if (bytes >= 1000000) {
     return `${Number(bytes / 1000000).toFixed(2)} MB`;
   }
-  if (bytes / 1000 >= 1) {
+  if (bytes >= 1000) {
     return `${Number(bytes / 1000).toFixed(2)} KB`;
   }
   return `${bytes} B`;
