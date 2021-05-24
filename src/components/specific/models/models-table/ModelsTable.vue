@@ -4,7 +4,7 @@
     :columns="columns"
     :rows="models"
     :paginated="true"
-    :perPage="6"
+    :perPage="7"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('ModelsTable.emptyTablePlaceholder')"
