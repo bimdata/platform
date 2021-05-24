@@ -10,15 +10,17 @@
         @tab-click="selectTab"
       />
 
-      <ModelsActionBar
-        class="models-manager__action-bar"
-        :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
-        :models="selection"
-        @archive-clicked="archiveModels"
-        @delete-clicked="openDeleteModal"
-        @download-clicked="downloadModels"
-        @merge-clicked="openMergeModal"
-      />
+      <transition name="fade">
+        <ModelsActionBar
+          class="models-manager__action-bar"
+          :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
+          :models="selection"
+          @archive-clicked="archiveModels"
+          @delete-clicked="openDeleteModal"
+          @download-clicked="downloadModels"
+          @merge-clicked="openMergeModal"
+        />
+      </transition>
 
       <ModelsTable
         :project="project"

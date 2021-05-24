@@ -7,6 +7,10 @@
   }
 
   &__action-bar {
-    margin: $spacing-unit 0;
+    // margin: $spacing-unit 0;
+    position: absolute;
+    z-index: 1;
+    margin-top: 8px;
+    margin-left: 60px;
   }
 }
