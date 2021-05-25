@@ -87,8 +87,13 @@ export default {
     message: "Hi {name}, it's great to see you again !"
   },
 
-  FileLastUpdateCell: {
-    at: "at"
+  FileActionsCell: {
+    addTagsButtonText: "Add tags",
+    validationRequestButtonText: "Validation request",
+    renameButtonText: "Rename",
+    downloadButtonText: "Download",
+    addVersionButtonText: "Add version",
+    manageAccessButtonText: "Manage access"
   },
 
   FilesManager: {

@@ -3,6 +3,7 @@
     class="files-table"
     :columns="columns"
     :rows="files"
+    :rowHeight="44"
     :selectable="true"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
