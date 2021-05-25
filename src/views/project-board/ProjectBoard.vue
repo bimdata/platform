@@ -26,7 +26,12 @@
           :invitations="invitations"
         />
 
-        <ProjectFiles v-else-if="currentTab === 'files'" :project="project" />
+        <ProjectFiles
+          v-else-if="currentTab === 'files'"
+          :project="project"
+          :files="files"
+          :fileStructure="fileStructure"
+        />
 
         <ProjectBcf v-else-if="currentTab === 'bcf'" :project="project" />
       </transition>
@@ -39,6 +44,7 @@ import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
+import { useFiles } from "@/state/files";
 // Components
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
@@ -61,6 +67,7 @@ export default {
     const { currentProject, currentProjectUsers, currentProjectInvitations } =
       useProjects();
     const { projectModels } = useModels();
+    const { projectFiles, projectFileStructure } = useFiles();
 
     const tabs = ref([]);
     const currentTab = ref("overview");
@@ -78,6 +85,8 @@ export default {
     return {
       // References
       currentTab,
+      files: projectFiles,
+      fileStructure: projectFileStructure,
       invitations: currentProjectInvitations,
       models: projectModels,
       project: currentProject,

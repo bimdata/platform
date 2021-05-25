@@ -3,13 +3,11 @@
     class="file-icon"
     :width="size"
     :height="(+size * 4) / 3"
-    :src="icons[`icon_${name}`]"
+    :src="`/static/file-icons/${name || 'unknown'}.svg`"
   />
 </template>
 
 <script>
-import icons from "./icons";
-
 export default {
   props: {
     name: {
@@ -20,11 +18,6 @@ export default {
       type: [String, Number],
       default: "16"
     }
-  },
-  setup() {
-    return {
-      icons
-    };
   }
 };
 </script>

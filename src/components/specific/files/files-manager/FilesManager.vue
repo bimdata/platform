@@ -43,7 +43,8 @@
       <FilesTable
         class="files-manager__table"
         :project="project"
-        :files="files"
+        :files="currentFiles"
+        @file-selected="onFileSelected"
       />
 
       <FilesManagerOnboarding v-if="false" :project="project" />
@@ -52,8 +53,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "@vue/runtime-core";
-import { useFiles } from "@/state/files";
+import { ref, watch } from "@vue/runtime-core";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -62,128 +62,6 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
-
-const testFileStructure = {
-  id: 0,
-  name: "root",
-  children: [
-    {
-      id: 11,
-      name: "model-1",
-      type: "Ifc"
-    },
-    {
-      id: 12,
-      name: "Dossier de Toto",
-      type: "Folder",
-      children: [
-        {
-          id: 21,
-          name: "Doc 1",
-          type: "Document"
-        },
-        {
-          id: 22,
-          name: "document important",
-          type: "Document"
-        },
-        {
-          id: 23,
-          name: "Sub Folder",
-          type: "Folder",
-          children: [
-            {
-              id: 31,
-              name: "model-2",
-              type: "Ifc"
-            }
-          ]
-        },
-        {
-          id: 1001,
-          name: "Sub Folder",
-          type: "Folder",
-          children: [
-            {
-              id: 1002,
-              name: "Sub Folder",
-              type: "Folder",
-              children: [
-                {
-                  id: 1003,
-                  name: "Sub Folder",
-                  type: "Folder",
-                  children: [
-                    {
-                      id: 1004,
-                      name: "Sub Folder",
-                      type: "Folder",
-                      children: [
-                        {
-                          id: 1005,
-                          name: "model-2",
-                          type: "Folder"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 13,
-      name: "Another Folder",
-      type: "Folder",
-      children: [
-        {
-          id: 24,
-          name: "Model 1234",
-          type: "Ifc"
-        }
-      ]
-    },
-    {
-      id: 14,
-      name: "Yet Another Folder",
-      type: "Folder",
-      children: [
-        {
-          id: 25,
-          name: "Model 1234",
-          type: "Ifc"
-        }
-      ]
-    },
-    {
-      id: 16,
-      name: "Folder 123",
-      type: "Folder",
-      children: [
-        {
-          id: 26,
-          name: "Model 1234",
-          type: "Ifc"
-        }
-      ]
-    },
-    {
-      id: 17,
-      name: "Folder ABC",
-      type: "Folder",
-      children: [
-        {
-          id: 27,
-          name: "Model 1234",
-          type: "Ifc"
-        }
-      ]
-    }
-  ]
-};
 
 export default {
   components: {
@@ -199,26 +77,37 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    files: {
+      type: Array,
+      required: true
+    },
+    fileStructure: {
+      type: Object,
+      required: true
     }
   },
   setup(props) {
-    const { loadProjectFileStructure } = useFiles();
+    const currentFolder = ref(null);
+    const currentFiles = ref([]);
 
-    const files = ref([]);
-    const fileStructure = ref(null);
-
-    onMounted(async () => {
-      // fileStructure.value = await loadProjectFileStructure(props.project);
-      fileStructure.value = testFileStructure;
+    watch(
+      () => props.fileStructure,
+      () => (currentFolder.value = props.fileStructure),
+      { immediate: true }
+    );
+    watch(currentFolder, folder => (currentFiles.value = folder.children), {
+      immediate: true
     });
 
     const onFileSelected = file => {
-      // TODO
+      if (file.type === "Folder") {
+        currentFolder.value = file;
+      }
     };
 
     return {
-      files,
-      fileStructure,
+      currentFiles,
       onFileSelected
     };
   }

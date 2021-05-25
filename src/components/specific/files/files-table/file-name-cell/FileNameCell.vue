@@ -1,7 +1,8 @@
 <template>
   <div class="file-name-cell">
     <BIMDataIcon v-if="file.type === 'Folder'" name="folder" size="s" />
-    <FileIcon v-else :name="fileExtension(file.name)" size="24" />
+    <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
+    <FileIcon v-else :name="fileExtension(file.name)" size="20" />
     <span>{{ file.name }}</span>
   </div>
 </template>
@@ -30,3 +31,5 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss" src="./FileNameCell.scss"></style>
