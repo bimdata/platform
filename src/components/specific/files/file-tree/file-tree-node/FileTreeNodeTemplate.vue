@@ -11,7 +11,7 @@
         class="file-tree-node__node__icon-arrow"
         name="chevron"
         size="xxs"
-        :rotate="isOpen ? 90 : 0"
+        :rotate="showChildren ? 90 : 0"
         :style="{
           visibility: hasChildren ? 'visible' : 'hidden'
         }"
@@ -19,7 +19,7 @@
       />
       <BIMDataIcon
         class="file-tree-node__node__icon-folder"
-        :name="isOpen ? 'folderOpen' : 'folder'"
+        :name="showChildren ? 'folderOpen' : 'folder'"
         size="s"
       />
       <span class="file-tree-node__node__name">
@@ -27,7 +27,7 @@
       </span>
     </div>
     <transition name="fade">
-      <div class="file-tree-node__children" v-show="isOpen">
+      <div class="file-tree-node__children" v-show="showChildren">
         <slot></slot>
       </div>
     </transition>
@@ -36,7 +36,7 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { inject } from "@vue/runtime-core";
+import { inject, watch } from "@vue/runtime-core";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
@@ -55,16 +55,37 @@ export default {
     hasChildren: {
       type: Boolean,
       default: false
+    },
+    isOpen: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
-    const isOpen = ref(false);
+    const showChildren = ref(false);
     const selectedFileID = inject("selectedFileID");
     const selectFile = inject("selectFile");
 
+    watch(
+      () => props.isOpen,
+      () => (showChildren.value = props.isOpen),
+      { immediate: true }
+    );
+    watch(
+      () => selectedFileID.value,
+      fileID => {
+        if (
+          props.hasChildren &&
+          props.file.children.some(child => child.id === fileID)
+        ) {
+          showChildren.value = true;
+        }
+      }
+    );
+
     const toggle = () => {
       if (props.hasChildren) {
-        isOpen.value = !isOpen.value;
+        showChildren.value = !showChildren.value;
       }
     };
 
@@ -74,8 +95,8 @@ export default {
 
     return {
       // References
-      isOpen,
       selectedFileID,
+      showChildren,
       // Methods
       toggle,
       select
