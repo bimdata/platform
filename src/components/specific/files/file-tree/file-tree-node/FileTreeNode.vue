@@ -29,7 +29,8 @@ FileTreeNode = {
         key: file.id,
         file,
         depth,
-        hasChildren: children.length > 0
+        hasChildren: children.length > 0,
+        isOpen: depth === 0
       },
       {
         default() {

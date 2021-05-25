@@ -1,28 +1,39 @@
-function createStructureNode(files, file, parent, children = []) {
+/* eslint-disable */
+
+function createStructureNode(fileMap, file, parent, siblings = []) {
   return {
     id: file.id,
     name: file.name,
     data: file,
     get parent() {
-      return parent ? files.get(parent.id) : null;
+      return parent ? fileMap.get(parent.id) : null;
+    },
+    get siblings() {
+      return siblings.map(f => fileMap.get(f.id));
     },
     get children() {
-      return (children || []).map(f => files.get(f.id));
+      return (file.children || []).map(f => fileMap.get(f.id));
     }
   };
 }
 
-function createStructureMap(files, file, parent) {
-  files.set(file.id, createStructureNode(files, file, parent, file.children));
-  (file.children || []).forEach(child =>
-    createStructureMap(files, child, file)
+function createStructureMap(fileMap, file, parent = null) {
+  const siblings = (file.children || []).filter(child =>
+    child.id !== file.id
   );
+  fileMap.set(
+    file.id,
+    createStructureNode(fileMap, file, parent, siblings)
+  );
+  (file.children || []).forEach(child =>
+    createStructureMap(fileMap, child, file)
+  );
+  return fileMap;
 }
 
 class FileStructureHandler {
   constructor(structure) {
-    this.files = new Map();
-    createStructureMap(this.files, structure, null);
+    this.files = createStructureMap(new Map(), structure);
   }
 
   file(id) {
