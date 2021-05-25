@@ -19,9 +19,9 @@ FileTreeNode = {
     const file = this.$props.file;
     const depth = this.$props.depth;
 
-    const children = (file.children || []).filter(
-      child => child.type === "Folder"
-    );
+    const children = (file.children || [])
+      .filter(child => child.type === "Folder")
+      .sort((a, b) => (a.name < b.name ? -1 : 1));
 
     const node = h(
       FileTreeNodeTemplate,
