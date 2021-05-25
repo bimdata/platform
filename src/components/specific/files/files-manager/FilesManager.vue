@@ -34,6 +34,8 @@
           class="files-manager__actions__input-search"
           width="400px"
           :placeholder="$t('FilesManager.searchInputPlaceholder')"
+          v-model="searchText"
+          clear
         />
       </div>
       <FileTree
@@ -47,7 +49,7 @@
       <FilesTable
         class="files-manager__table"
         :project="project"
-        :files="currentFiles"
+        :files="displayedFiles"
         @file-selected="onFileSelected"
       />
 
@@ -57,7 +59,7 @@
 </template>
 
 <script>
-import { ref, watch } from "@vue/runtime-core";
+import { ref, watch, watchEffect } from "vue";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -96,7 +98,6 @@ export default {
   setup(props) {
     const currentFolder = ref(null);
     const currentFiles = ref([]);
-
     watch(
       () => props.fileStructure,
       () => (currentFolder.value = props.fileStructure),
@@ -104,19 +105,50 @@ export default {
     );
     watch(
       () => currentFolder.value,
-      folder => (currentFiles.value = folder.children),
+      folder => {
+        const childrenFolders = folder.children
+          .filter(child => child.type === "Folder")
+          .sort((a, b) => (a.name < b.name ? -1 : 1));
+        const childrenFiles = folder.children
+          .filter(child => child.type !== "Folder")
+          .sort((a, b) => (a.name < b.name ? -1 : 1));
+        currentFiles.value = childrenFolders.concat(childrenFiles);
+      },
       { immediate: true }
     );
-
     const onFileSelected = file => {
       if (file.type === "Folder") {
         currentFolder.value = file;
       }
     };
 
+    const displayedFiles = ref([]);
+    watch(
+      () => currentFiles.value,
+      () => (displayedFiles.value = currentFiles.value),
+      { immediate: true }
+    );
+
+    const searchText = ref("");
+    const filterFiles = value => {
+      const text = value.trim().toLowerCase();
+      if (text) {
+        displayedFiles.value = currentFiles.value.filter(a =>
+          a.name.toLowerCase().includes(text)
+        );
+      } else {
+        displayedFiles.value = currentFiles.value;
+      }
+    };
+    watchEffect(() => filterFiles(searchText.value));
+
     return {
-      currentFiles,
+      // References
+      // currentFiles,
       currentFolder,
+      displayedFiles,
+      searchText,
+      // Methods
       onFileSelected
     };
   }

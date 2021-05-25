@@ -87,8 +87,13 @@ export default {
     message: "Bonjour {name}, content de vous revoir !"
   },
 
-  FileLastUpdateCell: {
-    at: "à"
+  FileActionsCell: {
+    addTagsButtonText: "Ajouter des tags",
+    validationRequestButtonText: "Demande de validation",
+    renameButtonText: "Renommer",
+    downloadButtonText: "Télécharger",
+    addVersionButtonText: "Ajouter une version",
+    manageAccessButtonText: "Gérer les accès"
   },
 
   FilesManager: {

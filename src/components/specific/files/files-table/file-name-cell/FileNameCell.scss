@@ -3,4 +3,8 @@
   align-items: center;
   gap: $spacing-unit/2;
   cursor: pointer;
+
+  &__icon-folder {
+    color: $color-primary;
+  }
 }

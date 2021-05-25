@@ -1,6 +1,11 @@
 <template>
   <div class="file-name-cell">
-    <BIMDataIcon v-if="file.type === 'Folder'" name="folder" size="s" />
+    <BIMDataIcon
+      v-if="file.type === 'Folder'"
+      class="file-name-cell__icon-folder"
+      name="folder"
+      size="m"
+    />
     <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
     <FileIcon v-else :name="fileExtension(file.name)" size="20" />
     <span>{{ file.name }}</span>
