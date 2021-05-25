@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { provide, ref } from "@vue/runtime-core";
+import { provide, ref, watch } from "vue";
 import FileTreeNode from "./file-tree-node/FileTreeNode";
 
 export default {
@@ -20,11 +20,28 @@ export default {
     fileStructure: {
       type: Object,
       required: true
+    },
+    selectedFile: {
+      type: Object
     }
   },
   emits: ["file-selected"],
   setup(props, { emit }) {
-    const selectedFileID = ref(props.fileStructure.id);
+    const selectedFileID = ref(null);
+
+    watch(
+      () => props.fileStructure,
+      () => (selectedFileID.value = props.fileStructure.id),
+      { immediate: true }
+    );
+    watch(
+      () => props.selectedFile,
+      () => {
+        if (props.selectedFile) {
+          selectedFileID.value = props.selectedFile.id;
+        }
+      }
+    );
 
     const selectFile = file => {
       selectedFileID.value = file.id;

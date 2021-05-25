@@ -93,7 +93,7 @@ export default {
         {
           id: "lastupdate",
           label: t("FilesTable.headers.lastupdate"),
-          width: "200px",
+          width: "150px",
           align: "center"
         },
         {
