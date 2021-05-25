@@ -35,8 +35,9 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
-import { inject, watch } from "@vue/runtime-core";
+import { inject, ref, watch } from "vue";
+import { getDescendants } from "@/utils/file-structure";
+// Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
@@ -76,7 +77,7 @@ export default {
       fileID => {
         if (
           props.hasChildren &&
-          props.file.children.some(child => child.id === fileID)
+          getDescendants(props.file).some(child => child.id === fileID)
         ) {
           showChildren.value = true;
         }

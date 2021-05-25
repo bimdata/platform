@@ -8,7 +8,7 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { watch } from "@vue/runtime-core";
-import FileStructureHandler from "@/utils/file-structure-handler";
+import { FileStructureHandler } from "@/utils/file-structure";
 
 export default {
   props: {
