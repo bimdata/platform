@@ -1,7 +1,10 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #left>
-      <div>( Files breadcrumb )</div>
+      <FilesManagerBreadcrumb
+        :fileStructure="fileStructure"
+        :file="currentFolder"
+      />
     </template>
     <template #content>
       <div class="files-manager__actions">
@@ -38,6 +41,7 @@
         v-if="fileStructure"
         :project="project"
         :fileStructure="fileStructure"
+        :selectedFile="currentFolder"
         @file-selected="onFileSelected"
       />
       <FilesTable
@@ -61,6 +65,7 @@ import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
+import FilesManagerBreadcrumb from "./files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
 
 export default {
@@ -71,6 +76,7 @@ export default {
     BIMDataSearch,
     FileTree,
     FilesTable,
+    FilesManagerBreadcrumb,
     FilesManagerOnboarding
   },
   props: {
@@ -96,9 +102,11 @@ export default {
       () => (currentFolder.value = props.fileStructure),
       { immediate: true }
     );
-    watch(currentFolder, folder => (currentFiles.value = folder.children), {
-      immediate: true
-    });
+    watch(
+      () => currentFolder.value,
+      folder => (currentFiles.value = folder.children),
+      { immediate: true }
+    );
 
     const onFileSelected = file => {
       if (file.type === "Folder") {
@@ -108,6 +116,7 @@ export default {
 
     return {
       currentFiles,
+      currentFolder,
       onFileSelected
     };
   }
