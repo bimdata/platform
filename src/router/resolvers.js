@@ -3,6 +3,7 @@ import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 import { useUser } from "@/state/user";
+import { useFiles } from "@/state/files";
 
 const rootResolver = async () => {
   const { loadUser } = useUser();
@@ -61,6 +62,7 @@ const projectBoardResolver = createViewResolver(async route => {
   const spaces = useSpaces();
   const projects = useProjects();
   const models = useModels();
+  const files = useFiles();
 
   await spaces.loadUserSpaces();
   await projects.loadUserProjects();
@@ -70,6 +72,7 @@ const projectBoardResolver = createViewResolver(async route => {
 
   projects.selectProject(+route.params.projectID);
   await models.loadProjectModels(projects.currentProject.value);
+  await files.loadProjectFileStructure(projects.currentProject.value);
 
   if (projects.currentProject.value.isAdmin) {
     await projects.loadProjectUsers(projects.currentProject.value);

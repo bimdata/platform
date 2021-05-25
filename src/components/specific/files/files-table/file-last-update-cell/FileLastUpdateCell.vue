@@ -3,9 +3,16 @@
     {{
       file.updatedAt
         .toISOString()
-        .slice(0, -5)
-        .replace(/-/g, "/")
-        .replace("T", ` ${$t("FileLastUpdateCell.at")} `)
+        .slice(0, -8)
+        .split("T")
+        .map((s, i) => {
+          if (i === 0) {
+            return s.slice(2).split("-").reverse().join("/");
+          } else {
+            return s.replace(":", "h");
+          }
+        })
+        .join(" - ")
     }}
   </div>
 </template>

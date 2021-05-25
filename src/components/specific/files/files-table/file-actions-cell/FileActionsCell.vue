@@ -1,8 +1,20 @@
 <template>
   <div class="file-actions-cell">
-    <BIMDataButton ghost rounded icon @click="() => {}">
+    <BIMDataButton
+      class="file-actions-cell__btn"
+      ripple
+      rounded
+      icon
+      @click="() => {}"
+    >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
+
+    <transition name="fade">
+      <div class="file-actions-cell__menu">
+        <!-- TODO -->
+      </div>
+    </transition>
   </div>
 </template>
 

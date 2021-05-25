@@ -14,7 +14,12 @@
       </BIMDataButton>
     </app-slot-content>
 
-    <FilesManager class="project-files__block--files" :project="project" />
+    <FilesManager
+      class="project-files__block--files"
+      :project="project"
+      :files="files"
+      :fileStructure="fileStructure"
+    />
   </div>
 </template>
 
@@ -36,10 +41,15 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    files: {
+      type: Array,
+      required: true
+    },
+    fileStructure: {
+      type: Object,
+      required: true
     }
-  },
-  setup() {
-    // TODO
   }
 };
 </script>

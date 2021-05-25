@@ -7,20 +7,16 @@
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: file }">
-      <FileNameCell :file="file" />
+      <FileNameCell :file="file" @click="$emit('file-selected', file)" />
     </template>
     <template #cell-type="{ row: file }">
-      {{
-        file.type === "Folder"
-          ? $t("FileTable.folder")
-          : "." + fileExtension(file.name)
-      }}
+      <FileTypeCell :file="file" />
     </template>
     <template #cell-creator="{ row: { creator } }">
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>
-    <template #cell-tags>
-      <FileTagsCell />
+    <template #cell-tags="{ row: file }">
+      <FileTagsCell :file="file" />
     </template>
     <template #cell-lastupdate="{ row: file }">
       <FileLastUpdateCell :file="file" />
@@ -28,7 +24,7 @@
     <template #cell-size="{ row: file }">
       {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
     </template>
-    <template #cell-actions>
+    <template #cell-actions="{ row: file }">
       <FileActionsCell :file="file" />
     </template>
   </GenericTable>
@@ -45,6 +41,7 @@ import FileActionsCell from "./file-actions-cell/FileActionsCell";
 import FileLastUpdateCell from "./file-last-update-cell/FileLastUpdateCell";
 import FileNameCell from "./file-name-cell/FileNameCell";
 import FileTagsCell from "./file-tags-cell/FileTagsCell";
+import FileTypeCell from "./file-type-cell/FileTypeCell";
 
 export default {
   components: {
@@ -52,7 +49,8 @@ export default {
     FileActionsCell,
     FileLastUpdateCell,
     FileNameCell,
-    FileTagsCell
+    FileTagsCell,
+    FileTypeCell
   },
   props: {
     project: {
@@ -64,6 +62,7 @@ export default {
       required: true
     }
   },
+  emits: ["file-selected"],
   setup() {
     const { t } = useI18n();
 
@@ -106,7 +105,7 @@ export default {
         {
           id: "actions",
           label: " ",
-          width: "100px",
+          width: "50px",
           align: "center"
         }
       ];
