@@ -29,7 +29,6 @@
         <ProjectFiles
           v-else-if="currentTab === 'files'"
           :project="project"
-          :files="files"
           :fileStructure="fileStructure"
         />
 
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { provide, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
@@ -64,10 +63,9 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const { currentProject, currentProjectUsers, currentProjectInvitations } =
-      useProjects();
+    const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { projectModels } = useModels();
-    const { projectFiles, projectFileStructure } = useFiles();
+    const { projectFileStructure, fileStructureHandler } = useFiles();
 
     const tabs = ref([]);
     const currentTab = ref("overview");
@@ -82,16 +80,17 @@ export default {
       currentTab.value = tab.id;
     };
 
+    provide("fileStructureHandler", fileStructureHandler);
+
     return {
       // References
       currentTab,
-      files: projectFiles,
       fileStructure: projectFileStructure,
-      invitations: currentProjectInvitations,
+      invitations: projectInvitations,
       models: projectModels,
       project: currentProject,
       tabs,
-      users: currentProjectUsers,
+      users: projectUsers,
       // Methods
       selectTab
     };

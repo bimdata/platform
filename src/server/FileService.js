@@ -8,20 +8,62 @@ class FileService {
     });
   }
 
-  fetchDocuments(project) {
-    return apiClient.collaborationApi.getDocuments({
+  // fetchFolders(project) {
+  //   return apiClient.collaborationApi.getFolders({
+  //     cloudPk: project.cloud.id,
+  //     projectPk: project.id
+  //   });
+  // }
+
+  createFolder(project, folder) {
+    return apiClient.collaborationApi.createFolder({
       cloudPk: project.cloud.id,
-      projectPk: project.id
+      projectPk: project.id,
+      data: folder
     });
   }
 
-  // createDocument(project, document) {
-  //   return apiClient.collaborationApi.createDocument({
+  updateFolders(project, folders) {
+    folders = [folders].flat();
+    return Promise.all(
+      folders.map(folder =>
+        apiClient.collaborationApi.updateFolder({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          id: folder.id,
+          data: folder
+        })
+      )
+    );
+  }
+
+  deleteFolders(project, folders) {
+    folders = [folders].flat();
+    return Promise.all(
+      folders.map(folder =>
+        apiClient.collaborationApi.deleteFolder({
+          cloudPk: project.cloud.id,
+          projectPk: project.id,
+          id: folder.id
+        })
+      )
+    );
+  }
+
+  // fetchDocuments(project) {
+  //   return apiClient.collaborationApi.getDocuments({
   //     cloudPk: project.cloud.id,
-  //     projectPk: project.id,
-  //     data: document
+  //     projectPk: project.id
   //   });
   // }
+
+  createDocument(project, document) {
+    return apiClient.collaborationApi.createDocument({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      data: document
+    });
+  }
 
   updateDocuments(project, documents) {
     documents = [].concat(documents);

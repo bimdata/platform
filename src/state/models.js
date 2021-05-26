@@ -24,7 +24,7 @@ const updateModels = async (project, models) => {
 };
 
 const softUpdateModels = models => {
-  for (const model of [].concat(models)) {
+  for (const model of [models].flat()) {
     state.projectModels = state.projectModels.map(m =>
       m.id === model.id ? { ...m, ...model } : m
     );

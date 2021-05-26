@@ -17,7 +17,6 @@
     <FilesManager
       class="project-files__block--files"
       :project="project"
-      :files="files"
       :fileStructure="fileStructure"
     />
   </div>
@@ -40,10 +39,6 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true
-    },
-    files: {
-      type: Array,
       required: true
     },
     fileStructure: {
