@@ -1,10 +1,7 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #left>
-      <FilesManagerBreadcrumb
-        :fileStructure="fileStructure"
-        :file="currentFolder"
-      />
+      <FilesManagerBreadcrumb :file="currentFolder" />
     </template>
     <template #content>
       <div class="files-manager__actions">
@@ -86,10 +83,6 @@ export default {
       type: Object,
       required: true
     },
-    files: {
-      type: Array,
-      required: true
-    },
     fileStructure: {
       type: Object,
       required: true
@@ -144,7 +137,6 @@ export default {
 
     return {
       // References
-      // currentFiles,
       currentFolder,
       displayedFiles,
       searchText,

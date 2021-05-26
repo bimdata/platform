@@ -1,4 +1,4 @@
-import { reactive, readonly, toRefs, watchEffect } from "vue";
+import { reactive, readonly, toRefs, watch } from "vue";
 import ProjectService from "@/server/ProjectService";
 import { useUser } from "@/state/user";
 import { PROJECT_ROLE } from "@/utils/users";
@@ -7,8 +7,8 @@ const state = reactive({
   userProjects: [],
   spaceProjects: [],
   currentProject: null,
-  currentProjectUsers: [],
-  currentProjectInvitations: []
+  projectUsers: [],
+  projectInvitations: []
 });
 
 const loadUserProjects = async () => {
@@ -27,16 +27,18 @@ const loadUserProjects = async () => {
   return projects;
 };
 
-let stopSpaceProjectsWatcher;
+let unwatchUserProjects = () => {};
 const loadSpaceProjects = space => {
-  if (typeof stopSpaceProjectsWatcher === "function") {
-    stopSpaceProjectsWatcher();
-  }
-  stopSpaceProjectsWatcher = watchEffect(() => {
-    state.spaceProjects = state.userProjects.filter(
-      project => project.cloud.id === space.id
-    );
-  });
+  unwatchUserProjects();
+  unwatchUserProjects = watch(
+    () => state.userProjects,
+    () => {
+      state.spaceProjects = state.userProjects.filter(
+        project => project.cloud.id === space.id
+      );
+    },
+    { immediate: true }
+  );
 };
 
 const loadProjectUsers = async project => {
@@ -51,13 +53,13 @@ const loadProjectUsers = async project => {
     .sort((a, b) =>
       `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
     );
-  state.currentProjectUsers = users;
+  state.projectUsers = users;
   return users;
 };
 
 const loadProjectInvitations = async project => {
   const invitations = await ProjectService.fetchProjectInvitations(project);
-  state.currentProjectInvitations = invitations;
+  state.projectInvitations = invitations;
   return invitations;
 };
 
@@ -109,16 +111,14 @@ const sendProjectInvitation = async (project, invitation, options = {}) => {
     invitation
   );
   if (!options.resend) {
-    state.currentProjectInvitations = [newInvitation].concat(
-      state.currentProjectInvitations
-    );
+    state.projectInvitations = [newInvitation].concat(state.projectInvitations);
   }
   return newInvitation;
 };
 
 const cancelProjectInvitation = async (project, invitation) => {
   await ProjectService.cancelProjectInvitation(project, invitation);
-  state.currentProjectInvitations = state.currentProjectInvitations.filter(
+  state.projectInvitations = state.projectInvitations.filter(
     i => i.id !== invitation.id
   );
   return invitation;
@@ -126,7 +126,7 @@ const cancelProjectInvitation = async (project, invitation) => {
 
 const updateProjectUser = async (project, user) => {
   const newUser = await ProjectService.updateProjectUser(project, user);
-  state.currentProjectUsers = state.currentProjectUsers.map(u =>
+  state.projectUsers = state.projectUsers.map(u =>
     u.id === user.id ? newUser : u
   );
   return newUser;
@@ -134,9 +134,7 @@ const updateProjectUser = async (project, user) => {
 
 const deleteProjectUser = async (project, user) => {
   await ProjectService.deleteProjectUser(project, user);
-  state.currentProjectUsers = state.currentProjectUsers.filter(
-    u => u.id !== user.id
-  );
+  state.projectUsers = state.projectUsers.filter(u => u.id !== user.id);
   return user;
 };
 

@@ -6,41 +6,26 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
-import { FileStructureHandler } from "@/utils/file-structure";
+import { inject, ref, watch } from "vue";
 
 export default {
   props: {
-    fileStructure: {
-      type: Object,
-      required: true
-    },
     file: {
       type: Object,
       required: true
     }
   },
   setup(props) {
+    const handler = inject("fileStructureHandler");
+
     const path = ref([]);
 
-    let structure = {};
-
-    watch(
-      () => props.fileStructure,
-      () => (structure = new FileStructureHandler(props.fileStructure)),
-      { immediate: true }
-    );
     watch(
       () => props.file,
       () => {
-        let file = structure.file(props.file.id);
-        const filePath = [];
-        while (file.parent) {
-          file = file.parent;
-          filePath.unshift(file.name);
-        }
-        path.value = filePath;
+        path.value = handler()
+          .ancestors(props.file)
+          .map(f => f.name);
       },
       { immediate: true }
     );
