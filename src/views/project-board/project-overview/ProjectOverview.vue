@@ -1,6 +1,6 @@
 <template>
   <div class="project-overview">
-    <app-slot-content name="view-header-right">
+    <app-slot-content name="project-board-action">
       <BIMDataButton
         data-test="btn-toggle-upload"
         width="120px"

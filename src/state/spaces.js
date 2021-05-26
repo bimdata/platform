@@ -6,8 +6,8 @@ import { SPACE_ROLE } from "@/utils/users";
 const state = reactive({
   userSpaces: [],
   currentSpace: null,
-  currentSpaceUsers: [],
-  currentSpaceInvitations: []
+  spaceUsers: [],
+  spaceInvitations: []
 });
 
 const loadUserSpaces = async () => {
@@ -36,13 +36,13 @@ const loadSpaceUsers = async space => {
     .sort((a, b) =>
       `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
     );
-  state.currentSpaceUsers = users;
+  state.spaceUsers = users;
   return users;
 };
 
 const loadSpaceInvitations = async space => {
   const invitations = await SpaceService.fetchSpaceInvitations(space);
-  state.currentSpaceInvitations = invitations;
+  state.spaceInvitations = invitations;
   return invitations;
 };
 
@@ -93,16 +93,14 @@ const sendSpaceInvitation = async (space, invitation, options = {}) => {
     invitation
   );
   if (!options.resend) {
-    state.currentSpaceInvitations = [newInvitation].concat(
-      state.currentSpaceInvitations
-    );
+    state.spaceInvitations = [newInvitation].concat(state.spaceInvitations);
   }
   return newInvitation;
 };
 
 const cancelSpaceInvitation = async (space, invitation) => {
   await SpaceService.cancelSpaceInvitation(space, invitation);
-  state.currentSpaceInvitations = state.currentSpaceInvitations.filter(
+  state.spaceInvitations = state.spaceInvitations.filter(
     i => i.id !== invitation.id
   );
   return invitation;
@@ -110,7 +108,7 @@ const cancelSpaceInvitation = async (space, invitation) => {
 
 const updateSpaceUser = async (space, user) => {
   const newUser = await SpaceService.updateSpaceUser(space, user);
-  state.currentSpaceUsers = state.currentSpaceUsers.map(u =>
+  state.spaceUsers = state.spaceUsers.map(u =>
     u.id === user.id ? newUser : u
   );
   return newUser;
@@ -118,9 +116,7 @@ const updateSpaceUser = async (space, user) => {
 
 const deleteSpaceUser = async (space, user) => {
   await SpaceService.deleteSpaceUser(space, user);
-  state.currentSpaceUsers = state.currentSpaceUsers.filter(
-    u => u.id !== user.id
-  );
+  state.spaceUsers = state.spaceUsers.filter(u => u.id !== user.id);
   return user;
 };
 

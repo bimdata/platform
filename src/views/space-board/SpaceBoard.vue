@@ -109,11 +109,7 @@ export default {
     SpaceUsersManager
   },
   setup() {
-    const {
-      currentSpace,
-      currentSpaceUsers,
-      currentSpaceInvitations
-    } = useSpaces();
+    const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
 
     const displayedProjects = ref([]);
@@ -151,12 +147,12 @@ export default {
 
     return {
       // References
-      invitations: currentSpaceInvitations,
+      invitations: spaceInvitations,
       projects: displayedProjects,
       searchText,
       showUsersManager,
       space: currentSpace,
-      users: currentSpaceUsers,
+      users: spaceUsers,
       // Methods
       closeUsersManager,
       filterProjects,

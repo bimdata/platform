@@ -14,6 +14,9 @@
           @tab-click="selectTab"
         />
       </template>
+      <template #right>
+        <app-slot name="project-board-action" />
+      </template>
     </ViewHeader>
 
     <div class="project-board__body">
@@ -46,6 +49,7 @@ import { useProjects } from "@/state/projects";
 import { useFiles } from "@/state/files";
 // Components
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import AppSlot from "@/components/generic/app-slot/AppSlot";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectBcf from "./project-bcf/ProjectBcf";
@@ -55,6 +59,7 @@ import ProjectOverview from "./project-overview/ProjectOverview";
 export default {
   components: {
     BIMDataTabs,
+    AppSlot,
     ViewHeader,
     AppBreadcrumb,
     ProjectBcf,
