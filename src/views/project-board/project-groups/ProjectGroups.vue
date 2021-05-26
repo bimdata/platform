@@ -1,7 +1,7 @@
 <template>
-  <div class="project-bcf">
+  <div class="project-groups">
     <!-- TODO -->
-    Project BCF view, coming soon...
+    Project Groups view, coming soon...
   </div>
 </template>
 
@@ -19,4 +19,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ProjectBcf.scss"></style>
+<style scoped lang="scss" src="./ProjectGroups.scss"></style>

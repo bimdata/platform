@@ -9,8 +9,8 @@
           width="300px"
           height="32px"
           tabSize="100px"
-          :selected="0"
           :tabs="tabs"
+          :selected="currentTab.id"
           @tab-click="selectTab"
         />
       </template>
@@ -21,32 +21,17 @@
 
     <div class="project-board__body">
       <transition name="fade" mode="out-in">
-        <ProjectOverview
-          v-if="currentTab === 'overview'"
-          :project="project"
-          :models="models"
-          :users="users"
-          :invitations="invitations"
-        />
-
-        <ProjectFiles
-          v-else-if="currentTab === 'files'"
-          :project="project"
-          :fileStructure="fileStructure"
-        />
-
-        <ProjectBcf v-else-if="currentTab === 'bcf'" :project="project" />
+        <keep-alive>
+          <component :is="currentTab.view" />
+        </keep-alive>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
-import { provide, ref, watchEffect } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useModels } from "@/state/models";
-import { useProjects } from "@/state/projects";
-import { useFiles } from "@/state/files";
 // Components
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import AppSlot from "@/components/generic/app-slot/AppSlot";
@@ -55,6 +40,12 @@ import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrum
 import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
 import ProjectOverview from "./project-overview/ProjectOverview";
+
+const tabsDef = [
+  { id: "overview", view: "ProjectOverview" },
+  { id: "files", view: "ProjectFiles" },
+  { id: "bcf", view: "ProjectBcf" }
+];
 
 export default {
   components: {
@@ -67,35 +58,29 @@ export default {
     ProjectOverview
   },
   setup() {
-    const { t } = useI18n();
-    const { currentProject, projectUsers, projectInvitations } = useProjects();
-    const { projectModels } = useModels();
-    const { projectFileStructure, fileStructureHandler } = useFiles();
+    const { locale, t } = useI18n();
 
     const tabs = ref([]);
-    const currentTab = ref("overview");
-    watchEffect(() => {
-      tabs.value = [
-        { id: "overview", label: t("ProjectBoard.tabs.overview") },
-        { id: "files", label: t("ProjectBoard.tabs.files") },
-        { id: "bcf", label: t("ProjectBoard.tabs.bcf") }
-      ];
-    });
-    const selectTab = tab => {
-      currentTab.value = tab.id;
-    };
+    watch(
+      () => locale.value,
+      () => {
+        tabs.value = tabsDef.map(tab => ({
+          ...tab,
+          label: t(`ProjectBoard.tabs.${tab.id}`)
+        }));
+      },
+      { immediate: true }
+    );
 
-    provide("fileStructureHandler", fileStructureHandler);
+    const currentTab = ref(tabsDef[0]);
+    const selectTab = tab => {
+      currentTab.value = tab;
+    };
 
     return {
       // References
       currentTab,
-      fileStructure: projectFileStructure,
-      invitations: projectInvitations,
-      models: projectModels,
-      project: currentProject,
       tabs,
-      users: projectUsers,
       // Methods
       selectTab
     };

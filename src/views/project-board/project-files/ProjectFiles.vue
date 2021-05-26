@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import { provide } from "vue";
+import { useFiles } from "@/state/files";
+import { useProjects } from "@/state/projects";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -36,15 +39,17 @@ export default {
     AppSlotContent,
     FilesManager
   },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    },
-    fileStructure: {
-      type: Object,
-      required: true
-    }
+  setup() {
+    const { currentProject } = useProjects();
+    const { projectFileStructure, fileStructureHandler } = useFiles();
+
+    provide("fileStructureHandler", fileStructureHandler);
+
+    return {
+      // References
+      fileStructure: projectFileStructure,
+      project: currentProject
+    };
   }
 };
 </script>
