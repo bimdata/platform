@@ -51,6 +51,7 @@
 <script>
 import { ref } from "vue";
 import { useModels } from "@/state/models";
+import { useProjects } from "@/state/projects";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -70,26 +71,9 @@ export default {
     ModelsOverview,
     ProjectUsersManager
   },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    },
-    models: {
-      type: Array,
-      required: true
-    },
-    users: {
-      type: Array,
-      required: true
-    },
-    invitations: {
-      type: Array,
-      required: true
-    }
-  },
   setup(props) {
-    const { loadProjectModels } = useModels();
+    const { currentProject, projectUsers, projectInvitations } = useProjects();
+    const { loadProjectModels, projectModels } = useModels();
 
     let reloadDebounce = null;
     const reloadModels = () => {
@@ -112,7 +96,11 @@ export default {
 
     return {
       // References
+      invitations: projectInvitations,
+      models: projectModels,
+      project: currentProject,
       showFileUploader,
+      users: projectUsers,
       // Methods
       closeFileUploader,
       openFileUploader,
