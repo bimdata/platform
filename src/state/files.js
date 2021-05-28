@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "@vue/reactivity";
 import FileService from "@/server/FileService";
+import { useModels } from "@/state/models";
 import { FileStructureHandler } from "@/utils/file-structure";
 
 const state = reactive({
@@ -61,6 +62,14 @@ const createDocument = async (project, document) => {
 const updateDocuments = async (project, documents) => {
   const newDocuments = await FileService.updateDocuments(project, documents);
   softUpdateFileStructure("update", documents);
+
+  // Update corresponding models if any
+  const { fetchModelByID, softUpdateModels } = useModels();
+  const modelDocs = [documents].flat().filter(doc => doc.type === "Ifc");
+  Promise.all(modelDocs.map(doc => fetchModelByID(project, doc.ifcId))).then(
+    softUpdateModels
+  );
+
   return newDocuments;
 };
 

@@ -42,7 +42,7 @@
       >
         <BIMDataIcon
           v-if="file.type === 'Folder'"
-          class="file-name-cell__icon-folder"
+          class="file-name-cell__content__icon-folder"
           name="folder"
           size="m"
         />
@@ -102,8 +102,7 @@ export default {
         if (fileName.value) {
           loading.value = true;
           await updateFile(props.project, {
-            id: props.file.id,
-            type: props.file.type,
+            ...props.file,
             name: fileName.value
           });
           closeUpdateForm();

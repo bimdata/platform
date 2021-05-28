@@ -20,8 +20,8 @@
     <template #cell-type="{ row: file }">
       <FileTypeCell :file="file" />
     </template>
-    <template #cell-creator="{ row: { creator } }">
-      {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
+    <template #cell-creator="{ row: { createdBy } }">
+      {{ createdBy ? `${createdBy.firstname} ${createdBy.lastname[0]}.` : "?" }}
     </template>
     <template #cell-tags="{ row: file }">
       <FileTagsCell :file="file" />

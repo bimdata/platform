@@ -43,7 +43,7 @@ const deleteModels = async (project, models) => {
 };
 
 const softDeleteModels = models => {
-  const modelIDs = [].concat(models).map(m => m.id);
+  const modelIDs = [models].flat().map(m => m.id);
   state.projectModels = state.projectModels.filter(
     model => !modelIDs.includes(model.id)
   );

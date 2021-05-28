@@ -1,5 +1,22 @@
 import apiClient from "./api-client";
 
+const FOLDER_UPDATABLE_FIELDS = ["name", "parentId"];
+const DOCUMENT_UPDATABLE_FIELDS = ["name", "description", "parentId"];
+
+function createPayload(object, allowedFields) {
+  const payload = {};
+  for (const field of allowedFields) {
+    payload[field] = object[field];
+  }
+  return payload;
+}
+
+const folderUpdatePayload = folder =>
+  createPayload(folder, FOLDER_UPDATABLE_FIELDS);
+
+const documentUpdatePayload = document =>
+  createPayload(document, DOCUMENT_UPDATABLE_FIELDS);
+
 class FileService {
   fetchFileStructure(project) {
     return apiClient.collaborationApi.getProjectDMSTree({
@@ -24,7 +41,7 @@ class FileService {
           cloudPk: project.cloud.id,
           projectPk: project.id,
           id: folder.id,
-          data: folder
+          data: folderUpdatePayload(folder)
         })
       )
     );
@@ -52,21 +69,21 @@ class FileService {
   }
 
   updateDocuments(project, documents) {
-    documents = [].concat(documents);
+    documents = [documents].flat();
     return Promise.all(
       documents.map(document =>
         apiClient.collaborationApi.updateDocument({
           cloudPk: project.cloud.id,
           projectPk: project.id,
           id: document.id,
-          data: document
+          data: documentUpdatePayload(document)
         })
       )
     );
   }
 
   deleteDocuments(project, documents) {
-    documents = [].concat(documents);
+    documents = [documents].flat();
     return Promise.all(
       documents.map(document =>
         apiClient.collaborationApi.deleteDocument({
