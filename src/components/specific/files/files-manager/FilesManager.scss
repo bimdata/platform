@@ -16,6 +16,10 @@
         display: flex;
         gap: $spacing-unit;
 
+        &__btn-new-folder {
+          z-index: 2;
+        }
+
         &__input-search {
           font-size: 1rem;
           background-color: $color-tertiary-lightest;

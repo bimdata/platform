@@ -5,17 +5,12 @@
     </template>
     <template #content>
       <div class="files-manager__actions">
-        <BIMDataButton
+        <FolderCreationButton
           class="files-manager__actions__btn-new-folder"
           width="194px"
-          color="primary"
-          fill
-          radius
-          @click="() => {}"
-        >
-          <BIMDataIcon name="addFolder" size="xs" />
-          <span>{{ $t("FilesManager.addFolderButtonText") }}</span>
-        </BIMDataButton>
+          :project="project"
+          :folder="currentFolder"
+        />
         <BIMDataButton
           class="files-manager__actions__btn-new-file"
           width="194px"
@@ -56,7 +51,7 @@
 </template>
 
 <script>
-import { ref, watch, watchEffect } from "vue";
+import { inject, ref, watch, watchEffect } from "vue";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -64,6 +59,7 @@ import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
+import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
 import FilesManagerBreadcrumb from "./files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
 
@@ -75,6 +71,7 @@ export default {
     BIMDataSearch,
     FileTree,
     FilesTable,
+    FolderCreationButton,
     FilesManagerBreadcrumb,
     FilesManagerOnboarding
   },
@@ -89,16 +86,26 @@ export default {
     }
   },
   setup(props) {
+    const handler = inject("fileStructureHandler");
     const currentFolder = ref(null);
     const currentFiles = ref([]);
+
     watch(
       () => props.fileStructure,
-      () => (currentFolder.value = props.fileStructure),
+      struct => {
+        if (!currentFolder.value || !handler().exists(currentFolder.value)) {
+          currentFolder.value = struct;
+        } else {
+          currentFolder.value = handler().get(currentFolder.value, {
+            children: true
+          });
+        }
+      },
       { immediate: true }
     );
     watch(
-      () => currentFolder.value,
-      folder => {
+      [() => props.fileStructure, () => currentFolder.value],
+      ([, folder]) => {
         const childrenFolders = folder.children
           .filter(child => child.type === "Folder")
           .sort((a, b) => (a.name < b.name ? -1 : 1));

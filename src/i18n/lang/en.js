@@ -99,7 +99,6 @@ export default {
   FilesManager: {
     title: "Project Files",
     searchInputPlaceholder: "Search",
-    addFolderButtonText: "New folder",
     addFileButtonText: "Upload a file"
   },
 
@@ -131,6 +130,15 @@ export default {
     uploadAreaText: "Drag and drop to store your project assets",
     separatorText: "or",
     uploadButtonText: "Select file"
+  },
+
+  FolderCreationButton: {
+    createFolderButtonText: "New folder",
+    creationFormTitle: "Create folder",
+    nameInputPlaceholder: "Folder name",
+    nameInputErrorMessage: "",
+    cancelButtonText: "Cancel",
+    submitButtonText: "Submit"
   },
 
   InvitationCard: {

@@ -19,16 +19,19 @@ const softUpdateFileStructure = (action, files) => {
   for (const file of [files].flat()) {
     switch (action) {
       case "create":
-        // TODO
+        fileStructureHandler.createFile(file);
         break;
       case "update":
-        // TODO
+        fileStructureHandler.updateFile(file);
         break;
       case "delete":
-        // TODO
+        fileStructureHandler.deleteFile(file);
         break;
     }
   }
+  const fileStructure = fileStructureHandler.structure();
+  state.projectFileStructure = fileStructure;
+  return fileStructure;
 };
 
 const createFolder = async (project, folder) => {

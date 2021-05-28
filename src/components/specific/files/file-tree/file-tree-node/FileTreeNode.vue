@@ -1,5 +1,5 @@
 <script>
-import { h } from "@vue/runtime-core";
+import { h, ref, watch } from "vue";
 import FileTreeNodeTemplate from "./FileTreeNodeTemplate";
 
 let FileTreeNode;
@@ -15,33 +15,36 @@ FileTreeNode = {
       default: 0
     }
   },
-  render() {
-    const file = this.$props.file;
-    const depth = this.$props.depth;
-
-    const children = (file.children || [])
-      .filter(child => child.type === "Folder")
-      .sort((a, b) => (a.name < b.name ? -1 : 1));
-
-    const node = h(
-      FileTreeNodeTemplate,
-      {
-        key: file.id,
-        file,
-        depth,
-        hasChildren: children.length > 0,
-        isOpen: depth === 0
+  setup(props) {
+    const children = ref([]);
+    watch(
+      () => props.file,
+      () => {
+        children.value = (props.file.children || [])
+          .filter(child => child.type === "Folder")
+          .sort((a, b) => (a.name < b.name ? -1 : 1));
       },
-      {
-        default() {
-          return children.map(child =>
-            h(FileTreeNode, { file: child, depth: depth + 1 })
-          );
-        }
-      }
+      { immediate: true }
     );
 
-    return node;
+    return () =>
+      h(
+        FileTreeNodeTemplate,
+        {
+          key: props.file.id,
+          file: props.file,
+          depth: props.depth,
+          hasChildren: children.value.length > 0,
+          isOpen: props.depth === 0
+        },
+        {
+          default() {
+            return children.value.map(child =>
+              h(FileTreeNode, { file: child, depth: props.depth + 1 })
+            );
+          }
+        }
+      );
   }
 };
 
