@@ -1,6 +1,9 @@
 name: Platform-next
 
-on: push
+on: 
+  push:
+  repository_dispatch:
+    types: [viewer-version]
 
 env:
   app: platform_v2
