@@ -42,7 +42,7 @@
         class="files-manager__table"
         :project="project"
         :files="displayedFiles"
-        @file-selected="onFileSelected"
+        @file-clicked="onFileSelected"
       />
 
       <FilesManagerOnboarding v-if="false" :project="project" />
@@ -104,8 +104,8 @@ export default {
       { immediate: true }
     );
     watch(
-      [() => props.fileStructure, () => currentFolder.value],
-      ([, folder]) => {
+      () => currentFolder.value,
+      folder => {
         const childrenFolders = folder.children
           .filter(child => child.type === "Folder")
           .sort((a, b) => (a.name < b.name ? -1 : 1));

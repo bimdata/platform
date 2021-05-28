@@ -32,7 +32,10 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="(row, i) of rows" :key="`body-row-${i}`">
+          <template
+            v-for="(row, i) of rows"
+            :key="`body-row-${rowKey ? row[rowKey] : i}`"
+          >
             <tr
               v-if="row"
               v-show="displayedRows.includes(i)"
@@ -46,7 +49,7 @@
               </td>
               <td
                 v-for="(column, j) of columns"
-                :key="`body-row-${i}-col-${j}`"
+                :key="`body-row-${rowKey ? row[rowKey] : i}-col-${j}`"
                 :style="{
                   width: column.width || 'auto',
                   textAlign: column.align || 'left'
@@ -127,6 +130,9 @@ export default {
     rows: {
       type: Array,
       required: true
+    },
+    rowKey: {
+      type: String
     },
     rowHeight: {
       type: Number,

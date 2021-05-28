@@ -93,7 +93,13 @@ export default {
     renameButtonText: "Rename",
     downloadButtonText: "Download",
     addVersionButtonText: "Add version",
-    manageAccessButtonText: "Manage access"
+    manageAccessButtonText: "Manage access",
+    deleteButtonText: "Delete"
+  },
+
+  FileNameCell: {
+    inputErrorMessage: "Invalid file name",
+    submitButtonText: "Validate"
   },
 
   FilesManager: {

@@ -118,12 +118,9 @@ export default {
 
     watch(
       () => props.model,
-      model => {
-        modelName.value = model.name;
-      },
+      model => (modelName.value = model.name),
       { immediate: true }
     );
-
     watch(
       () => props.editMode,
       value => {
