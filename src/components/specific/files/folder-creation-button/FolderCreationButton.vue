@@ -105,6 +105,7 @@ export default {
 
     const showCreationForm = ref(false);
     const close = () => {
+      name.value = "";
       error.value = false;
       showCreationForm.value = false;
     };

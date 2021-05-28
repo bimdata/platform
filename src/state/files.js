@@ -42,7 +42,7 @@ const createFolder = async (project, folder) => {
 
 const updateFolders = async (project, folders) => {
   const newFolders = await FileService.updateFolders(project, folders);
-  softUpdateFileStructure("update", newFolders);
+  softUpdateFileStructure("update", folders);
   return newFolders;
 };
 
@@ -60,7 +60,7 @@ const createDocument = async (project, document) => {
 
 const updateDocuments = async (project, documents) => {
   const newDocuments = await FileService.updateDocuments(project, documents);
-  softUpdateFileStructure("update", newDocuments);
+  softUpdateFileStructure("update", documents);
   return newDocuments;
 };
 
@@ -68,6 +68,21 @@ const deleteDocuments = async (project, documents) => {
   await FileService.deleteDocuments(project, documents);
   softUpdateFileStructure("delete", documents);
   return documents;
+};
+
+const updateFile = async (project, file) => {
+  if (file.type === "Folder") {
+    return updateFolders(project, file);
+  } else {
+    return updateDocuments(project, file);
+  }
+};
+
+const updateFiles = async (project, files) => {
+  for (const file of [files].flat()) {
+    await updateFile(project, file);
+  }
+  return files;
 };
 
 export function useFiles() {
@@ -79,10 +94,14 @@ export function useFiles() {
     // Methods
     loadProjectFileStructure,
     createFolder,
+    updateFolder: updateFolders,
     updateFolders,
     deleteFolders,
     createDocument,
+    updateDocument: updateDocuments,
     updateDocuments,
-    deleteDocuments
+    deleteDocuments,
+    updateFile,
+    updateFiles
   };
 }

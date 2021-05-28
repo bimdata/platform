@@ -3,12 +3,19 @@
     class="files-table"
     :columns="columns"
     :rows="files"
+    rowKey="id"
     :rowHeight="44"
     :selectable="true"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: file }">
-      <FileNameCell :file="file" @click="$emit('file-selected', file)" />
+      <FileNameCell
+        :project="project"
+        :file="file"
+        @file-clicked="$emit('file-clicked', $event)"
+        :editMode="nameEditMode[file.id]"
+        @close="nameEditMode[file.id] = false"
+      />
     </template>
     <template #cell-type="{ row: file }">
       <FileTypeCell :file="file" />
@@ -26,16 +33,18 @@
       {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
     </template>
     <template #cell-actions="{ row: file }">
-      <FileActionsCell :file="file" />
+      <FileActionsCell
+        :file="file"
+        @update-clicked="nameEditMode[file.id] = true"
+      />
     </template>
   </GenericTable>
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
-import { watchEffect } from "@vue/runtime-core";
+import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { fileExtension, formatBytes } from "@/utils/files";
+import { formatBytes } from "@/utils/files";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import FileActionsCell from "./file-actions-cell/FileActionsCell";
@@ -63,8 +72,8 @@ export default {
       required: true
     }
   },
-  emits: ["file-selected"],
-  setup() {
+  emits: ["file-clicked"],
+  setup(props) {
     const { t } = useI18n();
 
     const columns = ref([]);
@@ -112,11 +121,23 @@ export default {
       ];
     });
 
+    let nameEditMode;
+    watch(
+      () => props.files,
+      () => {
+        nameEditMode = reactive({});
+        props.files.forEach(row => {
+          nameEditMode[row.id] = false;
+        });
+      },
+      { immediate: true }
+    );
+
     return {
       // References
       columns,
+      nameEditMode,
       // Methods
-      fileExtension,
       formatBytes
     };
   }

@@ -8,13 +8,6 @@ class FileService {
     });
   }
 
-  // fetchFolders(project) {
-  //   return apiClient.collaborationApi.getFolders({
-  //     cloudPk: project.cloud.id,
-  //     projectPk: project.id
-  //   });
-  // }
-
   createFolder(project, folder) {
     return apiClient.collaborationApi.createFolder({
       cloudPk: project.cloud.id,
@@ -49,13 +42,6 @@ class FileService {
       )
     );
   }
-
-  // fetchDocuments(project) {
-  //   return apiClient.collaborationApi.getDocuments({
-  //     cloudPk: project.cloud.id,
-  //     projectPk: project.id
-  //   });
-  // }
 
   createDocument(project, document) {
     return apiClient.collaborationApi.createDocument({

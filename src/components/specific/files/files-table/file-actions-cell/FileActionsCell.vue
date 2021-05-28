@@ -18,7 +18,12 @@
         <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
           {{ $t("FileActionsCell.validationRequestButtonText") }}
         </BIMDataButton>
-        <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('update')"
+        >
           {{ $t("FileActionsCell.renameButtonText") }}
         </BIMDataButton>
         <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
@@ -29,6 +34,14 @@
         </BIMDataButton>
         <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
           {{ $t("FileActionsCell.manageAccessButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          color="high"
+          ghost
+          squared
+        >
+          {{ $t("FileActionsCell.deleteButtonText") }}
         </BIMDataButton>
       </div>
     </transition>
@@ -46,7 +59,16 @@ export default {
     BIMDataButton,
     BIMDataIcon
   },
-  setup() {
+  emits: [
+    "access-clicked",
+    "delete-clicked",
+    "download-clicked",
+    "tags-clicked",
+    "update-clicked",
+    "validation-clicked",
+    "version-clicked"
+  ],
+  setup(props, { emit }) {
     const showMenu = ref(false);
     const closeMenu = () => {
       showMenu.value = false;
@@ -55,11 +77,17 @@ export default {
       showMenu.value = !showMenu.value;
     };
 
+    const onClick = eventType => {
+      closeMenu();
+      emit(`${eventType}-clicked`, props.file);
+    };
+
     return {
       // References
       showMenu,
       // Methods
       closeMenu,
+      onClick,
       toggleMenu
     };
   }
