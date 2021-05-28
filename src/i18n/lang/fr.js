@@ -99,7 +99,6 @@ export default {
   FilesManager: {
     title: "Documents du projet",
     searchInputPlaceholder: "Rechercher",
-    addFolderButtonText: "Nouveau dossier",
     addFileButtonText: "Charger un fichier"
   },
 
@@ -131,6 +130,15 @@ export default {
     uploadAreaText: "Cliquer/Glisser vos fichiers ici",
     separatorText: "ou",
     uploadButtonText: "Selectionner un fichier"
+  },
+
+  FolderCreationButton: {
+    createFolderButtonText: "Nouveau dossier",
+    creationFormTitle: "Créer un dossier",
+    nameInputPlaceholder: "Nom du dossier",
+    nameInputErrorMessage: "",
+    cancelButtonText: "Annuler",
+    submitButtonText: "Valider"
   },
 
   InvitationCard: {

@@ -97,7 +97,9 @@ export default {
               role: role.value.value
             });
           } else if (props.space) {
-            await sendSpaceInvitation(props.space, { email: email.value });
+            await sendSpaceInvitation(props.space, {
+              email: email.value
+            });
           }
           emit("success");
         } catch (error) {

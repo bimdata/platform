@@ -6,6 +6,8 @@
 
 <script>
 import { provide, ref, watch } from "vue";
+import { getDescendants } from "@/utils/file-structure";
+// Components
 import FileTreeNode from "./file-tree-node/FileTreeNode";
 
 export default {
@@ -31,7 +33,12 @@ export default {
 
     watch(
       () => props.fileStructure,
-      () => (selectedFileID.value = props.fileStructure.id),
+      struct => {
+        const files = getDescendants(struct);
+        if (files.every(file => file.id !== selectedFileID.value)) {
+          selectedFileID.value = struct.id;
+        }
+      },
       { immediate: true }
     );
     watch(

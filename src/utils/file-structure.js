@@ -29,18 +29,16 @@ function createNodeMap(fileStructure) {
  * @returns {Object}
  */
 function createFileStructure(nodeMap, root) {
-  const fileStructure = {};
   const rootNode = nodeMap.get(root.id);
   const addToFileStructure = node => {
-    Object.assign(fileStructure, {
+    return Object.assign({}, {
       ...node.file,
       children: node.children.map(
         child => addToFileStructure(child)
       )
     });
   };
-  addToFileStructure(rootNode);
-  return fileStructure;
+  return addToFileStructure(rootNode);
 }
 
 /**
@@ -79,7 +77,7 @@ function createFileNode(nodeMap, file) {
 class FileStructureHandler {
 
   constructor(fileStructure) {
-    this.root = fileStructure;
+    this.root = { id: fileStructure.id };
     this.nodeMap = createNodeMap(fileStructure);
   }
 
@@ -91,8 +89,11 @@ class FileStructureHandler {
    * Structure accessors
    */
 
-  get(file) {
-    return (this.nodeMap.get(file.id) || {}).file;
+  get(file, options = {}) {
+    const fileData = (this.nodeMap.get(file.id) || {}).file;
+    return fileData && options.children 
+      ? { ...fileData, children: this.children(file) }
+      : fileData;
   }
 
   parent(file) {
@@ -122,6 +123,10 @@ class FileStructureHandler {
         child => this.descendants(child)
       )
     );
+  }
+
+  exists(file) {
+    return this.nodeMap.has(file.id);
   }
 
   siblings(file) {
