@@ -71,7 +71,7 @@ export default {
     ModelsOverview,
     ProjectUsersManager
   },
-  setup(props) {
+  setup() {
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
 
@@ -79,7 +79,7 @@ export default {
     const reloadModels = () => {
       clearTimeout(reloadDebounce);
       reloadDebounce = setTimeout(async () => {
-        await loadProjectModels(props.project);
+        await loadProjectModels(currentProject.value);
       }, 1000);
     };
 
