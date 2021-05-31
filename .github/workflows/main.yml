@@ -3,7 +3,7 @@ name: Platform-next
 on: 
   push:
   repository_dispatch:
-    types: [viewer-version]
+    types: [semantic-release]
 
 env:
   app: platform_v2
@@ -62,7 +62,6 @@ jobs:
           inventory: ${{ steps.tag.outputs.tag }}
           app: ${{ env.app }}
           vault-pass: ${{ secrets.ANSIBLE_VAULT_PASSWD }}
-      - run: docker images
       - name: Push image to registry
         run: |
           docker tag docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }} docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
