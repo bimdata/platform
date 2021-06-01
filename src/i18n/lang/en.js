@@ -110,8 +110,7 @@ export default {
 
   FilesManager: {
     title: "Project Files",
-    searchInputPlaceholder: "Search",
-    addFileButtonText: "Upload a file"
+    searchInputPlaceholder: "Search"
   },
 
   FilesManagerOnboarding: {
@@ -131,6 +130,10 @@ export default {
       lastupdate: "Last Modified",
       size: "Size"
     }
+  },
+
+  FileUploadButton: {
+    addFileButtonText: "Upload a file"
   },
 
   FileUploadCard: {

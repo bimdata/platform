@@ -11,17 +11,12 @@
           :project="project"
           :folder="currentFolder"
         />
-        <BIMDataButton
+        <FileUploadButton
           class="files-manager__actions__btn-new-file"
           width="194px"
-          color="primary"
-          fill
-          radius
-          @click="() => {}"
-        >
-          <BIMDataIcon name="addFile" size="xs" />
-          <span>{{ $t("FilesManager.addFileButtonText") }}</span>
-        </BIMDataButton>
+          :project="project"
+          :folder="currentFolder"
+        />
         <BIMDataSearch
           class="files-manager__actions__input-search"
           width="400px"
@@ -38,11 +33,11 @@
         :selectedFile="currentFolder"
         @file-selected="onFileSelected"
       />
-      <div class="files-manager__table">
-        <transition>
+      <div class="files-manager__files">
+        <transition name="fade">
           <FilesActionBar
             v-show="selection.length > 0"
-            class="files-manager__table__action-bar"
+            class="files-manager__files__action-bar"
             :files="selection"
             @delete-clicked="() => {}"
             @download-clicked="() => {}"
@@ -50,6 +45,7 @@
           />
         </transition>
         <FilesTable
+          class="files-manager__files__table"
           :project="project"
           :files="displayedFiles"
           @delete-clicked="() => {}"
@@ -68,10 +64,9 @@
 import { inject, ref, watch, watchEffect } from "vue";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import FileTree from "@/components/specific/files/file-tree/FileTree";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
 import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
 import FilesActionBar from "./files-action-bar/FilesActionBar";
@@ -81,10 +76,9 @@ import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboa
 export default {
   components: {
     BIMDataCard,
-    BIMDataButton,
-    BIMDataIcon,
     BIMDataSearch,
     FileTree,
+    FileUploadButton,
     FilesTable,
     FolderCreationButton,
     FilesActionBar,
