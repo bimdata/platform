@@ -26,7 +26,12 @@
         >
           {{ $t("FileActionsCell.renameButtonText") }}
         </BIMDataButton>
-        <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('download')"
+        >
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
         <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
@@ -40,6 +45,7 @@
           color="high"
           ghost
           squared
+          @click="onClick('delete')"
         >
           {{ $t("FileActionsCell.deleteButtonText") }}
         </BIMDataButton>

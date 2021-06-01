@@ -6,6 +6,7 @@
     rowKey="id"
     :rowHeight="44"
     :selectable="true"
+    @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: file }">
@@ -35,6 +36,8 @@
     <template #cell-actions="{ row: file }">
       <FileActionsCell
         :file="file"
+        @delete-clicked="$emit('delete-clicked', $event)"
+        @download-clicked="$emit('download-clicked', $event)"
         @update-clicked="nameEditMode[file.id] = true"
       />
     </template>
@@ -42,9 +45,10 @@
 </template>
 
 <script>
-import { reactive, ref, watch, watchEffect } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { formatBytes } from "@/utils/files";
+import columnsDef from "./columns";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import FileActionsCell from "./file-actions-cell/FileActionsCell";
@@ -72,54 +76,26 @@ export default {
       required: true
     }
   },
-  emits: ["file-clicked"],
+  emits: [
+    "delete-clicked",
+    "download-clicked",
+    "file-clicked",
+    "selection-changed"
+  ],
   setup(props) {
-    const { t } = useI18n();
+    const { locale, t } = useI18n();
 
     const columns = ref([]);
-    watchEffect(() => {
-      columns.value = [
-        {
-          id: "name",
-          label: t("FilesTable.headers.name")
-        },
-        {
-          id: "type",
-          label: t("FilesTable.headers.type"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "creator",
-          label: t("FilesTable.headers.creator"),
-          width: "200px",
-          align: "center"
-        },
-        {
-          id: "tags",
-          label: t("FilesTable.headers.tags"),
-          width: "200px"
-        },
-        {
-          id: "lastupdate",
-          label: t("FilesTable.headers.lastupdate"),
-          width: "150px",
-          align: "center"
-        },
-        {
-          id: "size",
-          label: t("FilesTable.headers.size"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "actions",
-          label: " ",
-          width: "50px",
-          align: "center"
-        }
-      ];
-    });
+    watch(
+      () => locale.value,
+      () => {
+        columns.value = columnsDef.map(col => ({
+          ...col,
+          label: col.label || t(`FilesTable.headers.${col.id}`)
+        }));
+      },
+      { immediate: true }
+    );
 
     let nameEditMode;
     watch(

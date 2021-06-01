@@ -102,6 +102,12 @@ export default {
     submitButtonText: "Validate"
   },
 
+  FilesActionBar: {
+    deleteButtonText: "Delete",
+    moveButtonText: "Move to",
+    downloadButtonText: "Download"
+  },
+
   FilesManager: {
     title: "Project Files",
     searchInputPlaceholder: "Search",
