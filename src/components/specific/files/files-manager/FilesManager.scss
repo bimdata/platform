@@ -36,6 +36,14 @@
 
       .files-manager__table {
         grid-area: table;
+        position: relative;
+
+        &__action-bar {
+          position: absolute;
+          z-index: 1;
+          margin-top: 4px;
+          margin-left: 48px;
+        }
       }
     }
   }

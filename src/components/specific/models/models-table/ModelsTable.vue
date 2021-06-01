@@ -43,8 +43,9 @@
 </template>
 
 <script>
-import { reactive, ref, watch, watchEffect } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import columnsDef from "./columns";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell";
@@ -77,52 +78,19 @@ export default {
     "selection-changed"
   ],
   setup(props) {
-    const { t } = useI18n();
+    const { locale, t } = useI18n();
 
     const columns = ref([]);
-    watchEffect(() => {
-      columns.value = [
-        {
-          id: "id",
-          label: t("ModelsTable.headers.id"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "name",
-          label: t("ModelsTable.headers.name")
-        },
-        {
-          id: "version",
-          label: t("ModelsTable.headers.version"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "creator",
-          label: t("ModelsTable.headers.creator"),
-          width: "200px",
-          align: "center"
-        },
-        {
-          id: "lastupdate",
-          label: t("ModelsTable.headers.lastupdate"),
-          width: "200px",
-          align: "center"
-        },
-        {
-          id: "status",
-          label: t("ModelsTable.headers.status"),
-          width: "100px",
-          align: "center"
-        },
-        {
-          id: "actions",
-          label: " ",
-          width: "500px"
-        }
-      ];
-    });
+    watch(
+      () => locale.value,
+      () => {
+        columns.value = columnsDef.map(col => ({
+          ...col,
+          label: col.label || t(`ModelsTable.headers.${col.id}`)
+        }));
+      },
+      { immediate: true }
+    );
 
     let nameEditMode;
     watch(

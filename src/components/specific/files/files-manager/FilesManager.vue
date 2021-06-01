@@ -38,12 +38,26 @@
         :selectedFile="currentFolder"
         @file-selected="onFileSelected"
       />
-      <FilesTable
-        class="files-manager__table"
-        :project="project"
-        :files="displayedFiles"
-        @file-clicked="onFileSelected"
-      />
+      <div class="files-manager__table">
+        <transition>
+          <FilesActionBar
+            v-show="selection.length > 0"
+            class="files-manager__table__action-bar"
+            :files="selection"
+            @delete-clicked="() => {}"
+            @download-clicked="() => {}"
+            @move-clicked="() => {}"
+          />
+        </transition>
+        <FilesTable
+          :project="project"
+          :files="displayedFiles"
+          @delete-clicked="() => {}"
+          @download-clicked="() => {}"
+          @file-clicked="onFileSelected"
+          @selection-changed="setSelection"
+        />
+      </div>
 
       <FilesManagerOnboarding v-if="false" :project="project" />
     </template>
@@ -60,6 +74,7 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
 import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
+import FilesActionBar from "./files-action-bar/FilesActionBar";
 import FilesManagerBreadcrumb from "./files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
 
@@ -72,6 +87,7 @@ export default {
     FileTree,
     FilesTable,
     FolderCreationButton,
+    FilesActionBar,
     FilesManagerBreadcrumb,
     FilesManagerOnboarding
   },
@@ -142,13 +158,20 @@ export default {
     };
     watchEffect(() => filterFiles(searchText.value));
 
+    const selection = ref([]);
+    const setSelection = models => {
+      selection.value = models;
+    };
+
     return {
       // References
       currentFolder,
       displayedFiles,
       searchText,
+      selection,
       // Methods
-      onFileSelected
+      onFileSelected,
+      setSelection
     };
   }
 };

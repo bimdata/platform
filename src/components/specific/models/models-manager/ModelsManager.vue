@@ -12,8 +12,8 @@
 
       <transition name="fade">
         <ModelsActionBar
+          v-show="selection.length > 0"
           class="models-manager__action-bar"
-          :style="{ visibility: selection.length > 0 ? 'visible' : 'hidden' }"
           :models="selection"
           @archive-clicked="archiveModels"
           @delete-clicked="openDeleteModal"
