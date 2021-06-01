@@ -70,31 +70,18 @@ export default {
       loading.value = false;
       emit("upload-failed");
     });
-    uppy.on(
-      "complete",
-      ({
-        successful: [
-          {
-            response: {
-              body: { image }
-            }
-          }
-        ]
-      }) => {
-        softUpdateSpace({ ...props.space, image });
-        uppy.reset(); // reset Uppy instance
-        emit("upload-completed");
-      }
-    );
+    uppy.on("complete", event => {
+      const image = event.successful[0].response.body.image;
+      softUpdateSpace({ ...props.space, image });
+      uppy.reset(); // reset Uppy instance
+      emit("upload-completed");
+    });
 
     const selectImage = () => {
       fileInput.value.click();
     };
-    const uploadImage = ({
-      target: {
-        files: [file]
-      }
-    }) => {
+    const uploadImage = event => {
+      const file = event.target.files[0];
       if (file) {
         uppy.addFile({
           name: file.name,

@@ -117,20 +117,12 @@ export default {
       failed.value = true;
       emit("upload-failed");
     });
-    uppy.on(
-      "complete",
-      ({
-        successful: [
-          {
-            response: { body: document }
-          }
-        ]
-      }) => {
-        uploading.value = false;
-        uppy.reset(); // reset Uppy instance
-        emit("upload-completed", document);
-      }
-    );
+    uppy.on("complete", event => {
+      const document = event.successful[0].response.body;
+      uploading.value = false;
+      uppy.reset(); // reset Uppy instance
+      emit("upload-completed", document);
+    });
 
     const progress = reactive({
       percentage: 0,

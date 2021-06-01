@@ -110,8 +110,7 @@ export default {
 
   FilesManager: {
     title: "Documents du projet",
-    searchInputPlaceholder: "Rechercher",
-    addFileButtonText: "Charger un fichier"
+    searchInputPlaceholder: "Rechercher"
   },
 
   FilesManagerOnboarding: {
@@ -131,6 +130,10 @@ export default {
       lastupdate: "Modifié le",
       size: "Taille"
     }
+  },
+
+  FileUploadButton: {
+    addFileButtonText: "Charger un fichier"
   },
 
   FileUploadCard: {

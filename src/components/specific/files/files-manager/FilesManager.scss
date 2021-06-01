@@ -9,7 +9,7 @@
       gap: $spacing-unit;
       grid-template-areas:
         "actions actions"
-        "tree    table";
+        "tree    files";
 
       .files-manager__actions {
         grid-area: actions;
@@ -34,8 +34,8 @@
         @include box-shadow;
       }
 
-      .files-manager__table {
-        grid-area: table;
+      .files-manager__files {
+        grid-area: files;
         position: relative;
 
         &__action-bar {
@@ -43,6 +43,10 @@
           z-index: 1;
           margin-top: 4px;
           margin-left: 48px;
+        }
+
+        &__table {
+          height: 100%;
         }
       }
     }
