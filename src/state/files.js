@@ -76,6 +76,12 @@ const updateDocuments = async (project, documents) => {
 const deleteDocuments = async (project, documents) => {
   await FileService.deleteDocuments(project, documents);
   softUpdateFileStructure("delete", documents);
+
+  // Delete corresponding models if any
+  const { softDeleteModels } = useModels();
+  const modelDocs = [documents].flat().filter(doc => doc.type === "Ifc");
+  softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
+
   return documents;
 };
 
@@ -94,6 +100,21 @@ const updateFiles = async (project, files) => {
   return files;
 };
 
+const deleteFile = async (project, file) => {
+  if (file.type === "Folder") {
+    return deleteFolders(project, file);
+  } else {
+    return deleteDocuments(project, file);
+  }
+};
+
+const deleteFiles = async (project, files) => {
+  for (const file of [files].flat()) {
+    await deleteFile(project, file);
+  }
+  return files;
+};
+
 export function useFiles() {
   const readOnlyState = readonly(state);
   return {
@@ -102,6 +123,7 @@ export function useFiles() {
     fileStructureHandler: () => fileStructureHandler,
     // Methods
     loadProjectFileStructure,
+    softUpdateFileStructure,
     createFolder,
     updateFolder: updateFolders,
     updateFolders,
@@ -111,6 +133,8 @@ export function useFiles() {
     updateDocuments,
     deleteDocuments,
     updateFile,
-    updateFiles
+    updateFiles,
+    deleteFile,
+    deleteFiles
   };
 }

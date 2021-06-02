@@ -1,4 +1,6 @@
 .files-manager {
+  position: relative;
+
   &:deep() {
     .bimdata-card__content {
       height: calc(100% - 35px - 26px);

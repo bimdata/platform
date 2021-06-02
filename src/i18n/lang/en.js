@@ -108,6 +108,14 @@ export default {
     downloadButtonText: "Download"
   },
 
+  FilesDeleteModal: {
+    title: "Delete files",
+    message:
+      "This action will permanently delete the following files/folders :",
+    cancelButtonText: "Cancel",
+    deleteButtonText: "Delete"
+  },
+
   FilesManager: {
     title: "Project Files",
     searchInputPlaceholder: "Search"

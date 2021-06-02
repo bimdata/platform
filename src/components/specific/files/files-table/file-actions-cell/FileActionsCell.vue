@@ -65,6 +65,12 @@ export default {
     BIMDataButton,
     BIMDataIcon
   },
+  props: {
+    file: {
+      type: Object,
+      required: true
+    }
+  },
   emits: [
     "access-clicked",
     "delete-clicked",
