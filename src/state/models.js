@@ -1,6 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
-import FileService from "@/server/FileService";
 import ModelService from "@/server/ModelService";
+import { useFiles } from "@/state/files";
 
 const state = reactive({
   projectModels: []
@@ -23,6 +23,19 @@ const updateModels = async (project, models) => {
   return newModels;
 };
 
+const updateModelName = async (project, model, name) => {
+  // In order to update a model name we have to update the name
+  // of its assiociated document.
+  const { updateDocuments } = useFiles();
+  const [newDocument] = await updateDocuments(project, {
+    id: model.documentId,
+    ifcId: model.id,
+    name
+  });
+
+  return { ...model, name, document: newDocument };
+};
+
 const softUpdateModels = models => {
   for (const model of [models].flat()) {
     state.projectModels = state.projectModels.map(m =>
@@ -37,8 +50,14 @@ const mergeModels = async (project, models, name) => {
 };
 
 const deleteModels = async (project, models) => {
+  // Delete associated documents
+  const { softUpdateFileStructure } = useFiles();
+  const modelDocs = [models].flat().map(model => model.document);
+  softUpdateFileStructure("delete", modelDocs);
+
   await ModelService.deleteModels(project, models);
   softDeleteModels(models);
+
   return models;
 };
 
@@ -48,16 +67,6 @@ const softDeleteModels = models => {
     model => !modelIDs.includes(model.id)
   );
   return models;
-};
-
-const updateModelName = async (project, model, name) => {
-  // In order to update a model name we have to update the name
-  // of its assiociated document.
-  await FileService.updateDocuments(project, { id: model.documentId, name });
-  // Once the document name is updated we can fetch the new model data.
-  const newModel = await ModelService.fetchModelByID(project, model.id);
-  softUpdateModels(newModel);
-  return newModel;
 };
 
 const fetchModelLocation = async (project, model) => {
@@ -157,11 +166,11 @@ export function useModels() {
     loadProjectModels,
     fetchModelByID,
     updateModels,
+    updateModelName,
     softUpdateModels,
     mergeModels,
     deleteModels,
     softDeleteModels,
-    updateModelName,
     fetchModelLocation,
     createModelLocation,
     updateModelLocation

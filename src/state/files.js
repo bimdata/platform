@@ -1,7 +1,7 @@
 import { reactive, readonly, toRefs } from "@vue/reactivity";
 import FileService from "@/server/FileService";
 import { useModels } from "@/state/models";
-import { FileStructureHandler } from "@/utils/file-structure";
+import { FileStructureHandler, getDescendants } from "@/utils/file-structure";
 
 const state = reactive({
   projectFileStructure: {}
@@ -48,8 +48,17 @@ const updateFolders = async (project, folders) => {
 };
 
 const deleteFolders = async (project, folders) => {
+  // Delete models contained in these folders
+  const { softDeleteModels } = useModels();
+  const modelDocs = [folders]
+    .flat()
+    .flatMap(folder => getDescendants(folder))
+    .filter(doc => !!doc.ifcId);
+  softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
+
   await FileService.deleteFolders(project, folders);
   softUpdateFileStructure("delete", folders);
+
   return folders;
 };
 
@@ -65,7 +74,7 @@ const updateDocuments = async (project, documents) => {
 
   // Update corresponding models if any
   const { fetchModelByID, softUpdateModels } = useModels();
-  const modelDocs = [documents].flat().filter(doc => doc.type === "Ifc");
+  const modelDocs = [documents].flat().filter(doc => !!doc.ifcId);
   Promise.all(modelDocs.map(doc => fetchModelByID(project, doc.ifcId))).then(
     softUpdateModels
   );
@@ -74,13 +83,13 @@ const updateDocuments = async (project, documents) => {
 };
 
 const deleteDocuments = async (project, documents) => {
-  await FileService.deleteDocuments(project, documents);
-  softUpdateFileStructure("delete", documents);
-
   // Delete corresponding models if any
   const { softDeleteModels } = useModels();
-  const modelDocs = [documents].flat().filter(doc => doc.type === "Ifc");
+  const modelDocs = [documents].flat().filter(doc => !!doc.ifcId);
   softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
+
+  await FileService.deleteDocuments(project, documents);
+  softUpdateFileStructure("delete", documents);
 
   return documents;
 };
