@@ -199,7 +199,10 @@ export default {
     };
 
     const downloadFiles = async files => {
-      let filesToDownload = files.filter(f => f.type !== "Folder");
+      const filesToDownload = files.filter(f => f.type !== "Folder");
+      if (filesToDownload.length > 1) {
+        return;
+      }
       for (const file of filesToDownload) {
         const link = document.createElement("a");
         link.style.display = "none";
