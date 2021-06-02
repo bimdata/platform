@@ -1,45 +1,45 @@
 <template>
   <GenericModal
-    class="models-delete-modal"
+    class="files-delete-modal"
     contentWidth="450px"
     @close="$emit('close')"
   >
     <template #header>
-      {{ $t("ModelsDeleteModal.title") }}
+      {{ $t("FilesDeleteModal.title") }}
     </template>
     <template #body>
-      <div class="models-delete-modal__message">
-        <div>{{ $t("ModelsDeleteModal.message") }}</div>
-        <ul class="models-delete-modal__message__list">
+      <div class="files-delete-modal__message">
+        <div>{{ $t("FilesDeleteModal.message") }}</div>
+        <ul class="files-delete-modal__message__list">
           <li
-            class="models-delete-modal__message__list__item"
-            v-for="model of models"
-            :key="model.id"
+            class="files-delete-modal__message__list__item"
+            v-for="file of files"
+            :key="file.id"
           >
-            "{{ model.name }}"
+            "{{ file.name }}"
           </li>
         </ul>
       </div>
     </template>
     <template #footer>
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
-        {{ $t("ModelsDeleteModal.cancelButtonText") }}
+        {{ $t("FilesDeleteModal.cancelButtonText") }}
       </BIMDataButton>
       <BIMDataButton
         color="high"
         fill
         radius
         width="120px"
-        @click="removeModels"
+        @click="removeFiles"
       >
-        {{ $t("ModelsDeleteModal.deleteButtonText") }}
+        {{ $t("FilesDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
   </GenericModal>
 </template>
 
 <script>
-import { useModels } from "@/state/models";
+import { useFiles } from "@/state/files";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import GenericModal from "@/components/generic/generic-modal/GenericModal";
@@ -54,26 +54,26 @@ export default {
       type: Object,
       required: true
     },
-    models: {
+    files: {
       type: Array,
       required: true
     }
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { softDeleteModels, deleteModels } = useModels();
+    const { softUpdateFileStructure, deleteFiles } = useFiles();
 
-    const removeModels = () => {
-      softDeleteModels(props.models);
-      deleteModels(props.project, props.models);
+    const removeFiles = () => {
+      softUpdateFileStructure("delete", props.files);
+      deleteFiles(props.project, props.files);
       emit("close");
     };
 
     return {
-      removeModels
+      removeFiles
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./ModelsDeleteModal.scss"></style>
+<style scoped lang="scss" src="./FilesDeleteModal.scss"></style>

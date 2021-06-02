@@ -108,6 +108,14 @@ export default {
     downloadButtonText: "Télécharger"
   },
 
+  FilesDeleteModal: {
+    title: "Suppression de fichiers",
+    message:
+      "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
+    cancelButtonText: "Annuler",
+    deleteButtonText: "Supprimer"
+  },
+
   FilesManager: {
     title: "Documents du projet",
     searchInputPlaceholder: "Rechercher"

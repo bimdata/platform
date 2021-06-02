@@ -54,7 +54,6 @@ export default {
     const uppy = new Uppy({
       id: `project-file-${props.project.id}`,
       autoProceed: true,
-      allowMultipleUploads: false,
       restrictions: {
         maxFileSize: +process.env.VUE_APP_MAX_UPLOAD_SIZE,
         minNumberOfFiles: 1
