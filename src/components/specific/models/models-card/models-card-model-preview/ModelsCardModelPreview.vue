@@ -112,9 +112,11 @@ export default {
       },
       { immediate: true }
     );
-    watch(index, i => {
-      image.value = images.value[i] || null;
-      emit("model-changed", props.models[i]);
+    watch(index, (newIndex, oldIndex) => {
+      if (newIndex !== oldIndex) {
+        image.value = images.value[newIndex] || null;
+        emit("model-changed", props.models[newIndex]);
+      }
     });
 
     return {

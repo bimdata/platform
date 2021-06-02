@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { onMounted, ref } from "vue";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import ModelLocation from "@/components/specific/models/model-location/ModelLocation";
@@ -50,13 +50,15 @@ export default {
   setup(props) {
     const displayedModel = ref(null);
 
-    watchEffect(() => {
+    const onModelChange = model => {
+      if (!displayedModel.value || displayedModel.value.id !== model.id) {
+        displayedModel.value = model;
+      }
+    };
+
+    onMounted(() => {
       displayedModel.value = props.models.length > 0 ? props.models[0] : null;
     });
-
-    const onModelChange = model => {
-      displayedModel.value = model;
-    };
 
     return {
       // References

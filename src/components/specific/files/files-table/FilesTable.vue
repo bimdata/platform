@@ -9,6 +9,20 @@
     @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
+    <template #sub-header>
+      <transition-group name="list">
+        <FileUploadCell
+          v-for="file of fileUploads"
+          :key="file.key"
+          :project="project"
+          :folder="folder"
+          :file="file"
+          @upload-completed="onUploadCompleted(file.key, $event)"
+          @upload-canceled="cleanUpload(file.key, 6000)"
+          @upload-failed="cleanUpload(file.key, 12000)"
+        />
+      </transition-group>
+    </template>
     <template #cell-name="{ row: file }">
       <FileNameCell
         :project="project"
@@ -36,9 +50,9 @@
     <template #cell-actions="{ row: file }">
       <FileActionsCell
         :file="file"
-        @delete-clicked="$emit('delete-clicked', $event)"
-        @download-clicked="$emit('download-clicked', $event)"
-        @update-clicked="nameEditMode[file.id] = true"
+        @delete="$emit('delete', $event)"
+        @download="$emit('download', $event)"
+        @update="nameEditMode[file.id] = true"
       />
     </template>
   </GenericTable>
@@ -56,6 +70,7 @@ import FileLastUpdateCell from "./file-last-update-cell/FileLastUpdateCell";
 import FileNameCell from "./file-name-cell/FileNameCell";
 import FileTagsCell from "./file-tags-cell/FileTagsCell";
 import FileTypeCell from "./file-type-cell/FileTypeCell";
+import FileUploadCell from "./file-upload-cell/FileUploadCell";
 
 export default {
   components: {
@@ -64,25 +79,35 @@ export default {
     FileLastUpdateCell,
     FileNameCell,
     FileTagsCell,
-    FileTypeCell
+    FileTypeCell,
+    FileUploadCell
   },
   props: {
     project: {
       type: Object,
       required: true
     },
+    folder: {
+      type: Object,
+      required: true
+    },
     files: {
       type: Array,
       required: true
+    },
+    filesToUpload: {
+      type: Array,
+      default: () => []
     }
   },
   emits: [
-    "delete-clicked",
-    "download-clicked",
+    "delete",
+    "download",
     "file-clicked",
+    "file-uploaded",
     "selection-changed"
   ],
-  setup(props) {
+  setup(props, { emit }) {
     const { locale, t } = useI18n();
 
     const columns = ref([]);
@@ -109,10 +134,38 @@ export default {
       { immediate: true }
     );
 
+    const fileUploads = ref([]);
+    watch(
+      () => props.filesToUpload,
+      () => {
+        fileUploads.value = fileUploads.value.concat(
+          props.filesToUpload.map((file, i) =>
+            Object.assign(file, { key: `${i}-${file.name}` })
+          )
+        );
+      },
+      { immediate: true }
+    );
+
+    const onUploadCompleted = (key, file) => {
+      cleanUpload(key, 500);
+      emit("file-uploaded", file);
+    };
+
+    const cleanUpload = (key, delay = 100) => {
+      setTimeout(() => {
+        const index = fileUploads.value.findIndex(f => f.key === key);
+        fileUploads.value.splice(index, 1);
+      }, delay);
+    };
+
     return {
       // References
+      cleanUpload,
       columns,
+      fileUploads,
       nameEditMode,
+      onUploadCompleted,
       // Methods
       formatBytes
     };

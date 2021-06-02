@@ -72,13 +72,13 @@ export default {
     }
   },
   emits: [
-    "access-clicked",
-    "delete-clicked",
-    "download-clicked",
-    "tags-clicked",
-    "update-clicked",
-    "validation-clicked",
-    "version-clicked"
+    "add-tags",
+    "add-version",
+    "delete",
+    "download",
+    "manage-access",
+    "request-validation",
+    "update"
   ],
   setup(props, { emit }) {
     const showMenu = ref(false);
@@ -89,9 +89,9 @@ export default {
       showMenu.value = !showMenu.value;
     };
 
-    const onClick = eventType => {
+    const onClick = event => {
       closeMenu();
-      emit(`${eventType}-clicked`, props.file);
+      emit(event, props.file);
     };
 
     return {

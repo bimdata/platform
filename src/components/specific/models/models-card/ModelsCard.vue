@@ -43,18 +43,20 @@ export default {
   setup(props, { emit }) {
     const router = useRouter();
 
-    const currentModel = ref();
+    const currentModel = ref(null);
     watch(
       () => props.models,
       () => {
-        currentModel.value = props.models[0];
+        currentModel.value = props.models.length > 0 ? props.models[0] : null;
       },
       { immediate: true }
     );
 
     const onModelChange = model => {
-      currentModel.value = model;
-      emit("model-changed", model);
+      if (!currentModel.value || currentModel.value.id !== model.id) {
+        currentModel.value = model;
+        emit("model-changed", model);
+      }
     };
 
     const goToModelViewer = () => {
@@ -69,6 +71,7 @@ export default {
     };
 
     return {
+      // Methods
       goToModelViewer,
       onModelChange
     };

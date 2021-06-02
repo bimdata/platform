@@ -5,7 +5,7 @@
       color="high"
       ghost
       squared
-      @click="$emit('delete-clicked', files)"
+      @click="$emit('delete', files)"
     >
       <BIMDataIcon name="delete" size="xs" />
       <span>{{ $t("FilesActionBar.deleteButtonText") }}</span>
@@ -15,7 +15,7 @@
       color="secondary"
       ghost
       squared
-      @click="$emit('move-clicked', files)"
+      @click="$emit('move', files)"
     >
       <BIMDataIcon name="folderOpen" size="xs" />
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
@@ -24,7 +24,7 @@
       width="120px"
       ghost
       squared
-      @click="$emit('download-clicked', files)"
+      @click="$emit('download', files)"
     >
       <BIMDataIcon name="download" size="s" />
       <span>{{ $t("FilesActionBar.downloadButtonText") }}</span>
@@ -47,7 +47,7 @@ export default {
       default: () => []
     }
   },
-  emits: ["delete-clicked", "download-clicked", "move-clicked"]
+  emits: ["delete", "download", "move"]
 };
 </script>
 

@@ -26,6 +26,14 @@
       th {
         font-weight: bold;
         color: $color-primary;
+
+        &.cell-sub-header {
+          min-height: 0;
+          padding: 0;
+          text-align: left;
+          font-weight: normal;
+          color: $color-tertiary-darkest;
+        }
       }
 
       td {

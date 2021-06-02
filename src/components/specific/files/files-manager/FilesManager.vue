@@ -15,8 +15,7 @@
           <FileUploadButton
             class="files-manager__actions__btn-new-file"
             width="194px"
-            :project="project"
-            :folder="currentFolder"
+            @upload="uploadFiles"
           />
           <BIMDataSearch
             class="files-manager__actions__input-search"
@@ -39,18 +38,21 @@
               v-show="selection.length > 0"
               class="files-manager__files__action-bar"
               :files="selection"
-              @delete-clicked="openDeleteModal"
-              @download-clicked="downloadFiles"
-              @move-clicked="() => {}"
+              @delete="openDeleteModal"
+              @download="downloadFiles"
+              @move="moveFiles"
             />
           </transition>
           <FilesTable
             class="files-manager__files__table"
             :project="project"
+            :folder="currentFolder"
             :files="displayedFiles"
-            @delete-clicked="openDeleteModal([$event])"
-            @download-clicked="downloadFiles([$event])"
+            :filesToUpload="filesToUpload"
+            @delete="openDeleteModal([$event])"
+            @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
+            @file-uploaded="onFileUploaded"
             @selection-changed="setSelection"
           />
         </div>
@@ -110,7 +112,8 @@ export default {
       required: true
     }
   },
-  setup(props) {
+  emits: ["file-uploaded"],
+  setup(props, { emit }) {
     const handler = inject("fileStructureHandler");
     const currentFolder = ref(null);
     const currentFiles = ref([]);
@@ -172,6 +175,14 @@ export default {
       selection.value = models;
     };
 
+    const filesToUpload = ref([]);
+    const uploadFiles = files => {
+      filesToUpload.value = files;
+    };
+    const onFileUploaded = () => {
+      emit("file-uploaded");
+    };
+
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
     const openDeleteModal = models => {
@@ -181,6 +192,10 @@ export default {
     const closeDeleteModal = () => {
       filesToDelete.value = [];
       showDeleteModal.value = false;
+    };
+
+    const moveFiles = () => {
+      // TODO
     };
 
     const downloadFiles = async files => {
@@ -203,15 +218,19 @@ export default {
       currentFolder,
       displayedFiles,
       filesToDelete,
+      filesToUpload,
       searchText,
       selection,
       showDeleteModal,
       // Methods
       closeDeleteModal,
       downloadFiles,
+      moveFiles,
       onFileSelected,
+      onFileUploaded,
       openDeleteModal,
-      setSelection
+      setSelection,
+      uploadFiles
     };
   }
 };
