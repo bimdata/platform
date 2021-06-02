@@ -26,6 +26,7 @@
           v-model="name"
           :error="error"
           :errorMessage="$t('FolderCreationButton.nameInputErrorMessage')"
+          @keyup.esc.stop="close"
           @keyup.enter.stop="submit"
         />
         <BIMDataButton
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useFiles } from "@/state/files";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -112,11 +113,10 @@ export default {
     const toggle = () => {
       error.value = false;
       showCreationForm.value = !showCreationForm.value;
+      if (showCreationForm.value) {
+        setTimeout(() => nameInput.value.focus(), 200);
+      }
     };
-
-    onMounted(() => {
-      setTimeout(() => nameInput.value.focus(), 200);
-    });
 
     return {
       // References
