@@ -50,6 +50,7 @@
 
 <script>
 import { ref } from "vue";
+import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 // Components
@@ -74,11 +75,13 @@ export default {
   setup() {
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
+    const { loadProjectFileStructure } = useFiles();
 
     let reloadDebounce = null;
     const reloadModels = () => {
       clearTimeout(reloadDebounce);
       reloadDebounce = setTimeout(async () => {
+        await loadProjectFileStructure(currentProject.value);
         await loadProjectModels(currentProject.value);
       }, 1000);
     };

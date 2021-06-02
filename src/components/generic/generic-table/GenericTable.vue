@@ -30,6 +30,14 @@
               </th>
             </template>
           </tr>
+          <tr key="head-row-1">
+            <th
+              class="cell-sub-header"
+              :colspan="columns.length + (selectable ? 1 : 0)"
+            >
+              <slot name="sub-header"></slot>
+            </th>
+          </tr>
         </thead>
         <tbody>
           <template

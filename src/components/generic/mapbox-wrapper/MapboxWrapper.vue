@@ -1,5 +1,5 @@
 <template>
-  <div class="mapbox-wrapper" id="mapbox-container">
+  <div id="mapbox-container" class="mapbox-wrapper">
     <!-- Mapbox will be displayed here -->
   </div>
 </template>

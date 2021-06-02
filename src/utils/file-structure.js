@@ -153,7 +153,7 @@ class FileStructureHandler {
     if (node.parent) {
       node.parent.addChild(file);
     }
-    file.children.forEach(
+    (file.children || []).forEach(
       child => this.createFile(child)
     );
   }
@@ -177,7 +177,7 @@ class FileStructureHandler {
   deleteFile(file) {
     const node = this.nodeMap.get(file.id);
     if (node) {
-      file.children.forEach(
+      (file.children || []).forEach(
         child => this.deleteFile(child)
       );
       this.nodeMap.delete(file.id);

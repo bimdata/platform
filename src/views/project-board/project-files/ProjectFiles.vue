@@ -18,6 +18,7 @@
       class="project-files__block--files"
       :project="project"
       :fileStructure="fileStructure"
+      @file-uploaded="reloadFileStructure"
     />
   </div>
 </template>
@@ -25,6 +26,7 @@
 <script>
 import { provide } from "vue";
 import { useFiles } from "@/state/files";
+import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -41,14 +43,30 @@ export default {
   },
   setup() {
     const { currentProject } = useProjects();
-    const { projectFileStructure, fileStructureHandler } = useFiles();
+    const { loadProjectModels } = useModels();
+    const {
+      loadProjectFileStructure,
+      projectFileStructure,
+      fileStructureHandler
+    } = useFiles();
 
     provide("fileStructureHandler", fileStructureHandler);
+
+    let reloadDebounce = null;
+    const reloadFileStructure = () => {
+      clearTimeout(reloadDebounce);
+      reloadDebounce = setTimeout(async () => {
+        await loadProjectFileStructure(currentProject.value);
+        await loadProjectModels(currentProject.value);
+      }, 1000);
+    };
 
     return {
       // References
       fileStructure: projectFileStructure,
-      project: currentProject
+      project: currentProject,
+      // Methods
+      reloadFileStructure
     };
   }
 };

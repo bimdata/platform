@@ -109,9 +109,19 @@ const deleteFile = async (project, file) => {
 };
 
 const deleteFiles = async (project, files) => {
+  const folders = [];
+  const documents = [];
   for (const file of [files].flat()) {
-    await deleteFile(project, file);
+    if (file.type === "Folder") {
+      folders.push(file);
+    } else {
+      documents.push(file);
+    }
   }
+  await Promise.all([
+    deleteFolders(project, folders),
+    deleteDocuments(project, documents)
+  ]);
   return files;
 };
 
