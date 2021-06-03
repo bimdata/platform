@@ -1,7 +1,7 @@
 import apiClient from "./api-client";
 
 const FOLDER_UPDATABLE_FIELDS = ["name", "parentId"];
-const DOCUMENT_UPDATABLE_FIELDS = ["name", "description", "parentId"];
+const DOCUMENT_UPDATABLE_FIELDS = ["name", "parentId"];
 
 function createPayload(object, allowedFields) {
   const payload = {};
@@ -34,7 +34,6 @@ class FileService {
   }
 
   updateFolders(project, folders) {
-    folders = [folders].flat();
     return Promise.all(
       folders.map(folder =>
         apiClient.collaborationApi.updateFolder({
@@ -48,7 +47,6 @@ class FileService {
   }
 
   deleteFolders(project, folders) {
-    folders = [folders].flat();
     return Promise.all(
       folders.map(folder =>
         apiClient.collaborationApi.deleteFolder({
@@ -60,16 +58,7 @@ class FileService {
     );
   }
 
-  createDocument(project, document) {
-    return apiClient.collaborationApi.createDocument({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      data: document
-    });
-  }
-
   updateDocuments(project, documents) {
-    documents = [documents].flat();
     return Promise.all(
       documents.map(document =>
         apiClient.collaborationApi.updateDocument({
@@ -83,7 +72,6 @@ class FileService {
   }
 
   deleteDocuments(project, documents) {
-    documents = [documents].flat();
     return Promise.all(
       documents.map(document =>
         apiClient.collaborationApi.deleteDocument({

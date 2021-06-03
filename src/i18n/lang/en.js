@@ -164,6 +164,14 @@ export default {
     submitButtonText: "Submit"
   },
 
+  FolderSelector: {
+    selectedFolder: "Selected folder",
+    submitButtonText: {
+      moveTo: "Validate",
+      moveHere: "Move here"
+    }
+  },
+
   InvitationCard: {
     pendingMessage: "Invited - Pending.",
     resendLinkText: "Send invitation again ?"

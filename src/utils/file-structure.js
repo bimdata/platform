@@ -81,8 +81,8 @@ class FileStructureHandler {
     this.nodeMap = createNodeMap(fileStructure);
   }
 
-  structure() {
-    return createFileStructure(this.nodeMap, this.root);
+  structure(root) {
+    return createFileStructure(this.nodeMap, root || this.root);
   }
 
   /**********************
@@ -165,15 +165,6 @@ class FileStructureHandler {
     }
   }
 
-  moveFile(file, target) {
-    const node = this.nodeMap.get(file.id);
-    const targetNode = this.nodeMap.get(target.id);
-    if (node && node.parent && targetNode) {
-      node.parent.removeChild(file);
-      targetNode.addChild(file);
-    }
-  }
-
   deleteFile(file) {
     const node = this.nodeMap.get(file.id);
     if (node) {
@@ -197,7 +188,24 @@ function getDescendants(file) {
   );
 }
 
+function segregate(files) {
+  const folders = [];
+  const documents = [];
+  for (const file of files) {
+    if (file.type === "Folder") {
+      folders.push(file);
+    } else {
+      documents.push(file);
+    }
+  }
+  return {
+    folders,
+    documents
+  };
+}
+
 export {
+  FileStructureHandler,
   getDescendants,
-  FileStructureHandler
+  segregate
 };
