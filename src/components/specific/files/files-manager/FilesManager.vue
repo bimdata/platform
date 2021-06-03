@@ -37,6 +37,7 @@
             <FilesActionBar
               v-show="selection.length > 0"
               class="files-manager__files__action-bar"
+              :fileStructure="fileStructure"
               :files="selection"
               @delete="openDeleteModal"
               @download="downloadFiles"
@@ -76,6 +77,7 @@
 
 <script>
 import { inject, ref, watch, watchEffect } from "vue";
+import { useFiles } from "@/state/files";
 import { delay } from "@/utils/async";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
@@ -114,6 +116,8 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
+    const { moveFiles: move } = useFiles();
+
     const handler = inject("fileStructureHandler");
     const currentFolder = ref(null);
     const currentFiles = ref([]);
@@ -124,9 +128,7 @@ export default {
         if (!currentFolder.value || !handler().exists(currentFolder.value)) {
           currentFolder.value = struct;
         } else {
-          currentFolder.value = handler().get(currentFolder.value, {
-            children: true
-          });
+          currentFolder.value = handler().structure(currentFolder.value);
         }
       },
       { immediate: true }
@@ -194,15 +196,12 @@ export default {
       showDeleteModal.value = false;
     };
 
-    const moveFiles = () => {
-      // TODO
+    const moveFiles = async event => {
+      await move(props.project, event.files, event.dest);
     };
 
     const downloadFiles = async files => {
       const filesToDownload = files.filter(f => f.type !== "Folder");
-      if (filesToDownload.length > 1) {
-        return;
-      }
       for (const file of filesToDownload) {
         const link = document.createElement("a");
         link.style.display = "none";

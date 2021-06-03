@@ -89,7 +89,7 @@ export default {
   },
   emits: ["file-clicked", "close", "success", "error"],
   setup(props, { emit }) {
-    const { updateFile } = useFiles();
+    const { updateFiles } = useFiles();
 
     const loading = ref(false);
 
@@ -101,10 +101,12 @@ export default {
       try {
         if (fileName.value) {
           loading.value = true;
-          await updateFile(props.project, {
-            ...props.file,
-            name: fileName.value
-          });
+          await updateFiles(props.project, [
+            {
+              ...props.file,
+              name: fileName.value
+            }
+          ]);
           closeUpdateForm();
           emit("success");
         } else {
