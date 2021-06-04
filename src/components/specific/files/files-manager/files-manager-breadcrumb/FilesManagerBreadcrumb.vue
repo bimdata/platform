@@ -41,12 +41,7 @@ export default {
 
     watch(
       () => props.file,
-      () => {
-        // path.value = handler()
-        //   .ancestors(props.file)
-        //   .map(f => f.name);
-        path.value = handler().ancestors(props.file);
-      },
+      () => (path.value = handler().ancestors(props.file)),
       { immediate: true }
     );
 
