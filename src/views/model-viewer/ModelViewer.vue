@@ -1,5 +1,19 @@
 <template>
   <div data-test="model-viewer" class="view model-viewer">
+    <app-slot-content name="app-header-action">
+      <!--
+        TODO: this is ugly. Need to find another way to apply styles.
+      -->
+      <span
+        :style="{
+          width: '0px',
+          height: '28px',
+          border: '0.5px solid #2F374A',
+          margin: '0 12px 0 24px'
+        }"
+      ></span>
+      <GoBackButton style="padding: 0 12px" />
+    </app-slot-content>
     <div id="viewer"></div>
   </div>
 </template>
@@ -12,6 +26,9 @@ import { useRoute } from "vue-router";
 import makeBIMDataViewer from "@bimdata/viewer";
 import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
+// Components
+import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent";
+import GoBackButton from "@/components/generic/go-back-button/GoBackButton";
 
 const availablePlugins = {
   bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.0",
@@ -26,6 +43,10 @@ const availablePlugins = {
 };
 
 export default {
+  components: {
+    AppSlotContent,
+    GoBackButton
+  },
   setup() {
     const route = useRoute();
     const { locale } = useI18n();
