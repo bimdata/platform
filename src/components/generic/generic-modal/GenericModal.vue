@@ -1,5 +1,5 @@
 <template>
-  <div class="generic-modal">
+  <div class="generic-modal" :style="{ zIndex }">
     <div
       class="generic-modal__content"
       :style="{
@@ -47,6 +47,10 @@ export default {
     contentHeight: {
       type: String,
       default: "50%"
+    },
+    zIndex: {
+      type: [String, Number],
+      default: 2
     }
   },
   emits: ["close"]

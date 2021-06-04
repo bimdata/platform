@@ -65,6 +65,7 @@
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
+          color="high"
           ghost
           squared
           @click="onDeleteClick"

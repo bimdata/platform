@@ -2,6 +2,7 @@
   <GenericModal
     class="files-delete-modal"
     contentWidth="450px"
+    zIndex="8"
     @close="$emit('close')"
   >
     <template #header>
