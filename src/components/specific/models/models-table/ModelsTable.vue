@@ -18,7 +18,7 @@
       />
     </template>
     <template #cell-version="{ row: { version } }">
-      {{ version ? version : "" }}
+      {{ version ? version : "-" }}
     </template>
     <template #cell-creator="{ row: { creator } }">
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}

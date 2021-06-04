@@ -12,12 +12,17 @@
         <BIMDataIcon name="arrow" size="xs" />
       </BIMDataButton>
       <div>
-        <div class="folder-selector__head__path">
-          {{ folderPath.map(f => f.name).join(" > ") }}
-        </div>
-        <div class="folder-selector__head__name">
-          {{ currentFolder.name }}
-        </div>
+        <TextBox
+          class="folder-selector__head__path"
+          :text="folderPath.map(f => f.name).join(' > ')"
+          :maxLength="42"
+          cutOn="start"
+        />
+        <TextBox
+          class="folder-selector__head__name"
+          :text="currentFolder.name"
+          :maxLength="32"
+        />
       </div>
       <BIMDataButton
         class="folder-selector__head__btn-close"
@@ -41,9 +46,11 @@
         @dblclick="enterFolder(folder)"
       >
         <BIMDataIcon name="folder" size="xs" />
-        <span class="folder-selector__body__item__name">
-          {{ folder.name }}
-        </span>
+        <TextBox
+          class="folder-selector__body__item__name"
+          :text="folder.name"
+          :maxLength="32"
+        />
         <BIMDataIcon
           name="chevron"
           size="xxs"
@@ -67,7 +74,11 @@
         :style="{ visibility: selectedFolder ? 'visible' : 'hidden' }"
       >
         {{ $t("FolderSelector.selectedFolder") }}:
-        <strong>{{ selectedFolder ? selectedFolder.name : "" }}</strong>
+        <TextBox
+          style="font-weight: bold"
+          :text="selectedFolder ? selectedFolder.name : ''"
+          :maxLength="24"
+        />
       </div>
       <BIMDataButton
         class="folder-selector__footer__btn-submit"
@@ -94,11 +105,13 @@ import { computed, ref, watch } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon
+    BIMDataIcon,
+    TextBox
   },
   props: {
     fileStructure: {

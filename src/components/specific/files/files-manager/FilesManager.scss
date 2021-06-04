@@ -2,6 +2,10 @@
   position: relative;
 
   &:deep() {
+    .bimdata-card__submenu {
+      z-index: 5;
+    }
+
     .bimdata-card__content {
       height: calc(100% - 35px - 26px);
 

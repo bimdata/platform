@@ -37,9 +37,7 @@
 
       <div v-else class="model-name-cell__content">
         <img src="/static/ifc-logo.svg" />
-        <span class="model-name-cell__content__text">
-          {{ model.name }}
-        </span>
+        <TextBox :text="model.name" :maxLength="64" />
       </div>
     </transition>
   </div>
@@ -53,13 +51,15 @@ import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
     BIMDataInput,
-    BIMDataSpinner
+    BIMDataSpinner,
+    TextBox
   },
   props: {
     project: {
