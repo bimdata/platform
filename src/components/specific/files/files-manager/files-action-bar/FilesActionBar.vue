@@ -17,7 +17,7 @@
       squared
       @click="toggleFolderSelector"
     >
-      <BIMDataIcon name="folderOpen" size="xs" />
+      <BIMDataIcon name="folderMove" size="s" />
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
