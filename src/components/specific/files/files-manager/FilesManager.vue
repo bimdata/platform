@@ -116,7 +116,7 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
-    const { moveFiles: move } = useFiles();
+    const { moveFiles: move, getArchiveUrl } = useFiles();
 
     const handler = inject("fileStructureHandler");
     const currentFolder = ref(null);
@@ -201,18 +201,26 @@ export default {
     };
 
     const downloadFiles = async files => {
-      const filesToDownload = files.filter(f => f.type !== "Folder");
-      for (const file of filesToDownload) {
-        const link = document.createElement("a");
-        link.style.display = "none";
-        link.download = file.fileName;
-        link.href = file.file;
-        document.body.append(link);
-        link.click();
-        await delay(100);
-        link.remove();
-        await delay(500);
+      let downloadName, downloadUrl;
+      if (files.length === 0) {
+        return;
       }
+      if (files.length === 1 && files[0].type !== "Folder") {
+        downloadName = files[0].fileName;
+        downloadUrl = files[0].file;
+      } else {
+        downloadName = props.project.name;
+        downloadUrl = getArchiveUrl(props.project, files);
+      }
+      const link = document.createElement("a");
+      link.style.display = "none";
+      link.download = downloadName;
+      link.href = downloadUrl;
+      document.body.append(link);
+      link.click();
+      await delay(100);
+      link.remove();
+      await delay(500);
     };
 
     return {

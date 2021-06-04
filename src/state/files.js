@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "@vue/reactivity";
 import FileService from "@/server/FileService";
+import { useAuth } from "@/state/auth";
 import { useModels } from "@/state/models";
 import {
   FileStructureHandler,
@@ -124,6 +125,17 @@ const deleteFiles = async (project, files) => {
   return files;
 };
 
+const getArchiveUrl = (project, files) => {
+  const { accessToken } = useAuth();
+  const { folders, documents } = segregate(files);
+  return FileService.getArchiveUrl(
+    project,
+    folders,
+    documents,
+    accessToken.value
+  );
+};
+
 export function useFiles() {
   const readOnlyState = readonly(state);
   return {
@@ -140,6 +152,7 @@ export function useFiles() {
     deleteDocuments,
     updateFiles,
     moveFiles,
-    deleteFiles
+    deleteFiles,
+    getArchiveUrl
   };
 }
