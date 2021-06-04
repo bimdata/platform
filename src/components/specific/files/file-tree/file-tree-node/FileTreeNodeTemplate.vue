@@ -22,9 +22,11 @@
         :name="showChildren ? 'folderOpen' : 'folder'"
         size="s"
       />
-      <span class="file-tree-node__node__name">
-        {{ file.name }}
-      </span>
+      <TextBox
+        class="file-tree-node__node__name"
+        :text="file.name"
+        :maxLength="32"
+      />
     </div>
     <transition name="fade">
       <div class="file-tree-node__children" v-show="showChildren">
@@ -39,10 +41,12 @@ import { inject, ref, watch } from "vue";
 import { getDescendants } from "@/utils/file-structure";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
-    BIMDataIcon
+    BIMDataIcon,
+    TextBox
   },
   props: {
     file: {

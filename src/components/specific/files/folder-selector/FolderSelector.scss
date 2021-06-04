@@ -16,12 +16,14 @@
     gap: $spacing-unit;
 
     &__path {
+      display: block;
       line-height: 1rem;
       font-size: 0.8rem;
       color: $color-tertiary-dark;
     }
 
     &__name {
+      display: block;
       font-weight: bold;
     }
 

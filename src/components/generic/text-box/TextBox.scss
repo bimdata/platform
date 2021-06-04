@@ -44,6 +44,14 @@
       }
     }
 
+    &--tertiary-lightest {
+      background-color: $color-tertiary-lightest;
+      color: $color-primary;
+      &::before {
+        border-color: $color-tertiary-lightest transparent transparent;
+      }
+    }
+
     &--top {
       top: -8px;
       left: 50%;

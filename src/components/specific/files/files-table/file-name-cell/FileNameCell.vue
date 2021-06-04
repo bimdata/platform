@@ -48,7 +48,7 @@
         />
         <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
         <FileIcon v-else :name="fileExtension(file.name)" size="20" />
-        <span>{{ file.name }}</span>
+        <TextBox :text="file.name" :maxLength="64" />
       </div>
     </transition>
   </div>
@@ -64,6 +64,7 @@ import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import FileIcon from "@/components/generic/file-icon/FileIcon";
+import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
@@ -71,7 +72,8 @@ export default {
     BIMDataIcon,
     BIMDataInput,
     BIMDataSpinner,
-    FileIcon
+    FileIcon,
+    TextBox
   },
   props: {
     project: {

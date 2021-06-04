@@ -12,13 +12,6 @@
         color: $color-primary;
         cursor: pointer;
 
-        &__name,
-        &__icon-arrow,
-        &__icon-folder {
-          position: relative;
-          z-index: 1;
-        }
-
         &__background {
           position: absolute;
           z-index: 0;
@@ -30,9 +23,25 @@
           transition: opacity 0.2s ease-out;
         }
 
+        &__name,
+        &__icon-arrow,
+        &__icon-folder {
+          position: relative;
+          z-index: 1;
+        }
+
+        &__icon-arrow {
+          min-width: 13px;
+        }
+        &__icon-folder {
+          min-width: 18px;
+        }
         &__name {
           @include noselect;
           align-self: flex-end;
+          &:hover {
+            z-index: 2;
+          }
         }
       }
 

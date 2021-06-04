@@ -53,7 +53,10 @@ export default {
     tooltipColor: {
       type: String,
       default: "primary",
-      validator: value => ["primary", "secondary", "tertiary"].includes(value)
+      validator: value =>
+        ["primary", "secondary", "tertiary", "tertiary-lightest"].includes(
+          value
+        )
     }
   },
   setup(props) {
@@ -72,35 +75,29 @@ export default {
         const c = props.cutSymbol.length;
         const max = props.maxLength;
         if (max && max < l && max > c) {
-          let cutIndex, head, tail;
+          let cutIndex,
+            head = "",
+            tail = "";
           switch (props.cutOn) {
             case "start":
               cutIndex = l - (max - c);
               tail = props.text.slice(cutIndex);
-              displayedText.value = `${props.cutSymbol}${tail}`;
               break;
             case "middle":
               cutIndex = (max - c) / 2;
               head = props.text.slice(0, Math.ceil(cutIndex));
               tail = props.text.slice(l - Math.floor(cutIndex));
-              displayedText.value = `${head}${props.cutSymbol}${tail}`;
               break;
             case "end":
               cutIndex = max - c;
               head = props.text.slice(0, cutIndex);
-              displayedText.value = `${head}${props.cutSymbol}`;
               break;
           }
+          displayedText.value = `${head}${props.cutSymbol}${tail}`;
         } else {
           displayedText.value = props.text;
         }
       },
-      { immediate: true }
-    );
-
-    watch(
-      () => props.tooltipPosition,
-      () => {},
       { immediate: true }
     );
 

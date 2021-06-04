@@ -1,0 +1,12 @@
+.files-manager-breadcrumb {
+  &__path {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-unit/2;
+  }
+
+  &__file {
+    margin-left: $spacing-unit/2;
+    font-weight: bold;
+  }
+}
