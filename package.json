@@ -11,18 +11,18 @@
   },
   "dependencies": {
     "@bimdata/design-system": "^0.3.11",
-    "@bimdata/typescript-fetch-api-client": "^6.12.1",
+    "@bimdata/typescript-fetch-api-client": "^6.13.3",
     "@bimdata/viewer": "^1.7.0-rc.9",
-    "@uppy/core": "^1.18.1",
-    "@uppy/xhr-upload": "^1.7.2",
+    "@uppy/core": "^1.19.1",
+    "@uppy/xhr-upload": "^1.7.4",
     "detect-browser": "^5.2.0",
     "lodash": "^4.17.21",
-    "mapbox-gl": "^2.2.0",
+    "mapbox-gl": "^2.3.0",
     "oidc-client": "^1.11.5",
     "seedrandom": "^3.0.5",
     "vue": "^3.0.11",
     "vue-i18n": "^9.1.6",
-    "vue-router": "^4.0.6",
+    "vue-router": "^4.0.8",
     "vue3-click-away": "^1.2.1"
   },
   "devDependencies": {
@@ -31,16 +31,16 @@
     "@vue/cli-service": "5.0.0-beta.1",
     "@vue/compiler-sfc": "^3.0.11",
     "@vue/test-utils": "^2.0.0-rc.6",
-    "cypress": "^7.3.0",
-    "eslint": "^7.26.0",
+    "cypress": "^7.4.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "^7.9.0",
+    "eslint-plugin-vue": "^7.10.0",
     "node-sass": "^6.0.0",
     "sass-loader": "^11.1.1",
-    "start-server-and-test": "^1.12.2",
-    "typescript": "~4.2.4",
-    "vue-jest": "^5.0.0-alpha.9"
+    "start-server-and-test": "^1.12.4",
+    "typescript": "~4.3.2",
+    "vue-jest": "^5.0.0-alpha.10"
   }
 }
