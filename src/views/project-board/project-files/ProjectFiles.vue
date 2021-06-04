@@ -9,7 +9,7 @@
         radius
         @click="() => {}"
       >
-        <BIMDataIcon name="user" size="xxxs" />
+        <BIMDataIcon name="group" size="s" />
         <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
       </BIMDataButton>
     </app-slot-content>
