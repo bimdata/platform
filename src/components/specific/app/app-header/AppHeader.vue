@@ -6,6 +6,7 @@
       src="/static/header-logo.svg"
       @click="goToDashboard"
     />
+    <app-slot name="app-header-action" />
     <AppHeaderMenu class="app-header__menu" />
   </div>
 </template>
@@ -14,10 +15,12 @@
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 // Components
+import AppSlot from "@/components/generic/app-slot/AppSlot";
 import AppHeaderMenu from "@/components/specific/app/app-header-menu/AppHeaderMenu";
 
 export default {
   components: {
+    AppSlot,
     AppHeaderMenu
   },
   setup() {
