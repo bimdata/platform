@@ -27,6 +27,7 @@
     cursor: pointer;
 
     &__icon-folder {
+      min-width: 22px;
       color: $color-primary;
     }
   }
