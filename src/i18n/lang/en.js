@@ -221,6 +221,7 @@ export default {
   ModelsActionBar: {
     deleteButtonText: "Delete",
     archiveButtonText: "Archive",
+    unarchiveButtonText: "Unarchive",
     downloadButtonText: "Download",
     mergeButtonText: "Merge"
   },

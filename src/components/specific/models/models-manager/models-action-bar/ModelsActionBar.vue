@@ -10,15 +10,30 @@
       <BIMDataIcon name="delete" size="xs" />
       <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
-    <BIMDataButton
-      width="120px"
-      ghost
-      squared
-      @click="$emit('archive', models)"
-    >
-      <BIMDataIcon name="archive" size="xs" />
-      <span>{{ $t("ModelsActionBar.archiveButtonText") }}</span>
-    </BIMDataButton>
+
+    <template v-if="currentTab === 'archive'">
+      <BIMDataButton
+        width="120px"
+        ghost
+        squared
+        @click="$emit('unarchive', models)"
+      >
+        <BIMDataIcon name="unarchive" size="xs" />
+        <span>{{ $t("ModelsActionBar.unarchiveButtonText") }}</span>
+      </BIMDataButton>
+    </template>
+    <template v-else>
+      <BIMDataButton
+        width="120px"
+        ghost
+        squared
+        @click="$emit('archive', models)"
+      >
+        <BIMDataIcon name="archive" size="xs" />
+        <span>{{ $t("ModelsActionBar.archiveButtonText") }}</span>
+      </BIMDataButton>
+    </template>
+
     <BIMDataButton
       width="120px"
       ghost
@@ -52,6 +67,10 @@ export default {
     BIMDataIcon
   },
   props: {
+    currentTab: {
+      type: String,
+      default: ""
+    },
     models: {
       type: Array,
       default: () => []
@@ -61,7 +80,8 @@ export default {
     "delete",
     "archive",
     "download",
-    "merge"
+    "merge",
+    "unarchive"
   ]
 };
 </script>
