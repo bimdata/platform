@@ -6,7 +6,7 @@
         height="44px"
         tabSize="180px"
         :tabs="tabs"
-        selected="ifc"
+        :selected="currentTab"
         @tab-click="selectTab"
       />
 
@@ -14,11 +14,13 @@
         <ModelsActionBar
           v-show="selection.length > 0"
           class="models-manager__action-bar"
+          :currentTab="currentTab"
           :models="selection"
           @archive="archiveModels"
           @delete="openDeleteModal"
           @download="downloadModels"
           @merge="openMergeModal"
+          @unarchive="unarchiveModels"
         />
       </transition>
 
@@ -189,6 +191,11 @@ export default {
       await updateModels(props.project, models);
     };
 
+    const unarchiveModels = async models => {
+      models = models.map(model => ({ ...model, archived: false }));
+      await updateModels(props.project, models);
+    };
+
     const downloadModels = async models => {
       for (const model of models) {
         const link = document.createElement("a");
@@ -205,6 +212,7 @@ export default {
 
     return {
       // References
+      currentTab,
       displayedModels,
       modelsToDelete,
       modelsToMerge,
@@ -220,7 +228,8 @@ export default {
       openDeleteModal,
       openMergeModal,
       selectTab,
-      setSelection
+      setSelection,
+      unarchiveModels
     };
   }
 };
