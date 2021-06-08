@@ -33,10 +33,10 @@
       <ModelActionsCell
         :project="project"
         :model="model"
-        @archive-clicked="$emit('archive-clicked', $event)"
-        @delete-clicked="$emit('delete-clicked', $event)"
-        @download-clicked="$emit('download-clicked', $event)"
-        @update-clicked="nameEditMode[model.id] = true"
+        @archive="$emit('archive', $event)"
+        @delete="$emit('delete', $event)"
+        @download="$emit('download', $event)"
+        @update="nameEditMode[model.id] = true"
       />
     </template>
   </GenericTable>
@@ -72,9 +72,9 @@ export default {
     }
   },
   emits: [
-    "archive-clicked",
-    "delete-clicked",
-    "download-clicked",
+    "archive",
+    "delete",
+    "download",
     "selection-changed"
   ],
   setup(props) {

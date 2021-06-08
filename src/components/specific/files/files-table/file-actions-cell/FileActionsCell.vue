@@ -12,10 +12,20 @@
 
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('add-tags')"
+        >
           {{ $t("FileActionsCell.addTagsButtonText") }}
         </BIMDataButton>
-        <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('request-validation')"
+        >
           {{ $t("FileActionsCell.validationRequestButtonText") }}
         </BIMDataButton>
         <BIMDataButton
@@ -34,10 +44,20 @@
         >
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
-        <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('add-version')"
+        >
           {{ $t("FileActionsCell.addVersionButtonText") }}
         </BIMDataButton>
-        <BIMDataButton class="file-actions-cell__menu__btn" ghost squared>
+        <BIMDataButton
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('manage-access')"
+        >
           {{ $t("FileActionsCell.manageAccessButtonText") }}
         </BIMDataButton>
         <BIMDataButton

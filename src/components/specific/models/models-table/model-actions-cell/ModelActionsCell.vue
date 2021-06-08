@@ -27,7 +27,7 @@
       ripple
       rounded
       icon
-      @click="onDownloadClick"
+      @click="onClick('download')"
     >
       <BIMDataIcon name="download" size="m" />
     </BIMDataButton>
@@ -50,7 +50,7 @@
           class="model-actions-cell__menu__btn"
           ghost
           squared
-          @click="onUpdateClick"
+          @click="onClick('update')"
         >
           {{ $t("ModelActionsCell.renameButtonText") }}
         </BIMDataButton>
@@ -59,7 +59,7 @@
           class="model-actions-cell__menu__btn"
           ghost
           squared
-          @click="onArchiveClick"
+          @click="onClick('archive')"
         >
           {{ $t("ModelActionsCell.archiveButtonText") }}
         </BIMDataButton>
@@ -68,7 +68,7 @@
           color="high"
           ghost
           squared
-          @click="onDeleteClick"
+          @click="onClick('delete')"
         >
           {{ $t("ModelActionsCell.deleteButtonText") }}
         </BIMDataButton>
@@ -102,10 +102,10 @@ export default {
     }
   },
   emits: [
-    "download-clicked",
-    "update-clicked",
-    "archive-clicked",
-    "delete-clicked"
+    "archive",
+    "delete",
+    "download",
+    "update"
   ],
   setup(props, { emit }) {
     const router = useRouter();
@@ -138,23 +138,9 @@ export default {
       });
     };
 
-    const onDownloadClick = () => {
-      emit("download-clicked", props.model);
-    };
-
-    const onUpdateClick = () => {
+    const onClick = event => {
       closeMenu();
-      emit("update-clicked", props.model);
-    };
-
-    const onArchiveClick = () => {
-      closeMenu();
-      emit("archive-clicked", props.model);
-    };
-
-    const onDeleteClick = () => {
-      closeMenu();
-      emit("delete-clicked", props.model);
+      emit(event, props.model);
     };
 
     return {
@@ -164,10 +150,7 @@ export default {
       // Methods
       closeMenu,
       goToModelViewer,
-      onArchiveClick,
-      onDeleteClick,
-      onDownloadClick,
-      onUpdateClick,
+      onClick,
       toggleMenu
     };
   }
