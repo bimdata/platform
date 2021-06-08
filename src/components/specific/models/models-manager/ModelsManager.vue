@@ -15,19 +15,19 @@
           v-show="selection.length > 0"
           class="models-manager__action-bar"
           :models="selection"
-          @archive-clicked="archiveModels"
-          @delete-clicked="openDeleteModal"
-          @download-clicked="downloadModels"
-          @merge-clicked="openMergeModal"
+          @archive="archiveModels"
+          @delete="openDeleteModal"
+          @download="downloadModels"
+          @merge="openMergeModal"
         />
       </transition>
 
       <ModelsTable
         :project="project"
         :models="displayedModels"
-        @archive-clicked="archiveModels([$event])"
-        @delete-clicked="openDeleteModal([$event])"
-        @download-clicked="downloadModels([$event])"
+        @archive="archiveModels([$event])"
+        @delete="openDeleteModal([$event])"
+        @download="downloadModels([$event])"
         @selection-changed="setSelection"
       />
 
