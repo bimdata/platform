@@ -6,48 +6,59 @@ const userManager = new UserManager({
   userStore: new WebStorageStateStore({ store: window.localStorage })
 });
 
-/*
-Monkey patch oidcUserManager to hijack login with force logout
-*/
+/**
+ * Monkey patch oidcUserManager to hijack login with force logout
+ */
 async function signinEndWithForcedLogout (url, args = {}) {
+  // Let UserManager process signin response "as usual"
   const signinResponse = await this.processSigninResponse(url);
+
   const authorizedIdentityProviders = oidcConfig.authorizedIdentityProviders;
+
   if (authorizedIdentityProviders.length) {
+    // Extract identity provider from signin response
+    // Note: `profile.preferred_username` is of the following form: <IDENTITY_PROVIDER>.<USER_EMAIL>
     const identityProvider = signinResponse.profile.preferred_username.split('.')[0];
+
     if (!authorizedIdentityProviders.includes(identityProvider)) {
+      // If the current identity provider is not authorized then logout
+      // and set the post logout uri to the platform itself.
+      // When the unauthenticated user comes back to the platform
+      // a standard login flow will begin.
       const params = new URLSearchParams({
         post_logout_redirect_uri: oidcConfig.post_logout_redirect_uri,
         id_token_hint: signinResponse.id_token,
-        initiating_idp: identityProvider,
+        // Prevent KeyCloak from logging out of the identity provider
+        initiating_idp: identityProvider
       });
       const redirectUrl = oidcConfig.metadata.end_session_endpoint + '?' + params.toString();
       window.location.replace(redirectUrl);
-      await new Promise((resolve, reject) => {
+      await new Promise(resolve => {
         // Wait for window.location.replace to trigger
         setTimeout(resolve, 5000);
       });
     }
   }
 
-  const user = new User(signinResponse)
+  const user = new User(signinResponse);
 
   if (args.current_sub) {
     if (args.current_sub !== user.profile.sub) {
-      console.debug('UserManager._signinEnd: current user does not match user returned from signin. sub from signin: ', user.profile.sub)
-      throw new Error('login_required')
+      console.debug('UserManager._signinEnd: current user does not match user returned from signin. sub from signin: ', user.profile.sub);
+      throw new Error('login_required');
     } else {
-      console.debug('UserManager._signinEnd: current user matches user returned from signin')
+      console.debug('UserManager._signinEnd: current user matches user returned from signin');
     }
   }
-  await this.storeUser(user)
-  console.debug('UserManager._signinEnd: user stored')
+  await this.storeUser(user);
 
-  this._events.load(user)
-  return user
+  this._events.load(user);
+  return user;
 }
-signinEndWithForcedLogout.bind(userManager)
 
-userManager._signinEnd = signinEndWithForcedLogout
+// Override UserManager `_signinEnd` method with our custom implementation
+signinEndWithForcedLogout.bind(userManager);
+userManager._signinEnd = signinEndWithForcedLogout;
 
 class AuthServive {
   getUser() {
