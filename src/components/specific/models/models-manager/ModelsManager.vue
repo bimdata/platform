@@ -8,7 +8,19 @@
         :tabs="tabs"
         :selected="currentTab"
         @tab-click="selectTab"
-      />
+      >
+        <template #tab="{ tab }">
+          <span class="models-manager__tab-label">
+            {{ tab.label }}
+          </span>
+          <span
+            class="models-manager__tab-count"
+            v-if="models[tab.id].length > 0"
+          >
+            {{ models[tab.id].length }}
+          </span>
+        </template>
+      </BIMDataTabs>
 
       <transition name="fade">
         <ModelsActionBar
@@ -58,8 +70,8 @@
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
-import { delay } from "@/utils/async";
-import { MODEL_SOURCE } from "@/utils/models";
+import { downloadAll } from "@/utils/download";
+import { segregate } from "@/utils/models";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
@@ -67,6 +79,13 @@ import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
 import ModelsActionBar from "./models-action-bar/ModelsActionBar";
 import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
 import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
+
+const tabsDef = [
+  { id: "ifc" },
+  { id: "split" },
+  { id: "merge" },
+  { id: "archive" }
+];
 
 export default {
   components: {
@@ -88,34 +107,24 @@ export default {
     }
   },
   setup(props) {
-    const { t } = useI18n();
+    const { locale, t } = useI18n();
     const { updateModels } = useModels();
 
     const tabs = ref([]);
-    const currentTab = ref("ifc");
-    watchEffect(() => {
-      tabs.value = [
-        {
-          id: "ifc",
-          label: t("ModelsManager.tabs.ifc")
-        },
-        {
-          id: "split",
-          label: t("ModelsManager.tabs.split")
-        },
-        {
-          id: "merge",
-          label: t("ModelsManager.tabs.merge")
-        },
-        {
-          id: "archive",
-          label: t("ModelsManager.tabs.archive")
-        }
-      ];
-    });
+    const currentTab = ref(tabsDef[0].id);
     const selectTab = tab => {
       currentTab.value = tab.id;
     };
+    watch(
+      () => locale.value,
+      () => {
+        tabs.value = tabsDef.map(tab => ({
+          ...tab,
+          label: t(`ModelsManager.tabs.${tab.id}`)
+        }));
+      },
+      { immediate: true }
+    );
 
     const models = reactive({
       ifc: [],
@@ -123,38 +132,12 @@ export default {
       merge: [],
       archive: []
     });
+    const displayedModels = ref([]);
     watch(
       () => props.models,
-      () => {
-        const filteredModels = {
-          ifc: [],
-          split: [],
-          merge: [],
-          archive: []
-        };
-        for (const model of props.models) {
-          if (model.archived) {
-            filteredModels.archive.push(model);
-          } else if (
-            [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
-          ) {
-            filteredModels.ifc.push(model);
-          } else if (
-            [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
-          ) {
-            filteredModels.split.push(model);
-          } else if (MODEL_SOURCE.MERGE === model.source) {
-            filteredModels.merge.push(model);
-          } else {
-            filteredModels.ifc.push(model);
-          }
-        }
-        Object.assign(models, filteredModels);
-      },
+      () => Object.assign(models, segregate(props.models)),
       { immediate: true }
     );
-
-    const displayedModels = ref([]);
     watchEffect(() => {
       displayedModels.value = models[currentTab.value];
     });
@@ -197,23 +180,19 @@ export default {
     };
 
     const downloadModels = async models => {
-      for (const model of models) {
-        const link = document.createElement("a");
-        link.style.display = "none";
-        link.download = model.document.fileName;
-        link.href = model.document.file;
-        document.body.append(link);
-        link.click();
-        await delay(100);
-        link.remove();
-        await delay(500);
-      }
+      await downloadAll(
+        models.map(model => ({
+          name: model.document.fileName,
+          url: model.document.file
+        }))
+      );
     };
 
     return {
       // References
       currentTab,
       displayedModels,
+      models,
       modelsToDelete,
       modelsToMerge,
       selection,
