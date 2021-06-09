@@ -78,7 +78,8 @@
 <script>
 import { inject, ref, watch, watchEffect } from "vue";
 import { useFiles } from "@/state/files";
-import { delay } from "@/utils/async";
+import { download } from "@/utils/download";
+import { FILE_TYPE } from "@/utils/file-structure";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
@@ -137,17 +138,17 @@ export default {
       () => currentFolder.value,
       folder => {
         const childrenFolders = folder.children
-          .filter(child => child.type === "Folder")
+          .filter(child => child.type === FILE_TYPE.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
         const childrenFiles = folder.children
-          .filter(child => child.type !== "Folder")
+          .filter(child => child.type !== FILE_TYPE.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
         currentFiles.value = childrenFolders.concat(childrenFiles);
       },
       { immediate: true }
     );
     const onFileSelected = file => {
-      if (file.type === "Folder") {
+      if (file.type === FILE_TYPE.FOLDER) {
         currentFolder.value = file;
       }
     };
@@ -205,22 +206,14 @@ export default {
       if (files.length === 0) {
         return;
       }
-      if (files.length === 1 && files[0].type !== "Folder") {
+      if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
         downloadName = files[0].fileName;
         downloadUrl = files[0].file;
       } else {
         downloadName = props.project.name;
         downloadUrl = getArchiveUrl(props.project, files);
       }
-      const link = document.createElement("a");
-      link.style.display = "none";
-      link.download = downloadName;
-      link.href = downloadUrl;
-      document.body.append(link);
-      link.click();
-      await delay(100);
-      link.remove();
-      await delay(500);
+      download({ name: downloadName, url: downloadUrl});
     };
 
     return {
