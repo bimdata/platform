@@ -2,6 +2,32 @@ import { reactive, readonly, toRefs, watchEffect } from "vue";
 import apiClient from "@/server/api-client";
 import AuthService from "@/server/AuthService";
 
+const parseJwt = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+  } catch (error) {
+    return {};
+  }
+}
+
+const tokenExp = (token) => {
+  if (token) {
+    const parsed = parseJwt(token);
+    return parsed.exp ? parsed.exp * 1000 : null;
+  }
+  return null;
+}
+
+const tokenIsExpired = (token) => {
+  const tokenExpiryTime = tokenExp(token);
+  if (tokenExpiryTime) {
+    return tokenExpiryTime < new Date().getTime();
+  }
+  return false;
+}
+
 const state = reactive({
   isAuthenticated: false,
   accessToken: null
@@ -15,6 +41,10 @@ const authenticate = async redirectPath => {
   }
   if (!state.isAuthenticated) {
     if (user.expired) {
+      if (tokenIsExpired(user.refresh_token)) {
+        await AuthService.signIn(redirectPath);
+        return;
+      }
       // Refresh access token silently
       user = await AuthService.signInSilent();
     }
