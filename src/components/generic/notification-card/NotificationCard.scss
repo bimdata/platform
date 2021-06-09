@@ -1,0 +1,64 @@
+.notification-card {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  min-height: 72px;
+  padding: $spacing-unit;
+  border-left: 3px solid;
+  @include box-shadow;
+  background-color: $color-white;
+
+  &__icon {
+    width: 22px;
+  }
+
+  &__text {
+    flex-grow: 1;
+    padding: 0 $spacing-unit;
+
+    &__title {
+      margin-bottom: $spacing-unit/3;
+      font-weight: bold;
+    }
+
+    &__message {
+      font-size: 0.9rem;
+      color: $color-tertiary-dark;
+    }
+  }
+
+  &__btn-close {
+    width: 22px;
+    color: $color-tertiary;
+  }
+
+  /* === State Styles === */
+
+  &--info {
+    border-color: $color-neutral;
+    .notification-card__icon {
+      color: $color-neutral;
+    }
+  }
+
+  &--success {
+    border-color: $color-success;
+    .notification-card__icon {
+      color: $color-success;
+    }
+  }
+
+  &--warning {
+    border-color: $color-warning;
+    .notification-card__icon {
+      color: $color-warning;
+    }
+  }
+
+  &--error {
+    border-color: $color-high;
+    .notification-card__icon {
+      color: $color-high;
+    }
+  }
+}
