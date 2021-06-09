@@ -13,5 +13,19 @@ html {
   body {
     margin: 0;
     padding: 0;
+
+    #side-panel-container {
+      position: fixed;
+      z-index: 200;
+      top: 0;
+      right: 0;
+    }
+
+    #notification-container {
+      position: fixed;
+      z-index: 300;
+      top: 0;
+      right: 0;
+    }
   }
 }

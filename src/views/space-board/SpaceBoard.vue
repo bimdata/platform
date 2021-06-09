@@ -48,19 +48,13 @@
       </template>
     </ViewHeader>
 
-    <transition name="fade">
-      <SidePanel
-        v-show="showUsersManager"
-        :title="$t('SpaceUsersManager.title')"
-        @close="closeUsersManager"
-      >
-        <SpaceUsersManager
-          :space="space"
-          :users="users"
-          :invitations="invitations"
-        />
-      </SidePanel>
-    </transition>
+    <SidePanel :title="$t('SpaceUsersManager.title')">
+      <SpaceUsersManager
+        :space="space"
+        :users="users"
+        :invitations="invitations"
+      />
+    </SidePanel>
 
     <ResponsiveGrid itemWidth="320px">
       <ProjectCreationCard
@@ -81,6 +75,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { useSidePanel } from "@/composables/side-panel";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
@@ -111,6 +106,7 @@ export default {
   setup() {
     const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
+    const { openSidePanel } = useSidePanel();
 
     const displayedProjects = ref([]);
     watchEffect(() => (displayedProjects.value = spaceProjects.value));
@@ -137,26 +133,16 @@ export default {
         .sort((a, b) => (a.name < b.name ? -1 : 1) * n);
     };
 
-    const showUsersManager = ref(false);
-    const openUsersManager = () => {
-      showUsersManager.value = true;
-    };
-    const closeUsersManager = () => {
-      showUsersManager.value = false;
-    };
-
     return {
       // References
       invitations: spaceInvitations,
       projects: displayedProjects,
       searchText,
-      showUsersManager,
       space: currentSpace,
       users: spaceUsers,
       // Methods
-      closeUsersManager,
       filterProjects,
-      openUsersManager,
+      openUsersManager: openSidePanel,
       sortProjects
     };
   }

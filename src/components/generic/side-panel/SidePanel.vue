@@ -1,18 +1,23 @@
 <template>
-  <div class="side-panel">
-    <div class="side-panel__title">
-      <span>{{ title }}</span>
-      <BIMDataButton ghost rounded icon @click="$emit('close')">
-        <BIMDataIcon name="close" size="xxxs" />
-      </BIMDataButton>
-    </div>
-    <div class="side-panel__content">
-      <slot></slot>
-    </div>
-  </div>
+  <teleport to="#side-panel-container">
+    <transition name="slide-fade-right">
+      <div class="side-panel" v-show="showSidePanelOpen">
+        <div class="side-panel__title">
+          <span>{{ title }}</span>
+          <BIMDataButton ghost rounded icon @click="closeSidePanel">
+            <BIMDataIcon name="close" size="xxxs" />
+          </BIMDataButton>
+        </div>
+        <div class="side-panel__content">
+          <slot></slot>
+        </div>
+      </div>
+    </transition>
+  </teleport>
 </template>
 
 <script>
+import { useSidePanel } from "@/composables/side-panel";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -28,7 +33,14 @@ export default {
       default: ""
     }
   },
-  emits: ["close"]
+  setup() {
+    const { showSidePanelOpen, closeSidePanel } = useSidePanel();
+
+    return {
+      showSidePanelOpen,
+      closeSidePanel
+    };
+  }
 };
 </script>
 
