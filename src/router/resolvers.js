@@ -1,4 +1,4 @@
-import { contextIDs, useLoadingContext } from "@/state/loading";
+import { contexts, useLoadingContext } from "@/composables/loading";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
@@ -13,7 +13,7 @@ const rootResolver = async () => {
 
 const createViewResolver = resolve => {
   return async route => {
-    const loading = useLoadingContext(contextIDs.viewContainer);
+    const loading = useLoadingContext(contexts.viewContainer);
     loading.value = true;
     await resolve(route);
     loading.value = false;
