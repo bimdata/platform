@@ -7,6 +7,7 @@ const APP_BASE_URL = process.env.VUE_APP_BASE_URL;
 const AUTHORITY = `${process.env.VUE_APP_IAM_BASE_URL}/auth/realms/bimdata`;
 const OIDC_ENDPOINT = `${AUTHORITY}/protocol/openid-connect`;
 const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID;
+const AUTHORIZED_IDENTITY_PROVIDERS = process.env.VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
 
 export const oidcConfig = {
   // Auth request config
@@ -37,5 +38,8 @@ export const oidcConfig = {
     userinfo_endpoint: `${OIDC_ENDPOINT}/userinfo`,
     end_session_endpoint: `${OIDC_ENDPOINT}/logout`,
     jwks_uri: `${OIDC_ENDPOINT}/certs`
-  }
+  },
+
+  // Limit authorized identity providers
+  authorizedIdentityProviders: AUTHORIZED_IDENTITY_PROVIDERS ? AUTHORIZED_IDENTITY_PROVIDERS.split(',') : [],
 };
