@@ -1,0 +1,14 @@
+.model-viewer {
+  &__header {
+    &__separator {
+      width: 0px;
+      height: 28px;
+      border: 0.5px solid $color-primary;
+      margin: 0 $spacing-unit 0 $spacing-unit * 2;
+    }
+
+    &__btn-back {
+      padding: 0 $spacing-unit !important;
+    }
+  }
+}

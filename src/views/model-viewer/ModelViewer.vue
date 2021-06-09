@@ -1,32 +1,28 @@
 <template>
   <div data-test="model-viewer" class="view model-viewer">
     <app-slot-content name="app-header-action">
-      <!--
-        TODO: this is ugly. Need to find another way to apply styles.
-      -->
-      <span
-        :style="{
-          width: '0px',
-          height: '28px',
-          border: '0.5px solid #2F374A',
-          margin: '0 12px 0 24px'
-        }"
-      ></span>
-      <GoBackButton style="padding: 0 12px" />
+      <span class="model-viewer__header__separator"></span>
+      <GoBackButton class="model-viewer__header__btn-back" />
     </app-slot-content>
+
     <div id="viewer"></div>
+
+    <div class="model-viewer__loader" v-show="loading">
+      <BIMDataSpinner />
+    </div>
   </div>
 </template>
 
 <script>
 import { merge, set } from "lodash";
-import { onBeforeUnmount, onMounted, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import makeBIMDataViewer from "@bimdata/viewer";
 import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
 // Components
+import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent";
 import GoBackButton from "@/components/generic/go-back-button/GoBackButton";
 
@@ -44,6 +40,7 @@ const availablePlugins = {
 
 export default {
   components: {
+    BIMDataSpinner,
     AppSlotContent,
     GoBackButton
   },
@@ -52,12 +49,13 @@ export default {
     const { locale } = useI18n();
     const { accessToken } = useAuth();
     const { currentSpace } = useSpaces();
+    const loading = ref(false);
 
     const apiUrl = process.env.VUE_APP_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs = route.params.modelIDs.split(",").map(id => +id);
-    const defaultWindow = route.query.window || "3d";
+    const initialWindow = route.query.window || "3d";
 
     // Initial plugins config
     const pluginsConfig = {
@@ -104,9 +102,10 @@ export default {
 
     const pluginUrls = featurePlugins.concat(Array.from(appPlugins));
 
-    let unwatchAccessToken;
-    let unwatchLocale;
+    let unwatchAccessToken = () => {};
+    let unwatchLocale = () => {};
     onMounted(async () => {
+      loading.value = true;
       const bimdataViewer = makeBIMDataViewer({
         api: {
           apiUrl,
@@ -119,17 +118,19 @@ export default {
         locale: locale.value
       });
 
-      const loadedPlugins = await Promise.all(
+      await Promise.all(
         // Webpack annotation is needed to prevent Webpack from using its own
         // import function instead of standard JS import function.
         // (see: https://stackoverflow.com/a/56998596/8298197)
-        pluginUrls.map(url => import(/* webpackIgnore: true */ url))
+        pluginUrls.map(url =>
+          import(/* webpackIgnore: true */ url)
+            .then(pluginModule => bimdataViewer.registerPlugin(pluginModule.default))
+            .catch(error => console.error(`Error while registering plugin at ${url}: `, error))
+        )
       );
-      loadedPlugins.forEach(pluginModule => {
-        bimdataViewer.registerPlugin(pluginModule.default);
-      });
+      loading.value = false;
 
-      bimdataViewer.mount("#viewer", defaultWindow);
+      bimdataViewer.mount("#viewer", initialWindow);
 
       // Keep viewer access token and locale in sync with application
       unwatchAccessToken = watch(accessToken, token => {
@@ -144,8 +145,13 @@ export default {
       unwatchAccessToken();
       unwatchLocale();
     });
+
+    return {
+      loading
+    };
   }
 };
 </script>
 
+<style lang="scss" src="./ModelViewer.global.scss"></style>
 <style scoped lang="scss" src="./ModelViewer.scss"></style>
