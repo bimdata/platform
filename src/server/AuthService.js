@@ -11,7 +11,6 @@ Monkey patch oidcUserManager to hijack login with force logout
 */
 async function signinEndWithForcedLogout (url, args = {}) {
   const signinResponse = await this.processSigninResponse(url);
-  console.debug('UserManager._signinEnd: got signin response');
   const authorizedIdentityProviders = oidcConfig.authorizedIdentityProviders;
   if (authorizedIdentityProviders.length) {
     const identityProvider = signinResponse.profile.preferred_username.split('.')[0];
