@@ -24,8 +24,8 @@ html {
     #notification-container {
       position: fixed;
       z-index: 300;
-      top: 0;
-      right: 0;
+      top: $platform-header-height + $spacing-unit;
+      right: $spacing-unit;
     }
   }
 }
