@@ -1,5 +1,11 @@
 /* eslint-disable */
 
+const FILE_TYPE = Object.freeze({
+  FOLDER: "Folder",
+  DOCUMENT: "Document",
+  IFC: "Ifc"
+});
+
 /**
  * Create a node map from file structure.
  *
@@ -192,7 +198,7 @@ function segregate(files) {
   const folders = [];
   const documents = [];
   for (const file of files) {
-    if (file.type === "Folder") {
+    if (file.type === FILE_TYPE.FOLDER) {
       folders.push(file);
     } else {
       documents.push(file);
@@ -205,6 +211,7 @@ function segregate(files) {
 }
 
 export {
+  FILE_TYPE,
   FileStructureHandler,
   getDescendants,
   segregate

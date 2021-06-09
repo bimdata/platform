@@ -6,6 +6,15 @@
     padding: $spacing-unit;
   }
 
+  &__tab-count {
+    margin-left: $spacing-unit;
+    padding: $spacing-unit/6 $spacing-unit/2;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    background-color: $color-primary;
+    color: $color-white;
+  }
+
   &__action-bar {
     position: absolute;
     z-index: 1;
