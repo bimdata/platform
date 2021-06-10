@@ -92,6 +92,7 @@ export default {
   },
 
   FileActionsCell: {
+    openViewerButtonText: "Voir",
     addTagsButtonText: "Ajouter des tags",
     validationRequestButtonText: "Demande de validation",
     renameButtonText: "Renommer",

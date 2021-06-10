@@ -49,6 +49,7 @@
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
+        :project="project"
         :file="file"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
