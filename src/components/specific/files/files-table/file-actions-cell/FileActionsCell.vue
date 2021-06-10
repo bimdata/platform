@@ -13,6 +13,15 @@
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
         <BIMDataButton
+          v-if="file.type === 'Ifc'"
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="goToModelViewer()"
+        >
+          {{ $t("FileActionsCell.openViewerButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -75,7 +84,9 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -86,6 +97,10 @@ export default {
     BIMDataIcon
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     file: {
       type: Object,
       required: true
@@ -101,12 +116,28 @@ export default {
     "update"
   ],
   setup(props, { emit }) {
+    const router = useRouter();
+
     const showMenu = ref(false);
     const closeMenu = () => {
       showMenu.value = false;
     };
     const toggleMenu = () => {
       showMenu.value = !showMenu.value;
+    };
+
+    const goToModelViewer = () => {
+      router.push({
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: props.project.cloud.id,
+          projectID: props.project.id,
+          modelIDs: props.file.ifcId
+        },
+        query: {
+          window: "3d"
+        }
+      });
     };
 
     const onClick = event => {
@@ -119,6 +150,7 @@ export default {
       showMenu,
       // Methods
       closeMenu,
+      goToModelViewer,
       onClick,
       toggleMenu
     };
