@@ -25,6 +25,7 @@
         :project="project"
         :allowedFileTypes="['.ifc', '.ifczip']"
         @file-uploaded="reloadModels"
+        @forbidden-upload-attempt="notifyForbiddenUpload"
         @close="closeFileUploader"
       />
     </transition>
@@ -50,6 +51,8 @@
 
 <script>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNotifications } from "@/composables/notifications";
 import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
@@ -73,9 +76,11 @@ export default {
     ProjectUsersManager
   },
   setup() {
+    const { t } = useI18n();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
+    const { pushNotification } = useNotifications();
 
     let reloadDebounce = null;
     const reloadModels = () => {
@@ -97,6 +102,14 @@ export default {
       showFileUploader.value = !showFileUploader.value;
     };
 
+    const notifyForbiddenUpload = () => {
+      pushNotification({
+        type: "error",
+        title: t("ProjectOverview.forbiddenUploadNotification.title"),
+        message: t("ProjectOverview.forbiddenUploadNotification.message")
+      });
+    };
+
     return {
       // References
       invitations: projectInvitations,
@@ -106,6 +119,7 @@ export default {
       users: projectUsers,
       // Methods
       closeFileUploader,
+      notifyForbiddenUpload,
       openFileUploader,
       reloadModels,
       toggleFileUploader

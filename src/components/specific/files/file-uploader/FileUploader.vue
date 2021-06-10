@@ -3,13 +3,13 @@
     <div class="file-uploader__upload-list">
       <transition-group name="list">
         <FileUploadCard
-          v-for="(file, i) of filesToUpload"
-          :key="i"
+          v-for="file of fileUploads"
+          :key="file.key"
           :project="project"
           :file="file"
-          @upload-completed="onSuccess(i, $event)"
-          @upload-canceled="clean(i, 6000)"
-          @upload-failed="clean(i, 12000)"
+          @upload-completed="onUploadCompleted(file.key, $event)"
+          @upload-canceled="cleanUpload(file.key, 6000)"
+          @upload-failed="cleanUpload(file.key, 12000)"
         />
       </transition-group>
     </div>
@@ -85,10 +85,10 @@ export default {
       default: () => []
     }
   },
-  emits: ["close", "file-uploaded"],
+  emits: ["close", "file-uploaded", "forbidden-upload-attempt"],
   setup(props, { emit }) {
     const fileInput = ref(null);
-    const filesToUpload = ref([]);
+    const fileUploads = ref([]);
 
     const selectFiles = () => {
       fileInput.value.click();
@@ -103,48 +103,62 @@ export default {
         // Files from input
         files = event.target.files;
       }
+      const forbiddenUploads = [];
       files = Array.from(files).filter(file => {
+        let shouldUpload = true;
         if (props.allowedFileTypes.length > 0) {
           // Only keep allowed files
-          return (
+          shouldUpload = (
             props.allowedFileTypes.includes(file.type) ||
             props.allowedFileTypes.includes("." + fileExtension(file.name))
           );
         }
         if (props.forbiddenFileTypes.length > 0) {
           // Discard forbidden files
-          return !(
+          shouldUpload = !(
             props.forbiddenFileTypes.includes(file.type) ||
             props.forbiddenFileTypes.includes("." + fileExtension(file.name))
           );
         }
-        return true;
+        if (!shouldUpload) {
+          forbiddenUploads.push(file);
+        }
+        return shouldUpload;
       });
-      filesToUpload.value = filesToUpload.value.concat(files);
+      if (forbiddenUploads.length > 0) {
+        emit("forbidden-upload-attempt", forbiddenUploads);
+      }
+      files = files.map((file, i) =>
+        Object.assign(file, { key: `${i}-${file.name}` })
+      );
+      fileUploads.value = fileUploads.value.concat(files);
     };
 
-    const onSuccess = (index, document) => {
-      clean(index, 3000);
+    const onUploadCompleted = (key, document) => {
+      cleanUpload(key, 3000);
       emit("file-uploaded", document);
     };
 
-    const clean = (index, delay = 100) => {
-      setTimeout(() => filesToUpload.value.splice(index, 1), delay);
+    const cleanUpload = (key, delay = 100) => {
+      setTimeout(() => {
+        const index = fileUploads.value.findIndex(f => f.key === key);
+        fileUploads.value.splice(index, 1);
+      }, delay);
     };
 
     const close = () => {
-      filesToUpload.value = [];
+      fileUploads.value = [];
       emit("close");
     };
 
     return {
       // References
       fileInput,
-      filesToUpload,
+      fileUploads,
       // Methods
-      clean,
+      cleanUpload,
       close,
-      onSuccess,
+      onUploadCompleted,
       selectFiles,
       uploadFiles
     };

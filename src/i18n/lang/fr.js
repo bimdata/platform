@@ -37,7 +37,11 @@ export default {
   },
   ProjectOverview: {
     openFileUploadButtonText: "Ajouter un IFC",
-    closeFileUploadButtonText: "Fermer"
+    closeFileUploadButtonText: "Fermer",
+    forbiddenUploadNotification: {
+      title: "Erreur",
+      message: "Veuillez sélectionner un fichier .ifc"
+    }
   },
 
   // ==========
@@ -152,7 +156,7 @@ export default {
   FileUploader: {
     uploadAreaText: "Cliquer/Glisser vos fichiers ici",
     separatorText: "ou",
-    uploadButtonText: "Selectionner un fichier"
+    uploadButtonText: "Selectionner un fichier .ifc"
   },
 
   FolderCreationButton: {
