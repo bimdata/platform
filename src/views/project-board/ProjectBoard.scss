@@ -5,7 +5,11 @@
 
   &__header:deep() {
     .bimdata-tabs__container__tab.active {
-      background-color: transparent;
+      background-color: rgba(47, 55, 74, 0.1);
+    }
+
+    .bimdata-tabs__container__tab:hover {
+      background-color: rgba(47, 55, 74, 0.05);
     }
   }
 
