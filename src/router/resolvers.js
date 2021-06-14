@@ -5,10 +5,19 @@ import { useSpaces } from "@/state/spaces";
 import { useUser } from "@/state/user";
 import { useFiles } from "@/state/files";
 
+let rootResolved = false;
+
 const rootResolver = async () => {
   const { loadUser } = useUser();
+  const { loadUserSpaces } = useSpaces();
+  const { loadUserProjects } = useProjects();
 
-  await loadUser();
+  if (!rootResolved) {
+    await loadUser();
+    await loadUserSpaces();
+    await loadUserProjects();
+    rootResolved = true;
+  }
 };
 
 const createViewResolver = resolve => {
@@ -20,34 +29,9 @@ const createViewResolver = resolve => {
   };
 };
 
-const dashboardResolver = createViewResolver(async () => {
-  const { loadUserSpaces } = useSpaces();
-  const { loadUserProjects } = useProjects();
-
-  await loadUserSpaces();
-  await loadUserProjects();
-});
-
-const userSpacesResolver = createViewResolver(async () => {
-  const { loadUserSpaces } = useSpaces();
-  const { loadUserProjects } = useProjects();
-
-  await loadUserSpaces();
-  await loadUserProjects();
-});
-
-const userProjectsResolver = createViewResolver(async () => {
-  const { loadUserProjects } = useProjects();
-
-  await loadUserProjects();
-});
-
 const spaceBoardResolver = createViewResolver(async route => {
   const spaces = useSpaces();
   const projects = useProjects();
-
-  await spaces.loadUserSpaces();
-  await projects.loadUserProjects();
 
   spaces.selectSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
@@ -63,9 +47,6 @@ const projectBoardResolver = createViewResolver(async route => {
   const projects = useProjects();
   const models = useModels();
   const files = useFiles();
-
-  await spaces.loadUserSpaces();
-  await projects.loadUserProjects();
 
   spaces.selectSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
@@ -85,9 +66,6 @@ const modelViewerResolver = createViewResolver(async route => {
   const projects = useProjects();
   const models = useModels();
 
-  await spaces.loadUserSpaces();
-  await projects.loadUserProjects();
-
   spaces.selectSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
 
@@ -97,9 +75,6 @@ const modelViewerResolver = createViewResolver(async route => {
 
 export {
   rootResolver,
-  dashboardResolver,
-  userSpacesResolver,
-  userProjectsResolver,
   spaceBoardResolver,
   projectBoardResolver,
   modelViewerResolver
