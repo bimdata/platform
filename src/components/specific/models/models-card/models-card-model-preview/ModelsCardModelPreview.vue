@@ -25,7 +25,7 @@
     </div>
 
     <div class="models-card-model-preview__switcher" v-if="images.length > 0">
-      <span>{{ image.name }}</span>
+      <TextBox :text="image.name" :maxLength="44" />
       <template v-if="images.length > 1">
         <BIMDataButton
           class="models-card-model-preview__switcher__btn-previous"
@@ -57,11 +57,13 @@ import { ref, watch } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon
+    BIMDataIcon,
+    TextBox
   },
   props: {
     models: {
