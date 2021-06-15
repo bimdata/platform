@@ -1,7 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/server/SpaceService";
 import { useUser } from "@/state/user";
-import { SPACE_ROLE } from "@/utils/users";
 
 const state = reactive({
   userSpaces: [],
@@ -11,37 +10,33 @@ const state = reactive({
 });
 
 const loadUserSpaces = async () => {
-  const { user } = useUser();
+  const { mapSpaces } = useUser();
   let spaces = await SpaceService.fetchUserSpaces();
-  spaces = spaces.map(space => ({
-    ...space,
-    isAdmin: user.value.clouds.some(
-      role => role.cloud === space.id && role.role === SPACE_ROLE.ADMIN
-    )
-  }));
-  spaces = spaces.slice().sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  spaces = mapSpaces(spaces);
+  spaces.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   state.userSpaces = spaces;
   return spaces;
 };
 
 const loadSpaceUsers = async space => {
-  const { user: currentUser } = useUser();
-  let users = await SpaceService.fetchSpaceUsers(space);
-  users = users.map(user => ({
-    ...user,
-    isSelf: user.id === currentUser.value.id
-  }));
-  users = users
-    .slice()
-    .sort((a, b) =>
+  const { mapUsers } = useUser();
+  let users = [];
+  if (space.isAdmin) {
+    users = await SpaceService.fetchSpaceUsers(space);
+    users = mapUsers(users);
+    users.sort((a, b) =>
       `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
     );
+  }
   state.spaceUsers = users;
   return users;
 };
 
 const loadSpaceInvitations = async space => {
-  const invitations = await SpaceService.fetchSpaceInvitations(space);
+  let invitations = [];
+  if (space.isAdmin) {
+    invitations = await SpaceService.fetchSpaceInvitations(space);
+  }
   state.spaceInvitations = invitations;
   return invitations;
 };

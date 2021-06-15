@@ -1,7 +1,6 @@
 import { reactive, readonly, toRefs, watch } from "vue";
 import ProjectService from "@/server/ProjectService";
 import { useUser } from "@/state/user";
-import { PROJECT_ROLE } from "@/utils/users";
 
 const state = reactive({
   userProjects: [],
@@ -12,17 +11,10 @@ const state = reactive({
 });
 
 const loadUserProjects = async () => {
-  const { user } = useUser();
+  const { mapProjects } = useUser();
   let projects = await ProjectService.fetchUserProjects();
-  projects = projects.map(project => ({
-    ...project,
-    isAdmin: user.value.projects.some(
-      role => role.project === project.id && role.role === PROJECT_ROLE.ADMIN
-    )
-  }));
-  projects = projects
-    .slice()
-    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  projects = mapProjects(projects);
+  projects.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   state.userProjects = projects;
   return projects;
 };
@@ -42,23 +34,24 @@ const loadSpaceProjects = space => {
 };
 
 const loadProjectUsers = async project => {
-  const { user: currentUser } = useUser();
-  let users = await ProjectService.fetchProjectUsers(project);
-  users = users.map(user => ({
-    ...user,
-    isSelf: user.id === currentUser.value.id
-  }));
-  users = users
-    .slice()
-    .sort((a, b) =>
+  const { mapUsers } = useUser();
+  let users = [];
+  if (project.isAdmin) {
+    await ProjectService.fetchProjectUsers(project);
+    users = mapUsers(users);
+    users.sort((a, b) =>
       `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
     );
+  }
   state.projectUsers = users;
   return users;
 };
 
 const loadProjectInvitations = async project => {
-  const invitations = await ProjectService.fetchProjectInvitations(project);
+  let invitations = [];
+  if (project.isAdmin) {
+    invitations = await ProjectService.fetchProjectInvitations(project);
+  }
   state.projectInvitations = invitations;
   return invitations;
 };
