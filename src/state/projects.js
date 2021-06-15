@@ -37,7 +37,7 @@ const loadProjectUsers = async project => {
   const { mapUsers } = useUser();
   let users = [];
   if (project.isAdmin) {
-    await ProjectService.fetchProjectUsers(project);
+    users = await ProjectService.fetchProjectUsers(project);
     users = mapUsers(users);
     users.sort((a, b) =>
       `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1

@@ -72,6 +72,7 @@
         <FilesManagerOnboarding
           class="files-manager__onboarding"
           :project="project"
+          :rootFolder="fileStructure"
         />
       </template>
     </template>
