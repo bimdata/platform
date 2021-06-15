@@ -8,8 +8,10 @@
     radius
     @click="selectFile"
   >
-    <BIMDataIcon name="addFile" size="xs" />
-    <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
+    <slot>
+      <BIMDataIcon name="addFile" size="xs" />
+      <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
+    </slot>
     <input hidden ref="fileInput" type="file" multiple @change="uploadFile" />
   </BIMDataButton>
 </template>
@@ -42,6 +44,7 @@ export default {
     const selectFile = () => {
       fileInput.value.click();
     };
+
     const uploadFile = event => {
       const files = Array.from(event.target.files);
       if (files.length > 0) {

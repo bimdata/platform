@@ -18,6 +18,17 @@
     padding: $spacing-unit;
     background-color: rgba(255, 255, 255, 0.5);
 
+    &__uploads {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-unit;
+      margin: $spacing-unit * 2;
+
+      .file-upload-cell {
+        @include box-shadow;
+      }
+    }
+
     &__folder-form {
       position: relative;
       top: 33%;

@@ -73,6 +73,7 @@
           class="files-manager__onboarding"
           :project="project"
           :rootFolder="fileStructure"
+          @file-uploaded="onFileUploaded"
         />
       </template>
     </template>
@@ -185,6 +186,7 @@ export default {
     const filesToUpload = ref([]);
     const uploadFiles = files => {
       filesToUpload.value = files;
+      setTimeout(() => filesToUpload.value = [], 100);
     };
     const onFileUploaded = () => {
       emit("file-uploaded");

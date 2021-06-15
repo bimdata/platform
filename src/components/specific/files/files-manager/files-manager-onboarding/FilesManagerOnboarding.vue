@@ -5,15 +5,9 @@
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <BIMDataButton
-        width="120px"
-        color="primary"
-        fill
-        radius
-        @click="uploadFile"
-      >
+      <FileUploadButton width="120px" @upload="uploadFile">
         {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
-      </BIMDataButton>
+      </FileUploadButton>
       <BIMDataButton
         width="120px"
         color="primary"
@@ -26,13 +20,27 @@
     </div>
     <transition name="fade">
       <div
-        v-show="showFolderForm"
+        v-show="showFolderForm || fileUploads.length > 0"
         class="files-manager-onboarding__overlay"
       >
+        <div class="files-manager-onboarding__overlay__uploads">
+          <FileUploadCell
+            v-for="(file, i) of fileUploads"
+            :key="i"
+            :project="project"
+            :folder="rootFolder"
+            :file="file"
+            @upload-completed="updateUploadCount"
+            @upload-canceled="updateUploadCount"
+            @upload-failed="updateUploadCount"
+          />
+        </div>
+
         <FolderCreationForm
           v-if="showFolderForm"
           class="files-manager-onboarding__overlay__folder-form"
-          :project="project" :folder="rootFolder"
+          :project="project"
+          :folder="rootFolder"
           @close="showFolderForm = false"
           @success="showFolderForm = false"
         />
@@ -45,11 +53,15 @@
 import { ref } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
+import FileUploadCell from "@/components/specific/files/files-table/file-upload-cell/FileUploadCell";
 import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
 
 export default {
   components: {
     BIMDataButton,
+    FileUploadButton,
+    FileUploadCell,
     FolderCreationForm
   },
   props: {
@@ -62,20 +74,36 @@ export default {
       required: true
     }
   },
-  setup() {
+  emits: ["file-uploaded"],
+  setup(props, { emit }) {
+    let uploadCount = 0;
+    const fileUploads = ref([]);
+    const uploadFile = files => {
+      uploadCount = 0;
+      fileUploads.value = files;
+    };
+
+    const updateUploadCount = () => {
+      uploadCount++;
+      if (uploadCount === fileUploads.value.length) {
+        uploadCount = 0;
+        fileUploads.value = [];
+        emit("file-uploaded");
+      }
+    };
+
     const showFolderForm  = ref(false);
-
-    const uploadFile = () => {};
-
     const createFolder = () => {
       showFolderForm.value = true;
     };
 
     return {
       // References
+      fileUploads,
       showFolderForm,
       // Methods
       createFolder,
+      updateUploadCount,
       uploadFile
     };
   }

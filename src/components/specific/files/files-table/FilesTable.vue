@@ -162,13 +162,13 @@ export default {
 
     return {
       // References
-      cleanUpload,
       columns,
       fileUploads,
       nameEditMode,
-      onUploadCompleted,
       // Methods
-      formatBytes
+      cleanUpload,
+      formatBytes,
+      onUploadCompleted
     };
   }
 };
