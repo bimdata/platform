@@ -69,7 +69,10 @@
       </template>
 
       <template v-else>
-        <FilesManagerOnboarding :project="project" />
+        <FilesManagerOnboarding
+          class="files-manager__onboarding"
+          :project="project"
+        />
       </template>
     </template>
   </BIMDataCard>

@@ -34,7 +34,7 @@
       color="primary"
       fill
       radius
-      @click="inviteUser"
+      @click="submit"
     >
       {{ $t("InvitationForm.submitButtonText") }}
     </BIMDataButton>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
@@ -69,26 +69,35 @@ export default {
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
-    const { t } = useI18n();
+    const { locale, t } = useI18n();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
+
+    const roles = ref([]);
+    const role = ref(null);
+    watch(
+      () => locale.value,
+      () => {
+        roles.value = [
+          { value: 100, name: t("InvitationForm.roles.admin") },
+          { value: 50, name: t("InvitationForm.roles.user") },
+          { value: 25, name: t("InvitationForm.roles.guest") }
+        ];
+        role.value = roles.value[0];
+      },
+      { immediate: true }
+    );
 
     const emailInput = ref(null);
     const email = ref("");
     const error = ref(false);
 
-    const roles = ref([]);
-    const role = ref(null);
-    watchEffect(() => {
-      roles.value = [
-        { value: 100, name: t("InvitationForm.roles.admin") },
-        { value: 50, name: t("InvitationForm.roles.user") },
-        { value: 25, name: t("InvitationForm.roles.guest") }
-      ];
-      role.value = roles.value[0];
-    });
+    const reset = () => {
+      email.value = "";
+      error.value = false;
+    };
 
-    const inviteUser = async () => {
+    const submit = async () => {
       if (email.value) {
         try {
           if (props.project) {
@@ -101,6 +110,7 @@ export default {
               email: email.value
             });
           }
+          reset();
           emit("success");
         } catch (error) {
           emit("error", error);
@@ -112,7 +122,7 @@ export default {
     };
 
     const close = () => {
-      error.value = false;
+      reset();
       emit("close");
     };
 
@@ -129,7 +139,7 @@ export default {
       roles,
       // Methods
       close,
-      inviteUser
+      submit
     };
   }
 };

@@ -161,10 +161,13 @@ export default {
   },
 
   FolderCreationButton: {
-    createFolderButtonText: "Nouveau dossier",
+    buttonText: "Nouveau dossier"
+  },
+
+  FolderCreationForm: {
     creationFormTitle: "Créer un dossier",
     nameInputPlaceholder: "Nom du dossier",
-    nameInputErrorMessage: "",
+    nameInputErrorMessage: "Nom de dossier invalide",
     cancelButtonText: "Annuler",
     submitButtonText: "Valider"
   },

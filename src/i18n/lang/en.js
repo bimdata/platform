@@ -161,10 +161,14 @@ export default {
   },
 
   FolderCreationButton: {
+    buttonText: "New folder"
+  },
+
+  FolderCreationForm: {
     createFolderButtonText: "New folder",
     creationFormTitle: "Create folder",
     nameInputPlaceholder: "Folder name",
-    nameInputErrorMessage: "",
+    nameInputErrorMessage: "Invalid folder name",
     cancelButtonText: "Cancel",
     submitButtonText: "Submit"
   },
