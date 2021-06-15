@@ -1,13 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { authGuard } from "./guards";
 import {
-  dashboardResolver,
   modelViewerResolver,
   projectBoardResolver,
   rootResolver,
-  spaceBoardResolver,
-  userProjectsResolver,
-  userSpacesResolver
+  spaceBoardResolver
 } from "./resolvers";
 // Components
 import Layout from "@/Layout";
@@ -46,26 +43,17 @@ const routes = [
       {
         path: "",
         name: routeNames.dashboard,
-        component: Dashboard,
-        meta: {
-          resolver: dashboardResolver
-        }
+        component: Dashboard
       },
       {
         path: "/spaces",
         name: routeNames.userSpaces,
-        component: UserSpaces,
-        meta: {
-          resolver: userSpacesResolver
-        }
+        component: UserSpaces
       },
       {
         path: "/projects",
         name: routeNames.userProjects,
-        component: UserProjects,
-        meta: {
-          resolver: userProjectsResolver
-        }
+        component: UserProjects
       },
       {
         path: "/spaces/:spaceID(\\d+)",

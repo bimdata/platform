@@ -123,7 +123,9 @@ const deleteSpaceUser = async (space, user) => {
 export function useSpaces() {
   const readonlyState = readonly(state);
   return {
+    // References
     ...toRefs(readonlyState),
+    // Methods
     loadUserSpaces,
     loadSpaceUsers,
     loadSpaceInvitations,

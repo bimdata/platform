@@ -141,7 +141,9 @@ const deleteProjectUser = async (project, user) => {
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
+    // References
     ...toRefs(readonlyState),
+    // Methods
     loadUserProjects,
     loadSpaceProjects,
     loadProjectUsers,
