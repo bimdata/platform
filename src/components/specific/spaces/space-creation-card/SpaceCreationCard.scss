@@ -1,20 +1,22 @@
+@import "../space-card/SpaceCard.vars.scss";
+
 .space-creation-card {
   position: relative;
-  width: $platform-space-card-width;
-  height: $platform-space-card-height;
+  width: $card-width;
+  height: $card-height;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
   color: $color-primary;
 
   &:deep() {
     .bimdata-card__submenu {
-      height: $spacing-unit*4;
+      height: $spacing-unit * 4;
       box-shadow: none;
       font-size: 1.05rem;
       font-weight: bold;
     }
 
     .bimdata-card__content {
-      height: calc(100% - #{$spacing-unit*4});
+      height: calc(100% - #{$spacing-unit * 4});
       font-size: 1rem;
 
       .action-loader {

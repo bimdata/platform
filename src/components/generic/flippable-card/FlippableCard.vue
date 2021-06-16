@@ -1,5 +1,5 @@
 <template>
-  <div class="flipable-card">
+  <div class="flippable-card">
     <div class="card" :class="{ flipped }">
       <div class="card__face card__face--front">
         <slot name="front-face"></slot>
@@ -22,4 +22,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./FlipableCard.scss"></style>
+<style scoped lang="scss" src="./FlippableCard.scss"></style>

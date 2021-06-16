@@ -53,12 +53,13 @@ export default {
     const { showNotification, notification } = useNotifications();
 
     return {
-      showNotification,
+      // References
       notification,
-      notifIcons
+      notifIcons,
+      showNotification
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./NotificationCard.scss"></style>

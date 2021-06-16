@@ -5,7 +5,7 @@
       height="40px"
       tabSize="50%"
       :tabs="tabs"
-      selected="admins"
+      :selected="currentTab"
       @tab-click="selectTab"
     />
 
@@ -47,6 +47,7 @@
             :space="space"
           />
         </template>
+
         <UserCard
           v-for="user in displayedUsers"
           :key="`user-${user.id}`"
@@ -139,10 +140,7 @@ export default {
       if (text) {
         displayedUsers.value = list.value.filter(
           ({ firstname, lastname, email }) =>
-            [firstname, lastname, email]
-              .join(" ")
-              .toLowerCase()
-              .includes(text)
+            [firstname, lastname, email].join(" ").toLowerCase().includes(text)
         );
       } else {
         displayedUsers.value = list.value;

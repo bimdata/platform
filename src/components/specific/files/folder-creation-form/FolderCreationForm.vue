@@ -110,7 +110,7 @@ export default {
       submit
     };
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./FolderCreationForm.scss"></style>

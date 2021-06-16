@@ -1,9 +1,11 @@
+@import "../ProjectCard.vars.scss";
+
 .project-card-model-preview {
   @include noselect;
 
   position: relative;
   height: 100%;
-  background-color: $platform-project-card-background;
+  background-color: $card-background;
 
   &__switcher {
     position: absolute;
@@ -17,7 +19,7 @@
   }
 
   &__viewport {
-    width: $platform-project-card-content-height;
+    width: $card-content-height;
     height: 100%;
     margin: auto;
     overflow: hidden;

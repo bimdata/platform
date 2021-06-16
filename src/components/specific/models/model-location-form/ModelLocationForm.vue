@@ -10,6 +10,7 @@
         v-model="inputAddress"
         @address-selected="checkAddress"
       />
+
       <template v-if="!isSubmitStep">
         <BIMDataButton color="primary" fill radius @click="checkAddress">
           {{ $t("ModelLocationForm.checkButtonText") }}
@@ -23,6 +24,7 @@
           {{ $t("ModelLocationForm.cancelButtonText") }}
         </BIMDataButton>
       </template>
+
       <BIMDataButton
         class="model-location-form__form-control__close-btn"
         ghost

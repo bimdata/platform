@@ -231,7 +231,7 @@ export default {
     archiveButtonText: "Archiver",
     unarchiveButtonText: "Désarchiver",
     downloadButtonText: "Télécharger",
-    mergeButtonText: "Fusionner",
+    mergeButtonText: "Fusionner"
   },
 
   ModelsCard: {
@@ -334,8 +334,8 @@ export default {
     deleteButtonText: "Supprimer"
   },
 
-  SpaceCardImageInput: {
-    changeImageButtonText: "Changer l'image"
+  SpaceCardImageButton: {
+    buttonText: "Changer l'image"
   },
 
   SpaceCardUpdateForm: {

@@ -1,6 +1,8 @@
+@import "./SpaceCard.vars.scss";
+
 .space-card {
-  width: $platform-space-card-width;
-  height: $platform-space-card-height;
+  width: $card-width;
+  height: $card-height;
   transition-duration: 0.35s;
 
   &:deep() {
@@ -14,7 +16,7 @@
 
     .bimdata-card__content {
       overflow: hidden;
-      height: $platform-space-card-content-height;
+      height: $card-content-height;
       padding: 0;
     }
 
@@ -23,7 +25,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: calc(100% - #{$platform-space-card-content-height});
+      height: calc(100% - #{$card-content-height});
       padding: 0;
 
       .title-underline {
@@ -41,6 +43,7 @@
           font-size: 10px;
           color: $color-tertiary-dark;
         }
+
         &__number {
           font-size: 14px;
           font-weight: bold;

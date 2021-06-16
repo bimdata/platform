@@ -1,7 +1,9 @@
+@import "./ProjectCard.vars.scss";
+
 .project-card {
-  min-width: $platform-project-card-width;
-  width: $platform-project-card-width;
-  height: $platform-project-card-height;
+  min-width: $card-width;
+  width: $card-width;
+  height: $card-height;
 
   .bimdata-card {
     position: relative;
@@ -13,14 +15,14 @@
       position: absolute;
       z-index: 1;
       width: 4px;
-      height: $platform-project-card-height;
+      height: $card-height;
       background-color: $color-primary;
     }
 
     .project-card__status-badge {
       position: absolute;
       z-index: 1;
-      top: $platform-project-card-content-height - $spacing-unit - 24px;
+      top: $card-content-height - $spacing-unit - 24px;
       left: $spacing-unit + 4px;
       height: 24pxv;
       padding: $spacing-unit/2 $spacing-unit;
@@ -46,7 +48,7 @@
 
       .bimdata-card__content {
         overflow: hidden;
-        height: $platform-project-card-content-height;
+        height: $card-content-height;
         padding: 0;
       }
 
@@ -55,7 +57,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: calc(100% - #{$platform-project-card-content-height});
+        height: calc(100% - #{$card-content-height});
         padding: 0;
       }
     }

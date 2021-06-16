@@ -1,7 +1,7 @@
 <template>
   <teleport to="#side-panel-container">
     <transition name="slide-fade-right">
-      <div class="side-panel" v-show="showSidePanelOpen">
+      <div class="side-panel" v-show="showSidePanel">
         <div class="side-panel__title">
           <span>{{ title }}</span>
           <BIMDataButton ghost rounded icon @click="closeSidePanel">
@@ -34,10 +34,12 @@ export default {
     }
   },
   setup() {
-    const { showSidePanelOpen, closeSidePanel } = useSidePanel();
+    const { showSidePanel, closeSidePanel } = useSidePanel();
 
     return {
-      showSidePanelOpen,
+      // References
+      showSidePanel,
+      // Methods
       closeSidePanel
     };
   }

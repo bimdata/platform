@@ -18,45 +18,51 @@
     <transition name="fade">
       <div class="space-card-action-menu__container" v-show="showMenu">
         <transition name="fade" mode="out-in">
-          <div class="space-card-action-menu__container__loader" v-if="loading">
-            <BIMDataSpinner />
-          </div>
+          <template v-if="loading">
+            <div class="space-card-action-menu__container__loader">
+              <BIMDataSpinner />
+            </div>
+          </template>
 
-          <SpaceCardUpdateForm
-            v-else-if="showUpdateForm"
-            :space="space"
-            @close="closeUpdateForm"
-            @success="closeMenu"
-          />
+          <template v-else-if="showUpdateForm">
+            <SpaceCardUpdateForm
+              :space="space"
+              @close="closeUpdateForm"
+              @success="closeMenu"
+            />
+          </template>
 
-          <SpaceCardDeleteGuard
-            v-else-if="showDeleteGuard"
-            :space="space"
-            @close="closeDeleteGuard"
-          />
+          <template v-else-if="showDeleteGuard">
+            <SpaceCardDeleteGuard :space="space" @close="closeDeleteGuard" />
+          </template>
 
-          <div class="space-card-action-menu__container__menu" v-else>
-            <BIMDataButton
-              data-test="btn-open-update"
-              ghost
-              squared
-              @click="openUpdateForm"
-            >
-              {{ $t("SpaceCardActionMenu.renameButtonText") }}
-            </BIMDataButton>
-            <SpaceCardImageInput :space="space" @upload-completed="closeMenu" />
-            <BIMDataButton ghost squared @click="removeImage">
-              {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
-            </BIMDataButton>
-            <BIMDataButton
-              data-test="btn-open-delete"
-              ghost
-              squared
-              @click="openDeleteGuard"
-            >
-              {{ $t("SpaceCardActionMenu.deleteButtonText") }}
-            </BIMDataButton>
-          </div>
+          <template v-else>
+            <div class="space-card-action-menu__container__menu">
+              <BIMDataButton
+                data-test="btn-open-update"
+                ghost
+                squared
+                @click="openUpdateForm"
+              >
+                {{ $t("SpaceCardActionMenu.renameButtonText") }}
+              </BIMDataButton>
+              <SpaceCardImageButton
+                :space="space"
+                @upload-completed="closeMenu"
+              />
+              <BIMDataButton ghost squared @click="removeImage">
+                {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
+              </BIMDataButton>
+              <BIMDataButton
+                data-test="btn-open-delete"
+                ghost
+                squared
+                @click="openDeleteGuard"
+              >
+                {{ $t("SpaceCardActionMenu.deleteButtonText") }}
+              </BIMDataButton>
+            </div>
+          </template>
         </transition>
       </div>
     </transition>
@@ -71,7 +77,7 @@ import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard";
-import SpaceCardImageInput from "../space-card-image-input/SpaceCardImageInput";
+import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton";
 import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm";
 
 export default {
@@ -80,7 +86,7 @@ export default {
     BIMDataIcon,
     BIMDataSpinner,
     SpaceCardDeleteGuard,
-    SpaceCardImageInput,
+    SpaceCardImageButton,
     SpaceCardUpdateForm
   },
   props: {

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-left: 4px;
+  padding-left: $spacing-unit/3;
 
   &__action-btn {
     color: $color-tertiary-dark;

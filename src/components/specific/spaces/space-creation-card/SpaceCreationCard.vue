@@ -18,31 +18,35 @@
     </template>
     <template #content>
       <transition name="fade" mode="out-in">
-        <div class="action-loader" v-if="loading">
-          <BIMDataSpinner />
-        </div>
+        <template v-if="loading">
+          <div class="action-loader">
+            <BIMDataSpinner />
+          </div>
+        </template>
 
-        <div class="creation-form" v-else>
-          <BIMDataInput
-            ref="nameInput"
-            data-test="input-create-name"
-            :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
-            v-model="newSpace.name"
-            :error="error"
-            :errorMessage="$t('SpaceCreationCard.inputErrorMessage')"
-            @keyup.esc.stop="close"
-            @keyup.enter.stop="createSpace"
-          />
-          <BIMDataButton
-            data-test="btn-submit-create"
-            fill
-            radius
-            color="primary"
-            @click="createSpace"
-          >
-            {{ $t("SpaceCreationCard.createButtonText") }}
-          </BIMDataButton>
-        </div>
+        <template v-else>
+          <div class="creation-form">
+            <BIMDataInput
+              ref="nameInput"
+              data-test="input-create-name"
+              :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
+              v-model="newSpace.name"
+              :error="error"
+              :errorMessage="$t('SpaceCreationCard.inputErrorMessage')"
+              @keyup.esc.stop="close"
+              @keyup.enter.stop="createSpace"
+            />
+            <BIMDataButton
+              data-test="btn-submit-create"
+              fill
+              radius
+              color="primary"
+              @click="createSpace"
+            >
+              {{ $t("SpaceCreationCard.createButtonText") }}
+            </BIMDataButton>
+          </div>
+        </template>
       </transition>
     </template>
   </BIMDataCard>

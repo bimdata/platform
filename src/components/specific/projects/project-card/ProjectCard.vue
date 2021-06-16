@@ -1,5 +1,5 @@
 <template>
-  <FlipableCard
+  <FlippableCard
     data-test="project-card"
     class="project-card"
     :flipped="showMenu"
@@ -32,7 +32,7 @@
     <template #back-face>
       <ProjectCardActionMenu :project="project" @close="closeMenu" />
     </template>
-  </FlipableCard>
+  </FlippableCard>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import FlipableCard from "@/components/generic/flipable-card/FlipableCard";
+import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
 import TextBox from "@/components/generic/text-box/TextBox";
 import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar";
 import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu";
@@ -51,7 +51,7 @@ import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardMod
 export default {
   components: {
     BIMDataCard,
-    FlipableCard,
+    FlippableCard,
     TextBox,
     ProjectCardActionBar,
     ProjectCardActionMenu,

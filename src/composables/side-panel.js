@@ -4,7 +4,7 @@ const { isOpen, open, close } = useToggle();
 
 export function useSidePanel() {
   return {
-    showSidePanelOpen: isOpen,
+    showSidePanel: isOpen,
     openSidePanel: open,
     closeSidePanel: close
   };

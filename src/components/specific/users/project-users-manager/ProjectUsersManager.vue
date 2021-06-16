@@ -34,6 +34,7 @@
                   v-model="searchText"
                   clear
                 />
+
                 <InvitationForm
                   v-if="showInvitationForm"
                   key="invitation-form"
@@ -41,6 +42,7 @@
                   @close="closeInvitationForm"
                   @success="closeInvitationForm"
                 />
+
                 <InvitationCard
                   v-for="invitation in invitations"
                   :key="`invitation-${invitation.id}`"

@@ -8,7 +8,7 @@
         v-model="email"
         :error="error"
         :errorMessage="$t('InvitationForm.emailInputErrorMessage')"
-        @keyup.enter.stop="inviteUser"
+        @keyup.enter.stop="submit"
       />
       <BIMDataSelect
         v-if="project"

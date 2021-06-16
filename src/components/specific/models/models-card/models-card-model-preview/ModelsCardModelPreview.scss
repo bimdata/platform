@@ -1,9 +1,11 @@
+@import "../ModelsCard.vars.scss";
+
 .models-card-model-preview {
   @include noselect;
 
   position: relative;
   height: 100%;
-  background-color: $platform-viewer-card-background;
+  background-color: $card-background;
 
   &__index {
     position: absolute;
@@ -14,10 +16,10 @@
   }
 
   &__container {
-    height: $platform-viewer-card-content-height;
+    height: $card-content-height;
 
     &__viewport {
-      width: $platform-viewer-card-content-height;
+      width: $card-content-height;
       height: 100%;
       margin: auto;
       overflow: hidden;
@@ -45,7 +47,7 @@
   &__switcher {
     display: flex;
     align-items: center;
-    height: calc(100% - #{$platform-viewer-card-content-height});
+    height: calc(100% - #{$card-content-height});
     padding: $spacing-unit;
     background-color: $color-white;
     font-size: 12px;

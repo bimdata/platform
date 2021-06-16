@@ -335,8 +335,8 @@ export default {
     deleteButtonText: "Delete"
   },
 
-  SpaceCardImageInput: {
-    changeImageButtonText: "Upload image"
+  SpaceCardImageButton: {
+    buttonText: "Upload image"
   },
 
   SpaceCardUpdateForm: {

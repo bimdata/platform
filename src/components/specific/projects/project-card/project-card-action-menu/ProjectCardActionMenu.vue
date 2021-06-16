@@ -1,53 +1,56 @@
 <template>
   <div class="project-card-action-menu" v-click-away="resetMenu">
     <transition name="fade" mode="out-in">
-      <div class="project-card-action-menu__loader" v-if="loading">
-        <BIMDataSpinner />
-      </div>
+      <template v-if="loading">
+        <div class="project-card-action-menu__loader">
+          <BIMDataSpinner />
+        </div>
+      </template>
 
-      <ProjectCardUpdateForm
-        v-else-if="showUpdateForm"
-        :project="project"
-        @close="closeUpdateForm"
-        @success="closeMenu"
-      />
+      <template v-else-if="showUpdateForm">
+        <ProjectCardUpdateForm
+          :project="project"
+          @close="closeUpdateForm"
+          @success="closeMenu"
+        />
+      </template>
 
-      <ProjectCardDeleteGuard
-        v-else-if="showDeleteGuard"
-        :project="project"
-        @close="closeDeleteGuard"
-      />
+      <template v-else-if="showDeleteGuard">
+        <ProjectCardDeleteGuard :project="project" @close="closeDeleteGuard" />
+      </template>
 
-      <div class="project-card-action-menu__menu" v-else>
-        <div class="project-card-action-menu__menu__title">
-          {{ project.name }}
+      <template v-else>
+        <div class="project-card-action-menu__menu">
+          <div class="project-card-action-menu__menu__title">
+            <TextBox :text="project.name" :maxLength="32" />
+            <BIMDataButton
+              data-test="btn-close-menu"
+              ghost
+              rounded
+              icon
+              @click="closeMenu"
+            >
+              <BIMDataIcon name="close" size="xxs" />
+            </BIMDataButton>
+          </div>
           <BIMDataButton
-            data-test="btn-close-menu"
+            data-test="btn-open-update"
             ghost
-            rounded
-            icon
-            @click="closeMenu"
+            squared
+            @click="openUpdateForm"
           >
-            <BIMDataIcon name="close" size="xxs" />
+            {{ $t("ProjectCardActionMenu.renameButtonText") }}
+          </BIMDataButton>
+          <BIMDataButton
+            data-test="btn-open-delete"
+            ghost
+            squared
+            @click="openDeleteGuard"
+          >
+            {{ $t("ProjectCardActionMenu.deleteButtonText") }}
           </BIMDataButton>
         </div>
-        <BIMDataButton
-          data-test="btn-open-update"
-          ghost
-          squared
-          @click="openUpdateForm"
-        >
-          {{ $t("ProjectCardActionMenu.renameButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-open-delete"
-          ghost
-          squared
-          @click="openDeleteGuard"
-        >
-          {{ $t("ProjectCardActionMenu.deleteButtonText") }}
-        </BIMDataButton>
-      </div>
+      </template>
     </transition>
   </div>
 </template>
@@ -58,6 +61,7 @@ import { provide, ref } from "vue";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
+import TextBox from "@/components/generic/text-box/TextBox";
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard";
 import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm";
 
@@ -66,6 +70,7 @@ export default {
     BIMDataButton,
     BIMDataIcon,
     BIMDataSpinner,
+    TextBox,
     ProjectCardDeleteGuard,
     ProjectCardUpdateForm
   },

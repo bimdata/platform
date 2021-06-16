@@ -1,3 +1,5 @@
+@import "../SpaceCard.vars.scss";
+
 .space-card-action-menu {
   position: relative;
 
@@ -6,12 +8,12 @@
   }
 
   &__container {
-    $container-min-height: 132px;
+    $card-menu-height: 132px;
 
     position: absolute;
     right: 0;
-    width: $platform-space-card-width - $spacing-unit;
-    min-height: $container-min-height;
+    width: $card-width - $spacing-unit;
+    min-height: $card-menu-height;
     margin-top: $spacing-unit/2;
     padding: $spacing-unit/2 0;
     border-radius: 4px;
@@ -22,7 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: $container-min-height - $spacing-unit;
+      height: $card-menu-height - $spacing-unit;
     }
 
     &__menu {
