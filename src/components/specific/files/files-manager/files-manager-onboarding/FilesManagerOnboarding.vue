@@ -92,7 +92,7 @@ export default {
       }
     };
 
-    const showFolderForm  = ref(false);
+    const showFolderForm = ref(false);
     const createFolder = () => {
       showFolderForm.value = true;
     };
