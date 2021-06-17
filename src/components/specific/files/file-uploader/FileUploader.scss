@@ -3,6 +3,10 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-unit;
+
+    .file-upload-card {
+      @include box-shadow;
+    }
   }
 
   &__upload-area {

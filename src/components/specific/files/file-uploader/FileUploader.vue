@@ -108,10 +108,9 @@ export default {
         let shouldUpload = true;
         if (props.allowedFileTypes.length > 0) {
           // Only keep allowed files
-          shouldUpload = (
+          shouldUpload =
             props.allowedFileTypes.includes(file.type) ||
-            props.allowedFileTypes.includes("." + fileExtension(file.name))
-          );
+            props.allowedFileTypes.includes("." + fileExtension(file.name));
         }
         if (props.forbiddenFileTypes.length > 0) {
           // Discard forbidden files

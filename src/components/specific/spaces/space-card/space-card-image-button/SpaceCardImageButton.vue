@@ -49,7 +49,7 @@ export default {
       onUploadComplete: event => {
         const image = event.successful[0].response.body.image;
         softUpdateSpace({ ...props.space, image });
-        uploader.instance.reset(); // reset Uppy instance
+        uploader.reset();
         emit("upload-completed");
       },
       onUploadError: () => {

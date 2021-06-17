@@ -24,7 +24,7 @@
       gap: $spacing-unit;
       margin: $spacing-unit * 2;
 
-      .file-upload-cell {
+      .file-upload-card {
         @include box-shadow;
       }
     }

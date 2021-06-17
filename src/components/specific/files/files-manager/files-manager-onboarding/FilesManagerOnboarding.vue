@@ -24,9 +24,10 @@
         class="files-manager-onboarding__overlay"
       >
         <div class="files-manager-onboarding__overlay__uploads">
-          <FileUploadCell
+          <FileUploadCard
             v-for="(file, i) of fileUploads"
             :key="i"
+            condensed
             :project="project"
             :folder="rootFolder"
             :file="file"
@@ -54,14 +55,14 @@ import { ref } from "vue";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import FileUploadCell from "@/components/specific/files/files-table/file-upload-cell/FileUploadCell";
+import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
 
 export default {
   components: {
     BIMDataButton,
     FileUploadButton,
-    FileUploadCell,
+    FileUploadCard,
     FolderCreationForm
   },
   props: {

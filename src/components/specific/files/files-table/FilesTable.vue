@@ -11,9 +11,10 @@
   >
     <template #sub-header>
       <transition-group name="list">
-        <FileUploadCell
+        <FileUploadCard
           v-for="file of fileUploads"
           :key="file.key"
+          condensed
           :project="project"
           :folder="folder"
           :file="file"
@@ -66,12 +67,12 @@ import { formatBytes } from "@/utils/files";
 import columnsDef from "./columns";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
+import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 import FileActionsCell from "./file-actions-cell/FileActionsCell";
 import FileLastUpdateCell from "./file-last-update-cell/FileLastUpdateCell";
 import FileNameCell from "./file-name-cell/FileNameCell";
 import FileTagsCell from "./file-tags-cell/FileTagsCell";
 import FileTypeCell from "./file-type-cell/FileTypeCell";
-import FileUploadCell from "./file-upload-cell/FileUploadCell";
 
 export default {
   components: {
@@ -81,7 +82,7 @@ export default {
     FileNameCell,
     FileTagsCell,
     FileTypeCell,
-    FileUploadCell
+    FileUploadCard
   },
   props: {
     project: {
