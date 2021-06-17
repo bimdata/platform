@@ -15,6 +15,7 @@
           <FileUploadButton
             class="files-manager__actions__btn-new-file"
             width="194px"
+            multiple
             @upload="uploadFiles"
           />
           <BIMDataSearch
@@ -186,7 +187,7 @@ export default {
     const filesToUpload = ref([]);
     const uploadFiles = files => {
       filesToUpload.value = files;
-      setTimeout(() => filesToUpload.value = [], 100);
+      setTimeout(() => (filesToUpload.value = []), 100);
     };
     const onFileUploaded = () => {
       emit("file-uploaded");
@@ -219,7 +220,7 @@ export default {
         downloadName = props.project.name;
         downloadUrl = getArchiveUrl(props.project, files);
       }
-      download({ name: downloadName, url: downloadUrl});
+      download({ name: downloadName, url: downloadUrl });
     };
 
     return {

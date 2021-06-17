@@ -35,40 +35,33 @@
           {{ $t("FileUploader.separatorText") }}
         </span>
       </div>
-      <BIMDataButton
+      <FileUploadButton
         class="file-uploader__upload-area__btn-upload"
         width="150px"
-        color="primary"
-        fill
-        radius
-        @click="selectFiles"
+        multiple
+        :accept="allowedFileTypes"
+        @upload="uploadFiles"
       >
         {{ $t("FileUploader.uploadButtonText") }}
-        <input
-          hidden
-          ref="fileInput"
-          type="file"
-          multiple
-          :accept="allowedFileTypes.join(',')"
-          @change="uploadFiles"
-        />
-      </BIMDataButton>
+      </FileUploadButton>
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import { fileExtension } from "@/utils/files";
+import { fileExtension, generateFileKey } from "@/utils/files";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataIcon,
+    FileUploadButton,
     FileUploadCard
   },
   props: {
@@ -87,24 +80,19 @@ export default {
   },
   emits: ["close", "file-uploaded", "forbidden-upload-attempt"],
   setup(props, { emit }) {
-    const fileInput = ref(null);
     const fileUploads = ref([]);
-
-    const selectFiles = () => {
-      fileInput.value.click();
-    };
 
     const uploadFiles = event => {
       let files = null;
       if (event.dataTransfer) {
         // Files from drag & drop
-        files = event.dataTransfer.files;
+        files = Array.from(event.dataTransfer.files);
       } else {
         // Files from input
-        files = event.target.files;
+        files = event;
       }
       const forbiddenUploads = [];
-      files = Array.from(files).filter(file => {
+      files = files.filter(file => {
         let shouldUpload = true;
         if (props.allowedFileTypes.length > 0) {
           // Only keep allowed files
@@ -127,8 +115,8 @@ export default {
       if (forbiddenUploads.length > 0) {
         emit("forbidden-upload-attempt", forbiddenUploads);
       }
-      files = files.map((file, i) =>
-        Object.assign(file, { key: `${i}-${file.name}` })
+      files = files.map(file =>
+        Object.assign(file, { key: generateFileKey(file.name, file.size) })
       );
       fileUploads.value = fileUploads.value.concat(files);
     };
@@ -152,13 +140,11 @@ export default {
 
     return {
       // References
-      fileInput,
       fileUploads,
       // Methods
       cleanUpload,
       close,
       onUploadCompleted,
-      selectFiles,
       uploadFiles
     };
   }

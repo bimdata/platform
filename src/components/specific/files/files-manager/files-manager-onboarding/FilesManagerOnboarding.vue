@@ -5,7 +5,7 @@
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <FileUploadButton width="120px" @upload="uploadFile">
+      <FileUploadButton width="120px" multiple @upload="uploadFile">
         {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
       </FileUploadButton>
       <BIMDataButton

@@ -63,7 +63,7 @@
 <script>
 import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { formatBytes } from "@/utils/files";
+import { formatBytes, generateFileKey } from "@/utils/files";
 import columnsDef from "./columns";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
@@ -141,8 +141,8 @@ export default {
       () => props.filesToUpload,
       () => {
         fileUploads.value = fileUploads.value.concat(
-          props.filesToUpload.map((file, i) =>
-            Object.assign(file, { key: `${i}-${file.name}` })
+          props.filesToUpload.map(file =>
+            Object.assign(file, { key: generateFileKey(file.name, file.size) })
           )
         );
       },

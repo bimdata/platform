@@ -12,7 +12,14 @@
       <BIMDataIcon name="addFile" size="xs" />
       <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
     </slot>
-    <input hidden ref="fileInput" type="file" multiple @change="uploadFile" />
+    <input
+      hidden
+      ref="fileInput"
+      type="file"
+      :multiple="multiple"
+      :accept="accept.join(',')"
+      @change="uploadFile"
+    />
   </BIMDataButton>
 </template>
 
@@ -35,6 +42,14 @@ export default {
     height: {
       type: String,
       default: "32px"
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    accept: {
+      type: Array,
+      default: () => []
     }
   },
   emits: ["upload"],

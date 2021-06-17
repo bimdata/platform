@@ -16,4 +16,11 @@ function formatBytes(bytes) {
   return `${bytes} B`;
 }
 
-export { fileExtension, formatBytes };
+function generateFileKey(fileName, fileSize) {
+  let key = Math.max(fileSize, 1000);
+  key = Math.random() * key + 1;
+  key = `${key}-${fileName}`;
+  return key;
+}
+
+export { fileExtension, formatBytes, generateFileKey };
