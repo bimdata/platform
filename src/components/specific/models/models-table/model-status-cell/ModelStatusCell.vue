@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { onUnmounted, ref, watch } from "vue";
 import { useModels } from "@/state/models";
 import { MODEL_STATUS } from "@/utils/models";
 // Components
@@ -53,27 +53,35 @@ export default {
       }
     };
 
-    watchEffect(() => {
-      setStatus(props.model.status);
+    let checkStatusInterval = null;
+    watch(
+      () => props.model,
+      () => {
+        setStatus(props.model.status);
 
-      if (
-        MODEL_STATUS.PENDING === props.model.status ||
-        MODEL_STATUS.IN_PROGRESS === props.model.status
-      ) {
-        // If model status is PENDING or IN_PROGRESS then check for status
-        // every 2 seconds until it's COMPLETED or ERROR.
-        let checkInterval = null;
-        checkInterval = setInterval(async () => {
-          const model = await fetchModelByID(props.project, props.model.id);
-          if (
-            MODEL_STATUS.PENDING !== model.status &&
-            MODEL_STATUS.IN_PROGRESS !== model.status
-          ) {
-            clearInterval(checkInterval);
-            softUpdateModels(model);
-          }
-        }, 2000);
-      }
+        if (
+          MODEL_STATUS.PENDING === props.model.status ||
+          MODEL_STATUS.IN_PROGRESS === props.model.status
+        ) {
+          // If model status is PENDING or IN_PROGRESS then check for status
+          // every 2 seconds until it's neither PENDING nor IN_PROGRESS.
+          checkStatusInterval = setInterval(async () => {
+            const model = await fetchModelByID(props.project, props.model.id);
+            if (
+              MODEL_STATUS.PENDING !== model.status &&
+              MODEL_STATUS.IN_PROGRESS !== model.status
+            ) {
+              clearInterval(checkStatusInterval);
+              softUpdateModels([model]);
+            }
+          }, 2000);
+        }
+      },
+      { immediate: true }
+    );
+
+    onUnmounted(() => {
+      clearInterval(checkStatusInterval);
     });
 
     return {
