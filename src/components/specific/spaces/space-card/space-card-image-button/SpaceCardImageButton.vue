@@ -17,10 +17,8 @@
 </template>
 
 <script>
-import Uppy from "@uppy/core";
-import XHRUpload from "@uppy/xhr-upload";
 import { inject, ref } from "vue";
-import { useAuth } from "@/state/auth";
+import { useUpload } from "@/composables/upload";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
@@ -37,44 +35,27 @@ export default {
   },
   emits: ["upload-completed", "upload-failed"],
   setup(props, { emit }) {
-    const { accessToken } = useAuth();
     const { softUpdateSpace } = useSpaces();
+    const { spaceImageUploader } = useUpload();
 
     const loading = inject("loading", false);
 
     const fileInput = ref(null);
 
-    const uppy = new Uppy({
-      id: `space-image-${props.space.id}`,
-      autoProceed: true,
-      allowMultipleUploads: false,
-      restrictions: {
-        maxFileSize: +process.env.VUE_APP_MAX_UPLOAD_SIZE,
-        maxNumberOfFiles: 1,
-        minNumberOfFiles: 1
+    const uploader = spaceImageUploader(props.space, {
+      onUploadStart: () => {
+        loading.value = true;
+      },
+      onUploadComplete: event => {
+        const image = event.successful[0].response.body.image;
+        softUpdateSpace({ ...props.space, image });
+        uploader.instance.reset(); // reset Uppy instance
+        emit("upload-completed");
+      },
+      onUploadError: () => {
+        loading.value = false;
+        emit("upload-failed");
       }
-    });
-    uppy.use(XHRUpload, {
-      method: "PATCH",
-      endpoint: `${process.env.VUE_APP_API_BASE_URL}/cloud/${props.space.id}`,
-      fieldName: "image",
-      metaFields: [],
-      headers: {
-        Authorization: `Bearer ${accessToken.value}`
-      }
-    });
-    uppy.on("file-added", () => {
-      loading.value = true;
-    });
-    uppy.on("upload-error", () => {
-      loading.value = false;
-      emit("upload-failed");
-    });
-    uppy.on("complete", event => {
-      const image = event.successful[0].response.body.image;
-      softUpdateSpace({ ...props.space, image });
-      uppy.reset(); // reset Uppy instance
-      emit("upload-completed");
     });
 
     const selectImage = () => {
@@ -83,11 +64,7 @@ export default {
     const uploadImage = event => {
       const file = event.target.files[0];
       if (file) {
-        uppy.addFile({
-          name: file.name,
-          type: file.type,
-          data: file
-        });
+        uploader.upload(file);
       }
     };
 
