@@ -181,6 +181,26 @@ export default {
     }
   },
 
+  GroupCardActionMenu: {
+    renameButtonText: "Rename",
+    changeColorButtonText: "Change color",
+    deleteButtonText: "Delete"
+  },
+
+  GroupCardDeleteGuard: {
+    title: "Delete group",
+    message:
+      "You are about to (definitely) delete group {name}, are you sure ?",
+    deleteButtonText: "Delete"
+  },
+
+  GroupCardUpdateForm: {
+    title: "Rename group",
+    inputPlaceholder: "Name",
+    inputErrorMessage: "Invalid group name",
+    submitButtonText: "Rename"
+  },
+
   InvitationCard: {
     pendingMessage: "Invited - Pending.",
     resendLinkText: "Send invitation again ?"

@@ -1,0 +1,24 @@
+.user-avatar {
+  min-width: 32px;
+  min-height: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-tertiary-lightest;
+  }
+
+  &--secondary {
+    background-color: $color-secondary;
+    color: $color-primary;
+  }
+
+  &--tertiary {
+    background-color: $color-tertiary-lightest;
+    color: $color-primary;
+  }
+}

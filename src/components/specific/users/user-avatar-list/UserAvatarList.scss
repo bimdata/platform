@@ -1,0 +1,18 @@
+.user-avatar-list {
+  display: grid;
+
+  &__item {
+    border: 1px solid $color-white;
+  }
+
+  &__tail-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $color-white;
+    border-radius: 50%;
+    font-weight: bold;
+    background-color: $color-primary;
+    color: $color-tertiary-lightest;
+  }
+}
