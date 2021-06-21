@@ -10,8 +10,8 @@
           height="32px"
           tabSize="100px"
           :tabs="tabs"
-          :selected="currentTab.id"
-          @tab-click="selectTab"
+          :selected="0"
+          @tab-click="changeView($event.id)"
         />
       </template>
       <template #right>
@@ -22,7 +22,7 @@
     <div class="project-board__body">
       <transition name="fade" mode="out-in">
         <keep-alive>
-          <component :is="currentTab.view" />
+          <component :is="currentView" />
         </keep-alive>
       </transition>
     </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { provide, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 // Components
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
@@ -39,13 +39,17 @@ import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
+import ProjectGroups from "./project-groups/ProjectGroups";
 import ProjectOverview from "./project-overview/ProjectOverview";
 
-const tabsDef = [
-  { id: "overview", view: "ProjectOverview" },
-  { id: "files", view: "ProjectFiles" },
-  { id: "bcf", view: "ProjectBcf" }
-];
+const views = {
+  overview: "ProjectOverview",
+  files: "ProjectFiles",
+  bcf: "ProjectBcf",
+  groups: "ProjectGroups"
+};
+
+const tabsDef = [{ id: "overview" }, { id: "files" }, { id: "bcf" }];
 
 export default {
   components: {
@@ -55,6 +59,7 @@ export default {
     AppBreadcrumb,
     ProjectBcf,
     ProjectFiles,
+    ProjectGroups,
     ProjectOverview
   },
   setup() {
@@ -65,24 +70,26 @@ export default {
       () => locale.value,
       () => {
         tabs.value = tabsDef.map(tab => ({
-          ...tab,
+          id: tab.id,
           label: t(`ProjectBoard.tabs.${tab.id}`)
         }));
       },
       { immediate: true }
     );
 
-    const currentTab = ref(tabsDef[0]);
-    const selectTab = tab => {
-      currentTab.value = tab;
+    const currentView = ref(views.overview);
+    const changeView = view => {
+      currentView.value = views[view];
     };
+
+    provide("changeView", changeView);
 
     return {
       // References
-      currentTab,
+      currentView,
       tabs,
       // Methods
-      selectTab
+      changeView
     };
   }
 };

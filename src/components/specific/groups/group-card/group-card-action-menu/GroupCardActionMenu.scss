@@ -1,0 +1,33 @@
+.group-card-action-menu {
+  height: 100%;
+  background-color: $color-white;
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transform: scale(2);
+  }
+
+  &__menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: $spacing-unit * 2;
+
+    &__title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: $spacing-unit $spacing-unit * 2;
+      font-weight: bold;
+    }
+  }
+}

@@ -7,7 +7,7 @@
         color="primary"
         fill
         radius
-        @click="() => {}"
+        @click="openProjectGroups"
       >
         <BIMDataIcon name="group" size="s" />
         <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { provide } from "vue";
+import { inject, provide } from "vue";
 import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
@@ -61,11 +61,17 @@ export default {
       }, 1000);
     };
 
+    const changeView = inject("changeView");
+    const openProjectGroups = () => {
+      changeView("groups");
+    };
+
     return {
       // References
       fileStructure: projectFileStructure,
       project: currentProject,
       // Methods
+      openProjectGroups,
       reloadFileStructure
     };
   }

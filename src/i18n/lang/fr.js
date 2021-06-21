@@ -180,6 +180,26 @@ export default {
     }
   },
 
+  GroupCardActionMenu: {
+    renameButtonText: "Renommer",
+    changeColorButtonText: "Modifier la couleur",
+    deleteButtonText: "Supprimer"
+  },
+
+  GroupCardDeleteGuard: {
+    title: "Supprimer le groupe",
+    message:
+      "Êtes vous sûr de vouloir supprimer (définitivement) le groupe {name} ?",
+    deleteButtonText: "Supprimer"
+  },
+
+  GroupCardUpdateForm: {
+    title: "Renommer le groupe",
+    inputPlaceholder: "Nom",
+    inputErrorMessage: "Nom de groupe invalide",
+    submitButtonText: "Renommer"
+  },
+
   InvitationCard: {
     pendingMessage: "Invité - Sans réponse.",
     resendLinkText: "Renvoyer l'invitation ?"
