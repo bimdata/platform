@@ -73,8 +73,6 @@ import { useModels } from "@/state/models";
 import { downloadAll } from "@/utils/download";
 import { segregate } from "@/utils/models";
 // Components
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
 import ModelsActionBar from "./models-action-bar/ModelsActionBar";
 import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
@@ -89,8 +87,6 @@ const tabsDef = [
 
 export default {
   components: {
-    BIMDataCard,
-    BIMDataTabs,
     ModelsTable,
     ModelsActionBar,
     ModelsDeleteModal,

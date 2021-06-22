@@ -9,15 +9,8 @@
 import { onUnmounted, ref, watch } from "vue";
 import { useModels } from "@/state/models";
 import { MODEL_STATUS } from "@/utils/models";
-// Components
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 
 export default {
-  components: {
-    BIMDataIcon,
-    BIMDataSpinner
-  },
   props: {
     project: {
       type: Object,

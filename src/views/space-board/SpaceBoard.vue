@@ -79,9 +79,6 @@ import { useSidePanel } from "@/composables/side-panel";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import SidePanel from "@/components/generic/side-panel/SidePanel";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
@@ -92,9 +89,6 @@ import SpaceUsersManager from "@/components/specific/users/space-users-manager/S
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSearch,
     ResponsiveGrid,
     SidePanel,
     ViewHeader,

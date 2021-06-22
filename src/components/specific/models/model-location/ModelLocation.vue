@@ -64,17 +64,11 @@ import { provide, ref, watch } from "vue";
 import { useModels } from "@/state/models";
 import { DMS2DD, getCoordinatesFromAddress } from "@/utils/location";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper";
 import ModelLocationForm from "@/components/specific/models/model-location-form/ModelLocationForm";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSpinner,
     MapboxWrapper,
     ModelLocationForm
   },

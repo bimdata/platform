@@ -31,16 +31,10 @@
 import { onMounted, ref } from "vue";
 import { useModels } from "@/state/models";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 import GenericModal from "@/components/generic/generic-modal/GenericModal";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataInput,
     GenericModal
   },
   props: {

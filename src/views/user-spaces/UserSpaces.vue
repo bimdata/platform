@@ -54,9 +54,6 @@
 import { ref, watchEffect } from "vue";
 import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
@@ -65,9 +62,6 @@ import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSearch,
     ResponsiveGrid,
     ViewHeader,
     AppBreadcrumb,

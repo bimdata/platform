@@ -52,15 +52,11 @@
 import { ref } from "vue";
 import { fileExtension, generateFileKey } from "@/utils/files";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
     FileUploadButton,
     FileUploadCard
   },

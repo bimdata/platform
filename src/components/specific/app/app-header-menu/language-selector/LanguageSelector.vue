@@ -8,9 +8,9 @@
     </div>
     <div class="language-selector__content">
       <span
+        class="language-selector__content__item"
         v-for="lang in $i18n.availableLocales"
         :key="lang"
-        class="lang-badge"
         :class="{ selected: $i18n.locale === lang }"
         @click="$i18n.locale = lang"
       >
@@ -21,14 +21,7 @@
 </template>
 
 <script>
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon
-  },
   emits: ["close"]
 };
 </script>

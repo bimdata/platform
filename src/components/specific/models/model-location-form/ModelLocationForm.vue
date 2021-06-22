@@ -43,15 +43,11 @@ import { inject, ref, watch } from "vue";
 import { useModels } from "@/state/models";
 import { DD2DMS, getCoordinatesFromAddress } from "@/utils/location";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import AddressInput from "@/components/generic/address-input/AddressInput";
 import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
     AddressInput,
     MapboxWrapper
   },

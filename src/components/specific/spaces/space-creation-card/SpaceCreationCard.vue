@@ -34,14 +34,14 @@
               :error="error"
               :errorMessage="$t('SpaceCreationCard.inputErrorMessage')"
               @keyup.esc.stop="close"
-              @keyup.enter.stop="createSpace"
+              @keyup.enter.stop="submit"
             />
             <BIMDataButton
               data-test="btn-submit-create"
               fill
               radius
               color="primary"
-              @click="createSpace"
+              @click="submit"
             >
               {{ $t("SpaceCreationCard.createButtonText") }}
             </BIMDataButton>
@@ -55,37 +55,23 @@
 <script>
 import { onMounted, reactive, ref } from "vue";
 import { useSpaces } from "@/state/spaces";
-// Components
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 
 export default {
-  components: {
-    BIMDataCard,
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataInput,
-    BIMDataSpinner
-  },
   emits: ["close"],
   setup(props, { emit }) {
-    const { createSpace: create } = useSpaces();
+    const { createSpace } = useSpaces();
 
     const loading = ref(false);
     const nameInput = ref(null);
     const newSpace = reactive({ name: "" });
     const error = ref(false);
 
-    const createSpace = () => {
+    const submit = async () => {
       if (newSpace.name) {
         loading.value = true;
-        create(newSpace).then(() => {
-          loading.value = false;
-          close();
-        });
+        await createSpace(newSpace);
+        loading.value = false;
+        close();
       } else {
         nameInput.value.focus();
         error.value = true;
@@ -98,7 +84,9 @@ export default {
       emit("close");
     };
 
-    onMounted(() => setTimeout(() => nameInput.value.focus(), 400));
+    onMounted(() => {
+      setTimeout(() => nameInput.value.focus(), 400);
+    });
 
     return {
       // References
@@ -108,7 +96,7 @@ export default {
       newSpace,
       // Methods
       close,
-      createSpace
+      submit
     };
   }
 };

@@ -57,8 +57,6 @@ import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader";
 import ModelsManager from "@/components/specific/models/models-manager/ModelsManager";
@@ -67,8 +65,6 @@ import ProjectUsersManager from "@/components/specific/users/project-users-manag
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
     AppSlotContent,
     FileUploader,
     ModelsManager,

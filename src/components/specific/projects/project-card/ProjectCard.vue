@@ -40,18 +40,14 @@ import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
-import TextBox from "@/components/generic/text-box/TextBox";
 import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar";
 import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu";
 import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview";
 
 export default {
   components: {
-    BIMDataCard,
     FlippableCard,
-    TextBox,
     ProjectCardActionBar,
     ProjectCardActionMenu,
     ProjectCardModelPreview

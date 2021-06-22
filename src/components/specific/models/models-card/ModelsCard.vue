@@ -17,16 +17,10 @@ import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataCard,
-    BIMDataIcon,
     ModelsCardModelPreview
   },
   props: {

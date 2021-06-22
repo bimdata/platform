@@ -42,15 +42,8 @@
 
 <script>
 import { ref } from "vue";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon
-  },
   emits: ["open-update", "open-delete"],
   setup() {
     const showMenu = ref(false);

@@ -21,13 +21,8 @@
 
 <script>
 import { inject, ref, watch } from "vue";
-// Components
-import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
-  components: {
-    TextBox
-  },
   props: {
     file: {
       type: Object,

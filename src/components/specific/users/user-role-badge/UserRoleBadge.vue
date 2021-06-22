@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed } from "vue";
 import { SPACE_ROLE, PROJECT_ROLE } from "@/utils/users";
 
 export default {
@@ -16,21 +16,17 @@ export default {
     }
   },
   setup(props) {
-    const roleName = ref("");
-
-    watchEffect(() => {
+    const roleName = computed(() => {
       switch (props.role) {
         case SPACE_ROLE.ADMIN:
         case PROJECT_ROLE.ADMIN:
-          roleName.value = "admin";
-          break;
+          return "admin";
         case SPACE_ROLE.USER:
         case PROJECT_ROLE.USER:
-          roleName.value = "user";
-          break;
+          return "user";
         case PROJECT_ROLE.GUEST:
-          roleName.value = "guest";
-          break;
+        default:
+          return "guest";
       }
     });
 

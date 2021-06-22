@@ -30,13 +30,8 @@
 
 <script>
 import { ref, watch } from "vue";
-// Components
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
-  components: {
-    BIMDataIcon
-  },
   props: {
     previews: {
       type: Array,
