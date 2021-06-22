@@ -1,0 +1,49 @@
+@import "./GroupMemberCard.vars.scss";
+
+.group-member-card {
+  position: relative;
+  min-width: $card-width;
+  width: $card-width;
+  height: $card-height;
+  transition-duration: 0.35s;
+
+  &__btn-menu {
+    position: absolute;
+    top: $spacing-unit/2;
+    right: $spacing-unit/2;
+  }
+
+  &__info {
+    text-align: center;
+
+    &__name {
+      margin-bottom: $spacing-unit/3;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: $color-primary;
+    }
+
+    &__email {
+      font-size: 0.9rem;
+      color: $color-tertiary-dark;
+    }
+  }
+
+  &:deep() {
+    .bimdata-card__content {
+      height: $card-content-height;
+      padding: 0;
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+  }
+}

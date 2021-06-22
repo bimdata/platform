@@ -6,7 +6,7 @@
     v-click-away="closeMenu"
   >
     <template #front-face>
-      <BIMDataCard>
+      <BIMDataCard @click="goToGroupBoard">
         <template #content>
           <div
             class="group-card__top-stripe"
@@ -18,7 +18,7 @@
             ghost
             rounded
             icon
-            @click="openMenu"
+            @click.stop="openMenu"
           >
             <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
           </BIMDataButton>
@@ -44,7 +44,9 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
+import { routeNames } from "@/router";
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
 import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList";
@@ -66,14 +68,27 @@ export default {
       default: true
     }
   },
-  setup() {
+  setup(props) {
+    const router = useRouter();
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
+
+    const goToGroupBoard = () => {
+      router.push({
+        name: routeNames.groupBoard,
+        params: {
+          spaceID: props.group.project.cloud.id,
+          projectID: props.group.project.id,
+          groupID: props.group.id
+        }
+      });
+    };
 
     return {
       // References
       showMenu,
       // Methods
       closeMenu,
+      goToGroupBoard,
       openMenu
     };
   }

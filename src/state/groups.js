@@ -25,7 +25,9 @@ const updateGroup = async (project, group) => {
 };
 
 const softUpdateGroup = group => {
-  // TODO: update state
+  state.projectGroups = state.projectGroups.map(g =>
+    g.id === group.id ? { ...g, ...group } : g
+  );
   return group;
 };
 
@@ -36,8 +38,14 @@ const deleteGroup = async (project, group) => {
 };
 
 const softDeleteGroup = group => {
-  // TODO: update state
+  state.projectGroups = state.projectGroups.filter(g => g.id !== group.id);
   return group;
+};
+
+const selectGroup = id => {
+  state.currentGroup =
+    state.projectGroups.find(group => group.id === id) || null;
+  return readonly(state.currentGroup);
 };
 
 export function useGroups() {
@@ -51,6 +59,7 @@ export function useGroups() {
     updateGroup,
     softUpdateGroup,
     deleteGroup,
-    softDeleteGroup
+    softDeleteGroup,
+    selectGroup
   };
 }

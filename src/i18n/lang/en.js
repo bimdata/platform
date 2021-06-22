@@ -7,6 +7,9 @@ export default {
     projectsButtonTitle: "Active Projects",
     projectsButtonText: "View projects"
   },
+  GroupBoard: {
+    searchInputPlaceholder: "Search members"
+  },
   OidcCallbackError: {
     message: "An error occured during authentication...",
     tryAgainButtonText: "Try Again"
@@ -71,6 +74,10 @@ export default {
     entryMarketplace: "Marketplace",
     entryLanguage: "Choose a language",
     logoutButtonText: "Log Out"
+  },
+
+  BreadcrumbGroupSelector: {
+    text: "Groups"
   },
 
   BreadcrumbProjectSelector: {
@@ -210,6 +217,14 @@ export default {
     inputPlaceholder: "Name",
     inputErrorMessage: "Invalid group name",
     submitButtonText: "Create"
+  },
+
+  GroupMemberSelectionCard: {
+    text: "Add a member",
+    title: "Manage members",
+    selectorLabel: "Group members",
+    cancelButtonText: "Cancel",
+    submitButtonText: "Validate"
   },
 
   InvitationCard: {
