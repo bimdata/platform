@@ -19,7 +19,7 @@
             icon
             @click.stop="closeCreationForm"
           >
-            <BIMDataIcon name="close" size="xxxs" />
+            <BIMDataIcon name="close" size="xxs" />
           </BIMDataButton>
         </div>
         <BIMDataInput
@@ -31,7 +31,7 @@
           :error="error"
           :errorMessage="$t('ProjectCreationCard.inputErrorMessage')"
           @keyup.esc.stop="closeCreationForm"
-          @keyup.enter.stop="createProject"
+          @keyup.enter.stop="submit"
         />
         <BIMDataButton
           data-test="btn-submit-create"
@@ -39,7 +39,7 @@
           fill
           radius
           color="primary"
-          @click="createProject"
+          @click="submit"
         >
           {{ $t("ProjectCreationCard.createButtonText") }}
         </BIMDataButton>
@@ -65,7 +65,6 @@
 <script>
 import { reactive, ref } from "vue";
 import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -79,22 +78,26 @@ export default {
     BIMDataInput,
     BIMDataSpinner
   },
-  setup() {
-    const { currentSpace } = useSpaces();
-    const { createProject: create } = useProjects();
+  props: {
+    space: {
+      type: Object,
+      required: true
+    }
+  },
+  setup(props) {
+    const { createProject } = useProjects();
 
     const loading = ref(false);
     const nameInput = ref(null);
 
     const newProject = reactive({ name: "" });
     const error = ref(false);
-    const createProject = () => {
+    const submit = async () => {
       if (newProject.name) {
         loading.value = true;
-        create(currentSpace.value, newProject).then(() => {
-          loading.value = false;
-          closeCreationForm();
-        });
+        await createProject(props.space, newProject);
+        loading.value = false;
+        closeCreationForm();
       } else {
         nameInput.value.focus();
         error.value = true;
@@ -121,8 +124,8 @@ export default {
       showCreationForm,
       // Methods
       closeCreationForm,
-      createProject,
-      openCreationForm
+      openCreationForm,
+      submit
     };
   }
 };

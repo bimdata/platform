@@ -8,16 +8,24 @@
       <!-- TODO: display avatar -->
       <!-- <img :src="user.avatar" /> -->
     </template>
-    <template v-else>
+    <template v-else-if="initials">
       {{ initials }}
+    </template>
+    <template v-else>
+      <BIMDataIcon name="user" size="s" />
     </template>
   </div>
 </template>
 
 <script>
 import { computed } from "vue";
+// Components
+import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
+  components: {
+    BIMDataIcon
+  },
   props: {
     user: {
       type: Object,
@@ -35,7 +43,9 @@ export default {
   },
   setup(props) {
     const initials = computed(() =>
-      `${props.user.firstname[0]}${props.user.lastname[0]}`.toUpperCase()
+      (
+        `${props.user.firstname[0] || ""}` + `${props.user.lastname[0] || ""}`
+      ).toUpperCase()
     );
 
     return {

@@ -19,17 +19,6 @@
     width: 100%;
     height: 100%;
 
-    &__avatar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 42px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background-color: $color-tertiary-lightest;
-    }
-
     &__info {
       flex-grow: 1;
       padding: 0 $spacing-unit;

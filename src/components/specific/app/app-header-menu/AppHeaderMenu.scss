@@ -14,19 +14,10 @@
     padding: $spacing-unit/2;
     text-align: left;
 
-    &__picture {
-      $size: 34px;
-
+    &__avatar {
       grid-row: 1 / span 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: $size;
-      height: $size;
-      border-radius: 50%;
-      background-color: $color-primary;
-      color: $color-white;
     }
+
     &__fullname {
       font-weight: bold;
     }
@@ -49,14 +40,12 @@
       justify-content: flex-start;
     }
 
-    .btn-lang {
-      .lang-badge {
-        margin-left: $spacing-unit/2;
-        padding: $spacing-unit/4 $spacing-unit/2;
-        border-radius: 2px;
-        background-color: $color-tertiary;
-        text-transform: uppercase;
-      }
+    .lang-badge {
+      margin-left: $spacing-unit/2;
+      padding: $spacing-unit/4 $spacing-unit/2;
+      border-radius: 2px;
+      background-color: $color-tertiary;
+      text-transform: uppercase;
     }
 
     .btn-logout {

@@ -11,6 +11,14 @@
     height: 100%;
     transition-duration: 0.35s;
 
+    .project-card__action-bar {
+      position: absolute;
+      z-index: 2;
+      top: $spacing-unit * 2 / 3;
+      height: 0;
+      padding: 0 $spacing-unit/2;
+    }
+
     .project-card__left-stripe {
       position: absolute;
       z-index: 1;
@@ -24,41 +32,27 @@
       z-index: 1;
       top: $card-content-height - $spacing-unit - 24px;
       left: $spacing-unit + 4px;
-      height: 24pxv;
+      height: 24px;
       padding: $spacing-unit/2 $spacing-unit;
-      background-color: $color-primary;
       line-height: 12px;
       text-transform: uppercase;
+      background-color: $color-primary;
       color: $color-white;
     }
 
     &:deep() {
-      .bimdata-card__brand {
-        position: relative;
-        top: $spacing-unit * 2;
-        z-index: 2;
-        height: 0;
-        padding: 0 $spacing-unit/2;
-
-        &--left {
-          width: 100%;
-          margin: 0;
-        }
-      }
-
       .bimdata-card__content {
-        overflow: hidden;
         height: $card-content-height;
         padding: 0;
+        overflow: hidden;
       }
 
       .bimdata-card__footer {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         height: calc(100% - #{$card-content-height});
         padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
 

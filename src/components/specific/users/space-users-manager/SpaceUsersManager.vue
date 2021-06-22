@@ -17,24 +17,26 @@
     />
 
     <transition name="fade" mode="out-in">
-      <InvitationForm
-        v-if="showInvitationForm"
-        :space="space"
-        @close="closeInvitationForm"
-        @success="closeInvitationForm"
-      />
+      <template v-if="showInvitationForm">
+        <InvitationForm
+          :space="space"
+          @close="closeInvitationForm"
+          @success="closeInvitationForm"
+        />
+      </template>
 
-      <BIMDataButton
-        v-else
-        outline
-        radius
-        icon
-        color="primary"
-        @click="openInvitationForm"
-      >
-        <BIMDataIcon name="plus" size="xxxs" />
-        <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
-      </BIMDataButton>
+      <template v-else>
+        <BIMDataButton
+          outline
+          radius
+          icon
+          color="primary"
+          @click="openInvitationForm"
+        >
+          <BIMDataIcon name="plus" size="xxxs" />
+          <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
+        </BIMDataButton>
+      </template>
     </transition>
 
     <div class="list-container">

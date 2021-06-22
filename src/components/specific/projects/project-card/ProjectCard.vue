@@ -7,15 +7,14 @@
   >
     <template #front-face>
       <BIMDataCard @click="goToProjectBoard">
-        <template #left>
+        <template #content>
           <ProjectCardActionBar
             v-if="actionMenu"
+            class="project-card__action-bar"
             :project="project"
             @open-viewer="goToModelViewer"
             @open-menu="openMenu"
           />
-        </template>
-        <template #content>
           <div class="project-card__left-stripe"></div>
           <div class="project-card__status-badge">Active</div>
           <ProjectCardModelPreview
