@@ -7,6 +7,9 @@ import { useUser } from "@/state/user";
 import { useFiles } from "@/state/files";
 
 /**
+ * Create a view resolver from a given promise
+ * by wrapping it with loading logic.
+ *
  * @param {Promise} resolve
  * @returns {Promise}
  */
@@ -20,7 +23,6 @@ const createViewResolver = resolve => {
 };
 
 let rootResolved = false;
-// let lastResolvedProject = null;
 
 const rootResolver = async () => {
   const { loadUser } = useUser();
@@ -51,11 +53,6 @@ const projectBoardResolver = createViewResolver(async route => {
   const projects = useProjects();
   const models = useModels();
   const files = useFiles();
-
-  // if (lastResolvedProject === +route.params.projectID) {
-  //   return;
-  // }
-  // lastResolvedProject = +route.params.projectID;
 
   spaces.selectSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);

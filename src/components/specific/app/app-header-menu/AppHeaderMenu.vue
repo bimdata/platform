@@ -3,14 +3,16 @@
     <BIMDataDropdownMenu width="0">
       <template #header>
         <div class="app-header-menu__btn">
-          <span class="app-header-menu__btn__picture">
-            {{ initials }}
-          </span>
+          <UserAvatar
+            class="app-header-menu__btn__avatar"
+            :user="user"
+            size="34"
+          />
           <span data-test="user-name" class="app-header-menu__btn__fullname">
-            {{ `${firstName} ${lastName}` }}
+            {{ `${user.firstname} ${user.lastname}` }}
           </span>
           <span class="app-header-menu__btn__email">
-            {{ email }}
+            {{ user.email }}
           </span>
         </div>
       </template>
@@ -30,12 +32,7 @@
             {{ $t("AppHeaderMenu.entryMarketplace") }}
           </BIMDataButton>
           <div class="separator"></div>
-          <BIMDataButton
-            class="btn-lang"
-            ghost
-            squared
-            @click="openLanguageSelector"
-          >
+          <BIMDataButton ghost squared @click="openLanguageSelector">
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
@@ -65,39 +62,27 @@
 </template>
 
 <script>
-import { computed, ref, watchEffect } from "vue";
+import { ref } from "vue";
 import { useAuth } from "@/state/auth";
 import { useUser } from "@/state/user";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import LanguageSelector from "@/components/generic/language-selector/LanguageSelector";
+import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import LanguageSelector from "./language-selector/LanguageSelector";
 
 export default {
   components: {
     BIMDataButton,
     BIMDataDropdownMenu,
     BIMDataIcon,
+    UserAvatar,
     LanguageSelector
   },
   setup() {
     const { signOut } = useAuth();
     const { user } = useUser();
-
-    const firstName = ref("");
-    const lastName = ref("");
-    const email = ref("");
-    const initials = computed(() =>
-      `${firstName.value[0]}${lastName.value[0]}`.toUpperCase()
-    );
-    watchEffect(() => {
-      if (user.value) {
-        firstName.value = user.value.firstname;
-        lastName.value = user.value.lastname;
-        email.value = user.value.email;
-      }
-    });
 
     const openBIMDataConnect = () => {
       window.open(`${process.env.VUE_APP_URL_BIMDATACONNECT}`);
@@ -121,11 +106,8 @@ export default {
 
     return {
       // References
-      email,
-      firstName,
-      initials,
-      lastName,
       showLanguageSelector,
+      user,
       // Methods
       closeLanguageSelector,
       openBIMDataConnect,

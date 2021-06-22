@@ -31,10 +31,9 @@
 
     &:deep() {
       .bimdata-card__content {
-        overflow: hidden;
         height: $card-content-height;
         padding: 0;
-        color: $color-primary;
+        overflow: hidden;
 
         display: flex;
         flex-direction: column;
@@ -43,6 +42,7 @@
         gap: $spacing-unit;
 
         font-size: 1.2rem;
+        color: $color-primary;
       }
     }
 

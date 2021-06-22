@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: $spacing-unit;
+  padding: $spacing-unit $spacing-unit * 2 $spacing-unit * 2;
 
   &__title {
     display: flex;
@@ -16,6 +16,6 @@
 
   &__input,
   &__submit-btn {
-    width: calc(100% - #{$spacing-unit * 2});
+    width: 100%;
   }
 }
