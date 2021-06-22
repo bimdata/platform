@@ -13,12 +13,14 @@ import { useRoute } from "vue-router";
 import { routeNames } from "@/router";
 // Components
 import GoBackButton from "@/components/generic/go-back-button/GoBackButton";
+// import BreadcrumbGroupSelector from "./breadcrumb-group-selector/BreadcrumbGroupSelector";
 import BreadcrumbProjectSelector from "./breadcrumb-project-selector/BreadcrumbProjectSelector";
 import BreadcrumbSpaceSelector from "./breadcrumb-space-selector/BreadcrumbSpaceSelector";
 
 export default {
   components: {
     GoBackButton,
+    // BreadcrumbGroupSelector,
     BreadcrumbProjectSelector,
     BreadcrumbSpaceSelector
   },
@@ -33,6 +35,9 @@ export default {
       case routeNames.projectBoard:
         breadcrumb = "BreadcrumbProjectSelector";
         break;
+      // case routeNames.groupUsers:
+      //   breadcrumb = "BreadcrumbGroupSelector";
+      //   break;
     }
 
     return {

@@ -11,7 +11,7 @@
           tabSize="100px"
           :tabs="tabs"
           :selected="0"
-          @tab-click="changeView($event.id)"
+          @tab-click="changeView($event.view)"
         />
       </template>
       <template #right>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { provide, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 // Components
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
@@ -39,17 +39,13 @@ import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
-import ProjectGroups from "./project-groups/ProjectGroups";
 import ProjectOverview from "./project-overview/ProjectOverview";
 
-const views = {
-  overview: "ProjectOverview",
-  files: "ProjectFiles",
-  bcf: "ProjectBcf",
-  groups: "ProjectGroups"
-};
-
-const tabsDef = [{ id: "overview" }, { id: "files" }, { id: "bcf" }];
+const tabsDef = [
+  { id: "overview", view: "ProjectOverview" },
+  { id: "files", view: "ProjectFiles" },
+  { id: "bcf", view: "ProjectBcf" }
+];
 
 export default {
   components: {
@@ -59,7 +55,6 @@ export default {
     AppBreadcrumb,
     ProjectBcf,
     ProjectFiles,
-    ProjectGroups,
     ProjectOverview
   },
   setup() {
@@ -70,19 +65,17 @@ export default {
       () => locale.value,
       () => {
         tabs.value = tabsDef.map(tab => ({
-          id: tab.id,
+          ...tab,
           label: t(`ProjectBoard.tabs.${tab.id}`)
         }));
       },
       { immediate: true }
     );
 
-    const currentView = ref(views.overview);
+    const currentView = ref(tabsDef[0].view);
     const changeView = view => {
-      currentView.value = views[view];
+      currentView.value = view;
     };
-
-    provide("changeView", changeView);
 
     return {
       // References

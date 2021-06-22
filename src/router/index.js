@@ -3,6 +3,7 @@ import { authGuard } from "./guards";
 import {
   modelViewerResolver,
   projectBoardResolver,
+  projectGroupsResolver,
   rootResolver,
   spaceBoardResolver
 } from "./resolvers";
@@ -13,6 +14,7 @@ import ModelViewer from "@/views/model-viewer/ModelViewer";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
 import ProjectBoard from "@/views/project-board/ProjectBoard";
+import ProjectGroups from "@/views/project-groups/ProjectGroups";
 import SpaceBoard from "@/views/space-board/SpaceBoard";
 import UserProjects from "@/views/user-projects/UserProjects";
 import UserSpaces from "@/views/user-spaces/UserSpaces";
@@ -26,7 +28,8 @@ const routeNames = Object.freeze({
   spaceBoard: "space-board",
   userProjects: "user-projects",
   projectBoard: "project-board",
-  modelViewer: "model-viewer"
+  modelViewer: "model-viewer",
+  projectGroups: "project-groups"
 });
 
 const routes = [
@@ -77,6 +80,14 @@ const routes = [
         component: ModelViewer,
         meta: {
           resolver: modelViewerResolver
+        }
+      },
+      {
+        path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/groups",
+        name: routeNames.projectGroups,
+        component: ProjectGroups,
+        meta: {
+          resolver: projectGroupsResolver
         }
       }
     ]

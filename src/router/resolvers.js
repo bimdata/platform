@@ -1,11 +1,26 @@
 import { contexts, useLoadingContext } from "@/composables/loading";
+import { useGroups } from "@/state/groups";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 import { useUser } from "@/state/user";
 import { useFiles } from "@/state/files";
 
+/**
+ * @param {Promise} resolve
+ * @returns {Promise}
+ */
+const createViewResolver = resolve => {
+  return async route => {
+    const loading = useLoadingContext(contexts.viewContainer);
+    loading.value = true;
+    await resolve(route);
+    loading.value = false;
+  };
+};
+
 let rootResolved = false;
+// let lastResolvedProject = null;
 
 const rootResolver = async () => {
   const { loadUser } = useUser();
@@ -18,15 +33,6 @@ const rootResolver = async () => {
     await loadUserProjects();
     rootResolved = true;
   }
-};
-
-const createViewResolver = resolve => {
-  return async route => {
-    const loading = useLoadingContext(contexts.viewContainer);
-    loading.value = true;
-    await resolve(route);
-    loading.value = false;
-  };
 };
 
 const spaceBoardResolver = createViewResolver(async route => {
@@ -45,6 +51,11 @@ const projectBoardResolver = createViewResolver(async route => {
   const projects = useProjects();
   const models = useModels();
   const files = useFiles();
+
+  // if (lastResolvedProject === +route.params.projectID) {
+  //   return;
+  // }
+  // lastResolvedProject = +route.params.projectID;
 
   spaces.selectSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
@@ -69,9 +80,22 @@ const modelViewerResolver = createViewResolver(async route => {
   await models.loadProjectModels(projects.currentProject.value);
 });
 
+const projectGroupsResolver = createViewResolver(async route => {
+  const spaces = useSpaces();
+  const projects = useProjects();
+  const groups = useGroups();
+
+  spaces.selectSpace(+route.params.spaceID);
+  projects.loadSpaceProjects(spaces.currentSpace.value);
+
+  projects.selectProject(+route.params.projectID);
+  await groups.loadProjectGroups(projects.currentProject.value);
+});
+
 export {
   rootResolver,
   spaceBoardResolver,
   projectBoardResolver,
-  modelViewerResolver
+  modelViewerResolver,
+  projectGroupsResolver
 };

@@ -7,7 +7,7 @@
         color="primary"
         fill
         radius
-        @click="openProjectGroups"
+        @click="goToProjectGroups"
       >
         <BIMDataIcon name="group" size="s" />
         <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
@@ -24,7 +24,9 @@
 </template>
 
 <script>
-import { inject, provide } from "vue";
+import { provide } from "vue";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
@@ -42,6 +44,7 @@ export default {
     FilesManager
   },
   setup() {
+    const router = useRouter();
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
     const {
@@ -61,9 +64,14 @@ export default {
       }, 1000);
     };
 
-    const changeView = inject("changeView");
-    const openProjectGroups = () => {
-      changeView("groups");
+    const goToProjectGroups = () => {
+      router.push({
+        name: routeNames.projectGroups,
+        params: {
+          spaceID: currentProject.value.cloud.id,
+          projectID: currentProject.value.id
+        }
+      });
     };
 
     return {
@@ -71,7 +79,7 @@ export default {
       fileStructure: projectFileStructure,
       project: currentProject,
       // Methods
-      openProjectGroups,
+      goToProjectGroups,
       reloadFileStructure
     };
   }
