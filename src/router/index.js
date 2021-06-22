@@ -7,18 +7,30 @@ import {
   rootResolver,
   spaceBoardResolver
 } from "./resolvers";
-// Components
+
+// Route components
 import Layout from "@/Layout";
-import Dashboard from "@/views/dashboard/Dashboard";
-import ModelViewer from "@/views/model-viewer/ModelViewer";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
-import ProjectBoard from "@/views/project-board/ProjectBoard";
-import ProjectGroups from "@/views/project-groups/ProjectGroups";
-import SpaceBoard from "@/views/space-board/SpaceBoard";
-import UserProjects from "@/views/user-projects/UserProjects";
-import UserSpaces from "@/views/user-spaces/UserSpaces";
 
+/* eslint-disable */
+const Dashboard = () =>
+  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
+const ModelViewer = () =>
+  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer");
+const ProjectBoard = () =>
+  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard");
+const ProjectGroups = () =>
+  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups");
+const SpaceBoard = () =>
+  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard");
+const UserProjects = () =>
+  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects");
+const UserSpaces = () =>
+  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces");
+/* eslint-enable */
+
+// Route names
 const routeNames = Object.freeze({
   root: "root",
   oidcCallback: "oidc-callback",
