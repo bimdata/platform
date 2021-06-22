@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { authGuard } from "./guards";
 import {
+  groupBoardResolver,
   modelViewerResolver,
   projectBoardResolver,
   projectGroupsResolver,
@@ -16,6 +17,8 @@ import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
 /* eslint-disable */
 const Dashboard = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
+const GroupBoard = () =>
+  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard");
 const ModelViewer = () =>
   import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer");
 const ProjectBoard = () =>
@@ -41,7 +44,8 @@ const routeNames = Object.freeze({
   userProjects: "user-projects",
   projectBoard: "project-board",
   modelViewer: "model-viewer",
-  projectGroups: "project-groups"
+  projectGroups: "project-groups",
+  groupBoard: "group-board"
 });
 
 const routes = [
@@ -100,6 +104,14 @@ const routes = [
         component: ProjectGroups,
         meta: {
           resolver: projectGroupsResolver
+        }
+      },
+      {
+        path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/groups/:groupID(\\d+)",
+        name: routeNames.groupBoard,
+        component: GroupBoard,
+        meta: {
+          resolver: groupBoardResolver
         }
       }
     ]

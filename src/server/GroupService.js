@@ -10,24 +10,34 @@ class GroupService {
         project,
         members: [
           {
+            id: 1230,
             firstname: "Gaëlle",
-            lastname: "Leroux"
+            lastname: "Leroux",
+            email: "gaelle@bimdata.io"
           },
           {
+            id: 1231,
             firstname: "Gaëtan",
-            lastname: "Lagier"
+            lastname: "Lagier",
+            email: "gaetan@bimdata.io"
           },
           {
+            id: 1232,
             firstname: "Hugo",
-            lastname: "Duroux"
+            lastname: "Duroux",
+            email: "hugo@bimdata.io"
           },
           {
+            id: 1234,
             firstname: "Nicolas",
-            lastname: "Richel"
+            lastname: "Richel",
+            email: "nicolas@bimdata.io"
           },
           {
+            id: 1235,
             firstname: "François",
-            lastname: "Thierry"
+            lastname: "Thierry",
+            email: "francois@bimdata.io"
           }
         ]
       }

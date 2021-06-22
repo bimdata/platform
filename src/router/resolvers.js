@@ -89,10 +89,26 @@ const projectGroupsResolver = createViewResolver(async route => {
   await groups.loadProjectGroups(projects.currentProject.value);
 });
 
+const groupBoardResolver = createViewResolver(async route => {
+  const spaces = useSpaces();
+  const projects = useProjects();
+  const groups = useGroups();
+
+  spaces.selectSpace(+route.params.spaceID);
+  projects.loadSpaceProjects(spaces.currentSpace.value);
+
+  projects.selectProject(+route.params.projectID);
+  await projects.loadProjectUsers(projects.currentProject.value);
+  await groups.loadProjectGroups(projects.currentProject.value);
+
+  groups.selectGroup(+route.params.groupID);
+});
+
 export {
   rootResolver,
   spaceBoardResolver,
   projectBoardResolver,
   modelViewerResolver,
-  projectGroupsResolver
+  projectGroupsResolver,
+  groupBoardResolver
 };
