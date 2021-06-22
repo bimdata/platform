@@ -18,6 +18,9 @@ export default {
       bcf: "BCF"
     }
   },
+  ProjectGroups: {
+    searchInputPlaceholder: "Rechercher un groupe"
+  },
   SpaceBoard: {
     searchInputPlaceholder: "Rechercher un projet"
   },
@@ -198,6 +201,14 @@ export default {
     inputPlaceholder: "Nom",
     inputErrorMessage: "Nom de groupe invalide",
     submitButtonText: "Renommer"
+  },
+
+  GroupCreationCard: {
+    text: "Créer un groupe",
+    title: "Nouveau groupe",
+    inputPlaceholder: "Nom",
+    inputErrorMessage: "Nom de groupe invalide",
+    submitButtonText: "Créer"
   },
 
   InvitationCard: {
