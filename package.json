@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "lint": "eslint --fix",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --modern",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
