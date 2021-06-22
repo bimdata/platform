@@ -9,7 +9,7 @@ const userManager = new UserManager({
 /**
  * Monkey patch oidcUserManager to hijack login with force logout
  */
-async function signinEndWithForcedLogout (url, args = {}) {
+async function signinEndWithForcedLogout(url, args = {}) {
   // Let UserManager process signin response "as usual"
   const signinResponse = await this.processSigninResponse(url);
 
@@ -18,7 +18,8 @@ async function signinEndWithForcedLogout (url, args = {}) {
   if (authorizedIdentityProviders.length) {
     // Extract identity provider from signin response
     // Note: `profile.preferred_username` is of the following form: <IDENTITY_PROVIDER>.<USER_EMAIL>
-    const identityProvider = signinResponse.profile.preferred_username.split('.')[0];
+    const identityProvider =
+      signinResponse.profile.preferred_username.split(".")[0];
 
     if (!authorizedIdentityProviders.includes(identityProvider)) {
       // If the current identity provider is not authorized then logout
@@ -31,7 +32,8 @@ async function signinEndWithForcedLogout (url, args = {}) {
         // Prevent KeyCloak from logging out of the identity provider
         initiating_idp: identityProvider
       });
-      const redirectUrl = oidcConfig.metadata.end_session_endpoint + '?' + params.toString();
+      const redirectUrl =
+        oidcConfig.metadata.end_session_endpoint + "?" + params.toString();
       window.location.replace(redirectUrl);
       await new Promise(resolve => {
         // Wait for window.location.replace to trigger
@@ -44,10 +46,15 @@ async function signinEndWithForcedLogout (url, args = {}) {
 
   if (args.current_sub) {
     if (args.current_sub !== user.profile.sub) {
-      console.debug('UserManager._signinEnd: current user does not match user returned from signin. sub from signin: ', user.profile.sub);
-      throw new Error('login_required');
+      console.debug(
+        "UserManager._signinEnd: current user does not match user returned from signin. sub from signin: ",
+        user.profile.sub
+      );
+      throw new Error("login_required");
     } else {
-      console.debug('UserManager._signinEnd: current user matches user returned from signin');
+      console.debug(
+        "UserManager._signinEnd: current user matches user returned from signin"
+      );
     }
   }
   await this.storeUser(user);
