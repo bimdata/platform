@@ -24,14 +24,12 @@
 <script>
 import { onMounted, ref } from "vue";
 // Components
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
 import ModelLocation from "@/components/specific/models/model-location/ModelLocation";
 import ModelsCard from "@/components/specific/models/models-card/ModelsCard";
 import ModelsOverviewOnboarding from "./models-overview-onboarding/ModelsOverviewOnboarding";
 
 export default {
   components: {
-    BIMDataCard,
     ModelLocation,
     ModelsCard,
     ModelsOverviewOnboarding

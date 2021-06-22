@@ -66,17 +66,11 @@ import { ref } from "vue";
 import { useAuth } from "@/state/auth";
 import { useUser } from "@/state/user";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import LanguageSelector from "./language-selector/LanguageSelector";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataDropdownMenu,
-    BIMDataIcon,
     UserAvatar,
     LanguageSelector
   },

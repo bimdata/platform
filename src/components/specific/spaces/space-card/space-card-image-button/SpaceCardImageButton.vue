@@ -20,13 +20,8 @@
 import { inject, ref } from "vue";
 import { useUpload } from "@/composables/upload";
 import { useSpaces } from "@/state/spaces";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 
 export default {
-  components: {
-    BIMDataButton
-  },
   props: {
     space: {
       type: Object,

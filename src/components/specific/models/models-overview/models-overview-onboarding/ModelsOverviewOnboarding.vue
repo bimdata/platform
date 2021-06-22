@@ -23,13 +23,7 @@
 </template>
 
 <script>
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-
 export default {
-  components: {
-    BIMDataButton
-  },
   emits: ["open-file-uploader"]
 };
 </script>

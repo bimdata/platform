@@ -58,19 +58,11 @@
 <script>
 import { provide, ref } from "vue";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
-import TextBox from "@/components/generic/text-box/TextBox";
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard";
 import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSpinner,
-    TextBox,
     ProjectCardDeleteGuard,
     ProjectCardUpdateForm
   },

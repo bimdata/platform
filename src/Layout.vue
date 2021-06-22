@@ -12,13 +12,11 @@
 <script>
 import { contexts, useLoadingContext } from "@/composables/loading";
 // Components
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import AppHeader from "@/components/specific/app/app-header/AppHeader";
 import NotificationCard from "@/components/generic/notification-card/NotificationCard";
 
 export default {
   components: {
-    BIMDataSpinner,
     AppHeader,
     NotificationCard
   },

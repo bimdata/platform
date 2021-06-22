@@ -57,17 +57,8 @@
 import { onMounted, reactive, ref } from "vue";
 import { useUpload } from "@/composables/upload";
 import { fileExtension, formatBytes } from "@/utils/files";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import FileIcon from "@/components/generic/file-icon/FileIcon";
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon,
-    FileIcon
-  },
   props: {
     project: {
       type: Object,

@@ -46,14 +46,10 @@
 <script>
 import { ref } from "vue";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import FolderSelector from "@/components/specific/files/folder-selector/FolderSelector";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
     FolderSelector
   },
   props: {

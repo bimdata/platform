@@ -73,18 +73,12 @@
 import { provide, ref } from "vue";
 import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard";
 import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton";
 import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSpinner,
     SpaceCardDeleteGuard,
     SpaceCardImageButton,
     SpaceCardUpdateForm

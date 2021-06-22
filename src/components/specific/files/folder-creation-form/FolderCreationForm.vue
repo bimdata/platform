@@ -39,17 +39,8 @@
 <script>
 import { onMounted, ref } from "vue";
 import { useFiles } from "@/state/files";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataInput
-  },
   props: {
     project: {
       type: Object,

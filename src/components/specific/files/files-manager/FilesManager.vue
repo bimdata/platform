@@ -87,8 +87,6 @@ import { useFiles } from "@/state/files";
 import { download } from "@/utils/download";
 import { FILE_TYPE } from "@/utils/file-structure";
 // Components
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
@@ -100,8 +98,6 @@ import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboa
 
 export default {
   components: {
-    BIMDataCard,
-    BIMDataSearch,
     FileTree,
     FileUploadButton,
     FilesTable,

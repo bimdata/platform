@@ -15,17 +15,17 @@
   }
 
   &__content {
-    $badge-size: 32px;
+    $item-size: 32px;
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, $badge-size);
+    grid-template-columns: repeat(auto-fill, $item-size);
     justify-content: space-between;
     gap: $spacing-unit/2;
 
-    .lang-badge {
+    &__item {
       cursor: pointer;
-      width: $badge-size;
-      height: $badge-size;
+      width: $item-size;
+      height: $item-size;
       display: flex;
       justify-content: center;
       align-items: center;

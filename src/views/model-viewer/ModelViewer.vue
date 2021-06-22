@@ -22,7 +22,6 @@ import makeBIMDataViewer from "@bimdata/viewer";
 import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
 // Components
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent";
 import GoBackButton from "@/components/generic/go-back-button/GoBackButton";
 
@@ -40,7 +39,6 @@ const availablePlugins = {
 
 export default {
   components: {
-    BIMDataSpinner,
     AppSlotContent,
     GoBackButton
   },
@@ -124,8 +122,12 @@ export default {
         // (see: https://stackoverflow.com/a/56998596/8298197)
         pluginUrls.map(url =>
           import(/* webpackIgnore: true */ url)
-            .then(pluginModule => bimdataViewer.registerPlugin(pluginModule.default))
-            .catch(error => console.error(`Error while registering plugin at ${url}: `, error))
+            .then(pluginModule =>
+              bimdataViewer.registerPlugin(pluginModule.default)
+            )
+            .catch(error =>
+              console.error(`Error while registering plugin at ${url}: `, error)
+            )
         )
       );
       loading.value = false;

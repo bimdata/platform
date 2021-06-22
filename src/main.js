@@ -5,9 +5,15 @@ import i18n from "./i18n";
 import router from "./router";
 
 import App from "./App.vue";
+import globalComponents from "@/components/global-components";
 
-createApp(App)
+const app = createApp(App)
   .use(vueClickAway)
   .use(i18n)
-  .use(router)
-  .mount("#app");
+  .use(router);
+
+for (const [name, component] of Object.entries(globalComponents)) {
+  app.component(name, component);
+}
+
+app.mount("#app");

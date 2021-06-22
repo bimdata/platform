@@ -27,15 +27,11 @@ import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import TextBox from "@/components/generic/text-box/TextBox";
 import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu";
 import SpaceCardImage from "./space-card-image/SpaceCardImage";
 
 export default {
   components: {
-    BIMDataCard,
-    TextBox,
     SpaceCardActionMenu,
     SpaceCardImage
   },

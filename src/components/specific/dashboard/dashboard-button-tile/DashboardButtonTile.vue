@@ -14,12 +14,7 @@
 </template>
 
 <script>
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-
 export default {
-  components: {
-    BIMDataIcon
-  },
   props: {
     color: {
       type: String,

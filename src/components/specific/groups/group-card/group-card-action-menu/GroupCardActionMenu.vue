@@ -74,20 +74,12 @@
 <script>
 import { provide, ref } from "vue";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
-import TextBox from "@/components/generic/text-box/TextBox";
 import GroupCardColorPicker from "../group-card-color-picker/GroupCardColorPicker";
 import GroupCardDeleteGuard from "../group-card-delete-guard/GroupCardDeleteGuard";
 import GroupCardUpdateForm from "../group-card-update-form/GroupCardUpdateForm";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSpinner,
-    TextBox,
     GroupCardColorPicker,
     GroupCardDeleteGuard,
     GroupCardUpdateForm

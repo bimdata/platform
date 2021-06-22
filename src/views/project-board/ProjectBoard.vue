@@ -33,7 +33,6 @@
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 // Components
-import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import AppSlot from "@/components/generic/app-slot/AppSlot";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
@@ -49,7 +48,6 @@ const tabsDef = [
 
 export default {
   components: {
-    BIMDataTabs,
     AppSlot,
     ViewHeader,
     AppBreadcrumb,

@@ -46,21 +46,13 @@
 <script>
 import { useToggle } from "@/composables/toggle";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
-import TextBox from "@/components/generic/text-box/TextBox";
 import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList";
 import GroupCardActionMenu from "./group-card-action-menu/GroupCardActionMenu";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataCard,
-    BIMDataIcon,
     FlippableCard,
-    TextBox,
     UserAvatarList,
     GroupCardActionMenu
   },

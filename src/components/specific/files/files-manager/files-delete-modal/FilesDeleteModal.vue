@@ -42,12 +42,10 @@
 <script>
 import { useFiles } from "@/state/files";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import GenericModal from "@/components/generic/generic-modal/GenericModal";
 
 export default {
   components: {
-    BIMDataButton,
     GenericModal
   },
   props: {

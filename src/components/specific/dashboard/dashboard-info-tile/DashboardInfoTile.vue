@@ -20,13 +20,8 @@
 
 <script>
 import { detect as detectBrowser } from "detect-browser";
-// Components
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
-  components: {
-    BIMDataIcon
-  },
   setup() {
     const { name, version: browserVersion, os } = detectBrowser();
 

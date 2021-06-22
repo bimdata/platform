@@ -66,20 +66,12 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { SPACE_ROLE } from "@/utils/users";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
-import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
 import UserCard from "@/components/specific/users/user-card/UserCard";
 
 export default {
   components: {
-    BIMDataButton,
-    BIMDataIcon,
-    BIMDataSearch,
-    BIMDataTabs,
     InvitationCard,
     InvitationForm,
     UserCard

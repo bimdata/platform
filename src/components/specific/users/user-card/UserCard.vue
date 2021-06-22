@@ -36,9 +36,8 @@
 </template>
 
 <script>
-import { computed, provide, ref, watch } from "vue";
+import { computed, provide, ref } from "vue";
 // Components
-import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge";
 import UserCardActionMenu from "./user-card-action-menu/UserCardActionMenu";
@@ -46,8 +45,6 @@ import UserCardDeleteGuard from "./user-card-delete-guard/UserCardDeleteGuard";
 
 export default {
   components: {
-    // BIMDataIcon,
-    BIMDataSpinner,
     UserAvatar,
     UserRoleBadge,
     UserCardActionMenu,
