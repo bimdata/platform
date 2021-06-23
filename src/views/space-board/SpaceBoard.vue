@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useSidePanel } from "@/composables/side-panel";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
@@ -102,21 +102,10 @@ export default {
     const { spaceProjects } = useProjects();
     const { openSidePanel } = useSidePanel();
 
-    const displayedProjects = ref([]);
-    watchEffect(() => (displayedProjects.value = spaceProjects.value));
-
-    const searchText = ref("");
-    const filterProjects = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedProjects.value = spaceProjects.value.filter(a =>
-          a.name.toLowerCase().includes(text)
-        );
-      } else {
-        displayedProjects.value = spaceProjects.value;
-      }
-    };
-    watchEffect(() => filterProjects(searchText.value));
+    const { filteredList: displayedProjects, searchText } = useListFilter(
+      spaceProjects,
+      project => project.name
+    );
 
     let sortOrder = "none";
     const sortProjects = () => {
@@ -135,7 +124,6 @@ export default {
       space: currentSpace,
       users: spaceUsers,
       // Methods
-      filterProjects,
       openUsersManager: openSidePanel,
       sortProjects
     };

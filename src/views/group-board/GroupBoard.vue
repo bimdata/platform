@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useGroups } from "@/state/groups";
 import { useProjects } from "@/state/projects";
 // Components
@@ -50,21 +51,10 @@ export default {
     const { projectUsers } = useProjects();
     const { currentGroup } = useGroups();
 
-    const displayedUsers = ref([]);
-    watchEffect(() => (displayedUsers.value = currentGroup.value.members));
-
-    const searchText = ref("");
-    const filterUsers = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedUsers.value = displayedUsers.value.filter(a =>
-          `${a.firstname} ${a.lastname}`.toLowerCase().includes(text)
-        );
-      } else {
-        displayedUsers.value = currentGroup.value.members;
-      }
-    };
-    watchEffect(() => filterUsers(searchText.value));
+    const { filteredList: displayedUsers, searchText } = useListFilter(
+      computed(() => currentGroup.value.members),
+      user => `${user.firstname} ${user.lastname}`
+    );
 
     return {
       // References

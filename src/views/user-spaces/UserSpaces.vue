@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useSpaces } from "@/state/spaces";
 // Components
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
@@ -71,21 +72,10 @@ export default {
   setup() {
     const { userSpaces } = useSpaces();
 
-    const displayedSpaces = ref([]);
-    watchEffect(() => (displayedSpaces.value = userSpaces.value));
-
-    const searchText = ref("");
-    const filterSpaces = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedSpaces.value = userSpaces.value.filter(a =>
-          a.name.toLowerCase().includes(text)
-        );
-      } else {
-        displayedSpaces.value = userSpaces.value;
-      }
-    };
-    watchEffect(() => filterSpaces(searchText.value));
+    const { filteredList: displayedSpaces, searchText } = useListFilter(
+      userSpaces,
+      space => space.name
+    );
 
     let sortOrder = "none";
     const sortSpaces = () => {

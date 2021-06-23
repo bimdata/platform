@@ -60,6 +60,7 @@
           </template>
         </BIMDataCard>
       </template>
+
       <template v-else>
         <UsersManagerOnboarding :project="project" />
       </template>
@@ -68,7 +69,8 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed, ref } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 // Components
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
@@ -97,25 +99,9 @@ export default {
     }
   },
   setup(props) {
-    const displayedUsers = ref([]);
-    const searchText = ref("");
-    const filterUsers = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedUsers.value = props.users.filter(
-          ({ firstname, lastname, email }) =>
-            [firstname, lastname, email].join(" ").toLowerCase().includes(text)
-        );
-      } else {
-        displayedUsers.value = props.users;
-      }
-    };
-    watch(
-      [() => props.users, searchText],
-      () => {
-        filterUsers(searchText.value);
-      },
-      { immediate: true }
+    const { filteredList: displayedUsers, searchText } = useListFilter(
+      computed(() => props.users),
+      ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
     const showInvitationForm = ref(false);

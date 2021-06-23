@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useProjects } from "@/state/projects";
 // Components
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
@@ -66,21 +66,10 @@ export default {
   setup() {
     const { userProjects } = useProjects();
 
-    const displayedProjects = ref([]);
-    watchEffect(() => (displayedProjects.value = userProjects.value));
-
-    const searchText = ref("");
-    const filterProjects = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedProjects.value = userProjects.value.filter(a =>
-          a.name.toLowerCase().includes(text)
-        );
-      } else {
-        displayedProjects.value = userProjects.value;
-      }
-    };
-    watchEffect(() => filterProjects(searchText.value));
+    const { filteredList: displayedProjects, searchText } = useListFilter(
+      userProjects,
+      project => project.name
+    );
 
     let sortOrder = "none";
     const sortProjects = () => {
@@ -96,7 +85,6 @@ export default {
       projects: displayedProjects,
       searchText,
       // Methods
-      filterProjects,
       sortProjects
     };
   }

@@ -82,7 +82,8 @@
 </template>
 
 <script>
-import { inject, ref, watch, watchEffect } from "vue";
+import { inject, ref, watch } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useFiles } from "@/state/files";
 import { download } from "@/utils/download";
 import { FILE_TYPE } from "@/utils/file-structure";
@@ -155,25 +156,10 @@ export default {
       }
     };
 
-    const displayedFiles = ref([]);
-    watch(
-      () => currentFiles.value,
-      () => (displayedFiles.value = currentFiles.value),
-      { immediate: true }
+    const { filteredList: displayedFiles, searchText } = useListFilter(
+      currentFiles,
+      file => file.name
     );
-
-    const searchText = ref("");
-    const filterFiles = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedFiles.value = currentFiles.value.filter(a =>
-          a.name.toLowerCase().includes(text)
-        );
-      } else {
-        displayedFiles.value = currentFiles.value;
-      }
-    };
-    watchEffect(() => filterFiles(searchText.value));
 
     const selection = ref([]);
     const setSelection = models => {
