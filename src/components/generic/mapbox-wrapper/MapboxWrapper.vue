@@ -8,6 +8,8 @@
 import mapboxgl from "mapbox-gl";
 import { onMounted, watchEffect } from "vue";
 
+const CONTAINER_ID = "mapbox-container";
+
 export default {
   props: {
     longitude: {
@@ -23,9 +25,10 @@ export default {
     mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN;
 
     const loadMap = (longitude, latitude) => {
-      if (longitude && latitude) {
+      const container = document.getElementById(CONTAINER_ID);
+      if (container && longitude && latitude) {
         const map = new mapboxgl.Map({
-          container: "mapbox-container",
+          container: CONTAINER_ID,
           style: "mapbox://styles/mapbox/light-v10",
           center: [longitude, latitude],
           zoom: 15.5,
@@ -76,7 +79,7 @@ export default {
           );
         });
 
-        new mapboxgl.Marker({ color: "#2F374A" })
+        new mapboxgl.Marker({ color: "#2F374A" /* color primary */ })
           .setLngLat([longitude, latitude])
           .addTo(map);
       }

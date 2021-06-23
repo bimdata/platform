@@ -10,8 +10,8 @@
           height="32px"
           tabSize="100px"
           :tabs="tabs"
-          :selected="0"
-          @tab-click="changeView($event.view)"
+          :selected="currentTab.id"
+          @tab-click="changeView($event.id)"
         />
       </template>
       <template #right>
@@ -30,8 +30,9 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 // Components
 import AppSlot from "@/components/generic/app-slot/AppSlot";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
@@ -40,10 +41,22 @@ import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
 import ProjectOverview from "./project-overview/ProjectOverview";
 
+const viewsDef = {
+  overview: "ProjectOverview",
+  files: "ProjectFiles",
+  bcf: "ProjectBcf"
+};
+
 const tabsDef = [
-  { id: "overview", view: "ProjectOverview" },
-  { id: "files", view: "ProjectFiles" },
-  { id: "bcf", view: "ProjectBcf" }
+  {
+    id: "overview"
+  },
+  {
+    id: "files"
+  },
+  {
+    id: "bcf"
+  }
 ];
 
 export default {
@@ -56,6 +69,7 @@ export default {
     ProjectOverview
   },
   setup() {
+    const route = useRoute();
     const { locale, t } = useI18n();
 
     const tabs = ref([]);
@@ -70,13 +84,26 @@ export default {
       { immediate: true }
     );
 
-    const currentView = ref(tabsDef[0].view);
-    const changeView = view => {
-      currentView.value = view;
+    const currentTab = ref(tabsDef[0]);
+    const currentView = ref(viewsDef["overview"]);
+    const changeView = id => {
+      const view = viewsDef[id] ? id : "overview";
+
+      const url = new URL(window.location);
+      url.hash = view;
+      history.replaceState(history.state, "", url);
+
+      currentTab.value = { id: view };
+      currentView.value = viewsDef[view];
     };
+
+    onBeforeMount(() => {
+      changeView(route.hash.slice(1));
+    });
 
     return {
       // References
+      currentTab,
       currentView,
       tabs,
       // Methods
