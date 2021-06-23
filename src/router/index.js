@@ -14,6 +14,7 @@ import Layout from "@/Layout";
 import OidcCallback from "@/views/oidc-callback/OidcCallback";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
 
+// Lazy loaded view components
 /* eslint-disable */
 const Dashboard = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
