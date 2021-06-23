@@ -51,8 +51,9 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useListFilter } from "@/composables/list-filter";
+import { useListSort } from "@/composables/list-sort";
+import { useToggle } from "@/composables/toggle";
 import { useSpaces } from "@/state/spaces";
 // Components
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
@@ -72,27 +73,21 @@ export default {
   setup() {
     const { userSpaces } = useSpaces();
 
+    const {
+      isOpen: showCreationForm,
+      open: openCreationForm,
+      close: closeCreationForm
+    } = useToggle();
+
     const { filteredList: displayedSpaces, searchText } = useListFilter(
       userSpaces,
       space => space.name
     );
 
-    let sortOrder = "none";
-    const sortSpaces = () => {
-      sortOrder = sortOrder === "asc" ? "desc" : "asc";
-      const n = sortOrder === "desc" ? -1 : 1;
-      displayedSpaces.value = displayedSpaces.value
-        .slice()
-        .sort((a, b) => (a.name < b.name ? -1 : 1) * n);
-    };
-
-    const showCreationForm = ref(false);
-    const openCreationForm = () => {
-      showCreationForm.value = true;
-    };
-    const closeCreationForm = () => {
-      showCreationForm.value = false;
-    };
+    const { sortToggle: sortSpaces } = useListSort(
+      displayedSpaces,
+      space => space.name
+    );
 
     return {
       // References

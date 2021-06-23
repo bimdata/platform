@@ -8,7 +8,7 @@
         @click="goToUserSpaces"
       >
         <template #title>{{ $t("Dashboard.spacesButtonTitle") }}</template>
-        <template #number>{{ nbSpaces }}</template>
+        <template #number>{{ spaces.length }}</template>
         <template #text>{{ $t("Dashboard.spacesButtonText") }}</template>
       </DashboardButtonTile>
       <DashboardButtonTile
@@ -17,7 +17,7 @@
         @click="goToUserProjects"
       >
         <template #title>{{ $t("Dashboard.projectsButtonTitle") }}</template>
-        <template #number>{{ nbProjects }}</template>
+        <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
       <DashboardInfoTile />
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
@@ -55,30 +54,16 @@ export default {
     const { userSpaces } = useSpaces();
     const { userProjects } = useProjects();
 
-    const nbSpaces = ref(0);
-    watchEffect(() => {
-      if (userSpaces.value) {
-        nbSpaces.value = userSpaces.value.length;
-      }
-    });
     const goToUserSpaces = () => {
       router.push({ name: routeNames.userSpaces });
     };
 
-    const nbProjects = ref(0);
-    watchEffect(() => {
-      if (userProjects.value) {
-        nbProjects.value = userProjects.value.length;
-      }
-    });
     const goToUserProjects = () => {
       router.push({ name: routeNames.userProjects });
     };
 
     return {
       // References
-      nbProjects,
-      nbSpaces,
       projects: userProjects,
       spaces: userSpaces,
       // Methods
