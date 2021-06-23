@@ -30,6 +30,7 @@ import { routeNames } from "@/router";
 import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
+import { debounce } from "@/utils/async";
 // Components
 import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent.vue";
 import FilesManager from "@/components/specific/files/files-manager/FilesManager";
@@ -51,14 +52,10 @@ export default {
 
     provide("fileStructureHandler", fileStructureHandler);
 
-    let reloadDebounce = null;
-    const reloadFileStructure = () => {
-      clearTimeout(reloadDebounce);
-      reloadDebounce = setTimeout(async () => {
-        await loadProjectFileStructure(currentProject.value);
-        await loadProjectModels(currentProject.value);
-      }, 1000);
-    };
+    const reloadFileStructure = debounce(async () => {
+      await loadProjectFileStructure(currentProject.value);
+      await loadProjectModels(currentProject.value);
+    }, 1000);
 
     const goToProjectGroups = () => {
       router.push({
