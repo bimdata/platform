@@ -3,17 +3,32 @@
   height: 100vh;
   background-color: $platform-background;
 
-  .view-container {
+  &__view-container {
     position: relative;
     height: calc(100% - #{$platform-header-height});
     padding: $spacing-unit * 7/2;
     overflow-y: auto;
 
-    &__loader {
-      position: absolute;
-      top: calc(50% - 6px);
-      left: calc(50% - 6px);
-      transform: scale(3);
+    &.loading {
+      overflow: hidden;
     }
+  }
+
+  &__overlay {
+    position: absolute;
+    z-index: 1000;
+    top: $platform-header-height;
+    left: 0;
+    width: 100%;
+    height: calc(100% - #{$platform-header-height});
+    background-color: $platform-background;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__loader {
+    transform: scale(3);
   }
 }

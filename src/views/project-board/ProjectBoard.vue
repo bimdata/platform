@@ -33,6 +33,7 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import { useProjects } from "@/state/projects";
 // Components
 import AppSlot from "@/components/generic/app-slot/AppSlot";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
@@ -41,11 +42,13 @@ import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
 import ProjectOverview from "./project-overview/ProjectOverview";
 
-const viewsDef = {
+const DEFAULT_VIEW = "overview";
+const VIEW_COMPONENTS = {
   overview: "ProjectOverview",
   files: "ProjectFiles",
   bcf: "ProjectBcf"
 };
+const ACTIVE_VIEW_STORAGE_KEY = id => `project-board:active-view:${id}`;
 
 const tabsDef = [
   {
@@ -71,6 +74,7 @@ export default {
   setup() {
     const route = useRoute();
     const { locale, t } = useI18n();
+    const { currentProject } = useProjects();
 
     const tabs = ref([]);
     watch(
@@ -85,20 +89,29 @@ export default {
     );
 
     const currentTab = ref(tabsDef[0]);
-    const currentView = ref(viewsDef["overview"]);
-    const changeView = id => {
-      const view = viewsDef[id] ? id : "overview";
+    const currentView = ref(VIEW_COMPONENTS[DEFAULT_VIEW]);
+    const changeView = key => {
+      const viewKey = VIEW_COMPONENTS[key] ? key : DEFAULT_VIEW;
 
-      const url = new URL(window.location);
-      url.hash = view;
-      history.replaceState(history.state, "", url);
+      sessionStorage.setItem(
+        ACTIVE_VIEW_STORAGE_KEY(currentProject.value.id),
+        viewKey
+      );
 
-      currentTab.value = { id: view };
-      currentView.value = viewsDef[view];
+      currentTab.value = { id: viewKey };
+      currentView.value = VIEW_COMPONENTS[viewKey];
     };
 
     onBeforeMount(() => {
-      changeView(route.hash.slice(1));
+      // Look for an active view in route hash.
+      // Otherwise get active view from session storage.
+      const viewKey =
+        route.hash.slice(1) ||
+        sessionStorage.getItem(
+          ACTIVE_VIEW_STORAGE_KEY(currentProject.value.id)
+        );
+      // Restore active view for this project.
+      changeView(viewKey);
     });
 
     return {
