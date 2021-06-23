@@ -75,6 +75,7 @@
 
 <script>
 import { useListFilter } from "@/composables/list-filter";
+import { useListSort } from "@/composables/list-sort";
 import { useSidePanel } from "@/composables/side-panel";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
@@ -107,14 +108,10 @@ export default {
       project => project.name
     );
 
-    let sortOrder = "none";
-    const sortProjects = () => {
-      sortOrder = sortOrder === "asc" ? "desc" : "asc";
-      const n = sortOrder === "desc" ? -1 : 1;
-      displayedProjects.value = displayedProjects.value
-        .slice()
-        .sort((a, b) => (a.name < b.name ? -1 : 1) * n);
-    };
+    const { sortToggle: sortProjects } = useListSort(
+      displayedProjects,
+      project => project.name
+    );
 
     return {
       // References
