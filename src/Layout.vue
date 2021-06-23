@@ -2,10 +2,14 @@
   <div class="app-layout">
     <NotificationCard />
     <AppHeader />
-    <div class="view-container">
-      <BIMDataSpinner class="view-container__loader" v-if="loading" />
-      <router-view v-else></router-view>
+    <div class="app-layout__view-container" :class="{ loading }">
+      <router-view></router-view>
     </div>
+    <transition name="fade">
+      <div class="app-layout__overlay" v-show="loading">
+        <BIMDataSpinner class="app-layout__loader" />
+      </div>
+    </transition>
   </div>
 </template>
 
