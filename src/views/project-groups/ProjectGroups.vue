@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useGroups } from "@/state/groups";
 import { useProjects } from "@/state/projects";
 // Components
@@ -46,21 +46,10 @@ export default {
     const { currentProject } = useProjects();
     const { projectGroups } = useGroups();
 
-    const displayedGroups = ref([]);
-    watchEffect(() => (displayedGroups.value = projectGroups.value));
-
-    const searchText = ref("");
-    const filterProjects = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedGroups.value = projectGroups.value.filter(a =>
-          a.name.toLowerCase().includes(text)
-        );
-      } else {
-        displayedGroups.value = projectGroups.value;
-      }
-    };
-    watchEffect(() => filterProjects(searchText.value));
+    const { filteredList: displayedGroups, searchText } = useListFilter(
+      projectGroups,
+      group => group.name
+    );
 
     return {
       // References

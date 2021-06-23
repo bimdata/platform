@@ -64,6 +64,7 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useListFilter } from "@/composables/list-filter";
 import { SPACE_ROLE } from "@/utils/users";
 // Components
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
@@ -127,25 +128,10 @@ export default {
     const list = computed(() =>
       currentTab.value === "admins" ? admins.value : users.value
     );
-    const displayedUsers = ref([]);
-    const searchText = ref("");
-    const filterUsers = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedUsers.value = list.value.filter(
-          ({ firstname, lastname, email }) =>
-            [firstname, lastname, email].join(" ").toLowerCase().includes(text)
-        );
-      } else {
-        displayedUsers.value = list.value;
-      }
-    };
-    watch(
-      [list, searchText],
-      () => {
-        filterUsers(searchText.value);
-      },
-      { immediate: true }
+
+    const { filteredList: displayedUsers, searchText } = useListFilter(
+      list,
+      ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
     const showInvitations = computed(() => currentTab.value === "admins");
