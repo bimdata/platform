@@ -2,4 +2,12 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export { delay };
+function debounce(callback, ms) {
+  let timeoutID = null;
+  return () => {
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(callback, ms);
+  };
+}
+
+export { delay, debounce };

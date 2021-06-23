@@ -15,7 +15,9 @@ export default {
   setup() {
     const router = useRouter();
 
-    const goToRoot = () => router.push({ name: routeNames.root });
+    const goToRoot = () => {
+      router.push({ name: routeNames.root });
+    };
 
     return {
       goToRoot

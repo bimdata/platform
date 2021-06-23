@@ -50,12 +50,13 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNotifications } from "@/composables/notifications";
+import { useToggle } from "@/composables/toggle";
 import { useFiles } from "@/state/files";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
+import { debounce } from "@/utils/async";
 // Components
 import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader";
@@ -78,25 +79,17 @@ export default {
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useNotifications();
 
-    let reloadDebounce = null;
-    const reloadModels = () => {
-      clearTimeout(reloadDebounce);
-      reloadDebounce = setTimeout(async () => {
-        await loadProjectFileStructure(currentProject.value);
-        await loadProjectModels(currentProject.value);
-      }, 1000);
-    };
+    const {
+      isOpen: showFileUploader,
+      open: openFileUploader,
+      close: closeFileUploader,
+      toggle: toggleFileUploader
+    } = useToggle();
 
-    const showFileUploader = ref(false);
-    const openFileUploader = () => {
-      showFileUploader.value = true;
-    };
-    const closeFileUploader = () => {
-      showFileUploader.value = false;
-    };
-    const toggleFileUploader = () => {
-      showFileUploader.value = !showFileUploader.value;
-    };
+    const reloadModels = debounce(async () => {
+      await loadProjectFileStructure(currentProject.value);
+      await loadProjectModels(currentProject.value);
+    }, 1000);
 
     const notifyForbiddenUpload = () => {
       pushNotification({
