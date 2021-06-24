@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import { inject, ref, watch } from "vue";
+import { ref, watch } from "vue";
+import { useFiles } from "@/state/files";
 
 export default {
   props: {
@@ -30,13 +31,13 @@ export default {
     }
   },
   setup(props) {
-    const handler = inject("fileStructureHandler");
+    const { fileStructureHandler: handler } = useFiles();
 
     const path = ref([]);
 
     watch(
       () => props.file,
-      () => (path.value = handler().ancestors(props.file)),
+      () => (path.value = handler.ancestors(props.file)),
       { immediate: true }
     );
 

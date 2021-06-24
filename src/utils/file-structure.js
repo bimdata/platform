@@ -83,6 +83,15 @@ function createFileNode(nodeMap, file) {
 class FileStructureHandler {
 
   constructor(fileStructure) {
+    if (fileStructure) {
+      this.init(fileStructure);
+    } else {
+      this.root = null;
+      this.nodeMap = new Map();
+    }
+  }
+
+  init(fileStructure) {
     this.root = { id: fileStructure.id };
     this.nodeMap = createNodeMap(fileStructure);
   }

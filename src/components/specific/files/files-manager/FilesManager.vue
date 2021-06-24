@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { inject, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 import { useFiles } from "@/state/files";
 import { download } from "@/utils/download";
@@ -120,19 +120,22 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
-    const { moveFiles: move, getArchiveUrl } = useFiles();
+    const {
+      fileStructureHandler: handler,
+      moveFiles: move,
+      getArchiveUrl
+    } = useFiles();
 
-    const handler = inject("fileStructureHandler");
     const currentFolder = ref(null);
     const currentFiles = ref([]);
 
     watch(
       () => props.fileStructure,
       struct => {
-        if (!currentFolder.value || !handler().exists(currentFolder.value)) {
+        if (!currentFolder.value || !handler.exists(currentFolder.value)) {
           currentFolder.value = struct;
         } else {
-          currentFolder.value = handler().structure(currentFolder.value);
+          currentFolder.value = handler.structure(currentFolder.value);
         }
       },
       { immediate: true }
