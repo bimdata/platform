@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { provide } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useFiles } from "@/state/files";
@@ -44,13 +43,7 @@ export default {
     const router = useRouter();
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
-    const {
-      loadProjectFileStructure,
-      projectFileStructure,
-      fileStructureHandler
-    } = useFiles();
-
-    provide("fileStructureHandler", fileStructureHandler);
+    const { loadProjectFileStructure, projectFileStructure } = useFiles();
 
     const reloadFileStructure = debounce(async () => {
       await loadProjectFileStructure(currentProject.value);

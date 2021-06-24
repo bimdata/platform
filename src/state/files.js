@@ -12,12 +12,12 @@ const state = reactive({
   projectFileStructure: {}
 });
 
-let fileStructureHandler = null;
+let fileStructureHandler = new FileStructureHandler();
 
 const loadProjectFileStructure = async project => {
   const fileStructure = await FileService.fetchFileStructure(project);
   state.projectFileStructure = fileStructure;
-  fileStructureHandler = new FileStructureHandler(fileStructure);
+  fileStructureHandler.init(fileStructure);
   return fileStructure;
 };
 
@@ -141,7 +141,7 @@ export function useFiles() {
   return {
     // References
     ...toRefs(readOnlyState),
-    fileStructureHandler: () => fileStructureHandler,
+    fileStructureHandler,
     // Methods
     loadProjectFileStructure,
     softUpdateFileStructure,
