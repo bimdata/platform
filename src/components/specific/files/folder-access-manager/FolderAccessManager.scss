@@ -1,0 +1,50 @@
+.folder-access-manager {
+  padding: $spacing-unit;
+  color: $color-primary;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 3/2;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit;
+
+    &__text {
+      flex-grow: 1;
+    }
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-unit;
+    padding-bottom: $spacing-unit;
+    border-bottom: 2px solid $color-tertiary-lightest;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-unit;
+
+    &__head {
+      display: flex;
+      align-items: center;
+      gap: $spacing-unit/2;
+      color: $color-tertiary-dark;
+
+      &--name {
+        flex-grow: 1;
+      }
+
+      &--rights {
+        width: 150px;
+      }
+
+      &--members {
+        width: 100px;
+      }
+    }
+  }
+}

@@ -57,6 +57,17 @@
         }
       }
 
+      .files-manager__side-panel {
+        position: absolute;
+        z-index: 5;
+        top: 0;
+        right: 0;
+        width: 420px;
+        height: 100%;
+        @include box-shadow;
+        background-color: $color-white;
+      }
+
       .files-manager__onboarding {
         position: absolute;
         width: 100%;

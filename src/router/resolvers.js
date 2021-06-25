@@ -53,6 +53,7 @@ const projectBoardResolver = createViewResolver(async route => {
   const projects = useProjects();
   const models = useModels();
   const files = useFiles();
+  const groups = useGroups();
 
   spaces.selectSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
@@ -60,6 +61,7 @@ const projectBoardResolver = createViewResolver(async route => {
   projects.selectProject(+route.params.projectID);
   await models.loadProjectModels(projects.currentProject.value);
   await files.loadProjectFileStructure(projects.currentProject.value);
+  await groups.loadProjectGroups(projects.currentProject.value);
 
   await projects.loadProjectUsers(projects.currentProject.value);
   await projects.loadProjectInvitations(projects.currentProject.value);

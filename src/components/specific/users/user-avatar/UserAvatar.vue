@@ -28,7 +28,8 @@ export default {
     },
     size: {
       type: [Number, String],
-      default: 32
+      default: 32,
+      validate: value => value >= 32
     },
     color: {
       type: String,

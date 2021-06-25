@@ -62,6 +62,7 @@
           {{ $t("FileActionsCell.addVersionButtonText") }}
         </BIMDataButton>
         <BIMDataButton
+          v-if="file.type === 'Folder'"
           class="file-actions-cell__menu__btn"
           ghost
           squared

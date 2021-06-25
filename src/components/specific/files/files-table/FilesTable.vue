@@ -54,6 +54,7 @@
         :file="file"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
+        @manage-access="$emit('manage-access', $event)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -107,6 +108,7 @@ export default {
     "download",
     "file-clicked",
     "file-uploaded",
+    "manage-access",
     "selection-changed"
   ],
   setup(props, { emit }) {
