@@ -170,6 +170,14 @@ export default {
     uploadButtonText: "Select an .ifc file"
   },
 
+  FolderAccessManager: {
+    title: "Manage access rights",
+    groupsButtonText: "Manage groups",
+    nameHeader: "Name",
+    rightsHeader: "Rights",
+    membersHeader: "Members"
+  },
+
   FolderCreationButton: {
     buttonText: "New folder"
   },
@@ -189,6 +197,10 @@ export default {
       moveTo: "Validate",
       moveHere: "Move here"
     }
+  },
+
+  GroupAccessSelector: {
+    defaultGroupName: "All"
   },
 
   GroupCardActionMenu: {

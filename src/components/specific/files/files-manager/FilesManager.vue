@@ -55,9 +55,22 @@
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="onFileUploaded"
+            @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
           />
         </div>
+
+        <transition name="slide-fade-right">
+          <div v-show="showSidePanel" class="files-manager__side-panel">
+            <FolderAccessManager
+              v-if="showAccessManager"
+              :project="project"
+              :folder="folderToManage"
+              :groups="groups"
+              @close="closeAccessManager"
+            />
+          </div>
+        </transition>
 
         <transition name="fade">
           <FilesDeleteModal
@@ -91,6 +104,7 @@ import { FILE_TYPE } from "@/utils/file-structure";
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FilesTable from "@/components/specific/files/files-table/FilesTable";
+import FolderAccessManager from "@/components/specific/files/folder-access-manager/FolderAccessManager";
 import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
 import FilesActionBar from "./files-action-bar/FilesActionBar";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal";
@@ -102,6 +116,7 @@ export default {
     FileTree,
     FileUploadButton,
     FilesTable,
+    FolderAccessManager,
     FolderCreationButton,
     FilesActionBar,
     FilesDeleteModal,
@@ -115,6 +130,10 @@ export default {
     },
     fileStructure: {
       type: Object,
+      required: true
+    },
+    groups: {
+      type: Array,
       required: true
     }
   },
@@ -208,19 +227,40 @@ export default {
       download({ name: downloadName, url: downloadUrl });
     };
 
+    const showSidePanel = ref(false);
+    const showAccessManager = ref(false);
+    const folderToManage = ref(null);
+    const openAccessManager = folder => {
+      folderToManage.value = folder;
+      showAccessManager.value = true;
+      // showSidePanel.value = true;
+    };
+    const closeAccessManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showAccessManager.value = false;
+        folderToManage.value = null;
+      }, 100);
+    };
+
     return {
       // References
       currentFolder,
       displayedFiles,
       filesToDelete,
       filesToUpload,
+      folderToManage,
       searchText,
       selection,
+      showAccessManager,
       showDeleteModal,
+      showSidePanel,
       // Methods
+      closeAccessManager,
       closeDeleteModal,
       downloadFiles,
       moveFiles,
+      openAccessManager,
       onFileSelected,
       onFileUploaded,
       openDeleteModal,

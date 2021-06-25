@@ -18,6 +18,7 @@
       class="project-files__block--files"
       :project="project"
       :fileStructure="fileStructure"
+      :groups="groups"
       @file-uploaded="reloadFileStructure"
     />
   </div>
@@ -27,6 +28,7 @@
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useFiles } from "@/state/files";
+import { useGroups } from "@/state/groups";
 import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { debounce } from "@/utils/async";
@@ -44,6 +46,7 @@ export default {
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
     const { loadProjectFileStructure, projectFileStructure } = useFiles();
+    const { projectGroups } = useGroups();
 
     const reloadFileStructure = debounce(async () => {
       await loadProjectFileStructure(currentProject.value);
@@ -63,6 +66,7 @@ export default {
     return {
       // References
       fileStructure: projectFileStructure,
+      groups: projectGroups,
       project: currentProject,
       // Methods
       goToProjectGroups,

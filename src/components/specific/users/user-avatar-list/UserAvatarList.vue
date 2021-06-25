@@ -44,11 +44,13 @@ export default {
     },
     itemSize: {
       type: [Number, String],
-      default: 32
+      default: 32,
+      validate: value => value >= 32
     },
     itemGap: {
       type: [Number, String],
-      default: 24
+      default: 24,
+      validate: value => value > 0
     }
   },
   setup(props) {

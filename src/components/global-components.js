@@ -2,6 +2,7 @@
 import BIMDataBigSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataBigSpinner.js";
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCard.js";
+import BIMDataDropdownList from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownList.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
@@ -18,6 +19,7 @@ export default {
   BIMDataBigSpinner,
   BIMDataButton,
   BIMDataCard,
+  BIMDataDropdownList,
   BIMDataDropdownMenu,
   BIMDataIcon,
   BIMDataInput,
