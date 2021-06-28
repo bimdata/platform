@@ -1,0 +1,37 @@
+[
+  {
+    "id": 123,
+    "name": "Architects",
+    "color": "#112233",
+    "members": [
+      {
+        "id": 1001,
+        "email": "toto.labrico@test-e2e.cy",
+        "firstname": "Toto",
+        "lastname": "LABRICO",
+        "sub": "sub-toto-labrico"
+      }
+    ]
+  },
+  {
+    "id": 456,
+    "name": "Engeneers",
+    "color": "#654321",
+    "members": [
+      {
+        "id": 1010,
+        "email": "hugo@bimdata.io",
+        "firstname": "Hugo",
+        "lastname": "Duroux",
+        "sub": "sub-hugo-duroux"
+      },
+      {
+        "id": 1011,
+        "email": "francois@bimdata.io",
+        "firstname": "François",
+        "lastname": "Thierry",
+        "sub": "sub-francois-thierry"
+      }
+    ]
+  }
+]
