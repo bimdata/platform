@@ -3,6 +3,15 @@
     <div class="dashboard__head">
       <DashboardWelcomeTile />
       <DashboardButtonTile
+        data-test="btn-projects"
+        color="secondary"
+        @click="buyPlatformPro"
+      >
+        <template #title>Buy PRO</template>
+        <template #number>29.99 €</template>
+        <template #text>Get more projects and more features</template>
+      </DashboardButtonTile>
+      <DashboardButtonTile
         data-test="btn-spaces"
         color="primary"
         @click="goToUserSpaces"
@@ -13,14 +22,13 @@
       </DashboardButtonTile>
       <DashboardButtonTile
         data-test="btn-projects"
-        color="secondary"
+        color="color-tertiary-lightest"
         @click="goToUserProjects"
       >
         <template #title>{{ $t("Dashboard.projectsButtonTitle") }}</template>
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardInfoTile />
     </div>
     <div class="dashboard__body">
       <DashboardSpaceList :spaces="spaces" />
@@ -36,7 +44,6 @@ import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile";
-import DashboardInfoTile from "@/components/specific/dashboard/dashboard-info-tile/DashboardInfoTile";
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile";
 import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList";
 import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList";
@@ -44,7 +51,6 @@ import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-
 export default {
   components: {
     DashboardButtonTile,
-    DashboardInfoTile,
     DashboardWelcomeTile,
     DashboardProjectList,
     DashboardSpaceList
@@ -62,13 +68,25 @@ export default {
       router.push({ name: routeNames.userProjects });
     };
 
+    const buyPlatformPro = () => {
+      Paddle.Checkout.open({
+        product: 12403,
+        email: "hugo@bimdata.io",
+        title: "MY TITLE",
+        message: 'MY MESSAGE',
+        disableLogout: true,
+        referring_domain: "platform self service",
+      });
+    }
+
     return {
       // References
       projects: userProjects,
       spaces: userSpaces,
       // Methods
       goToUserProjects,
-      goToUserSpaces
+      goToUserSpaces,
+      buyPlatformPro,
     };
   }
 };
