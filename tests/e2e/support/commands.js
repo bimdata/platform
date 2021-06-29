@@ -11,6 +11,15 @@ Cypress.Commands.add("getHook", names => {
   return cy.get(selector);
 });
 
+Cypress.Commands.add("getView", view => {
+  // eslint-disable-next-line cypress/require-data-selectors
+  return cy.get(`.view.${view}`);
+});
+
+Cypress.Commands.add("shouldBeOnView", view => {
+  cy.getView(view).should("exist");
+});
+
 Cypress.Commands.add("login", () => {
   const key = `oidc.user:${Cypress.env("IAM_BASE_URL")}/auth/realms/bimdata:${Cypress.env("OIDC_CLIENT_ID")}`;
   const user = {};
