@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.png">
     <title>BIMData Platform</title>
+    <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
   </head>
   <body>
+    <script type="text/javascript">
+      Paddle.Environment.set('sandbox');
+      Paddle.Setup({ vendor: 2342 });
+    </script>
     <noscript>
       <strong>
         We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
