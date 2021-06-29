@@ -62,6 +62,21 @@ export default {
       router.push({ name: routeNames.userProjects });
     };
 
+    const buyPlatformPro = () => {
+      Paddle.Product.Prices(12403, function (prices) {
+        // TODO: set price with with function instead of hard coded value
+        console.log(prices);
+      });
+      Paddle.Checkout.open({
+        product: 12403,
+        email: "hugo@bimdata.io",
+        title: "MY TITLE",
+        message: "MY MESSAGE",
+        disableLogout: true,
+        referring_domain: "platform self service"
+      });
+    };
+
     return {
       // References
       projects: userProjects,
