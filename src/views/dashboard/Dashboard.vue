@@ -70,12 +70,18 @@ export default {
 
     const buyPlatformPro = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> add example to set prices
       Paddle.Product.Prices(12403, function(prices) {
         // TODO: set price with with function instead of hard coded value
         console.log(prices);
       });
+<<<<<<< HEAD
 =======
 >>>>>>> WIP: first Paddle implementation
+=======
+>>>>>>> add example to set prices
       Paddle.Checkout.open({
         product: 12403,
         email: "hugo@bimdata.io",
@@ -84,9 +90,13 @@ export default {
         disableLogout: true,
         referring_domain: "platform self service",
 <<<<<<< HEAD
+<<<<<<< HEAD
         displayModeTheme: "dark",
 =======
 >>>>>>> WIP: first Paddle implementation
+=======
+        displayModeTheme: "dark",
+>>>>>>> add example to set prices
       });
     }
 
