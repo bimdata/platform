@@ -47,7 +47,13 @@
 
       &__node.selected {
         .file-tree-node__node__background {
-          opacity: 1;
+          opacity: 0.4;
+        }
+      }
+
+      &__node:hover:not(.selected) {
+        .file-tree-node__node__background {
+          opacity: 0.3;
         }
       }
     }
