@@ -12,6 +12,10 @@
   color: $color-primary;
   transition-duration: 0.35s;
 
+  &__loader {
+    transform: scale(2);
+  }
+
   &__selector {
     display: flex;
     flex-direction: column;

@@ -17,7 +17,12 @@
     </ViewHeader>
 
     <ResponsiveGrid itemWidth="320px">
-      <GroupMemberSelectionCard :key="-1" :group="group" :users="users" />
+      <GroupMemberSelectionCard
+        :key="-1"
+        :project="project"
+        :group="group"
+        :users="users"
+      />
       <GroupMemberCard
         v-for="user of displayedUsers"
         :key="user.id"
@@ -48,7 +53,7 @@ export default {
     GroupMemberSelectionCard
   },
   setup() {
-    const { projectUsers } = useProjects();
+    const { currentProject, projectUsers } = useProjects();
     const { currentGroup } = useGroups();
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
@@ -56,12 +61,71 @@ export default {
       user => `${user.firstname} ${user.lastname}`
     );
 
+    const users = [
+      {
+        id: 1230,
+        firstname: "Gaëlle",
+        lastname: "Leroux",
+        email: "gaelle@bimdata.io"
+      },
+      {
+        id: 1231,
+        firstname: "Gaëtan",
+        lastname: "Lagier",
+        email: "gaetan@bimdata.io"
+      },
+      {
+        id: 1232,
+        firstname: "Hugo",
+        lastname: "Duroux",
+        email: "hugo@bimdata.io"
+      },
+      {
+        id: 1234,
+        firstname: "Nicolas",
+        lastname: "Richel",
+        email: "nicolas@bimdata.io"
+      },
+      {
+        id: 1235,
+        firstname: "François",
+        lastname: "Thierry",
+        email: "francois@bimdata.io"
+      },
+      {
+        id: 1235,
+        firstname: "Tata",
+        lastname: "A",
+        email: "tata.a@test.com"
+      },
+      {
+        id: 1235,
+        firstname: "Titi",
+        lastname: "ZZZ",
+        email: "titi.zzz@test.com"
+      },
+      {
+        id: 1235,
+        firstname: "Toto",
+        lastname: "Foo",
+        email: "toto.foo@test.com"
+      },
+      {
+        id: 1235,
+        firstname: "Tutu",
+        lastname: "Bar",
+        email: "tutu.bar@test.com"
+      }
+    ];
+
     return {
       // References
       displayedUsers,
       group: currentGroup,
+      project: currentProject,
       searchText,
-      users: projectUsers
+      // users: projectUsers
+      users
     };
   }
 };

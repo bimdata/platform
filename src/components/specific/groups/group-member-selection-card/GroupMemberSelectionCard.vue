@@ -1,7 +1,11 @@
 <template>
   <div class="group-member-selection-card">
     <transition name="fade" mode="out-in">
-      <template v-if="showSelector">
+      <div v-if="loading" class="group-member-selection-card__loader">
+        <BIMDataSpinner />
+      </div>
+
+      <template v-else-if="showSelector">
         <div class="group-member-selection-card__selector">
           <div class="group-member-selection-card__selector__title">
             {{ $t("GroupMemberSelectionCard.title") }}
@@ -15,7 +19,7 @@
             :multi="true"
             :options="users"
             optionKey="firstname"
-            :modelValue="group.members"
+            v-model="members"
           />
           <div class="group-member-selection-card__selector__actions">
             <BIMDataButton width="80px" ghost radius @click="closeSelector">
@@ -26,7 +30,7 @@
               color="primary"
               fill
               radius
-              @click="() => {}"
+              @click="submit"
             >
               {{ $t("GroupMemberSelectionCard.submitButtonText") }}
             </BIMDataButton>
@@ -54,9 +58,14 @@
 
 <script>
 import { ref } from "vue";
+import { useGroups } from "@/state/groups";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true
@@ -66,7 +75,25 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const { updateGroupMembers } = useGroups();
+
+    const loading = ref(false);
+    const members = ref(props.group.members);
+
+    const submit = async () => {
+      try {
+        console.log("Members: ", members.value);
+        loading.value = true;
+        await updateGroupMembers(props.project, props.group, members.value);
+        closeSelector();
+      } catch (error) {
+        // TODO
+      } finally {
+        loading.value = false;
+      }
+    };
+
     const showSelector = ref(false);
     const openSelector = () => {
       showSelector.value = true;
@@ -77,10 +104,13 @@ export default {
 
     return {
       // References
+      loading,
+      members,
       showSelector,
       // Methods
       closeSelector,
-      openSelector
+      openSelector,
+      submit
     };
   }
 };
