@@ -9,24 +9,21 @@
       {{ $t("DashboardWelcomeTile.title") }}
     </span>
     <span class="dashboard-welcome-tile__message">
-      {{ $t("DashboardWelcomeTile.message", { name: firstName }) }}
+      {{ $t("DashboardWelcomeTile.message", { name: user.firstname }) }}
     </span>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
 import { useUser } from "@/state/user";
 
 export default {
   setup() {
     const { user } = useUser();
 
-    const firstName = ref(user.value.firstname);
-
     return {
       // References
-      firstName
+      user
     };
   }
 };

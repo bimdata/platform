@@ -1,5 +1,5 @@
 .dashboard-info-tile {
-  padding: $spacing-unit*2;
+  padding: $spacing-unit * 2;
   border-radius: $spacing-unit;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   background-color: $color-white;
@@ -9,7 +9,7 @@
     align-items: center;
     padding-bottom: $spacing-unit;
     border-bottom: 1px solid $color-tertiary;
-    font-size: $font-size*3/2;
+    font-size: $font-size * 3/2;
     font-weight: bold;
     &__icon {
       margin-left: auto;
@@ -19,7 +19,7 @@
   &__body {
     display: grid;
     gap: $spacing-unit;
-    padding: $spacing-unit*2 $spacing-unit;
+    padding: $spacing-unit * 2 $spacing-unit;
     color: $color-tertiary-dark;
   }
 }

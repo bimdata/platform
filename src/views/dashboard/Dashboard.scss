@@ -1,11 +1,37 @@
+$tile-width: 300px; // miminum tile width
+$tile-height: 240px;
+
 .dashboard {
   &__head {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax($tile-width, 1fr));
+    grid-template-rows: repeat(auto-fit, $tile-height);
     gap: $spacing-unit * 2;
   }
 
   &__body {
     margin: $spacing-unit * 3 0;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .dashboard {
+    &__head {
+      grid-template-columns: repeat(2, minmax($tile-width, 1fr));
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .dashboard {
+    &__head {
+      grid-template-columns: 1fr;
+
+      &:deep() {
+        .dashboard-info-tile {
+          height: $tile-height;
+        }
+      }
+    }
   }
 }

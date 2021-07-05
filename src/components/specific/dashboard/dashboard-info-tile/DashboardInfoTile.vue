@@ -11,8 +11,6 @@
       />
     </div>
     <div class="dashboard-info-tile__body">
-      <span>Last login 1 January at 10:30 AM</span>
-      <span>IP: 127.0.0.1</span>
       <span>{{ browserName }}/{{ browserVersion }} ({{ os }})</span>
     </div>
   </div>
