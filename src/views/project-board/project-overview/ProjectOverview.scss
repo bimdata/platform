@@ -24,3 +24,17 @@
     }
   }
 }
+
+@media only screen and (max-width: 1600px) {
+  .project-overview {
+    &__block {
+      &--overview {
+        width: 100%;
+      }
+
+      &--users {
+        width: 100%;
+      }
+    }
+  }
+}

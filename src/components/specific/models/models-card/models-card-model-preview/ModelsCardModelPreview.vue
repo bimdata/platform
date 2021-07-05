@@ -19,7 +19,7 @@
           :style="{ transform: `translateX(-${translation}px)` }"
         />
       </div>
-      <div class="models-card-model-preview__container__empty-preview">
+      <div v-else class="models-card-model-preview__container__empty-preview">
         {{ $t("ModelsCardModelPreview.emptyPreviewPlaceholder") }}
       </div>
     </div>

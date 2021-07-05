@@ -6,7 +6,7 @@
     radius
     @click="$router.back()"
   >
-    <BIMDataIcon name="arrow" size="xxs" />
+    <BIMDataIcon class="go-back-button__icon" name="arrow" size="xxs" />
     <span>{{ $t("GoBackButton.text") }}</span>
   </BIMDataButton>
 </template>
