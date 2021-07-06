@@ -1,22 +1,14 @@
 .space-card-delete-guard {
-  position: relative;
-  padding: 0 $spacing-unit/2;
+  padding: 0 $spacing-unit $spacing-unit/2;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit;
 
   &__title {
-    padding: $spacing-unit * 3/4 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-weight: bold;
-  }
-
-  &__btn-close {
-    position: absolute;
-    top: 0;
-    right: $spacing-unit/2;
-  }
-
-  &__message,
-  &__btn-submit {
-    width: calc(100% - #{$spacing-unit});
-    margin-left: $spacing-unit/2;
-    margin-bottom: $spacing-unit;
   }
 }

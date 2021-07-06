@@ -1,18 +1,17 @@
 <template>
   <div class="space-card-delete-guard">
     <div class="space-card-delete-guard__title">
-      {{ $t("SpaceCardDeleteGuard.title") }}
+      <span>{{ $t("SpaceCardDeleteGuard.title") }}</span>
+      <BIMDataButton
+        data-test="btn-close-delete"
+        ghost
+        rounded
+        icon
+        @click="close"
+      >
+        <BIMDataIcon name="close" size="xxxs" />
+      </BIMDataButton>
     </div>
-    <BIMDataButton
-      data-test="btn-close-delete"
-      class="space-card-delete-guard__btn-close"
-      ghost
-      rounded
-      icon
-      @click="close"
-    >
-      <BIMDataIcon name="close" size="xxxs" />
-    </BIMDataButton>
     <div class="space-card-delete-guard__message">
       {{ $t("SpaceCardDeleteGuard.message") }}
     </div>

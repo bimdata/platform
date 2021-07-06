@@ -1,18 +1,17 @@
 <template>
   <div class="space-card-update-form">
     <div class="space-card-update-form__title">
-      {{ $t("SpaceCardUpdateForm.title") }}
+      <span>{{ $t("SpaceCardUpdateForm.title") }}</span>
+      <BIMDataButton
+        data-test="btn-close-update"
+        ghost
+        rounded
+        icon
+        @click="close"
+      >
+        <BIMDataIcon name="close" size="xxxs" />
+      </BIMDataButton>
     </div>
-    <BIMDataButton
-      data-test="btn-close-update"
-      class="space-card-update-form__btn-close"
-      ghost
-      rounded
-      icon
-      @click="close"
-    >
-      <BIMDataIcon name="close" size="xxxs" />
-    </BIMDataButton>
     <BIMDataInput
       ref="nameInput"
       data-test="input-update-name"
