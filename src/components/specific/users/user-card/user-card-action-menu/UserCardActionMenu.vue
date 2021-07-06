@@ -17,7 +17,7 @@
 
     <transition name="fade">
       <div class="user-card-action-menu__container" v-show="showMenu">
-        <BIMDataButton
+        <!-- <BIMDataButton
           data-test="btn-open-update"
           ghost
           rounded
@@ -25,7 +25,7 @@
           @click="$emit('open-update')"
         >
           <BIMDataIcon name="edit" size="xxs" />
-        </BIMDataButton>
+        </BIMDataButton> -->
         <BIMDataButton
           data-test="btn-open-delete"
           ghost

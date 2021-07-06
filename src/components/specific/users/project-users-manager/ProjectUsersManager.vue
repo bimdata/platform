@@ -7,9 +7,9 @@
       <template v-if="users.length > 1 || invitations.length > 0">
         <BIMDataCard class="project-users-manager__manager">
           <template #left>
-            <BIMDataButton ghost rounded icon @click="() => {}">
+            <!-- <BIMDataButton ghost rounded icon @click="() => {}">
               <BIMDataIcon name="burgerMenu" size="xs" />
-            </BIMDataButton>
+            </BIMDataButton> -->
           </template>
           <template #right>
             <BIMDataButton ghost rounded icon @click="toggleInvitationForm">
@@ -18,9 +18,9 @@
             <BIMDataButton ghost rounded icon @click="toggleUserSearch">
               <BIMDataIcon name="search" size="xs" />
             </BIMDataButton>
-            <BIMDataButton ghost rounded icon @click="() => {}">
+            <!-- <BIMDataButton ghost rounded icon @click="() => {}">
               <BIMDataIcon name="filter" size="xs" />
-            </BIMDataButton>
+            </BIMDataButton> -->
           </template>
           <template #content>
             <div class="project-users-manager__list-container">

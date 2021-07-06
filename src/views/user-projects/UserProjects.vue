@@ -15,7 +15,7 @@
         />
       </template>
       <template #right>
-        <BIMDataButton
+        <!-- <BIMDataButton
           data-test="btn-filter"
           class="user-projects__header__btn-filter"
           fill
@@ -23,7 +23,7 @@
           icon
         >
           <BIMDataIcon name="filter" size="s" />
-        </BIMDataButton>
+        </BIMDataButton> -->
         <BIMDataButton
           data-test="btn-sort"
           class="user-projects__header__btn-sort"

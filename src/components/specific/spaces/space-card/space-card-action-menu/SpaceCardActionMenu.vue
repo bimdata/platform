@@ -55,6 +55,7 @@
               </BIMDataButton>
               <BIMDataButton
                 data-test="btn-open-delete"
+                color="high"
                 ghost
                 squared
                 @click="openDeleteGuard"

@@ -21,22 +21,22 @@
         >
           {{ $t("FileActionsCell.openViewerButtonText") }}
         </BIMDataButton>
-        <BIMDataButton
+        <!-- <BIMDataButton
           class="file-actions-cell__menu__btn"
           ghost
           squared
           @click="onClick('add-tags')"
         >
           {{ $t("FileActionsCell.addTagsButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton
+        </BIMDataButton> -->
+        <!-- <BIMDataButton
           class="file-actions-cell__menu__btn"
           ghost
           squared
           @click="onClick('request-validation')"
         >
           {{ $t("FileActionsCell.validationRequestButtonText") }}
-        </BIMDataButton>
+        </BIMDataButton> -->
         <BIMDataButton
           class="file-actions-cell__menu__btn"
           ghost
@@ -53,15 +53,15 @@
         >
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
-        <BIMDataButton
+        <!-- <BIMDataButton
           class="file-actions-cell__menu__btn"
           ghost
           squared
           @click="onClick('add-version')"
         >
           {{ $t("FileActionsCell.addVersionButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton
+        </BIMDataButton> -->
+        <!-- <BIMDataButton
           v-if="file.type === 'Folder'"
           class="file-actions-cell__menu__btn"
           ghost
@@ -69,7 +69,7 @@
           @click="onClick('manage-access')"
         >
           {{ $t("FileActionsCell.manageAccessButtonText") }}
-        </BIMDataButton>
+        </BIMDataButton> -->
         <BIMDataButton
           class="file-actions-cell__menu__btn"
           color="high"

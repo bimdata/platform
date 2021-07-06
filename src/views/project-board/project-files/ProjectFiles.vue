@@ -1,7 +1,7 @@
 <template>
   <div class="project-files">
     <app-slot-content name="project-board-action">
-      <BIMDataButton
+      <!-- <BIMDataButton
         data-test="btn-toggle-groups"
         width="120px"
         color="primary"
@@ -11,7 +11,7 @@
       >
         <BIMDataIcon name="group" size="s" />
         <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
-      </BIMDataButton>
+      </BIMDataButton> -->
     </app-slot-content>
 
     <FilesManager

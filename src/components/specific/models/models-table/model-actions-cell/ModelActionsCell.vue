@@ -43,9 +43,9 @@
 
     <transition name="fade">
       <div class="model-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton class="model-actions-cell__menu__btn" ghost squared>
+        <!-- <BIMDataButton class="model-actions-cell__menu__btn" ghost squared>
           {{ $t("ModelActionsCell.addTagsButtonText") }}
-        </BIMDataButton>
+        </BIMDataButton> -->
         <BIMDataButton
           class="model-actions-cell__menu__btn"
           ghost
