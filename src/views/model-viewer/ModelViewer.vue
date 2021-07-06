@@ -23,7 +23,7 @@ import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
 // Components
 import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent";
-import GoBackButton from "@/components/generic/go-back-button/GoBackButton";
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
 
 const availablePlugins = {
   bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.0",
