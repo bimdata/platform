@@ -7,6 +7,7 @@
 <script>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import PlatformService from "@/server/PlatformService";
 import { useAuth } from "@/state/auth";
 
 export default {
@@ -16,6 +17,7 @@ export default {
 
     onMounted(async () => {
       const result = await signInCallback();
+      await PlatformService.loginCallback();
       router.push({ path: result.state ? result.state : "/" });
     });
   }
