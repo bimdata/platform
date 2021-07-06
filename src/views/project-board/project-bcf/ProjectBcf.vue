@@ -1,7 +1,15 @@
 <template>
   <div class="project-bcf">
-    <!-- TODO -->
-    Project BCF view, coming soon...
+    <BIMDataCard class="models-overview" titleHeader="BCF">
+      <template #content>
+        <img
+          width="260"
+          height="260"
+          src="/static/bcf-manager-onboarding.svg"
+        />
+        <div>Project BCF view, coming soon...</div>
+      </template>
+    </BIMDataCard>
   </div>
 </template>
 

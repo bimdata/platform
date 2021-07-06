@@ -1,7 +1,20 @@
 .project-bcf {
-  // TODO
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
+  .bimdata-card {
+    width: 100%;
+    height: 100%;
+
+    &:deep() {
+      .bimdata-card__content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: $spacing-unit * 4;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: $color-primary;
+      }
+    }
+  }
 }
