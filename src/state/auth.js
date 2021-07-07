@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs, watchEffect } from "vue";
 import apiClient from "@/server/api-client";
 import AuthService from "@/server/AuthService";
+import PlatformService from "@/server/PlatformService";
 import { tokenHasExpired } from "@/utils/auth";
 
 const state = reactive({
@@ -29,6 +30,7 @@ const authenticate = async redirectPath => {
     // Set auth state
     state.isAuthenticated = true;
     state.accessToken = user.access_token;
+    await PlatformService.loginCallback(user.access_token);
   }
 };
 

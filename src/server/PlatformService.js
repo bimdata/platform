@@ -1,14 +1,12 @@
-import apiClient from "./api-client";
-
 class PlatformService {
-  loginCallback() {
+  loginCallback(accessToken) {
     return fetch(
       `${process.env.VUE_APP_BACKEND_BASE_URL}/create_or_update_user/`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: apiClient.config.accessToken()
+          Authorization: `Bearer ${accessToken}`
         }
       }
     );
