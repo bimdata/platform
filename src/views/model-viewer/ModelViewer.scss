@@ -21,4 +21,22 @@
       transform: scale(3);
     }
   }
+
+  // This is to adjust model selector styles in viewer.
+  // TODO: update design system components to avoid this workaround.
+  &:deep() {
+    .bimdata-model {
+      .bimdata-checkbox__text {
+        font-size: 0.8rem;
+      }
+    }
+
+    .bimdata-model-body {
+      .bimdata-model-body__name {
+        span {
+          font-size: 0.86rem;
+        }
+      }
+    }
+  }
 }
