@@ -1,54 +1,71 @@
 <template>
   <div data-test="user-card" class="user-card" v-click-away="resetCard">
     <transition name="fade" mode="out-in">
-      <div class="user-card__loader" v-if="loading">
-        <BIMDataSpinner />
-      </div>
-
-      <UserCardDeleteGuard
-        v-else-if="showDeleteGuard"
-        :user="user"
-        :space="space"
-        :project="project"
-        @close="closeDeleteGuard"
-      />
-
-      <div class="user-card__content" v-else>
-        <UserAvatar :user="user" size="42" color="tertiary" />
-        <div class="user-card__content__info">
-          <div class="user-card__content__info__name">
-            {{ fullName }}
-            {{ user.isSelf ? `(${$t("UserCard.self")})` : "" }}
-            <UserRoleBadge :role="role" />
-          </div>
-          <div class="user-card__content__info__email">
-            {{ user.email }}
-          </div>
+      <template v-if="loading">
+        <div class="user-card__loader">
+          <BIMDataSpinner />
         </div>
-        <UserCardActionMenu
-          v-if="!user.isSelf"
-          @open-update="() => {}"
-          @open-delete="openDeleteGuard"
+      </template>
+
+      <template v-else-if="showUpdateForm">
+        <UserCardUpdateForm
+          :user="user"
+          :space="space"
+          :project="project"
+          @close="closeUpdateForm"
         />
-      </div>
+      </template>
+
+      <template v-else-if="showDeleteGuard">
+        <UserCardDeleteGuard
+          :user="user"
+          :space="space"
+          :project="project"
+          @close="closeDeleteGuard"
+        />
+      </template>
+
+      <template v-else>
+        <div class="user-card__content">
+          <UserAvatar :user="user" size="42" color="tertiary" />
+          <div class="user-card__content__info">
+            <div class="user-card__content__info__name">
+              {{ fullName }}
+              {{ user.isSelf ? `(${$t("UserCard.self")})` : "" }}
+              <UserRoleBadge :role="role" />
+            </div>
+            <div class="user-card__content__info__email">
+              {{ user.email }}
+            </div>
+          </div>
+          <UserCardActionMenu
+            v-if="!user.isSelf"
+            @open-update="openUpdateForm"
+            @open-delete="openDeleteGuard"
+          />
+        </div>
+      </template>
     </transition>
   </div>
 </template>
 
 <script>
 import { computed, provide, ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge";
 import UserCardActionMenu from "./user-card-action-menu/UserCardActionMenu";
 import UserCardDeleteGuard from "./user-card-delete-guard/UserCardDeleteGuard";
+import UserCardUpdateForm from "./user-card-update-form/UserCardUpdateForm";
 
 export default {
   components: {
     UserAvatar,
     UserRoleBadge,
     UserCardActionMenu,
-    UserCardDeleteGuard
+    UserCardDeleteGuard,
+    UserCardUpdateForm
   },
   props: {
     user: {
@@ -75,16 +92,20 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const showDeleteGuard = ref(false);
-    const openDeleteGuard = () => {
-      showDeleteGuard.value = true;
-    };
-    const closeDeleteGuard = () => {
-      showDeleteGuard.value = false;
-    };
+    const {
+      isOpen: showUpdateForm,
+      open: openUpdateForm,
+      close: closeUpdateForm
+    } = useToggle();
+    const {
+      isOpen: showDeleteGuard,
+      open: openDeleteGuard,
+      close: closeDeleteGuard
+    } = useToggle();
 
     const resetCard = () => {
       loading.value = false;
+      closeUpdateForm();
       closeDeleteGuard();
     };
 
@@ -94,9 +115,12 @@ export default {
       loading,
       role,
       showDeleteGuard,
+      showUpdateForm,
       // Methods
       closeDeleteGuard,
+      closeUpdateForm,
       openDeleteGuard,
+      openUpdateForm,
       resetCard
     };
   }

@@ -430,7 +430,11 @@ export default {
       space: "Remove {name} from this space ?",
       project: "Remove {name} from this project ?"
     },
-    deleteButtonText: "Remove"
+    submitButtonText: "Remove"
+  },
+
+  UserCardUpdateForm: {
+    submitButtonText: "Validate"
   },
 
   UserRoleBadge: {

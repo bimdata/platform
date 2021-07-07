@@ -100,13 +100,19 @@ class ProjectService {
     });
   }
 
-  updateProjectUser(project, user) {
-    return apiClient.collaborationApi.updateProjectUser({
+  async updateProjectUser(project, user) {
+    // TODO: API model should be updated to return
+    // user data instead of role value.
+    await apiClient.collaborationApi.updateProjectUser({
       cloudPk: project.cloud.id,
       projectPk: project.id,
       id: user.id,
       data: user
     });
+    return {
+      ...user,
+      role: undefined
+    };
   }
 
   deleteProjectUser(project, user) {

@@ -9,18 +9,18 @@
     </span>
     <BIMDataButton
       data-test="btn-submit-delete"
-      class="user-card-delete-guard__delete-btn"
+      class="user-card-delete-guard__btn-submit"
       width="80px"
       color="high"
       fill
       radius
-      @click="removeSpaceUser"
+      @click="submit"
     >
-      {{ $t("UserCardDeleteGuard.deleteButtonText") }}
+      {{ $t("UserCardDeleteGuard.submitButtonText") }}
     </BIMDataButton>
     <BIMDataButton
       data-test="btn-close-delete"
-      class="user-card-delete-guard__close-btn"
+      class="user-card-delete-guard__btn-close"
       color="default"
       ghost
       rounded
@@ -59,14 +59,19 @@ export default {
 
     const loading = inject("loading", false);
 
-    const removeSpaceUser = async () => {
-      loading.value = true;
-      if (props.project) {
-        await deleteProjectUser(props.project, props.user);
-      } else if (props.space) {
-        await deleteSpaceUser(props.space, props.user);
+    const submit = async () => {
+      try {
+        loading.value = true;
+        if (props.project) {
+          await deleteProjectUser(props.project, props.user);
+        } else if (props.space) {
+          await deleteSpaceUser(props.space, props.user);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        loading.value = false;
       }
-      loading.value = false;
       close();
     };
 
@@ -77,7 +82,7 @@ export default {
     return {
       // Methods
       close,
-      removeSpaceUser
+      submit
     };
   }
 };

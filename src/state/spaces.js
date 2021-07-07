@@ -104,7 +104,7 @@ const cancelSpaceInvitation = async (space, invitation) => {
 const updateSpaceUser = async (space, user) => {
   const newUser = await SpaceService.updateSpaceUser(space, user);
   state.spaceUsers = state.spaceUsers.map(u =>
-    u.id === user.id ? newUser : u
+    u.id === user.id ? { ...u, ...newUser } : u
   );
   return newUser;
 };

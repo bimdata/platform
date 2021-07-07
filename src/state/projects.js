@@ -120,7 +120,7 @@ const cancelProjectInvitation = async (project, invitation) => {
 const updateProjectUser = async (project, user) => {
   const newUser = await ProjectService.updateProjectUser(project, user);
   state.projectUsers = state.projectUsers.map(u =>
-    u.id === user.id ? newUser : u
+    u.id === user.id ? { ...u, ...newUser } : u
   );
   return newUser;
 };
