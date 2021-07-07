@@ -1,9 +1,9 @@
 <template>
   <BreadcrumbSelector
-    :header="selectedSpace.name"
     :list="spaces"
     labelProp="name"
-    @item-selected="changeSpace"
+    :placeholder="selectedSpace.name"
+    @item-selected="goToSpace"
   />
 </template>
 
@@ -22,7 +22,7 @@ export default {
     const router = useRouter();
     const { userSpaces, currentSpace } = useSpaces();
 
-    const changeSpace = space => {
+    const goToSpace = space => {
       router.push({
         name: routeNames.spaceBoard,
         params: { spaceID: space.id }
@@ -34,7 +34,7 @@ export default {
       selectedSpace: currentSpace,
       spaces: userSpaces,
       // Methods
-      changeSpace
+      goToSpace
     };
   }
 };

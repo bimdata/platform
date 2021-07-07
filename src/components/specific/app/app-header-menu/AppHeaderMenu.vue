@@ -28,9 +28,9 @@
           <BIMDataButton ghost squared @click="openDocumentation">
             {{ $t("AppHeaderMenu.entryDocumentation") }}
           </BIMDataButton>
-          <BIMDataButton ghost squared @click="openMarketplace">
+          <!-- <BIMDataButton ghost squared @click="openMarketplace">
             {{ $t("AppHeaderMenu.entryMarketplace") }}
-          </BIMDataButton>
+          </BIMDataButton> -->
           <div class="separator"></div>
           <BIMDataButton ghost squared @click="openLanguageSelector">
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>

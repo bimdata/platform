@@ -1,17 +1,18 @@
 <template>
   <BreadcrumbSelector
-    :header="selectedSpace.name"
     :list="spaces"
     labelProp="name"
-    @item-selected="changeSpace"
+    :placeholder="selectedSpace.name"
+    @item-selected="selectSpace"
+    @header-clicked="goToSpace"
   />
   <div class="breadcrumb-separator"></div>
   <BreadcrumbSelector
     v-if="projects.length > 0"
-    :header="selectedProject.name"
     :list="projects"
     labelProp="name"
-    @item-selected="changeProject"
+    :placeholder="selectedProject.name"
+    @item-selected="goToProject"
   />
   <div v-else>
     {{ $t("BreadcrumbProjectSelector.placeholder") }}
@@ -40,7 +41,7 @@ export default {
     const selectedSpace = ref(currentSpace.value);
     const selectedProject = ref(currentProject.value);
 
-    const changeProject = project => {
+    const goToProject = project => {
       router.push({
         name: routeNames.projectBoard,
         params: {
@@ -50,7 +51,14 @@ export default {
       });
     };
 
-    const changeSpace = space => {
+    const goToSpace = space => {
+      router.push({
+        name: routeNames.spaceBoard,
+        params: { spaceID: space.id }
+      });
+    };
+
+    const selectSpace = space => {
       selectedSpace.value = space;
       projects.value = userProjects.value.filter(
         proj => proj.cloud.id === space.id
@@ -59,22 +67,24 @@ export default {
         // Automatically change project if there is only one
         // in the selected space
         selectedProject.value = projects.value[0];
-        changeProject(projects.value[0]);
+        goToProject(projects.value[0]);
+      } else if (projects.value.length > 1) {
+        selectedProject.value = projects.value[0];
       } else {
-        selectedProject.value =
-          projects.value.length > 0 ? projects.value[0] : {};
+        selectedProject.value = {};
       }
     };
 
     return {
       // References
-      spaces: userSpaces,
       projects,
-      selectedSpace,
       selectedProject,
+      selectedSpace,
+      spaces: userSpaces,
       // Methods
-      changeSpace,
-      changeProject
+      goToProject,
+      goToSpace,
+      selectSpace
     };
   }
 };

@@ -1,15 +1,17 @@
 <template>
-  <div
-    class="breadcrumb-selector"
-    :class="{ active: isActive }"
-    v-click-away="closeList"
-  >
-    <div class="breadcrumb-selector__header" @click="toggleList">
-      <TextBox :text="header" :maxLength="24" />
+  <div class="breadcrumb-selector" v-click-away="close">
+    <div class="breadcrumb-selector__header">
+      <TextBox
+        :text="currentItem[labelProp] || placeholder"
+        :maxLength="24"
+        @click="$emit('header-clicked', currentItem)"
+      />
       <BIMDataIcon
         class="breadcrumb-selector__header__icon"
         name="chevron"
         size="xxs"
+        :rotate="isActive ? 90 : 0"
+        @click="toggle"
       />
     </div>
     <transition name="slide-fade-down">
@@ -41,7 +43,9 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
+import { useToggle } from "@/composables/toggle";
+import { useListFilter } from "@/composables/list-filter";
 // Components
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
@@ -54,9 +58,9 @@ export default {
     TextBox
   },
   props: {
-    header: {
+    placeholder: {
       type: String,
-      required: true
+      default: ""
     },
     keyProp: {
       type: String,
@@ -71,47 +75,33 @@ export default {
       default: () => []
     }
   },
-  emits: ["item-selected"],
+  emits: ["header-clicked", "item-selected"],
   setup(props, { emit }) {
-    const isActive = ref(false);
-    const closeList = () => {
-      isActive.value = false;
-    };
-    const toggleList = () => {
-      isActive.value = !isActive.value;
-    };
+    const { isOpen: isActive, close, toggle } = useToggle();
 
-    const displayedItems = ref([]);
-    watchEffect(() => (displayedItems.value = props.list));
+    const { filteredList: displayedItems, searchText } = useListFilter(
+      computed(() => props.list),
+      item => item[props.labelProp]
+    );
 
-    const searchText = ref("");
-    const filterItems = value => {
-      const text = value.trim().toLowerCase();
-      if (text) {
-        displayedItems.value = props.list.filter(a =>
-          a[props.labelProp].toLowerCase().includes(text)
-        );
-      } else {
-        displayedItems.value = props.list;
-      }
-    };
-    watchEffect(() => filterItems(searchText.value));
+    const currentItem = ref({});
 
     const selectItem = item => {
-      closeList();
+      close();
+      currentItem.value = item;
       emit("item-selected", item);
     };
 
     return {
       // References
+      currentItem,
       displayedItems,
       isActive,
       searchText,
       // Methods
-      closeList,
-      filterItems,
+      close,
       selectItem,
-      toggleList
+      toggle
     };
   }
 };

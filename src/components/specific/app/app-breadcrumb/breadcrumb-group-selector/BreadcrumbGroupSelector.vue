@@ -2,10 +2,10 @@
   <div>{{ $t("BreadcrumbGroupSelector.text") }}</div>
   <div class="breadcrumb-separator"></div>
   <BreadcrumbSelector
-    :header="currentGroup.name"
     :list="groups"
     labelProp="name"
-    @item-selected="changeGroup"
+    :placeholder="selectedGroup.name"
+    @item-selected="goToGroup"
   />
 </template>
 
@@ -24,7 +24,7 @@ export default {
     const router = useRouter();
     const { projectGroups, currentGroup } = useGroups();
 
-    const changeGroup = group => {
+    const goToGroup = group => {
       router.push({
         name: routeNames.groupBoard,
         params: {
@@ -37,10 +37,10 @@ export default {
 
     return {
       // References
-      currentGroup,
+      selectedGroup: currentGroup,
       groups: projectGroups,
       // Methods
-      changeGroup
+      goToGroup
     };
   }
 };

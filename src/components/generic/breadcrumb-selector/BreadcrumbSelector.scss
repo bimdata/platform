@@ -41,12 +41,4 @@
       }
     }
   }
-
-  &.active {
-    .breadcrumb-selector__header {
-      .breadcrumb-selector__header__icon {
-        transform: rotate(90deg);
-      }
-    }
-  }
 }
