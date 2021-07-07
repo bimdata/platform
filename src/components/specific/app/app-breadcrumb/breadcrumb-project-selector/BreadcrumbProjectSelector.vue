@@ -2,6 +2,7 @@
   <BreadcrumbSelector
     :list="spaces"
     labelProp="name"
+    :defaultItem="selectedSpace"
     :placeholder="selectedSpace.name"
     @item-selected="selectSpace"
     @header-clicked="goToSpace"

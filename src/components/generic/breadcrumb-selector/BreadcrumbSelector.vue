@@ -58,9 +58,9 @@ export default {
     TextBox
   },
   props: {
-    placeholder: {
-      type: String,
-      default: ""
+    list: {
+      type: Array,
+      default: () => []
     },
     keyProp: {
       type: String,
@@ -70,9 +70,13 @@ export default {
       type: String,
       required: true
     },
-    list: {
-      type: Array,
-      default: () => []
+    defaultItem: {
+      type: Object,
+      default: null
+    },
+    placeholder: {
+      type: String,
+      default: ""
     }
   },
   emits: ["header-clicked", "item-selected"],
@@ -84,7 +88,7 @@ export default {
       item => item[props.labelProp]
     );
 
-    const currentItem = ref({});
+    const currentItem = ref(props.defaultItem || {});
 
     const selectItem = item => {
       close();
