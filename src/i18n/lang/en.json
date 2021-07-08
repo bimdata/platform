@@ -182,7 +182,6 @@
   },
 
   "FolderCreationForm": {
-    "createFolderButtonText": "New folder",
     "creationFormTitle": "Create folder",
     "nameInputPlaceholder": "Folder name",
     "nameInputErrorMessage": "Invalid folder name",
