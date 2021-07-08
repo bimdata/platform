@@ -30,7 +30,7 @@ const authenticate = async redirectPath => {
     // Set auth state
     state.isAuthenticated = true;
     state.accessToken = user.access_token;
-    await PlatformService.loginCallback(user.access_token);
+    PlatformService.loginCallback(user.access_token);
   }
 };
 
