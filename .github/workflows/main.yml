@@ -6,7 +6,7 @@ on:
     types: [semantic-release]
 
 env:
-  app: platform_v2
+  app: platform
 
 jobs:
   test:
