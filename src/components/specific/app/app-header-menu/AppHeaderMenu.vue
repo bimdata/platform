@@ -18,9 +18,9 @@
       </template>
       <template #element>
         <div class="app-header-menu__container" @click.stop="() => {}">
-          <BIMDataButton ghost squared>
+          <!-- <BIMDataButton ghost squared>
             {{ $t("AppHeaderMenu.entrySettings") }}
-          </BIMDataButton>
+          </BIMDataButton> -->
           <BIMDataButton ghost squared @click="openBIMDataConnect">
             {{ $t("AppHeaderMenu.entryConnect") }}
           </BIMDataButton>
@@ -31,6 +31,9 @@
           <!-- <BIMDataButton ghost squared @click="openMarketplace">
             {{ $t("AppHeaderMenu.entryMarketplace") }}
           </BIMDataButton> -->
+          <BIMDataButton ghost squared @click="openOldPlatform">
+            {{ $t("AppHeaderMenu.entryOldPlatform") }}
+          </BIMDataButton>
           <div class="separator"></div>
           <BIMDataButton ghost squared @click="openLanguageSelector">
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
@@ -62,7 +65,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 import { useAuth } from "@/state/auth";
 import { useUser } from "@/state/user";
 // Components
@@ -90,13 +93,15 @@ export default {
       window.open(`${process.env.VUE_APP_URL_MARKETPLACE}`);
     };
 
-    const showLanguageSelector = ref(false);
-    const openLanguageSelector = () => {
-      showLanguageSelector.value = true;
+    const openOldPlatform = () => {
+      window.open(`${process.env.VUE_APP_URL_OLD_PLATFORM}`);
     };
-    const closeLanguageSelector = () => {
-      showLanguageSelector.value = false;
-    };
+
+    const {
+      isOpen: showLanguageSelector,
+      open: openLanguageSelector,
+      close: closeLanguageSelector
+    } = useToggle();
 
     return {
       // References
@@ -108,6 +113,7 @@ export default {
       openDocumentation,
       openLanguageSelector,
       openMarketplace,
+      openOldPlatform,
       signOut
     };
   }

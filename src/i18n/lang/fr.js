@@ -72,6 +72,7 @@ export default {
     entryConnect: "BIMData Connect",
     entryDocumentation: "Documentation",
     entryMarketplace: "Marketplace",
+    entryOldPlatform: "Plateforme V1",
     entryLanguage: "Choix de la langue",
     logoutButtonText: "Se Déconnecter"
   },
