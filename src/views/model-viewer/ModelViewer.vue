@@ -27,7 +27,7 @@ import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton"
 
 const availablePlugins = {
   bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.0",
-  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.7",
+  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.8",
   gltfExtractor:
     "https://unpkg.com/@bimdata/gltf-extractor-viewer-plugin@1.0.0",
   svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.0",
