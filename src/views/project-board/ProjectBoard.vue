@@ -34,6 +34,7 @@ import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useProjects } from "@/state/projects";
+import { useSession } from "@/state/session";
 // Components
 import AppSlot from "@/components/generic/app-slot/AppSlot";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
@@ -42,13 +43,12 @@ import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
 import ProjectOverview from "./project-overview/ProjectOverview";
 
-const DEFAULT_VIEW = "overview";
-const VIEW_COMPONENTS = {
+const DEFAULT_PROJECT_VIEW = "overview";
+const PROJECT_VIEWS = {
   overview: "ProjectOverview",
   files: "ProjectFiles",
   bcf: "ProjectBcf"
 };
-const ACTIVE_VIEW_STORAGE_KEY = id => `project-board:active-view:${id}`;
 
 const tabsDef = [
   {
@@ -75,6 +75,7 @@ export default {
     const route = useRoute();
     const { locale, t } = useI18n();
     const { currentProject } = useProjects();
+    const { currentProjectView } = useSession();
 
     const tabs = ref([]);
     watch(
@@ -89,28 +90,22 @@ export default {
     );
 
     const currentTab = ref(tabsDef[0]);
-    const currentView = ref(VIEW_COMPONENTS[DEFAULT_VIEW]);
+    const currentView = ref(PROJECT_VIEWS[DEFAULT_PROJECT_VIEW]);
     const changeView = key => {
-      const viewKey = VIEW_COMPONENTS[key] ? key : DEFAULT_VIEW;
+      const viewKey = PROJECT_VIEWS[key] ? key : DEFAULT_PROJECT_VIEW;
 
-      sessionStorage.setItem(
-        ACTIVE_VIEW_STORAGE_KEY(currentProject.value.id),
-        viewKey
-      );
+      currentProjectView.set(currentProject.value.id, viewKey);
 
       currentTab.value = { id: viewKey };
-      currentView.value = VIEW_COMPONENTS[viewKey];
+      currentView.value = PROJECT_VIEWS[viewKey];
     };
 
     onBeforeMount(() => {
-      // Look for an active view in route hash.
-      // Otherwise get active view from session storage.
+      // Look for current project view in route hash.
+      // Otherwise get current view from session storage.
       const viewKey =
-        route.hash.slice(1) ||
-        sessionStorage.getItem(
-          ACTIVE_VIEW_STORAGE_KEY(currentProject.value.id)
-        );
-      // Restore active view for this project.
+        route.hash.slice(1) || currentProjectView.get(currentProject.value.id);
+      // Restore current project view for this project.
       changeView(viewKey);
     });
 

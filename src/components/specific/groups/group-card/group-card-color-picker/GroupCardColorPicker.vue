@@ -12,7 +12,7 @@
     </div>
     <div class="group-card-color-picker__side">
       <BIMDataButton
-        data-test="btn-close-delete"
+        data-test="btn-close-colors"
         class="group-card-color-picker__side__btn-close"
         ghost
         rounded
@@ -27,8 +27,8 @@
 
 <script>
 import { inject, ref } from "vue";
+import colors from "@/config/groupColors";
 import { useGroups } from "@/state/groups";
-import colors from "./colors";
 
 export default {
   props: {

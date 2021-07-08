@@ -1,6 +1,17 @@
 <template>
-  <BIMDataButton data-test="btn-back" class="go-back-button" ghost radius @click="goBack">
-    <BIMDataIcon class="go-back-button__icon" name="arrow" size="xxs" margin="0 6 0 0" />
+  <BIMDataButton
+    data-test="btn-back"
+    class="go-back-button"
+    ghost
+    radius
+    @click="goBack"
+  >
+    <BIMDataIcon
+      class="go-back-button__icon"
+      name="arrow"
+      size="xxs"
+      margin="0 6 0 0"
+    />
     <span>{{ $t("GoBackButton.text") }}</span>
   </BIMDataButton>
 </template>
@@ -8,48 +19,47 @@
 <script>
 import { useRoute, useRouter } from "vue-router";
 import { routeNames } from "@/router";
+import { useSession } from "@/state/session";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
-const HAS_PREVIOUS_STORAGE_KEY = "has-previous";
-
-const DEFAULT_PREVIOUS_VIEWS = {
+const DEFAULT_PREVIOUS_ROUTE = {
   [routeNames.userSpaces]: routeNames.dashboard,
   [routeNames.userProjects]: routeNames.dashboard,
   [routeNames.spaceBoard]: routeNames.dashboard,
   [routeNames.projectBoard]: routeNames.spaceBoard,
   [routeNames.modelViewer]: routeNames.projectBoard,
   [routeNames.projectGroups]: routeNames.projectBoard,
-  [routeNames.groupBoard]: routeNames.projectGroups,
+  [routeNames.groupBoard]: routeNames.projectGroups
 };
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon,
+    BIMDataIcon
   },
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const { defaultRoutingMode } = useSession();
 
     const goBack = () => {
-      const hasPrevious = sessionStorage.getItem(HAS_PREVIOUS_STORAGE_KEY);
-      if (hasPrevious) {
+      if (defaultRoutingMode.get()) {
         router.back();
       } else {
-        sessionStorage.setItem(HAS_PREVIOUS_STORAGE_KEY, "yes");
+        defaultRoutingMode.set(true);
         router.push({
-          name: DEFAULT_PREVIOUS_VIEWS[route.name],
-          params: route.params,
+          name: DEFAULT_PREVIOUS_ROUTE[route.name],
+          params: route.params
         });
       }
     };
 
     return {
-      goBack,
+      goBack
     };
-  },
+  }
 };
 </script>
 
