@@ -2,8 +2,7 @@
   <BreadcrumbSelector
     :list="spaces"
     labelProp="name"
-    :defaultItem="selectedSpace"
-    :placeholder="selectedSpace.name"
+    :header="selectedSpace.name"
     @item-selected="selectSpace"
     @header-clicked="goToSpace"
   />
@@ -12,7 +11,7 @@
     v-if="projects.length > 0"
     :list="projects"
     labelProp="name"
-    :placeholder="selectedProject.name"
+    :header="selectedProject.name"
     @item-selected="goToProject"
   />
   <div v-else>
@@ -21,7 +20,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
@@ -42,6 +41,11 @@ export default {
     const selectedSpace = ref(currentSpace.value);
     const selectedProject = ref(currentProject.value);
 
+    watch(
+      () => currentProject.value,
+      () => (selectedProject.value = currentProject.value)
+    );
+
     const goToProject = project => {
       router.push({
         name: routeNames.projectBoard,
@@ -52,10 +56,12 @@ export default {
       });
     };
 
-    const goToSpace = space => {
+    const goToSpace = () => {
       router.push({
         name: routeNames.spaceBoard,
-        params: { spaceID: space.id }
+        params: {
+          spaceID: selectedSpace.value.id
+        }
       });
     };
 

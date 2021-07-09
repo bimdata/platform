@@ -4,7 +4,7 @@
   <BreadcrumbSelector
     :list="groups"
     labelProp="name"
-    :placeholder="selectedGroup.name"
+    :header="selectedGroup.name"
     @item-selected="goToGroup"
   />
 </template>

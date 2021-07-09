@@ -2,20 +2,20 @@
   <div class="breadcrumb-selector" v-click-away="close">
     <div class="breadcrumb-selector__header">
       <TextBox
-        :text="currentItem[labelProp] || placeholder"
+        :text="header"
         :maxLength="24"
-        @click="$emit('header-clicked', currentItem)"
+        @click="$emit('header-clicked')"
       />
       <BIMDataIcon
         class="breadcrumb-selector__header__icon"
         name="chevron"
         size="xxs"
-        :rotate="isActive ? 90 : 0"
+        :rotate="isOpen ? 90 : 0"
         @click="toggle"
       />
     </div>
     <transition name="slide-fade-down">
-      <div class="breadcrumb-selector__list" v-show="isActive">
+      <div class="breadcrumb-selector__list" v-show="isOpen">
         <BIMDataSearch
           radius
           width="204px"
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useToggle } from "@/composables/toggle";
 import { useListFilter } from "@/composables/list-filter";
 // Components
@@ -70,37 +70,29 @@ export default {
       type: String,
       required: true
     },
-    defaultItem: {
-      type: Object,
-      default: null
-    },
-    placeholder: {
+    header: {
       type: String,
       default: ""
     }
   },
   emits: ["header-clicked", "item-selected"],
   setup(props, { emit }) {
-    const { isOpen: isActive, close, toggle } = useToggle();
+    const { isOpen, close, toggle } = useToggle();
 
     const { filteredList: displayedItems, searchText } = useListFilter(
       computed(() => props.list),
       item => item[props.labelProp]
     );
 
-    const currentItem = ref(props.defaultItem || {});
-
     const selectItem = item => {
       close();
-      currentItem.value = item;
       emit("item-selected", item);
     };
 
     return {
       // References
-      currentItem,
       displayedItems,
-      isActive,
+      isOpen,
       searchText,
       // Methods
       close,
