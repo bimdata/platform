@@ -50,6 +50,7 @@ export default {
     watch(
       () => props.model,
       () => {
+        clearInterval(checkStatusInterval);
         setStatus(props.model.status);
 
         if (
