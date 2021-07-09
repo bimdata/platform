@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { ref, watch } from "vue";
 // Components
 import ModelLocation from "@/components/specific/models/model-location/ModelLocation";
 import ModelsCard from "@/components/specific/models/models-card/ModelsCard";
@@ -47,16 +47,19 @@ export default {
   emits: ["open-file-uploader"],
   setup(props) {
     const displayedModel = ref(null);
+    watch(
+      () => props.models,
+      () => {
+        displayedModel.value = props.models.length > 0 ? props.models[0] : null;
+      },
+      { immediate: true }
+    );
 
     const onModelChange = model => {
       if (!displayedModel.value || displayedModel.value.id !== model.id) {
         displayedModel.value = model;
       }
     };
-
-    onMounted(() => {
-      displayedModel.value = props.models.length > 0 ? props.models[0] : null;
-    });
 
     return {
       // References
