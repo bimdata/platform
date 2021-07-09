@@ -3,7 +3,7 @@
 > :warning: **Important Note**
 >
 > This project is the next generation BIMData platform.
-> It is still under development and we do not intend to provide any support
+> It is still under active development and we do not intend to provide any support
 > on this project for now.
 >
 > If you want to fork/work/give feedback on BIMData platform please go to the [currently
@@ -14,10 +14,27 @@
 This repository host the BIMData Platform project.
 The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.org/).
 
+## Pre-requisites
+
+You need:
+
+- Node v14+
+- Vue 3.x
+- [see platform-back for backend requirements](https://github.com/bimdata/platform-back)
+
 ## Install & Run
 
-Here are the instructions to get the platform up and running on your
-development environment:
+### Backend setup
+
+In order for the platform to work properly it should be able to interact with its backend service.
+The [platform-back](https://github.com/bimdata/platform-back) repository host the source code of the service.
+
+The backend is a python app built with [Django REST framework](https://www.django-rest-framework.org/).<br/>
+You should refer to the README to set it up on your development environment before moving to the application setup.
+
+### Application setup
+
+Here are the instructions to get the platform up and running on your development environment:
 
 - **(1)** Get the sources
 
@@ -91,5 +108,5 @@ A work in progress documentation is available [here](https://github.com/bimdata/
 
 The content of this repository is published under the terms of the [GNU LGPL-3.0](./LICENSE).
 
-> You are free to copy, modify, and distribute BIMData Platform under the terms of the LGPL 3.0.  
+> You are free to copy, modify, and distribute BIMData Platform under the terms of the LGPL 3.0.<br/>
 > See LICENSE for more details.

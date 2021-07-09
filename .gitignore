@@ -1,22 +1,5 @@
+# Mac OS system files
 .DS_Store
-node_modules
-/dist
-
-/tests/e2e/downloads/
-/tests/e2e/screenshots/
-/tests/e2e/videos/
-
-
-# local env files
-.env
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
 
 # Editor directories and files
 .idea
@@ -27,5 +10,24 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-# Cypress env file
+# Dependencies files
+node_modules
+# Build ouput files
+/dist
+
+# Log files
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Cypress env and output files
 cypress.env.json
+/tests/e2e/downloads/
+/tests/e2e/screenshots/
+/tests/e2e/videos/
