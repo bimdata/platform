@@ -26,13 +26,7 @@
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
         {{ $t("FilesDeleteModal.cancelButtonText") }}
       </BIMDataButton>
-      <BIMDataButton
-        color="high"
-        fill
-        radius
-        width="120px"
-        @click="removeFiles"
-      >
+      <BIMDataButton color="high" fill radius width="120px" @click="submit">
         {{ $t("FilesDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
@@ -62,14 +56,14 @@ export default {
   setup(props, { emit }) {
     const { softUpdateFileStructure, deleteFiles } = useFiles();
 
-    const removeFiles = () => {
+    const submit = () => {
       softUpdateFileStructure("delete", props.files);
       deleteFiles(props.project, props.files);
       emit("close");
     };
 
     return {
-      removeFiles
+      submit
     };
   }
 };

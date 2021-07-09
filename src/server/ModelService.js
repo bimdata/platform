@@ -17,7 +17,6 @@ class ModelService {
   }
 
   updateModels(project, models) {
-    models = [].concat(models);
     return Promise.all(
       models.map(model =>
         apiClient.ifcApi.updateIfc({
@@ -31,7 +30,6 @@ class ModelService {
   }
 
   deleteModels(project, models) {
-    models = [].concat(models);
     return Promise.all(
       models.map(model =>
         apiClient.ifcApi.deleteIfc({
@@ -57,7 +55,6 @@ class ModelService {
   }
 
   createModelElements(project, model, elements) {
-    elements = [].concat(elements);
     return apiClient.ifcApi.createElement({
       cloudPk: project.cloud.id,
       projectPk: project.id,
@@ -67,7 +64,6 @@ class ModelService {
   }
 
   updateModelElements(project, model, elements) {
-    elements = [].concat(elements);
     return apiClient.ifcApi.bulkUpdateElements({
       cloudPk: project.cloud.id,
       projectPk: project.id,
@@ -77,7 +73,6 @@ class ModelService {
   }
 
   deleteModelElements(project, model, elements) {
-    elements = [].concat(elements);
     return Promise.all(
       elements.map(element =>
         apiClient.ifcApi.deleteElement({
@@ -90,9 +85,8 @@ class ModelService {
     );
   }
 
-  createModelElementPsetProperties(project, model, element, pset, properties) {
-    properties = [].concat(properties);
-    properties = properties.map(({ name, value }) => ({
+  createModelElementPsetProperties(project, model, element, pset, props) {
+    const properties = props.map(({ name, value }) => ({
       definition: { name },
       value
     }));
@@ -110,9 +104,8 @@ class ModelService {
     );
   }
 
-  updateModelElementPsetProperties(project, model, element, pset, properties) {
-    properties = [].concat(properties);
-    properties = properties.map(({ id, name, value }) => ({
+  updateModelElementPsetProperties(project, model, element, pset, props) {
+    const properties = props.map(({ id, name, value }) => ({
       id,
       definition: { name },
       value
@@ -143,10 +136,9 @@ class ModelService {
     );
   }
 
-  deleteModelElementPsetProperties(project, model, element, pset, properties) {
-    properties = [].concat(properties);
+  deleteModelElementPsetProperties(project, model, element, pset, props) {
     return Promise.all(
-      properties.map(property =>
+      props.map(property =>
         apiClient.ifcApi.removeElementPropertySetProperty({
           cloudPk: project.cloud.id,
           projectPk: project.id,
@@ -159,33 +151,33 @@ class ModelService {
     );
   }
 
-  createModelElementAttrProperties(project, model, element, properties) {
+  createModelElementAttrProperties(project, model, element, props) {
     return this.createModelElementPsetProperties(
       project,
       model,
       element,
       element.attributes,
-      properties
+      props
     );
   }
 
-  updateModelElementAttrProperties(project, model, element, properties) {
+  updateModelElementAttrProperties(project, model, element, props) {
     return this.updateModelElementPsetProperties(
       project,
       model,
       element,
       element.attributes,
-      properties
+      props
     );
   }
 
-  deleteModelElementAttrProperties(project, model, element, properties) {
+  deleteModelElementAttrProperties(project, model, element, props) {
     return this.deleteModelElementPsetProperties(
       project,
       model,
       element,
       element.attributes,
-      properties
+      props
     );
   }
 

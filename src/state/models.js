@@ -27,21 +27,25 @@ const updateModelName = async (project, model, name) => {
   // In order to update a model name we have to update the name
   // of its assiociated document.
   const { updateDocuments } = useFiles();
-  const [newDocument] = await updateDocuments(project, {
-    id: model.documentId,
-    ifcId: model.id,
-    name
-  });
+  const [newDocument] = await updateDocuments(project, [
+    {
+      id: model.documentId,
+      ifcId: model.id,
+      name
+    }
+  ]);
 
   return { ...model, name, document: newDocument };
 };
 
 const softUpdateModels = models => {
-  for (const model of [models].flat()) {
-    state.projectModels = state.projectModels.map(m =>
+  let projectModels = state.projectModels.slice();
+  for (const model of models) {
+    projectModels = projectModels.map(m =>
       m.id === model.id ? { ...m, ...model } : m
     );
   }
+  state.projectModels = projectModels;
   return models;
 };
 
@@ -52,7 +56,7 @@ const mergeModels = async (project, models, name) => {
 const deleteModels = async (project, models) => {
   // Delete associated documents
   const { softUpdateFileStructure } = useFiles();
-  const modelDocs = [models].flat().map(model => model.document);
+  const modelDocs = models.map(model => model.document);
   softUpdateFileStructure("delete", modelDocs);
 
   await ModelService.deleteModels(project, models);
@@ -62,7 +66,7 @@ const deleteModels = async (project, models) => {
 };
 
 const softDeleteModels = models => {
-  const modelIDs = [models].flat().map(m => m.id);
+  const modelIDs = models.map(m => m.id);
   state.projectModels = state.projectModels.filter(
     model => !modelIDs.includes(model.id)
   );
@@ -123,7 +127,9 @@ const createModelLocation = async (
       ]
     }
   };
-  const newSite = await ModelService.createModelElements(project, model, site);
+  const newSite = await ModelService.createModelElements(project, model, [
+    site
+  ]);
   return newSite;
 };
 
@@ -145,7 +151,7 @@ const updateModelLocation = async (
   refLatitudeID = (
     properties.find(p => p.definition.name === "RefLatitude") || {}
   ).id;
-  const data = [
+  const props = [
     { id: siteAddressID, name: "SiteAddress", value: address },
     { id: refLongitudeID, name: "RefLongitude", value: longitude },
     { id: refLatitudeID, name: "RefLatitude", value: latitude }
@@ -154,7 +160,7 @@ const updateModelLocation = async (
     project,
     model,
     site,
-    data
+    props
   );
   return newProperties;
 };
