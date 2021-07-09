@@ -43,6 +43,7 @@
         @delete="openDeleteModal([$event])"
         @download="downloadModels([$event])"
         @selection-changed="setSelection"
+        @unarchive="unarchiveModels([$event])"
       />
 
       <transition name="fade">

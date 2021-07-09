@@ -55,13 +55,18 @@
           {{ $t("ModelActionsCell.renameButtonText") }}
         </BIMDataButton>
         <BIMDataButton
-          v-if="!model.archived"
           class="model-actions-cell__menu__btn"
           ghost
           squared
-          @click="onClick('archive')"
+          @click="onClick(model.archived ? 'unarchive' : 'archive')"
         >
-          {{ $t("ModelActionsCell.archiveButtonText") }}
+          {{
+            $t(
+              `ModelActionsCell.${
+                model.archived ? "unarchiveButtonText" : "archiveButtonText"
+              }`
+            )
+          }}
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"

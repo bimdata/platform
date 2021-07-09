@@ -36,6 +36,7 @@
         @archive="$emit('archive', $event)"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
+        @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
       />
     </template>
@@ -71,12 +72,7 @@ export default {
       required: true
     }
   },
-  emits: [
-    "archive",
-    "delete",
-    "download",
-    "selection-changed"
-  ],
+  emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
     const { locale, t } = useI18n();
 

@@ -262,6 +262,7 @@ export default {
     addTagsButtonText: "Add tags",
     renameButtonText: "Rename",
     archiveButtonText: "Archive",
+    unarchiveButtonText: "Unarchive",
     deleteButtonText: "Delete"
   },
 
