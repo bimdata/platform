@@ -31,7 +31,6 @@
           @archive="archiveModels"
           @delete="openDeleteModal"
           @download="downloadModels"
-          @merge="openMergeModal"
           @unarchive="unarchiveModels"
         />
       </transition>
@@ -55,14 +54,14 @@
         />
       </transition>
 
-      <transition name="fade">
+      <!-- <transition name="fade">
         <ModelsMergeModal
           v-if="showMergeModal"
           :project="project"
           :models="modelsToMerge"
           @close="closeMergeModal"
         />
-      </transition>
+      </transition> -->
     </template>
   </BIMDataCard>
 </template>
@@ -77,12 +76,12 @@ import { segregate } from "@/utils/models";
 import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
 import ModelsActionBar from "./models-action-bar/ModelsActionBar";
 import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
-import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
+// import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
 
 const tabsDef = [
   { id: "ifc" },
   { id: "split" },
-  { id: "merge" },
+  // { id: "merge" },
   { id: "archive" }
 ];
 
@@ -91,7 +90,7 @@ export default {
     ModelsTable,
     ModelsActionBar,
     ModelsDeleteModal,
-    ModelsMergeModal
+    // ModelsMergeModal
   },
   props: {
     project: {
@@ -126,7 +125,7 @@ export default {
     const models = reactive({
       ifc: [],
       split: [],
-      merge: [],
+      // merge: [],
       archive: []
     });
     const displayedModels = ref([]);
@@ -155,16 +154,16 @@ export default {
       showDeleteModal.value = false;
     };
 
-    const modelsToMerge = ref([]);
-    const showMergeModal = ref(false);
-    const openMergeModal = models => {
-      modelsToMerge.value = models;
-      showMergeModal.value = true;
-    };
-    const closeMergeModal = () => {
-      modelsToMerge.value = [];
-      showMergeModal.value = false;
-    };
+    // const modelsToMerge = ref([]);
+    // const showMergeModal = ref(false);
+    // const openMergeModal = models => {
+    //   modelsToMerge.value = models;
+    //   showMergeModal.value = true;
+    // };
+    // const closeMergeModal = () => {
+    //   modelsToMerge.value = [];
+    //   showMergeModal.value = false;
+    // };
 
     const archiveModels = async models => {
       models = models.map(model => ({ ...model, archived: true }));
@@ -191,18 +190,18 @@ export default {
       displayedModels,
       models,
       modelsToDelete,
-      modelsToMerge,
+      // modelsToMerge,
       selection,
       showDeleteModal,
-      showMergeModal,
+      // showMergeModal,
       tabs,
       // Methods
       archiveModels,
       downloadModels,
       closeDeleteModal,
-      closeMergeModal,
+      // closeMergeModal,
       openDeleteModal,
-      openMergeModal,
+      // openMergeModal,
       selectTab,
       setSelection,
       unarchiveModels

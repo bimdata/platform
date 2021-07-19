@@ -43,7 +43,7 @@
       <BIMDataIcon name="download" size="s" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
-    <BIMDataButton
+    <!-- <BIMDataButton
       width="120px"
       ghost
       squared
@@ -52,7 +52,7 @@
     >
       <BIMDataIcon name="union" size="xs" />
       <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>
-    </BIMDataButton>
+    </BIMDataButton> -->
   </div>
 </template>
 
@@ -68,7 +68,7 @@ export default {
       default: () => []
     }
   },
-  emits: ["delete", "archive", "download", "merge", "unarchive"]
+  emits: ["delete", "archive", "download", "unarchive"]
 };
 </script>
 
