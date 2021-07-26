@@ -33,18 +33,14 @@
           radius
           @click="openCreationForm"
         >
-          <BIMDataIcon name="plus" size="xxxs" />
+          <BIMDataIcon name="plus" size="xxxs" margin="0 6 0 0" />
           <span>{{ $t("UserSpaces.createButtonText") }}</span>
         </BIMDataButton>
       </template>
     </ViewHeader>
 
     <ResponsiveGrid itemWidth="215px">
-      <SpaceCreationCard
-        v-if="showCreationForm"
-        :key="-1"
-        @close="closeCreationForm"
-      />
+      <SpaceCreationCard v-if="showCreationForm" :key="-1" @close="closeCreationForm" />
       <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
     </ResponsiveGrid>
   </div>
@@ -68,7 +64,7 @@ export default {
     ViewHeader,
     AppBreadcrumb,
     SpaceCard,
-    SpaceCreationCard
+    SpaceCreationCard,
   },
   setup() {
     const { userSpaces } = useSpaces();
@@ -76,18 +72,15 @@ export default {
     const {
       isOpen: showCreationForm,
       open: openCreationForm,
-      close: closeCreationForm
+      close: closeCreationForm,
     } = useToggle();
 
     const { filteredList: displayedSpaces, searchText } = useListFilter(
       userSpaces,
-      space => space.name
+      (space) => space.name
     );
 
-    const { sortToggle: sortSpaces } = useListSort(
-      displayedSpaces,
-      space => space.name
-    );
+    const { sortToggle: sortSpaces } = useListSort(displayedSpaces, (space) => space.name);
 
     return {
       // References
@@ -97,9 +90,9 @@ export default {
       // Methods
       closeCreationForm,
       openCreationForm,
-      sortSpaces
+      sortSpaces,
     };
-  }
+  },
 };
 </script>
 

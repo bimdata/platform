@@ -1,17 +1,14 @@
 <template>
   <div class="breadcrumb-selector" v-click-away="close">
     <div class="breadcrumb-selector__header">
-      <TextBox
-        :text="header"
-        :maxLength="24"
-        @click="$emit('header-clicked')"
-      />
+      <TextBox :text="header" :maxLength="24" @click="$emit('header-clicked')" />
       <BIMDataIcon
         class="breadcrumb-selector__header__icon"
         name="chevron"
         size="xxs"
         :rotate="isOpen ? 90 : 0"
         @click="toggle"
+        margin="0 0 0 6"
       />
     </div>
     <transition name="slide-fade-down">
@@ -29,12 +26,7 @@
             :key="item[keyProp]"
             @click="() => selectItem(item)"
           >
-            <TextBox
-              :text="item[labelProp]"
-              :maxLength="24"
-              cutOn="end"
-              :tooltip="false"
-            />
+            <TextBox :text="item[labelProp]" :maxLength="24" cutOn="end" :tooltip="false" />
           </div>
         </transition-group>
       </div>
@@ -55,25 +47,25 @@ export default {
   components: {
     BIMDataIcon,
     BIMDataSearch,
-    TextBox
+    TextBox,
   },
   props: {
     list: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     keyProp: {
       type: String,
-      default: "id"
+      default: "id",
     },
     labelProp: {
       type: String,
-      required: true
+      required: true,
     },
     header: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   emits: ["header-clicked", "item-selected"],
   setup(props, { emit }) {
@@ -81,10 +73,10 @@ export default {
 
     const { filteredList: displayedItems, searchText } = useListFilter(
       computed(() => props.list),
-      item => item[props.labelProp]
+      (item) => item[props.labelProp]
     );
 
-    const selectItem = item => {
+    const selectItem = (item) => {
       close();
       emit("item-selected", item);
     };
@@ -97,9 +89,9 @@ export default {
       // Methods
       close,
       selectItem,
-      toggle
+      toggle,
     };
-  }
+  },
 };
 </script>
 

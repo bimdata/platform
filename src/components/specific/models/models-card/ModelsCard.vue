@@ -2,7 +2,7 @@
   <BIMDataCard class="models-card">
     <template #left>
       <BIMDataButton color="primary" fill radius @click="goToModelViewer">
-        <BIMDataIcon name="show" size="xs" />
+        <BIMDataIcon name="show" size="xs" margin="0 6 0 0" />
         <span>{{ $t("ModelsCard.openButtonText") }}</span>
       </BIMDataButton>
     </template>
@@ -21,17 +21,17 @@ import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelP
 
 export default {
   components: {
-    ModelsCardModelPreview
+    ModelsCardModelPreview,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     models: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["model-changed"],
   setup(props, { emit }) {
@@ -46,7 +46,7 @@ export default {
       { immediate: true }
     );
 
-    const onModelChange = model => {
+    const onModelChange = (model) => {
       if (!currentModel.value || currentModel.value.id !== model.id) {
         currentModel.value = model;
         emit("model-changed", model);
@@ -59,17 +59,17 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelIDs: currentModel.value.id
-        }
+          modelIDs: currentModel.value.id,
+        },
       });
     };
 
     return {
       // Methods
       goToModelViewer,
-      onModelChange
+      onModelChange,
     };
-  }
+  },
 };
 </script>
 
