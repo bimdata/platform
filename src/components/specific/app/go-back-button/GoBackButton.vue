@@ -1,12 +1,6 @@
 <template>
-  <BIMDataButton
-    data-test="btn-back"
-    class="go-back-button"
-    ghost
-    radius
-    @click="goBack"
-  >
-    <BIMDataIcon class="go-back-button__icon" name="arrow" size="xxs" />
+  <BIMDataButton data-test="btn-back" class="go-back-button" ghost radius @click="goBack">
+    <BIMDataIcon class="go-back-button__icon" name="arrow" size="xxs" margin="0 6 0 0" />
     <span>{{ $t("GoBackButton.text") }}</span>
   </BIMDataButton>
 </template>
@@ -27,13 +21,13 @@ const DEFAULT_PREVIOUS_VIEWS = {
   [routeNames.projectBoard]: routeNames.spaceBoard,
   [routeNames.modelViewer]: routeNames.projectBoard,
   [routeNames.projectGroups]: routeNames.projectBoard,
-  [routeNames.groupBoard]: routeNames.projectGroups
+  [routeNames.groupBoard]: routeNames.projectGroups,
 };
 
 export default {
   components: {
     BIMDataButton,
-    BIMDataIcon
+    BIMDataIcon,
   },
   setup() {
     const router = useRouter();
@@ -47,15 +41,15 @@ export default {
         sessionStorage.setItem(HAS_PREVIOUS_STORAGE_KEY, "yes");
         router.push({
           name: DEFAULT_PREVIOUS_VIEWS[route.name],
-          params: route.params
+          params: route.params,
         });
       }
     };
 
     return {
-      goBack
+      goBack,
     };
-  }
+  },
 };
 </script>
 

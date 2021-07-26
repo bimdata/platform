@@ -10,14 +10,8 @@
       </BIMDataButton>
     </div>
     <div class="folder-access-manager__head">
-      <BIMDataButton
-        width="100%"
-        color="primary"
-        fill
-        radius
-        @click="goToProjectGroups"
-      >
-        <BIMDataIcon name="group" size="s" />
+      <BIMDataButton width="100%" color="primary" fill radius @click="goToProjectGroups">
+        <BIMDataIcon name="group" size="s" margin="0 6 0 0" />
         <span>{{ $t("FolderAccessManager.groupsButtonText") }}</span>
       </BIMDataButton>
       <GroupAccessSelector />
@@ -34,11 +28,7 @@
           {{ $t("FolderAccessManager.membersHeader") }}
         </span>
       </div>
-      <GroupAccessSelector
-        v-for="group of groups"
-        :key="group.id"
-        :group="group"
-      />
+      <GroupAccessSelector v-for="group of groups" :key="group.id" :group="group" />
     </div>
   </div>
 </template>
@@ -51,21 +41,21 @@ import GroupAccessSelector from "./group-access-selector/GroupAccessSelector";
 
 export default {
   components: {
-    GroupAccessSelector
+    GroupAccessSelector,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     folder: {
       type: Object,
-      required: true
+      required: true,
     },
     groups: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["close"],
   setup(props) {
@@ -76,16 +66,16 @@ export default {
         name: routeNames.projectGroups,
         params: {
           spaceID: props.project.cloud.id,
-          projectID: props.project.id
-        }
+          projectID: props.project.id,
+        },
       });
     };
 
     return {
       // Methods
-      goToProjectGroups
+      goToProjectGroups,
     };
-  }
+  },
 };
 </script>
 

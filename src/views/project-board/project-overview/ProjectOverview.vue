@@ -9,7 +9,7 @@
         radius
         @click="toggleFileUploader"
       >
-        <BIMDataIcon :name="showFileUploader ? 'close' : 'plus'" size="xxxs" />
+        <BIMDataIcon :name="showFileUploader ? 'close' : 'plus'" size="xxxs" margin="0 6 0 0" />
         <span>{{
           showFileUploader
             ? $t("ProjectOverview.closeFileUploadButtonText")

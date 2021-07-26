@@ -1,32 +1,15 @@
 <template>
   <div class="files-action-bar">
-    <BIMDataButton
-      width="120px"
-      color="high"
-      ghost
-      squared
-      @click="$emit('delete', files)"
-    >
-      <BIMDataIcon name="delete" size="xs" />
+    <BIMDataButton width="120px" color="high" ghost squared @click="$emit('delete', files)">
+      <BIMDataIcon name="delete" size="xs" margin="0 6 0 0" />
       <span>{{ $t("FilesActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
-    <BIMDataButton
-      width="120px"
-      color="secondary"
-      ghost
-      squared
-      @click="toggleFolderSelector"
-    >
-      <BIMDataIcon name="folderMove" size="s" />
+    <BIMDataButton width="120px" color="secondary" ghost squared @click="toggleFolderSelector">
+      <BIMDataIcon name="folderMove" size="s" margin="0 6 0 0" />
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
-    <BIMDataButton
-      width="120px"
-      ghost
-      squared
-      @click="$emit('download', files)"
-    >
-      <BIMDataIcon name="download" size="s" />
+    <BIMDataButton width="120px" ghost squared @click="$emit('download', files)">
+      <BIMDataIcon name="download" size="s" margin="0 6 0 0" />
       <span>{{ $t("FilesActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
 
@@ -50,17 +33,17 @@ import FolderSelector from "@/components/specific/files/folder-selector/FolderSe
 
 export default {
   components: {
-    FolderSelector
+    FolderSelector,
   },
   props: {
     fileStructure: {
       type: Object,
-      required: true
+      required: true,
     },
     files: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   emits: ["delete", "download", "move"],
   setup() {
@@ -77,9 +60,9 @@ export default {
       showFolderSelector,
       // Methods
       closeFolderSelector,
-      toggleFolderSelector
+      toggleFolderSelector,
     };
-  }
+  },
 };
 </script>
 
