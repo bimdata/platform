@@ -9,6 +9,7 @@
         :error="error"
         :errorMessage="$t('InvitationForm.emailInputErrorMessage')"
         @keyup.enter.stop="submit"
+        margin="0px"
       />
       <BIMDataSelect
         v-if="project"
