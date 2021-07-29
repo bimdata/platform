@@ -5,7 +5,7 @@
 
     &:deep() {
       .bimdata-card__content {
-        height: 100%;
+        height: calc(100% - 37px);
         display: flex;
         flex-direction: column;
         justify-content: center;
