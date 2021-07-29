@@ -13,6 +13,7 @@
       :errorMessage="$t('FolderCreationForm.nameInputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="submit"
+      margin="24px 0px"
     />
     <BIMDataButton
       class="folder-creation-form__btn-cancel"
@@ -44,12 +45,12 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     folder: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["close", "success", "error"],
   setup(props, { emit }) {
@@ -69,7 +70,7 @@ export default {
         try {
           await createFolder(props.project, {
             parentId: props.folder.id,
-            name: name.value
+            name: name.value,
           });
           reset();
           emit("success");
@@ -98,9 +99,9 @@ export default {
       nameInput,
       // Methods
       close,
-      submit
+      submit,
     };
-  }
+  },
 };
 </script>
 
