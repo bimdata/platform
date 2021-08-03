@@ -117,7 +117,7 @@ export default {
         }
         emit("success");
       } catch (error) {
-        console.log(error);
+        console.warn(error);
         emit("error", error);
       } finally {
         submitLoading.value = false;
