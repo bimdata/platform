@@ -3,7 +3,11 @@
     <BIMDataDropdownMenu width="0">
       <template #header>
         <div class="app-header-menu__btn">
-          <UserAvatar class="app-header-menu__btn__avatar" :user="user" size="34" />
+          <UserAvatar
+            class="app-header-menu__btn__avatar"
+            :user="user"
+            size="34"
+          />
           <span data-test="user-name" class="app-header-menu__btn__fullname">
             {{ `${user.firstname} ${user.lastname}` }}
           </span>
@@ -43,7 +47,7 @@
             radius
             @click="signOut"
           >
-            <BIMDataIcon name="logout" size="xxs" margin="0 6 0 0" />
+            <BIMDataIcon name="logout" size="xxs" margin="0 6px 0 0" />
             <span>{{ $t("AppHeaderMenu.logoutButtonText") }}</span>
           </BIMDataButton>
 
@@ -71,7 +75,7 @@ import LanguageSelector from "./language-selector/LanguageSelector";
 export default {
   components: {
     UserAvatar,
-    LanguageSelector,
+    LanguageSelector
   },
   setup() {
     const { signOut } = useAuth();
@@ -96,7 +100,7 @@ export default {
     const {
       isOpen: showLanguageSelector,
       open: openLanguageSelector,
-      close: closeLanguageSelector,
+      close: closeLanguageSelector
     } = useToggle();
 
     return {
@@ -110,9 +114,9 @@ export default {
       openLanguageSelector,
       openMarketplace,
       openOldPlatform,
-      signOut,
+      signOut
     };
-  },
+  }
 };
 </script>
 

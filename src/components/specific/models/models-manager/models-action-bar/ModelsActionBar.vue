@@ -7,7 +7,7 @@
       squared
       @click="$emit('delete', models)"
     >
-      <BIMDataIcon name="delete" size="xs" margin="0 6 0 0" />
+      <BIMDataIcon name="delete" size="xs" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
 
@@ -18,7 +18,7 @@
         squared
         @click="$emit('unarchive', models)"
       >
-        <BIMDataIcon name="unarchive" size="xs" margin="0 6 0 0" />
+        <BIMDataIcon name="unarchive" size="xs" margin="0 6px 0 0" />
         <span>{{ $t("ModelsActionBar.unarchiveButtonText") }}</span>
       </BIMDataButton>
     </template>
@@ -29,7 +29,7 @@
         squared
         @click="$emit('archive', models)"
       >
-        <BIMDataIcon name="archive" size="xs" margin="0 6 0 0" />
+        <BIMDataIcon name="archive" size="xs" margin="0 6px 0 0" />
         <span>{{ $t("ModelsActionBar.archiveButtonText") }}</span>
       </BIMDataButton>
     </template>
@@ -40,7 +40,7 @@
       squared
       @click="$emit('download', models)"
     >
-      <BIMDataIcon name="download" size="s" margin="0 6 0 0" />
+      <BIMDataIcon name="download" size="s" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
     <!-- <BIMDataButton
@@ -50,7 +50,7 @@
       :disabled="models.length < 2"
       @click="$emit('merge', models)"
     >
-      <BIMDataIcon name="union" size="xs" margin="0 6 0 0" />
+      <BIMDataIcon name="union" size="xs" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>
     </BIMDataButton> -->
   </div>

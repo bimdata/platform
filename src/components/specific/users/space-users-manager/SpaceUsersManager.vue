@@ -26,8 +26,14 @@
       </template>
 
       <template v-else>
-        <BIMDataButton outline radius icon color="primary" @click="openInvitationForm">
-          <BIMDataIcon name="plus" size="xxxs" margin="0 6 0 0" />
+        <BIMDataButton
+          outline
+          radius
+          icon
+          color="primary"
+          @click="openInvitationForm"
+        >
+          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
           <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
         </BIMDataButton>
       </template>
@@ -69,21 +75,21 @@ export default {
   components: {
     InvitationCard,
     InvitationForm,
-    UserCard,
+    UserCard
   },
   props: {
     space: {
       type: Object,
-      required: true,
+      required: true
     },
     users: {
       type: Array,
-      required: true,
+      required: true
     },
     invitations: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const { locale, t } = useI18n();
@@ -95,12 +101,12 @@ export default {
       () => {
         tabs.value = [
           { id: "admins", label: t("SpaceUsersManager.tabs.admins") },
-          { id: "users", label: t("SpaceUsersManager.tabs.users") },
+          { id: "users", label: t("SpaceUsersManager.tabs.users") }
         ];
       },
       { immediate: true }
     );
-    const selectTab = (tab) => {
+    const selectTab = tab => {
       currentTab.value = tab.id;
     };
 
@@ -109,13 +115,19 @@ export default {
     watch(
       () => props.users,
       () => {
-        admins.value = props.users.filter((user) => user.cloudRole === SPACE_ROLE.ADMIN);
-        users.value = props.users.filter((user) => user.cloudRole === SPACE_ROLE.USER);
+        admins.value = props.users.filter(
+          user => user.cloudRole === SPACE_ROLE.ADMIN
+        );
+        users.value = props.users.filter(
+          user => user.cloudRole === SPACE_ROLE.USER
+        );
       },
       { immediate: true }
     );
 
-    const list = computed(() => (currentTab.value === "admins" ? admins.value : users.value));
+    const list = computed(() =>
+      currentTab.value === "admins" ? admins.value : users.value
+    );
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
       list,
@@ -143,9 +155,9 @@ export default {
       // Methods
       closeInvitationForm,
       openInvitationForm,
-      selectTab,
+      selectTab
     };
-  },
+  }
 };
 </script>
 

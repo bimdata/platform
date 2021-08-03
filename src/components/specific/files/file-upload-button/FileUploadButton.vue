@@ -9,7 +9,7 @@
     @click="selectFile"
   >
     <slot>
-      <BIMDataIcon name="addFile" size="xs" margin="0 6 0 0" />
+      <BIMDataIcon name="addFile" size="xs" margin="0 6px 0 0" />
       <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
     </slot>
     <input

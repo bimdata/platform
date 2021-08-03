@@ -8,7 +8,7 @@
         class="dashboard-info-tile__head__icon"
         name="information"
         size="s"
-        margin="0 0 0 6"
+        margin="0 0 0 6px"
       />
     </div>
     <div class="dashboard-info-tile__body">
@@ -26,16 +26,16 @@ export default {
 
     const browserName = name
       .split("-")
-      .map((s) => `${s[0].toUpperCase()}${s.slice(1)}`)
+      .map(s => `${s[0].toUpperCase()}${s.slice(1)}`)
       .join(" ");
 
     return {
       // References
       browserName,
       browserVersion,
-      os,
+      os
     };
-  },
+  }
 };
 </script>
 

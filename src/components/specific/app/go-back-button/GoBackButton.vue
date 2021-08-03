@@ -10,7 +10,7 @@
       class="go-back-button__icon"
       name="arrow"
       size="xxs"
-      margin="0 6 0 0"
+      margin="0 6px 0 0"
     />
     <span>{{ $t("GoBackButton.text") }}</span>
   </BIMDataButton>

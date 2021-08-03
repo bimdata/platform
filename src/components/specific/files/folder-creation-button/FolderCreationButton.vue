@@ -9,7 +9,7 @@
       radius
       @click="toggle"
     >
-      <BIMDataIcon name="addFolder" size="xs" margin="0 6 0 0" />
+      <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
       <span>{{ $t("FolderCreationButton.buttonText") }}</span>
     </BIMDataButton>
 
@@ -33,25 +33,25 @@ import FolderCreationForm from "@/components/specific/files/folder-creation-form
 
 export default {
   components: {
-    FolderCreationForm,
+    FolderCreationForm
   },
   props: {
     width: {
       type: String,
-      default: "32px",
+      default: "32px"
     },
     height: {
       type: String,
-      default: "32px",
+      default: "32px"
     },
     project: {
       type: Object,
-      required: true,
+      required: true
     },
     folder: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     const showCreationForm = ref(false);
@@ -67,9 +67,9 @@ export default {
       showCreationForm,
       // Methods
       close,
-      toggle,
+      toggle
     };
-  },
+  }
 };
 </script>
 

@@ -12,7 +12,7 @@
         size="xxs"
         :rotate="isOpen ? 90 : 0"
         @click="toggle"
-        margin="0 0 1 6"
+        margin="0 0 1px 6px"
       />
     </div>
     <transition name="slide-fade-down">

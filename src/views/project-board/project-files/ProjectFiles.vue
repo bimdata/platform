@@ -9,7 +9,7 @@
         radius
         @click="goToProjectGroups"
       >
-        <BIMDataIcon name="group" size="s" margin="0 6 0 0" />
+        <BIMDataIcon name="group" size="s" margin="0 6px 0 0" />
         <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
       </BIMDataButton> -->
     </app-slot-content>
@@ -39,7 +39,7 @@ import FilesManager from "@/components/specific/files/files-manager/FilesManager
 export default {
   components: {
     AppSlotContent,
-    FilesManager,
+    FilesManager
   },
   setup() {
     const router = useRouter();
@@ -58,8 +58,8 @@ export default {
         name: routeNames.projectGroups,
         params: {
           spaceID: currentProject.value.cloud.id,
-          projectID: currentProject.value.id,
-        },
+          projectID: currentProject.value.id
+        }
       });
     };
 
@@ -70,9 +70,9 @@ export default {
       project: currentProject,
       // Methods
       goToProjectGroups,
-      reloadFileStructure,
+      reloadFileStructure
     };
-  },
+  }
 };
 </script>
 
