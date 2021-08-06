@@ -1,12 +1,12 @@
 function createMock(spaceID, projectID, modelIDs = []) {
   const mock = [
     {
-      name: `space-${spaceID}-user`,
+      name: `space-${spaceID}-users`,
       path: `/cloud/${spaceID}/user`,
       data: `spaces/${spaceID}/users.json`
     },
     {
-      name: `space-${spaceID}-invitation`,
+      name: `space-${spaceID}-invitations`,
       path: `/cloud/${spaceID}/invitation`,
       data: `spaces/${spaceID}/invitations.json`
     },
@@ -71,9 +71,9 @@ const apiMocks = [
   { name: "spaces",   path: "/cloud",         data: "spaces.json"   },
   { name: "projects", path: "/user/projects", data: "projects.json" },
   ...createMock(100, 100, [1001, 1002]),
-  ...createMock(100, 101, []),
-  ...createMock(200, 200, []),
-  ...createMock(300, 300, [])
+  ...createMock(100, 101),
+  ...createMock(200, 200),
+  ...createMock(300, 300)
 ];
 
 const fileMocks = [
