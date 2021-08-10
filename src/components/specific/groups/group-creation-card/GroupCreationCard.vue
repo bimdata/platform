@@ -30,7 +30,7 @@
             data-test="input-create-name"
             class="group-creation-card__form__input"
             :placeholder="$t('GroupCreationCard.inputPlaceholder')"
-            v-model="newGroup.name"
+            v-model="groupName"
             :error="error"
             :errorMessage="$t('GroupCreationCard.inputErrorMessage')"
             @keyup.esc.stop="closeCreationForm"
@@ -68,8 +68,10 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
+import colors from "@/config/groupColors";
 import { useGroups } from "@/state/groups";
+import { getRandomElement } from "@/utils/random";
 
 export default {
   props: {
@@ -84,12 +86,15 @@ export default {
     const loading = ref(false);
     const nameInput = ref(null);
 
-    const newGroup = reactive({ name: "" });
+    const groupName = ref("");
     const error = ref(false);
     const submit = async () => {
-      if (newGroup.name) {
+      if (groupName.value) {
         loading.value = true;
-        await createGroup(props.project, newGroup);
+        await createGroup(props.project, {
+          name: groupName.value,
+          color: getRandomElement(colors)
+        });
         loading.value = false;
         closeCreationForm();
       } else {
@@ -104,7 +109,7 @@ export default {
       setTimeout(() => nameInput.value.focus(), 200);
     };
     const closeCreationForm = () => {
-      newGroup.name = "";
+      groupName.value = "";
       error.value = false;
       showCreationForm.value = false;
     };
@@ -114,7 +119,7 @@ export default {
       error,
       loading,
       nameInput,
-      newGroup,
+      groupName,
       showCreationForm,
       // Methods
       closeCreationForm,

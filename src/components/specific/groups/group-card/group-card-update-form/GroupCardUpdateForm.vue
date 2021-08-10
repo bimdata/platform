@@ -42,12 +42,16 @@ import { useGroups } from "@/state/groups";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { updateGroup } = useGroups();
 
@@ -60,13 +64,15 @@ export default {
       if (groupName.value) {
         try {
           loading.value = true;
-          await updateGroup(props.group.project, {
+          await updateGroup(props.project, {
             ...props.group,
             name: groupName.value
           });
           emit("success");
         } catch (error) {
-          emit("error", error);
+          console.error(error);
+        } finally {
+          loading.value = false;
         }
       } else {
         nameInput.value.focus();

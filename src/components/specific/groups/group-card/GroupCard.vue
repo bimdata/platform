@@ -38,7 +38,11 @@
       </BIMDataCard>
     </template>
     <template #back-face>
-      <GroupCardActionMenu :group="group" @close="closeMenu" />
+      <GroupCardActionMenu
+        :project="project"
+        :group="group"
+        @close="closeMenu"
+      />
     </template>
   </FlippableCard>
 </template>
@@ -59,6 +63,10 @@ export default {
     GroupCardActionMenu
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true

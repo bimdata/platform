@@ -34,6 +34,10 @@ import { useGroups } from "@/state/groups";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true
@@ -45,9 +49,15 @@ export default {
 
     const loading = inject("loading", false);
 
-    const removeGroup = () => {
-      loading.value = true;
-      deleteGroup(props.group);
+    const removeGroup = async () => {
+      try {
+        loading.value = true;
+        await deleteGroup(props.project, props.group);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        loading.value = false;
+      }
     };
 
     const close = () => {
