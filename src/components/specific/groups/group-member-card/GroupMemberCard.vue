@@ -1,6 +1,7 @@
 <template>
   <BIMDataCard class="group-member-card">
     <template #content>
+      <!--
       <BIMDataButton
         class="group-member-card__btn-menu"
         ghost
@@ -10,6 +11,7 @@
       >
         <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
       </BIMDataButton>
+      -->
       <UserAvatar :user="user" size="64" />
       <div class="group-member-card__info">
         <div class="group-member-card__info__name">

@@ -84,8 +84,8 @@ export default {
       router.push({
         name: routeNames.groupBoard,
         params: {
-          spaceID: props.group.project.cloud.id,
-          projectID: props.group.project.id,
+          spaceID: props.project.cloud.id,
+          projectID: props.project.id,
           groupID: props.group.id
         }
       });

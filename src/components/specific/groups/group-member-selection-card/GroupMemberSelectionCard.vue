@@ -9,7 +9,7 @@
         <div class="group-member-selection-card__selector">
           <div class="group-member-selection-card__selector__title">
             {{ $t("GroupMemberSelectionCard.title") }}
-            <BIMDataButton ghost rounded icon @click.stop="closeSelector">
+            <BIMDataButton ghost rounded icon @click="closeSelector">
               <BIMDataIcon name="close" size="xxs" />
             </BIMDataButton>
           </div>
@@ -18,7 +18,8 @@
             :label="$t('GroupMemberSelectionCard.selectorLabel')"
             :multi="true"
             :options="users"
-            optionKey="firstname"
+            optionKey="id"
+            optionLabelKey="firstname"
             v-model="members"
           />
           <div class="group-member-selection-card__selector__actions">
@@ -57,7 +58,8 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useToggle } from "@/composables/toggle";
 import { useGroups } from "@/state/groups";
 
 export default {
@@ -76,30 +78,36 @@ export default {
     }
   },
   setup(props) {
-    const { updateGroupMembers } = useGroups();
+    const { selectGroup, updateGroupMembers } = useGroups();
 
     const loading = ref(false);
-    const members = ref(props.group.members);
+    const {
+      isOpen: showSelector,
+      open: openSelector,
+      close: closeSelector
+    } = useToggle();
+
+    const members = ref([]);
+    watch(
+      () => props.group,
+      () => {
+        closeSelector();
+        members.value = props.group.members;
+      },
+      { immediate: true }
+    );
 
     const submit = async () => {
       try {
-        console.log("Members: ", members.value);
         loading.value = true;
         await updateGroupMembers(props.project, props.group, members.value);
+        selectGroup(props.group.id);
         closeSelector();
       } catch (error) {
-        // TODO
+        console.error(error);
       } finally {
         loading.value = false;
       }
-    };
-
-    const showSelector = ref(false);
-    const openSelector = () => {
-      showSelector.value = true;
-    };
-    const closeSelector = () => {
-      showSelector.value = false;
     };
 
     return {

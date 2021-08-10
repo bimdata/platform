@@ -1,11 +1,13 @@
 <template>
-  <div>{{ $t("BreadcrumbGroupSelector.text") }}</div>
+  <div style="cursor: pointer" @click="goToProjectGroups">
+    {{ $t("BreadcrumbGroupSelector.text") }}
+  </div>
   <div class="breadcrumb-separator"></div>
   <BreadcrumbSelector
     :list="groups"
     labelProp="name"
     :header="selectedGroup.name"
-    @item-selected="goToGroup"
+    @item-selected="goToGroupBoard"
   />
 </template>
 
@@ -13,6 +15,7 @@
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useGroups } from "@/state/groups";
+import { useProjects } from "@/state/projects";
 // Components
 import BreadcrumbSelector from "@/components/generic/breadcrumb-selector/BreadcrumbSelector";
 
@@ -22,14 +25,25 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const { currentProject } = useProjects();
     const { projectGroups, currentGroup } = useGroups();
 
-    const goToGroup = group => {
+    const goToProjectGroups = () => {
+      router.push({
+        name: routeNames.projectGroups,
+        params: {
+          spaceID: currentProject.value.cloud.id,
+          projectID: currentProject.value.id
+        }
+      });
+    };
+
+    const goToGroupBoard = group => {
       router.push({
         name: routeNames.groupBoard,
         params: {
-          spaceID: group.project.cloud.id,
-          projectID: group.project.id,
+          spaceID: currentProject.value.cloud.id,
+          projectID: currentProject.value.id,
           groupID: group.id
         }
       });
@@ -40,7 +54,8 @@ export default {
       selectedGroup: currentGroup,
       groups: projectGroups,
       // Methods
-      goToGroup
+      goToGroupBoard,
+      goToProjectGroups
     };
   }
 };

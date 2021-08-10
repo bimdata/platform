@@ -27,22 +27,27 @@ const updateGroup = async (project, group) => {
 const updateGroupMembers = async (project, group, members) => {
   const oldMemberIDs = group.members.map(member => member.id);
   const newMemberIDs = members.map(member => member.id);
+
+  // Add members that are in new list but were not in old list
   const membersToAdd = members.filter(
     member => !oldMemberIDs.includes(member.id)
-  );
-  const membersToRemove = group.members.filter(
-    member => !newMemberIDs.includes(member.id)
   );
   const addedMembers = await GroupService.addGroupMembers(
     project,
     group,
     membersToAdd
   );
+
+  // Remove members that were in old list but are not in new list
+  const membersToRemove = group.members.filter(
+    member => !newMemberIDs.includes(member.id)
+  );
   const removedMembers = await GroupService.removeGroupMembers(
     project,
     group,
     membersToRemove
   );
+
   softUpdateGroup({ ...group, members });
   return { addedMembers, removedMembers };
 };
