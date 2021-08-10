@@ -95,9 +95,11 @@ class FileStructureHandler {
       this.root = { id: fileStructure.id };
       this.nodeMap = createNodeMap(fileStructure);
     } else {
-      throw new Error(
-        "[FileStructureHandler] invalid init structure."
-      );
+      // throw new Error(
+      //   "[FileStructureHandler] invalid init structure."
+      // );
+      this.root = null;
+      this.nodeMap = new Map();
     }
   }
 
