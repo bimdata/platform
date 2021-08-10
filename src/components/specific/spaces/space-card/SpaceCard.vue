@@ -1,6 +1,6 @@
 <template>
   <BIMDataCard
-    data-test="space-card"
+    :data-test="`space-card space-card-${space.id}`"
     class="space-card"
     @click="goToSpaceBoard"
   >

@@ -67,7 +67,7 @@ function createFileNode(nodeMap, file) {
     },
 
     update(file) {
-      return Object.assign(this.file, { ...file });
+      return Object.assign(this.file, { ...file, children: [] });
     },
     addChild(child) {
       this._children.push(child.id);
@@ -83,17 +83,22 @@ function createFileNode(nodeMap, file) {
 class FileStructureHandler {
 
   constructor(fileStructure) {
-    if (fileStructure) {
-      this.init(fileStructure);
-    } else {
-      this.root = null;
-      this.nodeMap = new Map();
-    }
+    this.init(fileStructure);
   }
 
   init(fileStructure) {
-    this.root = { id: fileStructure.id };
-    this.nodeMap = createNodeMap(fileStructure);
+    if (
+      fileStructure
+      && fileStructure.id !== undefined
+      && fileStructure.id !== null
+    ) {
+      this.root = { id: fileStructure.id };
+      this.nodeMap = createNodeMap(fileStructure);
+    } else {
+      throw new Error(
+        "[FileStructureHandler] invalid init structure."
+      );
+    }
   }
 
   structure(root) {
@@ -104,6 +109,10 @@ class FileStructureHandler {
    * Structure accessors
    */
 
+  exists(file) {
+    return this.nodeMap.has(file.id);
+  }
+
   get(file, options = {}) {
     const fileData = (this.nodeMap.get(file.id) || {}).file;
     return fileData && options.children 
@@ -112,11 +121,12 @@ class FileStructureHandler {
   }
 
   parent(file) {
-    return this.get({ id: file.parentId })
+    return this.get({ id: file.parentId }) || null;
+    // return (this.nodeMap.get(file.id) || {}).parent.file;
   }
 
   children(file) {
-    return this.nodeMap.get(file.id).children.map(
+    return (this.nodeMap.get(file.id) || {}).children.map(
       child => child.file
     );
   }
@@ -138,10 +148,6 @@ class FileStructureHandler {
         child => this.descendants(child)
       )
     );
-  }
-
-  exists(file) {
-    return this.nodeMap.has(file.id);
   }
 
   siblings(file) {

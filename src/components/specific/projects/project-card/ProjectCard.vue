@@ -1,6 +1,6 @@
 <template>
   <FlippableCard
-    data-test="project-card"
+    :data-test="`project-card project-card-${project.id}`"
     class="project-card"
     :flipped="showMenu"
     v-click-away="closeMenu"

@@ -1,4 +1,4 @@
-describe("Dashboard Scenarios", () => {
+describe("Dashboard scenarios", () => {
 
   beforeEach(() => {
     cy.setupMocks();
@@ -18,11 +18,13 @@ describe("Dashboard Scenarios", () => {
   });
 
   it("Should be able to access a specific space", () => {
-    // TODO
+    cy.getHook("dashboard.space-card").first().click();
+    cy.location("pathname").should("match", /\/spaces\/(\d+)/);
   });
 
   it("Should be able to access a specific project", () => {
-    // TODO
+    cy.getHook("dashboard.project-card").first().click();
+    cy.location("pathname").should("match", /\/spaces\/(\d+)\/projects\/(\d+)/);
   });
 
 });

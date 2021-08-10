@@ -6,18 +6,9 @@
 import { apiMocks, fileMocks } from "./mocks";
 
 Cypress.Commands.add("getHook", names => {
-  const selector = names.split(".").map(name => `[data-test=${name}]`).join(" ");
+  const selector = names.split(".").map(name => `[data-test~=${name}]`).join(" ");
   // eslint-disable-next-line cypress/require-data-selectors
   return cy.get(selector);
-});
-
-Cypress.Commands.add("getView", view => {
-  // eslint-disable-next-line cypress/require-data-selectors
-  return cy.get(`.view.${view}`);
-});
-
-Cypress.Commands.add("shouldBeOnView", view => {
-  cy.getView(view).should("exist");
 });
 
 Cypress.Commands.add("login", () => {
@@ -40,6 +31,7 @@ Cypress.Commands.add("fileMock", ({ path, data }) => {
 });
 
 Cypress.Commands.add("setupMocks", () => {
+  cy.intercept(`${Cypress.env("BACKEND_BASE_URL")}/*`, req => req.reply({ statusCode: 200 }));
   apiMocks.forEach(cy.apiMock);
   fileMocks.forEach(cy.fileMock);
 });

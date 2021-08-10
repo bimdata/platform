@@ -26,6 +26,7 @@
 
           <template v-else-if="showUpdateForm">
             <SpaceCardUpdateForm
+              data-test="update-form"
               :space="space"
               @close="closeUpdateForm"
               @success="closeMenu"
@@ -33,7 +34,11 @@
           </template>
 
           <template v-else-if="showDeleteGuard">
-            <SpaceCardDeleteGuard :space="space" @close="closeDeleteGuard" />
+            <SpaceCardDeleteGuard
+              data-test="delete-guard"
+              :space="space"
+              @close="closeDeleteGuard"
+            />
           </template>
 
           <template v-else>
@@ -47,10 +52,16 @@
                 {{ $t("SpaceCardActionMenu.renameButtonText") }}
               </BIMDataButton>
               <SpaceCardImageButton
+                data-test="btn-update-image"
                 :space="space"
                 @upload-completed="closeMenu"
               />
-              <BIMDataButton ghost squared @click="removeImage">
+              <BIMDataButton
+                data-test="btn-delete-image"
+                ghost
+                squared
+                @click="removeImage"
+              >
                 {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
               </BIMDataButton>
               <BIMDataButton
