@@ -2,7 +2,8 @@
   <div class="project-files">
     <app-slot-content name="project-board-action">
       <BIMDataButton
-        data-test="btn-toggle-groups"
+        v-if="project.isAdmin"
+        data-test="btn-manage-groups"
         width="120px"
         color="primary"
         fill
@@ -20,6 +21,7 @@
       :fileStructure="fileStructure"
       :groups="groups"
       @file-uploaded="reloadFileStructure"
+      @folder-access-updated="reloadFileStructure"
     />
   </div>
 </template>

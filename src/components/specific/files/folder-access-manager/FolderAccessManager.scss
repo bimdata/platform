@@ -21,6 +21,10 @@
     gap: $spacing-unit;
     padding-bottom: $spacing-unit;
     border-bottom: 2px solid $color-tertiary-lightest;
+
+    &__search {
+      font-size: 1rem;
+    }
   }
 
   &__body {

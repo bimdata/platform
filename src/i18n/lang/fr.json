@@ -171,8 +171,8 @@
 
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
-    "groupsButtonText": "Gestion des groupes",
-    "nameHeader": "Nom",
+    "searchInputPlaceholder": "Rechercher un groupe",
+    "groupHeader": "Groupe",
     "rightsHeader": "Droits",
     "membersHeader": "Membres"
   },
@@ -198,7 +198,12 @@
   },
 
   "GroupAccessSelector": {
-    "defaultGroupName": "Tout le monde"
+    "defaultGroupName": "Tout le monde",
+    "options": {
+      "accessDenied": "Accès refusé",
+      "readOnly": "Lecture seule",
+      "readWrite": "Lecture / Écriture"
+    }
   },
 
   "GroupCardActionMenu": {

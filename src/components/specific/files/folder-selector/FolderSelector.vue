@@ -102,6 +102,7 @@
 
 <script>
 import { computed, ref, watch } from "vue";
+import { FILE_TYPE } from "@/utils/file-structure";
 
 export default {
   props: {
@@ -123,7 +124,8 @@ export default {
     const folders = computed(() =>
       currentFolder.value.children.filter(
         child =>
-          child.type === "Folder" && !props.files.some(f => child.id === f.id)
+          child.type === FILE_TYPE.FOLDER &&
+          !props.files.some(f => child.id === f.id)
       )
     );
 

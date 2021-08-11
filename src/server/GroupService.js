@@ -67,6 +67,18 @@ class GroupService {
       )
     );
   }
+
+  updateGroupPermission(project, folder, group, permission) {
+    return apiClient.collaborationApi.updateGroupFolder({
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      folderPk: folder.id,
+      id: group.id,
+      data: {
+        permission
+      }
+    });
+  }
 }
 
 const service = new GroupService();

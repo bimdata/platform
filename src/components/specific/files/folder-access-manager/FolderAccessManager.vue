@@ -3,29 +3,27 @@
     <div class="folder-access-manager__title">
       <BIMDataIcon name="key" size="l" />
       <span class="folder-access-manager__title__text">
-        {{ $t("FolderAccessManager.title") }}
+        {{ $t("FolderAccessManager.title") }} -
+        <TextBox :text="folder.name" :maxLength="16" />
       </span>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
         <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
       </BIMDataButton>
     </div>
     <div class="folder-access-manager__head">
-      <BIMDataButton
+      <BIMDataSearch
+        class="folder-access-manager__head__search"
         width="100%"
         color="primary"
-        fill
-        radius
-        @click="goToProjectGroups"
-      >
-        <BIMDataIcon name="group" size="s" margin="0 6px 0 0" />
-        <span>{{ $t("FolderAccessManager.groupsButtonText") }}</span>
-      </BIMDataButton>
-      <GroupAccessSelector />
+        :placeholder="$t('FolderAccessManager.searchInputPlaceholder')"
+        v-model="searchText"
+      />
+      <GroupAccessSelector :project="project" :folder="folder" />
     </div>
     <div class="folder-access-manager__body">
       <div class="folder-access-manager__body__head">
         <span class="folder-access-manager__body__head--name">
-          {{ $t("FolderAccessManager.nameHeader") }}
+          {{ $t("FolderAccessManager.groupHeader") }}
         </span>
         <span class="folder-access-manager__body__head--rights">
           {{ $t("FolderAccessManager.rightsHeader") }}
@@ -34,18 +32,22 @@
           {{ $t("FolderAccessManager.membersHeader") }}
         </span>
       </div>
-      <GroupAccessSelector
-        v-for="group of groups"
-        :key="group.id"
-        :group="group"
-      />
+      <transition-group name="list">
+        <GroupAccessSelector
+          v-for="group of displayedGroups"
+          :key="group.id"
+          :project="project"
+          :folder="folder"
+          :group="group"
+        />
+      </transition-group>
     </div>
   </div>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import { computed } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 // Components
 import GroupAccessSelector from "./group-access-selector/GroupAccessSelector";
 
@@ -67,23 +69,17 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "folder-access-updated"],
   setup(props) {
-    const router = useRouter();
-
-    const goToProjectGroups = () => {
-      router.push({
-        name: routeNames.projectGroups,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id
-        }
-      });
-    };
+    const { filteredList: displayedGroups, searchText } = useListFilter(
+      computed(() => props.groups),
+      group => group.name
+    );
 
     return {
-      // Methods
-      goToProjectGroups
+      // References
+      displayedGroups,
+      searchText
     };
   }
 };

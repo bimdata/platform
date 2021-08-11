@@ -171,8 +171,8 @@
 
   "FolderAccessManager": {
     "title": "Manage access rights",
-    "groupsButtonText": "Manage groups",
-    "nameHeader": "Name",
+    "searchInputPlaceholder": "Search group",
+    "groupHeader": "Group",
     "rightsHeader": "Rights",
     "membersHeader": "Members"
   },
@@ -198,7 +198,12 @@
   },
 
   "GroupAccessSelector": {
-    "defaultGroupName": "All"
+    "defaultGroupName": "All",
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write"
+    }
   },
 
   "GroupCardActionMenu": {

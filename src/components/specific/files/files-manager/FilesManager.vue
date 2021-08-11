@@ -54,7 +54,7 @@
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
-            @file-uploaded="onFileUploaded"
+            @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
           />
@@ -67,6 +67,7 @@
               :project="project"
               :folder="folderToManage"
               :groups="groups"
+              @folder-access-updated="$emit('folder-access-updated')"
               @close="closeAccessManager"
             />
           </div>
@@ -87,7 +88,7 @@
           class="files-manager__onboarding"
           :project="project"
           :rootFolder="fileStructure"
-          @file-uploaded="onFileUploaded"
+          @file-uploaded="$emit('file-uploaded')"
         />
       </template>
     </template>
@@ -137,8 +138,8 @@ export default {
       required: true
     }
   },
-  emits: ["file-uploaded"],
-  setup(props, { emit }) {
+  emits: ["file-uploaded", "folder-access-updated"],
+  setup(props) {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
@@ -193,9 +194,6 @@ export default {
       filesToUpload.value = files;
       setTimeout(() => (filesToUpload.value = []), 100);
     };
-    const onFileUploaded = () => {
-      emit("file-uploaded");
-    };
 
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
@@ -233,7 +231,7 @@ export default {
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
-      // showSidePanel.value = true;
+      showSidePanel.value = true;
     };
     const closeAccessManager = () => {
       showSidePanel.value = false;
@@ -262,7 +260,6 @@ export default {
       moveFiles,
       openAccessManager,
       onFileSelected,
-      onFileUploaded,
       openDeleteModal,
       setSelection,
       uploadFiles

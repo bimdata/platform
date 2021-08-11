@@ -9,6 +9,7 @@
     .bimdata-card__content {
       position: relative;
       height: calc(100% - 37px - 27px);
+      overflow: hidden;
 
       display: grid;
       grid-template-columns: 400px 1fr;

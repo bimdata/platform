@@ -6,6 +6,12 @@ const FILE_TYPE = Object.freeze({
   IFC: "Ifc"
 });
 
+const FILE_PERMISSION = Object.freeze({
+  ACCESS_DENIED: 1,
+  READ_ONLY: 50,
+  READ_WRITE: 100
+});
+
 /**
  * Create a node map from file structure.
  *
@@ -228,6 +234,7 @@ function segregate(files) {
 }
 
 export {
+  FILE_PERMISSION,
   FILE_TYPE,
   FileStructureHandler,
   getDescendants,

@@ -52,6 +52,15 @@ const updateGroupMembers = async (project, group, members) => {
   return { addedMembers, removedMembers };
 };
 
+const updateGroupPermission = async (project, folder, group, permission) => {
+  const response = await GroupService.updateGroupPermission(
+    project,
+    folder,
+    group,
+    permission
+  );
+};
+
 const softUpdateGroup = group => {
   state.projectGroups = state.projectGroups.map(g =>
     g.id === group.id ? { ...g, ...group } : g
