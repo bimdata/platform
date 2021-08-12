@@ -14,6 +14,7 @@
       <BIMDataSelect
         v-if="project"
         class="invitation-form__input__role"
+        width="180px"
         :label="$t('InvitationForm.roleInputLabel')"
         :options="roles"
         optionKey="name"
