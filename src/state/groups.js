@@ -7,7 +7,11 @@ const state = reactive({
 });
 
 const loadProjectGroups = async project => {
-  const groups = await GroupService.fetchProjectGroups(project);
+  let groups = [];
+  if (project.isAdmin) {
+    groups = await GroupService.fetchProjectGroups(project);
+    groups.sort((a, b) => (a.name < b.name ? -1 : 1));
+  }
   state.projectGroups = groups;
   return groups;
 };
