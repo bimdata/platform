@@ -233,12 +233,27 @@ export default {
     const showSidePanel = ref(false);
     const showAccessManager = ref(false);
     const folderToManage = ref(null);
+    let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
       showSidePanel.value = true;
+      // Watch for current files changes in order to update
+      // folder data in access manager accordingly
+      stopCurrentFilesWatcher = watch(
+        () => currentFiles.value,
+        files => {
+          const newFolder = files.find(file => file.id === folder.id);
+          if (newFolder) {
+            folderToManage.value = newFolder;
+          } else {
+            closeAccessManager();
+          }
+        }
+      );
     };
     const closeAccessManager = () => {
+      stopCurrentFilesWatcher();
       showSidePanel.value = false;
       setTimeout(() => {
         showAccessManager.value = false;
