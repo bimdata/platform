@@ -53,7 +53,7 @@ const updateGroupMembers = async (project, group, members) => {
 };
 
 const updateGroupPermission = async (project, folder, group, permission) => {
-  const response = await GroupService.updateGroupPermission(
+  return await GroupService.updateGroupPermission(
     project,
     folder,
     group,
@@ -95,6 +95,7 @@ export function useGroups() {
     createGroup,
     updateGroup,
     updateGroupMembers,
+    updateGroupPermission,
     softUpdateGroup,
     deleteGroup,
     softDeleteGroup,

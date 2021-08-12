@@ -21,7 +21,8 @@
       :fileStructure="fileStructure"
       :groups="groups"
       @file-uploaded="reloadFileStructure"
-      @folder-access-updated="reloadFileStructure"
+      @folder-permission-updated="reloadFileStructure"
+      @group-permission-updated="reloadFileStructure"
     />
   </div>
 </template>

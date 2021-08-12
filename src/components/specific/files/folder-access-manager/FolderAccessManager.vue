@@ -18,7 +18,11 @@
         :placeholder="$t('FolderAccessManager.searchInputPlaceholder')"
         v-model="searchText"
       />
-      <GroupAccessSelector :project="project" :folder="folder" />
+      <FolderPermissionSelector
+        :project="project"
+        :folder="folder"
+        @folder-permission-updated="$emit('folder-permission-updated')"
+      />
     </div>
     <div class="folder-access-manager__body">
       <div class="folder-access-manager__body__head">
@@ -33,12 +37,13 @@
         </span>
       </div>
       <transition-group name="list">
-        <GroupAccessSelector
+        <GroupPermissionSelector
           v-for="group of displayedGroups"
           :key="group.id"
           :project="project"
           :folder="folder"
           :group="group"
+          @group-permission-updated="$emit('group-permission-updated')"
         />
       </transition-group>
     </div>
@@ -49,11 +54,13 @@
 import { computed } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 // Components
-import GroupAccessSelector from "./group-access-selector/GroupAccessSelector";
+import FolderPermissionSelector from "./folder-permission-selector/FolderPermissionSelector";
+import GroupPermissionSelector from "./group-permission-selector/GroupPermissionSelector";
 
 export default {
   components: {
-    GroupAccessSelector
+    FolderPermissionSelector,
+    GroupPermissionSelector
   },
   props: {
     project: {
@@ -69,7 +76,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "folder-access-updated"],
+  emits: ["close", "folder-permission-updated", "group-permission-updated"],
   setup(props) {
     const { filteredList: displayedGroups, searchText } = useListFilter(
       computed(() => props.groups),

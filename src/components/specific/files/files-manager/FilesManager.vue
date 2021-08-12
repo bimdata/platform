@@ -67,7 +67,8 @@
               :project="project"
               :folder="folderToManage"
               :groups="groups"
-              @folder-access-updated="$emit('folder-access-updated')"
+              @folder-permission-updated="$emit('folder-permission-updated')"
+              @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
             />
           </div>
@@ -138,7 +139,11 @@ export default {
       required: true
     }
   },
-  emits: ["file-uploaded", "folder-access-updated"],
+  emits: [
+    "file-uploaded",
+    "folder-permission-updated",
+    "group-permission-updated"
+  ],
   setup(props) {
     const {
       fileStructureHandler: handler,

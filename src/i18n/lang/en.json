@@ -189,20 +189,20 @@
     "submitButtonText": "Submit"
   },
 
+  "FolderPermissionSelector": {
+    "label": "All",
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write"
+    }
+  },
+
   "FolderSelector": {
     "selectedFolder": "Selected folder",
     "submitButtonText": {
       "moveTo": "Validate",
       "moveHere": "Move here"
-    }
-  },
-
-  "GroupAccessSelector": {
-    "defaultGroupName": "All",
-    "options": {
-      "accessDenied": "Access denied",
-      "readOnly": "Read only",
-      "readWrite": "Read / Write"
     }
   },
 
@@ -240,6 +240,14 @@
     "selectorLabel": "Group members",
     "cancelButtonText": "Cancel",
     "submitButtonText": "Validate"
+  },
+
+  "GroupPermissionSelector": {
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write"
+    }
   },
 
   "InvitationCard": {
