@@ -36,7 +36,7 @@ import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { debounce } from "@/utils/async";
 // Components
-import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent.vue";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import FilesManager from "@/components/specific/files/files-manager/FilesManager";
 
 export default {
