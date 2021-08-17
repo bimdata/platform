@@ -14,6 +14,7 @@
           @keyup.enter.stop="renameFile"
           :error="error"
           :errorMessage="$t('FileNameCell.inputErrorMessage')"
+          margin="0"
         />
         <BIMDataButton
           class="file-name-cell__update-form__btn-submit"

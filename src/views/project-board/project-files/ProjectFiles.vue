@@ -1,8 +1,9 @@
 <template>
   <div class="project-files">
     <app-slot-content name="project-board-action">
-      <!-- <BIMDataButton
-        data-test="btn-toggle-groups"
+      <BIMDataButton
+        v-if="project.isAdmin"
+        data-test="btn-manage-groups"
         width="120px"
         color="primary"
         fill
@@ -11,7 +12,7 @@
       >
         <BIMDataIcon name="group" size="s" margin="0 6px 0 0" />
         <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
-      </BIMDataButton> -->
+      </BIMDataButton>
     </app-slot-content>
 
     <FilesManager
@@ -20,6 +21,8 @@
       :fileStructure="fileStructure"
       :groups="groups"
       @file-uploaded="reloadFileStructure"
+      @folder-permission-updated="reloadFileStructure"
+      @group-permission-updated="reloadFileStructure"
     />
   </div>
 </template>

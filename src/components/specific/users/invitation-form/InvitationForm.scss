@@ -17,11 +17,10 @@
     }
 
     &__role:deep() {
-      width: 180px;
       height: 33px;
       color: $color-primary;
       label {
-        top: -20px !important;
+        top: -14px !important;
         color: $color-tertiary-dark !important;
       }
     }

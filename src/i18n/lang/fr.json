@@ -171,8 +171,8 @@
 
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
-    "groupsButtonText": "Gestion des groupes",
-    "nameHeader": "Nom",
+    "searchInputPlaceholder": "Rechercher un groupe",
+    "groupHeader": "Groupe",
     "rightsHeader": "Droits",
     "membersHeader": "Membres"
   },
@@ -189,16 +189,21 @@
     "submitButtonText": "Valider"
   },
 
+  "FolderPermissionSelector": {
+    "label": "Tout le monde",
+    "options": {
+      "accessDenied": "Accès refusé",
+      "readOnly": "Lecture seule",
+      "readWrite": "Lecture / Écriture"
+    }
+  },
+
   "FolderSelector": {
     "selectedFolder": "Dossier sélectionné",
     "submitButtonText": {
       "moveTo": "Valider",
       "moveHere": "Déplacer ici"
     }
-  },
-
-  "GroupAccessSelector": {
-    "defaultGroupName": "Tout le monde"
   },
 
   "GroupCardActionMenu": {
@@ -235,6 +240,14 @@
     "selectorLabel": "Membres du groupe",
     "cancelButtonText": "Annuler",
     "submitButtonText": "Valider"
+  },
+
+  "GroupPermissionSelector": {
+    "options": {
+      "accessDenied": "Accès refusé",
+      "readOnly": "Lecture seule",
+      "readWrite": "Lecture / Écriture"
+    }
   },
 
   "InvitationCard": {

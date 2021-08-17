@@ -1,4 +1,4 @@
-.group-access-selector {
+.folder-permission-selector {
   display: flex;
   align-items: center;
   gap: $spacing-unit/2;
@@ -17,7 +17,7 @@
     }
   }
 
-  &__members {
+  &__tail {
     min-width: 100px;
   }
 }

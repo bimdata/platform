@@ -15,9 +15,9 @@
           </span>
           <span
             class="models-manager__tab-count"
-            v-if="models[tab.id].length > 0"
+            v-if="modelLists[tab.id].length > 0"
           >
-            {{ models[tab.id].length }}
+            {{ modelLists[tab.id].length }}
           </span>
         </template>
       </BIMDataTabs>
@@ -26,8 +26,9 @@
         <ModelsActionBar
           v-show="selection.length > 0"
           class="models-manager__action-bar"
-          :currentTab="currentTab"
+          :project="project"
           :models="selection"
+          :currentTab="currentTab"
           @archive="archiveModels"
           @delete="openDeleteModal"
           @download="downloadModels"
@@ -89,7 +90,7 @@ export default {
   components: {
     ModelsTable,
     ModelsActionBar,
-    ModelsDeleteModal,
+    ModelsDeleteModal
     // ModelsMergeModal
   },
   props: {
@@ -122,7 +123,7 @@ export default {
       { immediate: true }
     );
 
-    const models = reactive({
+    const modelLists = reactive({
       ifc: [],
       split: [],
       // merge: [],
@@ -131,11 +132,11 @@ export default {
     const displayedModels = ref([]);
     watch(
       () => props.models,
-      () => Object.assign(models, segregate(props.models)),
+      () => Object.assign(modelLists, segregate(props.models)),
       { immediate: true }
     );
     watchEffect(() => {
-      displayedModels.value = models[currentTab.value];
+      displayedModels.value = modelLists[currentTab.value];
     });
 
     const selection = ref([]);
@@ -188,7 +189,7 @@ export default {
       // References
       currentTab,
       displayedModels,
-      models,
+      modelLists,
       modelsToDelete,
       // modelsToMerge,
       selection,

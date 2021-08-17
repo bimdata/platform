@@ -12,6 +12,7 @@
             v-if="actionMenu"
             class="project-card__action-bar"
             :project="project"
+            :previews="previews"
             @open-viewer="goToModelViewer"
             @open-menu="openMenu"
           />

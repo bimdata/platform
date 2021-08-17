@@ -171,8 +171,8 @@
 
   "FolderAccessManager": {
     "title": "Manage access rights",
-    "groupsButtonText": "Manage groups",
-    "nameHeader": "Name",
+    "searchInputPlaceholder": "Search group",
+    "groupHeader": "Group",
     "rightsHeader": "Rights",
     "membersHeader": "Members"
   },
@@ -189,16 +189,21 @@
     "submitButtonText": "Submit"
   },
 
+  "FolderPermissionSelector": {
+    "label": "All",
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write"
+    }
+  },
+
   "FolderSelector": {
     "selectedFolder": "Selected folder",
     "submitButtonText": {
       "moveTo": "Validate",
       "moveHere": "Move here"
     }
-  },
-
-  "GroupAccessSelector": {
-    "defaultGroupName": "All"
   },
 
   "GroupCardActionMenu": {
@@ -235,6 +240,14 @@
     "selectorLabel": "Group members",
     "cancelButtonText": "Cancel",
     "submitButtonText": "Validate"
+  },
+
+  "GroupPermissionSelector": {
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write"
+    }
   },
 
   "InvitationCard": {

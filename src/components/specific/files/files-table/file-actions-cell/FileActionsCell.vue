@@ -38,6 +38,7 @@
           {{ $t("FileActionsCell.validationRequestButtonText") }}
         </BIMDataButton> -->
         <BIMDataButton
+          :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -61,16 +62,17 @@
         >
           {{ $t("FileActionsCell.addVersionButtonText") }}
         </BIMDataButton> -->
-        <!-- <BIMDataButton
-          v-if="file.type === 'Folder'"
+        <BIMDataButton
+          v-if="project.isAdmin && file.type === 'Folder'"
           class="file-actions-cell__menu__btn"
           ghost
           squared
           @click="onClick('manage-access')"
         >
           {{ $t("FileActionsCell.manageAccessButtonText") }}
-        </BIMDataButton> -->
+        </BIMDataButton>
         <BIMDataButton
+          :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
           ghost
@@ -85,8 +87,8 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useToggle } from "@/composables/toggle";
 import { routeNames } from "@/router";
 
 export default {
@@ -112,13 +114,11 @@ export default {
   setup(props, { emit }) {
     const router = useRouter();
 
-    const showMenu = ref(false);
-    const closeMenu = () => {
-      showMenu.value = false;
-    };
-    const toggleMenu = () => {
-      showMenu.value = !showMenu.value;
-    };
+    const {
+      isOpen: showMenu,
+      close: closeMenu,
+      toggle: toggleMenu
+    } = useToggle();
 
     const goToModelViewer = () => {
       router.push({

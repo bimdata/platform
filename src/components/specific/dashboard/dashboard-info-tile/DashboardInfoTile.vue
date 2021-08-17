@@ -8,7 +8,7 @@
         class="dashboard-info-tile__head__icon"
         name="information"
         size="s"
-        margin="0 0 0 6px"
+        margin="0 0 0 auto"
       />
     </div>
     <div class="dashboard-info-tile__body">

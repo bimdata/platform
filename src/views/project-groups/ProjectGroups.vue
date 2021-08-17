@@ -18,7 +18,12 @@
 
     <ResponsiveGrid itemWidth="320px">
       <GroupCreationCard v-if="project.isAdmin" :key="-1" :project="project" />
-      <GroupCard v-for="group of groups" :key="group.id" :group="group" />
+      <GroupCard
+        v-for="group of groups"
+        :key="group.id"
+        :project="project"
+        :group="group"
+      />
     </ResponsiveGrid>
   </div>
 </template>

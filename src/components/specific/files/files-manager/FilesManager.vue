@@ -7,12 +7,14 @@
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
           <FolderCreationButton
+            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
             width="194px"
             :project="project"
             :folder="currentFolder"
           />
           <FileUploadButton
+            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-file"
             width="194px"
             multiple
@@ -38,6 +40,7 @@
             <FilesActionBar
               v-show="selection.length > 0"
               class="files-manager__files__action-bar"
+              :project="project"
               :fileStructure="fileStructure"
               :files="selection"
               @delete="openDeleteModal"
@@ -54,7 +57,7 @@
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
-            @file-uploaded="onFileUploaded"
+            @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
           />
@@ -67,6 +70,8 @@
               :project="project"
               :folder="folderToManage"
               :groups="groups"
+              @folder-permission-updated="$emit('folder-permission-updated')"
+              @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
             />
           </div>
@@ -87,7 +92,7 @@
           class="files-manager__onboarding"
           :project="project"
           :rootFolder="fileStructure"
-          @file-uploaded="onFileUploaded"
+          @file-uploaded="$emit('file-uploaded')"
         />
       </template>
     </template>
@@ -137,8 +142,12 @@ export default {
       required: true
     }
   },
-  emits: ["file-uploaded"],
-  setup(props, { emit }) {
+  emits: [
+    "file-uploaded",
+    "folder-permission-updated",
+    "group-permission-updated"
+  ],
+  setup(props) {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
@@ -193,9 +202,6 @@ export default {
       filesToUpload.value = files;
       setTimeout(() => (filesToUpload.value = []), 100);
     };
-    const onFileUploaded = () => {
-      emit("file-uploaded");
-    };
 
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
@@ -230,12 +236,27 @@ export default {
     const showSidePanel = ref(false);
     const showAccessManager = ref(false);
     const folderToManage = ref(null);
+    let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
-      // showSidePanel.value = true;
+      showSidePanel.value = true;
+      // Watch for current files changes in order to update
+      // folder data in access manager accordingly
+      stopCurrentFilesWatcher = watch(
+        () => currentFiles.value,
+        files => {
+          const newFolder = files.find(file => file.id === folder.id);
+          if (newFolder) {
+            folderToManage.value = newFolder;
+          } else {
+            closeAccessManager();
+          }
+        }
+      );
     };
     const closeAccessManager = () => {
+      stopCurrentFilesWatcher();
       showSidePanel.value = false;
       setTimeout(() => {
         showAccessManager.value = false;
@@ -262,7 +283,6 @@ export default {
       moveFiles,
       openAccessManager,
       onFileSelected,
-      onFileUploaded,
       openDeleteModal,
       setSelection,
       uploadFiles

@@ -9,6 +9,7 @@
 
       <template v-else-if="showUpdateForm">
         <GroupCardUpdateForm
+          :project="project"
           :group="group"
           @close="closeUpdateForm"
           @success="closeMenu"
@@ -17,6 +18,7 @@
 
       <template v-else-if="showColorPicker">
         <GroupCardColorPicker
+          :project="project"
           :group="group"
           @close="closeColorPicker"
           @success="closeMenu"
@@ -24,7 +26,11 @@
       </template>
 
       <template v-else-if="showDeleteGuard">
-        <GroupCardDeleteGuard :group="group" @close="closeDeleteGuard" />
+        <GroupCardDeleteGuard
+          :project="project"
+          :group="group"
+          @close="closeDeleteGuard"
+        />
       </template>
 
       <template v-else>
@@ -85,6 +91,10 @@ export default {
     GroupCardUpdateForm
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true

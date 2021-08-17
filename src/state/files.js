@@ -96,11 +96,13 @@ const deleteDocuments = async (project, documents) => {
 
 const updateFiles = async (project, files) => {
   const { folders, documents } = segregate(files);
-  await Promise.all([
-    updateFolders(project, folders),
-    updateDocuments(project, documents)
-  ]);
-  return files;
+  const newFiles = (
+    await Promise.all([
+      updateFolders(project, folders),
+      updateDocuments(project, documents)
+    ])
+  ).flat();
+  return newFiles;
 };
 
 const moveFiles = async (project, files, dest) => {

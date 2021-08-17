@@ -1,6 +1,6 @@
 import apiClient from "./api-client";
 
-const FOLDER_UPDATABLE_FIELDS = ["name", "parentId"];
+const FOLDER_UPDATABLE_FIELDS = ["name", "parentId", "defaultPermission"];
 const DOCUMENT_UPDATABLE_FIELDS = ["name", "parentId"];
 
 function createPayload(object, allowedFields) {
