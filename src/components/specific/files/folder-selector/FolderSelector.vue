@@ -102,10 +102,14 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-import { FILE_TYPE } from "@/utils/file-structure";
+import { FILE_PERMISSION, FILE_TYPE } from "@/utils/file-structure";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     fileStructure: {
       type: Object,
       required: true
@@ -121,13 +125,16 @@ export default {
     const currentFolder = ref(null);
     const selectedFolder = ref(null);
 
+    /* eslint-disable */
     const folders = computed(() =>
       currentFolder.value.children.filter(
         child =>
-          child.type === FILE_TYPE.FOLDER &&
-          !props.files.some(f => child.id === f.id)
+          child.type === FILE_TYPE.FOLDER
+          && !props.files.some(f => child.id === f.id)
+          && (props.project.isAdmin || child.userPermission === FILE_PERMISSION.READ_WRITE)
       )
     );
+    /* eslint-enable */
 
     const reset = () => {
       folderPath.value = [];

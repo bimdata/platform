@@ -45,14 +45,14 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true,
+      required: true
     },
     folder: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { createFolder } = useFiles();
 
@@ -70,12 +70,12 @@ export default {
         try {
           await createFolder(props.project, {
             parentId: props.folder.id,
-            name: name.value,
+            name: name.value
           });
           reset();
           emit("success");
         } catch (error) {
-          emit("error", error);
+          console.error(error);
         }
       } else {
         nameInput.value.focus();
@@ -99,9 +99,9 @@ export default {
       nameInput,
       // Methods
       close,
-      submit,
+      submit
     };
-  },
+  }
 };
 </script>
 

@@ -7,6 +7,7 @@
       color="primary"
       fill
       radius
+      :disabled="disabled"
       @click="toggle"
     >
       <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
@@ -51,6 +52,10 @@ export default {
     folder: {
       type: Object,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup() {

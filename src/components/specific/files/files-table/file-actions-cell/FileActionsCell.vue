@@ -38,6 +38,7 @@
           {{ $t("FileActionsCell.validationRequestButtonText") }}
         </BIMDataButton> -->
         <BIMDataButton
+          :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -71,6 +72,7 @@
           {{ $t("FileActionsCell.manageAccessButtonText") }}
         </BIMDataButton>
         <BIMDataButton
+          :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
           ghost

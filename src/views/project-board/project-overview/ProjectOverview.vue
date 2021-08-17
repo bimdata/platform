@@ -40,6 +40,7 @@
       @open-file-uploader="openFileUploader"
     />
     <ProjectUsersManager
+      v-if="project.isAdmin"
       class="project-overview__block--users"
       :project="project"
       :users="users"

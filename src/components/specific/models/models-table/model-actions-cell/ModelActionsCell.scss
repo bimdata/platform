@@ -7,12 +7,15 @@
 
   &__btn {
     color: $color-tertiary-dark;
+    &:disabled {
+      visibility: hidden;
+    }
+  }
 
-    &--viewer {
-      color: $color-primary;
-      &:disabled {
-        opacity: 0.4;
-      }
+  &__btn--viewer {
+    color: $color-primary;
+    &:disabled {
+      opacity: 0.4;
     }
   }
 

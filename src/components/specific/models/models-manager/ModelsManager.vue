@@ -26,8 +26,9 @@
         <ModelsActionBar
           v-show="selection.length > 0"
           class="models-manager__action-bar"
-          :currentTab="currentTab"
+          :project="project"
           :models="selection"
+          :currentTab="currentTab"
           @archive="archiveModels"
           @delete="openDeleteModal"
           @download="downloadModels"

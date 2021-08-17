@@ -7,12 +7,14 @@
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
           <FolderCreationButton
+            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
             width="194px"
             :project="project"
             :folder="currentFolder"
           />
           <FileUploadButton
+            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-file"
             width="194px"
             multiple
@@ -38,6 +40,7 @@
             <FilesActionBar
               v-show="selection.length > 0"
               class="files-manager__files__action-bar"
+              :project="project"
               :fileStructure="fileStructure"
               :files="selection"
               @delete="openDeleteModal"

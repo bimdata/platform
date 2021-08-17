@@ -16,8 +16,8 @@
         class="invitation-form__input__role"
         width="180px"
         :label="$t('InvitationForm.roleInputLabel')"
-        :options="roles"
-        optionKey="name"
+        :options="roleOptions"
+        optionKey="label"
         v-model="role"
       />
     </div>
@@ -48,6 +48,14 @@ import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
+// import { useUser } from "@/state/user";
+import { PROJECT_ROLE } from "@/utils/users";
+
+const roleList = [
+  { id: "admin", value: PROJECT_ROLE.ADMIN },
+  { id: "user", value: PROJECT_ROLE.USER },
+  { id: "guest", value: PROJECT_ROLE.GUEST }
+];
 
 export default {
   props: {
@@ -60,23 +68,37 @@ export default {
       default: null
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
+    // const { spaceRoles, projectRoles } = useUser();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
 
-    const roles = ref([]);
+    const roleOptions = ref([]);
     const role = ref(null);
     watch(
-      () => locale.value,
+      [() => props.space, () => props.project, () => locale.value],
       () => {
-        roles.value = [
-          { value: 100, name: t("InvitationForm.roles.admin") },
-          { value: 50, name: t("InvitationForm.roles.user") },
-          { value: 25, name: t("InvitationForm.roles.guest") }
-        ];
-        role.value = roles.value[0];
+        let availableRoles = roleList;
+
+        // Filter role list according to current user role in space/project
+        // if (props.project) {
+        //   availableRoles = roleList.filter(
+        //     r => r.value <= projectRoles.value[props.project.id]
+        //   );
+        // } else if (props.space) {
+        //   availableRoles = roleList.filter(
+        //     r => r.value <= spaceRoles.value[props.space.id]
+        //   );
+        // }
+
+        roleOptions.value = availableRoles.map(r => ({
+          ...r,
+          label: t(`InvitationForm.roles.${r.id}`)
+        }));
+
+        role.value = roleOptions.value[0];
       },
       { immediate: true }
     );
@@ -106,7 +128,7 @@ export default {
           reset();
           emit("success");
         } catch (error) {
-          emit("error", error);
+          console.log(error);
         }
       } else {
         emailInput.value.focus();
@@ -129,7 +151,7 @@ export default {
       emailInput,
       error,
       role,
-      roles,
+      roleOptions,
       // Methods
       close,
       submit
