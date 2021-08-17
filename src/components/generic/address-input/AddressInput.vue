@@ -23,7 +23,7 @@
             :key="i"
             class="address-input__suggestions__item"
             :class="{ hovered: selectionIndex === i }"
-            @click="selectAdress(i)"
+            @click="selectAddress(i)"
           >
             <span class="address-input__suggestions__item__icon">
               <BIMDataIcon name="location" size="xs" />
@@ -118,7 +118,7 @@ export default {
       showSuggestions.value = false;
     };
 
-    const selectAdress = index => {
+    const selectAddress = index => {
       if (index >= 0) {
         selectionIndex.value = -1;
         showSuggestions.value = false;
@@ -136,7 +136,7 @@ export default {
       showSuggestions,
       suggestions,
       // Methods
-      selectAdress,
+      selectAddress,
       selectionDown,
       selectionStop,
       selectionUp
