@@ -31,7 +31,7 @@
               data-test="input-create-name"
               :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
               v-model="newSpace.name"
-              :error="error"
+              :error="hasError"
               :errorMessage="$t('SpaceCreationCard.inputErrorMessage')"
               @keyup.esc.stop="close"
               @keyup.enter.stop="submit"
@@ -54,33 +54,40 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useSpaces } from "@/state/spaces";
 
 export default {
   emits: ["close"],
   setup(props, { emit }) {
+    const { handleError, SPACE_CREATE_ERROR } = useErrors();
     const { createSpace } = useSpaces();
 
     const loading = ref(false);
     const nameInput = ref(null);
     const newSpace = reactive({ name: "" });
-    const error = ref(false);
+    const hasError = ref(false);
 
     const submit = async () => {
       if (newSpace.name) {
-        loading.value = true;
-        await createSpace(newSpace);
-        loading.value = false;
-        close();
+        try {
+          loading.value = true;
+          await createSpace(newSpace);
+          close();
+        } catch (error) {
+          handleError(SPACE_CREATE_ERROR, error);
+        } finally {
+          loading.value = false;
+        }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
     const close = () => {
       newSpace.name = "";
-      error.value = false;
+      hasError.value = false;
       emit("close");
     };
 
@@ -90,7 +97,7 @@ export default {
 
     return {
       // References
-      error,
+      hasError,
       loading,
       nameInput,
       newSpace,

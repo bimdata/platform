@@ -38,6 +38,7 @@
 <script>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useToggle } from "@/composables/toggle";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
@@ -67,9 +68,7 @@ export default {
     const router = useRouter();
     const { loadProjectModelPreviews } = useProjects();
 
-    const showMenu = ref(false);
-    const openMenu = () => (showMenu.value = true);
-    const closeMenu = () => (showMenu.value = false);
+    const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
     const previews = ref([]);
     const currentPreview = ref();

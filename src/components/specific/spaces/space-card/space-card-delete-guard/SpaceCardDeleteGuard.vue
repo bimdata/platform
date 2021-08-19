@@ -21,7 +21,7 @@
       color="high"
       fill
       radius
-      @click="removeSpace"
+      @click="submit"
     >
       {{ $t("SpaceCardDeleteGuard.deleteButtonText") }}
     </BIMDataButton>
@@ -30,6 +30,7 @@
 
 <script>
 import { inject } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useSpaces } from "@/state/spaces";
 
 export default {
@@ -39,15 +40,23 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
+    const { handleError, SPACE_DELETE_ERROR } = useErrors();
     const { deleteSpace } = useSpaces();
 
     const loading = inject("loading", false);
 
-    const removeSpace = () => {
-      loading.value = true;
-      deleteSpace({ ...props.space });
+    const submit = async () => {
+      try {
+        loading.value = true;
+        await deleteSpace(props.space);
+        emit("success");
+      } catch (error) {
+        handleError(SPACE_DELETE_ERROR, error);
+      } finally {
+        loading.value = false;
+      }
     };
 
     const close = () => {
@@ -57,7 +66,7 @@ export default {
     return {
       // Methods
       close,
-      removeSpace
+      submit
     };
   }
 };

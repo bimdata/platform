@@ -12,8 +12,15 @@ const app = createApp(App)
   .use(i18n)
   .use(router);
 
+// Register global components
 for (const [name, component] of Object.entries(globalComponents)) {
   app.component(name, component);
 }
+
+// Setup global error handler
+app.config.errorHandler = error => {
+  // TODO: error handling logic
+  console.error(error);
+};
 
 app.mount("#app");

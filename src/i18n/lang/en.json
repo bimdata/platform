@@ -252,7 +252,9 @@
 
   "InvitationCard": {
     "pendingMessage": "Invited - Pending.",
-    "resendLinkText": "Send invitation again ?"
+    "resendLinkText": "Send invitation again ?",
+    "resendSuccessNotifText": "Invitation sent again",
+    "cancelSuccessNotifText": "Invitation canceled"
   },
 
   "InvitationForm": {
@@ -265,7 +267,8 @@
       "guest": "Guest"
     },
     "cancelButtonText": "Cancel",
-    "submitButtonText": "Send invitation"
+    "submitButtonText": "Send invitation",
+    "successNotifText": "Invitation sent"
   },
 
   "ModelActionsCell": {
@@ -458,5 +461,26 @@
   "UsersManagerOnboarding": {
     "text": "Invite your first collaborator",
     "inviteButtonText": "Invite"
+  },
+
+
+
+  "Error": "Error",
+  "Success": "Success",
+
+  "Errors": {
+    "spaceCreateError": "An error occurred during space creation",
+    "spaceUpdateError": "An error occurred during space update",
+    "spaceDeleteError": "An error occurred during space deletion",
+    "spaceImageUpdateError": "Error while changing space image",
+    "spaceImageDeleteError": "Error while deleting space image",
+    "projectCreateError": "Fail to create project",
+    "projectUpdateError": "Fail to update project",
+    "projectDeleteError": "Fail to delete project",
+    "invitationSendError": "Fail to send invitation",
+    "invitationResendError": "Fail to resend invitation",
+    "invitationCancelError": "Fail to cancel invitation",
+    "userUpdateError": "Fail to update user",
+    "userDeleteError": "Fail to delete user"
   }
 }

@@ -27,6 +27,9 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
+import { useErrors } from "@/composables/errors";
+import { useNotifications } from "@/composables/notifications";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 
@@ -46,25 +49,48 @@ export default {
     }
   },
   setup(props) {
+    const { t } = useI18n();
+    const { pushNotification } = useNotifications();
+    const { handleError, INVITATION_RESEND_ERROR, INVITATION_CANCEL_ERROR } =
+      useErrors();
     const { sendSpaceInvitation, cancelSpaceInvitation } = useSpaces();
     const { sendProjectInvitation, cancelProjectInvitation } = useProjects();
 
-    const resendInvitation = () => {
-      if (props.project) {
-        sendProjectInvitation(props.project, props.invitation, {
-          resend: true
+    const resendInvitation = async () => {
+      try {
+        if (props.project) {
+          await sendProjectInvitation(props.project, props.invitation, {
+            resend: true
+          });
+        } else if (props.space) {
+          await sendSpaceInvitation(props.space, props.invitation, {
+            resend: true
+          });
+        }
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("InvitationCard.resendSuccessNotifText")
         });
-      } else if (props.space) {
-        sendSpaceInvitation(props.space, props.invitation.email, {
-          resend: true
-        });
+      } catch (error) {
+        handleError(INVITATION_RESEND_ERROR, error);
       }
     };
-    const cancelInvitation = () => {
-      if (props.project) {
-        cancelProjectInvitation(props.project, props.invitation);
-      } else if (props.space) {
-        cancelSpaceInvitation(props.space, props.invitation);
+
+    const cancelInvitation = async () => {
+      try {
+        if (props.project) {
+          await cancelProjectInvitation(props.project, props.invitation);
+        } else if (props.space) {
+          await cancelSpaceInvitation(props.space, props.invitation);
+        }
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("InvitationCard.cancelSuccessNotifText")
+        });
+      } catch (error) {
+        handleError(INVITATION_CANCEL_ERROR, error);
       }
     };
 

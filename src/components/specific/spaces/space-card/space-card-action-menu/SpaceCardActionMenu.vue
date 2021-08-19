@@ -83,6 +83,8 @@
 
 <script>
 import { provide, ref } from "vue";
+import { useErrors } from "@/composables/errors";
+import { useToggle } from "@/composables/toggle";
 import { useSpaces } from "@/state/spaces";
 // Components
 import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard";
@@ -102,43 +104,49 @@ export default {
     }
   },
   setup(props) {
+    const { handleError, SPACE_IMAGE_DELETE_ERROR } = useErrors();
     const { removeSpaceImage } = useSpaces();
 
     const loading = ref(false);
     provide("loading", loading);
 
-    const showMenu = ref(false);
-    const closeMenu = () => {
+    const {
+      isOpen: showUpdateForm,
+      open: openUpdateForm,
+      close: closeUpdateForm
+    } = useToggle();
+    const {
+      isOpen: showDeleteGuard,
+      open: openDeleteGuard,
+      close: closeDeleteGuard
+    } = useToggle();
+
+    const reset = () => {
       closeUpdateForm();
       closeDeleteGuard();
       loading.value = false;
+    };
+
+    const showMenu = ref(false);
+    const closeMenu = () => {
+      reset();
       showMenu.value = false;
     };
     const toggleMenu = () => {
-      closeUpdateForm();
-      closeDeleteGuard();
-      loading.value = false;
+      reset();
       showMenu.value = !showMenu.value;
     };
 
-    const showUpdateForm = ref(false);
-    const openUpdateForm = () => {
-      showUpdateForm.value = true;
-    };
-    const closeUpdateForm = () => {
-      showUpdateForm.value = false;
-    };
-
-    const removeImage = () => {
-      removeSpaceImage({ ...props.space }).then(closeMenu);
-    };
-
-    const showDeleteGuard = ref(false);
-    const openDeleteGuard = () => {
-      showDeleteGuard.value = true;
-    };
-    const closeDeleteGuard = () => {
-      showDeleteGuard.value = false;
+    const removeImage = async () => {
+      try {
+        loading.value = true;
+        await removeSpaceImage(props.space);
+        closeMenu();
+      } catch (error) {
+        handleError(SPACE_IMAGE_DELETE_ERROR, error);
+      } finally {
+        loading.value = false;
+      }
     };
 
     return {

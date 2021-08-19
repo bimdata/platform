@@ -57,6 +57,7 @@
 
 <script>
 import { provide, ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard";
 import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm";
@@ -77,21 +78,17 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const showUpdateForm = ref(false);
-    const openUpdateForm = () => {
-      showUpdateForm.value = true;
-    };
-    const closeUpdateForm = () => {
-      showUpdateForm.value = false;
-    };
+    const {
+      isOpen: showUpdateForm,
+      open: openUpdateForm,
+      close: closeUpdateForm
+    } = useToggle();
 
-    const showDeleteGuard = ref(false);
-    const openDeleteGuard = () => {
-      showDeleteGuard.value = true;
-    };
-    const closeDeleteGuard = () => {
-      showDeleteGuard.value = false;
-    };
+    const {
+      isOpen: showDeleteGuard,
+      open: openDeleteGuard,
+      close: closeDeleteGuard
+    } = useToggle();
 
     const resetMenu = () => {
       closeUpdateForm();

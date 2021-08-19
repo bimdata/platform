@@ -18,10 +18,10 @@
       class="space-card-update-form__input"
       :placeholder="$t('SpaceCardUpdateForm.inputPlaceholder')"
       v-model="spaceName"
-      :error="error"
+      :error="hasError"
       :errorMessage="$t('SpaceCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
-      @keyup.enter.stop="renameSpace"
+      @keyup.enter.stop="submit"
     />
     <BIMDataButton
       data-test="btn-submit-update"
@@ -29,7 +29,7 @@
       fill
       radius
       color="primary"
-      @click="renameSpace"
+      @click="submit"
     >
       {{ $t("SpaceCardUpdateForm.submitButtonText") }}
     </BIMDataButton>
@@ -38,6 +38,7 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useSpaces } from "@/state/spaces";
 
 export default {
@@ -47,29 +48,36 @@ export default {
       required: true
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
+    const { handleError, SPACE_UPDATE_ERROR } = useErrors();
     const { updateSpace } = useSpaces();
 
     const loading = inject("loading", false);
 
     const nameInput = ref(null);
     const spaceName = ref(props.space.name);
-    const error = ref(false);
-    const renameSpace = () => {
+    const hasError = ref(false);
+
+    const submit = async () => {
       if (spaceName.value) {
-        loading.value = true;
-        updateSpace({ ...props.space, name: spaceName.value })
-          .then(() => emit("success"))
-          .catch(error => emit("error", error));
+        try {
+          loading.value = true;
+          await updateSpace({ ...props.space, name: spaceName.value });
+          emit("success");
+        } catch (error) {
+          handleError(SPACE_UPDATE_ERROR, error);
+        } finally {
+          loading.value = false;
+        }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
     const close = () => {
-      error.value = false;
+      hasError.value = false;
       emit("close");
     };
 
@@ -79,12 +87,12 @@ export default {
 
     return {
       // References
-      error,
+      hasError,
       nameInput,
       spaceName,
       // Methods
       close,
-      renameSpace
+      submit
     };
   }
 };

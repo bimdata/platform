@@ -6,7 +6,7 @@
         class="invitation-form__input__email"
         :placeholder="$t('InvitationForm.emailInputPlaceholder')"
         v-model="email"
-        :error="error"
+        :error="hasError"
         :errorMessage="$t('InvitationForm.emailInputErrorMessage')"
         @keyup.enter.stop="submit"
         margin="0px"
@@ -46,6 +46,8 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useErrors } from "@/composables/errors";
+import { useNotifications } from "@/composables/notifications";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // import { useUser } from "@/state/user";
@@ -71,6 +73,8 @@ export default {
   emits: ["close", "success"],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
+    const { pushNotification } = useNotifications();
+    const { handleError, INVITATION_SEND_ERROR } = useErrors();
     // const { spaceRoles, projectRoles } = useUser();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
@@ -105,11 +109,11 @@ export default {
 
     const emailInput = ref(null);
     const email = ref("");
-    const error = ref(false);
+    const hasError = ref(false);
 
     const reset = () => {
       email.value = "";
-      error.value = false;
+      hasError.value = false;
     };
 
     const submit = async () => {
@@ -125,14 +129,19 @@ export default {
               email: email.value
             });
           }
+          pushNotification({
+            type: "success",
+            title: t("Success"),
+            message: t("InvitationForm.successNotifText")
+          });
           reset();
           emit("success");
         } catch (error) {
-          console.log(error);
+          handleError(INVITATION_SEND_ERROR, error);
         }
       } else {
         emailInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
@@ -149,7 +158,7 @@ export default {
       // References
       email,
       emailInput,
-      error,
+      hasError,
       role,
       roleOptions,
       // Methods

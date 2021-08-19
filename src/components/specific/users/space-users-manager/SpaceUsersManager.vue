@@ -65,6 +65,7 @@
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter";
+import { useToggle } from "@/composables/toggle";
 import { SPACE_ROLE } from "@/utils/users";
 // Components
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
@@ -136,13 +137,11 @@ export default {
 
     const showInvitations = computed(() => currentTab.value === "admins");
 
-    const showInvitationForm = ref(false);
-    const openInvitationForm = () => {
-      showInvitationForm.value = true;
-    };
-    const closeInvitationForm = () => {
-      showInvitationForm.value = false;
-    };
+    const {
+      isOpen: showInvitationForm,
+      open: openInvitationForm,
+      close: closeInvitationForm
+    } = useToggle();
 
     return {
       // Refrences

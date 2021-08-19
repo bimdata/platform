@@ -18,7 +18,7 @@
       class="project-card-update-form__input"
       :placeholder="$t('ProjectCardUpdateForm.inputPlaceholder')"
       v-model="projectName"
-      :error="error"
+      :error="hasError"
       :errorMessage="$t('ProjectCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="renameProject"
@@ -38,6 +38,7 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -47,15 +48,17 @@ export default {
       required: true
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
+    const { handleError, PROJECT_UPDATE_ERROR } = useErrors();
     const { updateProject } = useProjects();
 
     const loading = inject("loading", false);
 
     const nameInput = ref(null);
     const projectName = ref(props.project.name);
-    const error = ref(false);
+    const hasError = ref(false);
+
     const renameProject = async () => {
       if (projectName.value) {
         try {
@@ -66,24 +69,28 @@ export default {
           });
           emit("success");
         } catch (error) {
-          emit("error", error);
+          handleError(PROJECT_UPDATE_ERROR, error);
+        } finally {
+          loading.value = false;
         }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
     const close = () => {
-      error.value = false;
+      hasError.value = false;
       emit("close");
     };
 
-    onMounted(() => setTimeout(() => nameInput.value.focus(), 200));
+    onMounted(() => {
+      setTimeout(() => nameInput.value.focus(), 200);
+    });
 
     return {
       // References
-      error,
+      hasError,
       nameInput,
       projectName,
       // Methods

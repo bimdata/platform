@@ -28,7 +28,7 @@
           class="project-creation-card__form__input"
           :placeholder="$t('ProjectCreationCard.inputPlaceholder')"
           v-model="newProject.name"
-          :error="error"
+          :error="hasError"
           :errorMessage="$t('ProjectCreationCard.inputErrorMessage')"
           @keyup.esc.stop="closeCreationForm"
           @keyup.enter.stop="submit"
@@ -64,6 +64,7 @@
 
 <script>
 import { reactive, ref } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -74,22 +75,28 @@ export default {
     }
   },
   setup(props) {
+    const { handleError, PROJECT_CREATE_ERROR } = useErrors();
     const { createProject } = useProjects();
 
     const loading = ref(false);
     const nameInput = ref(null);
 
     const newProject = reactive({ name: "" });
-    const error = ref(false);
+    const hasError = ref(false);
     const submit = async () => {
       if (newProject.name) {
-        loading.value = true;
-        await createProject(props.space, newProject);
-        loading.value = false;
-        closeCreationForm();
+        try {
+          loading.value = true;
+          await createProject(props.space, newProject);
+          closeCreationForm();
+        } catch (error) {
+          handleError(PROJECT_CREATE_ERROR, error);
+        } finally {
+          loading.value = false;
+        }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
@@ -100,13 +107,13 @@ export default {
     };
     const closeCreationForm = () => {
       newProject.name = "";
-      error.value = false;
+      hasError.value = false;
       showCreationForm.value = false;
     };
 
     return {
       // References
-      error,
+      hasError,
       loading,
       nameInput,
       newProject,

@@ -21,7 +21,7 @@
       color="high"
       fill
       radius
-      @click="removeProject"
+      @click="submit"
     >
       {{ $t("ProjectCardDeleteGuard.deleteButtonText") }}
     </BIMDataButton>
@@ -30,6 +30,7 @@
 
 <script>
 import { inject } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -39,15 +40,23 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
+    const { handleError, PROJECT_DELETE_ERROR } = useErrors();
     const { deleteProject } = useProjects();
 
     const loading = inject("loading", false);
 
-    const removeProject = () => {
-      loading.value = true;
-      deleteProject(props.project);
+    const submit = async () => {
+      try {
+        loading.value = true;
+        await deleteProject(props.project);
+        emit("success");
+      } catch (error) {
+        handleError(PROJECT_DELETE_ERROR, error);
+      } finally {
+        loading.value = false;
+      }
     };
 
     const close = () => {
@@ -57,7 +66,7 @@ export default {
     return {
       // Methods
       close,
-      removeProject
+      submit
     };
   }
 };
