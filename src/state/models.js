@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import ModelService from "@/server/ModelService";
+import ModelService from "@/services/ModelService";
 import { useFiles } from "@/state/files";
 
 const state = reactive({

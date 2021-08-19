@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "@vue/reactivity";
-import FileService from "@/server/FileService";
+import FileService from "@/services/FileService";
 import { useAuth } from "@/state/auth";
 import { useModels } from "@/state/models";
 import {
