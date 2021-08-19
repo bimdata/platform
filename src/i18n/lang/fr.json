@@ -481,6 +481,10 @@
     "invitationResendError": "Echec du renvoi de l'invitation",
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
-    "userDeleteError": "Échec de la suppression de l'utilisateur"
+    "userDeleteError": "Échec de la suppression de l'utilisateur",
+    "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
+    "modelUpdateError": "Échec de la mise à jour du modèle",
+    "modelDownloadError": "Une erreur est survenue lors du téléchargement",
+    "modelDeleteError": "Erreur lors de la suppression du modèle"
   }
 }

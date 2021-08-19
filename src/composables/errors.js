@@ -18,7 +18,11 @@ const ERROR_IDS = Object.freeze({
   INVITATION_RESEND_ERROR: "invitationResendError",
   INVITATION_CANCEL_ERROR: "invitationCancelError",
   USER_UPDATE_ERROR: "userUpdateError",
-  USER_DELETE_ERROR: "userDeleteError"
+  USER_DELETE_ERROR: "userDeleteError",
+  MODEL_UPLOAD_ERROR: "modelUploadError",
+  MODEL_UPDATE_ERROR: "modelUpdateError",
+  MODEL_DOWNLOAD_ERROR: "modelDownloadError",
+  MODEL_DELETE_ERROR: "modelDeleteError"
 });
 
 const handleError = (errorId, error, options = DEFAULT_OPTIONS) => {

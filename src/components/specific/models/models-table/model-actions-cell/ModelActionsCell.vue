@@ -84,8 +84,9 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useToggle } from "@/composables/toggle";
 import { routeNames } from "@/router";
 import { MODEL_STATUS } from "@/utils/models";
 
@@ -104,13 +105,11 @@ export default {
   setup(props, { emit }) {
     const router = useRouter();
 
-    const showMenu = ref(false);
-    const closeMenu = () => {
-      showMenu.value = false;
-    };
-    const toggleMenu = () => {
-      showMenu.value = !showMenu.value;
-    };
+    const {
+      isOpen: showMenu,
+      close: closeMenu,
+      toggle: toggleMenu
+    } = useToggle();
 
     const isModelReady = computed(
       () =>

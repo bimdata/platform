@@ -469,11 +469,11 @@
   "Success": "Success",
 
   "Errors": {
-    "spaceCreateError": "An error occurred during space creation",
-    "spaceUpdateError": "An error occurred during space update",
-    "spaceDeleteError": "An error occurred during space deletion",
-    "spaceImageUpdateError": "Error while changing space image",
-    "spaceImageDeleteError": "Error while deleting space image",
+    "spaceCreateError": "Fail to create space",
+    "spaceUpdateError": "Fail to update space",
+    "spaceDeleteError": "Fail to delete space",
+    "spaceImageUpdateError": "Fail to update space image",
+    "spaceImageDeleteError": "Fail to delete space image",
     "projectCreateError": "Fail to create project",
     "projectUpdateError": "Fail to update project",
     "projectDeleteError": "Fail to delete project",
@@ -481,6 +481,10 @@
     "invitationResendError": "Fail to resend invitation",
     "invitationCancelError": "Fail to cancel invitation",
     "userUpdateError": "Fail to update user",
-    "userDeleteError": "Fail to delete user"
+    "userDeleteError": "Fail to delete user",
+    "modelUploadError": "Fail to upload model",
+    "modelUpdateError": "Fail to update model",
+    "modelDownloadError": "Fail to download model",
+    "modelDeleteError": "Fail to delete model"
   }
 }

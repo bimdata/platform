@@ -12,7 +12,7 @@
           v-model="modelName"
           @keyup.esc.stop="closeUpdateForm"
           @keyup.enter.stop="renameModel"
-          :error="error"
+          :error="hasError"
           :errorMessage="$t('ModelNameCell.inputErrorMessage')"
         />
         <BIMDataButton
@@ -45,6 +45,7 @@
 
 <script>
 import { ref, watch } from "vue";
+import { useErrors } from "@/composables/errors";
 import { useModels } from "@/state/models";
 
 export default {
@@ -62,32 +63,32 @@ export default {
       default: false
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
+    const { handleError, MODEL_UPDATE_ERROR } = useErrors();
     const { updateModelName } = useModels();
 
     const loading = ref(false);
 
     const nameInput = ref(null);
     const modelName = ref("");
-    const error = ref(false);
+    const hasError = ref(false);
 
     const renameModel = async () => {
-      try {
-        if (modelName.value) {
+      if (modelName.value) {
+        try {
           loading.value = true;
           await updateModelName(props.project, props.model, modelName.value);
           closeUpdateForm();
           emit("success");
-        } else {
-          error.value = true;
-          nameInput.value.focus();
+        } catch (error) {
+          handleError(MODEL_UPDATE_ERROR, error);
+        } finally {
+          loading.value = false;
         }
-      } catch (error) {
-        console.log(error);
-        emit("error", error);
-      } finally {
-        loading.value = false;
+      } else {
+        hasError.value = true;
+        nameInput.value.focus();
       }
     };
 
@@ -98,7 +99,7 @@ export default {
     };
     const closeUpdateForm = () => {
       loading.value = false;
-      error.value = false;
+      hasError.value = false;
       showUpdateForm.value = false;
       emit("close");
     };
@@ -121,7 +122,7 @@ export default {
 
     return {
       // References
-      error,
+      hasError,
       loading,
       nameInput,
       modelName,

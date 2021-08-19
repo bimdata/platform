@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { useErrors } from "@/composables/errors";
 import { useModels } from "@/state/models";
 // Components
 import GenericModal from "@/components/generic/generic-modal/GenericModal";
@@ -59,12 +60,17 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
+    const { handleError, MODEL_DELETE_ERROR } = useErrors();
     const { softDeleteModels, deleteModels } = useModels();
 
-    const removeModels = () => {
-      softDeleteModels(props.models);
-      deleteModels(props.project, props.models);
-      emit("close");
+    const removeModels = async () => {
+      try {
+        softDeleteModels(props.models);
+        await deleteModels(props.project, props.models);
+        emit("close");
+      } catch (error) {
+        handleError(MODEL_DELETE_ERROR, error);
+      }
     };
 
     return {
