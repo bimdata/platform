@@ -252,7 +252,9 @@
 
   "InvitationCard": {
     "pendingMessage": "Invited - Pending.",
-    "resendLinkText": "Send invitation again ?"
+    "resendLinkText": "Send invitation again ?",
+    "resendSuccessNotifText": "Invitation sent again",
+    "cancelSuccessNotifText": "Invitation canceled"
   },
 
   "InvitationForm": {
@@ -265,7 +267,8 @@
       "guest": "Guest"
     },
     "cancelButtonText": "Cancel",
-    "submitButtonText": "Send invitation"
+    "submitButtonText": "Send invitation",
+    "successNotifText": "Invitation sent"
   },
 
   "ModelActionsCell": {
@@ -458,5 +461,46 @@
   "UsersManagerOnboarding": {
     "text": "Invite your first collaborator",
     "inviteButtonText": "Invite"
+  },
+
+
+
+  "Error": "Error",
+  "Success": "Success",
+
+  "Errors": {
+    "spacesFetchError": "Fail to fetch spaces",
+    "spaceCreateError": "Fail to create space",
+    "spaceUpdateError": "Fail to update space",
+    "spaceDeleteError": "Fail to delete space",
+    "spaceImageUpdateError": "Fail to update space image",
+    "spaceImageDeleteError": "Fail to delete space image",
+    "projectsFetchError": "Fail to fetch projects",
+    "projectCreateError": "Fail to create project",
+    "projectUpdateError": "Fail to update project",
+    "projectDeleteError": "Fail to delete project",
+    "invitationsFetchError": "Fail to fetch invitations",
+    "invitationSendError": "Fail to send invitation",
+    "invitationResendError": "Fail to resend invitation",
+    "invitationCancelError": "Fail to cancel invitation",
+    "usersFetchError": "Fail to fetch users",
+    "userUpdateError": "Fail to update user",
+    "userDeleteError": "Fail to delete user",
+    "modelsFetchError": "Fail to fetch models",
+    "modelUploadError": "Fail to upload model",
+    "modelUpdateError": "Fail to update model",
+    "modelDownloadError": "Fail to download model",
+    "modelMergeError": "Fail to merge models",
+    "modelDeleteError": "Fail to delete model",
+    "fileStructureFetchError": "Fail to fetch file structure",
+    "fileUpdateError": "Fail to update files",
+    "fileDownloadError": "Fail to download files",
+    "fileDeleteError": "Fail to delete files",
+    "folderCreateError": "Fail to create folder",
+    "documentUploadError": "Fail to upload document",
+    "groupsFetchError": "Fail to fetch groups",
+    "groupCreateError": "Fail to create group",
+    "groupUpdateError": "Fail to update group",
+    "groupDeleteError": "Fail to delete group"
   }
 }

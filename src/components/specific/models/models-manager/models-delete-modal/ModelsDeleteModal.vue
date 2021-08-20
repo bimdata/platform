@@ -25,13 +25,7 @@
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
         {{ $t("ModelsDeleteModal.cancelButtonText") }}
       </BIMDataButton>
-      <BIMDataButton
-        color="high"
-        fill
-        radius
-        width="120px"
-        @click="removeModels"
-      >
+      <BIMDataButton color="high" fill radius width="120px" @click="submit">
         {{ $t("ModelsDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
@@ -61,14 +55,14 @@ export default {
   setup(props, { emit }) {
     const { softDeleteModels, deleteModels } = useModels();
 
-    const removeModels = () => {
-      softDeleteModels(props.models);
+    const submit = () => {
       deleteModels(props.project, props.models);
+      softDeleteModels(props.models);
       emit("close");
     };
 
     return {
-      removeModels
+      submit
     };
   }
 };

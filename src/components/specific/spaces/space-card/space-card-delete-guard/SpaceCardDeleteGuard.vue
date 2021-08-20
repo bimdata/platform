@@ -21,7 +21,7 @@
       color="high"
       fill
       radius
-      @click="removeSpace"
+      @click="submit"
     >
       {{ $t("SpaceCardDeleteGuard.deleteButtonText") }}
     </BIMDataButton>
@@ -39,15 +39,20 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { deleteSpace } = useSpaces();
 
     const loading = inject("loading", false);
 
-    const removeSpace = () => {
-      loading.value = true;
-      deleteSpace({ ...props.space });
+    const submit = async () => {
+      try {
+        loading.value = true;
+        await deleteSpace(props.space);
+        emit("success");
+      } finally {
+        loading.value = false;
+      }
     };
 
     const close = () => {
@@ -57,7 +62,7 @@ export default {
     return {
       // Methods
       close,
-      removeSpace
+      submit
     };
   }
 };

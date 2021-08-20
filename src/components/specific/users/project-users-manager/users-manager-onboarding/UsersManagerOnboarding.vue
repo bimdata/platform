@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
@@ -49,13 +49,11 @@ export default {
     }
   },
   setup() {
-    const showInvitationForm = ref(false);
-    const openInvitationForm = () => {
-      showInvitationForm.value = true;
-    };
-    const closeInvitationForm = () => {
-      showInvitationForm.value = false;
-    };
+    const {
+      isOpen: showInvitationForm,
+      open: openInvitationForm,
+      close: closeInvitationForm
+    } = useToggle();
 
     return {
       // References

@@ -24,7 +24,7 @@
           icon
           @click="showNotification = false"
         >
-          <BIMDataIcon name="close" size="s" />
+          <BIMDataIcon name="close" size="xs" />
         </BIMDataButton>
       </div>
     </transition>

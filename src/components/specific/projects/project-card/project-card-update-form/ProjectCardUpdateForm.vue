@@ -18,7 +18,7 @@
       class="project-card-update-form__input"
       :placeholder="$t('ProjectCardUpdateForm.inputPlaceholder')"
       v-model="projectName"
-      :error="error"
+      :error="hasError"
       :errorMessage="$t('ProjectCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="renameProject"
@@ -47,7 +47,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { updateProject } = useProjects();
 
@@ -55,7 +55,8 @@ export default {
 
     const nameInput = ref(null);
     const projectName = ref(props.project.name);
-    const error = ref(false);
+    const hasError = ref(false);
+
     const renameProject = async () => {
       if (projectName.value) {
         try {
@@ -65,25 +66,27 @@ export default {
             name: projectName.value
           });
           emit("success");
-        } catch (error) {
-          emit("error", error);
+        } finally {
+          loading.value = false;
         }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
     const close = () => {
-      error.value = false;
+      hasError.value = false;
       emit("close");
     };
 
-    onMounted(() => setTimeout(() => nameInput.value.focus(), 200));
+    onMounted(() => {
+      setTimeout(() => nameInput.value.focus(), 200);
+    });
 
     return {
       // References
-      error,
+      hasError,
       nameInput,
       projectName,
       // Methods

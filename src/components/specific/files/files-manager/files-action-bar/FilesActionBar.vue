@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import FolderSelector from "@/components/specific/files/folder-selector/FolderSelector";
 
@@ -71,13 +71,11 @@ export default {
   },
   emits: ["delete", "download", "move"],
   setup() {
-    const showFolderSelector = ref(false);
-    const closeFolderSelector = () => {
-      showFolderSelector.value = false;
-    };
-    const toggleFolderSelector = () => {
-      showFolderSelector.value = !showFolderSelector.value;
-    };
+    const {
+      isOpen: showFolderSelector,
+      close: closeFolderSelector,
+      toggle: toggleFolderSelector
+    } = useToggle();
 
     return {
       // References

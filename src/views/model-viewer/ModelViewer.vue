@@ -22,7 +22,7 @@ import { useRoute } from "vue-router";
 import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
 // Components
-import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
 
 const availablePlugins = {

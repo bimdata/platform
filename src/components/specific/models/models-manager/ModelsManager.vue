@@ -71,7 +71,6 @@
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
-import { downloadAll } from "@/utils/download";
 import { segregate } from "@/utils/models";
 // Components
 import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
@@ -105,7 +104,7 @@ export default {
   },
   setup(props) {
     const { locale, t } = useI18n();
-    const { updateModels } = useModels();
+    const { updateModels, downloadModels: download } = useModels();
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
@@ -167,22 +166,21 @@ export default {
     // };
 
     const archiveModels = async models => {
-      models = models.map(model => ({ ...model, archived: true }));
-      await updateModels(props.project, models);
+      await updateModels(
+        props.project,
+        models.map(model => ({ ...model, archived: true }))
+      );
     };
 
     const unarchiveModels = async models => {
-      models = models.map(model => ({ ...model, archived: false }));
-      await updateModels(props.project, models);
+      await updateModels(
+        props.project,
+        models.map(model => ({ ...model, archived: false }))
+      );
     };
 
     const downloadModels = async models => {
-      await downloadAll(
-        models.map(model => ({
-          name: model.document.fileName,
-          url: model.document.file
-        }))
-      );
+      await download(models);
     };
 
     return {

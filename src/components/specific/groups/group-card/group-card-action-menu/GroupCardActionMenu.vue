@@ -79,6 +79,7 @@
 
 <script>
 import { provide, ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import GroupCardColorPicker from "../group-card-color-picker/GroupCardColorPicker";
 import GroupCardDeleteGuard from "../group-card-delete-guard/GroupCardDeleteGuard";
@@ -105,29 +106,21 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const showUpdateForm = ref(false);
-    const openUpdateForm = () => {
-      showUpdateForm.value = true;
-    };
-    const closeUpdateForm = () => {
-      showUpdateForm.value = false;
-    };
-
-    const showColorPicker = ref(false);
-    const openColorPicker = () => {
-      showColorPicker.value = true;
-    };
-    const closeColorPicker = () => {
-      showColorPicker.value = false;
-    };
-
-    const showDeleteGuard = ref(false);
-    const openDeleteGuard = () => {
-      showDeleteGuard.value = true;
-    };
-    const closeDeleteGuard = () => {
-      showDeleteGuard.value = false;
-    };
+    const {
+      isOpen: showUpdateForm,
+      open: openUpdateForm,
+      close: closeUpdateForm
+    } = useToggle();
+    const {
+      isOpen: showColorPicker,
+      open: openColorPicker,
+      close: closeColorPicker
+    } = useToggle();
+    const {
+      isOpen: showDeleteGuard,
+      open: openDeleteGuard,
+      close: closeDeleteGuard
+    } = useToggle();
 
     const resetMenu = () => {
       closeColorPicker();

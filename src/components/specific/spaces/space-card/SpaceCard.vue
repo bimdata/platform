@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
@@ -49,12 +49,9 @@ export default {
     const router = useRouter();
     const { userProjects } = useProjects();
 
-    const nbProjects = ref(0);
-    watchEffect(() => {
-      nbProjects.value = userProjects.value.filter(
-        p => p.cloud.id === props.space.id
-      ).length;
-    });
+    const nbProjects = computed(
+      () => userProjects.value.filter(p => p.cloud.id === props.space.id).length
+    );
 
     const goToSpaceBoard = () => {
       router.push({

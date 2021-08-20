@@ -55,27 +55,23 @@ export default {
     const folderPermission = ref();
     watch(
       () => props.folder.defaultPermission,
-      perm => {
+      permValue => {
         folderPermission.value = permissionList.find(
-          right => right.value === perm
+          perm => perm.value === permValue
         );
       },
       { immediate: true }
     );
 
     const update = async perm => {
-      try {
-        folderPermission.value = perm;
-        const [response] = await updateFiles(props.project, [
-          { ...props.folder, defaultPermission: perm.value }
-        ]);
-        emit("folder-permission-updated", {
-          folder: response,
-          permission: perm.value
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      folderPermission.value = perm;
+      const [response] = await updateFiles(props.project, [
+        { ...props.folder, defaultPermission: perm.value }
+      ]);
+      emit("folder-permission-updated", {
+        folder: response,
+        permission: perm.value
+      });
     };
 
     return {

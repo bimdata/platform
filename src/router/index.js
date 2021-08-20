@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { authGuard } from "./guards";
-import {
-  groupBoardResolver,
-  modelViewerResolver,
-  projectBoardResolver,
-  projectGroupsResolver,
-  rootResolver,
-  spaceBoardResolver
-} from "./resolvers";
+import authGuard from "./guards/auth";
+import groupBoardResolver from "./resolvers/group-board";
+import modelViewerResolver from "./resolvers/model-viewer";
+import projectBoardResolver from "./resolvers/project-board";
+import projectGroupsResolver from "./resolvers/project-groups";
+import rootResolver from "./resolvers/root";
+import spaceBoardResolver from "./resolvers/space-board";
 
 // Route components
 import Layout from "@/Layout";

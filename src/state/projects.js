@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs, watch } from "vue";
-import ProjectService from "@/server/ProjectService";
+import ProjectService from "@/services/ProjectService";
 import { useUser } from "@/state/user";
 
 const state = reactive({

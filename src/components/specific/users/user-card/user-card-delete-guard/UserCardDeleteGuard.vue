@@ -67,12 +67,10 @@ export default {
         } else if (props.space) {
           await deleteSpaceUser(props.space, props.user);
         }
-      } catch (error) {
-        console.log(error);
+        close();
       } finally {
         loading.value = false;
       }
-      close();
     };
 
     const close = () => {

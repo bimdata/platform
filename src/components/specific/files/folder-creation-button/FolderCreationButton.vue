@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
 
@@ -59,13 +59,7 @@ export default {
     }
   },
   setup() {
-    const showCreationForm = ref(false);
-    const close = () => {
-      showCreationForm.value = false;
-    };
-    const toggle = () => {
-      showCreationForm.value = !showCreationForm.value;
-    };
+    const { isOpen: showCreationForm, close, toggle } = useToggle();
 
     return {
       // References

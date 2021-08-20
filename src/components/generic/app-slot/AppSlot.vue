@@ -1,6 +1,6 @@
 <script>
 import { h } from "vue";
-import { useAppSlot } from "@/composables/app-slot";
+import { useAppSlot } from "./app-slot";
 
 export default {
   props: {

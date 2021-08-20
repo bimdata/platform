@@ -41,18 +41,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 
 export default {
   emits: ["open-update", "open-delete"],
   setup() {
-    const showMenu = ref(false);
-    const closeMenu = () => {
-      showMenu.value = false;
-    };
-    const toggleMenu = () => {
-      showMenu.value = !showMenu.value;
-    };
+    const {
+      isOpen: showMenu,
+      close: closeMenu,
+      toggle: toggleMenu
+    } = useToggle();
 
     return {
       // References

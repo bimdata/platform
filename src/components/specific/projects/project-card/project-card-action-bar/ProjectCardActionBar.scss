@@ -6,5 +6,9 @@
 
   &__action-btn {
     color: $color-tertiary-dark;
+
+    &:disabled {
+      color: $color-tertiary;
+    }
   }
 }
