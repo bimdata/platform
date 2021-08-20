@@ -34,7 +34,6 @@
 
 <script>
 import { inject, ref } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 
@@ -55,7 +54,6 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { handleError, USER_UPDATE_ERROR } = useErrors();
     const { updateSpaceUser } = useSpaces();
     const { updateProjectUser } = useProjects();
 
@@ -81,8 +79,6 @@ export default {
             role: role.value
           });
         }
-      } catch (error) {
-        handleError(USER_UPDATE_ERROR, error);
       } finally {
         loading.value = false;
       }

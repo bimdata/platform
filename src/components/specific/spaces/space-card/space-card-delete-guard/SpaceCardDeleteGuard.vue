@@ -30,7 +30,6 @@
 
 <script>
 import { inject } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useSpaces } from "@/state/spaces";
 
 export default {
@@ -42,7 +41,6 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { handleError, SPACE_DELETE_ERROR } = useErrors();
     const { deleteSpace } = useSpaces();
 
     const loading = inject("loading", false);
@@ -52,8 +50,6 @@ export default {
         loading.value = true;
         await deleteSpace(props.space);
         emit("success");
-      } catch (error) {
-        handleError(SPACE_DELETE_ERROR, error);
       } finally {
         loading.value = false;
       }

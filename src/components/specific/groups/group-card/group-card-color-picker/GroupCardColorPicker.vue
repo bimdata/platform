@@ -58,8 +58,6 @@ export default {
             color: groupColor.value
           });
           emit("success");
-        } catch (error) {
-          console.error(error);
         } finally {
           loading.value = false;
         }

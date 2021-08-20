@@ -18,7 +18,7 @@
       class="group-card-update-form__input"
       :placeholder="$t('GroupCardUpdateForm.inputPlaceholder')"
       v-model="groupName"
-      :error="error"
+      :error="hasError"
       :errorMessage="$t('GroupCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="submit"
@@ -59,7 +59,8 @@ export default {
 
     const nameInput = ref(null);
     const groupName = ref(props.group.name);
-    const error = ref(false);
+    const hasError = ref(false);
+
     const submit = async () => {
       if (groupName.value) {
         try {
@@ -69,19 +70,17 @@ export default {
             name: groupName.value
           });
           emit("success");
-        } catch (error) {
-          console.error(error);
         } finally {
           loading.value = false;
         }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
     const close = () => {
-      error.value = false;
+      hasError.value = false;
       emit("close");
     };
 
@@ -91,7 +90,7 @@ export default {
 
     return {
       // References
-      error,
+      hasError,
       groupName,
       nameInput,
       // Methods

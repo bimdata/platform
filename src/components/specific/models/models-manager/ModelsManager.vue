@@ -70,9 +70,7 @@
 <script>
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { useErrors } from "@/composables/errors";
 import { useModels } from "@/state/models";
-import { downloadAll } from "@/utils/download";
 import { segregate } from "@/utils/models";
 // Components
 import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
@@ -106,9 +104,7 @@ export default {
   },
   setup(props) {
     const { locale, t } = useI18n();
-    const { handleError, MODEL_UPDATE_ERROR, MODEL_DOWNLOAD_ERROR } =
-      useErrors();
-    const { updateModels } = useModels();
+    const { updateModels, downloadModels: download } = useModels();
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
@@ -170,34 +166,21 @@ export default {
     // };
 
     const archiveModels = async models => {
-      try {
-        models = models.map(model => ({ ...model, archived: true }));
-        await updateModels(props.project, models);
-      } catch (error) {
-        handleError(MODEL_UPDATE_ERROR, error);
-      }
+      await updateModels(
+        props.project,
+        models.map(model => ({ ...model, archived: true }))
+      );
     };
 
     const unarchiveModels = async models => {
-      try {
-        models = models.map(model => ({ ...model, archived: false }));
-        await updateModels(props.project, models);
-      } catch (error) {
-        handleError(MODEL_UPDATE_ERROR, error);
-      }
+      await updateModels(
+        props.project,
+        models.map(model => ({ ...model, archived: false }))
+      );
     };
 
     const downloadModels = async models => {
-      try {
-        await downloadAll(
-          models.map(model => ({
-            name: model.document.fileName,
-            url: model.document.file
-          }))
-        );
-      } catch (error) {
-        handleError(MODEL_DOWNLOAD_ERROR, error);
-      }
+      await download(models);
     };
 
     return {

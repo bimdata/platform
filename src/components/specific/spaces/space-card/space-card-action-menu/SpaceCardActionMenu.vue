@@ -83,7 +83,6 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useToggle } from "@/composables/toggle";
 import { useSpaces } from "@/state/spaces";
 // Components
@@ -104,7 +103,6 @@ export default {
     }
   },
   setup(props) {
-    const { handleError, SPACE_IMAGE_DELETE_ERROR } = useErrors();
     const { removeSpaceImage } = useSpaces();
 
     const loading = ref(false);
@@ -142,8 +140,6 @@ export default {
         loading.value = true;
         await removeSpaceImage(props.space);
         closeMenu();
-      } catch (error) {
-        handleError(SPACE_IMAGE_DELETE_ERROR, error);
       } finally {
         loading.value = false;
       }

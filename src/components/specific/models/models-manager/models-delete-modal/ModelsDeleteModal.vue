@@ -25,13 +25,7 @@
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
         {{ $t("ModelsDeleteModal.cancelButtonText") }}
       </BIMDataButton>
-      <BIMDataButton
-        color="high"
-        fill
-        radius
-        width="120px"
-        @click="removeModels"
-      >
+      <BIMDataButton color="high" fill radius width="120px" @click="submit">
         {{ $t("ModelsDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
@@ -39,7 +33,6 @@
 </template>
 
 <script>
-import { useErrors } from "@/composables/errors";
 import { useModels } from "@/state/models";
 // Components
 import GenericModal from "@/components/generic/generic-modal/GenericModal";
@@ -60,21 +53,16 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { handleError, MODEL_DELETE_ERROR } = useErrors();
     const { softDeleteModels, deleteModels } = useModels();
 
-    const removeModels = async () => {
-      try {
-        softDeleteModels(props.models);
-        await deleteModels(props.project, props.models);
-        emit("close");
-      } catch (error) {
-        handleError(MODEL_DELETE_ERROR, error);
-      }
+    const submit = () => {
+      deleteModels(props.project, props.models);
+      softDeleteModels(props.models);
+      emit("close");
     };
 
     return {
-      removeModels
+      submit
     };
   }
 };

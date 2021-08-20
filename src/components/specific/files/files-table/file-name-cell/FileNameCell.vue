@@ -12,7 +12,7 @@
           v-model="fileName"
           @keyup.esc.stop="closeUpdateForm"
           @keyup.enter.stop="renameFile"
-          :error="error"
+          :error="hasError"
           :errorMessage="$t('FileNameCell.inputErrorMessage')"
           margin="0"
         />
@@ -75,7 +75,7 @@ export default {
       default: false
     }
   },
-  emits: ["file-clicked", "close", "success", "error"],
+  emits: ["close", "file-clicked", "success"],
   setup(props, { emit }) {
     const { updateFiles } = useFiles();
 
@@ -83,11 +83,11 @@ export default {
 
     const nameInput = ref(null);
     const fileName = ref("");
-    const error = ref(false);
+    const hasError = ref(false);
 
     const renameFile = async () => {
-      try {
-        if (fileName.value) {
+      if (fileName.value) {
+        try {
           loading.value = true;
           await updateFiles(props.project, [
             {
@@ -97,15 +97,12 @@ export default {
           ]);
           closeUpdateForm();
           emit("success");
-        } else {
-          error.value = true;
-          nameInput.value.focus();
+        } finally {
+          loading.value = false;
         }
-      } catch (error) {
-        console.log(error);
-        emit("error", error);
-      } finally {
-        loading.value = false;
+      } else {
+        hasError.value = true;
+        nameInput.value.focus();
       }
     };
 
@@ -117,7 +114,7 @@ export default {
     };
     const closeUpdateForm = () => {
       loading.value = false;
-      error.value = false;
+      hasError.value = false;
       showUpdateForm.value = false;
       emit("close");
     };
@@ -140,8 +137,8 @@ export default {
 
     return {
       // References
-      error,
       fileName,
+      hasError,
       loading,
       nameInput,
       showUpdateForm,

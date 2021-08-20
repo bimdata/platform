@@ -55,15 +55,15 @@ const updateFolders = async (project, folders) => {
 };
 
 const deleteFolders = async (project, folders) => {
+  await FileService.deleteFolders(project, folders);
+  softUpdateFileStructure("delete", folders);
+
   // Delete models contained in these folders
   const { softDeleteModels } = useModels();
   const modelDocs = folders
     .flatMap(folder => getDescendants(folder))
     .filter(doc => !!doc.ifcId);
   softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
-
-  await FileService.deleteFolders(project, folders);
-  softUpdateFileStructure("delete", folders);
 
   return folders;
 };
@@ -83,13 +83,13 @@ const updateDocuments = async (project, documents) => {
 };
 
 const deleteDocuments = async (project, documents) => {
+  await FileService.deleteDocuments(project, documents);
+  softUpdateFileStructure("delete", documents);
+
   // Delete corresponding models if any
   const { softDeleteModels } = useModels();
   const modelDocs = documents.filter(doc => !!doc.ifcId);
   softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
-
-  await FileService.deleteDocuments(project, documents);
-  softUpdateFileStructure("delete", documents);
 
   return documents;
 };
@@ -118,6 +118,11 @@ const moveFiles = async (project, files, dest) => {
   return newFiles;
 };
 
+const downloadFiles = async (project, files) => {
+  const { accessToken } = useAuth();
+  await FileService.downloadFiles(project, files, accessToken.value);
+};
+
 const deleteFiles = async (project, files) => {
   const { folders, documents } = segregate(files);
   await Promise.all([
@@ -125,17 +130,6 @@ const deleteFiles = async (project, files) => {
     deleteDocuments(project, documents)
   ]);
   return files;
-};
-
-const getArchiveUrl = (project, files) => {
-  const { accessToken } = useAuth();
-  const { folders, documents } = segregate(files);
-  return FileService.getArchiveUrl(
-    project,
-    folders,
-    documents,
-    accessToken.value
-  );
 };
 
 export function useFiles() {
@@ -154,7 +148,7 @@ export function useFiles() {
     deleteDocuments,
     updateFiles,
     moveFiles,
-    deleteFiles,
-    getArchiveUrl
+    downloadFiles,
+    deleteFiles
   };
 }

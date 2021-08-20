@@ -34,7 +34,6 @@
 
 <script>
 import { inject } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 
@@ -55,7 +54,6 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { handleError, USER_DELETE_ERROR } = useErrors();
     const { deleteSpaceUser } = useSpaces();
     const { deleteProjectUser } = useProjects();
 
@@ -70,8 +68,6 @@ export default {
           await deleteSpaceUser(props.space, props.user);
         }
         close();
-      } catch (error) {
-        handleError(USER_DELETE_ERROR, error);
       } finally {
         loading.value = false;
       }

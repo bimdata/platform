@@ -38,7 +38,6 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useSpaces } from "@/state/spaces";
 
 export default {
@@ -50,7 +49,6 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { handleError, SPACE_UPDATE_ERROR } = useErrors();
     const { updateSpace } = useSpaces();
 
     const loading = inject("loading", false);
@@ -65,8 +63,6 @@ export default {
           loading.value = true;
           await updateSpace({ ...props.space, name: spaceName.value });
           emit("success");
-        } catch (error) {
-          handleError(SPACE_UPDATE_ERROR, error);
         } finally {
           loading.value = false;
         }

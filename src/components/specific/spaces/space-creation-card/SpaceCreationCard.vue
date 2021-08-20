@@ -54,13 +54,11 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useSpaces } from "@/state/spaces";
 
 export default {
   emits: ["close"],
   setup(props, { emit }) {
-    const { handleError, SPACE_CREATE_ERROR } = useErrors();
     const { createSpace } = useSpaces();
 
     const loading = ref(false);
@@ -74,8 +72,6 @@ export default {
           loading.value = true;
           await createSpace(newSpace);
           close();
-        } catch (error) {
-          handleError(SPACE_CREATE_ERROR, error);
         } finally {
           loading.value = false;
         }

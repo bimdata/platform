@@ -103,7 +103,6 @@
 import { ref, watch } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 import { useFiles } from "@/state/files";
-import { download } from "@/utils/download";
 import { FILE_TYPE } from "@/utils/file-structure";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree";
@@ -151,7 +150,7 @@ export default {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
-      getArchiveUrl
+      downloadFiles: download
     } = useFiles();
 
     const currentFolder = ref(null);
@@ -219,18 +218,7 @@ export default {
     };
 
     const downloadFiles = async files => {
-      let downloadName, downloadUrl;
-      if (files.length === 0) {
-        return;
-      }
-      if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
-        downloadName = files[0].fileName;
-        downloadUrl = files[0].file;
-      } else {
-        downloadName = props.project.name;
-        downloadUrl = getArchiveUrl(props.project, files);
-      }
-      download({ name: downloadName, url: downloadUrl });
+      await download(props.project, files);
     };
 
     const showSidePanel = ref(false);

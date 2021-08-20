@@ -64,7 +64,6 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -75,7 +74,6 @@ export default {
     }
   },
   setup(props) {
-    const { handleError, PROJECT_CREATE_ERROR } = useErrors();
     const { createProject } = useProjects();
 
     const loading = ref(false);
@@ -89,8 +87,6 @@ export default {
           loading.value = true;
           await createProject(props.space, newProject);
           closeCreationForm();
-        } catch (error) {
-          handleError(PROJECT_CREATE_ERROR, error);
         } finally {
           loading.value = false;
         }

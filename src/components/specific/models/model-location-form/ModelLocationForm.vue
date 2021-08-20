@@ -40,7 +40,6 @@
 
 <script>
 import { inject, ref, watch } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useModels } from "@/state/models";
 import { DD2DMS, getCoordinatesFromAddress } from "@/utils/location";
 // Components
@@ -79,7 +78,6 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { handleError, MODEL_UPDATE_ERROR } = useErrors();
     const { createModelLocation, updateModelLocation } = useModels();
 
     const isSubmitStep = ref(false);
@@ -118,8 +116,6 @@ export default {
           await createModelLocation(props.project, props.model, location);
         }
         emit("success");
-      } catch (error) {
-        handleError(MODEL_UPDATE_ERROR, error);
       } finally {
         submitLoading.value = false;
       }

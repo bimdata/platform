@@ -485,6 +485,15 @@
     "modelUploadError": "Fail to upload model",
     "modelUpdateError": "Fail to update model",
     "modelDownloadError": "Fail to download model",
-    "modelDeleteError": "Fail to delete model"
+    "modelMergeError": "Fail to merge models",
+    "modelDeleteError": "Fail to delete model",
+    "fileUpdateError": "Fail to update files",
+    "fileDownloadError": "Fail to download files",
+    "fileDeleteError": "Fail to delete files",
+    "folderCreateError": "Fail to create folder",
+    "documentUploadError": "Fail to upload document",
+    "groupCreateError": "Fail to create group",
+    "groupUpdateError": "Fail to update group",
+    "groupDeleteError": "Fail to delete group"
   }
 }

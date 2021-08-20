@@ -31,7 +31,7 @@
             class="group-creation-card__form__input"
             :placeholder="$t('GroupCreationCard.inputPlaceholder')"
             v-model="groupName"
-            :error="error"
+            :error="hasError"
             :errorMessage="$t('GroupCreationCard.inputErrorMessage')"
             @keyup.esc.stop="closeCreationForm"
             @keyup.enter.stop="submit"
@@ -84,22 +84,26 @@ export default {
     const { createGroup } = useGroups();
 
     const loading = ref(false);
-    const nameInput = ref(null);
 
+    const nameInput = ref(null);
     const groupName = ref("");
-    const error = ref(false);
+    const hasError = ref(false);
+
     const submit = async () => {
       if (groupName.value) {
-        loading.value = true;
-        await createGroup(props.project, {
-          name: groupName.value,
-          color: getRandomElement(colors)
-        });
-        loading.value = false;
-        closeCreationForm();
+        try {
+          loading.value = true;
+          await createGroup(props.project, {
+            name: groupName.value,
+            color: getRandomElement(colors)
+          });
+          closeCreationForm();
+        } finally {
+          loading.value = false;
+        }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
@@ -110,13 +114,13 @@ export default {
     };
     const closeCreationForm = () => {
       groupName.value = "";
-      error.value = false;
+      hasError.value = false;
       showCreationForm.value = false;
     };
 
     return {
       // References
-      error,
+      hasError,
       loading,
       nameInput,
       groupName,

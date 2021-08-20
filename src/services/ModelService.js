@@ -1,4 +1,6 @@
+import { downloadAll } from "@/utils/download";
 import apiClient from "./api-client";
+import { ERRORS, RuntimeError } from "./ErrorService";
 
 class ModelService {
   fetchModels(project) {
@@ -17,28 +19,49 @@ class ModelService {
   }
 
   updateModels(project, models) {
-    return Promise.all(
-      models.map(model =>
-        apiClient.ifcApi.updateIfc({
-          cloudPk: project.cloud.id,
-          projectPk: project.id,
-          id: model.id,
-          data: model
-        })
-      )
-    );
+    try {
+      return Promise.all(
+        models.map(model =>
+          apiClient.ifcApi.updateIfc({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            id: model.id,
+            data: model
+          })
+        )
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
+  }
+
+  downloadModels(models) {
+    try {
+      return downloadAll(
+        models.map(model => ({
+          name: model.document.fileName,
+          url: model.document.file
+        }))
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_DOWNLOAD_ERROR, error);
+    }
   }
 
   deleteModels(project, models) {
-    return Promise.all(
-      models.map(model =>
-        apiClient.ifcApi.deleteIfc({
-          cloudPk: project.cloud.id,
-          projectPk: project.id,
-          id: model.id
-        })
-      )
-    );
+    try {
+      return Promise.all(
+        models.map(model =>
+          apiClient.ifcApi.deleteIfc({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            id: model.id
+          })
+        )
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_DELETE_ERROR, error);
+    }
   }
 
   fetchModelElements(project, model, params = {}) {
@@ -55,100 +78,124 @@ class ModelService {
   }
 
   createModelElements(project, model, elements) {
-    return apiClient.ifcApi.createElement({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      ifcPk: model.id,
-      data: elements
-    });
+    try {
+      return apiClient.ifcApi.createElement({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        ifcPk: model.id,
+        data: elements
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
   }
 
   updateModelElements(project, model, elements) {
-    return apiClient.ifcApi.bulkUpdateElements({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      ifcPk: model.id,
-      data: elements
-    });
+    try {
+      return apiClient.ifcApi.bulkUpdateElements({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        ifcPk: model.id,
+        data: elements
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
   }
 
   deleteModelElements(project, model, elements) {
-    return Promise.all(
-      elements.map(element =>
-        apiClient.ifcApi.deleteElement({
-          cloudPk: project.cloud.id,
-          projectPk: project.id,
-          ifcPk: model.id,
-          uuid: element.uuid
-        })
-      )
-    );
+    try {
+      return Promise.all(
+        elements.map(element =>
+          apiClient.ifcApi.deleteElement({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            ifcPk: model.id,
+            uuid: element.uuid
+          })
+        )
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
   }
 
   createModelElementPsetProperties(project, model, element, pset, props) {
-    const properties = props.map(({ name, value }) => ({
-      definition: { name },
-      value
-    }));
-    return Promise.all(
-      properties.map(property =>
-        apiClient.ifcApi.createElementPropertySetProperty({
-          cloudPk: project.cloud.id,
-          projectPk: project.id,
-          ifcPk: model.id,
-          elementUuid: element.uuid,
-          propertysetPk: pset.id,
-          data: property
-        })
-      )
-    );
+    try {
+      const properties = props.map(({ name, value }) => ({
+        definition: { name },
+        value
+      }));
+      return Promise.all(
+        properties.map(property =>
+          apiClient.ifcApi.createElementPropertySetProperty({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            ifcPk: model.id,
+            elementUuid: element.uuid,
+            propertysetPk: pset.id,
+            data: property
+          })
+        )
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
   }
 
   updateModelElementPsetProperties(project, model, element, pset, props) {
-    const properties = props.map(({ id, name, value }) => ({
-      id,
-      definition: { name },
-      value
-    }));
-    return Promise.all(
-      properties.map(property => {
-        if (property.id) {
-          return apiClient.ifcApi.updateElementPropertySetProperty({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            ifcPk: model.id,
-            elementUuid: element.uuid,
-            propertysetPk: pset.id,
-            id: property.id,
-            data: property
-          });
-        } else {
-          return apiClient.ifcApi.createElementPropertySetProperty({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            ifcPk: model.id,
-            elementUuid: element.uuid,
-            propertysetPk: pset.id,
-            data: property
-          });
-        }
-      })
-    );
+    try {
+      const properties = props.map(({ id, name, value }) => ({
+        id,
+        definition: { name },
+        value
+      }));
+      return Promise.all(
+        properties.map(property => {
+          if (property.id) {
+            return apiClient.ifcApi.updateElementPropertySetProperty({
+              cloudPk: project.cloud.id,
+              projectPk: project.id,
+              ifcPk: model.id,
+              elementUuid: element.uuid,
+              propertysetPk: pset.id,
+              id: property.id,
+              data: property
+            });
+          } else {
+            return apiClient.ifcApi.createElementPropertySetProperty({
+              cloudPk: project.cloud.id,
+              projectPk: project.id,
+              ifcPk: model.id,
+              elementUuid: element.uuid,
+              propertysetPk: pset.id,
+              data: property
+            });
+          }
+        })
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
   }
 
   deleteModelElementPsetProperties(project, model, element, pset, props) {
-    return Promise.all(
-      props.map(property =>
-        apiClient.ifcApi.removeElementPropertySetProperty({
-          cloudPk: project.cloud.id,
-          projectPk: project.id,
-          ifcPk: model.id,
-          elementUuid: element.uuid,
-          propertysetPk: pset.id,
-          id: property.id
-        })
-      )
-    );
+    try {
+      return Promise.all(
+        props.map(property =>
+          apiClient.ifcApi.removeElementPropertySetProperty({
+            cloudPk: project.cloud.id,
+            projectPk: project.id,
+            ifcPk: model.id,
+            elementUuid: element.uuid,
+            propertysetPk: pset.id,
+            id: property.id
+          })
+        )
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
+    }
   }
 
   createModelElementAttrProperties(project, model, element, props) {
@@ -181,41 +228,19 @@ class ModelService {
     );
   }
 
-  optimizeModel(project, model) {
-    return apiClient.ifcApi.optimizeIfc({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: model.id,
-      data: {}
-    });
-  }
-
-  reprocessModel(project, model) {
-    return apiClient.ifcApi.reprocessIfc({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: model.id
-    });
-  }
-
-  exportModel(project, model, modelExport) {
-    return apiClient.ifcApi.exportIfc({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: model.id,
-      data: modelExport
-    });
-  }
-
   mergeModels(project, models, name) {
-    return apiClient.ifcApi.mergeIfcs({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      data: {
-        ifcIds: models.map(model => model.id),
-        exportName: name
-      }
-    });
+    try {
+      return apiClient.ifcApi.mergeIfcs({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        data: {
+          ifcIds: models.map(model => model.id),
+          exportName: name
+        }
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_MERGE_ERROR, error);
+    }
   }
 }
 

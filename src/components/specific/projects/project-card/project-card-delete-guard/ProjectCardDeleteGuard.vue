@@ -30,7 +30,6 @@
 
 <script>
 import { inject } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -42,7 +41,6 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { handleError, PROJECT_DELETE_ERROR } = useErrors();
     const { deleteProject } = useProjects();
 
     const loading = inject("loading", false);
@@ -52,8 +50,6 @@ export default {
         loading.value = true;
         await deleteProject(props.project);
         emit("success");
-      } catch (error) {
-        handleError(PROJECT_DELETE_ERROR, error);
       } finally {
         loading.value = false;
       }

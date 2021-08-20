@@ -1,4 +1,5 @@
 import apiClient from "./api-client";
+import { ERRORS, RuntimeError } from "./ErrorService";
 
 class ProjectService {
   constructor() {
@@ -59,68 +60,96 @@ class ProjectService {
   }
 
   createProject(space, project) {
-    return apiClient.collaborationApi.createProject({
-      cloudPk: space.id,
-      data: project
-    });
+    try {
+      return apiClient.collaborationApi.createProject({
+        cloudPk: space.id,
+        data: project
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_CREATE_ERROR, error);
+    }
   }
 
   updateProject(project) {
-    return apiClient.collaborationApi.updateProject({
-      cloudPk: project.cloud.id,
-      id: project.id,
-      data: project
-    });
+    try {
+      return apiClient.collaborationApi.updateProject({
+        cloudPk: project.cloud.id,
+        id: project.id,
+        data: project
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_UPDATE_ERROR, error);
+    }
   }
 
   deleteProject(project) {
-    return apiClient.collaborationApi.deleteProject({
-      cloudPk: project.cloud.id,
-      id: project.id
-    });
+    try {
+      return apiClient.collaborationApi.deleteProject({
+        cloudPk: project.cloud.id,
+        id: project.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_DELETE_ERROR, error);
+    }
   }
 
   sendProjectInvitation(project, invitation) {
-    return apiClient.collaborationApi.inviteProjectUser({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      data: {
-        email: invitation.email,
-        role: invitation.role,
-        redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
-      }
-    });
+    try {
+      return apiClient.collaborationApi.inviteProjectUser({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        data: {
+          email: invitation.email,
+          role: invitation.role,
+          redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
+        }
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
+    }
   }
 
   cancelProjectInvitation(project, invitation) {
-    return apiClient.collaborationApi.cancelProjectUserInvitation({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: invitation.id
-    });
+    try {
+      return apiClient.collaborationApi.cancelProjectUserInvitation({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        id: invitation.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.INVITATION_CANCEL_ERROR, error);
+    }
   }
 
   async updateProjectUser(project, user) {
-    // TODO: API model should be updated to return
-    // user data instead of role value.
-    await apiClient.collaborationApi.updateProjectUser({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: user.id,
-      data: user
-    });
-    return {
-      ...user,
-      role: undefined
-    };
+    try {
+      // TODO: API model should be updated to return
+      // user data instead of role value.
+      await apiClient.collaborationApi.updateProjectUser({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        id: user.id,
+        data: user
+      });
+      return {
+        ...user,
+        role: undefined
+      };
+    } catch (error) {
+      throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
+    }
   }
 
   deleteProjectUser(project, user) {
-    return apiClient.collaborationApi.deleteProjectUser({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id: user.id
-    });
+    try {
+      return apiClient.collaborationApi.deleteProjectUser({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        id: user.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
+    }
   }
 }
 

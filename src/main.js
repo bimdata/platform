@@ -1,8 +1,9 @@
 /* eslint-disable */
 import { createApp } from "vue";
 import vueClickAway from "vue3-click-away";
-import i18n from "./i18n";
-import router from "./router";
+import i18n from "@/i18n";
+import router from "@/router";
+import ErrorService from "@/services/ErrorService";
 
 import App from "./App.vue";
 import globalComponents from "@/components/global-components";
@@ -19,8 +20,7 @@ for (const [name, component] of Object.entries(globalComponents)) {
 
 // Setup global error handler
 app.config.errorHandler = error => {
-  // TODO: error handling logic
-  console.error(error);
+  ErrorService.handleError(error);
 };
 
 app.mount("#app");

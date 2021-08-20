@@ -53,14 +53,18 @@ const mergeModels = async (project, models, name) => {
   await ModelService.mergeModels(project, models, name);
 };
 
+const downloadModels = async models => {
+  await ModelService.downloadModels(models);
+};
+
 const deleteModels = async (project, models) => {
+  await ModelService.deleteModels(project, models);
+  softDeleteModels(models);
+
   // Delete associated documents
   const { softUpdateFileStructure } = useFiles();
   const modelDocs = models.map(model => model.document);
   softUpdateFileStructure("delete", modelDocs);
-
-  await ModelService.deleteModels(project, models);
-  softDeleteModels(models);
 
   return models;
 };
@@ -175,6 +179,7 @@ export function useModels() {
     updateModelName,
     softUpdateModels,
     mergeModels,
+    downloadModels,
     deleteModels,
     softDeleteModels,
     fetchModelLocation,

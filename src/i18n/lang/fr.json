@@ -485,6 +485,15 @@
     "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
     "modelUpdateError": "Échec de la mise à jour du modèle",
     "modelDownloadError": "Une erreur est survenue lors du téléchargement",
-    "modelDeleteError": "Erreur lors de la suppression du modèle"
+    "modelMergeError": "Échec de la fusion des modèles",
+    "modelDeleteError": "Erreur lors de la suppression du modèle",
+    "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
+    "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
+    "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "folderCreateError": "Erreur lors de la création du dossier",
+    "documentUploadError": "Erreur lors du téléversmeent du fichier",
+    "groupCreateError": "Erreur lors de la création du groupe",
+    "groupUpdateError": "Erreur lors de la mise à jour du groupe",
+    "groupDeleteError": "Échec de la suppression du groupe"
   }
 }

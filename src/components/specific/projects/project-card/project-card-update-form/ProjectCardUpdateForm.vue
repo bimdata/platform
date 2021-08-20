@@ -38,7 +38,6 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useProjects } from "@/state/projects";
 
 export default {
@@ -50,7 +49,6 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { handleError, PROJECT_UPDATE_ERROR } = useErrors();
     const { updateProject } = useProjects();
 
     const loading = inject("loading", false);
@@ -68,8 +66,6 @@ export default {
             name: projectName.value
           });
           emit("success");
-        } catch (error) {
-          handleError(PROJECT_UPDATE_ERROR, error);
         } finally {
           loading.value = false;
         }

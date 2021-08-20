@@ -43,7 +43,7 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { deleteGroup } = useGroups();
 
@@ -53,8 +53,7 @@ export default {
       try {
         loading.value = true;
         await deleteGroup(props.project, props.group);
-      } catch (error) {
-        console.error(error);
+        emit("success");
       } finally {
         loading.value = false;
       }

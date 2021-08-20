@@ -45,7 +45,6 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useErrors } from "@/composables/errors";
 import { useModels } from "@/state/models";
 
 export default {
@@ -65,7 +64,6 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { handleError, MODEL_UPDATE_ERROR } = useErrors();
     const { updateModelName } = useModels();
 
     const loading = ref(false);
@@ -81,8 +79,6 @@ export default {
           await updateModelName(props.project, props.model, modelName.value);
           closeUpdateForm();
           emit("success");
-        } catch (error) {
-          handleError(MODEL_UPDATE_ERROR, error);
         } finally {
           loading.value = false;
         }

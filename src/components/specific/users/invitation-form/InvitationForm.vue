@@ -46,7 +46,6 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useErrors } from "@/composables/errors";
 import { useNotifications } from "@/composables/notifications";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
@@ -74,7 +73,6 @@ export default {
   setup(props, { emit }) {
     const { locale, t } = useI18n();
     const { pushNotification } = useNotifications();
-    const { handleError, INVITATION_SEND_ERROR } = useErrors();
     // const { spaceRoles, projectRoles } = useUser();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
@@ -118,27 +116,23 @@ export default {
 
     const submit = async () => {
       if (email.value) {
-        try {
-          if (props.project) {
-            await sendProjectInvitation(props.project, {
-              email: email.value,
-              role: role.value.value
-            });
-          } else if (props.space) {
-            await sendSpaceInvitation(props.space, {
-              email: email.value
-            });
-          }
-          pushNotification({
-            type: "success",
-            title: t("Success"),
-            message: t("InvitationForm.successNotifText")
+        if (props.project) {
+          await sendProjectInvitation(props.project, {
+            email: email.value,
+            role: role.value.value
           });
-          reset();
-          emit("success");
-        } catch (error) {
-          handleError(INVITATION_SEND_ERROR, error);
+        } else if (props.space) {
+          await sendSpaceInvitation(props.space, {
+            email: email.value
+          });
         }
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("InvitationForm.successNotifText")
+        });
+        reset();
+        emit("success");
       } else {
         emailInput.value.focus();
         hasError.value = true;
