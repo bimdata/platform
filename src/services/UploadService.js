@@ -1,6 +1,7 @@
 import Uppy from "@uppy/core";
 import XHRUpload from "@uppy/xhr-upload";
 import apiClient from "./api-client";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 let fileUploadInstanceID = 0;
 
@@ -32,7 +33,12 @@ class UploadService {
 
     uppy.on("file-added", onUploadStart);
     uppy.on("complete", onUploadComplete);
-    uppy.on("upload-error", onUploadError);
+    uppy.on("upload-error", (file, error) => {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.SPACE_IMAGE_UPDATE_ERROR, error)
+      );
+      onUploadError(file, error);
+    });
 
     const upload = file =>
       uppy.addFile({
@@ -74,7 +80,12 @@ class UploadService {
     uppy.on("file-added", onUploadStart);
     uppy.on("upload-progress", onUploadProgress);
     uppy.on("complete", onUploadComplete);
-    uppy.on("upload-error", onUploadError);
+    uppy.on("upload-error", (file, error) => {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.DOCUMENT_UPLOAD_ERROR, error)
+      );
+      onUploadError(file, error);
+    });
 
     const upload = (file, parentId) =>
       uppy.addFile({
