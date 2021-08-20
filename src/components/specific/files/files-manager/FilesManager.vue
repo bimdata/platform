@@ -102,8 +102,8 @@
 <script>
 import { ref, watch } from "vue";
 import { useListFilter } from "@/composables/list-filter";
+import FILE_TYPES from "@/config/file-types";
 import { useFiles } from "@/state/files";
-import { FILE_TYPE } from "@/utils/file-structure";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
@@ -171,17 +171,17 @@ export default {
       () => currentFolder.value,
       folder => {
         const childrenFolders = folder.children
-          .filter(child => child.type === FILE_TYPE.FOLDER)
+          .filter(child => child.type === FILE_TYPES.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
         const childrenFiles = folder.children
-          .filter(child => child.type !== FILE_TYPE.FOLDER)
+          .filter(child => child.type !== FILE_TYPES.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
         currentFiles.value = childrenFolders.concat(childrenFiles);
       },
       { immediate: true }
     );
     const onFileSelected = file => {
-      if (file.type === FILE_TYPE.FOLDER) {
+      if (file.type === FILE_TYPES.FOLDER) {
         currentFolder.value = file;
       }
     };

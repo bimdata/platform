@@ -27,7 +27,7 @@
 
 <script>
 import { inject, ref } from "vue";
-import colors from "@/config/groupColors";
+import colors from "@/config/group-colors";
 import { useGroups } from "@/state/groups";
 
 export default {

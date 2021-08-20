@@ -1,5 +1,6 @@
 import { download } from "@/utils/download";
-import { FILE_TYPE, segregate } from "@/utils/file-structure";
+import FILE_TYPES from "@/config/file-types";
+import { segregate } from "@/utils/file-structure";
 import apiClient from "./api-client";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
@@ -119,7 +120,7 @@ class FileService {
       if (files.length === 0) {
         return;
       }
-      if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
+      if (files.length === 1 && files[0].type !== FILE_TYPES.FOLDER) {
         downloadName = files[0].fileName;
         downloadUrl = files[0].file;
       } else {

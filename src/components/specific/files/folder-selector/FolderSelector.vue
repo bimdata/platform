@@ -102,7 +102,8 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-import { FILE_PERMISSION, FILE_TYPE } from "@/utils/file-structure";
+import FILE_PERMISSIONS from "@/config/file-permissions";
+import FILE_TYPES from "@/config/file-types";
 
 export default {
   props: {
@@ -129,9 +130,9 @@ export default {
     const folders = computed(() =>
       currentFolder.value.children.filter(
         child =>
-          child.type === FILE_TYPE.FOLDER
+          child.type === FILE_TYPES.FOLDER
           && !props.files.some(f => child.id === f.id)
-          && (props.project.isAdmin || child.userPermission === FILE_PERMISSION.READ_WRITE)
+          && (props.project.isAdmin || child.userPermission === FILE_PERMISSIONS.READ_WRITE)
       )
     );
     /* eslint-enable */

@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
 import UserService from "@/services/UserService";
-import { PROJECT_ROLE, SPACE_ROLE } from "@/utils/users";
+import PROJECT_ROLES from "@/config/project-roles";
+import SPACE_ROLES from "@/config/space-roles";
 
 const state = reactive({
   user: null,
@@ -34,14 +35,14 @@ const mapUsers = users => {
 const mapSpaces = spaces => {
   return spaces.map(space => ({
     ...space,
-    isAdmin: state.spaceRoles[space.id] === SPACE_ROLE.ADMIN
+    isAdmin: state.spaceRoles[space.id] === SPACE_ROLES.ADMIN
   }));
 };
 
 const mapProjects = projects => {
   return projects.map(project => ({
     ...project,
-    isAdmin: state.projectRoles[project.id] === PROJECT_ROLE.ADMIN
+    isAdmin: state.projectRoles[project.id] === PROJECT_ROLES.ADMIN
   }));
 };
 

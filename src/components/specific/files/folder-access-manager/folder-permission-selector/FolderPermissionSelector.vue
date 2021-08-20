@@ -28,13 +28,13 @@
 
 <script>
 import { ref, watch } from "vue";
+import FILE_PERMISSIONS from "@/config/file-permissions";
 import { useFiles } from "@/state/files";
-import { FILE_PERMISSION } from "@/utils/file-structure";
 
 const permissionList = [
-  { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
-  { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
-  { id: "readWrite", value: FILE_PERMISSION.READ_WRITE }
+  { id: "accessDenied", value: FILE_PERMISSIONS.ACCESS_DENIED },
+  { id: "readOnly", value: FILE_PERMISSIONS.READ_ONLY },
+  { id: "readWrite", value: FILE_PERMISSIONS.READ_WRITE }
 ];
 
 export default {
