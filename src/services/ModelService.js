@@ -1,21 +1,33 @@
 import { downloadAll } from "@/utils/download";
 import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 class ModelService {
   fetchModels(project) {
-    return apiClient.ifcApi.getIfcs({
-      cloudPk: project.cloud.id,
-      projectPk: project.id
-    });
+    try {
+      return apiClient.ifcApi.getIfcs({
+        cloudPk: project.cloud.id,
+        projectPk: project.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchModelByID(project, id) {
-    return apiClient.ifcApi.getIfc({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      id
-    });
+    try {
+      return apiClient.ifcApi.getIfc({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        id
+      });
+    } catch (error) {
+      ErrorService.handleError(error);
+      return null;
+    }
   }
 
   updateModels(project, models) {

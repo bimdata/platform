@@ -1,19 +1,33 @@
 import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 class GroupService {
   fetchProjectGroups(project) {
-    return apiClient.collaborationApi.getManageGroups({
-      cloudPk: project.cloud.id,
-      projectPk: project.id
-    });
+    try {
+      return apiClient.collaborationApi.getManageGroups({
+        cloudPk: project.cloud.id,
+        projectPk: project.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.GROUPS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchUserGroups(project) {
-    return apiClient.collaborationApi.getGroups({
-      cloudPk: project.cloud.id,
-      projectPk: project.id
-    });
+    try {
+      return apiClient.collaborationApi.getGroups({
+        cloudPk: project.cloud.id,
+        projectPk: project.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.GROUPS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   createGroup(project, group) {

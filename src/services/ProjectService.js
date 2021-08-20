@@ -1,5 +1,6 @@
 import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
+import ModelService from "./ModelService";
 
 class ProjectService {
   constructor() {
@@ -9,34 +10,67 @@ class ProjectService {
   }
 
   fetchUserProjects() {
-    return apiClient.collaborationApi.getSelfProjects();
+    try {
+      return apiClient.collaborationApi.getSelfProjects();
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchSpaceProjects(space) {
-    return apiClient.collaborationApi.getProjects({
-      cloudPk: space.id
-    });
+    try {
+      return apiClient.collaborationApi.getProjects({
+        cloudPk: space.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchProjectByID(space, id) {
-    return apiClient.collaborationApi.getProject({
-      cloudPk: space.id,
-      id
-    });
+    try {
+      return apiClient.collaborationApi.getProject({
+        cloudPk: space.id,
+        id
+      });
+    } catch (error) {
+      ErrorService.handleError(error);
+      return null;
+    }
   }
 
   fetchProjectUsers(project) {
-    return apiClient.collaborationApi.getProjectUsers({
-      cloudPk: project.cloud.id,
-      projectPk: project.id
-    });
+    try {
+      return apiClient.collaborationApi.getProjectUsers({
+        cloudPk: project.cloud.id,
+        projectPk: project.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.USERS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchProjectInvitations(project) {
-    return apiClient.collaborationApi.getProjectInvitations({
-      cloudPk: project.cloud.id,
-      projectPk: project.id
-    });
+    try {
+      return apiClient.collaborationApi.getProjectInvitations({
+        cloudPk: project.cloud.id,
+        projectPk: project.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.INVITATIONS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   async fetchProjectModelPreviews(project) {
@@ -44,10 +78,7 @@ class ProjectService {
     if (this.cache.modelPreviews.has(cacheKey)) {
       return this.cache.modelPreviews.get(cacheKey);
     } else {
-      const models = await apiClient.ifcApi.getIfcs({
-        cloudPk: project.cloud.id,
-        projectPk: project.id
-      });
+      const models = await ModelService.fetchModels(project);
       const previews = models
         .filter(model => model.viewer360File)
         .map(model => ({

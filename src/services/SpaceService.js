@@ -1,25 +1,51 @@
 import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 class SpaceService {
   fetchUserSpaces() {
-    return apiClient.collaborationApi.getClouds();
+    try {
+      return apiClient.collaborationApi.getClouds();
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.SPACES_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchSpaceByID(id) {
-    return apiClient.collaborationApi.getCloud({ id });
+    try {
+      return apiClient.collaborationApi.getCloud({ id });
+    } catch (error) {
+      ErrorService.handleError(error);
+      return null;
+    }
   }
 
   fetchSpaceUsers(space) {
-    return apiClient.collaborationApi.getCloudUsers({
-      cloudPk: space.id
-    });
+    try {
+      return apiClient.collaborationApi.getCloudUsers({
+        cloudPk: space.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.USERS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   fetchSpaceInvitations(space) {
-    return apiClient.collaborationApi.getCloudInvitations({
-      cloudPk: space.id
-    });
+    try {
+      return apiClient.collaborationApi.getCloudInvitations({
+        cloudPk: space.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.INVITATIONS_FETCH_ERROR, error)
+      );
+      return [];
+    }
   }
 
   createSpace(space) {

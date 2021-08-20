@@ -1,7 +1,7 @@
 import { download } from "@/utils/download";
 import { FILE_TYPE, segregate } from "@/utils/file-structure";
 import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 const FOLDER_UPDATABLE_FIELDS = ["name", "parentId", "defaultPermission"];
 const DOCUMENT_UPDATABLE_FIELDS = ["name", "parentId"];
@@ -22,10 +22,17 @@ const documentUpdatePayload = document =>
 
 class FileService {
   fetchFileStructure(project) {
-    return apiClient.collaborationApi.getProjectDMSTree({
-      cloudPk: project.cloud.id,
-      id: project.id
-    });
+    try {
+      return apiClient.collaborationApi.getProjectDMSTree({
+        cloudPk: project.cloud.id,
+        id: project.id
+      });
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.FILE_STRUCTURE_FETCH_ERROR, error)
+      );
+      return {};
+    }
   }
 
   createFolder(project, folder) {
