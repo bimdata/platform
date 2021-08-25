@@ -1,12 +1,12 @@
-import { reactive, readonly, toRefs } from "@vue/reactivity";
-import FileService from "@/services/FileService";
-import { useAuth } from "@/state/auth";
-import { useModels } from "@/state/models";
+import { reactive, readonly, toRefs } from "vue";
+import FileService from "@/services/FileService.js";
+import { useAuth } from "@/state/auth.js";
+import { useModels } from "@/state/models.js";
 import {
   FileStructureHandler,
   getDescendants,
   segregate
-} from "@/utils/file-structure";
+} from "@/utils/file-structure.js";
 
 const state = reactive({
   projectFileStructure: {}
@@ -15,9 +15,9 @@ const state = reactive({
 let fileStructureHandler = new FileStructureHandler();
 
 const loadProjectFileStructure = async project => {
-  const fileStructure = await FileService.fetchFileStructure(project);
+  let fileStructure = await FileService.fetchFileStructure(project);
   state.projectFileStructure = fileStructure;
-  fileStructureHandler.init(fileStructure);
+  fileStructureHandler.serialize(fileStructure);
   return fileStructure;
 };
 
@@ -37,7 +37,7 @@ const softUpdateFileStructure = (action, files) => {
   for (const file of files) {
     actionFn(file);
   }
-  const fileStructure = fileStructureHandler.structure();
+  const fileStructure = fileStructureHandler.deserialize();
   state.projectFileStructure = fileStructure;
   return fileStructure;
 };

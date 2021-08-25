@@ -2,6 +2,39 @@
 import FILE_TYPES from "@/config/file-types";
 
 /**
+ * Compute a file UUID.
+ *
+ * @param {Object} file 
+ * @returns {String}
+ */
+function uuid(file) {
+  return `${file.type}-${file.id}`;
+}
+
+/**
+ * Validate a file object.
+ *
+ * @param {Object} file 
+ * @param {Array} requiredFields 
+ */
+function validate(file, requiredFields = []) {
+  if (!file) {
+    throw new Error(`[file validation] invalid file: ${file}`);
+  }
+  if (!file.id && file.id !== 0) {
+    throw new Error(`[file validation] file id not set: ${file.id}`);
+  }
+  if (!file.type) {
+    throw new Error(`[file validation] file type not set: ${file.type}`);
+  }
+  for (const field of requiredFields) {
+    if (!file[field] && file[field] !== 0) {
+      throw new Error(`[file validation] file ${field} not set: ${file[field]}`);
+    }
+  }
+}
+
+/**
  * Create a node map from file structure.
  *
  * @param {Object} fileStructure 
@@ -11,7 +44,7 @@ function createNodeMap(fileStructure) {
   const nodeMap = new Map();
   const addToNodeMap = file => {
     nodeMap.set(
-      file.id,
+      uuid(file),
       createFileNode(nodeMap, file)
     );
     (file.children || []).forEach(
@@ -30,7 +63,7 @@ function createNodeMap(fileStructure) {
  * @returns {Object}
  */
 function createFileStructure(nodeMap, root) {
-  const rootNode = nodeMap.get(root.id);
+  const rootNode = nodeMap.get(uuid(root));
   const addToFileStructure = node => {
     return Object.assign({}, {
       ...node.file,
@@ -52,24 +85,28 @@ function createFileStructure(nodeMap, root) {
 function createFileNode(nodeMap, file) {
   return {
     file: { ...file, children: [] },
-    _children: (file.children || []).map(f => f.id),
+    _children: (file.children || []).map(child => uuid(child)),
 
     get parent() {
-      return file.parentId ? nodeMap.get(file.parentId) : null;
+      return this.file.parentId ? nodeMap.get(`${FILE_TYPES.FOLDER}-${this.file.parentId}`) : null;
     },
     get children() {
-      return this._children.map(id => nodeMap.get(id));
+      return this._children.map(nodeId => nodeMap.get(nodeId));
     },
 
     update(file) {
       return Object.assign(this.file, { ...file, children: [] });
     },
     addChild(child) {
-      this._children.push(child.id);
+      const childId = uuid(child);
+      if (!this._children.includes(childId)) {
+        this._children.push(childId);
+      }
       return child;
     },
     removeChild(child) {
-      this._children = this._children.filter(id => id !== child.id);
+      const childId = uuid(child);
+      this._children = this._children.filter(nodeId => nodeId !== childId);
       return child;
     }
   };
@@ -78,27 +115,23 @@ function createFileNode(nodeMap, file) {
 class FileStructureHandler {
 
   constructor(fileStructure) {
-    this.init(fileStructure);
-  }
-
-  init(fileStructure) {
-    if (
-      fileStructure
-      && fileStructure.id !== undefined
-      && fileStructure.id !== null
-    ) {
-      this.root = { id: fileStructure.id };
-      this.nodeMap = createNodeMap(fileStructure);
-    } else {
-      // throw new Error(
-      //   "[FileStructureHandler] invalid init structure."
-      // );
-      this.root = null;
-      this.nodeMap = new Map();
+    this.root = null;
+    this.nodeMap = new Map();
+    if (fileStructure) {
+      this.serialize(fileStructure);
     }
   }
 
-  structure(root) {
+  serialize(fileStructure) {
+    validate(fileStructure);
+    this.root = { id: fileStructure.id, type: fileStructure.type };
+    this.nodeMap = createNodeMap(fileStructure);
+  }
+
+  deserialize(root) {
+    if (!this.root) {
+      throw new Error(`[FileStructureHandler.deserialize] handler root is not set.`);
+    }
     return createFileStructure(this.nodeMap, root || this.root);
   }
 
@@ -107,25 +140,34 @@ class FileStructureHandler {
    */
 
   exists(file) {
-    return this.nodeMap.has(file.id);
+    return this.nodeMap.has(uuid(file));
   }
 
   get(file, options = {}) {
-    const fileData = (this.nodeMap.get(file.id) || {}).file;
-    return fileData && options.children 
+    const fileData = (this.nodeMap.get(uuid(file)) || {}).file;
+    return fileData && options.children
       ? { ...fileData, children: this.children(file) }
       : fileData;
   }
 
   parent(file) {
-    return this.get({ id: file.parentId }) || null;
-    // return (this.nodeMap.get(file.id) || {}).parent.file;
+    const nodeId = uuid(file);
+    const node = this.nodeMap.get(nodeId);
+    if (node) {
+      return (node.parent || {}).file || null;
+    } else {
+      throw new Error(`[FileStructureHandler.parent] node ${nodeId} does not exist.`);
+    }
   }
 
   children(file) {
-    return (this.nodeMap.get(file.id) || {}).children.map(
-      child => child.file
-    );
+    const nodeId = uuid(file);
+    const node = this.nodeMap.get(nodeId);
+    if (node) {
+      return node.children.map(child => child.file);
+    } else {
+      throw new Error(`[FileStructureHandler.children] node ${nodeId} does not exist.`);
+    }
   }
 
   ancestors(file) {
@@ -148,17 +190,23 @@ class FileStructureHandler {
   }
 
   siblings(file) {
-    const parent = this.nodeMap.get(file.id).parent;
-    if (!parent) {
-      return [];
-    }
-    const siblings = [];
-    for (const child of parent.children) {
-      if (child.id !== file.id) {
-        siblings.push(child.file);
+    const nodeId = uuid(file);
+    const node = this.nodeMap.get(nodeId);
+    if (node) {
+      const parent = node.parent;
+      if (!parent) {
+        return [];
       }
+      const siblings = [];
+      for (const child of parent.children) {
+        if (uuid(child.file) !== nodeId) {
+          siblings.push(child.file);
+        }
+      }
+      return siblings;
+    } else {
+      throw new Error(`[FileStructureHandler.siblings] node ${nodeId} does not exist.`);
     }
-    return siblings;
   }
 
   /**********************
@@ -166,33 +214,41 @@ class FileStructureHandler {
    */
 
   createFile(file) {
+    validate(file, ['parentId']);
+    const nodeId = uuid(file);
     const node = createFileNode(this.nodeMap, file);
-    this.nodeMap.set(file.id, node);
-    if (node.parent) {
-      node.parent.addChild(file);
-    }
+    this.nodeMap.set(nodeId, node);
+    node.parent.addChild(file);
     (file.children || []).forEach(
       child => this.createFile(child)
     );
   }
 
   updateFile(file) {
-    const node = this.nodeMap.get(file.id);
+    validate(file);
+    const nodeId = uuid(file);
+    const node = this.nodeMap.get(nodeId);
     if (node) {
       node.update(file);
+    } else {
+      // throw new Error(`[FileStructureHandler.updateFile] node ${nodeId} does not exist.`);
     }
   }
 
   deleteFile(file) {
-    const node = this.nodeMap.get(file.id);
+    validate(file);
+    const nodeId = uuid(file);
+    const node = this.nodeMap.get(nodeId);
     if (node) {
       (file.children || []).forEach(
         child => this.deleteFile(child)
       );
-      this.nodeMap.delete(file.id);
+      this.nodeMap.delete(nodeId);
       if (node.parent) {
         node.parent.removeChild(file);
       }
+    } else {
+      // throw new Error(`[FileStructureHandler.deleteFile] node ${nodeId} does not exist.`);
     }
   }
 }

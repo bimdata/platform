@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
-import ModelService from "@/services/ModelService";
-import { useFiles } from "@/state/files";
+import FILE_TYPES from "@/config/file-types.js";
+import ModelService from "@/services/ModelService.js";
+import { useFiles } from "@/state/files.js";
 
 const state = reactive({
   projectModels: []
@@ -29,8 +30,8 @@ const updateModelName = async (project, model, name) => {
   const { updateDocuments } = useFiles();
   const [newDocument] = await updateDocuments(project, [
     {
-      id: model.documentId,
-      ifcId: model.id,
+      ...model.document,
+      type: FILE_TYPES.IFC,
       name
     }
   ]);
@@ -63,7 +64,10 @@ const deleteModels = async (project, models) => {
 
   // Delete associated documents
   const { softUpdateFileStructure } = useFiles();
-  const modelDocs = models.map(model => model.document);
+  const modelDocs = models.map(model => ({
+    ...model.document,
+    type: FILE_TYPES.IFC
+  }));
   softUpdateFileStructure("delete", modelDocs);
 
   return models;

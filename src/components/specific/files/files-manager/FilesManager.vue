@@ -162,7 +162,7 @@ export default {
         if (!currentFolder.value || !handler.exists(currentFolder.value)) {
           currentFolder.value = struct;
         } else {
-          currentFolder.value = handler.structure(currentFolder.value);
+          currentFolder.value = handler.deserialize(currentFolder.value);
         }
       },
       { immediate: true }
