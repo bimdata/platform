@@ -12,6 +12,14 @@
     "message": "An error occured during authentication...",
     "tryAgainButtonText": "Try Again"
   },
+  "PageNotFound": {
+    "title": "Page not found",
+    "text": {
+      "line1": "Woopsie! The page that you are looking for does not exist.",
+      "line2": "Please return home."
+    },
+    "homeButtonText": "Home"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Project",

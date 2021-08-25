@@ -1,0 +1,57 @@
+.page-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-unit * 2;
+  min-height: 100%;
+
+  &__left {
+    width: 40%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: $spacing-unit * 4;
+  }
+
+  &__right {
+    width: 30%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 62px;
+    font-weight: bold;
+  }
+
+  &__text {
+    font-size: 32px;
+  }
+
+  &__image {
+    width: 90%;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .page-not-found {
+    flex-direction: column-reverse;
+    gap: $spacing-unit * 4;
+
+    &__left {
+      width: 50%;
+      height: auto;
+    }
+
+    &__right {
+      width: 30%;
+      height: auto;
+    }
+  }
+}

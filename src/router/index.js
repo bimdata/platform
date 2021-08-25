@@ -1,35 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
-import authGuard from "./guards/auth";
-import groupBoardResolver from "./resolvers/group-board";
-import modelViewerResolver from "./resolvers/model-viewer";
-import projectBoardResolver from "./resolvers/project-board";
-import projectGroupsResolver from "./resolvers/project-groups";
-import rootResolver from "./resolvers/root";
-import spaceBoardResolver from "./resolvers/space-board";
+import authGuard from "./guards/auth.js";
+import groupBoardResolver from "./resolvers/group-board.js";
+import modelViewerResolver from "./resolvers/model-viewer.js";
+import projectBoardResolver from "./resolvers/project-board.js";
+import projectGroupsResolver from "./resolvers/project-groups.js";
+import rootResolver from "./resolvers/root.js";
+import spaceBoardResolver from "./resolvers/space-board.js";
 
 // Route components
-import Layout from "@/Layout";
-import OidcCallback from "@/views/oidc-callback/OidcCallback";
-import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
+import Layout from "@/Layout.vue";
+import OidcCallback from "@/views/oidc-callback/OidcCallback.vue";
+import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError.vue";
+import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
 
 // Lazy loaded view components
 /* eslint-disable */
 const Dashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
+  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard.vue");
 const GroupBoard = () =>
-  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard");
+  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
 const ModelViewer = () =>
-  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer");
+  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer.vue");
 const ProjectBoard = () =>
-  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard");
+  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard.vue");
 const ProjectGroups = () =>
-  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups");
+  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups.vue");
 const SpaceBoard = () =>
-  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard");
+  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
 const UserProjects = () =>
-  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects");
+  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const UserSpaces = () =>
-  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces");
+  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
 
 // Route names
@@ -112,6 +113,12 @@ const routes = [
         meta: {
           resolver: groupBoardResolver
         }
+      },
+      {
+        // Show 'page not found' view for unknown routes
+        path: "/:path(.*)*",
+        name: routeNames.PageNotFound,
+        component: PageNotFound
       }
     ]
   },
