@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import authGuard from "./guards/auth.js";
-import groupBoardResolver from "./resolvers/group-board.js";
-import modelViewerResolver from "./resolvers/model-viewer.js";
-import projectBoardResolver from "./resolvers/project-board.js";
-import projectGroupsResolver from "./resolvers/project-groups.js";
+import spaceBoardGuard from "./guards/views/space-board.js";
 import rootResolver from "./resolvers/root.js";
-import spaceBoardResolver from "./resolvers/space-board.js";
+import groupBoardResolver from "./resolvers/views/group-board.js";
+import modelViewerResolver from "./resolvers/views/model-viewer.js";
+import projectBoardResolver from "./resolvers/views/project-board.js";
+import projectGroupsResolver from "./resolvers/views/project-groups.js";
+import spaceBoardResolver from "./resolvers/views/space-board.js";
 
 // Route components
 import Layout from "@/Layout.vue";
@@ -45,7 +46,8 @@ const routeNames = Object.freeze({
   projectBoard: "project-board",
   modelViewer: "model-viewer",
   projectGroups: "project-groups",
-  groupBoard: "group-board"
+  groupBoard: "group-board",
+  pageNotFound: "page-not-found"
 });
 
 const routes = [
@@ -79,6 +81,7 @@ const routes = [
         name: routeNames.spaceBoard,
         component: SpaceBoard,
         meta: {
+          guard: spaceBoardGuard,
           resolver: spaceBoardResolver
         }
       },
@@ -117,7 +120,7 @@ const routes = [
       {
         // Show 'page not found' view for unknown routes
         path: "/:path(.*)*",
-        name: routeNames.PageNotFound,
+        name: routeNames.pageNotFound,
         component: PageNotFound
       }
     ]
@@ -146,14 +149,20 @@ const router = createRouter({
 });
 
 router.beforeEach(authGuard);
+router.beforeEach(async route => {
+  if (route.meta && route.meta.guard) {
+    const result = await route.meta.guard(route);
+    return result;
+  }
+});
 
-router.beforeResolve(async targetRoute => {
-  const resolvers = targetRoute.matched
-    .filter(route => route.meta && route.meta.resolver)
-    .map(route => route.meta.resolver);
+router.beforeResolve(async route => {
+  const resolvers = route.matched
+    .filter(r => r.meta && r.meta.resolver)
+    .map(r => r.meta.resolver);
 
   for (const resolver of resolvers) {
-    await resolver(targetRoute);
+    await resolver(route);
   }
 });
 

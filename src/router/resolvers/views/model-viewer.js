@@ -1,9 +1,9 @@
-import { useModels } from "@/state/models";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-import { createViewResolver } from "./view-resolver";
+import { useModels } from "@/state/models.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { createViewResolver } from "../view-resolver-factory.js";
 
-const modelViewerResolver = createViewResolver(async route => {
+export default createViewResolver(async route => {
   const spaces = useSpaces();
   const projects = useProjects();
   const models = useModels();
@@ -14,5 +14,3 @@ const modelViewerResolver = createViewResolver(async route => {
   projects.selectProject(+route.params.projectID);
   await models.loadProjectModels(projects.currentProject.value);
 });
-
-export default modelViewerResolver;

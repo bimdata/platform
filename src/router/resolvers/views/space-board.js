@@ -1,8 +1,8 @@
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-import { createViewResolver } from "./view-resolver";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { createViewResolver } from "../view-resolver-factory.js";
 
-const spaceBoardResolver = createViewResolver(async route => {
+export default createViewResolver(async route => {
   const spaces = useSpaces();
   const projects = useProjects();
 
@@ -12,5 +12,3 @@ const spaceBoardResolver = createViewResolver(async route => {
   await spaces.loadSpaceUsers(spaces.currentSpace.value);
   await spaces.loadSpaceInvitations(spaces.currentSpace.value);
 });
-
-export default spaceBoardResolver;

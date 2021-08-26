@@ -13,9 +13,9 @@ class SpaceService {
     }
   }
 
-  fetchSpaceByID(id) {
+  async fetchSpaceByID(id) {
     try {
-      return apiClient.collaborationApi.getCloud({ id });
+      return await apiClient.collaborationApi.getCloud({ id });
     } catch (error) {
       ErrorService.handleError(error);
       return null;

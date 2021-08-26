@@ -1,11 +1,11 @@
-import { useGroups } from "@/state/groups";
-import { useModels } from "@/state/models";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-import { useFiles } from "@/state/files";
-import { createViewResolver } from "./view-resolver";
+import { useGroups } from "@/state/groups.js";
+import { useModels } from "@/state/models.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { useFiles } from "@/state/files.js";
+import { createViewResolver } from "../view-resolver-factory.js";
 
-const projectBoardResolver = createViewResolver(async route => {
+export default createViewResolver(async route => {
   const spaces = useSpaces();
   const projects = useProjects();
   const models = useModels();
@@ -23,5 +23,3 @@ const projectBoardResolver = createViewResolver(async route => {
   await projects.loadProjectUsers(projects.currentProject.value);
   await projects.loadProjectInvitations(projects.currentProject.value);
 });
-
-export default projectBoardResolver;

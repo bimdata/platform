@@ -1,6 +1,6 @@
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-import { useUser } from "@/state/user";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { useUser } from "@/state/user.js";
 
 let rootResolved = false;
 

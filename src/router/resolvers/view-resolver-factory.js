@@ -1,17 +1,17 @@
-import { contexts, useLoadingContext } from "@/composables/loading";
+import { contexts, useLoadingContext } from "@/composables/loading.js";
 
 /**
  * Create a view resolver from a given promise
  * by wrapping it with loading logic.
  *
- * @param {Promise} resolve
+ * @param {Promise} resolver
  * @returns {Promise}
  */
-const createViewResolver = resolve => {
+const createViewResolver = resolver => {
   return async route => {
     const loading = useLoadingContext(contexts.viewContainer);
     loading.value = true;
-    await resolve(route);
+    await resolver(route);
     loading.value = false;
   };
 };

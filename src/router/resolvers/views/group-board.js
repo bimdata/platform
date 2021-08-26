@@ -1,9 +1,9 @@
-import { useGroups } from "@/state/groups";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-import { createViewResolver } from "./view-resolver";
+import { useGroups } from "@/state/groups.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { createViewResolver } from "../view-resolver-factory.js";
 
-const groupBoardResolver = createViewResolver(async route => {
+export default createViewResolver(async route => {
   const spaces = useSpaces();
   const projects = useProjects();
   const groups = useGroups();
@@ -17,5 +17,3 @@ const groupBoardResolver = createViewResolver(async route => {
 
   groups.selectGroup(+route.params.groupID);
 });
-
-export default groupBoardResolver;

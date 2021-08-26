@@ -1,15 +1,13 @@
-import { useAuth } from "@/state/auth";
+import { useAuth } from "@/state/auth.js";
 
-const authGuard = async (to, from, next) => {
+const authGuard = async route => {
   const { isAuthenticated, authenticate } = useAuth();
   if (isAuthenticated.value) {
-    next();
-  } else if (to.matched.some(route => route.meta.requiresAuth)) {
-    await authenticate(to.path);
+    return true;
+  } else if (route.matched.some(r => r.meta.requiresAuth)) {
+    await authenticate(route.path);
     // Navigate to target route if authentication succeeds (cancel navigation otherwise)
-    next(isAuthenticated.value);
-  } else {
-    next();
+    return isAuthenticated.value;
   }
 };
 
