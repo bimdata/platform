@@ -3,9 +3,9 @@ import apiClient from "./api-client";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 class ModelService {
-  fetchModels(project) {
+  async fetchModels(project) {
     try {
-      return apiClient.ifcApi.getIfcs({
+      return await apiClient.ifcApi.getIfcs({
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
@@ -17,9 +17,9 @@ class ModelService {
     }
   }
 
-  fetchModelByID(project, id) {
+  async fetchModelByID(project, id) {
     try {
-      return apiClient.ifcApi.getIfc({
+      return await apiClient.ifcApi.getIfc({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         id
@@ -30,9 +30,9 @@ class ModelService {
     }
   }
 
-  updateModels(project, models) {
+  async updateModels(project, models) {
     try {
-      return Promise.all(
+      return await Promise.all(
         models.map(model =>
           apiClient.ifcApi.updateIfc({
             cloudPk: project.cloud.id,
@@ -47,9 +47,9 @@ class ModelService {
     }
   }
 
-  downloadModels(models) {
+  async downloadModels(models) {
     try {
-      return downloadAll(
+      return await downloadAll(
         models.map(model => ({
           name: model.document.fileName,
           url: model.document.file
@@ -60,9 +60,9 @@ class ModelService {
     }
   }
 
-  deleteModels(project, models) {
+  async deleteModels(project, models) {
     try {
-      return Promise.all(
+      return await Promise.all(
         models.map(model =>
           apiClient.ifcApi.deleteIfc({
             cloudPk: project.cloud.id,
@@ -89,9 +89,9 @@ class ModelService {
     return this.fetchModelElements(project, model, { type });
   }
 
-  createModelElements(project, model, elements) {
+  async createModelElements(project, model, elements) {
     try {
-      return apiClient.ifcApi.createElement({
+      return await apiClient.ifcApi.createElement({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         ifcPk: model.id,
@@ -102,9 +102,9 @@ class ModelService {
     }
   }
 
-  updateModelElements(project, model, elements) {
+  async updateModelElements(project, model, elements) {
     try {
-      return apiClient.ifcApi.bulkUpdateElements({
+      return await apiClient.ifcApi.bulkUpdateElements({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         ifcPk: model.id,
@@ -115,9 +115,9 @@ class ModelService {
     }
   }
 
-  deleteModelElements(project, model, elements) {
+  async deleteModelElements(project, model, elements) {
     try {
-      return Promise.all(
+      return await Promise.all(
         elements.map(element =>
           apiClient.ifcApi.deleteElement({
             cloudPk: project.cloud.id,
@@ -132,13 +132,13 @@ class ModelService {
     }
   }
 
-  createModelElementPsetProperties(project, model, element, pset, props) {
+  async createModelElementPsetProperties(project, model, element, pset, props) {
     try {
       const properties = props.map(({ name, value }) => ({
         definition: { name },
         value
       }));
-      return Promise.all(
+      return await Promise.all(
         properties.map(property =>
           apiClient.ifcApi.createElementPropertySetProperty({
             cloudPk: project.cloud.id,
@@ -155,14 +155,14 @@ class ModelService {
     }
   }
 
-  updateModelElementPsetProperties(project, model, element, pset, props) {
+  async updateModelElementPsetProperties(project, model, element, pset, props) {
     try {
       const properties = props.map(({ id, name, value }) => ({
         id,
         definition: { name },
         value
       }));
-      return Promise.all(
+      return await Promise.all(
         properties.map(property => {
           if (property.id) {
             return apiClient.ifcApi.updateElementPropertySetProperty({
@@ -191,9 +191,9 @@ class ModelService {
     }
   }
 
-  deleteModelElementPsetProperties(project, model, element, pset, props) {
+  async deleteModelElementPsetProperties(project, model, element, pset, props) {
     try {
-      return Promise.all(
+      return await Promise.all(
         props.map(property =>
           apiClient.ifcApi.removeElementPropertySetProperty({
             cloudPk: project.cloud.id,
@@ -240,9 +240,9 @@ class ModelService {
     );
   }
 
-  mergeModels(project, models, name) {
+  async mergeModels(project, models, name) {
     try {
-      return apiClient.ifcApi.mergeIfcs({
+      return await apiClient.ifcApi.mergeIfcs({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         data: {

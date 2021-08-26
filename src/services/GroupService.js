@@ -2,9 +2,9 @@ import apiClient from "./api-client";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 class GroupService {
-  fetchProjectGroups(project) {
+  async fetchProjectGroups(project) {
     try {
-      return apiClient.collaborationApi.getManageGroups({
+      return await apiClient.collaborationApi.getManageGroups({
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
@@ -16,9 +16,9 @@ class GroupService {
     }
   }
 
-  fetchUserGroups(project) {
+  async fetchUserGroups(project) {
     try {
-      return apiClient.collaborationApi.getGroups({
+      return await apiClient.collaborationApi.getGroups({
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
@@ -30,9 +30,9 @@ class GroupService {
     }
   }
 
-  createGroup(project, group) {
+  async createGroup(project, group) {
     try {
-      return apiClient.collaborationApi.createManageGroup({
+      return await apiClient.collaborationApi.createManageGroup({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         data: group
@@ -42,9 +42,9 @@ class GroupService {
     }
   }
 
-  updateGroup(project, group) {
+  async updateGroup(project, group) {
     try {
-      return apiClient.collaborationApi.updateManageGroup({
+      return await apiClient.collaborationApi.updateManageGroup({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         id: group.id,
@@ -55,9 +55,9 @@ class GroupService {
     }
   }
 
-  deleteGroup(project, group) {
+  async deleteGroup(project, group) {
     try {
-      return apiClient.collaborationApi.deleteManageGroup({
+      return await apiClient.collaborationApi.deleteManageGroup({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         id: group.id
@@ -67,9 +67,9 @@ class GroupService {
     }
   }
 
-  addGroupMembers(project, group, users) {
+  async addGroupMembers(project, group, users) {
     try {
-      return Promise.all(
+      return await Promise.all(
         users.map(user =>
           apiClient.collaborationApi.addGroupMember({
             cloudPk: project.cloud.id,
@@ -86,9 +86,9 @@ class GroupService {
     }
   }
 
-  removeGroupMembers(project, group, users) {
+  async removeGroupMembers(project, group, users) {
     try {
-      return Promise.all(
+      return await Promise.all(
         users.map(user =>
           apiClient.collaborationApi.deleteGroupMember({
             cloudPk: project.cloud.id,
@@ -103,9 +103,9 @@ class GroupService {
     }
   }
 
-  updateGroupPermission(project, folder, group, permission) {
+  async updateGroupPermission(project, folder, group, permission) {
     try {
-      return apiClient.collaborationApi.updateGroupFolder({
+      return await apiClient.collaborationApi.updateGroupFolder({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         folderPk: folder.id,

@@ -9,9 +9,9 @@ class ProjectService {
     };
   }
 
-  fetchUserProjects() {
+  async fetchUserProjects() {
     try {
-      return apiClient.collaborationApi.getSelfProjects();
+      return await apiClient.collaborationApi.getSelfProjects();
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error)
@@ -20,9 +20,9 @@ class ProjectService {
     }
   }
 
-  fetchSpaceProjects(space) {
+  async fetchSpaceProjects(space) {
     try {
-      return apiClient.collaborationApi.getProjects({
+      return await apiClient.collaborationApi.getProjects({
         cloudPk: space.id
       });
     } catch (error) {
@@ -33,9 +33,9 @@ class ProjectService {
     }
   }
 
-  fetchProjectByID(space, id) {
+  async fetchProjectByID(space, id) {
     try {
-      return apiClient.collaborationApi.getProject({
+      return await apiClient.collaborationApi.getProject({
         cloudPk: space.id,
         id
       });
@@ -45,9 +45,9 @@ class ProjectService {
     }
   }
 
-  fetchProjectUsers(project) {
+  async fetchProjectUsers(project) {
     try {
-      return apiClient.collaborationApi.getProjectUsers({
+      return await apiClient.collaborationApi.getProjectUsers({
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
@@ -59,9 +59,9 @@ class ProjectService {
     }
   }
 
-  fetchProjectInvitations(project) {
+  async fetchProjectInvitations(project) {
     try {
-      return apiClient.collaborationApi.getProjectInvitations({
+      return await apiClient.collaborationApi.getProjectInvitations({
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
@@ -90,9 +90,9 @@ class ProjectService {
     }
   }
 
-  createProject(space, project) {
+  async createProject(space, project) {
     try {
-      return apiClient.collaborationApi.createProject({
+      return await apiClient.collaborationApi.createProject({
         cloudPk: space.id,
         data: project
       });
@@ -101,9 +101,9 @@ class ProjectService {
     }
   }
 
-  updateProject(project) {
+  async updateProject(project) {
     try {
-      return apiClient.collaborationApi.updateProject({
+      return await apiClient.collaborationApi.updateProject({
         cloudPk: project.cloud.id,
         id: project.id,
         data: project
@@ -113,9 +113,9 @@ class ProjectService {
     }
   }
 
-  deleteProject(project) {
+  async deleteProject(project) {
     try {
-      return apiClient.collaborationApi.deleteProject({
+      return await apiClient.collaborationApi.deleteProject({
         cloudPk: project.cloud.id,
         id: project.id
       });
@@ -124,9 +124,9 @@ class ProjectService {
     }
   }
 
-  sendProjectInvitation(project, invitation) {
+  async sendProjectInvitation(project, invitation) {
     try {
-      return apiClient.collaborationApi.inviteProjectUser({
+      return await apiClient.collaborationApi.inviteProjectUser({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         data: {
@@ -140,9 +140,9 @@ class ProjectService {
     }
   }
 
-  cancelProjectInvitation(project, invitation) {
+  async cancelProjectInvitation(project, invitation) {
     try {
-      return apiClient.collaborationApi.cancelProjectUserInvitation({
+      return await apiClient.collaborationApi.cancelProjectUserInvitation({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         id: invitation.id
@@ -171,9 +171,9 @@ class ProjectService {
     }
   }
 
-  deleteProjectUser(project, user) {
+  async deleteProjectUser(project, user) {
     try {
-      return apiClient.collaborationApi.deleteProjectUser({
+      return await apiClient.collaborationApi.deleteProjectUser({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         id: user.id

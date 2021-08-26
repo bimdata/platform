@@ -2,9 +2,9 @@ import apiClient from "./api-client";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 
 class SpaceService {
-  fetchUserSpaces() {
+  async fetchUserSpaces() {
     try {
-      return apiClient.collaborationApi.getClouds();
+      return await apiClient.collaborationApi.getClouds();
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.SPACES_FETCH_ERROR, error)
@@ -22,9 +22,9 @@ class SpaceService {
     }
   }
 
-  fetchSpaceUsers(space) {
+  async fetchSpaceUsers(space) {
     try {
-      return apiClient.collaborationApi.getCloudUsers({
+      return await apiClient.collaborationApi.getCloudUsers({
         cloudPk: space.id
       });
     } catch (error) {
@@ -35,9 +35,9 @@ class SpaceService {
     }
   }
 
-  fetchSpaceInvitations(space) {
+  async fetchSpaceInvitations(space) {
     try {
-      return apiClient.collaborationApi.getCloudInvitations({
+      return await apiClient.collaborationApi.getCloudInvitations({
         cloudPk: space.id
       });
     } catch (error) {
@@ -48,9 +48,9 @@ class SpaceService {
     }
   }
 
-  createSpace(space) {
+  async createSpace(space) {
     try {
-      return apiClient.collaborationApi.createCloud({
+      return await apiClient.collaborationApi.createCloud({
         data: space
       });
     } catch (error) {
@@ -58,9 +58,9 @@ class SpaceService {
     }
   }
 
-  updateSpace(space) {
+  async updateSpace(space) {
     try {
-      return apiClient.collaborationApi.updateCloud({
+      return await apiClient.collaborationApi.updateCloud({
         id: space.id,
         data: {
           name: space.name
@@ -71,26 +71,30 @@ class SpaceService {
     }
   }
 
-  removeSpaceImage(space) {
+  async removeSpaceImage(space) {
     try {
-      return fetch(`${apiClient.config.basePath}/cloud/${space.id}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: apiClient.config.accessToken(),
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          image: null
-        })
-      }).then(res => res.json());
+      const response = await fetch(
+        `${apiClient.config.basePath}/cloud/${space.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: apiClient.config.accessToken(),
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            image: null
+          })
+        }
+      );
+      return await response.json();
     } catch (error) {
       throw new RuntimeError(ERRORS.SPACE_IMAGE_DELETE_ERROR, error);
     }
   }
 
-  deleteSpace(space) {
+  async deleteSpace(space) {
     try {
-      return apiClient.collaborationApi.deleteCloud({
+      return await apiClient.collaborationApi.deleteCloud({
         id: space.id
       });
     } catch (error) {
@@ -98,9 +102,9 @@ class SpaceService {
     }
   }
 
-  sendSpaceInvitation(space, invitation) {
+  async sendSpaceInvitation(space, invitation) {
     try {
-      return apiClient.collaborationApi.inviteCloudUser({
+      return await apiClient.collaborationApi.inviteCloudUser({
         cloudPk: space.id,
         data: {
           email: invitation.email,
@@ -112,9 +116,9 @@ class SpaceService {
     }
   }
 
-  cancelSpaceInvitation(space, invitation) {
+  async cancelSpaceInvitation(space, invitation) {
     try {
-      return apiClient.collaborationApi.cancelCloudUserInvitation({
+      return await apiClient.collaborationApi.cancelCloudUserInvitation({
         cloudPk: space.id,
         id: invitation.id
       });
@@ -141,9 +145,9 @@ class SpaceService {
     }
   }
 
-  deleteSpaceUser(space, user) {
+  async deleteSpaceUser(space, user) {
     try {
-      return apiClient.collaborationApi.deleteCloudUser({
+      return await apiClient.collaborationApi.deleteCloudUser({
         cloudPk: space.id,
         id: user.id
       });

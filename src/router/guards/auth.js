@@ -1,6 +1,6 @@
 import { useAuth } from "@/state/auth.js";
 
-const authGuard = async route => {
+export default async function authGuard(route) {
   const { isAuthenticated, authenticate } = useAuth();
   if (isAuthenticated.value) {
     return true;
@@ -9,6 +9,4 @@ const authGuard = async route => {
     // Navigate to target route if authentication succeeds (cancel navigation otherwise)
     return isAuthenticated.value;
   }
-};
-
-export default authGuard;
+}

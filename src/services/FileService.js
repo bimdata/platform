@@ -22,9 +22,9 @@ const documentUpdatePayload = document =>
   createPayload(document, DOCUMENT_UPDATABLE_FIELDS);
 
 class FileService {
-  fetchFileStructure(project) {
+  async fetchFileStructure(project) {
     try {
-      return apiClient.collaborationApi.getProjectDMSTree({
+      return await apiClient.collaborationApi.getProjectDMSTree({
         cloudPk: project.cloud.id,
         id: project.id
       });
@@ -36,9 +36,9 @@ class FileService {
     }
   }
 
-  createFolder(project, folder) {
+  async createFolder(project, folder) {
     try {
-      return apiClient.collaborationApi.createFolder({
+      return await apiClient.collaborationApi.createFolder({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         data: folder
@@ -48,9 +48,9 @@ class FileService {
     }
   }
 
-  updateFolders(project, folders) {
+  async updateFolders(project, folders) {
     try {
-      return Promise.all(
+      return await Promise.all(
         folders.map(folder =>
           apiClient.collaborationApi.updateFolder({
             cloudPk: project.cloud.id,
@@ -65,9 +65,9 @@ class FileService {
     }
   }
 
-  deleteFolders(project, folders) {
+  async deleteFolders(project, folders) {
     try {
-      return Promise.all(
+      return await Promise.all(
         folders.map(folder =>
           apiClient.collaborationApi.deleteFolder({
             cloudPk: project.cloud.id,
@@ -81,9 +81,9 @@ class FileService {
     }
   }
 
-  updateDocuments(project, documents) {
+  async updateDocuments(project, documents) {
     try {
-      return Promise.all(
+      return await Promise.all(
         documents.map(document =>
           apiClient.collaborationApi.updateDocument({
             cloudPk: project.cloud.id,
@@ -98,9 +98,9 @@ class FileService {
     }
   }
 
-  deleteDocuments(project, documents) {
+  async deleteDocuments(project, documents) {
     try {
-      return Promise.all(
+      return await Promise.all(
         documents.map(document =>
           apiClient.collaborationApi.deleteDocument({
             cloudPk: project.cloud.id,
@@ -114,7 +114,7 @@ class FileService {
     }
   }
 
-  downloadFiles(project, files, accessToken) {
+  async downloadFiles(project, files, accessToken) {
     try {
       let downloadName, downloadUrl;
       if (files.length === 0) {
@@ -127,7 +127,7 @@ class FileService {
         downloadName = project.name;
         downloadUrl = this.getArchiveUrl(project, files, accessToken);
       }
-      return download({ name: downloadName, url: downloadUrl });
+      return await download({ name: downloadName, url: downloadUrl });
     } catch (error) {
       throw new RuntimeError(ERRORS.FILE_DOWNLOAD_ERROR, error);
     }
