@@ -30,6 +30,19 @@ class GroupService {
     }
   }
 
+  async fetchGroupByID(project, id) {
+    try {
+      return await apiClient.collaborationApi.getManageGroup({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        id
+      });
+    } catch (error) {
+      ErrorService.handleError(error);
+      return null;
+    }
+  }
+
   async createGroup(project, group) {
     try {
       return await apiClient.collaborationApi.createManageGroup({

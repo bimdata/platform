@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import authGuard from "./guards/auth.js";
+import groupBoardGuard from "./guards/views/group-board.js";
+import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
 import rootResolver from "./resolvers/root.js";
 import groupBoardResolver from "./resolvers/views/group-board.js";
@@ -90,6 +92,7 @@ const routes = [
         name: routeNames.projectBoard,
         component: ProjectBoard,
         meta: {
+          guard: projectBoardGuard,
           resolver: projectBoardResolver
         }
       },
@@ -114,6 +117,7 @@ const routes = [
         name: routeNames.groupBoard,
         component: GroupBoard,
         meta: {
+          guard: groupBoardGuard,
           resolver: groupBoardResolver
         }
       },
