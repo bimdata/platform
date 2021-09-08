@@ -174,6 +174,58 @@ export default {
       });
     };
 
+    const buyPlatformPro = async () => {
+      Paddle.Product.Prices(12403, function(prices) {
+        // TODO: set price with with function instead of hard coded value
+        console.log(prices);
+      });
+      console.log(JSON.stringify({
+            cloud_id: currentSpace.value.id,
+            subscription_id: "131457",
+            quantity: 5,
+          }))
+/*      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`, {
+          method: "PATCH", headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${accessToken.value}`,
+          },
+          body: JSON.stringify({
+            cloud_id: currentSpace.value.id,
+            subscription_id: "131457",
+            quantity: 5,
+          })
+        }
+      );
+      return;*/
+      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/create-api-data-pack-subscription`, {
+          method: "post", headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${accessToken.value}`,
+          },
+          body: JSON.stringify({
+            cloud_id: currentSpace.value.id
+          })
+        }
+      );
+      return;
+      const response = await (await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${accessToken.value}`,
+        },
+        body: JSON.stringify({
+          cloud_id: currentSpace.value.id
+        })
+      })).json();
+
+      Paddle.Checkout.open({
+        override: response.url,
+        disableLogout: true,
+        referring_domain: "platform self service",
+      });
+    }
+
     return {
       // References
       invitations: spaceInvitations,
