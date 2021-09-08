@@ -47,7 +47,15 @@
         </BIMDataButton>
       </template>
     </ViewHeader>
-
+    <DashboardButtonTile
+        data-test="btn-projects"
+        color="secondary"
+        @click="buyPlatformPro"
+      >
+        <template #title>Buy PRO</template>
+        <template #number>44.99 €</template>
+        <template #text>Get more space and more features</template>
+      </DashboardButtonTile>
     <SidePanel :title="$t('SpaceUsersManager.title')">
       <SpaceUsersManager
         :space="space"
@@ -79,6 +87,7 @@ import { useListSort } from "@/composables/list-sort";
 import { useSidePanel } from "@/composables/side-panel";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
+import { useAuth } from "@/state/auth";
 // Components
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import SidePanel from "@/components/generic/side-panel/SidePanel";
@@ -87,6 +96,7 @@ import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrum
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
 import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
+import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile";
 
 export default {
   components: {
@@ -96,12 +106,14 @@ export default {
     AppBreadcrumb,
     ProjectCard,
     ProjectCreationCard,
-    SpaceUsersManager
+    SpaceUsersManager,
+    DashboardButtonTile,
   },
   setup() {
     const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
     const { openSidePanel } = useSidePanel();
+    const { accessToken } = useAuth();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -113,6 +125,58 @@ export default {
       project => project.name
     );
 
+    const buyPlatformPro = async () => {
+      Paddle.Product.Prices(12403, function(prices) {
+        // TODO: set price with with function instead of hard coded value
+        console.log(prices);
+      });
+      console.log(JSON.stringify({
+            cloud_id: currentSpace.value.id,
+            subscription_id: "131457",
+            quantity: 5,
+          }))
+/*      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`, {
+          method: "PATCH", headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${accessToken.value}`,
+          },
+          body: JSON.stringify({
+            cloud_id: currentSpace.value.id,
+            subscription_id: "131457",
+            quantity: 5,
+          })
+        }
+      );
+      return;*/
+      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/create-api-data-pack-subscription`, {
+          method: "post", headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${accessToken.value}`,
+          },
+          body: JSON.stringify({
+            cloud_id: currentSpace.value.id
+          })
+        }
+      );
+      return;
+      const response = await (await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${accessToken.value}`,
+        },
+        body: JSON.stringify({
+          cloud_id: currentSpace.value.id
+        })
+      })).json();
+
+      Paddle.Checkout.open({
+        override: response.url,
+        disableLogout: true,
+        referring_domain: "platform self service",
+      });
+    }
+
     return {
       // References
       invitations: spaceInvitations,
@@ -122,7 +186,8 @@ export default {
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,
-      sortProjects
+      sortProjects,
+      buyPlatformPro,
     };
   }
 };
