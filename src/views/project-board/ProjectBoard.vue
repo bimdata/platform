@@ -69,7 +69,7 @@ export default {
     AppBreadcrumb,
     ProjectBcf,
     ProjectFiles,
-    ProjectOverview
+    ProjectOverview,
   },
   setup() {
     const route = useRoute();
@@ -108,6 +108,7 @@ export default {
       // Restore current project view for this project.
       changeView(viewKey);
     });
+    
 
     return {
       // References
@@ -115,7 +116,7 @@ export default {
       currentView,
       tabs,
       // Methods
-      changeView
+      changeView,
     };
   }
 };
