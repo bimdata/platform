@@ -441,7 +441,7 @@
       "users": "Utilisateurs"
     },
     "searchInputPlaceholder": "Rechercher un utilisateur",
-    "addUserButtonText": "Ajouter un utilisateur"
+    "addUserButtonText": "Ajouter un administrateur"
   },
 
   "UserCard": {

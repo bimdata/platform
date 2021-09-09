@@ -16,7 +16,7 @@
       clear
     />
 
-    <transition name="fade" mode="out-in">
+    <transition v-if="showInvitations" name="fade" mode="out-in">
       <template v-if="showInvitationForm">
         <InvitationForm
           :space="space"
@@ -72,6 +72,8 @@ import InvitationCard from "@/components/specific/users/invitation-card/Invitati
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
 import UserCard from "@/components/specific/users/user-card/UserCard";
 
+const tabsDef = [{ id: "admins" }, { id: "users" }];
+
 export default {
   components: {
     InvitationCard,
@@ -96,20 +98,18 @@ export default {
     const { locale, t } = useI18n();
 
     const tabs = ref([]);
-    const currentTab = ref("admins");
+    const currentTab = ref(tabsDef[0].id);
+    const selectTab = tab => (currentTab.value = tab.id);
     watch(
-      locale,
+      () => locale.value,
       () => {
-        tabs.value = [
-          { id: "admins", label: t("SpaceUsersManager.tabs.admins") },
-          { id: "users", label: t("SpaceUsersManager.tabs.users") }
-        ];
+        tabs.value = tabsDef.map(tab => ({
+          ...tab,
+          label: t(`SpaceUsersManager.tabs.${tab.id}`)
+        }));
       },
       { immediate: true }
     );
-    const selectTab = tab => {
-      currentTab.value = tab.id;
-    };
 
     const admins = ref([]);
     const users = ref([]);

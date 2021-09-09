@@ -108,9 +108,7 @@ export default {
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
-    const selectTab = tab => {
-      currentTab.value = tab.id;
-    };
+    const selectTab = tab => (currentTab.value = tab.id);
     watch(
       () => locale.value,
       () => {
