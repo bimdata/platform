@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import legacyRoutes from "./legacy.js";
+
+// Guards
 import authGuard from "./guards/auth.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
 import rootResolver from "./resolvers/root.js";
+
+// Resolvers
 import groupBoardResolver from "./resolvers/views/group-board.js";
 import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
@@ -121,6 +126,8 @@ const routes = [
           resolver: groupBoardResolver
         }
       },
+      // Add legacy routes for retro-compatibility
+      ...legacyRoutes,
       {
         // Show 'page not found' view for unknown routes
         path: "/:path(.*)*",
