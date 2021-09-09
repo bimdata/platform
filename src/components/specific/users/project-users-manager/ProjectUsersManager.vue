@@ -12,7 +12,13 @@
             </BIMDataButton> -->
           </template>
           <template #right>
-            <BIMDataButton ghost rounded icon @click="toggleInvitationForm">
+            <BIMDataButton
+              v-if="project.isAdmin"
+              ghost
+              rounded
+              icon
+              @click="toggleInvitationForm"
+            >
               <BIMDataIcon name="addUser" size="xs" />
             </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="toggleUserSearch">

@@ -1,20 +1,22 @@
 <template>
   <div class="users-manager-onboarding">
     <img width="260" height="260" src="/static/users-manager-onboarding.svg" />
-    <div>
-      {{ $t("UsersManagerOnboarding.text") }}
-    </div>
-    <div class="users-manager-onboarding__actions">
-      <BIMDataButton
-        width="120px"
-        color="primary"
-        fill
-        radius
-        @click="openInvitationForm"
-      >
-        {{ $t("UsersManagerOnboarding.inviteButtonText") }}
-      </BIMDataButton>
-    </div>
+    <template v-if="project.isAdmin">
+      <div>
+        {{ $t("UsersManagerOnboarding.text") }}
+      </div>
+      <div class="users-manager-onboarding__actions">
+        <BIMDataButton
+          width="120px"
+          color="primary"
+          fill
+          radius
+          @click="openInvitationForm"
+        >
+          {{ $t("UsersManagerOnboarding.inviteButtonText") }}
+        </BIMDataButton>
+      </div>
+    </template>
     <transition name="fade">
       <div
         v-show="showInvitationForm"

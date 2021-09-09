@@ -42,7 +42,9 @@ const mapSpaces = spaces => {
 const mapProjects = projects => {
   return projects.map(project => ({
     ...project,
-    isAdmin: state.projectRoles[project.id] === PROJECT_ROLES.ADMIN
+    isAdmin: state.projectRoles[project.id] === PROJECT_ROLES.ADMIN,
+    isUser: state.projectRoles[project.id] === PROJECT_ROLES.USER,
+    isGuest: state.projectRoles[project.id] === PROJECT_ROLES.GUEST
   }));
 };
 

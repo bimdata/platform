@@ -39,7 +39,7 @@
             </div>
           </div>
           <UserCardActionMenu
-            v-if="!user.isSelf"
+            v-if="showActionMenu"
             @open-update="openUpdateForm"
             @open-delete="openDeleteGuard"
           />
@@ -82,6 +82,12 @@ export default {
     }
   },
   setup(props) {
+    const showActionMenu = computed(
+      () =>
+        !props.user.isSelf &&
+        ((props.space && props.space.isAdmin) ||
+          (props.project && props.project.isAdmin))
+    );
     const fullName = computed(
       () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
     );
@@ -114,6 +120,7 @@ export default {
       fullName,
       loading,
       role,
+      showActionMenu,
       showDeleteGuard,
       showUpdateForm,
       // Methods
