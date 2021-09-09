@@ -44,7 +44,11 @@
         <BIMDataIcon
           v-if="file.type === 'Folder'"
           class="file-name-cell__content__icon-folder"
-          name="folder"
+          :name="
+            !project.isAdmin && file.userPermission < 100
+              ? 'readonlyFolder'
+              : 'folder'
+          "
           size="m"
         />
         <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
