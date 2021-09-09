@@ -42,6 +42,9 @@
     </BIMDataButton>
 
     <BIMDataButton
+      :disabled="
+        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+      "
       width="120px"
       ghost
       squared

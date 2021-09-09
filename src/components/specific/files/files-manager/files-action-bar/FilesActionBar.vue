@@ -23,6 +23,7 @@
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
+      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
       width="120px"
       ghost
       squared

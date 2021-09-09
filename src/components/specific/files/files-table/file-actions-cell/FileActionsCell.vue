@@ -47,6 +47,7 @@
           {{ $t("FileActionsCell.renameButtonText") }}
         </BIMDataButton>
         <BIMDataButton
+          :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           ghost
           squared
