@@ -1,6 +1,6 @@
 .models-action-bar {
   display: inline-flex;
-  gap: $spacing-unit/2;
-  background-color: $color-white;
-  @include box-shadow;
+  gap: calc(var(--spacing-unit) / 2);
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
 }

@@ -11,7 +11,7 @@
     grid-template-rows: 14px 14px;
     align-items: center;
     gap: 2px 4px;
-    padding: $spacing-unit/2;
+    padding: calc(var(--spacing-unit) / 2);
     text-align: left;
 
     &__avatar {
@@ -32,8 +32,8 @@
 
     .separator {
       height: 1px;
-      margin: $spacing-unit/2 $spacing-unit;
-      background-color: $color-tertiary;
+      margin: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+      background-color: var(--color-tertiary);
     }
 
     .bimdata-btn {
@@ -41,15 +41,15 @@
     }
 
     .lang-badge {
-      margin-left: $spacing-unit/2;
-      padding: $spacing-unit/4 $spacing-unit/2;
+      margin-left: calc(var(--spacing-unit) / 2);
+      padding: calc(var(--spacing-unit) / 4) calc(var(--spacing-unit) / 2);
       border-radius: 2px;
-      background-color: $color-tertiary;
+      background-color: var(--color-tertiary);
       text-transform: uppercase;
     }
 
     .btn-logout {
-      margin: $spacing-unit/2 $spacing-unit;
+      margin: calc(var(--spacing-unit) / 2) var(--spacing-unit);
       justify-content: center;
     }
   }

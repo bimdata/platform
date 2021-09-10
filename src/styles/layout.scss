@@ -1,12 +1,12 @@
 .app-layout {
   width: 100%;
   height: 100vh;
-  background-color: $platform-background;
+  background-color: var(--platform-background);
 
   &__view-container {
     position: relative;
-    height: calc(100% - #{$platform-header-height});
-    padding: $spacing-unit * 7/2;
+    height: calc(100% - var(--platform-header-height));
+    padding: calc(var(--spacing-unit) * 7 / 2);
     overflow-y: auto;
 
     &.loading {
@@ -17,11 +17,11 @@
   &__overlay {
     position: absolute;
     z-index: 1000;
-    top: $platform-header-height;
+    top: var(--platform-header-height);
     left: 0;
     width: 100%;
-    height: calc(100% - #{$platform-header-height});
-    background-color: $platform-background;
+    height: calc(100% - var(--platform-header-height));
+    background-color: var(--platform-background);
 
     display: flex;
     justify-content: center;

@@ -1,9 +1,9 @@
 .space-card-update-form {
-  padding: 0 $spacing-unit $spacing-unit/2;
+  padding: 0 var(--spacing-unit) calc(var(--spacing-unit) / 2);
 
   display: flex;
   flex-direction: column;
-  gap: $spacing-unit;
+  gap: var(--spacing-unit);
 
   &__title {
     display: flex;

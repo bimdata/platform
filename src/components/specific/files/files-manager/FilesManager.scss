@@ -15,7 +15,7 @@
       display: grid;
       grid-template-columns: 400px 1fr;
       grid-template-rows: 32px 1fr;
-      gap: $spacing-unit;
+      gap: var(--spacing-unit);
       grid-template-areas:
         "actions actions"
         "tree    files";
@@ -23,7 +23,7 @@
       .files-manager__actions {
         grid-area: actions;
         display: flex;
-        gap: $spacing-unit;
+        gap: var(--spacing-unit);
 
         &__btn-new-folder {
           z-index: 2;
@@ -31,16 +31,16 @@
 
         &__input-search {
           font-size: 1rem;
-          background-color: $color-tertiary-lightest;
+          background-color: var(--color-tertiary-lightest);
           &.focus {
-            background-color: $color-white;
+            background-color: var(--color-white);
           }
         }
       }
 
       .files-manager__tree {
         grid-area: tree;
-        @include box-shadow;
+        box-shadow: var(--box-shadow);
       }
 
       .files-manager__files {
@@ -66,8 +66,8 @@
         right: 0;
         width: 420px;
         height: 100%;
-        @include box-shadow;
-        background-color: $color-white;
+        box-shadow: var(--box-shadow);
+        background-color: var(--color-white);
       }
 
       .files-manager__onboarding {

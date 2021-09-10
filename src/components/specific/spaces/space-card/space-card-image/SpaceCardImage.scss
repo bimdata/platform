@@ -8,7 +8,7 @@
   svg {
     width: 100%;
     height: 100%;
-    transform: translateY($spacing-unit/3);
+    transform: translateY(calc(var(--spacing-unit) / 3));
     background-color: $card-background;
   }
 

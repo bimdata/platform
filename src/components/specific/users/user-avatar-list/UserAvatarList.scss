@@ -2,7 +2,7 @@
   display: grid;
 
   &__item {
-    border: 1px solid $color-white;
+    border: 1px solid var(--color-white);
   }
 
   &__tail-item {
@@ -12,10 +12,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid $color-white;
+    border: 1px solid var(--color-white);
     border-radius: 50%;
     font-weight: bold;
-    background-color: $color-primary;
-    color: $color-tertiary-lightest;
+    background-color: var(--color-primary);
+    color: var(--color-tertiary-lightest);
   }
 }

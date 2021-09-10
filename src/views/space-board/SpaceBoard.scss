@@ -1,13 +1,13 @@
 .space-board {
   &__header {
     &__search {
-      background-color: $color-white;
+      background-color: var(--color-white);
     }
 
     &__btn-filter,
     &__btn-sort,
     &__btn-users {
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
     }
   }
 }

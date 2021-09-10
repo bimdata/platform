@@ -8,7 +8,7 @@
     min-width: 60px;
     max-width: 200px;
     width: max-content;
-    padding: $spacing-unit/3 $spacing-unit/2;
+    padding: calc(var(--spacing-unit) / 3) calc(var(--spacing-unit) / 2);
     border-radius: 3px;
     text-align: center;
     word-wrap: break-word;
@@ -21,34 +21,34 @@
     }
 
     &--primary {
-      background-color: $color-primary;
-      color: $color-white;
+      background-color: var(--color-primary);
+      color: var(--color-white);
       &::before {
-        border-color: $color-primary transparent transparent;
+        border-color: var(--color-primary) transparent transparent;
       }
     }
 
     &--secondary {
-      background-color: $color-secondary;
-      color: $color-primary;
+      background-color: var(--color-secondary);
+      color: var(--color-primary);
       &::before {
-        border-color: $color-secondary transparent transparent;
+        border-color: var(--color-secondary) transparent transparent;
       }
     }
 
     &--tertiary {
-      background-color: $color-tertiary-dark;
-      color: $color-white;
+      background-color: var(--color-tertiary-dark);
+      color: var(--color-white);
       &::before {
-        border-color: $color-tertiary-dark transparent transparent;
+        border-color: var(--color-tertiary-dark) transparent transparent;
       }
     }
 
     &--tertiary-lightest {
-      background-color: $color-tertiary-lightest;
-      color: $color-primary;
+      background-color: var(--color-tertiary-lightest);
+      color: var(--color-primary);
       &::before {
-        border-color: $color-tertiary-lightest transparent transparent;
+        border-color: var(--color-tertiary-lightest) transparent transparent;
       }
     }
 

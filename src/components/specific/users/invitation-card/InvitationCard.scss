@@ -4,7 +4,7 @@
   min-height: 64px;
   height: 64px;
   font-size: 1rem;
-  color: $color-primary;
+  color: var(--color-primary);
 
   &__avatar {
     display: flex;
@@ -13,12 +13,12 @@
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: $color-white;
+    background-color: var(--color-white);
   }
 
   &__info {
     flex-grow: 1;
-    padding: 0 $spacing-unit;
+    padding: 0 var(--spacing-unit);
     line-height: 18px;
 
     &__email {
@@ -27,18 +27,18 @@
 
     &__text {
       font-size: 12px;
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
 
       a {
         cursor: pointer;
         font-style: italic;
         text-decoration: underline;
-        color: $color-primary;
+        color: var(--color-primary);
       }
     }
   }
 
   &__cancel-btn {
-    color: $color-tertiary-dark;
+    color: var(--color-tertiary-dark);
   }
 }

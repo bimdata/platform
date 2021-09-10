@@ -1,9 +1,9 @@
 .dashboard-space-list {
-  padding: $spacing-unit;
+  padding: var(--spacing-unit);
 
   &__title {
-    margin-bottom: $spacing-unit;
-    padding-left: $spacing-unit;
+    margin-bottom: var(--spacing-unit);
+    padding-left: var(--spacing-unit);
     font-size: 1.2rem;
     font-weight: bold;
   }

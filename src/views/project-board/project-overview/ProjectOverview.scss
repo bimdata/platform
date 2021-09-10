@@ -1,7 +1,7 @@
 .project-overview {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-unit * 2;
+  gap: calc(var(--spacing-unit) * 2);
 
   &__block {
     &--upload {

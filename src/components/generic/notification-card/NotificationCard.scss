@@ -3,10 +3,10 @@
   align-items: center;
   width: 400px;
   min-height: 72px;
-  padding: $spacing-unit;
+  padding: var(--spacing-unit);
   border-left: 3px solid;
-  @include box-shadow;
-  background-color: $color-white;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
 
   &__icon {
     width: 22px;
@@ -14,51 +14,51 @@
 
   &__text {
     flex-grow: 1;
-    padding: 0 $spacing-unit;
+    padding: 0 var(--spacing-unit);
 
     &__title {
-      margin-bottom: $spacing-unit/3;
+      margin-bottom: calc(var(--spacing-unit) / 3);
       font-weight: bold;
     }
 
     &__message {
       font-size: 0.9rem;
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
     }
   }
 
   &__btn-close {
     width: 22px;
-    color: $color-tertiary;
+    color: var(--color-tertiary);
   }
 
   /* === State Styles === */
 
   &--info {
-    border-color: $color-neutral;
+    border-color: var(--color-neutral);
     .notification-card__icon {
-      color: $color-neutral;
+      color: var(--color-neutral);
     }
   }
 
   &--success {
-    border-color: $color-success;
+    border-color: var(--color-success);
     .notification-card__icon {
-      color: $color-success;
+      color: var(--color-success);
     }
   }
 
   &--warning {
-    border-color: $color-warning;
+    border-color: var(--color-warning);
     .notification-card__icon {
-      color: $color-warning;
+      color: var(--color-warning);
     }
   }
 
   &--error {
-    border-color: $color-high;
+    border-color: var(--color-high);
     .notification-card__icon {
-      color: $color-high;
+      color: var(--color-high);
     }
   }
 }

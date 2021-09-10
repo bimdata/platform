@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $platform-background;
+    background-color: var(--platform-background);
 
     .bimdata-spinner {
       transform: scale(3);

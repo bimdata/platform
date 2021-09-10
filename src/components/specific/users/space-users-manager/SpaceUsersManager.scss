@@ -1,21 +1,21 @@
 .space-users-manager {
   display: flex;
   flex-direction: column;
-  gap: $spacing-unit * 2;
+  gap: calc(var(--spacing-unit) * 2);
   height: 100%;
 
   .bimdata-search-bar {
     min-height: 32px;
-    background-color: $color-tertiary-lightest;
+    background-color: var(--color-tertiary-lightest);
     &.focus {
-      background-color: $color-white;
+      background-color: var(--color-white);
     }
   }
 
   .list-container {
     display: flex;
     flex-direction: column;
-    padding-bottom: $spacing-unit/2;
+    padding-bottom: calc(var(--spacing-unit) / 2);
     overflow-x: hidden;
     overflow-y: auto;
 

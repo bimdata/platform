@@ -2,11 +2,11 @@
   position: relative;
 
   &__header {
-    padding: $spacing-unit/2;
+    padding: calc(var(--spacing-unit) / 2);
     cursor: pointer;
 
     &__icon {
-      margin-left: $spacing-unit/2;
+      margin-left: calc(var(--spacing-unit) / 2);
       margin-bottom: 1px;
       vertical-align: bottom;
     }
@@ -17,19 +17,19 @@
     z-index: 1;
     width: 220px;
     max-height: 360px;
-    margin-top: $spacing-unit/2;
-    padding-bottom: $spacing-unit/2;
+    margin-top: calc(var(--spacing-unit) / 2);
+    padding-bottom: calc(var(--spacing-unit) / 2);
     border-radius: 4px;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-    background-color: $color-white;
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
     overflow-x: hidden;
     overflow-y: auto;
 
     .bimdata-search-bar {
       margin: 8px;
-      background-color: $color-tertiary-lightest;
+      background-color: var(--color-tertiary-lightest);
       &.focus {
-        background-color: $color-white;
+        background-color: var(--color-white);
       }
     }
 
@@ -37,7 +37,7 @@
       padding: 8px;
       &:hover {
         cursor: pointer;
-        background-color: $color-tertiary-lightest;
+        background-color: var(--color-tertiary-lightest);
       }
     }
   }

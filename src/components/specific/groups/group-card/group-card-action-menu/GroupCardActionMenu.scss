@@ -1,6 +1,6 @@
 .group-card-action-menu {
   height: 100%;
-  background-color: $color-white;
+  background-color: var(--color-white);
 
   &__loader {
     display: flex;
@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    padding: $spacing-unit * 2;
+    padding: calc(var(--spacing-unit) * 2);
 
     &__title {
       position: absolute;
@@ -26,7 +26,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      padding: $spacing-unit $spacing-unit * 2;
+      padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
       font-weight: bold;
     }
   }

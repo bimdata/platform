@@ -1,7 +1,7 @@
 .folder-permission-selector {
   display: flex;
   align-items: center;
-  gap: $spacing-unit/2;
+  gap: calc(var(--spacing-unit) / 2);
 
   &__label {
     flex-grow: 1;

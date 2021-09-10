@@ -5,17 +5,17 @@
   font-weight: normal;
 
   &--admin {
-    background-color: $color-primary;
-    color: $color-white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
   }
 
   &--user {
-    background-color: $color-success;
-    color: $color-white;
+    background-color: var(--color-success);
+    color: var(--color-white);
   }
 
   &--guest {
-    background-color: $color-tertiary-dark;
-    color: $color-white;
+    background-color: var(--color-tertiary-dark);
+    color: var(--color-white);
   }
 }

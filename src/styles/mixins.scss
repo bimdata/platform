@@ -1,3 +1,8 @@
+/**
+ * Note: this file is automatically imported at the begining
+ * of every .scss file (see vue.config.js).
+ */
+
 @mixin noselect {
   -webkit-touch-callout: none; // iOS Safari
   -webkit-user-select: none; // Safari
@@ -5,8 +10,4 @@
   -moz-user-select: none; // Firefox
   -ms-user-select: none; // Internet Explorer/Edge
   user-select: none; // Non-prefixed version, currently supported by Chrome and Opera
-}
-
-@mixin box-shadow {
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 }

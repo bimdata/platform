@@ -1,5 +1,5 @@
 .carousel-list {
-  $button-size: 44px;
+  --button-size: 44px;
 
   position: relative;
 
@@ -21,17 +21,17 @@
   &__btn-next {
     position: absolute;
     z-index: 2;
-    top: calc(50% - #{$button-size / 2});
-    width: $button-size;
-    height: $button-size;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+    top: calc(50% - var(--button-size) / 2);
+    width: var(--button-size);
+    height: var(--button-size);
+    box-shadow: var(--box-shadow);
   }
 
   &__btn-previous {
-    left: -$button-size / 2;
+    left: calc(0px - var(--button-size) / 2);
   }
 
   &__btn-next {
-    right: -$button-size / 2;
+    right: calc(0px - var(--button-size) / 2);
   }
 }

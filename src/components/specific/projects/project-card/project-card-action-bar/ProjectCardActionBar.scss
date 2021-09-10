@@ -2,13 +2,13 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-left: $spacing-unit/3;
+  padding-left: calc(var(--spacing-unit) / 3);
 
   &__action-btn {
-    color: $color-tertiary-dark;
+    color: var(--color-tertiary-dark);
 
     &:disabled {
-      color: $color-tertiary;
+      color: var(--color-tertiary);
     }
   }
 }

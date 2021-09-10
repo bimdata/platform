@@ -9,7 +9,7 @@
       margin-right: auto;
 
       &__item {
-        margin: $spacing-unit/3 0;
+        margin: calc(var(--spacing-unit) / 3) 0;
       }
     }
   }
