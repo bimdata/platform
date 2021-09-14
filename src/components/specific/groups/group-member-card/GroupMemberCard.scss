@@ -7,7 +7,7 @@
   height: $card-height;
   transition-duration: 0.35s;
 
-  &__btn-menu {
+  &__btn-remove {
     position: absolute;
     top: calc(var(--spacing-unit) / 2);
     right: calc(var(--spacing-unit) / 2);

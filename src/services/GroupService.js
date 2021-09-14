@@ -101,7 +101,7 @@ class GroupService {
 
   async removeGroupMembers(project, group, users) {
     try {
-      return await Promise.all(
+      await Promise.all(
         users.map(user =>
           apiClient.collaborationApi.deleteGroupMember({
             cloudPk: project.cloud.id,
@@ -111,6 +111,7 @@ class GroupService {
           })
         )
       );
+      return users;
     } catch (error) {
       throw new RuntimeError(ERRORS.GROUP_UPDATE_ERROR, error);
     }

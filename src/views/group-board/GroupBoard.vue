@@ -26,6 +26,8 @@
       <GroupMemberCard
         v-for="member of displayedMembers"
         :key="member.id"
+        :project="project"
+        :group="group"
         :user="member"
       />
     </ResponsiveGrid>

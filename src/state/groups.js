@@ -28,6 +28,31 @@ const updateGroup = async (project, group) => {
   return newGroup;
 };
 
+const addGroupMembers = async (project, group, membersToAdd) => {
+  const addedMembers = await GroupService.addGroupMembers(
+    project,
+    group,
+    membersToAdd
+  );
+  const members = group.members.concat(addedMembers);
+  softUpdateGroup({ ...group, members });
+  return addedMembers;
+};
+
+const removeGroupMembers = async (project, group, membersToRemove) => {
+  const removedMembers = await GroupService.removeGroupMembers(
+    project,
+    group,
+    membersToRemove
+  );
+  const removedMemberIDs = removedMembers.map(member => member.id);
+  const members = group.members.filter(
+    member => !removedMemberIDs.includes(member.id)
+  );
+  softUpdateGroup({ ...group, members });
+  return removedMembers;
+};
+
 const updateGroupMembers = async (project, group, members) => {
   const oldMemberIDs = group.members.map(member => member.id);
   const newMemberIDs = members.map(member => member.id);
@@ -98,6 +123,8 @@ export function useGroups() {
     loadProjectGroups,
     createGroup,
     updateGroup,
+    addGroupMembers,
+    removeGroupMembers,
     updateGroupMembers,
     updateGroupPermission,
     softUpdateGroup,
