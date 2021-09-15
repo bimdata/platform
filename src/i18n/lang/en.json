@@ -243,11 +243,12 @@
   },
 
   "GroupMemberSelectionCard": {
-    "text": "Add a member",
-    "title": "Manage members",
-    "selectorLabel": "Group members",
-    "cancelButtonText": "Cancel",
-    "submitButtonText": "Validate"
+    "text": "Add a member"
+  },
+
+  "GroupMembersSelector": {
+    "title": "Manage group members",
+    "searchInputPlaceholder": "Search"
   },
 
   "GroupPermissionSelector": {

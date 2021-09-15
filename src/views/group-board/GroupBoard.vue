@@ -16,13 +16,12 @@
       </template>
     </ViewHeader>
 
+    <SidePanel side="left" :title="$t('GroupMembersSelector.title')">
+      <GroupMembersSelector :project="project" :group="group" :users="users" />
+    </SidePanel>
+
     <ResponsiveGrid itemWidth="320px">
-      <GroupMemberSelectionCard
-        :key="-1"
-        :project="project"
-        :group="group"
-        :users="users"
-      />
+      <GroupMemberSelectionCard :key="-1" @click="openMembersSelector" />
       <GroupMemberCard
         v-for="member of displayedMembers"
         :key="member.id"
@@ -36,27 +35,33 @@
 
 <script>
 import { computed } from "vue";
-import { useListFilter } from "@/composables/list-filter";
-import { useGroups } from "@/state/groups";
-import { useProjects } from "@/state/projects";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useSidePanel } from "@/composables/side-panel.js";
+import { useGroups } from "@/state/groups.js";
+import { useProjects } from "@/state/projects.js";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import GroupMemberCard from "@/components/specific/groups/group-member-card/GroupMemberCard";
-import GroupMemberSelectionCard from "@/components/specific/groups/group-member-selection-card/GroupMemberSelectionCard";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import GroupMemberCard from "@/components/specific/groups/group-member-card/GroupMemberCard.vue";
+import GroupMemberSelectionCard from "@/components/specific/groups/group-member-selection-card/GroupMemberSelectionCard.vue";
+import GroupMembersSelector from "@/components/specific/groups/group-members-selector/GroupMembersSelector.vue";
 
 export default {
   components: {
     ResponsiveGrid,
+    SidePanel,
     ViewHeader,
     AppBreadcrumb,
     GroupMemberCard,
-    GroupMemberSelectionCard
+    GroupMemberSelectionCard,
+    GroupMembersSelector
   },
   setup() {
     const { currentProject, projectUsers } = useProjects();
     const { currentGroup } = useGroups();
+    const { openSidePanel } = useSidePanel();
 
     const { filteredList: displayedMembers, searchText } = useListFilter(
       computed(() => currentGroup.value.members),
@@ -69,7 +74,9 @@ export default {
       group: currentGroup,
       project: currentProject,
       searchText,
-      users: projectUsers
+      users: projectUsers,
+      // Methods
+      openMembersSelector: openSidePanel
     };
   }
 };

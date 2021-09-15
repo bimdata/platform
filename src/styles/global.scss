@@ -27,10 +27,19 @@ html {
     padding: 0;
 
     #side-panel-container {
-      position: fixed;
-      z-index: 200;
-      top: 0;
-      right: 0;
+      &--left {
+        position: fixed;
+        z-index: 200;
+        top: 0;
+        left: 0;
+      }
+
+      &--right {
+        position: fixed;
+        z-index: 200;
+        top: 0;
+        right: 0;
+      }
     }
 
     #notification-container {
