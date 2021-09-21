@@ -1,0 +1,10 @@
+.platform-subscription__content__billing {
+  .bimdata-card__empty {
+    &:deep(.bimdata-card__content) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
