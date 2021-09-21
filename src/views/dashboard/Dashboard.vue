@@ -13,9 +13,9 @@
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
       <DashboardButtonTile data-test="btn-projects" @click="buyPlatformPro">
-        <template #title>Buy PRO</template>
+        <template #title>{{ $t("Dashboard.platformProButtonTitle") }}</template>
         <template #number>29.99 €</template>
-        <template #text>Get more projects and more features</template>
+        <template #text>{{ $t("Dashboard.platformProButtonText") }}</template>
       </DashboardButtonTile>
     </div>
     <div class="dashboard__body">

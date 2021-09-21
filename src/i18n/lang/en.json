@@ -3,7 +3,10 @@
     "spacesButtonTitle": "Active Spaces",
     "spacesButtonText": "View spaces",
     "projectsButtonTitle": "Active Projects",
-    "projectsButtonText": "View projects"
+    "projectsButtonText": "View projects",
+    "platformProButtonTitle": "Buy PRO",
+    "platformProButtonText": "Get more projects and more features"
+
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Search members"
