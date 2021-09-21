@@ -31,7 +31,8 @@
     "searchInputPlaceholder": "Search groups"
   },
   "SpaceBoard": {
-    "searchInputPlaceholder": "Search projects"
+    "searchInputPlaceholder": "Search projects",
+    "upgradeStorageButton" : "upgrade storage"
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
