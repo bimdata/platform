@@ -12,10 +12,24 @@
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile data-test="btn-projects" @click="buyPlatformPro">
+      <DashboardButtonTile data-test="btn-platform" class="subscription-platform" @click.stop="buyPlatformPro">
         <template #title>{{ $t("Dashboard.platformProButtonTitle") }}</template>
-        <template #number>29.99 €</template>
-        <template #text>{{ $t("Dashboard.platformProButtonText") }}</template>
+        <template #number>
+          <div class="m-t-18 flex items-center justify-between">
+            <p>{{ $t("Dashboard.paymentInformationText") }}</p>
+            <div class="flex">
+              <BIMDataButton width="100px" color="primary" fill radius class="m-r-12" @click.stop="goToUserProjects">{{ $t("Dashboard.updateInformationButton") }}</BIMDataButton>
+              <BIMDataButton width="100px"  color="high" ghost radius @click.stop="goToUserProjects">{{ $t("Dashboard.cancelInformationButton") }}</BIMDataButton>
+            </div>
+          </div>
+          <div class="flex">
+            <p class="m-r-6">{{ $t("Dashboard.nextPaymentText") }}</p>
+            <p>10/10/2021</p>
+          </div>
+        </template>
+        <template #text>
+          <span @click="buyPlatformPro">{{ $t("Dashboard.platformProButtonText") }}</span>
+        </template>
       </DashboardButtonTile>
     </div>
     <div class="dashboard__body">
@@ -75,7 +89,7 @@ export default {
 =======
 >>>>>>> add example to set prices
       Paddle.Checkout.open({
-        method: 'inline',
+        method: "inline",
         product: 12403,
         email: "hugo@bimdata.io",
         title: "MY TITLE",
