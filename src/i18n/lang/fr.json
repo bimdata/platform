@@ -4,8 +4,12 @@
     "spacesButtonText": "Mes espaces",
     "projectsButtonTitle": "Projets",
     "projectsButtonText": "Mes projets",
-    "platformProButtonTitle": "Acheter PRO",
-    "platformProButtonText": "Obtenez plus de projets et plus de fonctionnalités"
+    "platformProButtonTitle": "Abonnement à la plateforme",
+    "platformProButtonText": "Obtenez plus de projets et plus de fonctionnalités",
+    "paymentInformationText": "Informations de paiement :",
+    "updateInformationButton": "Mettre à jour",
+    "cancelInformationButton": "Annuler",
+    "nextPaymentText": "Prochain paiement :"
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Rechercher un membre"
