@@ -2,32 +2,20 @@
   <div data-test="dashboard" class="view dashboard">
     <div class="dashboard__head">
       <DashboardWelcomeTile />
-      <DashboardButtonTile
-        data-test="btn-projects"
-        color="secondary"
-        @click="buyPlatformPro"
-      >
-        <template #title>Buy PRO</template>
-        <template #number>29.99 €</template>
-        <template #text>Get more projects and more features</template>
-      </DashboardButtonTile>
-      <DashboardButtonTile
-        data-test="btn-spaces"
-        color="primary"
-        @click="goToUserSpaces"
-      >
+      <DashboardButtonTile data-test="btn-spaces" color="primary" @click="goToUserSpaces">
         <template #title>{{ $t("Dashboard.spacesButtonTitle") }}</template>
         <template #number>{{ spaces.length }}</template>
         <template #text>{{ $t("Dashboard.spacesButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile
-        data-test="btn-projects"
-        color="color-tertiary-lightest"
-        @click="goToUserProjects"
-      >
+      <DashboardButtonTile data-test="btn-projects" color="secondary" @click="goToUserProjects">
         <template #title>{{ $t("Dashboard.projectsButtonTitle") }}</template>
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
+      </DashboardButtonTile>
+      <DashboardButtonTile data-test="btn-projects" @click="buyPlatformPro">
+        <template #title>Buy PRO</template>
+        <template #number>29.99 €</template>
+        <template #text>Get more projects and more features</template>
       </DashboardButtonTile>
     </div>
     <div class="dashboard__body">
@@ -53,7 +41,7 @@ export default {
     DashboardButtonTile,
     DashboardWelcomeTile,
     DashboardProjectList,
-    DashboardSpaceList
+    DashboardSpaceList,
   },
   setup() {
     const router = useRouter();
@@ -71,9 +59,13 @@ export default {
     const buyPlatformPro = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> add example to set prices
       Paddle.Product.Prices(12403, function(prices) {
+=======
+      Paddle.Product.Prices(12403, function (prices) {
+>>>>>>> add PlatformSubscription page & header link
         // TODO: set price with with function instead of hard coded value
         console.log(prices);
       });
@@ -83,10 +75,11 @@ export default {
 =======
 >>>>>>> add example to set prices
       Paddle.Checkout.open({
+        method: 'inline',
         product: 12403,
         email: "hugo@bimdata.io",
         title: "MY TITLE",
-        message: 'MY MESSAGE',
+        message: "MY MESSAGE",
         disableLogout: true,
         referring_domain: "platform self service",
 <<<<<<< HEAD
@@ -98,7 +91,7 @@ export default {
         displayModeTheme: "dark",
 >>>>>>> add example to set prices
       });
-    }
+    };
 
     return {
       // References
@@ -109,7 +102,7 @@ export default {
       goToUserSpaces,
       buyPlatformPro,
     };
-  }
+  },
 };
 </script>
 
