@@ -39,6 +39,8 @@ const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const PlatformSubscription = () =>
   import(/* webpackChunkName: "platform-subscription" */ "@/views/platform-subscription/PlatformSubscription.vue");
+  const PaddlePayment = () =>
+  import(/* webpackChunkName: "paddle-payment" */ "@/views/paddle-payment/PaddlePayment.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
@@ -53,6 +55,7 @@ const routeNames = Object.freeze({
   spaceBoard: "space-board",
   userProjects: "user-projects",
   platformSubscription: "subscription",
+  paddlePayment: "payment",
   projectBoard: "project-board",
   modelViewer: "model-viewer",
   projectGroups: "project-groups",
@@ -90,6 +93,11 @@ const routes = [
         path: "/subscription",
         name: routeNames.platformSubscription,
         component: PlatformSubscription,
+      },
+      {
+        path: "/payment",
+        name: routeNames.paddlePayment,
+        component: PaddlePayment,
       },
       {
         path: "/spaces/:spaceID(\\d+)",
