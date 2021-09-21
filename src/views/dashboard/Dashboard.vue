@@ -20,7 +20,11 @@
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardInfoTile />
+      <DashboardButtonTile data-test="btn-projects" @click="buyPlatformPro">
+        <template #title>Buy PRO</template>
+        <template #number>29.99 €</template>
+        <template #text>Get more projects and more features</template>
+      </DashboardButtonTile>
     </div>
     <div class="dashboard__body">
       <DashboardSpaceList :spaces="spaces" />
@@ -68,6 +72,7 @@ export default {
         console.log(prices);
       });
       Paddle.Checkout.open({
+        method: "inline",
         product: 12403,
         email: "hugo@bimdata.io",
         title: "MY TITLE",
