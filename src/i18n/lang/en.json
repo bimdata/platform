@@ -4,8 +4,12 @@
     "spacesButtonText": "View spaces",
     "projectsButtonTitle": "Active Projects",
     "projectsButtonText": "View projects",
-    "platformProButtonTitle": "Buy PRO",
-    "platformProButtonText": "Get more projects and more features"
+    "platformProButtonTitle": "Platform subscription",
+    "platformProButtonText": "Get more projects and more features",
+    "paymentInformationText": "Payment information :",
+    "updateInformationButton": "Update",
+    "cancelInformationButton": "Cancel",
+    "nextPaymentText": "Next payment :"
 
   },
   "GroupBoard": {
