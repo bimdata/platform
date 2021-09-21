@@ -75,7 +75,7 @@ export default {
     };
 
     const buyPlatformPro = () => {
-      Paddle.Product.Prices(12403, function(prices) {
+      Paddle.Product.Prices(12403, function (prices) {
         // TODO: set price with with function instead of hard coded value
         console.log(prices);
       });
