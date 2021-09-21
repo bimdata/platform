@@ -1,0 +1,25 @@
+.platform-subscription {
+  header {
+    h1 {
+      margin-top: 0;
+      font-family: "robotobold";
+    }
+    .bimdata-dropdown-list {
+      width: 391px;
+      &::v-deep(.bimdata-dropdown-list__content) {
+        width: 100%;
+      }
+    }
+  }
+  &__content {
+    & > .flex {
+      flex-wrap: wrap;
+      gap: 36px;
+    }
+    &__billing,
+    &__invoices,
+    &__plans {
+      flex: 1;
+    }
+  }
+}
