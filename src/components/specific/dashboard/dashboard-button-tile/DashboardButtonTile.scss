@@ -18,10 +18,14 @@
 
   &__text {
     align-self: end;
+    font-size: 13px;
     text-transform: uppercase;
     .arrow-icon {
+<<<<<<< HEAD
       transform: rotate(180deg);
       margin-left: var(--spacing-unit);
+=======
+>>>>>>> add translations for Dashboard Platform Pro btn
       vertical-align: text-bottom;
     }
   }

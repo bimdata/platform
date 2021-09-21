@@ -11,8 +11,9 @@
       <BIMDataIcon
         class="arrow-icon"
         name="arrow"
-        size="s"
-        margin="0 0 0 6px"
+        size="xs"
+        margin="0 0 0 12px"
+        :rotate="180"
       />
     </span>
   </div>

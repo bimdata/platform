@@ -3,7 +3,9 @@
     "spacesButtonTitle": "Espaces",
     "spacesButtonText": "Mes espaces",
     "projectsButtonTitle": "Projets",
-    "projectsButtonText": "Mes projets"
+    "projectsButtonText": "Mes projets",
+    "platformProButtonTitle": "Acheter PRO",
+    "platformProButtonText": "Obtenez plus de projets et plus de fonctionnalités"
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Rechercher un membre"
