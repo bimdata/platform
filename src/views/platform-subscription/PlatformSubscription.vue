@@ -10,9 +10,12 @@
         :perPage="6"
         elementKey="dropdown"
         :disabled="false"
-        :closeOnElementClick="false"
+        :closeOnElementClick="true"
       >
         <template #header> dropdown list example </template>
+        <template #element="{ element }">
+      {{ element.name }}
+    </template>
       </BIMDataDropdownList>
     </header>
     <aside class="platform-subscription__content m-t-18">
