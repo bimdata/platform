@@ -20,14 +20,33 @@
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile data-test="btn-platform" class="subscription-platform" @click.stop="buyPlatformPro">
+      <DashboardButtonTile
+        data-test="btn-platform"
+        class="subscription-platform"
+        @click.stop="goToPlatformSubscription"
+      >
         <template #title>{{ $t("Dashboard.platformProButtonTitle") }}</template>
         <template #number>
           <div class="m-t-18 flex items-center justify-between">
             <p>{{ $t("Dashboard.paymentInformationText") }}</p>
             <div class="flex">
-              <BIMDataButton width="100px" color="primary" fill radius class="m-r-12" @click.stop="goToUserProjects">{{ $t("Dashboard.updateInformationButton") }}</BIMDataButton>
-              <BIMDataButton width="100px"  color="high" ghost radius @click.stop="goToUserProjects">{{ $t("Dashboard.cancelInformationButton") }}</BIMDataButton>
+              <BIMDataButton
+                width="100px"
+                color="primary"
+                fill
+                radius
+                class="m-r-12"
+                @click.stop="goToUserProjects"
+                >{{ $t("Dashboard.updateInformationButton") }}</BIMDataButton
+              >
+              <BIMDataButton
+                width="100px"
+                color="high"
+                ghost
+                radius
+                @click.stop="goToUserProjects"
+                >{{ $t("Dashboard.cancelInformationButton") }}</BIMDataButton
+              >
             </div>
           </div>
           <div class="flex">
@@ -36,7 +55,9 @@
           </div>
         </template>
         <template #text>
-          <span @click="buyPlatformPro">{{ $t("Dashboard.platformProButtonText") }}</span>
+          <span @click="buyPlatformPro">{{
+            $t("Dashboard.platformProButtonText")
+          }}</span>
         </template>
       </DashboardButtonTile>
     </div>
@@ -80,6 +101,10 @@ export default {
       router.push({ name: routeNames.userProjects });
     };
 
+    const goToPlatformSubscription = () => {
+      router.push({ name: routeNames.platformSubscription });
+    };
+
     const buyPlatformPro = () => {
       Paddle.Product.Prices(12403, function (prices) {
         // TODO: set price with with function instead of hard coded value
@@ -102,7 +127,9 @@ export default {
       spaces: userSpaces,
       // Methods
       goToUserProjects,
-      goToUserSpaces
+      goToUserSpaces,
+      goToPlatformSubscription,
+      buyPlatformPro
     };
   }
 };
