@@ -1,13 +1,12 @@
 <template>
   <div class="platform-subscription">
     <header>
-      <h1>Platform subscription</h1>
+      <h1>{{ $t("PlatformSubscription.platformSubscriptionTitle") }}</h1>
       <p>
-        Texte expliquant que l’on doit choisir son organisation pour voir les informations de
-        paiement et les factures associés
+        {{ $t("PlatformSubscription.platformSubscriptionText") }}
       </p>
       <BIMDataDropdownList
-        :list="list"
+        :list="organizations"
         :perPage="6"
         elementKey="dropdown"
         :disabled="false"
@@ -27,29 +26,38 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useOrganizations } from "@/state/organizations.js";
 // Components
-import BillingDetails from "@/components/specific/subscription/subscription-billing-details/BillingDetails";
-import Invoices from "@/components/specific/subscription/invoices/Invoices";
-import OurPlans from "@/components/specific/subscription/plans/OurPlans";
+import BillingDetails from "@/components/specific/subscription/subscription-billing-details/BillingDetails.vue";
+import Invoices from "@/components/specific/subscription/invoices/Invoices.vue";
+import OurPlans from "@/components/specific/subscription/plans/OurPlans.vue";
 
 export default {
   components: {
     BillingDetails,
     Invoices,
-    OurPlans,
+    OurPlans
   },
   setup() {
     const displayedBilling = ref([]);
     const displayedInvoices = ref([]);
     const empty = ref(false);
 
+    const { retrieveOrganizations } = useOrganizations();
+
+    const organizations = ref([]);
+    onMounted(async () => {
+      organizations.value = await retrieveOrganizations();
+    });
+
     return {
       displayedBilling,
       displayedInvoices,
       empty,
+      organizations
     };
-  },
+  }
 };
 </script>
 
