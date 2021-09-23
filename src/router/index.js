@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-<<<<<<< HEAD
 import legacyRoutes from "./legacy.js";
 
 // Guards
@@ -15,17 +14,6 @@ import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
-=======
-import { authGuard } from "./guards";
-import {
-  groupBoardResolver,
-  modelViewerResolver,
-  projectBoardResolver,
-  projectGroupsResolver,
-  rootResolver,
-  spaceBoardResolver,
-} from "./resolvers";
->>>>>>> add PlatformSubscription to router
 
 // Route components
 import Layout from "@/Layout.vue";
@@ -35,12 +23,8 @@ import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
 
 // Lazy loaded view components
 /* eslint-disable */
-<<<<<<< HEAD
 const Dashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard.vue");
-=======
-const Dashboard = () => import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
->>>>>>> add PlatformSubscription to router
+  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
 const GroupBoard = () =>
   import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
 const ModelViewer = () =>
@@ -52,15 +36,9 @@ const ProjectGroups = () =>
 const SpaceBoard = () =>
   import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
 const UserProjects = () =>
-<<<<<<< HEAD
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
-=======
-  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects");
 const PlatformSubscription = () =>
-  import(
-    /* webpackChunkName: "platform-subscription" */ "@/views/platform-subscription/PlatformSubscription"
-  );
->>>>>>> add PlatformSubscription to router
+  import(/* webpackChunkName: "platform-subscription" */ "@/views/platform-subscription/PlatformSubscription.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
@@ -79,10 +57,7 @@ const routeNames = Object.freeze({
   modelViewer: "model-viewer",
   projectGroups: "project-groups",
   groupBoard: "group-board",
-<<<<<<< HEAD
   pageNotFound: "page-not-found"
-=======
->>>>>>> add PlatformSubscription to router
 });
 
 const routes = [
@@ -121,28 +96,18 @@ const routes = [
         name: routeNames.spaceBoard,
         component: SpaceBoard,
         meta: {
-<<<<<<< HEAD
           guard: spaceBoardGuard,
           resolver: spaceBoardResolver
         }
-=======
-          resolver: spaceBoardResolver,
-        },
->>>>>>> add PlatformSubscription to router
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)",
         name: routeNames.projectBoard,
         component: ProjectBoard,
         meta: {
-<<<<<<< HEAD
           guard: projectBoardGuard,
           resolver: projectBoardResolver
         }
-=======
-          resolver: projectBoardResolver,
-        },
->>>>>>> add PlatformSubscription to router
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/viewer/:modelIDs",
@@ -165,7 +130,6 @@ const routes = [
         name: routeNames.groupBoard,
         component: GroupBoard,
         meta: {
-<<<<<<< HEAD
           guard: groupBoardGuard,
           resolver: groupBoardResolver
         }
@@ -179,12 +143,6 @@ const routes = [
         component: PageNotFound
       }
     ]
-=======
-          resolver: groupBoardResolver,
-        },
-      },
-    ],
->>>>>>> add PlatformSubscription to router
   },
   {
     // Should match `redirect_uri` path in oidcConfig
@@ -217,17 +175,10 @@ router.beforeEach(async route => {
   }
 });
 
-<<<<<<< HEAD
 router.beforeResolve(async route => {
   const resolvers = route.matched
     .filter(r => r.meta && r.meta.resolver)
     .map(r => r.meta.resolver);
-=======
-router.beforeResolve(async (targetRoute) => {
-  const resolvers = targetRoute.matched
-    .filter((route) => route.meta && route.meta.resolver)
-    .map((route) => route.meta.resolver);
->>>>>>> add PlatformSubscription to router
 
   for (const resolver of resolvers) {
     await resolver(route);

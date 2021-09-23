@@ -12,7 +12,7 @@
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile data-test="btn-platform" class="subscription-platform" @click.stop="buyPlatformPro">
+      <DashboardButtonTile data-test="btn-platform" class="subscription-platform" @click.stop="goToPlatformSubscription">
         <template #title>{{ $t("Dashboard.platformProButtonTitle") }}</template>
         <template #number>
           <div class="m-t-18 flex items-center justify-between">
@@ -70,24 +70,16 @@ export default {
       router.push({ name: routeNames.userProjects });
     };
 
+    const goToPlatformSubscription = () => {
+      router.push({ name: routeNames.platformSubscription });
+    };
+
     const buyPlatformPro = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add example to set prices
-      Paddle.Product.Prices(12403, function(prices) {
-=======
+
       Paddle.Product.Prices(12403, function (prices) {
->>>>>>> add PlatformSubscription page & header link
         // TODO: set price with with function instead of hard coded value
         console.log(prices);
       });
-<<<<<<< HEAD
-=======
->>>>>>> WIP: first Paddle implementation
-=======
->>>>>>> add example to set prices
       Paddle.Checkout.open({
         method: "inline",
         product: 12403,
@@ -96,14 +88,7 @@ export default {
         message: "MY MESSAGE",
         disableLogout: true,
         referring_domain: "platform self service",
-<<<<<<< HEAD
-<<<<<<< HEAD
-        displayModeTheme: "dark",
-=======
->>>>>>> WIP: first Paddle implementation
-=======
-        displayModeTheme: "dark",
->>>>>>> add example to set prices
+        displayModeTheme: "dark"
       });
     };
 
@@ -114,6 +99,7 @@ export default {
       // Methods
       goToUserProjects,
       goToUserSpaces,
+      goToPlatformSubscription,
       buyPlatformPro,
     };
   },
