@@ -26,6 +26,10 @@
     },
     "homeButtonText": "Home"
   },
+  "PlatformSubscription": {
+    "platformSubscriptionTitle": "Abonnement à la plateforme",
+    "platformSubscriptionText": "Lorem ipsum"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Projet",
@@ -87,7 +91,19 @@
     "entryMarketplace": "Marketplace",
     "entryOldPlatform": "Plateforme V1",
     "entryLanguage": "Choix de la langue",
-    "logoutButtonText": "Se Déconnecter"
+    "logoutButtonText": "Se Déconnecter",
+    "subscriptionPlatform": "Abonnement plateforme"
+  },
+
+  "BillingDetails": {
+    "emptyTablePlaceholder": "Prochains paiement.",
+    "headers": {
+      "space": "Espace",
+      "nextpayment": "Prochain paiement",
+      "subscriptionplan": "Formule d'abonnement",
+      "statut": "Statut",
+      "amount": "Montant"
+    }
   },
 
   "BreadcrumbGroupSelector": {
@@ -285,6 +301,17 @@
     "cancelButtonText": "Annuler",
     "submitButtonText": "Inviter",
     "successNotifText": "Invitation envoyée"
+  },
+
+  "Invoices": {
+    "emptyTablePlaceholder": "Problème de facture ? Contactez votre administrateur.",
+    "headers": {
+      "amount": "Montant",
+      "statut": "Statut",
+      "space": "Espace",
+      "date": "Date",
+      "actions": "Actions"
+    }
   },
 
   "ModelActionsCell": {
