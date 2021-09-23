@@ -27,6 +27,10 @@
     },
     "homeButtonText": "Home"
   },
+  "PlatformSubscription": {
+    "platformSubscriptionTitle": "Platform subscription",
+    "platformSubscriptionText": "Lorem ipsum"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Project",
@@ -88,7 +92,19 @@
     "entryMarketplace": "Marketplace",
     "entryOldPlatform": "Platform V1",
     "entryLanguage": "Choose a language",
-    "logoutButtonText": "Log Out"
+    "logoutButtonText": "Log Out",
+    "subscriptionPlatform": "Platform subscription"
+  },
+
+  "BillingDetails": {
+    "emptyTablePlaceholder": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+    "headers": {
+      "space": "Space",
+      "nextpayment": "Next payment",
+      "subscriptionplan": "Subscription plan",
+      "statut": "Statut",
+      "amount": "Amount"
+    }
   },
 
   "BreadcrumbGroupSelector": {
@@ -286,6 +302,17 @@
     "cancelButtonText": "Cancel",
     "submitButtonText": "Send invitation",
     "successNotifText": "Invitation sent"
+  },
+
+  "Invoices": {
+    "emptyTablePlaceholder": "Oh non. Il n'y a pas de plan actif ici. Vous n'avez probablement jamais essayé notre version Pro auparavant ?",
+    "headers": {
+      "amount": "Montant",
+      "statut": "Statut",
+      "space": "Espace",
+      "date": "Date",
+      "actions": "Actions"
+    }
   },
 
   "ModelActionsCell": {
