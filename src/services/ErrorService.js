@@ -2,6 +2,10 @@ import i18n from "@/i18n";
 import { useNotifications } from "@/composables/notifications";
 
 const ERRORS = Object.freeze({
+  ORGANIZATIONS_FETCH_ERROR: "organizationsFetchError",
+  ORGANIZATION_CREATE_ERROR: "organizationCreateError",
+  ORGANIZATION_UPDATE_ERROR: "organizationUpdateError",
+  ORGANIZATION_DELETE_ERROR: "organizationDeleteError",
   SPACES_FETCH_ERROR: "spacesFetchError",
   SPACE_CREATE_ERROR: "spaceCreateError",
   SPACE_UPDATE_ERROR: "spaceUpdateError",
