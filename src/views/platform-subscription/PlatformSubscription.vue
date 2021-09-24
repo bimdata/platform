@@ -47,11 +47,11 @@ export default {
     const displayedInvoices = ref([]);
     const empty = ref(false);
 
-    const { retrieveOrganizations } = useOrganizations();
+    const { retrieveUserOrganizations } = useOrganizations();
 
     const organizations = ref([]);
     onMounted(async () => {
-      organizations.value = await retrieveOrganizations();
+      organizations.value = await retrieveUserOrganizations();
     });
 
     return {
