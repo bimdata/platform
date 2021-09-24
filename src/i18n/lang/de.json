@@ -410,6 +410,10 @@
     "Error": "Fehler",
     "Success": "Erfolg",
     "Errors": {
+        "organizationsFetchError": "Fail to fetch organizations",
+        "organizationCreateError": "Fail to create organizations",
+        "organizationUpdateError": "Fail to update organizations",
+        "organizationDeleteError": "Fail to delete organizations",
         "spacesFetchError": "Unmöglich, die Bereichsliste abzurufen",
         "spaceCreateError": "Fehler beim Erstellen des Bereichs",
         "spaceUpdateError": "Fehler bei der Aktualisierung des Bereichs",

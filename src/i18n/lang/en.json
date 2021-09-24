@@ -513,6 +513,10 @@
   "Success": "Success",
 
   "Errors": {
+    "organizationsFetchError": "Fail to fetch organizations",
+    "organizationCreateError": "Fail to create organizations",
+    "organizationUpdateError": "Fail to update organizations",
+    "organizationDeleteError": "Fail to delete organizations",
     "spacesFetchError": "Fail to fetch spaces",
     "spaceCreateError": "Fail to create space",
     "spaceUpdateError": "Fail to update space",

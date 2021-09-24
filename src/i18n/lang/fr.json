@@ -512,6 +512,10 @@
   "Success": "Succès",
 
   "Errors": {
+    "organizationsFetchError": "Impossible de récupérer la liste des organizations",
+    "organizationCreateError": "Erreur lors de la création de l'organization",
+    "organizationUpdateError": "Erreur lors le de mise à jour de l'organization",
+    "organizationDeleteError": "Erreur lors de la suppression de l'organization",
     "spacesFetchError": "Impossible de récupérer la liste des espaces",
     "spaceCreateError": "Erreur lors de la création de l'espace",
     "spaceUpdateError": "Erreur de mise à jour de l'espace",

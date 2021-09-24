@@ -410,6 +410,10 @@
     "Error": "Error",
     "Success": "Éxito",
     "Errors": {
+        "organizationsFetchError": "Imposible recuperar la lista de organizaciones",
+        "organizationCreateError": "Error durante la creación del organización",
+        "organizationUpdateError": "Error de puesta en marcha del organización",
+        "organizationDeleteError": "Error en la supresión del organización",
         "spacesFetchError": "Imposible recuperar la lista de espacios",
         "spaceCreateError": "Error durante la creación del espacio",
         "spaceUpdateError": "Error de puesta en marcha del espacio",
