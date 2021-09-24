@@ -14,8 +14,8 @@
       >
         <template #header> dropdown list example </template>
         <template #element="{ element }">
-      {{ element.name }}
-    </template>
+          {{ element.name }}
+        </template>
       </BIMDataDropdownList>
     </header>
     <aside class="platform-subscription__content m-t-18">
