@@ -1,0 +1,447 @@
+{
+    "Dashboard": {
+        "spacesButtonTitle": "Spazi attivi",
+        "spacesButtonText": "Vedi gli spazi",
+        "projectsButtonTitle": "Progetti attivi",
+        "projectsButtonText": "Vedi i progetti"
+    },
+    "GroupBoard": {
+        "searchInputPlaceholder": "Cerca tra i membri"
+    },
+    "OidcCallbackError": {
+        "message": "Si è verificato un errore durante l'autenticazione...",
+        "tryAgainButtonText": "Riprova"
+    },
+    "ProjectBoard": {
+        "tabs": {
+            "overview": "Progetto",
+            "files": "File",
+            "bcf": "BCF"
+        }
+    },
+    "ProjectGroups": {
+        "searchInputPlaceholder": "Cerca tra i gruppi"
+    },
+    "SpaceBoard": {
+        "searchInputPlaceholder": "Cerca tra i progetti"
+    },
+    "UserProjects": {
+        "searchInputPlaceholder": "Cerca tra i progetti"
+    },
+    "UserSpaces": {
+        "searchInputPlaceholder": "Cerca tra gli spazi",
+        "createButtonText": "Crea uno spazio"
+    },
+    "ProjectFiles": {
+        "groupsButtonText": "Gestisci i gruppi"
+    },
+    "ProjectOverview": {
+        "openFileUploadButtonText": "Aggiungi un IFC",
+        "closeFileUploadButtonText": "Chiudi",
+        "forbiddenUploadNotification": {
+            "title": "Errore nel caricamento",
+            "message": "Seleziona un file .ifc"
+        }
+    },
+    "BreadcrumbSelector": {
+        "inputPlaceholder": "Cerca"
+    },
+    "GenericTable": {
+        "pagination": "{start} - {end} di {total}"
+    },
+    "GoBackButton": {
+        "text": "Indietro"
+    },
+    "LanguageSelector": {
+        "title": "Scegli una lingua"
+    },
+    "AppHeaderMenu": {
+        "entrySettings": "Impostazioni dell'account",
+        "entryConnect": "BIMData Connect",
+        "entryDocumentation": "Documentazione",
+        "entryMarketplace": "Mercato",
+        "entryOldPlatform": "Piattaforma V1",
+        "entryLanguage": "Scegli una lingua",
+        "logoutButtonText": "Esci"
+    },
+    "BreadcrumbGroupSelector": {
+        "text": "Gruppi"
+    },
+    "BreadcrumbProjectSelector": {
+        "placeholder": "< Nessun progetto >"
+    },
+    "DashboardInfoTile": {
+        "title": "Sicurezza"
+    },
+    "DashboardProjectList": {
+        "title": "Progetti recenti"
+    },
+    "DashboardSpaceList": {
+        "title": "Spazi recenti"
+    },
+    "DashboardWelcomeTile": {
+        "title": "Dashboard",
+        "message": "Ciao {name}, è un piacere rivederti!"
+    },
+    "FileActionsCell": {
+        "openViewerButtonText": "Apri nel visualizzatore",
+        "addTagsButtonText": "Aggiungi tag",
+        "validationRequestButtonText": "Richiesta di convalida",
+        "renameButtonText": "Rinomina",
+        "downloadButtonText": "Scarica",
+        "addVersionButtonText": "Aggiungi versione",
+        "manageAccessButtonText": "Gestisci l'accesso",
+        "deleteButtonText": "Cancella"
+    },
+    "FileNameCell": {
+        "inputErrorMessage": "Nome file non valido",
+        "submitButtonText": "Convalida"
+    },
+    "FilesActionBar": {
+        "deleteButtonText": "Cancella",
+        "moveButtonText": "Sposta in",
+        "downloadButtonText": "Scarica"
+    },
+    "FilesDeleteModal": {
+        "title": "Cancella i file",
+        "message": "Questa azione eliminerà definitivamente i seguenti file/cartelle:",
+        "cancelButtonText": "Annulla",
+        "deleteButtonText": "Cancella"
+    },
+    "FilesManager": {
+        "title": "File del progetto",
+        "searchInputPlaceholder": "Cerca"
+    },
+    "FilesManagerOnboarding": {
+        "text": "Carica il tuo primo file",
+        "uploadFileButtonText": "Carica un file",
+        "createFolderButtonText": "Crea una cartella"
+    },
+    "FilesTable": {
+        "emptyTablePlaceholder": "Svuota la cartella",
+        "folder": "Cartella",
+        "headers": {
+            "name": "Nome",
+            "type": "Tipo",
+            "creator": "Creata da",
+            "tags": "Tag",
+            "lastupdate": "Ultima modifica",
+            "size": "Dimensioni"
+        }
+    },
+    "FileUploadButton": {
+        "addFileButtonText": "Carica un file"
+    },
+    "FileUploadCard": {
+        "cancelMessage": "Annullato",
+        "errorMessage": "Caricamento non riuscito"
+    },
+    "FileUploader": {
+        "uploadAreaText": "Trascina e rilascia per archiviare le risorse del progetto",
+        "separatorText": "o",
+        "uploadButtonText": "Seleziona un file .ifc"
+    },
+    "FolderAccessManager": {
+        "title": "Gestisci i diritti di accesso",
+        "groupsButtonText": "Gestisci i gruppi",
+        "nameHeader": "Nome",
+        "rightsHeader": "Diritti",
+        "membersHeader": "Membri",
+        "searchInputPlaceholder": "Cerca gruppo",
+        "groupHeader": "Gruppo"
+    },
+    "FolderCreationButton": {
+        "buttonText": "Nuova cartella"
+    },
+    "FolderCreationForm": {
+        "creationFormTitle": "Crea una cartella",
+        "nameInputPlaceholder": "Nome della cartella",
+        "nameInputErrorMessage": "Nome cartella non valido",
+        "cancelButtonText": "Annulla",
+        "submitButtonText": "Invia"
+    },
+    "FolderSelector": {
+        "selectedFolder": "Cartella selezionata",
+        "submitButtonText": {
+            "moveTo": "Convalida",
+            "moveHere": "Sposta qui"
+        }
+    },
+    "GroupAccessSelector": {
+        "defaultGroupName": "Tutto"
+    },
+    "GroupCardActionMenu": {
+        "renameButtonText": "Rinomina",
+        "changeColorButtonText": "Cambia colore",
+        "deleteButtonText": "Cancella"
+    },
+    "GroupCardDeleteGuard": {
+        "title": "Cancella gruppo",
+        "message": "Stai per cancellare (definitivamente) il gruppo {name}, sei sicuro?",
+        "deleteButtonText": "Cancella"
+    },
+    "GroupCardUpdateForm": {
+        "title": "Rinomina il gruppo",
+        "inputPlaceholder": "Nome",
+        "inputErrorMessage": "Nome gruppo non valido",
+        "submitButtonText": "Rinomina"
+    },
+    "GroupCreationCard": {
+        "text": "Crea un gruppo",
+        "title": "Nuovo gruppo",
+        "inputPlaceholder": "Nome",
+        "inputErrorMessage": "Nome gruppo non valido",
+        "submitButtonText": "Crea"
+    },
+    "GroupMemberSelectionCard": {
+        "text": "Aggiungi un membro",
+        "title": "Gestisci i membri",
+        "selectorLabel": "Membri del gruppo",
+        "cancelButtonText": "Annulla",
+        "submitButtonText": "Convalida"
+    },
+    "InvitationCard": {
+        "pendingMessage": "Invitato - In attesa.",
+        "resendLinkText": "Inviare di nuovo l'invito?",
+        "resendSuccessNotifText": "Invito spedito nuovamente",
+        "cancelSuccessNotifText": "Invito cancellato"
+    },
+    "InvitationForm": {
+        "emailInputPlaceholder": "Indirizzo e-mail",
+        "emailInputErrorMessage": "E-mail non valida",
+        "roleInputLabel": "Ruolo",
+        "roles": {
+            "admin": "Amministratore",
+            "user": "Utente",
+            "guest": "Ospite"
+        },
+        "cancelButtonText": "Annulla",
+        "submitButtonText": "Invia invito",
+        "successNotifText": "Invito spedito"
+    },
+    "ModelActionsCell": {
+        "addTagsButtonText": "Aggiungi tag",
+        "renameButtonText": "Rinomina",
+        "archiveButtonText": "Archivia",
+        "deleteButtonText": "Cancella",
+        "unarchiveButtonText": "Estrai"
+    },
+    "ModelLastUpdateCell": {
+        "at": "in"
+    },
+    "ModelLocation": {
+        "emptyLocationMessage": "Nessun dato di localizzazione disponibile",
+        "addLocationButtonText": "Riempi"
+    },
+    "ModelLocationForm": {
+        "addressInputPlaceholder": "Inserisci l'indirizzo",
+        "checkButtonText": "Controlla",
+        "submitButtonText": "Convalida",
+        "cancelButtonText": "Modifica"
+    },
+    "ModelNameCell": {
+        "inputErrorMessage": "Nome modello non valido",
+        "submitButtonText": "Convalida"
+    },
+    "ModelsActionBar": {
+        "deleteButtonText": "Cancella",
+        "archiveButtonText": "Archivia",
+        "unarchiveButtonText": "Estrai",
+        "downloadButtonText": "Download",
+        "mergeButtonText": "Unisci"
+    },
+    "ModelsCard": {
+        "openButtonText": "Apri"
+    },
+    "ModelsCardModelPreview": {
+        "emptyPreviewPlaceholder": "Nessuna anteprima disponibile"
+    },
+    "ModelsDeleteModal": {
+        "title": "Attenzione!",
+        "message": "Questa azione eliminerà definitivamente i seguenti modelli:",
+        "cancelButtonText": "Annulla",
+        "deleteButtonText": "Elimina"
+    },
+    "ModelsManager": {
+        "title": "Modelli di progetto",
+        "tabs": {
+            "ifc": "IFC",
+            "split": "Dividi/Esporta",
+            "merge": "Unisci",
+            "archive": "Archivia"
+        }
+    },
+    "ModelsMergeModal": {
+        "title": "Unisci selezione",
+        "inputPlaceholder": "Nome della tua unione",
+        "inputErrorMessage": "È necessario fornire un nome per il file",
+        "submitButtonText": "Esporta"
+    },
+    "ModelsOverview": {
+        "title": "Panoramica dei modelli di progetto"
+    },
+    "ModelsOverviewOnboarding": {
+        "text": "Carica il tuo primo IFC",
+        "uploadButtonText": "Carica IFC"
+    },
+    "ModelsTable": {
+        "emptyTablePlaceholder": "Nessun modello",
+        "headers": {
+            "id": "ID",
+            "name": "Nome",
+            "version": "Versione",
+            "creator": "Autore",
+            "lastupdate": "Ultima modifica",
+            "status": "Status"
+        }
+    },
+    "ProjectCardActionMenu": {
+        "renameButtonText": "Rinomina",
+        "deleteButtonText": "Elimina"
+    },
+    "ProjectCardDeleteGuard": {
+        "title": "Elimina progetto",
+        "message": "Sei sicuro di voler eliminare (permanentemente) questo progetto?",
+        "deleteButtonText": "Elimina"
+    },
+    "ProjectCardUpdateForm": {
+        "title": "Rinomina progetto",
+        "inputPlaceholder": "Nome",
+        "inputErrorMessage": "Nome del progetto non valido",
+        "renameButtonText": "Rinomina"
+    },
+    "ProjectCreationCard": {
+        "title": "Nuovo progetto",
+        "text": "Crea nuovo progetto",
+        "inputPlaceholder": "Nome",
+        "inputErrorMessage": "È necessario fornire un nome per il progetto!",
+        "createButtonText": "Crea"
+    },
+    "ProjectUsersManager": {
+        "title": "Utenti del progetto",
+        "searchInputPlaceholder": "Cerca utenti"
+    },
+    "SpaceCard": {
+        "projects": "PROGETTI"
+    },
+    "SpaceCardActionMenu": {
+        "renameButtonText": "Rinomina",
+        "removeImageButtonText": "Rimuovi immagine",
+        "deleteButtonText": "Elimina"
+    },
+    "SpaceCardDeleteGuard": {
+        "title": "Elimina spazio",
+        "message": "Sei sicuro?",
+        "deleteButtonText": "Elimina"
+    },
+    "SpaceCardImageButton": {
+        "buttonText": "Carica immagine"
+    },
+    "SpaceCardUpdateForm": {
+        "title": "Rinomina spazio",
+        "inputPlaceholder": "Nome",
+        "inputErrorMessage": "Nome spazio non valido",
+        "submitButtonText": "Rinomina"
+    },
+    "SpaceCreationCard": {
+        "title": "Nuovo spazio",
+        "inputPlaceholder": "Nomina",
+        "inputErrorMessage": "È necessario fornire un nome per lo spazio!",
+        "createButtonText": "Crea"
+    },
+    "SpaceUsersManager": {
+        "title": "Gestisci amministratori dell'area",
+        "tabs": {
+            "admins": "Amministratori",
+            "users": "Utenti"
+        },
+        "searchInputPlaceholder": "Cerca utenti",
+        "addUserButtonText": "Aggiungi nuovo amministratore"
+    },
+    "UserCard": {
+        "self": "tu"
+    },
+    "UserCardDeleteGuard": {
+        "message": {
+            "space": "Rimuovere {name} da questo spazio?",
+            "project": "Rimuovere {name} da questo progetto?"
+        },
+        "submitButtonText": "Rimuovi"
+    },
+    "UserCardUpdateForm": {
+        "submitButtonText": "Convalida"
+    },
+    "UserRoleBadge": {
+        "admin": "Amministratore",
+        "user": "Utente",
+        "guest": "Ospite"
+    },
+    "UsersManagerOnboarding": {
+        "text": "Invita il tuo primo collaboratore",
+        "inviteButtonText": "Invita"
+    },
+    "PageNotFound": {
+        "title": "Pagina non trovata",
+        "text": {
+            "line1": "Ops! La pagina che stai cercando non esiste.",
+            "line2": "Per favore torna alla home."
+        },
+        "homeButtonText": "Home"
+    },
+    "FolderPermissionSelector": {
+        "label": "Tutti",
+        "options": {
+            "accessDenied": "Accesso negato",
+            "readOnly": "Sola lettura",
+            "readWrite": "Lettura/Scrittura"
+        }
+    },
+    "GroupMembersSelector": {
+        "title": "Gestisci membri del gruppo",
+        "searchInputPlaceholder": "Cerca"
+    },
+    "GroupPermissionSelector": {
+        "options": {
+            "accessDenied": "Accesso negato",
+            "readOnly": "Sola lettura",
+            "readWrite": "Lettura/scrittura"
+        }
+    },
+    "Error": "Errore",
+    "Success": "Riuscito",
+    "Errors": {
+        "spacesFetchError": "Impossibile recuperare gli spazi",
+        "spaceCreateError": "Impossibile creare spazio",
+        "spaceUpdateError": "Impossibile caricare spazio",
+        "spaceDeleteError": "Impossibile eliminare spazio",
+        "spaceImageUpdateError": "Impossibile caricare immagine spazio",
+        "spaceImageDeleteError": "Impossibile eliminare immagine spazio",
+        "projectsFetchError": "Impossibile recuperare progetti",
+        "projectCreateError": "Impossibile creare progetto",
+        "projectUpdateError": "Impossibile caricare progetto",
+        "projectDeleteError": "Impossibile eliminare progetto",
+        "invitationsFetchError": "Impossibile recuperare inviti",
+        "invitationSendError": "Impossibile spedire invito",
+        "invitationResendError": "Impossibile rispedire invito",
+        "invitationCancelError": "Impossibile annullare invito",
+        "usersFetchError": "Impossibile recuperare utenti",
+        "userUpdateError": "Impossibile caricare utente",
+        "userDeleteError": "Impossibile eliminare utente",
+        "modelsFetchError": "Impossibile recuperare modelli",
+        "modelUploadError": "Impossibile caricare modello",
+        "modelUpdateError": "Impossibile caricare modello",
+        "modelDownloadError": "Impossibile scaricare modello",
+        "modelMergeError": "Impossibile unire modelli",
+        "modelDeleteError": "Impossibile eliminare modello",
+        "fileStructureFetchError": "Impossibile recuperare struttura file",
+        "fileUpdateError": "Impossibile caricare file",
+        "fileDownloadError": "Impossibile scaricare file",
+        "fileDeleteError": "Impossibile eliminare file",
+        "folderCreateError": "Impossibile creare cartella",
+        "documentUploadError": "Impossibile caricare documento",
+        "groupsFetchError": "Impossibile recuperare gruppi",
+        "groupCreateError": "Impossibile creare gruppo",
+        "groupUpdateError": "Impossibile caricare gruppo",
+        "groupDeleteError": "Impossibile eliminare gruppo"
+    }
+}

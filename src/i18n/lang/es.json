@@ -1,0 +1,447 @@
+{
+    "Dashboard": {
+        "spacesButtonTitle": "Espacios",
+        "spacesButtonText": "Mis espacios",
+        "projectsButtonTitle": "Proyectos",
+        "projectsButtonText": "Mis proyectos"
+    },
+    "GroupBoard": {
+        "searchInputPlaceholder": "Buscar un miembro"
+    },
+    "OidcCallbackError": {
+        "message": "Ha ocurrido un error de autenticación...",
+        "tryAgainButtonText": "Intente de nuevo"
+    },
+    "ProjectBoard": {
+        "tabs": {
+            "overview": "Proyecto",
+            "files": "Archivos",
+            "bcf": "BCF"
+        }
+    },
+    "ProjectGroups": {
+        "searchInputPlaceholder": "Buscar un grupo"
+    },
+    "SpaceBoard": {
+        "searchInputPlaceholder": "Buscar un proyecto"
+    },
+    "UserProjects": {
+        "searchInputPlaceholder": "Buscar un proyecto"
+    },
+    "UserSpaces": {
+        "searchInputPlaceholder": "Buscar un espacio",
+        "createButtonText": "Crear un espacio"
+    },
+    "ProjectFiles": {
+        "groupsButtonText": "Gestión de grupos"
+    },
+    "ProjectOverview": {
+        "openFileUploadButtonText": "Añadir un IFC",
+        "closeFileUploadButtonText": "Cerrar",
+        "forbiddenUploadNotification": {
+            "title": "Error",
+            "message": "Por favor seleccione un archivo .ifc"
+        }
+    },
+    "BreadcrumbSelector": {
+        "inputPlaceholder": "Buscar"
+    },
+    "GenericTable": {
+        "pagination": "{start} - {end} en {total}"
+    },
+    "GoBackButton": {
+        "text": "Retorno"
+    },
+    "LanguageSelector": {
+        "title": "Selección de idioma"
+    },
+    "AppHeaderMenu": {
+        "entrySettings": "Parámetros de cuenta",
+        "entryConnect": "BIMData Connect",
+        "entryDocumentation": "Documentación",
+        "entryMarketplace": "Marketplace",
+        "entryOldPlatform": "Plataforma V1",
+        "entryLanguage": "Selección de idioma",
+        "logoutButtonText": "Desconectar"
+    },
+    "BreadcrumbGroupSelector": {
+        "text": "Grupos"
+    },
+    "BreadcrumbProjectSelector": {
+        "placeholder": "<No existen proyectos>"
+    },
+    "DashboardInfoTile": {
+        "title": "Seguridad"
+    },
+    "DashboardProjectList": {
+        "title": "Proyectos recientes"
+    },
+    "DashboardSpaceList": {
+        "title": "Espacios recientes"
+    },
+    "DashboardWelcomeTile": {
+        "title": "Dashboard",
+        "message": "Hola {name}, me alegro verte de nuevo !"
+    },
+    "FileActionsCell": {
+        "openViewerButtonText": "Ver",
+        "addTagsButtonText": "Añadir etiquetas",
+        "validationRequestButtonText": "Solicitud de validación",
+        "renameButtonText": "Renombrar",
+        "downloadButtonText": "Descargar",
+        "addVersionButtonText": "Añadir una versión",
+        "manageAccessButtonText": "Gestionar los accesos",
+        "deleteButtonText": "Suprimir"
+    },
+    "FileNameCell": {
+        "inputErrorMessage": "Nombre de archivo inválido",
+        "submitButtonText": "Validar"
+    },
+    "FilesActionBar": {
+        "deleteButtonText": "Suprimir",
+        "moveButtonText": "Moverse hacia",
+        "downloadButtonText": "Descargar"
+    },
+    "FilesDeleteModal": {
+        "title": "Eliminación de archivos",
+        "message": "Está apunto de suprimir definitivamente los archivos/carpetas siguientes:",
+        "cancelButtonText": "Cancelar",
+        "deleteButtonText": "Suprimir"
+    },
+    "FilesManager": {
+        "title": "Documentos del proyecto",
+        "searchInputPlaceholder": "Buscar"
+    },
+    "FilesManagerOnboarding": {
+        "text": "Suba su primer archivo",
+        "uploadFileButtonText": "Suba un archivo",
+        "createFolderButtonText": "Crear una carpeta"
+    },
+    "FilesTable": {
+        "emptyTablePlaceholder": "Carpeta vacía",
+        "folder": "Carpeta",
+        "headers": {
+            "name": "Nombre",
+            "type": "Tipo",
+            "creator": "Creado por",
+            "tags": "Etiquetas",
+            "lastupdate": "Modificado el",
+            "size": "Talla"
+        }
+    },
+    "FileUploadButton": {
+        "addFileButtonText": "Cargar un archivo"
+    },
+    "FileUploadCard": {
+        "cancelMessage": "Cancelado",
+        "errorMessage": "La subida ha fracasado"
+    },
+    "FileUploader": {
+        "uploadAreaText": "Haga Clic/Deslizar sus archivos aquí",
+        "separatorText": "o",
+        "uploadButtonText": "Seleccione un archivo .ifc"
+    },
+    "FolderAccessManager": {
+        "title": "Gestión de derechos de acceso",
+        "groupsButtonText": "Gestión de grupos",
+        "nameHeader": "Nombre",
+        "rightsHeader": "Derechos",
+        "membersHeader": "Miembros",
+        "searchInputPlaceholder": "Buscar un grupo",
+        "groupHeader": "Grupo"
+    },
+    "FolderCreationButton": {
+        "buttonText": "Carpeta nueva"
+    },
+    "FolderCreationForm": {
+        "creationFormTitle": "Crear un archivo",
+        "nameInputPlaceholder": "Nombre de la carpeta",
+        "nameInputErrorMessage": "Nombre de carpeta inválida",
+        "cancelButtonText": "Cancelar",
+        "submitButtonText": "Validar"
+    },
+    "FolderSelector": {
+        "selectedFolder": "Carpeta seleccionada",
+        "submitButtonText": {
+            "moveTo": "Validar",
+            "moveHere": "Mueva aquí"
+        }
+    },
+    "GroupAccessSelector": {
+        "defaultGroupName": "Todo el mundo"
+    },
+    "GroupCardActionMenu": {
+        "renameButtonText": "Renombrar",
+        "changeColorButtonText": "Modificar el color",
+        "deleteButtonText": "Suprimir"
+    },
+    "GroupCardDeleteGuard": {
+        "title": "Suprimir el grupo",
+        "message": "¿Está seguro que quiere borrar (definitivamente) el grupo {name} ?",
+        "deleteButtonText": "Suprimir"
+    },
+    "GroupCardUpdateForm": {
+        "title": "Renombrar el grupo",
+        "inputPlaceholder": "Nombre",
+        "inputErrorMessage": "Nombre del grupo inválido",
+        "submitButtonText": "Renombrar"
+    },
+    "GroupCreationCard": {
+        "text": "Crear un grupo",
+        "title": "Grupo nuevo",
+        "inputPlaceholder": "Nombre",
+        "inputErrorMessage": "Nombre del grupo inválido",
+        "submitButtonText": "Crear"
+    },
+    "GroupMemberSelectionCard": {
+        "text": "Añadir un usuario",
+        "title": "Gestión de miembros",
+        "selectorLabel": "Miembros del grupo",
+        "cancelButtonText": "Cancelar",
+        "submitButtonText": "Validar"
+    },
+    "InvitationCard": {
+        "pendingMessage": "Invitado - Sin respuesta.",
+        "resendLinkText": "¿Enviar la participación de nuevo?",
+        "resendSuccessNotifText": "Invitación reenviada",
+        "cancelSuccessNotifText": "Invitación anulada"
+    },
+    "InvitationForm": {
+        "emailInputPlaceholder": "Correo electrónico del usuario",
+        "emailInputErrorMessage": "Correo electrónico invalido",
+        "roleInputLabel": "Papel",
+        "roles": {
+            "admin": "Administrador",
+            "user": "Usuario",
+            "guest": "Invitado"
+        },
+        "cancelButtonText": "Cancelar",
+        "submitButtonText": "Invitar",
+        "successNotifText": "Invitación enviada"
+    },
+    "ModelActionsCell": {
+        "addTagsButtonText": "Añadir etiquetas",
+        "renameButtonText": "Cambiar el nombre",
+        "archiveButtonText": "Archivar",
+        "deleteButtonText": "Suprimir",
+        "unarchiveButtonText": "Desarchivar"
+    },
+    "ModelLastUpdateCell": {
+        "at": "a"
+    },
+    "ModelLocation": {
+        "emptyLocationMessage": "Datos de seguimiento no disponibles",
+        "addLocationButtonText": "Infórmese"
+    },
+    "ModelLocationForm": {
+        "addressInputPlaceholder": "Introduzca una dirección",
+        "checkButtonText": "Verificar",
+        "submitButtonText": "Validar",
+        "cancelButtonText": "Cambiar"
+    },
+    "ModelNameCell": {
+        "inputErrorMessage": "Nombre de modelo inválido",
+        "submitButtonText": "Validar"
+    },
+    "ModelsActionBar": {
+        "deleteButtonText": "Suprimir",
+        "archiveButtonText": "Archivar",
+        "unarchiveButtonText": "Desarchivar",
+        "downloadButtonText": "Descargar",
+        "mergeButtonText": "Fusionar"
+    },
+    "ModelsCard": {
+        "openButtonText": "Abrir"
+    },
+    "ModelsCardModelPreview": {
+        "emptyPreviewPlaceholder": "Sin previsualización"
+    },
+    "ModelsDeleteModal": {
+        "title": "¡Atención!",
+        "message": "Esta acción es irreversible. Esto suprimirá:",
+        "cancelButtonText": "Anular",
+        "deleteButtonText": "Suprimir"
+    },
+    "ModelsManager": {
+        "title": "Modelos del proyecto",
+        "tabs": {
+            "ifc": "IFC",
+            "split": "Split / Exportar",
+            "merge": "Fusionar",
+            "archive": "Archivos"
+        }
+    },
+    "ModelsMergeModal": {
+        "title": "Fusionar la selección",
+        "inputPlaceholder": "Nombre de vuestra fusión del IFC",
+        "inputErrorMessage": "Debéis elegir un nombre para el fichero",
+        "submitButtonText": "Exportar"
+    },
+    "ModelsOverview": {
+        "title": "Visión del proyecto"
+    },
+    "ModelsOverviewOnboarding": {
+        "text": "Transferir vuestro primer IFC",
+        "uploadButtonText": "Transferencia"
+    },
+    "ModelsTable": {
+        "emptyTablePlaceholder": "Sin modelos",
+        "headers": {
+            "id": "ID",
+            "name": "Nombre",
+            "version": "Versión",
+            "creator": "Creado por",
+            "lastupdate": "Modificado el",
+            "status": "Estatus"
+        }
+    },
+    "ProjectCardActionMenu": {
+        "renameButtonText": "Renombrar",
+        "deleteButtonText": "Suprimir"
+    },
+    "ProjectCardDeleteGuard": {
+        "title": "Suprimir el proyecto",
+        "message": "¿Está usted seguro de que quiere suprimir (definitivamente) este proyecto?",
+        "deleteButtonText": "Suprimir"
+    },
+    "ProjectCardUpdateForm": {
+        "title": "Renombrar el proyecto",
+        "inputPlaceholder": "Nombre",
+        "inputErrorMessage": "Este nombre de proyecto no es válido.",
+        "renameButtonText": "Renombrar"
+    },
+    "ProjectCreationCard": {
+        "title": "Nuevo proyecto",
+        "text": "Crear un nuevo proyecto",
+        "inputPlaceholder": "Nombre",
+        "inputErrorMessage": "¡Debe darle un nombre al proyecto!",
+        "createButtonText": "Crear"
+    },
+    "ProjectUsersManager": {
+        "title": "Usuarios",
+        "searchInputPlaceholder": "Buscar un usuario"
+    },
+    "SpaceCard": {
+        "projects": "PROYECTOS"
+    },
+    "SpaceCardActionMenu": {
+        "renameButtonText": "Renombrar",
+        "removeImageButtonText": "Suprimir la imagen",
+        "deleteButtonText": "Suprimir este espacio"
+    },
+    "SpaceCardDeleteGuard": {
+        "title": "Suprimir el espacio",
+        "message": "¿Está usted seguro de querer suprimir (definitivamente) este espacio?",
+        "deleteButtonText": "Suprimir"
+    },
+    "SpaceCardImageButton": {
+        "buttonText": "Cambiar la imagen"
+    },
+    "SpaceCardUpdateForm": {
+        "title": "Renombrar el espacio",
+        "inputPlaceholder": "Nombre",
+        "inputErrorMessage": "Este nombre de espacio no es válido.",
+        "submitButtonText": "Renombrar"
+    },
+    "SpaceCreationCard": {
+        "title": "Nuevo espacio",
+        "inputPlaceholder": "Nombre",
+        "inputErrorMessage": "¡Debe darle un nombre al espacio!",
+        "createButtonText": "Crear"
+    },
+    "SpaceUsersManager": {
+        "title": "Administrador/gestor del espacio",
+        "tabs": {
+            "admins": "Administradores",
+            "users": "Usuarios"
+        },
+        "searchInputPlaceholder": "Buscar un usuario",
+        "addUserButtonText": "Agregar un administrador"
+    },
+    "UserCard": {
+        "self": "ustedes"
+    },
+    "UserCardDeleteGuard": {
+        "message": {
+            "space": "¿Suprimir {name} de este espacio?",
+            "project": "¿Suprimir {name} de este proyecto?"
+        },
+        "submitButtonText": "Suprimir"
+    },
+    "UserCardUpdateForm": {
+        "submitButtonText": "Validar"
+    },
+    "UserRoleBadge": {
+        "admin": "Admin",
+        "user": "Usuario",
+        "guest": "Invitado"
+    },
+    "UsersManagerOnboarding": {
+        "text": "Invitar a su primer colaborador",
+        "inviteButtonText": "Invitación"
+    },
+    "PageNotFound": {
+        "title": "Página no encontrada",
+        "text": {
+            "line1": "¡Ups! La página que usted está buscando no existe.",
+            "line2": "Por favor vuelva a inicio."
+        },
+        "homeButtonText": "Inicio"
+    },
+    "FolderPermissionSelector": {
+        "label": "Todo el mundo",
+        "options": {
+            "accessDenied": "Acceso denegado",
+            "readOnly": "Solo lectura",
+            "readWrite": "Lectura / Escritura"
+        }
+    },
+    "GroupMembersSelector": {
+        "title": "Gestión de los miembros del grupo",
+        "searchInputPlaceholder": "Buscar"
+    },
+    "GroupPermissionSelector": {
+        "options": {
+            "accessDenied": "Acceso denegado",
+            "readOnly": "Solo lectura",
+            "readWrite": "Lectura / Escritura"
+        }
+    },
+    "Error": "Error",
+    "Success": "Éxito",
+    "Errors": {
+        "spacesFetchError": "Imposible recuperar la lista de espacios",
+        "spaceCreateError": "Error durante la creación del espacio",
+        "spaceUpdateError": "Error de puesta en marcha del espacio",
+        "spaceDeleteError": "Error en la supresión del espacio",
+        "spaceImageUpdateError": "Error durante el cambio de imagen del espacio",
+        "spaceImageDeleteError": "Error durante la supresión de la imagen del espacio",
+        "projectsFetchError": "Imposible recuperar la lista de proyectos",
+        "projectCreateError": "Ha surgido un error durante la creación del proyecto",
+        "projectUpdateError": "Fracaso de la puesta en marcha del proyecto",
+        "projectDeleteError": "Fracaso de la supresión del proyecto",
+        "invitationsFetchError": "Imposible recuperar la lista de invitaciones",
+        "invitationSendError": "La invitación no puede ser enviada",
+        "invitationResendError": "Fracaso del reenvío de la invitación",
+        "invitationCancelError": "La invitación no puede ser anulada",
+        "usersFetchError": "Imposible recuperar la lista de usuarios",
+        "userUpdateError": "Fracaso de la puesta en marcha del usuario",
+        "userDeleteError": "Fracaso de la supresión del usuario",
+        "modelsFetchError": "Imposible recuperar la lista de modelos",
+        "modelUploadError": "Lo(s) modelo(s) no ha(n) podido ser transferido(s)",
+        "modelUpdateError": "Fracaso de la puesta en marcha del modelo",
+        "modelDownloadError": "Un error ha surgido durante la transferencia",
+        "modelMergeError": "Fracaso de la fusión de los modelos",
+        "modelDeleteError": "Error durante la supresión del modelo",
+        "fileStructureFetchError": "Imposible recuperar la estructura del fichero",
+        "fileUpdateError": "Un error ha surgido durante la puesta en marcha de los dosieres/ficheros",
+        "fileDownloadError": "Fracaso de la transferencia de los dosieres/ficheros",
+        "fileDeleteError": "Error de la supresión de los dosieres/ficheros",
+        "folderCreateError": "Error durante la creación del dossier",
+        "documentUploadError": "Error durante la transferencia del fichero",
+        "groupsFetchError": "Imposible recuperar la lista de grupos",
+        "groupCreateError": "Error durante la creación del grupo",
+        "groupUpdateError": "Error durante la puesta en marcha del grupo",
+        "groupDeleteError": "Fracaso durante la supresión del grupo"
+    }
+}
