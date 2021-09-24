@@ -2,7 +2,7 @@ import { privateApiClient } from "./api-client.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class OrganizationService {
-  async fetchOrganizations() {
+  async fetchUserOrganizations() {
     try {
       return await privateApiClient.get("/organization");
     } catch (error) {
