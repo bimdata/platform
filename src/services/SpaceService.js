@@ -1,5 +1,5 @@
 import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
+import { ERRORS, ErrorService, RuntimeError } from "./ErrorService";
 
 class SpaceService {
   async fetchUserSpaces() {

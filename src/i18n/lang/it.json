@@ -413,6 +413,10 @@
     "Error": "Errore",
     "Success": "Riuscito",
     "Errors": {
+        "organizationsFetchError": "Impossibile recuperare organizzazioni",
+        "organizationCreateError": "Impossibile creare organizzazione",
+        "organizationUpdateError": "Impossibile caricare organizzazione",
+        "organizationDeleteError": "Impossibile eliminare organizzazione",
         "spacesFetchError": "Impossibile recuperare gli spazi",
         "spaceCreateError": "Impossibile creare spazio",
         "spaceUpdateError": "Impossibile caricare spazio",
