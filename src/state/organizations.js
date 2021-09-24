@@ -6,13 +6,13 @@ const state = reactive({
   organizationSpaces: []
 });
 
-const retrieveOrganizations = async () => {
-  const organizations = await OrganizationService.fetchOrganizations();
+const retrieveUserOrganizations = async () => {
+  const organizations = await OrganizationService.fetchUserOrganizations();
   state.userOrganizations = organizations;
   return organizations;
 };
 
-const fecthOrganizationSpaces = async organization => {
+const retrieveOrganizationSpaces = async organization => {
   const spaces = await OrganizationService.fecthOrganizationSpaces(
     organization
   );
@@ -62,8 +62,8 @@ export function useOrganizations() {
     // References
     ...toRefs(readonlyState),
     // Methods
-    retrieveOrganizations,
-    fecthOrganizationSpaces,
+    retrieveUserOrganizations,
+    retrieveOrganizationSpaces,
     createOrganization,
     updateOrganization,
     deleteOrganization,
