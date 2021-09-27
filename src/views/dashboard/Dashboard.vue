@@ -12,25 +12,7 @@
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile data-test="btn-platform" class="subscription-platform" @click.stop="goToPlatformSubscription">
-        <template #title>{{ $t("Dashboard.platformProButtonTitle") }}</template>
-        <template #number>
-          <div class="m-t-18 flex items-center justify-between">
-            <p>{{ $t("Dashboard.paymentInformationText") }}</p>
-            <div class="flex">
-              <BIMDataButton width="100px" color="primary" fill radius class="m-r-12" @click.stop="goToUserProjects">{{ $t("Dashboard.updateInformationButton") }}</BIMDataButton>
-              <BIMDataButton width="100px"  color="high" ghost radius @click.stop="goToUserProjects">{{ $t("Dashboard.cancelInformationButton") }}</BIMDataButton>
-            </div>
-          </div>
-          <div class="flex">
-            <p class="m-r-6">{{ $t("Dashboard.nextPaymentText") }}</p>
-            <p>10/10/2021</p>
-          </div>
-        </template>
-        <template #text>
-          <span @click="buyPlatformPro">{{ $t("Dashboard.platformProButtonText") }}</span>
-        </template>
-      </DashboardButtonTile>
+      <DashboardSubscriptionPlatform />
     </div>
     <div class="dashboard__body">
       <DashboardSpaceList :spaces="spaces" />
@@ -46,6 +28,7 @@ import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile";
+import DashboardSubscriptionPlatform from "@/components/specific/dashboard/dashboard-subscription-platform/DashboardSubscriptionPlatform";
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile";
 import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList";
 import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList";
@@ -53,6 +36,7 @@ import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-
 export default {
   components: {
     DashboardButtonTile,
+    DashboardSubscriptionPlatform,
     DashboardWelcomeTile,
     DashboardProjectList,
     DashboardSpaceList,
@@ -99,7 +83,6 @@ export default {
       goToUserProjects,
       goToUserSpaces,
       goToPlatformSubscription,
-      buyPlatformPro,
     };
   },
 };
