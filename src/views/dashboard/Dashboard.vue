@@ -20,46 +20,7 @@
         <template #number>{{ projects.length }}</template>
         <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
       </DashboardButtonTile>
-      <DashboardButtonTile
-        data-test="btn-platform"
-        class="subscription-platform"
-        @click.stop="goToPlatformSubscription"
-      >
-        <template #title>{{ $t("Dashboard.platformProButtonTitle") }}</template>
-        <template #number>
-          <div class="m-t-18 flex items-center justify-between">
-            <p>{{ $t("Dashboard.paymentInformationText") }}</p>
-            <div class="flex">
-              <BIMDataButton
-                width="100px"
-                color="primary"
-                fill
-                radius
-                class="m-r-12"
-                @click.stop="goToUserProjects"
-                >{{ $t("Dashboard.updateInformationButton") }}</BIMDataButton
-              >
-              <BIMDataButton
-                width="100px"
-                color="high"
-                ghost
-                radius
-                @click.stop="goToUserProjects"
-                >{{ $t("Dashboard.cancelInformationButton") }}</BIMDataButton
-              >
-            </div>
-          </div>
-          <div class="flex">
-            <p class="m-r-6">{{ $t("Dashboard.nextPaymentText") }}</p>
-            <p>10/10/2021</p>
-          </div>
-        </template>
-        <template #text>
-          <span @click="buyPlatformPro">{{
-            $t("Dashboard.platformProButtonText")
-          }}</span>
-        </template>
-      </DashboardButtonTile>
+      <DashboardSubscriptionPlatform />
     </div>
     <div class="dashboard__body">
       <DashboardSpaceList :spaces="spaces" />
@@ -75,7 +36,7 @@ import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components
 import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile";
-import DashboardInfoTile from "@/components/specific/dashboard/dashboard-info-tile/DashboardInfoTile";
+import DashboardSubscriptionPlatform from "@/components/specific/dashboard/dashboard-subscription-platform/DashboardSubscriptionPlatform";
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile";
 import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList";
 import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList";
@@ -83,7 +44,7 @@ import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-
 export default {
   components: {
     DashboardButtonTile,
-    DashboardInfoTile,
+    DashboardSubscriptionPlatform,
     DashboardWelcomeTile,
     DashboardProjectList,
     DashboardSpaceList
@@ -105,22 +66,6 @@ export default {
       router.push({ name: routeNames.platformSubscription });
     };
 
-    const buyPlatformPro = () => {
-      Paddle.Product.Prices(12403, function (prices) {
-        // TODO: set price with with function instead of hard coded value
-        console.log(prices);
-      });
-      Paddle.Checkout.open({
-        method: "inline",
-        product: 12403,
-        email: "hugo@bimdata.io",
-        title: "MY TITLE",
-        message: "MY MESSAGE",
-        disableLogout: true,
-        referring_domain: "platform self service"
-      });
-    };
-
     return {
       // References
       projects: userProjects,
@@ -128,8 +73,7 @@ export default {
       // Methods
       goToUserProjects,
       goToUserSpaces,
-      goToPlatformSubscription,
-      buyPlatformPro
+      goToPlatformSubscription
     };
   }
 };
