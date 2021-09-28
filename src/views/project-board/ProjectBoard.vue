@@ -108,7 +108,6 @@ export default {
       // Restore current project view for this project.
       changeView(viewKey);
     });
-    
 
     return {
       // References
