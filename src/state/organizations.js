@@ -1,27 +1,73 @@
+import { reactive, readonly, toRefs } from "vue";
 import OrganizationService from "@/services/OrganizationService.js";
 
-const retrieveOrganizations = async () => {
-  return await OrganizationService.retrieveOrganizations();
+const state = reactive({
+  userOrganizations: [],
+  organizationSpaces: []
+});
+
+const retrieveUserOrganizations = async () => {
+  const organizations = await OrganizationService.fetchUserOrganizations();
+  state.userOrganizations = organizations;
+  return organizations;
 };
 
-const createOrganization = async () => {
-  // TODO
+const retrieveOrganizationSpaces = async organization => {
+  const spaces = await OrganizationService.fecthOrganizationSpaces(
+    organization
+  );
+  state.organizationSpaces = spaces;
+  return spaces;
 };
 
-const updateOrganization = async () => {
-  // TODO
+const createOrganization = async organization => {
+  const newOrganization = await OrganizationService.createOrganization(
+    organization
+  );
+  state.userOrganizations = [newOrganization].concat(state.userOrganizations);
+  return newOrganization;
 };
 
-const deleteOrganization = async () => {
-  // TODO
+const updateOrganization = async organization => {
+  const newOrganization = await OrganizationService.updateOrganization(
+    organization
+  );
+  softUpdateOrganization(newOrganization);
+  return newOrganization;
+};
+
+const deleteOrganization = async organization => {
+  await OrganizationService.deleteOrganization(organization);
+  softDeleteOrganization(organization);
+  return organization;
+};
+
+const softUpdateOrganization = organization => {
+  state.userOrganizations = state.userOrganizations.map(orga =>
+    orga.id === organization.id ? { ...orga, ...organization } : orga
+  );
+  return organization;
+};
+
+const softDeleteOrganization = organization => {
+  state.userOrganizations = state.userOrganizations.filter(
+    orga => orga.id !== organization.id
+  );
+  return organization;
 };
 
 export function useOrganizations() {
+  const readonlyState = readonly(state);
   return {
+    // References
+    ...toRefs(readonlyState),
     // Methods
-    retrieveOrganizations,
+    retrieveUserOrganizations,
+    retrieveOrganizationSpaces,
     createOrganization,
     updateOrganization,
-    deleteOrganization
+    deleteOrganization,
+    softUpdateOrganization,
+    softDeleteOrganization
   };
 }
