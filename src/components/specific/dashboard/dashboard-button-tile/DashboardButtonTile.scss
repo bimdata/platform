@@ -40,15 +40,4 @@
     background-color: var(--color-secondary);
     color: var(--color-primary);
   }
-  &.subscription-platform {
-    .dashboard-button-tile__number {
-      font-size: inherit;
-      font-weight: normal;
-      &::v-deep(.flex) {
-        p:last-child {
-          font-weight: bold;
-        }
-      }
-    }
-  }
 }
