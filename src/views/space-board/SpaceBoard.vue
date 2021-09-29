@@ -51,7 +51,11 @@
       </template>
     </ViewHeader>
     <SidePanel :title="$t('SpaceUsersManager.title')">
-      <SpaceUsersManager :space="space" :users="users" :invitations="invitations" />
+      <SpaceUsersManager
+        :space="space"
+        :users="users"
+        :invitations="invitations"
+      />
     </SidePanel>
 
     <ResponsiveGrid itemWidth="320px">
@@ -86,7 +90,6 @@ import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrum
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
 import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
-import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile";
 
 export default {
   components: {
@@ -96,8 +99,7 @@ export default {
     AppBreadcrumb,
     ProjectCard,
     ProjectCreationCard,
-    SpaceUsersManager,
-    DashboardButtonTile,
+    SpaceUsersManager
   },
   setup() {
     const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
@@ -107,10 +109,13 @@ export default {
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
-      (project) => project.name
+      project => project.name
     );
 
-    const { sortToggle: sortProjects } = useListSort(displayedProjects, (project) => project.name);
+    const { sortToggle: sortProjects } = useListSort(
+      displayedProjects,
+      project => project.name
+    );
 
     const buyPlatformPro = async () => {
       Paddle.Product.Prices(12403, function (prices) {
@@ -121,57 +126,60 @@ export default {
         JSON.stringify({
           cloud_id: currentSpace.value.id,
           subscription_id: "131457",
-          quantity: 5,
+          quantity: 5
         })
       );
-      /*      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`, {
-          method: "PATCH", headers: {
-            'content-type': 'application/json',
-            authorization: `Bearer ${accessToken.value}`,
-          },
-          body: JSON.stringify({
-            cloud_id: currentSpace.value.id,
-            subscription_id: "131457",
-            quantity: 5,
-          })
-        }
-      );
-      return;*/
+      // await fetch(
+      //   `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`,
+      //   {
+      //     method: "PATCH",
+      //     headers: {
+      //       "content-type": "application/json",
+      //       authorization: `Bearer ${accessToken.value}`,
+      //     },
+      //     body: JSON.stringify({
+      //       cloud_id: currentSpace.value.id,
+      //       subscription_id: "131457",
+      //       quantity: 5,
+      //     })
+      //   }
+      // );
+      // return;
       await fetch(
         `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/create-api-data-pack-subscription`,
         {
           method: "post",
           headers: {
             "content-type": "application/json",
-            authorization: `Bearer ${accessToken.value}`,
+            authorization: `Bearer ${accessToken.value}`
           },
           body: JSON.stringify({
-            cloud_id: currentSpace.value.id,
-          }),
+            cloud_id: currentSpace.value.id
+          })
         }
       );
       return;
-      const response = await (
-        await fetch(
-          `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
-          {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              authorization: `Bearer ${accessToken.value}`,
-            },
-            body: JSON.stringify({
-              cloud_id: currentSpace.value.id,
-            }),
-          }
-        )
-      ).json();
+      // const response = await (
+      //   await fetch(
+      //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
+      //     {
+      //       method: "POST",
+      //       headers: {
+      //         "content-type": "application/json",
+      //         authorization: `Bearer ${accessToken.value}`
+      //       },
+      //       body: JSON.stringify({
+      //         cloud_id: currentSpace.value.id
+      //       })
+      //     }
+      //   )
+      // ).json();
 
-      Paddle.Checkout.open({
-        override: response.url,
-        disableLogout: true,
-        referring_domain: "platform self service",
-      });
+      // Paddle.Checkout.open({
+      //   override: response.url,
+      //   disableLogout: true,
+      //   referring_domain: "platform self service"
+      // });
     };
 
     return {
@@ -184,9 +192,9 @@ export default {
       // Methods
       openUsersManager: openSidePanel,
       sortProjects,
-      buyPlatformPro,
+      buyPlatformPro
     };
-  },
+  }
 };
 </script>
 
