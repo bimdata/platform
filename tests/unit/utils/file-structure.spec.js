@@ -1,4 +1,4 @@
-import { FileStructureHandler, getDescendants, segregate } from "../../../src/utils/file-structure";
+import { FileStructureHandler, getDescendants, segregate } from "../../../src/utils/file-structure.js";
 
 describe("FileStructureHandler - serialize/deserialize", () => {
 
