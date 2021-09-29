@@ -6,13 +6,21 @@
         {{ $t("PlatformSubscription.platformSubscriptionText") }}
       </p>
       <BIMDataDropdownList
-        :list="organizations"
+        :list="organizationsList"
         :perPage="6"
         elementKey="dropdown"
-        :disabled="false"
         :closeOnElementClick="true"
+        @element-click="onOrganizationClick($event)"
       >
-        <template #header> dropdown list example </template>
+        <template #header>
+          <div class="flex items-center">
+            <span
+              class="number-organizations flex items-center justify-center"
+              >{{ organizationsList.length }}</span
+            >
+            <span class="m-l-12">{{ selectedOrganization }}</span>
+          </div>
+        </template>
         <template #element="{ element }">
           {{ element.name }}
         </template>
@@ -49,16 +57,22 @@ export default {
 
     const { retrieveUserOrganizations } = useOrganizations();
 
-    const organizations = ref([]);
+    const organizationsList = ref([]);
     onMounted(async () => {
-      organizations.value = await retrieveUserOrganizations();
+      organizationsList.value = await retrieveUserOrganizations();
     });
+
+    const selectedOrganization = ref("");
+
+    const onOrganizationClick = org => (selectedOrganization.value = org.name);
 
     return {
       displayedBilling,
       displayedInvoices,
       empty,
-      organizations
+      organizationsList,
+      selectedOrganization,
+      onOrganizationClick
     };
   }
 };
