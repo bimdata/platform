@@ -6,6 +6,11 @@ const state = reactive({
   organizationSpaces: []
 });
 
+const resetState = () => {
+  state.userOrganizations = [];
+  state.organizationSpaces = [];
+};
+
 const retrieveUserOrganizations = async () => {
   const organizations = await OrganizationService.fetchUserOrganizations();
   state.userOrganizations = organizations;
@@ -62,6 +67,7 @@ export function useOrganizations() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    resetState,
     retrieveUserOrganizations,
     retrieveOrganizationSpaces,
     createOrganization,
