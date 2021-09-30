@@ -49,6 +49,7 @@
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Search spaces",
+    "organizationsButtonText": "Organizations",
     "createButtonText": "Create a space"
   },
 
@@ -417,6 +418,17 @@
     "professionalPlanButton": "Start your trial",
     "professionalPlanTitle": "Professional",
     "professionalPlanPrice": "/ month"
+  },
+
+  "OrganizationCard": {
+    "spaces": "{number} spaces"
+  },
+
+  "OrganizationsManager": {
+    "title": "Manage organizations",
+    "explanationText": "",
+    "createButtonText": "Add new organization",
+    "searchInputPlaceholder": "Search an organization"
   },
 
   "ProjectCardActionMenu": {

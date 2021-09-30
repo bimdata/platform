@@ -26,8 +26,17 @@
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
         <BIMDataButton
+          width="120px"
+          fill
+          radius
+          @click="openOrganizationsManager"
+        >
+          {{ $t("UserSpaces.organizationsButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
           data-test="btn-open-create"
           class="user-spaces__header__btn-create"
+          width="120px"
           color="primary"
           fill
           radius
@@ -38,6 +47,10 @@
         </BIMDataButton>
       </template>
     </ViewHeader>
+
+    <SidePanel :title="$t('OrganizationsManager.title')">
+      <OrganizationsManager :organizations="organizations" />
+    </SidePanel>
 
     <ResponsiveGrid itemWidth="215px">
       <SpaceCreationCard
@@ -51,26 +64,34 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useListSort } from "@/composables/list-sort";
-import { useToggle } from "@/composables/toggle";
-import { useSpaces } from "@/state/spaces";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useListSort } from "@/composables/list-sort.js";
+import { useSidePanel } from "@/composables/side-panel.js";
+import { useToggle } from "@/composables/toggle.js";
+import { useOrganizations } from "@/state/organizations.js";
+import { useSpaces } from "@/state/spaces.js";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
-import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import OrganizationsManager from "@/components/specific/organizations/organizations-manager/OrganizationsManager.vue";
+import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard.vue";
+import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard.vue";
 
 export default {
   components: {
     ResponsiveGrid,
+    SidePanel,
     ViewHeader,
     AppBreadcrumb,
+    OrganizationsManager,
     SpaceCard,
     SpaceCreationCard
   },
   setup() {
+    const { openSidePanel } = useSidePanel();
+    const { userOrganizations } = useOrganizations();
     const { userSpaces } = useSpaces();
 
     const {
@@ -91,12 +112,14 @@ export default {
 
     return {
       // References
+      organizations: userOrganizations,
       searchText,
       showCreationForm,
       spaces: displayedSpaces,
       // Methods
       closeCreationForm,
       openCreationForm,
+      openOrganizationsManager: openSidePanel,
       sortSpaces
     };
   }

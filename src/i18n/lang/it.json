@@ -30,8 +30,12 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Cerca tra gli spazi",
+        "organizationsButtonText": "Organizzazioni",
         "createButtonText": "Crea uno spazio"
     },
+
+
+
     "ProjectFiles": {
         "groupsButtonText": "Gestisci i gruppi"
     },
@@ -43,6 +47,9 @@
             "message": "Seleziona un file .ifc"
         }
     },
+
+
+
     "BreadcrumbSelector": {
         "inputPlaceholder": "Cerca"
     },
@@ -295,6 +302,15 @@
             "status": "Status"
         }
     },
+    "OrganizationCard": {
+        "spaces": "{number} spazi"
+    },
+    "OrganizationsManager": {
+        "title": "Gestione delle organizzazioni",
+        "explanationText": "",
+        "createButtonText": "Crea un organizzazione",
+        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
+    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Rinomina",
         "deleteButtonText": "Elimina"
@@ -410,8 +426,12 @@
             "readWrite": "Lettura/scrittura"
         }
     },
+
+
+
     "Error": "Errore",
     "Success": "Riuscito",
+
     "Errors": {
         "organizationsFetchError": "Impossibile recuperare organizzazioni",
         "organizationCreateError": "Impossibile creare organizzazione",
