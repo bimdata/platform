@@ -58,13 +58,17 @@ export default {
     const { retrieveUserOrganizations } = useOrganizations();
 
     const organizationsList = ref([]);
+    const selectedOrganization = ref("");
+    const onOrganizationClick = ref({});
     onMounted(async () => {
       organizationsList.value = await retrieveUserOrganizations();
+      organizationsList.value.sort((a, b) =>
+        a.created_at > b.created_at ? -1 : 1
+      );
+      selectedOrganization.value = organizationsList.value[0].name;
+      onOrganizationClick.value = organization =>
+        (selectedOrganization.value = organization.name);
     });
-
-    const selectedOrganization = ref("");
-
-    const onOrganizationClick = org => (selectedOrganization.value = org.name);
 
     return {
       displayedBilling,
