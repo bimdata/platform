@@ -50,6 +50,7 @@
         </BIMDataButton>
       </template>
     </ViewHeader>
+
     <SidePanel :title="$t('SpaceUsersManager.title')">
       <SpaceUsersManager
         :space="space"
@@ -76,20 +77,20 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useListSort } from "@/composables/list-sort";
-import { useSidePanel } from "@/composables/side-panel";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-import { useAuth } from "@/state/auth";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useListSort } from "@/composables/list-sort.js";
+import { useSidePanel } from "@/composables/side-panel.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { useAuth } from "@/state/auth.js";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
-import SidePanel from "@/components/generic/side-panel/SidePanel";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
-import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
-import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
+import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
+import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
   components: {
@@ -102,10 +103,10 @@ export default {
     SpaceUsersManager
   },
   setup() {
+    const { accessToken } = useAuth();
+    const { openSidePanel } = useSidePanel();
     const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
-    const { openSidePanel } = useSidePanel();
-    const { accessToken } = useAuth();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,

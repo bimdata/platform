@@ -30,8 +30,12 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Buscar un espacio",
+        "organizationsButtonText": "Organizaciones",
         "createButtonText": "Crear un espacio"
     },
+
+
+
     "ProjectFiles": {
         "groupsButtonText": "Gestión de grupos"
     },
@@ -43,6 +47,9 @@
             "message": "Por favor seleccione un archivo .ifc"
         }
     },
+
+
+
     "BreadcrumbSelector": {
         "inputPlaceholder": "Buscar"
     },
@@ -295,6 +302,15 @@
             "status": "Estatus"
         }
     },
+    "OrganizationCard": {
+        "spaces": "{number} espacios"
+    },
+    "OrganizationsManager": {
+        "title": "Lista de organizaciones",
+        "explanationText": "",
+        "createButtonText": "Crear un organización",
+        "searchInputPlaceholder": "Buscar un organización"
+    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Renombrar",
         "deleteButtonText": "Suprimir"
@@ -410,8 +426,12 @@
             "readWrite": "Lectura / Escritura"
         }
     },
+
+
+
     "Error": "Error",
     "Success": "Éxito",
+
     "Errors": {
         "organizationsFetchError": "Imposible recuperar la lista de organizaciones",
         "organizationCreateError": "Error durante la creación del organización",

@@ -49,6 +49,7 @@
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Rechercher un espace",
+    "organizationsButtonText": "Organisations",
     "createButtonText": "Créer un espace"
   },
 
@@ -417,6 +418,17 @@
     "professionalPlanButton": "Commencez votre essai",
     "professionalPlanTitle": "Professionnel",
     "professionalPlanPrice": "/ mois"
+  },
+
+  "OrganizationCard": {
+    "spaces": "{number} espaces"
+  },
+
+  "OrganizationsManager": {
+    "title": "Liste des organizations",
+    "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
+    "createButtonText": "Créer une organisation",
+    "searchInputPlaceholder": "Rechercher une organisation"
   },
 
   "ProjectCardActionMenu": {

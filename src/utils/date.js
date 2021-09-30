@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function formatDate(value) {
   const monthNames = [
     "January",
@@ -21,6 +22,17 @@ function formatDate(value) {
     " " +
     date.getFullYear()
   );
+=======
+/**
+ * Change an ISO formatted date into a date with formatted as: DD/MM/YYYY.
+ *
+ * @param {String} date an ISO formatted date string
+ * @returns {String} formatted date
+ */
+function formatDate(date) {
+  const d = date.split("T")[0];
+  return d.split("-").reverse().join("/");
+>>>>>>> 8f347fc (feat(organizations): create organization management panel on user spaces view)
 }
 
 export { formatDate };
