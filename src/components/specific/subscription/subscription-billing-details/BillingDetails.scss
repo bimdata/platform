@@ -7,4 +7,30 @@
       align-items: center;
     }
   }
+  .billing-table {
+    .billing-status-cell {
+      &--active,
+      &--trialing,
+      &--past_due,
+      &--paused,
+      &--delete {
+        font-weight: bold;
+      }
+      &--active {
+        color: $color-success;
+      }
+      &--trialing {
+        color: $color-tertiary-darkest;
+      }
+      &--past_due {
+        color: $color-tertiary-darkest;
+      }
+      &--paused {
+        color: $color-warning;
+      }
+      &--delete {
+        color: $color-high;
+      }
+    }
+  }
 }
