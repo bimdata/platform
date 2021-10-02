@@ -1,6 +1,6 @@
 <template>
   <div class="platform-subscription__content__invoices">
-    <h2>Invoices</h2>
+    <h2>{{ $t("Invoices.invoicesTitle") }}</h2>
     <BIMDataCard>
       <template #content>
         <GenericTable
@@ -28,17 +28,17 @@ import columnsDef from "./columns";
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 export default {
   components: {
-    GenericTable,
+    GenericTable
   },
   props: {
     invoices: {
       type: Array,
-      required: true,
+      required: true
     },
     empty: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup() {
     const { locale, t } = useI18n();
@@ -46,16 +46,16 @@ export default {
     watch(
       () => locale.value,
       () => {
-        columns.value = columnsDef.map((col) => ({
+        columns.value = columnsDef.map(col => ({
           ...col,
-          label: col.label || t(`Invoices.headers.${col.id}`),
+          label: col.label || t(`Invoices.headers.${col.id}`)
         }));
       },
       { immediate: true }
     );
     return {
-      columns,
+      columns
     };
-  },
+  }
 };
 </script>
