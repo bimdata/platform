@@ -96,12 +96,16 @@
   },
 
   "BillingDetails": {
+    "billingDetailsTitle": "Détails des facturations",
+    "cancelSubscriptionButton": "Annuler l'abonnement",
     "emptyTablePlaceholder": "Prochains paiement.",
+    "updateCreditCardButton": "Mettre à jour la carte de crédit",
+    "updatePlatformPro": "Passez à notre plateforme Pro",
     "headers": {
       "space": "Espace",
       "nextpayment": "Prochain paiement",
       "subscriptionplan": "Formule d'abonnement",
-      "statut": "Statut",
+      "status": "Statut",
       "amount": "Montant"
     }
   },
@@ -305,6 +309,7 @@
 
   "Invoices": {
     "emptyTablePlaceholder": "Problème de facture ? Contactez votre administrateur.",
+    "invoicesTitle": "Factures",
     "headers": {
       "amount": "Montant",
       "statut": "Statut",
@@ -402,6 +407,18 @@
       "lastupdate": "Modifié le",
       "status": "Statut"
     }
+  },
+
+  "OurPlans": {
+    "freePlanBaseline": "Pour toujours",
+    "freePlanButton": "Gardez ce plan",
+    "freePlanPrice": "0€",
+    "freePlanTitle": "Gratuit",
+    "ourPlansTitle": "Nos plans",
+    "professionalPlanBaseline": "étendre de 1 Go pour 10€ / mois",
+    "professionalPlanButton": "Commencez votre essai",
+    "professionalPlanTitle": "Professionnel",
+    "professionalPlanPrice": "/ mois"
   },
 
   "ProjectCardActionMenu": {
