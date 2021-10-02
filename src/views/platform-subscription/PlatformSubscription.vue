@@ -5,7 +5,6 @@
       <p>
         {{ $t("PlatformSubscription.platformSubscriptionText") }}
       </p>
-      {{ organizationPlaformSubscriptions }}
       <BIMDataDropdownList
         :list="organizationsList"
         :perPage="6"
@@ -30,11 +29,11 @@
     <aside class="platform-subscription__content m-t-18">
       <div class="flex">
         <BillingDetails
-          :billing="displayedBilling"
-          :empty="!!organizationPlaformSubscriptions"
+          :billings="organizationPlaformSubscriptions"
+          :empty="!organizationPlaformSubscriptions.length"
         />
         <Invoices
-          v-if="!organizationPlaformSubscriptions"
+          v-if="organizationPlaformSubscriptions.length"
           :invoices="displayedInvoices"
         />
         <OurPlans v-else />
