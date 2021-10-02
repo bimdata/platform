@@ -1,33 +1,36 @@
 <template>
   <div class="platform-subscription__content__plans">
-    <h2>Our plans</h2>
+    <h2>{{ $t("OurPlans.ourPlansTitle") }}</h2>
     <div class="flex">
       <BIMDataCard class="p-y-12">
         <template #content>
-          <h4>Free</h4>
-          <h3 class="text-center">0€ <span>*</span></h3>
+          <h4>{{ $t("OurPlans.freePlanTitle") }}</h4>
+          <h3 class="text-center">
+            {{ $t("OurPlans.freePlanPrice") }} <span>*</span>
+          </h3>
           <BIMDataButton color="primary" fill radius>
-            Keep this plan
+            {{ $t("OurPlans.freePlanTitle") }}
           </BIMDataButton>
-          <p class="m-t-24">* Forever</p>
+          <p class="m-t-24">* {{ $t("OurPlans.freePlanBaseline") }}</p>
         </template>
       </BIMDataCard>
       <BIMDataCard class="p-y-12" bgColor="primary">
         <template #content>
-          <h4>Professional</h4>
-          <h3 class="text-center">45€ <span>/ month</span></h3>
+          <h4>{{ $t("OurPlans.professionalPlanTitle") }}</h4>
+          <h3 class="text-center">
+            45€ <span>{{ $t("OurPlans.professionalPlanPrice") }}</span
+            >**
+          </h3>
           <BIMDataButton color="secondary" fill radius>
-            Commencez votre essai
+            {{ $t("OurPlans.professionalPlanButton") }}
           </BIMDataButton>
-          <p class="m-t-24">** expand 1 Gb for 10€ / Month</p>
+          <p class="m-t-24">** {{ $t("OurPlans.professionalPlanBaseline") }}</p>
         </template>
       </BIMDataCard>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+<script></script>
 
 <style scoped lang="scss" src="./OurPlans.scss"></style>
