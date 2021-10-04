@@ -23,7 +23,10 @@ declare -A vars_to_placeholders=(
 )
 
 # Copy the original JS
-cp -r ${js_original_path} ${js_path}
+if [[ -d "${js_path}" ]] ; then
+  rm -r "${js_path}"
+fi
+cp -r "${js_original_path}" "${js_path}"
 
 # For each env variable, if unset, set it to empty string and replace
 # the placeholder by the wanted value in the JS files
@@ -31,5 +34,5 @@ for var_name in "${!vars_to_placeholders[@]}" ; do
   if [[ -z ${!var_name+x} ]] ; then
     declare ${var_name}=""
   fi
-  sed -i "s|${vars_to_placeholders[$var_name]}|${!var_name}|g" "${js_path}/*"
+  sed -i "s|${vars_to_placeholders[$var_name]}|${!var_name}|g" "${js_path}"/*
 done
