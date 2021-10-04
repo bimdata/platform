@@ -11,7 +11,6 @@ sed -i "s/ENV_TOKEN_BASE_URL/$VUE_APP_BASE_URL/g" ${js_path}/*
 sed -i "s/ENV_TOKEN_IAM_BASE_URL/$VUE_APP_IAM_BASE_URL/g" ${js_path}/*
 sed -i "s/ENV_TOKEN_API_BASE_URL/$VUE_APP_API_BASE_URL/g" ${js_path}/*
 sed -i "s/ENV_TOKEN_BACKEND_BASE_URL/$VUE_APP_BACKEND_BASE_URL/g" ${js_path}/*
-sed -i "s/ENV_TOKEN_VIEWER_BASE_URL/$VUE_APP_VIEWER_BASE_URL/g" ${js_path}/*
 sed -i "s/ENV_TOKEN_OIDC_CLIENT_ID/$VUE_APP_OIDC_CLIENT_ID/g" ${js_path}/*
 sed -i "s/ENV_TOKEN_MAPBOX_TOKEN/$VUE_APP_MAPBOX_TOKEN/g" ${js_path}/*
 sed -i "s/ENV_TOKEN_MAX_UPLOAD_SIZE/$VUE_APP_MAX_UPLOAD_SIZE/g" ${js_path}/*
