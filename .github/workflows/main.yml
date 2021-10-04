@@ -58,17 +58,15 @@ jobs:
         uses: bimdata/actions/get-docker-tag@v1
         with:
           branch: ${{ github.ref }}
-      - name: Build with ansible
-        uses: bimdata/actions/build-image@v1
+      - name: Build and push
+        uses: docker/build-push-action@v2
         with:
-          inventory: ${{ steps.tag.outputs.tag }}
-          app: ${{ env.app }}
-          vault-pass: ${{ secrets.ANSIBLE_VAULT_PASSWD }}
-      - name: Push image to registry
-        run: |
-          docker tag docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }} docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
-          docker push docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }}
-          docker push docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
+          context: .
+          push: true
+          pull: true
+          tags: |
+            docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
+            docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }}
 
   deploy:
     runs-on: self-hosted
