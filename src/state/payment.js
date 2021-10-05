@@ -2,24 +2,31 @@ import { reactive } from "vue";
 import PaymentService from "@/services/PaymentService.js";
 
 const state = reactive({
+  plaformSubscriptionPayments: [],
   platformSubscriptions: [],
   organizationPlatformSubscriptions: []
 });
 
-const retrievePlaformSubscriptions = async () => {
-  return await PaymentService.retrievePlatformSubscriptions();
-};
-
-const retrieveOrganizationPlaformSubscriptions = async org => {
+const retrieveOrganizationPlaformSubscriptions = async orga => {
   const organization =
-    await PaymentService.retrieveOrganizationPlatformSubscriptions(org);
+    await PaymentService.retrieveOrganizationPlatformSubscriptions(orga);
   state.organizationPlatformSubscriptions =
     organization.organizationPlatformSubscriptions;
   return organization;
 };
 
-const retrievePlaformSubscriptionPayments = async () => {
-  // TODO
+const retrievePlaformSubscriptionPayments = async (
+  orga,
+  space,
+  subscription
+) => {
+  const payments = await PaymentService.retrievePlaformSubscriptionPayments(
+    orga,
+    space,
+    subscription
+  );
+  state.plaformSubscriptionPayments = payments.plaformSubscriptionPayments;
+  return payments;
 };
 
 const subscribeDataPack = async () => {
@@ -37,7 +44,7 @@ const createPaddleSubscriptionUrl = async () => {
 export function usePayment() {
   return {
     // Methods
-    retrievePlaformSubscriptions,
+    // retrievePlaformSubscriptions,
     retrieveOrganizationPlaformSubscriptions,
     retrievePlaformSubscriptionPayments,
     subscribeDataPack,

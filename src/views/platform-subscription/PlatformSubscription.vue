@@ -34,7 +34,7 @@
         />
         <Invoices
           v-if="organizationPlaformSubscriptions.length"
-          :invoices="displayedInvoices"
+          :invoices="plaformSubscriptionPayments"
         />
         <OurPlans v-else />
       </div>
@@ -59,14 +59,15 @@ export default {
     OurPlans
   },
   setup() {
-    const displayedBilling = ref([]);
-    const displayedInvoices = ref([]);
-
     const { retrieveUserOrganizations } = useOrganizations();
-    const { retrieveOrganizationPlaformSubscriptions } = usePayment();
+    const {
+      retrieveOrganizationPlaformSubscriptions,
+      retrievePlaformSubscriptionPayments
+    } = usePayment();
 
     const organizationsList = ref([]);
     const organizationPlaformSubscriptions = ref([]);
+    const plaformSubscriptionPayments = ref([]);
     const selectedOrganization = ref("");
 
     const onOrganizationClick = organization =>
@@ -85,14 +86,26 @@ export default {
         await retrieveOrganizationPlaformSubscriptions(
           selectedOrganization.value
         );
+
+      let payments = await Promise.all(
+        organizationPlaformSubscriptions.value.map(sub => {
+          return retrievePlaformSubscriptionPayments(
+            selectedOrganization.value,
+            sub.cloud,
+            sub
+          );
+        })
+      );
+      payments = payments.flat();
+
+      plaformSubscriptionPayments.value = payments;
     });
 
     return {
       // References
-      displayedBilling,
-      displayedInvoices,
       organizationsList,
       organizationPlaformSubscriptions,
+      plaformSubscriptionPayments,
       selectedOrganization,
       // Methods
       onOrganizationClick
