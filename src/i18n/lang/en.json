@@ -10,7 +10,6 @@
     "updateInformationButton": "Update",
     "cancelInformationButton": "Cancel",
     "nextPaymentText": "Next payment :"
-
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Search members"
@@ -43,7 +42,7 @@
   },
   "SpaceBoard": {
     "searchInputPlaceholder": "Search projects",
-    "upgradeStorageButton" : "upgrade storage"
+    "upgradeStorageButton": "upgrade storage"
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
@@ -52,8 +51,6 @@
     "searchInputPlaceholder": "Search spaces",
     "createButtonText": "Create a space"
   },
-
-
 
   "ProjectBcf": {},
   "ProjectFiles": {
@@ -68,8 +65,6 @@
     }
   },
 
-
-
   "BreadcrumbSelector": {
     "inputPlaceholder": "Search"
   },
@@ -82,8 +77,6 @@
   "LanguageSelector": {
     "title": "Choose a language"
   },
-
-
 
   "AppHeaderMenu": {
     "entrySettings": "Account settings",
@@ -160,8 +153,7 @@
 
   "FilesDeleteModal": {
     "title": "Delete files",
-    "message":
-      "This action will permanently delete the following files/folders :",
+    "message": "This action will permanently delete the following files/folders :",
     "cancelButtonText": "Cancel",
     "deleteButtonText": "Delete"
   },
@@ -250,8 +242,7 @@
 
   "GroupCardDeleteGuard": {
     "title": "Delete group",
-    "message":
-      "You are about to (definitely) delete group {name}, are you sure ?",
+    "message": "You are about to (definitely) delete group {name}, are you sure ?",
     "deleteButtonText": "Delete"
   },
 
@@ -312,11 +303,10 @@
     "emptyTablePlaceholder": "Oh non. Il n'y a pas de plan actif ici. Vous n'avez probablement jamais essayé notre version Pro auparavant ?",
     "invoicesTitle": "Factures",
     "headers": {
-      "amount": "Montant",
-      "statut": "Statut",
-      "space": "Espace",
-      "date": "Date",
-      "actions": "Actions"
+      "amount": "Amount",
+      "status": "Status",
+      "space": "Space",
+      "date": "Date"
     }
   },
 
@@ -527,8 +517,6 @@
     "text": "Invite your first collaborator",
     "inviteButtonText": "Invite"
   },
-
-
 
   "Error": "Error",
   "Success": "Success",
