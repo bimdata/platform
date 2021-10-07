@@ -13,8 +13,9 @@
       &--trialing,
       &--past_due,
       &--paused,
-      &--delete {
+      &--deleted {
         font-weight: bold;
+        text-transform: capitalize;
       }
       &--active {
         color: $color-success;
@@ -28,7 +29,7 @@
       &--paused {
         color: $color-warning;
       }
-      &--delete {
+      &--deleted {
         color: $color-high;
       }
     }
