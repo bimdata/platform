@@ -17,7 +17,9 @@
             @open-menu="openMenu"
           />
           <div class="project-card__left-stripe"></div>
-          <div class="project-card__status-badge">Active</div>
+          <div class="project-card__status-badge">
+            {{ $t("ProjectStatusBadge.active") }}
+          </div>
           <ProjectCardModelPreview
             :previews="previews"
             @preview-changed="onPreviewChange"

@@ -317,6 +317,9 @@
         "inputErrorMessage": "È necessario fornire un nome per il progetto!",
         "createButtonText": "Crea"
     },
+    "ProjectStatusBadge": {
+        "active": ""
+    },
     "ProjectUsersManager": {
         "title": "Utenti del progetto",
         "searchInputPlaceholder": "Cerca utenti"
