@@ -54,10 +54,15 @@
   }
 
   &:hover {
-    cursor: pointer;
-    box-shadow: var(--box-shadow-dark);
-    .space-card-image {
-      transform: translateY(calc(var(--spacing-unit) / 3)) scale(1.04);
+    &:deep() {
+      cursor: pointer;
+      box-shadow: var(--box-shadow-dark);
+      .space-card-image {
+        img,
+        svg {
+          transform: scale(1.05);
+        }
+      }
     }
   }
 }

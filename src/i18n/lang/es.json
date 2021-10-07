@@ -305,11 +305,38 @@
     "OrganizationCard": {
         "spaces": "{number} espacios"
     },
+    "OrganizationForm": {
+        "backButtonText": "Retorno",
+        "title": "",
+        "infoSectionTitle": "",
+        "logoSectionTitle": "",
+        "nameInputPlaceholder": "Nombre",
+        "nameInputErrorMessage": "Este nombre no es válido",
+        "submitButtonText": "Validar",
+        "successTitle": "",
+        "successMessage": "",
+        "successButtonText": "OK"
+    },
     "OrganizationsManager": {
-        "title": "Lista de organizaciones",
+        "title": "Gestión de organizaciones",
         "explanationText": "",
         "createButtonText": "Crear un organización",
         "searchInputPlaceholder": "Buscar un organización"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} proyectos"
+    },
+    "OrganizationSpacesImporter": {
+        "backButtonText": "Retorno",
+        "spaceListTitle": "",
+        "submitButtonText": "Validar"
+    },
+    "OrganizationSpacesManager": {
+        "backButtonText": "Retorno",
+        "importButtonText": "",
+        "addButtonText": "",
+        "searchInputPlaceholder": "Buscar",
+        "spaceListTitle": ""
     },
     "ProjectCardActionMenu": {
         "renameButtonText": "Renombrar",

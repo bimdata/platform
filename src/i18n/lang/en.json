@@ -424,11 +424,42 @@
     "spaces": "{number} spaces"
   },
 
+  "OrganizationForm": {
+    "backButtonText": "Back",
+    "title": "Create an organisation",
+    "infoSectionTitle": "Basic information",
+    "logoSectionTitle": "Upload logo",
+    "nameInputPlaceholder": "Name",
+    "nameInputErrorMessage": "Invalid name",
+    "submitButtonText": "Validate",
+    "successTitle": "Congratulation your organization has just been created",
+    "successMessage": "",
+    "successButtonText": "OK"
+  },
+
   "OrganizationsManager": {
     "title": "Manage organizations",
     "explanationText": "",
     "createButtonText": "Add new organization",
     "searchInputPlaceholder": "Search an organization"
+  },
+  
+  "OrganizationSpaceCard": {
+    "projects": "{number} projects"
+  },
+
+  "OrganizationSpacesImporter": {
+    "backButtonText": "Back",
+    "spaceListTitle": "Select spaces to import",
+    "submitButtonText": "Import spaces"
+  },
+
+  "OrganizationSpacesManager": {
+    "backButtonText": "Back",
+    "importButtonText": "Import space",
+    "addButtonText": "Add new space",
+    "searchInputPlaceholder": "Search",
+    "spaceListTitle": "Organization spaces"
   },
 
   "ProjectCardActionMenu": {

@@ -1,12 +1,10 @@
-.organization-card {
+.organization-space-card {
   position: relative;
   min-height: 64px;
   height: 64px;
 
   display: flex;
   align-items: center;
-
-  cursor: pointer;
 
   &__image {
     width: 44px;
@@ -15,11 +13,6 @@
     padding: calc(var(--spacing-unit) / 6);
     border-radius: 4px;
     box-shadow: 0 0 10px 0 rgba(0 0 0 / 0.1);
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
 
   &__info {
