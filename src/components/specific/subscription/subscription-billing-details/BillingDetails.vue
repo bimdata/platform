@@ -43,7 +43,13 @@
       <template #content>
         <img class="m-b-24" src="../../../../icons/emptyBilling.svg" />
         <p>{{ $t("BillingDetails.emptyTablePlaceholder") }}</p>
-        <BIMDataButton class="m-t-18" color="primary" fill radius>
+        <BIMDataButton
+          class="m-t-18"
+          color="primary"
+          fill
+          radius
+          @click="goToPaddlePayment"
+        >
           {{ $t("BillingDetails.updatePlatformPro") }}
         </BIMDataButton>
       </template>
@@ -56,6 +62,8 @@ import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns";
 import { formatDate } from "@/utils/date.js";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import BillingDetailsActionsCell from "./BillingDetailsActionsCell.vue";
@@ -78,6 +86,7 @@ export default {
   setup() {
     const { locale, t } = useI18n();
     const columns = ref([]);
+    const router = useRouter();
 
     watch(
       () => locale.value,
@@ -89,9 +98,15 @@ export default {
       },
       { immediate: true }
     );
+    const goToPaddlePayment = () => {
+      router.push({ name: routeNames.paddlePayment });
+    };
     return {
+      // references
       columns,
-      formatDate
+      formatDate,
+      //methods
+      goToPaddlePayment
     };
   }
 };

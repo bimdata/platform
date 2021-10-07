@@ -21,7 +21,13 @@
             45€ <span>{{ $t("OurPlans.professionalPlanPrice") }}</span
             >**
           </h3>
-          <BIMDataButton color="secondary" fill radius width="185px">
+          <BIMDataButton
+            color="secondary"
+            fill
+            radius
+            width="185px"
+            @click="goToPaddlePayment"
+          >
             {{ $t("OurPlans.professionalPlanButton") }}
           </BIMDataButton>
           <p class="m-t-24">** {{ $t("OurPlans.professionalPlanBaseline") }}</p>
@@ -31,6 +37,22 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
+
+export default {
+  setup() {
+    const router = useRouter();
+    const goToPaddlePayment = () => {
+      router.push({ name: routeNames.paddlePayment });
+    };
+    return {
+      //methods
+      goToPaddlePayment
+    };
+  }
+};
+</script>
 
 <style scoped lang="scss" src="./OurPlans.scss"></style>
