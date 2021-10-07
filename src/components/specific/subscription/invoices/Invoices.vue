@@ -4,15 +4,41 @@
     <BIMDataCard>
       <template #content>
         <GenericTable
-          class="billing-table"
+          class="invoice-table"
           :columns="columns"
           :rows="invoices"
           :paginated="true"
           :perPage="7"
           :placeholder="$t('Invoices.emptyTablePlaceholder')"
         >
-          <template #cell-version="{ row: { version } }">
-            {{ version ? version : "-" }}
+          <template #cell-space="{ row: invoice }">
+            {{ subscriptionsMap[invoice.subscription_id].cloud.name }}</template
+          >
+          <template #cell-date="{ row: invoice }">
+            {{ formatDate(invoice.payout_date) }}
+          </template>
+          <template #cell-status="{ row: invoice }">
+            <span :class="`invoice-status-cell--${invoice.is_paid}`">
+              {{ invoice.is_paid === 1 ? "Completed" : "Pending" }}
+            </span>
+          </template>
+          <template #cell-amount="{ row: invoice }">
+            {{ invoice.amount }}
+            <span> {{ invoice.currency === "EUR" ? "€" : "£" }} </span>
+          </template>
+          <template #cell-actions="{ row: invoice }">
+            <a
+              v-if="invoice.receipt_url"
+              :href="invoice.receipt_url"
+              target="_blank"
+              class="
+                bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--default
+                invoice-actions-cell__menu__btn
+              "
+            >
+              Télécharger la facture</a
+            >
+            <!-- <InvoiceDetailsActionsCell :invoice="invoice" /> -->
           </template>
         </GenericTable>
       </template>
@@ -24,14 +50,22 @@
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns";
+import { formatDate } from "@/utils/date.js";
+
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
+// import InvoiceDetailsActionsCell from "./InvoicesDetailsActionsCell.vue";
 export default {
   components: {
     GenericTable
+    // InvoiceDetailsActionsCell
   },
   props: {
     invoices: {
+      type: Array,
+      required: true
+    },
+    subscriptions: {
       type: Array,
       required: true
     },
@@ -40,7 +74,7 @@ export default {
       default: false
     }
   },
-  setup() {
+  setup(props) {
     const { locale, t } = useI18n();
     const columns = ref([]);
     watch(
@@ -53,9 +87,18 @@ export default {
       },
       { immediate: true }
     );
+    const subscriptionsMap = {};
+    props.subscriptions.forEach(subscription => {
+      subscriptionsMap[subscription.subscription_id] = subscription;
+    });
+
     return {
-      columns
+      columns,
+      formatDate,
+      subscriptionsMap
     };
   }
 };
 </script>
+
+<style scoped lang="scss" src="./Invoices.scss"></style>
