@@ -35,6 +35,7 @@
         <Invoices
           v-if="organizationPlaformSubscriptions.length"
           :invoices="plaformSubscriptionPayments"
+          :subscriptions="organizationPlaformSubscriptions"
         />
         <OurPlans v-else />
       </div>
@@ -97,8 +98,19 @@ export default {
         })
       );
       payments = payments.flat();
-
-      plaformSubscriptionPayments.value = payments;
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      plaformSubscriptionPayments.value = payments
+        // so as not to have future payments in the "invoice" part
+        .filter(
+          payment =>
+            new Date(payment.payout_date).getTime() < tomorrow.getTime()
+        )
+        .sort((a, b) =>
+          new Date(a.payout_date).getTime() > new Date(b.payout_date).getTime()
+            ? -1
+            : 1
+        );
     });
 
     return {
