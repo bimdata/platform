@@ -68,10 +68,6 @@ export default {
     subscriptions: {
       type: Array,
       required: true
-    },
-    empty: {
-      type: Boolean,
-      default: false
     }
   },
   setup(props) {
@@ -87,10 +83,11 @@ export default {
       },
       { immediate: true }
     );
-    const subscriptionsMap = {};
-    props.subscriptions.forEach(subscription => {
-      subscriptionsMap[subscription.subscription_id] = subscription;
-    });
+
+    const subscriptionsMap = props.subscriptions.reduce((acc, subscription) => {
+      acc[subscription.subscription_id] = subscription;
+      return acc;
+    }, {});
 
     return {
       columns,
