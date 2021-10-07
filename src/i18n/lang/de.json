@@ -15,7 +15,7 @@
     "ProjectBoard": {
         "tabs": {
             "overview": "Projekt",
-            "files": "EDV",
+            "files": "EDM",
             "bcf": "BCF"
         }
     },
@@ -268,7 +268,7 @@
             "ifc": "IFC",
             "split": "Aufteilen / exportieren",
             "merge": "Zusammenführen",
-            "archive": "Archive"
+            "archive": "Archiv"
         }
     },
     "ModelsMergeModal": {
@@ -316,6 +316,9 @@
         "inputPlaceholder": "Name",
         "inputErrorMessage": "Sie müssen einen Namen für das Projekt angeben:",
         "createButtonText": "Erstellen"
+    },
+    "ProjectStatusBadge": {
+        "active": "AKTIV"
     },
     "ProjectUsersManager": {
         "title": "Nutzer",

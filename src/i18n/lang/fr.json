@@ -430,6 +430,10 @@
     "createButtonText": "Créer"
   },
 
+  "ProjectStatusBadge": {
+    "active": "ACTIF"
+  },
+
   "ProjectUsersManager": {
     "title": "Utilisateurs",
     "searchInputPlaceholder": "Rechercher un utilisateur"

@@ -317,6 +317,9 @@
         "inputErrorMessage": "¡Debe darle un nombre al proyecto!",
         "createButtonText": "Crear"
     },
+    "ProjectStatusBadge": {
+        "active": ""
+    },
     "ProjectUsersManager": {
         "title": "Usuarios",
         "searchInputPlaceholder": "Buscar un usuario"
