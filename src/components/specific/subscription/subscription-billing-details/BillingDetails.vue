@@ -38,7 +38,7 @@
         </GenericTable>
       </template>
     </BIMDataCard>
-    <BIMDataCard class="bimdata-card__empty p-24" v-else>
+    <BIMDataCard class="bimdata-card__empty p-42" v-else>
       <template #content>
         <img class="m-b-24" src="../../../../icons/emptyBilling.svg" />
         <p>{{ $t("BillingDetails.emptyTablePlaceholder") }}</p>
@@ -54,7 +54,7 @@
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns";
-import { formatDate } from "./date.js";
+import { formatDate } from "@/utils/date.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import BillingDetailsActionsCell from "./BillingDetailsActionsCell.vue";
