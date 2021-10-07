@@ -305,11 +305,38 @@
     "OrganizationCard": {
         "spaces": "{number} spazi"
     },
+    "OrganizationForm": {
+        "backButtonText": "Indietro",
+        "title": "",
+        "infoSectionTitle": "",
+        "logoSectionTitle": "",
+        "nameInputPlaceholder": "Nome",
+        "nameInputErrorMessage": "Nome non valido",
+        "submitButtonText": "Convalida",
+        "successTitle": "",
+        "successMessage": "",
+        "successButtonText": "OK"
+    },
     "OrganizationsManager": {
         "title": "Gestione delle organizzazioni",
         "explanationText": "",
         "createButtonText": "Crea un organizzazione",
         "searchInputPlaceholder": "Cercare tra gli organizzazioni"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} progetti"
+    },
+    "OrganizationSpacesImporter": {
+        "backButtonText": "Indietro",
+        "spaceListTitle": "",
+        "submitButtonText": "Convalida"
+    },
+    "OrganizationSpacesManager": {
+        "backButtonText": "Indietro",
+        "importButtonText": "",
+        "addButtonText": "",
+        "searchInputPlaceholder": "Cercare",
+        "spaceListTitle": ""
     },
     "ProjectCardActionMenu": {
         "renameButtonText": "Rinomina",

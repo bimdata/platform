@@ -305,11 +305,38 @@
     "OrganizationCard": {
         "spaces": "{number} Bereichs"
     },
+    "OrganizationForm": {
+        "backButtonText": "Zurück",
+        "title": "",
+        "infoSectionTitle": "",
+        "logoSectionTitle": "",
+        "inputPlaceholder": "Name",
+        "nameInputErrorMessage": "Ungültiger Name",
+        "submitButtonText": "Bestätigen",
+        "successTitle": "",
+        "successMessage": "",
+        "successButtonText": "OK"
+    },
     "OrganizationsManager": {
         "title": "Verwaltung von organisationen",
         "explanationText": "",
         "createButtonText": "Organisation erstellen",
         "searchInputPlaceholder": "Suchen"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} Projekte"
+    },
+    "OrganizationSpacesImporter": {
+        "backButtonText": "Zurück",
+        "spaceListTitle": "",
+        "submitButtonText": "Bestätigen"
+    },
+    "OrganizationSpacesManager": {
+        "backButtonText": "Zurück",
+        "importButtonText": "",
+        "addButtonText": "",
+        "searchInputPlaceholder": "Suchen",
+        "spaceListTitle": ""
     },
     "ProjectCardActionMenu": {
         "renameButtonText": "Umbenennen",

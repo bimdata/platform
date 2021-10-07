@@ -8,7 +8,7 @@
       <SpaceCardActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
     </template>
     <template #content>
-      <SpaceCardImage :space="space" />
+      <SpaceCardImage :space="space" topStripe />
     </template>
     <template #footer>
       <TextBox :text="space.name" :maxLength="30" />
