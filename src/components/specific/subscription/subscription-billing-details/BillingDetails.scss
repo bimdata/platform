@@ -10,24 +10,12 @@
   .billing-table {
     .billing-status-cell {
       &--active,
-      &--trialing,
-      &--past_due,
-      &--paused,
       &--deleted {
         font-weight: bold;
         text-transform: capitalize;
       }
       &--active {
         color: $color-success;
-      }
-      &--trialing {
-        color: $color-tertiary-darkest;
-      }
-      &--past_due {
-        color: $color-tertiary-darkest;
-      }
-      &--paused {
-        color: $color-warning;
       }
       &--deleted {
         color: $color-high;
