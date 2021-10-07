@@ -29,5 +29,10 @@
     &__plans {
       flex: 1;
     }
+    &__billing {
+      &::v-deep(.bimdata-card__empty) {
+        height: 337px;
+      }
+    }
   }
 }
