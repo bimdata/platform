@@ -5,7 +5,7 @@
         <div class="side-panel__title">
           <span>{{ title }}</span>
           <BIMDataButton ghost rounded icon @click="closeSidePanel">
-            <BIMDataIcon name="close" size="xxxs" />
+            <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
           </BIMDataButton>
         </div>
         <div class="side-panel__content">

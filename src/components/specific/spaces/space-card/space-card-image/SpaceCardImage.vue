@@ -1,5 +1,10 @@
 <template>
-  <div class="space-card-image" :style="{ backgroundColor }">
+  <div class="space-card-image">
+    <div
+      v-if="topStripe"
+      class="space-card-image__top-stripe"
+      :style="{ backgroundColor: stripeColor }"
+    ></div>
     <img v-if="space.image" loading="lazy" :src="space.image" />
     <svg
       v-else
@@ -17,8 +22,8 @@
 
 <script>
 import seedrandom from "seedrandom";
-import colors from "./colors";
-import fallbackImages from "./fallback-images";
+import colors from "./colors.js";
+import fallbackImages from "./fallback-images/index.js";
 
 export default {
   components: {
@@ -28,6 +33,10 @@ export default {
     space: {
       type: Object,
       required: true
+    },
+    topStripe: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -41,11 +50,11 @@ export default {
     const svgColors = colors[randomNumber(colors.length)];
 
     const svgColorCodes = Object.values(svgColors);
-    const backgroundColor = svgColorCodes[randomNumber(svgColorCodes.length)];
+    const stripeColor = svgColorCodes[randomNumber(svgColorCodes.length)];
 
     return {
-      backgroundColor,
       fallbackImage,
+      stripeColor,
       svg: {
         ...svgColors
       }
