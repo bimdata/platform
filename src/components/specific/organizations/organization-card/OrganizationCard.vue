@@ -5,7 +5,7 @@
     </div>
     <div class="organization-card__info">
       <div class="organization-card__info__name">
-        {{ organization.name }}
+        <TextBox :text="organization.name" :maxLength="32" />
       </div>
       <div class="organization-card__info__data">
         <span class="organization-card__info__data--spaces">
@@ -16,31 +16,41 @@
         </span>
       </div>
     </div>
-    <div class="organization-card__action">
-      <BIMDataButton ghost rounded icon @click="() => {}">
-        <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
-      </BIMDataButton>
-    </div>
+    <OrganizationCardActionMenu
+      @click.stop="() => {}"
+      @update="$emit('update')"
+      @delete="$emit('delete')"
+    />
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { formatDate } from "@/utils/date.js";
+// Components
+import OrganizationCardActionMenu from "./organization-card-action-menu/OrganizationCardActionMenu.vue";
 
 export default {
+  components: {
+    OrganizationCardActionMenu
+  },
   props: {
     organization: {
       type: Object,
       required: true
     }
   },
+  emits: ["delete", "update"],
   setup(props) {
-    const { getOrganizationSpaces } = useOrganizations();
+    const { getOrganizationSpaces, retrieveOrganizationSpaces } =
+      useOrganizations();
 
-    const spaces = ref([]);
-    spaces.value = getOrganizationSpaces(props.organization);
+    const spaces = computed(() => getOrganizationSpaces(props.organization));
+
+    onBeforeMount(async () => {
+      await retrieveOrganizationSpaces(props.organization);
+    });
 
     return {
       // References

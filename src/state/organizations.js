@@ -1,15 +1,14 @@
 import { reactive, readonly, toRefs } from "vue";
 import OrganizationService from "@/services/OrganizationService.js";
-import { useSpaces } from "@/state/spaces.js";
 
 const state = reactive({
   userOrganizations: [],
-  organizationSpaces: []
+  organizationSpaces: {}
 });
 
 const resetState = () => {
   state.userOrganizations = [];
-  state.organizationSpaces = [];
+  state.organizationSpaces = {};
 };
 
 const retrieveUserOrganizations = async () => {
@@ -22,15 +21,12 @@ const retrieveOrganizationSpaces = async organization => {
   const spaces = await OrganizationService.fecthOrganizationSpaces(
     organization
   );
-  state.organizationSpaces = spaces;
+  state.organizationSpaces[organization.id] = spaces;
   return spaces;
 };
 
 const getOrganizationSpaces = organization => {
-  const { userSpaces } = useSpaces();
-  return userSpaces.value.filter(
-    space => space.organization.id === organization.id
-  );
+  return readonly(state.organizationSpaces[organization.id] || []);
 };
 
 const createOrganization = async organization => {
