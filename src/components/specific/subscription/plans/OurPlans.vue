@@ -8,8 +8,8 @@
           <h3 class="text-center">
             {{ $t("OurPlans.freePlanPrice") }} <span>*</span>
           </h3>
-          <BIMDataButton color="primary" fill radius>
-            {{ $t("OurPlans.freePlanTitle") }}
+          <BIMDataButton color="primary" fill radius width="185px">
+            {{ $t("OurPlans.freePlanButton") }}
           </BIMDataButton>
           <p class="m-t-24">* {{ $t("OurPlans.freePlanBaseline") }}</p>
         </template>
@@ -21,7 +21,7 @@
             45€ <span>{{ $t("OurPlans.professionalPlanPrice") }}</span
             >**
           </h3>
-          <BIMDataButton color="secondary" fill radius>
+          <BIMDataButton color="secondary" fill radius width="185px">
             {{ $t("OurPlans.professionalPlanButton") }}
           </BIMDataButton>
           <p class="m-t-24">** {{ $t("OurPlans.professionalPlanBaseline") }}</p>

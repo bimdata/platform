@@ -19,7 +19,7 @@
             billing-actions-cell__menu__btn
           "
         >
-          Modifier la carte de paiement</a
+          {{ $t("BillingDetailsActionsCell.updateUrl") }}</a
         >
         <a
           :href="billing.cancel_url"
@@ -28,7 +28,7 @@
             billing-actions-cell__menu__btn
           "
         >
-          Annuler ce paiement</a
+          {{ $t("BillingDetailsActionsCell.cancelUrl") }}</a
         >
       </div>
     </transition>

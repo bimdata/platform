@@ -15,10 +15,11 @@
             {{ billing.cloud.name }}
           </template>
           <template #cell-nextpayment="{ row: billing }">
-            on {{ formatDate(billing.next_bill_date) }}
+            {{ $t("BillingDetails.nextPayment") }}
+            {{ formatDate(billing.next_bill_date) }}
           </template>
           <template #cell-subscriptionplan="{ row: billing }">
-            Professionnal
+            {{ $t("BillingDetails.professionalPlan") }}
             <span v-if="billing.data_packs.length">{{
               billing.data_packs
             }}</span>

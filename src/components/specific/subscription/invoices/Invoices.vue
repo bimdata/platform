@@ -36,7 +36,7 @@
                 invoice-actions-cell__menu__btn
               "
             >
-              Télécharger la facture</a
+              {{ $t("Invoices.downloadInvoice") }}</a
             >
             <!-- <InvoiceDetailsActionsCell :invoice="invoice" /> -->
           </template>

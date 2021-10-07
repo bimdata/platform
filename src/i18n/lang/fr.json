@@ -93,6 +93,8 @@
     "billingDetailsTitle": "Détails des facturations",
     "cancelSubscriptionButton": "Annuler l'abonnement",
     "emptyTablePlaceholder": "Prochains paiement.",
+    "nextPayment": "le",
+    "professionalPlan": "Professionnelle",
     "updateCreditCardButton": "Mettre à jour la carte de crédit",
     "updatePlatformPro": "Passez à notre plateforme Pro",
     "headers": {
@@ -102,6 +104,10 @@
       "status": "Statut",
       "amount": "Montant"
     }
+  },
+  "BillingDetailsActionsCell": {
+    "cancelUrl": "Annuler ce paiement",
+    "updateUrl": "Modifier la carte de paiement"
   },
 
   "BreadcrumbGroupSelector": {
@@ -300,7 +306,8 @@
   },
 
   "Invoices": {
-    "emptyTablePlaceholder": "Problème de facture ? Contactez votre administrateur.",
+    "downloadInvoice": "Télécharger la facture",
+    "emptyTablePlaceholder": "Chargement des factures en cours.",
     "invoicesTitle": "Factures",
     "headers": {
       "amount": "Montant",
