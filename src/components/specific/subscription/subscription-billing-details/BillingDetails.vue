@@ -34,7 +34,10 @@
             <span> {{ billing.currency === "EUR" ? "€" : "£" }} </span>
           </template>
           <template #cell-actions="{ row: billing }">
-            <BillingDetailsActionsCell :billing="billing" />
+            <BillingDetailsActionsCell
+              :billing="billing"
+              v-if="billing.status === 'active'"
+            />
           </template>
         </GenericTable>
       </template>
