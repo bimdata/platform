@@ -44,7 +44,7 @@
     </BIMDataCard>
     <BIMDataCard class="bimdata-card__empty p-42" v-else>
       <template #content>
-        <img class="m-b-24" src="../../../../icons/emptyBilling.svg" />
+        <img class="m-b-24" src="/static/emptyBilling.svg" />
         <p>{{ $t("BillingDetails.emptyTablePlaceholder") }}</p>
         <BIMDataButton
           class="m-t-18"
