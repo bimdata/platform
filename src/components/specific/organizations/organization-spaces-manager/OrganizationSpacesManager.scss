@@ -7,7 +7,18 @@
     padding: calc(var(--spacing-unit) / 2) 0;
   }
 
-  &__content {
+  &__import {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: var(--spacing-unit);
+    background-color: var(--color-white);
+  }
+
+  &__list {
     height: calc(100% - 44px);
     display: flex;
     flex-direction: column;
