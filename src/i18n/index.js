@@ -10,8 +10,9 @@ const i18n = createI18n({
   legacy: false,
   // Makes i18n functions ($i18n, $t, $d, ...) available in all components templates
   globalInjection: true,
-  // Default & fallback locales
-  locale: "fr",
+  // Set default locale according to navigator language
+  locale: navigator.language.slice(0, 2),
+  // Fallback to english if no translation available
   fallbackLocale: "en",
 
   messages: {
