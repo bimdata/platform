@@ -10,7 +10,6 @@
     "updateInformationButton": "Update",
     "cancelInformationButton": "Cancel",
     "nextPaymentText": "Next payment :"
-
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Search members"
@@ -43,7 +42,7 @@
   },
   "SpaceBoard": {
     "searchInputPlaceholder": "Search projects",
-    "upgradeStorageButton" : "upgrade storage"
+    "upgradeStorageButton": "upgrade storage"
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
@@ -52,8 +51,6 @@
     "searchInputPlaceholder": "Search spaces",
     "createButtonText": "Create a space"
   },
-
-
 
   "ProjectBcf": {},
   "ProjectFiles": {
@@ -68,8 +65,6 @@
     }
   },
 
-
-
   "BreadcrumbSelector": {
     "inputPlaceholder": "Search"
   },
@@ -83,8 +78,6 @@
     "title": "Choose a language"
   },
 
-
-
   "AppHeaderMenu": {
     "entrySettings": "Account settings",
     "entryConnect": "BIMData Connect",
@@ -97,14 +90,24 @@
   },
 
   "BillingDetails": {
+    "billingDetailsTitle": "Billing details",
+    "cancelSubscriptionButton": "Cancel subscription",
     "emptyTablePlaceholder": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+    "nextPayment": "on",
+    "professionalPlan": "Professionnal",
+    "updateCreditCardButton": "Update credit card",
+    "updatePlatformPro": "Upgrade to our Pro Platform",
     "headers": {
       "space": "Space",
       "nextpayment": "Next payment",
       "subscriptionplan": "Subscription plan",
-      "statut": "Statut",
+      "status": "Status",
       "amount": "Amount"
     }
+  },
+  "BillingDetailsActionsCell": {
+    "cancelUrl": "Cancel this payment",
+    "updateUrl": "Modify the payment card"
   },
 
   "BreadcrumbGroupSelector": {
@@ -156,8 +159,7 @@
 
   "FilesDeleteModal": {
     "title": "Delete files",
-    "message":
-      "This action will permanently delete the following files/folders :",
+    "message": "This action will permanently delete the following files/folders :",
     "cancelButtonText": "Cancel",
     "deleteButtonText": "Delete"
   },
@@ -246,8 +248,7 @@
 
   "GroupCardDeleteGuard": {
     "title": "Delete group",
-    "message":
-      "You are about to (definitely) delete group {name}, are you sure ?",
+    "message": "You are about to (definitely) delete group {name}, are you sure ?",
     "deleteButtonText": "Delete"
   },
 
@@ -305,13 +306,14 @@
   },
 
   "Invoices": {
-    "emptyTablePlaceholder": "Oh non. Il n'y a pas de plan actif ici. Vous n'avez probablement jamais essayé notre version Pro auparavant ?",
+    "downloadInvoice": "Download the invoice",
+    "emptyTablePlaceholder": "Loading invoices in progress.",
+    "invoicesTitle": "Invoices",
     "headers": {
-      "amount": "Montant",
-      "statut": "Statut",
-      "space": "Espace",
-      "date": "Date",
-      "actions": "Actions"
+      "amount": "Amount",
+      "status": "Status",
+      "space": "Space",
+      "date": "Date"
     }
   },
 
@@ -403,6 +405,18 @@
       "lastupdate": "Last modified",
       "status": "Status"
     }
+  },
+
+  "OurPlans": {
+    "freePlanBaseline": "* Forever",
+    "freePlanButton": "Keep this plan",
+    "freePlanPrice": "0€",
+    "freePlanTitle": "Free",
+    "ourPlansTitle": "Our Plans",
+    "professionalPlanBaseline": "** expand 1 Gb for 10€ / Month",
+    "professionalPlanButton": "Start your trial",
+    "professionalPlanTitle": "Professional",
+    "professionalPlanPrice": "/ month"
   },
 
   "ProjectCardActionMenu": {
@@ -510,8 +524,6 @@
     "text": "Invite your first collaborator",
     "inviteButtonText": "Invite"
   },
-
-
 
   "Error": "Error",
   "Success": "Success",
