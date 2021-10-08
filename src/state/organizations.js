@@ -45,6 +45,16 @@ const updateOrganization = async organization => {
   return newOrganization;
 };
 
+const importOrganizationSpaces = async (organization, spaces) => {
+  const importedSpaces = await Promise.all(
+    spaces.map(space =>
+      OrganizationService.updateSpaceOrganization(space, organization)
+    )
+  );
+  await retrieveUserOrganizations();
+  return importedSpaces;
+};
+
 const deleteOrganization = async organization => {
   await OrganizationService.deleteOrganization(organization);
   softDeleteOrganization(organization);
@@ -77,6 +87,7 @@ export function useOrganizations() {
     getOrganizationSpaces,
     createOrganization,
     updateOrganization,
+    importOrganizationSpaces,
     deleteOrganization,
     softUpdateOrganization,
     softDeleteOrganization

@@ -329,7 +329,11 @@
     "OrganizationSpacesImport": {
         "backButtonText": "Indietro",
         "spaceListTitle": "",
-        "submitButtonText": "Convalida"
+        "spaceListPlaceholder": "",
+        "submitButtonText": "Convalida",
+        "successTitle": "",
+        "successMessage": "",
+        "successButtonText": "OK"
     },
     "OrganizationSpacesManager": {
         "backButtonText": "Indietro",
