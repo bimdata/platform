@@ -439,7 +439,11 @@
   "OrganizationSpacesImport": {
     "backButtonText": "Back",
     "spaceListTitle": "Select spaces to import",
-    "submitButtonText": "Import spaces"
+    "spaceListPlaceholder": "No space to import...",
+    "submitButtonText": "Import spaces",
+    "successTitle": "Spaces successfully imported",
+    "successMessage": "",
+    "successButtonText": "OK"
   },
 
   "OrganizationSpacesManager": {
