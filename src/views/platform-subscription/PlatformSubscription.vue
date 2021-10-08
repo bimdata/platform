@@ -6,13 +6,21 @@
         {{ $t("PlatformSubscription.platformSubscriptionText") }}
       </p>
       <BIMDataDropdownList
-        :list="organizations"
+        :list="organizationsList"
         :perPage="6"
         elementKey="dropdown"
-        :disabled="false"
         :closeOnElementClick="true"
+        @element-click="onOrganizationClick($event)"
       >
-        <template #header> dropdown list example </template>
+        <template #header>
+          <div class="flex items-center">
+            <span
+              class="number-organizations flex items-center justify-center"
+              >{{ organizationsList.length }}</span
+            >
+            <span class="m-l-12">{{ selectedOrganization.name }}</span>
+          </div>
+        </template>
         <template #element="{ element }">
           {{ element.name }}
         </template>
@@ -20,8 +28,15 @@
     </header>
     <aside class="platform-subscription__content m-t-18">
       <div class="flex">
-        <BillingDetails :billing="displayedBilling" :empty="empty" />
-        <Invoices v-if="!empty" :invoices="displayedInvoices" />
+        <BillingDetails
+          :billings="organizationPlaformSubscriptions"
+          :empty="!organizationPlaformSubscriptions.length"
+        />
+        <Invoices
+          v-if="organizationPlaformSubscriptions.length"
+          :invoices="plaformSubscriptionPayments"
+          :subscriptions="organizationPlaformSubscriptions"
+        />
         <OurPlans v-else />
       </div>
     </aside>
@@ -29,8 +44,10 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
+import { usePayment } from "@/state/payment.js";
+
 // Components
 import BillingDetails from "@/components/specific/subscription/subscription-billing-details/BillingDetails.vue";
 import Invoices from "@/components/specific/subscription/invoices/Invoices.vue";
@@ -43,22 +60,67 @@ export default {
     OurPlans
   },
   setup() {
-    const displayedBilling = ref([]);
-    const displayedInvoices = ref([]);
-    const empty = ref(false);
-
     const { retrieveUserOrganizations } = useOrganizations();
+    const {
+      retrieveOrganizationPlaformSubscriptions,
+      retrievePlaformSubscriptionPayments
+    } = usePayment();
 
-    const organizations = ref([]);
+    const organizationsList = ref([]);
+    const organizationPlaformSubscriptions = ref([]);
+    const plaformSubscriptionPayments = ref([]);
+    const selectedOrganization = ref("");
+
+    const onOrganizationClick = organization =>
+      (selectedOrganization.value = organization);
+
     onMounted(async () => {
-      organizations.value = await retrieveUserOrganizations();
+      organizationsList.value = await retrieveUserOrganizations();
+      organizationsList.value.sort((a, b) =>
+        a.created_at > b.created_at ? -1 : 1
+      );
+      selectedOrganization.value = organizationsList.value[0];
+    });
+
+    watch(selectedOrganization, async () => {
+      organizationPlaformSubscriptions.value =
+        await retrieveOrganizationPlaformSubscriptions(
+          selectedOrganization.value
+        );
+
+      let payments = await Promise.all(
+        organizationPlaformSubscriptions.value.map(sub => {
+          return retrievePlaformSubscriptionPayments(
+            selectedOrganization.value,
+            sub.cloud,
+            sub
+          );
+        })
+      );
+      payments = payments.flat();
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      plaformSubscriptionPayments.value = payments
+        // so as not to have future payments in the "invoice" part
+        .filter(
+          payment =>
+            new Date(payment.payout_date).getTime() < tomorrow.getTime()
+        )
+        .sort((a, b) =>
+          new Date(a.payout_date).getTime() > new Date(b.payout_date).getTime()
+            ? -1
+            : 1
+        );
     });
 
     return {
-      displayedBilling,
-      displayedInvoices,
-      empty,
-      organizations
+      // References
+      organizationsList,
+      organizationPlaformSubscriptions,
+      plaformSubscriptionPayments,
+      selectedOrganization,
+      // Methods
+      onOrganizationClick
     };
   }
 };

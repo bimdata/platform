@@ -1,18 +1,19 @@
 export default [
   {
+    id: "space"
+  },
+  {
+    id: "date"
+  },
+  {
+    id: "status"
+  },
+  {
     id: "amount"
   },
   {
-    id: "statut",
-  },
-  {
-    id: "space",
-  },
-  {
-    id: "date",
-  },
-  {
     id: "actions",
-    width: "50px",
+    label: " ",
+    width: "180px"
   }
 ];

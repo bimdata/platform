@@ -7,4 +7,19 @@
       align-items: center;
     }
   }
+  .billing-table {
+    .billing-status-cell {
+      &--active,
+      &--deleted {
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+      &--active {
+        color: $color-success;
+      }
+      &--deleted {
+        color: $color-high;
+      }
+    }
+  }
 }
