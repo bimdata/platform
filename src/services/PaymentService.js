@@ -1,21 +1,33 @@
-import apiClient from "../services/api-client.js";
+import { privateApiClient } from "./api-client.js";
 
 class PaymentService {
-  async retrievePlatformSubscriptions() {
-    const organization = 
-    const response = await fetch(
-      `${process.env.VUE_APP_API_BASE_URL}/private
-    ​/payment​/organization​/${organization.id}​/cloud​/${cloud.id}​/subscription`,
-      {
-        headers: {
-          Authorization: apiClient.config.accessToken(),
-        },
-      }
-    );
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw response;
+  async retrievePlaformSubscriptions(organization, space) {
+    try {
+      return await privateApiClient.get(
+        `/payment/organization/${organization.id}/cloud/${space.id}/subscription`
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async retrievePlaformSubscriptionPayments(organization, space, subscription) {
+    try {
+      return await privateApiClient.get(
+        `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async retrieveOrganizationPlatformSubscriptions(organization) {
+    try {
+      return await privateApiClient.get(
+        `/payment/organization/${organization.id}/platform-subscription`
+      );
+    } catch (e) {
+      console.log(e);
     }
   }
 }

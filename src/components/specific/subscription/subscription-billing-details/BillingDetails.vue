@@ -1,39 +1,59 @@
 <template>
   <div class="platform-subscription__content__billing">
-    <h2>Billing details</h2>
+    <h2>{{ $t("BillingDetails.billingDetailsTitle") }}</h2>
     <BIMDataCard v-if="!empty">
       <template #content>
         <GenericTable
           class="billing-table"
           :columns="columns"
-          :rows="billing"
+          :rows="billings"
           :paginated="true"
           :perPage="7"
           :placeholder="$t('BillingDetails.emptyTablePlaceholder')"
         >
-          <template #cell-version="{ row: { version } }">
-            {{ version ? version : "-" }}
+          <template #cell-space="{ row: billing }">
+            {{ billing.cloud.name }}
+          </template>
+          <template #cell-nextpayment="{ row: billing }">
+            {{ $t("BillingDetails.nextPayment") }}
+            {{ formatDate(billing.next_bill_date) }}
+          </template>
+          <template #cell-subscriptionplan="{ row: billing }">
+            {{ $t("BillingDetails.professionalPlan") }}
+            <span v-if="billing.data_packs.length">{{
+              billing.data_packs
+            }}</span>
+          </template>
+          <template #cell-status="{ row: billing }">
+            <span :class="`billing-status-cell--${billing.status}`">{{
+              billing.status
+            }}</span>
+          </template>
+          <template #cell-amount="{ row: billing }">
+            {{ billing.unit_price }}
+            <span> {{ billing.currency === "EUR" ? "€" : "£" }} </span>
+          </template>
+          <template #cell-actions="{ row: billing }">
+            <BillingDetailsActionsCell
+              :billing="billing"
+              v-if="billing.status === 'active'"
+            />
           </template>
         </GenericTable>
       </template>
-      <template #footer>
-        <div class="flex justify-end">
-          <BIMDataButton color="primary" fill radius class="m-r-6">
-            Update credit card
-          </BIMDataButton>
-          <BIMDataButton color="high" ghost radius>
-            Cancel subscription
-          </BIMDataButton>
-        </div>
-      </template>
     </BIMDataCard>
-    <BIMDataCard class="bimdata-card__empty p-24" v-else>
+    <BIMDataCard class="bimdata-card__empty p-42" v-else>
       <template #content>
-        <img class="m-b-24" src="../../../../icons/emptyBilling.svg" />
-        <p>Oh no. There is no active plan here.</p>
-        <p>You have probably never tried our Pro version before ?</p>
-        <BIMDataButton class="m-t-18" color="primary" fill radius
-          >Upgrade to our Pro Platform
+        <img class="m-b-24" src="/static/emptyBilling.svg" />
+        <p>{{ $t("BillingDetails.emptyTablePlaceholder") }}</p>
+        <BIMDataButton
+          class="m-t-18"
+          color="primary"
+          fill
+          radius
+          @click="goToPaddlePayment"
+        >
+          {{ $t("BillingDetails.updatePlatformPro") }}
         </BIMDataButton>
       </template>
     </BIMDataCard>
@@ -44,39 +64,54 @@
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns";
+import { formatDate } from "@/utils/date.js";
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable";
+import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import BillingDetailsActionsCell from "./BillingDetailsActionsCell.vue";
+
 export default {
   components: {
     GenericTable,
+    BillingDetailsActionsCell
   },
   props: {
-    billing: {
+    billings: {
       type: Array,
-      required: true,
+      required: true
     },
     empty: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup() {
     const { locale, t } = useI18n();
     const columns = ref([]);
+    const router = useRouter();
+
     watch(
       () => locale.value,
       () => {
-        columns.value = columnsDef.map((col) => ({
+        columns.value = columnsDef.map(col => ({
           ...col,
-          label: col.label || t(`BillingDetails.headers.${col.id}`),
+          label: col.label || t(`BillingDetails.headers.${col.id}`)
         }));
       },
       { immediate: true }
     );
-    return {
-      columns,
+    const goToPaddlePayment = () => {
+      router.push({ name: routeNames.paddlePayment });
     };
-  },
+    return {
+      // references
+      columns,
+      formatDate,
+      //methods
+      goToPaddlePayment
+    };
+  }
 };
 </script>
 
