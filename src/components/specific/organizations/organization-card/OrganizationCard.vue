@@ -27,7 +27,7 @@
 <script>
 import { computed, onBeforeMount } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
-import { formatDate } from "@/utils/date.js";
+import { formatDateShort } from "@/utils/date.js";
 // Components
 import OrganizationCardActionMenu from "./organization-card-action-menu/OrganizationCardActionMenu.vue";
 
@@ -56,7 +56,7 @@ export default {
       // References
       spaces,
       // Methods
-      formatDate
+      formatDate: formatDateShort
     };
   }
 };

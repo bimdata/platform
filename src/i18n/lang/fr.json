@@ -408,18 +408,6 @@
     }
   },
 
-  "OurPlans": {
-    "freePlanBaseline": "Pour toujours",
-    "freePlanButton": "Gardez ce plan",
-    "freePlanPrice": "0€",
-    "freePlanTitle": "Gratuit",
-    "ourPlansTitle": "Nos plans",
-    "professionalPlanBaseline": "étendre de 1 Go pour 10€ / mois",
-    "professionalPlanButton": "Commencez votre essai",
-    "professionalPlanTitle": "Professionnel",
-    "professionalPlanPrice": "/ mois"
-  },
-
   "OrganizationCard": {
     "spaces": "{number} espaces"
   },
@@ -460,6 +448,18 @@
     "addButtonText": "Ajouter un espace",
     "searchInputPlaceholder": "Rechercher",
     "spaceListTitle": "Liste des espaces de l'organisation"
+  },
+
+  "OurPlans": {
+    "freePlanBaseline": "Pour toujours",
+    "freePlanButton": "Gardez ce plan",
+    "freePlanPrice": "0€",
+    "freePlanTitle": "Gratuit",
+    "ourPlansTitle": "Nos plans",
+    "professionalPlanBaseline": "étendre de 1 Go pour 10€ / mois",
+    "professionalPlanButton": "Commencez votre essai",
+    "professionalPlanTitle": "Professionnel",
+    "professionalPlanPrice": "/ mois"
   },
 
   "ProjectCardActionMenu": {
