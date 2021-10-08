@@ -436,7 +436,7 @@
     "projects": "{number} projects"
   },
 
-  "OrganizationSpacesImporter": {
+  "OrganizationSpacesImport": {
     "backButtonText": "Back",
     "spaceListTitle": "Select spaces to import",
     "submitButtonText": "Import spaces"
