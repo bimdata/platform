@@ -1,0 +1,41 @@
+.platform-subscription__content__invoices {
+  .invoice-table {
+    a {
+      height: 32px;
+      text-decoration: none;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+    .invoice-status-cell {
+      &--0,
+      &--1 {
+        padding: 6px 12px;
+        position: relative;
+        border-radius: 3px;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 100%;
+        }
+      }
+      &--0 {
+        color: var(--color-warning);
+        &::after {
+          background-color: var(--color-warning);
+          opacity: 0.1;
+        }
+      }
+      &--1 {
+        color: var(--color-success);
+        &::after {
+          background-color: var(--color-success);
+          opacity: 0.1;
+        }
+      }
+    }
+  }
+}

@@ -3,16 +3,16 @@ export default [
     id: "space"
   },
   {
-    id: "nextpayment",
+    id: "nextpayment"
   },
   {
-    id: "subscriptionplan",
+    id: "subscriptionplan"
   },
   {
-    id: "statut",
+    id: "status"
   },
   {
-    id: "amount",
+    id: "amount"
   },
   {
     id: "actions",
