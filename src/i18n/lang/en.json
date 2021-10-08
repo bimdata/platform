@@ -408,18 +408,6 @@
     }
   },
 
-  "OurPlans": {
-    "freePlanBaseline": "* Forever",
-    "freePlanButton": "Keep this plan",
-    "freePlanPrice": "0€",
-    "freePlanTitle": "Free",
-    "ourPlansTitle": "Our Plans",
-    "professionalPlanBaseline": "** expand 1 Gb for 10€ / Month",
-    "professionalPlanButton": "Start your trial",
-    "professionalPlanTitle": "Professional",
-    "professionalPlanPrice": "/ month"
-  },
-
   "OrganizationCard": {
     "spaces": "{number} spaces"
   },
@@ -460,6 +448,18 @@
     "addButtonText": "Add new space",
     "searchInputPlaceholder": "Search",
     "spaceListTitle": "Organization spaces"
+  },
+
+  "OurPlans": {
+    "freePlanBaseline": "* Forever",
+    "freePlanButton": "Keep this plan",
+    "freePlanPrice": "0€",
+    "freePlanTitle": "Free",
+    "ourPlansTitle": "Our Plans",
+    "professionalPlanBaseline": "** expand 1 Gb for 10€ / Month",
+    "professionalPlanButton": "Start your trial",
+    "professionalPlanTitle": "Professional",
+    "professionalPlanPrice": "/ month"
   },
 
   "ProjectCardActionMenu": {
