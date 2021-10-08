@@ -326,7 +326,7 @@
     "OrganizationSpaceCard": {
         "projects": "{number} progetti"
     },
-    "OrganizationSpacesImporter": {
+    "OrganizationSpacesImport": {
         "backButtonText": "Indietro",
         "spaceListTitle": "",
         "submitButtonText": "Convalida"

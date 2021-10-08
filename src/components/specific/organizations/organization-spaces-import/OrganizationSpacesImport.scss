@@ -1,4 +1,4 @@
-.organization-spaces-importer {
+.organization-spaces-import {
   &__header {
     display: flex;
     justify-content: space-between;
@@ -24,6 +24,15 @@
       padding-bottom: calc(var(--spacing-unit) / 2);
       overflow-x: hidden;
       overflow-y: auto;
+
+      .list-item {
+        display: flex;
+        align-items: center;
+
+        &__checkbox {
+          padding: 0 var(--spacing-unit);
+        }
+      }
     }
   }
 }

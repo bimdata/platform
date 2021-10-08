@@ -11,36 +11,57 @@
       </BIMDataButton>
     </div>
 
-    <div class="organization-spaces-manager__content">
-      <div class="actions-container">
-        <BIMDataButton width="48%" color="primary" outline radius>
-          {{ $t("OrganizationSpacesManager.importButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton width="48%" color="secondary" fill radius>
-          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-          <span>{{ $t("OrganizationSpacesManager.addButtonText") }}</span>
-        </BIMDataButton>
-      </div>
-      <BIMDataSearch
-        width="100%"
-        :placeholder="$t('OrganizationSpacesManager.searchInputPlaceholder')"
-        v-model="searchText"
-        clear
-      />
-      <div class="list-title">
-        {{ $t("OrganizationSpacesManager.spaceListTitle") }}
-      </div>
-      <div class="list-container">
-        <transition-group name="list">
-          <OrganizationSpaceCard
-            v-for="space of displayedSpaces"
-            :key="space.id"
+    <transition name="fade" mode="out-in">
+      <template v-if="showSpaceImport">
+        <div class="organization-spaces-manager__import">
+          <OrganizationSpacesImport
             :organization="organization"
-            :space="space"
+            @close="showSpaceImport = false"
           />
-        </transition-group>
-      </div>
-    </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="organization-spaces-manager__list">
+          <div class="actions-container">
+            <BIMDataButton
+              width="48%"
+              color="primary"
+              outline
+              radius
+              @click="showSpaceImport = true"
+            >
+              {{ $t("OrganizationSpacesManager.importButtonText") }}
+            </BIMDataButton>
+            <BIMDataButton width="48%" color="secondary" fill radius>
+              <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+              <span>{{ $t("OrganizationSpacesManager.addButtonText") }}</span>
+            </BIMDataButton>
+          </div>
+          <BIMDataSearch
+            width="100%"
+            :placeholder="
+              $t('OrganizationSpacesManager.searchInputPlaceholder')
+            "
+            v-model="searchText"
+            clear
+          />
+          <div class="list-title">
+            {{ $t("OrganizationSpacesManager.spaceListTitle") }}
+          </div>
+          <div class="list-container">
+            <transition-group name="list">
+              <OrganizationSpaceCard
+                v-for="space of displayedSpaces"
+                :key="space.id"
+                :organization="organization"
+                :space="space"
+              />
+            </transition-group>
+          </div>
+        </div>
+      </template>
+    </transition>
   </div>
 </template>
 
@@ -50,10 +71,12 @@ import { useListFilter } from "@/composables/list-filter.js";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
 import OrganizationSpaceCard from "@/components/specific/organizations/organization-space-card/OrganizationSpaceCard.vue";
+import OrganizationSpacesImport from "@/components/specific/organizations/organization-spaces-import/OrganizationSpacesImport.vue";
 
 export default {
   components: {
-    OrganizationSpaceCard
+    OrganizationSpaceCard,
+    OrganizationSpacesImport
   },
   props: {
     organization: {
@@ -66,6 +89,7 @@ export default {
     const { getOrganizationSpaces } = useOrganizations();
 
     const loading = ref(false);
+    const showSpaceImport = ref(false);
 
     const reset = () => {
       loading.value = false;
@@ -89,6 +113,7 @@ export default {
       displayedSpaces,
       loading,
       searchText,
+      showSpaceImport,
       // Methods
       close,
       closePanel
