@@ -329,7 +329,11 @@
     "OrganizationSpacesImport": {
         "backButtonText": "Retorno",
         "spaceListTitle": "",
-        "submitButtonText": "Validar"
+        "spaceListPlaceholder": "",
+        "submitButtonText": "Validar",
+        "successTitle": "",
+        "successMessage": "",
+        "successButtonText": "OK"
     },
     "OrganizationSpacesManager": {
         "backButtonText": "Retorno",
