@@ -23,7 +23,7 @@
 
 <script>
 import { ref } from "vue";
-import { formatDate } from "@/utils/date.js";
+import { formatDateShort } from "@/utils/date.js";
 // Components
 import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
 
@@ -48,7 +48,7 @@ export default {
       // References
       projects,
       // Methods
-      formatDate
+      formatDate: formatDateShort
     };
   }
 };
