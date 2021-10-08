@@ -49,6 +49,17 @@ class OrganizationService {
       throw new RuntimeError(ERRORS.ORGANIZATION_DELETE_ERROR, error);
     }
   }
+
+  async updateSpaceOrganization(space, organization) {
+    try {
+      return await privateApiClient.patch(
+        `/organization/${organization.id}/cloud/${space.id}/update-org`,
+        { organization: organization.id }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.SPACE_UPDATE_ERROR, error);
+    }
+  }
 }
 
 const service = new OrganizationService();

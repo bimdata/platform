@@ -17,6 +17,7 @@
           <OrganizationSpacesImport
             :organization="organization"
             @close="showSpaceImport = false"
+            @close-panel="closePanel"
           />
         </div>
       </template>
