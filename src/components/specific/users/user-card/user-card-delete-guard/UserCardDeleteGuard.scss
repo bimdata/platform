@@ -1,7 +1,7 @@
 .user-card-delete-guard {
   display: flex;
   align-items: center;
-  gap: $spacing-unit/2;
+  gap: calc(var(--spacing-unit) / 2);
   width: 100%;
   height: 100%;
 
@@ -11,6 +11,6 @@
   }
 
   &__btn-close {
-    margin-right: $spacing-unit/2;
+    margin-right: calc(var(--spacing-unit) / 2);
   }
 }

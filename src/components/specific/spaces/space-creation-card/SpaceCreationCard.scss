@@ -4,19 +4,19 @@
   position: relative;
   width: $card-width;
   height: $card-height;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
-  color: $color-primary;
+  box-shadow: bvar(--box-shadow);
+  color: var(--color-primary);
 
   &:deep() {
     .bimdata-card__submenu {
-      height: $spacing-unit * 4;
+      height: calc(var(--spacing-unit) * 4);
       box-shadow: none;
       font-size: 1.05rem;
       font-weight: bold;
     }
 
     .bimdata-card__content {
-      height: calc(100% - #{$spacing-unit * 4});
+      height: calc(100% - var(--spacing-unit) * 4);
       font-size: 1rem;
 
       .action-loader {
@@ -34,7 +34,7 @@
         flex-direction: column;
         justify-content: space-evenly;
         height: 100%;
-        padding: $spacing-unit;
+        padding: var(--spacing-unit);
       }
     }
   }

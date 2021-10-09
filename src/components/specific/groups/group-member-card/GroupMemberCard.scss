@@ -7,25 +7,25 @@
   height: $card-height;
   transition-duration: 0.35s;
 
-  &__btn-menu {
+  &__btn-remove {
     position: absolute;
-    top: $spacing-unit/2;
-    right: $spacing-unit/2;
+    top: calc(var(--spacing-unit) / 2);
+    right: calc(var(--spacing-unit) / 2);
   }
 
   &__info {
     text-align: center;
 
     &__name {
-      margin-bottom: $spacing-unit/3;
+      margin-bottom: calc(var(--spacing-unit) / 3);
       font-size: 1.1rem;
       font-weight: bold;
-      color: $color-primary;
+      color: var(--color-primary);
     }
 
     &__email {
       font-size: 0.9rem;
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
     }
   }
 
@@ -44,6 +44,6 @@
 
   &:hover {
     cursor: pointer;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: var(--box-shadow-dark);
   }
 }

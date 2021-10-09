@@ -9,7 +9,7 @@
       class="folder-creation-form__input"
       :placeholder="$t('FolderCreationForm.nameInputPlaceholder')"
       v-model="name"
-      :error="error"
+      :error="hasError"
       :errorMessage="$t('FolderCreationForm.nameInputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="submit"
@@ -45,41 +45,37 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true,
+      required: true
     },
     folder: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { createFolder } = useFiles();
 
     const nameInput = ref(null);
     const name = ref("");
-    const error = ref(false);
+    const hasError = ref(false);
 
     const reset = () => {
       name.value = "";
-      error.value = false;
+      hasError.value = false;
     };
 
     const submit = async () => {
       if (name.value) {
-        try {
-          await createFolder(props.project, {
-            parentId: props.folder.id,
-            name: name.value,
-          });
-          reset();
-          emit("success");
-        } catch (error) {
-          emit("error", error);
-        }
+        await createFolder(props.project, {
+          parentId: props.folder.id,
+          name: name.value
+        });
+        reset();
+        emit("success");
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
@@ -94,14 +90,14 @@ export default {
 
     return {
       // References
-      error,
+      hasError,
       name,
       nameInput,
       // Methods
       close,
-      submit,
+      submit
     };
-  },
+  }
 };
 </script>
 

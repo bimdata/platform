@@ -36,11 +36,11 @@
       align-items: center;
       width: 100%;
       height: 100%;
-      padding: $spacing-unit * 2;
+      padding: calc(var(--spacing-unit) * 2);
       text-align: center;
       font-size: 18px;
       font-weight: bold;
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
     }
   }
 
@@ -48,10 +48,10 @@
     display: flex;
     align-items: center;
     height: calc(100% - #{$card-content-height});
-    padding: $spacing-unit;
-    background-color: $color-white;
+    padding: var(--spacing-unit);
     font-size: 12px;
-    color: $color-primary;
+    background-color: var(--color-white);
+    color: var(--color-primary);
 
     &__btn-previous {
       margin-left: auto;

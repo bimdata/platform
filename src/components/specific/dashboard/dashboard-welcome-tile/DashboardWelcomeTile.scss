@@ -4,11 +4,10 @@
   grid-template-columns: 80px auto;
   grid-template-areas:
     "logo title"
-    "logo message"
-  ;
-  gap: $spacing-unit;
-  margin: 0 $spacing-unit/2;
-  color: $color-primary;
+    "logo message";
+  gap: var(--spacing-unit);
+  margin: 0 calc(var(--spacing-unit) / 2);
+  color: var(--color-primary);
 
   &__logo {
     grid-area: logo;

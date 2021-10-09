@@ -34,20 +34,29 @@ import { useGroups } from "@/state/groups";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { deleteGroup } = useGroups();
 
     const loading = inject("loading", false);
 
-    const removeGroup = () => {
-      loading.value = true;
-      deleteGroup(props.group);
+    const removeGroup = async () => {
+      try {
+        loading.value = true;
+        await deleteGroup(props.project, props.group);
+        emit("success");
+      } finally {
+        loading.value = false;
+      }
     };
 
     const close = () => {

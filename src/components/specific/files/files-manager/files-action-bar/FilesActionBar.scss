@@ -1,12 +1,12 @@
 .files-action-bar {
   display: inline-flex;
-  gap: $spacing-unit/2;
-  background-color: $color-white;
-  @include box-shadow;
+  gap: calc(var(--spacing-unit) / 2);
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
 
   &__folder-selector {
     position: absolute;
     z-index: 1;
-    top: calc(100% + #{$spacing-unit});
+    top: calc(100% + var(--spacing-unit));
   }
 }

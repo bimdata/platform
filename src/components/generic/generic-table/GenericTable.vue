@@ -52,7 +52,7 @@
               <td class="cell-checkbox" v-if="selectable">
                 <BIMDataCheckbox
                   :modelValue="selection.has(i)"
-                  @update:modelValue="toggleSelection(i)"
+                  @update:modelValue="toggleRowSelection(i)"
                 />
               </td>
               <td
@@ -171,49 +171,79 @@ export default {
     "all-unselected"
   ],
   setup(props, { emit }) {
+    // `selection` ref is a map of currently selected rows where
+    // keys are rows' indexes and values the row objects.
     const selection = ref(new Map());
     watch(selection, map => {
+      // Emit a 'selection-changed' event with the array of selected
+      // row objects each time selection ref is updated.
       emit("selection-changed", Array.from(map.values()));
     });
 
-    let selectionRefs;
-    const buildSelectionRefs = (rows, value) => {
-      selectionRefs = [];
-      rows.forEach((row, i) => {
-        selectionRefs[i] = ref(value);
-        watch(selectionRefs[i], checked => {
-          if (props.selectable) {
-            if (checked) {
-              selection.value.set(i, row);
-              selection.value = new Map([...selection.value.entries()]);
-              emit("row-selected", row);
-            } else {
-              selection.value.delete(i);
-              selection.value = new Map([...selection.value.entries()]);
-              emit("row-unselected", row);
+    // `rowSelectionRefs` holds an array of ref that represent each
+    // row selection state together with its 'unwatch' function.
+    let rowSelectionRefs = [];
+
+    /**
+     * Stop every row selection watcher and reset the `rowSelectionRefs` array.
+     */
+    const resetRowSelectionRefs = () => {
+      rowSelectionRefs.forEach(selectionRef => selectionRef.unwatch());
+      rowSelectionRefs = [];
+    };
+
+    /**
+     * Reset the current `rowSelectionRefs` and create a new one from
+     * the given rows array with the given initial value.
+     * A watcher is attached to each selection ref in order to handle
+     * selection updates effects (e.g. event emission).
+     *
+     * @param {Array} rows an array of row objects
+     * @param {Boolean} value selection refs initial value
+     */
+    const buildRowSelectionRefs = (rows, value) => {
+      resetRowSelectionRefs();
+      rowSelectionRefs = rows.map((row, i) => {
+        const rr = ref(value);
+        return {
+          ref: rr,
+          unwatch: watch(rr, checked => {
+            if (props.selectable) {
+              if (checked) {
+                selection.value.set(i, row);
+                selection.value = new Map([...selection.value.entries()]);
+                emit("row-selected", row);
+              } else {
+                selection.value.delete(i);
+                selection.value = new Map([...selection.value.entries()]);
+                emit("row-unselected", row);
+              }
             }
-          }
-        });
+          })
+        };
       });
     };
 
+    // `fullSelectionRef` controls whether all rows are (un)selected at once.
     const fullSelectionRef = ref(false);
     watch(fullSelectionRef, checked => {
       if (props.selectable) {
+        // When `fullSelectionRef` change, rebuild the rows' selection refs
+        // with corresponding initial value and emit the appropriate events.
         if (checked) {
           selection.value = new Map([...props.rows.map((row, i) => [i, row])]);
-          buildSelectionRefs(props.rows, true);
+          buildRowSelectionRefs(props.rows, true);
           emit("all-selected");
         } else {
           selection.value = new Map();
-          buildSelectionRefs(props.rows, false);
+          buildRowSelectionRefs(props.rows, false);
           emit("all-unselected");
         }
       }
     });
 
-    const toggleSelection = i => {
-      selectionRefs[i].value = !selectionRefs[i].value;
+    const toggleRowSelection = i => {
+      rowSelectionRefs[i].ref.value = !rowSelectionRefs[i].ref.value;
     };
     const toggleFullSelection = () => {
       fullSelectionRef.value = !fullSelectionRef.value;
@@ -223,17 +253,28 @@ export default {
     const pageIndex = ref(0);
     const pageStartIndex = ref(1);
     const pageEndIndex = ref(props.perPage);
+
+    // Reset selection when rows array change.
     watch(
       () => props.rows,
       () => {
         selection.value = new Map();
-        buildSelectionRefs(props.rows, false);
+        // `setTimeout` is needed here to avoid row selection issues
+        // when adding new rows. This is probably due to some Vue internal
+        // mechanism, no other workaround could be found for now.
+        setTimeout(() => buildRowSelectionRefs(props.rows, false));
       },
       { immediate: true }
     );
-    watch([() => props.rows, () => props.perPage], () => {
-      pageIndex.value = 0;
-    });
+    // Reset `pageIndex` when rows array or the number of rows per page change.
+    watch(
+      [() => props.rows, () => props.perPage],
+      () => {
+        pageIndex.value = 0;
+      },
+      { immediate: true }
+    );
+    // Compute `displayedRows` according to rows array and pagination settings.
     watch(
       [() => props.rows, () => props.paginated, () => props.perPage, pageIndex],
       () => {
@@ -261,7 +302,7 @@ export default {
       selection,
       // Methods
       toggleFullSelection,
-      toggleSelection
+      toggleRowSelection
     };
   }
 };

@@ -1,28 +1,27 @@
 .invitation-form {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 $spacing-unit/2;
+  padding: 0 calc(var(--spacing-unit) / 2);
   font-size: 1rem;
-  background-color: $color-white;
+  background-color: var(--color-white);
 
   &__input {
     display: flex;
     align-items: flex-start;
-    gap: $spacing-unit;
+    gap: var(--spacing-unit);
     width: 100%;
-    margin-bottom: $spacing-unit;
+    margin-bottom: var(--spacing-unit);
 
     &__email {
       flex-grow: 1;
     }
 
     &__role:deep() {
-      width: 180px;
       height: 33px;
-      color: $color-primary;
+      color: var(--color-primary);
       label {
-        top: -20px !important;
-        color: $color-tertiary-dark !important;
+        top: -14px !important;
+        color: var(--color-tertiary-dark) !important;
       }
     }
   }
@@ -32,6 +31,6 @@
   }
 
   &__btn-submit {
-    margin-left: $spacing-unit;
+    margin-left: var(--spacing-unit);
   }
 }

@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs, watch } from "vue";
-import ProjectService from "@/server/ProjectService";
+import ProjectService from "@/services/ProjectService";
 import { useUser } from "@/state/user";
 
 const state = reactive({
@@ -36,13 +36,11 @@ const loadSpaceProjects = space => {
 const loadProjectUsers = async project => {
   const { mapUsers } = useUser();
   let users = [];
-  if (project.isAdmin) {
-    users = await ProjectService.fetchProjectUsers(project);
-    users = mapUsers(users);
-    users.sort((a, b) =>
-      `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
-    );
-  }
+  users = await ProjectService.fetchProjectUsers(project);
+  users = mapUsers(users);
+  users.sort((a, b) =>
+    `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
+  );
   state.projectUsers = users;
   return users;
 };

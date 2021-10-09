@@ -22,18 +22,18 @@ import { useRoute } from "vue-router";
 import { useAuth } from "@/state/auth";
 import { useSpaces } from "@/state/spaces";
 // Components
-import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
 
 const availablePlugins = {
-  bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.0",
-  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.8",
+  bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.1",
+  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.9",
   gltfExtractor:
-    "https://unpkg.com/@bimdata/gltf-extractor-viewer-plugin@1.0.0",
-  svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.0",
+    "https://unpkg.com/@bimdata/gltf-extractor-viewer-plugin@1.0.2",
+  svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.2",
   realiz3D: "https://unpkg.com/@bimdata/realiz3d-viewer-plugin@0.0.2",
   backgroundColor:
-    "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.0",
+    "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
   idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.6"
 };
 

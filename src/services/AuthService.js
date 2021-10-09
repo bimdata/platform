@@ -1,8 +1,8 @@
 import { User, UserManager, WebStorageStateStore } from "oidc-client";
-import { oidcConfig } from "@/config/oidcConfig";
+import OIDC_CONFIG from "@/config/oidc-config";
 
 const userManager = new UserManager({
-  ...oidcConfig,
+  ...OIDC_CONFIG,
   userStore: new WebStorageStateStore({ store: window.localStorage })
 });
 
@@ -13,7 +13,7 @@ async function signinEndWithForcedLogout(url, args = {}) {
   // Let UserManager process signin response "as usual"
   const signinResponse = await this.processSigninResponse(url);
 
-  const authorizedIdentityProviders = oidcConfig.authorizedIdentityProviders;
+  const authorizedIdentityProviders = OIDC_CONFIG.authorizedIdentityProviders;
 
   if (authorizedIdentityProviders.length) {
     // Extract identity provider from signin response
@@ -27,13 +27,13 @@ async function signinEndWithForcedLogout(url, args = {}) {
       // When the unauthenticated user comes back to the platform
       // a standard login flow will begin.
       const params = new URLSearchParams({
-        post_logout_redirect_uri: oidcConfig.post_logout_redirect_uri,
+        post_logout_redirect_uri: OIDC_CONFIG.post_logout_redirect_uri,
         id_token_hint: signinResponse.id_token,
         // Prevent KeyCloak from logging out of the identity provider
         initiating_idp: identityProvider
       });
       const redirectUrl =
-        oidcConfig.metadata.end_session_endpoint + "?" + params.toString();
+        OIDC_CONFIG.metadata.end_session_endpoint + "?" + params.toString();
       window.location.replace(redirectUrl);
       await new Promise(resolve => {
         // Wait for window.location.replace to trigger

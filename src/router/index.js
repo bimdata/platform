@@ -1,37 +1,44 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { authGuard } from "./guards";
-import {
-  groupBoardResolver,
-  modelViewerResolver,
-  projectBoardResolver,
-  projectGroupsResolver,
-  rootResolver,
-  spaceBoardResolver
-} from "./resolvers";
+import legacyRoutes from "./legacy.js";
+
+// Guards
+import authGuard from "./guards/auth.js";
+import groupBoardGuard from "./guards/views/group-board.js";
+import projectBoardGuard from "./guards/views/project-board.js";
+import spaceBoardGuard from "./guards/views/space-board.js";
+import rootResolver from "./resolvers/root.js";
+
+// Resolvers
+import groupBoardResolver from "./resolvers/views/group-board.js";
+import modelViewerResolver from "./resolvers/views/model-viewer.js";
+import projectBoardResolver from "./resolvers/views/project-board.js";
+import projectGroupsResolver from "./resolvers/views/project-groups.js";
+import spaceBoardResolver from "./resolvers/views/space-board.js";
 
 // Route components
-import Layout from "@/Layout";
-import OidcCallback from "@/views/oidc-callback/OidcCallback";
-import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError";
+import Layout from "@/Layout.vue";
+import OidcCallback from "@/views/oidc-callback/OidcCallback.vue";
+import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError.vue";
+import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
 
 // Lazy loaded view components
 /* eslint-disable */
 const Dashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
+  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard.vue");
 const GroupBoard = () =>
-  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard");
+  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
 const ModelViewer = () =>
-  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer");
+  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer.vue");
 const ProjectBoard = () =>
-  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard");
+  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard.vue");
 const ProjectGroups = () =>
-  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups");
+  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups.vue");
 const SpaceBoard = () =>
-  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard");
+  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
 const UserProjects = () =>
-  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects");
+  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const UserSpaces = () =>
-  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces");
+  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
 
 // Route names
@@ -46,7 +53,8 @@ const routeNames = Object.freeze({
   projectBoard: "project-board",
   modelViewer: "model-viewer",
   projectGroups: "project-groups",
-  groupBoard: "group-board"
+  groupBoard: "group-board",
+  pageNotFound: "page-not-found"
 });
 
 const routes = [
@@ -80,6 +88,7 @@ const routes = [
         name: routeNames.spaceBoard,
         component: SpaceBoard,
         meta: {
+          guard: spaceBoardGuard,
           resolver: spaceBoardResolver
         }
       },
@@ -88,6 +97,7 @@ const routes = [
         name: routeNames.projectBoard,
         component: ProjectBoard,
         meta: {
+          guard: projectBoardGuard,
           resolver: projectBoardResolver
         }
       },
@@ -112,8 +122,17 @@ const routes = [
         name: routeNames.groupBoard,
         component: GroupBoard,
         meta: {
+          guard: groupBoardGuard,
           resolver: groupBoardResolver
         }
+      },
+      // Add legacy routes for retro-compatibility
+      ...legacyRoutes,
+      {
+        // Show 'page not found' view for unknown routes
+        path: "/:path(.*)*",
+        name: routeNames.pageNotFound,
+        component: PageNotFound
       }
     ]
   },
@@ -141,14 +160,20 @@ const router = createRouter({
 });
 
 router.beforeEach(authGuard);
+router.beforeEach(async route => {
+  if (route.meta && route.meta.guard) {
+    const result = await route.meta.guard(route);
+    return result;
+  }
+});
 
-router.beforeResolve(async targetRoute => {
-  const resolvers = targetRoute.matched
-    .filter(route => route.meta && route.meta.resolver)
-    .map(route => route.meta.resolver);
+router.beforeResolve(async route => {
+  const resolvers = route.matched
+    .filter(r => r.meta && r.meta.resolver)
+    .map(r => r.meta.resolver);
 
   for (const resolver of resolvers) {
-    await resolver(targetRoute);
+    await resolver(route);
   }
 });
 

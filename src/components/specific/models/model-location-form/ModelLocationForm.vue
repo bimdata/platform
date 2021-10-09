@@ -76,7 +76,7 @@ export default {
       default: 0
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { createModelLocation, updateModelLocation } = useModels();
 
@@ -116,9 +116,6 @@ export default {
           await createModelLocation(props.project, props.model, location);
         }
         emit("success");
-      } catch (error) {
-        console.warn(error);
-        emit("error", error);
       } finally {
         submitLoading.value = false;
       }

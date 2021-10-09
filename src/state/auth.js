@@ -1,7 +1,7 @@
 import { reactive, readonly, toRefs, watchEffect } from "vue";
-import apiClient from "@/server/api-client";
-import AuthService from "@/server/AuthService";
-import PlatformService from "@/server/PlatformService";
+import apiClient from "@/services/api-client";
+import AuthService from "@/services/AuthService";
+import PlatformService from "@/services/PlatformService";
 import { tokenHasExpired } from "@/utils/auth";
 
 const state = reactive({

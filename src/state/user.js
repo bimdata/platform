@@ -1,22 +1,27 @@
 import { reactive, readonly, toRefs } from "vue";
-import UserService from "@/server/UserService";
-import { PROJECT_ROLE, SPACE_ROLE } from "@/utils/users";
+import UserService from "@/services/UserService";
+import PROJECT_ROLES from "@/config/project-roles";
+import SPACE_ROLES from "@/config/space-roles";
 
 const state = reactive({
   user: null,
-  adminSpaces: [],
-  adminProjects: []
+  spaceRoles: {},
+  projectRoles: {}
 });
 
 const loadUser = async () => {
   const user = await UserService.fetchUserData();
   state.user = user;
-  state.adminSpaces = user.clouds
-    .filter(role => role.role === SPACE_ROLE.ADMIN)
-    .map(role => role.cloud);
-  state.adminProjects = user.projects
-    .filter(role => role.role === PROJECT_ROLE.ADMIN)
-    .map(role => role.project);
+
+  state.spaceRoles = user.clouds.reduce(
+    (roles, role) => ({ ...roles, [role.cloud]: role.role }),
+    {}
+  );
+  state.projectRoles = user.projects.reduce(
+    (roles, role) => ({ ...roles, [role.project]: role.role }),
+    {}
+  );
+
   return user;
 };
 
@@ -30,14 +35,16 @@ const mapUsers = users => {
 const mapSpaces = spaces => {
   return spaces.map(space => ({
     ...space,
-    isAdmin: state.adminSpaces.includes(space.id)
+    isAdmin: state.spaceRoles[space.id] === SPACE_ROLES.ADMIN
   }));
 };
 
 const mapProjects = projects => {
   return projects.map(project => ({
     ...project,
-    isAdmin: state.adminProjects.includes(project.id)
+    isAdmin: state.projectRoles[project.id] === PROJECT_ROLES.ADMIN,
+    isUser: state.projectRoles[project.id] === PROJECT_ROLES.USER,
+    isGuest: state.projectRoles[project.id] === PROJECT_ROLES.GUEST
   }));
 };
 

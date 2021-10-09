@@ -1,6 +1,6 @@
 <template>
-  <teleport to="#side-panel-container">
-    <transition name="slide-fade-right">
+  <teleport :to="`#side-panel-container--${side}`">
+    <transition :name="`slide-fade-${side}`">
       <div class="side-panel" v-show="showSidePanel">
         <div class="side-panel__title">
           <span>{{ title }}</span>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { useSidePanel } from "@/composables/side-panel";
+import { useSidePanel } from "@/composables/side-panel.js";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
@@ -28,6 +28,11 @@ export default {
     BIMDataIcon
   },
   props: {
+    side: {
+      type: String,
+      default: "right",
+      validator: value => ["right", "left"].includes(value)
+    },
     title: {
       type: String,
       default: ""

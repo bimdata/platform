@@ -15,9 +15,9 @@
           </span>
           <span
             class="models-manager__tab-count"
-            v-if="models[tab.id].length > 0"
+            v-if="modelLists[tab.id].length > 0"
           >
-            {{ models[tab.id].length }}
+            {{ modelLists[tab.id].length }}
           </span>
         </template>
       </BIMDataTabs>
@@ -26,8 +26,9 @@
         <ModelsActionBar
           v-show="selection.length > 0"
           class="models-manager__action-bar"
-          :currentTab="currentTab"
+          :project="project"
           :models="selection"
+          :currentTab="currentTab"
           @archive="archiveModels"
           @delete="openDeleteModal"
           @download="downloadModels"
@@ -70,7 +71,6 @@
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models";
-import { downloadAll } from "@/utils/download";
 import { segregate } from "@/utils/models";
 // Components
 import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
@@ -89,7 +89,7 @@ export default {
   components: {
     ModelsTable,
     ModelsActionBar,
-    ModelsDeleteModal,
+    ModelsDeleteModal
     // ModelsMergeModal
   },
   props: {
@@ -104,13 +104,11 @@ export default {
   },
   setup(props) {
     const { locale, t } = useI18n();
-    const { updateModels } = useModels();
+    const { updateModels, downloadModels: download } = useModels();
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
-    const selectTab = tab => {
-      currentTab.value = tab.id;
-    };
+    const selectTab = tab => (currentTab.value = tab.id);
     watch(
       () => locale.value,
       () => {
@@ -122,7 +120,7 @@ export default {
       { immediate: true }
     );
 
-    const models = reactive({
+    const modelLists = reactive({
       ifc: [],
       split: [],
       // merge: [],
@@ -131,11 +129,11 @@ export default {
     const displayedModels = ref([]);
     watch(
       () => props.models,
-      () => Object.assign(models, segregate(props.models)),
+      () => Object.assign(modelLists, segregate(props.models)),
       { immediate: true }
     );
     watchEffect(() => {
-      displayedModels.value = models[currentTab.value];
+      displayedModels.value = modelLists[currentTab.value];
     });
 
     const selection = ref([]);
@@ -166,29 +164,28 @@ export default {
     // };
 
     const archiveModels = async models => {
-      models = models.map(model => ({ ...model, archived: true }));
-      await updateModels(props.project, models);
+      await updateModels(
+        props.project,
+        models.map(model => ({ ...model, archived: true }))
+      );
     };
 
     const unarchiveModels = async models => {
-      models = models.map(model => ({ ...model, archived: false }));
-      await updateModels(props.project, models);
+      await updateModels(
+        props.project,
+        models.map(model => ({ ...model, archived: false }))
+      );
     };
 
     const downloadModels = async models => {
-      await downloadAll(
-        models.map(model => ({
-          name: model.document.fileName,
-          url: model.document.file
-        }))
-      );
+      await download(models);
     };
 
     return {
       // References
       currentTab,
       displayedModels,
-      models,
+      modelLists,
       modelsToDelete,
       // modelsToMerge,
       selection,

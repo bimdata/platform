@@ -13,8 +13,8 @@ import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 
 // Generic components
-import FileIcon from "@/components/generic/file-icon/FileIcon";
-import TextBox from "@/components/generic/text-box/TextBox";
+import FileIcon from "@/components/generic/file-icon/FileIcon.vue";
+import TextBox from "@/components/generic/text-box/TextBox.vue";
 
 export default {
   BIMDataBigSpinner,

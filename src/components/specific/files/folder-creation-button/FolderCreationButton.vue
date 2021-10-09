@@ -7,6 +7,7 @@
       color="primary"
       fill
       radius
+      :disabled="disabled"
       @click="toggle"
     >
       <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
@@ -27,7 +28,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
 
@@ -51,16 +52,14 @@ export default {
     folder: {
       type: Object,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup() {
-    const showCreationForm = ref(false);
-    const close = () => {
-      showCreationForm.value = false;
-    };
-    const toggle = () => {
-      showCreationForm.value = !showCreationForm.value;
-    };
+    const { isOpen: showCreationForm, close, toggle } = useToggle();
 
     return {
       // References

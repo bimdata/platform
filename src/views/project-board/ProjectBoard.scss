@@ -15,6 +15,6 @@
 
   &__body {
     display: grid;
-    padding: $spacing-unit * 2 0;
+    padding: calc(var(--spacing-unit) * 2) 0;
   }
 }

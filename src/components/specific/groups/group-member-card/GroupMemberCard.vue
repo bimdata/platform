@@ -2,13 +2,13 @@
   <BIMDataCard class="group-member-card">
     <template #content>
       <BIMDataButton
-        class="group-member-card__btn-menu"
+        class="group-member-card__btn-remove"
         ghost
         rounded
         icon
-        @click.stop="() => {}"
+        @click="remove"
       >
-        <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
+        <BIMDataIcon name="delete" size="s" fill color="high" />
       </BIMDataButton>
       <UserAvatar :user="user" size="64" />
       <div class="group-member-card__info">
@@ -25,27 +25,45 @@
 
 <script>
 import { computed } from "vue";
+import { useGroups } from "@/state/groups.js";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
 
 export default {
   components: {
     UserAvatar
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
+    group: {
+      type: Object,
+      required: true
+    },
     user: {
       type: Object,
       required: true
     }
   },
   setup(props) {
+    const { selectGroup, removeGroupMembers } = useGroups();
+
     const fullName = computed(
       () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
     );
 
+    const remove = async () => {
+      await removeGroupMembers(props.project, props.group, [props.user]);
+      selectGroup(props.group.id); // Needed to reload member list
+    };
+
     return {
       // References
-      fullName
+      fullName,
+      // Methods
+      remove
     };
   }
 };

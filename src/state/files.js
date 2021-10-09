@@ -1,12 +1,12 @@
-import { reactive, readonly, toRefs } from "@vue/reactivity";
-import FileService from "@/server/FileService";
-import { useAuth } from "@/state/auth";
-import { useModels } from "@/state/models";
+import { reactive, readonly, toRefs } from "vue";
+import FileService from "@/services/FileService.js";
+import { useAuth } from "@/state/auth.js";
+import { useModels } from "@/state/models.js";
 import {
   FileStructureHandler,
   getDescendants,
   segregate
-} from "@/utils/file-structure";
+} from "@/utils/file-structure.js";
 
 const state = reactive({
   projectFileStructure: {}
@@ -15,9 +15,9 @@ const state = reactive({
 let fileStructureHandler = new FileStructureHandler();
 
 const loadProjectFileStructure = async project => {
-  const fileStructure = await FileService.fetchFileStructure(project);
+  let fileStructure = await FileService.fetchFileStructure(project);
   state.projectFileStructure = fileStructure;
-  fileStructureHandler.init(fileStructure);
+  fileStructureHandler.serialize(fileStructure);
   return fileStructure;
 };
 
@@ -37,7 +37,7 @@ const softUpdateFileStructure = (action, files) => {
   for (const file of files) {
     actionFn(file);
   }
-  const fileStructure = fileStructureHandler.structure();
+  const fileStructure = fileStructureHandler.deserialize();
   state.projectFileStructure = fileStructure;
   return fileStructure;
 };
@@ -55,15 +55,15 @@ const updateFolders = async (project, folders) => {
 };
 
 const deleteFolders = async (project, folders) => {
+  await FileService.deleteFolders(project, folders);
+  softUpdateFileStructure("delete", folders);
+
   // Delete models contained in these folders
   const { softDeleteModels } = useModels();
   const modelDocs = folders
     .flatMap(folder => getDescendants(folder))
     .filter(doc => !!doc.ifcId);
   softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
-
-  await FileService.deleteFolders(project, folders);
-  softUpdateFileStructure("delete", folders);
 
   return folders;
 };
@@ -83,24 +83,26 @@ const updateDocuments = async (project, documents) => {
 };
 
 const deleteDocuments = async (project, documents) => {
+  await FileService.deleteDocuments(project, documents);
+  softUpdateFileStructure("delete", documents);
+
   // Delete corresponding models if any
   const { softDeleteModels } = useModels();
   const modelDocs = documents.filter(doc => !!doc.ifcId);
   softDeleteModels(modelDocs.map(doc => ({ id: doc.ifcId })));
-
-  await FileService.deleteDocuments(project, documents);
-  softUpdateFileStructure("delete", documents);
 
   return documents;
 };
 
 const updateFiles = async (project, files) => {
   const { folders, documents } = segregate(files);
-  await Promise.all([
-    updateFolders(project, folders),
-    updateDocuments(project, documents)
-  ]);
-  return files;
+  const newFiles = (
+    await Promise.all([
+      updateFolders(project, folders),
+      updateDocuments(project, documents)
+    ])
+  ).flat();
+  return newFiles;
 };
 
 const moveFiles = async (project, files, dest) => {
@@ -116,6 +118,11 @@ const moveFiles = async (project, files, dest) => {
   return newFiles;
 };
 
+const downloadFiles = async (project, files) => {
+  const { accessToken } = useAuth();
+  await FileService.downloadFiles(project, files, accessToken.value);
+};
+
 const deleteFiles = async (project, files) => {
   const { folders, documents } = segregate(files);
   await Promise.all([
@@ -123,17 +130,6 @@ const deleteFiles = async (project, files) => {
     deleteDocuments(project, documents)
   ]);
   return files;
-};
-
-const getArchiveUrl = (project, files) => {
-  const { accessToken } = useAuth();
-  const { folders, documents } = segregate(files);
-  return FileService.getArchiveUrl(
-    project,
-    folders,
-    documents,
-    accessToken.value
-  );
 };
 
 export function useFiles() {
@@ -152,7 +148,7 @@ export function useFiles() {
     deleteDocuments,
     updateFiles,
     moveFiles,
-    deleteFiles,
-    getArchiveUrl
+    downloadFiles,
+    deleteFiles
   };
 }

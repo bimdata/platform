@@ -18,7 +18,7 @@
       class="group-card-update-form__input"
       :placeholder="$t('GroupCardUpdateForm.inputPlaceholder')"
       v-model="groupName"
-      :error="error"
+      :error="hasError"
       :errorMessage="$t('GroupCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="submit"
@@ -42,12 +42,16 @@ import { useGroups } from "@/state/groups";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     group: {
       type: Object,
       required: true
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { updateGroup } = useGroups();
 
@@ -55,27 +59,28 @@ export default {
 
     const nameInput = ref(null);
     const groupName = ref(props.group.name);
-    const error = ref(false);
+    const hasError = ref(false);
+
     const submit = async () => {
       if (groupName.value) {
         try {
           loading.value = true;
-          await updateGroup(props.group.project, {
+          await updateGroup(props.project, {
             ...props.group,
             name: groupName.value
           });
           emit("success");
-        } catch (error) {
-          emit("error", error);
+        } finally {
+          loading.value = false;
         }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
     const close = () => {
-      error.value = false;
+      hasError.value = false;
       emit("close");
     };
 
@@ -85,7 +90,7 @@ export default {
 
     return {
       // References
-      error,
+      hasError,
       groupName,
       nameInput,
       // Methods

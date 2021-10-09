@@ -1,38 +1,43 @@
 .folder-access-manager {
-  padding: $spacing-unit;
-  color: $color-primary;
+  padding: var(--spacing-unit);
+  color: var(--color-primary);
   display: flex;
   flex-direction: column;
-  gap: $spacing-unit * 3/2;
+  gap: calc(var(--spacing-unit) * 3 / 2);
 
   &__title {
     display: flex;
     align-items: center;
-    gap: $spacing-unit;
+    gap: var(--spacing-unit);
 
     &__text {
       flex-grow: 1;
+      font-weight: bold;
     }
   }
 
   &__head {
     display: flex;
     flex-direction: column;
-    gap: $spacing-unit;
-    padding-bottom: $spacing-unit;
-    border-bottom: 2px solid $color-tertiary-lightest;
+    gap: var(--spacing-unit);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 2px solid var(--color-tertiary-lightest);
+
+    &__search {
+      font-size: 1rem;
+    }
   }
 
   &__body {
     display: flex;
     flex-direction: column;
-    gap: $spacing-unit;
+    gap: var(--spacing-unit);
 
     &__head {
       display: flex;
       align-items: center;
-      gap: $spacing-unit/2;
-      color: $color-tertiary-dark;
+      gap: calc(var(--spacing-unit) / 2);
+      color: var(--color-tertiary-dark);
 
       &--name {
         flex-grow: 1;

@@ -7,12 +7,14 @@
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
           <FolderCreationButton
+            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
             width="194px"
             :project="project"
             :folder="currentFolder"
           />
           <FileUploadButton
+            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-file"
             width="194px"
             multiple
@@ -38,6 +40,7 @@
             <FilesActionBar
               v-show="selection.length > 0"
               class="files-manager__files__action-bar"
+              :project="project"
               :fileStructure="fileStructure"
               :files="selection"
               @delete="openDeleteModal"
@@ -54,7 +57,7 @@
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
-            @file-uploaded="onFileUploaded"
+            @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
           />
@@ -67,6 +70,8 @@
               :project="project"
               :folder="folderToManage"
               :groups="groups"
+              @folder-permission-updated="$emit('folder-permission-updated')"
+              @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
             />
           </div>
@@ -87,7 +92,7 @@
           class="files-manager__onboarding"
           :project="project"
           :rootFolder="fileStructure"
-          @file-uploaded="onFileUploaded"
+          @file-uploaded="$emit('file-uploaded')"
         />
       </template>
     </template>
@@ -97,9 +102,8 @@
 <script>
 import { ref, watch } from "vue";
 import { useListFilter } from "@/composables/list-filter";
+import FILE_TYPES from "@/config/file-types";
 import { useFiles } from "@/state/files";
-import { download } from "@/utils/download";
-import { FILE_TYPE } from "@/utils/file-structure";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
@@ -137,12 +141,16 @@ export default {
       required: true
     }
   },
-  emits: ["file-uploaded"],
-  setup(props, { emit }) {
+  emits: [
+    "file-uploaded",
+    "folder-permission-updated",
+    "group-permission-updated"
+  ],
+  setup(props) {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
-      getArchiveUrl
+      downloadFiles: download
     } = useFiles();
 
     const currentFolder = ref(null);
@@ -154,7 +162,7 @@ export default {
         if (!currentFolder.value || !handler.exists(currentFolder.value)) {
           currentFolder.value = struct;
         } else {
-          currentFolder.value = handler.structure(currentFolder.value);
+          currentFolder.value = handler.deserialize(currentFolder.value);
         }
       },
       { immediate: true }
@@ -163,17 +171,17 @@ export default {
       () => currentFolder.value,
       folder => {
         const childrenFolders = folder.children
-          .filter(child => child.type === FILE_TYPE.FOLDER)
+          .filter(child => child.type === FILE_TYPES.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
         const childrenFiles = folder.children
-          .filter(child => child.type !== FILE_TYPE.FOLDER)
+          .filter(child => child.type !== FILE_TYPES.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
         currentFiles.value = childrenFolders.concat(childrenFiles);
       },
       { immediate: true }
     );
     const onFileSelected = file => {
-      if (file.type === FILE_TYPE.FOLDER) {
+      if (file.type === FILE_TYPES.FOLDER) {
         currentFolder.value = file;
       }
     };
@@ -193,9 +201,6 @@ export default {
       filesToUpload.value = files;
       setTimeout(() => (filesToUpload.value = []), 100);
     };
-    const onFileUploaded = () => {
-      emit("file-uploaded");
-    };
 
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
@@ -213,29 +218,33 @@ export default {
     };
 
     const downloadFiles = async files => {
-      let downloadName, downloadUrl;
-      if (files.length === 0) {
-        return;
-      }
-      if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
-        downloadName = files[0].fileName;
-        downloadUrl = files[0].file;
-      } else {
-        downloadName = props.project.name;
-        downloadUrl = getArchiveUrl(props.project, files);
-      }
-      download({ name: downloadName, url: downloadUrl });
+      await download(props.project, files);
     };
 
     const showSidePanel = ref(false);
     const showAccessManager = ref(false);
     const folderToManage = ref(null);
+    let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
-      // showSidePanel.value = true;
+      showSidePanel.value = true;
+      // Watch for current files changes in order to update
+      // folder data in access manager accordingly
+      stopCurrentFilesWatcher = watch(
+        () => currentFiles.value,
+        files => {
+          const newFolder = files.find(file => file.id === folder.id);
+          if (newFolder) {
+            folderToManage.value = newFolder;
+          } else {
+            closeAccessManager();
+          }
+        }
+      );
     };
     const closeAccessManager = () => {
+      stopCurrentFilesWatcher();
       showSidePanel.value = false;
       setTimeout(() => {
         showAccessManager.value = false;
@@ -262,7 +271,6 @@ export default {
       moveFiles,
       openAccessManager,
       onFileSelected,
-      onFileUploaded,
       openDeleteModal,
       setSelection,
       uploadFiles

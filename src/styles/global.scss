@@ -1,31 +1,52 @@
+@import "~@bimdata/design-system/dist/css/design-system.css";
 @import "~@bimdata/design-system/dist/scss/elements/_BIMDataScrollbar.scss";
 @import "~@bimdata/design-system/dist/scss/_BIMDataTransitions.scss";
 
-* {
+:root {
+  --platform-header-height: 62px;
+  --platform-background: #f2f2f2;
+
+  // TODO: this variable should be defined in the design system
+  --box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  --box-shadow-dark: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
-  font-family: $primary-font;
-  font-size: $font-size;
-  color: $color-primary;
+  font-family: var(--primary-font);
+  font-size: var(--font-size);
+  color: var(--color-primary);
 
   body {
     margin: 0;
     padding: 0;
 
     #side-panel-container {
-      position: fixed;
-      z-index: 200;
-      top: 0;
-      right: 0;
+      &--left {
+        position: fixed;
+        z-index: 200;
+        top: 0;
+        left: 0;
+      }
+
+      &--right {
+        position: fixed;
+        z-index: 200;
+        top: 0;
+        right: 0;
+      }
     }
 
     #notification-container {
       position: fixed;
       z-index: 300;
-      top: $platform-header-height + $spacing-unit;
-      right: $spacing-unit;
+      top: calc(var(--platform-header-height) + var(--spacing-unit));
+      right: var(--spacing-unit);
     }
   }
 }

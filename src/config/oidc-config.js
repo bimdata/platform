@@ -11,7 +11,7 @@ const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID;
 const AUTHORIZED_IDENTITY_PROVIDERS =
   process.env.VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
 
-export const oidcConfig = {
+export default {
   // Auth request config
   authority: AUTHORITY,
   client_id: CLIENT_ID,

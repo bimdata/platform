@@ -1,10 +1,10 @@
 .file-upload-card {
   display: flex;
   align-items: center;
-  gap: $spacing-unit;
+  gap: var(--spacing-unit);
   height: 72px;
-  padding: $spacing-unit;
-  background-color: $color-white;
+  padding: var(--spacing-unit);
+  background-color: var(--color-white);
 
   &.condensed {
     height: 44px;
@@ -12,7 +12,7 @@
   }
 
   &.failed {
-    border: 2px solid $color-high;
+    border: 2px solid var(--color-high);
     background-color: #fff2f2;
   }
 
@@ -21,22 +21,22 @@
   }
 
   &__info {
-    color: $color-tertiary-dark;
+    color: var(--color-tertiary-dark);
 
     &__file-name {
-      margin-bottom: $spacing-unit/2;
+      margin-bottom: calc(var(--spacing-unit) / 2);
     }
 
     &__progress-bar {
       width: 100%;
       height: 4px;
       border-radius: 2px;
-      background-color: $color-tertiary;
+      background-color: var(--color-tertiary);
 
       .progress-level {
         height: 100%;
         border-radius: 2px;
-        background-color: $color-primary;
+        background-color: var(--color-primary);
       }
     }
 
@@ -44,25 +44,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: $spacing-unit/2;
+      margin-top: calc(var(--spacing-unit) / 2);
       font-style: italic;
 
       .message {
         &::before {
           content: "-";
-          margin-right: $spacing-unit/3;
-          color: $color-tertiary-dark;
+          margin-right: calc(var(--spacing-unit) / 3);
+          color: var(--color-tertiary-dark);
         }
-        margin-left: $spacing-unit/3;
+        margin-left: calc(var(--spacing-unit) / 3);
         font-weight: bold;
-        color: $color-high;
+        color: var(--color-high);
       }
     }
   }
 
   &__btn-cancel {
-    border: 1px solid $color-tertiary-dark;
-    color: $color-tertiary-dark;
+    border: 1px solid var(--color-tertiary-dark);
+    color: var(--color-tertiary-dark);
     transform: scale(0.8);
   }
 }

@@ -8,7 +8,7 @@
   &__update-form {
     display: flex;
     align-items: center;
-    gap: $spacing-unit;
+    gap: var(--spacing-unit);
 
     &__input {
       flex-grow: 1;
@@ -16,13 +16,13 @@
     }
 
     &__btn-close {
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
     }
   }
 
   &__content {
     display: flex;
     align-items: center;
-    gap: $spacing-unit / 2;
+    gap: calc(var(--spacing-unit) / 2);
   }
 }

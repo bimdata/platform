@@ -30,8 +30,8 @@
             data-test="input-create-name"
             class="group-creation-card__form__input"
             :placeholder="$t('GroupCreationCard.inputPlaceholder')"
-            v-model="newGroup.name"
-            :error="error"
+            v-model="groupName"
+            :error="hasError"
             :errorMessage="$t('GroupCreationCard.inputErrorMessage')"
             @keyup.esc.stop="closeCreationForm"
             @keyup.enter.stop="submit"
@@ -68,8 +68,10 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
+import colors from "@/config/group-colors";
 import { useGroups } from "@/state/groups";
+import { getRandomElement } from "@/utils/random";
 
 export default {
   props: {
@@ -82,19 +84,26 @@ export default {
     const { createGroup } = useGroups();
 
     const loading = ref(false);
-    const nameInput = ref(null);
 
-    const newGroup = reactive({ name: "" });
-    const error = ref(false);
+    const nameInput = ref(null);
+    const groupName = ref("");
+    const hasError = ref(false);
+
     const submit = async () => {
-      if (newGroup.name) {
-        loading.value = true;
-        await createGroup(props.project, newGroup);
-        loading.value = false;
-        closeCreationForm();
+      if (groupName.value) {
+        try {
+          loading.value = true;
+          await createGroup(props.project, {
+            name: groupName.value,
+            color: getRandomElement(colors)
+          });
+          closeCreationForm();
+        } finally {
+          loading.value = false;
+        }
       } else {
         nameInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
@@ -104,17 +113,17 @@ export default {
       setTimeout(() => nameInput.value.focus(), 200);
     };
     const closeCreationForm = () => {
-      newGroup.name = "";
-      error.value = false;
+      groupName.value = "";
+      hasError.value = false;
       showCreationForm.value = false;
     };
 
     return {
       // References
-      error,
+      hasError,
       loading,
       nameInput,
-      newGroup,
+      groupName,
       showCreationForm,
       // Methods
       closeCreationForm,

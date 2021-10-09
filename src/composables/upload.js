@@ -1,4 +1,4 @@
-import UploadService from "@/server/UploadService";
+import UploadService from "@/services/UploadService";
 
 const spaceImageUploader = (space, handlers) => {
   return UploadService.createSpaceImageUploader(space, handlers);

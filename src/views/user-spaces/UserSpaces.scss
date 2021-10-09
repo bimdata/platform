@@ -1,11 +1,11 @@
 .user-spaces {
   &__header {
     &__search {
-      background-color: $color-white;
+      background-color: var(--color-white);
     }
 
     &__btn-sort {
-      color: $color-tertiary-dark;
+      color: var(--color-tertiary-dark);
     }
   }
 }

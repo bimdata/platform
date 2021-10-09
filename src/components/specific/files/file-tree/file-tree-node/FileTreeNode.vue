@@ -1,5 +1,6 @@
 <script>
 import { h, ref, watch } from "vue";
+import FILE_TYPES from "@/config/file-types";
 import FileTreeNodeTemplate from "./FileTreeNodeTemplate";
 
 let FileTreeNode;
@@ -21,7 +22,7 @@ FileTreeNode = {
       () => props.file,
       () => {
         children.value = (props.file.children || [])
-          .filter(child => child.type === "Folder")
+          .filter(child => child.type === FILE_TYPES.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
       },
       { immediate: true }

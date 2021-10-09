@@ -6,6 +6,7 @@
     color="primary"
     fill
     radius
+    :disabled="disabled"
     @click="selectFile"
   >
     <slot>
@@ -43,6 +44,10 @@ export default {
     accept: {
       type: Array,
       default: () => []
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ["upload"],

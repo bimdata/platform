@@ -1,12 +1,15 @@
 <template>
   <div
     class="user-avatar"
-    :class="`user-avatar--${color}`"
-    :style="{ width: `${size}px`, height: `${size}px` }"
+    :class="`user-avatar--${user.profilePicture ? 'tertiary' : color}`"
+    :style="{
+      width: `${size}px`,
+      height: `${size}px`,
+      fontSize: `${+size * 0.382}px`
+    }"
   >
-    <template v-if="user.avatar">
-      <!-- TODO: display avatar -->
-      <!-- <img :src="user.avatar" /> -->
+    <template v-if="user.profilePicture">
+      <img :src="user.profilePicture" />
     </template>
     <template v-else-if="initials">
       {{ initials }}
@@ -38,11 +41,14 @@ export default {
     }
   },
   setup(props) {
-    const initials = computed(() =>
-      (
-        `${props.user.firstname[0] || ""}` + `${props.user.lastname[0] || ""}`
+    /* eslint-disable */
+    const initials = computed(
+      () => (
+        `${props.user.firstname && props.user.firstname[0] || ""}`
+        + `${props.user.lastname && props.user.lastname[0] || ""}`
       ).toUpperCase()
     );
+    /* eslint-enable */
 
     return {
       initials

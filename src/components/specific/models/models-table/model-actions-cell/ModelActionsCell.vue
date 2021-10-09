@@ -23,6 +23,7 @@
       3D
     </BIMDataButton>
     <BIMDataButton
+      :disabled="!project.isAdmin && model.document.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
@@ -32,6 +33,7 @@
       <BIMDataIcon name="download" size="m" />
     </BIMDataButton>
     <BIMDataButton
+      :disabled="!project.isAdmin && model.document.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
@@ -83,10 +85,11 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useToggle } from "@/composables/toggle";
+import MODEL_STATUS from "@/config/model-statuses";
 import { routeNames } from "@/router";
-import { MODEL_STATUS } from "@/utils/models";
 
 export default {
   props: {
@@ -103,13 +106,11 @@ export default {
   setup(props, { emit }) {
     const router = useRouter();
 
-    const showMenu = ref(false);
-    const closeMenu = () => {
-      showMenu.value = false;
-    };
-    const toggleMenu = () => {
-      showMenu.value = !showMenu.value;
-    };
+    const {
+      isOpen: showMenu,
+      close: closeMenu,
+      toggle: toggleMenu
+    } = useToggle();
 
     const isModelReady = computed(
       () =>

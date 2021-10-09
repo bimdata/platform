@@ -1,25 +1,22 @@
 .dashboard-info-tile {
-  padding: $spacing-unit * 2;
-  border-radius: $spacing-unit;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-  background-color: $color-white;
+  padding: calc(var(--spacing-unit) * 2);
+  border-radius: var(--spacing-unit);
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
 
   &__head {
     display: flex;
     align-items: center;
-    padding-bottom: $spacing-unit;
-    border-bottom: 1px solid $color-tertiary;
-    font-size: $font-size * 3/2;
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--color-tertiary);
+    font-size: 1.5rem;
     font-weight: bold;
-    &__icon {
-      margin-left: auto;
-    }
   }
 
   &__body {
     display: grid;
-    gap: $spacing-unit;
-    padding: $spacing-unit * 2 $spacing-unit;
-    color: $color-tertiary-dark;
+    gap: var(--spacing-unit);
+    padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+    color: var(--color-tertiary-dark);
   }
 }

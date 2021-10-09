@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import SpaceService from "@/server/SpaceService";
+import SpaceService from "@/services/SpaceService";
 import { useUser } from "@/state/user";
 
 const state = reactive({

@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
+import { useNotifications } from "@/composables/notifications";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 
@@ -46,26 +48,39 @@ export default {
     }
   },
   setup(props) {
+    const { t } = useI18n();
+    const { pushNotification } = useNotifications();
     const { sendSpaceInvitation, cancelSpaceInvitation } = useSpaces();
     const { sendProjectInvitation, cancelProjectInvitation } = useProjects();
 
-    const resendInvitation = () => {
+    const resendInvitation = async () => {
       if (props.project) {
-        sendProjectInvitation(props.project, props.invitation, {
+        await sendProjectInvitation(props.project, props.invitation, {
           resend: true
         });
       } else if (props.space) {
-        sendSpaceInvitation(props.space, props.invitation.email, {
+        await sendSpaceInvitation(props.space, props.invitation, {
           resend: true
         });
       }
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("InvitationCard.resendSuccessNotifText")
+      });
     };
-    const cancelInvitation = () => {
+
+    const cancelInvitation = async () => {
       if (props.project) {
-        cancelProjectInvitation(props.project, props.invitation);
+        await cancelProjectInvitation(props.project, props.invitation);
       } else if (props.space) {
-        cancelSpaceInvitation(props.space, props.invitation);
+        await cancelSpaceInvitation(props.space, props.invitation);
       }
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("InvitationCard.cancelSuccessNotifText")
+      });
     };
 
     return {

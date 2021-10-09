@@ -6,7 +6,8 @@
 
 <script>
 import { computed } from "vue";
-import { SPACE_ROLE, PROJECT_ROLE } from "@/utils/users";
+import PROJECT_ROLES from "@/config/project-roles";
+import SPACE_ROLES from "@/config/space-roles";
 
 export default {
   props: {
@@ -18,13 +19,13 @@ export default {
   setup(props) {
     const roleName = computed(() => {
       switch (props.role) {
-        case SPACE_ROLE.ADMIN:
-        case PROJECT_ROLE.ADMIN:
+        case SPACE_ROLES.ADMIN:
+        case PROJECT_ROLES.ADMIN:
           return "admin";
-        case SPACE_ROLE.USER:
-        case PROJECT_ROLE.USER:
+        case SPACE_ROLES.USER:
+        case PROJECT_ROLES.USER:
           return "user";
-        case PROJECT_ROLE.GUEST:
+        case PROJECT_ROLES.GUEST:
         default:
           return "guest";
       }

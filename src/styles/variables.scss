@@ -1,5 +1,7 @@
-// Import Design System variables
-@import "~@bimdata/design-system/dist/scss/BIMDataVariables.scss";
+/**
+ * Note: this file is automatically imported at the begining
+ * of every .scss file (see vue.config.js).
+ */
 
-$platform-header-height: 62px;
-$platform-background: #f2f2f2;
+// Import Design System SASS variables
+@import "~@bimdata/design-system/dist/scss/BIMDataVariables.scss";

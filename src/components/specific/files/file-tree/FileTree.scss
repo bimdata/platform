@@ -1,5 +1,5 @@
 .file-tree {
-  padding: $spacing-unit;
+  padding: var(--spacing-unit);
 
   &:deep() {
     .file-tree-node {
@@ -7,18 +7,18 @@
         position: relative;
         display: flex;
         align-items: center;
-        gap: $spacing-unit * 2/3;
-        margin: $spacing-unit * 2/3 0;
-        color: $color-primary;
+        gap: calc(var(--spacing-unit) * 2 / 3);
+        margin: calc(var(--spacing-unit) * 2 / 3) 0;
+        color: var(--color-primary);
         cursor: pointer;
 
         &__background {
           position: absolute;
           z-index: 0;
-          left: -$spacing-unit;
-          width: calc(100% + #{$spacing-unit * 2});
+          left: calc(0px - var(--spacing-unit));
+          width: calc(100% + var(--spacing-unit) * 2);
           height: 26px;
-          background-color: $color-tertiary;
+          background-color: var(--color-tertiary);
           opacity: 0;
           transition: opacity 0.2s ease-out;
         }

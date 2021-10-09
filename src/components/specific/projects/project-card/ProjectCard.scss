@@ -9,15 +9,15 @@
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow: visible;
     transition-duration: 0.35s;
 
     .project-card__action-bar {
       position: absolute;
       z-index: 2;
-      top: $spacing-unit * 2 / 3;
+      top: calc(var(--spacing-unit) * 2 / 3);
       height: 0;
-      padding: 0 $spacing-unit/2;
+      padding: 0 calc(var(--spacing-unit) / 2);
     }
 
     .project-card__left-stripe {
@@ -25,20 +25,20 @@
       z-index: 1;
       width: 4px;
       height: $card-height;
-      background-color: $color-primary;
+      background-color: var(--color-primary);
     }
 
     .project-card__status-badge {
       position: absolute;
       z-index: 1;
-      top: $card-content-height - $spacing-unit - 24px;
-      left: $spacing-unit + 4px;
+      top: calc(#{$card-content-height} - var(--spacing-unit) - 24px);
+      left: calc(var(--spacing-unit) + 4px);
       height: 24px;
-      padding: $spacing-unit/2 $spacing-unit;
+      padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
       line-height: 12px;
       text-transform: uppercase;
-      background-color: $color-primary;
-      color: $color-white;
+      background-color: var(--color-primary);
+      color: var(--color-white);
     }
 
     &:deep() {
@@ -59,7 +59,7 @@
 
     &:hover {
       cursor: pointer;
-      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: var(--box-shadow-dark);
     }
   }
 }

@@ -79,8 +79,6 @@ export default {
             role: role.value
           });
         }
-      } catch (error) {
-        console.log(error);
       } finally {
         loading.value = false;
       }

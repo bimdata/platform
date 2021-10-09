@@ -12,6 +12,14 @@
     "message": "Une erreur s'est produite lors de l'authentification...",
     "tryAgainButtonText": "Réessayer"
   },
+  "PageNotFound": {
+    "title": "Page not found",
+    "text": {
+      "line1": "Woopsie! The page that you are looking for does not exist.",
+      "line2": "Please return home."
+    },
+    "homeButtonText": "Home"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Projet",
@@ -171,8 +179,8 @@
 
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
-    "groupsButtonText": "Gestion des groupes",
-    "nameHeader": "Nom",
+    "searchInputPlaceholder": "Rechercher un groupe",
+    "groupHeader": "Groupe",
     "rightsHeader": "Droits",
     "membersHeader": "Membres"
   },
@@ -189,16 +197,21 @@
     "submitButtonText": "Valider"
   },
 
+  "FolderPermissionSelector": {
+    "label": "Tout le monde",
+    "options": {
+      "accessDenied": "Accès refusé",
+      "readOnly": "Lecture seule",
+      "readWrite": "Lecture / Écriture"
+    }
+  },
+
   "FolderSelector": {
     "selectedFolder": "Dossier sélectionné",
     "submitButtonText": {
       "moveTo": "Valider",
       "moveHere": "Déplacer ici"
     }
-  },
-
-  "GroupAccessSelector": {
-    "defaultGroupName": "Tout le monde"
   },
 
   "GroupCardActionMenu": {
@@ -230,16 +243,27 @@
   },
 
   "GroupMemberSelectionCard": {
-    "text": "Ajouter un utilisateur",
-    "title": "Gestion des membres",
-    "selectorLabel": "Membres du groupe",
-    "cancelButtonText": "Annuler",
-    "submitButtonText": "Valider"
+    "text": "Ajouter un utilisateur"
+  },
+
+  "GroupMembersSelector": {
+    "title": "Gestion des membres du groupe",
+    "searchInputPlaceholder": "Rechercher"
+  },
+
+  "GroupPermissionSelector": {
+    "options": {
+      "accessDenied": "Accès refusé",
+      "readOnly": "Lecture seule",
+      "readWrite": "Lecture / Écriture"
+    }
   },
 
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
-    "resendLinkText": "Renvoyer l'invitation ?"
+    "resendLinkText": "Renvoyer l'invitation ?",
+    "resendSuccessNotifText": "Invitation renvoyée",
+    "cancelSuccessNotifText": "Invitation annulée"
   },
 
   "InvitationForm": {
@@ -252,7 +276,8 @@
       "guest": "Invité"
     },
     "cancelButtonText": "Annuler",
-    "submitButtonText": "Inviter"
+    "submitButtonText": "Inviter",
+    "successNotifText": "Invitation envoyée"
   },
 
   "ModelActionsCell": {
@@ -371,6 +396,10 @@
     "createButtonText": "Créer"
   },
 
+  "ProjectStatusBadge": {
+    "active": "ACTIF"
+  },
+
   "ProjectUsersManager": {
     "title": "Utilisateurs",
     "searchInputPlaceholder": "Rechercher un utilisateur"
@@ -417,7 +446,7 @@
       "users": "Utilisateurs"
     },
     "searchInputPlaceholder": "Rechercher un utilisateur",
-    "addUserButtonText": "Ajouter un utilisateur"
+    "addUserButtonText": "Ajouter un administrateur"
   },
 
   "UserCard": {
@@ -445,5 +474,46 @@
   "UsersManagerOnboarding": {
     "text": "Inviter votre premier collaborateur",
     "inviteButtonText": "Invitation"
+  },
+
+
+
+  "Error": "Erreur",
+  "Success": "Succès",
+
+  "Errors": {
+    "spacesFetchError": "Impossible de récupérer la liste des espaces",
+    "spaceCreateError": "Erreur lors de la création de l'espace",
+    "spaceUpdateError": "Erreur de mise à jour de l'espace",
+    "spaceDeleteError": "Erreur lors de la suppression de l'espace",
+    "spaceImageUpdateError": "Erreur lors du changement d'image de l'espace",
+    "spaceImageDeleteError": "Erreur lors de la suppression de l'image de l'espace",
+    "projectsFetchError": "Impossible de récupérer la liste des projets",
+    "projectCreateError": "Une erreur est survenue lors de la création du projet",
+    "projectUpdateError": "Échec de la mise à jour du projet",
+    "projectDeleteError": "Échec de la suppression du projet",
+    "invitationsFetchError": "Impossible de récupérer la liste des invitations",
+    "invitationSendError": "L'invitation n'a pas pu être envoyée",
+    "invitationResendError": "Echec du renvoi de l'invitation",
+    "invitationCancelError": "L'invitation n'as pas pu être annulée",
+    "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
+    "userUpdateError": "Échec de la mise à jour de l'utilisateur",
+    "userDeleteError": "Échec de la suppression de l'utilisateur",
+    "modelsFetchError": "Impossible de récupérer la liste des modèles",
+    "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
+    "modelUpdateError": "Échec de la mise à jour du modèle",
+    "modelDownloadError": "Une erreur est survenue lors du téléchargement",
+    "modelMergeError": "Échec de la fusion des modèles",
+    "modelDeleteError": "Erreur lors de la suppression du modèle",
+    "fileStructureFetchError": "Impossible de récupérer la structure de fichier",
+    "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
+    "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
+    "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "folderCreateError": "Erreur lors de la création du dossier",
+    "documentUploadError": "Erreur lors du téléversmeent du fichier",
+    "groupsFetchError": "Impossible de récupérer la liste des groupes",
+    "groupCreateError": "Erreur lors de la création du groupe",
+    "groupUpdateError": "Erreur lors de la mise à jour du groupe",
+    "groupDeleteError": "Échec de la suppression du groupe"
   }
 }

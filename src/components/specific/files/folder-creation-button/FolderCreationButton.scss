@@ -3,8 +3,8 @@
 
   &__form {
     position: absolute;
-    top: calc(100% + #{$spacing-unit});
+    top: calc(100% + var(--spacing-unit));
     width: 260px;
-    @include box-shadow;
+    box-shadow: var(--box-shadow);
   }
 }

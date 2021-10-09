@@ -62,7 +62,7 @@ import { useModels } from "@/state/models";
 import { useProjects } from "@/state/projects";
 import { debounce } from "@/utils/async";
 // Components
-import AppSlotContent from "@/components/generic/app-slot-content/AppSlotContent.vue";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader";
 import ModelsManager from "@/components/specific/models/models-manager/ModelsManager";
 import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview";

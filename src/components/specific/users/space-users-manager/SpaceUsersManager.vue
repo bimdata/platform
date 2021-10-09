@@ -16,7 +16,7 @@
       clear
     />
 
-    <transition name="fade" mode="out-in">
+    <transition v-if="showInvitations" name="fade" mode="out-in">
       <template v-if="showInvitationForm">
         <InvitationForm
           :space="space"
@@ -65,11 +65,14 @@
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter";
-import { SPACE_ROLE } from "@/utils/users";
+import { useToggle } from "@/composables/toggle";
+import SPACE_ROLES from "@/config/space-roles";
 // Components
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
 import UserCard from "@/components/specific/users/user-card/UserCard";
+
+const tabsDef = [{ id: "admins" }, { id: "users" }];
 
 export default {
   components: {
@@ -95,20 +98,18 @@ export default {
     const { locale, t } = useI18n();
 
     const tabs = ref([]);
-    const currentTab = ref("admins");
+    const currentTab = ref(tabsDef[0].id);
+    const selectTab = tab => (currentTab.value = tab.id);
     watch(
-      locale,
+      () => locale.value,
       () => {
-        tabs.value = [
-          { id: "admins", label: t("SpaceUsersManager.tabs.admins") },
-          { id: "users", label: t("SpaceUsersManager.tabs.users") }
-        ];
+        tabs.value = tabsDef.map(tab => ({
+          ...tab,
+          label: t(`SpaceUsersManager.tabs.${tab.id}`)
+        }));
       },
       { immediate: true }
     );
-    const selectTab = tab => {
-      currentTab.value = tab.id;
-    };
 
     const admins = ref([]);
     const users = ref([]);
@@ -116,10 +117,10 @@ export default {
       () => props.users,
       () => {
         admins.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLE.ADMIN
+          user => user.cloudRole === SPACE_ROLES.ADMIN
         );
         users.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLE.USER
+          user => user.cloudRole === SPACE_ROLES.USER
         );
       },
       { immediate: true }
@@ -136,13 +137,11 @@ export default {
 
     const showInvitations = computed(() => currentTab.value === "admins");
 
-    const showInvitationForm = ref(false);
-    const openInvitationForm = () => {
-      showInvitationForm.value = true;
-    };
-    const closeInvitationForm = () => {
-      showInvitationForm.value = false;
-    };
+    const {
+      isOpen: showInvitationForm,
+      open: openInvitationForm,
+      close: closeInvitationForm
+    } = useToggle();
 
     return {
       // Refrences

@@ -1,17 +1,4 @@
-const MODEL_SOURCE = Object.freeze({
-  UPLOAD: "UPLOAD",
-  SPLIT: "SPLIT",
-  EXPORT: "EXPORT",
-  MERGE: "MERGE",
-  OPTIMIZED: "OPTIMIZED"
-});
-
-const MODEL_STATUS = Object.freeze({
-  PENDING: "P",
-  IN_PROGRESS: "I",
-  COMPLETED: "C",
-  ERROR: "E"
-});
+import MODEL_SOURCES from "@/config/model-sources";
 
 function segregate(models) {
   const result = {
@@ -24,14 +11,14 @@ function segregate(models) {
     if (model.archived) {
       result.archive.push(model);
     } else if (
-      [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
+      [MODEL_SOURCES.UPLOAD, MODEL_SOURCES.OPTIMIZED].includes(model.source)
     ) {
       result.ifc.push(model);
     } else if (
-      [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
+      [MODEL_SOURCES.SPLIT, MODEL_SOURCES.EXPORT].includes(model.source)
     ) {
       result.split.push(model);
-    } else if (MODEL_SOURCE.MERGE === model.source) {
+    } else if (MODEL_SOURCES.MERGE === model.source) {
       result.merge.push(model);
     } else {
       result.ifc.push(model);
@@ -40,4 +27,4 @@ function segregate(models) {
   return result;
 }
 
-export { MODEL_SOURCE, MODEL_STATUS, segregate };
+export { segregate };

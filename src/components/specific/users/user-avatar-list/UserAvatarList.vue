@@ -3,7 +3,7 @@
     class="user-avatar-list"
     :style="{
       width: `${listWidth}px`,
-      gridTemplateColumns: `repeat(${length}, ${itemGap}px)`
+      gridTemplateColumns: `repeat(${listLength}, ${itemGap}px)`
     }"
   >
     <UserAvatar
@@ -51,6 +51,10 @@ export default {
       type: [Number, String],
       default: 24,
       validate: value => value > 0
+    },
+    fixedWidth: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -60,8 +64,14 @@ export default {
       return props.users.slice(0, n > l ? l - 1 : l);
     });
 
-    const listWidth = computed(() => {
+    const listLength = computed(() => {
+      const n = props.users.length;
       const l = props.length;
+      return props.fixedWidth || n > l ? l : n;
+    });
+
+    const listWidth = computed(() => {
+      const l = listLength.value;
       const w = +props.itemSize;
       const g = +props.itemGap;
       return l * g + (w > g ? w - g : 0);
@@ -70,6 +80,7 @@ export default {
     return {
       // References
       displayedUsers,
+      listLength,
       listWidth
     };
   }

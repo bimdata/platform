@@ -11,7 +11,7 @@
       top: 28px;
       z-index: 2;
       height: 0;
-      padding: 0 $spacing-unit;
+      padding: 0 var(--spacing-unit);
     }
 
     .bimdata-card__content {

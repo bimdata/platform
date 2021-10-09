@@ -12,7 +12,13 @@
             </BIMDataButton> -->
           </template>
           <template #right>
-            <BIMDataButton ghost rounded icon @click="toggleInvitationForm">
+            <BIMDataButton
+              v-if="project.isAdmin"
+              ghost
+              rounded
+              icon
+              @click="toggleInvitationForm"
+            >
               <BIMDataIcon name="addUser" size="xs" />
             </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="toggleUserSearch">
@@ -71,6 +77,7 @@
 <script>
 import { computed, ref } from "vue";
 import { useListFilter } from "@/composables/list-filter";
+import { useToggle } from "@/composables/toggle";
 // Components
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
@@ -104,13 +111,11 @@ export default {
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
-    const showInvitationForm = ref(false);
-    const toggleInvitationForm = () => {
-      showInvitationForm.value = !showInvitationForm.value;
-    };
-    const closeInvitationForm = () => {
-      showInvitationForm.value = false;
-    };
+    const {
+      isOpen: showInvitationForm,
+      close: closeInvitationForm,
+      toggle: toggleInvitationForm
+    } = useToggle();
 
     const showUserSearch = ref(false);
     const toggleUserSearch = () => {

@@ -7,7 +7,7 @@
       align-items: center;
       gap: 12px;
       height: calc(100% - 37px);
-      padding: $spacing-unit * 2;
+      padding: calc(var(--spacing-unit) * 2);
     }
   }
 }

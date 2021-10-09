@@ -12,11 +12,14 @@
             v-if="actionMenu"
             class="project-card__action-bar"
             :project="project"
+            :previews="previews"
             @open-viewer="goToModelViewer"
             @open-menu="openMenu"
           />
           <div class="project-card__left-stripe"></div>
-          <div class="project-card__status-badge">Active</div>
+          <div class="project-card__status-badge">
+            {{ $t("ProjectStatusBadge.active") }}
+          </div>
           <ProjectCardModelPreview
             :previews="previews"
             @preview-changed="onPreviewChange"
@@ -37,6 +40,7 @@
 <script>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useToggle } from "@/composables/toggle";
 import { routeNames } from "@/router";
 import { useProjects } from "@/state/projects";
 // Components
@@ -66,9 +70,7 @@ export default {
     const router = useRouter();
     const { loadProjectModelPreviews } = useProjects();
 
-    const showMenu = ref(false);
-    const openMenu = () => (showMenu.value = true);
-    const closeMenu = () => (showMenu.value = false);
+    const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
     const previews = ref([]);
     const currentPreview = ref();

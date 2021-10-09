@@ -1,6 +1,9 @@
 <template>
   <div class="models-action-bar">
     <BIMDataButton
+      :disabled="
+        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+      "
       width="120px"
       color="high"
       ghost
@@ -11,30 +14,37 @@
       <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
 
-    <template v-if="currentTab === 'archive'">
-      <BIMDataButton
-        width="120px"
-        ghost
-        squared
-        @click="$emit('unarchive', models)"
-      >
-        <BIMDataIcon name="unarchive" size="xs" margin="0 6px 0 0" />
-        <span>{{ $t("ModelsActionBar.unarchiveButtonText") }}</span>
-      </BIMDataButton>
-    </template>
-    <template v-else>
-      <BIMDataButton
-        width="120px"
-        ghost
-        squared
-        @click="$emit('archive', models)"
-      >
-        <BIMDataIcon name="archive" size="xs" margin="0 6px 0 0" />
-        <span>{{ $t("ModelsActionBar.archiveButtonText") }}</span>
-      </BIMDataButton>
-    </template>
+    <BIMDataButton
+      :disabled="
+        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+      "
+      width="120px"
+      ghost
+      squared
+      @click="$emit(currentTab === 'archive' ? 'unarchive' : 'archive', models)"
+    >
+      <BIMDataIcon
+        :name="currentTab === 'archive' ? 'unarchive' : 'archive'"
+        size="xs"
+        margin="0 6px 0 0"
+      />
+      <span>
+        {{
+          $t(
+            `ModelsActionBar.${
+              currentTab === "archive"
+                ? "unarchiveButtonText"
+                : "archiveButtonText"
+            }`
+          )
+        }}
+      </span>
+    </BIMDataButton>
 
     <BIMDataButton
+      :disabled="
+        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+      "
       width="120px"
       ghost
       squared
@@ -59,13 +69,17 @@
 <script>
 export default {
   props: {
-    currentTab: {
-      type: String,
-      default: ""
+    project: {
+      type: Object,
+      required: true
     },
     models: {
       type: Array,
       default: () => []
+    },
+    currentTab: {
+      type: String,
+      default: ""
     }
   },
   emits: ["delete", "archive", "download", "unarchive"]

@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   font-size: 0.9rem;
-  color: $color-primary;
+  color: var(--color-primary);
   background-color: rgba(47, 55, 74, 0.75);
 
   display: flex;
@@ -14,7 +14,7 @@
 
   &__content {
     position: relative;
-    background-color: $color-white;
+    background-color: var(--color-white);
 
     display: flex;
     flex-direction: column;
@@ -22,14 +22,14 @@
 
     &__btn-close {
       position: absolute;
-      top: $spacing-unit/2;
-      right: $spacing-unit/2;
-      color: $color-tertiary-dark;
+      top: calc(var(--spacing-unit) / 2);
+      right: calc(var(--spacing-unit) / 2);
+      color: var(--color-tertiary-dark);
     }
 
     &__title {
       width: 100%;
-      padding: $spacing-unit * 2;
+      padding: calc(var(--spacing-unit) * 2);
       font-size: 1.3rem;
       font-weight: bold;
       text-align: center;
@@ -38,7 +38,7 @@
     &__text {
       flex-grow: 1;
       width: 100%;
-      padding: $spacing-unit;
+      padding: var(--spacing-unit);
       overflow-y: auto;
     }
 
@@ -46,9 +46,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: $spacing-unit * 2;
+      gap: calc(var(--spacing-unit) * 2);
       width: 100%;
-      padding: $spacing-unit * 2;
+      padding: calc(var(--spacing-unit) * 2);
     }
   }
 }

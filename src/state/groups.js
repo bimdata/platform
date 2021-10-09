@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import GroupService from "@/server/GroupService";
+import GroupService from "@/services/GroupService";
 
 const state = reactive({
   projectGroups: [],
@@ -7,7 +7,11 @@ const state = reactive({
 });
 
 const loadProjectGroups = async project => {
-  const groups = await GroupService.fetchProjectGroups(project);
+  let groups = [];
+  if (project.isAdmin) {
+    groups = await GroupService.fetchProjectGroups(project);
+    groups.sort((a, b) => (a.name < b.name ? -1 : 1));
+  }
   state.projectGroups = groups;
   return groups;
 };
@@ -24,27 +28,66 @@ const updateGroup = async (project, group) => {
   return newGroup;
 };
 
+const addGroupMembers = async (project, group, membersToAdd) => {
+  const addedMembers = await GroupService.addGroupMembers(
+    project,
+    group,
+    membersToAdd
+  );
+  const members = group.members.concat(addedMembers);
+  softUpdateGroup({ ...group, members });
+  return addedMembers;
+};
+
+const removeGroupMembers = async (project, group, membersToRemove) => {
+  const removedMembers = await GroupService.removeGroupMembers(
+    project,
+    group,
+    membersToRemove
+  );
+  const removedMemberIDs = removedMembers.map(member => member.id);
+  const members = group.members.filter(
+    member => !removedMemberIDs.includes(member.id)
+  );
+  softUpdateGroup({ ...group, members });
+  return removedMembers;
+};
+
 const updateGroupMembers = async (project, group, members) => {
   const oldMemberIDs = group.members.map(member => member.id);
   const newMemberIDs = members.map(member => member.id);
+
+  // Add members that are in new list but were not in old list
   const membersToAdd = members.filter(
     member => !oldMemberIDs.includes(member.id)
-  );
-  const membersToRemove = group.members.filter(
-    member => !newMemberIDs.includes(member.id)
   );
   const addedMembers = await GroupService.addGroupMembers(
     project,
     group,
     membersToAdd
   );
+
+  // Remove members that were in old list but are not in new list
+  const membersToRemove = group.members.filter(
+    member => !newMemberIDs.includes(member.id)
+  );
   const removedMembers = await GroupService.removeGroupMembers(
     project,
     group,
     membersToRemove
   );
+
   softUpdateGroup({ ...group, members });
   return { addedMembers, removedMembers };
+};
+
+const updateGroupPermission = async (project, folder, group, permission) => {
+  return await GroupService.updateGroupPermission(
+    project,
+    folder,
+    group,
+    permission
+  );
 };
 
 const softUpdateGroup = group => {
@@ -80,7 +123,10 @@ export function useGroups() {
     loadProjectGroups,
     createGroup,
     updateGroup,
+    addGroupMembers,
+    removeGroupMembers,
     updateGroupMembers,
+    updateGroupPermission,
     softUpdateGroup,
     deleteGroup,
     softDeleteGroup,

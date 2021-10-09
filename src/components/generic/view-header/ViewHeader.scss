@@ -7,7 +7,7 @@
 
   &__slot {
     display: flex;
-    gap: $spacing-unit;
+    gap: var(--spacing-unit);
     width: calc(100% / 3);
 
     &--left {

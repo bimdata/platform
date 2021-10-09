@@ -2,10 +2,10 @@
   &__upload-list {
     display: flex;
     flex-direction: column;
-    gap: $spacing-unit;
+    gap: var(--spacing-unit);
 
     .file-upload-card {
-      @include box-shadow;
+      box-shadow: var(--box-shadow);
     }
   }
 
@@ -15,18 +15,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: $spacing-unit * 3/2;
-    margin-top: $spacing-unit;
-    padding: $spacing-unit * 3/2;
-    border: 2px dashed $color-primary;
+    gap: calc(var(--spacing-unit) * 3 / 2);
+    margin-top: var(--spacing-unit);
+    padding: calc(var(--spacing-unit) * 3 / 2);
+    border: 2px dashed var(--color-primary);
     border-radius: 8px;
-    color: $color-tertiary-dark;
+    color: var(--color-tertiary-dark);
 
     &__btn-close {
       position: absolute;
       top: 0;
       right: 0;
-      color: $color-primary;
+      color: var(--color-primary);
     }
 
     &__text {
@@ -34,22 +34,22 @@
     }
 
     &__separator {
-      $separator-width: 120px;
-      $text-width: 32px;
-      $text-height: 16px;
+      --separator-width: 120px;
+      --text-width: 32px;
+      --text-height: 16px;
 
       position: relative;
       height: 1px;
-      width: $separator-width;
-      background-color: $color-tertiary;
+      width: var(--separator-width);
+      background-color: var(--color-tertiary);
       &__text {
         position: absolute;
-        top: -$text-height/2;
-        left: calc(50% - #{$text-width}/ 2);
-        height: $text-height;
-        width: $text-width;
+        top: calc(0px - var(--text-height) / 2);
+        left: calc(50% - var(--text-width) / 2);
+        height: var(--text-height);
+        width: var(--text-width);
         text-align: center;
-        background-color: $platform-background;
+        background-color: var(--platform-background);
       }
     }
   }

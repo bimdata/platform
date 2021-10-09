@@ -1,6 +1,7 @@
 <template>
   <div class="files-action-bar">
     <BIMDataButton
+      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
       width="120px"
       color="high"
       ghost
@@ -11,6 +12,7 @@
       <span>{{ $t("FilesActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
+      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
       width="120px"
       color="secondary"
       ghost
@@ -21,6 +23,7 @@
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
+      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
       width="120px"
       ghost
       squared
@@ -34,6 +37,7 @@
       <FolderSelector
         v-show="showFolderSelector"
         class="files-action-bar__folder-selector"
+        :project="project"
         :fileStructure="fileStructure"
         :files="files"
         @folder-selected="$emit('move', { files, dest: $event })"
@@ -44,7 +48,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 // Components
 import FolderSelector from "@/components/specific/files/folder-selector/FolderSelector";
 
@@ -53,6 +57,10 @@ export default {
     FolderSelector
   },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     fileStructure: {
       type: Object,
       required: true
@@ -64,13 +72,11 @@ export default {
   },
   emits: ["delete", "download", "move"],
   setup() {
-    const showFolderSelector = ref(false);
-    const closeFolderSelector = () => {
-      showFolderSelector.value = false;
-    };
-    const toggleFolderSelector = () => {
-      showFolderSelector.value = !showFolderSelector.value;
-    };
+    const {
+      isOpen: showFolderSelector,
+      close: closeFolderSelector,
+      toggle: toggleFolderSelector
+    } = useToggle();
 
     return {
       // References

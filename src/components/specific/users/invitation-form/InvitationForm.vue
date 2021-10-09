@@ -6,7 +6,7 @@
         class="invitation-form__input__email"
         :placeholder="$t('InvitationForm.emailInputPlaceholder')"
         v-model="email"
-        :error="error"
+        :error="hasError"
         :errorMessage="$t('InvitationForm.emailInputErrorMessage')"
         @keyup.enter.stop="submit"
         margin="0px"
@@ -14,9 +14,10 @@
       <BIMDataSelect
         v-if="project"
         class="invitation-form__input__role"
+        width="180px"
         :label="$t('InvitationForm.roleInputLabel')"
-        :options="roles"
-        optionKey="name"
+        :options="roleOptions"
+        optionKey="label"
         v-model="role"
       />
     </div>
@@ -45,8 +46,17 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useNotifications } from "@/composables/notifications";
+import PROJECT_ROLES from "@/config/project-roles";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
+// import { useUser } from "@/state/user";
+
+const roleList = [
+  { id: "admin", value: PROJECT_ROLES.ADMIN },
+  { id: "user", value: PROJECT_ROLES.USER },
+  { id: "guest", value: PROJECT_ROLES.GUEST }
+];
 
 export default {
   props: {
@@ -59,57 +69,73 @@ export default {
       default: null
     }
   },
-  emits: ["close", "success", "error"],
+  emits: ["close", "success"],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
+    const { pushNotification } = useNotifications();
+    // const { spaceRoles, projectRoles } = useUser();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
 
-    const roles = ref([]);
+    const roleOptions = ref([]);
     const role = ref(null);
     watch(
-      () => locale.value,
+      [() => props.space, () => props.project, () => locale.value],
       () => {
-        roles.value = [
-          { value: 100, name: t("InvitationForm.roles.admin") },
-          { value: 50, name: t("InvitationForm.roles.user") },
-          { value: 25, name: t("InvitationForm.roles.guest") }
-        ];
-        role.value = roles.value[0];
+        let availableRoles = roleList;
+
+        // Filter role list according to current user role in space/project
+        // if (props.project) {
+        //   availableRoles = roleList.filter(
+        //     r => r.value <= projectRoles.value[props.project.id]
+        //   );
+        // } else if (props.space) {
+        //   availableRoles = roleList.filter(
+        //     r => r.value <= spaceRoles.value[props.space.id]
+        //   );
+        // }
+
+        roleOptions.value = availableRoles.map(r => ({
+          ...r,
+          label: t(`InvitationForm.roles.${r.id}`)
+        }));
+
+        role.value = roleOptions.value[0];
       },
       { immediate: true }
     );
 
     const emailInput = ref(null);
     const email = ref("");
-    const error = ref(false);
+    const hasError = ref(false);
 
     const reset = () => {
       email.value = "";
-      error.value = false;
+      hasError.value = false;
     };
 
     const submit = async () => {
       if (email.value) {
-        try {
-          if (props.project) {
-            await sendProjectInvitation(props.project, {
-              email: email.value,
-              role: role.value.value
-            });
-          } else if (props.space) {
-            await sendSpaceInvitation(props.space, {
-              email: email.value
-            });
-          }
-          reset();
-          emit("success");
-        } catch (error) {
-          emit("error", error);
+        if (props.project) {
+          await sendProjectInvitation(props.project, {
+            email: email.value,
+            role: role.value.value
+          });
+        } else if (props.space) {
+          await sendSpaceInvitation(props.space, {
+            email: email.value
+          });
         }
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("InvitationForm.successNotifText")
+        });
+        reset();
+        emit("success");
       } else {
         emailInput.value.focus();
-        error.value = true;
+        hasError.value = true;
       }
     };
 
@@ -126,9 +152,9 @@ export default {
       // References
       email,
       emailInput,
-      error,
+      hasError,
       role,
-      roles,
+      roleOptions,
       // Methods
       close,
       submit

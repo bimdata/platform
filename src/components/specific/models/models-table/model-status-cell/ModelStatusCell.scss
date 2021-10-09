@@ -4,22 +4,22 @@
   align-items: center;
   width: 18px;
   height: 18px;
-  margin: $spacing-unit/2;
+  margin: calc(var(--spacing-unit) / 2);
 
   &--pending,
   &--in-progress {
-    color: $color-primary;
+    color: var(--color-primary);
   }
 
   &--completed {
-    color: $color-success;
+    color: var(--color-success);
   }
 
   &--warning {
-    color: $color-warning;
+    color: var(--color-warning);
   }
 
   &--error {
-    color: $color-high;
+    color: var(--color-high);
   }
 }

@@ -1,6 +1,6 @@
 .folder-creation-form {
-  padding: $spacing-unit;
-  background-color: $color-white;
+  padding: var(--spacing-unit);
+  background-color: var(--color-white);
 
   display: flex;
   flex-wrap: wrap;
@@ -9,8 +9,8 @@
     width: 100%;
     display: flex;
     align-items: flex-end;
-    gap: $spacing-unit/2;
-    color: $color-primary;
+    gap: calc(var(--spacing-unit) / 2);
+    color: var(--color-primary);
   }
 
   &__input {
@@ -23,6 +23,6 @@
   }
 
   &__btn-submit {
-    margin-left: $spacing-unit;
+    margin-left: var(--spacing-unit);
   }
 }
