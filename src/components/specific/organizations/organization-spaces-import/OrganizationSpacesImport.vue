@@ -35,7 +35,7 @@
             color="primary"
             fill
             radius
-            @click="reset"
+            @click="close"
           >
             {{ $t("OrganizationSpacesImport.successButtonText") }}
           </BIMDataButton>
@@ -115,6 +115,23 @@ export default {
       importOrganizationSpaces
     } = useOrganizations();
 
+    const loading = ref(false);
+    const isSuccess = ref(false);
+
+    const reset = () => {
+      loading.value = false;
+      isSuccess.value = false;
+      selection.value = new Map();
+    };
+    const close = () => {
+      reset();
+      emit("close");
+    };
+    const closePanel = () => {
+      reset();
+      emit("close-panel");
+    };
+
     const spaces = computed(() => {
       return userOrganizations.value.reduce(
         (acc, orga) =>
@@ -145,23 +162,6 @@ export default {
       } finally {
         loading.value = false;
       }
-    };
-
-    const loading = ref(false);
-    const isSuccess = ref(false);
-
-    const reset = () => {
-      loading.value = false;
-      isSuccess.value = false;
-      selection.value = new Map();
-    };
-    const close = () => {
-      reset();
-      emit("close");
-    };
-    const closePanel = () => {
-      reset();
-      emit("close-panel");
     };
 
     return {
