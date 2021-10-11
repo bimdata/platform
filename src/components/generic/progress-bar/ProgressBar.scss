@@ -1,0 +1,25 @@
+.bimdata-progress {
+  &__content {
+    position: relative;
+    height: 6px;
+    border-radius: 15px;
+    background-color: var(--color-tertiary);
+    &__bar {
+      height: 100%;
+      border-radius: 15px;
+      &--good {
+        background-color: var(--color-success);
+      }
+      &--warning {
+        background-color: var(--color-warning);
+      }
+      &--high {
+        background-color: var(--color-high);
+      }
+    }
+  }
+  &--text {
+    color: var(--color-tertiary-dark);
+    font-size: 13px;
+  }
+}
