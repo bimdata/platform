@@ -97,6 +97,20 @@ export default {
     const hasInvalidName = ref(false);
     const isSuccess = ref(false);
 
+    const reset = () => {
+      loading.value = false;
+      hasInvalidName.value = false;
+      isSuccess.value = false;
+    };
+    const close = () => {
+      reset();
+      emit("close");
+    };
+    const closePanel = () => {
+      reset();
+      emit("close-panel");
+    };
+
     const orgaName = ref("");
     const orgaLogo = ref(null);
 
@@ -109,22 +123,6 @@ export default {
       },
       { immediate: true }
     );
-
-    const reset = () => {
-      loading.value = false;
-      hasInvalidName.value = false;
-      isSuccess.value = false;
-    };
-
-    const close = () => {
-      reset();
-      emit("close");
-    };
-
-    const closePanel = () => {
-      reset();
-      emit("close-panel");
-    };
 
     const submit = async () => {
       hasInvalidName.value = false;
