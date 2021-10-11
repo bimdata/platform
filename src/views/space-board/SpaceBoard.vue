@@ -15,10 +15,36 @@
         />
       </template>
       <template #right>
-        <BIMDataButton color="secondary" fill radius @click="buyPlatformPro">
-          {{ $t("SpaceBoard.upgradeStorageButton") }}
-        </BIMDataButton>
-        <!-- <BIMDataButton
+        <div class="flex items-center">
+          <div class="flex" v-if="isSpacePay">
+            <ProgressBar class="m-r-12">
+              <template #text-left-below>Using 5G from 10Go</template>
+            </ProgressBar>
+            <BIMDataButton
+              color="secondary"
+              fill
+              radius
+              @click="updgradeDataPack"
+              class="m-r-18"
+            >
+              {{ $t("SpaceBoard.upgradeStorageButton") }}
+            </BIMDataButton>
+          </div>
+          <div class="flex" v-else>
+            <ProgressBar class="m-r-12">
+              <template #text-left-below>Using 0 from 500Mb included</template>
+            </ProgressBar>
+            <BIMDataButton
+              color="secondary"
+              fill
+              radius
+              @click="buyPlatformPro"
+              class="m-r-18"
+            >
+              Passer à la platform pro
+            </BIMDataButton>
+          </div>
+          <!-- <BIMDataButton
           data-test="btn-filter"
           class="space-board__header__btn-filter"
           fill
@@ -27,27 +53,28 @@
         >
           <BIMDataIcon name="filter" size="s" />
         </BIMDataButton> -->
-        <BIMDataButton
-          data-test="btn-sort"
-          class="space-board__header__btn-sort"
-          fill
-          squared
-          icon
-          @click="sortProjects"
-        >
-          <BIMDataIcon name="alphabeticalSort" size="s" />
-        </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-users"
-          v-if="space.isAdmin"
-          class="space-board__header__btn-users"
-          fill
-          squared
-          icon
-          @click="openUsersManager"
-        >
-          <BIMDataIcon name="addUser" size="s" />
-        </BIMDataButton>
+          <BIMDataButton
+            data-test="btn-sort"
+            class="space-board__header__btn-sort m-r-12"
+            fill
+            squared
+            icon
+            @click="sortProjects"
+          >
+            <BIMDataIcon name="alphabeticalSort" size="s" />
+          </BIMDataButton>
+          <BIMDataButton
+            data-test="btn-users"
+            v-if="space.isAdmin"
+            class="space-board__header__btn-users"
+            fill
+            squared
+            icon
+            @click="openUsersManager"
+          >
+            <BIMDataIcon name="addUser" size="s" />
+          </BIMDataButton>
+        </div>
       </template>
     </ViewHeader>
     <SidePanel :title="$t('SpaceUsersManager.title')">
@@ -76,23 +103,28 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter.js";
-import { useListSort } from "@/composables/list-sort.js";
-import { useSidePanel } from "@/composables/side-panel.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
-import { useAuth } from "@/state/auth.js";
+import { ref, onMounted } from "vue";
+
+import { useListFilter } from "@/composables/list-filter";
+import { useListSort } from "@/composables/list-sort";
+import { useSidePanel } from "@/composables/side-panel";
+import { usePayment } from "@/state/payment.js";
+import { useProjects } from "@/state/projects";
+import { useSpaces } from "@/state/spaces";
+import { useAuth } from "@/state/auth";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
-import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
-import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
+import ProgressBar from "@/components/generic/progress-bar/ProgressBar";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
+import SidePanel from "@/components/generic/side-panel/SidePanel";
+import ViewHeader from "@/components/generic/view-header/ViewHeader";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
+import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
+import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
 
 export default {
   components: {
+    ProgressBar,
     ResponsiveGrid,
     SidePanel,
     ViewHeader,
@@ -106,6 +138,7 @@ export default {
     const { openSidePanel } = useSidePanel();
     const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
+    const { retrieveOrganizationPlaformSubscriptions } = usePayment();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -116,6 +149,20 @@ export default {
       displayedProjects,
       project => project.name
     );
+
+    const organizationPlaformSubscriptions = ref([]);
+    const cloudMap = ref([]);
+    const currentOrganization = currentSpace.value.organization;
+    const isSpacePay = ref(false);
+
+    onMounted(async () => {
+      organizationPlaformSubscriptions.value =
+        await retrieveOrganizationPlaformSubscriptions(currentOrganization);
+      cloudMap.value = organizationPlaformSubscriptions.value.map(
+        organization => organization.cloud.id
+      );
+      isSpacePay.value = cloudMap.value.includes(currentSpace.value.id);
+    });
 
     const buyPlatformPro = async () => {
       Paddle.Product.Prices(12403, function (prices) {
@@ -129,37 +176,34 @@ export default {
           quantity: 5
         })
       );
+      /*      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`, {
+          method: "PATCH", headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${accessToken.value}`,
+          },
+          body: JSON.stringify({
+            cloud_id: currentSpace.value.id,
+            subscription_id: "131457",
+            quantity: 5,
+          })
+        }
+      );
+      return;*/
       // await fetch(
-      //   `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`,
+      //   `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/create-api-data-pack-subscription`,
       //   {
-      //     method: "PATCH",
+      //     method: "post",
       //     headers: {
       //       "content-type": "application/json",
-      //       authorization: `Bearer ${accessToken.value}`,
+      //       authorization: `Bearer ${accessToken.value}`
       //     },
       //     body: JSON.stringify({
-      //       cloud_id: currentSpace.value.id,
-      //       subscription_id: "131457",
-      //       quantity: 5,
+      //       cloud_id: currentSpace.value.id
       //     })
       //   }
       // );
       // return;
-      await fetch(
-        `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/create-api-data-pack-subscription`,
-        {
-          method: "post",
-          headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${accessToken.value}`
-          },
-          body: JSON.stringify({
-            cloud_id: currentSpace.value.id
-          })
-        }
-      );
-      return;
-      // const response = await (
+      // const url = await (
       //   await fetch(
       //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
       //     {
@@ -174,8 +218,9 @@ export default {
       //     }
       //   )
       // ).json();
+
       // Paddle.Checkout.open({
-      //   override: response.url,
+      //   override: url,
       //   disableLogout: true,
       //   referring_domain: "platform self service"
       // });
@@ -188,6 +233,9 @@ export default {
       searchText,
       space: currentSpace,
       users: spaceUsers,
+      organizationPlaformSubscriptions,
+      cloudMap,
+      isSpacePay,
       // Methods
       openUsersManager: openSidePanel,
       sortProjects,
