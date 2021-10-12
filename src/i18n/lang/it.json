@@ -306,8 +306,8 @@
         "spaces": "{number} spazi"
     },
     "OrganizationForm": {
-        "backButtonText": "Indietro",
-        "title": "Crea un organizzazione",
+        "createTitle": "Crea un organizzazione",
+        "updateTitle": "Rinomina organizzazione",
         "nameInputPlaceholder": "Nome",
         "nameInputErrorMessage": "Nome non valido",
         "submitButtonText": "Convalida",

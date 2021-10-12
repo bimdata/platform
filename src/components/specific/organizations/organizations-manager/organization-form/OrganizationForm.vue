@@ -7,11 +7,14 @@
 
       <template v-else>
         <div class="organization-form__content">
-          <div class="organization-form__title">
-            {{ $t("OrganizationForm.title") }}
+          <div class="form-title">
+            {{
+              $t(`OrganizationForm.${isUpdate ? "updateTitle" : "createTitle"}`)
+            }}
           </div>
-          <div class="organization-form__section">
-            <div class="organization-form__section__title">
+
+          <div class="form-section--name">
+            <div class="form-section__title">
               {{ $t("OrganizationForm.infoSectionTitle") }}
             </div>
             <BIMDataInput
@@ -21,17 +24,29 @@
               v-model="orgaName"
             />
           </div>
-          <div class="organization-form__section">
-            <div class="organization-form__section__title">
-              {{ $t("OrganizationForm.logoSectionTitle") }}
+
+          <div class="form-section--logo">
+            <div class="logo-preview" v-show="orgaLogoUrl">
+              <img :src="orgaLogoUrl" />
             </div>
-            <input
-              type="file"
-              accept="image/png, image/jpeg"
-              @change="orgaLogo = $event.target.files[0]"
-            />
+            <div class="logo-input">
+              <div class="logo-input__title">
+                {{ $t("OrganizationForm.logoInputLabel") }}
+              </div>
+              <div>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  @change="orgaLogoFile = $event.target.files[0]"
+                />
+              </div>
+              <div class="logo-input__message">
+                {{ $t("OrganizationForm.logoInputMessage") }}
+              </div>
+            </div>
           </div>
-          <div class="organization-form__action">
+
+          <div class="form-action">
             <BIMDataButton width="120px" color="primary" fill radius>
               {{ $t("OrganizationForm.submitButtonText") }}
             </BIMDataButton>
@@ -43,7 +58,7 @@
 </template>
 
 <script>
-import { inject, ref, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
 import OrganizationFormSuccess from "./organization-form-success/OrganizationFormSuccess.vue";
@@ -57,8 +72,9 @@ export default {
 
     const localState = inject("localState");
 
+    const isUpdate = computed(() => !!localState.organization);
     const hasInvalidName = ref(false);
-    const isSuccess = ref(true);
+    const isSuccess = ref(false);
 
     const reset = () => {
       localState.loading = false;
@@ -67,13 +83,21 @@ export default {
     };
 
     const orgaName = ref("");
-    const orgaLogo = ref(null);
+    const orgaLogoUrl = ref("");
+    const orgaLogoFile = ref(null);
+
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      orgaLogoUrl.value = reader.result;
+    });
+    watch(orgaLogoFile, file => reader.readAsDataURL(file));
 
     watch(
       () => localState.organization,
       () => {
-        if (localState.organization) {
+        if (isUpdate.value) {
           orgaName.value = localState.organization.name;
+          orgaLogoUrl.value = localState.organization.logo;
         }
       },
       { immediate: true }
@@ -88,7 +112,7 @@ export default {
       try {
         localState.loading = true;
         const newOrganization = { name: orgaName.value };
-        if (localState.organization) {
+        if (isUpdate.value) {
           await updateOrganization(newOrganization);
         } else {
           await createOrganization(newOrganization);
@@ -103,7 +127,9 @@ export default {
       // References
       hasInvalidName,
       isSuccess,
-      orgaLogo,
+      isUpdate,
+      orgaLogoFile,
+      orgaLogoUrl,
       orgaName,
       // Methods
       reset,
