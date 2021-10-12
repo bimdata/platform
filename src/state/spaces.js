@@ -6,7 +6,8 @@ const state = reactive({
   userSpaces: [],
   currentSpace: null,
   spaceUsers: [],
-  spaceInvitations: []
+  spaceInvitations: [],
+  spaceSize: []
 });
 
 const loadUserSpaces = async () => {
@@ -115,6 +116,12 @@ const deleteSpaceUser = async (space, user) => {
   return user;
 };
 
+const cloudSize = async space => {
+  const size = await SpaceService.cloudSize(space);
+  state.spaceSize = size.spaceSize;
+  return size;
+};
+
 export function useSpaces() {
   const readonlyState = readonly(state);
   return {
@@ -134,6 +141,7 @@ export function useSpaces() {
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,
-    deleteSpaceUser
+    deleteSpaceUser,
+    cloudSize
   };
 }
