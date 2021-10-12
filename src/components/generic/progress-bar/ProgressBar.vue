@@ -7,8 +7,8 @@
     <div class="bimdata-progress__content" :style="{ width: componentWidth }">
       <div
         class="bimdata-progress__content__bar"
-        :style="{ width: progressWidth }"
-        :class="[`bimdata-progress__content__bar--${indicatorColor}`]"
+        :style="{ width: progressPercent + '%' }"
+        :class="[`bimdata-progress__content__bar--${indicatorColorState}`]"
       ></div>
     </div>
     <div class="bimdata-progress--text flex justify-between m-t-6">
@@ -19,35 +19,29 @@
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
   props: {
     componentWidth: {
       type: String,
       default: "230px"
     },
-    progressWidth: {
-      type: String,
-      default: "1%"
-    },
-    indicatorColor: {
-      type: String,
-      default: "good",
-      validator: value => ["good", "warning", "high"].includes(value)
+    progressPercent: {
+      type: Number,
+      default: 0
     }
   },
   setup(props) {
-    const indicatorColorState = () => {
-      const indicator = (10 * 10) / 3;
-      if (props.progressWidth <= indicator) {
-        console.log("good indicator:");
+    const indicatorColorState = computed(() => {
+      if (33 < props.progressPercent && props.progressPercent <= 66) {
+        return "warning";
       }
-      if (indicator <= props.progressWidth <= indicator * 2) {
-        console.log("warning indicator:");
+      if (props.progressPercent > 66) {
+        return "high";
       }
-      if (props.progressWidth >= indicator * 2) {
-        console.log("high indicator:");
-      }
-    };
+      return "good";
+    });
     return {
       indicatorColorState
     };
