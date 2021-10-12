@@ -1,90 +1,66 @@
 <template>
   <div class="organizations-manager">
+    <div
+      v-show="localState.currentView !== 'list'"
+      class="organizations-manager__header"
+    >
+      <BIMDataButton ghost radius :disabled="localState.loading" @click="back">
+        <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
+        <span>{{ $t("OrganizationsManager.backButtonText") }}</span>
+      </BIMDataButton>
+      <TextBox
+        v-if="localState.organization"
+        :text="localState.organization.name"
+        :maxLength="24"
+      />
+      <BIMDataButton
+        ghost
+        rounded
+        icon
+        :disabled="localState.loading"
+        @click="close"
+      >
+        <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
+      </BIMDataButton>
+    </div>
+
+    <transition name="fade">
+      <div v-show="localState.loading" class="organizations-manager__loader">
+        <BIMDataSpinner />
+      </div>
+    </transition>
+
     <transition name="fade" mode="out-in">
-      <template v-if="showForm">
-        <div class="organizations-manager__form">
-          <OrganizationForm
-            :organization="selectedOrganization"
-            @close="closeForm"
-            @close-panel="closePanel"
-          />
-        </div>
-      </template>
-
-      <template v-else-if="showSpaces">
-        <div class="organizations-manager__spaces">
-          <OrganizationSpacesManager
-            :organization="selectedOrganization"
-            @close="closeSpaces"
-            @close-panel="closePanel"
-          />
-        </div>
-      </template>
-
-      <template v-else-if="showDeleteGuard">
-        <div class="organizations-manager__delete-guard">
-          <!-- <OrganizationDeleteGuard
-            :organization="selectedOrganization"
-            @close="closeDeleteGuard"
-            @close-panel="closePanel"
-          /> -->
-        </div>
-      </template>
-
-      <template v-else>
-        <div class="organizations-manager__list">
-          <BIMDataButton outline radius color="primary" @click="openForm()">
-            <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-            <span>{{ $t("OrganizationsManager.createButtonText") }}</span>
-          </BIMDataButton>
-
-          <!-- <BIMDataText color="color-tertiary-dark"> -->
-          <p class="color-tertiary-dark">
-            {{ $t("OrganizationsManager.explanationText") }}
-          </p>
-          <!-- </BIMDataText> -->
-
-          <BIMDataSearch
-            width="100%"
-            :placeholder="$t('OrganizationsManager.searchInputPlaceholder')"
-            v-model="searchText"
-            clear
-          />
-
-          <div class="list-container">
-            <transition-group name="list">
-              <OrganizationCard
-                v-for="orga in displayedOrganizations"
-                :key="orga.id"
-                :organization="orga"
-                @click="openSpaces(orga)"
-                @update="openForm(orga)"
-                @delete="openDeleteGuard(orga)"
-              />
-            </transition-group>
-          </div>
-        </div>
-      </template>
+      <component :is="currentView" />
     </transition>
   </div>
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import { useListFilter } from "@/composables/list-filter.js";
+import { computed, provide, reactive, watch } from "vue";
 import { useSidePanel } from "@/composables/side-panel.js";
 // Components
-import OrganizationCard from "@/components/specific/organizations/organization-card/OrganizationCard.vue";
-// import OrganizationDeleteGuard from "@/components/specific/organizations/organization-delete-guard/OrganizationDeleteGuard.vue";
-import OrganizationForm from "@/components/specific/organizations/organization-form/OrganizationForm.vue";
-import OrganizationSpacesManager from "@/components/specific/organizations/organization-spaces-manager/OrganizationSpacesManager.vue";
+import OrganizationDeleteGuard from "./organization-delete-guard/OrganizationDeleteGuard.vue";
+import OrganizationForm from "./organization-form/OrganizationForm.vue";
+import OrganizationsList from "./organizations-list/OrganizationsList.vue";
+import OrganizationSpacesImport from "./organization-spaces-import/OrganizationSpacesImport.vue";
+import OrganizationSpacesList from "./organization-spaces-list/OrganizationSpacesList.vue";
+
+const localViews = {
+  list: "OrganizationsList",
+  form: "OrganizationForm",
+  "delete-guard": "OrganizationDeleteGuard",
+  "spaces-list": "OrganizationSpacesList",
+  "spaces-import": "OrganizationSpacesImport"
+};
 
 export default {
   components: {
-    OrganizationCard,
-    // OrganizationDeleteGuard,
+    OrganizationDeleteGuard,
     OrganizationForm,
-    OrganizationSpacesManager
+    OrganizationsList,
+    OrganizationSpacesImport,
+    OrganizationSpacesList
   },
   props: {
     organizations: {
@@ -95,62 +71,50 @@ export default {
   setup(props) {
     const { closeSidePanel } = useSidePanel();
 
-    const selectedOrganization = ref(null);
+    const localState = reactive({
+      organizations: [],
+      organization: null,
+      currentView: "list",
+      loading: false
+    });
 
-    const showForm = ref(false);
-    const showSpaces = ref(false);
-    const showDeleteGuard = ref(false);
+    const currentView = computed(() => localViews[localState.currentView]);
+
+    provide("localState", localState);
+
+    watch(
+      () => props.organizations,
+      () => (localState.organizations = props.organizations),
+      { immediate: true }
+    );
+
     const reset = () => {
-      selectedOrganization.value = null;
-      showForm.value = false;
-      showSpaces.value = false;
-      showDeleteGuard.value = false;
+      localState.organization = null;
+      localState.currentView = "list";
+      localState.loading = false;
     };
 
-    const openForm = orga => {
-      reset();
-      selectedOrganization.value = orga;
-      showForm.value = true;
+    const back = () => {
+      if (localState.currentView === "spaces-import") {
+        localState.currentView = "spaces-list";
+      } else {
+        reset();
+      }
     };
 
-    const openSpaces = orga => {
-      reset();
-      selectedOrganization.value = orga;
-      showSpaces.value = true;
-    };
-
-    const openDeleteGuard = orga => {
-      reset();
-      selectedOrganization.value = orga;
-      showDeleteGuard.value = true;
-    };
-
-    const closePanel = () => {
+    const close = () => {
       reset();
       closeSidePanel();
     };
 
-    const { filteredList: displayedOrganizations, searchText } = useListFilter(
-      computed(() => props.organizations),
-      organization => organization.name
-    );
-
     return {
       // References
-      displayedOrganizations,
-      searchText,
-      selectedOrganization,
-      showDeleteGuard,
-      showForm,
-      showSpaces,
+      currentView,
+      localState,
       // Methods
-      closeDeleteGuard: reset,
-      closeForm: reset,
-      closePanel,
-      closeSpaces: reset,
-      openDeleteGuard,
-      openForm,
-      openSpaces
+      back,
+      close,
+      open
     };
   }
 };

@@ -307,40 +307,31 @@
     },
     "OrganizationForm": {
         "backButtonText": "Indietro",
-        "title": "",
-        "infoSectionTitle": "",
-        "logoSectionTitle": "",
+        "title": "Crea un organizzazione",
         "nameInputPlaceholder": "Nome",
         "nameInputErrorMessage": "Nome non valido",
         "submitButtonText": "Convalida",
-        "successTitle": "",
-        "successMessage": "",
         "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "createButtonText": "Crea un organizzazione",
+        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
     },
     "OrganizationsManager": {
         "title": "Gestione delle organizzazioni",
-        "explanationText": "",
-        "createButtonText": "Crea un organizzazione",
-        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
+        "backButtonText": "Indietro"
     },
     "OrganizationSpaceCard": {
         "projects": "{number} progetti"
     },
     "OrganizationSpacesImport": {
         "backButtonText": "Indietro",
-        "spaceListTitle": "",
-        "spaceListPlaceholder": "",
         "submitButtonText": "Convalida",
-        "successTitle": "",
-        "successMessage": "",
         "successButtonText": "OK"
     },
-    "OrganizationSpacesManager": {
+    "OrganizationSpacesList": {
         "backButtonText": "Indietro",
-        "importButtonText": "",
-        "addButtonText": "",
-        "searchInputPlaceholder": "Cercare",
-        "spaceListTitle": ""
+        "searchInputPlaceholder": "Cercare"
     },
     "ProjectCardActionMenu": {
         "renameButtonText": "Rinomina",
@@ -365,7 +356,7 @@
         "createButtonText": "Crea"
     },
     "ProjectStatusBadge": {
-        "active": ""
+        "active": "ATTIVO"
     },
     "ProjectUsersManager": {
         "title": "Utenti del progetto",

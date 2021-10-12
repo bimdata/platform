@@ -1,40 +1,32 @@
 .organizations-manager {
   height: 100%;
 
-  &__form,
-  &__spaces,
-  &__delete-guard {
+  &__header {
     position: absolute;
     z-index: 2;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    padding: var(--spacing-unit);
+    top: var(--spacing-unit);
+    left: var(--spacing-unit);
+    width: calc(100% - var(--spacing-unit) * 2);
+    height: 44px;
+    padding: calc(var(--spacing-unit) / 2) 0;
     background-color: var(--color-white);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  &__list {
+  &__loader {
+    position: relative;
+    z-index: 1;
     height: 100%;
+    background-color: var(--color-white);
+
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-unit);
-    padding-top: var(--spacing-unit);
-
-    .bimdata-search-bar {
-      min-height: 32px;
-      background-color: var(--color-tertiary-lightest);
-      &.focus {
-        background-color: var(--color-white);
-      }
-    }
-
-    .list-container {
-      display: flex;
-      flex-direction: column;
-      padding-bottom: calc(var(--spacing-unit) / 2);
-      overflow-x: hidden;
-      overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    .bimdata-spinner {
+      transform: scale(2);
     }
   }
 }

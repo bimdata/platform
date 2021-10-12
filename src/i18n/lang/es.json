@@ -306,41 +306,28 @@
         "spaces": "{number} espacios"
     },
     "OrganizationForm": {
-        "backButtonText": "Retorno",
-        "title": "",
-        "infoSectionTitle": "",
-        "logoSectionTitle": "",
         "nameInputPlaceholder": "Nombre",
         "nameInputErrorMessage": "Este nombre no es válido",
         "submitButtonText": "Validar",
-        "successTitle": "",
-        "successMessage": "",
         "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "createButtonText": "Crear un organización",
+        "searchInputPlaceholder": "Buscar un organización"
     },
     "OrganizationsManager": {
         "title": "Gestión de organizaciones",
-        "explanationText": "",
-        "createButtonText": "Crear un organización",
-        "searchInputPlaceholder": "Buscar un organización"
+        "backButtonText": "Retorno"
     },
     "OrganizationSpaceCard": {
         "projects": "{number} proyectos"
     },
     "OrganizationSpacesImport": {
-        "backButtonText": "Retorno",
-        "spaceListTitle": "",
-        "spaceListPlaceholder": "",
         "submitButtonText": "Validar",
-        "successTitle": "",
-        "successMessage": "",
         "successButtonText": "OK"
     },
-    "OrganizationSpacesManager": {
-        "backButtonText": "Retorno",
-        "importButtonText": "",
-        "addButtonText": "",
-        "searchInputPlaceholder": "Buscar",
-        "spaceListTitle": ""
+    "OrganizationSpacesList": {
+        "searchInputPlaceholder": "Buscar"
     },
     "ProjectCardActionMenu": {
         "renameButtonText": "Renombrar",
@@ -365,7 +352,7 @@
         "createButtonText": "Crear"
     },
     "ProjectStatusBadge": {
-        "active": ""
+        "active": "ACTIVO"
     },
     "ProjectUsersManager": {
         "title": "Usuarios",

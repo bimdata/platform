@@ -413,7 +413,6 @@
   },
 
   "OrganizationForm": {
-    "backButtonText": "Back",
     "title": "Create an organisation",
     "infoSectionTitle": "Basic information",
     "logoSectionTitle": "Upload logo",
@@ -421,15 +420,17 @@
     "nameInputErrorMessage": "Invalid name",
     "submitButtonText": "Validate",
     "successTitle": "Congratulation your organization has just been created",
-    "successMessage": "",
     "successButtonText": "OK"
+  },
+
+  "OrganizationsList": {
+    "createButtonText": "Add new organization",
+    "searchInputPlaceholder": "Search an organization"
   },
 
   "OrganizationsManager": {
     "title": "Manage organizations",
-    "explanationText": "",
-    "createButtonText": "Add new organization",
-    "searchInputPlaceholder": "Search an organization"
+    "backButtonText": "Back"
   },
   
   "OrganizationSpaceCard": {
@@ -437,17 +438,14 @@
   },
 
   "OrganizationSpacesImport": {
-    "backButtonText": "Back",
     "spaceListTitle": "Select spaces to import",
     "spaceListPlaceholder": "No space to import...",
     "submitButtonText": "Import spaces",
     "successTitle": "Spaces successfully imported",
-    "successMessage": "",
     "successButtonText": "OK"
   },
 
-  "OrganizationSpacesManager": {
-    "backButtonText": "Back",
+  "OrganizationSpacesList": {
     "importButtonText": "Import space",
     "addButtonText": "Add new space",
     "searchInputPlaceholder": "Search",
