@@ -34,13 +34,16 @@ export default {
   },
   setup(props) {
     const indicatorColorState = computed(() => {
+      if (props.progressPercent <= 33) {
+        return "good";
+      }
       if (33 < props.progressPercent && props.progressPercent <= 66) {
         return "warning";
       }
       if (props.progressPercent > 66) {
         return "high";
       }
-      return "good";
+      return "";
     });
     return {
       indicatorColorState
