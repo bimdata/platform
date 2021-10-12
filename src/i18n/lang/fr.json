@@ -413,7 +413,6 @@
   },
 
   "OrganizationForm": {
-    "backButtonText": "Retour",
     "title": "Création d'organisation",
     "infoSectionTitle": "Information de base",
     "logoSectionTitle": "Logo de l'organisation",
@@ -425,11 +424,15 @@
     "successButtonText": "OK"
   },
 
-  "OrganizationsManager": {
-    "title": "Gestion des organizations",
+  "OrganizationsList": {
     "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
     "createButtonText": "Créer une organisation",
     "searchInputPlaceholder": "Rechercher une organisation"
+  },
+
+  "OrganizationsManager": {
+    "title": "Gestion des organizations",
+    "backButtonText": "Retour"
   },
 
   "OrganizationSpaceCard": {
@@ -437,7 +440,6 @@
   },
 
   "OrganizationSpacesImport": {
-    "backButtonText": "retour",
     "spaceListTitle": "Sélectionnez les espaces à importer",
     "spaceListPlaceholder": "Aucun espace à importer...",
     "submitButtonText": "Importer",
@@ -446,8 +448,7 @@
     "successButtonText": "OK"
   },
 
-  "OrganizationSpacesManager": {
-    "backButtonText": "Retour",
+  "OrganizationSpacesList": {
     "importButtonText": "Importer un espace",
     "addButtonText": "Ajouter un espace",
     "searchInputPlaceholder": "Rechercher",
