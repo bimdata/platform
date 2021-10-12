@@ -413,11 +413,13 @@
   },
 
   "OrganizationForm": {
-    "title": "Create an organisation",
+    "createTitle": "Create an organization",
+    "updateTitle": "Update organization",
     "infoSectionTitle": "Basic information",
-    "logoSectionTitle": "Upload logo",
     "nameInputPlaceholder": "Name",
     "nameInputErrorMessage": "Invalid name",
+    "logoInputLabel": "Upload logo",
+    "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
     "submitButtonText": "Validate",
     "successTitle": "Congratulation your organization has just been created",
     "successButtonText": "OK"

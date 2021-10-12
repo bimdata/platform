@@ -413,11 +413,13 @@
   },
 
   "OrganizationForm": {
-    "title": "Création d'organisation",
+    "createTitle": "Création d'organisation",
+    "updateTitle": "Modifier l'organisation",
     "infoSectionTitle": "Information de base",
-    "logoSectionTitle": "Logo de l'organisation",
     "nameInputPlaceholder": "Nom",
     "nameInputErrorMessage": "Nom invalide",
+    "logoInputLabel": "Choisir un logo",
+    "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
     "submitButtonText": "Valider",
     "successTitle": "Félicitation votre organisation vient d'être créée",
     "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
