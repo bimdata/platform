@@ -26,7 +26,7 @@ const retrieveOrganizationSpaces = async organization => {
 };
 
 const getOrganizationSpaces = organization => {
-  return readonly(state.organizationSpaces[organization.id] || []);
+  return readonly(state.organizationSpaces[organization?.id] || []);
 };
 
 const createOrganization = async organization => {
