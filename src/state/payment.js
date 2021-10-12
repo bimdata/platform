@@ -7,6 +7,15 @@ const state = reactive({
   organizationPlatformSubscriptions: []
 });
 
+const retrievePlaformSubscriptions = async (orga, space) => {
+  const subscription = await PaymentService.retrievePlaformSubscriptions(
+    orga,
+    space
+  );
+  state.platformSubscriptions = subscription.platformSubscriptions;
+  return subscription;
+};
+
 const retrieveOrganizationPlaformSubscriptions = async orga => {
   const organization =
     await PaymentService.retrieveOrganizationPlatformSubscriptions(orga);
@@ -44,7 +53,7 @@ const createPaddleSubscriptionUrl = async () => {
 export function usePayment() {
   return {
     // Methods
-    // retrievePlaformSubscriptions,
+    retrievePlaformSubscriptions,
     retrieveOrganizationPlaformSubscriptions,
     retrievePlaformSubscriptionPayments,
     subscribeDataPack,
