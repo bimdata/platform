@@ -41,8 +41,14 @@
     "searchInputPlaceholder": "Search groups"
   },
   "SpaceBoard": {
-    "searchInputPlaceholder": "Search projects",
-    "upgradeStorageButton": "upgrade storage"
+    "progressBar": {
+      "buyPlatformProButton": "Switch to the pro platform ",
+      "from": "out of",
+      "included": "included",
+      "upgradeStorageButton": "Upgrade storage",
+      "using": "using"
+    },
+    "searchInputPlaceholder": "Search projects"
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
