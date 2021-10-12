@@ -17,28 +17,35 @@
       <template #right>
         <div class="flex items-center">
           <div class="flex" v-if="isSpacePay">
-            <ProgressBar class="m-r-12">
-              <template #text-left-below>Using 5G from 10Go</template>
+            <ProgressBar class="m-r-12" :progressPercent="calcSize">
+              <template #text-left-below
+                >Using {{ formatBytes(spaceSize.smart_data_size) }} from
+                {{ formatBytes(spaceSize.smart_data_size_available) }}</template
+              >
             </ProgressBar>
             <BIMDataButton
               color="secondary"
               fill
               radius
-              @click="updgradeDataPack"
+              @click="goToPaddlePayment"
               class="m-r-18"
             >
               {{ $t("SpaceBoard.upgradeStorageButton") }}
             </BIMDataButton>
           </div>
           <div class="flex" v-else>
-            <ProgressBar class="m-r-12">
-              <template #text-left-below>Using 0 from 500Mb included</template>
+            <ProgressBar class="m-r-12" :progressPercent="calcSize">
+              <template #text-left-below
+                >Using {{ formatBytes(spaceSize.smart_data_size) }} from
+                {{ formatBytes(spaceSize.smart_data_size_available) }}
+                included</template
+              >
             </ProgressBar>
             <BIMDataButton
               color="secondary"
               fill
               radius
-              @click="buyPlatformPro"
+              @click="goToPaddlePayment"
               class="m-r-18"
             >
               Passer à la platform pro
@@ -105,13 +112,17 @@
 <script>
 import { ref, onMounted } from "vue";
 
+import { useRouter } from "vue-router";
+import { routeNames } from "@/router";
+
 import { useListFilter } from "@/composables/list-filter";
 import { useListSort } from "@/composables/list-sort";
 import { useSidePanel } from "@/composables/side-panel";
 import { usePayment } from "@/state/payment.js";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
-import { useAuth } from "@/state/auth";
+
+import { formatBytes } from "@/utils/formatBytes.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar";
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
@@ -134,11 +145,15 @@ export default {
     SpaceUsersManager
   },
   setup() {
-    const { accessToken } = useAuth();
-    const { openSidePanel } = useSidePanel();
-    const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
+    const { currentSpace, spaceUsers, spaceInvitations, cloudSize } =
+      useSpaces();
     const { spaceProjects } = useProjects();
-    const { retrieveOrganizationPlaformSubscriptions } = usePayment();
+    const { openSidePanel } = useSidePanel();
+    const {
+      retrievePlaformSubscriptions,
+      retrieveOrganizationPlaformSubscriptions
+    } = usePayment();
+    const router = useRouter();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -151,9 +166,12 @@ export default {
     );
 
     const organizationPlaformSubscriptions = ref([]);
+    const platformSubscriptions = ref([]);
+    const spaceSize = ref({});
     const cloudMap = ref([]);
     const currentOrganization = currentSpace.value.organization;
     const isSpacePay = ref(false);
+    const calcSize = ref(Number);
 
     onMounted(async () => {
       organizationPlaformSubscriptions.value =
@@ -161,69 +179,23 @@ export default {
       cloudMap.value = organizationPlaformSubscriptions.value.map(
         organization => organization.cloud.id
       );
+      // boolean for upgrade platform or pay platform pro
       isSpacePay.value = cloudMap.value.includes(currentSpace.value.id);
+      platformSubscriptions.value = await retrievePlaformSubscriptions(
+        currentOrganization,
+        currentSpace.value
+      );
+
+      // cloud size value
+      spaceSize.value = await cloudSize(currentSpace.value);
+      spaceSize.value = JSON.parse(spaceSize.value);
+
+      // calculation of the remaining size
+      calcSize.value = 100 - spaceSize.value.remaining_smart_data_size_percent;
     });
 
-    const buyPlatformPro = async () => {
-      Paddle.Product.Prices(12403, function (prices) {
-        // TODO: set price with with function instead of hard coded value
-        console.log(prices);
-      });
-      console.log(
-        JSON.stringify({
-          cloud_id: currentSpace.value.id,
-          subscription_id: "131457",
-          quantity: 5
-        })
-      );
-      /*      await fetch(`http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/update-plaform-data-pack-subscription`, {
-          method: "PATCH", headers: {
-            'content-type': 'application/json',
-            authorization: `Bearer ${accessToken.value}`,
-          },
-          body: JSON.stringify({
-            cloud_id: currentSpace.value.id,
-            subscription_id: "131457",
-            quantity: 5,
-          })
-        }
-      );
-      return;*/
-      // await fetch(
-      //   `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/create-api-data-pack-subscription`,
-      //   {
-      //     method: "post",
-      //     headers: {
-      //       "content-type": "application/json",
-      //       authorization: `Bearer ${accessToken.value}`
-      //     },
-      //     body: JSON.stringify({
-      //       cloud_id: currentSpace.value.id
-      //     })
-      //   }
-      // );
-      // return;
-      // const url = await (
-      //   await fetch(
-      //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "content-type": "application/json",
-      //         authorization: `Bearer ${accessToken.value}`
-      //       },
-      //       body: JSON.stringify({
-      //         cloud_id: currentSpace.value.id
-      //       })
-      //     }
-      //   )
-      // ).json();
-
-      // Paddle.Checkout.open({
-      //   override: url,
-      //   disableLogout: true,
-      //   referring_domain: "platform self service"
-      // });
+    const goToPaddlePayment = () => {
+      router.push({ name: routeNames.paddlePayment });
     };
 
     return {
@@ -236,10 +208,13 @@ export default {
       organizationPlaformSubscriptions,
       cloudMap,
       isSpacePay,
+      spaceSize,
+      formatBytes,
+      calcSize,
       // Methods
       openUsersManager: openSidePanel,
       sortProjects,
-      buyPlatformPro
+      goToPaddlePayment
     };
   }
 };
