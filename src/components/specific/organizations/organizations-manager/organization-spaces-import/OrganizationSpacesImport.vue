@@ -1,24 +1,7 @@
 <template>
   <div class="organization-spaces-import">
-    <div class="organization-spaces-import__header">
-      <BIMDataButton ghost radius :disabled="loading" @click="close">
-        <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
-        <span>{{ $t("OrganizationSpacesImport.backButtonText") }}</span>
-      </BIMDataButton>
-      <TextBox :text="organization.name" :maxLength="24" />
-      <BIMDataButton ghost rounded icon :disabled="loading" @click="closePanel">
-        <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
-      </BIMDataButton>
-    </div>
-
     <transition name="fade" mode="out-in">
-      <template v-if="loading">
-        <div class="organization-spaces-import__loader">
-          <BIMDataSpinner />
-        </div>
-      </template>
-
-      <template v-else-if="isSuccess">
+      <template v-if="isSuccess">
         <div class="organization-spaces-import__success">
           <img
             class="organization-spaces-import__success__image"
@@ -35,7 +18,7 @@
             color="primary"
             fill
             radius
-            @click="close"
+            @click="reset"
           >
             {{ $t("OrganizationSpacesImport.successButtonText") }}
           </BIMDataButton>
@@ -92,7 +75,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
 import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
@@ -101,42 +84,30 @@ export default {
   components: {
     SpaceCardImage
   },
-  props: {
-    organization: {
-      type: Object,
-      required: true
-    }
-  },
-  emits: ["close", "close-panel"],
-  setup(props, { emit }) {
+  setup() {
     const {
       userOrganizations,
       getOrganizationSpaces,
       importOrganizationSpaces
     } = useOrganizations();
 
-    const loading = ref(false);
+    const localState = inject("localState");
+
     const isSuccess = ref(false);
 
     const reset = () => {
-      loading.value = false;
+      localState.loading = false;
       isSuccess.value = false;
       selection.value = new Map();
-    };
-    const close = () => {
-      reset();
-      emit("close");
-    };
-    const closePanel = () => {
-      reset();
-      emit("close-panel");
     };
 
     const spaces = computed(() => {
       return userOrganizations.value.reduce(
         (acc, orga) =>
           acc.concat(
-            orga.id === props.organization.id ? [] : getOrganizationSpaces(orga)
+            orga.id === localState.organization.id
+              ? []
+              : getOrganizationSpaces(orga)
           ),
         []
       );
@@ -155,24 +126,21 @@ export default {
 
     const submit = async () => {
       try {
-        loading.value = true;
-        await importOrganizationSpaces(props.organization, [
+        localState.loading = true;
+        await importOrganizationSpaces(localState.organization, [
           ...selection.value.values()
         ]);
       } finally {
-        loading.value = false;
+        localState.loading = false;
       }
     };
 
     return {
       // References
       isSuccess,
-      loading,
       selection,
       spaces,
       // Methods
-      close,
-      closePanel,
       reset,
       submit,
       toggle
