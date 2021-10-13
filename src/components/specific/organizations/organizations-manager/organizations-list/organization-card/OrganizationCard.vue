@@ -43,14 +43,9 @@ export default {
   },
   emits: ["delete", "update"],
   setup(props) {
-    const { getOrganizationSpaces, retrieveOrganizationSpaces } =
-      useOrganizations();
+    const { getOrganizationSpaces } = useOrganizations();
 
     const spaces = computed(() => getOrganizationSpaces(props.organization));
-
-    onBeforeMount(async () => {
-      await retrieveOrganizationSpaces(props.organization);
-    });
 
     return {
       // References
