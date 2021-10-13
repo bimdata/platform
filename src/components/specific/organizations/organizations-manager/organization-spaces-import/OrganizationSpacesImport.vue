@@ -2,27 +2,7 @@
   <div class="organization-spaces-import">
     <transition name="fade" mode="out-in">
       <template v-if="isSuccess">
-        <div class="organization-spaces-import__success">
-          <img
-            class="organization-spaces-import__success__image"
-            src="/static/organization-form-success.svg"
-          />
-          <div class="organization-spaces-import__success__title">
-            {{ $t("OrganizationSpacesImport.successTitle") }}
-          </div>
-          <div class="organization-spaces-import__success__message">
-            {{ $t("OrganizationSpacesImport.successMessage") }}
-          </div>
-          <BIMDataButton
-            width="120px"
-            color="primary"
-            fill
-            radius
-            @click="reset"
-          >
-            {{ $t("OrganizationSpacesImport.successButtonText") }}
-          </BIMDataButton>
-        </div>
+        <OrganizationImportSuccess @close="reset" />
       </template>
 
       <template v-else>
@@ -79,9 +59,11 @@ import { computed, inject, ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
 import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
+import OrganizationImportSuccess from "./organization-import-success/OrganizationImportSuccess.vue";
 
 export default {
   components: {
+    OrganizationImportSuccess,
     SpaceCardImage
   },
   setup() {
@@ -130,6 +112,7 @@ export default {
         await importOrganizationSpaces(localState.organization, [
           ...selection.value.values()
         ]);
+        isSuccess.value = true;
       } finally {
         localState.loading = false;
       }

@@ -426,6 +426,7 @@
   },
 
   "OrganizationsList": {
+    "explanationText": "An organization is the entity that gather your billing/invoices at BIMData.io",
     "createButtonText": "Add new organization",
     "searchInputPlaceholder": "Search an organization"
   },
