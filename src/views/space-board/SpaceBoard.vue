@@ -16,10 +16,19 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <div class="flex" v-if="isSpacePay">
+          <div
+            class="flex"
+            v-if="
+              isSpacePay &&
+              Object.keys(organizationPlaformSubscriptions).length === 0 &&
+              spaceSize.role === 100
+            "
+          >
             <ProgressBar class="m-r-12" :progressPercent="calcSize">
               <template #text-left-below
-                >Using {{ formatBytes(spaceSize.smart_data_size) }} from
+                >{{ $t("SpaceBoard.progressBar.using") }}
+                {{ formatBytes(spaceSize.smart_data_size) }}
+                {{ $t("SpaceBoard.progressBar.from") }}
                 {{ formatBytes(spaceSize.smart_data_size_available) }}</template
               >
             </ProgressBar>
@@ -30,15 +39,24 @@
               @click="goToPaddlePayment"
               class="m-r-18"
             >
-              {{ $t("SpaceBoard.upgradeStorageButton") }}
+              {{ $t("SpaceBoard.progressBar.upgradeStorageButton") }}
             </BIMDataButton>
           </div>
-          <div class="flex" v-else>
+          <div
+            class="flex"
+            v-if="
+              !isSpacePay &&
+              Object.keys(organizationPlaformSubscriptions).length === 0 &&
+              spaceSize.role === 100
+            "
+          >
             <ProgressBar class="m-r-12" :progressPercent="calcSize">
-              <template #text-left-below
-                >Using {{ formatBytes(spaceSize.smart_data_size) }} from
+              <template #text-left-below>
+                {{ formatBytes(spaceSize.smart_data_size) }}
+                {{ $t("SpaceBoard.progressBar.using") }}
+                {{ $t("SpaceBoard.progressBar.from") }}
                 {{ formatBytes(spaceSize.smart_data_size_available) }}
-                included</template
+                {{ $t("SpaceBoard.progressBar.included") }}</template
               >
             </ProgressBar>
             <BIMDataButton
@@ -48,7 +66,7 @@
               @click="goToPaddlePayment"
               class="m-r-18"
             >
-              Passer à la platform pro
+              {{ $t("SpaceBoard.progressBar.buyPlatformProButton") }}
             </BIMDataButton>
           </div>
           <!-- <BIMDataButton
@@ -174,17 +192,21 @@ export default {
     const calcSize = ref(Number);
 
     onMounted(async () => {
-      organizationPlaformSubscriptions.value =
-        await retrieveOrganizationPlaformSubscriptions(currentOrganization);
-      cloudMap.value = organizationPlaformSubscriptions.value.map(
-        organization => organization.cloud.id
-      );
+      if (organizationPlaformSubscriptions.value.length) {
+        organizationPlaformSubscriptions.value =
+          await retrieveOrganizationPlaformSubscriptions(currentOrganization);
+        cloudMap.value = organizationPlaformSubscriptions.value.map(
+          organization => organization.cloud.id
+        );
+      }
       // boolean for upgrade platform or pay platform pro
-      isSpacePay.value = cloudMap.value.includes(currentSpace.value.id);
-      platformSubscriptions.value = await retrievePlaformSubscriptions(
-        currentOrganization,
-        currentSpace.value
-      );
+      if (platformSubscriptions.value.length) {
+        isSpacePay.value = cloudMap.value.includes(currentSpace.value.id);
+        platformSubscriptions.value = await retrievePlaformSubscriptions(
+          currentOrganization,
+          currentSpace.value
+        );
+      }
 
       // cloud size value
       spaceSize.value = await cloudSize(currentSpace.value);
