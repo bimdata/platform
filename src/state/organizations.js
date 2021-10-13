@@ -3,7 +3,7 @@ import OrganizationService from "@/services/OrganizationService.js";
 
 const state = reactive({
   userOrganizations: [],
-  organizationSpaces: {}
+  organizationsSpaces: {}
 });
 
 const resetState = () => {
@@ -13,6 +13,7 @@ const resetState = () => {
 
 const retrieveUserOrganizations = async () => {
   const organizations = await OrganizationService.fetchUserOrganizations();
+  organizations.sort((a, b) => (a.name < b.name ? 1 : -1));
   state.userOrganizations = organizations;
   return organizations;
 };
@@ -21,12 +22,20 @@ const retrieveOrganizationSpaces = async organization => {
   const spaces = await OrganizationService.fecthOrganizationSpaces(
     organization
   );
-  state.organizationSpaces[organization.id] = spaces;
+  state.organizationsSpaces[organization.id] = spaces;
   return spaces;
 };
 
+const retrieveAllOrganizationsSpaces = async () => {
+  return (
+    await Promise.all(
+      state.userOrganizations.map(orga => retrieveOrganizationSpaces(orga))
+    )
+  ).reduce((acc, spaces) => acc.concat(spaces), []);
+};
+
 const getOrganizationSpaces = organization => {
-  return readonly(state.organizationSpaces[organization?.id] || []);
+  return readonly(state.organizationsSpaces[organization?.id] || []);
 };
 
 const createOrganization = async organization => {
@@ -51,7 +60,7 @@ const importOrganizationSpaces = async (organization, spaces) => {
       OrganizationService.updateSpaceOrganization(space, organization)
     )
   );
-  await retrieveUserOrganizations();
+  await retrieveOrganizationSpaces(organization);
   return importedSpaces;
 };
 
@@ -84,6 +93,7 @@ export function useOrganizations() {
     resetState,
     retrieveUserOrganizations,
     retrieveOrganizationSpaces,
+    retrieveAllOrganizationsSpaces,
     getOrganizationSpaces,
     createOrganization,
     updateOrganization,

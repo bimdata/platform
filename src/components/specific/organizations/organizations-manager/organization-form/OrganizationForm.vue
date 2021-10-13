@@ -47,7 +47,13 @@
           </div>
 
           <div class="form-action">
-            <BIMDataButton width="120px" color="primary" fill radius>
+            <BIMDataButton
+              width="120px"
+              color="primary"
+              fill
+              radius
+              @click="submit"
+            >
               {{ $t("OrganizationForm.submitButtonText") }}
             </BIMDataButton>
           </div>
@@ -80,6 +86,7 @@ export default {
       localState.loading = false;
       hasInvalidName.value = false;
       isSuccess.value = false;
+      localState.currentView = "list";
     };
 
     const orgaName = ref("");
@@ -111,8 +118,12 @@ export default {
       }
       try {
         localState.loading = true;
-        const newOrganization = { name: orgaName.value };
+        const newOrganization = {
+          name: orgaName.value,
+          logo: orgaLogoFile.value
+        };
         if (isUpdate.value) {
+          newOrganization.id = localState.organization.id;
           await updateOrganization(newOrganization);
         } else {
           await createOrganization(newOrganization);

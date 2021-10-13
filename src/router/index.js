@@ -71,33 +71,33 @@ const routes = [
     meta: {
       // Protect this route and all its children with authentication
       requiresAuth: true,
-      resolver: rootResolver,
+      resolver: rootResolver
     },
     children: [
       {
         path: "",
         name: routeNames.dashboard,
-        component: Dashboard,
+        component: Dashboard
       },
       {
         path: "/spaces",
         name: routeNames.userSpaces,
-        component: UserSpaces,
+        component: UserSpaces
       },
       {
         path: "/projects",
         name: routeNames.userProjects,
-        component: UserProjects,
+        component: UserProjects
       },
       {
         path: "/subscription",
         name: routeNames.platformSubscription,
-        component: PlatformSubscription,
+        component: PlatformSubscription
       },
       {
         path: "/payment",
         name: routeNames.paddlePayment,
-        component: PaddlePayment,
+        component: PaddlePayment
       },
       {
         path: "/spaces/:spaceID(\\d+)",
@@ -122,16 +122,16 @@ const routes = [
         name: routeNames.modelViewer,
         component: ModelViewer,
         meta: {
-          resolver: modelViewerResolver,
-        },
+          resolver: modelViewerResolver
+        }
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/groups",
         name: routeNames.projectGroups,
         component: ProjectGroups,
         meta: {
-          resolver: projectGroupsResolver,
-        },
+          resolver: projectGroupsResolver
+        }
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/groups/:groupID(\\d+)",
@@ -156,23 +156,23 @@ const routes = [
     // Should match `redirect_uri` path in oidcConfig
     path: "/oidc-callback",
     name: routeNames.oidcCallback,
-    component: OidcCallback,
+    component: OidcCallback
   },
   {
     path: "/oidc-callback-error",
     name: routeNames.oidcCallbackError,
-    component: OidcCallbackError,
+    component: OidcCallbackError
   },
   {
     // Redirect every unknown route to the root
     path: "/:path(.*)*",
-    beforeEnter: (to, from, next) => next("/"),
-  },
+    beforeEnter: (to, from, next) => next("/")
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
+  routes
 });
 
 router.beforeEach(authGuard);
