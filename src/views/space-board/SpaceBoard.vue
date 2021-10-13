@@ -16,58 +16,37 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <div
-            class="flex"
-            v-if="
-              isSpacePay &&
-              Object.keys(organizationPlaformSubscriptions).length === 0 &&
-              spaceSize.role === 100
-            "
-          >
+          <div class="flex" v-if="size.role === 100">
             <ProgressBar class="m-r-12" :progressPercent="calcSize">
               <template #text-left-below
                 >{{ $t("SpaceBoard.progressBar.using") }}
-                {{ formatBytes(spaceSize.smart_data_size) }}
+                {{ formatBytes(size.smartDataSize) }}
                 {{ $t("SpaceBoard.progressBar.from") }}
-                {{ formatBytes(spaceSize.smart_data_size_available) }}</template
+                {{ formatBytes(size.smartDataSizeAvailable) }}</template
               >
             </ProgressBar>
-            <BIMDataButton
-              color="secondary"
-              fill
-              radius
-              @click="goToPaddlePayment"
-              class="m-r-18"
-            >
-              {{ $t("SpaceBoard.progressBar.upgradeStorageButton") }}
-            </BIMDataButton>
-          </div>
-          <div
-            class="flex"
-            v-if="
-              !isSpacePay &&
-              Object.keys(organizationPlaformSubscriptions).length === 0 &&
-              spaceSize.role === 100
-            "
-          >
-            <ProgressBar class="m-r-12" :progressPercent="calcSize">
-              <template #text-left-below>
-                {{ formatBytes(spaceSize.smart_data_size) }}
-                {{ $t("SpaceBoard.progressBar.using") }}
-                {{ $t("SpaceBoard.progressBar.from") }}
-                {{ formatBytes(spaceSize.smart_data_size_available) }}
-                {{ $t("SpaceBoard.progressBar.included") }}</template
+            <div v-if="isPlatformSubscription && isOrganizationMember">
+              <BIMDataButton
+                v-if="isPlatformPaid"
+                color="secondary"
+                fill
+                radius
+                @click="goToPaddlePayment"
+                class="m-r-18"
               >
-            </ProgressBar>
-            <BIMDataButton
-              color="secondary"
-              fill
-              radius
-              @click="goToPaddlePayment"
-              class="m-r-18"
-            >
-              {{ $t("SpaceBoard.progressBar.buyPlatformProButton") }}
-            </BIMDataButton>
+                {{ $t("SpaceBoard.progressBar.buyPlatformProButton") }}
+              </BIMDataButton>
+              <BIMDataButton
+                v-else
+                color="secondary"
+                fill
+                radius
+                @click="goToPaddlePayment"
+                class="m-r-18"
+              >
+                {{ $t("SpaceBoard.progressBar.upgradeStorageButton") }}
+              </BIMDataButton>
+            </div>
           </div>
           <!-- <BIMDataButton
           data-test="btn-filter"
@@ -163,14 +142,11 @@ export default {
     SpaceUsersManager
   },
   setup() {
-    const { currentSpace, spaceUsers, spaceInvitations, cloudSize } =
+    const { currentSpace, spaceUsers, spaceInvitations, spaceSize } =
       useSpaces();
     const { spaceProjects } = useProjects();
     const { openSidePanel } = useSidePanel();
-    const {
-      retrievePlaformSubscriptions,
-      retrieveOrganizationPlaformSubscriptions
-    } = usePayment();
+    const { retrievePlaformSubscriptions } = usePayment();
     const router = useRouter();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
@@ -183,37 +159,38 @@ export default {
       project => project.name
     );
 
-    const organizationPlaformSubscriptions = ref([]);
-    const platformSubscriptions = ref([]);
-    const spaceSize = ref({});
-    const cloudMap = ref([]);
+    const size = ref({});
     const currentOrganization = currentSpace.value.organization;
-    const isSpacePay = ref(false);
+    const isPlatformSubscription = ref(false);
+    const isOrganizationMember = ref(false);
+    const isPlatformPaid = ref(false);
     const calcSize = ref(Number);
 
     onMounted(async () => {
-      if (organizationPlaformSubscriptions.value.length) {
-        organizationPlaformSubscriptions.value =
-          await retrieveOrganizationPlaformSubscriptions(currentOrganization);
-        cloudMap.value = organizationPlaformSubscriptions.value.map(
-          organization => organization.cloud.id
-        );
-      }
-      // boolean for upgrade platform or pay platform pro
-      if (platformSubscriptions.value.length) {
-        isSpacePay.value = cloudMap.value.includes(currentSpace.value.id);
-        platformSubscriptions.value = await retrievePlaformSubscriptions(
-          currentOrganization,
-          currentSpace.value
-        );
-      }
-
       // cloud size value
-      spaceSize.value = await cloudSize(currentSpace.value);
-      spaceSize.value = JSON.parse(spaceSize.value);
+      size.value = await spaceSize(currentSpace.value);
+
+      isPlatformSubscription.value =
+        size.value.managedBy === "BIMDATA_PLATFORM";
+
+      if (isPlatformSubscription.value) {
+        try {
+          let platformSubscriptions = await retrievePlaformSubscriptions(
+            currentOrganization,
+            currentSpace.value
+          );
+          isOrganizationMember.value = true;
+          // boolean for upgrade platform or pay platform pro
+          isPlatformPaid.value = platformSubscriptions.some(
+            platformSubscription => platformSubscription.status === "active"
+          );
+        } catch (e) {
+          isOrganizationMember.value = false;
+        }
+      }
 
       // calculation of the remaining size
-      calcSize.value = 100 - spaceSize.value.remaining_smart_data_size_percent;
+      calcSize.value = 100 - size.value.remainingSmartDataSizePercent;
     });
 
     const goToPaddlePayment = () => {
@@ -227,12 +204,13 @@ export default {
       searchText,
       space: currentSpace,
       users: spaceUsers,
-      organizationPlaformSubscriptions,
-      cloudMap,
-      isSpacePay,
-      spaceSize,
+      isPlatformSubscription,
+      isPlatformPaid,
+      isOrganizationMember,
+      size,
       formatBytes,
       calcSize,
+      currentOrganization,
       // Methods
       openUsersManager: openSidePanel,
       sortProjects,

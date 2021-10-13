@@ -156,7 +156,7 @@ class SpaceService {
     }
   }
 
-  async cloudSize(space) {
+  async spaceSize(space) {
     try {
       return await apiClient.collaborationApi.getCloudSize({
         id: space.id

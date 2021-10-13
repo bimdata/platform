@@ -116,8 +116,8 @@ const deleteSpaceUser = async (space, user) => {
   return user;
 };
 
-const cloudSize = async space => {
-  const size = await SpaceService.cloudSize(space);
+const spaceSize = async space => {
+  const size = await SpaceService.spaceSize(space);
   state.spaceSize = size.spaceSize;
   return size;
 };
@@ -142,6 +142,6 @@ export function useSpaces() {
     cancelSpaceInvitation,
     updateSpaceUser,
     deleteSpaceUser,
-    cloudSize
+    spaceSize
   };
 }

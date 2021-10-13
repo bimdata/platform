@@ -21,14 +21,10 @@ class PaymentService {
     }
   }
 
-  async retrieveOrganizationPlatformSubscriptions(organization) {
-    try {
-      return await privateApiClient.get(
-        `/payment/organization/${organization.id}/platform-subscription`
-      );
-    } catch (e) {
-      console.log(e);
-    }
+  retrieveOrganizationPlatformSubscriptions(organization) {
+    return privateApiClient.get(
+      `/payment/organization/${organization.id}/platform-subscription`
+    );
   }
 }
 
