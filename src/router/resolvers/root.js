@@ -7,14 +7,17 @@ let rootResolved = false;
 
 const rootResolver = async () => {
   const { loadUser } = useUser();
-  const { retrieveUserOrganizations: loadUserOrganizations } =
-    useOrganizations();
+  const {
+    retrieveUserOrganizations: loadUserOrganizations,
+    retrieveAllOrganizationsSpaces: loadOrganizationsSpaces
+  } = useOrganizations();
   const { loadUserSpaces } = useSpaces();
   const { loadUserProjects } = useProjects();
 
   if (!rootResolved) {
     await loadUser();
     await loadUserOrganizations();
+    await loadOrganizationsSpaces();
     await loadUserSpaces();
     await loadUserProjects();
     rootResolved = true;
