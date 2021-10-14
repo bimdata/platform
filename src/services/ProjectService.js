@@ -3,12 +3,6 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 import ModelService from "./ModelService";
 
 class ProjectService {
-  constructor() {
-    this.cache = {
-      modelPreviews: new Map()
-    };
-  }
-
   async fetchUserProjects() {
     try {
       return await apiClient.collaborationApi.getSelfProjects();
