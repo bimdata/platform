@@ -1,7 +1,13 @@
 <template>
   <div class="organization-card">
     <div class="organization-card__image">
-      <img :src="organization.logo" />
+      <img v-if="organization.logo" :src="organization.logo" />
+      <BIMDataIcon
+        v-else
+        style="margin-top: 4px; margin-left: 3px"
+        name="organization"
+        size="xxl"
+      />
     </div>
     <div class="organization-card__info">
       <div class="organization-card__info__name">
@@ -25,7 +31,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount } from "vue";
+import { computed } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { formatDateShort } from "@/utils/date.js";
 // Components
