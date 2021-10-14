@@ -81,6 +81,7 @@ export default {
       localState.loading = false;
       isSuccess.value = false;
       selection.value = new Map();
+      localState.currentView = "spaces-list";
     };
 
     const spaces = computed(() => {
@@ -111,8 +112,7 @@ export default {
         localState.loading = true;
         await importOrganizationSpaces(localState.organization, [
           ...selection.value.values()
-        ]);
-        isSuccess.value = true;
+        ]).then(() => (isSuccess.value = true));
       } finally {
         localState.loading = false;
       }
