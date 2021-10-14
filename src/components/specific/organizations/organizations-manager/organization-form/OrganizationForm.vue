@@ -124,11 +124,14 @@ export default {
         };
         if (isUpdate.value) {
           newOrganization.id = localState.organization.id;
-          await updateOrganization(newOrganization);
+          await updateOrganization(newOrganization).then(
+            () => (isSuccess.value = true)
+          );
         } else {
-          await createOrganization(newOrganization);
+          await createOrganization(newOrganization).then(
+            () => (isSuccess.value = true)
+          );
         }
-        isSuccess.value = true;
       } finally {
         localState.loading = false;
       }
