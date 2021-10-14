@@ -21,7 +21,7 @@
     <div class="project-card-model-preview__viewport" ref="viewport">
       <img
         loading="lazy"
-        :src="image ? image.url : '/static/default-model-preview.png'"
+        :src="image.url || '/static/default-model-preview.png'"
         :style="{ transform: `translateX(-${translation}px)` }"
       />
     </div>
@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 export default {
   props: {
-    previews: {
+    models: {
       type: Array,
       required: true
     }
@@ -58,7 +58,7 @@ export default {
     };
 
     const images = ref([]);
-    const image = ref(null);
+    const image = ref({});
     const index = ref(0);
 
     const previousImage = () => {
@@ -69,20 +69,20 @@ export default {
     };
 
     watch(
-      () => props.previews,
+      () => props.models,
       () => {
-        images.value = props.previews.map((preview, i) => ({
+        images.value = props.models.map((model, i) => ({
           index: i + 1,
-          url: preview.url
+          url: model.viewer360File
         }));
-        image.value = images.value.length > 0 ? images.value[0] : null;
+        image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;
       },
       { immediate: true }
     );
     watch(index, i => {
-      image.value = images.value[i] || null;
-      emit("preview-changed", props.previews[i]);
+      image.value = images.value[i] || {};
+      emit("preview-changed", props.models[i]);
     });
 
     return {

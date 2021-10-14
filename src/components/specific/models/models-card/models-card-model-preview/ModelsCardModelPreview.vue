@@ -95,11 +95,13 @@ export default {
     watch(
       () => props.models,
       () => {
-        images.value = props.models.map((model, i) => ({
-          index: i + 1,
-          name: model.name,
-          url: model.viewer360File
-        }));
+        images.value = props.models
+          .filter(model => !model.archived)
+          .map((model, i) => ({
+            index: i + 1,
+            name: model.name,
+            url: model.viewer360File
+          }));
         image.value = images.value.length > 0 ? images.value[0] : null;
         index.value = 0;
       },
