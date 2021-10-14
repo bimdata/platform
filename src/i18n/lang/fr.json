@@ -412,6 +412,12 @@
     "spaces": "{number} espaces"
   },
 
+  "OrganizationDeleteGuard": {
+    "title": "Supprimer l'organisation",
+    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "submitButtonText": "Supprimer"
+  },
+
   "OrganizationForm": {
     "createTitle": "Création d'organisation",
     "updateTitle": "Modifier l'organisation",
