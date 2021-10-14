@@ -6,7 +6,7 @@
       ghost
       rounded
       icon
-      :disabled="previews.length === 0"
+      :disabled="models.length === 0"
       @click.stop="$emit('open-viewer')"
     >
       <BIMDataIcon name="show" size="s" />
@@ -34,7 +34,7 @@ export default {
       type: Object,
       required: true
     },
-    previews: {
+    models: {
       type: Array,
       required: true
     }

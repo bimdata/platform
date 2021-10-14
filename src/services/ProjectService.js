@@ -73,23 +73,6 @@ class ProjectService {
     }
   }
 
-  async fetchProjectModelPreviews(project) {
-    const cacheKey = `${project.cloud.id}-${project.id}`;
-    if (this.cache.modelPreviews.has(cacheKey)) {
-      return this.cache.modelPreviews.get(cacheKey);
-    } else {
-      const models = await ModelService.fetchModels(project);
-      const previews = models
-        .filter(model => model.viewer360File)
-        .map(model => ({
-          id: model.id,
-          url: model.viewer360File
-        }));
-      this.cache.modelPreviews.set(cacheKey, previews);
-      return previews;
-    }
-  }
-
   async createProject(space, project) {
     try {
       return await apiClient.collaborationApi.createProject({
