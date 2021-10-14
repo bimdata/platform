@@ -412,6 +412,11 @@
     "spaces": "{number} spaces"
   },
 
+  "OrganizationDeleteGuard": {
+    "title": "Delete organization",
+    "submitButtonText": "Delete"
+  },
+
   "OrganizationForm": {
     "createTitle": "Create an organization",
     "updateTitle": "Update organization",
