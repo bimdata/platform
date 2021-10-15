@@ -25,7 +25,14 @@ class OrganizationService {
 
   async createOrganization(organization) {
     try {
-      return await privateApiClient.post("/organization", organization);
+      const data = new FormData();
+      data.append("name", organization.name);
+      if (organization.logo) {
+        data.append("logo", organization.logo);
+      }
+      return await privateApiClient.post("/organization", data, {
+        json: false
+      });
     } catch (error) {
       throw new RuntimeError(ERRORS.ORGANIZATION_CREATE_ERROR, error);
     }
@@ -33,9 +40,15 @@ class OrganizationService {
 
   async updateOrganization(organization) {
     try {
+      const data = new FormData();
+      data.append("name", organization.name);
+      if (organization.logo) {
+        data.append("logo", organization.logo);
+      }
       return await privateApiClient.patch(
         `/organization/${organization.id}`,
-        organization
+        data,
+        { json: false }
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.ORGANIZATION_UPDATE_ERROR, error);
@@ -47,6 +60,17 @@ class OrganizationService {
       return await privateApiClient.delete(`/organization/${organization.id}`);
     } catch (error) {
       throw new RuntimeError(ERRORS.ORGANIZATION_DELETE_ERROR, error);
+    }
+  }
+
+  async updateSpaceOrganization(space, organization) {
+    try {
+      return await privateApiClient.patch(
+        `/organization/${space.organization.id}/cloud/${space.id}/update-org`,
+        { organization: organization.id }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.SPACE_UPDATE_ERROR, error);
     }
   }
 }

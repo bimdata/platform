@@ -100,6 +100,16 @@ const routes = [
         component: PaddlePayment,
       },
       {
+        path: "/subscription",
+        name: routeNames.platformSubscription,
+        component: PlatformSubscription
+      },
+      {
+        path: "/payment",
+        name: routeNames.paddlePayment,
+        component: PaddlePayment
+      },
+      {
         path: "/spaces/:spaceID(\\d+)",
         name: routeNames.spaceBoard,
         component: SpaceBoard,

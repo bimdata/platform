@@ -23,4 +23,15 @@ function formatDate(value) {
   );
 }
 
-export { formatDate };
+/**
+ * Change an ISO formatted date into a date with formatted as: DD/MM/YYYY.
+ *
+ * @param {String} date an ISO formatted date string
+ * @returns {String} formatted date
+ */
+function formatDateShort(date) {
+  const d = date.split("T")[0];
+  return d.split("-").reverse().join("/");
+}
+
+export { formatDate, formatDateShort };

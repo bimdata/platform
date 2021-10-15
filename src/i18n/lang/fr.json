@@ -49,6 +49,7 @@
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Rechercher un espace",
+    "organizationsButtonText": "Organisations",
     "createButtonText": "Créer un espace"
   },
 
@@ -405,6 +406,61 @@
       "lastupdate": "Modifié le",
       "status": "Statut"
     }
+  },
+
+  "OrganizationCard": {
+    "spaces": "{number} espaces"
+  },
+
+  "OrganizationDeleteGuard": {
+    "title": "Supprimer l'organisation",
+    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "submitButtonText": "Supprimer"
+  },
+
+  "OrganizationForm": {
+    "createTitle": "Création d'organisation",
+    "updateTitle": "Modifier l'organisation",
+    "infoSectionTitle": "Information de base",
+    "nameInputPlaceholder": "Nom",
+    "nameInputErrorMessage": "Nom invalide",
+    "logoInputLabel": "Choisir un logo",
+    "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
+    "submitButtonText": "Valider",
+    "successTitle": "Félicitation votre organisation vient d'être créée",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationsList": {
+    "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
+    "createButtonText": "Créer une organisation",
+    "searchInputPlaceholder": "Rechercher une organisation"
+  },
+
+  "OrganizationsManager": {
+    "title": "Gestion des organizations",
+    "backButtonText": "Retour"
+  },
+
+  "OrganizationSpaceCard": {
+    "projects": "{number} projets"
+  },
+
+  "OrganizationSpacesImport": {
+    "spaceListTitle": "Sélectionnez les espaces à importer",
+    "spaceListPlaceholder": "Aucun espace à importer...",
+    "submitButtonText": "Importer",
+    "successTitle": "Les espaces ont été déplacés",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationSpacesList": {
+    "importButtonText": "Importer un espace",
+    "addButtonText": "Ajouter un espace",
+    "searchInputPlaceholder": "Rechercher",
+    "spaceListTitle": "Liste des espaces de l'organisation"
   },
 
   "OurPlans": {

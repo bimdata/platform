@@ -1,0 +1,71 @@
+<template>
+  <div class="organization-spaces-list">
+    <div class="organization-spaces-list__actions">
+      <BIMDataButton
+        width="48%"
+        color="primary"
+        outline
+        radius
+        @click="localState.currentView = 'spaces-import'"
+      >
+        {{ $t("OrganizationSpacesList.importButtonText") }}
+      </BIMDataButton>
+      <BIMDataButton width="48%" color="secondary" fill radius>
+        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+        <span>{{ $t("OrganizationSpacesList.addButtonText") }}</span>
+      </BIMDataButton>
+    </div>
+    <BIMDataSearch
+      width="100%"
+      :placeholder="$t('OrganizationSpacesList.searchInputPlaceholder')"
+      v-model="searchText"
+      clear
+    />
+    <div class="organization-spaces-list__title">
+      {{ $t("OrganizationSpacesList.spaceListTitle") }}
+    </div>
+    <div class="organization-spaces-list__container">
+      <transition-group name="list">
+        <OrganizationSpaceCard
+          v-for="space of displayedSpaces"
+          :key="space.id"
+          :organization="localState.organization"
+          :space="space"
+        />
+      </transition-group>
+    </div>
+  </div>
+</template>
+
+<script>
+import { computed, inject } from "vue";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useOrganizations } from "@/state/organizations.js";
+// Components
+import OrganizationSpaceCard from "./organization-space-card/OrganizationSpaceCard.vue";
+
+export default {
+  components: {
+    OrganizationSpaceCard
+  },
+  setup() {
+    const { getOrganizationSpaces } = useOrganizations();
+
+    const localState = inject("localState");
+
+    const { filteredList: displayedSpaces, searchText } = useListFilter(
+      computed(() => getOrganizationSpaces(localState.organization)),
+      space => space.name
+    );
+
+    return {
+      // References
+      displayedSpaces,
+      localState,
+      searchText
+    };
+  }
+};
+</script>
+
+<style scoped lang="scss" src="./OrganizationSpacesList.scss"></style>

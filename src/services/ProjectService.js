@@ -3,12 +3,6 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 import ModelService from "./ModelService";
 
 class ProjectService {
-  constructor() {
-    this.cache = {
-      modelPreviews: new Map()
-    };
-  }
-
   async fetchUserProjects() {
     try {
       return await apiClient.collaborationApi.getSelfProjects();
@@ -70,23 +64,6 @@ class ProjectService {
         new RuntimeError(ERRORS.INVITATIONS_FETCH_ERROR, error)
       );
       return [];
-    }
-  }
-
-  async fetchProjectModelPreviews(project) {
-    const cacheKey = `${project.cloud.id}-${project.id}`;
-    if (this.cache.modelPreviews.has(cacheKey)) {
-      return this.cache.modelPreviews.get(cacheKey);
-    } else {
-      const models = await ModelService.fetchModels(project);
-      const previews = models
-        .filter(model => model.viewer360File)
-        .map(model => ({
-          id: model.id,
-          url: model.viewer360File
-        }));
-      this.cache.modelPreviews.set(cacheKey, previews);
-      return previews;
     }
   }
 

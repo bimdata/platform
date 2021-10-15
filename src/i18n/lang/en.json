@@ -49,6 +49,7 @@
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Search spaces",
+    "organizationsButtonText": "Organizations",
     "createButtonText": "Create a space"
   },
 
@@ -405,6 +406,58 @@
       "lastupdate": "Last modified",
       "status": "Status"
     }
+  },
+
+  "OrganizationCard": {
+    "spaces": "{number} spaces"
+  },
+
+  "OrganizationDeleteGuard": {
+    "title": "Delete organization",
+    "submitButtonText": "Delete"
+  },
+
+  "OrganizationForm": {
+    "createTitle": "Create an organization",
+    "updateTitle": "Update organization",
+    "infoSectionTitle": "Basic information",
+    "nameInputPlaceholder": "Name",
+    "nameInputErrorMessage": "Invalid name",
+    "logoInputLabel": "Upload logo",
+    "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
+    "submitButtonText": "Validate",
+    "successTitle": "Congratulation your organization has just been created",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationsList": {
+    "explanationText": "An organization is the entity that gather your billing/invoices at BIMData.io",
+    "createButtonText": "Add new organization",
+    "searchInputPlaceholder": "Search an organization"
+  },
+
+  "OrganizationsManager": {
+    "title": "Manage organizations",
+    "backButtonText": "Back"
+  },
+  
+  "OrganizationSpaceCard": {
+    "projects": "{number} projects"
+  },
+
+  "OrganizationSpacesImport": {
+    "spaceListTitle": "Select spaces to import",
+    "spaceListPlaceholder": "No space to import...",
+    "submitButtonText": "Import spaces",
+    "successTitle": "Spaces successfully imported",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationSpacesList": {
+    "importButtonText": "Import space",
+    "addButtonText": "Add new space",
+    "searchInputPlaceholder": "Search",
+    "spaceListTitle": "Organization spaces"
   },
 
   "OurPlans": {

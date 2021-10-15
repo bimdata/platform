@@ -90,9 +90,9 @@ export default {
       toggle: toggleFileUploader
     } = useToggle();
 
-    const reloadModels = debounce(async () => {
-      await loadProjectFileStructure(currentProject.value);
-      await loadProjectModels(currentProject.value);
+    const reloadModels = debounce(() => {
+      loadProjectFileStructure(currentProject.value);
+      loadProjectModels(currentProject.value);
     }, 1000);
 
     const notifyForbiddenUpload = () => {

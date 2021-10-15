@@ -29,7 +29,6 @@
         <BIMDataButton
           outline
           radius
-          icon
           color="primary"
           @click="openInvitationForm"
         >
@@ -64,13 +63,13 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useListFilter } from "@/composables/list-filter";
-import { useToggle } from "@/composables/toggle";
-import SPACE_ROLES from "@/config/space-roles";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useToggle } from "@/composables/toggle.js";
+import SPACE_ROLES from "@/config/space-roles.js";
 // Components
-import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
-import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
-import UserCard from "@/components/specific/users/user-card/UserCard";
+import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard.vue";
+import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm.vue";
+import UserCard from "@/components/specific/users/user-card/UserCard.vue";
 
 const tabsDef = [{ id: "admins" }, { id: "users" }];
 

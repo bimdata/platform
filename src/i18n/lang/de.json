@@ -30,8 +30,12 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Bereich suchen",
+        "organizationsButtonText": "Organizations",
         "createButtonText": "Bereich erstellen"
     },
+
+
+
     "ProjectFiles": {
         "groupsButtonText": "Gruppenverwaltung"
     },
@@ -43,6 +47,9 @@
             "message": "Wählen Sie eine Datei .ifc"
         }
     },
+
+
+
     "BreadcrumbSelector": {
         "inputPlaceholder": "Suchen"
     },
@@ -295,6 +302,33 @@
             "status": "Status"
         }
     },
+    "OrganizationCard": {
+        "spaces": "{number} Bereichs"
+    },
+    "OrganizationForm": {
+        "inputPlaceholder": "Name",
+        "nameInputErrorMessage": "Ungültiger Name",
+        "submitButtonText": "Bestätigen",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "createButtonText": "Organisation erstellen",
+        "searchInputPlaceholder": "Suchen"
+    },
+    "OrganizationsManager": {
+        "title": "Verwaltung von organisationen",
+        "backButtonText": "Zurück"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} Projekte"
+    },
+    "OrganizationSpacesImport": {
+        "submitButtonText": "Bestätigen",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "searchInputPlaceholder": "Suchen"
+    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Umbenennen",
         "deleteButtonText": "Löschen"
@@ -410,13 +444,17 @@
             "readWrite": "Lesen / schreiben"
         }
     },
+
+
+
     "Error": "Fehler",
     "Success": "Erfolg",
+
     "Errors": {
         "organizationsFetchError": "Fail to fetch organizations",
-        "organizationCreateError": "Fail to create organizations",
-        "organizationUpdateError": "Fail to update organizations",
-        "organizationDeleteError": "Fail to delete organizations",
+        "organizationCreateError": "Fehler beim Erstellen des organisation",
+        "organizationUpdateError": "Fehler bei der Aktualisierung des organisationen",
+        "organizationDeleteError": "Fehler beim Löschen des organisationen",
         "spacesFetchError": "Unmöglich, die Bereichsliste abzurufen",
         "spaceCreateError": "Fehler beim Erstellen des Bereichs",
         "spaceUpdateError": "Fehler bei der Aktualisierung des Bereichs",

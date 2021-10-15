@@ -30,8 +30,12 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Cerca tra gli spazi",
+        "organizationsButtonText": "Organizzazioni",
         "createButtonText": "Crea uno spazio"
     },
+
+
+
     "ProjectFiles": {
         "groupsButtonText": "Gestisci i gruppi"
     },
@@ -43,6 +47,9 @@
             "message": "Seleziona un file .ifc"
         }
     },
+
+
+
     "BreadcrumbSelector": {
         "inputPlaceholder": "Cerca"
     },
@@ -295,6 +302,37 @@
             "status": "Status"
         }
     },
+    "OrganizationCard": {
+        "spaces": "{number} spazi"
+    },
+    "OrganizationForm": {
+        "createTitle": "Crea un organizzazione",
+        "updateTitle": "Rinomina organizzazione",
+        "nameInputPlaceholder": "Nome",
+        "nameInputErrorMessage": "Nome non valido",
+        "submitButtonText": "Convalida",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "createButtonText": "Crea un organizzazione",
+        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
+    },
+    "OrganizationsManager": {
+        "title": "Gestione delle organizzazioni",
+        "backButtonText": "Indietro"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} progetti"
+    },
+    "OrganizationSpacesImport": {
+        "backButtonText": "Indietro",
+        "submitButtonText": "Convalida",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "backButtonText": "Indietro",
+        "searchInputPlaceholder": "Cercare"
+    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Rinomina",
         "deleteButtonText": "Elimina"
@@ -318,7 +356,7 @@
         "createButtonText": "Crea"
     },
     "ProjectStatusBadge": {
-        "active": ""
+        "active": "ATTIVO"
     },
     "ProjectUsersManager": {
         "title": "Utenti del progetto",
@@ -410,8 +448,12 @@
             "readWrite": "Lettura/scrittura"
         }
     },
+
+
+
     "Error": "Errore",
     "Success": "Riuscito",
+
     "Errors": {
         "organizationsFetchError": "Impossibile recuperare organizzazioni",
         "organizationCreateError": "Impossibile creare organizzazione",

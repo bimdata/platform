@@ -2,10 +2,12 @@
   <teleport :to="`#side-panel-container--${side}`">
     <transition :name="`slide-fade-${side}`">
       <div class="side-panel" v-show="showSidePanel">
-        <div class="side-panel__title">
-          <span>{{ title }}</span>
+        <div class="side-panel__header">
+          <span class="side-panel__header__title">
+            <slot name="title">{{ title }}</slot>
+          </span>
           <BIMDataButton ghost rounded icon @click="closeSidePanel">
-            <BIMDataIcon name="close" size="xxxs" />
+            <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
           </BIMDataButton>
         </div>
         <div class="side-panel__content">
