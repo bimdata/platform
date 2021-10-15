@@ -175,7 +175,6 @@ export default {
       //     }
       //   )
       // ).json();
-
       // Paddle.Checkout.open({
       //   override: response.url,
       //   disableLogout: true,
