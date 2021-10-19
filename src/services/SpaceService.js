@@ -155,6 +155,16 @@ class SpaceService {
       throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
     }
   }
+
+  async spaceSize(space) {
+    try {
+      return await apiClient.collaborationApi.getCloudSize({
+        id: space.id
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 const service = new SpaceService();
