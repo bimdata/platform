@@ -9,7 +9,7 @@
 
     flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(5, var(item-size));
+    grid-template-columns: repeat(5, var(--item-size));
     justify-content: space-between;
     row-gap: var(--spacing-unit);
 
@@ -25,9 +25,9 @@
           position: absolute;
           top: calc(0px - var(--spacing-unit) / 2);
           left: calc(0px - var(--spacing-unit) / 2);
-          width: 100%;
-          height: 100%;
-          border: var(--spacing-unit) / 2 solid rgba(0, 0, 0, 0.1);
+          width: calc(100% + var(--spacing-unit));
+          height: calc(100% + var(--spacing-unit));
+          border: calc(var(--spacing-unit) / 2) solid rgba(0, 0, 0, 0.1);
           border-radius: 3px;
         }
       }
@@ -36,11 +36,11 @@
 
   &__side {
     width: 32px;
-    margin-left: var(--spacing-unit) / 2;
+    margin-left: calc(var(--spacing-unit) / 2);
 
     &__btn-close {
       position: relative;
-      top: -var(--spacing-unit) / 4;
+      top: calc(0px - var(--spacing-unit) / 4);
     }
   }
 }
