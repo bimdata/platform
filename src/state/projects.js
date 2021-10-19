@@ -54,11 +54,6 @@ const loadProjectInvitations = async project => {
   return invitations;
 };
 
-const loadProjectModelPreviews = async project => {
-  const previews = await ProjectService.fetchProjectModelPreviews(project);
-  return previews;
-};
-
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
   state.userProjects = [{ ...newProject, isAdmin: true }].concat(
@@ -139,7 +134,6 @@ export function useProjects() {
     loadSpaceProjects,
     loadProjectUsers,
     loadProjectInvitations,
-    loadProjectModelPreviews,
     createProject,
     updateProject,
     softUpdateProject,

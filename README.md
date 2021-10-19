@@ -1,16 +1,5 @@
 # BIMData Platform, next generation
 
-> :warning: **Important Note**
->
-> This project is the next generation BIMData platform.
-> It is still under active development and we do not intend to provide any support
-> on this project for now.
->
-> If you want to fork/work/give feedback on BIMData platform please go to the [currently
-> supported version](https://github.com/bimdata/platform).
-
----
-
 This repository host the BIMData Platform project.
 The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.org/).
 

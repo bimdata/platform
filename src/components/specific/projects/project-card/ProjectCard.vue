@@ -12,7 +12,7 @@
             v-if="actionMenu"
             class="project-card__action-bar"
             :project="project"
-            :previews="previews"
+            :models="nonArchivedModels"
             @open-viewer="goToModelViewer"
             @open-menu="openMenu"
           />
@@ -21,7 +21,7 @@
             {{ $t("ProjectStatusBadge.active") }}
           </div>
           <ProjectCardModelPreview
-            :previews="previews"
+            :models="nonArchivedModels"
             @preview-changed="onPreviewChange"
           />
         </template>
@@ -38,11 +38,12 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
 import { routeNames } from "@/router";
-import { useProjects } from "@/state/projects";
+import { useModels } from "@/state/models";
+
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
 import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar";
@@ -68,23 +69,31 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-    const { loadProjectModelPreviews } = useProjects();
+    const { loadProjectModels } = useModels();
 
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
-    const previews = ref([]);
-    const currentPreview = ref();
+    const currentModel = ref();
+    const models = ref([]);
+    const nonArchivedModels = computed(() => {
+      return models.value.filter(model => !model.archived)
+    })
     watch(
       () => props.project,
       async () => {
-        previews.value = await loadProjectModelPreviews(props.project);
-        currentPreview.value = previews.value[0];
+        models.value = await loadProjectModels(props.project);
       },
       { immediate: true }
     );
+    watch(
+      nonArchivedModels,
+      () => {
+        currentModel.value = nonArchivedModels.value[0]
+      }
+    );
 
-    const onPreviewChange = preview => {
-      currentPreview.value = preview;
+    const onPreviewChange = model => {
+      currentModel.value = model;
     };
 
     const goToModelViewer = () => {
@@ -93,7 +102,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelIDs: currentPreview.value.id
+          modelIDs: currentModel.value.id
         }
       });
     };
@@ -110,9 +119,9 @@ export default {
 
     return {
       // References
-      currentPreview,
-      previews,
+      currentModel,
       showMenu,
+      nonArchivedModels,
       // Methods
       closeMenu,
       goToModelViewer,
