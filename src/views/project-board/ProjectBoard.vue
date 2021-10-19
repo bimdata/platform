@@ -15,7 +15,10 @@
         />
       </template>
       <template #right>
-        <app-slot name="project-board-action" />
+        <div class="flex items-center">
+          <StorageInformations :space="space" />
+          <app-slot name="project-board-action" />
+        </div>
       </template>
     </ViewHeader>
 
@@ -35,6 +38,8 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useProjects } from "@/state/projects";
 import { useSession } from "@/state/session";
+import { useSpaces } from "@/state/spaces";
+
 // Components
 import AppSlot from "@/components/generic/app-slot/AppSlot";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
@@ -42,6 +47,7 @@ import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrum
 import ProjectBcf from "./project-bcf/ProjectBcf";
 import ProjectFiles from "./project-files/ProjectFiles";
 import ProjectOverview from "./project-overview/ProjectOverview";
+import StorageInformations from "@/components/specific/subscription/storage-informations/StorageInformations";
 
 const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {
@@ -70,12 +76,14 @@ export default {
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
+    StorageInformations
   },
   setup() {
     const route = useRoute();
     const { locale, t } = useI18n();
     const { currentProject } = useProjects();
     const { currentProjectView } = useSession();
+    const { currentSpace } = useSpaces();
 
     const tabs = ref([]);
     watch(
@@ -114,8 +122,9 @@ export default {
       currentTab,
       currentView,
       tabs,
+      space: currentSpace,
       // Methods
-      changeView,
+      changeView
     };
   }
 };

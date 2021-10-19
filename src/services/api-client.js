@@ -27,6 +27,13 @@ const privateApiFetch = async ({ method = "GET", path, body, json = true }) => {
       body: body ? (json ? JSON.stringify(body) : body) : undefined
     }
   );
+  if (!response.ok) {
+    let errorDetails = "";
+    if (response.headers.get("Content-Type") === "application/json") {
+      errorDetails = await response.text();
+    }
+    throw new Error(`request error ${response.status}: ${errorDetails}`);
+  }
   return await response.json();
 };
 
