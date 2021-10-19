@@ -48,7 +48,7 @@ import { useSpaces } from "@/state/spaces";
 
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar";
 
-import { formatBytes } from "@/utils/formatBytes.js";
+import { formatBytesV2 } from "@/utils/files.js";
 
 export default {
   components: {
@@ -113,7 +113,7 @@ export default {
       isOrganizationMember,
       calcSize,
       size,
-      formatBytes,
+      formatBytes: formatBytesV2,
       // Methods
       goToPaddlePayment
     };

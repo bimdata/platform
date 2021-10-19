@@ -7,7 +7,7 @@ const state = reactive({
   currentSpace: null,
   spaceUsers: [],
   spaceInvitations: [],
-  spaceSize: []
+  spaceSize: {}
 });
 
 const loadUserSpaces = async () => {
