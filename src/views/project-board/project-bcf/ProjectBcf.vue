@@ -1,6 +1,6 @@
 <template>
   <div class="project-bcf">
-    <BIMDataCard class="models-overview" titleHeader="BCF">
+    <BIMDataCard class="bcf-manager" titleHeader="BCF">
       <template #content>
         <img
           width="260"
