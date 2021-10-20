@@ -76,7 +76,7 @@ export default {
 
     const goToPayment = () => {
       router.push({
-        name: routeNames.payment
+        name: routeNames.spacePayment
         // params: { spaceId: props.space.id }
       });
     };
