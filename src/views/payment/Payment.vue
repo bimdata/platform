@@ -1,186 +1,70 @@
 <template>
-  <div class="paddle-payment">
-    <div class="paddle-payment__header flex items-center">
-      <GoBackButton />
-      <h1 v-if="spaceInformation.isPlatformPaid" class="text-center">
-        Ajout de DataPack
-      </h1>
-      <h1 v-else class="text-center">Passer à la platforme professionnelle</h1>
-    </div>
-    <div class="paddle-payment__content justify-center m-y-24">
-      <BIMDataCard class="create-select-orga text-center">
-        <template #content>
-          <h3 class="color-primary">Create or select an orga</h3>
-          <div>
-            <BIMDataRadio
-              text="Create a new orga"
-              id="newOrga"
-              value="newOrga"
-              v-model="organizationChoice"
-            >
-            </BIMDataRadio>
-            <BIMDataInput
-              v-model="organizationName"
-              placeholder="Nom de ma nouvelle orga"
-              :error="!organizationName"
-              errorMessage="organization error message here"
-              :disabled="organizationChoice !== 'newOrga'"
-            >
-            </BIMDataInput>
-          </div>
-          <div>
-            <BIMDataRadio
-              text="Select an orga"
-              id="selectOrga"
-              value="selectOrga"
-              v-model="organizationChoice"
-            >
-            </BIMDataRadio>
-            <BIMDataDropdownList
-              :list="organizationsList"
-              :perPage="6"
-              elementKey="dropdown"
-              :disabled="organizationChoice !== 'selectOrga'"
-              :closeOnElementClick="true"
-              @element-click="onOrganizationClick($event)"
-              class="m-t-12"
-            >
-              <template #header>{{ selectedOrganization.name }}</template>
-              <template #element="{ element }">
-                {{ element.name }}
-              </template>
-            </BIMDataDropdownList>
-          </div>
-          <BIMDataButton color="primary" fill radius class="m-t-12"
-            >Valider</BIMDataButton
-          >
-        </template>
-      </BIMDataCard>
-      <BIMDataCard class="create-space text-center">
-        <template #content>
-          <h3 class="color-primary">Create a space</h3>
-          <p>lorem ipsum dolor sit amet, con</p>
-          <div>
-            <BIMDataInput
-              v-model="spaceName"
-              placeholder="Nom de mon espace"
-              :error="!spaceName"
-              errorMessage="space error message here"
-              :disabled="!organizationName"
-            >
-            </BIMDataInput>
-          </div>
-          <BIMDataButton color="primary" fill radius class="m-t-12"
-            >Valider</BIMDataButton
-          >
-        </template>
-      </BIMDataCard>
-    </div>
-    <div class="paddle-payment__payment">
-      <div class="paddle-payment__payment__left">left</div>
-      <div class="paddle-payment__payment__center paddle-container"></div>
-      <div class="paddle-payment__payment__right">right</div>
+  <div class="view payment">
+    <ViewHeader>
+      <template #left>
+        <GoBackButton />
+      </template>
+      <template #center>
+        <h1 class="payment__title">
+          {{ $t("Payment.title") }}
+        </h1>
+      </template>
+    </ViewHeader>
+    <div class="payment__content">
+      <div class="payment__content__left">
+        <SubscriptionInfo />
+      </div>
+      <div class="payment__content__center">
+        <SubscriptionForm
+          :organization="selectedOrganization"
+          :space="selectedSpace"
+        />
+      </div>
+      <div class="payment__content__right">
+        <StoragePreview />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-
-import { useSpaces } from "@/state/spaces";
 import { useOrganizations } from "@/state/organizations.js";
-import { usePayment } from "@/state/payment.js";
-
 // Components
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import StoragePreview from "@/components/specific/payment/storage-preview/StoragePreview.vue";
+import SubscriptionForm from "@/components/specific/payment/subscription-form/SubscriptionForm.vue";
+import SubscriptionInfo from "@/components/specific/payment/subscription-info/SubscriptionInfo.vue";
+
 export default {
   components: {
-    GoBackButton
+    GoBackButton,
+    StoragePreview,
+    SubscriptionForm,
+    SubscriptionInfo,
+    ViewHeader
   },
   setup() {
-    const { retrieveUserOrganizations } = useOrganizations();
+    const { userOrganizations } = useOrganizations();
 
-    const { retrieveSpaceInformation } = usePayment();
+    const selectedOrganization = ref(null);
+    const selectedSpace = ref(null);
 
-    const organizationChoice = ref("newOrga");
-    const organizationName = ref("");
+    const onOrganizationClick = orga => {
+      selectedOrganization.value = orga;
+    };
 
-    const organizationsList = ref([]);
-    const selectedOrganization = ref("");
-    const onOrganizationClick = organization =>
-      (selectedOrganization.value = organization);
-
-    const spaceInformation = ref({});
-
-    const { currentSpace } = useSpaces();
-    onMounted(async () => {
-      async () => {
-        spaceInformation.value = await retrieveSpaceInformation(
-          currentSpace.value
-        );
-      },
-        (organizationsList.value = await retrieveUserOrganizations());
-      organizationsList.value.sort((a, b) =>
-        a.created_at > b.created_at ? -1 : 1
-      );
-      selectedOrganization.value = organizationsList.value[0];
-
-      Paddle.Product.Prices(12403, function (prices) {
-        // TODO: set price with with function instead of hard coded value
-        console.log(prices);
-      });
-      // const response = await (
-      //   await fetch(
-      //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "content-type": "application/json",
-      //         authorization: `Bearer ${accessToken.value}`
-      //       },
-      //     }
-      //   )
-      // ).json();
-      // const response = await (
-      //   await fetch(
-      //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/cloud/${currentSpace.id}/generate-platform-subscription`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "content-type": "application/json",
-      //         authorization: `Bearer ${accessToken.value}`
-      //       }
-      //     }
-      //   )
-      // ).json();
-      // console.log(response);
-      Paddle.Checkout.open({
-        method: "inline",
-        product: 12403,
-        email: "gaelle@bimdata.io",
-        // title: "MY TITLE",
-        // message: "MY MESSAGE",
-        disableLogout: true,
-        // passthrough: {
-        //   organization_id: "1663",
-        //   cloud_id: "673"
-        // },
-        frameTarget: "paddle-container",
-        frameInitialHeight: 416,
-        frameStyle:
-          "width:100%; min-width:312px; background-color: transparent; border: none;",
-        referring_domain: "platform self service",
-        displayModeTheme: "light"
-      });
+    onMounted(() => {
+      selectedOrganization.value = userOrganizations.value[0];
+      selectedSpace.value = {};
     });
 
     return {
-      currentSpace,
-      organizationsList,
-      organizationChoice,
-      organizationName,
+      // References
+      organizations: userOrganizations,
       selectedOrganization,
-      spaceInformation,
+      selectedSpace,
       // Methods
       onOrganizationClick
     };

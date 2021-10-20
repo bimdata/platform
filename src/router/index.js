@@ -40,10 +40,10 @@ const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const PlatformSubscription = () =>
   import(/* webpackChunkName: "platform-subscription" */ "@/views/platform-subscription/PlatformSubscription.vue");
-  const Payment = () =>
+const Payment = () =>
   import(/* webpackChunkName: "payment" */ "@/views/payment/Payment.vue");
-  const SpacePayment = () =>
-  import(/* webpackChunkName: "payment" */ "@/views/space-payment/SpacePayment.vue");
+const SpacePayment = () =>
+  import(/* webpackChunkName: "space-payment" */ "@/views/space-payment/SpacePayment.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
@@ -99,7 +99,7 @@ const routes = [
         component: PlatformSubscription
       },
       {
-        path: "/payment/",
+        path: "/payment",
         name: routeNames.payment,
         component: Payment
       },

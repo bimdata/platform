@@ -26,6 +26,9 @@
     },
     "homeButtonText": "Home"
   },
+  "Payment": {
+    "title": "Passer à la platforme professionnelle"
+  },
   "PlatformSubscription": {
     "platformSubscriptionTitle": "Abonnement à la plateforme",
     "platformSubscriptionText": "Lorem ipsum"
@@ -558,6 +561,14 @@
     },
     "searchInputPlaceholder": "Rechercher un utilisateur",
     "addUserButtonText": "Ajouter un administrateur"
+  },
+
+  "StoragePreview": {
+    "title": "Stockage",
+    "actualStorage": "Stockage actuel",
+    "actualStorageText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "newStorage": "Nouveau stockage",
+    "newStorageText": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit."
   },
 
   "UserCard": {

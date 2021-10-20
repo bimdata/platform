@@ -26,6 +26,9 @@
     },
     "homeButtonText": "Home"
   },
+  "Payment": {
+    "title": "Upgrade to pro platform"
+  },
   "PlatformSubscription": {
     "platformSubscriptionTitle": "Platform subscription",
     "platformSubscriptionText": "Lorem ipsum"
@@ -555,6 +558,12 @@
     },
     "searchInputPlaceholder": "Search user",
     "addUserButtonText": "Add new admin"
+  },
+
+  "StoragePreview": {
+    "title": "Storage",
+    "actualStorage": "Actual storage",
+    "newStorage": "New storage"
   },
 
   "UserCard": {
