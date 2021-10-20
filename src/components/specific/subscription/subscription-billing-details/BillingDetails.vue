@@ -51,7 +51,7 @@
           color="primary"
           fill
           radius
-          @click="goToPaddlePayment"
+          @click="goToPayment"
         >
           {{ $t("BillingDetails.updatePlatformPro") }}
         </BIMDataButton>
@@ -101,15 +101,15 @@ export default {
       },
       { immediate: true }
     );
-    const goToPaddlePayment = () => {
-      router.push({ name: routeNames.paddlePayment });
+    const goToPayment = () => {
+      router.push({ name: routeNames.payment });
     };
     return {
       // references
       columns,
       formatDate,
       //methods
-      goToPaddlePayment
+      goToPayment
     };
   }
 };

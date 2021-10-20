@@ -26,7 +26,7 @@
             fill
             radius
             width="185px"
-            @click="goToPaddlePayment"
+            @click="goToPayment"
           >
             {{ $t("OurPlans.professionalPlanButton") }}
           </BIMDataButton>
@@ -44,12 +44,12 @@ import { routeNames } from "@/router";
 export default {
   setup() {
     const router = useRouter();
-    const goToPaddlePayment = () => {
-      router.push({ name: routeNames.paddlePayment });
+    const goToPayment = () => {
+      router.push({ name: routeNames.payment });
     };
     return {
       //methods
-      goToPaddlePayment
+      goToPayment
     };
   }
 };

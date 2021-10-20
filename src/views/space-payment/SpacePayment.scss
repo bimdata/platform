@@ -1,0 +1,79 @@
+.paddle-payment {
+  &__header {
+    h1 {
+      width: calc(100% - 84px);
+    }
+    button {
+      width: 84px;
+    }
+  }
+  &__content {
+    display: grid;
+    grid-template-columns: 400px 400px;
+    gap: calc(var(--spacing-unit) * 4);
+    .create-select-orga,
+    .create-space {
+      position: relative;
+      &::after {
+        content: "";
+        width: 34px;
+        height: 34px;
+        position: absolute;
+        top: calc(-34px / 2);
+        background-color: var(--color-secondary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .create-select-orga {
+      &::after {
+        content: "1";
+      }
+    }
+    .create-space {
+      &::after {
+        content: "2";
+      }
+    }
+    & > div {
+      background: #ffffff;
+      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.05);
+    }
+    &::v-deep(.bimdata-card) {
+      overflow: inherit;
+      h3 {
+        font-size: 24px;
+      }
+      .bimdata-radio > span {
+        font-size: 13px;
+      }
+      .bimdata-card__content {
+        padding: 12px 70px;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+    }
+  }
+  &__payment {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1.5fr 1fr 0.5fr;
+    gap: calc(var(--spacing-unit) * 4);
+    grid-template-areas: ". left center right .";
+    & > div {
+      background: #ffffff;
+      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.05);
+    }
+    &__left {
+      grid-area: left;
+    }
+    &__center {
+      grid-area: center;
+    }
+    &__right {
+      grid-area: right;
+    }
+  }
+}
