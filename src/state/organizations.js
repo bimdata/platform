@@ -13,7 +13,7 @@ const resetState = () => {
 
 const retrieveUserOrganizations = async () => {
   const organizations = await OrganizationService.fetchUserOrganizations();
-  organizations.sort((a, b) => (a.name < b.name ? 1 : -1));
+  organizations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   state.userOrganizations = organizations;
   return organizations;
 };
