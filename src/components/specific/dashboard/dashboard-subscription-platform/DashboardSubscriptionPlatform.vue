@@ -11,7 +11,7 @@
           radius
           class="m-l-12"
           @click="goToPlatformSubscription"
-          >Voir mon abonnement</BIMDataButton
+          >Voir mes abonnements</BIMDataButton
         >
       </div>
       <div class="flex items-center">
@@ -20,8 +20,16 @@
       </div>
     </div>
     <BIMDataButton class="dashboard-subscription-platform__btn">
-      <span @click="goToPaddlePayment">{{ $t("Dashboard.platformProButtonText") }}</span>
-      <BIMDataIcon class="arrow-icon" name="arrow" size="xs" margin="0 0 0 12px" :rotate="180" />
+      <span @click="goToPayment">{{
+        $t("Dashboard.platformProButtonText")
+      }}</span>
+      <BIMDataIcon
+        class="arrow-icon"
+        name="arrow"
+        size="xs"
+        margin="0 0 0 12px"
+        :rotate="180"
+      />
     </BIMDataButton>
   </div>
 </template>
@@ -37,15 +45,15 @@ export default {
       router.push({ name: routeNames.platformSubscription });
     };
 
-    const goToPaddlePayment = () => {
-      router.push({ name: routeNames.paddlePayment });
+    const goToPayment = () => {
+      router.push({ name: routeNames.payment });
     };
 
     return {
       goToPlatformSubscription,
-      goToPaddlePayment,
+      goToPayment
     };
-  },
+  }
 };
 </script>
 

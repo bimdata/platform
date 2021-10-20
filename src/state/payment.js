@@ -38,6 +38,10 @@ const retrievePlaformSubscriptionPayments = async (
   return payments;
 };
 
+const retrieveSpaceInformation = space => {
+  return PaymentService.retrieveSpaceInformation(space);
+};
+
 const subscribeDataPack = async () => {
   // TODO
 };
@@ -56,6 +60,7 @@ export function usePayment() {
     retrievePlaformSubscriptions,
     retrieveOrganizationPlaformSubscriptions,
     retrievePlaformSubscriptionPayments,
+    retrieveSpaceInformation,
     subscribeDataPack,
     updateDataPack,
     createPaddleSubscriptionUrl
