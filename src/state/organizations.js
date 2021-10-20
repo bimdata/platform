@@ -8,7 +8,7 @@ const state = reactive({
 
 const resetState = () => {
   state.userOrganizations = [];
-  state.organizationSpaces = {};
+  state.organizationsSpaces = {};
 };
 
 const retrieveUserOrganizations = async () => {
@@ -60,7 +60,12 @@ const importOrganizationSpaces = async (organization, spaces) => {
       OrganizationService.updateSpaceOrganization(space, organization)
     )
   );
-  await retrieveOrganizationSpaces(organization);
+  const updatedOrganizations = [organization].concat(
+    spaces.map(space => space.organization)
+  );
+  await Promise.all(
+    updatedOrganizations.map(orga => retrieveOrganizationSpaces(orga))
+  );
   return importedSpaces;
 };
 
