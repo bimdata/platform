@@ -70,5 +70,10 @@
       align-items: center;
       color: var(--color-tertiary-dark);
     }
+
+    .btn-submit {
+      margin: 0 calc(var(--spacing-unit) * 2);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+    }
   }
 }

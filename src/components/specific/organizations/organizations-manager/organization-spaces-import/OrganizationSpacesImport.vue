@@ -7,16 +7,6 @@
 
       <template v-else>
         <div class="organization-spaces-import__content">
-          <BIMDataButton
-            color="primary"
-            fill
-            radius
-            :disabled="selection.size < 1"
-            @click="submit"
-          >
-            {{ $t("OrganizationSpacesImport.submitButtonText") }}
-          </BIMDataButton>
-
           <div class="list-title">
             {{ $t("OrganizationSpacesImport.spaceListTitle") }}
           </div>
@@ -48,6 +38,18 @@
           <div class="list-placeholder" v-if="spaces.length === 0">
             {{ $t("OrganizationSpacesImport.spaceListPlaceholder") }}
           </div>
+
+          <BIMDataButton
+            v-else
+            class="btn-submit"
+            color="primary"
+            fill
+            radius
+            :disabled="selection.size < 1"
+            @click="submit"
+          >
+            {{ $t("OrganizationSpacesImport.submitButtonText") }}
+          </BIMDataButton>
         </div>
       </template>
     </transition>
