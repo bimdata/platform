@@ -14,6 +14,7 @@ import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
+import paymentResolver from "./resolvers/views/payment.js";
 
 // Route components
 import Layout from "@/Layout.vue";
@@ -39,8 +40,10 @@ const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const PlatformSubscription = () =>
   import(/* webpackChunkName: "platform-subscription" */ "@/views/platform-subscription/PlatformSubscription.vue");
-  const PaddlePayment = () =>
-  import(/* webpackChunkName: "paddle-payment" */ "@/views/paddle-payment/PaddlePayment.vue");
+  const Payment = () =>
+  import(/* webpackChunkName: "payment" */ "@/views/payment/Payment.vue");
+  const SpacePayment = () =>
+  import(/* webpackChunkName: "payment" */ "@/views/space-payment/SpacePayment.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
@@ -55,7 +58,8 @@ const routeNames = Object.freeze({
   spaceBoard: "space-board",
   userProjects: "user-projects",
   platformSubscription: "subscription",
-  paddlePayment: "payment",
+  payment: "payment",
+  spacePayment: "space-payment",
   projectBoard: "project-board",
   modelViewer: "model-viewer",
   projectGroups: "project-groups",
@@ -95,9 +99,17 @@ const routes = [
         component: PlatformSubscription
       },
       {
-        path: "/payment",
-        name: routeNames.paddlePayment,
-        component: PaddlePayment
+        path: "/payment/",
+        name: routeNames.payment,
+        component: Payment
+      },
+      {
+        path: "/spaces/:spaceID(\\d+)/payment/",
+        name: routeNames.spacePayment,
+        component: SpacePayment,
+        meta: {
+          resolver: paymentResolver
+        }
       },
       {
         path: "/spaces/:spaceID(\\d+)",

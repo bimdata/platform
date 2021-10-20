@@ -105,9 +105,9 @@ export default {
     StorageInformations
   },
   setup() {
-    const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
     const { openSidePanel } = useSidePanel();
+    const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,

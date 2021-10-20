@@ -54,4 +54,4 @@ const privateApiClient = {
 
 export default apiClient;
 
-export { privateApiClient };
+export { apiClient, privateApiClient };
