@@ -1,10 +1,7 @@
 .models-manager {
   position: relative;
 
-  &.bimdata-card:deep() > .bimdata-card__content {
-    height: calc(100% - 37px);
-    padding: var(--spacing-unit);
-  }
+  @include block-card($padding: var(--spacing-unit));
 
   &__tab-count {
     margin-left: var(--spacing-unit);

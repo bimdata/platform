@@ -11,3 +11,17 @@
   -ms-user-select: none; // Internet Explorer/Edge
   user-select: none; // Non-prefixed version, currently supported by Chrome and Opera
 }
+
+@mixin block-card($padding: 0) {
+  &.bimdata-card:deep() {
+    --header-height: 38px;
+
+    & > .bimdata-card__header {
+      height: var(--header-height);
+    }
+    & > .bimdata-card__content {
+      height: calc(100% - var(--header-height));
+      padding: $padding;
+    }
+  }
+}
