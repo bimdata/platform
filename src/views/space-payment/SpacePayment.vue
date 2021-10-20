@@ -8,73 +8,54 @@
       <h1 v-else class="text-center">Passer à la platforme professionnelle</h1>
     </div>
     <div class="paddle-payment__content justify-center m-y-24">
-      <BIMDataCard class="create-select-orga text-center">
-        <template #content>
-          <h3 class="color-primary">Create or select an orga</h3>
-          <div>
-            <BIMDataRadio
-              text="Create a new orga"
-              id="newOrga"
-              value="newOrga"
-              v-model="organizationChoice"
-            >
-            </BIMDataRadio>
-            <BIMDataInput
-              v-model="organizationName"
-              placeholder="Nom de ma nouvelle orga"
-              :error="!organizationName"
-              errorMessage="organization error message here"
-              :disabled="organizationChoice !== 'newOrga'"
-            >
-            </BIMDataInput>
-          </div>
-          <div>
-            <BIMDataRadio
-              text="Select an orga"
-              id="selectOrga"
-              value="selectOrga"
-              v-model="organizationChoice"
-            >
-            </BIMDataRadio>
-            <BIMDataDropdownList
-              :list="organizationsList"
-              :perPage="6"
-              elementKey="dropdown"
-              :disabled="organizationChoice !== 'selectOrga'"
-              :closeOnElementClick="true"
-              @element-click="onOrganizationClick($event)"
-              class="m-t-12"
-            >
-              <template #header>{{ selectedOrganization.name }}</template>
-              <template #element="{ element }">
-                {{ element.name }}
-              </template>
-            </BIMDataDropdownList>
-          </div>
-          <BIMDataButton color="primary" fill radius class="m-t-12"
-            >Valider</BIMDataButton
-          >
-        </template>
-      </BIMDataCard>
-      <BIMDataCard class="create-space text-center">
-        <template #content>
-          <h3 class="color-primary">Create a space</h3>
-          <p>lorem ipsum dolor sit amet, con</p>
-          <div>
-            <BIMDataInput
-              v-model="spaceName"
-              placeholder="Nom de mon espace"
-              :error="!spaceName"
-              errorMessage="space error message here"
-              :disabled="!organizationName"
-            >
-            </BIMDataInput>
-          </div>
-          <BIMDataButton color="primary" fill radius class="m-t-12"
-            >Valider</BIMDataButton
-          >
-        </template>
-      </BIMDataCard>
+      <div class="flex items-center">
+        <span class="primary-font-bold m-r-12">Organization selected :</span>
+        <BIMDataDropdownList
+          :list="organizationsList"
+          :perPage="6"
+          elementKey="dropdown"
+          :closeOnElementClick="true"
+          @element-click="onOrganizationClick($event)"
+        >
+          <template #header>
+            <div class="flex items-center">
+              <img
+                alt="organization icon"
+                src="/static/organization-icon.svg"
+                class="m-r-12"
+              />
+              {{ selectedOrganization.name }}
+            </div>
+          </template>
+          <template #element="{ element }">
+            {{ element.name }}
+          </template>
+        </BIMDataDropdownList>
+      </div>
+      <div class="flex items-center">
+        <span class="primary-font-bold m-r-12">Space selected :</span>
+        <BIMDataDropdownList
+          :list="spacesList"
+          :perPage="6"
+          elementKey="dropdown"
+          :closeOnElementClick="true"
+          @element-click="onSpaceClick($event)"
+        >
+          <template #header>
+            <div class="flex items-center">
+              <img
+                alt="organization icon"
+                src="/static/space-icon.svg"
+                class="m-r-12"
+              />
+              {{ selectedSpace.name }}
+            </div>
+          </template>
+          <template #element="{ element }">
+            {{ element.name }}
+          </template>
+        </BIMDataDropdownList>
+      </div>
     </div>
     <div class="paddle-payment__payment">
       <div class="paddle-payment__payment__left">left</div>
@@ -85,7 +66,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 import { useSpaces } from "@/state/spaces";
 import { useOrganizations } from "@/state/organizations.js";
@@ -98,37 +79,56 @@ export default {
     GoBackButton
   },
   setup() {
-    const { retrieveUserOrganizations } = useOrganizations();
+    const { retrieveUserOrganizations, retrieveOrganizationSpaces } =
+      useOrganizations();
 
     const { retrieveSpaceInformation } = usePayment();
 
-    const organizationChoice = ref("newOrga");
-    const organizationName = ref("");
-
     const organizationsList = ref([]);
+    const spacesList = ref([]);
     const selectedOrganization = ref("");
+    const selectedSpace = ref("");
+
     const onOrganizationClick = organization =>
       (selectedOrganization.value = organization);
+    const onSpaceClick = space => (selectedSpace.value = space);
 
     const spaceInformation = ref({});
 
     const { currentSpace } = useSpaces();
+
+    watch(
+      () => selectedOrganization.value,
+      async () => {
+        spacesList.value = await retrieveOrganizationSpaces(
+          selectedOrganization.value
+        );
+        selectedSpace.value = spacesList.value[0];
+      }
+    );
+
     onMounted(async () => {
+      organizationsList.value = await retrieveUserOrganizations();
+      organizationsList.value.sort((a, b) =>
+        a.created_at > b.created_at ? -1 : 1
+      );
+      selectedOrganization.value = currentSpace.value.organization;
+
+      selectedSpace.value = currentSpace.value;
+
+      spaceInformation.value = await retrieveSpaceInformation(
+        currentSpace.value
+      );
+
       async () => {
         spaceInformation.value = await retrieveSpaceInformation(
           currentSpace.value
         );
       },
-        (organizationsList.value = await retrieveUserOrganizations());
-      organizationsList.value.sort((a, b) =>
-        a.created_at > b.created_at ? -1 : 1
-      );
-      selectedOrganization.value = organizationsList.value[0];
-
-      Paddle.Product.Prices(12403, function (prices) {
-        // TODO: set price with with function instead of hard coded value
-        console.log(prices);
-      });
+        Paddle.Product.Prices(12403, function (prices) {
+          // TODO: set price with with function instead of hard coded value
+          console.log(prices);
+        });
       // const response = await (
       //   await fetch(
       //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
@@ -177,12 +177,13 @@ export default {
     return {
       currentSpace,
       organizationsList,
-      organizationChoice,
-      organizationName,
+      spacesList,
       selectedOrganization,
+      selectedSpace,
       spaceInformation,
       // Methods
-      onOrganizationClick
+      onOrganizationClick,
+      onSpaceClick
     };
   }
 };
