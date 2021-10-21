@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { usePayment } from "@/state/payment.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -45,29 +45,58 @@ export default {
     ViewHeader
   },
   setup() {
-    const { userOrganizations } = useOrganizations();
+    const { userOrganizations, organizationsSpaces } = useOrganizations();
     const { currentSpace } = useSpaces();
-    const { platformSubscriptions } = usePayment();
+    const { retrieveSpaceInformation } = usePayment();
 
     const selectedOrga = ref({});
-    const selectedSpace = ref({});
 
-    const hasSubscription = ref(false);
+    const spaces = ref([]);
+    const selectedSpace = ref({});
+    const spaceInfo = ref({});
+
+    const onOrganizationClick = organization => {
+      selectedOrga.value = organization;
+    };
+    const onSpaceClick = space => {
+      selectedSpace.value = space;
+    };
 
     onMounted(() => {
       selectedOrga.value = userOrganizations.value[0];
       if (currentSpace.value) {
         selectedSpace.value = currentSpace.value;
-        hasSubscription.value = platformSubscriptions.value.length > 0;
       }
     });
 
+    watch(
+      () => selectedOrga.value,
+      () => {
+        spaces.value = organizationsSpaces[selectedOrga.value.id];
+        selectedSpace.value = spaces.value[0];
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => selectedSpace.value,
+      async space => {
+        if (space && space.id) {
+          spaceInfo.value = await retrieveSpaceInformation(space);
+        }
+      }
+    );
+
     return {
       // References
-      hasSubscription,
       organizations: userOrganizations,
       selectedOrga,
-      selectedSpace
+      selectedSpace,
+      spaceInfo,
+      spaces,
+      // Methods
+      onOrganizationClick,
+      onSpaceClick
     };
   }
 };
