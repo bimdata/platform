@@ -11,14 +11,18 @@
       </template>
     </ViewHeader>
     <div class="payment__content">
-      <div class="payment__content__left">
-        <SubscriptionInfo />
+      <div class="payment__content--top">
+        <div class="payment__content__block"></div>
+        <div class="payment__content__block"></div>
       </div>
-      <div class="payment__content__center">
-        <SubscriptionForm :space="selectedSpace" />
+      <div class="payment__content__block payment__content--left">
+        <PlatformSubInfo />
       </div>
-      <div class="payment__content__right">
-        <StoragePreview :space="selectedSpace" />
+      <div class="payment__content__block payment__content--center">
+        <PlatformSubForm :space="selectedSpace" />
+      </div>
+      <div class="payment__content__block payment__content--right">
+        <SpaceSizePreview :space="selectedSpace" />
       </div>
     </div>
   </div>
@@ -30,23 +34,23 @@ import { useOrganizations } from "@/state/organizations.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import StoragePreview from "@/components/specific/payment/storage-preview/StoragePreview.vue";
-import SubscriptionForm from "@/components/specific/payment/subscription-form/SubscriptionForm.vue";
-import SubscriptionInfo from "@/components/specific/payment/subscription-info/SubscriptionInfo.vue";
+import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
+import PlatformSubForm from "@/components/specific/payment/platform-sub-form/PlatformSubForm.vue";
+import PlatformSubInfo from "@/components/specific/payment/platform-sub-info/PlatformSubInfo.vue";
 
 export default {
   components: {
     GoBackButton,
-    StoragePreview,
-    SubscriptionForm,
-    SubscriptionInfo,
+    PlatformSubForm,
+    PlatformSubInfo,
+    SpaceSizePreview,
     ViewHeader
   },
   setup() {
     const { userOrganizations } = useOrganizations();
 
-    const selectedOrganization = ref(null);
-    const selectedSpace = ref(null);
+    const selectedOrganization = ref({});
+    const selectedSpace = ref({});
 
     const onOrganizationClick = orga => {
       selectedOrganization.value = orga;
@@ -54,7 +58,12 @@ export default {
 
     onMounted(() => {
       selectedOrganization.value = userOrganizations.value[0];
-      selectedSpace.value = {};
+      selectedSpace.value = {
+        id: 0,
+        organization: {
+          id: 0
+        }
+      };
     });
 
     return {

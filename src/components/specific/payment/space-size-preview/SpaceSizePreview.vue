@@ -83,7 +83,10 @@ export default {
     watch(
       () => props.space,
       async () => {
-        spaceInfo.value = await retrieveSpaceInformation(props.space);
+        // TODO: remove if statement when not necessary anymore
+        if (props.space && props.space.id) {
+          spaceInfo.value = await retrieveSpaceInformation(props.space);
+        }
       },
       { immediate: true }
     );
@@ -98,4 +101,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./StoragePreview.scss"></style>
+<style scoped lang="scss" src="./SpaceSizePreview.scss"></style>
