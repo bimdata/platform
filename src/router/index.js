@@ -14,7 +14,6 @@ import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
-import paymentResolver from "./resolvers/views/payment.js";
 
 // Route components
 import Layout from "@/Layout.vue";
@@ -102,14 +101,6 @@ const routes = [
         path: "/payment",
         name: routeNames.payment,
         component: Payment
-      },
-      {
-        path: "/spaces/:spaceID(\\d+)/payment/",
-        name: routeNames.spacePayment,
-        component: SpacePayment,
-        meta: {
-          resolver: paymentResolver
-        }
       },
       {
         path: "/spaces/:spaceID(\\d+)",

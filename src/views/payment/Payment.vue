@@ -11,19 +11,8 @@
       </template>
     </ViewHeader>
     <div class="payment__content">
-      <div class="payment__content--top">
-        <div class="payment__content__block"></div>
-        <div class="payment__content__block"></div>
-      </div>
-      <div class="payment__content__block payment__content--left">
-        <PlatformSubInfo />
-      </div>
-      <div class="payment__content__block payment__content--center">
-        <PlatformSubForm :space="selectedSpace" />
-      </div>
-      <div class="payment__content__block payment__content--right">
-        <SpaceSizePreview :space="selectedSpace" />
-      </div>
+      <div class="payment__content__head"></div>
+      <PlatformSubscription />
     </div>
   </div>
 </template>
@@ -34,16 +23,12 @@ import { useOrganizations } from "@/state/organizations.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
-import PlatformSubForm from "@/components/specific/payment/platform-sub-form/PlatformSubForm.vue";
-import PlatformSubInfo from "@/components/specific/payment/platform-sub-info/PlatformSubInfo.vue";
+import PlatformSubscription from "./platform-subscription/PlatformSubscription.vue";
 
 export default {
   components: {
     GoBackButton,
-    PlatformSubForm,
-    PlatformSubInfo,
-    SpaceSizePreview,
+    PlatformSubscription,
     ViewHeader
   },
   setup() {
