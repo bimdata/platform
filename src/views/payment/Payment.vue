@@ -27,6 +27,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
+import { usePayment } from "@/state/payment.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
@@ -44,6 +45,7 @@ export default {
   setup() {
     const { userOrganizations } = useOrganizations();
     const { currentSpace } = useSpaces();
+    const { platformSubscriptions } = usePayment();
 
     const selectedOrga = ref({});
     const selectedSpace = ref({});
@@ -52,7 +54,10 @@ export default {
 
     onMounted(() => {
       selectedOrga.value = userOrganizations.value[0];
-      selectedSpace.value = currentSpace.value || {};
+      if (currentSpace.value) {
+        selectedSpace.value = currentSpace.value;
+        hasSubscription.value = platformSubscriptions.value.length > 0;
+      }
     });
 
     return {

@@ -11,6 +11,7 @@ import rootResolver from "./resolvers/root.js";
 // Resolvers
 import groupBoardResolver from "./resolvers/views/group-board.js";
 import modelViewerResolver from "./resolvers/views/model-viewer.js";
+import paymentResolver from "./resolvers/views/payment.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
@@ -98,7 +99,10 @@ const routes = [
       {
         path: "/payment",
         name: routeNames.payment,
-        component: Payment
+        component: Payment,
+        meta: {
+          resolver: paymentResolver
+        }
       },
       {
         path: "/spaces/:spaceID(\\d+)",

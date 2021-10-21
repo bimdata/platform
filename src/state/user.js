@@ -4,6 +4,7 @@ import PROJECT_ROLES from "@/config/project-roles";
 import SPACE_ROLES from "@/config/space-roles";
 
 const state = reactive({
+  isNew: false,
   user: null,
   spaceRoles: {},
   projectRoles: {}
@@ -23,6 +24,10 @@ const loadUser = async () => {
   );
 
   return user;
+};
+
+const setIsNew = value => {
+  state.isNew = value;
 };
 
 const mapUsers = users => {
@@ -55,6 +60,7 @@ export function useUser() {
     ...toRefs(readonlyState),
     // Methods
     loadUser,
+    setIsNew,
     mapUsers,
     mapSpaces,
     mapProjects
