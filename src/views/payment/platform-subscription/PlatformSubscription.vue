@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 // Components
 import PlatformSubForm from "@/components/specific/payment/platform-sub-form/PlatformSubForm.vue";
 import PlatformSubInfo from "@/components/specific/payment/platform-sub-info/PlatformSubInfo.vue";
@@ -25,13 +24,11 @@ export default {
     PlatformSubInfo,
     SpaceSizePreview
   },
-  setup() {
-    const space = ref({});
-
-    return {
-      // References
-      space
-    };
+  props: {
+    space: {
+      type: Object,
+      required: true
+    }
   }
 };
 </script>
