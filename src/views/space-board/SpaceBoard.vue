@@ -17,15 +17,6 @@
       <template #right>
         <div class="flex items-center">
           <StorageInformations :space="space" />
-          <!-- <BIMDataButton
-          data-test="btn-filter"
-          class="space-board__header__btn-filter"
-          fill
-          squared
-          icon
-        >
-          <BIMDataIcon name="filter" size="s" />
-        </BIMDataButton> -->
           <BIMDataButton
             data-test="btn-sort"
             class="space-board__header__btn-sort m-r-12"

@@ -50,12 +50,10 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router";
-
 import { usePayment } from "@/state/payment.js";
-
+import { formatBytes } from "@/utils/files.js";
+// Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar";
-
-import { formatBytesV2 } from "@/utils/files.js";
 
 export default {
   components: {
@@ -91,8 +89,8 @@ export default {
     return {
       // References
       spaceInformation,
-      formatBytes: formatBytesV2,
       // Methods
+      formatBytes,
       goToPayment
     };
   }

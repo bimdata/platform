@@ -3,23 +3,7 @@ function fileExtension(fileName) {
   return parts.length > 1 ? parts[parts.length - 1] : "";
 }
 
-function formatBytes(bytes) {
-  if (bytes >= 1000000000000) {
-    return `${Number(bytes / 1000000000000).toFixed(2)} TB`;
-  }
-  if (bytes >= 1000000000) {
-    return `${Number(bytes / 1000000000).toFixed(2)} GB`;
-  }
-  if (bytes >= 1000000) {
-    return `${Number(bytes / 1000000).toFixed(2)} MB`;
-  }
-  if (bytes >= 1000) {
-    return `${Number(bytes / 1000).toFixed(2)} KB`;
-  }
-  return `${bytes} B`;
-}
-
-function formatBytesV2(bytes, decimals = 2) {
+function formatBytes(bytes, decimals = 2) {
   if (bytes) {
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
@@ -39,4 +23,4 @@ function generateFileKey(fileName, fileSize) {
   return key;
 }
 
-export { fileExtension, formatBytes, formatBytesV2, generateFileKey };
+export { fileExtension, formatBytes, generateFileKey };

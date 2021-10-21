@@ -10,15 +10,25 @@
       />
     </div>
     <div class="storage-preview__actual">
-      <ProgressBar class="m-b-12" componentWidth="100%" :progressPercent="36">
+      <ProgressBar
+        class="m-b-12"
+        componentWidth="100%"
+        :progressPercent="spaceInfo.remainingSizePercent"
+      >
         <template #text-left-above>
-          {{ $t("StoragePreview.actualStorage") }}
+          <span>
+            {{ $t("StoragePreview.actualStorage") }}
+          </span>
         </template>
         <template #text-left-below>
-          <span>125MB</span>
+          <span>
+            {{ formatBytes(spaceInfo.smartDataSize) }}
+          </span>
         </template>
         <template #text-right-below>
-          <span>500MB</span>
+          <span>
+            {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+          </span>
         </template>
       </ProgressBar>
       <BIMDataText color="color-tertiary-dark">
@@ -28,10 +38,14 @@
     <div class="storage-preview__new">
       <ProgressBar class="m-b-12" componentWidth="100%" :progressPercent="15">
         <template #text-left-above>
-          {{ $t("StoragePreview.newStorage") }}
+          <span>
+            {{ $t("StoragePreview.newStorage") }}
+          </span>
         </template>
         <template #text-left-below>
-          <span>125MB</span>
+          <span>
+            {{ formatBytes(spaceInfo.smartDataSize) }}
+          </span>
         </template>
         <template #text-right-below>
           <span>10GB</span>
@@ -45,6 +59,9 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
+import { usePayment } from "@/state/payment.js";
+import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
 
@@ -53,10 +70,30 @@ export default {
     ProgressBar
   },
   props: {
-    // TODO
+    space: {
+      type: Object,
+      required: true
+    }
   },
-  setup() {
-    // TODO
+  setup(props) {
+    const { retrieveSpaceInformation } = usePayment();
+
+    const spaceInfo = ref({});
+
+    watch(
+      () => props.space,
+      async () => {
+        spaceInfo.value = await retrieveSpaceInformation(props.space);
+      },
+      { immediate: true }
+    );
+
+    return {
+      // References
+      spaceInfo,
+      // Methods
+      formatBytes
+    };
   }
 };
 </script>
