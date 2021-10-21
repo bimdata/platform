@@ -10,7 +10,7 @@
           ghost
           radius
           class="m-l-12"
-          @click="goToPlatformSubscription"
+          @click="goToUserSubscriptions"
           >Voir mes abonnements</BIMDataButton
         >
       </div>
@@ -41,8 +41,8 @@ import { routeNames } from "@/router";
 export default {
   setup() {
     const router = useRouter();
-    const goToPlatformSubscription = () => {
-      router.push({ name: routeNames.platformSubscription });
+    const goToUserSubscriptions = () => {
+      router.push({ name: routeNames.userSubscriptions });
     };
 
     const goToPayment = () => {
@@ -50,7 +50,7 @@ export default {
     };
 
     return {
-      goToPlatformSubscription,
+      goToUserSubscriptions,
       goToPayment
     };
   }

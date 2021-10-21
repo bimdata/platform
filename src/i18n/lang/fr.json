@@ -29,10 +29,6 @@
   "Payment": {
     "title": "Passer à la platforme professionnelle"
   },
-  "PlatformSubscription": {
-    "platformSubscriptionTitle": "Abonnement à la plateforme",
-    "platformSubscriptionText": "Lorem ipsum"
-  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Projet",
@@ -61,6 +57,12 @@
     "organizationsButtonText": "Organisations",
     "createButtonText": "Créer un espace"
   },
+  "UserSubscriptions": {
+    "title": "Abonnement à la plateforme",
+    "text": "Lorem ipsum"
+  },
+
+
 
   "ProjectBcf": {},
   "ProjectFiles": {
@@ -74,6 +76,8 @@
       "message": "Veuillez sélectionner un fichier .ifc"
     }
   },
+
+
 
   "BreadcrumbSelector": {
     "inputPlaceholder": "Rechercher"

@@ -29,10 +29,6 @@
   "Payment": {
     "title": "Upgrade to pro platform"
   },
-  "PlatformSubscription": {
-    "platformSubscriptionTitle": "Platform subscription",
-    "platformSubscriptionText": "Lorem ipsum"
-  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Project",
@@ -61,6 +57,12 @@
     "organizationsButtonText": "Organizations",
     "createButtonText": "Create a space"
   },
+  "UserSubscriptions": {
+    "title": "Platform subscription",
+    "text": "Lorem ipsum"
+  },
+
+
 
   "ProjectBcf": {},
   "ProjectFiles": {
@@ -74,6 +76,8 @@
       "message": "Please select an .ifc file"
     }
   },
+
+
 
   "BreadcrumbSelector": {
     "inputPlaceholder": "Search"

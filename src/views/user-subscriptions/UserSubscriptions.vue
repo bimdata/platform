@@ -1,9 +1,9 @@
 <template>
-  <div class="platform-subscription">
+  <div class="user-subscriptions">
     <header>
-      <h1>{{ $t("PlatformSubscription.platformSubscriptionTitle") }}</h1>
+      <h1>{{ $t("UserSubscriptions.title") }}</h1>
       <p>
-        {{ $t("PlatformSubscription.platformSubscriptionText") }}
+        {{ $t("UserSubscriptions.text") }}
       </p>
       <BIMDataDropdownList
         :list="organizationsList"
@@ -26,7 +26,7 @@
         </template>
       </BIMDataDropdownList>
     </header>
-    <aside class="platform-subscription__content m-t-18">
+    <aside class="user-subscriptions__content m-t-18">
       <div class="flex">
         <BillingDetails
           :billings="organizationPlaformSubscriptions"
@@ -126,4 +126,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./PlatformSubscription.scss"></style>
+<style scoped lang="scss" src="./UserSubscriptions.scss"></style>
