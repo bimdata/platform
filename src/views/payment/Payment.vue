@@ -11,7 +11,9 @@
       </template>
     </ViewHeader>
     <div class="payment__content">
-      <div class="payment__content__head"></div>
+      <div class="payment__content__head">
+        <!-- TODO: /!\ (WARNING !!!) Jaja area /!\ -->
+      </div>
       <transition name="fade" mode="out-in">
         <template v-if="hasSubscription">
           <DatapackSubscription :space="selectedSpace" />
