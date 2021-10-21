@@ -14,11 +14,12 @@
       >
         <template #header>
           <div class="flex items-center">
-            <span
-              class="number-organizations flex items-center justify-center"
-              >{{ organizationsList.length }}</span
-            >
-            <span class="m-l-12">{{ selectedOrganization.name }}</span>
+            <span class="number-organizations flex items-center justify-center">
+              {{ organizationsList.length }}
+            </span>
+            <span class="m-l-12">
+              {{ selectedOrganization.name }}
+            </span>
           </div>
         </template>
         <template #element="{ element }">
@@ -49,9 +50,9 @@ import { useOrganizations } from "@/state/organizations.js";
 import { usePayment } from "@/state/payment.js";
 
 // Components
-import BillingDetails from "@/components/specific/subscription/subscription-billing-details/BillingDetails.vue";
-import Invoices from "@/components/specific/subscription/invoices/Invoices.vue";
-import OurPlans from "@/components/specific/subscription/plans/OurPlans.vue";
+import BillingDetails from "@/components/specific/subscriptions/subscription-billing-details/BillingDetails.vue";
+import Invoices from "@/components/specific/subscriptions/invoices/Invoices.vue";
+import OurPlans from "@/components/specific/subscriptions/plans/OurPlans.vue";
 
 export default {
   components: {

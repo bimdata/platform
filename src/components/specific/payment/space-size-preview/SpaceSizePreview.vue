@@ -1,15 +1,15 @@
 <template>
-  <div class="storage-preview">
+  <div class="space-size-preview">
     <div class="storage-preview__title">
-      <h1>{{ $t("StoragePreview.title") }}</h1>
+      <h1>{{ $t("SpaceSizePreview.title") }}</h1>
     </div>
-    <div class="storage-preview__logo">
+    <div class="space-size-preview__logo">
       <img
-        src="/static/storage-preview-image.svg"
+        src="/static/space-size-preview-image.svg"
         alt="storage-preview-image"
       />
     </div>
-    <div class="storage-preview__actual">
+    <div class="space-size-preview__actual">
       <ProgressBar
         class="m-b-12"
         componentWidth="100%"
@@ -17,7 +17,7 @@
       >
         <template #text-left-above>
           <span>
-            {{ $t("StoragePreview.actualStorage") }}
+            {{ $t("SpaceSizePreview.actualStorage") }}
           </span>
         </template>
         <template #text-left-below>
@@ -32,14 +32,14 @@
         </template>
       </ProgressBar>
       <BIMDataText color="color-tertiary-dark">
-        {{ $t("StoragePreview.actualStorageText") }}
+        {{ $t("SpaceSizePreview.actualStorageText") }}
       </BIMDataText>
     </div>
-    <div class="storage-preview__new">
+    <div class="space-size-preview__new">
       <ProgressBar class="m-b-12" componentWidth="100%" :progressPercent="15">
         <template #text-left-above>
           <span>
-            {{ $t("StoragePreview.newStorage") }}
+            {{ $t("SpaceSizePreview.newStorage") }}
           </span>
         </template>
         <template #text-left-below>
@@ -52,7 +52,7 @@
         </template>
       </ProgressBar>
       <BIMDataText color="color-tertiary-dark">
-        {{ $t("StoragePreview.newStorageText") }}
+        {{ $t("SpaceSizePreview.newStorageText") }}
       </BIMDataText>
     </div>
   </div>

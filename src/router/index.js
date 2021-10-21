@@ -57,7 +57,6 @@ const routeNames = Object.freeze({
   userProjects: "user-projects",
   userSubscriptions: "user-subscriptions",
   payment: "payment",
-  spacePayment: "space-payment",
   projectBoard: "project-board",
   modelViewer: "model-viewer",
   projectGroups: "project-groups",

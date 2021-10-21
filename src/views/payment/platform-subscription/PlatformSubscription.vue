@@ -7,7 +7,7 @@
       <PlatformSubForm :space="space" />
     </div>
     <div class="platform-subscription__right">
-      <SpaceSizePreview :space="space" />
+      <SpaceSizePreview :spaceInfo="spaceInfo" />
     </div>
   </div>
 </template>
@@ -26,6 +26,10 @@ export default {
   },
   props: {
     space: {
+      type: Object,
+      required: true
+    },
+    sapceInfo: {
       type: Object,
       required: true
     }

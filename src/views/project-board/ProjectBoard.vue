@@ -16,7 +16,7 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <StorageInformations :space="space" />
+          <SpaceSizeInfo :space="space" />
           <app-slot name="project-board-action" />
         </div>
       </template>
@@ -36,18 +36,18 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { useProjects } from "@/state/projects";
-import { useSession } from "@/state/session";
-import { useSpaces } from "@/state/spaces";
+import { useProjects } from "@/state/projects.js";
+import { useSession } from "@/state/session.js";
+import { useSpaces } from "@/state/spaces.js";
 
 // Components
-import AppSlot from "@/components/generic/app-slot/AppSlot";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectBcf from "./project-bcf/ProjectBcf";
-import ProjectFiles from "./project-files/ProjectFiles";
-import ProjectOverview from "./project-overview/ProjectOverview";
-import StorageInformations from "@/components/specific/subscription/storage-informations/StorageInformations";
+import AppSlot from "@/components/generic/app-slot/AppSlot.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ProjectBcf from "./project-bcf/ProjectBcf.vue";
+import ProjectFiles from "./project-files/ProjectFiles.vue";
+import ProjectOverview from "./project-overview/ProjectOverview.vue";
+import SpaceSizeInfo from "@/components/specific/payment/storage-informations/SpaceSizeInfo.vue";
 
 const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {
@@ -76,7 +76,7 @@ export default {
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
-    StorageInformations
+    SpaceSizeInfo
   },
   setup() {
     const route = useRoute();

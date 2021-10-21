@@ -39,16 +39,18 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import { routeNames } from "@/router/index.js";
 
 export default {
   setup() {
     const router = useRouter();
+
     const goToPayment = () => {
       router.push({ name: routeNames.payment });
     };
+
     return {
-      //methods
+      // Methods
       goToPayment
     };
   }

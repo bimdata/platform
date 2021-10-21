@@ -2,14 +2,14 @@
   <div class="datapack-subscription">
     <div class="datapack-subscription__left">
       Datapack Sub Info
-      <!-- <DatapackSubInfo :space="space" /> -->
+      <!-- <DatapackSubInfo :spaceInfo="spaceInfo" /> -->
     </div>
     <div class="datapack-subscription__center">
       Datapack Sub Form
-      <!-- <DatapackSubForm :space="space" /> -->
+      <!-- <DatapackSubForm :space="space" :spaceInfo="spaceInfo" /> -->
     </div>
     <div class="datapack-subscription__right">
-      <SpaceSizePreview :space="space" />
+      <SpaceSizePreview :spaceInfo="spaceInfo" />
     </div>
   </div>
 </template>
@@ -24,6 +24,10 @@ export default {
   },
   props: {
     space: {
+      type: Object,
+      required: true
+    },
+    sapceInfo: {
       type: Object,
       required: true
     }

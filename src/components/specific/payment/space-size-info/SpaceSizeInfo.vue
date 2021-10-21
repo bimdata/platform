@@ -1,36 +1,33 @@
 <template>
-  <div class="flex" v-if="spaceInformation.role === 100">
+  <div class="flex" v-if="spaceInfo.role === 100">
     <ProgressBar
       class="m-r-12"
-      :progressPercent="spaceInformation.remainingSizePercent"
+      :progressPercent="spaceInfo.remainingSizePercent"
     >
       <template #text-left-below>
         <div>
-          {{ formatBytes(spaceInformation.smartDataSize) }}
-          {{ $t("SpaceBoard.progressBar.using") }}
-          {{ $t("SpaceBoard.progressBar.from") }}
-          {{ formatBytes(spaceInformation.smartDataSizeAvailable) }}
-          <span v-if="!isPlatformPaid">{{
-            $t("SpaceBoard.progressBar.included")
-          }}</span>
+          {{ formatBytes(spaceInfo.smartDataSize) }}
+          {{ $t("SpaceSizeInfo.using") }}
+          {{ $t("SpaceSizeInfo.from") }}
+          {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+          <span v-if="!spaceInfo.isPlatformPaid">
+            {{ $t("SpaceSizeInfo.included") }}
+          </span>
         </div>
       </template>
     </ProgressBar>
     <div
-      v-if="
-        spaceInformation.isPlatformSubscription &&
-        spaceInformation.isOrganizationMember
-      "
+      v-if="spaceInfo.isPlatformSubscription && spaceInfo.isOrganizationMember"
     >
       <BIMDataButton
-        v-if="spaceInformation.isPlatformPaid"
+        v-if="spaceInfo.isPlatformPaid"
         color="secondary"
         fill
         radius
         @click="goToPayment"
         class="m-r-18"
       >
-        {{ $t("SpaceBoard.progressBar.upgradeStorageButton") }}
+        {{ $t("SpaceSizeInfo.upgradeStorageButton") }}
       </BIMDataButton>
       <BIMDataButton
         v-else
@@ -40,7 +37,7 @@
         @click="goToPayment"
         class="m-r-18"
       >
-        {{ $t("SpaceBoard.progressBar.buyPlatformProButton") }}
+        {{ $t("SpaceSizeInfo.buyPlatformProButton") }}
       </BIMDataButton>
     </div>
   </div>
@@ -49,11 +46,11 @@
 <script>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import { routeNames } from "@/router/index.js";
 import { usePayment } from "@/state/payment.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
-import ProgressBar from "@/components/generic/progress-bar/ProgressBar";
+import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
 
 export default {
   components: {
@@ -66,29 +63,28 @@ export default {
     }
   },
   setup(props) {
+    const router = useRouter();
     const { retrieveSpaceInformation } = usePayment();
 
-    const router = useRouter();
-
-    const spaceInformation = ref({});
+    const spaceInfo = ref({});
 
     const goToPayment = () => {
       router.push({
-        name: routeNames.spacePayment
+        name: routeNames.payment
       });
     };
 
     watch(
       () => props.space,
       async () => {
-        spaceInformation.value = await retrieveSpaceInformation(props.space);
+        spaceInfo.value = await retrieveSpaceInformation(props.space);
       },
       { immediate: true }
     );
 
     return {
       // References
-      spaceInformation,
+      spaceInfo,
       // Methods
       formatBytes,
       goToPayment

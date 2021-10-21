@@ -15,11 +15,11 @@
         <!-- TODO: /!\ (WARNING !!!) Jaja area /!\ -->
       </div>
       <transition name="fade" mode="out-in">
-        <template v-if="hasSubscription">
-          <DatapackSubscription :space="selectedSpace" />
+        <template v-if="spaceInfo.isPlatformPaid">
+          <DatapackSubscription :space="selectedSpace" :spaceInfo="spaceInfo" />
         </template>
         <template v-else>
-          <PlatformSubscription :space="selectedSpace" />
+          <PlatformSubscription :space="selectedSpace" :spaceInfo="spaceInfo" />
         </template>
       </transition>
     </div>
@@ -62,13 +62,6 @@ export default {
       selectedSpace.value = space;
     };
 
-    onMounted(() => {
-      selectedOrga.value = userOrganizations.value[0];
-      if (currentSpace.value) {
-        selectedSpace.value = currentSpace.value;
-      }
-    });
-
     watch(
       () => selectedOrga.value,
       () => {
@@ -86,6 +79,13 @@ export default {
         }
       }
     );
+
+    onMounted(() => {
+      selectedOrga.value = userOrganizations.value[0];
+      if (currentSpace.value) {
+        selectedSpace.value = currentSpace.value;
+      }
+    });
 
     return {
       // References

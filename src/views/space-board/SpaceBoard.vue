@@ -16,7 +16,7 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <StorageInformations :space="space" />
+          <SpaceSizeInfo :space="space" />
           <BIMDataButton
             data-test="btn-sort"
             class="space-board__header__btn-sort m-r-12"
@@ -68,21 +68,21 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useListSort } from "@/composables/list-sort";
-import { useSidePanel } from "@/composables/side-panel";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useListSort } from "@/composables/list-sort.js";
+import { useSidePanel } from "@/composables/side-panel.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
 
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
-import SidePanel from "@/components/generic/side-panel/SidePanel";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
-import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
-import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
-import StorageInformations from "@/components/specific/subscription/storage-informations/StorageInformations";
+import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
+import SpaceSizeInfo from "@/components/specific/payment/space-size-info/SpaceSizeInfo.vue";
+import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
+import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
   components: {
@@ -92,8 +92,8 @@ export default {
     AppBreadcrumb,
     ProjectCard,
     ProjectCreationCard,
-    SpaceUsersManager,
-    StorageInformations
+    SpaceSizeInfo,
+    SpaceUsersManager
   },
   setup() {
     const { spaceProjects } = useProjects();

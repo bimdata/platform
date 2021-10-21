@@ -34,13 +34,6 @@
     "searchInputPlaceholder": "Search groups"
   },
   "SpaceBoard": {
-    "progressBar": {
-      "buyPlatformProButton": "Switch to the pro platform ",
-      "from": "out of",
-      "included": "included",
-      "upgradeStorageButton": "Upgrade storage",
-      "using": "using"
-    },
     "searchInputPlaceholder": "Search projects"
   },
   "UserProjects": {
@@ -574,6 +567,20 @@
     "createButtonText": "Create"
   },
 
+  "SpaceSizeInfo": {
+    "using": "using",
+    "from": "out of",
+    "included": "included",
+    "upgradeStorageButton": "Upgrade storage",
+    "buyPlatformProButton": "Switch to the pro platform"
+  },
+
+  "SpaceSizePreview": {
+    "title": "Storage",
+    "actualStorage": "Actual storage",
+    "newStorage": "New storage"
+  },
+
   "SpaceUsersManager": {
     "title": "Manage space admins",
     "tabs": {
@@ -582,12 +589,6 @@
     },
     "searchInputPlaceholder": "Search user",
     "addUserButtonText": "Add new admin"
-  },
-
-  "StoragePreview": {
-    "title": "Storage",
-    "actualStorage": "Actual storage",
-    "newStorage": "New storage"
   },
 
   "UserCard": {
