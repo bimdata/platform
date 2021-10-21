@@ -1,3 +1,24 @@
 .datapack-subscription {
-  // TODO
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--spacing-unit) * 3);
+
+  &__left,
+  &__center,
+  &__right {
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+  }
+
+  &__left {
+    width: 400px;
+  }
+
+  &__center {
+    width: 600px;
+  }
+
+  &__right {
+    width: 400px;
+  }
 }
