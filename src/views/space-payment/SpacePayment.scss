@@ -8,7 +8,7 @@
       width: 84px;
     }
   }
-  &__content {
+  &__selectors {
     display: grid;
     grid-template-columns: 400px 400px;
     gap: calc(var(--spacing-unit) * 4);

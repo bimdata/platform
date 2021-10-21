@@ -7,7 +7,7 @@
       </h1>
       <h1 v-else class="text-center">Passer à la platforme professionnelle</h1>
     </div>
-    <div class="paddle-payment__content justify-center m-y-24">
+    <div class="paddle-payment__selectors justify-center m-y-24">
       <div class="flex items-center">
         <span class="primary-font-bold m-r-12">Organization selected :</span>
         <BIMDataDropdownList
