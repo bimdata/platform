@@ -1,28 +1,39 @@
 <template>
-  <div class="dashboard-subscription-platform">
-    <h2>{{ $t("Dashboard.platformProButtonTitle") }}</h2>
+  <div class="dashboard-subscription-tile">
+    <h2>{{ $t("DashboardSubscriptionTile.title") }}</h2>
     <div>
       <div class="m-t-18 flex items-center">
-        <p>{{ $t("Dashboard.paymentInformationText") }}</p>
+        <p>
+          {{ $t("DashboardSubscriptionTile.paymentInfoText") }}
+        </p>
         <BIMDataButton
+          class="m-l-12"
           width="100px"
           color="primary"
           ghost
           radius
-          class="m-l-12"
           @click="goToUserSubscriptions"
-          >Voir mes abonnements</BIMDataButton
         >
+          {{ $t("DashboardSubscriptionTile.paymentInfoButtonText") }}
+        </BIMDataButton>
       </div>
       <div class="flex items-center">
-        <p class="m-r-6">{{ $t("Dashboard.nextPaymentText") }}</p>
-        <strong>10/10/2021</strong>
+        <p class="m-r-6">
+          {{ $t("DashboardSubscriptionTile.nextPaymentDate") }}
+        </p>
+        <strong>
+          <!-- TODO: make this dynamic -->
+          10/10/2021
+        </strong>
       </div>
     </div>
-    <BIMDataButton class="dashboard-subscription-platform__btn">
-      <span @click="goToPayment">{{
-        $t("Dashboard.platformProButtonText")
-      }}</span>
+    <BIMDataButton
+      class="dashboard-subscription-tile__btn"
+      @click="goToPayment"
+    >
+      <span>
+        {{ $t("DashboardSubscriptionTile.subscribeButtonText") }}
+      </span>
       <BIMDataIcon
         class="arrow-icon"
         name="arrow"
@@ -41,6 +52,7 @@ import { routeNames } from "@/router";
 export default {
   setup() {
     const router = useRouter();
+
     const goToUserSubscriptions = () => {
       router.push({ name: routeNames.userSubscriptions });
     };
@@ -50,11 +62,12 @@ export default {
     };
 
     return {
-      goToUserSubscriptions,
-      goToPayment
+      // Methods
+      goToPayment,
+      goToUserSubscriptions
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./DashboardSubscriptionPlatform.scss"></style>
+<style scoped lang="scss" src="./DashboardSubscriptionTile.scss"></style>

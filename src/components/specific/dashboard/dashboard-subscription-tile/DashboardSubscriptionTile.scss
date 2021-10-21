@@ -1,13 +1,15 @@
-.dashboard-subscription-platform {
+.dashboard-subscription-tile {
   padding: calc(var(--spacing-unit) * 2);
   display: grid;
   grid-template-rows: 1fr 1fr 2fr;
   background-color: var(--color-white);
   border-radius: var(--spacing-unit);
   box-shadow: var(--box-shadow);
+
   h2 {
     margin: 0;
   }
+
   &__btn {
     padding: 0;
     justify-content: flex-start;
