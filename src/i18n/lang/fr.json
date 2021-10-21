@@ -3,13 +3,7 @@
     "spacesButtonTitle": "Espaces",
     "spacesButtonText": "Mes espaces",
     "projectsButtonTitle": "Projets",
-    "projectsButtonText": "Mes projets",
-    "platformProButtonTitle": "Abonnement à la plateforme",
-    "platformProButtonText": "Obtenez plus de projets et plus de fonctionnalités",
-    "paymentInformationText": "Informations de paiement :",
-    "updateInformationButton": "Mettre à jour",
-    "cancelInformationButton": "Annuler",
-    "nextPaymentText": "Prochain paiement :"
+    "projectsButtonText": "Mes projets"
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Rechercher un membre"
@@ -119,6 +113,7 @@
       "amount": "Montant"
     }
   },
+
   "BillingDetailsActionsCell": {
     "cancelUrl": "Annuler ce paiement",
     "updateUrl": "Modifier la carte de paiement"
@@ -142,6 +137,14 @@
 
   "DashboardSpaceList": {
     "title": "Espaces récents"
+  },
+
+  "DashboardSubscriptionTile": {
+    "title": "Abonnement Plateforme",
+    "paymentInfoText": "Informations de paiement :",
+    "paymentInfoButtonText": "Gérer mes abonnements",
+    "nextPaymentDate": "Prochain paiement :",
+    "subscribeButtonText": "Acheter du stockage"
   },
 
   "DashboardWelcomeTile": {

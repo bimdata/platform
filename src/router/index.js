@@ -29,6 +29,8 @@ const GroupBoard = () =>
   import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
 const ModelViewer = () =>
   import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer.vue");
+const Payment = () =>
+  import(/* webpackChunkName: "payment" */ "@/views/payment/Payment.vue");
 const ProjectBoard = () =>
   import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard.vue");
 const ProjectGroups = () =>
@@ -39,10 +41,6 @@ const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const UserSubscriptions = () =>
   import(/* webpackChunkName: "user-subscriptions" */ "@/views/user-subscriptions/UserSubscriptions.vue");
-const Payment = () =>
-  import(/* webpackChunkName: "payment" */ "@/views/payment/Payment.vue");
-const SpacePayment = () =>
-  import(/* webpackChunkName: "space-payment" */ "@/views/space-payment/SpacePayment.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
