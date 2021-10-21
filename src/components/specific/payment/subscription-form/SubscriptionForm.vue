@@ -10,16 +10,12 @@ import { useUser } from "@/state/user.js";
 
 export default {
   props: {
-    organization: {
-      type: Object,
-      required: true
-    },
     space: {
       type: Object,
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const { user } = useUser();
 
     onMounted(() => {
@@ -28,13 +24,13 @@ export default {
         product: 12403,
         method: "inline",
         disableLogout: true,
-        referring_domain: "platform self service",
+        referring_domain: "platform",
 
         // User data
         email: user.value.email,
         // passthrough: {
-        //   organization_id: "1663",
-        //   cloud_id: "673"
+        //   organization_id: props.space.organization.id,
+        //   cloud_id: props.space.id
         // },
 
         // Checkout frame

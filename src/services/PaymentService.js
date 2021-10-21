@@ -21,10 +21,14 @@ class PaymentService {
     }
   }
 
-  retrieveOrganizationPlatformSubscriptions(organization) {
-    return privateApiClient.get(
-      `/payment/organization/${organization.id}/platform-subscription`
-    );
+  async retrieveOrganizationPlatformSubscriptions(organization) {
+    try {
+      return await privateApiClient.get(
+        `/payment/organization/${organization.id}/platform-subscription`
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async retrieveSpaceInformation(space) {
@@ -53,6 +57,7 @@ class PaymentService {
 
     // calculation of the remaining size
     const remainingSizePercent = 100 - size.remainingSmartDataSizePercent;
+
     return {
       remainingSizePercent,
       isPlatformPaid,
@@ -60,6 +65,16 @@ class PaymentService {
       isPlatformSubscription,
       ...size
     };
+  }
+
+  async generatePlatformSubscription(space) {
+    try {
+      return await privateApiClient.post(
+        `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/generate-platform-subscription`
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

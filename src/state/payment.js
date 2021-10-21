@@ -42,15 +42,15 @@ const retrieveSpaceInformation = space => {
   return PaymentService.retrieveSpaceInformation(space);
 };
 
-const subscribeDataPack = async () => {
+const generatePlatformSubscription = space => {
+  return PaymentService.generatePlatformSubscription(space);
+};
+
+const createDataPackSubscription = async () => {
   // TODO
 };
 
-const updateDataPack = async () => {
-  // TODO
-};
-
-const createPaddleSubscriptionUrl = async () => {
+const updateDataPackSubscription = async () => {
   // TODO
 };
 
@@ -61,8 +61,8 @@ export function usePayment() {
     retrieveOrganizationPlaformSubscriptions,
     retrievePlaformSubscriptionPayments,
     retrieveSpaceInformation,
-    subscribeDataPack,
-    updateDataPack,
-    createPaddleSubscriptionUrl
+    generatePlatformSubscription,
+    createDataPackSubscription,
+    updateDataPackSubscription
   };
 }

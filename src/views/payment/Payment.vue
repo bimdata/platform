@@ -15,13 +15,10 @@
         <SubscriptionInfo />
       </div>
       <div class="payment__content__center">
-        <SubscriptionForm
-          :organization="selectedOrganization"
-          :space="selectedSpace"
-        />
+        <SubscriptionForm :space="selectedSpace" />
       </div>
       <div class="payment__content__right">
-        <StoragePreview />
+        <StoragePreview :space="selectedSpace" />
       </div>
     </div>
   </div>
