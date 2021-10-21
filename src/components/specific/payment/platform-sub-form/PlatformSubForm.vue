@@ -1,5 +1,5 @@
 <template>
-  <div class="subscription-form paddle-checkout-container">
+  <div class="platform-sub-form paddle-checkout-container">
     <!-- Paddle inline checkout will be loaded here -->
   </div>
 </template>
@@ -43,5 +43,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss" src="./SubscriptionForm.scss"></style>
