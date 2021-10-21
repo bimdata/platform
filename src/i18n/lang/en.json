@@ -485,6 +485,23 @@
     "professionalPlanPrice": "/ month"
   },
 
+  "PlatformSubInfo": {
+    "title": "Your subscription",
+    "subTitle": "Professionnal plan",
+    "month": "month",
+    "bulletsHead": "Subscription includes",
+    "bullet1": "5GB of storage",
+    "bullet2": "BIMData Platform",
+    "bullet3": "Unlimited users",
+    "bullet4": "Unlimited projects",
+    "bullet5": "Unlimited comments (BCF)",
+    "bullet6": "SaaS License",
+    "bullet7": "IFC Merge / Split",
+    "bullet8": "IFC Edition",
+    "bullet9": "Support",
+    "bullet10": "Microsoft Power BI connector"
+  },
+
   "ProjectCardActionMenu": {
     "renameButtonText": "Rename",
     "deleteButtonText": "Delete"
