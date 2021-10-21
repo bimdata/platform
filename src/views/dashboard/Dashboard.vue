@@ -62,8 +62,8 @@ export default {
       router.push({ name: routeNames.userProjects });
     };
 
-    const goToPlatformSubscription = () => {
-      router.push({ name: routeNames.platformSubscription });
+    const goToUserSubscriptions = () => {
+      router.push({ name: routeNames.userSubscriptions });
     };
 
     return {
@@ -73,7 +73,7 @@ export default {
       // Methods
       goToUserProjects,
       goToUserSpaces,
-      goToPlatformSubscription
+      goToUserSubscriptions
     };
   }
 };

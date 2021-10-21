@@ -3,7 +3,11 @@
     <BIMDataDropdownMenu width="0">
       <template #header>
         <div class="app-header-menu__btn">
-          <UserAvatar class="app-header-menu__btn__avatar" :user="user" size="34" />
+          <UserAvatar
+            class="app-header-menu__btn__avatar"
+            :user="user"
+            size="34"
+          />
           <span data-test="user-name" class="app-header-menu__btn__fullname">
             {{ `${user.firstname} ${user.lastname}` }}
           </span>
@@ -31,7 +35,7 @@
             {{ $t("AppHeaderMenu.entryOldPlatform") }}
           </BIMDataButton>
           <div class="separator"></div>
-          <BIMDataButton ghost squared @click="goToPlatformSubscription">
+          <BIMDataButton ghost squared @click="goToUserSubscriptions">
             <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
           </BIMDataButton>
           <BIMDataButton ghost squared @click="openLanguageSelector">
@@ -76,7 +80,7 @@ import LanguageSelector from "./language-selector/LanguageSelector";
 export default {
   components: {
     UserAvatar,
-    LanguageSelector,
+    LanguageSelector
   },
   setup() {
     const router = useRouter();
@@ -99,14 +103,14 @@ export default {
       window.open(`${process.env.VUE_APP_URL_OLD_PLATFORM}`);
     };
 
-    const goToPlatformSubscription = () => {
-      router.push({ name: routeNames.platformSubscription });
+    const goToUserSubscriptions = () => {
+      router.push({ name: routeNames.userSubscriptions });
     };
 
     const {
       isOpen: showLanguageSelector,
       open: openLanguageSelector,
-      close: closeLanguageSelector,
+      close: closeLanguageSelector
     } = useToggle();
 
     return {
@@ -115,15 +119,15 @@ export default {
       user,
       // Methods
       closeLanguageSelector,
+      goToUserSubscriptions,
       openBIMDataConnect,
       openDocumentation,
-      goToPlatformSubscription,
       openLanguageSelector,
       openMarketplace,
       openOldPlatform,
-      signOut,
+      signOut
     };
-  },
+  }
 };
 </script>
 
