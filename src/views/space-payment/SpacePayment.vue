@@ -83,11 +83,12 @@ export default {
       useOrganizations();
 
     const { retrieveSpaceInformation } = usePayment();
+    const { currentSpace } = useSpaces();
 
     const organizationsList = ref([]);
     const spacesList = ref([]);
-    const selectedOrganization = ref("");
-    const selectedSpace = ref("");
+    const selectedSpace = ref(currentSpace.value);
+    const selectedOrganization = ref(currentSpace.value.organization);
 
     const onOrganizationClick = organization =>
       (selectedOrganization.value = organization);
@@ -95,7 +96,12 @@ export default {
 
     const spaceInformation = ref({});
 
-    const { currentSpace } = useSpaces();
+    onMounted(async () => {
+      organizationsList.value = await retrieveUserOrganizations();
+      organizationsList.value.sort((a, b) =>
+        a.created_at > b.created_at ? -1 : 1
+      );
+    });
 
     watch(
       () => selectedOrganization.value,
@@ -107,72 +113,14 @@ export default {
       }
     );
 
-    onMounted(async () => {
-      organizationsList.value = await retrieveUserOrganizations();
-      organizationsList.value.sort((a, b) =>
-        a.created_at > b.created_at ? -1 : 1
-      );
-      selectedOrganization.value = currentSpace.value.organization;
-
-      selectedSpace.value = currentSpace.value;
-
-      spaceInformation.value = await retrieveSpaceInformation(
-        currentSpace.value
-      );
-
+    watch(
+      () => selectedSpace.value,
       async () => {
         spaceInformation.value = await retrieveSpaceInformation(
-          currentSpace.value
+          selectedSpace.value
         );
-      },
-        Paddle.Product.Prices(12403, function (prices) {
-          // TODO: set price with with function instead of hard coded value
-          console.log(prices);
-        });
-      // const response = await (
-      //   await fetch(
-      //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/generate-api-subscription`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "content-type": "application/json",
-      //         authorization: `Bearer ${accessToken.value}`
-      //       },
-      //     }
-      //   )
-      // ).json();
-      // const response = await (
-      //   await fetch(
-      //     `http://localhost:8000/payment/organization/${currentSpace.value.organization.id}/cloud/${currentSpace.id}/generate-platform-subscription`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "content-type": "application/json",
-      //         authorization: `Bearer ${accessToken.value}`
-      //       }
-      //     }
-      //   )
-      // ).json();
-      // console.log(response);
-      Paddle.Checkout.open({
-        method: "inline",
-        product: 12403,
-        email: "gaelle@bimdata.io",
-        // title: "MY TITLE",
-        // message: "MY MESSAGE",
-        disableLogout: true,
-        // passthrough: {
-        //   organization_id: "1663",
-        //   cloud_id: "673"
-        // },
-        frameTarget: "paddle-container",
-        frameInitialHeight: 416,
-        frameStyle:
-          "width:100%; min-width:312px; background-color: transparent; border: none;",
-        referring_domain: "platform self service",
-        displayModeTheme: "light"
-      });
-    });
+      }
+    );
 
     return {
       currentSpace,
