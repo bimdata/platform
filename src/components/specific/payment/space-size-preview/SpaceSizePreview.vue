@@ -48,7 +48,9 @@
           </span>
         </template>
         <template #text-right-below>
-          <span>10GB</span>
+          <span>
+            {{ formatBytes(newSpaceSize) }}
+          </span>
         </template>
       </ProgressBar>
       <BIMDataText color="color-tertiary-dark">
@@ -59,8 +61,6 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
-import { usePayment } from "@/state/payment.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
@@ -70,30 +70,17 @@ export default {
     ProgressBar
   },
   props: {
-    space: {
+    spaceInfo: {
       type: Object,
+      required: true
+    },
+    newSpaceSize: {
+      type: Number,
       required: true
     }
   },
-  setup(props) {
-    const { retrieveSpaceInformation } = usePayment();
-
-    const spaceInfo = ref({});
-
-    watch(
-      () => props.space,
-      async () => {
-        // TODO: remove if statement when not necessary anymore
-        if (props.space && props.space.id) {
-          spaceInfo.value = await retrieveSpaceInformation(props.space);
-        }
-      },
-      { immediate: true }
-    );
-
+  setup() {
     return {
-      // References
-      spaceInfo,
       // Methods
       formatBytes
     };

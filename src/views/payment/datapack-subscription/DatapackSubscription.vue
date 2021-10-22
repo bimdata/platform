@@ -27,7 +27,7 @@ export default {
       type: Object,
       required: true
     },
-    sapceInfo: {
+    spaceInfo: {
       type: Object,
       required: true
     }

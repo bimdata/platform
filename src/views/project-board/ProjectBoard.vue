@@ -47,7 +47,7 @@ import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrum
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
 import ProjectOverview from "./project-overview/ProjectOverview.vue";
-import SpaceSizeInfo from "@/components/specific/payment/storage-informations/SpaceSizeInfo.vue";
+import SpaceSizeInfo from "@/components/specific/payment/space-size-info/SpaceSizeInfo.vue";
 
 const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {

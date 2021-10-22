@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from "vue";
+import { ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { usePayment } from "@/state/payment.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -55,22 +55,25 @@ export default {
     const selectedSpace = ref({});
     const spaceInfo = ref({});
 
-    const onOrganizationClick = organization => {
-      selectedOrga.value = organization;
-    };
-    const onSpaceClick = space => {
-      selectedSpace.value = space;
-    };
+    if (currentSpace.value) {
+      selectedOrga.value = currentSpace.value.organization;
+      selectedSpace.value = currentSpace.value;
+    } else {
+      selectedOrga.value = userOrganizations.value[0];
+      spaces.value = organizationsSpaces.value[selectedOrga.value.id];
+      selectedSpace.value = spaces.value[0];
+    }
+    retrieveSpaceInformation(selectedSpace.value).then(
+      info => (spaceInfo.value = info)
+    );
 
     watch(
       () => selectedOrga.value,
-      () => {
-        spaces.value = organizationsSpaces[selectedOrga.value.id];
+      orga => {
+        spaces.value = organizationsSpaces.value[orga.id];
         selectedSpace.value = spaces.value[0];
-      },
-      { immediate: true }
+      }
     );
-
     watch(
       () => selectedSpace.value,
       async space => {
@@ -80,12 +83,12 @@ export default {
       }
     );
 
-    onMounted(() => {
-      selectedOrga.value = userOrganizations.value[0];
-      if (currentSpace.value) {
-        selectedSpace.value = currentSpace.value;
-      }
-    });
+    const onOrganizationClick = organization => {
+      selectedOrga.value = organization;
+    };
+    const onSpaceClick = space => {
+      selectedSpace.value = space;
+    };
 
     return {
       // References

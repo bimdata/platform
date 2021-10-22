@@ -6,7 +6,6 @@
 
 <script>
 import { onMounted } from "vue";
-import { useUser } from "@/state/user.js";
 
 export default {
   props: {
@@ -16,22 +15,12 @@ export default {
     }
   },
   setup(props) {
-    const { user } = useUser();
-
     onMounted(() => {
       Paddle.Checkout.open({
         // Checkout params
-        product: 12403,
         method: "inline",
-        disableLogout: true,
         referring_domain: "platform",
-
-        // User data
-        email: user.value.email,
-        // passthrough: {
-        //   organization_id: props.space.organization.id,
-        //   cloud_id: props.space.id
-        // },
+        override: "",
 
         // Checkout frame
         frameTarget: "paddle-checkout-container",
