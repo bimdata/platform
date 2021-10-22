@@ -7,7 +7,10 @@
       <PlatformSubForm :space="space" />
     </div>
     <div class="platform-subscription__right">
-      <SpaceSizePreview :spaceInfo="spaceInfo" :newSpaceSize="10000000000" />
+      <SpaceSizePreview
+        :spaceInfo="spaceInfo"
+        :newSizeAvailable="10 * Math.pow(1024, 3)"
+      />
     </div>
   </div>
 </template>

@@ -42,8 +42,8 @@ const retrieveSpaceInformation = space => {
   return PaymentService.retrieveSpaceInformation(space);
 };
 
-const generatePlatformSubscription = space => {
-  return PaymentService.generatePlatformSubscription(space);
+const generatePlatformSubscriptionLink = space => {
+  return PaymentService.generatePlatformSubscriptionLink(space);
 };
 
 const createDataPackSubscription = async () => {
@@ -61,7 +61,7 @@ export function usePayment() {
     retrieveOrganizationPlaformSubscriptions,
     retrievePlaformSubscriptionPayments,
     retrieveSpaceInformation,
-    generatePlatformSubscription,
+    generatePlatformSubscriptionLink,
     createDataPackSubscription,
     updateDataPackSubscription
   };

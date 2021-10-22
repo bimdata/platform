@@ -9,7 +9,10 @@
       <!-- <DatapackSubForm :space="space" :spaceInfo="spaceInfo" /> -->
     </div>
     <div class="datapack-subscription__right">
-      <SpaceSizePreview :spaceInfo="spaceInfo" />
+      <SpaceSizePreview
+        :spaceInfo="spaceInfo"
+        :newSizeAvailable="10 * Math.pow(1024, 3)"
+      />
     </div>
   </div>
 </template>

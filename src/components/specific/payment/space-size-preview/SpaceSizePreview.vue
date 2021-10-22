@@ -13,7 +13,7 @@
       <ProgressBar
         class="m-b-12"
         componentWidth="100%"
-        :progressPercent="spaceInfo.remainingSizePercent"
+        :progressPercent="spaceInfo.usedSizePercent"
       >
         <template #text-left-above>
           <span>
@@ -36,7 +36,11 @@
       </BIMDataText>
     </div>
     <div class="space-size-preview__new">
-      <ProgressBar class="m-b-12" componentWidth="100%" :progressPercent="15">
+      <ProgressBar
+        class="m-b-12"
+        componentWidth="100%"
+        :progressPercent="newUsedSizePercent"
+      >
         <template #text-left-above>
           <span>
             {{ $t("SpaceSizePreview.newStorage") }}
@@ -49,7 +53,7 @@
         </template>
         <template #text-right-below>
           <span>
-            {{ formatBytes(newSpaceSize) }}
+            {{ formatBytes(newSizeAvailable) }}
           </span>
         </template>
       </ProgressBar>
@@ -61,6 +65,7 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
@@ -74,13 +79,22 @@ export default {
       type: Object,
       required: true
     },
-    newSpaceSize: {
+    newSizeAvailable: {
       type: Number,
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const newUsedSizePercent = computed(() => {
+      return Math.round(
+        props.spaceInfo.usedSizePercent *
+          (props.spaceInfo.smartDataSizeAvailable / props.newSizeAvailable)
+      );
+    });
+
     return {
+      // References
+      newUsedSizePercent,
       // Methods
       formatBytes
     };

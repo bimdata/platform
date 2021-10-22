@@ -22,5 +22,16 @@
       align-items: center;
       gap: calc(var(--spacing-unit) * 2);
     }
+
+    &__loader {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .bimdata-spinner {
+        transform: scale(2);
+      }
+    }
   }
 }

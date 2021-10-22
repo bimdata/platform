@@ -6,6 +6,7 @@
 
 <script>
 import { onMounted } from "vue";
+import { usePayment } from "@/state/payment.js";
 
 export default {
   props: {
@@ -15,12 +16,16 @@ export default {
     }
   },
   setup(props) {
-    onMounted(() => {
+    const { generatePlatformSubscriptionLink } = usePayment();
+
+    onMounted(async () => {
+      const subLink = await generatePlatformSubscriptionLink(props.space);
+
       Paddle.Checkout.open({
         // Checkout params
         method: "inline",
         referring_domain: "platform",
-        override: "",
+        override: subLink,
 
         // Checkout frame
         frameTarget: "paddle-checkout-container",

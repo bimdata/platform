@@ -56,10 +56,10 @@ class PaymentService {
     }
 
     // calculation of the remaining size
-    const remainingSizePercent = 100 - size.remainingSmartDataSizePercent;
+    const usedSizePercent = 100 - size.remainingSmartDataSizePercent;
 
     return {
-      remainingSizePercent,
+      usedSizePercent,
       isPlatformPaid,
       isOrganizationMember,
       isPlatformSubscription,
@@ -67,7 +67,7 @@ class PaymentService {
     };
   }
 
-  async generatePlatformSubscription(space) {
+  async generatePlatformSubscriptionLink(space) {
     try {
       return await privateApiClient.post(
         `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/generate-platform-subscription`

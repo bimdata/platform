@@ -1,9 +1,6 @@
 <template>
   <div class="flex" v-if="spaceInfo.role === 100">
-    <ProgressBar
-      class="m-r-12"
-      :progressPercent="spaceInfo.remainingSizePercent"
-    >
+    <ProgressBar class="m-r-12" :progressPercent="spaceInfo.usedSizePercent">
       <template #text-left-below>
         <div>
           {{ formatBytes(spaceInfo.smartDataSize) }}
