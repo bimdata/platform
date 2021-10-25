@@ -6,10 +6,10 @@
       </template>
       <template #center>
         <h1 class="payment__title" v-if="spaceInfo.isPlatformPaid">
-          Ajout DataPack
+          {{ $t("Payment.dataPackTitle") }}
         </h1>
         <h1 class="payment__title" v-else>
-          {{ $t("Payment.title") }}
+          {{ $t("Payment.platformProTitle") }}
         </h1>
       </template>
     </ViewHeader>
@@ -17,19 +17,26 @@
       <div class="payment__content__head">
         <OrgaSpaceSelectors
           :organizations="organizations"
-          :spaces="spaces"
+          :spaces="spacesPaid"
           :selectedOrga="selectedOrga"
           :selectedSpace="selectedSpace"
+          @orgaClick="onOrganizationClick"
+          @spaceClick="onSpaceClick"
+        />
+        <OrgaSpaceCards
+          :organizations="organizations"
+          :spaces="spaces"
+          :selectedOrga="selectedOrga"
           @orgaClick="onOrganizationClick"
           @spaceClick="onSpaceClick"
         />
       </div>
       <transition name="fade" mode="out-in">
         <template v-if="spaceInfo.isPlatformPaid">
-          <DatapackSubscription :space="selectedSpace" />
+          <DatapackSubscription class="p-b-24" :space="selectedSpace" />
         </template>
         <template v-else>
-          <PlatformSubscription :space="selectedSpace" />
+          <PlatformSubscription class="p-b-24" :space="selectedSpace" />
         </template>
       </transition>
     </div>
@@ -45,6 +52,7 @@ import { useSpaces } from "@/state/spaces.js";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import OrgaSpaceSelectors from "@/components/specific/payment/orga-space-selectors/OrgaSpaceSelectors.vue";
+import OrgaSpaceCards from "@/components/specific/payment/orga-space-cards/OrgaSpaceCards.vue";
 import DatapackSubscription from "./datapack-subscription/DatapackSubscription.vue";
 import PlatformSubscription from "./platform-subscription/PlatformSubscription.vue";
 
@@ -53,19 +61,23 @@ export default {
     DatapackSubscription,
     GoBackButton,
     OrgaSpaceSelectors,
+    OrgaSpaceCards,
     PlatformSubscription,
     ViewHeader
   },
   setup() {
     const { userOrganizations, organizationsSpaces } = useOrganizations();
     const { currentSpace } = useSpaces();
-    const { retrieveSpaceInformation } = usePayment();
+    const {
+      retrieveSpaceInformation,
+      retrieveOrganizationPlaformSubscriptions
+    } = usePayment();
 
     const selectedOrga = ref({});
-
-    const spaces = ref([]);
     const selectedSpace = ref({});
     const spaceInfo = ref({});
+    const spaces = ref([]);
+    const spacesPaid = ref([]);
 
     const onOrganizationClick = organization => {
       selectedOrga.value = organization;
@@ -74,8 +86,14 @@ export default {
       selectedSpace.value = space;
     };
 
+    const filterUserOrga = ref([]);
+
+    filterUserOrga.value = userOrganizations.value.filter(
+      userOrganization => userOrganization.is_personnal === false
+    );
+
     onMounted(() => {
-      selectedOrga.value = userOrganizations.value[0];
+      selectedOrga.value = filterUserOrga.value[0];
       if (currentSpace.value) {
         selectedSpace.value = currentSpace.value;
       }
@@ -83,11 +101,13 @@ export default {
 
     watch(
       () => selectedOrga.value,
-      () => {
+      async () => {
         spaces.value = organizationsSpaces.value[selectedOrga.value.id];
         selectedSpace.value = spaces.value[0];
+        spacesPaid.value = await retrieveOrganizationPlaformSubscriptions(
+          selectedOrga.value
+        );
       }
-      // { immediate: true }
     );
 
     watch(
@@ -101,11 +121,12 @@ export default {
 
     return {
       // References
-      organizations: userOrganizations,
+      organizations: filterUserOrga,
       selectedOrga,
       selectedSpace,
       spaceInfo,
       spaces,
+      spacesPaid,
       // Methods
       onOrganizationClick,
       onSpaceClick
