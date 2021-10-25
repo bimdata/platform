@@ -1,5 +1,5 @@
 <template>
-  <div class="platform-subscription__content__billing">
+  <div class="user-subscriptions__content__billing">
     <h2>{{ $t("BillingDetails.billingDetailsTitle") }}</h2>
     <BIMDataCard v-if="!empty">
       <template #content>

@@ -21,7 +21,8 @@
     "homeButtonText": "Home"
   },
   "Payment": {
-    "title": "Upgrade to pro platform"
+    "titlePlatform": "Upgrade to pro platform",
+    "titleDatapack": "Add DataPack"
   },
   "ProjectBoard": {
     "tabs": {
@@ -440,7 +441,7 @@
   },
 
   "OrganizationsList": {
-    "explanationText": "An organization is the entity that gather your billing/invoices at BIMData.io",
+    "explanationText": "An organization is the entity that gather your billing at BIMData.io",
     "createButtonText": "Add new organization",
     "searchInputPlaceholder": "Search an organization"
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="platform-subscription__content__plans">
+  <div class="user-subscriptions__content__plans">
     <h2>{{ $t("OurPlans.ourPlansTitle") }}</h2>
     <div class="flex">
       <BIMDataCard class="p-y-12">

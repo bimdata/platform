@@ -1,0 +1,14 @@
+.datapack-sub-info {
+  height: 100%;
+  padding: calc(var(--spacing-unit) * 2) 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-unit);
+
+  .heading {
+    width: 300px;
+  }
+}

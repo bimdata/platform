@@ -1,9 +1,14 @@
-import { reactive, readonly, toRefs } from "vue";
+import { computed, reactive, readonly, toRefs } from "vue";
 import OrganizationService from "@/services/OrganizationService.js";
+import { useSpaces } from "@/state/spaces.js";
+
+const { userSpaces } = useSpaces();
+const userSpacesIDs = computed(() => userSpaces.value.map(s => s.id));
 
 const state = reactive({
   userOrganizations: [],
-  organizationsSpaces: {}
+  organizationsSpaces: {},
+  organizationsUserSpaces: {}
 });
 
 const resetState = () => {
@@ -23,6 +28,9 @@ const retrieveOrganizationSpaces = async organization => {
     organization
   );
   state.organizationsSpaces[organization.id] = spaces;
+  state.organizationsUserSpaces[organization.id] = spaces.filter(space =>
+    userSpacesIDs.value.includes(space.id)
+  );
   return spaces;
 };
 
@@ -36,6 +44,10 @@ const retrieveAllOrganizationsSpaces = async () => {
 
 const getOrganizationSpaces = organization => {
   return readonly(state.organizationsSpaces[organization?.id] || []);
+};
+
+const getOrganizationUserSpaces = organization => {
+  return readonly(state.organizationsUserSpaces[organization?.id] || []);
 };
 
 const createOrganization = async organization => {
@@ -100,6 +112,7 @@ export function useOrganizations() {
     retrieveOrganizationSpaces,
     retrieveAllOrganizationsSpaces,
     getOrganizationSpaces,
+    getOrganizationUserSpaces,
     createOrganization,
     updateOrganization,
     importOrganizationSpaces,

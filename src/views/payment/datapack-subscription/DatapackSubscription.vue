@@ -1,12 +1,10 @@
 <template>
   <div class="datapack-subscription">
     <div class="datapack-subscription__left">
-      Datapack Sub Info
-      <!-- <DatapackSubInfo :spaceInfo="spaceInfo" /> -->
+      <DatapackSubInfo :spaceInfo="spaceInfo" />
     </div>
     <div class="datapack-subscription__center">
-      Datapack Sub Form
-      <!-- <DatapackSubForm :space="space" :spaceInfo="spaceInfo" /> -->
+      <DatapackSubForm :space="space" :spaceInfo="spaceInfo" />
     </div>
     <div class="datapack-subscription__right">
       <SpaceSizePreview
@@ -19,10 +17,14 @@
 
 <script>
 // Components
+import DatapackSubForm from "@/components/specific/payment/datapack-sub-form/DatapackSubForm.vue";
+import DatapackSubInfo from "@/components/specific/payment/datapack-sub-info/DatapackSubInfo.vue";
 import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {
+    DatapackSubForm,
+    DatapackSubInfo,
     SpaceSizePreview
   },
   props: {

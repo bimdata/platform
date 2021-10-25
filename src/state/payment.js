@@ -2,19 +2,9 @@ import { reactive } from "vue";
 import PaymentService from "@/services/PaymentService.js";
 
 const state = reactive({
-  plaformSubscriptionPayments: [],
-  platformSubscriptions: [],
-  organizationPlatformSubscriptions: []
+  organizationPlatformSubscriptions: [],
+  spacePlatformSubscriptions: []
 });
-
-const retrievePlaformSubscriptions = async (orga, space) => {
-  const subscription = await PaymentService.retrievePlaformSubscriptions(
-    orga,
-    space
-  );
-  state.platformSubscriptions = subscription.platformSubscriptions;
-  return subscription;
-};
 
 const retrieveOrganizationPlaformSubscriptions = async orga => {
   const organization =
@@ -24,17 +14,25 @@ const retrieveOrganizationPlaformSubscriptions = async orga => {
   return organization;
 };
 
-const retrievePlaformSubscriptionPayments = async (
+const retrieveSpacePlatformSubscriptions = async (orga, space) => {
+  const subscription = await PaymentService.retrieveSpacePlatformSubscriptions(
+    orga,
+    space
+  );
+  state.spacePlatformSubscriptions = subscription.platformSubscriptions;
+  return subscription;
+};
+
+const retrievePlatformSubscriptionPayments = async (
   orga,
   space,
   subscription
 ) => {
-  const payments = await PaymentService.retrievePlaformSubscriptionPayments(
+  const payments = await PaymentService.retrievePlatformSubscriptionPayments(
     orga,
     space,
     subscription
   );
-  state.plaformSubscriptionPayments = payments.plaformSubscriptionPayments;
   return payments;
 };
 
@@ -46,23 +44,23 @@ const generatePlatformSubscriptionLink = space => {
   return PaymentService.generatePlatformSubscriptionLink(space);
 };
 
-const createDataPackSubscription = async () => {
+const createDatapackSubscription = async () => {
   // TODO
 };
 
-const updateDataPackSubscription = async () => {
+const updateDatapackSubscription = async () => {
   // TODO
 };
 
 export function usePayment() {
   return {
     // Methods
-    retrievePlaformSubscriptions,
+    retrieveSpacePlatformSubscriptions,
     retrieveOrganizationPlaformSubscriptions,
-    retrievePlaformSubscriptionPayments,
+    retrievePlatformSubscriptionPayments,
     retrieveSpaceInformation,
     generatePlatformSubscriptionLink,
-    createDataPackSubscription,
-    updateDataPackSubscription
+    createDatapackSubscription,
+    updateDatapackSubscription
   };
 }

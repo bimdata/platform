@@ -6,12 +6,11 @@ import authGuard from "./guards/auth.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
-import rootResolver from "./resolvers/root.js";
 
 // Resolvers
+import rootResolver from "./resolvers/root.js";
 import groupBoardResolver from "./resolvers/views/group-board.js";
 import modelViewerResolver from "./resolvers/views/model-viewer.js";
-import paymentResolver from "./resolvers/views/payment.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
@@ -98,10 +97,7 @@ const routes = [
       {
         path: "/payment",
         name: routeNames.payment,
-        component: Payment,
-        meta: {
-          resolver: paymentResolver
-        }
+        component: Payment
       },
       {
         path: "/spaces/:spaceID(\\d+)",

@@ -1,5 +1,5 @@
 <template>
-  <div class="platform-subscription__content__invoices">
+  <div class="user-subscriptions__content__invoices">
     <h2>{{ $t("Invoices.invoicesTitle") }}</h2>
     <BIMDataCard>
       <template #content>

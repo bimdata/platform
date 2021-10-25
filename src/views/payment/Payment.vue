@@ -6,7 +6,13 @@
       </template>
       <template #center>
         <h1 class="payment__title">
-          {{ $t("Payment.title") }}
+          {{
+            $t(
+              `Payment.${
+                spaceInfo.isPlatformPaid ? "titleDatapack" : "titlePlatform"
+              }`
+            )
+          }}
         </h1>
       </template>
     </ViewHeader>
@@ -40,7 +46,7 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { usePayment } from "@/state/payment.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -58,12 +64,17 @@ export default {
     ViewHeader
   },
   setup() {
-    const { userOrganizations, organizationsSpaces } = useOrganizations();
+    const { userOrganizations, getOrganizationUserSpaces } = useOrganizations();
     const { currentSpace } = useSpaces();
     const { retrieveSpaceInformation } = usePayment();
 
     const loading = ref(false);
 
+    const organizations = computed(() =>
+      userOrganizations.value.filter(
+        orga => getOrganizationUserSpaces(orga).length > 0
+      )
+    );
     const selectedOrga = ref(null);
     const spaces = ref([]);
     const selectedSpace = ref(null);
@@ -87,10 +98,11 @@ export default {
     onMounted(() => {
       if (currentSpace.value) {
         selectedOrga.value = currentSpace.value.organization;
+        spaces.value = getOrganizationUserSpaces(selectedOrga.value);
         selectedSpace.value = currentSpace.value;
       } else {
-        selectedOrga.value = userOrganizations.value[0];
-        spaces.value = organizationsSpaces.value[selectedOrga.value.id];
+        selectedOrga.value = organizations.value[0];
+        spaces.value = getOrganizationUserSpaces(selectedOrga.value);
         selectedSpace.value = spaces.value[0];
       }
       loadSpaceInfo(selectedSpace.value);
@@ -98,7 +110,7 @@ export default {
       watch(
         () => selectedOrga.value,
         orga => {
-          spaces.value = organizationsSpaces.value[orga.id];
+          spaces.value = getOrganizationUserSpaces(orga);
           selectedSpace.value = spaces.value[0];
         }
       );
@@ -113,7 +125,7 @@ export default {
     return {
       // References
       loading,
-      organizations: userOrganizations,
+      organizations,
       selectedOrga,
       selectedSpace,
       spaceInfo,

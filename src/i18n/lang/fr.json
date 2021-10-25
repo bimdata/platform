@@ -21,7 +21,8 @@
     "homeButtonText": "Home"
   },
   "Payment": {
-    "title": "Passer à la platforme professionnelle"
+    "titlePlatform": "Passer à la platforme professionnelle",
+    "titleDatapack": "Ajout d'un DataPack"
   },
   "ProjectBoard": {
     "tabs": {

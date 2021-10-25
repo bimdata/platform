@@ -1,20 +1,10 @@
 import { apiClient, privateApiClient } from "./api-client.js";
 
 class PaymentService {
-  async retrievePlaformSubscriptions(organization, space) {
+  async retrieveSpacePlatformSubscriptions(organization, space) {
     try {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/cloud/${space.id}/subscription`
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  async retrievePlaformSubscriptionPayments(organization, space, subscription) {
-    try {
-      return await privateApiClient.get(
-        `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
       );
     } catch (e) {
       console.log(e);
@@ -31,6 +21,20 @@ class PaymentService {
     }
   }
 
+  async retrievePlatformSubscriptionPayments(
+    organization,
+    space,
+    subscription
+  ) {
+    try {
+      return await privateApiClient.get(
+        `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async retrieveSpaceInformation(space) {
     const size = await apiClient.collaborationApi.getCloudSize({
       id: space.id
@@ -41,13 +45,14 @@ class PaymentService {
 
     if (isPlatformSubscription) {
       try {
-        let platformSubscriptions = await this.retrievePlaformSubscriptions(
-          space.organization,
-          space
-        );
+        let spacePlatformSubscriptions =
+          await this.retrieveSpacePlatformSubscriptions(
+            space.organization,
+            space
+          );
         isOrganizationMember = true;
         // boolean for upgrade platform or pay platform pro
-        isPlatformPaid = platformSubscriptions.some(
+        isPlatformPaid = spacePlatformSubscriptions.some(
           platformSubscription => platformSubscription.status === "active"
         );
       } catch (e) {

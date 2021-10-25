@@ -35,6 +35,9 @@
     .bullets-head {
       font-weight: bold;
       margin-bottom: calc(var(--spacing-unit) / 2);
+      &::after {
+        content: ":";
+      }
     }
 
     .bullet {
