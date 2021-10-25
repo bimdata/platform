@@ -37,6 +37,12 @@
   "SpaceBoard": {
     "searchInputPlaceholder": "Search projects"
   },
+  "SubscriptionDatapack": {
+    "title": "Add DataPack"
+  },
+  "SubscriptionPlatform": {
+    "title": "Upgrade to pro platform"
+  },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
   },
@@ -144,6 +150,23 @@
   "DashboardWelcomeTile": {
     "title": "Dashboard",
     "message": "Hi {name}, it's great to see you again !"
+  },
+
+  "DatapackSubForm": {
+    "title": "Add DataPack",
+    "text": "You want more GB to your space ? Add GB to your space",
+    "priceLabel": "GB unit price",
+    "priceUnit": " / GB / month",
+    "controlLabel": "Add GB to space {spaceName}",
+    "totalLabel": "Total price",
+    "totalUnit": " / month",
+    "submitButtonText": "Validate"
+  },
+
+  "DatapackSubInfo": {
+    "title": "Actual subscription",
+    "datapacks": "Active DataPacks",
+    "storage": "Active storage"
   },
 
   "FileActionsCell": {
@@ -569,7 +592,7 @@
   },
 
   "SpaceSizeInfo": {
-    "using": "using",
+    "used": "used",
     "from": "out of",
     "included": "included",
     "upgradeStorageButton": "Upgrade storage",
@@ -659,6 +682,9 @@
     "groupsFetchError": "Fail to fetch groups",
     "groupCreateError": "Fail to create group",
     "groupUpdateError": "Fail to update group",
-    "groupDeleteError": "Fail to delete group"
+    "groupDeleteError": "Fail to delete group",
+    "subscriptionsFetchError": "Fail to fetch subscriptions",
+    "platformSubscribeError": "Fail to initialize platform subscription",
+    "datapackSubscribeError": "Fail to create datapack subscription"
   }
 }

@@ -1,13 +1,12 @@
 import { reactive, readonly, toRefs } from "vue";
-import SpaceService from "@/services/SpaceService";
-import { useUser } from "@/state/user";
+import SpaceService from "@/services/SpaceService.js";
+import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userSpaces: [],
   currentSpace: null,
   spaceUsers: [],
-  spaceInvitations: [],
-  spaceSize: {}
+  spaceInvitations: []
 });
 
 const loadUserSpaces = async () => {
@@ -78,7 +77,7 @@ const softDeleteSpace = space => {
   return space;
 };
 
-const selectSpace = id => {
+const setCurrentSpace = id => {
   state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
   return readonly(state.currentSpace);
 };
@@ -116,12 +115,6 @@ const deleteSpaceUser = async (space, user) => {
   return user;
 };
 
-const spaceSize = async space => {
-  const size = await SpaceService.spaceSize(space);
-  state.spaceSize = size.spaceSize;
-  return size;
-};
-
 export function useSpaces() {
   const readonlyState = readonly(state);
   return {
@@ -137,11 +130,10 @@ export function useSpaces() {
     removeSpaceImage,
     deleteSpace,
     softDeleteSpace,
-    selectSpace,
+    setCurrentSpace,
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,
-    deleteSpaceUser,
-    spaceSize
+    deleteSpaceUser
   };
 }

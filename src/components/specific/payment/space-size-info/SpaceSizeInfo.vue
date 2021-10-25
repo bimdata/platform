@@ -4,7 +4,7 @@
       <template #text-left-below>
         <div>
           {{ formatBytes(spaceInfo.smartDataSize) }}
-          {{ $t("SpaceSizeInfo.using") }}
+          {{ $t("SpaceSizeInfo.used") }}
           {{ $t("SpaceSizeInfo.from") }}
           {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
           <span v-if="!spaceInfo.isPlatformPaid">
@@ -18,21 +18,21 @@
     >
       <BIMDataButton
         v-if="spaceInfo.isPlatformPaid"
+        class="m-r-18"
         color="secondary"
         fill
         radius
-        @click="goToPayment"
-        class="m-r-18"
+        @click="goToSubscriptionDatapack"
       >
         {{ $t("SpaceSizeInfo.upgradeStorageButton") }}
       </BIMDataButton>
       <BIMDataButton
         v-else
+        class="m-r-18"
         color="secondary"
         fill
         radius
-        @click="goToPayment"
-        class="m-r-18"
+        @click="goToSubscriptionPlatform"
       >
         {{ $t("SpaceSizeInfo.buyPlatformProButton") }}
       </BIMDataButton>
@@ -64,13 +64,6 @@ export default {
     const { retrieveSpaceInformation } = usePayment();
 
     const spaceInfo = ref({});
-
-    const goToPayment = () => {
-      router.push({
-        name: routeNames.payment
-      });
-    };
-
     watch(
       () => props.space,
       async () => {
@@ -79,12 +72,24 @@ export default {
       { immediate: true }
     );
 
+    const goToSubscriptionPlatform = () => {
+      router.push({
+        name: routeNames.subscriptionPlatform
+      });
+    };
+    const goToSubscriptionDatapack = () => {
+      router.push({
+        name: routeNames.subscriptionPlatform
+      });
+    };
+
     return {
       // References
       spaceInfo,
       // Methods
       formatBytes,
-      goToPayment
+      goToSubscriptionDatapack,
+      goToSubscriptionPlatform
     };
   }
 };

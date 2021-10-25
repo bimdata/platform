@@ -1,23 +1,30 @@
 import { apiClient, privateApiClient } from "./api-client.js";
+import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class PaymentService {
-  async retrieveSpacePlatformSubscriptions(organization, space) {
-    try {
-      return await privateApiClient.get(
-        `/payment/organization/${organization.id}/cloud/${space.id}/subscription`
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   async retrieveOrganizationPlatformSubscriptions(organization) {
     try {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/platform-subscription`
       );
     } catch (error) {
-      console.log(error);
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.SUBSCRIPTIONS_FETCH_ERROR, error)
+      );
+      return [];
+    }
+  }
+
+  async fetchSpaceSubscriptions(space) {
+    try {
+      return await privateApiClient.get(
+        `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription`
+      );
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.SUBSCRIPTIONS_FETCH_ERROR, error)
+      );
+      return [];
     }
   }
 
@@ -30,8 +37,8 @@ class PaymentService {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
       );
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      ErrorService.handleError(error);
     }
   }
 
@@ -39,35 +46,37 @@ class PaymentService {
     const size = await apiClient.collaborationApi.getCloudSize({
       id: space.id
     });
+
+    // Derive used size from remaining size
+    const usedSizePercent = 100 - size.remainingSmartDataSizePercent;
+
     const isPlatformSubscription = size.managedBy === "BIMDATA_PLATFORM";
     let isOrganizationMember = false;
     let isPlatformPaid = false;
+    let activeSubscriptions = [];
 
     if (isPlatformSubscription) {
       try {
-        let spacePlatformSubscriptions =
-          await this.retrieveSpacePlatformSubscriptions(
-            space.organization,
-            space
-          );
+        const subscriptions = await privateApiClient.get(
+          `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription`
+        );
         isOrganizationMember = true;
         // boolean for upgrade platform or pay platform pro
-        isPlatformPaid = spacePlatformSubscriptions.some(
-          platformSubscription => platformSubscription.status === "active"
+        activeSubscriptions = subscriptions.filter(
+          sub => sub.status === "active"
         );
-      } catch (e) {
+        isPlatformPaid = activeSubscriptions.length > 0;
+      } catch {
         isOrganizationMember = false;
       }
     }
 
-    // calculation of the remaining size
-    const usedSizePercent = 100 - size.remainingSmartDataSizePercent;
-
     return {
       usedSizePercent,
-      isPlatformPaid,
-      isOrganizationMember,
       isPlatformSubscription,
+      isOrganizationMember,
+      isPlatformPaid,
+      activeSubscriptions,
       ...size
     };
   }
@@ -78,7 +87,18 @@ class PaymentService {
         `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/generate-platform-subscription`
       );
     } catch (error) {
-      console.log(error);
+      throw new RuntimeError(ERRORS.PLATFORM_SUBSCRIBE_ERROR, error);
+    }
+  }
+
+  async createDatapackSubscription(space, quantity) {
+    try {
+      return await privateApiClient.post(
+        `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/generate-platform-subscription`,
+        { quantity }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.DATAPACK_SUBSCRIBE_ERROR, error);
     }
   }
 }

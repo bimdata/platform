@@ -8,7 +8,7 @@ export default createViewResolver(async route => {
   const projects = useProjects();
   const models = useModels();
 
-  spaces.selectSpace(+route.params.spaceID);
+  spaces.setCurrentSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
 
   projects.selectProject(+route.params.projectID);

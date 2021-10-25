@@ -4,11 +4,32 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-unit);
+  gap: calc(var(--spacing-unit) * 4);
 
   .heading {
     width: 300px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+
+    .title {
+      margin: 0;
+    }
+
+    .text {
+      :first-child {
+        &::after {
+          content: " :";
+        }
+      }
+      :last-child {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
   }
 }

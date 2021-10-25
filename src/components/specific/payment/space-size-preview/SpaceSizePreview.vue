@@ -9,9 +9,8 @@
         alt="storage-preview-image"
       />
     </div>
-    <div class="space-size-preview__actual">
+    <div class="space-size-preview__actual-size">
       <ProgressBar
-        class="m-b-12"
         componentWidth="100%"
         :progressPercent="spaceInfo.usedSizePercent"
       >
@@ -35,12 +34,8 @@
         {{ $t("SpaceSizePreview.actualStorageText") }}
       </BIMDataText>
     </div>
-    <div class="space-size-preview__new">
-      <ProgressBar
-        class="m-b-12"
-        componentWidth="100%"
-        :progressPercent="newUsedSizePercent"
-      >
+    <div class="space-size-preview__new-size">
+      <ProgressBar componentWidth="100%" :progressPercent="newUsedSizePercent">
         <template #text-left-above>
           <span>
             {{ $t("SpaceSizePreview.newStorage") }}

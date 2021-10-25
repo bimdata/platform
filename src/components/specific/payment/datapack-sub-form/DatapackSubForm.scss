@@ -1,3 +1,85 @@
 .datapack-sub-form {
-  // TODO
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing-unit) * 2);
+  padding: calc(var(--spacing-unit) * 3);
+
+  &__title {
+    margin: 0;
+  }
+
+  &__text {
+    max-width: 50%;
+    text-align: center;
+  }
+
+  &__price {
+    &__label {
+      &::after {
+        margin-right: var(--spacing-unit);
+        content: " :";
+      }
+    }
+
+    &__value {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    &__unit {
+      color: var(--color-tertiary-dark);
+    }
+  }
+
+  &__control {
+    width: 100%;
+    margin: calc(var(--spacing-unit) * 2) 0;
+    padding: calc(var(--spacing-unit) * 4);
+    background-color: var(--color-tertiary-lightest);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 2);
+
+    &__label {
+      font-weight: bold;
+    }
+
+    &__input {
+      display: flex;
+
+      &__value {
+        width: 84px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--color-tertiary);
+        font-weight: bold;
+      }
+    }
+  }
+
+  &__total {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &__label {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    &__value {
+      font-size: 2.2rem;
+      font-weight: bold;
+    }
+
+    &__unit {
+      color: var(--color-tertiary-dark);
+    }
+  }
 }

@@ -37,6 +37,12 @@
   "SpaceBoard": {
     "searchInputPlaceholder": "Rechercher un projet"
   },
+  "SubscriptionDatapack": {
+    "title": "Ajout d'un DataPack"
+  },
+  "SubscriptionPlatform": {
+    "title": "Passer à la platforme professionnelle"
+  },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"
   },
@@ -144,6 +150,23 @@
   "DashboardWelcomeTile": {
     "title": "Dashboard",
     "message": "Bonjour {name}, content de vous revoir !"
+  },
+
+  "DatapackSubForm": {
+    "title": "Ajout d'un DataPack",
+    "text": "Augmenter votre capacité de stockage",
+    "priceLabel": "Prix GB unitaire",
+    "priceUnit": " / GB / mois",
+    "controlLabel": "Ajouter des GB à l'espace {spaceName}",
+    "totalLabel": "Prix total",
+    "totalUnit": " / mois",
+    "submitButtonText": "Valider"
+  },
+
+  "DatapackSubInfo": {
+    "title": "Abonnement actuel",
+    "datapacks": "Récapitulatif DataPack actif :",
+    "storage": "Récapitulatif GB actif :"
   },
 
   "FileActionsCell": {
@@ -572,7 +595,7 @@
   },
 
   "SpaceSizeInfo": {
-    "using": "utilisé",
+    "used": "utilisé",
     "from": "sur",
     "included": "inclus",
     "upgradeStorageButton": "Augmenter la capacité de stockage",
@@ -664,6 +687,9 @@
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
-    "groupDeleteError": "Échec de la suppression du groupe"
+    "groupDeleteError": "Échec de la suppression du groupe",
+    "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
+    "platformSubscribeError": "Erreur lors de la création du lien de souscription",
+    "datapackSubscribeError": "Échec de la souscription à un nouveau datapack"
   }
 }

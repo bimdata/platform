@@ -1,17 +1,17 @@
 <template>
-  <div class="bimdata-progress flex flex-col">
-    <div class="bimdata-progress--text flex justify-between m-b-6">
+  <div class="progress-bar flex flex-col">
+    <div class="progress-bar--text flex justify-between m-b-6">
       <slot name="text-left-above"></slot>
       <slot name="text-right-above"></slot>
     </div>
-    <div class="bimdata-progress__content" :style="{ width: componentWidth }">
+    <div class="progress-bar__content" :style="{ width: componentWidth }">
       <div
-        class="bimdata-progress__content__bar"
+        class="progress-bar__content__bar"
         :style="{ width: progressPercent + '%' }"
-        :class="[`bimdata-progress__content__bar--${indicatorColorState}`]"
+        :class="[`progress-bar__content__bar--${indicatorColorState}`]"
       ></div>
     </div>
-    <div class="bimdata-progress--text flex justify-between m-t-6">
+    <div class="progress-bar--text flex justify-between m-t-6">
       <slot name="text-left-below"></slot>
       <slot name="text-right-below"></slot>
     </div>

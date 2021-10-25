@@ -38,7 +38,10 @@ const ERRORS = Object.freeze({
   GROUPS_FETCH_ERROR: "groupsFetchError",
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
-  GROUP_DELETE_ERROR: "groupDeleteError"
+  GROUP_DELETE_ERROR: "groupDeleteError",
+  SUBSCRIPTIONS_FETCH_ERROR: "subscriptionsFetchError",
+  PLATFORM_SUBSCRIBE_ERROR: "platformSubscribeError",
+  DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError"
 });
 
 class RuntimeError {

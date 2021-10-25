@@ -1,5 +1,5 @@
-import apiClient from "./api-client";
-import { ERRORS, ErrorService, RuntimeError } from "./ErrorService";
+import apiClient from "./api-client.js";
+import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class SpaceService {
   async fetchUserSpaces() {
@@ -19,6 +19,17 @@ class SpaceService {
     } catch (error) {
       ErrorService.handleError(error);
       return null;
+    }
+  }
+
+  async fetchSpaceSize(space) {
+    try {
+      return await apiClient.collaborationApi.getCloudSize({
+        id: space.id
+      });
+    } catch (error) {
+      ErrorService.handleError(error);
+      return {};
     }
   }
 
@@ -153,16 +164,6 @@ class SpaceService {
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
-    }
-  }
-
-  async spaceSize(space) {
-    try {
-      return await apiClient.collaborationApi.getCloudSize({
-        id: space.id
-      });
-    } catch (e) {
-      console.log(e);
     }
   }
 }
