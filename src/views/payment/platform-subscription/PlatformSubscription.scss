@@ -1,7 +1,8 @@
 .platform-subscription {
-  display: flex;
-  justify-content: center;
-  gap: calc(var(--spacing-unit) * 3);
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 0.5fr;
+  gap: calc(var(--spacing-unit) * 4);
+  grid-template-areas: ". left center right .";
 
   &__left,
   &__center,
@@ -11,14 +12,14 @@
   }
 
   &__left {
-    width: 400px;
+    grid-area: left;
   }
 
   &__center {
-    width: 600px;
+    grid-area: center;
   }
 
   &__right {
-    width: 400px;
+    grid-area: right;
   }
 }
