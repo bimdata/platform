@@ -496,6 +496,25 @@
     "spaceListTitle": "Liste des espaces de l'organisation"
   },
 
+  "OrgaSpaceCards": {
+    "createNewOrgaRadio": "Créer une nouvelle orga",
+    "createNewOrgaInput": "Nom de ma nouvelle orga",
+    "createSelectOrgaTitle": "Créer ou sélectionner une orga",
+    "createSpaceTitle": "Créer un espace",
+    "createSpaceText": "Texte expliquant ce qu'est un espace ici.",
+    "createSpaceInput": "Nom de mon nouvel espace",
+    "selectOrgaRadio": "Sélectionner une orga",
+    "spaceSuccessMessageNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}",
+    "orgaValidateButton": "Valider",
+    "spaceValidateButton": "Valider"
+  },
+
+  "OrgaSpaceSelectors": {
+    "orgaSpaceSelectorsText": "Il n'y a pas d'espaces payants ici. Vous devez passer à la Plateforme Professionelle avant d'ajouter des Data-packs.",
+    "organizationSelected": "Organisation selectionnée :",
+    "spaceSelected": "Espace selectionné :"
+  },
+
   "OurPlans": {
     "freePlanBaseline": "Pour toujours",
     "freePlanButton": "Gardez ce plan",
