@@ -1,51 +1,58 @@
 <template>
-  <div class="flex items-center">
-    <span class="primary-font-bold m-r-12">Organization selected :</span>
-    <BIMDataDropdownList
-      :list="organizations"
-      :perPage="6"
-      elementKey="dropdown"
-      :closeOnElementClick="true"
-      @element-click="$emit('orgaClick', $event)"
-    >
-      <template #header>
-        <div class="flex items-center">
-          <img
-            alt="organization icon"
-            src="/static/organization-icon.svg"
-            class="m-r-12"
-          />
-          {{ selectedOrga.name }}
-        </div>
-      </template>
-      <template #element="{ element }">
-        {{ element.name }}
-      </template>
-    </BIMDataDropdownList>
+  <div class="orga-space-selectors flex items-center">
+    <div class="flex items-center m-r-24">
+      <span class="primary-font-bold m-r-12">{{
+        $t("OrgaSpaceSelectors.organizationSelected")
+      }}</span>
+      <BIMDataDropdownList
+        :list="organizations"
+        :perPage="6"
+        elementKey="dropdown"
+        :closeOnElementClick="true"
+        @element-click="$emit('orgaClick', $event)"
+      >
+        <template #header>
+          <div class="flex items-center">
+            <img
+              alt="organization icon"
+              src="/static/organization-icon.svg"
+              class="m-r-12"
+            />
+            <span class="m-r-6">{{ selectedOrga.name }}</span>
+          </div>
+        </template>
+        <template #element="{ element }">
+          {{ element.name }}
+        </template>
+      </BIMDataDropdownList>
+    </div>
+    <div class="flex items-center" v-if="spaces && spaces.length">
+      <span class="primary-font-bold m-r-12">{{
+        $t("OrgaSpaceSelectors.spaceSelected")
+      }}</span>
+      <BIMDataDropdownList
+        :list="spaces"
+        :perPage="6"
+        elementKey="dropdown"
+        :closeOnElementClick="true"
+        @element-click="$emit('spaceClick', $event)"
+      >
+        <template #header>
+          <div class="flex items-center">
+            <img alt="space icon" src="/static/space-icon.svg" class="m-r-12" />
+            <span class="m-r-6">{{ selectedSpace.name }}</span>
+          </div>
+        </template>
+        <template #element="{ element }">
+          {{ element.name }}
+        </template>
+      </BIMDataDropdownList>
+    </div>
   </div>
-  <div class="flex items-center">
-    <span class="primary-font-bold m-r-12">Space selected :</span>
-    <BIMDataDropdownList
-      :list="spaces"
-      :perPage="6"
-      elementKey="dropdown"
-      :closeOnElementClick="true"
-      @element-click="$emit('spaceClick', $event)"
-    >
-      <template #header>
-        <div class="flex items-center">
-          <img
-            alt="organization icon"
-            src="/static/space-icon.svg"
-            class="m-r-12"
-          />
-          {{ selectedSpace.name }}
-        </div>
-      </template>
-      <template #element="{ element }">
-        {{ element.name }}
-      </template>
-    </BIMDataDropdownList>
+  <div class="orga-space-selectors__empty" v-if="spaces.length === 0">
+    <p>
+      {{ $t("OrgaSpaceSelectors.orgaSpaceSelectorsText") }}
+    </p>
   </div>
 </template>
 
@@ -72,3 +79,5 @@ export default {
   emits: ["orgaClick", "spaceClick"]
 };
 </script>
+
+<style scoped lang="scss" src="./OrgaSpaceSelectors.scss"></style>
