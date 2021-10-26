@@ -24,7 +24,7 @@
         radius
         @click="goToSubscriptionDatapack"
       >
-        {{ $t("SpaceSizeInfo.upgradeStorageButton") }}
+        {{ $t("SpaceSizeInfo.subscribeDatapackButton") }}
       </BIMDataButton>
       <BIMDataButton
         v-else
@@ -34,7 +34,7 @@
         radius
         @click="goToSubscriptionPlatform"
       >
-        {{ $t("SpaceSizeInfo.buyPlatformProButton") }}
+        {{ $t("SpaceSizeInfo.subscribePlatformButton") }}
       </BIMDataButton>
     </div>
   </div>

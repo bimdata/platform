@@ -616,8 +616,8 @@
     "used": "utilisé",
     "from": "sur",
     "included": "inclus",
-    "upgradeStorageButton": "Augmenter la capacité de stockage",
-    "buyPlatformProButton": "Passer à la platform pro"
+    "subscribeDatapackButton": "Acheter un DataPack",
+    "subscribePlatformButton": "Passer à la platform pro"
   },
 
   "SpaceSizePreview": {

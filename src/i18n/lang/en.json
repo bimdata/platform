@@ -613,8 +613,8 @@
     "used": "used",
     "from": "out of",
     "included": "included",
-    "upgradeStorageButton": "Upgrade storage",
-    "buyPlatformProButton": "Switch to the pro platform"
+    "subscribeDatapackButton": "Upgrade storage",
+    "subscribePlatformButton": "Switch to pro platform"
   },
 
   "SpaceSizePreview": {

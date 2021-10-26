@@ -10,7 +10,13 @@
       >
         {{ $t("OrganizationSpacesList.importButtonText") }}
       </BIMDataButton>
-      <BIMDataButton width="48%" color="secondary" fill radius>
+      <BIMDataButton
+        width="48%"
+        color="secondary"
+        fill
+        radius
+        @click="goToSubscriptionPlatform"
+      >
         <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
         <span>{{ $t("OrganizationSpacesList.addButtonText") }}</span>
       </BIMDataButton>
@@ -39,7 +45,9 @@
 
 <script>
 import { computed, inject } from "vue";
+import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
+import { routeNames } from "@/router/index.js";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
 import OrganizationSpaceCard from "./organization-space-card/OrganizationSpaceCard.vue";
@@ -49,6 +57,7 @@ export default {
     OrganizationSpaceCard
   },
   setup() {
+    const router = useRouter();
     const { getOrganizationSpaces } = useOrganizations();
 
     const localState = inject("localState");
@@ -58,11 +67,22 @@ export default {
       space => space.name
     );
 
+    const goToSubscriptionPlatform = () => {
+      router.push({
+        name: routeNames.subscriptionPlatform,
+        query: {
+          organization: localState.organization.id
+        }
+      });
+    };
+
     return {
       // References
       displayedSpaces,
       localState,
-      searchText
+      searchText,
+      // Methods
+      goToSubscriptionPlatform
     };
   }
 };

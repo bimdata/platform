@@ -15,7 +15,7 @@
       <div class="subscription-platform__content__head">
         <SpaceCreator
           :organizations="organizations"
-          :initialOrga="null"
+          :initialOrga="currentOrga"
           @space-created="space = $event"
         />
       </div>
@@ -43,6 +43,7 @@
 <script>
 import { computed, ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
+import { usePayment } from "@/state/payment.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -62,6 +63,7 @@ export default {
   },
   setup() {
     const { userOrganizations } = useOrganizations();
+    const { currentOrga } = usePayment();
 
     const organizations = computed(() =>
       userOrganizations.value.filter(orga => !orga.is_personnal)
@@ -71,6 +73,7 @@ export default {
 
     return {
       // References
+      currentOrga,
       organizations,
       space,
       spaceInfo

@@ -16,36 +16,38 @@
         </div>
         <div>
           <BIMDataRadio
+            v-if="organizations.length > 0"
+            :disabled="step !== 1"
             name="mode"
             value="create"
             :text="$t('SpaceCreator.createNewOrgaRadio')"
-            :disabled="step > 1"
             v-model="mode"
           >
           </BIMDataRadio>
           <BIMDataInput
+            :disabled="step !== 1 || mode !== 'create'"
             ref="orgaNameInput"
             :placeholder="$t('SpaceCreator.createNewOrgaInput')"
-            :disabled="step > 1 || mode !== 'create'"
+            :loading="newOrgaLoading"
             v-model="newOrga.name"
           />
         </div>
-        <div>
+        <div v-if="organizations.length > 0">
           <BIMDataRadio
+            :disabled="step !== 1"
             name="mode"
             value="select"
             :text="$t('SpaceCreator.selectOrgaRadio')"
-            :disabled="step > 1"
             v-model="mode"
           >
           </BIMDataRadio>
           <BIMDataDropdownList
+            :disabled="step !== 1 || mode === 'create'"
             class="m-t-12"
             width="300px"
             :list="organizations"
             :perPage="6"
             :closeOnElementClick="true"
-            :disabled="step > 1 || mode === 'create'"
             @element-click="orga = $event"
           >
             <template #header>
@@ -57,11 +59,11 @@
           </BIMDataDropdownList>
         </div>
         <BIMDataButton
+          :disabled="step !== 1 || (mode === 'create' && !newOrga.name)"
           class="m-t-12"
           color="primary"
           fill
           radius
-          :disabled="step > 1 || (mode === 'create' && !newOrga.name)"
           @click="submitOrga"
         >
           {{ $t("SpaceCreator.orgaValidateButton") }}
@@ -88,9 +90,10 @@
         </p>
         <div>
           <BIMDataInput
+            :disabled="step !== 2"
             ref="spaceNameInput"
             :placeholder="$t('SpaceCreator.createSpaceInput')"
-            :disabled="step === 1"
+            :loading="newSpaceLoading"
             v-model="newSpace.name"
           />
         </div>
@@ -99,7 +102,7 @@
           color="primary"
           fill
           radius
-          :disabled="step === 1 || !newSpace.name"
+          :disabled="step !== 2 || !newSpace.name"
           @click="submitSpace"
         >
           {{ $t("SpaceCreator.spaceValidateButton") }}
@@ -139,17 +142,33 @@ export default {
     const orga = ref({});
 
     const orgaNameInput = ref(null);
-    const spaceNameInput = ref(null);
+    const newOrgaLoading = ref(false);
     const newOrga = reactive({
       id: null,
       name: ""
     });
+
+    const spaceNameInput = ref(null);
+    const newSpaceLoading = ref(false);
     const newSpace = reactive({
       id: null,
       name: "",
       organizationId: null
     });
 
+    watch(
+      [() => props.organizations, () => props.initialOrga],
+      ([organizations, initialOrga]) => {
+        if (organizations.length > 0) {
+          mode.value = initialOrga ? "select" : "create";
+          orga.value = initialOrga ?? organizations[0];
+        } else {
+          mode.value = "create";
+          orga.value = {};
+        }
+      },
+      { immediate: true }
+    );
     watch(
       () => mode.value,
       () => {
@@ -159,17 +178,15 @@ export default {
       },
       { immediate: true }
     );
-    watch(
-      [() => props.organizations, () => props.initialOrga],
-      ([organizations, initialOrga]) => {
-        orga.value = initialOrga ?? organizations[0];
-      },
-      { immediate: true }
-    );
 
     const submitOrga = async () => {
       if (mode.value === "create") {
-        orga.value = await createOrganization(newOrga);
+        try {
+          newOrgaLoading.value = true;
+          orga.value = await createOrganization(newOrga);
+        } finally {
+          newOrgaLoading.value = false;
+        }
       }
       newSpace.organizationId = orga.value.id;
       step.value = 2;
@@ -177,23 +194,30 @@ export default {
     };
 
     const submitSpace = async () => {
-      const createdSpace = await createSpace(newSpace);
-      step.value = 3;
-      emit("space-created", createdSpace);
-      pushNotification({
-        type: "success",
-        title: t("Success"),
-        message: t("SpaceCreator.spaceSuccessMessageNotification", {
-          organizationName: orga.value.name,
-          spaceName: newSpace.name
-        })
-      });
+      try {
+        newSpaceLoading.value = true;
+        const createdSpace = await createSpace(newSpace);
+        emit("space-created", createdSpace);
+        step.value = 3;
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("SpaceCreator.spaceSuccessMessageNotification", {
+            organizationName: orga.value.name,
+            spaceName: newSpace.name
+          })
+        });
+      } finally {
+        newSpaceLoading.value = false;
+      }
     };
 
     return {
       mode,
       newOrga,
+      newOrgaLoading,
       newSpace,
+      newSpaceLoading,
       orga,
       orgaNameInput,
       spaceNameInput,

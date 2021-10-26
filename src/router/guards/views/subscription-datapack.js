@@ -2,9 +2,14 @@ import { routeNames } from "@/router/index.js";
 import { usePayment } from "@/state/payment.js";
 
 export default async function subscriptionDatapackGuard(route) {
-  if (route.query.space) {
-    const { setCurrentSpace } = usePayment();
-    setCurrentSpace(route.query.organization);
-    return { name: routeNames.subscriptionDatapack };
+  const { currentSpace, setCurrentSpace } = usePayment();
+
+  if (!currentSpace.value) {
+    if (route.query.space) {
+      setCurrentSpace(+route.query.space);
+      return { name: routeNames.subscriptionDatapack };
+    } else {
+      return { name: routeNames.subscriptionPlatform };
+    }
   }
 }

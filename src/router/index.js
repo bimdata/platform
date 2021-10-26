@@ -6,6 +6,8 @@ import authGuard from "./guards/auth.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
+import subscriptionDatapackGuard from "./guards/views/subscription-datapack.js";
+import subscriptionPlatformGuard from "./guards/views/subscription-platform.js";
 
 // Resolvers
 import rootResolver from "./resolvers/root.js";
@@ -14,6 +16,7 @@ import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
+import subscriptionDatapackResolver from "./resolvers/views/subscription-datapack.js";
 
 // Route components
 import Layout from "@/Layout.vue";
@@ -100,12 +103,19 @@ const routes = [
       {
         path: "/subscription/platform",
         name: routeNames.subscriptionPlatform,
-        component: SubscriptionPlatform
+        component: SubscriptionPlatform,
+        meta: {
+          guard: subscriptionPlatformGuard
+        }
       },
       {
         path: "/subscription/datapack",
         name: routeNames.subscriptionDatapack,
-        component: SubscriptionDatapack
+        component: SubscriptionDatapack,
+        meta: {
+          guard: subscriptionDatapackGuard,
+          resolver: subscriptionDatapackResolver
+        }
       },
       {
         path: "/spaces/:spaceID(\\d+)",
