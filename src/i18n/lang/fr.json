@@ -510,7 +510,6 @@
   },
 
   "OrgaSpaceSelectors": {
-    "orgaSpaceSelectorsText": "Il n'y a pas d'espaces payants ici. Vous devez passer à la Plateforme Professionelle avant d'ajouter des Data-packs.",
     "organizationSelected": "Organisation selectionnée :",
     "spaceSelected": "Espace selectionné :"
   },

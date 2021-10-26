@@ -507,7 +507,6 @@
   },
 
   "OrgaSpaceSelectors": {
-    "orgaSpaceSelectorsText": "There are no paid spaces here. You must switch to the Professional platform before adding Data Packs.",
     "organizationSelected": "Organization selected :",
     "spaceSelected": "Space selected :"
   },

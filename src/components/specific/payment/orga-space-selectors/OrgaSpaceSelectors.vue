@@ -49,11 +49,6 @@
       </BIMDataDropdownList>
     </div>
   </div>
-  <div class="orga-space-selectors__empty" v-if="spaces.length === 0">
-    <p>
-      {{ $t("OrgaSpaceSelectors.orgaSpaceSelectorsText") }}
-    </p>
-  </div>
 </template>
 
 <script>

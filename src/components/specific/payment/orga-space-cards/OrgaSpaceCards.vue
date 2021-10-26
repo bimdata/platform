@@ -45,7 +45,7 @@
             :list="organizations"
             :perPage="6"
             elementKey="dropdown"
-            :disabled="orgaChoice !== 'selectOrga'"
+            :disabled="orgaChoice !== 'selectOrga' || isSubmitOrga"
             :closeOnElementClick="true"
             @element-click="$emit('orgaClick', $event)"
             class="m-t-12"
@@ -63,6 +63,7 @@
           radius
           class="m-t-12"
           @click="submitOrga"
+          :disabled="isSubmitOrga || isSubmitSpace"
           >{{ $t("OrgaSpaceCards.orgaValidateButton") }}</BIMDataButton
         >
       </template>
@@ -122,7 +123,7 @@ export default {
       required: true
     }
   },
-  emits: ["orgaClick", "spaceClick"],
+  emits: ["orgaClick"],
   setup(props) {
     const { createOrganization } = useOrganizations();
     const { createSpace } = useSpaces();
@@ -130,6 +131,7 @@ export default {
     const { t } = useI18n();
 
     const isSubmitOrga = ref(false);
+    const isSubmitSpace = ref(false);
     const hasOrgaInvalidName = ref(false);
     const hasSpaceInvalidName = ref(false);
 
@@ -182,7 +184,7 @@ export default {
             })
           });
         } finally {
-          console.log(newSpace.value);
+          isSubmitSpace.value = true;
         }
       }
       // if select an organization
@@ -202,12 +204,13 @@ export default {
             })
           });
         } finally {
-          console.log(newSpace.value);
+          isSubmitSpace.value = true;
         }
       }
     };
     return {
       isSubmitOrga,
+      isSubmitSpace,
       hasOrgaInvalidName,
       hasSpaceInvalidName,
       orgaChoice,

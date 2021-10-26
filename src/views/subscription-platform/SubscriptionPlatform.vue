@@ -12,14 +12,20 @@
     </ViewHeader>
     <div class="subscription-platform__content">
       <div class="subscription-platform__content__head">
-        <!-- TODO: space creator -->
+        <OrgaSpaceCards
+          :organizations="organizations"
+          :spaces="spaces"
+          :selectedOrga="selectedOrga"
+          @orgaClick="onOrganizationClick"
+          @spaceCreated="onSpaceCreated"
+        />
       </div>
       <div class="subscription-platform__content__body">
         <div class="subscription-platform__content__body__left">
           <PlatformSubInfo />
         </div>
         <div class="subscription-platform__content__body__center">
-          <PlatformSubForm :space="space" />
+          <PlatformSubForm :space="selectedSpace" />
         </div>
         <div class="subscription-platform__content__body__right">
           <SpaceSizePreview
@@ -33,51 +39,92 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useOrganizations } from "@/state/organizations.js";
+import { usePayment } from "@/state/payment.js";
+import { useSpaces } from "@/state/spaces.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import PlatformSubForm from "@/components/specific/payment/platform-sub-form/PlatformSubForm.vue";
 import PlatformSubInfo from "@/components/specific/payment/platform-sub-info/PlatformSubInfo.vue";
 import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
+import OrgaSpaceCards from "@/components/specific/payment/orga-space-cards/OrgaSpaceCards.vue";
 
 export default {
   components: {
     GoBackButton,
+    OrgaSpaceCards,
     PlatformSubForm,
     PlatformSubInfo,
     SpaceSizePreview,
     ViewHeader
   },
   setup() {
-    const space = ref({
-      id: 558,
-      name: "My New Space",
-      organization: {
-        id: 1935
+    const { userOrganizations, organizationsSpaces } = useOrganizations();
+    const { currentSpace } = useSpaces();
+    const {
+      retrieveSpaceInformation,
+      retrieveOrganizationPlaformSubscriptions
+    } = usePayment();
+
+    const selectedOrga = ref({});
+    const selectedSpace = ref({});
+    const spaceInfo = ref({});
+    const spaces = ref([]);
+    const spacesPaid = ref([]);
+
+    const filterUserOrga = ref([]);
+
+    filterUserOrga.value = userOrganizations.value.filter(
+      userOrganization => userOrganization.is_personnal === false
+    );
+
+    onMounted(() => {
+      selectedOrga.value = filterUserOrga.value[0];
+      if (currentSpace.value) {
+        selectedSpace.value = currentSpace.value;
       }
     });
-    const spaceInfo = ref({
-      managedBy: "BIMDATA_PLATFORM",
-      role: 100,
-      totalSize: 29255230,
-      smartDtaSize: 29255230,
-      totalSizeAvailable: 536870912000,
-      smartDataSizeAvailable: 536870912000,
-      remainingTotalSize: 536841656770,
-      remainingSmartDataPize: 536841656770,
-      remainingTotalSizePercent: 99.99455078877509,
-      remainingSmartDataSizePercent: 99.99455078877509,
-      isPlatformSubscription: true,
-      isOrganizationMember: true,
-      isPlatformPaid: false,
-      usedSizePercent: 0.005449211224913597
-    });
+
+    watch(
+      () => selectedOrga.value,
+      async () => {
+        spaces.value = organizationsSpaces.value[selectedOrga.value.id];
+        selectedSpace.value = spaces.value[0];
+        spacesPaid.value = await retrieveOrganizationPlaformSubscriptions(
+          selectedOrga.value
+        );
+      }
+    );
+
+    watch(
+      () => selectedSpace.value,
+      async space => {
+        if (space && space.id) {
+          spaceInfo.value = await retrieveSpaceInformation(space);
+        }
+      }
+    );
+
+    const onOrganizationClick = organization => {
+      selectedOrga.value = organization;
+    };
+    const onSpaceCreated = space => {
+      selectedSpace.value = space;
+    };
 
     return {
       // References
-      space,
-      spaceInfo
+      organizations: filterUserOrga,
+      selectedOrga,
+      selectedSpace,
+      spaces,
+      spaceInfo,
+      spacesPaid,
+      // Methods
+      onOrganizationClick,
+      onSpaceCreated
     };
   }
 };
