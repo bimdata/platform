@@ -18,15 +18,16 @@
         <template #content>
           <h4>{{ $t("OurPlans.professionalPlanTitle") }}</h4>
           <h3 class="text-center">
-            45€ <span>{{ $t("OurPlans.professionalPlanPrice") }}</span
-            >**
+            45€
+            <span>{{ $t("OurPlans.professionalPlanPrice") }}</span>
+            **
           </h3>
           <BIMDataButton
+            width="185px"
             color="secondary"
             fill
             radius
-            width="185px"
-            @click="goToPayment"
+            @click="goToSubscriptionPlatform"
           >
             {{ $t("OurPlans.professionalPlanButton") }}
           </BIMDataButton>
@@ -45,13 +46,13 @@ export default {
   setup() {
     const router = useRouter();
 
-    const goToPayment = () => {
-      router.push({ name: routeNames.payment });
+    const goToSubscriptionPlatform = () => {
+      router.push({ name: routeNames.subscriptionPlatform });
     };
 
     return {
       // Methods
-      goToPayment
+      goToSubscriptionPlatform
     };
   }
 };

@@ -493,19 +493,6 @@
     "spaceListTitle": "Organization spaces"
   },
 
-  "OrgaSpaceCards": {
-    "createNewOrgaRadio": "Create a new orga",
-    "createNewOrgaInput": "Name of my new orga",
-    "createSelectOrgaTitle": "Create or select an orga",
-    "createSpaceTitle": "Create a space",
-    "createSpaceText": "Text explaining what's a space here.",
-    "createSpaceInput": "Name of my new space",
-    "selectOrgaRadio": "Select an orga",
-    "spaceSuccessMessageNotification": "You have just created the space {spaceName} in the organization {organizationName}",
-    "orgaValidateButton": "Validate",
-    "spaceValidateButton": "Validate"
-  },
-
   "OrgaSpaceSelectors": {
     "organizationSelected": "Organization selected :",
     "spaceSelected": "Space selected :"
@@ -607,6 +594,19 @@
     "inputPlaceholder": "Name",
     "inputErrorMessage": "You must provide a name for the space !",
     "createButtonText": "Create"
+  },
+
+  "SpaceCreator": {
+    "createNewOrgaRadio": "Create a new orga",
+    "createNewOrgaInput": "Name of my new orga",
+    "createSelectOrgaTitle": "Create or select an orga",
+    "createSpaceTitle": "Create a space",
+    "createSpaceText": "Text explaining what's a space here.",
+    "createSpaceInput": "Name of my new space",
+    "selectOrgaRadio": "Select an orga",
+    "spaceSuccessMessageNotification": "You have just created the space {spaceName} in the organization {organizationName}",
+    "orgaValidateButton": "Validate",
+    "spaceValidateButton": "Validate"
   },
 
   "SpaceSizeInfo": {

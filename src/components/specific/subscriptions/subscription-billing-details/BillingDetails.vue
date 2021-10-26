@@ -1,6 +1,9 @@
 <template>
   <div class="user-subscriptions__content__billing">
-    <h2>{{ $t("BillingDetails.billingDetailsTitle") }}</h2>
+    <h2>
+      {{ $t("BillingDetails.billingDetailsTitle") }}
+    </h2>
+
     <BIMDataCard v-if="!empty">
       <template #content>
         <GenericTable
@@ -42,16 +45,19 @@
         </GenericTable>
       </template>
     </BIMDataCard>
+
     <BIMDataCard class="bimdata-card__empty p-42" v-else>
       <template #content>
         <img class="m-b-24" src="/static/emptyBilling.svg" />
-        <p>{{ $t("BillingDetails.emptyTablePlaceholder") }}</p>
+        <p>
+          {{ $t("BillingDetails.emptyTablePlaceholder") }}
+        </p>
         <BIMDataButton
           class="m-t-18"
           color="primary"
           fill
           radius
-          @click="goToPayment"
+          @click="goToSubscriptionPlatform"
         >
           {{ $t("BillingDetails.updatePlatformPro") }}
         </BIMDataButton>
@@ -63,18 +69,18 @@
 <script>
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef from "./columns";
-import { formatDate } from "@/utils/date.js";
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import { formatDate } from "@/utils/date.js";
+import { routeNames } from "@/router/index.js";
+import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import BillingDetailsActionsCell from "./BillingDetailsActionsCell.vue";
 
 export default {
   components: {
-    GenericTable,
-    BillingDetailsActionsCell
+    BillingDetailsActionsCell,
+    GenericTable
   },
   props: {
     billings: {
@@ -101,15 +107,17 @@ export default {
       },
       { immediate: true }
     );
-    const goToPayment = () => {
-      router.push({ name: routeNames.payment });
+
+    const goToSubscriptionPlatform = () => {
+      router.push({ name: routeNames.subscriptionPlatform });
     };
+
     return {
-      // references
+      // References
       columns,
       formatDate,
-      //methods
-      goToPayment
+      // Methods
+      goToSubscriptionPlatform
     };
   }
 };

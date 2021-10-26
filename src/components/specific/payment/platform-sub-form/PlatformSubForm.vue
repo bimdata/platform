@@ -5,34 +5,42 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { usePayment } from "@/state/payment.js";
 
 export default {
   props: {
     space: {
       type: Object,
-      required: true
+      default: null
     }
   },
   setup(props) {
     const { generatePlatformSubscriptionLink } = usePayment();
 
     onMounted(async () => {
-      const subLink = await generatePlatformSubscriptionLink(props.space);
+      watch(
+        () => props.space,
+        async space => {
+          if (space) {
+            const link = await generatePlatformSubscriptionLink(space);
 
-      Paddle.Checkout.open({
-        // Checkout params
-        method: "inline",
-        referring_domain: "platform",
-        override: subLink,
+            Paddle.Checkout.open({
+              // Checkout params
+              method: "inline",
+              referring_domain: "platform",
+              override: link,
 
-        // Checkout frame
-        frameTarget: "paddle-checkout-container",
-        frameInitialHeight: 416,
-        frameStyle:
-          "width:100%; min-width:312px; background-color: transparent; border: none;"
-      });
+              // Checkout frame
+              frameTarget: "paddle-checkout-container",
+              frameInitialHeight: 416,
+              frameStyle:
+                "width:100%; min-width:312px; background-color: transparent; border: none;"
+            });
+          }
+        },
+        { immediate: true }
+      );
     });
   }
 };

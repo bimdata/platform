@@ -29,7 +29,7 @@
     </div>
     <BIMDataButton
       class="dashboard-subscription-tile__btn"
-      @click="goToPayment"
+      @click="goToSubscriptionPlatform"
     >
       <span>
         {{ $t("DashboardSubscriptionTile.subscribeButtonText") }}
@@ -47,7 +47,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import { routeNames } from "@/router/index.js";
 
 export default {
   setup() {
@@ -57,13 +57,13 @@ export default {
       router.push({ name: routeNames.userSubscriptions });
     };
 
-    const goToPayment = () => {
-      router.push({ name: routeNames.payment });
+    const goToSubscriptionPlatform = () => {
+      router.push({ name: routeNames.subscriptionPlatform });
     };
 
     return {
       // Methods
-      goToPayment,
+      goToSubscriptionPlatform,
       goToUserSubscriptions
     };
   }

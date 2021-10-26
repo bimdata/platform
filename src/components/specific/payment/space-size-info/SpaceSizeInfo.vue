@@ -79,7 +79,10 @@ export default {
     };
     const goToSubscriptionDatapack = () => {
       router.push({
-        name: routeNames.subscriptionPlatform
+        name: routeNames.subscriptionDatapack,
+        query: {
+          space: props.space.id
+        }
       });
     };
 

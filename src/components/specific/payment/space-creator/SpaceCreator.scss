@@ -1,16 +1,20 @@
-.orga-space-cards {
+.space-creator {
   display: grid;
   grid-template-columns: 400px 400px;
   gap: calc(var(--spacing-unit) * 4);
+
   &::v-deep(.bimdata-card) {
     overflow: inherit;
+
     h3 {
-      margin: 12px 0 18px;
+      margin: 12px 0 18px 6px;
       font-size: 20px;
     }
+
     .bimdata-radio > span {
       font-size: 13px;
     }
+
     .bimdata-card__content {
       padding: 24px 48px;
       height: 100%;
@@ -20,29 +24,36 @@
     }
   }
 }
+
 .orga-card,
 .space-card {
   position: relative;
-  &::after {
-    content: "";
+
+  &::before {
     width: 34px;
     height: 34px;
+
     position: absolute;
     top: calc(-34px / 2);
     left: calc(50% - (34px / 2));
-    background-color: var(--color-secondary);
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    font-weight: bold;
+    background-color: var(--color-secondary);
   }
 }
+
 .orga-card {
-  &::after {
+  &::before {
     content: "1";
   }
 }
+
 .space-card {
-  &::after {
+  &::before {
     content: "2";
   }
 }
