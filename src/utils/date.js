@@ -30,6 +30,12 @@ function formatDate(value) {
  * @returns {String} formatted date
  */
 function formatDateShort(date) {
+  if (!date) {
+    return "";
+  }
+  if (date instanceof Date) {
+    date = date.toISOString();
+  }
   const d = date.split("T")[0];
   return d.split("-").reverse().join("/");
 }

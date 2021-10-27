@@ -8,13 +8,8 @@
         <TextBox :text="space.name" :maxLength="36" />
       </div>
       <div class="organization-space-card__info__data">
-        <!-- <span class="organization-space-card__info__data--projects">
-          {{
-            $t("OrganizationSpaceCard.projects", { number: projects.length })
-          }}
-        </span> -->
         <span class="organization-space-card__info__data--date">
-          {{ formatDate(space.created_at) }}
+          {{ formatDate(space.created_at || space.createdAt) }}
         </span>
       </div>
     </div>

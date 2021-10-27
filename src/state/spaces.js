@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/services/SpaceService.js";
+import { useOrganizations } from "@/state/organizations.js";
 import { useUser } from "@/state/user.js";
 
 const state = reactive({
@@ -43,8 +44,17 @@ const loadSpaceInvitations = async space => {
 
 const createSpace = async space => {
   const newSpace = await SpaceService.createSpace(space);
-  state.userSpaces = [{ ...newSpace, isAdmin: true }].concat(state.userSpaces);
+  softCreateSpace({ ...newSpace, isAdmin: true });
   return newSpace;
+};
+
+const softCreateSpace = space => {
+  state.userSpaces = [space].concat(state.userSpaces);
+
+  const { softCreateOrganizationSpace } = useOrganizations();
+  softCreateOrganizationSpace(space);
+
+  return space;
 };
 
 const updateSpace = async space => {
@@ -57,6 +67,10 @@ const softUpdateSpace = space => {
   state.userSpaces = state.userSpaces.map(s =>
     s.id === space.id ? { ...s, ...space } : s
   );
+
+  const { softUpdateOrganizationSpace } = useOrganizations();
+  softUpdateOrganizationSpace(space);
+
   return space;
 };
 
@@ -74,6 +88,10 @@ const deleteSpace = async space => {
 
 const softDeleteSpace = space => {
   state.userSpaces = state.userSpaces.filter(s => s.id !== space.id);
+
+  const { softDeleteOrganizationSpace } = useOrganizations();
+  softDeleteOrganizationSpace(space);
+
   return space;
 };
 
@@ -125,6 +143,7 @@ export function useSpaces() {
     loadSpaceUsers,
     loadSpaceInvitations,
     createSpace,
+    softCreateSpace,
     updateSpace,
     softUpdateSpace,
     removeSpaceImage,
