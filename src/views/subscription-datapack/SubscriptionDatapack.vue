@@ -21,11 +21,12 @@
       </div>
       <div class="subscription-datapack__content__body">
         <div class="subscription-datapack__content__body__left">
-          <DatapackSubInfo :spaceInfo="spaceInfo" :spaceSubs="spaceSubs" />
+          <DatapackSubInfo :spaceInfo="spaceInfo" :subscriptions="spaceSubs" />
         </div>
         <div class="subscription-datapack__content__body__center">
           <DatapackSubForm
             :space="selectedSpace"
+            :subscriptions="spaceSubs"
             @quantity-updated="onQuantityUpdate"
             @datapack-created="() => {}"
           />
@@ -43,6 +44,7 @@
 
 <script>
 import { computed, ref, watch } from "vue";
+import { GB } from "@/config/size-unit.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
@@ -52,8 +54,6 @@ import DatapackSubForm from "@/components/specific/payment/datapack-sub-form/Dat
 import DatapackSubInfo from "@/components/specific/payment/datapack-sub-info/DatapackSubInfo.vue";
 import SpaceSelector from "@/components/specific/payment/space-selector/SpaceSelector.vue";
 import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
-
-const OneGB = Math.pow(1024, 3);
 
 export default {
   components: {
@@ -92,13 +92,11 @@ export default {
       { immediate: true }
     );
 
-    const newSizeAvailable = ref(
-      spaceInfo.value.smartDataSizeAvailable + OneGB
-    );
+    const newSizeAvailable = ref(spaceInfo.value.smartDataSizeAvailable + GB);
 
     const onQuantityUpdate = quantity => {
       newSizeAvailable.value =
-        spaceInfo.value.smartDataSizeAvailable + quantity * OneGB;
+        spaceInfo.value.smartDataSizeAvailable + quantity * GB;
     };
 
     return {

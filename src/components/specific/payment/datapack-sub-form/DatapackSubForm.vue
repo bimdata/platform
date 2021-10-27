@@ -54,18 +54,23 @@
 
 <script>
 import { computed, ref } from "vue";
+import { usePaddle } from "@/composables/paddle.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
-import { getPrice } from "@/utils/price.js";
 
 export default {
   props: {
     space: {
       type: Object,
       required: true
+    },
+    subscriptions: {
+      type: Array,
+      required: true
     }
   },
   emits: ["quantity-updated", "datapack-created"],
   setup(props, { emit }) {
+    const { getDatapackPrice } = usePaddle();
     const { createDatapackSubscription } = useSubscriptions();
 
     const loading = ref(false);
@@ -75,8 +80,7 @@ export default {
     const totalPrice = computed(() => quantity.value * unitPrice.value);
 
     // Get localized datapack price from Paddle
-    Paddle.Product.Prices(12405, response => {
-      const { price, currency: curr } = getPrice(response);
+    getDatapackPrice().then(({ price, currency: curr }) => {
       unitPrice.value = price;
       currency.value = curr;
     });

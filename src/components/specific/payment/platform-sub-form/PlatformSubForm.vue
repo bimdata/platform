@@ -6,6 +6,7 @@
 
 <script>
 import { onMounted, watch } from "vue";
+import { usePaddle } from "@/composables/paddle.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
 export default {
@@ -16,6 +17,7 @@ export default {
     }
   },
   setup(props) {
+    const { loadCheckout } = usePaddle();
     const { generatePlatformSubscriptionLink } = useSubscriptions();
 
     onMounted(async () => {
@@ -24,19 +26,7 @@ export default {
         async space => {
           if (space) {
             const link = await generatePlatformSubscriptionLink(space);
-
-            Paddle.Checkout.open({
-              // Checkout params
-              method: "inline",
-              referring_domain: "platform",
-              override: link,
-
-              // Checkout frame
-              frameTarget: "paddle-checkout-container",
-              frameInitialHeight: 416,
-              frameStyle:
-                "width:100%; min-width:312px; background-color: transparent; border: none;"
-            });
+            loadCheckout("paddle-checkout-container", link);
           }
         },
         { immediate: true }
