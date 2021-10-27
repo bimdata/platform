@@ -2,7 +2,7 @@ import { apiClient, privateApiClient } from "./api-client.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class PaymentService {
-  async retrieveOrganizationPlatformSubscriptions(organization) {
+  async fetchOrganizationSubscriptions(organization) {
     try {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/platform-subscription`
@@ -21,28 +21,23 @@ class PaymentService {
         `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription`
       );
     } catch (error) {
-      ErrorService.handleError(
-        new RuntimeError(ERRORS.SUBSCRIPTIONS_FETCH_ERROR, error)
-      );
+      ErrorService.handleError(error);
       return [];
     }
   }
 
-  async retrievePlatformSubscriptionPayments(
-    organization,
-    space,
-    subscription
-  ) {
+  async fetchSubscriptionPayments(organization, space, subscription) {
     try {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
       );
     } catch (error) {
       ErrorService.handleError(error);
+      return [];
     }
   }
 
-  async retrieveSpaceInformation(space) {
+  async fetchSpaceInformation(space) {
     const size = await apiClient.collaborationApi.getCloudSize({
       id: space.id
     });

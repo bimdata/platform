@@ -493,11 +493,6 @@
     "spaceListTitle": "Organization spaces"
   },
 
-  "OrgaSpaceSelectors": {
-    "organizationSelected": "Organization selected :",
-    "spaceSelected": "Space selected :"
-  },
-
   "OurPlans": {
     "freePlanBaseline": "* Forever",
     "freePlanButton": "Keep this plan",
@@ -607,6 +602,11 @@
     "spaceSuccessMessageNotification": "You have just created the space {spaceName} in the organization {organizationName}",
     "orgaValidateButton": "Validate",
     "spaceValidateButton": "Validate"
+  },
+
+  "SpaceSelector": {
+    "orgaSelectorLabel": "Organization selected :",
+    "spaceSelectorLabel": "Space selected :"
   },
 
   "SpaceSizeInfo": {

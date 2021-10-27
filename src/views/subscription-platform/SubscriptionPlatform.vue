@@ -43,7 +43,7 @@
 <script>
 import { computed, ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
-import { usePayment } from "@/state/payment.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -63,7 +63,7 @@ export default {
   },
   setup() {
     const { userOrganizations } = useOrganizations();
-    const { currentOrga } = usePayment();
+    const { currentOrga } = useSubscriptions();
 
     const organizations = computed(() =>
       userOrganizations.value.filter(orga => !orga.is_personnal)

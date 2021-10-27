@@ -1,8 +1,8 @@
-import { usePayment } from "@/state/payment.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 import { createViewResolver } from "../view-resolver-factory.js";
 
 export default createViewResolver(async () => {
-  const payment = usePayment();
+  const payment = useSubscriptions();
 
-  await payment.loadSpaceSubscriptions(payment.currentSpace.value);
+  await payment.retrieveSpaceSubscriptions(payment.currentSpace.value);
 });

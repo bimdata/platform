@@ -16,7 +16,7 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <SpaceSizeInfo :space="space" />
+          <SpaceSizeInfo v-if="space.isAdmin" :space="space" />
           <app-slot name="project-board-action" />
         </div>
       </template>

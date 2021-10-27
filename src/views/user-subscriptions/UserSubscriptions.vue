@@ -47,7 +47,7 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
-import { usePayment } from "@/state/payment.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 
 // Components
 import BillingDetails from "@/components/specific/subscriptions/subscription-billing-details/BillingDetails.vue";
@@ -62,10 +62,8 @@ export default {
   },
   setup() {
     const { retrieveUserOrganizations } = useOrganizations();
-    const {
-      retrieveOrganizationPlaformSubscriptions,
-      retrievePlatformSubscriptionPayments
-    } = usePayment();
+    const { retrieveOrganizationSubscriptions, retrieveSubscriptionPayments } =
+      useSubscriptions();
 
     const organizationsList = ref([]);
     const organizationPlaformSubscriptions = ref([]);
@@ -85,13 +83,11 @@ export default {
 
     watch(selectedOrganization, async () => {
       organizationPlaformSubscriptions.value =
-        await retrieveOrganizationPlaformSubscriptions(
-          selectedOrganization.value
-        );
+        await retrieveOrganizationSubscriptions(selectedOrganization.value);
 
       let payments = await Promise.all(
         organizationPlaformSubscriptions.value.map(sub => {
-          return retrievePlatformSubscriptionPayments(
+          return retrieveSubscriptionPayments(
             selectedOrganization.value,
             sub.cloud,
             sub

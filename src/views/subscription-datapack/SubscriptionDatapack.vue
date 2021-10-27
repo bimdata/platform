@@ -12,18 +12,16 @@
     </ViewHeader>
     <div class="subscription-datapack__content">
       <div class="subscription-datapack__content__head">
-        <OrgaSpaceSelectors
+        <SpaceSelector
           :organizations="organizations"
-          :spaces="spacesPaid"
-          :selectedOrga="selectedOrga"
-          :selectedSpace="selectedSpace"
-          @orgaClick="onOrganizationClick"
-          @spaceClick="onSpaceClick"
+          :initialOrga="currentOrga"
+          :initialSpace="currentSpace"
+          @space-selected="selectedSpace = $event"
         />
       </div>
       <div class="subscription-datapack__content__body">
         <div class="subscription-datapack__content__body__left">
-          <DatapackSubInfo :spaceInfo="spaceInfo" />
+          <DatapackSubInfo :spaceInfo="spaceInfo" :spaceSubs="spaceSubs" />
         </div>
         <div class="subscription-datapack__content__body__center">
           <DatapackSubForm
@@ -44,17 +42,16 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
-import { usePayment } from "@/state/payment.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import DatapackSubForm from "@/components/specific/payment/datapack-sub-form/DatapackSubForm.vue";
 import DatapackSubInfo from "@/components/specific/payment/datapack-sub-info/DatapackSubInfo.vue";
+import SpaceSelector from "@/components/specific/payment/space-selector/SpaceSelector.vue";
 import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
-import OrgaSpaceSelectors from "@/components/specific/payment/orga-space-selectors/OrgaSpaceSelectors.vue";
 
 const OneGB = Math.pow(1024, 3);
 
@@ -63,81 +60,37 @@ export default {
     DatapackSubForm,
     DatapackSubInfo,
     GoBackButton,
-    OrgaSpaceSelectors,
+    SpaceSelector,
     SpaceSizePreview,
     ViewHeader
   },
   setup() {
-    // const space = ref({
-    //   id: 558,
-    //   name: "My New Space",
-    //   organization: {
-    //     id: 1935
-    //   }
-    // });
-    // const spaceInfo = ref({
-    //   smartDataSize: 29255230,
-    //   smartDataSizeAvailable: 536870912000,
-    //   remainingSmartDataPize: 536841656770,
-    //   remainingSmartDataSizePercent: 99.99455078877509,
-    //   usedSizePercent: 0.005449211224913597,
-    //   isPlatformSubscription: true,
-    //   isOrganizationMember: true,
-    //   isPlatformPaid: true
-    // });
-
-    const { userOrganizations, organizationsSpaces } = useOrganizations();
-    const { currentSpace } = useSpaces();
+    const { userOrganizations } = useOrganizations();
     const {
+      currentOrga,
+      currentSpace,
       retrieveSpaceInformation,
-      retrieveOrganizationPlaformSubscriptions
-    } = usePayment();
+      getSpaceSubscriptions
+    } = useSubscriptions();
 
-    const selectedOrga = ref({});
-    const selectedSpace = ref({});
+    const organizations = computed(() =>
+      userOrganizations.value.filter(orga => !orga.is_personnal)
+    );
+
+    const selectedSpace = ref(currentSpace.value);
     const spaceInfo = ref({});
-    const spaces = ref([]);
-    const spacesPaid = ref([]);
-
-    const filterUserOrga = ref([]);
-
-    filterUserOrga.value = userOrganizations.value.filter(
-      userOrganization => userOrganization.is_personnal === false
-    );
-
-    onMounted(() => {
-      selectedOrga.value = filterUserOrga.value[0];
-      if (currentSpace.value) {
-        selectedSpace.value = currentSpace.value;
-      }
-    });
-
-    watch(
-      () => selectedOrga.value,
-      async () => {
-        spaces.value = organizationsSpaces.value[selectedOrga.value.id];
-        selectedSpace.value = spaces.value[0];
-        spacesPaid.value = await retrieveOrganizationPlaformSubscriptions(
-          selectedOrga.value
-        );
-      }
-    );
+    const spaceSubs = ref([]);
 
     watch(
       () => selectedSpace.value,
       async space => {
         if (space && space.id) {
           spaceInfo.value = await retrieveSpaceInformation(space);
+          spaceSubs.value = getSpaceSubscriptions(space);
         }
-      }
+      },
+      { immediate: true }
     );
-
-    const onOrganizationClick = organization => {
-      selectedOrga.value = organization;
-    };
-    const onSpaceClick = space => {
-      selectedSpace.value = space;
-    };
 
     const newSizeAvailable = ref(
       spaceInfo.value.smartDataSizeAvailable + OneGB
@@ -150,17 +103,15 @@ export default {
 
     return {
       // References
+      currentOrga,
+      currentSpace,
       newSizeAvailable,
-      organizations: filterUserOrga,
-      selectedOrga,
+      organizations,
       selectedSpace,
       spaceInfo,
-      spaces,
-      spacesPaid,
+      spaceSubs,
       // Methods
-      onOrganizationClick,
-      onQuantityUpdate,
-      onSpaceClick
+      onQuantityUpdate
     };
   }
 };

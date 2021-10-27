@@ -1,5 +1,5 @@
 <template>
-  <div class="flex" v-if="spaceInfo.role === 100">
+  <div class="flex">
     <ProgressBar class="m-r-12" :progressPercent="spaceInfo.usedSizePercent">
       <template #text-left-below>
         <div>
@@ -44,7 +44,7 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { routeNames } from "@/router/index.js";
-import { usePayment } from "@/state/payment.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
@@ -61,7 +61,7 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-    const { retrieveSpaceInformation } = usePayment();
+    const { retrieveSpaceInformation } = useSubscriptions();
 
     const spaceInfo = ref({});
     watch(

@@ -14,6 +14,7 @@ const state = reactive({
 const resetState = () => {
   state.userOrganizations = [];
   state.organizationsSpaces = {};
+  state.organizationsUserSpaces = {};
 };
 
 const retrieveUserOrganizations = async () => {

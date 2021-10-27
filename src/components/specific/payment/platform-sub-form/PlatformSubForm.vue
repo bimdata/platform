@@ -6,7 +6,7 @@
 
 <script>
 import { onMounted, watch } from "vue";
-import { usePayment } from "@/state/payment.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 
 export default {
   props: {
@@ -16,7 +16,7 @@ export default {
     }
   },
   setup(props) {
-    const { generatePlatformSubscriptionLink } = usePayment();
+    const { generatePlatformSubscriptionLink } = useSubscriptions();
 
     onMounted(async () => {
       watch(

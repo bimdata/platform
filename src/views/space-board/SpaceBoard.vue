@@ -16,7 +16,7 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <SpaceSizeInfo :space="space" />
+          <SpaceSizeInfo v-if="space.isAdmin" :space="space" />
           <BIMDataButton
             data-test="btn-sort"
             class="space-board__header__btn-sort m-r-12"

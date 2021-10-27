@@ -54,7 +54,7 @@
 
 <script>
 import { computed, ref } from "vue";
-import { usePayment } from "@/state/payment.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 import { getPrice } from "@/utils/price.js";
 
 export default {
@@ -66,7 +66,7 @@ export default {
   },
   emits: ["quantity-updated", "datapack-created"],
   setup(props, { emit }) {
-    const { createDatapackSubscription } = usePayment();
+    const { createDatapackSubscription } = useSubscriptions();
 
     const loading = ref(false);
     const quantity = ref(1);
