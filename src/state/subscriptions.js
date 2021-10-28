@@ -54,6 +54,10 @@ const getSpaceSubscriptions = space => {
   return readonly(state.spacesSubscriptions[space?.id] || []);
 };
 
+const getSpaceActiveSubscription = space => {
+  return getSpaceSubscriptions(space).find(sub => sub.status === "active");
+};
+
 const retrieveSubscriptionPayments = (orga, space, subscription) => {
   return SubscriptionService.fetchSubscriptionPayments(
     orga,
@@ -74,6 +78,14 @@ const createDatapackSubscription = (space, quantity) => {
   return SubscriptionService.createDatapackSubscription(space, quantity);
 };
 
+const updateDatapackSubscription = (space, datapack, quantity) => {
+  return SubscriptionService.updateDatapackSubscription(
+    space,
+    datapack,
+    quantity
+  );
+};
+
 export function useSubscriptions() {
   const readonlyState = readonly(state);
   return {
@@ -86,9 +98,11 @@ export function useSubscriptions() {
     retrieveSpaceSubscriptions,
     retrieveAllSpacesSubscriptions,
     getSpaceSubscriptions,
+    getSpaceActiveSubscription,
     retrieveSubscriptionPayments,
     retrieveSpaceInformation,
     generatePlatformSubscriptionLink,
-    createDatapackSubscription
+    createDatapackSubscription,
+    updateDatapackSubscription
   };
 }

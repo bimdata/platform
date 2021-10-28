@@ -21,12 +21,12 @@
     }
 
     .text {
-      :first-child {
+      & > :first-child {
         &::after {
           content: " :";
         }
       }
-      :last-child {
+      & > :last-child {
         font-size: 1.2rem;
         font-weight: bold;
       }

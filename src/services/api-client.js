@@ -32,7 +32,14 @@ const privateApiFetch = async ({ method = "GET", path, body, json = true }) => {
     if (response.headers.get("Content-Type") === "application/json") {
       errorDetails = await response.text();
     }
-    throw new Error(`request error ${response.status}: ${errorDetails}`);
+    throw new Error(
+      `[Private API Client] Request error ${response.status}: ${errorDetails}`
+    );
+  }
+  if (response.status === 204) {
+    // Do not try to parse response body in case
+    // of HTTP status "204 No Content"
+    return;
   }
   return await response.json();
 };

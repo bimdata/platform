@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { usePaddle } from "@/composables/paddle.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
@@ -63,21 +63,30 @@ export default {
       type: Object,
       required: true
     },
-    subscriptions: {
-      type: Array,
-      required: true
+    subscription: {
+      type: Object,
+      default: null
     }
   },
-  emits: ["quantity-updated", "datapack-created"],
+  emits: ["quantity-updated", "datapack-created", "datapack-updated"],
   setup(props, { emit }) {
     const { getDatapackPrice } = usePaddle();
-    const { createDatapackSubscription } = useSubscriptions();
+    const { createDatapackSubscription, updateDatapackSubscription } =
+      useSubscriptions();
 
-    const loading = ref(false);
+    const loading = inject("loading", false);
+
+    const datapack = computed(() => props.subscription?.data_packs[0]);
+
     const quantity = ref(1);
     const unitPrice = ref(0);
     const currency = ref("");
     const totalPrice = computed(() => quantity.value * unitPrice.value);
+
+    watch(
+      () => quantity.value,
+      () => emit("quantity-updated", quantity.value)
+    );
 
     // Get localized datapack price from Paddle
     getDatapackPrice().then(({ price, currency: curr }) => {
@@ -88,19 +97,27 @@ export default {
     const decrement = () => {
       if (quantity.value > 1) {
         quantity.value--;
-        emit("quantity-updated", quantity.value);
       }
     };
     const increment = () => {
       quantity.value++;
-      emit("quantity-updated", quantity.value);
     };
 
     const submit = async () => {
       try {
         loading.value = true;
-        await createDatapackSubscription(props.space, quantity.value);
-        emit("datapack-created");
+        if (datapack.value) {
+          await updateDatapackSubscription(
+            props.space,
+            datapack.value,
+            datapack.value.quantity + quantity.value
+          );
+          emit("datapack-updated");
+        } else {
+          await createDatapackSubscription(props.space, quantity.value);
+          emit("datapack-created");
+        }
+        quantity.value = 1; // Reset quantity value
       } finally {
         loading.value = false;
       }

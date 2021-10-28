@@ -166,7 +166,8 @@
   "DatapackSubInfo": {
     "title": "Actual subscription",
     "datapacks": "Active DataPacks",
-    "storage": "Active storage"
+    "storage": "Active storage",
+    "including": "including {quantity} GB of DataPack"
   },
 
   "FileActionsCell": {
@@ -703,6 +704,7 @@
     "groupDeleteError": "Fail to delete group",
     "subscriptionsFetchError": "Fail to fetch subscriptions",
     "platformSubscribeError": "Fail to initialize platform subscription",
-    "datapackSubscribeError": "Fail to create datapack subscription"
+    "datapackSubscribeError": "Fail to create datapack subscription",
+    "datapackUpdateError": "Fail to update datapack subscription"
   }
 }

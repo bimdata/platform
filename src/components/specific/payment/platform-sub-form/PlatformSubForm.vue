@@ -16,6 +16,7 @@ export default {
       default: null
     }
   },
+  emits: ["subscription-created"],
   setup(props) {
     const { loadCheckout } = usePaddle();
     const { generatePlatformSubscriptionLink } = useSubscriptions();

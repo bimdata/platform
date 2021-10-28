@@ -26,12 +26,12 @@
             <PlatformSubInfo />
           </div>
           <div class="subscription-platform__content__body__center">
-            <PlatformSubForm :space="space" />
+            <PlatformSubForm :space="space" @subscription-created="() => {}" />
           </div>
           <div class="subscription-platform__content__body__right">
             <SpaceSizePreview
               :spaceInfo="spaceInfo"
-              :newSizeAvailable="10 * Math.pow(1024, 3)"
+              :newSizeAvailable="newSizeAvailable"
             />
           </div>
         </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
@@ -65,16 +65,17 @@ export default {
     const { userOrganizations } = useOrganizations();
     const { currentOrga } = useSubscriptions();
 
-    const organizations = computed(() =>
-      userOrganizations.value.filter(orga => !orga.is_personnal)
-    );
     const space = ref(null);
     const spaceInfo = ref({});
+    const newSizeAvailable = ref(
+      +process.env.VUE_APP_PLATFORM_SUBSCRIPTION_STORAGE
+    );
 
     return {
       // References
       currentOrga,
-      organizations,
+      newSizeAvailable,
+      organizations: userOrganizations,
       space,
       spaceInfo
     };

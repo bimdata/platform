@@ -16,7 +16,6 @@ import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
 import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
-import subscriptionDatapackResolver from "./resolvers/views/subscription-datapack.js";
 
 // Route components
 import Layout from "@/Layout.vue";
@@ -113,8 +112,7 @@ const routes = [
         name: routeNames.subscriptionDatapack,
         component: SubscriptionDatapack,
         meta: {
-          guard: subscriptionDatapackGuard,
-          resolver: subscriptionDatapackResolver
+          guard: subscriptionDatapackGuard
         }
       },
       {

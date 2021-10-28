@@ -1,4 +1,5 @@
 .subscription-datapack {
+  position: relative;
   height: 100%;
 
   &__title {
@@ -45,6 +46,26 @@
       &__right {
         width: 400px;
       }
+    }
+  }
+
+  &__loader {
+    --view-container-padding: var(--spacing-unit) * 7 / 2;
+
+    position: absolute;
+    z-index: 51; // This is to overlay view-header (which has z-index: 50)
+    top: calc(0px - var(--view-container-padding));
+    left: calc(0px - var(--view-container-padding));
+    width: calc(100% + var(--view-container-padding) * 2);
+    height: calc(100% + var(--view-container-padding) * 2);
+    background-color: rgba(255 255 255 / 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .bimdata-spinner {
+      transform: scale(3);
     }
   }
 }

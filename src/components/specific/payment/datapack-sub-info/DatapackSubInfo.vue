@@ -20,8 +20,12 @@
           {{ $t("DatapackSubInfo.storage") }}
         </div>
         <div>
-          {{ totalQuantity }}
-          GB
+          <span>{{ formatBytes(spaceInfo.smartDataSizeAvailable) }}</span>
+          <span>
+            ({{
+              $t("DatapackSubInfo.including", { quantity: datapacksQuantity })
+            }})
+          </span>
         </div>
       </div>
     </div>
@@ -29,7 +33,8 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
+import { formatBytes } from "@/utils/files.js";
 import heading from "./heading.svg";
 import image from "./image.svg";
 
@@ -39,34 +44,25 @@ export default {
       type: Object,
       required: true
     },
-    subscriptions: {
-      type: Array,
-      required: true
+    subscription: {
+      type: Object,
+      default: null
     }
   },
   setup(props) {
-    const subscription = ref({});
-    const datapacks = ref([]);
-    const totalQuantity = computed(() =>
+    const datapacks = computed(() => props.subscription?.data_packs || []);
+    const datapacksQuantity = computed(() =>
       datapacks.value.map(d => d.quantity).reduce((a, b) => a + b, 0)
-    );
-
-    watch(
-      () => props.subscriptions,
-      () => {
-        subscription.value = props.subscriptions[0] || {};
-        datapacks.value = subscription.value.data_packs || [];
-      },
-      { immediate: true }
     );
 
     return {
       // References
       datapacks,
+      datapacksQuantity,
       heading,
       image,
-      subscription,
-      totalQuantity
+      // Methods
+      formatBytes
     };
   }
 };

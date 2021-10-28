@@ -89,11 +89,25 @@ class PaymentService {
   async createDatapackSubscription(space, quantity) {
     try {
       return await privateApiClient.post(
-        `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/generate-platform-subscription`,
+        `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/create-platform-data-pack-subscription`,
         { quantity }
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.DATAPACK_SUBSCRIBE_ERROR, error);
+    }
+  }
+
+  async updateDatapackSubscription(space, datapack, quantity) {
+    try {
+      return await privateApiClient.patch(
+        `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription/update-platform-data-pack-subscription`,
+        {
+          subscription_id: datapack.subscription_id,
+          quantity
+        }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.DATAPACK_UPDATE_ERROR, error);
     }
   }
 }

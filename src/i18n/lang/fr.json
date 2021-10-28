@@ -165,8 +165,9 @@
 
   "DatapackSubInfo": {
     "title": "Abonnement actuel",
-    "datapacks": "Récapitulatif DataPack actif :",
-    "storage": "Récapitulatif GB actif :"
+    "datapacks": "Récapitulatif DataPack actif",
+    "storage": "Récapitulatif GB actif",
+    "including": "dont {quantity} GB de DataPack"
   },
 
   "FileActionsCell": {
@@ -708,6 +709,7 @@
     "groupDeleteError": "Échec de la suppression du groupe",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
-    "datapackSubscribeError": "Échec de la souscription à un nouveau datapack"
+    "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",
+    "datapackUpdateError": "Erreur lors de la mise à jour du datapack"
   }
 }

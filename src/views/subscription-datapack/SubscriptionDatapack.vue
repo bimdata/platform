@@ -21,14 +21,18 @@
       </div>
       <div class="subscription-datapack__content__body">
         <div class="subscription-datapack__content__body__left">
-          <DatapackSubInfo :spaceInfo="spaceInfo" :subscriptions="spaceSubs" />
+          <DatapackSubInfo
+            :spaceInfo="spaceInfo"
+            :subscription="subscription"
+          />
         </div>
         <div class="subscription-datapack__content__body__center">
           <DatapackSubForm
             :space="selectedSpace"
-            :subscriptions="spaceSubs"
-            @quantity-updated="onQuantityUpdate"
-            @datapack-created="() => {}"
+            :subscription="subscription"
+            @quantity-updated="quantity = $event"
+            @datapack-created="loadSpaceData(selectedSpace)"
+            @datapack-updated="loadSpaceData(selectedSpace)"
           />
         </div>
         <div class="subscription-datapack__content__body__right">
@@ -39,12 +43,15 @@
         </div>
       </div>
     </div>
+    <div class="subscription-datapack__loader" v-show="loading">
+      <BIMDataSpinner />
+    </div>
   </div>
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
-import { GB } from "@/config/size-unit.js";
+import { computed, provide, ref, watch } from "vue";
+import SIZE_UNIT from "@/config/size-unit.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
@@ -70,46 +77,54 @@ export default {
       currentOrga,
       currentSpace,
       retrieveSpaceInformation,
-      getSpaceSubscriptions
+      retrieveSpaceSubscriptions,
+      getSpaceActiveSubscription
     } = useSubscriptions();
 
-    const organizations = computed(() =>
-      userOrganizations.value.filter(orga => !orga.is_personnal)
-    );
+    const loading = ref(false);
+    provide("loading", loading);
 
     const selectedSpace = ref(currentSpace.value);
     const spaceInfo = ref({});
-    const spaceSubs = ref([]);
+    const subscription = ref(null);
+
+    const quantity = ref(1);
+    const newSizeAvailable = computed(
+      () =>
+        spaceInfo.value.smartDataSizeAvailable + quantity.value * SIZE_UNIT.GB
+    );
+
+    const loadSpaceData = async space => {
+      if (space && space.id) {
+        const info = await retrieveSpaceInformation(space);
+        const sub = await retrieveSpaceSubscriptions(space).then(() =>
+          getSpaceActiveSubscription(space)
+        );
+        // This is needed to trigger reactive effects
+        spaceInfo.value = { ...info };
+        subscription.value = { ...sub };
+      }
+    };
 
     watch(
       () => selectedSpace.value,
-      async space => {
-        if (space && space.id) {
-          spaceInfo.value = await retrieveSpaceInformation(space);
-          spaceSubs.value = getSpaceSubscriptions(space);
-        }
-      },
+      space => loadSpaceData(space),
       { immediate: true }
     );
-
-    const newSizeAvailable = ref(spaceInfo.value.smartDataSizeAvailable + GB);
-
-    const onQuantityUpdate = quantity => {
-      newSizeAvailable.value =
-        spaceInfo.value.smartDataSizeAvailable + quantity * GB;
-    };
 
     return {
       // References
       currentOrga,
       currentSpace,
+      loading,
       newSizeAvailable,
-      organizations,
+      organizations: userOrganizations,
+      quantity,
       selectedSpace,
       spaceInfo,
-      spaceSubs,
+      subscription,
       // Methods
-      onQuantityUpdate
+      loadSpaceData
     };
   }
 };
