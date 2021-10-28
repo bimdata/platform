@@ -26,7 +26,7 @@
             <PlatformSubInfo />
           </div>
           <div class="subscription-platform__content__body__center">
-            <PlatformSubForm :space="space" @subscription-created="() => {}" />
+            <PlatformSubForm :space="space" />
           </div>
           <div class="subscription-platform__content__body__right">
             <SpaceSizePreview

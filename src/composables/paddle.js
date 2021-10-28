@@ -1,6 +1,6 @@
 import { getPrice } from "@/utils/price.js";
 
-const loadCheckout = (containerID, link) => {
+const loadCheckout = (containerID, link, { onLoad, onSuccess }) => {
   Paddle.Checkout.open({
     // Checkout params
     method: "inline",
@@ -11,7 +11,10 @@ const loadCheckout = (containerID, link) => {
     frameTarget: containerID,
     frameInitialHeight: 416,
     frameStyle:
-      "width:100%; min-width:312px; background-color: transparent; border: none;"
+      "width:100%; min-width:312px; background-color: transparent; border: none;",
+
+    loadCallback: onLoad,
+    successCallback: onSuccess
   });
 };
 

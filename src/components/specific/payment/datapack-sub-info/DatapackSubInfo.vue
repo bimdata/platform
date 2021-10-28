@@ -1,7 +1,15 @@
 <template>
   <div class="datapack-sub-info">
-    <img class="heading" :src="heading" alt="BIMData Platform" />
-    <img class="image" :src="image" alt="Datapack image" />
+    <img
+      class="heading"
+      src="/static/platform-sub-info-heading.svg"
+      alt="BIMData Platform"
+    />
+    <img
+      class="image"
+      src="/static/datapack-sub-info-image.svg"
+      alt="Datapack image"
+    />
     <div class="content">
       <h1 class="title">
         {{ $t("DatapackSubInfo.title") }}
@@ -35,8 +43,6 @@
 <script>
 import { computed } from "vue";
 import { formatBytes } from "@/utils/files.js";
-import heading from "./heading.svg";
-import image from "./image.svg";
 
 export default {
   props: {
@@ -59,8 +65,6 @@ export default {
       // References
       datapacks,
       datapacksQuantity,
-      heading,
-      image,
       // Methods
       formatBytes
     };

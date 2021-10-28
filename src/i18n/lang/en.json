@@ -506,10 +506,15 @@
     "professionalPlanPrice": "/ month"
   },
 
+  "PlatformSubForm": {
+    "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
+    "successButtonText": "Home"
+  },
+
   "PlatformSubInfo": {
     "title": "Your subscription",
     "subTitle": "Professionnal plan",
-    "month": "month",
+    "priceUnit": "/ month",
     "bulletsHead": "Subscription includes",
     "bullet1": "5GB of storage",
     "bullet2": "BIMData Platform",

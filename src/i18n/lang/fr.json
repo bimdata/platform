@@ -509,10 +509,16 @@
     "professionalPlanPrice": "/ mois"
   },
 
+  "PlatformSubForm": {
+    "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "Page d'accueil"
+  },
+
   "PlatformSubInfo": {
     "title": "Votre souscription",
     "subTitle": "Professionnelle",
-    "month": "mois",
+    "priceUnit": "/ mois",
     "bulletsHead": "La souscription inclue",
     "bullet1": "5GB de stockage",
     "bullet2": "BIMData Plateforme",
