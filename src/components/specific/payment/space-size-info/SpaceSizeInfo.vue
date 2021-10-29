@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <ProgressBar class="m-r-12" :progressPercent="spaceInfo.usedSizePercent">
+    <ProgressBar class="m-r-12" :progress="spaceInfo.usedSizePercent">
       <template #text-below-left>
         <div>
           {{ formatBytes(spaceInfo.smartDataSize) }}

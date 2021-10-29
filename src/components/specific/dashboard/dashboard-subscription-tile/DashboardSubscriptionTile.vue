@@ -29,6 +29,7 @@
     </div>
     <BIMDataButton
       class="dashboard-subscription-tile__btn"
+      height="16px"
       @click="goToSubscriptionPlatform"
     >
       <span>

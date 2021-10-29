@@ -4,11 +4,11 @@
       <slot name="text-above-left"></slot>
       <slot name="text-above-right"></slot>
     </div>
-    <div class="progress-bar__content" :style="{ width: componentWidth }">
+    <div class="progress-bar__content" :style="{ width }">
       <div
         class="progress-bar__content__bar"
-        :style="{ width: progressPercent + '%' }"
-        :class="[`progress-bar__content__bar--${indicatorColorState}`]"
+        :class="[`progress-bar__content__bar--${barColor}`]"
+        :style="{ width: Math.min(progress, 100) + '%' }"
       ></div>
     </div>
     <div class="progress-bar__text progress-bar__text--below">
@@ -23,30 +23,43 @@ import { computed } from "vue";
 
 export default {
   props: {
-    componentWidth: {
+    width: {
       type: String,
       default: "230px"
     },
-    progressPercent: {
+    progress: {
       type: Number,
       default: 0
+    },
+    warningLimit: {
+      type: Number,
+      default: 66
+    },
+    highLimit: {
+      type: Number,
+      default: 80
     }
   },
   setup(props) {
-    const indicatorColorState = computed(() => {
-      if (props.progressPercent <= 33) {
+    const barColor = computed(() => {
+      if (props.progress <= props.warningLimit) {
         return "good";
       }
-      if (33 < props.progressPercent && props.progressPercent <= 66) {
+      if (
+        props.progress > props.warningLimit &&
+        props.progress <= props.highLimit
+      ) {
         return "warning";
       }
-      if (props.progressPercent > 66) {
+      if (props.progress > props.highLimit) {
         return "high";
       }
       return "";
     });
+
     return {
-      indicatorColorState
+      // References
+      barColor
     };
   }
 };

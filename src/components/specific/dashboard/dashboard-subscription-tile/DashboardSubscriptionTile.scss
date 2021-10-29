@@ -2,9 +2,9 @@
   padding: calc(var(--spacing-unit) * 2);
   display: grid;
   grid-template-rows: 1fr 1fr 2fr;
-  background-color: var(--color-white);
   border-radius: var(--spacing-unit);
   box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
 
   h2 {
     margin: 0;
