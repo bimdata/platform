@@ -9,6 +9,7 @@ export default createViewResolver(async route => {
   spaces.setCurrentSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
 
+  await spaces.loadSpaceInfo(spaces.currentSpace.value);
   await spaces.loadSpaceUsers(spaces.currentSpace.value);
   await spaces.loadSpaceInvitations(spaces.currentSpace.value);
 });

@@ -14,17 +14,17 @@
         componentWidth="100%"
         :progressPercent="spaceInfo.usedSizePercent"
       >
-        <template #text-left-above>
+        <template #text-above-left>
           <span>
             {{ $t("SpaceSizePreview.actualStorage") }}
           </span>
         </template>
-        <template #text-left-below>
+        <template #text-below-left>
           <span>
             {{ formatBytes(spaceInfo.smartDataSize) }}
           </span>
         </template>
-        <template #text-right-below>
+        <template #text-below-right>
           <span>
             {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
           </span>
@@ -36,17 +36,17 @@
     </div>
     <div class="space-size-preview__new-size">
       <ProgressBar componentWidth="100%" :progressPercent="newUsedSizePercent">
-        <template #text-left-above>
+        <template #text-above-left>
           <span>
             {{ $t("SpaceSizePreview.newStorage") }}
           </span>
         </template>
-        <template #text-left-below>
+        <template #text-below-left>
           <span>
             {{ formatBytes(spaceInfo.smartDataSize) }}
           </span>
         </template>
-        <template #text-right-below>
+        <template #text-below-right>
           <span>
             {{ formatBytes(newSizeAvailable) }}
           </span>

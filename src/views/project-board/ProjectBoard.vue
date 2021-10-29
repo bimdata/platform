@@ -16,7 +16,11 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <SpaceSizeInfo v-if="space.isAdmin" :space="space" />
+          <SpaceSizeInfo
+            v-if="space.isAdmin"
+            :space="space"
+            :spaceInfo="spaceInfo"
+          />
           <app-slot name="project-board-action" />
         </div>
       </template>
@@ -81,9 +85,9 @@ export default {
   setup() {
     const route = useRoute();
     const { locale, t } = useI18n();
+    const { currentSpace, spaceInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { currentProjectView } = useSession();
-    const { currentSpace } = useSpaces();
 
     const tabs = ref([]);
     watch(
@@ -123,6 +127,7 @@ export default {
       currentView,
       tabs,
       space: currentSpace,
+      spaceInfo,
       // Methods
       changeView
     };

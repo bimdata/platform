@@ -13,6 +13,7 @@ export default createViewResolver(async route => {
   const groups = useGroups();
 
   spaces.setCurrentSpace(+route.params.spaceID);
+  await spaces.loadSpaceInfo(spaces.currentSpace.value);
   projects.loadSpaceProjects(spaces.currentSpace.value);
 
   projects.selectProject(+route.params.projectID);

@@ -1,8 +1,8 @@
 <template>
-  <div class="progress-bar flex flex-col">
-    <div class="progress-bar--text flex justify-between m-b-6">
-      <slot name="text-left-above"></slot>
-      <slot name="text-right-above"></slot>
+  <div class="progress-bar">
+    <div class="progress-bar__text progress-bar__text--above">
+      <slot name="text-above-left"></slot>
+      <slot name="text-above-right"></slot>
     </div>
     <div class="progress-bar__content" :style="{ width: componentWidth }">
       <div
@@ -11,9 +11,9 @@
         :class="[`progress-bar__content__bar--${indicatorColorState}`]"
       ></div>
     </div>
-    <div class="progress-bar--text flex justify-between m-t-6">
-      <slot name="text-left-below"></slot>
-      <slot name="text-right-below"></slot>
+    <div class="progress-bar__text progress-bar__text--below">
+      <slot name="text-below-left"></slot>
+      <slot name="text-below-right"></slot>
     </div>
   </div>
 </template>

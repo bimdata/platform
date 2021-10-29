@@ -16,7 +16,11 @@
       </template>
       <template #right>
         <div class="flex items-center">
-          <SpaceSizeInfo v-if="space.isAdmin" :space="space" />
+          <SpaceSizeInfo
+            v-if="space.isAdmin"
+            :space="space"
+            :spaceInfo="spaceInfo"
+          />
           <BIMDataButton
             data-test="btn-sort"
             class="space-board__header__btn-sort m-r-12"
@@ -96,9 +100,10 @@ export default {
     SpaceUsersManager
   },
   setup() {
-    const { spaceProjects } = useProjects();
     const { openSidePanel } = useSidePanel();
-    const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
+    const { currentSpace, spaceInfo, spaceUsers, spaceInvitations } =
+      useSpaces();
+    const { spaceProjects } = useProjects();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -116,6 +121,7 @@ export default {
       projects: displayedProjects,
       searchText,
       space: currentSpace,
+      spaceInfo,
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,

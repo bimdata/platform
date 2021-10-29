@@ -30,6 +30,7 @@
             :placeholder="$t('SpaceCreator.createNewOrgaInput')"
             :loading="newOrgaLoading"
             v-model="newOrga.name"
+            @keyup.enter.stop="() => (newOrga.name ? submitOrga() : null)"
           />
         </div>
         <div v-if="organizations.length > 0">
@@ -95,6 +96,7 @@
             :placeholder="$t('SpaceCreator.createSpaceInput')"
             :loading="newSpaceLoading"
             v-model="newSpace.name"
+            @keyup.enter.stop="() => (newSpace.name ? submitSpace() : null)"
           />
         </div>
         <BIMDataButton

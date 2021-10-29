@@ -17,6 +17,7 @@
 
     <FilesManager
       class="project-files__block--files"
+      :spaceInfo="spaceInfo"
       :project="project"
       :fileStructure="fileStructure"
       :groups="groups"
@@ -29,15 +30,16 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
-import { useFiles } from "@/state/files";
-import { useGroups } from "@/state/groups";
-import { useModels } from "@/state/models";
-import { useProjects } from "@/state/projects";
-import { debounce } from "@/utils/async";
+import { routeNames } from "@/router/index.js";
+import { useFiles } from "@/state/files.js";
+import { useGroups } from "@/state/groups.js";
+import { useModels } from "@/state/models.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { debounce } from "@/utils/async.js";
 // Components
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
-import FilesManager from "@/components/specific/files/files-manager/FilesManager";
+import FilesManager from "@/components/specific/files/files-manager/FilesManager.vue";
 
 export default {
   components: {
@@ -46,12 +48,14 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const { currentSpace, spaceInfo, loadSpaceInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
-    const { loadProjectFileStructure, projectFileStructure } = useFiles();
+    const { projectFileStructure, loadProjectFileStructure } = useFiles();
     const { projectGroups } = useGroups();
 
     const reloadFileStructure = debounce(async () => {
+      await loadSpaceInfo(currentSpace.value);
       await loadProjectFileStructure(currentProject.value);
       await loadProjectModels(currentProject.value);
     }, 1000);
@@ -71,6 +75,7 @@ export default {
       fileStructure: projectFileStructure,
       groups: projectGroups,
       project: currentProject,
+      spaceInfo,
       // Methods
       goToProjectGroups,
       reloadFileStructure

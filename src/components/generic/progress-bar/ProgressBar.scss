@@ -1,12 +1,19 @@
 .progress-bar {
+  position: relative;
+  height: 32px;
+  display: flex;
+  align-items: center;
+
   &__content {
     position: relative;
     height: 6px;
     border-radius: 15px;
     background-color: var(--color-tertiary);
+
     &__bar {
       height: 100%;
       border-radius: 15px;
+
       &--good {
         background-color: var(--color-success);
       }
@@ -18,8 +25,22 @@
       }
     }
   }
-  &--text {
+
+  &__text {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
     color: var(--color-tertiary-dark);
     font-size: 12px;
+
+    &--above {
+      top: -4px;
+    }
+
+    &--below {
+      bottom: -4px;
+    }
   }
 }

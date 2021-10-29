@@ -1,11 +1,13 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/services/SpaceService.js";
+import SubscriptionService from "@/services/SubscriptionService.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userSpaces: [],
   currentSpace: null,
+  spaceInfo: {},
   spaceUsers: [],
   spaceInvitations: []
 });
@@ -17,6 +19,12 @@ const loadUserSpaces = async () => {
   spaces.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   state.userSpaces = spaces;
   return spaces;
+};
+
+const loadSpaceInfo = async space => {
+  const spaceInfo = await SubscriptionService.fetchSpaceInformation(space);
+  state.spaceInfo = spaceInfo;
+  return spaceInfo;
 };
 
 const loadSpaceUsers = async space => {
@@ -140,6 +148,7 @@ export function useSpaces() {
     ...toRefs(readonlyState),
     // Methods
     loadUserSpaces,
+    loadSpaceInfo,
     loadSpaceUsers,
     loadSpaceInvitations,
     createSpace,
