@@ -22,7 +22,13 @@
           <span>{{ $t("ProPlanCard.bullet3") }}</span>
         </div>
       </div>
-      <BIMDataButton width="240px" color="secondary" fill radius>
+      <BIMDataButton
+        width="240px"
+        color="secondary"
+        fill
+        radius
+        @click="goToSubscriptionPlatform"
+      >
         {{ $t("ProPlanCard.buttonText") }}
       </BIMDataButton>
       <div class="pro-plan-card__note">

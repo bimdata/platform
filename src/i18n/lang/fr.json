@@ -44,6 +44,10 @@
   "SubscriptionDatapack": {
     "title": "Ajout d'un DataPack"
   },
+  "SubscriptionFree": {
+    "title": "Créer un espace gratuit",
+    "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: 300 MB, 6 utilisateurs."
+  },
   "SubscriptionPlatform": {
     "title": "Passer à la platforme professionnelle"
   },

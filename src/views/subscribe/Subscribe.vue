@@ -10,14 +10,14 @@
         </h1>
       </template>
     </ViewHeader>
-  </div>
-  <div class="subscribe__body">
-    <p class="subscribe__body__text">
-      {{ $t("Subscribe.text") }}
-    </p>
-    <div class="subscribe__body__content">
-      <FreePlanCard />
-      <ProPlanCard />
+    <div class="subscribe__body">
+      <p class="subscribe__body__text">
+        {{ $t("Subscribe.text") }}
+      </p>
+      <div class="subscribe__body__content">
+        <FreePlanCard />
+        <ProPlanCard />
+      </div>
     </div>
   </div>
 </template>

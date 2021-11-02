@@ -22,7 +22,13 @@
           <span>{{ $t("FreePlanCard.bullet3") }}</span>
         </div>
       </div>
-      <BIMDataButton width="240px" color="primary" fill radius>
+      <BIMDataButton
+        width="240px"
+        color="primary"
+        fill
+        radius
+        @click="goToSubscriptionFree"
+      >
         {{ $t("FreePlanCard.buttonText") }}
       </BIMDataButton>
       <div class="free-plan-card__note">

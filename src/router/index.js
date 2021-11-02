@@ -7,6 +7,7 @@ import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
 import subscriptionDatapackGuard from "./guards/views/subscription-datapack.js";
+import subscriptionFreeGuard from "./guards/views/subscription-free.js";
 import subscriptionPlatformGuard from "./guards/views/subscription-platform.js";
 
 // Resolvers
@@ -41,6 +42,8 @@ const Subscribe = () =>
   import(/* webpackChunkName: "subscribe" */ "@/views/subscribe/Subscribe.vue");
 const SubscriptionDatapack = () =>
   import(/* webpackChunkName: "subscription-datapack" */ "@/views/subscription-datapack/SubscriptionDatapack.vue");
+const SubscriptionFree = () =>
+  import(/* webpackChunkName: "subscription-free" */ "@/views/subscription-free/SubscriptionFree.vue");
 const SubscriptionPlatform = () =>
   import(/* webpackChunkName: "subscription-platform" */ "@/views/subscription-platform/SubscriptionPlatform.vue");
 const UserProjects = () =>
@@ -109,6 +112,14 @@ const routes = [
         component: Subscribe,
         meta: {
           guard: null // TODO
+        }
+      },
+      {
+        path: "/subscription/free",
+        name: routeNames.subscriptionFree,
+        component: SubscriptionFree,
+        meta: {
+          guard: subscriptionFreeGuard
         }
       },
       {

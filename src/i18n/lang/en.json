@@ -43,6 +43,9 @@
   "SubscriptionDatapack": {
     "title": "Add DataPack"
   },
+  "SubscriptionFree": {
+    "title": "Create Free Plan"
+  },
   "SubscriptionPlatform": {
     "title": "Upgrade to pro platform"
   },
