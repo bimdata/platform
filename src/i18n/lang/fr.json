@@ -37,6 +37,10 @@
   "SpaceBoard": {
     "searchInputPlaceholder": "Rechercher un projet"
   },
+  "Subscribe": {
+    "title": "Choisissez votre abonnement",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  },
   "SubscriptionDatapack": {
     "title": "Ajout d'un DataPack"
   },
@@ -273,6 +277,16 @@
       "moveTo": "Valider",
       "moveHere": "Déplacer ici"
     }
+  },
+
+  "FreePlanCard": {
+    "title": "FREE",
+    "price": "0€",
+    "bullet1": "300 MB",
+    "bullet2": "1 Espace gratuit",
+    "bullet3": "6 Utilisateurs",
+    "buttonText": "Créer un espace gratuit",
+    "note": "Pour toujours"
   },
 
   "GroupCardActionMenu": {
@@ -565,6 +579,16 @@
   "ProjectUsersManager": {
     "title": "Utilisateurs",
     "searchInputPlaceholder": "Rechercher un utilisateur"
+  },
+
+  "ProPlanCard": {
+    "title": "PROFESSIONEL",
+    "price": "30€ / Espace / mois",
+    "bullet1": "10 GB",
+    "bullet2": "Projets illimités",
+    "bullet3": "Utilisateurs illimités",
+    "buttonText": "Souscrire",
+    "note": "extensible pour 10€ / GB / mois"
   },
 
   "SpaceCard": {

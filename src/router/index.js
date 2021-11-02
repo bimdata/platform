@@ -37,6 +37,8 @@ const ProjectGroups = () =>
   import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups.vue");
 const SpaceBoard = () =>
   import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
+const Subscribe = () =>
+  import(/* webpackChunkName: "subscribe" */ "@/views/subscribe/Subscribe.vue");
 const SubscriptionDatapack = () =>
   import(/* webpackChunkName: "subscription-datapack" */ "@/views/subscription-datapack/SubscriptionDatapack.vue");
 const SubscriptionPlatform = () =>
@@ -59,6 +61,8 @@ const routeNames = Object.freeze({
   spaceBoard: "space-board",
   userProjects: "user-projects",
   userSubscriptions: "user-subscriptions",
+  subscribe: "subscribe",
+  subscriptionFree: "subscription-free",
   subscriptionPlatform: "subscription-platform",
   subscriptionDatapack: "subscription-datapack",
   projectBoard: "project-board",
@@ -98,6 +102,14 @@ const routes = [
         path: "/subscriptions",
         name: routeNames.userSubscriptions,
         component: UserSubscriptions
+      },
+      {
+        path: "/subscribe",
+        name: routeNames.subscribe,
+        component: Subscribe,
+        meta: {
+          guard: null // TODO
+        }
       },
       {
         path: "/subscription/platform",

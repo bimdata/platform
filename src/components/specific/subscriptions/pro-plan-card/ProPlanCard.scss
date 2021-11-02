@@ -1,0 +1,54 @@
+.pro-plan-card {
+  &.bimdata-card:deep(.bimdata-card__content) {
+    width: 400px;
+    height: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 2);
+    padding: calc(var(--spacing-unit) * 5 / 2);
+    font-size: 1rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  &__title {
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  &__price {
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
+
+  &__separator {
+    width: 260px;
+    height: 1px;
+    margin: var(--spacing-unit) 0;
+    background-color: var(--color-tertiary);
+  }
+
+  &__bullets {
+    margin: var(--spacing-unit) 0;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2 / 3);
+
+    &__bullet {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-unit);
+      font-weight: bold;
+    }
+  }
+
+  &__note {
+    font-size: 12px;
+
+    &::before {
+      content: "** ";
+    }
+  }
+}

@@ -9,7 +9,7 @@
       <BIMDataIcon
         class="breadcrumb-selector__header__icon"
         name="chevron"
-        size="xxs"
+        size="xs"
         :rotate="isOpen ? 90 : 0"
         @click="toggle"
         margin="0 0 1px 6px"
