@@ -48,8 +48,9 @@
     "title": "Créer un espace gratuit",
     "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: 300 MB, 6 utilisateurs."
   },
-  "SubscriptionPlatform": {
-    "title": "Passer à la platforme professionnelle"
+  "SubscriptionPro": {
+    "title": "Passer à la platforme professionnelle",
+    "text": "Vous êtes sur le pint de créer votre plan professionel. Votre plan inclus: 10GB, création de projets illimités, utilisateurs illimités."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"

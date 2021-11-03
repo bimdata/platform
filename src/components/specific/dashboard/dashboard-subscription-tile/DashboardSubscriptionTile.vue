@@ -30,7 +30,7 @@
     <BIMDataButton
       class="dashboard-subscription-tile__btn"
       height="16px"
-      @click="goToSubscriptionPlatform"
+      @click="goToSubscriptionPro"
     >
       <span>
         {{ $t("DashboardSubscriptionTile.subscribeButtonText") }}
@@ -58,13 +58,13 @@ export default {
       router.push({ name: routeNames.userSubscriptions });
     };
 
-    const goToSubscriptionPlatform = () => {
-      router.push({ name: routeNames.subscriptionPlatform });
+    const goToSubscriptionPro = () => {
+      router.push({ name: routeNames.subscriptionPro });
     };
 
     return {
       // Methods
-      goToSubscriptionPlatform,
+      goToSubscriptionPro,
       goToUserSubscriptions
     };
   }

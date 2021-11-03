@@ -1,18 +1,22 @@
 <template>
-  <div class="subscription-platform">
+  <div class="subscription-pro">
     <ViewHeader>
       <template #left>
         <GoBackButton />
       </template>
       <template #center>
-        <h1 class="subscription-platform__title">
-          {{ $t("SubscriptionPlatform.title") }}
+        <h1 class="subscription-pro__title">
+          {{ $t("SubscriptionPro.title") }}
         </h1>
       </template>
     </ViewHeader>
 
-    <div class="subscription-platform__content">
-      <div class="subscription-platform__content__head">
+    <div class="subscription-pro__content">
+      <div class="subscription-pro__content__text">
+        {{ $t("SubscriptionPro.text") }}
+      </div>
+
+      <div class="subscription-pro__content__head">
         <SpaceCreator
           :organizations="organizations"
           :initialOrga="currentOrga"
@@ -21,14 +25,14 @@
       </div>
 
       <transition name="slide-fade-down">
-        <div class="subscription-platform__content__body" v-show="space">
-          <div class="subscription-platform__content__body__left">
+        <div class="subscription-pro__content__body" v-show="space">
+          <div class="subscription-pro__content__body__left">
             <PlatformSubInfo />
           </div>
-          <div class="subscription-platform__content__body__center">
+          <div class="subscription-pro__content__body__center">
             <PlatformSubForm :space="space" />
           </div>
-          <div class="subscription-platform__content__body__right">
+          <div class="subscription-pro__content__body__right">
             <SpaceSizePreview
               :spaceInfo="spaceInfo"
               :newSizeAvailable="newSizeAvailable"
@@ -83,4 +87,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./SubscriptionPlatform.scss"></style>
+<style scoped lang="scss" src="./SubscriptionPro.scss"></style>

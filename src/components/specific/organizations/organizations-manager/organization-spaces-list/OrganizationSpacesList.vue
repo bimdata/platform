@@ -15,7 +15,7 @@
         color="secondary"
         fill
         radius
-        @click="goToSubscriptionPlatform"
+        @click="goToSubscriptionPro"
       >
         <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
         <span>{{ $t("OrganizationSpacesList.addButtonText") }}</span>
@@ -67,9 +67,9 @@ export default {
       space => space.name
     );
 
-    const goToSubscriptionPlatform = () => {
+    const goToSubscriptionPro = () => {
       router.push({
-        name: routeNames.subscriptionPlatform,
+        name: routeNames.subscriptionPro,
         query: {
           organization: localState.organization.id
         }
@@ -82,7 +82,7 @@ export default {
       localState,
       searchText,
       // Methods
-      goToSubscriptionPlatform
+      goToSubscriptionPro
     };
   }
 };

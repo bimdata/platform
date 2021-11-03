@@ -6,9 +6,10 @@ import authGuard from "./guards/auth.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
+import subscribeGuard from "./guards/views/subscribe.js";
 import subscriptionDatapackGuard from "./guards/views/subscription-datapack.js";
 import subscriptionFreeGuard from "./guards/views/subscription-free.js";
-import subscriptionPlatformGuard from "./guards/views/subscription-platform.js";
+import subscriptionProGuard from "./guards/views/subscription-pro.js";
 
 // Resolvers
 import rootResolver from "./resolvers/root.js";
@@ -27,7 +28,7 @@ import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
 // Lazy loaded view components
 /* eslint-disable */
 const Dashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard");
+  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard.vue");
 const GroupBoard = () =>
   import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
 const ModelViewer = () =>
@@ -44,8 +45,8 @@ const SubscriptionDatapack = () =>
   import(/* webpackChunkName: "subscription-datapack" */ "@/views/subscription-datapack/SubscriptionDatapack.vue");
 const SubscriptionFree = () =>
   import(/* webpackChunkName: "subscription-free" */ "@/views/subscription-free/SubscriptionFree.vue");
-const SubscriptionPlatform = () =>
-  import(/* webpackChunkName: "subscription-platform" */ "@/views/subscription-platform/SubscriptionPlatform.vue");
+const SubscriptionPro = () =>
+  import(/* webpackChunkName: "subscription-pro" */ "@/views/subscription-pro/SubscriptionPro.vue");
 const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const UserSubscriptions = () =>
@@ -66,7 +67,7 @@ const routeNames = Object.freeze({
   userSubscriptions: "user-subscriptions",
   subscribe: "subscribe",
   subscriptionFree: "subscription-free",
-  subscriptionPlatform: "subscription-platform",
+  subscriptionPro: "subscription-pro",
   subscriptionDatapack: "subscription-datapack",
   projectBoard: "project-board",
   modelViewer: "model-viewer",
@@ -111,7 +112,7 @@ const routes = [
         name: routeNames.subscribe,
         component: Subscribe,
         meta: {
-          guard: null // TODO
+          guard: subscribeGuard
         }
       },
       {
@@ -123,11 +124,11 @@ const routes = [
         }
       },
       {
-        path: "/subscription/platform",
-        name: routeNames.subscriptionPlatform,
-        component: SubscriptionPlatform,
+        path: "/subscription/pro",
+        name: routeNames.subscriptionPro,
+        component: SubscriptionPro,
         meta: {
-          guard: subscriptionPlatformGuard
+          guard: subscriptionProGuard
         }
       },
       {

@@ -40,7 +40,7 @@
           color="secondary"
           fill
           radius
-          @click="goToSubscriptionPlatform"
+          @click="goToSubscriptionPro"
         >
           <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
           <span>{{ $t("UserSpaces.createButtonText") }}</span>
@@ -99,8 +99,8 @@ export default {
       space => space.name
     );
 
-    const goToSubscriptionPlatform = () => {
-      router.push({ name: routeNames.subscriptionPlatform });
+    const goToSubscriptionPro = () => {
+      router.push({ name: routeNames.subscriptionPro });
     };
 
     return {
@@ -109,7 +109,7 @@ export default {
       searchText,
       spaces: displayedSpaces,
       // Methods
-      goToSubscriptionPlatform,
+      goToSubscriptionPro,
       openOrganizationsManager: openSidePanel,
       sortSpaces
     };

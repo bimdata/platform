@@ -9,7 +9,7 @@ export default async function subscriptionDatapackGuard(route) {
       setCurrentSpace(+route.query.space);
       return { name: routeNames.subscriptionDatapack };
     } else {
-      return { name: routeNames.subscriptionPlatform };
+      return { name: routeNames.subscriptionPro };
     }
   }
 }

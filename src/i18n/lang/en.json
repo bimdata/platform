@@ -46,8 +46,9 @@
   "SubscriptionFree": {
     "title": "Create Free Plan"
   },
-  "SubscriptionPlatform": {
-    "title": "Upgrade to pro platform"
+  "SubscriptionPro": {
+    "title": "Upgrade to pro platform",
+    "text": "You are about to create your pro plan. This includes: 10GB, unlimited projects, unlimited users."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"

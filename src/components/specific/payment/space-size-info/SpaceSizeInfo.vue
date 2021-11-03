@@ -25,7 +25,7 @@
           () =>
             spaceInfo.isPlatformPaid
               ? goToSubscriptionDatapack()
-              : goToSubscriptionPlatform()
+              : goToSubscriptionPro()
         "
       >
         {{
@@ -66,9 +66,9 @@ export default {
   setup(props) {
     const router = useRouter();
 
-    const goToSubscriptionPlatform = () => {
+    const goToSubscriptionPro = () => {
       router.push({
-        name: routeNames.subscriptionPlatform
+        name: routeNames.subscriptionPro
       });
     };
 
@@ -85,7 +85,7 @@ export default {
       // Methods
       formatBytes,
       goToSubscriptionDatapack,
-      goToSubscriptionPlatform
+      goToSubscriptionPro
     };
   }
 };

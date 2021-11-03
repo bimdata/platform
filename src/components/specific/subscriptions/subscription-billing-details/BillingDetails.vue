@@ -57,7 +57,7 @@
           color="primary"
           fill
           radius
-          @click="goToSubscriptionPlatform"
+          @click="goToSubscriptionPro"
         >
           {{ $t("BillingDetails.updatePlatformPro") }}
         </BIMDataButton>
@@ -108,8 +108,8 @@ export default {
       { immediate: true }
     );
 
-    const goToSubscriptionPlatform = () => {
-      router.push({ name: routeNames.subscriptionPlatform });
+    const goToSubscriptionPro = () => {
+      router.push({ name: routeNames.subscriptionPro });
     };
 
     return {
@@ -117,7 +117,7 @@ export default {
       columns,
       formatDate,
       // Methods
-      goToSubscriptionPlatform
+      goToSubscriptionPro
     };
   }
 };

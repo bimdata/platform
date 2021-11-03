@@ -27,7 +27,7 @@
             color="secondary"
             fill
             radius
-            @click="goToSubscriptionPlatform"
+            @click="goToSubscriptionPro"
           >
             {{ $t("OurPlans.professionalPlanButton") }}
           </BIMDataButton>
@@ -46,13 +46,13 @@ export default {
   setup() {
     const router = useRouter();
 
-    const goToSubscriptionPlatform = () => {
-      router.push({ name: routeNames.subscriptionPlatform });
+    const goToSubscriptionPro = () => {
+      router.push({ name: routeNames.subscriptionPro });
     };
 
     return {
       // Methods
-      goToSubscriptionPlatform
+      goToSubscriptionPro
     };
   }
 };
