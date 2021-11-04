@@ -41,7 +41,7 @@
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useModels } from "@/state/models";
 
 // Components

@@ -50,7 +50,7 @@
 <script>
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
 import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList";

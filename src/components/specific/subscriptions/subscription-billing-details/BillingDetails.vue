@@ -71,7 +71,7 @@ import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { formatDate } from "@/utils/date.js";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";

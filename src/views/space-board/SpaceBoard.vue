@@ -17,7 +17,7 @@
       <template #right>
         <div class="flex items-center">
           <SpaceSizeInfo
-            v-if="space.isAdmin"
+            v-if="isSubscriptionEnabled && space.isAdmin"
             :space="space"
             :spaceInfo="spaceInfo"
           />
@@ -77,6 +77,7 @@ import { useListSort } from "@/composables/list-sort.js";
 import { useSidePanel } from "@/composables/side-panel.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 
 // Components
 import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
@@ -101,6 +102,7 @@ export default {
   },
   setup() {
     const { openSidePanel } = useSidePanel();
+    const { isSubscriptionEnabled } = useSubscriptions();
     const { currentSpace, spaceInfo, spaceUsers, spaceInvitations } =
       useSpaces();
     const { spaceProjects } = useProjects();
@@ -118,6 +120,7 @@ export default {
     return {
       // References
       invitations: spaceInvitations,
+      isSubscriptionEnabled,
       projects: displayedProjects,
       searchText,
       space: currentSpace,

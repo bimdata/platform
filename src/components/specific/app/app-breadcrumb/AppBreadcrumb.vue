@@ -10,7 +10,7 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 // Components
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
 import BreadcrumbGroupSelector from "./breadcrumb-group-selector/BreadcrumbGroupSelector";

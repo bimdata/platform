@@ -89,7 +89,7 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
 import MODEL_STATUS from "@/config/model-statuses";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 
 export default {
   props: {

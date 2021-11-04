@@ -13,7 +13,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 // Components
 import AppSlot from "@/components/generic/app-slot/AppSlot";
 import AppHeaderMenu from "@/components/specific/app/app-header-menu/AppHeaderMenu";

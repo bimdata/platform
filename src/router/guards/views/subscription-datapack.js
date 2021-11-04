@@ -1,4 +1,4 @@
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
 export default async function subscriptionDatapackGuard(route) {

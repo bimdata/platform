@@ -30,7 +30,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { useFiles } from "@/state/files.js";
 import { useGroups } from "@/state/groups.js";
 import { useModels } from "@/state/models.js";

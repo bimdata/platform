@@ -4,6 +4,7 @@ import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
 
 const state = reactive({
+  isSubscriptionEnabled: process.env.VUE_APP_SUBSCRIPTION_ENABLED === "true",
   currentOrga: null,
   currentSpace: null,
   organizationsSubscriptions: {},

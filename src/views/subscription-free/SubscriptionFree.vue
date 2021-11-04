@@ -28,7 +28,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 // Components

@@ -38,7 +38,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { usePaddle } from "@/composables/paddle.js";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
 export default {

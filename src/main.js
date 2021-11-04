@@ -2,7 +2,7 @@
 import { createApp } from "vue";
 import vueClickAway from "vue3-click-away";
 import i18n from "@/i18n";
-import router from "@/router";
+import router from "@/router/index.js";
 import ErrorService from "@/services/ErrorService";
 
 import App from "./App.vue";

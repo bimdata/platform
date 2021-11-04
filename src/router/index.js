@@ -1,15 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
+import routeNames from "./route-names.js";
 import legacyRoutes from "./legacy.js";
+import subscriptionRoutes from "./subscription.js";
 
 // Guards
 import authGuard from "./guards/auth.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
-import subscribeGuard from "./guards/views/subscribe.js";
-import subscriptionDatapackGuard from "./guards/views/subscription-datapack.js";
-import subscriptionFreeGuard from "./guards/views/subscription-free.js";
-import subscriptionProGuard from "./guards/views/subscription-pro.js";
 
 // Resolvers
 import rootResolver from "./resolvers/root.js";
@@ -39,42 +37,11 @@ const ProjectGroups = () =>
   import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups.vue");
 const SpaceBoard = () =>
   import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
-const Subscribe = () =>
-  import(/* webpackChunkName: "subscribe" */ "@/views/subscribe/Subscribe.vue");
-const SubscriptionDatapack = () =>
-  import(/* webpackChunkName: "subscription-datapack" */ "@/views/subscription-datapack/SubscriptionDatapack.vue");
-const SubscriptionFree = () =>
-  import(/* webpackChunkName: "subscription-free" */ "@/views/subscription-free/SubscriptionFree.vue");
-const SubscriptionPro = () =>
-  import(/* webpackChunkName: "subscription-pro" */ "@/views/subscription-pro/SubscriptionPro.vue");
 const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
-const UserSubscriptions = () =>
-  import(/* webpackChunkName: "user-subscriptions" */ "@/views/user-subscriptions/UserSubscriptions.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
-
-// Route names
-const routeNames = Object.freeze({
-  root: "root",
-  oidcCallback: "oidc-callback",
-  oidcCallbackError: "oidc-callback-error",
-  dashboard: "dashboard",
-  userSpaces: "user-spaces",
-  spaceBoard: "space-board",
-  userProjects: "user-projects",
-  userSubscriptions: "user-subscriptions",
-  subscribe: "subscribe",
-  subscriptionFree: "subscription-free",
-  subscriptionPro: "subscription-pro",
-  subscriptionDatapack: "subscription-datapack",
-  projectBoard: "project-board",
-  modelViewer: "model-viewer",
-  projectGroups: "project-groups",
-  groupBoard: "group-board",
-  pageNotFound: "page-not-found"
-});
 
 const routes = [
   {
@@ -101,43 +68,6 @@ const routes = [
         path: "/projects",
         name: routeNames.userProjects,
         component: UserProjects
-      },
-      {
-        path: "/subscriptions",
-        name: routeNames.userSubscriptions,
-        component: UserSubscriptions
-      },
-      {
-        path: "/subscribe",
-        name: routeNames.subscribe,
-        component: Subscribe,
-        meta: {
-          guard: subscribeGuard
-        }
-      },
-      {
-        path: "/subscription/free",
-        name: routeNames.subscriptionFree,
-        component: SubscriptionFree,
-        meta: {
-          guard: subscriptionFreeGuard
-        }
-      },
-      {
-        path: "/subscription/pro",
-        name: routeNames.subscriptionPro,
-        component: SubscriptionPro,
-        meta: {
-          guard: subscriptionProGuard
-        }
-      },
-      {
-        path: "/subscription/datapack",
-        name: routeNames.subscriptionDatapack,
-        component: SubscriptionDatapack,
-        meta: {
-          guard: subscriptionDatapackGuard
-        }
       },
       {
         path: "/spaces/:spaceID(\\d+)",
@@ -182,6 +112,10 @@ const routes = [
           resolver: groupBoardResolver
         }
       },
+      // Add subscription routes if enabled
+      ...(process.env.VUE_APP_SUBSCRIPTION_ENABLED === "true"
+        ? subscriptionRoutes
+        : []),
       // Add legacy routes for retro-compatibility
       ...legacyRoutes,
       {
@@ -232,7 +166,5 @@ router.beforeResolve(async route => {
     await resolver(route);
   }
 });
-
-export { routeNames };
 
 export default router;

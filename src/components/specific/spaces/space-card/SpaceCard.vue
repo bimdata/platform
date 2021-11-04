@@ -24,7 +24,7 @@
 <script>
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects";
 // Components
 import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu";

@@ -44,7 +44,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";

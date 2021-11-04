@@ -11,6 +11,7 @@
         {{ $t("OrganizationSpacesList.importButtonText") }}
       </BIMDataButton>
       <BIMDataButton
+        v-if="isSubscriptionEnabled"
         width="48%"
         color="secondary"
         fill
@@ -47,8 +48,9 @@
 import { computed, inject } from "vue";
 import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import OrganizationSpaceCard from "./organization-space-card/OrganizationSpaceCard.vue";
 
@@ -58,6 +60,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const { isSubscriptionEnabled } = useSubscriptions();
     const { getOrganizationSpaces } = useOrganizations();
 
     const localState = inject("localState");
@@ -79,6 +82,7 @@ export default {
     return {
       // References
       displayedSpaces,
+      isSubscriptionEnabled,
       localState,
       searchText,
       // Methods

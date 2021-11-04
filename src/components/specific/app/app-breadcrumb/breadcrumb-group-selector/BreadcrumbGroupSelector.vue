@@ -13,7 +13,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useGroups } from "@/state/groups";
 import { useProjects } from "@/state/projects";
 // Components

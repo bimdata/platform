@@ -31,7 +31,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router/index.js";
+import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components

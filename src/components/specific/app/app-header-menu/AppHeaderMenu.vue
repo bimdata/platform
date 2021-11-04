@@ -69,7 +69,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useToggle } from "@/composables/toggle";
 import { useAuth } from "@/state/auth";
 import { useUser } from "@/state/user";
