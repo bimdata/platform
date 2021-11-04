@@ -10,15 +10,15 @@
       <div class="free-plan-card__separator"></div>
       <div class="free-plan-card__bullets">
         <div class="free-plan-card__bullets__bullet">
-          <img src="/static/platform-sub-info-bullet-mark.svg" />
+          <img src="/static/bullet-mark.svg" />
           <span>{{ $t("FreePlanCard.bullet1") }}</span>
         </div>
         <div class="free-plan-card__bullets__bullet">
-          <img src="/static/platform-sub-info-bullet-mark.svg" />
+          <img src="/static/bullet-mark.svg" />
           <span>{{ $t("FreePlanCard.bullet2") }}</span>
         </div>
         <div class="free-plan-card__bullets__bullet">
-          <img src="/static/platform-sub-info-bullet-mark.svg" />
+          <img src="/static/bullet-mark.svg" />
           <span>{{ $t("FreePlanCard.bullet3") }}</span>
         </div>
       </div>

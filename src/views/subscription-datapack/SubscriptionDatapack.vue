@@ -21,13 +21,10 @@
       </div>
       <div class="subscription-datapack__content__body">
         <div class="subscription-datapack__content__body__left">
-          <DatapackSubInfo
-            :spaceInfo="spaceInfo"
-            :subscription="subscription"
-          />
+          <DatapackInfo :spaceInfo="spaceInfo" :subscription="subscription" />
         </div>
         <div class="subscription-datapack__content__body__center">
-          <DatapackSubForm
+          <DatapackForm
             :space="selectedSpace"
             :subscription="subscription"
             @quantity-updated="quantity = $event"
@@ -57,15 +54,15 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import DatapackSubForm from "@/components/specific/payment/datapack-sub-form/DatapackSubForm.vue";
-import DatapackSubInfo from "@/components/specific/payment/datapack-sub-info/DatapackSubInfo.vue";
+import DatapackForm from "@/components/specific/payment/datapack-form/DatapackForm.vue";
+import DatapackInfo from "@/components/specific/payment/datapack-info/DatapackInfo.vue";
 import SpaceSelector from "@/components/specific/payment/space-selector/SpaceSelector.vue";
 import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {
-    DatapackSubForm,
-    DatapackSubInfo,
+    DatapackForm,
+    DatapackInfo,
     GoBackButton,
     SpaceSelector,
     SpaceSizePreview,

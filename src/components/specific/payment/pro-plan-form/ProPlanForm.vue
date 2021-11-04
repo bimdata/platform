@@ -1,25 +1,24 @@
 <template>
-  <div class="platform-sub-form paddle-checkout-container">
+  <div class="pro-plan-form paddle-checkout-container">
     <!--
       Paddle inline checkout will be loaded here
     -->
     <transition name="fade">
-      <div class="platform-sub-form__loader" v-show="loading">
+      <div class="pro-plan-form__loader" v-show="loading">
         <BIMDataSpinner />
       </div>
     </transition>
     <transition name="fade">
-      <div class="platform-sub-form__success" v-show="isSuccess">
-        <!-- <div class="platform-sub-form__success__image"></div> -->
+      <div class="pro-plan-form__success" v-show="isSuccess">
         <img
-          src="/static/platform-sub-form-success.svg"
+          src="/static/pro-plan-form-success.svg"
           alt="Subscription success"
         />
-        <h2 class="platform-sub-form__success__title">
-          {{ $t("PlatformSubForm.successTitle") }}
+        <h2 class="pro-plan-form__success__title">
+          {{ $t("ProPlanForm.successTitle") }}
         </h2>
-        <div class="platform-sub-form__success__message">
-          {{ $t("PlatformSubForm.successMessage") }}
+        <div class="pro-plan-form__success__message">
+          {{ $t("ProPlanForm.successMessage") }}
         </div>
         <BIMDataButton
           width="160px"
@@ -28,7 +27,7 @@
           radius
           @click="goToDashboard"
         >
-          {{ $t("PlatformSubForm.successButtonText") }}
+          {{ $t("ProPlanForm.successButtonText") }}
         </BIMDataButton>
       </div>
     </transition>
@@ -95,4 +94,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./PlatformSubForm.scss"></style>
+<style scoped lang="scss" src="./ProPlanForm.scss"></style>

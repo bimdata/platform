@@ -1,31 +1,31 @@
 <template>
-  <div class="datapack-sub-form">
-    <h1 class="datapack-sub-form__title">
-      {{ $t("DatapackSubForm.title") }}
+  <div class="datapack-form">
+    <h1 class="datapack-form__title">
+      {{ $t("DatapackForm.title") }}
     </h1>
-    <div class="datapack-sub-form__text">
-      {{ $t("DatapackSubForm.text") }}
+    <div class="datapack-form__text">
+      {{ $t("DatapackForm.text") }}
     </div>
-    <div class="datapack-sub-form__price">
-      <span class="datapack-sub-form__price__label">
-        {{ $t("DatapackSubForm.priceLabel") }}
+    <div class="datapack-form__price">
+      <span class="datapack-form__price__label">
+        {{ $t("DatapackForm.priceLabel") }}
       </span>
-      <span class="datapack-sub-form__price__value">
+      <span class="datapack-form__price__value">
         {{ unitPrice }}{{ currency }}
       </span>
-      <span class="datapack-sub-form__price__unit">
-        {{ $t("DatapackSubForm.priceUnit") }}
+      <span class="datapack-form__price__unit">
+        {{ $t("DatapackForm.priceUnit") }}
       </span>
     </div>
-    <div class="datapack-sub-form__control">
-      <div class="datapack-sub-form__control__label">
-        {{ $t("DatapackSubForm.controlLabel", { spaceName: space.name }) }}
+    <div class="datapack-form__control">
+      <div class="datapack-form__control__label">
+        {{ $t("DatapackForm.controlLabel", { spaceName: space.name }) }}
       </div>
-      <div class="datapack-sub-form__control__input">
+      <div class="datapack-form__control__input">
         <BIMDataButton color="primary" fill square icon @click="decrement">
           <BIMDataIcon name="minus" size="xxxs" />
         </BIMDataButton>
-        <span class="datapack-sub-form__control__input__value">
+        <span class="datapack-form__control__input__value">
           {{ quantity }}
         </span>
         <BIMDataButton color="primary" fill square icon @click="increment">
@@ -33,21 +33,21 @@
         </BIMDataButton>
       </div>
     </div>
-    <div class="datapack-sub-form__total">
-      <span class="datapack-sub-form__total__label">
-        {{ $t("DatapackSubForm.totalLabel") }}
+    <div class="datapack-form__total">
+      <span class="datapack-form__total__label">
+        {{ $t("DatapackForm.totalLabel") }}
       </span>
       <span>
-        <span class="datapack-sub-form__total__value">
+        <span class="datapack-form__total__value">
           {{ totalPrice }}{{ currency }}
         </span>
-        <span class="datapack-sub-form__total__unit">
-          {{ $t("DatapackSubForm.totalUnit") }}
+        <span class="datapack-form__total__unit">
+          {{ $t("DatapackForm.totalUnit") }}
         </span>
       </span>
     </div>
     <BIMDataButton width="100%" color="primary" fill radius @click="submit">
-      {{ $t("DatapackSubForm.submitButtonText") }}
+      {{ $t("DatapackForm.submitButtonText") }}
     </BIMDataButton>
   </div>
 </template>
@@ -139,4 +139,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./DatapackSubForm.scss"></style>
+<style scoped lang="scss" src="./DatapackForm.scss"></style>

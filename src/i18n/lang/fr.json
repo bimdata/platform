@@ -161,7 +161,7 @@
     "message": "Bonjour {name}, content de vous revoir !"
   },
 
-  "DatapackSubForm": {
+  "DatapackForm": {
     "title": "Ajout d'un DataPack",
     "text": "Augmenter votre capacité de stockage",
     "priceLabel": "Prix GB unitaire",
@@ -172,7 +172,7 @@
     "submitButtonText": "Valider"
   },
 
-  "DatapackSubInfo": {
+  "DatapackInfo": {
     "title": "Abonnement actuel",
     "datapacks": "Récapitulatif DataPack actif",
     "storage": "Récapitulatif GB actif",
@@ -528,29 +528,6 @@
     "professionalPlanPrice": "/ mois"
   },
 
-  "PlatformSubForm": {
-    "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
-    "successButtonText": "Page d'accueil"
-  },
-
-  "PlatformSubInfo": {
-    "title": "Votre souscription",
-    "subTitle": "Professionnelle",
-    "priceUnit": "/ mois",
-    "bulletsHead": "La souscription inclue",
-    "bullet1": "5GB de stockage",
-    "bullet2": "BIMData Plateforme",
-    "bullet3": "Utilisateurs illimités",
-    "bullet4": "Projets illimités",
-    "bullet5": "Commentaires (BCF) illimités",
-    "bullet6": "Licence SaaS",
-    "bullet7": "Fusion / Division IFC",
-    "bullet8": "Edition IFC",
-    "bullet9": "Support par emails",
-    "bullet10": "Connecteur Microsoft Power BI"
-  },
-
   "ProjectCardActionMenu": {
     "renameButtonText": "Renommer",
     "deleteButtonText": "Supprimer"
@@ -594,6 +571,29 @@
     "bullet3": "Utilisateurs illimités",
     "buttonText": "Souscrire",
     "note": "extensible pour 10€ / GB / mois"
+  },
+
+  "ProPlanForm": {
+    "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "Page d'accueil"
+  },
+
+  "ProPlanInfo": {
+    "title": "Votre souscription",
+    "subTitle": "Professionnelle",
+    "priceUnit": "/ mois",
+    "bulletsHead": "La souscription inclue",
+    "bullet1": "5GB de stockage",
+    "bullet2": "BIMData Plateforme",
+    "bullet3": "Utilisateurs illimités",
+    "bullet4": "Projets illimités",
+    "bullet5": "Commentaires (BCF) illimités",
+    "bullet6": "Licence SaaS",
+    "bullet7": "Fusion / Division IFC",
+    "bullet8": "Edition IFC",
+    "bullet9": "Support par emails",
+    "bullet10": "Connecteur Microsoft Power BI"
   },
 
   "SpaceCard": {

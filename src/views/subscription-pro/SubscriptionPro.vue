@@ -27,10 +27,10 @@
       <transition name="slide-fade-down">
         <div class="subscription-pro__content__body" v-show="space">
           <div class="subscription-pro__content__body__left">
-            <PlatformSubInfo />
+            <ProPlanInfo />
           </div>
           <div class="subscription-pro__content__body__center">
-            <PlatformSubForm :space="space" />
+            <ProPlanForm :space="space" />
           </div>
           <div class="subscription-pro__content__body__right">
             <SpaceSizePreview
@@ -51,16 +51,16 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import PlatformSubForm from "@/components/specific/payment/platform-sub-form/PlatformSubForm.vue";
-import PlatformSubInfo from "@/components/specific/payment/platform-sub-info/PlatformSubInfo.vue";
+import ProPlanForm from "@/components/specific/payment/pro-plan-form/ProPlanForm.vue";
+import ProPlanInfo from "@/components/specific/payment/pro-plan-info/ProPlanInfo.vue";
 import SpaceCreator from "@/components/specific/payment/space-creator/SpaceCreator.vue";
 import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {
     GoBackButton,
-    PlatformSubForm,
-    PlatformSubInfo,
+    ProPlanForm,
+    ProPlanInfo,
     SpaceCreator,
     SpaceSizePreview,
     ViewHeader

@@ -1,27 +1,27 @@
 <template>
-  <div class="platform-sub-info">
+  <div class="pro-plan-info">
     <img
       class="heading"
-      src="/static/platform-sub-info-heading.svg"
+      src="/static/platform-heading.svg"
       alt="BIMData Platform"
     />
     <h1 class="title">
-      {{ $t("PlatformSubInfo.title") }}
+      {{ $t("ProPlanInfo.title") }}
     </h1>
     <h3 class="sub-title">
-      {{ $t("PlatformSubInfo.subTitle") }}
+      {{ $t("ProPlanInfo.subTitle") }}
     </h3>
     <div class="price">
       <span> {{ unitPrice }}{{ currency }} </span>
-      <span>{{ $t("PlatformSubInfo.priceUnit") }}</span>
+      <span>{{ $t("ProPlanInfo.priceUnit") }}</span>
     </div>
     <div class="bullet-list">
       <div class="bullets-head">
-        {{ $t("PlatformSubInfo.bulletsHead") }}
+        {{ $t("ProPlanInfo.bulletsHead") }}
       </div>
       <div class="bullet" v-for="bullet of bullets" :key="bullet">
-        <img src="/static/platform-sub-info-bullet-mark.svg" />
-        {{ $t(`PlatformSubInfo.${bullet}`) }}
+        <img src="/static/bullet-mark.svg" />
+        {{ $t(`ProPlanInfo.${bullet}`) }}
       </div>
     </div>
   </div>
@@ -67,4 +67,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./PlatformSubInfo.scss"></style>
+<style scoped lang="scss" src="./ProPlanInfo.scss"></style>

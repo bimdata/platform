@@ -1,22 +1,22 @@
 <template>
-  <div class="datapack-sub-info">
+  <div class="datapack-info">
     <img
       class="heading"
-      src="/static/platform-sub-info-heading.svg"
+      src="/static/platform-heading.svg"
       alt="BIMData Platform"
     />
     <img
       class="image"
-      src="/static/datapack-sub-info-image.svg"
+      src="/static/datapack-info-image.svg"
       alt="Datapack image"
     />
     <div class="content">
       <h1 class="title">
-        {{ $t("DatapackSubInfo.title") }}
+        {{ $t("DatapackInfo.title") }}
       </h1>
       <div class="text">
         <div>
-          {{ $t("DatapackSubInfo.datapacks") }}
+          {{ $t("DatapackInfo.datapacks") }}
         </div>
         <div>
           {{ datapacks.length }}
@@ -25,13 +25,13 @@
       </div>
       <div class="text">
         <div>
-          {{ $t("DatapackSubInfo.storage") }}
+          {{ $t("DatapackInfo.storage") }}
         </div>
         <div>
           <span>{{ formatBytes(spaceInfo.smartDataSizeAvailable) }}</span>
           <span>
             ({{
-              $t("DatapackSubInfo.including", { quantity: datapacksQuantity })
+              $t("DatapackInfo.including", { quantity: datapacksQuantity })
             }})
           </span>
         </div>
@@ -72,4 +72,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./DatapackSubInfo.scss"></style>
+<style scoped lang="scss" src="./DatapackInfo.scss"></style>

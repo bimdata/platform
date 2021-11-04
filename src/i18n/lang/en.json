@@ -159,7 +159,7 @@
     "message": "Hi {name}, it's great to see you again !"
   },
 
-  "DatapackSubForm": {
+  "DatapackForm": {
     "title": "Add DataPack",
     "text": "You want more GB to your space ? Add GB to your space",
     "priceLabel": "GB unit price",
@@ -170,7 +170,7 @@
     "submitButtonText": "Validate"
   },
 
-  "DatapackSubInfo": {
+  "DatapackInfo": {
     "title": "Actual subscription",
     "datapacks": "Active DataPacks",
     "storage": "Active storage",
@@ -523,28 +523,6 @@
     "professionalPlanPrice": "/ month"
   },
 
-  "PlatformSubForm": {
-    "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
-    "successButtonText": "Home"
-  },
-
-  "PlatformSubInfo": {
-    "title": "Your subscription",
-    "subTitle": "Professionnal plan",
-    "priceUnit": "/ month",
-    "bulletsHead": "Subscription includes",
-    "bullet1": "5GB of storage",
-    "bullet2": "BIMData Platform",
-    "bullet3": "Unlimited users",
-    "bullet4": "Unlimited projects",
-    "bullet5": "Unlimited comments (BCF)",
-    "bullet6": "SaaS License",
-    "bullet7": "IFC Merge / Split",
-    "bullet8": "IFC Edition",
-    "bullet9": "Support",
-    "bullet10": "Microsoft Power BI connector"
-  },
-
   "ProjectCardActionMenu": {
     "renameButtonText": "Rename",
     "deleteButtonText": "Delete"
@@ -588,6 +566,28 @@
     "bullet3": "Unlimited users",
     "buttonText": "Choose professional",
     "note": "expand 1GB for 10€ / month"
+  },
+
+  "ProPlanForm": {
+    "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
+    "successButtonText": "Home"
+  },
+
+  "ProPlanInfo": {
+    "title": "Your subscription",
+    "subTitle": "Professionnal plan",
+    "priceUnit": "/ month",
+    "bulletsHead": "Subscription includes",
+    "bullet1": "5GB of storage",
+    "bullet2": "BIMData Platform",
+    "bullet3": "Unlimited users",
+    "bullet4": "Unlimited projects",
+    "bullet5": "Unlimited comments (BCF)",
+    "bullet6": "SaaS License",
+    "bullet7": "IFC Merge / Split",
+    "bullet8": "IFC Edition",
+    "bullet9": "Support",
+    "bullet10": "Microsoft Power BI connector"
   },
 
   "SpaceCard": {
