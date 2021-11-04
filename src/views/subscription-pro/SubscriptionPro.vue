@@ -51,10 +51,10 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import ProPlanForm from "@/components/specific/payment/pro-plan-form/ProPlanForm.vue";
-import ProPlanInfo from "@/components/specific/payment/pro-plan-info/ProPlanInfo.vue";
-import SpaceCreator from "@/components/specific/payment/space-creator/SpaceCreator.vue";
-import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
+import ProPlanForm from "@/components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
+import ProPlanInfo from "@/components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";
+import SpaceCreator from "@/components/specific/subscriptions/space-creator/SpaceCreator.vue";
+import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {

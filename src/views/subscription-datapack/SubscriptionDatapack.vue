@@ -54,10 +54,10 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import DatapackForm from "@/components/specific/payment/datapack-form/DatapackForm.vue";
-import DatapackInfo from "@/components/specific/payment/datapack-info/DatapackInfo.vue";
-import SpaceSelector from "@/components/specific/payment/space-selector/SpaceSelector.vue";
-import SpaceSizePreview from "@/components/specific/payment/space-size-preview/SpaceSizePreview.vue";
+import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
+import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";
+import SpaceSelector from "@/components/specific/subscriptions/space-selector/SpaceSelector.vue";
+import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {

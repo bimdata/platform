@@ -34,7 +34,7 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import SpaceCreator from "@/components/specific/payment/space-creator/SpaceCreator.vue";
+import SpaceCreator from "@/components/specific/subscriptions/space-creator/SpaceCreator.vue";
 
 export default {
   components: {
