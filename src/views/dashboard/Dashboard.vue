@@ -7,20 +7,49 @@
         color="primary"
         @click="goToUserSpaces"
       >
-        <template #title>{{ $t("Dashboard.spacesButtonTitle") }}</template>
-        <template #number>{{ spaces.length }}</template>
-        <template #text>{{ $t("Dashboard.spacesButtonText") }}</template>
+        <template #title>
+          {{ $t("Dashboard.spacesTileTitle") }}
+        </template>
+        <template #content>
+          <span style="font-size: 3rem; font-weight: bold">
+            {{ spaces.length }}
+          </span>
+        </template>
+        <template #bottom-text>
+          {{ $t("Dashboard.spacesTileBottomText") }}
+        </template>
       </DashboardButtonTile>
       <DashboardButtonTile
         data-test="btn-projects"
         color="secondary"
         @click="goToUserProjects"
       >
-        <template #title>{{ $t("Dashboard.projectsButtonTitle") }}</template>
-        <template #number>{{ projects.length }}</template>
-        <template #text>{{ $t("Dashboard.projectsButtonText") }}</template>
+        <template #title>
+          {{ $t("Dashboard.projectsTileTitle") }}
+        </template>
+        <template #content>
+          <span style="font-size: 3rem; font-weight: bold">
+            {{ projects.length }}
+          </span>
+        </template>
+        <template #bottom-text>
+          {{ $t("Dashboard.projectsTileBottomText") }}
+        </template>
       </DashboardButtonTile>
-      <DashboardSubscriptionTile />
+      <DashboardButtonTile
+        data-test="btn-subscriptions"
+        @click="goToUserSubscriptions"
+      >
+        <template #title>
+          {{ $t("Dashboard.subscriptionsTileTitle") }}
+        </template>
+        <template #content>
+          {{ $t("Dashboard.subscriptionsTileText") }}
+        </template>
+        <template #bottom-text>
+          {{ $t("Dashboard.subscriptionsTileBottomText") }}
+        </template>
+      </DashboardButtonTile>
     </div>
     <div class="dashboard__body">
       <DashboardSpaceList :spaces="spaces" />
@@ -38,7 +67,6 @@ import { useSpaces } from "@/state/spaces.js";
 import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile.vue";
 import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList.vue";
 import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList.vue";
-import DashboardSubscriptionTile from "@/components/specific/dashboard/dashboard-subscription-tile/DashboardSubscriptionTile.vue";
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
 
 export default {
@@ -46,7 +74,6 @@ export default {
     DashboardButtonTile,
     DashboardProjectList,
     DashboardSpaceList,
-    DashboardSubscriptionTile,
     DashboardWelcomeTile
   },
   setup() {

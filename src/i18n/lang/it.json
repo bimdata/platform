@@ -1,9 +1,9 @@
 {
     "Dashboard": {
-        "spacesButtonTitle": "Spazi attivi",
-        "spacesButtonText": "Vedi gli spazi",
-        "projectsButtonTitle": "Progetti attivi",
-        "projectsButtonText": "Vedi i progetti"
+        "spacesTileTitle": "Spazi attivi",
+        "spacesTileText": "Vedi gli spazi",
+        "projectsTileTitle": "Progetti attivi",
+        "projectsTileText": "Vedi i progetti"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Cerca tra i membri"

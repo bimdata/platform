@@ -1,7 +1,8 @@
 .dashboard-button-tile {
-  display: grid;
-  grid-template-rows: 1fr 1fr 2fr;
   padding: calc(var(--spacing-unit) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 2);
   border-radius: var(--spacing-unit);
   box-shadow: var(--box-shadow);
   background-color: var(--color-white);
@@ -11,18 +12,15 @@
     font-weight: bold;
   }
 
-  &__number {
-    font-size: 3rem;
-    font-weight: bold;
+  &__content {
+    flex-grow: 1;
   }
 
-  &__text {
-    align-self: end;
+  &__bottom-text {
+    display: flex;
+    align-items: center;
     font-size: 13px;
     text-transform: uppercase;
-    .arrow-icon {
-      vertical-align: text-bottom;
-    }
   }
 
   cursor: pointer;

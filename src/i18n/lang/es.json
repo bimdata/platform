@@ -1,9 +1,9 @@
 {
     "Dashboard": {
-        "spacesButtonTitle": "Espacios",
-        "spacesButtonText": "Mis espacios",
-        "projectsButtonTitle": "Proyectos",
-        "projectsButtonText": "Mis proyectos"
+        "spacesTileTitle": "Espacios",
+        "spacesTileText": "Mis espacios",
+        "projectsTileTitle": "Proyectos",
+        "projectsTileText": "Mis proyectos"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Buscar un miembro"

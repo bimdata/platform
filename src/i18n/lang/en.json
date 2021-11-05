@@ -1,9 +1,11 @@
 {
   "Dashboard": {
-    "spacesButtonTitle": "Active Spaces",
-    "spacesButtonText": "View spaces",
-    "projectsButtonTitle": "Active Projects",
-    "projectsButtonText": "View projects"
+    "spacesTileTitle": "Active Spaces",
+    "spacesTileBottomText": "View spaces",
+    "projectsTileTitle": "Active Projects",
+    "projectsTileBottomText": "View projects",
+    "subscriptionsTileTitle": "Billing & Invoices",
+    "subscriptionsTileBottomText": "Manage subscriptions"
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Search members"
@@ -144,14 +146,6 @@
 
   "DashboardSpaceList": {
     "title": "Recent spaces"
-  },
-
-  "DashboardSubscriptionTile": {
-    "title": "Platform subscription",
-    "paymentInfoText": "Payment information :",
-    "paymentInfoButtonText": "Manage subscriptions",
-    "nextPaymentDate": "Next payment :",
-    "subscribeButtonText": "BUY STORAGE"
   },
 
   "DashboardWelcomeTile": {
