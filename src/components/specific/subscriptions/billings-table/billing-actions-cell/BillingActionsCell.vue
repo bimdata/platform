@@ -7,7 +7,7 @@
       icon
       @click="toggleMenu"
     >
-      <BIMDataIcon name="ellipsis" size="l" />
+      <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
     </BIMDataButton>
 
     <transition name="fade">
@@ -19,8 +19,8 @@
             billing-actions-cell__menu__btn
           "
         >
-          {{ $t("BillingDetailsActionsCell.updateUrl") }}</a
-        >
+          {{ $t("BillingActionsCell.updateButtonText") }}
+        </a>
         <a
           :href="billing.cancel_url"
           class="
@@ -28,8 +28,8 @@
             billing-actions-cell__menu__btn
           "
         >
-          {{ $t("BillingDetailsActionsCell.cancelUrl") }}</a
-        >
+          {{ $t("BillingActionsCell.cancelButtonText") }}
+        </a>
       </div>
     </transition>
   </div>
@@ -63,4 +63,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./BillingDetailsActionsCell.scss"></style>
+<style scoped lang="scss" src="./BillingActionsCell.scss"></style>

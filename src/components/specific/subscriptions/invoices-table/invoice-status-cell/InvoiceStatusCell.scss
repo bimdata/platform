@@ -1,0 +1,30 @@
+.invoice-status-cell {
+  padding: 6px 12px;
+  position: relative;
+  border-radius: 3px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  &--pending {
+    color: var(--color-warning);
+    &::after {
+      opacity: 0.1;
+      background-color: var(--color-warning);
+    }
+  }
+
+  &--completed {
+    color: var(--color-success);
+    &::after {
+      opacity: 0.1;
+      background-color: var(--color-success);
+    }
+  }
+}

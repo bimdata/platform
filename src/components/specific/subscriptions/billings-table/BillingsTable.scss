@@ -1,0 +1,27 @@
+.billings-table {
+  .billing-status-cell {
+    &--active,
+    &--deleted {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+
+    &--active {
+      color: var(--color-success);
+    }
+
+    &--deleted {
+      color: var(--color-high);
+    }
+  }
+
+  &__empty {
+    &:deep(.bimdata-card__content) {
+      height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

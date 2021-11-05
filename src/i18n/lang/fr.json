@@ -62,7 +62,7 @@
   },
   "UserSubscriptions": {
     "title": "Abonnement à la plateforme",
-    "text": "Lorem ipsum"
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   },
 
 
@@ -106,14 +106,20 @@
     "subscriptionPlatform": "Abonnement plateforme"
   },
 
-  "BillingDetails": {
-    "billingDetailsTitle": "Détails des facturations",
-    "cancelSubscriptionButton": "Annuler l'abonnement",
-    "emptyTablePlaceholder": "Prochains paiement.",
+  "BillingActionsCell": {
+    "updateButtonText": "Modifier la carte de paiement",
+    "cancelButtonText": "Annuler ce paiement"
+  },
+
+  "BillingsTable": {
+    "title": "Abonnements",
     "nextPayment": "le",
     "professionalPlan": "Professionnelle",
+    "withDatapack": "+ Datapack",
+    "cancelSubscriptionButton": "Annuler l'abonnement",
     "updateCreditCardButton": "Mettre à jour la carte de crédit",
-    "updatePlatformPro": "Passez à notre plateforme Pro",
+    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "subscribeButton": "Passez à notre plateforme Pro",
     "headers": {
       "space": "Espace",
       "nextpayment": "Prochain paiement",
@@ -121,11 +127,6 @@
       "status": "Statut",
       "amount": "Montant"
     }
-  },
-
-  "BillingDetailsActionsCell": {
-    "cancelUrl": "Annuler ce paiement",
-    "updateUrl": "Modifier la carte de paiement"
   },
 
   "BreadcrumbGroupSelector": {
@@ -359,16 +360,26 @@
     "successNotifText": "Invitation envoyée"
   },
 
-  "Invoices": {
-    "downloadInvoice": "Télécharger la facture",
-    "emptyTablePlaceholder": "Chargement des factures en cours.",
-    "invoicesTitle": "Factures",
+  "InvoiceActionsCell": {
+    "downloadButton": "Télécharger la facture"
+  },
+
+  "InvoicesTable": {
+    "title": "Factures",
+    "tablePlaceholder": "Chargement des factures...",
+    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "subscribeButton": "Passez à notre plateforme Pro",
     "headers": {
       "amount": "Montant",
       "status": "Statut",
       "space": "Espace",
       "date": "Date"
     }
+  },
+
+  "InvoiceStatusCell": {
+    "completed": "Payé",
+    "pending": "En attente"
   },
 
   "ModelActionsCell": {
@@ -672,6 +683,12 @@
     },
     "searchInputPlaceholder": "Rechercher un utilisateur",
     "addUserButtonText": "Ajouter un administrateur"
+  },
+
+  "SubscribeCard": {
+    "title": "Créez votre nouvel espace",
+    "text": "Envie de profiter pleinement de la plateforme ? Profitez de 10GB pour vos projets et d'utilisateurs illimités en passant à le version profesionnelle.",
+    "button": "Créer un espace"
   },
 
   "UserCard": {

@@ -59,8 +59,7 @@
     "createButtonText": "Create a space"
   },
   "UserSubscriptions": {
-    "title": "Platform subscription",
-    "text": "Lorem ipsum"
+    "title": "Platform subscription"
   },
 
 
@@ -104,14 +103,20 @@
     "subscriptionPlatform": "Platform subscription"
   },
 
-  "BillingDetails": {
-    "billingDetailsTitle": "Billing details",
-    "cancelSubscriptionButton": "Cancel subscription",
-    "emptyTablePlaceholder": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+  "BillingActionsCell": {
+    "updateButtonText": "Modify the payment card",
+    "cancelButtonText": "Cancel this payment"
+  },
+
+  "BillingsTable": {
+    "title": "Billing details",
     "nextPayment": "on",
     "professionalPlan": "Professionnal",
+    "withDatapack": "with Datapack",
+    "cancelSubscriptionButton": "Cancel subscription",
     "updateCreditCardButton": "Update credit card",
-    "updatePlatformPro": "Upgrade to our Pro Platform",
+    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+    "subscribeButton": "Upgrade to our Pro Platform",
     "headers": {
       "space": "Space",
       "nextpayment": "Next payment",
@@ -119,11 +124,6 @@
       "status": "Status",
       "amount": "Amount"
     }
-  },
-
-  "BillingDetailsActionsCell": {
-    "cancelUrl": "Cancel this payment",
-    "updateUrl": "Modify the payment card"
   },
 
   "BreadcrumbGroupSelector": {
@@ -357,16 +357,26 @@
     "successNotifText": "Invitation sent"
   },
 
-  "Invoices": {
-    "downloadInvoice": "Download the invoice",
-    "emptyTablePlaceholder": "Loading invoices in progress.",
-    "invoicesTitle": "Invoices",
+  "InvoiceActionsCell": {
+    "downloadButton": "Download invoice"
+  },
+
+  "InvoicesTable": {
+    "title": "Invoices",
+    "tablePlaceholder": "Loading invoices...",
+    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+    "subscribeButton": "Upgrade to our Pro Platform",
     "headers": {
       "amount": "Amount",
       "status": "Status",
       "space": "Space",
       "date": "Date"
     }
+  },
+
+  "InvoiceStatusCell": {
+    "completed": "Completed",
+    "pending": "Pending"
   },
 
   "ModelActionsCell": {
@@ -664,6 +674,11 @@
     },
     "searchInputPlaceholder": "Search user",
     "addUserButtonText": "Add new admin"
+  },
+
+  "SubscribeCard": {
+    "title": "Create your new space",
+    "button": "Create a new space"
   },
 
   "UserCard": {

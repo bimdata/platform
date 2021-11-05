@@ -14,6 +14,7 @@ export default [
   {
     id: "actions",
     label: " ",
-    width: "180px"
+    width: "50px",
+    align: "center"
   }
 ];

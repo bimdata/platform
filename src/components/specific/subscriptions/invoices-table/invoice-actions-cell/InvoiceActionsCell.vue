@@ -8,7 +8,7 @@
       icon
       @click="toggleMenu"
     >
-      <BIMDataIcon name="ellipsis" size="l" />
+      <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
     </BIMDataButton>
 
     <transition name="fade">
@@ -21,15 +21,15 @@
             invoice-actions-cell__menu__btn
           "
         >
-          Télécharger la facture</a
-        >
+          {{ $t("InvoiceActionsCell.downloadButton") }}
+        </a>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
 
 export default {
   props: {
@@ -56,4 +56,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./InvoiceDetailsActionsCell.scss"></style>
+<style scoped lang="scss" src="./InvoiceActionsCell.scss"></style>
