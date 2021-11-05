@@ -1,7 +1,19 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #left>
-      <FilesManagerBreadcrumb :file="currentFolder" />
+      <BIMDataIcon
+        name="arrow"
+        size="xxs"
+        margin="10 13"
+        @click="backToParent(currentFolder)"
+        :style="{
+          cursor: currentFolder.parentId ? 'pointer' : 'initial'
+        }"
+      />
+      <FilesManagerBreadcrumb
+        :file="currentFolder"
+        @file-selected="onFileSelected"
+      />
     </template>
     <template #content>
       <template v-if="fileStructure.children.length > 0">
@@ -182,8 +194,13 @@ export default {
     );
     const onFileSelected = file => {
       if (file.type === FILE_TYPES.FOLDER) {
-        currentFolder.value = file;
+        currentFolder.value = handler.deserialize(file);
       }
+    };
+
+    const backToParent = file => {
+      const parentFolder = handler.parent(file);
+      currentFolder.value = handler.deserialize(parentFolder);
     };
 
     const { filteredList: displayedFiles, searchText } = useListFilter(
@@ -273,7 +290,8 @@ export default {
       onFileSelected,
       openDeleteModal,
       setSelection,
-      uploadFiles
+      uploadFiles,
+      backToParent
     };
   }
 };

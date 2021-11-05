@@ -5,7 +5,9 @@
         <TextBox
           :text="folder.name"
           :maxLength="24"
+          @click="selectFile(folder)"
           tooltipColor="tertiary-lightest"
+          style="cursor: pointer"
         />
         <span>></span>
       </template>
@@ -30,7 +32,8 @@ export default {
       required: true
     }
   },
-  setup(props) {
+  emits: ["file-selected"],
+  setup(props, { emit }) {
     const { fileStructureHandler: handler } = useFiles();
 
     const path = ref([]);
@@ -41,8 +44,11 @@ export default {
       { immediate: true }
     );
 
+    const selectFile = folder => emit("file-selected", folder);
+
     return {
-      path
+      path,
+      selectFile
     };
   }
 };
