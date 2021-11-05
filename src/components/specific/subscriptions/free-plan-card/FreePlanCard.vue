@@ -9,9 +9,9 @@
       </div>
       <div class="free-plan-card__separator"></div>
       <div class="free-plan-card__bullets">
-        <div class="free-plan-card__bullets__bullet">
+        <div class="free-plan-card__bullets__bullet size">
           <img src="/static/bullet-mark.svg" />
-          <span>{{ $t("FreePlanCard.bullet1") }}</span>
+          <span>{{ size }}</span>
         </div>
         <div class="free-plan-card__bullets__bullet">
           <img src="/static/bullet-mark.svg" />
@@ -39,18 +39,24 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   setup() {
     const router = useRouter();
+
+    const size = ref(formatBytes(process.env.VUE_APP_FREE_PLAN_STORAGE));
 
     const goToSubscriptionFree = () => {
       router.push({ name: routeNames.subscriptionFree });
     };
 
     return {
+      // References
+      size,
       // Methods
       goToSubscriptionFree
     };

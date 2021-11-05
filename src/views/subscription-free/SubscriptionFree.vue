@@ -12,7 +12,7 @@
     </ViewHeader>
     <div class="subscription-free__body">
       <p class="subscription-free__body__text">
-        {{ $t("SubscriptionFree.text") }}
+        {{ $t("SubscriptionFree.text", { size }) }}
       </p>
       <div class="subscription-free__body__content">
         <SpaceCreator
@@ -31,6 +31,7 @@ import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
+import { formatBytes } from "@/utils/files.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -47,7 +48,7 @@ export default {
     const { userOrganizations } = useOrganizations();
     const { currentOrga } = useSubscriptions();
 
-    const space = ref(null);
+    const size = ref(formatBytes(process.env.VUE_APP_FREE_PLAN_STORAGE));
 
     const onSpaceCreated = space => {
       router.push({
@@ -62,7 +63,7 @@ export default {
       // References
       currentOrga,
       organizations: userOrganizations,
-      space,
+      size,
       // Methods
       onSpaceCreated
     };

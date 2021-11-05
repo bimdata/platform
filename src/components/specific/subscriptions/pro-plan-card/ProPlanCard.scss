@@ -41,6 +41,10 @@
       align-items: center;
       gap: var(--spacing-unit);
       font-weight: bold;
+
+      &.size::after {
+        content: "**";
+      }
     }
   }
 

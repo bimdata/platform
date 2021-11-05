@@ -50,7 +50,7 @@
   },
   "SubscriptionPro": {
     "title": "Upgrade to pro platform",
-    "text": "You are about to create your pro plan. This includes: 10GB, unlimited projects, unlimited users."
+    "text": "You are about to create your pro plan. This includes: {size} of storage, unlimited projects, unlimited users."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
@@ -279,7 +279,6 @@
   "FreePlanCard": {
     "title": "FREE",
     "price": "0€",
-    "bullet1": "300 MB",
     "bullet2": "1 Free space",
     "bullet3": "6 Users",
     "buttonText": "Create a free space",
@@ -515,18 +514,6 @@
     "spaceListTitle": "Organization spaces"
   },
 
-  "OurPlans": {
-    "freePlanBaseline": "* Forever",
-    "freePlanButton": "Keep this plan",
-    "freePlanPrice": "0€",
-    "freePlanTitle": "Free",
-    "ourPlansTitle": "Our Plans",
-    "professionalPlanBaseline": "** expand 1 Gb for 10€ / Month",
-    "professionalPlanButton": "Start your trial",
-    "professionalPlanTitle": "Professional",
-    "professionalPlanPrice": "/ month"
-  },
-
   "ProjectCardActionMenu": {
     "renameButtonText": "Rename",
     "deleteButtonText": "Delete"
@@ -564,12 +551,11 @@
 
   "ProPlanCard": {
     "title": "PROFESSIONAL",
-    "price": "30€ / Space / month",
-    "bullet1": "10 GB **",
+    "priceUnit": "/ Space / month",
     "bullet2": "Unlimited projects",
     "bullet3": "Unlimited users",
     "buttonText": "Choose professional",
-    "note": "expand 1GB for 10€ / month"
+    "note": "expand 1GB for {price} / month"
   },
 
   "ProPlanForm": {
@@ -582,7 +568,7 @@
     "subTitle": "Professionnal plan",
     "priceUnit": "/ month",
     "bulletsHead": "Subscription includes",
-    "bullet1": "5GB of storage",
+    "bullet1": "{size} of storage",
     "bullet2": "BIMData Platform",
     "bullet3": "Unlimited users",
     "bullet4": "Unlimited projects",

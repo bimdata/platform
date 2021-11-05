@@ -24,24 +24,20 @@ const getPrices = productID => {
   });
 };
 
-const getPlatformPrice = async () => {
-  const response = await getPrices(
-    process.env.VUE_APP_PLATFORM_SUBSCRIPTION_PLAN_ID
-  );
+const getProPlanPrice = async () => {
+  const response = await getPrices(process.env.VUE_APP_PRO_PLAN_ID);
   return getPrice(response);
 };
 
 const getDatapackPrice = async () => {
-  const response = await getPrices(
-    process.env.VUE_APP_DATAPACK_SUBSCRIPTION_PLAN_ID
-  );
+  const response = await getPrices(process.env.VUE_APP_DATAPACK_PLAN_ID);
   return getPrice(response);
 };
 
 export function usePaddle() {
   return {
     loadCheckout,
-    getPlatformPrice,
+    getProPlanPrice,
     getDatapackPrice
   };
 }

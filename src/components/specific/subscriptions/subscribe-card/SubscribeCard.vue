@@ -8,7 +8,7 @@
         {{ $t("SubscribeCard.title") }}
       </div>
       <div class="subscribe-card__center__text">
-        {{ $t("SubscribeCard.text") }}
+        {{ $t("SubscribeCard.text", { size }) }}
       </div>
     </div>
     <div class="subscribe-card__end">
@@ -28,8 +28,10 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   props: {
@@ -42,11 +44,15 @@ export default {
   setup() {
     const router = useRouter();
 
+    const size = ref(formatBytes(process.env.VUE_APP_PRO_PLAN_STORAGE));
+
     const goToSubscribe = () => {
       router.push({ name: routeNames.subscribe });
     };
 
     return {
+      // References
+      size,
       // Methods
       goToSubscribe
     };

@@ -13,7 +13,9 @@
 
     <div class="subscription-pro__content">
       <div class="subscription-pro__content__text">
-        {{ $t("SubscriptionPro.text") }}
+        {{
+          $t("SubscriptionPro.text", { size: formatBytes(newSizeAvailable) })
+        }}
       </div>
 
       <div class="subscription-pro__content__head">
@@ -48,6 +50,7 @@
 import { ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
+import { formatBytes } from "@/utils/files.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -71,9 +74,7 @@ export default {
 
     const space = ref(null);
     const spaceInfo = ref({});
-    const newSizeAvailable = ref(
-      +process.env.VUE_APP_PLATFORM_SUBSCRIPTION_STORAGE
-    );
+    const newSizeAvailable = ref(+process.env.VUE_APP_PRO_PLAN_STORAGE);
 
     return {
       // References
@@ -81,7 +82,9 @@ export default {
       newSizeAvailable,
       organizations: userOrganizations,
       space,
-      spaceInfo
+      spaceInfo,
+      // Methods
+      formatBytes
     };
   }
 };

@@ -49,11 +49,11 @@
   },
   "SubscriptionFree": {
     "title": "Créer un espace gratuit",
-    "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: 300 MB, 6 utilisateurs."
+    "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: {size}, 6 utilisateurs."
   },
   "SubscriptionPro": {
     "title": "Passer à la platforme professionnelle",
-    "text": "Vous êtes sur le pint de créer votre plan professionel. Votre plan inclus: 10GB, création de projets illimités, utilisateurs illimités."
+    "text": "Vous êtes sur le point de créer votre plan professionel. Votre plan inclus: {size} de stockage, création de projets illimités, utilisateurs illimités."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"
@@ -283,7 +283,6 @@
   "FreePlanCard": {
     "title": "FREE",
     "price": "0€",
-    "bullet1": "300 MB",
     "bullet2": "1 Espace gratuit",
     "bullet3": "6 Utilisateurs",
     "buttonText": "Créer un espace gratuit",
@@ -522,18 +521,6 @@
     "spaceListTitle": "Liste des espaces de l'organisation"
   },
 
-  "OurPlans": {
-    "freePlanBaseline": "Pour toujours",
-    "freePlanButton": "Gardez ce plan",
-    "freePlanPrice": "0€",
-    "freePlanTitle": "Gratuit",
-    "ourPlansTitle": "Nos plans",
-    "professionalPlanBaseline": "étendre de 1 Go pour 10€ / mois",
-    "professionalPlanButton": "Commencez votre essai",
-    "professionalPlanTitle": "Professionnel",
-    "professionalPlanPrice": "/ mois"
-  },
-
   "ProjectCardActionMenu": {
     "renameButtonText": "Renommer",
     "deleteButtonText": "Supprimer"
@@ -571,12 +558,11 @@
 
   "ProPlanCard": {
     "title": "PROFESSIONEL",
-    "price": "30€ / Espace / mois",
-    "bullet1": "10 GB",
+    "priceUnit": "/ Espace / mois",
     "bullet2": "Projets illimités",
     "bullet3": "Utilisateurs illimités",
     "buttonText": "Souscrire",
-    "note": "extensible pour 10€ / GB / mois"
+    "note": "extensible pour {price} / GB / mois"
   },
 
   "ProPlanForm": {
@@ -590,7 +576,7 @@
     "subTitle": "Professionnelle",
     "priceUnit": "/ mois",
     "bulletsHead": "La souscription inclue",
-    "bullet1": "5GB de stockage",
+    "bullet1": "{size} de stockage",
     "bullet2": "BIMData Plateforme",
     "bullet3": "Utilisateurs illimités",
     "bullet4": "Projets illimités",
@@ -682,7 +668,7 @@
 
   "SubscribeCard": {
     "title": "Créez votre nouvel espace",
-    "text": "Envie de profiter pleinement de la plateforme ? Profitez de 10GB pour vos projets et d'utilisateurs illimités en passant à le version profesionnelle.",
+    "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à le version profesionnelle.",
     "button": "Créer un espace"
   },
 

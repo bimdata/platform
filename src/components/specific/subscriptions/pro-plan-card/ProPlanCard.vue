@@ -5,20 +5,20 @@
         {{ $t("ProPlanCard.title") }}
       </div>
       <div class="pro-plan-card__price">
-        {{ $t("ProPlanCard.price") }}
+        {{ proPlanPrice }} {{ $t("ProPlanCard.priceUnit") }}
       </div>
       <div class="pro-plan-card__separator"></div>
       <div class="pro-plan-card__bullets">
-        <div class="pro-plan-card__bullets__bullet">
-          <img src="/static/platform-sub-info-bullet-mark.svg" />
-          <span>{{ $t("ProPlanCard.bullet1") }}</span>
+        <div class="pro-plan-card__bullets__bullet size">
+          <img src="/static/bullet-mark.svg" />
+          <span>{{ size }}</span>
         </div>
         <div class="pro-plan-card__bullets__bullet">
-          <img src="/static/platform-sub-info-bullet-mark.svg" />
+          <img src="/static/bullet-mark.svg" />
           <span>{{ $t("ProPlanCard.bullet2") }}</span>
         </div>
         <div class="pro-plan-card__bullets__bullet">
-          <img src="/static/platform-sub-info-bullet-mark.svg" />
+          <img src="/static/bullet-mark.svg" />
           <span>{{ $t("ProPlanCard.bullet3") }}</span>
         </div>
       </div>
@@ -32,25 +32,44 @@
         {{ $t("ProPlanCard.buttonText") }}
       </BIMDataButton>
       <div class="pro-plan-card__note">
-        {{ $t("ProPlanCard.note") }}
+        {{ $t("ProPlanCard.note", { price: datapackPrice }) }}
       </div>
     </template>
   </BIMDataCard>
 </template>
 
 <script>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { usePaddle } from "@/composables/paddle.js";
 import routeNames from "@/router/route-names.js";
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   setup() {
     const router = useRouter();
+    const { getProPlanPrice, getDatapackPrice } = usePaddle();
+
+    const proPlanPrice = ref(0);
+    const datapackPrice = ref(0);
+    const size = ref(formatBytes(process.env.VUE_APP_PRO_PLAN_STORAGE));
+
+    getProPlanPrice().then(({ price, currency }) => {
+      proPlanPrice.value = `${price}${currency}`;
+    });
+    getDatapackPrice().then(({ price, currency }) => {
+      datapackPrice.value = `${price}${currency}`;
+    });
 
     const goToSubscriptionPro = () => {
       router.push({ name: routeNames.subscriptionPro });
     };
 
     return {
+      // References
+      datapackPrice,
+      proPlanPrice,
+      size,
       // Methods
       goToSubscriptionPro
     };

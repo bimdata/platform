@@ -1,27 +1,39 @@
 <template>
   <div class="pro-plan-info">
     <img
-      class="heading"
+      class="pro-plan-info__heading"
       src="/static/platform-heading.svg"
       alt="BIMData Platform"
     />
-    <h1 class="title">
+    <h1 class="pro-plan-info__title">
       {{ $t("ProPlanInfo.title") }}
     </h1>
-    <h3 class="sub-title">
+    <h3 class="pro-plan-info__sub-title">
       {{ $t("ProPlanInfo.subTitle") }}
     </h3>
-    <div class="price">
-      <span> {{ unitPrice }}{{ currency }} </span>
-      <span>{{ $t("ProPlanInfo.priceUnit") }}</span>
+    <div class="pro-plan-info__price">
+      <span class="pro-plan-info__price__value">
+        {{ proPlanPrice }}
+      </span>
+      <span class="pro-plan-info__price__unit">
+        {{ $t("ProPlanInfo.priceUnit") }}
+      </span>
     </div>
-    <div class="bullet-list">
-      <div class="bullets-head">
+    <div class="pro-plan-info__bullets">
+      <div class="pro-plan-info__bullets__head">
         {{ $t("ProPlanInfo.bulletsHead") }}
       </div>
-      <div class="bullet" v-for="bullet of bullets" :key="bullet">
+      <div class="pro-plan-info__bullets__bullet">
         <img src="/static/bullet-mark.svg" />
-        {{ $t(`ProPlanInfo.${bullet}`) }}
+        {{ $t("ProPlanInfo.bullet1", { size }) }}
+      </div>
+      <div
+        class="pro-plan-info__bullets__bullet"
+        v-for="i of [2, 3, 4, 5, 6, 7, 8, 9, 10]"
+        :key="i"
+      >
+        <img src="/static/bullet-mark.svg" />
+        {{ $t(`ProPlanInfo.bullet${i}`) }}
       </div>
     </div>
   </div>
@@ -30,38 +42,24 @@
 <script>
 import { ref } from "vue";
 import { usePaddle } from "@/composables/paddle.js";
-
-const bullets = [
-  "bullet1",
-  "bullet2",
-  "bullet3",
-  "bullet4",
-  "bullet5",
-  "bullet6",
-  "bullet7",
-  "bullet8",
-  "bullet9",
-  "bullet10"
-];
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   setup() {
-    const { getPlatformPrice } = usePaddle();
+    const { getProPlanPrice } = usePaddle();
 
-    const unitPrice = ref(0);
-    const currency = ref("");
+    const proPlanPrice = ref(0);
+    const size = ref(formatBytes(process.env.VUE_APP_PRO_PLAN_STORAGE));
 
-    // Get localized platform subscription price from Paddle
-    getPlatformPrice().then(({ price, currency: curr }) => {
-      unitPrice.value = price;
-      currency.value = curr;
+    // Get localized pro plan price from Paddle
+    getProPlanPrice().then(({ price, currency }) => {
+      proPlanPrice.value = `${price}${currency}`;
     });
 
     return {
       // References
-      bullets,
-      currency,
-      unitPrice
+      proPlanPrice,
+      size
     };
   }
 };
