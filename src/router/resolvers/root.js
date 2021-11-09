@@ -18,12 +18,15 @@ let rootResolved = false;
 
 const rootResolver = async () => {
   if (!rootResolved) {
+    // Note: the call order *is* important !
     await loadUser();
     await loadUserOrganizations();
-    await loadOrganizationsSpaces();
     await loadUserSpaces();
-    await loadSpacesSubscriptions();
     await loadUserProjects();
+
+    await loadOrganizationsSpaces();
+    await loadSpacesSubscriptions();
+
     rootResolved = true;
   }
 };

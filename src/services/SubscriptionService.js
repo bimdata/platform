@@ -1,7 +1,7 @@
 import { apiClient, privateApiClient } from "./api-client.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
-class PaymentService {
+class SubscriptionService {
   async fetchOrganizationSubscriptions(organization) {
     try {
       return await privateApiClient.get(
@@ -31,6 +31,15 @@ class PaymentService {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
       );
+    } catch (error) {
+      ErrorService.handleError(error);
+      return [];
+    }
+  }
+
+  async fetchFreeSpaces() {
+    try {
+      return await privateApiClient.get(`/payment/free-cloud`);
     } catch (error) {
       ErrorService.handleError(error);
       return [];
@@ -112,6 +121,6 @@ class PaymentService {
   }
 }
 
-const service = new PaymentService();
+const service = new SubscriptionService();
 
 export default service;

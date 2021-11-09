@@ -14,9 +14,18 @@ const state = reactive({
 
 const loadUserSpaces = async () => {
   const { mapSpaces } = useUser();
+
   let spaces = await SpaceService.fetchUserSpaces();
+  const freeSpaces = await SubscriptionService.fetchFreeSpaces();
+  const freeSpacesIDs = freeSpaces.map(s => s.id);
+
   spaces = mapSpaces(spaces);
+  spaces = spaces.map(space => ({
+    ...space,
+    isFree: freeSpacesIDs.includes(space.id)
+  }));
   spaces.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+
   state.userSpaces = spaces;
   return spaces;
 };

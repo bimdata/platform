@@ -38,6 +38,7 @@
       </DashboardButtonTile>
       <DashboardButtonTile
         data-test="btn-subscriptions"
+        v-if="isSubscriptionEnabled"
         @click="goToUserSubscriptions"
       >
         <template #title>
@@ -57,7 +58,7 @@
         <DashboardProjectList :projects="projects" />
       </div>
       <div class="dashboard__body__right">
-        <SubscribeCard layout="vertical" />
+        <SubscribeCard v-if="isSubscriptionEnabled" layout="vertical" />
       </div>
     </div>
   </div>
@@ -68,6 +69,7 @@ import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
+import { useSubscriptions } from "@/state/subscriptions.js";
 // Components
 import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile.vue";
 import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList.vue";
@@ -85,6 +87,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const { isSubscriptionEnabled } = useSubscriptions();
     const { userSpaces } = useSpaces();
     const { userProjects } = useProjects();
 
@@ -102,6 +105,7 @@ export default {
 
     return {
       // References
+      isSubscriptionEnabled,
       projects: userProjects,
       spaces: userSpaces,
       // Methods

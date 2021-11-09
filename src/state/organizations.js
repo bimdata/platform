@@ -1,9 +1,6 @@
-import { computed, reactive, readonly, toRefs } from "vue";
+import { reactive, readonly, toRefs } from "vue";
 import OrganizationService from "@/services/OrganizationService.js";
 import { useSpaces } from "@/state/spaces.js";
-
-const { userSpaces } = useSpaces();
-const userSpacesIDs = computed(() => userSpaces.value.map(s => s.id));
 
 const state = reactive({
   userOrganizations: [],
@@ -29,9 +26,13 @@ const retrieveOrganizationSpaces = async organization => {
     organization
   );
   state.organizationsSpaces[organization.id] = spaces;
+
+  const { userSpaces } = useSpaces();
+  const userSpacesIDs = userSpaces.value.map(s => s.id);
   state.organizationsUserSpaces[organization.id] = spaces.filter(space =>
-    userSpacesIDs.value.includes(space.id)
+    userSpacesIDs.includes(space.id)
   );
+
   return spaces;
 };
 
