@@ -52,8 +52,13 @@
       </DashboardButtonTile>
     </div>
     <div class="dashboard__body">
-      <DashboardSpaceList :spaces="spaces" />
-      <DashboardProjectList :projects="projects" />
+      <div class="dashboard__body__left">
+        <DashboardSpaceList :spaces="spaces" />
+        <DashboardProjectList :projects="projects" />
+      </div>
+      <div class="dashboard__body__right">
+        <SubscribeCard layout="vertical" />
+      </div>
     </div>
   </div>
 </template>
@@ -68,13 +73,15 @@ import DashboardButtonTile from "@/components/specific/dashboard/dashboard-butto
 import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList.vue";
 import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList.vue";
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
+import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
 export default {
   components: {
     DashboardButtonTile,
     DashboardProjectList,
     DashboardSpaceList,
-    DashboardWelcomeTile
+    DashboardWelcomeTile,
+    SubscribeCard
   },
   setup() {
     const router = useRouter();

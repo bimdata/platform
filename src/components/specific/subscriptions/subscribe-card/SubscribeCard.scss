@@ -35,6 +35,22 @@
   }
 
   &--vertical {
-    // TODO
+    width: 310px;
+    height: 100%;
+    flex-direction: column;
+    padding: calc(var(--spacing-unit) * 2);
+
+    .subscribe-card__start {
+      min-width: 196px;
+      min-height: 196px;
+    }
+
+    .subscribe-card__center {
+      text-align: center;
+
+      &__text {
+        margin-top: calc(var(--spacing-unit) * 2);
+      }
+    }
   }
 }
