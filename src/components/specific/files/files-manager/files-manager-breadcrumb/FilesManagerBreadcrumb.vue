@@ -17,6 +17,7 @@
       :text="file.name"
       :maxLength="24"
       tooltipColor="tertiary-lightest"
+      :style="{ marginLeft: path.length ? '15px' : '5px' }"
     />
   </div>
 </template>
@@ -32,7 +33,7 @@ export default {
       required: true
     }
   },
-  emits: ["file-selected"],
+  emits: ["file-clicked"],
   setup(props, { emit }) {
     const { fileStructureHandler: handler } = useFiles();
 
@@ -44,7 +45,7 @@ export default {
       { immediate: true }
     );
 
-    const selectFile = folder => emit("file-selected", folder);
+    const selectFile = folder => emit("file-clicked", folder);
 
     return {
       path,

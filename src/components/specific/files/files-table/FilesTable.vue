@@ -10,6 +10,19 @@
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
     <template #sub-header>
+      <div style="display: flex; align-items: center">
+        <BIMDataIcon
+          name="arrow"
+          size="xxs"
+          margin="10 24 10 12"
+          @click="$emit('back-parent-folder', folder)"
+          :style="{ cursor: folder.parentId ? 'pointer' : 'initial' }"
+        />
+        <FilesManagerBreadcrumb
+          :file="folder"
+          @file-clicked="$emit('file-clicked', $event)"
+        />
+      </div>
       <transition-group name="list">
         <FileUploadCard
           v-for="file of fileUploads"
@@ -69,6 +82,7 @@ import columnsDef from "./columns";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
+import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FileActionsCell from "./file-actions-cell/FileActionsCell";
 import FileLastUpdateCell from "./file-last-update-cell/FileLastUpdateCell";
 import FileNameCell from "./file-name-cell/FileNameCell";
@@ -83,7 +97,8 @@ export default {
     FileNameCell,
     FileTagsCell,
     FileTypeCell,
-    FileUploadCard
+    FileUploadCard,
+    FilesManagerBreadcrumb
   },
   props: {
     project: {
@@ -109,7 +124,8 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
-    "selection-changed"
+    "selection-changed",
+    "back-parent-folder"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();

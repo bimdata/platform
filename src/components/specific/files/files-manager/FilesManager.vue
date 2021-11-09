@@ -1,20 +1,5 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
-    <template #left>
-      <BIMDataIcon
-        name="arrow"
-        size="xxs"
-        margin="10 13"
-        @click="backToParent(currentFolder)"
-        :style="{
-          cursor: currentFolder.parentId ? 'pointer' : 'initial'
-        }"
-      />
-      <FilesManagerBreadcrumb
-        :file="currentFolder"
-        @file-selected="onFileSelected"
-      />
-    </template>
     <template #content>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
@@ -72,6 +57,7 @@
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
+            @back-parent-folder="backToParent"
           />
         </div>
 
@@ -124,7 +110,6 @@ import FolderAccessManager from "@/components/specific/files/folder-access-manag
 import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
 import FilesActionBar from "./files-action-bar/FilesActionBar";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal";
-import FilesManagerBreadcrumb from "./files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
 
 export default {
@@ -136,7 +121,6 @@ export default {
     FolderCreationButton,
     FilesActionBar,
     FilesDeleteModal,
-    FilesManagerBreadcrumb,
     FilesManagerOnboarding
   },
   props: {
