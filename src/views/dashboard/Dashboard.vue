@@ -104,7 +104,7 @@ export default {
 
     return {
       // References
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED(),
       projects: userProjects,
       spaces: userSpaces,
       // Methods

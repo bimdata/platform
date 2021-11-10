@@ -81,7 +81,7 @@ export default {
     return {
       // References
       displayedSpaces,
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED(),
       localState,
       searchText,
       // Methods
