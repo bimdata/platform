@@ -50,7 +50,8 @@
   },
   "SubscriptionPro": {
     "title": "Upgrade to pro platform",
-    "text": "You are about to create your pro plan. This includes: {size} of storage, unlimited projects, unlimited users."
+    "text": "You are about to create your pro plan. This includes: {size} of storage, unlimited projects, unlimited users.",
+    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
@@ -622,7 +623,6 @@
     "createSpaceText": "Text explaining what's a space here.",
     "createSpaceInput": "Name of my new space",
     "selectOrgaRadio": "Select an orga",
-    "spaceSuccessMessageNotification": "You have just created the space {spaceName} in the organization {organizationName}",
     "orgaValidateButton": "Validate",
     "spaceValidateButton": "Validate"
   },

@@ -13,7 +13,7 @@ class OrganizationService {
     }
   }
 
-  async fecthOrganizationSpaces(organization) {
+  async fetchOrganizationSpaces(organization) {
     try {
       return await privateApiClient.get(
         `/organization/${organization.id}/cloud`

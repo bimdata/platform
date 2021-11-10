@@ -2,6 +2,7 @@ import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/services/SpaceService.js";
 import SubscriptionService from "@/services/SubscriptionService.js";
 import { useOrganizations } from "@/state/organizations.js";
+import { useProjects } from "@/state/projects.js";
 import { useUser } from "@/state/user.js";
 
 const state = reactive({
@@ -11,6 +12,11 @@ const state = reactive({
   spaceUsers: [],
   spaceInvitations: []
 });
+
+const setCurrentSpace = id => {
+  state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
+  return readonly(state.currentSpace);
+};
 
 const loadUserSpaces = async () => {
   const { mapSpaces } = useUser();
@@ -108,13 +114,10 @@ const softDeleteSpace = space => {
 
   const { softDeleteOrganizationSpace } = useOrganizations();
   softDeleteOrganizationSpace(space);
+  const { softDeleteSpaceProjects } = useProjects();
+  softDeleteSpaceProjects(space);
 
   return space;
-};
-
-const setCurrentSpace = id => {
-  state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
-  return readonly(state.currentSpace);
 };
 
 const sendSpaceInvitation = async (space, invitation, options = {}) => {
@@ -156,6 +159,7 @@ export function useSpaces() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    setCurrentSpace,
     loadUserSpaces,
     loadSpaceInfo,
     loadSpaceUsers,
@@ -167,7 +171,6 @@ export function useSpaces() {
     removeSpaceImage,
     deleteSpace,
     softDeleteSpace,
-    setCurrentSpace,
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,

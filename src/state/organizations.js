@@ -22,7 +22,7 @@ const retrieveUserOrganizations = async () => {
 };
 
 const retrieveOrganizationSpaces = async organization => {
-  const spaces = await OrganizationService.fecthOrganizationSpaces(
+  const spaces = await OrganizationService.fetchOrganizationSpaces(
     organization
   );
   state.organizationsSpaces[organization.id] = spaces;

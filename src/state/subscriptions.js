@@ -1,7 +1,9 @@
 import { reactive, readonly, toRefs } from "vue";
+import OrganizationService from "@/services/OrganizationService.js";
 import SubscriptionService from "@/services/SubscriptionService.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
+import { delay } from "@/utils/async.js";
 
 const state = reactive({
   isSubscriptionEnabled: process.env.VUE_APP_SUBSCRIPTION_ENABLED === "true",
@@ -71,8 +73,36 @@ const retrieveSpaceInformation = space => {
   return SubscriptionService.fetchSpaceInformation(space);
 };
 
-const generatePlatformSubscriptionLink = space => {
-  return SubscriptionService.generatePlatformSubscriptionLink(space);
+const getPlatformSubscriptionLink = space => {
+  // return SubscriptionService.generatePlatformSubscriptionLink(space);
+  return SubscriptionService.createPlatformSubscription(space);
+};
+
+/**
+ * This method takes a space as a parameter and checks the list of spaces
+ * of its organization every 2 seconds until one of them is found to have
+ * the same name. As space names are unique in a given organization this
+ * will mean that the space (given as a parameter) has been created.
+ * Then it return that space.
+ *
+ * @param {Object} space
+ * @returns {Object}
+ */
+const waitForCreatedSpace = async space => {
+  let spaces = [];
+  do {
+    // Retrieve organization spaces from API
+    spaces = await OrganizationService.fetchOrganizationSpaces(
+      space.organization
+    );
+    await delay(2000); // wait 2s
+  } while (!spaces.some(s => s.name === space.name));
+
+  const newSpace = spaces.find(s => s.name === space.name);
+  const { softCreateSpace } = useSpaces();
+  softCreateSpace({ ...newSpace, isAdmin: true });
+
+  return newSpace;
 };
 
 const createDatapackSubscription = (space, quantity) => {
@@ -102,7 +132,8 @@ export function useSubscriptions() {
     getSpaceActiveSubscription,
     retrieveSubscriptionPayments,
     retrieveSpaceInformation,
-    generatePlatformSubscriptionLink,
+    getPlatformSubscriptionLink,
+    waitForCreatedSpace,
     createDatapackSubscription,
     updateDatapackSubscription
   };

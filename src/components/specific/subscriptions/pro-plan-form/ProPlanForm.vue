@@ -20,7 +20,7 @@
         <div class="pro-plan-form__success__message">
           {{ $t("ProPlanForm.successMessage") }}
         </div>
-        <BIMDataButton
+        <!-- <BIMDataButton
           width="160px"
           color="primary"
           fill
@@ -28,7 +28,7 @@
           @click="goToDashboard"
         >
           {{ $t("ProPlanForm.successButtonText") }}
-        </BIMDataButton>
+        </BIMDataButton> -->
       </div>
     </transition>
   </div>
@@ -48,11 +48,12 @@ export default {
       default: null
     }
   },
-  emits: ["subscription-created"],
+  emits: ["space-created"],
   setup(props, { emit }) {
     const router = useRouter();
     const { loadCheckout } = usePaddle();
-    const { generatePlatformSubscriptionLink } = useSubscriptions();
+    const { getPlatformSubscriptionLink, waitForCreatedSpace } =
+      useSubscriptions();
 
     const loading = ref(false);
     const isSuccess = ref(false);
@@ -63,14 +64,16 @@ export default {
         async space => {
           if (space) {
             loading.value = true;
-            const link = await generatePlatformSubscriptionLink(space);
+            const link = await getPlatformSubscriptionLink(space);
             loadCheckout("paddle-checkout-container", link, {
               onLoad: () => {
                 loading.value = false;
               },
               onSuccess: () => {
                 isSuccess.value = true;
-                emit("subscription-created");
+                waitForCreatedSpace(space).then(createdSpace =>
+                  emit("space-created", createdSpace)
+                );
               }
             });
           }

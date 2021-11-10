@@ -32,7 +32,7 @@
             <ProPlanInfo />
           </div>
           <div class="subscription-pro__content__body__center">
-            <ProPlanForm :space="space" />
+            <ProPlanForm :space="space" @space-created="goToSpaceBoard" />
           </div>
           <div class="subscription-pro__content__body__right">
             <SpaceSizePreview
@@ -48,6 +48,10 @@
 
 <script>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useNotifications } from "@/composables/notifications.js";
+import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 import { formatBytes } from "@/utils/files.js";
@@ -69,12 +73,30 @@ export default {
     ViewHeader
   },
   setup() {
+    const { t } = useI18n();
+    const router = useRouter();
+    const { pushNotification } = useNotifications();
     const { userOrganizations } = useOrganizations();
     const { currentOrga } = useSubscriptions();
 
     const space = ref(null);
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+process.env.VUE_APP_PRO_PLAN_STORAGE);
+
+    const goToSpaceBoard = space => {
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("SubscriptionPro.spaceCreatedNotification", {
+          organizationName: space.organization.name,
+          spaceName: space.name
+        })
+      });
+      router.push({
+        name: routeNames.spaceBoard,
+        params: { spaceID: space.id }
+      });
+    };
 
     return {
       // References
@@ -84,7 +106,8 @@ export default {
       space,
       spaceInfo,
       // Methods
-      formatBytes
+      formatBytes,
+      goToSpaceBoard
     };
   }
 };

@@ -95,6 +95,17 @@ class SubscriptionService {
     }
   }
 
+  async createPlatformSubscription(space) {
+    try {
+      return await privateApiClient.post(
+        `/payment/organization/${space.organization.id}/platform-subscription/create`,
+        { cloud_name: space.name }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PLATFORM_SUBSCRIBE_ERROR, error);
+    }
+  }
+
   async createDatapackSubscription(space, quantity) {
     try {
       return await privateApiClient.post(

@@ -53,7 +53,8 @@
   },
   "SubscriptionPro": {
     "title": "Passer à la platforme professionnelle",
-    "text": "Vous êtes sur le point de créer votre plan professionel. Votre plan inclus: {size} de stockage, création de projets illimités, utilisateurs illimités."
+    "text": "Vous êtes sur le point de créer votre plan professionel. Votre plan inclus: {size} de stockage, création de projets illimités, utilisateurs illimités.",
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"
@@ -630,7 +631,6 @@
     "createSpaceText": "Texte expliquant ce qu'est un espace ici.",
     "createSpaceInput": "Nom de mon nouvel espace",
     "selectOrgaRadio": "Sélectionner une orga",
-    "spaceSuccessMessageNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}",
     "orgaValidateButton": "Valider",
     "spaceValidateButton": "Valider"
   },

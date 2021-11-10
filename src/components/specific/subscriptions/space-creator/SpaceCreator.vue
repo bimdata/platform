@@ -116,10 +116,7 @@
 
 <script>
 import { ref, reactive, watch } from "vue";
-import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications.js";
 import { useOrganizations } from "@/state/organizations.js";
-import { useSpaces } from "@/state/spaces.js";
 
 export default {
   props: {
@@ -134,10 +131,7 @@ export default {
   },
   emits: ["space-created"],
   setup(props, { emit }) {
-    const { t } = useI18n();
-    const { pushNotification } = useNotifications();
     const { createOrganization } = useOrganizations();
-    const { createSpace } = useSpaces();
 
     const mode = ref("create");
     const step = ref(1);
@@ -155,7 +149,7 @@ export default {
     const newSpace = reactive({
       id: null,
       name: "",
-      organizationId: null
+      organization: null
     });
 
     watch(
@@ -190,7 +184,7 @@ export default {
           newOrgaLoading.value = false;
         }
       }
-      newSpace.organizationId = orga.value.id;
+      newSpace.organization = { id: orga.value.id };
       step.value = 2;
       setTimeout(() => spaceNameInput.value.focus(), 200);
     };
@@ -198,17 +192,8 @@ export default {
     const submitSpace = async () => {
       try {
         newSpaceLoading.value = true;
-        const createdSpace = await createSpace(newSpace);
-        emit("space-created", createdSpace);
+        emit("space-created", { ...newSpace });
         step.value = 3;
-        pushNotification({
-          type: "success",
-          title: t("Success"),
-          message: t("SpaceCreator.spaceSuccessMessageNotification", {
-            organizationName: orga.value.name,
-            spaceName: newSpace.name
-          })
-        });
       } finally {
         newSpaceLoading.value = false;
       }

@@ -86,6 +86,10 @@ const softDeleteProject = project => {
   return project;
 };
 
+const softDeleteSpaceProjects = space => {
+  state.userProjects = state.userProjects.filter(p => p.cloud.id !== space.id);
+};
+
 const selectProject = id => {
   state.currentProject = state.userProjects.find(p => p.id === id) || null;
   return readonly(state.currentProject);
@@ -139,6 +143,7 @@ export function useProjects() {
     softUpdateProject,
     deleteProject,
     softDeleteProject,
+    softDeleteSpaceProjects,
     selectProject,
     sendProjectInvitation,
     cancelProjectInvitation,
