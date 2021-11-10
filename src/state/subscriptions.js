@@ -6,7 +6,6 @@ import { useSpaces } from "@/state/spaces.js";
 import { delay } from "@/utils/async.js";
 
 const state = reactive({
-  isSubscriptionEnabled: process.env.VUE_APP_SUBSCRIPTION_ENABLED === "true",
   currentOrga: null,
   currentSpace: null,
   organizationsSubscriptions: {},
@@ -74,7 +73,6 @@ const retrieveSpaceInformation = space => {
 };
 
 const getPlatformSubscriptionLink = space => {
-  // return SubscriptionService.generatePlatformSubscriptionLink(space);
   return SubscriptionService.createPlatformSubscription(space);
 };
 

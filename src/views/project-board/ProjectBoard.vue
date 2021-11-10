@@ -40,10 +40,10 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import { IS_SUBCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSession } from "@/state/session.js";
 import { useSpaces } from "@/state/spaces.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
 
 // Components
 import AppSlot from "@/components/generic/app-slot/AppSlot.vue";
@@ -86,7 +86,6 @@ export default {
   setup() {
     const route = useRoute();
     const { locale, t } = useI18n();
-    const { isSubscriptionEnabled } = useSubscriptions();
     const { currentSpace, spaceInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { currentProjectView } = useSession();
@@ -127,7 +126,7 @@ export default {
       // References
       currentTab,
       currentView,
-      isSubscriptionEnabled,
+      isSubscriptionEnabled: IS_SUBCRIPTION_ENABLED,
       tabs,
       space: currentSpace,
       spaceInfo,

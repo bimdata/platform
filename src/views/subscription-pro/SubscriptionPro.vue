@@ -51,6 +51,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useNotifications } from "@/composables/notifications.js";
+import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
@@ -81,7 +82,7 @@ export default {
 
     const space = ref(null);
     const spaceInfo = ref({});
-    const newSizeAvailable = ref(+process.env.VUE_APP_PRO_PLAN_STORAGE);
+    const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
     const goToSpaceBoard = space => {
       pushNotification({

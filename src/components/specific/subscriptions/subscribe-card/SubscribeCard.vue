@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 
@@ -44,7 +44,7 @@ export default {
   setup() {
     const router = useRouter();
 
-    const size = ref(formatBytes(process.env.VUE_APP_PRO_PLAN_STORAGE));
+    const size = formatBytes(PRO_PLAN_STORAGE);
 
     const goToSubscribe = () => {
       router.push({ name: routeNames.subscribe });

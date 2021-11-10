@@ -1,3 +1,4 @@
+import { DATAPACK_PLAN_ID, PRO_PLAN_ID } from "@/config/subscription.js";
 import { getPrice } from "@/utils/price.js";
 
 const loadCheckout = (containerID, link, { onLoad, onSuccess }) => {
@@ -25,12 +26,12 @@ const getPrices = productID => {
 };
 
 const getProPlanPrice = async () => {
-  const response = await getPrices(process.env.VUE_APP_PRO_PLAN_ID);
+  const response = await getPrices(PRO_PLAN_ID);
   return getPrice(response);
 };
 
 const getDatapackPrice = async () => {
-  const response = await getPrices(process.env.VUE_APP_DATAPACK_PLAN_ID);
+  const response = await getPrices(DATAPACK_PLAN_ID);
   return getPrice(response);
 };
 

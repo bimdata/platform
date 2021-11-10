@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { FREE_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 
@@ -48,7 +48,7 @@ export default {
   setup() {
     const router = useRouter();
 
-    const size = ref(formatBytes(process.env.VUE_APP_FREE_PLAN_STORAGE));
+    const size = formatBytes(FREE_PLAN_STORAGE);
 
     const goToSubscriptionFree = () => {
       router.push({ name: routeNames.subscriptionFree });
