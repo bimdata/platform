@@ -26,6 +26,7 @@
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
         <BIMDataButton
+          v-if="isSubscriptionEnabled"
           width="120px"
           fill
           radius
