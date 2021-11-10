@@ -75,7 +75,7 @@
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
 import { useSidePanel } from "@/composables/side-panel.js";
-import { IS_SUBCRIPTION_ENABLED } from "@/config/subscription.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 
@@ -119,7 +119,7 @@ export default {
     return {
       // References
       invitations: spaceInvitations,
-      isSubscriptionEnabled: IS_SUBCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       projects: displayedProjects,
       searchText,
       space: currentSpace,

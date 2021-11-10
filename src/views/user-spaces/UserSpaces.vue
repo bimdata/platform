@@ -65,7 +65,7 @@ import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
 import { useSidePanel } from "@/composables/side-panel.js";
-import { IS_SUBCRIPTION_ENABLED } from "@/config/subscription.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -108,7 +108,7 @@ export default {
 
     return {
       // References
-      isSubscriptionEnabled: IS_SUBCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       organizations: userOrganizations,
       searchText,
       spaces: displayedSpaces,

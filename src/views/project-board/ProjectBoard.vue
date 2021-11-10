@@ -40,7 +40,7 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { IS_SUBCRIPTION_ENABLED } from "@/config/subscription.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSession } from "@/state/session.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -126,7 +126,7 @@ export default {
       // References
       currentTab,
       currentView,
-      isSubscriptionEnabled: IS_SUBCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       tabs,
       space: currentSpace,
       spaceInfo,

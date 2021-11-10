@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "./route-names.js";
 import legacyRoutes from "./legacy.js";
 import subscriptionRoutes from "./subscription.js";
@@ -113,9 +114,7 @@ const routes = [
         }
       },
       // Add subscription routes if enabled
-      ...(process.env.VUE_APP_SUBSCRIPTION_ENABLED === "true"
-        ? subscriptionRoutes
-        : []),
+      ...(IS_SUBSCRIPTION_ENABLED ? subscriptionRoutes : []),
       // Add legacy routes for retro-compatibility
       ...legacyRoutes,
       {

@@ -48,7 +48,7 @@
 import { computed, inject } from "vue";
 import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
-import { IS_SUBCRIPTION_ENABLED } from "@/config/subscription.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
@@ -81,7 +81,7 @@ export default {
     return {
       // References
       displayedSpaces,
-      isSubscriptionEnabled: IS_SUBCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       localState,
       searchText,
       // Methods

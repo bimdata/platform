@@ -66,7 +66,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { IS_SUBCRIPTION_ENABLED } from "@/config/subscription.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -104,7 +104,7 @@ export default {
 
     return {
       // References
-      isSubscriptionEnabled: IS_SUBCRIPTION_ENABLED,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       projects: userProjects,
       spaces: userSpaces,
       // Methods
