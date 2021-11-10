@@ -1,13 +1,16 @@
 <template>
   <div class="files-manager-breadcrumb">
     <span class="files-manager-breadcrumb__path">
-      <template v-for="folder of path" :key="folder.id">
+      <template v-for="(folder, index) of path" :key="folder.id">
         <TextBox
           :text="folder.name"
           :maxLength="24"
           @click="selectFile(folder)"
           tooltipColor="tertiary-lightest"
-          style="cursor: pointer"
+          :style="{
+            cursor: 'pointer',
+            margin: index === 0 ? 'auto 15px auto 5px' : 'auto 15px'
+          }"
         />
         <span>></span>
       </template>

@@ -11,13 +11,20 @@
   >
     <template #sub-header>
       <div style="display: flex; align-items: center">
-        <BIMDataIcon
-          name="arrow"
-          size="xxs"
-          margin="10 24 10 12"
-          @click="$emit('back-parent-folder', folder)"
-          :style="{ cursor: folder.parentId ? 'pointer' : 'initial' }"
-        />
+        <BIMDataButton
+          ghost
+          rounded
+          icon
+          :disabled="!folder.parentId"
+          style="margin: 5px 14px 5px 3px"
+        >
+          <BIMDataIcon
+            name="arrow"
+            size="xxs"
+            @click="$emit('back-parent-folder', folder)"
+            :style="{ cursor: folder.parentId ? 'pointer' : 'initial' }"
+          />
+        </BIMDataButton>
         <FilesManagerBreadcrumb
           :file="folder"
           @file-clicked="$emit('file-clicked', $event)"
