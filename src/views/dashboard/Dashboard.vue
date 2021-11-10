@@ -102,8 +102,6 @@ export default {
       router.push({ name: routeNames.userSubscriptions });
     };
 
-    console.log("Debug: from dashboard: ", { IS_SUBSCRIPTION_ENABLED });
-
     return {
       // References
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
