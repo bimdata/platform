@@ -114,7 +114,7 @@ const routes = [
         }
       },
       // Add subscription routes if enabled
-      ...(IS_SUBSCRIPTION_ENABLED() ? subscriptionRoutes : []),
+      ...(IS_SUBSCRIPTION_ENABLED ? subscriptionRoutes : []),
       // Add legacy routes for retro-compatibility
       ...legacyRoutes,
       {

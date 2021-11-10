@@ -119,7 +119,7 @@ export default {
     return {
       // References
       invitations: spaceInvitations,
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED(),
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       projects: displayedProjects,
       searchText,
       space: currentSpace,

@@ -108,7 +108,7 @@ export default {
 
     return {
       // References
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED(),
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       organizations: userOrganizations,
       searchText,
       spaces: displayedSpaces,

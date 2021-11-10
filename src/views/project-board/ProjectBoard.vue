@@ -126,7 +126,7 @@ export default {
       // References
       currentTab,
       currentView,
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED(),
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       tabs,
       space: currentSpace,
       spaceInfo,
