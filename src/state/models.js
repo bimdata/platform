@@ -176,7 +176,9 @@ const updateModelLocation = async (
 export function useModels() {
   const readonlyState = readonly(state);
   return {
+    // References
     ...toRefs(readonlyState),
+    // Methods
     loadProjectModels,
     fetchModelByID,
     updateModels,

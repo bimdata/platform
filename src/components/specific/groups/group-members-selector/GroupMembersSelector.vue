@@ -65,7 +65,7 @@ export default {
     }
   },
   setup(props) {
-    const { selectGroup, addGroupMembers } = useGroups();
+    const { setCurrentGroup, addGroupMembers } = useGroups();
 
     const availableUsers = computed(() => {
       const memberIDs = props.group.members.map(u => u.id);
@@ -79,7 +79,7 @@ export default {
 
     const addMember = async user => {
       await addGroupMembers(props.project, props.group, [user]);
-      selectGroup(props.group.id); // Needed to reload member list
+      setCurrentGroup(props.group.id); // Needed to reload member list
     };
 
     return {

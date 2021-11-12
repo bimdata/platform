@@ -73,8 +73,8 @@ export default {
     const {
       currentOrga,
       currentSpace,
-      retrieveSpaceInformation,
-      retrieveSpaceSubscriptions,
+      fetchSpaceInformation,
+      loadSpaceSubscriptions,
       getSpaceActiveSubscription
     } = useSubscriptions();
 
@@ -93,8 +93,8 @@ export default {
 
     const loadSpaceData = async space => {
       if (space && space.id) {
-        const info = await retrieveSpaceInformation(space);
-        const sub = await retrieveSpaceSubscriptions(space).then(() =>
+        const info = await fetchSpaceInformation(space);
+        const sub = await loadSpaceSubscriptions(space).then(() =>
           getSpaceActiveSubscription(space)
         );
         // This is needed to trigger reactive effects

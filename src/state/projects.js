@@ -1,6 +1,6 @@
 import { reactive, readonly, toRefs, watch } from "vue";
-import ProjectService from "@/services/ProjectService";
-import { useUser } from "@/state/user";
+import ProjectService from "@/services/ProjectService.js";
+import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userProjects: [],
@@ -9,6 +9,11 @@ const state = reactive({
   projectUsers: [],
   projectInvitations: []
 });
+
+const setCurrentProject = id => {
+  state.currentProject = state.userProjects.find(p => p.id === id) || null;
+  return readonly(state.currentProject);
+};
 
 const loadUserProjects = async () => {
   const { mapProjects } = useUser();
@@ -90,11 +95,6 @@ const softDeleteSpaceProjects = space => {
   state.userProjects = state.userProjects.filter(p => p.cloud.id !== space.id);
 };
 
-const selectProject = id => {
-  state.currentProject = state.userProjects.find(p => p.id === id) || null;
-  return readonly(state.currentProject);
-};
-
 const sendProjectInvitation = async (project, invitation, options = {}) => {
   const newInvitation = await ProjectService.sendProjectInvitation(
     project,
@@ -134,6 +134,7 @@ export function useProjects() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    setCurrentProject,
     loadUserProjects,
     loadSpaceProjects,
     loadProjectUsers,
@@ -144,7 +145,6 @@ export function useProjects() {
     deleteProject,
     softDeleteProject,
     softDeleteSpaceProjects,
-    selectProject,
     sendProjectInvitation,
     cancelProjectInvitation,
     updateProjectUser,

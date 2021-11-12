@@ -5,13 +5,10 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 import { useUser } from "@/state/user.js";
 
 const { loadUser } = useUser();
-const {
-  retrieveUserOrganizations: loadUserOrganizations,
-  retrieveAllOrganizationsSpaces: loadOrganizationsSpaces
-} = useOrganizations();
+const { loadUserOrganizations, loadAllOrganizationsSpaces } =
+  useOrganizations();
 const { loadUserSpaces } = useSpaces();
-const { retrieveAllSpacesSubscriptions: loadSpacesSubscriptions } =
-  useSubscriptions();
+const { loadAllSpacesSubscriptions } = useSubscriptions();
 const { loadUserProjects } = useProjects();
 
 let rootResolved = false;
@@ -24,8 +21,8 @@ const rootResolver = async () => {
     await loadUserSpaces();
     await loadUserProjects();
 
-    await loadOrganizationsSpaces();
-    await loadSpacesSubscriptions();
+    await loadAllOrganizationsSpaces();
+    await loadAllSpacesSubscriptions();
 
     rootResolved = true;
   }

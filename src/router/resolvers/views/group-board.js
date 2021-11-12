@@ -11,9 +11,9 @@ export default createViewResolver(async route => {
   spaces.setCurrentSpace(+route.params.spaceID);
   projects.loadSpaceProjects(spaces.currentSpace.value);
 
-  projects.selectProject(+route.params.projectID);
+  projects.setCurrentProject(+route.params.projectID);
   await projects.loadProjectUsers(projects.currentProject.value);
   await groups.loadProjectGroups(projects.currentProject.value);
 
-  groups.selectGroup(+route.params.groupID);
+  groups.setCurrentGroup(+route.params.groupID);
 });

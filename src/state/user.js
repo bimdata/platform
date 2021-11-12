@@ -1,7 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
-import UserService from "@/services/UserService";
-import PROJECT_ROLES from "@/config/project-roles";
-import SPACE_ROLES from "@/config/space-roles";
+import PROJECT_ROLES from "@/config/project-roles.js";
+import SPACE_ROLES from "@/config/space-roles.js";
+import UserService from "@/services/UserService.js";
 
 const state = reactive({
   isNew: false,

@@ -14,14 +14,14 @@ const resetState = () => {
   state.organizationsUserSpaces = {};
 };
 
-const retrieveUserOrganizations = async () => {
+const loadUserOrganizations = async () => {
   const organizations = await OrganizationService.fetchUserOrganizations();
   organizations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   state.userOrganizations = organizations;
   return organizations;
 };
 
-const retrieveOrganizationSpaces = async organization => {
+const loadOrganizationSpaces = async organization => {
   const spaces = await OrganizationService.fetchOrganizationSpaces(
     organization
   );
@@ -36,10 +36,10 @@ const retrieveOrganizationSpaces = async organization => {
   return spaces;
 };
 
-const retrieveAllOrganizationsSpaces = async () => {
+const loadAllOrganizationsSpaces = async () => {
   return (
     await Promise.all(
-      state.userOrganizations.map(orga => retrieveOrganizationSpaces(orga))
+      state.userOrganizations.map(orga => loadOrganizationSpaces(orga))
     )
   ).reduce((acc, spaces) => acc.concat(spaces), []);
 };
@@ -111,7 +111,7 @@ const importOrganizationSpaces = async (organization, spaces) => {
     spaces.map(space => space.organization)
   );
   await Promise.all(
-    updatedOrganizations.map(orga => retrieveOrganizationSpaces(orga))
+    updatedOrganizations.map(orga => loadOrganizationSpaces(orga))
   );
   return importedSpaces;
 };
@@ -143,9 +143,9 @@ export function useOrganizations() {
     ...toRefs(readonlyState),
     // Methods
     resetState,
-    retrieveUserOrganizations,
-    retrieveOrganizationSpaces,
-    retrieveAllOrganizationsSpaces,
+    loadUserOrganizations,
+    loadOrganizationSpaces,
+    loadAllOrganizationsSpaces,
     getOrganizationSpaces,
     getOrganizationUserSpaces,
     softCreateOrganizationSpace,

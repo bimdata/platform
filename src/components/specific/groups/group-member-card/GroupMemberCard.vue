@@ -48,7 +48,7 @@ export default {
     }
   },
   setup(props) {
-    const { selectGroup, removeGroupMembers } = useGroups();
+    const { setCurrentGroup, removeGroupMembers } = useGroups();
 
     const fullName = computed(
       () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
@@ -56,7 +56,7 @@ export default {
 
     const remove = async () => {
       await removeGroupMembers(props.project, props.group, [props.user]);
-      selectGroup(props.group.id); // Needed to reload member list
+      setCurrentGroup(props.group.id); // Needed to reload member list
     };
 
     return {

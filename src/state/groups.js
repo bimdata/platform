@@ -1,10 +1,16 @@
 import { reactive, readonly, toRefs } from "vue";
-import GroupService from "@/services/GroupService";
+import GroupService from "@/services/GroupService.js";
 
 const state = reactive({
   projectGroups: [],
   currentGroup: null
 });
+
+const setCurrentGroup = id => {
+  state.currentGroup =
+    state.projectGroups.find(group => group.id === id) || null;
+  return readonly(state.currentGroup);
+};
 
 const loadProjectGroups = async project => {
   let groups = [];
@@ -108,18 +114,13 @@ const softDeleteGroup = group => {
   return group;
 };
 
-const selectGroup = id => {
-  state.currentGroup =
-    state.projectGroups.find(group => group.id === id) || null;
-  return readonly(state.currentGroup);
-};
-
 export function useGroups() {
   const readOnlyState = readonly(state);
   return {
     // References
     ...toRefs(readOnlyState),
     // Methods
+    setCurrentGroup,
     loadProjectGroups,
     createGroup,
     updateGroup,
@@ -129,7 +130,6 @@ export function useGroups() {
     updateGroupPermission,
     softUpdateGroup,
     deleteGroup,
-    softDeleteGroup,
-    selectGroup
+    softDeleteGroup
   };
 }

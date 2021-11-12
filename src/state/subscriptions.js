@@ -27,14 +27,14 @@ const setCurrentSpace = id => {
   return space;
 };
 
-const retrieveOrganizationSubscriptions = async orga => {
+const loadOrganizationSubscriptions = async orga => {
   const subscriptions =
     await SubscriptionService.fetchOrganizationSubscriptions(orga);
   state.organizationsSubscriptions[orga.id] = subscriptions;
   return subscriptions;
 };
 
-const retrieveSpaceSubscriptions = async space => {
+const loadSpaceSubscriptions = async space => {
   const subscriptions = await SubscriptionService.fetchSpaceSubscriptions(
     space
   );
@@ -42,14 +42,26 @@ const retrieveSpaceSubscriptions = async space => {
   return subscriptions;
 };
 
-const retrieveAllSpacesSubscriptions = async () => {
+const loadAllSpacesSubscriptions = async () => {
   const { userOrganizations, getOrganizationSpaces } = useOrganizations();
   const spaces = userOrganizations.value.flatMap(orga =>
     getOrganizationSpaces(orga)
   );
   return (
-    await Promise.all(spaces.map(space => retrieveSpaceSubscriptions(space)))
+    await Promise.all(spaces.map(space => loadSpaceSubscriptions(space)))
   ).reduce((acc, subscriptions) => acc.concat(subscriptions), []);
+};
+
+const loadSubscriptionPayments = (orga, space, subscription) => {
+  return SubscriptionService.fetchSubscriptionPayments(
+    orga,
+    space,
+    subscription
+  );
+};
+
+const fetchSpaceInformation = space => {
+  return SubscriptionService.fetchSpaceInformation(space);
 };
 
 const getSpaceSubscriptions = space => {
@@ -58,18 +70,6 @@ const getSpaceSubscriptions = space => {
 
 const getSpaceActiveSubscription = space => {
   return getSpaceSubscriptions(space).find(sub => sub.status === "active");
-};
-
-const retrieveSubscriptionPayments = (orga, space, subscription) => {
-  return SubscriptionService.fetchSubscriptionPayments(
-    orga,
-    space,
-    subscription
-  );
-};
-
-const retrieveSpaceInformation = space => {
-  return SubscriptionService.fetchSpaceInformation(space);
 };
 
 const getPlatformSubscriptionLink = space => {
@@ -123,13 +123,13 @@ export function useSubscriptions() {
     // Methods
     setCurrentOrga,
     setCurrentSpace,
-    retrieveOrganizationSubscriptions,
-    retrieveSpaceSubscriptions,
-    retrieveAllSpacesSubscriptions,
+    loadOrganizationSubscriptions,
+    loadSpaceSubscriptions,
+    loadAllSpacesSubscriptions,
+    loadSubscriptionPayments,
+    fetchSpaceInformation,
     getSpaceSubscriptions,
     getSpaceActiveSubscription,
-    retrieveSubscriptionPayments,
-    retrieveSpaceInformation,
     getPlatformSubscriptionLink,
     waitForCreatedSpace,
     createDatapackSubscription,

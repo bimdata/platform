@@ -63,7 +63,7 @@ export default {
   },
   setup() {
     const { userOrganizations } = useOrganizations();
-    const { retrieveOrganizationSubscriptions, retrieveSubscriptionPayments } =
+    const { loadOrganizationSubscriptions, loadSubscriptionPayments } =
       useSubscriptions();
 
     const subscriptions = ref([]);
@@ -80,17 +80,13 @@ export default {
     watch(
       selectedOrga,
       async () => {
-        subscriptions.value = await retrieveOrganizationSubscriptions(
+        subscriptions.value = await loadOrganizationSubscriptions(
           selectedOrga.value
         );
 
         let allPayments = await Promise.all(
           subscriptions.value.map(sub => {
-            return retrieveSubscriptionPayments(
-              selectedOrga.value,
-              sub.cloud,
-              sub
-            );
+            return loadSubscriptionPayments(selectedOrga.value, sub.cloud, sub);
           })
         );
 

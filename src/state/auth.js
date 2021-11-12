@@ -1,9 +1,9 @@
 import { reactive, readonly, toRefs, watchEffect } from "vue";
-import apiClient from "@/services/api-client";
-import AuthService from "@/services/AuthService";
-import PlatformService from "@/services/PlatformService";
+import apiClient from "@/services/api-client.js";
+import AuthService from "@/services/AuthService.js";
+import PlatformService from "@/services/PlatformService.js";
 import { useUser } from "@/state/user.js";
-import { tokenHasExpired } from "@/utils/auth";
+import { tokenHasExpired } from "@/utils/auth.js";
 
 const state = reactive({
   isAuthenticated: false,
@@ -67,7 +67,9 @@ watchEffect(() => (apiClient.accessToken = state.accessToken));
 export function useAuth() {
   const readonlyState = readonly(state);
   return {
+    // References
     ...toRefs(readonlyState),
+    // Methods
     authenticate,
     signIn,
     signInCallback,
