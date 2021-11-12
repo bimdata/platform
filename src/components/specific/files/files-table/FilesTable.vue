@@ -10,19 +10,18 @@
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
     <template #sub-header>
-      <div style="display: flex; align-items: center">
-        <BIMDataButton
-          ghost
-          rounded
-          icon
-          :disabled="!folder.parentId"
-          style="margin: 5px 14px 5px 3px"
-        >
+      <div
+        :style="{
+          display: folder.parentId ? 'flex' : 'none',
+          alignItems: 'center'
+        }"
+      >
+        <BIMDataButton ghost rounded icon style="margin: 5px 14px 5px 3px">
           <BIMDataIcon
             name="arrow"
             size="xxs"
             @click="$emit('back-parent-folder', folder)"
-            :style="{ cursor: folder.parentId ? 'pointer' : 'initial' }"
+            style="cursor: pointer"
           />
         </BIMDataButton>
         <FilesManagerBreadcrumb
