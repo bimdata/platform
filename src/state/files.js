@@ -44,13 +44,13 @@ const softUpdateFileStructure = (action, files) => {
 
 const createFolder = async (project, folder) => {
   const newFolder = await FileService.createFolder(project, folder);
-  softUpdateFileStructure("create", [newFolder]);
+  await loadProjectFileStructure(project);
   return newFolder;
 };
 
 const updateFolders = async (project, folders) => {
   const newFolders = await FileService.updateFolders(project, folders);
-  softUpdateFileStructure("update", folders);
+  await loadProjectFileStructure(project);
   return newFolders;
 };
 
@@ -114,7 +114,7 @@ const moveFiles = async (project, files, dest) => {
       FileService.updateDocuments(project, documents)
     ])
   ).flat();
-  loadProjectFileStructure(project);
+  await loadProjectFileStructure(project);
   return newFiles;
 };
 

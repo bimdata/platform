@@ -67,22 +67,25 @@ const loadSpaceInvitations = async space => {
 
 const createSpace = async space => {
   const newSpace = await SpaceService.createSpace(space);
-  softCreateSpace({ ...newSpace, isAdmin: true });
+
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+
   return newSpace;
-};
-
-const softCreateSpace = space => {
-  state.userSpaces = [space].concat(state.userSpaces);
-
-  const { softCreateOrganizationSpace } = useOrganizations();
-  softCreateOrganizationSpace(space);
-
-  return space;
 };
 
 const updateSpace = async space => {
   const newSpace = await SpaceService.updateSpace(space);
-  softUpdateSpace(newSpace);
+
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+
   return newSpace;
 };
 
@@ -91,8 +94,8 @@ const softUpdateSpace = space => {
     s.id === space.id ? { ...s, ...space } : s
   );
 
-  const { softUpdateOrganizationSpace } = useOrganizations();
-  softUpdateOrganizationSpace(space);
+  const { loadOrganizationSpaces } = useOrganizations();
+  loadOrganizationSpaces(space.organization);
 
   return space;
 };
@@ -105,17 +108,14 @@ const removeSpaceImage = async space => {
 
 const deleteSpace = async space => {
   await SpaceService.deleteSpace(space);
-  softDeleteSpace(space);
-  return space;
-};
 
-const softDeleteSpace = space => {
-  state.userSpaces = state.userSpaces.filter(s => s.id !== space.id);
-
-  const { softDeleteOrganizationSpace } = useOrganizations();
-  softDeleteOrganizationSpace(space);
-  const { softDeleteSpaceProjects } = useProjects();
-  softDeleteSpaceProjects(space);
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+  const { loadUserProjects } = useProjects();
+  await loadUserProjects();
 
   return space;
 };
@@ -165,12 +165,10 @@ export function useSpaces() {
     loadSpaceUsers,
     loadSpaceInvitations,
     createSpace,
-    softCreateSpace,
     updateSpace,
     softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
-    softDeleteSpace,
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,

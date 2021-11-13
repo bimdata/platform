@@ -1,4 +1,4 @@
-import { reactive, readonly, toRefs, watch } from "vue";
+import { reactive, readonly, toRefs } from "vue";
 import ProjectService from "@/services/ProjectService.js";
 import { useUser } from "@/state/user.js";
 
@@ -16,26 +16,21 @@ const setCurrentProject = id => {
 };
 
 const loadUserProjects = async () => {
-  const { mapProjects } = useUser();
   let projects = await ProjectService.fetchUserProjects();
+  const { mapProjects } = useUser();
   projects = mapProjects(projects);
   projects.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   state.userProjects = projects;
   return projects;
 };
 
-let unwatchUserProjects = () => {};
-const loadSpaceProjects = space => {
-  unwatchUserProjects();
-  unwatchUserProjects = watch(
-    () => state.userProjects,
-    () => {
-      state.spaceProjects = state.userProjects.filter(
-        project => project.cloud.id === space.id
-      );
-    },
-    { immediate: true }
-  );
+const loadSpaceProjects = async space => {
+  let projects = await ProjectService.fetchSpaceProjects(space);
+  const { mapProjects } = useUser();
+  projects = mapProjects(projects);
+  projects.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  state.spaceProjects = projects;
+  return projects;
 };
 
 const loadProjectUsers = async project => {
@@ -61,38 +56,35 @@ const loadProjectInvitations = async project => {
 
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
-  state.userProjects = [{ ...newProject, isAdmin: true }].concat(
-    state.userProjects
-  );
+
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserProjects();
+  await loadSpaceProjects(space);
+
   return newProject;
 };
 
 const updateProject = async project => {
   const newProject = await ProjectService.updateProject(project);
-  softUpdateProject(newProject);
-  return newProject;
-};
 
-const softUpdateProject = project => {
-  state.userProjects = state.userProjects.map(p =>
-    p.id === project.id ? { ...p, ...project } : p
-  );
-  return project;
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserProjects();
+  await loadSpaceProjects({ id: project.cloud.id });
+
+  return newProject;
 };
 
 const deleteProject = async project => {
   await ProjectService.deleteProject(project);
-  softDeleteProject(project);
-  return project;
-};
 
-const softDeleteProject = project => {
-  state.userProjects = state.userProjects.filter(p => p.id !== project.id);
-  return project;
-};
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserProjects();
+  await loadSpaceProjects({ id: project.cloud.id });
 
-const softDeleteSpaceProjects = space => {
-  state.userProjects = state.userProjects.filter(p => p.cloud.id !== space.id);
+  return project;
 };
 
 const sendProjectInvitation = async (project, invitation, options = {}) => {
@@ -141,10 +133,7 @@ export function useProjects() {
     loadProjectInvitations,
     createProject,
     updateProject,
-    softUpdateProject,
     deleteProject,
-    softDeleteProject,
-    softDeleteSpaceProjects,
     sendProjectInvitation,
     cancelProjectInvitation,
     updateProjectUser,

@@ -3,6 +3,7 @@ import OrganizationService from "@/services/OrganizationService.js";
 import SubscriptionService from "@/services/SubscriptionService.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
+import { useUser } from "@/state/user.js";
 import { delay } from "@/utils/async.js";
 
 const state = reactive({
@@ -81,24 +82,31 @@ const getPlatformSubscriptionLink = space => {
  * of its organization every 2 seconds until one of them is found to have
  * the same name. As space names are unique in a given organization this
  * will mean that the space (given as a parameter) has been created.
- * Then it return that space.
+ * Then it return the newly created space.
  *
  * @param {Object} space
  * @returns {Object}
  */
 const waitForCreatedSpace = async space => {
-  let spaces = [];
-  do {
-    // Retrieve organization spaces from API
+  let spaces = [],
+    newSpace = null;
+  while (!newSpace) {
+    // Fetch organization spaces from API
     spaces = await OrganizationService.fetchOrganizationSpaces(
       space.organization
     );
-    await delay(2000); // wait 2s
-  } while (!spaces.some(s => s.name === space.name));
+    newSpace = spaces.find(s => s.name === space.name);
+    if (newSpace) break; // Exit loop if space is created
+    await delay(2000); // else wait 2s before next check
+  }
 
-  const newSpace = spaces.find(s => s.name === space.name);
-  const { softCreateSpace } = useSpaces();
-  softCreateSpace({ ...newSpace, isAdmin: true });
+  // Reload the list of spaces
+  const { loadUser } = useUser();
+  await loadUser();
+  const { loadUserSpaces } = useSpaces();
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(newSpace.organization);
 
   return newSpace;
 };

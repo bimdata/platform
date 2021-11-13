@@ -25,6 +25,7 @@ const loadOrganizationSpaces = async organization => {
   const spaces = await OrganizationService.fetchOrganizationSpaces(
     organization
   );
+
   state.organizationsSpaces[organization.id] = spaces;
 
   const { userSpaces } = useSpaces();
@@ -50,39 +51,6 @@ const getOrganizationSpaces = organization => {
 
 const getOrganizationUserSpaces = organization => {
   return readonly(state.organizationsUserSpaces[organization?.id] || []);
-};
-
-const softCreateOrganizationSpace = space => {
-  const orga = space.organization;
-  state.organizationsSpaces[orga.id] = [space].concat(
-    getOrganizationSpaces(orga)
-  );
-  state.organizationsUserSpaces[orga.id] = [space].concat(
-    getOrganizationUserSpaces(orga)
-  );
-  return space;
-};
-
-const softUpdateOrganizationSpace = space => {
-  const orga = space.organization;
-  state.organizationsSpaces[orga.id] = getOrganizationSpaces(orga).map(s =>
-    s.id === space.id ? { ...s, ...space } : s
-  );
-  state.organizationsUserSpaces[orga.id] = getOrganizationUserSpaces(orga).map(
-    s => (s.id === space.id ? { ...s, ...space } : s)
-  );
-  return space;
-};
-
-const softDeleteOrganizationSpace = space => {
-  const orga = space.organization;
-  state.organizationsSpaces[orga.id] = getOrganizationSpaces(orga).filter(
-    s => s.id !== space.id
-  );
-  state.organizationsUserSpaces[orga.id] = getOrganizationUserSpaces(
-    orga
-  ).filter(s => s.id !== space.id);
-  return space;
 };
 
 const createOrganization = async organization => {
@@ -148,9 +116,6 @@ export function useOrganizations() {
     loadAllOrganizationsSpaces,
     getOrganizationSpaces,
     getOrganizationUserSpaces,
-    softCreateOrganizationSpace,
-    softUpdateOrganizationSpace,
-    softDeleteOrganizationSpace,
     createOrganization,
     updateOrganization,
     importOrganizationSpaces,
