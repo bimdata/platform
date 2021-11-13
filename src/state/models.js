@@ -1,5 +1,4 @@
 import { reactive, readonly, toRefs } from "vue";
-import FILE_TYPES from "@/config/file-types.js";
 import ModelService from "@/services/ModelService.js";
 import { useFiles } from "@/state/files.js";
 
@@ -20,34 +19,19 @@ const fetchModelByID = async (project, id) => {
 
 const updateModels = async (project, models) => {
   const newModels = await ModelService.updateModels(project, models);
-  softUpdateModels(newModels);
+  await loadProjectModels(project);
   return newModels;
 };
 
 const updateModelName = async (project, model, name) => {
   // In order to update a model name we have to update the name
   // of its assiociated document.
-  const { updateDocuments } = useFiles();
-  const [newDocument] = await updateDocuments(project, [
-    {
-      ...model.document,
-      type: FILE_TYPES.IFC,
-      name
-    }
+  const { updateFiles } = useFiles();
+  const [newDocument] = await updateFiles(project, [
+    { ...model.document, name }
   ]);
 
   return { ...model, name, document: newDocument };
-};
-
-const softUpdateModels = models => {
-  let projectModels = state.projectModels.slice();
-  for (const model of models) {
-    projectModels = projectModels.map(m =>
-      m.id === model.id ? { ...m, ...model } : m
-    );
-  }
-  state.projectModels = projectModels;
-  return models;
 };
 
 const mergeModels = async (project, models, name) => {
@@ -60,15 +44,10 @@ const downloadModels = async models => {
 
 const deleteModels = async (project, models) => {
   await ModelService.deleteModels(project, models);
-  softDeleteModels(models);
 
-  // Delete associated documents
-  const { softUpdateFileStructure } = useFiles();
-  const modelDocs = models.map(model => ({
-    ...model.document,
-    type: FILE_TYPES.IFC
-  }));
-  softUpdateFileStructure("delete", modelDocs);
+  await loadProjectModels(project);
+  const { loadProjectFileStructure } = useFiles();
+  await loadProjectFileStructure(project);
 
   return models;
 };
@@ -183,7 +162,6 @@ export function useModels() {
     fetchModelByID,
     updateModels,
     updateModelName,
-    softUpdateModels,
     mergeModels,
     downloadModels,
     deleteModels,
