@@ -1,5 +1,6 @@
 .user-subscriptions {
   &__header {
+    margin-top: var(--spacing-unit);
     display: flex;
     justify-content: space-between;
     gap: var(--spacing-unit);

@@ -1,5 +1,10 @@
 <template>
   <div class="user-subscriptions">
+    <ViewHeader>
+      <template #left>
+        <GoBackButton />
+      </template>
+    </ViewHeader>
     <div class="user-subscriptions__header">
       <div class="user-subscriptions__header__left">
         <h1>
@@ -51,6 +56,8 @@ import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
 // Components
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import BillingsTable from "@/components/specific/subscriptions/billings-table/BillingsTable.vue";
 import InvoicesTable from "@/components/specific/subscriptions/invoices-table/InvoicesTable.vue";
 import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
@@ -58,8 +65,10 @@ import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/Su
 export default {
   components: {
     BillingsTable,
+    GoBackButton,
     InvoicesTable,
-    SubscribeCard
+    SubscribeCard,
+    ViewHeader
   },
   setup() {
     const { userOrganizations } = useOrganizations();
@@ -85,9 +94,17 @@ export default {
         );
 
         let allPayments = await Promise.all(
-          subscriptions.value.map(sub => {
-            return loadSubscriptionPayments(selectedOrga.value, sub.cloud, sub);
-          })
+          subscriptions.value
+            // TODO: this is to avoid errors when fetching payments of a deleted space.
+            // Should be removed when a solution is found.
+            .filter(sub => sub.cloud)
+            .map(sub => {
+              return loadSubscriptionPayments(
+                selectedOrga.value,
+                sub.cloud,
+                sub
+              );
+            })
         );
 
         const tomorrow = new Date();
