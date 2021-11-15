@@ -1,8 +1,5 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
-    <template #left>
-      <FilesManagerBreadcrumb :file="currentFolder" />
-    </template>
     <template #content>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
@@ -63,6 +60,7 @@
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
+            @back-parent-folder="backToParent"
           />
         </div>
 
@@ -115,7 +113,6 @@ import FolderAccessManager from "@/components/specific/files/folder-access-manag
 import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
 import FilesActionBar from "./files-action-bar/FilesActionBar";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal";
-import FilesManagerBreadcrumb from "./files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
 
 export default {
@@ -127,7 +124,6 @@ export default {
     FolderCreationButton,
     FilesActionBar,
     FilesDeleteModal,
-    FilesManagerBreadcrumb,
     FilesManagerOnboarding
   },
   props: {
@@ -189,8 +185,13 @@ export default {
     );
     const onFileSelected = file => {
       if (file.type === FILE_TYPES.FOLDER) {
-        currentFolder.value = file;
+        currentFolder.value = handler.deserialize(file);
       }
+    };
+
+    const backToParent = file => {
+      const parentFolder = handler.parent(file);
+      currentFolder.value = handler.deserialize(parentFolder);
     };
 
     const { filteredList: displayedFiles, searchText } = useListFilter(
@@ -280,7 +281,8 @@ export default {
       onFileSelected,
       openDeleteModal,
       setSelection,
-      uploadFiles
+      uploadFiles,
+      backToParent
     };
   }
 };

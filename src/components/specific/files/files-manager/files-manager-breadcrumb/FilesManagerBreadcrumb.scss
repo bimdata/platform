@@ -2,11 +2,9 @@
   &__path {
     display: inline-flex;
     align-items: center;
-    gap: calc(var(--spacing-unit) / 2);
   }
 
   &__file {
-    margin-left: calc(var(--spacing-unit) / 2);
     font-weight: bold;
   }
 }

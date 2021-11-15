@@ -65,7 +65,8 @@ export default {
         merge: true,
         export: true,
         editProperties: true
-      }
+      },
+      "viewer2d-background": true
     };
 
     // Extract space specific plugins config
