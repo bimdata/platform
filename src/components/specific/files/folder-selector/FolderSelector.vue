@@ -147,15 +147,10 @@ export default {
         )
     );
 
-    const isAllowedToMoveFile = computed(() =>
-      props.files.some(f => {
-        if (selectedFolder.value) {
-          return selectedFolder.value.id === f.parentId;
-        } else {
-          return currentFolder.value.id === f.parentId;
-        }
-      })
-    );
+    const isAllowedToMoveFile = computed(() => {
+      const activeFolder = (selectedFolder.value || currentFolder.value).id;
+      return props.files.some(f => activeFolder === f.parentId);
+    });
 
     const set = () => {
       currentFolder.value = props.initialFolder;
