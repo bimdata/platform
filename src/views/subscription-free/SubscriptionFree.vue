@@ -16,6 +16,7 @@
       </p>
       <div class="subscription-free__body__content">
         <SpaceCreator
+          type="free"
           :organizations="organizations"
           :initialOrga="currentOrga"
           @space-created="onSpaceCreated"
@@ -26,7 +27,9 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { useNotifications } from "@/composables/notifications.js";
 import { FREE_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
@@ -44,13 +47,23 @@ export default {
     ViewHeader
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
+    const { pushNotification } = useNotifications();
     const { userOrganizations } = useOrganizations();
     const { currentOrga } = useSubscriptions();
 
     const size = formatBytes(FREE_PLAN_STORAGE);
 
     const onSpaceCreated = space => {
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("SubscriptionFree.spaceCreatedNotification", {
+          organizationName: space.organization.name,
+          spaceName: space.name
+        })
+      });
       router.push({
         name: routeNames.spaceBoard,
         params: {

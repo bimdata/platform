@@ -49,7 +49,8 @@
   },
   "SubscriptionFree": {
     "title": "Créer un espace gratuit",
-    "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: {size}, 6 utilisateurs."
+    "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: {size}, 6 utilisateurs.",
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "SubscriptionPro": {
     "title": "Passer à la platforme professionnelle",

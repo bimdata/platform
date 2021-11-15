@@ -117,9 +117,15 @@
 <script>
 import { ref, reactive, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
+import { useSpaces } from "@/state/spaces.js";
 
 export default {
   props: {
+    type: {
+      type: String,
+      default: "pro",
+      validator: value => ["free", "pro"].includes(value)
+    },
     organizations: {
       type: Array,
       required: true
@@ -132,6 +138,7 @@ export default {
   emits: ["space-created"],
   setup(props, { emit }) {
     const { createOrganization } = useOrganizations();
+    const { createSpace } = useSpaces();
 
     const mode = ref("create");
     const step = ref(1);
@@ -192,7 +199,12 @@ export default {
     const submitSpace = async () => {
       try {
         newSpaceLoading.value = true;
-        emit("space-created", { ...newSpace });
+        if (props.type === "free") {
+          const createdSpace = await createSpace(newSpace);
+          emit("space-created", createdSpace);
+        } else {
+          emit("space-created", { ...newSpace });
+        }
         step.value = 3;
       } finally {
         newSpaceLoading.value = false;

@@ -46,7 +46,8 @@
     "title": "Add DataPack"
   },
   "SubscriptionFree": {
-    "title": "Create Free Plan"
+    "title": "Create Free Plan",
+    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
   },
   "SubscriptionPro": {
     "title": "Upgrade to pro platform",

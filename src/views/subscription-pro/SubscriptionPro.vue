@@ -32,7 +32,7 @@
             <ProPlanInfo />
           </div>
           <div class="subscription-pro__content__body__center">
-            <ProPlanForm :space="space" @space-created="goToSpaceBoard" />
+            <ProPlanForm :space="space" @space-created="onSpaceCreated" />
           </div>
           <div class="subscription-pro__content__body__right">
             <SpaceSizePreview
@@ -84,7 +84,7 @@ export default {
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
-    const goToSpaceBoard = space => {
+    const onSpaceCreated = space => {
       pushNotification({
         type: "success",
         title: t("Success"),
@@ -108,7 +108,7 @@ export default {
       spaceInfo,
       // Methods
       formatBytes,
-      goToSpaceBoard
+      onSpaceCreated
     };
   }
 };
