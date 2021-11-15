@@ -40,6 +40,7 @@
         :project="project"
         :fileStructure="fileStructure"
         :files="files"
+        :initialFolder="initialFolder"
         @folder-selected="$emit('move', { files, dest: $event })"
         @close="closeFolderSelector"
       />
@@ -68,6 +69,10 @@ export default {
     files: {
       type: Array,
       default: () => []
+    },
+    initialFolder: {
+      type: Object,
+      required: true
     }
   },
   emits: ["delete", "download", "move"],
