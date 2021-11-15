@@ -40,6 +40,7 @@
               :project="project"
               :fileStructure="fileStructure"
               :files="selection"
+              :initialFolder="currentFolder"
               @delete="openDeleteModal"
               @download="downloadFiles"
               @move="moveFiles"

@@ -87,6 +87,7 @@
         fill
         radius
         @click="submit"
+        :disabled="isAllowedToMoveFile"
       >
         {{
           $t(
@@ -102,6 +103,8 @@
 
 <script>
 import { computed, ref, watch } from "vue";
+
+import { useFiles } from "@/state/files";
 import FILE_PERMISSIONS from "@/config/file-permissions";
 import FILE_TYPES from "@/config/file-types";
 
@@ -118,33 +121,50 @@ export default {
     files: {
       type: Array,
       default: () => []
+    },
+    initialFolder: {
+      type: Object,
+      required: true
     }
   },
   emits: ["close", "folder-selected"],
   setup(props, { emit }) {
+    const { fileStructureHandler: handler } = useFiles();
+
     const folderPath = ref([]);
     const currentFolder = ref(null);
     const selectedFolder = ref(null);
 
-    /* eslint-disable */
     const folders = computed(() =>
-      currentFolder.value.children.filter(
-        child =>
-          child.type === FILE_TYPES.FOLDER
-          && !props.files.some(f => child.id === f.id)
-          && (props.project.isAdmin || child.userPermission === FILE_PERMISSIONS.READ_WRITE)
-      )
+      handler
+        .children(currentFolder.value)
+        .filter(
+          child =>
+            child.type === FILE_TYPES.FOLDER &&
+            !props.files.some(f => child.id === f.id) &&
+            (props.project.isAdmin ||
+              child.userPermission === FILE_PERMISSIONS.READ_WRITE)
+        )
     );
-    /* eslint-enable */
 
-    const reset = () => {
-      folderPath.value = [];
-      currentFolder.value = props.fileStructure;
+    const isAllowedToMoveFile = computed(() =>
+      props.files.some(f => {
+        if (selectedFolder.value) {
+          return selectedFolder.value.id === f.parentId;
+        } else {
+          return currentFolder.value.id === f.parentId;
+        }
+      })
+    );
+
+    const set = () => {
+      currentFolder.value = props.initialFolder;
+      folderPath.value = handler.ancestors(currentFolder.value);
       selectedFolder.value = null;
     };
 
     const close = () => {
-      reset();
+      set();
       emit("close");
     };
 
@@ -176,8 +196,8 @@ export default {
     };
 
     watch(
-      () => props.fileStructure,
-      () => reset(),
+      () => props.initialFolder,
+      () => set(),
       { immediate: true }
     );
 
@@ -192,7 +212,8 @@ export default {
       enterFolder,
       exitFolder,
       selectFolder,
-      submit
+      submit,
+      isAllowedToMoveFile
     };
   }
 };
