@@ -80,8 +80,6 @@ const createSpace = async space => {
 const updateSpace = async space => {
   const newSpace = await SpaceService.updateSpace(space);
 
-  const { loadUser } = useUser();
-  await loadUser();
   await loadUserSpaces();
   const { loadOrganizationSpaces } = useOrganizations();
   await loadOrganizationSpaces(space.organization);
@@ -89,20 +87,13 @@ const updateSpace = async space => {
   return newSpace;
 };
 
-const softUpdateSpace = space => {
-  state.userSpaces = state.userSpaces.map(s =>
-    s.id === space.id ? { ...s, ...space } : s
-  );
-
-  const { loadOrganizationSpaces } = useOrganizations();
-  loadOrganizationSpaces(space.organization);
-
-  return space;
-};
-
 const removeSpaceImage = async space => {
   const newSpace = await SpaceService.removeSpaceImage(space);
-  softUpdateSpace(newSpace);
+
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+
   return newSpace;
 };
 
@@ -166,7 +157,6 @@ export function useSpaces() {
     loadSpaceInvitations,
     createSpace,
     updateSpace,
-    softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
     sendSpaceInvitation,

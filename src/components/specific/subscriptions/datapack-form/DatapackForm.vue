@@ -71,8 +71,7 @@ export default {
   emits: ["quantity-updated", "datapack-created", "datapack-updated"],
   setup(props, { emit }) {
     const { getDatapackPrice } = usePaddle();
-    const { createDatapackSubscription, updateDatapackSubscription } =
-      useSubscriptions();
+    const { createDatapack, updateDatapack } = useSubscriptions();
 
     const loading = inject("loading", false);
 
@@ -107,14 +106,14 @@ export default {
       try {
         loading.value = true;
         if (datapack.value) {
-          await updateDatapackSubscription(
+          await updateDatapack(
             props.space,
             datapack.value,
             datapack.value.quantity + quantity.value
           );
           emit("datapack-updated");
         } else {
-          await createDatapackSubscription(props.space, quantity.value);
+          await createDatapack(props.space, quantity.value);
           emit("datapack-created");
         }
         quantity.value = 1; // Reset quantity value

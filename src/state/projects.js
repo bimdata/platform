@@ -68,8 +68,6 @@ const createProject = async (space, project) => {
 const updateProject = async project => {
   const newProject = await ProjectService.updateProject(project);
 
-  const { loadUser } = useUser();
-  await loadUser();
   await loadUserProjects();
   await loadSpaceProjects({ id: project.cloud.id });
 

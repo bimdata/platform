@@ -111,11 +111,11 @@ const waitForCreatedSpace = async space => {
   return newSpace;
 };
 
-const createDatapackSubscription = (space, quantity) => {
+const createDatapack = (space, quantity) => {
   return SubscriptionService.createDatapackSubscription(space, quantity);
 };
 
-const updateDatapackSubscription = (space, datapack, quantity) => {
+const updateDatapack = (space, datapack, quantity) => {
   return SubscriptionService.updateDatapackSubscription(
     space,
     datapack,
@@ -140,7 +140,7 @@ export function useSubscriptions() {
     getSpaceActiveSubscription,
     getPlatformSubscriptionLink,
     waitForCreatedSpace,
-    createDatapackSubscription,
-    updateDatapackSubscription
+    createDatapack,
+    updateDatapack
   };
 }
