@@ -590,6 +590,7 @@
   },
 
   "SpaceCard": {
+    "free": "Gratuit",
     "projects": "PROJETS"
   },
 

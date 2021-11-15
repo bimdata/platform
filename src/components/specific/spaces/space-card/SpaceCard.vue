@@ -8,6 +8,9 @@
       <SpaceCardActionMenu v-if="actionMenu && space.isAdmin" :space="space" />
     </template>
     <template #content>
+      <div v-if="space.isFree" class="free-badge">
+        {{ $t("SpaceCard.free") }}
+      </div>
       <SpaceCardImage :space="space" topStripe />
     </template>
     <template #footer>

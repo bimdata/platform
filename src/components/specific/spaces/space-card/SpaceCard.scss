@@ -16,9 +16,26 @@
     }
 
     .bimdata-card__content {
+      position: relative;
       overflow: hidden;
       height: $card-content-height;
       padding: 0;
+
+      .free-badge {
+        position: absolute;
+        z-index: 1;
+        top: 4px;
+        left: 0;
+
+        min-width: 32px;
+        min-height: 32px;
+        padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+      }
     }
 
     .bimdata-card__footer {
