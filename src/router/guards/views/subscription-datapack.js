@@ -1,15 +1,16 @@
 import routeNames from "@/router/route-names.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
-export default async function subscriptionDatapackGuard(route) {
-  const { currentSpace, setCurrentSpace } = useSubscriptions();
+const { setCurrentSpace } = useSubscriptions();
 
-  if (!currentSpace.value) {
-    if (route.query.space) {
-      setCurrentSpace(+route.query.space);
-      return { name: routeNames.subscriptionDatapack };
-    } else {
-      return { name: routeNames.subscriptionPro };
-    }
+export default async function subscriptionDatapackGuard(route) {
+  setCurrentSpace(null);
+
+  if (route.query.space) {
+    setCurrentSpace(+route.query.space);
+    return true;
   }
+
+  // Redirect to pro plan subscription if no space is selected
+  return { name: routeNames.subscriptionPro };
 }

@@ -1,10 +1,17 @@
-import routeNames from "@/router/route-names.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
-export default async function subscriptionPlatformGuard(route) {
+const { setCurrentOrga, setCurrentSpace } = useSubscriptions();
+
+export default async function subscriptionProGuard(route) {
+  setCurrentOrga(null);
+  setCurrentSpace(null);
+
+  if (route.query.space) {
+    setCurrentSpace(+route.query.space);
+    return true;
+  }
+
   if (route.query.organization) {
-    const { setCurrentOrga } = useSubscriptions();
     setCurrentOrga(+route.query.organization);
-    return { name: routeNames.subscriptionPro };
   }
 }

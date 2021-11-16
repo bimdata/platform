@@ -13,20 +13,22 @@
     <transition name="fade">
       <div class="billing-actions-cell__menu" v-show="showMenu">
         <a
-          :href="billing.update_url"
           class="
             bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--default
             billing-actions-cell__menu__btn
           "
+          target="blank"
+          :href="billing.update_url"
         >
           {{ $t("BillingActionsCell.updateButtonText") }}
         </a>
         <a
-          :href="billing.cancel_url"
           class="
             bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--high
             billing-actions-cell__menu__btn
           "
+          target="blank"
+          :href="billing.cancel_url"
         >
           {{ $t("BillingActionsCell.cancelButtonText") }}
         </a>

@@ -5,19 +5,21 @@
       src="/static/platform-heading.svg"
       alt="BIMData Platform"
     />
-    <h1 class="pro-plan-info__title">
-      {{ $t("ProPlanInfo.title") }}
-    </h1>
-    <h3 class="pro-plan-info__sub-title">
-      {{ $t("ProPlanInfo.subTitle") }}
-    </h3>
-    <div class="pro-plan-info__price">
-      <span class="pro-plan-info__price__value">
-        {{ proPlanPrice }}
-      </span>
-      <span class="pro-plan-info__price__unit">
-        {{ $t("ProPlanInfo.priceUnit") }}
-      </span>
+    <div class="pro-plan-info__middle">
+      <h1 class="pro-plan-info__title">
+        {{ $t("ProPlanInfo.title") }}
+      </h1>
+      <h3 class="pro-plan-info__sub-title">
+        {{ $t("ProPlanInfo.subTitle") }}
+      </h3>
+      <div class="pro-plan-info__price">
+        <span class="value">
+          {{ proPlanPrice }}
+        </span>
+        <span class="unit">
+          {{ $t("ProPlanInfo.priceUnit") }}
+        </span>
+      </div>
     </div>
     <div class="pro-plan-info__bullets">
       <div class="pro-plan-info__bullets__head">

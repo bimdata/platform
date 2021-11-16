@@ -1,8 +1,19 @@
 <template>
-  <div class="pro-plan-form paddle-checkout-container">
-    <!--
-      Paddle inline checkout will be loaded here
-    -->
+  <div class="pro-plan-form">
+    <div class="pro-plan-form__head">
+      <h1 class="pro-plan-form__head__title">
+        {{ $t("ProPlanForm.title") }}
+      </h1>
+      <span class="pro-plan-form__head__price">
+        <span class="value">{{ proPlanPrice }}</span>
+        <span class="unit">{{ $t("ProPlanForm.priceUnit") }}</span>
+      </span>
+    </div>
+    <div class="paddle-checkout-container">
+      <!--
+        Paddle inline checkout will be loaded here
+      -->
+    </div>
     <transition name="fade">
       <div class="pro-plan-form__loader" v-show="loading">
         <BIMDataSpinner />
@@ -20,15 +31,6 @@
         <div class="pro-plan-form__success__message">
           {{ $t("ProPlanForm.successMessage") }}
         </div>
-        <!-- <BIMDataButton
-          width="160px"
-          color="primary"
-          fill
-          radius
-          @click="goToDashboard"
-        >
-          {{ $t("ProPlanForm.successButtonText") }}
-        </BIMDataButton> -->
       </div>
     </transition>
   </div>
@@ -51,12 +53,17 @@ export default {
   emits: ["space-created"],
   setup(props, { emit }) {
     const router = useRouter();
-    const { loadCheckout } = usePaddle();
+    const { getProPlanPrice, loadCheckout } = usePaddle();
     const { getPlatformSubscriptionLink, waitForCreatedSpace } =
       useSubscriptions();
 
     const loading = ref(false);
     const isSuccess = ref(false);
+    const proPlanPrice = ref("0");
+
+    getProPlanPrice().then(({ price, currency }) => {
+      proPlanPrice.value = `${price}${currency}`;
+    });
 
     onMounted(async () => {
       watch(
@@ -90,6 +97,7 @@ export default {
       // References
       isSuccess,
       loading,
+      proPlanPrice,
       // Methods
       goToDashboard
     };

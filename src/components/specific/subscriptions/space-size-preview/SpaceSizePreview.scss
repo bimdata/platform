@@ -5,6 +5,16 @@
   gap: calc(var(--spacing-unit) * 3);
   padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4);
 
+  &__title {
+    h1 {
+      margin: 0;
+    }
+  }
+
+  &__image {
+    margin: calc(var(--spacing-unit) * 2) 0;
+  }
+
   &__actual-size,
   &__new-size {
     width: 100%;

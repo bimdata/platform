@@ -159,29 +159,6 @@ export default {
       organization: null
     });
 
-    watch(
-      [() => props.organizations, () => props.initialOrga],
-      ([organizations, initialOrga]) => {
-        if (organizations.length > 0) {
-          mode.value = initialOrga ? "select" : "create";
-          orga.value = initialOrga ?? organizations[0];
-        } else {
-          mode.value = "create";
-          orga.value = {};
-        }
-      },
-      { immediate: true }
-    );
-    watch(
-      () => mode.value,
-      () => {
-        if (mode.value === "create") {
-          setTimeout(() => orgaNameInput.value.focus(), 200);
-        }
-      },
-      { immediate: true }
-    );
-
     const submitOrga = async () => {
       if (mode.value === "create") {
         try {
@@ -210,6 +187,30 @@ export default {
         newSpaceLoading.value = false;
       }
     };
+
+    watch(
+      [() => props.organizations, () => props.initialOrga],
+      ([organizations, initialOrga]) => {
+        if (organizations.length > 0) {
+          mode.value = initialOrga ? "select" : "create";
+          orga.value = initialOrga ?? organizations[0];
+          if (initialOrga) submitOrga();
+        } else {
+          mode.value = "create";
+          orga.value = {};
+        }
+      },
+      { immediate: true }
+    );
+    watch(
+      () => mode.value,
+      () => {
+        if (mode.value === "create") {
+          setTimeout(() => orgaNameInput.value.focus(), 200);
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       mode,

@@ -41,11 +41,9 @@
         <SubscribeCard />
       </div>
     </div>
-    <div class="user-subscriptions__content m-t-18">
-      <div class="flex">
-        <BillingsTable :subscriptions="subscriptions" />
-        <InvoicesTable :subscriptions="subscriptions" :payments="payments" />
-      </div>
+    <div class="user-subscriptions__content">
+      <BillingsTable :subscriptions="subscriptions" />
+      <InvoicesTable :subscriptions="subscriptions" :payments="payments" />
     </div>
   </div>
 </template>

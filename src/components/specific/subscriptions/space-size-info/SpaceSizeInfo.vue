@@ -68,7 +68,10 @@ export default {
 
     const goToSubscriptionPro = () => {
       router.push({
-        name: routeNames.subscriptionPro
+        name: routeNames.subscriptionPro,
+        query: {
+          space: props.space.id
+        }
       });
     };
 

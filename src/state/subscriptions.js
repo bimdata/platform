@@ -15,15 +15,15 @@ const state = reactive({
 
 const setCurrentOrga = id => {
   const { userOrganizations } = useOrganizations();
-  const orga = userOrganizations.value.find(orga => orga.id === id);
+  const orga = userOrganizations.value.find(orga => orga.id === id) || null;
   state.currentOrga = orga;
   return orga;
 };
 
 const setCurrentSpace = id => {
   const { userSpaces } = useSpaces();
-  const space = userSpaces.value.find(space => space.id === id);
-  state.currentOrga = space.organization;
+  const space = userSpaces.value.find(space => space.id === id) || null;
+  state.currentOrga = space ? space.organization : null;
   state.currentSpace = space;
   return space;
 };

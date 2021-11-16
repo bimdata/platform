@@ -1,10 +1,11 @@
-import routeNames from "@/router/route-names.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
+const { setCurrentOrga } = useSubscriptions();
+
 export default async function subscriptionFreeGuard(route) {
+  setCurrentOrga(null);
+
   if (route.query.organization) {
-    const { setCurrentOrga } = useSubscriptions();
     setCurrentOrga(+route.query.organization);
-    return { name: routeNames.subscriptionFree };
   }
 }

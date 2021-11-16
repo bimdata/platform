@@ -53,8 +53,11 @@
     "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "SubscriptionPro": {
-    "title": "Passer à la platforme professionnelle",
+    "subscribeTitle": "Créer un espace pro",
+    "upgradeTitle": "Passer à la platforme professionnelle",
     "text": "Vous êtes sur le point de créer votre plan professionel. Votre plan inclus: {size} de stockage, création de projets illimités, utilisateurs illimités.",
+    "currentOrga": "Organization sélectionnée:",
+    "currentSpace": "Espace sélectionné:",
     "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "UserProjects": {
@@ -568,6 +571,8 @@
   },
 
   "ProPlanForm": {
+    "title": "Prix",
+    "priceUnit": "/ mois",
     "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
     "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
     "successButtonText": "Page d'accueil"
@@ -626,14 +631,14 @@
   },
 
   "SpaceCreator": {
-    "createNewOrgaRadio": "Créer une nouvelle orga",
-    "createNewOrgaInput": "Nom de ma nouvelle orga",
-    "createSelectOrgaTitle": "Créer ou sélectionner une orga",
+    "createSelectOrgaTitle": "Créer ou sélectionner une organisation",
+    "createNewOrgaRadio": "Créer une nouvelle organisation",
+    "createNewOrgaInput": "Nom de ma nouvelle organisation",
+    "selectOrgaRadio": "Sélectionner une organisation",
+    "orgaValidateButton": "Valider",
     "createSpaceTitle": "Créer un espace",
     "createSpaceText": "Texte expliquant ce qu'est un espace ici.",
     "createSpaceInput": "Nom de mon nouvel espace",
-    "selectOrgaRadio": "Sélectionner une orga",
-    "orgaValidateButton": "Valider",
     "spaceValidateButton": "Valider"
   },
 

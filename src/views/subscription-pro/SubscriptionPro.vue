@@ -6,7 +6,13 @@
       </template>
       <template #center>
         <h1 class="subscription-pro__title">
-          {{ $t("SubscriptionPro.title") }}
+          {{
+            $t(
+              `SubscriptionPro.${
+                currentSpace ? "upgradeTitle" : "subscribeTitle"
+              }`
+            )
+          }}
         </h1>
       </template>
     </ViewHeader>
@@ -19,11 +25,33 @@
       </div>
 
       <div class="subscription-pro__content__head">
-        <SpaceCreator
-          :organizations="organizations"
-          :initialOrga="currentOrga"
-          @space-created="space = $event"
-        />
+        <template v-if="currentSpace">
+          <div class="space-selector flex items-center">
+            <div class="m-r-24 flex items-center">
+              <span class="m-r-12 primary-font-bold">
+                {{ $t("SubscriptionPro.currentOrga") }}
+              </span>
+              <span>
+                {{ currentOrga.name }}
+              </span>
+            </div>
+            <div class="flex items-center">
+              <span class="m-r-12 primary-font-bold">
+                {{ $t("SubscriptionPro.currentSpace") }}
+              </span>
+              <span>
+                {{ currentSpace.name }}
+              </span>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <SpaceCreator
+            :organizations="organizations"
+            :initialOrga="currentOrga"
+            @space-created="space = $event"
+          />
+        </template>
       </div>
 
       <transition name="slide-fade-down">
@@ -78,11 +106,15 @@ export default {
     const router = useRouter();
     const { pushNotification } = useNotifications();
     const { userOrganizations } = useOrganizations();
-    const { currentOrga } = useSubscriptions();
+    const { currentOrga, currentSpace } = useSubscriptions();
 
     const space = ref(null);
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
+
+    if (currentSpace.value) {
+      space.value = currentSpace.value;
+    }
 
     const onSpaceCreated = space => {
       pushNotification({
@@ -102,6 +134,7 @@ export default {
     return {
       // References
       currentOrga,
+      currentSpace,
       newSizeAvailable,
       organizations: userOrganizations,
       space,

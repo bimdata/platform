@@ -3,9 +3,11 @@
     margin-top: var(--spacing-unit);
     display: flex;
     justify-content: space-between;
-    gap: var(--spacing-unit);
+    gap: calc(var(--spacing-unit) * 6);
 
     &__left {
+      max-width: 450px;
+
       h1 {
         margin-top: 0;
         font-family: "robotobold";
@@ -29,13 +31,18 @@
         }
       }
     }
+
+    &__right {
+      flex-grow: 1;
+    }
   }
 
   &__content {
-    & > .flex {
-      flex-wrap: wrap;
-      gap: calc(var(--spacing-unit) * 3);
-    }
+    margin-top: calc(var(--spacing-unit) * 3 / 2);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 3);
 
     .billings-table,
     .invoices-table {

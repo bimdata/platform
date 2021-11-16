@@ -1,9 +1,9 @@
 <template>
   <div class="space-size-preview">
-    <div class="storage-preview__title">
+    <div class="space-size-preview__title">
       <h1>{{ $t("SpaceSizePreview.title") }}</h1>
     </div>
-    <div class="space-size-preview__logo">
+    <div class="space-size-preview__image">
       <img
         src="/static/space-size-preview-image.svg"
         alt="storage-preview-image"

@@ -1,14 +1,21 @@
 .pro-plan-info {
   height: 100%;
-  padding: calc(var(--spacing-unit) * 2) 0;
+  padding: calc(var(--spacing-unit) * 3) 0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-unit);
+  gap: calc(var(--spacing-unit) * 2);
 
   &__heading {
     width: 300px;
+  }
+
+  &__middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-unit);
   }
 
   &__title,
@@ -17,11 +24,11 @@
   }
 
   &__price {
-    &__value {
+    .value {
       font-size: 40px;
       font-weight: bold;
     }
-    &__unit {
+    .unit {
       color: var(--color-tertiary-dark);
     }
   }
@@ -32,7 +39,6 @@
     gap: calc(var(--spacing-unit) / 2);
 
     &__head {
-      font-weight: bold;
       margin-bottom: calc(var(--spacing-unit) / 2);
       &::after {
         content: ":";
