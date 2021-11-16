@@ -1,9 +1,11 @@
+import { useAuth } from "@/state/auth.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 import { useUser } from "@/state/user.js";
 
+const { isAuthenticated } = useAuth();
 const { loadUser } = useUser();
 const { loadUserOrganizations, loadAllOrganizationsSpaces } =
   useOrganizations();
@@ -14,8 +16,9 @@ const { loadUserProjects } = useProjects();
 let dataLoaded = false;
 
 export default async function dataGuard() {
-  if (!dataLoaded) {
-    // Note: the call order *is* important !
+  if (isAuthenticated.value && !dataLoaded) {
+    // Note: the order in which methods are called is important !
+
     await loadUser();
     await loadUserOrganizations();
     await loadUserSpaces();
