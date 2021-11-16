@@ -11,10 +11,10 @@ const { loadUserSpaces } = useSpaces();
 const { loadAllSpacesSubscriptions } = useSubscriptions();
 const { loadUserProjects } = useProjects();
 
-let rootResolved = false;
+let dataLoaded = false;
 
-const rootResolver = async () => {
-  if (!rootResolved) {
+export default async function dataGuard() {
+  if (!dataLoaded) {
     // Note: the call order *is* important !
     await loadUser();
     await loadUserOrganizations();
@@ -24,8 +24,6 @@ const rootResolver = async () => {
     await loadAllOrganizationsSpaces();
     await loadAllSpacesSubscriptions();
 
-    rootResolved = true;
+    dataLoaded = true;
   }
-};
-
-export default rootResolver;
+}

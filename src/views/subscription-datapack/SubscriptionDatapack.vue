@@ -28,8 +28,8 @@
             :space="selectedSpace"
             :subscription="subscription"
             @quantity-updated="quantity = $event"
-            @datapack-created="loadSpaceData(selectedSpace)"
-            @datapack-updated="loadSpaceData(selectedSpace)"
+            @datapack-created="onSuccess"
+            @datapack-updated="onSuccess"
           />
         </div>
         <div class="subscription-datapack__content__body__right">
@@ -48,9 +48,13 @@
 
 <script>
 import { computed, provide, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useNotifications } from "@/composables/notifications.js";
 import SIZE_UNIT from "@/config/size-unit.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
+import { formatBytes } from "@/utils/files.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -69,6 +73,9 @@ export default {
     ViewHeader
   },
   setup() {
+    const { t } = useI18n();
+    const router = useRouter();
+    const { pushNotification } = useNotifications();
     const { userOrganizations } = useOrganizations();
     const {
       currentOrga,
@@ -103,6 +110,21 @@ export default {
       }
     };
 
+    const onSuccess = () => {
+      pushNotification(
+        {
+          type: "success",
+          title: t("Success"),
+          message: t("SubscriptionDatapack.successNotification", {
+            spaceName: selectedSpace.value.name,
+            size: formatBytes(newSizeAvailable.value)
+          })
+        },
+        8000
+      );
+      router.back();
+    };
+
     watch(
       () => selectedSpace.value,
       space => loadSpaceData(space),
@@ -121,7 +143,7 @@ export default {
       spaceInfo,
       subscription,
       // Methods
-      loadSpaceData
+      onSuccess
     };
   }
 };

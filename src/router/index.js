@@ -6,12 +6,12 @@ import subscriptionRoutes from "./subscription.js";
 
 // Guards
 import authGuard from "./guards/auth.js";
+import dataGuard from "./guards/data.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
 
 // Resolvers
-import rootResolver from "./resolvers/root.js";
 import groupBoardResolver from "./resolvers/views/group-board.js";
 import modelViewerResolver from "./resolvers/views/model-viewer.js";
 import projectBoardResolver from "./resolvers/views/project-board.js";
@@ -51,8 +51,7 @@ const routes = [
     component: Layout,
     meta: {
       // Protect this route and all its children with authentication
-      requiresAuth: true,
-      resolver: rootResolver
+      requiresAuth: true
     },
     children: [
       {
@@ -149,6 +148,7 @@ const router = createRouter({
 });
 
 router.beforeEach(authGuard);
+router.beforeEach(dataGuard);
 router.beforeEach(async route => {
   if (route.meta && route.meta.guard) {
     const result = await route.meta.guard(route);

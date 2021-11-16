@@ -116,7 +116,6 @@ export default {
           await createDatapack(props.space, quantity.value);
           emit("datapack-created");
         }
-        quantity.value = 1; // Reset quantity value
       } finally {
         loading.value = false;
       }
