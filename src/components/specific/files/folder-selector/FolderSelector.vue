@@ -11,19 +11,13 @@
       >
         <BIMDataIcon name="arrow" size="xs" />
       </BIMDataButton>
-      <div>
-        <TextBox
-          class="folder-selector__head__path"
-          :text="folderPath.map(f => f.name).join(' > ')"
-          :maxLength="42"
-          cutOn="start"
-        />
-        <TextBox
-          class="folder-selector__head__name"
-          :text="currentFolder.name"
-          :maxLength="32"
-        />
-      </div>
+
+      <BIMDataIcon name="folder" size="xs" />
+      <TextBox
+        class="folder-selector__head__name"
+        :text="currentFolder.name"
+        :maxLength="32"
+      />
       <BIMDataButton
         class="folder-selector__head__btn-close"
         ghost
@@ -65,7 +59,9 @@
           class="folder-selector__body__placeholder__icon"
           name="folderOpen"
           size="xxxl"
+          style="margin-bottom: 25px"
         />
+        <div>{{ $t("FolderSelector.emptyFolderPlaceholder") }}</div>
       </div>
     </div>
     <div class="folder-selector__footer">
