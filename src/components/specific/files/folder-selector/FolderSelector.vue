@@ -31,28 +31,32 @@
     <div class="folder-selector__body">
       <div
         class="folder-selector__body__item"
-        v-for="folder of folders"
-        :key="folder.id"
+        v-for="file of displayedFiles"
+        :key="file.id"
         :class="{
-          selected: selectedFolder && selectedFolder.id === folder.id
+          folder: file.type === 'Folder',
+          selected: selectedFolder && selectedFolder.id === file.id
         }"
-        @click="selectFolder(folder)"
-        @dblclick="enterFolder(folder)"
+        @click="selectFolder(file)"
+        @dblclick="enterFolder(file)"
       >
-        <BIMDataIcon name="folder" size="xs" />
+        <BIMDataIcon v-if="file.type === 'Folder'" name="folder" size="xs" />
+        <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="13" />
+        <FileIcon v-else :name="fileExtension(file.name)" size="13" />
         <TextBox
           class="folder-selector__body__item__name"
-          :text="folder.name"
+          :text="file.name"
           :maxLength="32"
         />
         <BIMDataIcon
+          v-if="file.type === 'Folder'"
           name="chevron"
           size="xxs"
-          @click.stop="enterFolder(folder)"
+          @click.stop="enterFolder(file)"
         />
       </div>
       <div
-        v-show="folders.length === 0"
+        v-show="displayedFiles.length === 0"
         class="folder-selector__body__placeholder"
       >
         <BIMDataIcon
@@ -101,6 +105,7 @@
 import { computed, ref, watch } from "vue";
 
 import { useFiles } from "@/state/files";
+import { fileExtension } from "@/utils/files";
 import FILE_PERMISSIONS from "@/config/file-permissions";
 import FILE_TYPES from "@/config/file-types";
 
@@ -131,16 +136,19 @@ export default {
     const currentFolder = ref(null);
     const selectedFolder = ref(null);
 
-    const folders = computed(() =>
+    const displayedFiles = computed(() =>
       handler
         .children(currentFolder.value)
         .filter(
           child =>
-            child.type === FILE_TYPES.FOLDER &&
             !props.files.some(f => child.id === f.id) &&
             (props.project.isAdmin ||
               child.userPermission === FILE_PERMISSIONS.READ_WRITE)
         )
+        .sort((a, b) => {
+          if (a.type === "Folder" && b.type !== "Folder") return -1;
+          return a.name < b.name ? -1 : 1;
+        })
     );
 
     const isAllowedToMoveFile = computed(() => {
@@ -169,6 +177,8 @@ export default {
     };
 
     const enterFolder = folder => {
+      if (folder.type !== FILE_TYPES.FOLDER) return;
+
       folderPath.value.push(currentFolder.value);
       currentFolder.value = folder;
       selectedFolder.value = null;
@@ -179,6 +189,8 @@ export default {
     };
 
     const selectFolder = folder => {
+      if (folder.type !== FILE_TYPES.FOLDER) return;
+
       if (selectedFolder.value && selectedFolder.value.id === folder.id) {
         selectedFolder.value = null;
       } else {
@@ -195,7 +207,7 @@ export default {
     return {
       // References
       folderPath,
-      folders,
+      displayedFiles,
       currentFolder,
       selectedFolder,
       // Methods
@@ -204,7 +216,8 @@ export default {
       exitFolder,
       selectFolder,
       submit,
-      isAllowedToMoveFile
+      isAllowedToMoveFile,
+      fileExtension
     };
   }
 };
