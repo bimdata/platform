@@ -162,6 +162,7 @@
     },
     "FolderSelector": {
         "selectedFolder": "Carpeta seleccionada",
+        "emptyFolderPlaceholder": "Carpeta vacía",
         "submitButtonText": {
             "moveTo": "Validar",
             "moveHere": "Mueva aquí"

@@ -59,7 +59,7 @@
           class="folder-selector__body__placeholder__icon"
           name="folderOpen"
           size="xxxl"
-          style="margin-bottom: 25px"
+          margin="0 0 25px 0px"
         />
         <div>{{ $t("FolderSelector.emptyFolderPlaceholder") }}</div>
       </div>
