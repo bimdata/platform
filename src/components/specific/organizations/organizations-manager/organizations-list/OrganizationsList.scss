@@ -20,5 +20,15 @@
     padding-bottom: calc(var(--spacing-unit) / 2);
     overflow-x: hidden;
     overflow-y: auto;
+
+    .organization-card {
+      margin-bottom: 2px;
+    }
+
+    .organization-card {
+      &:hover {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      }
+    }
   }
 }
