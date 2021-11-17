@@ -280,6 +280,7 @@
 
   "FolderSelector": {
     "selectedFolder": "Dossier sélectionné",
+    "emptyFolderPlaceholder": "Dossier vide",
     "submitButtonText": {
       "moveTo": "Valider",
       "moveHere": "Déplacer ici"

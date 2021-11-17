@@ -169,6 +169,7 @@
     },
     "FolderSelector": {
         "selectedFolder": "Ausgewählter Ordner",
+        "emptyFolderPlaceholder": "Leerer Ordner",
         "submitButtonText": {
             "moveTo": "Bestätigen",
             "moveHere": "Hierher verschieben"

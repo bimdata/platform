@@ -125,7 +125,7 @@
         "createFolderButtonText": "Crea una cartella"
     },
     "FilesTable": {
-        "emptyTablePlaceholder": "Svuota la cartella",
+        "emptyTablePlaceholder": "Cartella vuota",
         "folder": "Cartella",
         "headers": {
             "name": "Nome",
@@ -169,6 +169,7 @@
     },
     "FolderSelector": {
         "selectedFolder": "Cartella selezionata",
+        "emptyFolderPlaceholder": "Cartella vuota",
         "submitButtonText": {
             "moveTo": "Convalida",
             "moveHere": "Sposta qui"

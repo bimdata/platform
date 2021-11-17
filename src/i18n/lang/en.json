@@ -276,6 +276,7 @@
 
   "FolderSelector": {
     "selectedFolder": "Selected folder",
+    "emptyFolderPlaceholder": "Empty folder",
     "submitButtonText": {
       "moveTo": "Validate",
       "moveHere": "Move here"
