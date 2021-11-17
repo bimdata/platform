@@ -34,13 +34,13 @@
         v-for="file of displayedFiles"
         :key="file.id"
         :class="{
-          folder: file.type === 'Folder',
+          folder: isFolderType(file),
           selected: selectedFolder && selectedFolder.id === file.id
         }"
         @click="selectFolder(file)"
         @dblclick="enterFolder(file)"
       >
-        <BIMDataIcon v-if="file.type === 'Folder'" name="folder" size="xs" />
+        <BIMDataIcon v-if="isFolderType(file)" name="folder" size="xs" />
         <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="13" />
         <FileIcon v-else :name="fileExtension(file.name)" size="13" />
         <TextBox
@@ -49,7 +49,7 @@
           :maxLength="32"
         />
         <BIMDataIcon
-          v-if="file.type === 'Folder'"
+          v-if="isFolderType(file)"
           name="chevron"
           size="xxs"
           @click.stop="enterFolder(file)"
@@ -146,7 +146,7 @@ export default {
               child.userPermission === FILE_PERMISSIONS.READ_WRITE)
         )
         .sort((a, b) => {
-          if (a.type === "Folder" && b.type !== "Folder") return -1;
+          if (isFolderType(a) && !isFolderType(b)) return -1;
           return a.name < b.name ? -1 : 1;
         })
     );
@@ -155,6 +155,8 @@ export default {
       const activeFolder = (selectedFolder.value || currentFolder.value).id;
       return props.files.some(f => activeFolder === f.parentId);
     });
+
+    const isFolderType = file => file.type === FILE_TYPES.FOLDER;
 
     const set = () => {
       currentFolder.value = props.initialFolder;
@@ -177,7 +179,7 @@ export default {
     };
 
     const enterFolder = folder => {
-      if (folder.type !== FILE_TYPES.FOLDER) return;
+      if (!isFolderType(folder)) return;
 
       folderPath.value.push(currentFolder.value);
       currentFolder.value = folder;
@@ -189,7 +191,7 @@ export default {
     };
 
     const selectFolder = folder => {
-      if (folder.type !== FILE_TYPES.FOLDER) return;
+      if (!isFolderType(folder)) return;
 
       if (selectedFolder.value && selectedFolder.value.id === folder.id) {
         selectedFolder.value = null;
@@ -217,7 +219,8 @@ export default {
       selectFolder,
       submit,
       isAllowedToMoveFile,
-      fileExtension
+      fileExtension,
+      isFolderType
     };
   }
 };
