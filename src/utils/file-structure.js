@@ -278,8 +278,14 @@ function segregate(files) {
   };
 }
 
+function isFolder(file) { 
+  return file.type === FILE_TYPES.FOLDER
+};
+
+
 export {
   FileStructureHandler,
   getDescendants,
-  segregate
+  segregate,
+  isFolder
 };
