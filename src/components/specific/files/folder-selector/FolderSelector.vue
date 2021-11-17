@@ -147,7 +147,9 @@ export default {
         )
         .sort((a, b) => {
           if (isFolder(a) && !isFolder(b)) return -1;
-          return a.name < b.name ? -1 : 1;
+          if (!isFolder(a) && isFolder(b)) return 1;
+
+          return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
         })
     );
 

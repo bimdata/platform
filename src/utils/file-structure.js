@@ -279,8 +279,8 @@ function segregate(files) {
 }
 
 function isFolder(file) { 
-  return file.type === FILE_TYPES.FOLDER
-};
+  return file.type === FILE_TYPES.FOLDER;
+}
 
 
 export {
