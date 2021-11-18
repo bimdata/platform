@@ -24,41 +24,57 @@ const UserSubscriptions = () =>
   import(/* webpackChunkName: "user-subscriptions" */ "@/views/user-subscriptions/UserSubscriptions.vue");
 /* eslint-enable */
 
+const {
+  dashboard,
+  userSubscriptions,
+  subscribe,
+  subscriptionFree,
+  subscriptionPro,
+  subscriptionDatapack
+} = routeNames;
+
 const routes = [
   {
     path: "/subscriptions",
-    name: routeNames.userSubscriptions,
-    component: UserSubscriptions
+    name: userSubscriptions,
+    component: UserSubscriptions,
+    meta: {
+      back: dashboard
+    }
   },
   {
     path: "/subscribe",
-    name: routeNames.subscribe,
+    name: subscribe,
     component: Subscribe,
     meta: {
+      backDefault: dashboard,
       guard: subscribeGuard
     }
   },
   {
     path: "/subscription/free",
-    name: routeNames.subscriptionFree,
+    name: subscriptionFree,
     component: SubscriptionFree,
     meta: {
+      backDefault: dashboard,
       guard: subscriptionFreeGuard
     }
   },
   {
     path: "/subscription/pro",
-    name: routeNames.subscriptionPro,
+    name: subscriptionPro,
     component: SubscriptionPro,
     meta: {
+      backDefault: dashboard,
       guard: subscriptionProGuard
     }
   },
   {
     path: "/subscription/datapack",
-    name: routeNames.subscriptionDatapack,
+    name: subscriptionDatapack,
     component: SubscriptionDatapack,
     meta: {
+      backDefault: dashboard,
       guard: subscriptionDatapackGuard
     }
   }

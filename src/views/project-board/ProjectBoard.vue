@@ -40,9 +40,9 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
-import { useSession } from "@/state/session.js";
 import { useSpaces } from "@/state/spaces.js";
 
 // Components
@@ -88,7 +88,7 @@ export default {
     const { locale, t } = useI18n();
     const { currentSpace, spaceInfo } = useSpaces();
     const { currentProject } = useProjects();
-    const { currentProjectView } = useSession();
+    const { projectView } = useSession();
 
     const tabs = ref([]);
     watch(
@@ -107,7 +107,7 @@ export default {
     const changeView = key => {
       const viewKey = PROJECT_VIEWS[key] ? key : DEFAULT_PROJECT_VIEW;
 
-      currentProjectView.set(currentProject.value.id, viewKey);
+      projectView.set(currentProject.value.id, viewKey);
 
       currentTab.value = { id: viewKey };
       currentView.value = PROJECT_VIEWS[viewKey];
@@ -117,7 +117,7 @@ export default {
       // Look for current project view in route hash.
       // Otherwise get current view from session storage.
       const viewKey =
-        route.hash.slice(1) || currentProjectView.get(currentProject.value.id);
+        route.hash.slice(1) || projectView.get(currentProject.value.id);
       // Restore current project view for this project.
       changeView(viewKey);
     });

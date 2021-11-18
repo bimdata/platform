@@ -12,27 +12,18 @@
       size="xxs"
       margin="0 6px 0 0"
     />
-    <span>{{ $t("GoBackButton.text") }}</span>
+    <span>
+      {{ $t("GoBackButton.text") }}
+    </span>
   </BIMDataButton>
 </template>
 
 <script>
 import { useRoute, useRouter } from "vue-router";
-import routeNames from "@/router/route-names.js";
-import { useSession } from "@/state/session";
+import { useSession } from "@/composables/session.js";
 // Components
 import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-
-const DEFAULT_PREVIOUS_ROUTE = {
-  [routeNames.userSpaces]: routeNames.dashboard,
-  [routeNames.userProjects]: routeNames.dashboard,
-  [routeNames.spaceBoard]: routeNames.dashboard,
-  [routeNames.projectBoard]: routeNames.spaceBoard,
-  [routeNames.modelViewer]: routeNames.projectBoard,
-  [routeNames.projectGroups]: routeNames.projectBoard,
-  [routeNames.groupBoard]: routeNames.projectGroups
-};
 
 export default {
   components: {
@@ -42,17 +33,38 @@ export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const { defaultRoutingMode } = useSession();
+    const { previousView } = useSession();
+
+    const { back, backRoutes, backDefault } = route.meta;
+    const prev = previousView.get();
 
     const goBack = () => {
-      if (defaultRoutingMode.get()) {
-        router.back();
-      } else {
-        defaultRoutingMode.set(true);
-        router.push({
-          name: DEFAULT_PREVIOUS_ROUTE[route.name],
-          params: route.params
-        });
+      let target;
+
+      if (back) {
+        // If `route.meta.back` is defined
+        // => go to `back`
+        target = { name: back, params: route.params };
+      }
+      // ---
+      else if (
+        (prev.name && !backRoutes) ||
+        (prev.name && backRoutes && backRoutes.includes(prev.name))
+      ) {
+        // If a previous route exists and `route.meta.backRoutes` is not defined
+        // or if a previous exists and is included in `route.meta.backRoutes`
+        // => go to previous route
+        target = prev;
+      }
+      // ---
+      else if (backDefault) {
+        // If `route.meta.backDefault` is defined
+        // => go to `backDefault`
+        target = { name: backDefault, params: route.params };
+      }
+
+      if (target) {
+        router.push(target);
       }
     };
 
