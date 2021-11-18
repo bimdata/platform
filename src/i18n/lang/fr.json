@@ -377,13 +377,20 @@
 
   "ProjectCardActionMenu": {
     "renameButtonText": "Renommer",
-    "deleteButtonText": "Supprimer"
+    "deleteButtonText": "Supprimer",
+    "leaveButtonText": "Quitter"
   },
 
   "ProjectCardDeleteGuard": {
     "title": "Supprimer le projet",
     "message": "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
     "deleteButtonText": "Supprimer"
+  },
+
+  "ProjectCardLeaveGuard": {
+    "title": "Quitter le projet",
+    "message": "Êtes vous sûr de vouloir quitter ce projet ?",
+    "leaveButtonText": "Valider"
   },
 
   "ProjectCardUpdateForm": {
