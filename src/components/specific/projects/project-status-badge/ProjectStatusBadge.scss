@@ -1,0 +1,25 @@
+.project-status-badge {
+  min-width: 58px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  color: var(--color-white);
+
+  &--new {
+    background-color: var(--color-primary);
+  }
+
+  &--active {
+    background-color: var(--color-success);
+  }
+
+  &--inactive {
+    background-color: var(--color-high);
+  }
+
+  &--paused {
+    background-color: var(--color-tertiary-dark);
+  }
+}

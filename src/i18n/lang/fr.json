@@ -398,7 +398,10 @@
   },
 
   "ProjectStatusBadge": {
-    "active": "ACTIF"
+    "new": "NOUVEAU",
+    "active": "ACTIF",
+    "inactive": "INACTIF",
+    "paused": "PAUSE"
   },
 
   "ProjectUsersManager": {

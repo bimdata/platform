@@ -76,8 +76,9 @@ export default {
     const currentModel = ref();
     const models = ref([]);
     const nonArchivedModels = computed(() => {
-      return models.value.filter(model => !model.archived)
-    })
+      return models.value.filter(model => !model.archived);
+    });
+
     watch(
       () => props.project,
       async () => {
@@ -85,12 +86,9 @@ export default {
       },
       { immediate: true }
     );
-    watch(
-      nonArchivedModels,
-      () => {
-        currentModel.value = nonArchivedModels.value[0]
-      }
-    );
+    watch(nonArchivedModels, () => {
+      currentModel.value = nonArchivedModels.value[0];
+    });
 
     const onPreviewChange = model => {
       currentModel.value = model;

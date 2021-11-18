@@ -319,7 +319,7 @@
         "createButtonText": "Crear"
     },
     "ProjectStatusBadge": {
-        "active": ""
+        "active": "ACTIVO"
     },
     "ProjectUsersManager": {
         "title": "Usuarios",
