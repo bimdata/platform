@@ -47,8 +47,13 @@
         background-color: var(--color-tertiary);
       }
 
-      &:hover:not(.selected) {
+      &:hover:not(.selected).folder {
         background-color: var(--color-tertiary-lightest);
+      }
+      
+      &:not(.folder) {
+        opacity: 60%;
+        cursor: initial;
       }
 
       &__name {
