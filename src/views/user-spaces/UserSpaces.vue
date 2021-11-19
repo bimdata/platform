@@ -39,14 +39,16 @@
       </template>
     </ViewHeader>
 
-    <ResponsiveGrid itemWidth="215px">
-      <SpaceCreationCard
-        v-if="showCreationForm"
-        :key="-1"
-        @close="closeCreationForm"
-      />
-      <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-    </ResponsiveGrid>
+    <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
+      <transition-group name="grid">
+        <SpaceCreationCard
+          v-if="showCreationForm"
+          :key="-1"
+          @close="closeCreationForm"
+        />
+        <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+      </transition-group>
+    </BIMDataResponsiveGrid>
   </div>
 </template>
 
@@ -56,7 +58,6 @@ import { useListSort } from "@/composables/list-sort";
 import { useToggle } from "@/composables/toggle";
 import { useSpaces } from "@/state/spaces";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
@@ -64,7 +65,6 @@ import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/
 
 export default {
   components: {
-    ResponsiveGrid,
     ViewHeader,
     AppBreadcrumb,
     SpaceCard,
