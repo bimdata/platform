@@ -24,4 +24,4 @@ function tokenHasExpired(token) {
   return false;
 }
 
-export { parseJwt, tokenExp, tokenHasExpired };
+export { tokenHasExpired };
