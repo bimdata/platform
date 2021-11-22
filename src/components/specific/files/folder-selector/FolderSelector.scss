@@ -80,11 +80,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 0 calc(var(--spacing-unit) / 2) var(--spacing-unit) calc(var(--spacing-unit) / 2);
+    padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
 
     &__text {
       width: 100%;
       padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
+
+      &:not(.visibility){
+        display: none;
+      }
     }
   }
 }
