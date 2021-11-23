@@ -17,7 +17,7 @@
           <UserAvatar :user="user" size="48" color="tertiary" />
           <div class="user-add-card__info">
             <div class="user-add-card__info__name">
-              {{ `${user.firstname} ${user.lastname}` }}
+              {{ user.fullname }}
             </div>
             <div class="user-add-card__info__email">
               {{ user.email }}
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { computed } from "vue";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useGroups } from "@/state/groups.js";
@@ -65,11 +66,20 @@ export default {
     }
   },
   setup(props) {
+    const { t } = useI18n();
     const { selectGroup, addGroupMembers } = useGroups();
 
     const availableUsers = computed(() => {
       const memberIDs = props.group.members.map(u => u.id);
-      return props.users.filter(u => !memberIDs.includes(u.id));
+      return props.users
+        .filter(u => !memberIDs.includes(u.id))
+        .map(x => {
+          const fullname = x.userId
+            ? `${x.firstname} ${x.lastname}`
+            : t("GroupMemberInvitation.name");
+          console.log({ ...x, fullname })
+          return { ...x, fullname };
+        });
     });
 
     const { filteredList: displayedUsers, searchText } = useListFilter(

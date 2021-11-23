@@ -247,6 +247,10 @@
     "text": "Add a member"
   },
 
+  "GroupMemberInvitation": {
+    "name": "Pending invitation"
+  },
+
   "GroupMembersSelector": {
     "title": "Manage group members",
     "searchInputPlaceholder": "Search"
