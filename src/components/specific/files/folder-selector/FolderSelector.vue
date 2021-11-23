@@ -71,7 +71,7 @@
     <div class="folder-selector__footer">
       <div
         class="folder-selector__footer__text"
-        :style="{ visibility: selectedFolder ? 'visible' : 'hidden' }"
+        :class="{ visibility: selectedFolder }"
       >
         {{ $t("FolderSelector.selectedFolder") }}:
         <TextBox
