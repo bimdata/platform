@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs, watch } from "vue";
 import ProjectService from "@/services/ProjectService";
 import { useUser } from "@/state/user";
+import { status } from "@/utils/projects.js";
 
 const state = reactive({
   userProjects: [],
@@ -56,9 +57,14 @@ const loadProjectInvitations = async project => {
 
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
-  state.userProjects = [{ ...newProject, isAdmin: true }].concat(
-    state.userProjects
-  );
+  state.userProjects = [
+    {
+      ...newProject,
+      isAdmin: true,
+      status: status(newProject)
+    }
+  ].concat(state.userProjects);
+
   return newProject;
 };
 
