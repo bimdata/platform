@@ -89,7 +89,7 @@ class GroupService {
             projectPk: project.id,
             groupPk: group.id,
             data: {
-              userId: user.id
+              userprojectId: user.id
             }
           })
         )
