@@ -77,7 +77,6 @@ export default {
           const fullname = x.userId
             ? `${x.firstname} ${x.lastname}`
             : t("GroupMemberInvitation.name");
-          console.log({ ...x, fullname })
           return { ...x, fullname };
         });
     });
