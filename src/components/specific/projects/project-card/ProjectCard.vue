@@ -16,10 +16,11 @@
             @open-viewer="goToModelViewer"
             @open-menu="openMenu"
           />
-          <div class="project-card__left-stripe"></div>
-          <div class="project-card__status-badge">
-            {{ $t("ProjectStatusBadge.active") }}
-          </div>
+          <div
+            class="project-card__left-stripe"
+            :class="`project-card__left-stripe--${project.status}`"
+          ></div>
+          <ProjectStatusBadge :status="project.status" />
           <ProjectCardModelPreview
             :models="nonArchivedModels"
             @preview-changed="onPreviewChange"
@@ -46,6 +47,7 @@ import { useModels } from "@/state/models";
 
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
+import ProjectStatusBadge from "@/components/specific/projects/project-status-badge/ProjectStatusBadge";
 import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar";
 import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu";
 import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview";
@@ -55,7 +57,8 @@ export default {
     FlippableCard,
     ProjectCardActionBar,
     ProjectCardActionMenu,
-    ProjectCardModelPreview
+    ProjectCardModelPreview,
+    ProjectStatusBadge
   },
   props: {
     project: {
@@ -76,8 +79,9 @@ export default {
     const currentModel = ref();
     const models = ref([]);
     const nonArchivedModels = computed(() => {
-      return models.value.filter(model => !model.archived)
-    })
+      return models.value.filter(model => !model.archived);
+    });
+
     watch(
       () => props.project,
       async () => {
@@ -85,12 +89,9 @@ export default {
       },
       { immediate: true }
     );
-    watch(
-      nonArchivedModels,
-      () => {
-        currentModel.value = nonArchivedModels.value[0]
-      }
-    );
+    watch(nonArchivedModels, () => {
+      currentModel.value = nonArchivedModels.value[0];
+    });
 
     const onPreviewChange = model => {
       currentModel.value = model;
