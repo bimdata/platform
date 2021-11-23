@@ -468,8 +468,8 @@
 
   "UserRoleBadge": {
     "admin": "Admin",
-    "user": "User",
-    "guest": "Guest"
+    "user": "Utilisateur",
+    "guest": "Invité"
   },
 
   "UsersManagerOnboarding": {
