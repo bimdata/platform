@@ -50,18 +50,18 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useListSort } from "@/composables/list-sort";
-import { useProjects } from "@/state/projects";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useListSort } from "@/composables/list-sort.js";
+import { useProjects } from "@/state/projects.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
 
 export default {
   components: {
-    ViewHeader,
     AppBreadcrumb,
+    ViewHeader,
     ProjectCard
   },
   setup() {

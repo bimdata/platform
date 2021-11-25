@@ -19,11 +19,11 @@ import { merge, set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { useAuth } from "@/state/auth";
-import { useSpaces } from "@/state/spaces";
+import { useAuth } from "@/state/auth.js";
+import { useSpaces } from "@/state/spaces.js";
 // Components
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 
 const availablePlugins = {
   bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.1",

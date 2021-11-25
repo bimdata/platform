@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { useProjects } from "@/state/projects";
+import { useProjects } from "@/state/projects.js";
 
 export default {
   setup() {

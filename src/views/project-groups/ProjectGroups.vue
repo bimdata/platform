@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useGroups } from "@/state/groups";
-import { useProjects } from "@/state/projects";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useGroups } from "@/state/groups.js";
+import { useProjects } from "@/state/projects.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import GroupCard from "@/components/specific/groups/group-card/GroupCard";
-import GroupCreationCard from "@/components/specific/groups/group-creation-card/GroupCreationCard";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import GroupCard from "@/components/specific/groups/group-card/GroupCard.vue";
+import GroupCreationCard from "@/components/specific/groups/group-creation-card/GroupCreationCard.vue";
 
 export default {
   components: {
