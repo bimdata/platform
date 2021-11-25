@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "@/services/SpaceService.js";
 import SubscriptionService from "@/services/SubscriptionService.js";
+import { mapSpaces, mapUsers } from "@/state/mappers.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useProjects } from "@/state/projects.js";
 import { useUser } from "@/state/user.js";
@@ -19,20 +20,9 @@ const setCurrentSpace = id => {
 };
 
 const loadUserSpaces = async () => {
-  const { mapSpaces } = useUser();
-
-  let spaces = await SpaceService.fetchUserSpaces();
+  const spaces = await SpaceService.fetchUserSpaces();
   const freeSpaces = await SubscriptionService.fetchFreeSpaces();
-  const freeSpacesIDs = freeSpaces.map(s => s.id);
-
-  spaces = mapSpaces(spaces);
-  spaces = spaces.map(space => ({
-    ...space,
-    isFree: freeSpacesIDs.includes(space.id)
-  }));
-  spaces.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-
-  state.userSpaces = spaces;
+  state.userSpaces = mapSpaces(spaces, freeSpaces);
   return spaces;
 };
 
@@ -43,14 +33,10 @@ const loadSpaceInfo = async space => {
 };
 
 const loadSpaceUsers = async space => {
-  const { mapUsers } = useUser();
   let users = [];
   if (space.isAdmin) {
     users = await SpaceService.fetchSpaceUsers(space);
     users = mapUsers(users);
-    users.sort((a, b) =>
-      `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
-    );
   }
   state.spaceUsers = users;
   return users;

@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import ProjectService from "@/services/ProjectService.js";
+import { mapProjects, mapUsers } from "@/state/mappers.js";
 import { useUser } from "@/state/user.js";
 
 const state = reactive({
@@ -16,32 +17,20 @@ const setCurrentProject = id => {
 };
 
 const loadUserProjects = async () => {
-  let projects = await ProjectService.fetchUserProjects();
-  const { mapProjects } = useUser();
-  projects = mapProjects(projects);
-  projects.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  state.userProjects = projects;
+  const projects = await ProjectService.fetchUserProjects();
+  state.userProjects = mapProjects(projects);
   return projects;
 };
 
 const loadSpaceProjects = async space => {
-  let projects = await ProjectService.fetchSpaceProjects(space);
-  const { mapProjects } = useUser();
-  projects = mapProjects(projects);
-  projects.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  state.spaceProjects = projects;
+  const projects = await ProjectService.fetchSpaceProjects(space);
+  state.spaceProjects = mapProjects(projects);
   return projects;
 };
 
 const loadProjectUsers = async project => {
-  const { mapUsers } = useUser();
-  let users = [];
-  users = await ProjectService.fetchProjectUsers(project);
-  users = mapUsers(users);
-  users.sort((a, b) =>
-    `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
-  );
-  state.projectUsers = users;
+  const users = await ProjectService.fetchProjectUsers(project);
+  state.projectUsers = mapUsers(users);
   return users;
 };
 

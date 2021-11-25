@@ -1,8 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import PROJECT_ROLES from "@/config/project-roles.js";
-import SPACE_ROLES from "@/config/space-roles.js";
 import UserService from "@/services/UserService.js";
-import { status } from "@/utils/projects.js";
 
 const state = reactive({
   isNew: false,
@@ -31,30 +28,6 @@ const setIsNew = value => {
   state.isNew = value;
 };
 
-const mapUsers = users => {
-  return users.map(user => ({
-    ...user,
-    isSelf: user.userId === state.user.id
-  }));
-};
-
-const mapSpaces = spaces => {
-  return spaces.map(space => ({
-    ...space,
-    isAdmin: state.spaceRoles[space.id] === SPACE_ROLES.ADMIN
-  }));
-};
-
-const mapProjects = projects => {
-  return projects.map(project => ({
-    ...project,
-    isAdmin: state.projectRoles[project.id] === PROJECT_ROLES.ADMIN,
-    isUser: state.projectRoles[project.id] === PROJECT_ROLES.USER,
-    isGuest: state.projectRoles[project.id] === PROJECT_ROLES.GUEST,
-    status: status(project)
-  }));
-};
-
 export function useUser() {
   const readonlyState = readonly(state);
   return {
@@ -62,9 +35,6 @@ export function useUser() {
     ...toRefs(readonlyState),
     // Methods
     loadUser,
-    setIsNew,
-    mapUsers,
-    mapSpaces,
-    mapProjects
+    setIsNew
   };
 }
