@@ -29,7 +29,7 @@ const loadUser = async () => {
 const mapUsers = users => {
   return users.map(user => ({
     ...user,
-    isSelf: user.id === state.user.id
+    isSelf: user.userId === state.user.id
   }));
 };
 

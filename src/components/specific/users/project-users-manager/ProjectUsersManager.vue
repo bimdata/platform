@@ -103,7 +103,7 @@ export default {
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
-const {
+    const {
       isOpen: showInvitationForm,
       close: closeInvitationForm,
       toggle: toggleInvitationForm
