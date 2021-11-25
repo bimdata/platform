@@ -2,6 +2,7 @@ import { reactive, readonly, toRefs } from "vue";
 import PROJECT_ROLES from "@/config/project-roles.js";
 import SPACE_ROLES from "@/config/space-roles.js";
 import UserService from "@/services/UserService.js";
+import { status } from "@/utils/projects";
 
 const state = reactive({
   isNew: false,
@@ -33,7 +34,7 @@ const setIsNew = value => {
 const mapUsers = users => {
   return users.map(user => ({
     ...user,
-    isSelf: user.id === state.user.id
+    isSelf: user.userId === state.user.id
   }));
 };
 
@@ -49,7 +50,8 @@ const mapProjects = projects => {
     ...project,
     isAdmin: state.projectRoles[project.id] === PROJECT_ROLES.ADMIN,
     isUser: state.projectRoles[project.id] === PROJECT_ROLES.USER,
-    isGuest: state.projectRoles[project.id] === PROJECT_ROLES.GUEST
+    isGuest: state.projectRoles[project.id] === PROJECT_ROLES.GUEST,
+    status: status(project)
   }));
 };
 

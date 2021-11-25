@@ -327,6 +327,10 @@
     "text": "Ajouter un utilisateur"
   },
 
+  "GroupMemberInvitation": {
+    "name": "Invitation en cours"
+  },
+
   "GroupMembersSelector": {
     "title": "Gestion des membres du groupe",
     "searchInputPlaceholder": "Rechercher"
@@ -389,10 +393,6 @@
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
     "deleteButtonText": "Supprimer"
-  },
-
-  "ModelLastUpdateCell": {
-    "at": "à"
   },
 
   "ModelLocation": {
@@ -555,7 +555,10 @@
   },
 
   "ProjectStatusBadge": {
-    "active": "ACTIF"
+    "new": "NOUVEAU",
+    "active": "ACTIF",
+    "inactive": "INACTIF",
+    "paused": "PAUSE"
   },
 
   "ProjectUsersManager": {
@@ -699,8 +702,8 @@
 
   "UserRoleBadge": {
     "admin": "Admin",
-    "user": "User",
-    "guest": "Guest"
+    "user": "Utilisateur",
+    "guest": "Invité"
   },
 
   "UsersManagerOnboarding": {

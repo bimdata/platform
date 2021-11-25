@@ -25,20 +25,29 @@
       z-index: 1;
       width: 4px;
       height: $card-height;
-      background-color: var(--color-primary);
+
+      &--new {
+        background-color: var(--color-primary);
+      }
+
+      &--active {
+        background-color: var(--color-success);
+      }
+
+      &--inactive {
+        background-color: var(--color-high);
+      }
+
+      &--paused {
+        background-color: var(--color-tertiary-dark);
+      }
     }
 
-    .project-card__status-badge {
+    .project-status-badge {
       position: absolute;
       z-index: 1;
       top: calc(#{$card-content-height} - var(--spacing-unit) - 24px);
       left: calc(var(--spacing-unit) + 4px);
-      height: 24px;
-      padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
-      line-height: 12px;
-      text-transform: uppercase;
-      background-color: var(--color-primary);
-      color: var(--color-white);
     }
 
     &:deep() {

@@ -323,6 +323,10 @@
     "text": "Add a member"
   },
 
+  "GroupMemberInvitation": {
+    "name": "Pending invitation"
+  },
+
   "GroupMembersSelector": {
     "title": "Manage group members",
     "searchInputPlaceholder": "Search"
@@ -385,10 +389,6 @@
     "archiveButtonText": "Archive",
     "unarchiveButtonText": "Unarchive",
     "deleteButtonText": "Delete"
-  },
-
-  "ModelLastUpdateCell": {
-    "at": "at"
   },
 
   "ModelLocation": {
@@ -548,7 +548,10 @@
   },
 
   "ProjectStatusBadge": {
-    "active": "ACTIVE"
+    "new": "NEW",
+    "active": "ACTIVE",
+    "inactive": "INACTIVE",
+    "paused": "PAUSED"
   },
 
   "ProjectUsersManager": {

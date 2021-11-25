@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { computed } from "vue";
 import { useGroups } from "@/state/groups.js";
 // Components
@@ -48,11 +49,15 @@ export default {
     }
   },
   setup(props) {
+    const { t } = useI18n();
     const { setCurrentGroup, removeGroupMembers } = useGroups();
 
-    const fullName = computed(
-      () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
-    );
+    const fullName = computed(() => {
+      if (props.user.userId) {
+        return `${props.user.firstname || ""} ${props.user.lastname || ""}`;
+      }
+      return t("GroupMemberInvitation.name");
+    });
 
     const remove = async () => {
       await removeGroupMembers(props.project, props.group, [props.user]);

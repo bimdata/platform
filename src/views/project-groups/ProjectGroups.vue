@@ -16,15 +16,21 @@
       </template>
     </ViewHeader>
 
-    <ResponsiveGrid itemWidth="320px">
-      <GroupCreationCard v-if="project.isAdmin" :key="-1" :project="project" />
-      <GroupCard
-        v-for="group of groups"
-        :key="group.id"
-        :project="project"
-        :group="group"
-      />
-    </ResponsiveGrid>
+    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+      <transition-group name="grid">
+        <GroupCreationCard
+          v-if="project.isAdmin"
+          :key="-1"
+          :project="project"
+        />
+        <GroupCard
+          v-for="group of groups"
+          :key="group.id"
+          :project="project"
+          :group="group"
+        />
+      </transition-group>
+    </BIMDataResponsiveGrid>
   </div>
 </template>
 
@@ -33,7 +39,6 @@ import { useListFilter } from "@/composables/list-filter";
 import { useGroups } from "@/state/groups";
 import { useProjects } from "@/state/projects";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import GroupCard from "@/components/specific/groups/group-card/GroupCard";
@@ -41,7 +46,6 @@ import GroupCreationCard from "@/components/specific/groups/group-creation-card/
 
 export default {
   components: {
-    ResponsiveGrid,
     ViewHeader,
     AppBreadcrumb,
     GroupCard,

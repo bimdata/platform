@@ -20,16 +20,18 @@
       <GroupMembersSelector :project="project" :group="group" :users="users" />
     </SidePanel>
 
-    <ResponsiveGrid itemWidth="320px">
-      <GroupMemberSelectionCard :key="-1" @click="openMembersSelector" />
-      <GroupMemberCard
-        v-for="member of displayedMembers"
-        :key="member.id"
-        :project="project"
-        :group="group"
-        :user="member"
-      />
-    </ResponsiveGrid>
+    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+      <transition-group name="grid">
+        <GroupMemberSelectionCard :key="-1" @click="openMembersSelector" />
+        <GroupMemberCard
+          v-for="member of displayedMembers"
+          :key="member.id"
+          :project="project"
+          :group="group"
+          :user="member"
+        />
+      </transition-group>
+    </BIMDataResponsiveGrid>
   </div>
 </template>
 
@@ -40,7 +42,6 @@ import { useSidePanel } from "@/composables/side-panel.js";
 import { useGroups } from "@/state/groups.js";
 import { useProjects } from "@/state/projects.js";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
 import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
@@ -50,7 +51,6 @@ import GroupMembersSelector from "@/components/specific/groups/group-members-sel
 
 export default {
   components: {
-    ResponsiveGrid,
     SidePanel,
     ViewHeader,
     AppBreadcrumb,

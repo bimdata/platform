@@ -234,9 +234,6 @@
         "deleteButtonText": "Suprimir",
         "unarchiveButtonText": "Desarchivar"
     },
-    "ModelLastUpdateCell": {
-        "at": "a"
-    },
     "ModelLocation": {
         "emptyLocationMessage": "Datos de seguimiento no disponibles",
         "addLocationButtonText": "Infórmese"

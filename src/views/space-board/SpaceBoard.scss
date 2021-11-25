@@ -10,4 +10,8 @@
       color: var(--color-tertiary-dark);
     }
   }
+
+  .bimdata-responsive-grid {
+    padding: calc(var(--spacing-unit) * 2) 0;
+  }
 }

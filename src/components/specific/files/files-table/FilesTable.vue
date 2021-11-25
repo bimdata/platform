@@ -62,7 +62,7 @@
       <FileTagsCell :file="file" />
     </template>
     <template #cell-lastupdate="{ row: file }">
-      <FileLastUpdateCell :file="file" />
+      {{ $d(file.updatedAt, "long") }}
     </template>
     <template #cell-size="{ row: file }">
       {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
@@ -90,7 +90,6 @@ import GenericTable from "@/components/generic/generic-table/GenericTable";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb";
 import FileActionsCell from "./file-actions-cell/FileActionsCell";
-import FileLastUpdateCell from "./file-last-update-cell/FileLastUpdateCell";
 import FileNameCell from "./file-name-cell/FileNameCell";
 import FileTagsCell from "./file-tags-cell/FileTagsCell";
 import FileTypeCell from "./file-type-cell/FileTypeCell";
@@ -99,7 +98,6 @@ export default {
   components: {
     GenericTable,
     FileActionsCell,
-    FileLastUpdateCell,
     FileNameCell,
     FileTagsCell,
     FileTypeCell,

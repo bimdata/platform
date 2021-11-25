@@ -56,14 +56,16 @@
       <OrganizationsManager :organizations="organizations" />
     </SidePanel>
 
-    <ResponsiveGrid itemWidth="215px">
-      <SpaceCreationCard
-        v-if="showCreationForm"
-        :key="-1"
-        @close="closeCreationForm"
-      />
-      <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
-    </ResponsiveGrid>
+    <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
+      <transition-group name="grid">
+        <SpaceCreationCard
+          v-if="showCreationForm"
+          :key="-1"
+          @close="closeCreationForm"
+        />
+        <SpaceCard v-for="space in spaces" :key="space.id" :space="space" />
+      </transition-group>
+    </BIMDataResponsiveGrid>
   </div>
 </template>
 
@@ -78,7 +80,6 @@ import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid.vue";
 import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
@@ -88,13 +89,12 @@ import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/
 
 export default {
   components: {
-    ResponsiveGrid,
-    SidePanel,
-    ViewHeader,
     AppBreadcrumb,
     OrganizationsManager,
     SpaceCard,
-    SpaceCreationCard
+    SpaceCreationCard,
+    SidePanel,
+    ViewHeader
   },
   setup() {
     const router = useRouter();

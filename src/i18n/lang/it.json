@@ -234,9 +234,6 @@
         "deleteButtonText": "Cancella",
         "unarchiveButtonText": "Estrai"
     },
-    "ModelLastUpdateCell": {
-        "at": "in"
-    },
     "ModelLocation": {
         "emptyLocationMessage": "Nessun dato di localizzazione disponibile",
         "addLocationButtonText": "Riempi"

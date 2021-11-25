@@ -176,10 +176,14 @@ export default {
       folder => {
         const childrenFolders = folder.children
           .filter(child => child.type === FILE_TYPES.FOLDER)
-          .sort((a, b) => (a.name < b.name ? -1 : 1));
+          .sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
         const childrenFiles = folder.children
           .filter(child => child.type !== FILE_TYPES.FOLDER)
-          .sort((a, b) => (a.name < b.name ? -1 : 1));
+          .sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
         currentFiles.value = childrenFolders.concat(childrenFiles);
       },
       { immediate: true }

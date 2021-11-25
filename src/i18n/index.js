@@ -1,4 +1,5 @@
 import { createI18n } from "vue-i18n";
+import datetimeFormats from "./datetime.js";
 import de from "./lang/de.json";
 import en from "./lang/en.json";
 import es from "./lang/es.json";
@@ -14,6 +15,9 @@ const i18n = createI18n({
   locale: navigator.language.slice(0, 2),
   // Fallback to english if no translation available
   fallbackLocale: "en",
+
+  // Date & Time formatting for each locale
+  datetimeFormats,
 
   messages: {
     de,

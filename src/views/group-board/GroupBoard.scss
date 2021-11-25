@@ -4,4 +4,8 @@
       background-color: var(--color-white);
     }
   }
+
+  .bimdata-responsive-grid {
+    padding: calc(var(--spacing-unit) * 2) 0;
+  }
 }

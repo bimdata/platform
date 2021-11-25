@@ -37,13 +37,15 @@
       </template>
     </ViewHeader>
 
-    <ResponsiveGrid itemWidth="320px">
-      <ProjectCard
-        v-for="project in projects"
-        :key="project.id"
-        :project="project"
-      />
-    </ResponsiveGrid>
+    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+      <transition-group name="grid">
+        <ProjectCard
+          v-for="project in projects"
+          :key="project.id"
+          :project="project"
+        />
+      </transition-group>
+    </BIMDataResponsiveGrid>
   </div>
 </template>
 
@@ -52,14 +54,12 @@ import { useListFilter } from "@/composables/list-filter";
 import { useListSort } from "@/composables/list-sort";
 import { useProjects } from "@/state/projects";
 // Components
-import ResponsiveGrid from "@/components/generic/responsive-grid/ResponsiveGrid";
 import ViewHeader from "@/components/generic/view-header/ViewHeader";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
 
 export default {
   components: {
-    ResponsiveGrid,
     ViewHeader,
     AppBreadcrumb,
     ProjectCard
