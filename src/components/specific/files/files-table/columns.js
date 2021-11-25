@@ -18,7 +18,7 @@ export default [
   },
   {
     id: "lastupdate",
-    width: "150px",
+    width: "180px",
     align: "center"
   },
   {

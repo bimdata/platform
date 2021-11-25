@@ -1,12 +1,6 @@
 <template>
   <div class="model-last-update-cell">
-    {{
-      model.updatedAt
-        .toISOString()
-        .slice(0, -5)
-        .replace(/-/g, "/")
-        .replace("T", ` ${$t("ModelLastUpdateCell.at")} `)
-    }}
+    {{ $d(model.updatedAt, "long") }}
   </div>
 </template>
 
