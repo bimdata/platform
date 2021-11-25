@@ -31,7 +31,6 @@
 <script>
 import { inject } from "vue";
 import { useProjects } from "@/state/projects";
-import { useUser } from "@/state/user";
 
 export default {
   props: {
@@ -43,14 +42,13 @@ export default {
   emits: ["close", "success"],
   setup(props, { emit }) {
     const { leaveProject, softDeleteProject } = useProjects();
-    const { user } = useUser();
 
     const loading = inject("loading", false);
 
     const submit = async () => {
       try {
         loading.value = true;
-        await leaveProject(props.project, user);
+        await leaveProject(props.project);
         softDeleteProject(props.project);
         emit("success");
       } finally {
@@ -65,8 +63,7 @@ export default {
     return {
       // Methods
       close,
-      submit,
-      user
+      submit
     };
   }
 };

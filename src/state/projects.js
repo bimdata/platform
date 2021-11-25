@@ -130,10 +130,8 @@ const deleteProjectUser = async (project, user) => {
   return user;
 };
 
-const leaveProject = async (project, user) => {
+const leaveProject = async project => {
   await ProjectService.leaveProject(project);
-  state.projectUsers = state.projectUsers.filter(u => u.id !== user.id);
-  return user;
 };
 
 export function useProjects() {
