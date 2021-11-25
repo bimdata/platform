@@ -9,7 +9,7 @@
       </div>
       <div class="organization-space-card__info__data">
         <span class="organization-space-card__info__data--date">
-          {{ formatDate(space.created_at || space.createdAt) }}
+          {{ $d(space.created_at || space.createdAt, "short") }}
         </span>
       </div>
     </div>
@@ -18,7 +18,6 @@
 
 <script>
 import { ref } from "vue";
-import { formatDateShort } from "@/utils/date.js";
 // Components
 import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
 
@@ -41,9 +40,7 @@ export default {
 
     return {
       // References
-      projects,
-      // Methods
-      formatDate: formatDateShort
+      projects
     };
   }
 };

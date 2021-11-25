@@ -18,7 +18,7 @@
           {{ $t("OrganizationCard.spaces", { number: spaces.length }) }}
         </span>
         <span class="organization-card__info__data--date">
-          {{ formatDate(organization.created_at) }}
+          {{ $d(organization.created_at, "short") }}
         </span>
       </div>
     </div>
@@ -33,7 +33,6 @@
 <script>
 import { computed } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
-import { formatDateShort } from "@/utils/date.js";
 // Components
 import OrganizationCardActionMenu from "./organization-card-action-menu/OrganizationCardActionMenu.vue";
 
@@ -55,9 +54,7 @@ export default {
 
     return {
       // References
-      spaces,
-      // Methods
-      formatDate: formatDateShort
+      spaces
     };
   }
 };

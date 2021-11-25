@@ -17,7 +17,7 @@
             {{ (subscriptionsMap[payment.subscription_id].cloud || {}).name }}
           </template>
           <template #cell-date="{ row: payment }">
-            {{ formatDate(payment.payout_date) }}
+            {{ $d(payment.payout_date, "short") }}
           </template>
           <template #cell-status="{ row: payment }">
             <InvoiceStatusCell :invoice="payment" />
@@ -58,10 +58,9 @@ import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
-import { formatDate } from "@/utils/date.js";
-import columnsDef from "./columns";
+import columnsDef from "./columns.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable";
+import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import InvoiceActionsCell from "./invoice-actions-cell/InvoiceActionsCell.vue";
 import InvoiceStatusCell from "./invoice-status-cell/InvoiceStatusCell.vue";
 
@@ -119,7 +118,6 @@ export default {
       columns,
       subscriptionsMap,
       // Methods
-      formatDate,
       goToSubscriptionPro
     };
   }

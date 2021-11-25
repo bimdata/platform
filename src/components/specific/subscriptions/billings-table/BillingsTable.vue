@@ -16,8 +16,7 @@
             {{ (sub.cloud || {}).name }}
           </template>
           <template #cell-nextpayment="{ row: sub }">
-            {{ $t("BillingsTable.nextPayment") }}
-            {{ formatDate(sub.next_bill_date) }}
+            {{ $d(sub.next_bill_date, "short") }}
           </template>
           <template #cell-subscriptionplan="{ row: sub }">
             {{ $t("BillingsTable.professionalPlan") }}
@@ -66,7 +65,6 @@ import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
-import { formatDate } from "@/utils/date.js";
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
@@ -106,7 +104,6 @@ export default {
     return {
       // References
       columns,
-      formatDate,
       // Methods
       goToSubscriptionPro
     };
