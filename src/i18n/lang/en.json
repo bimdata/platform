@@ -293,10 +293,6 @@
     "deleteButtonText": "Delete"
   },
 
-  "ModelLastUpdateCell": {
-    "at": "at"
-  },
-
   "ModelLocation": {
     "emptyLocationMessage": "No location data available",
     "addLocationButtonText": "Fill in"

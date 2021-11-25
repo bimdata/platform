@@ -227,9 +227,6 @@
         "deleteButtonText": "Löschen",
         "unarchiveButtonText": "Dearchivieren"
     },
-    "ModelLastUpdateCell": {
-        "at": "in"
-    },
     "ModelLocation": {
         "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
         "addLocationButtonText": "Nachfragen"

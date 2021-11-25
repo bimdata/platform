@@ -293,10 +293,6 @@
     "deleteButtonText": "Supprimer"
   },
 
-  "ModelLastUpdateCell": {
-    "at": "à"
-  },
-
   "ModelLocation": {
     "emptyLocationMessage": "Aucune données de localisation disponible",
     "addLocationButtonText": "Renseigner"

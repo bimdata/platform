@@ -24,7 +24,7 @@
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>
     <template #cell-lastupdate="{ row: model }">
-      <ModelLastUpdateCell :model="model" />
+      {{ $d(model.updatedAt, "long") }}
     </template>
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />
@@ -50,7 +50,6 @@ import columnsDef from "./columns";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell";
-import ModelLastUpdateCell from "./model-last-update-cell/ModelLastUpdateCell";
 import ModelNameCell from "./model-name-cell/ModelNameCell";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell";
 
@@ -58,7 +57,6 @@ export default {
   components: {
     GenericTable,
     ModelActionsCell,
-    ModelLastUpdateCell,
     ModelNameCell,
     ModelStatusCell
   },
