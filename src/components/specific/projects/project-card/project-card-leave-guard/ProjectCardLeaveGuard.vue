@@ -42,7 +42,7 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { deleteProjectUser, softDeleteProject } = useProjects();
+    const { leaveProject, softDeleteProject } = useProjects();
     const { user } = useUser();
 
     const loading = inject("loading", false);
@@ -50,7 +50,7 @@ export default {
     const submit = async () => {
       try {
         loading.value = true;
-        await deleteProjectUser(props.project, user.value);
+        await leaveProject(props.project, user);
         softDeleteProject(props.project);
         emit("success");
       } finally {

@@ -115,6 +115,7 @@ export default {
     const resetMenu = () => {
       closeUpdateForm();
       closeDeleteGuard();
+      closeLeaveGuard();
       loading.value = false;
     };
 

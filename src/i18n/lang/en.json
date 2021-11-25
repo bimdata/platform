@@ -379,7 +379,6 @@
     "renameButtonText": "Rename",
     "deleteButtonText": "Delete",
     "leaveButtonText": "Leave"
-
   },
 
   "ProjectCardDeleteGuard": {
@@ -515,6 +514,7 @@
     "usersFetchError": "Fail to fetch users",
     "userUpdateError": "Fail to update user",
     "userDeleteError": "Fail to delete user",
+    "userLeaveError": "You can't leave the project as you are the last administrator",
     "modelsFetchError": "Fail to fetch models",
     "modelUploadError": "Fail to upload model",
     "modelUpdateError": "Fail to update model",

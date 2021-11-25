@@ -514,6 +514,7 @@
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
+    "userLeaveError": "Vous ne pouvez pas quitter ce projet car vous êtes le dernier administrateur",
     "modelsFetchError": "Impossible de récupérer la liste des modèles",
     "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
     "modelUpdateError": "Échec de la mise à jour du modèle",
