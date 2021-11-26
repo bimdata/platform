@@ -15,7 +15,7 @@
 
   &--primary {
     background-color: var(--color-primary);
-    color: var(--color-tertiary-lightest);
+    color: var(--color-silver-light);
   }
 
   &--secondary {
@@ -24,7 +24,7 @@
   }
 
   &--tertiary {
-    background-color: var(--color-tertiary-lightest);
+    background-color: var(--color-silver-light);
     color: var(--color-primary);
   }
 }

@@ -12,13 +12,13 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-unit);
-    background-color: var(--color-tertiary-lightest);
+    background-color: var(--color-silver-light);
 
     &__path {
       display: block;
       line-height: 1rem;
       font-size: 0.8rem;
-      color: var(--color-tertiary-dark);
+      color: var(--color-granite-light);
     }
 
     &__name {
@@ -28,7 +28,7 @@
 
     &__btn-close {
       margin-left: auto;
-      color: var(--color-tertiary-dark);
+      color: var(--color-granite-light);
     }
   }
 
@@ -44,13 +44,13 @@
       cursor: pointer;
 
       &.selected {
-        background-color: var(--color-tertiary);
+        background-color: var(--color-silver);
       }
 
       &:hover:not(.selected).folder {
-        background-color: var(--color-tertiary-lightest);
+        background-color: var(--color-silver-light);
       }
-      
+
       &:not(.folder) {
         opacity: 60%;
         cursor: initial;
@@ -86,7 +86,7 @@
       width: 100%;
       padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
 
-      &:not(.visibility){
+      &:not(.visibility) {
         display: none;
       }
     }

@@ -35,7 +35,7 @@
           min-width: calc(100% - var(--spacing-unit) * 2);
           margin: var(--spacing-unit);
           font-size: 1rem;
-          background-color: var(--color-tertiary-lightest);
+          background-color: var(--color-silver-light);
           &.focus {
             background-color: var(--color-white);
           }
@@ -48,15 +48,15 @@
 
         .invitation-card {
           padding: 0 calc(var(--spacing-unit) / 2);
-          border-bottom: 1px solid var(--color-tertiary-lightest);
+          border-bottom: 1px solid var(--color-silver-light);
         }
 
         .user-card {
           padding: 0 calc(var(--spacing-unit) / 2);
           margin-bottom: calc(var(--spacing-unit) / 4);
-          border-bottom: 1px solid var(--color-tertiary-lightest);
+          border-bottom: 1px solid var(--color-silver-light);
           &:hover {
-            background-color: var(--color-tertiary-lightest);
+            background-color: var(--color-silver-light);
           }
         }
       }
