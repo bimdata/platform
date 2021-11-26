@@ -33,9 +33,6 @@
 
 <script>
 import { useNotifications } from "@/composables/notifications";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 const notifIcons = {
   info: "information",
@@ -45,10 +42,6 @@ const notifIcons = {
 };
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon
-  },
   setup() {
     const { showNotification, notification } = useNotifications();
 

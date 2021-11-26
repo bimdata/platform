@@ -20,9 +20,6 @@
 import { useRoute, useRouter } from "vue-router";
 import { routeNames } from "@/router";
 import { useSession } from "@/state/session";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 const DEFAULT_PREVIOUS_ROUTE = {
   [routeNames.userSpaces]: routeNames.dashboard,
@@ -35,10 +32,6 @@ const DEFAULT_PREVIOUS_ROUTE = {
 };
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon
-  },
   setup() {
     const router = useRouter();
     const route = useRoute();

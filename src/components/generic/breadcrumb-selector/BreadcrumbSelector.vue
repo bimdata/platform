@@ -48,14 +48,10 @@ import { computed } from "vue";
 import { useToggle } from "@/composables/toggle";
 import { useListFilter } from "@/composables/list-filter";
 // Components
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
 import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
   components: {
-    BIMDataIcon,
-    BIMDataSearch,
     TextBox
   },
   props: {
