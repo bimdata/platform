@@ -2,11 +2,7 @@
   <div class="project-bcf">
     <BIMDataCard class="models-overview" titleHeader="BCF">
       <template #content>
-        <img
-          width="260"
-          height="260"
-          src="/static/bcf-manager-onboarding.svg"
-        />
+        <BcfManagerOnboarding />
         <div>Project BCF view, coming soon...</div>
       </template>
     </BIMDataCard>
@@ -16,7 +12,12 @@
 <script>
 import { useProjects } from "@/state/projects";
 
+import BcfManagerOnboarding from "../../../../public/static/bcf-manager-onboarding.vue";
+
 export default {
+  components: {
+    BcfManagerOnboarding
+  },
   setup() {
     const { currentProject } = useProjects();
 

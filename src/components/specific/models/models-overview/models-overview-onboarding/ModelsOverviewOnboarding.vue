@@ -1,10 +1,6 @@
 <template>
   <div class="models-overview-onboarding">
-    <img
-      width="260"
-      height="260"
-      src="/static/models-overview-onboarding.svg"
-    />
+    <ModelsOverviewOnboarding />
     <div>
       {{ $t("ModelsOverviewOnboarding.text") }}
     </div>
@@ -23,7 +19,11 @@
 </template>
 
 <script>
+import ModelsOverviewOnboarding from "../../../../../../public/static/models-overview-onboarding.vue";
 export default {
+  components: {
+    ModelsOverviewOnboarding
+  },
   emits: ["open-file-uploader"]
 };
 </script>
