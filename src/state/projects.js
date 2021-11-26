@@ -130,6 +130,10 @@ const deleteProjectUser = async (project, user) => {
   return user;
 };
 
+const leaveProject = async project => {
+  await ProjectService.leaveProject(project);
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -149,6 +153,7 @@ export function useProjects() {
     sendProjectInvitation,
     cancelProjectInvitation,
     updateProjectUser,
-    deleteProjectUser
+    deleteProjectUser,
+    leaveProject
   };
 }

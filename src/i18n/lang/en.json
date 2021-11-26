@@ -373,13 +373,20 @@
 
   "ProjectCardActionMenu": {
     "renameButtonText": "Rename",
-    "deleteButtonText": "Delete"
+    "deleteButtonText": "Delete",
+    "leaveButtonText": "Leave"
   },
 
   "ProjectCardDeleteGuard": {
     "title": "Delete project",
     "message": "Are you sure you want to (permanently) delete this project ?",
     "deleteButtonText": "Delete"
+  },
+
+  "ProjectCardLeaveGuard": {
+    "title": "Leave projet",
+    "message": "Are you sure you want to leave this project ?",
+    "leaveButtonText": "Validate"
   },
 
   "ProjectCardUpdateForm": {
@@ -503,6 +510,7 @@
     "usersFetchError": "Fail to fetch users",
     "userUpdateError": "Fail to update user",
     "userDeleteError": "Fail to delete user",
+    "userLeaveError": "You can't leave the project as you are the last administrator",
     "modelsFetchError": "Fail to fetch models",
     "modelUploadError": "Fail to upload model",
     "modelUpdateError": "Fail to update model",
