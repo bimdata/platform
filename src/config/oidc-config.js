@@ -47,7 +47,7 @@ const config = {
 
 if (AUTHORIZED_IDENTITY_PROVIDERS) {
   config.extraQueryParams = {
-    kc_idp_hint: AUTHORIZED_IDENTITY_PROVIDERS
+    kc_idp_hint: AUTHORIZED_IDENTITY_PROVIDERS,
   };
 }
 
