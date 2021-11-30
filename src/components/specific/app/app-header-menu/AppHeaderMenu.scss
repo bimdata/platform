@@ -33,7 +33,7 @@
     .separator {
       height: 1px;
       margin: calc(var(--spacing-unit) / 2) var(--spacing-unit);
-      background-color: var(--color-tertiary);
+      background-color: var(--color-silver);
     }
 
     .bimdata-btn {
@@ -44,7 +44,7 @@
       margin-left: calc(var(--spacing-unit) / 2);
       padding: calc(var(--spacing-unit) / 4) calc(var(--spacing-unit) / 2);
       border-radius: 2px;
-      background-color: var(--color-tertiary);
+      background-color: var(--color-silver);
       text-transform: uppercase;
     }
 

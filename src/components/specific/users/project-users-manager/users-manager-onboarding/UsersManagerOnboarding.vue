@@ -1,6 +1,6 @@
 <template>
   <div class="users-manager-onboarding">
-    <img width="260" height="260" src="/static/users-manager-onboarding.svg" />
+    <UsersManagerOnboarding />
     <template v-if="project.isAdmin">
       <div>
         {{ $t("UsersManagerOnboarding.text") }}
@@ -34,14 +34,14 @@
 </template>
 
 <script>
+import UsersManagerOnboarding from "../../../../../../public/static/users-manager-onboarding.vue";
 import { useToggle } from "@/composables/toggle";
 // Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
 
 export default {
   components: {
-    BIMDataButton,
+    UsersManagerOnboarding,
     InvitationForm
   },
   props: {

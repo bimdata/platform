@@ -38,9 +38,6 @@
 
 <script>
 import { onBeforeUnmount, onMounted, ref } from "vue";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon";
 
 // Slider padding:
 const sliderPadding = 12; // px
@@ -48,10 +45,6 @@ const sliderPadding = 12; // px
 const minGap = 24; // px
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon
-  },
   setup() {
     const slider = ref(null);
 
@@ -68,10 +61,8 @@ export default {
 
       if (children.length > 0) {
         // Note: it is assumed that all items have the same dimensions (width/height)
-        const {
-          width: itemWidth,
-          height: itemHeight
-        } = children[0].getBoundingClientRect();
+        const { width: itemWidth, height: itemHeight } =
+          children[0].getBoundingClientRect();
 
         // Set slider height according to items height and slider padding
         slider.value.style.height = `${itemHeight + 2 * sliderPadding}px`;

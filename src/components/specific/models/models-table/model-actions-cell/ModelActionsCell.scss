@@ -6,14 +6,13 @@
   gap: calc(var(--spacing-unit) * 3 / 2);
 
   &__btn {
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
     &:disabled {
       visibility: hidden;
     }
   }
 
   &__btn--viewer {
-    color: var(--color-primary);
     &:disabled {
       opacity: 0.4;
     }
@@ -33,6 +32,9 @@
 
     &__btn {
       justify-content: flex-start;
+      &.bimdata-btn__ghost--default:deep() {
+        color: var(--color-text);
+      }
     }
   }
 }

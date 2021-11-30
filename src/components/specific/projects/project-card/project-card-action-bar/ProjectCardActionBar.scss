@@ -5,10 +5,10 @@
   padding-left: calc(var(--spacing-unit) / 3);
 
   &__action-btn {
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
 
     &:disabled {
-      color: var(--color-tertiary);
+      color: var(--color-silver);
     }
   }
 }
