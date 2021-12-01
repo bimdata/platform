@@ -36,7 +36,7 @@
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 // Components
-import PageNotFoundImage from "../../../public/static/page-not-found-image.vue";
+import PageNotFoundImage from "./PageNotFoundImage.vue";
 
 export default {
   components: {

@@ -7,7 +7,7 @@
         <TextBox :text="folder.name" :maxLength="16" />
       </span>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
-        <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
+        <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
     <div class="folder-access-manager__head">

@@ -7,7 +7,7 @@
             <slot name="title">{{ title }}</slot>
           </span>
           <BIMDataButton ghost rounded icon @click="closeSidePanel">
-            <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
+            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
           </BIMDataButton>
         </div>
         <div class="side-panel__content">

@@ -33,7 +33,7 @@
     width: 260px;
     height: 1px;
     margin: var(--spacing-unit) 0;
-    background-color: var(--color-tertiary);
+    background-color: var(--color-silver);
   }
 
   &__bullets {
@@ -52,7 +52,7 @@
 
   &__note {
     font-size: 12px;
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
 
     &::before {
       content: "* ";

@@ -4,7 +4,7 @@
       <BIMDataButton
         data-test="btn-toggle-upload"
         width="120px"
-        :color="showFileUploader ? 'tertiary-darkest' : 'primary'"
+        :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
         :disabled="spaceInfo.remainingSmartDataSize <= 0"

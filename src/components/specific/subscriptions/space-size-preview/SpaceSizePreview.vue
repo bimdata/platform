@@ -27,7 +27,7 @@
           </span>
         </template>
       </ProgressBar>
-      <BIMDataText color="color-tertiary-dark">
+      <BIMDataText color="color-granite-light">
         {{ $t("SpaceSizePreview.actualStorageText") }}
       </BIMDataText>
     </div>
@@ -49,7 +49,7 @@
           </span>
         </template>
       </ProgressBar>
-      <BIMDataText color="color-tertiary-dark">
+      <BIMDataText color="color-granite-light">
         {{ $t("SpaceSizePreview.newStorageText") }}
       </BIMDataText>
     </div>

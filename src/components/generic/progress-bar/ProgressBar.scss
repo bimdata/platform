@@ -8,7 +8,7 @@
     position: relative;
     height: 6px;
     border-radius: 15px;
-    background-color: var(--color-tertiary);
+    background-color: var(--color-silver);
 
     &__bar {
       height: 100%;
@@ -32,7 +32,7 @@
     display: flex;
     justify-content: space-between;
 
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
     font-size: 12px;
 
     &--above {

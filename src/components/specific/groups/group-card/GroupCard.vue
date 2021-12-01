@@ -20,7 +20,7 @@
             icon
             @click.stop="openMenu"
           >
-            <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
+            <BIMDataIcon name="ellipsis" size="l" fill color="granite-light" />
           </BIMDataButton>
           <BIMDataIcon name="group" size="xxl" />
           <TextBox

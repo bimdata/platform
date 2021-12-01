@@ -5,7 +5,7 @@
       <span>{{ $t("OrganizationsList.createButtonText") }}</span>
     </BIMDataButton>
 
-    <BIMDataText color="color-tertiary-dark">
+    <BIMDataText color="color-granite-light">
       {{ $t("OrganizationsList.explanationText") }}
     </BIMDataText>
 

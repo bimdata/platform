@@ -14,7 +14,7 @@
           v-for="user of displayedUsers"
           :key="user.id"
         >
-          <UserAvatar :user="user" size="48" color="tertiary" />
+          <UserAvatar :user="user" size="48" color="silver-light" />
           <div class="user-add-card__info">
             <div class="user-add-card__info__name">
               {{ user.fullname }}

@@ -20,7 +20,7 @@
         :disabled="localState.loading"
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxs" fill color="tertiary-dark" />
+        <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
 

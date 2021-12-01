@@ -6,7 +6,7 @@
           :text="folder.name"
           :maxLength="24"
           @click="selectFile(folder)"
-          tooltipColor="tertiary-lightest"
+          tooltipColor="silver-light"
           :style="{
             cursor: 'pointer',
             margin: index === 0 ? 'auto 15px auto 5px' : 'auto 15px'
@@ -19,7 +19,7 @@
       class="files-manager-breadcrumb__file"
       :text="file.name"
       :maxLength="24"
-      tooltipColor="tertiary-lightest"
+      tooltipColor="silver-light"
       :style="{ marginLeft: path.length ? '15px' : '5px' }"
     />
   </div>
