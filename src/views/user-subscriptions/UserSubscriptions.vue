@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
@@ -70,60 +70,61 @@ export default {
   },
   setup() {
     const { userOrganizations } = useOrganizations();
-    const { loadOrganizationSubscriptions, loadSubscriptionPayments } =
-      useSubscriptions();
+    const {
+      currentOrga,
+      loadOrganizationSubscriptions,
+      loadSubscriptionPayments
+    } = useSubscriptions();
 
     const subscriptions = ref([]);
     const payments = ref([]);
 
     const selectedOrga = ref({});
 
-    watch(
-      userOrganizations,
-      () => (selectedOrga.value = userOrganizations.value[0]),
-      { immediate: true }
-    );
+    onMounted(() => {
+      selectedOrga.value = currentOrga.value || userOrganizations.value[0];
 
-    watch(
-      selectedOrga,
-      async () => {
-        subscriptions.value = await loadOrganizationSubscriptions(
-          selectedOrga.value
-        );
-
-        let allPayments = await Promise.all(
-          subscriptions.value
-            // TODO: this is to avoid errors when fetching payments of a deleted space.
-            // Should be removed when a solution is found.
-            .filter(sub => sub.cloud)
-            .map(sub => {
-              return loadSubscriptionPayments(
-                selectedOrga.value,
-                sub.cloud,
-                sub
-              );
-            })
-        );
-
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-
-        payments.value = allPayments
-          .flat()
-          .filter(
-            payment =>
-              // Do not show future payments in the invoices table
-              new Date(payment.payout_date).getTime() < tomorrow.getTime()
-          )
-          .sort((a, b) =>
-            new Date(a.payout_date).getTime() >
-            new Date(b.payout_date).getTime()
-              ? -1
-              : 1
+      watch(
+        selectedOrga,
+        async () => {
+          subscriptions.value = await loadOrganizationSubscriptions(
+            selectedOrga.value
           );
-      },
-      { immediate: true }
-    );
+
+          let allPayments = await Promise.all(
+            subscriptions.value
+              // TODO: this is to avoid errors when fetching payments of a deleted space.
+              // Should be removed when a solution is found.
+              .filter(sub => sub.cloud)
+              .map(sub => {
+                return loadSubscriptionPayments(
+                  selectedOrga.value,
+                  sub.cloud,
+                  sub
+                );
+              })
+          );
+
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+
+          payments.value = allPayments
+            .flat()
+            .filter(
+              payment =>
+                // Do not show future payments in the invoices table
+                new Date(payment.payout_date).getTime() < tomorrow.getTime()
+            )
+            .sort((a, b) =>
+              new Date(a.payout_date).getTime() >
+              new Date(b.payout_date).getTime()
+                ? -1
+                : 1
+            );
+        },
+        { immediate: true }
+      );
+    });
 
     return {
       // References

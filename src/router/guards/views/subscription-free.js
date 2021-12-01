@@ -5,8 +5,7 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 const { setCurrentOrga } = useSubscriptions();
 
 export default async function subscriptionFreeGuard(route) {
-  // Redirect to pro plan subscription
-  // if the user already has a free space
+  // Redirect to dashboard if the user already has a free space
   const freeSpaces = await SubscriptionService.fetchFreeSpaces();
   if (freeSpaces.length > 0) {
     return { name: routeNames.dashboard };

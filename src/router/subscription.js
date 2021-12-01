@@ -9,6 +9,7 @@ import subscribeGuard from "./guards/views/subscribe.js";
 import subscriptionDatapackGuard from "./guards/views/subscription-datapack.js";
 import subscriptionFreeGuard from "./guards/views/subscription-free.js";
 import subscriptionProGuard from "./guards/views/subscription-pro.js";
+import userSubscriptionsGuard from "./guards/views/user-subscriptions.js";
 
 // Lazy loaded view components
 /* eslint-disable */
@@ -39,7 +40,8 @@ const routes = [
     name: userSubscriptions,
     component: UserSubscriptions,
     meta: {
-      back: dashboard
+      back: dashboard,
+      guard: userSubscriptionsGuard
     }
   },
   {
