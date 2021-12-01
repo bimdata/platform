@@ -13,7 +13,9 @@
           :perPage="7"
         >
           <template #cell-space="{ row: sub }">
-            {{ (sub.cloud || {}).name }}
+            <span class="space-cell" @click="goToSpaceBoard(sub.cloud)">
+              {{ (sub.cloud || {}).name }}
+            </span>
           </template>
           <template #cell-nextpayment="{ row: sub }">
             {{ $d(sub.next_bill_date, "short") }}
@@ -25,7 +27,7 @@
             </span>
           </template>
           <template #cell-status="{ row: sub }">
-            <span :class="`billing-status-cell--${sub.status}`">
+            <span :class="`status-cell--${sub.status}`">
               {{ sub.status }}
             </span>
           </template>
@@ -101,10 +103,22 @@ export default {
       router.push({ name: routeNames.subscriptionPro });
     };
 
+    const goToSpaceBoard = space => {
+      if (space) {
+        router.push({
+          name: routeNames.spaceBoard,
+          params: {
+            spaceID: space.id
+          }
+        });
+      }
+    };
+
     return {
       // References
       columns,
       // Methods
+      goToSpaceBoard,
       goToSubscriptionPro
     };
   }

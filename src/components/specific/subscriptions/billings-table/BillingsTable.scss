@@ -1,5 +1,10 @@
 .billings-table {
-  .billing-status-cell {
+  .space-cell:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .status-cell {
     &--active,
     &--deleted {
       font-weight: bold;
