@@ -13,7 +13,6 @@
     </BIMDataButton>
 
     <BIMDataButton
-      v-if="project.isAdmin"
       data-test="btn-open-menu"
       class="project-card-action-bar__action-btn"
       color="default"

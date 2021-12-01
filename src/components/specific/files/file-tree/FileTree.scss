@@ -18,7 +18,7 @@
           left: calc(0px - var(--spacing-unit));
           width: calc(100% + var(--spacing-unit) * 2);
           height: 26px;
-          background-color: var(--color-tertiary);
+          background-color: var(--color-silver);
           opacity: 0;
           transition: opacity 0.2s ease-out;
         }
@@ -39,6 +39,7 @@
         &__name {
           @include noselect;
           align-self: flex-end;
+          color: var(--color-text);
           &:hover {
             z-index: 2;
           }

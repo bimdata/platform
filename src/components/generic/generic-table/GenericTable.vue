@@ -119,17 +119,8 @@
 
 <script>
 import { ref, watch } from "vue";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataCheckbox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCheckbox.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataCheckbox,
-    BIMDataIcon
-  },
   props: {
     columns: {
       type: Array,

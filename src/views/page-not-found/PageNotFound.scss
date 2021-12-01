@@ -12,6 +12,11 @@
     flex-direction: column;
     justify-content: center;
     gap: calc(var(--spacing-unit) * 4);
+    h1 {
+      margin: 0;
+      font-size: 220px;
+      line-height: 1;
+    }
   }
 
   &__right {

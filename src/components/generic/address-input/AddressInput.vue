@@ -41,15 +41,8 @@
 <script>
 import { ref, watch, watchEffect } from "vue";
 import { getAdressesFromSearchText } from "@/utils/location";
-// Components
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
-import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 
 export default {
-  components: {
-    BIMDataIcon,
-    BIMDataInput
-  },
   props: {
     modelValue: {
       type: String,

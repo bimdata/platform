@@ -81,7 +81,6 @@ export default {
     const nonArchivedModels = computed(() => {
       return models.value.filter(model => !model.archived);
     });
-
     watch(
       () => props.project,
       async () => {

@@ -158,6 +158,17 @@ class ProjectService {
       throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
     }
   }
+
+  async leaveProject(project) {
+    try {
+      return await apiClient.collaborationApi.leaveProject({
+        cloudPk: project.cloud.id,
+        id: project.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.USER_LEAVE_ERROR, error);
+    }
+  }
 }
 
 const service = new ProjectService();

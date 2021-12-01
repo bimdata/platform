@@ -530,13 +530,20 @@
 
   "ProjectCardActionMenu": {
     "renameButtonText": "Renommer",
-    "deleteButtonText": "Supprimer"
+    "deleteButtonText": "Supprimer",
+    "leaveButtonText": "Quitter"
   },
 
   "ProjectCardDeleteGuard": {
     "title": "Supprimer le projet",
     "message": "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
     "deleteButtonText": "Supprimer"
+  },
+
+  "ProjectCardLeaveGuard": {
+    "title": "Quitter le projet",
+    "message": "Êtes vous sûr de vouloir quitter ce projet ?",
+    "leaveButtonText": "Valider"
   },
 
   "ProjectCardUpdateForm": {
@@ -736,6 +743,7 @@
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
+    "userLeaveError": "Vous ne pouvez pas quitter ce projet car vous êtes le dernier administrateur",
     "modelsFetchError": "Impossible de récupérer la liste des modèles",
     "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
     "modelUpdateError": "Échec de la mise à jour du modèle",

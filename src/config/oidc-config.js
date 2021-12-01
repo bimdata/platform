@@ -11,16 +11,13 @@ const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID;
 const AUTHORIZED_IDENTITY_PROVIDERS =
   process.env.VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
 
-export default {
+const config = {
   // Auth request config
   authority: AUTHORITY,
   client_id: CLIENT_ID,
   scope: "openid profile email",
   response_type: "code",
   redirect_uri: `${APP_BASE_URL}/oidc-callback`,
-  extraQueryParams: {
-    kc_idp_hint: "bimdataconnect"
-  },
 
   // Logout config
   post_logout_redirect_uri: APP_BASE_URL,
@@ -47,3 +44,11 @@ export default {
     ? AUTHORIZED_IDENTITY_PROVIDERS.split(",")
     : []
 };
+
+if (AUTHORIZED_IDENTITY_PROVIDERS) {
+  config.extraQueryParams = {
+    kc_idp_hint: AUTHORIZED_IDENTITY_PROVIDERS,
+  };
+}
+
+export default config;

@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     padding-bottom: var(--spacing-unit);
-    border-bottom: 1px solid var(--color-tertiary);
+    border-bottom: 1px solid var(--color-silver);
     font-size: 1.5rem;
     font-weight: bold;
   }
@@ -17,6 +17,6 @@
     display: grid;
     gap: var(--spacing-unit);
     padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
   }
 }

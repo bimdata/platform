@@ -20,7 +20,7 @@
     padding: calc(var(--spacing-unit) * 3 / 2);
     border: 2px dashed var(--color-primary);
     border-radius: 8px;
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
 
     &__btn-close {
       position: absolute;
@@ -41,7 +41,7 @@
       position: relative;
       height: 1px;
       width: var(--separator-width);
-      background-color: var(--color-tertiary);
+      background-color: var(--color-silver);
       &__text {
         position: absolute;
         top: calc(0px - var(--text-height) / 2);

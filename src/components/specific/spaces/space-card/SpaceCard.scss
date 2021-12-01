@@ -46,11 +46,15 @@
       height: calc(100% - #{$card-content-height});
       padding: 0;
 
+      .text-box {
+        color: var(--color-text);
+      }
+
       .title-underline {
         height: 1px;
         width: 50px;
         margin: calc(var(--spacing-unit) * 2 / 3) 0;
-        background-color: var(--color-tertiary);
+        background-color: var(--color-silver);
       }
 
       .sub-title {
@@ -59,7 +63,7 @@
 
         &__text {
           font-size: 10px;
-          color: var(--color-tertiary-dark);
+          color: var(--color-granite-light);
         }
 
         &__number {

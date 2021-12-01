@@ -2,7 +2,7 @@
   <div class="model-actions-cell" v-click-away="closeMenu">
     <BIMDataButton
       class="model-actions-cell__btn model-actions-cell__btn--viewer"
-      color="primary"
+      color="granite"
       outline
       radius
       icon
@@ -13,7 +13,7 @@
     </BIMDataButton>
     <BIMDataButton
       class="model-actions-cell__btn model-actions-cell__btn--viewer"
-      color="primary"
+      color="granite"
       outline
       radius
       icon

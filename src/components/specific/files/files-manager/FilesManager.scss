@@ -38,7 +38,8 @@
 
         &__input-search {
           font-size: 1rem;
-          background-color: var(--color-tertiary-lightest);
+          background-color: var(--color-silver-light);
+          color: var(--color-primary);
           &.focus {
             background-color: var(--color-white);
           }

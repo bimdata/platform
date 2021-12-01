@@ -27,7 +27,7 @@
 
     .bimdata-search-bar {
       margin: 8px;
-      background-color: var(--color-tertiary-lightest);
+      background-color: var(--color-silver-light);
       &.focus {
         background-color: var(--color-white);
       }
@@ -37,7 +37,7 @@
       padding: 8px;
       &:hover {
         cursor: pointer;
-        background-color: var(--color-tertiary-lightest);
+        background-color: var(--color-silver-light);
       }
     }
   }

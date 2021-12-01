@@ -21,15 +21,8 @@
 <script>
 import { useRoute, useRouter } from "vue-router";
 import { useSession } from "@/composables/session.js";
-// Components
-import BIMDataButton from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataButton.js";
-import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 
 export default {
-  components: {
-    BIMDataButton,
-    BIMDataIcon
-  },
   setup() {
     const router = useRouter();
     const route = useRoute();

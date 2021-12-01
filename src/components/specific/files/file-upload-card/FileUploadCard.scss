@@ -21,7 +21,7 @@
   }
 
   &__info {
-    color: var(--color-tertiary-dark);
+    color: var(--color-granite-light);
 
     &__file-name {
       margin-bottom: calc(var(--spacing-unit) / 2);
@@ -31,7 +31,7 @@
       width: 100%;
       height: 4px;
       border-radius: 2px;
-      background-color: var(--color-tertiary);
+      background-color: var(--color-silver);
 
       .progress-level {
         height: 100%;
@@ -51,7 +51,7 @@
         &::before {
           content: "-";
           margin-right: calc(var(--spacing-unit) / 3);
-          color: var(--color-tertiary-dark);
+          color: var(--color-granite-light);
         }
         margin-left: calc(var(--spacing-unit) / 3);
         font-weight: bold;
@@ -61,8 +61,8 @@
   }
 
   &__btn-cancel {
-    border: 1px solid var(--color-tertiary-dark);
-    color: var(--color-tertiary-dark);
+    border: 1px solid var(--color-granite-light);
+    color: var(--color-granite-light);
     transform: scale(0.8);
   }
 }

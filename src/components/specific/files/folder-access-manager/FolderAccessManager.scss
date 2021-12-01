@@ -21,7 +21,7 @@
     flex-direction: column;
     gap: var(--spacing-unit);
     padding-bottom: var(--spacing-unit);
-    border-bottom: 2px solid var(--color-tertiary-lightest);
+    border-bottom: 2px solid var(--color-silver-light);
 
     &__search {
       font-size: 1rem;
@@ -37,7 +37,7 @@
       display: flex;
       align-items: center;
       gap: calc(var(--spacing-unit) / 2);
-      color: var(--color-tertiary-dark);
+      color: var(--color-granite-light);
 
       &--name {
         flex-grow: 1;
