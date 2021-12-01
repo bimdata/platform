@@ -1,9 +1,9 @@
 {
   "Dashboard": {
     "spacesTileTitle": "Espaces",
-    "spacesTileText": "Mes espaces",
+    "spacesTileBottomText": "Mes espaces",
     "projectsTileTitle": "Projets",
-    "projectsTileText": "Mes projets",
+    "projectsTileBottomText": "Mes projets",
     "subscriptionsTileTitle": "Abonnements",
     "subscriptionsTileText": "Retrouvez toutes vos factures et vos dernières informations de paiement ici.",
     "subscriptionsTileBottomText": "Gérer mes abonnements"

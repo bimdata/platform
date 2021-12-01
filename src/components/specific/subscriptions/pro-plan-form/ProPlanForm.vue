@@ -38,6 +38,7 @@
 
 <script>
 import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { usePaddle } from "@/composables/paddle.js";
 import routeNames from "@/router/route-names.js";
@@ -52,6 +53,7 @@ export default {
   },
   emits: ["space-created"],
   setup(props, { emit }) {
+    const { locale } = useI18n();
     const router = useRouter();
     const { getProPlanPrice, loadCheckout } = usePaddle();
     const { getPlatformSubscriptionLink, waitForCreatedSpace } =
@@ -72,7 +74,7 @@ export default {
           if (space) {
             loading.value = true;
             const link = await getPlatformSubscriptionLink(space);
-            loadCheckout("paddle-checkout-container", link, {
+            loadCheckout("paddle-checkout-container", link, locale.value, {
               onLoad: () => {
                 loading.value = false;
               },

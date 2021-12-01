@@ -1,12 +1,13 @@
 import { DATAPACK_PLAN_ID, PRO_PLAN_ID } from "@/config/subscription.js";
 import { getPrice } from "@/utils/price.js";
 
-const loadCheckout = (containerID, link, { onLoad, onSuccess }) => {
+const loadCheckout = (containerID, link, locale, { onLoad, onSuccess }) => {
   Paddle.Checkout.open({
     // Checkout params
     method: "inline",
     referring_domain: "platform",
     override: link,
+    locale,
 
     // Checkout frame
     frameTarget: containerID,

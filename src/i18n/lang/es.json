@@ -1,9 +1,9 @@
 {
     "Dashboard": {
         "spacesTileTitle": "Espacios",
-        "spacesTileText": "Mis espacios",
+        "spacesTileBottomText": "Mis espacios",
         "projectsTileTitle": "Proyectos",
-        "projectsTileText": "Mis proyectos"
+        "projectsTileBottomText": "Mis proyectos"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Buscar un miembro"
