@@ -1,0 +1,33 @@
+.visa-add {
+  border: 2px solid blue;
+  height: 100%;
+  padding: var(--spacing-unit);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    &__left-side {
+      display: flex;
+      flex-grow: 1;
+      margin: auto 0;
+
+     span {
+       margin-left: var(--spacing-unit);
+     }
+    }
+  }
+
+  &__validator {
+    margin: calc(var(--spacing-unit ) * 2) 0;
+  }
+
+  &__description {
+    margin: calc(var(--spacing-unit ) * 2) 0;
+  }
+
+  &__action-button {
+    display: flex;
+    justify-content: end;
+  }
+}

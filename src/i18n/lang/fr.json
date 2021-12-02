@@ -487,6 +487,18 @@
     "inviteButtonText": "Invitation"
   },
 
+  "Visa": {
+    "add": {
+      "title": "Demande de validation",
+      "validator": "Validant",
+      "toValidate": "A valider avant",
+      "errorDate": "Date invalide",
+      "description": "Description",
+      "cancel": "Annuler",
+      "validate": "Valider"
+    }
+  },
+
 
 
   "Error": "Erreur",

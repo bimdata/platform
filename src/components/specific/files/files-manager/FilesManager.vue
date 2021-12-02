@@ -73,6 +73,7 @@
               @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
             />
+            <VisaMain v-if="showVisaManager" @close="closeVisaManager" />
           </div>
         </transition>
 
@@ -112,6 +113,7 @@ import FolderCreationButton from "@/components/specific/files/folder-creation-bu
 import FilesActionBar from "./files-action-bar/FilesActionBar";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
+import VisaMain from "@/components/specific/visa/visa-main/VisaMain";
 
 export default {
   components: {
@@ -122,7 +124,8 @@ export default {
     FolderCreationButton,
     FilesActionBar,
     FilesDeleteModal,
-    FilesManagerOnboarding
+    FilesManagerOnboarding,
+    VisaMain
   },
   props: {
     project: {
@@ -227,13 +230,15 @@ export default {
       await download(props.project, files);
     };
 
-    const showSidePanel = ref(false);
+    const showSidePanel = ref(true);
     const showAccessManager = ref(false);
+    const showVisaManager = ref(true);
     const folderToManage = ref(null);
     let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
+      showVisaManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
@@ -258,6 +263,14 @@ export default {
       }, 100);
     };
 
+    const closeVisaManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showVisaManager.value = false;
+        folderToManage.value = null;
+      }, 100);
+    };
+
     return {
       // References
       currentFolder,
@@ -268,6 +281,7 @@ export default {
       searchText,
       selection,
       showAccessManager,
+      showVisaManager,
       showDeleteModal,
       showSidePanel,
       // Methods
@@ -280,7 +294,8 @@ export default {
       openDeleteModal,
       setSelection,
       uploadFiles,
-      backToParent
+      backToParent,
+      closeVisaManager
     };
   }
 };
