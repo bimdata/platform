@@ -12,33 +12,24 @@
 
     <transition name="fade">
       <div class="billing-actions-cell__menu" v-show="showMenu">
-        <a
-          class="
-            bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--default
-            billing-actions-cell__menu__btn
-          "
-          target="blank"
-          :href="billing.update_url"
-        >
+        <BIMDataButton ghost squared @click="goToSubscriptionDatapack">
+          {{ $t("BillingActionsCell.datapackButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton ghost squared @click="openUpdateUrl">
           {{ $t("BillingActionsCell.updateButtonText") }}
-        </a>
-        <a
-          class="
-            bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--high
-            billing-actions-cell__menu__btn
-          "
-          target="blank"
-          :href="billing.cancel_url"
-        >
+        </BIMDataButton>
+        <BIMDataButton color="high" ghost squared @click="openCancelUrl">
           {{ $t("BillingActionsCell.cancelButtonText") }}
-        </a>
+        </BIMDataButton>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useRouter } from "vue-router";
+import { useToggle } from "@/composables/toggle.js";
+import routeNames from "@/router/route-names.js";
 
 export default {
   props: {
@@ -47,18 +38,40 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const router = useRouter();
+
     const {
       isOpen: showMenu,
       close: closeMenu,
       toggle: toggleMenu
     } = useToggle();
 
+    const goToSubscriptionDatapack = () => {
+      router.push({
+        name: routeNames.subscriptionDatapack,
+        query: {
+          space: props.billing.cloud?.id
+        }
+      });
+    };
+
+    const openUpdateUrl = () => {
+      window.open(props.billing.update_url);
+    };
+
+    const openCancelUrl = () => {
+      window.open(props.billing.cancel_url);
+    };
+
     return {
       // References
       showMenu,
       // Methods
       closeMenu,
+      goToSubscriptionDatapack,
+      openCancelUrl,
+      openUpdateUrl,
       toggleMenu
     };
   }

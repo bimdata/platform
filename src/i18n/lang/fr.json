@@ -117,6 +117,7 @@
 
   "BillingActionsCell": {
     "updateButtonText": "Modifier la carte de paiement",
+    "datapackButtonText": "Gérer mes datapacks",
     "cancelButtonText": "Annuler ce paiement"
   },
 
