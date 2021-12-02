@@ -32,7 +32,12 @@
             </span>
           </template>
           <template #cell-amount="{ row: sub }">
-            {{ sub.unit_price }}
+            {{
+              +sub.unit_price +
+              sub.data_packs
+                .map(d => +d.unit_price * d.quantity)
+                .reduce((a, b) => a + b, 0)
+            }}
             <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
           </template>
           <template #cell-actions="{ row: sub }">
