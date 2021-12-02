@@ -160,15 +160,6 @@ export default {
     });
 
     const submitOrga = async () => {
-      if (mode.value === "create") {
-        try {
-          newOrgaLoading.value = true;
-          orga.value = await createOrganization(newOrga);
-        } finally {
-          newOrgaLoading.value = false;
-        }
-      }
-      newSpace.organization = { id: orga.value.id };
       step.value = 2;
       setTimeout(() => spaceNameInput.value.focus(), 200);
     };
@@ -176,6 +167,12 @@ export default {
     const submitSpace = async () => {
       try {
         newSpaceLoading.value = true;
+
+        if (mode.value === "create") {
+          orga.value = await createOrganization(newOrga);
+        }
+        newSpace.organization = { id: orga.value.id };
+
         if (props.type === "free") {
           const createdSpace = await createSpace(newSpace);
           emit("space-created", createdSpace);
@@ -202,6 +199,7 @@ export default {
       },
       { immediate: true }
     );
+
     watch(
       () => mode.value,
       () => {
