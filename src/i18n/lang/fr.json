@@ -57,8 +57,6 @@
     "subscribeTitle": "Créer un espace pro",
     "upgradeTitle": "Passer à la platforme professionnelle",
     "text": "Vous êtes sur le point de créer votre plan professionel. Votre plan inclus: {size} de stockage, création de projets illimités, utilisateurs illimités.",
-    "currentOrga": "Organization sélectionnée:",
-    "currentSpace": "Espace sélectionné:",
     "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "UserProjects": {
@@ -653,6 +651,11 @@
     "createSpaceText": "Texte expliquant ce qu'est un espace ici.",
     "createSpaceInput": "Nom de mon nouvel espace",
     "spaceValidateButton": "Valider"
+  },
+
+  "SpaceSelected": {
+    "selectedOrga": "Organization sélectionnée:",
+    "selectedSpace": "Espace sélectionné:"
   },
 
   "SpaceSelector": {

@@ -54,8 +54,6 @@
     "subscribeTitle": "Create Professional Plan",
     "upgradeTitle": "Upgrade to pro platform",
     "text": "You are about to create your pro plan. This includes: {size} of storage, unlimited projects, unlimited users.",
-    "currentOrga": "Selected organization:",
-    "currentSpace": "Selected space:",
     "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
   },
   "UserProjects": {
@@ -644,6 +642,11 @@
     "createSpaceTitle": "Create a space",
     "createSpaceInput": "Name of my new space",
     "spaceValidateButton": "Validate"
+  },
+
+  "SpaceSelected": {
+    "selectedOrga": "Selected organization:",
+    "selectedSpace": "Selected space:"
   },
 
   "SpaceSelector": {

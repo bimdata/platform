@@ -10,15 +10,12 @@
         </h1>
       </template>
     </ViewHeader>
+
     <div class="subscription-datapack__content">
       <div class="subscription-datapack__content__head">
-        <SpaceSelector
-          :organizations="organizations"
-          :initialOrga="currentOrga"
-          :initialSpace="currentSpace"
-          @space-selected="selectedSpace = $event"
-        />
+        <SpaceSelected :space="currentSpace" />
       </div>
+
       <div class="subscription-datapack__content__body">
         <div class="subscription-datapack__content__body__left">
           <DatapackInfo :spaceInfo="spaceInfo" :subscription="subscription" />
@@ -40,6 +37,7 @@
         </div>
       </div>
     </div>
+
     <div class="subscription-datapack__loader" v-show="loading">
       <BIMDataSpinner />
     </div>
@@ -60,7 +58,7 @@ import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
 import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";
-import SpaceSelector from "@/components/specific/subscriptions/space-selector/SpaceSelector.vue";
+import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
 import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
 export default {
@@ -68,7 +66,7 @@ export default {
     DatapackForm,
     DatapackInfo,
     GoBackButton,
-    SpaceSelector,
+    SpaceSelected,
     SpaceSizePreview,
     ViewHeader
   },

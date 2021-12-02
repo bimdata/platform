@@ -26,24 +26,7 @@
 
       <div class="subscription-pro__content__head">
         <template v-if="currentSpace">
-          <div class="space-selector flex items-center">
-            <div class="m-r-24 flex items-center">
-              <span class="m-r-12 primary-font-bold">
-                {{ $t("SubscriptionPro.currentOrga") }}
-              </span>
-              <span>
-                {{ currentOrga.name }}
-              </span>
-            </div>
-            <div class="flex items-center">
-              <span class="m-r-12 primary-font-bold">
-                {{ $t("SubscriptionPro.currentSpace") }}
-              </span>
-              <span>
-                {{ currentSpace.name }}
-              </span>
-            </div>
-          </div>
+          <SpaceSelected :space="currentSpace" />
         </template>
         <template v-else>
           <SpaceCreator
@@ -90,6 +73,7 @@ import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.
 import ProPlanForm from "@/components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
 import ProPlanInfo from "@/components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";
 import SpaceCreator from "@/components/specific/subscriptions/space-creator/SpaceCreator.vue";
+import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
 import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
 export default {
@@ -98,6 +82,7 @@ export default {
     ProPlanForm,
     ProPlanInfo,
     SpaceCreator,
+    SpaceSelected,
     SpaceSizePreview,
     ViewHeader
   },

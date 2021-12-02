@@ -29,6 +29,7 @@
         </template>
       </BIMDataDropdownList>
     </div>
+
     <div class="flex items-center" v-if="spaces && spaces.length">
       <span class="m-r-12 primary-font-bold">
         {{ $t("SpaceSelector.spaceSelectorLabel") }}
