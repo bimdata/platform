@@ -13,6 +13,7 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSelect.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import BIMDataTextarea from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextarea.js";
 
 // Generic components
 import FileIcon from "@/components/generic/file-icon/FileIcon.vue";
@@ -33,6 +34,7 @@ export default {
   BIMDataSelect,
   BIMDataSpinner,
   BIMDataTabs,
+  BIMDataTextarea,
   FileIcon,
   TextBox
 };

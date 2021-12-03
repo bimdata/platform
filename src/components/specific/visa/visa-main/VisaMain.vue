@@ -1,6 +1,6 @@
 <template>
   <div class="visa-main">
-    <VisaAdd @close="$emit('close', $event)" />
+    <VisaAdd @close="$emit('close', $event)" :fileToManage="fileToManage" />
   </div>
 </template>
 
@@ -11,7 +11,12 @@ export default {
   components: {
     VisaAdd
   },
-  props: {},
+  props: {
+    fileToManage: {
+      type: Object,
+      required: false
+    }
+  },
   emits: ["close"],
   setup() {}
 };

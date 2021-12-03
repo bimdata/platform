@@ -73,6 +73,17 @@
           {{ $t("FileActionsCell.manageAccessButtonText") }}
         </BIMDataButton>
         <BIMDataButton
+          v-if="
+            !isFolder(file) && project.isAdmin && file.userPermission === 100
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('openVisaManager')"
+        >
+          {{ $t("FileActionsCell.VisaButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
@@ -91,7 +102,7 @@
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
 import { routeNames } from "@/router";
-
+import { isFolder } from "@/utils/file-structure";
 export default {
   props: {
     project: {
@@ -110,7 +121,8 @@ export default {
     "download",
     "manage-access",
     "request-validation",
-    "update"
+    "update",
+    "openVisaManager"
   ],
   setup(props, { emit }) {
     const router = useRouter();
@@ -147,7 +159,9 @@ export default {
       closeMenu,
       goToModelViewer,
       onClick,
-      toggleMenu
+      toggleMenu,
+      isFolder,
+      console
     };
   }
 };

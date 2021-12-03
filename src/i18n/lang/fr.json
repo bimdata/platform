@@ -116,7 +116,8 @@
     "downloadButtonText": "Télécharger",
     "addVersionButtonText": "Ajouter une version",
     "manageAccessButtonText": "Gérer les accès",
-    "deleteButtonText": "Supprimer"
+    "deleteButtonText": "Supprimer",
+    "VisaButtonText": "Demandes de validation"
   },
 
   "FileNameCell": {
@@ -495,7 +496,10 @@
       "errorDate": "Date invalide",
       "description": "Description",
       "cancel": "Annuler",
-      "validate": "Valider"
+      "validate": "Valider",
+      "remainingCharacters": "Caractères restants :",
+      "tooMuchCharacters": "Caractères en trop : "
+
     }
   },
 

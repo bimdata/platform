@@ -22,8 +22,28 @@
     margin: calc(var(--spacing-unit ) * 2) 0;
   }
 
+  &__validate-date {
+    &:deep() {
+      label {
+        font-size: 1em;
+      }
+    }
+  }
+
+
   &__description {
     margin: calc(var(--spacing-unit ) * 2) 0;
+
+    &:deep() {
+      label {
+        font-size: 1em;
+      }
+    }
+
+    .error {
+      color: red;
+    }
+
   }
 
   &__action-button {

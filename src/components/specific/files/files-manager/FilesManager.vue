@@ -59,6 +59,7 @@
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
             @back-parent-folder="backToParent"
+            @openVisaManager="openVisaManager"
           />
         </div>
 
@@ -73,7 +74,11 @@
               @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
             />
-            <VisaMain v-if="showVisaManager" @close="closeVisaManager" />
+            <VisaMain
+              v-if="showVisaManager"
+              @close="closeVisaManager"
+              :file="fileToManage"
+            />
           </div>
         </transition>
 
@@ -230,10 +235,11 @@ export default {
       await download(props.project, files);
     };
 
-    const showSidePanel = ref(true);
+    const showSidePanel = ref(false);
     const showAccessManager = ref(false);
-    const showVisaManager = ref(true);
+    const showVisaManager = ref(false);
     const folderToManage = ref(null);
+    const fileToManage = ref(null);
     let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
@@ -263,11 +269,18 @@ export default {
       }, 100);
     };
 
+    const openVisaManager = file => {
+      fileToManage.value = file;
+      showVisaManager.value = true;
+      showAccessManager.value = false;
+      showSidePanel.value = true;
+    };
+
     const closeVisaManager = () => {
       showSidePanel.value = false;
       setTimeout(() => {
         showVisaManager.value = false;
-        folderToManage.value = null;
+        fileToManage.value = null;
       }, 100);
     };
 
@@ -295,7 +308,8 @@ export default {
       setSelection,
       uploadFiles,
       backToParent,
-      closeVisaManager
+      closeVisaManager,
+      openVisaManager
     };
   }
 };
