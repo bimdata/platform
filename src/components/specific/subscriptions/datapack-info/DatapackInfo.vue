@@ -1,41 +1,15 @@
 <template>
   <div class="datapack-info">
-    <img
-      class="heading"
-      src="/static/platform-heading.svg"
-      alt="BIMData Platform"
-    />
-    <img
-      class="image"
-      src="/static/datapack-info-image.svg"
-      alt="Datapack image"
-    />
-    <div class="content">
-      <h1 class="title">
-        {{ $t("DatapackInfo.title") }}
-      </h1>
-      <div class="text">
-        <div>
-          {{ $t("DatapackInfo.datapacks") }}
-        </div>
-        <div>
-          {{ datapacks.length }}
-          DataPacks
-        </div>
-      </div>
-      <div class="text">
-        <div>
-          {{ $t("DatapackInfo.storage") }}
-        </div>
-        <div>
-          <span>{{ formatBytes(spaceInfo.smartDataSizeAvailable) }}</span>
-          <span>
-            ({{
-              $t("DatapackInfo.including", { quantity: datapacksQuantity })
-            }})
-          </span>
-        </div>
-      </div>
+    <div class="datapack-info__text">
+      {{ $t("DatapackInfo.storage") }}
+    </div>
+    <div class="datapack-info__info">
+      <span>
+        {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+      </span>
+      <span>
+        ({{ $t("DatapackInfo.including", { quantity: datapacksQuantity }) }})
+      </span>
     </div>
   </div>
 </template>
@@ -56,14 +30,14 @@ export default {
     }
   },
   setup(props) {
-    const datapacks = computed(() => props.subscription?.data_packs || []);
     const datapacksQuantity = computed(() =>
-      datapacks.value.map(d => d.quantity).reduce((a, b) => a + b, 0)
+      (props.subscription?.data_packs || [])
+        .map(d => d.quantity)
+        .reduce((a, b) => a + b, 0)
     );
 
     return {
       // References
-      datapacks,
       datapacksQuantity,
       // Methods
       formatBytes

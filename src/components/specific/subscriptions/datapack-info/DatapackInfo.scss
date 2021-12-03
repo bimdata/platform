@@ -1,35 +1,16 @@
 .datapack-info {
-  height: 100%;
-  padding: calc(var(--spacing-unit) * 2) 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(var(--spacing-unit) * 4);
 
-  .heading {
-    width: 300px;
+  &__text {
+    &::after {
+      content: " :";
+    }
   }
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 2);
-
-    .title {
-      margin: 0;
-    }
-
-    .text {
-      & > :first-child {
-        &::after {
-          content: " :";
-        }
-      }
-      & > :last-child {
-        font-size: 1.2rem;
-        font-weight: bold;
-      }
-    }
+  &__info {
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 }

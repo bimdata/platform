@@ -17,24 +17,14 @@
       </div>
 
       <div class="subscription-datapack__content__body">
-        <div class="subscription-datapack__content__body__left">
-          <DatapackInfo :spaceInfo="spaceInfo" :subscription="subscription" />
-        </div>
-        <div class="subscription-datapack__content__body__center">
-          <DatapackForm
-            :space="selectedSpace"
-            :subscription="subscription"
-            @quantity-updated="quantity = $event"
-            @datapack-created="onSuccess"
-            @datapack-updated="onSuccess"
-          />
-        </div>
-        <div class="subscription-datapack__content__body__right">
-          <SpaceSizePreview
-            :spaceInfo="spaceInfo"
-            :newSizeAvailable="newSizeAvailable"
-          />
-        </div>
+        <DatapackInfo :spaceInfo="spaceInfo" :subscription="subscription" />
+        <DatapackForm
+          :space="currentSpace"
+          :subscription="subscription"
+          @quantity-updated="quantity = $event"
+          @datapack-created="onSuccess"
+          @datapack-updated="onSuccess"
+        />
       </div>
     </div>
 
@@ -52,6 +42,7 @@ import { useNotifications } from "@/composables/notifications.js";
 import SIZE_UNIT from "@/config/size-unit.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
+import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
@@ -59,7 +50,6 @@ import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.
 import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
 import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";
 import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
-import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {
@@ -67,7 +57,6 @@ export default {
     DatapackInfo,
     GoBackButton,
     SpaceSelected,
-    SpaceSizePreview,
     ViewHeader
   },
   setup() {
@@ -120,7 +109,12 @@ export default {
         },
         8000
       );
-      router.back();
+      router.push({
+        name: routeNames.spaceBoard,
+        params: {
+          spaceID: currentSpace.value.id
+        }
+      });
     };
 
     watch(
