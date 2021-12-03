@@ -1,9 +1,6 @@
 <template>
   <div class="subscription-datapack">
     <ViewHeader>
-      <template #left>
-        <GoBackButton />
-      </template>
       <template #center>
         <h1 class="subscription-datapack__title">
           {{ $t("SubscriptionDatapack.title") }}
@@ -20,8 +17,8 @@
         <DatapackInfo :spaceInfo="spaceInfo" :subscription="subscription" />
         <DatapackForm
           :space="currentSpace"
+          :spaceInfo="spaceInfo"
           :subscription="subscription"
-          @quantity-updated="quantity = $event"
           @datapack-created="onSuccess"
           @datapack-updated="onSuccess"
         />
@@ -35,18 +32,16 @@
 </template>
 
 <script>
-import { computed, provide, ref, watch } from "vue";
+import { provide, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useNotifications } from "@/composables/notifications.js";
-import SIZE_UNIT from "@/config/size-unit.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
 import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";
 import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
@@ -55,7 +50,6 @@ export default {
   components: {
     DatapackForm,
     DatapackInfo,
-    GoBackButton,
     SpaceSelected,
     ViewHeader
   },
@@ -79,12 +73,6 @@ export default {
     const spaceInfo = ref({});
     const subscription = ref(null);
 
-    const quantity = ref(1);
-    const newSizeAvailable = computed(
-      () =>
-        spaceInfo.value.smartDataSizeAvailable + quantity.value * SIZE_UNIT.GB
-    );
-
     const loadSpaceData = async space => {
       if (space && space.id) {
         const info = await fetchSpaceInformation(space);
@@ -97,18 +85,19 @@ export default {
       }
     };
 
-    const onSuccess = () => {
+    const onSuccess = ({ size }) => {
       pushNotification(
         {
           type: "success",
           title: t("Success"),
           message: t("SubscriptionDatapack.successNotification", {
             spaceName: selectedSpace.value.name,
-            size: formatBytes(newSizeAvailable.value)
+            size: formatBytes(size)
           })
         },
         8000
       );
+
       router.push({
         name: routeNames.spaceBoard,
         params: {
@@ -128,9 +117,7 @@ export default {
       currentOrga,
       currentSpace,
       loading,
-      newSizeAvailable,
       organizations: userOrganizations,
-      quantity,
       selectedSpace,
       spaceInfo,
       subscription,

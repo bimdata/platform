@@ -159,14 +159,16 @@
   },
 
   "DatapackForm": {
-    "title": "Add DataPack",
-    "text": "You want more GB to your space ? Add GB to your space",
-    "priceLabel": "GB unit price",
+    "baseNote": "Storage included",
+    "baseText": "Included with pro plan",
+    "datapackNote": "Additional storage",
+    "datapackText": "",
     "priceUnit": " / GB / month",
-    "controlLabel": "Add GB to space {spaceName}",
-    "totalLabel": "Total price",
     "totalUnit": " / month",
-    "submitButtonText": "Validate"
+    "actualStorage": "Actual storage",
+    "newStorage": "New Storage",
+    "submitButtonText": "Validate",
+    "cancelButtonText": "Cancel"
   },
 
   "DatapackInfo": {

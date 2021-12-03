@@ -1,65 +1,144 @@
 <template>
   <div class="datapack-form">
-    <h1 class="datapack-form__title">
-      {{ $t("DatapackForm.title") }}
-    </h1>
-    <div class="datapack-form__text">
-      {{ $t("DatapackForm.text") }}
-    </div>
-    <div class="datapack-form__price">
-      <span class="datapack-form__price__label">
-        {{ $t("DatapackForm.priceLabel") }}
-      </span>
-      <span class="datapack-form__price__value">
-        {{ unitPrice }}{{ currency }}
-      </span>
-      <span class="datapack-form__price__unit">
-        {{ $t("DatapackForm.priceUnit") }}
-      </span>
-    </div>
-    <div class="datapack-form__control">
-      <div class="datapack-form__control__label">
-        {{ $t("DatapackForm.controlLabel", { spaceName: space.name }) }}
+    <div class="datapack-form__column">
+      <div class="datapack-form__card">
+        <StorageImage style="color: #d8d8d8" />
+        <div class="datapack-form__base__size">
+          {{ formatBytes(baseSize) }}
+        </div>
+        <div class="datapack-form__base__note">
+          {{ $t("DatapackForm.baseNote") }}
+        </div>
+        <div class="datapack-form__base__text">
+          {{ $t("DatapackForm.baseText") }}
+        </div>
       </div>
-      <div class="datapack-form__control__input">
-        <BIMDataButton color="primary" fill square icon @click="decrement">
-          <BIMDataIcon name="minus" size="xxxs" />
-        </BIMDataButton>
-        <span class="datapack-form__control__input__value">
-          {{ quantity }}
-        </span>
-        <BIMDataButton color="primary" fill square icon @click="increment">
-          <BIMDataIcon name="plus" size="xxxs" />
-        </BIMDataButton>
+      <ProgressBar :progress="spaceInfo.usedSizePercent">
+        <template #text-above-left>
+          <span class="primary-font-bold">
+            {{ $t("DatapackForm.actualStorage") }}
+          </span>
+        </template>
+        <template #text-below-left>
+          <span>
+            {{ formatBytes(spaceInfo.smartDataSize) }}
+          </span>
+        </template>
+        <template #text-below-right>
+          <span>
+            {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+          </span>
+        </template>
+      </ProgressBar>
+      <BIMDataButton
+        class="datapack-form__btn"
+        width="200px"
+        height="44px"
+        fill
+        radius
+        @click="() => {}"
+      >
+        {{ $t("DatapackForm.cancelButtonText") }}
+      </BIMDataButton>
+    </div>
+
+    <div class="datapack-form__column">
+      <div class="datapack-form__card">
+        <StorageImage style="color: #2f374a" />
+        <div class="datapack-form__datapack__size">
+          {{ formatBytes(datapackSize) }}
+        </div>
+        <div class="datapack-form__datapack__note">
+          {{ $t("DatapackForm.datapackNote") }}
+        </div>
+        <div class="datapack-form__datapack__total">
+          <span class="datapack-form__datapack__total__value">
+            {{ totalPrice }}{{ currency }}
+          </span>
+          <span class="datapack-form__datapack__total__unit">
+            {{ $t("DatapackForm.totalUnit") }}
+          </span>
+        </div>
+        <div class="datapack-form__datapack__controls">
+          <BIMDataButton
+            width="42px"
+            height="42px"
+            color="primary"
+            fill
+            square
+            icon
+            @click="decrement"
+          >
+            <BIMDataIcon name="minus" size="xxxs" />
+          </BIMDataButton>
+          <BIMDataButton
+            width="42px"
+            height="42px"
+            color="primary"
+            fill
+            square
+            icon
+            @click="increment"
+          >
+            <BIMDataIcon name="plus" size="xxxs" />
+          </BIMDataButton>
+        </div>
       </div>
+      <ProgressBar :progress="totalSizePercent">
+        <template #text-above-left>
+          <span class="primary-font-bold">
+            {{ $t("DatapackForm.newStorage") }}
+          </span>
+        </template>
+        <template #text-below-left>
+          <span>
+            {{ formatBytes(spaceInfo.smartDataSize) }}
+          </span>
+        </template>
+        <template #text-below-right>
+          <span>
+            {{ formatBytes(totalSize) }}
+          </span>
+        </template>
+      </ProgressBar>
+      <BIMDataButton
+        class="datapack-form__btn"
+        width="200px"
+        height="44px"
+        color="primary"
+        fill
+        radius
+        :disabled="quantity === datapack?.quantity"
+        @click="submit"
+      >
+        {{ $t("DatapackForm.submitButtonText") }}
+      </BIMDataButton>
     </div>
-    <div class="datapack-form__total">
-      <span class="datapack-form__total__label">
-        {{ $t("DatapackForm.totalLabel") }}
-      </span>
-      <span>
-        <span class="datapack-form__total__value">
-          {{ totalPrice }}{{ currency }}
-        </span>
-        <span class="datapack-form__total__unit">
-          {{ $t("DatapackForm.totalUnit") }}
-        </span>
-      </span>
-    </div>
-    <BIMDataButton width="100%" color="primary" fill radius @click="submit">
-      {{ $t("DatapackForm.submitButtonText") }}
-    </BIMDataButton>
   </div>
 </template>
 
 <script>
 import { computed, inject, ref, watch } from "vue";
 import { usePaddle } from "@/composables/paddle.js";
+import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
+import SIZE_UNIT from "@/config/size-unit.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
+import { formatBytes } from "@/utils/files.js";
+// Components
+import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
+import StorageImage from "./StorageImage.vue";
 
 export default {
+  components: {
+    ProgressBar,
+    StorageImage
+  },
   props: {
     space: {
+      type: Object,
+      required: true
+    },
+    spaceInfo: {
       type: Object,
       required: true
     },
@@ -68,23 +147,37 @@ export default {
       default: null
     }
   },
-  emits: ["quantity-updated", "datapack-created", "datapack-updated"],
+  emits: ["datapack-created", "datapack-updated"],
   setup(props, { emit }) {
     const { getDatapackPrice } = usePaddle();
     const { createDatapack, updateDatapack } = useSubscriptions();
 
     const loading = inject("loading", false);
 
-    const datapack = computed(() => props.subscription?.data_packs[0]);
+    const datapack = ref(null);
+    const quantity = ref(0);
 
-    const quantity = ref(1);
-    const unitPrice = ref(0);
+    const baseSize = ref(+PRO_PLAN_STORAGE);
+    const datapackSize = computed(() => quantity.value * SIZE_UNIT.GB);
+    const totalSize = computed(() => baseSize.value + datapackSize.value);
+    const totalSizePercent = computed(() => {
+      return Math.round(
+        props.spaceInfo.usedSizePercent *
+          (props.spaceInfo.smartDataSizeAvailable / totalSize.value)
+      );
+    });
+
     const currency = ref("");
+    const unitPrice = ref(0);
     const totalPrice = computed(() => quantity.value * unitPrice.value);
 
     watch(
-      () => quantity.value,
-      () => emit("quantity-updated", quantity.value)
+      () => props.subscription,
+      sub => {
+        datapack.value = sub?.data_packs[0];
+        quantity.value = datapack.value?.quantity || 0;
+      },
+      { immediate: true }
     );
 
     // Get localized datapack price from Paddle
@@ -94,7 +187,7 @@ export default {
     });
 
     const decrement = () => {
-      if (quantity.value > 1) {
+      if (quantity.value > 0) {
         quantity.value--;
       }
     };
@@ -106,15 +199,17 @@ export default {
       try {
         loading.value = true;
         if (datapack.value) {
-          await updateDatapack(
-            props.space,
-            datapack.value,
-            datapack.value.quantity + quantity.value
-          );
-          emit("datapack-updated");
+          await updateDatapack(props.space, datapack.value, quantity.value);
+          emit("datapack-updated", {
+            quantity: quantity.value,
+            size: totalSize.value
+          });
         } else {
           await createDatapack(props.space, quantity.value);
-          emit("datapack-created");
+          emit("datapack-created", {
+            quantity: quantity.value,
+            size: totalSize.value
+          });
         }
       } finally {
         loading.value = false;
@@ -123,13 +218,19 @@ export default {
 
     return {
       // References
+      baseSize,
       currency,
+      datapack,
+      datapackSize,
       loading,
       quantity,
       totalPrice,
+      totalSize,
+      totalSizePercent,
       unitPrice,
       // Methods
       decrement,
+      formatBytes,
       increment,
       submit
     };

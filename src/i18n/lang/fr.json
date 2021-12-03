@@ -163,14 +163,16 @@
   },
 
   "DatapackForm": {
-    "title": "Ajout d'un DataPack",
-    "text": "Augmenter votre capacité de stockage",
-    "priceLabel": "Prix GB unitaire",
+    "baseNote": "Stockage inclus",
+    "baseText": "Inclus dans l'abonnement",
+    "datapackNote": "Stockage additionnel",
+    "datapackText": "",
     "priceUnit": " / GB / mois",
-    "controlLabel": "Ajouter des GB à l'espace {spaceName}",
-    "totalLabel": "Prix total",
     "totalUnit": " / mois",
-    "submitButtonText": "Valider"
+    "actualStorage": "",
+    "newStorage": "",
+    "submitButtonText": "Valider",
+    "cancelButtonText": "Annuler"
   },
 
   "DatapackInfo": {
