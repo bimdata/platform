@@ -1,7 +1,7 @@
 import { reactive, readonly, toRefs, watch } from "vue";
 import ProjectService from "@/services/ProjectService";
 import { useUser } from "@/state/user";
-import { status } from "@/utils/projects.js";
+import { projectStatus } from "@/utils/projects.js";
 
 const state = reactive({
   userProjects: [],
@@ -61,7 +61,7 @@ const createProject = async (space, project) => {
     {
       ...newProject,
       isAdmin: true,
-      status: status(newProject)
+      projectStatus: projectStatus(newProject)
     }
   ].concat(state.userProjects);
 

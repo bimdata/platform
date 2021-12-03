@@ -18,9 +18,9 @@
           />
           <div
             class="project-card__left-stripe"
-            :class="`project-card__left-stripe--${project.status}`"
+            :class="`project-card__left-stripe--${project.projectStatus}`"
           ></div>
-          <ProjectStatusBadge :status="project.status" />
+          <ProjectStatusBadge :status="project.projectStatus" />
           <ProjectCardModelPreview
             :models="nonArchivedModels"
             @preview-changed="onPreviewChange"
