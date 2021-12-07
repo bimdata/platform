@@ -1,7 +1,7 @@
 import PROJECT_ROLES from "@/config/project-roles.js";
 import SPACE_ROLES from "@/config/space-roles.js";
 import { useUser } from "@/state/user.js";
-import { status } from "@/utils/projects.js";
+import { projectStatus } from "@/utils/projects.js";
 
 const { user: currentUser, spaceRoles, projectRoles } = useUser();
 
@@ -22,7 +22,7 @@ function mapProjects(projects) {
     isAdmin: projectRoles.value[project.id] === PROJECT_ROLES.ADMIN,
     isUser: projectRoles.value[project.id] === PROJECT_ROLES.USER,
     isGuest: projectRoles.value[project.id] === PROJECT_ROLES.GUEST,
-    status: status(project)
+    projectStatus: projectStatus(project)
   }));
   result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   return result;
