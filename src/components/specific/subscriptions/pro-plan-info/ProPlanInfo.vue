@@ -30,7 +30,7 @@
         v-for="i of [2, 3, 4, 5, 6, 7, 8, 9, 10]"
         :key="i"
       >
-        <img src="/static/bullet-mark.svg" />
+        <BulletMarkImage />
         {{ $t(`ProPlanInfo.bullet${i}`) }}
       </div>
     </div>
