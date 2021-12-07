@@ -1,7 +1,7 @@
 <template>
   <div class="subscribe-card" :class="`subscribe-card--${layout}`">
     <div class="subscribe-card__start">
-      <img src="/static/subscribe-card-image.svg" alt="Create new space" />
+      <SubscribeCardImage />
     </div>
     <div class="subscribe-card__center">
       <div class="subscribe-card__center__title">

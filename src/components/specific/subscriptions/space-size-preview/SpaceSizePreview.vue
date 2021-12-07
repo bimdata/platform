@@ -4,10 +4,7 @@
       <h1>{{ $t("SpaceSizePreview.title") }}</h1>
     </div>
     <div class="space-size-preview__image">
-      <img
-        src="/static/space-size-preview-image.svg"
-        alt="storage-preview-image"
-      />
+      <SpaceSizePreviewImage />
     </div>
     <div class="space-size-preview__actual-size">
       <ProgressBar width="100%" :progress="spaceInfo.usedSizePercent">

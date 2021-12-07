@@ -21,10 +21,7 @@
     </transition>
     <transition name="fade">
       <div class="pro-plan-form__success" v-show="isSuccess">
-        <img
-          src="/static/pro-plan-form-success.svg"
-          alt="Subscription success"
-        />
+        <ProPlanFormSuccessImage />
         <h2 class="pro-plan-form__success__title">
           {{ $t("ProPlanForm.successTitle") }}
         </h2>

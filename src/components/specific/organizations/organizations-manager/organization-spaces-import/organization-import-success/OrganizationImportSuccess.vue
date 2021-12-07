@@ -1,9 +1,6 @@
 <template>
   <div class="organization-import-success">
-    <img
-      class="organization-import-success__image"
-      src="/static/organization-form-success.svg"
-    />
+    <OrganizationFormSuccessImage />
     <div class="organization-import-success__title">
       {{ $t("OrganizationSpacesImport.successTitle") }}
     </div>

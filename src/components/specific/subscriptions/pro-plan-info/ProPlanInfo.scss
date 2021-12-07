@@ -7,10 +7,6 @@
   align-items: center;
   gap: calc(var(--spacing-unit) * 2);
 
-  &__heading {
-    width: 300px;
-  }
-
   &__middle {
     display: flex;
     flex-direction: column;

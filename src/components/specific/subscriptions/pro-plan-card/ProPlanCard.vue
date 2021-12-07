@@ -10,15 +10,15 @@
       <div class="pro-plan-card__separator"></div>
       <div class="pro-plan-card__bullets">
         <div class="pro-plan-card__bullets__bullet size">
-          <img src="/static/bullet-mark.svg" />
+          <BulletMarkImage />
           <span>{{ size }}</span>
         </div>
         <div class="pro-plan-card__bullets__bullet">
-          <img src="/static/bullet-mark.svg" />
+          <BulletMarkImage />
           <span>{{ $t("ProPlanCard.bullet2") }}</span>
         </div>
         <div class="pro-plan-card__bullets__bullet">
-          <img src="/static/bullet-mark.svg" />
+          <BulletMarkImage />
           <span>{{ $t("ProPlanCard.bullet3") }}</span>
         </div>
       </div>

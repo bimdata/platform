@@ -6,11 +6,6 @@
   gap: calc(var(--spacing-unit) * 3);
   padding-top: calc(var(--spacing-unit) * 2);
 
-  &__image {
-    width: 84px;
-    height: 84px;
-  }
-
   &__title {
     width: 75%;
     text-align: center;

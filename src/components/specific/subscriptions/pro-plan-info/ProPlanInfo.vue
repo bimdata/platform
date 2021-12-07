@@ -1,10 +1,6 @@
 <template>
   <div class="pro-plan-info">
-    <img
-      class="pro-plan-info__heading"
-      src="/static/platform-heading.svg"
-      alt="BIMData Platform"
-    />
+    <ProPlanInfoHeadingImage />
     <div class="pro-plan-info__middle">
       <h1 class="pro-plan-info__title">
         {{ $t("ProPlanInfo.title") }}
@@ -26,7 +22,7 @@
         {{ $t("ProPlanInfo.bulletsHead") }}
       </div>
       <div class="pro-plan-info__bullets__bullet">
-        <img src="/static/bullet-mark.svg" />
+        <BulletMarkImage />
         {{ $t("ProPlanInfo.bullet1", { size }) }}
       </div>
       <div

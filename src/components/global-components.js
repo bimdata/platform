@@ -19,6 +19,18 @@ import BIMDataText from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import FileIcon from "@/components/generic/file-icon/FileIcon.vue";
 import TextBox from "@/components/generic/text-box/TextBox.vue";
 
+// Image components
+import BillingsTableEmptyImage from "@/components/images/BillingsTableEmptyImage.vue";
+import BulletMarkImage from "@/components/images/BulletMarkImage.vue";
+import InvitationAvatarImage from "@/components/images/InvitationAvatarImage.vue";
+import InvoicesTableEmptyImage from "@/components/images/InvoicesTableEmptyImage.vue";
+import OrganizationFormSuccessImage from "@/components/images/OrganizationFormSuccessImage.vue";
+import ProPlanFormSuccessImage from "@/components/images/ProPlanFormSuccessImage.vue";
+import ProPlanInfoHeadingImage from "@/components/images/ProPlanInfoHeadingImage.vue";
+import SpaceSizePreviewImage from "@/components/images/SpaceSizePreviewImage.vue";
+import StorageImage from "@/components/images/StorageImage.vue";
+import SubscribeCardImage from "@/components/images/SubscribeCardImage.vue";
+
 export default {
   BIMDataBigSpinner,
   BIMDataButton,
@@ -36,5 +48,17 @@ export default {
   BIMDataTabs,
   BIMDataText,
   FileIcon,
-  TextBox
+  TextBox,
+
+  // Images
+  BillingsTableEmptyImage,
+  BulletMarkImage,
+  InvitationAvatarImage,
+  InvoicesTableEmptyImage,
+  OrganizationFormSuccessImage,
+  ProPlanFormSuccessImage,
+  ProPlanInfoHeadingImage,
+  SpaceSizePreviewImage,
+  StorageImage,
+  SubscribeCardImage
 };

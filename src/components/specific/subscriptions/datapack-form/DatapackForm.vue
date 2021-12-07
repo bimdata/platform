@@ -2,7 +2,7 @@
   <div class="datapack-form">
     <div class="datapack-form__column">
       <div class="datapack-form__card">
-        <StorageImage style="color: #d8d8d8" />
+        <StorageImage class="color-silver" />
         <div class="datapack-form__base__size">
           {{ formatBytes(baseSize) }}
         </div>
@@ -44,7 +44,7 @@
 
     <div class="datapack-form__column">
       <div class="datapack-form__card">
-        <StorageImage style="color: #2f374a" />
+        <StorageImage class="color-primary" />
         <div class="datapack-form__datapack__size">
           {{ formatBytes(datapackSize) }}
         </div>
@@ -127,12 +127,10 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
-import StorageImage from "./StorageImage.vue";
 
 export default {
   components: {
-    ProgressBar,
-    StorageImage
+    ProgressBar
   },
   props: {
     space: {

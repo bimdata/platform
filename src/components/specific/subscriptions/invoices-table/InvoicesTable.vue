@@ -35,7 +35,7 @@
 
     <BIMDataCard v-else class="invoices-table__empty">
       <template #content>
-        <img class="m-b-24" src="/static/invoices-table-empty-image.svg" />
+        <InvoicesTableEmptyImage class="m-b-24" />
         <p>
           {{ $t("InvoicesTable.emptyTableText") }}
         </p>
