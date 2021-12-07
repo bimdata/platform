@@ -1,67 +1,84 @@
 .visa-add {
-  border: 2px solid blue;
+  border: 2px solid yellow;
   height: 100%;
   padding: var(--spacing-unit);
-  
-  &__header {
-    display: flex;
-    justify-content: space-between;
 
-    &__left-side {
+  &__safe-zone {
+    z-index: 2;
+    position: absolute;
+    top: 15%;
+    left: 14.5%;
+  }
+
+  &__content {
+    border: 2px solid blue;
+    height: 100%;
+    padding: var(--spacing-unit);
+
+    &__header {
       display: flex;
-      flex-grow: 1;
-      margin: auto 0;
-
-     span {
-       margin-left: var(--spacing-unit);
-     }
-    }
-  }
-
-  &__validator {
-    margin: calc(var(--spacing-unit ) * 2) 0;
-  }
-
-  &__validate-date {
-    &:deep() {
-      label {
-        font-size: 1em;
+      justify-content: space-between;
+  
+      &__left-side {
+        display: flex;
+        flex-grow: 1;
+        margin: auto 0;
+  
+       span {
+         margin-left: var(--spacing-unit);
+       }
       }
-      
+    }
+  
+    &__validator {
+      margin: calc(var(--spacing-unit ) * 2) 0;
+    }
+  
+    &__validate-date {
+      &:deep() {
+        label {
+          font-size: 1em;
+        }
+        
+        .error {
+          display: block;
+          font-size: 1em;
+          margin-top: 18px;
+        }
+      }
+    }
+  
+  
+    &__description {
+      margin: calc(var(--spacing-unit ) * 3) 0;
+  
+      &:deep() {
+        label {
+          font-size: 1em;
+        }
+  
+        textarea {
+          font-family: var(--primary-font);
+          resize: vertical; 
+          max-height: 200px;
+        }
+  
+  
+      }
+  
       .error {
-        display: block;
-        font-size: 1em;
-        margin-top: 18px;
+        color: red;
       }
+  
+    }
+  
+    &__action-button {
+      display: flex;
+      justify-content: end;
     }
   }
-
-
-  &__description {
-    margin: calc(var(--spacing-unit ) * 3) 0;
-
-    &:deep() {
-      label {
-        font-size: 1em;
-      }
-
-      textarea {
-        font-family: var(--primary-font);
-        resize: vertical; 
-        max-height: 200px;
-      }
-
-
-    }
-
-    .error {
-      color: red;
-    }
-
+  .safeZone {
+    filter: blur(4px); 
   }
-
-  &__action-button {
-    display: flex;
-    justify-content: end;
-  }
+  
 }

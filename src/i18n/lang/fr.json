@@ -497,6 +497,11 @@
       "description": "Description",
       "cancel": "Annuler",
       "validate": "Valider"
+    },
+    "safeZone": {
+      "content": "Êtes-vous sûr de vouloir quitter cette page ?",
+      "goBack": "Oui, quitter cette page",
+      "keepView": "Annuler, rester ici"
     }
   },
 

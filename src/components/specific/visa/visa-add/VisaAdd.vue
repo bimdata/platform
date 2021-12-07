@@ -1,22 +1,30 @@
 <template>
   <div class="visa-add">
-      <div class="visa-add__header">
-        <div class="visa-add__header__left-side">
+    <transition name="fade">
+      <template v-if="isSafeZone">
+        <div class="visa-add__safe-zone">
+          <VisaSafeZone @onClose="onClose" />
+        </div>
+      </template>
+    </transition>
+    <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
+      <div class="visa-add__content__header">
+        <div class="visa-add__content__header__left-side">
           <BIMDataIcon name="validate" size="xxs" />
           <span>{{ $t("Visa.add.title") }}</span>
         </div>
         <div class="right-side">
-          <BIMDataButton ghost rounded icon @click="$emit('close')">
+          <BIMDataButton ghost rounded icon @click="safeZoneHandler">
             <BIMDataIcon name="close" size="xxxs" />
           </BIMDataButton>
         </div>
       </div>
-      <div class="visa-add__validator">
+      <div class="visa-add__content__validator">
         <BIMDataButton color="primary" fill radius width="100%">{{
           $t("Visa.add.validator")
         }}</BIMDataButton>
       </div>
-      <div class="visa-add__validate-date">
+      <div class="visa-add__content__validate-date">
         <BIMDataInput
           v-model="dateInput"
           :placeholder="$t('Visa.add.toValidate')"
@@ -25,7 +33,7 @@
         >
         </BIMDataInput>
       </div>
-      <div class="visa-add__description">
+      <div class="visa-add__content__description">
         <BIMDataTextarea
           v-model="descInput"
           :label="$t('Visa.add.description')"
@@ -33,25 +41,29 @@
           width="100%"
         />
       </div>
-      <div class="visa-add__action-button">
-        <BIMDataButton color="primary" radius @click="$emit('close')">{{
+      <div class="visa-add__content__action-button">
+        <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
           $t("Visa.add.cancel")
         }}</BIMDataButton>
         <BIMDataButton color="primary" fill radius @click="submit">{{
           $t("Visa.add.validate")
         }}</BIMDataButton>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
+import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone";
 import { formatToDateObject, formatDate, regexDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
 
 export default {
+  components: {
+    VisaSafeZone
+  },
   props: {
     baseInfo: {
       type: Object,
@@ -59,12 +71,14 @@ export default {
     }
   },
   emits: ["close"],
-  setup(props) {
+  setup(props, { emit }) {
     const { createVisa } = useVisa();
 
     const dateInput = ref("");
     const descInput = ref("");
     const hasDateError = ref(false);
+    const isSafeZone = ref(false);
+    const isClosing = ref(null);
 
     const isDateConform = ({ value }) => {
       const dateToCompare = formatToDateObject(value);
@@ -75,6 +89,21 @@ export default {
         value.match(regexDate) && dateToCompare.getTime() >= today.getTime()
       );
     };
+
+    const safeZoneHandler = () =>
+      dateInput.value.length || descInput.value.length
+        ? (isSafeZone.value = true)
+        : emit("close");
+
+    const onClose = event => (isClosing.value = event);
+
+    watch(isClosing, () => {
+      isSafeZone.value = false;
+      if (isClosing.value) {
+        emit("close");
+      }
+      isClosing.value = null;
+    });
 
     const submit = async () => {
       const dateConform = isDateConform(dateInput);
@@ -100,8 +129,12 @@ export default {
       hasDateError,
       dateInput,
       descInput,
+      isSafeZone,
+      isClosing,
       // Methods
       submit,
+      onClose,
+      safeZoneHandler,
       console
     };
   }
