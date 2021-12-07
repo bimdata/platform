@@ -40,12 +40,9 @@ export default {
         target = { name: back, params: route.params };
       }
       // ---
-      else if (
-        (prev.name && !backRoutes) ||
-        (prev.name && backRoutes && backRoutes.includes(prev.name))
-      ) {
+      else if (prev.name && (!backRoutes || backRoutes.includes(prev.name))) {
         // If a previous route exists and `route.meta.backRoutes` is not defined
-        // or if a previous exists and is included in `route.meta.backRoutes`
+        // or if previous route is included in `route.meta.backRoutes`
         // => go to previous route
         target = prev;
       }

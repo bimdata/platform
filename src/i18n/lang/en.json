@@ -43,7 +43,7 @@
     "title": "Choose your plan"
   },
   "SubscriptionDatapack": {
-    "title": "Add DataPack",
+    "title": "Manage DataPack",
     "successNotification": "You now have {size} of storage in space {spaceName}"
   },
   "SubscriptionFree": {

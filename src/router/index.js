@@ -58,7 +58,8 @@ const {
   projectBoard,
   modelViewer,
   projectGroups,
-  groupBoard
+  groupBoard,
+  userSubscriptions
 } = routeNames;
 
 const routes = [
@@ -97,7 +98,8 @@ const routes = [
         name: spaceBoard,
         component: SpaceBoard,
         meta: {
-          back: userSpaces,
+          backRoutes: [userSpaces, userSubscriptions],
+          backDefault: userSpaces,
           guard: spaceBoardGuard,
           resolver: spaceBoardResolver
         }

@@ -69,19 +69,15 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const selectedSpace = ref(currentSpace.value);
     const spaceInfo = ref({});
     const subscription = ref(null);
 
     const loadSpaceData = async space => {
       if (space && space.id) {
-        const info = await fetchSpaceInformation(space);
-        const sub = await loadSpaceSubscriptions(space).then(() =>
+        spaceInfo.value = await fetchSpaceInformation(space);
+        subscription.value = await loadSpaceSubscriptions(space).then(() =>
           getSpaceActiveSubscription(space)
         );
-        // This is needed to trigger reactive effects
-        spaceInfo.value = { ...info };
-        subscription.value = { ...sub };
       }
     };
 
@@ -91,7 +87,7 @@ export default {
           type: "success",
           title: t("Success"),
           message: t("SubscriptionDatapack.successNotification", {
-            spaceName: selectedSpace.value.name,
+            spaceName: currentSpace.value.name,
             size: formatBytes(size)
           })
         },
@@ -107,7 +103,7 @@ export default {
     };
 
     watch(
-      () => selectedSpace.value,
+      () => currentSpace.value,
       space => loadSpaceData(space),
       { immediate: true }
     );
@@ -118,7 +114,6 @@ export default {
       currentSpace,
       loading,
       organizations: userOrganizations,
-      selectedSpace,
       spaceInfo,
       subscription,
       // Methods

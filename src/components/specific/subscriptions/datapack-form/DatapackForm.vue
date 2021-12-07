@@ -36,7 +36,7 @@
         height="44px"
         fill
         radius
-        @click="() => {}"
+        @click="cancel"
       >
         {{ $t("DatapackForm.cancelButtonText") }}
       </BIMDataButton>
@@ -119,6 +119,7 @@
 
 <script>
 import { computed, inject, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import { usePaddle } from "@/composables/paddle.js";
 import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import SIZE_UNIT from "@/config/size-unit.js";
@@ -149,6 +150,7 @@ export default {
   },
   emits: ["datapack-created", "datapack-updated"],
   setup(props, { emit }) {
+    const router = useRouter();
     const { getDatapackPrice } = usePaddle();
     const { createDatapack, updateDatapack } = useSubscriptions();
 
@@ -216,6 +218,10 @@ export default {
       }
     };
 
+    const cancel = () => {
+      router.back();
+    };
+
     return {
       // References
       baseSize,
@@ -229,6 +235,7 @@ export default {
       totalSizePercent,
       unitPrice,
       // Methods
+      cancel,
       decrement,
       formatBytes,
       increment,
