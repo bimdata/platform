@@ -297,6 +297,7 @@ export default {
       showVisaManager,
       showDeleteModal,
       showSidePanel,
+      fileToManage,
       // Methods
       closeAccessManager,
       closeDeleteModal,

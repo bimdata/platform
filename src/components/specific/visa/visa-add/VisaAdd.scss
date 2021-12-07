@@ -2,7 +2,7 @@
   border: 2px solid blue;
   height: 100%;
   padding: var(--spacing-unit);
-
+  
   &__header {
     display: flex;
     justify-content: space-between;
@@ -27,17 +27,31 @@
       label {
         font-size: 1em;
       }
+      
+      .error {
+        display: block;
+        font-size: 1em;
+        margin-top: 18px;
+      }
     }
   }
 
 
   &__description {
-    margin: calc(var(--spacing-unit ) * 2) 0;
+    margin: calc(var(--spacing-unit ) * 3) 0;
 
     &:deep() {
       label {
         font-size: 1em;
       }
+
+      textarea {
+        font-family: var(--primary-font);
+        resize: vertical; 
+        max-height: 200px;
+      }
+
+
     }
 
     .error {

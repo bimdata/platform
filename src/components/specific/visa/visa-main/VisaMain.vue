@@ -1,24 +1,38 @@
 <template>
   <div class="visa-main">
-    <VisaAdd @close="$emit('close', $event)" :fileToManage="fileToManage" />
+    <VisaAdd @close="$emit('close', $event)" :baseInfo="baseInfo" />
   </div>
 </template>
 
 <script>
 import VisaAdd from "@/components/specific/visa/visa-add/VisaAdd";
+import { useSpaces } from "@/state/spaces";
+import { useProjects } from "@/state/projects";
 
 export default {
   components: {
     VisaAdd
   },
   props: {
-    fileToManage: {
+    file: {
       type: Object,
-      required: false
+      required: true
     }
   },
   emits: ["close"],
-  setup() {}
+  setup(props) {
+    const { currentSpace } = useSpaces();
+    const { currentProject } = useProjects();
+
+    return {
+      //references
+      baseInfo: {
+        cloudPk: currentSpace.value.id,
+        projectPk: currentProject.value.id,
+        documentPk: props.file.id
+      }
+    };
+  }
 };
 </script>
 

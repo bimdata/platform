@@ -117,7 +117,7 @@
     "addVersionButtonText": "Ajouter une version",
     "manageAccessButtonText": "Gérer les accès",
     "deleteButtonText": "Supprimer",
-    "VisaButtonText": "Demandes de validation"
+    "VisaButtonText": "Demande de validation"
   },
 
   "FileNameCell": {
@@ -496,10 +496,7 @@
       "errorDate": "Date invalide",
       "description": "Description",
       "cancel": "Annuler",
-      "validate": "Valider",
-      "remainingCharacters": "Caractères restants :",
-      "tooMuchCharacters": "Caractères en trop : "
-
+      "validate": "Valider"
     }
   },
 
@@ -542,6 +539,7 @@
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
-    "groupDeleteError": "Échec de la suppression du groupe"
+    "groupDeleteError": "Échec de la suppression du groupe",
+    "visaCreateError": "Erreur lors de la création du visa"
   }
 }

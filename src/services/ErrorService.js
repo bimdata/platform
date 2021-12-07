@@ -35,7 +35,8 @@ const ERRORS = Object.freeze({
   GROUPS_FETCH_ERROR: "groupsFetchError",
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
-  GROUP_DELETE_ERROR: "groupDeleteError"
+  GROUP_DELETE_ERROR: "groupDeleteError",
+  VISA_CREATE_ERROR: "visaCreateError"
 });
 
 class RuntimeError {
