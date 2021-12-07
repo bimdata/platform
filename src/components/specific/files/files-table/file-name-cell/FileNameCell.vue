@@ -51,8 +51,8 @@
           "
           size="m"
         />
-        <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
-        <FileIcon v-else :name="fileExtension(file.name)" size="20" />
+        <BIMDataFileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
+        <BIMDataFileIcon v-else :name="fileExtension(file.name)" size="20" />
         <TextBox :text="file.name" :maxLength="64" />
       </div>
     </transition>

@@ -41,8 +41,8 @@
         @dblclick="enterFolder(file)"
       >
         <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
-        <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="13" />
-        <FileIcon v-else :name="fileExtension(file.name)" size="13" />
+        <BIMDataFileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="13" />
+        <BIMDataFileIcon v-else :name="fileExtension(file.name)" size="13" />
         <TextBox
           class="folder-selector__body__item__name"
           :text="file.name"

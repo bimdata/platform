@@ -5,6 +5,7 @@ import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataCheckbox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCheckbox.js";
 import BIMDataDropdownList from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownList.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
+import BIMDataFileIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataFileIcon.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 import BIMDataRadio from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataRadio.js";
@@ -16,7 +17,6 @@ import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataText from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataText.js";
 
 // Generic components
-import FileIcon from "@/components/generic/file-icon/FileIcon.vue";
 import TextBox from "@/components/generic/text-box/TextBox.vue";
 
 // Image components
@@ -38,6 +38,7 @@ export default {
   BIMDataCheckbox,
   BIMDataDropdownList,
   BIMDataDropdownMenu,
+  BIMDataFileIcon,
   BIMDataIcon,
   BIMDataInput,
   BIMDataRadio,
@@ -47,7 +48,6 @@ export default {
   BIMDataSpinner,
   BIMDataTabs,
   BIMDataText,
-  FileIcon,
   TextBox,
 
   // Images
