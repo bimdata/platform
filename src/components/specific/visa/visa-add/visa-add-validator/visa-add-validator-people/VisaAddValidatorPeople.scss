@@ -1,0 +1,31 @@
+.visa-add-validator-people {
+  margin: 4% auto;
+  display: flex;
+  &__picture {
+    margin: auto var(--spacing-unit);;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &__main {
+      font-weight: bold;
+      color: var(--color-black)
+    }
+  }
+
+  &__acces-denied {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin: auto 0 auto var(--spacing-unit);;
+    span {
+      margin: auto 0;
+    }
+  } 
+
+  .hide {
+    filter: blur(1px)
+  }
+}

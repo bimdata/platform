@@ -1,6 +1,11 @@
 <template>
   <div class="visa-main">
-    <VisaAdd @close="$emit('close', $event)" :baseInfo="baseInfo" />
+    {{ console.log("file", file) }}
+    <VisaAdd
+      @close="$emit('close', $event)"
+      :baseInfo="baseInfo"
+      :fileParentId="file.parentId"
+    />
   </div>
 </template>
 
@@ -30,7 +35,8 @@ export default {
         cloudPk: currentSpace.value.id,
         projectPk: currentProject.value.id,
         documentPk: props.file.id
-      }
+      },
+      console
     };
   }
 };

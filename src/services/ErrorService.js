@@ -17,6 +17,7 @@ const ERRORS = Object.freeze({
   INVITATION_RESEND_ERROR: "invitationResendError",
   INVITATION_CANCEL_ERROR: "invitationCancelError",
   USERS_FETCH_ERROR: "usersFetchError",
+  USERS_PROJECT_FETCH_ERROR: "usersProjectFetchError",
   USER_UPDATE_ERROR: "userUpdateError",
   USER_DELETE_ERROR: "userDeleteError",
   USER_LEAVE_ERROR: "userLeaveError",

@@ -496,7 +496,13 @@
       "errorDate": "Date invalide",
       "description": "Description",
       "cancel": "Annuler",
-      "validate": "Valider"
+      "validate": "Valider",
+      "validatorView": {
+        "getBack": "Retour",
+        "validator": "Validant",
+        "accesDenied": "Pas d'accès au fichier"
+
+      }
     },
     "safeZone": {
       "content": "Êtes-vous sûr de vouloir quitter cette page ?",
@@ -526,6 +532,7 @@
     "invitationResendError": "Echec du renvoi de l'invitation",
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
+    "usersProjectFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
     "userLeaveError": "Vous ne pouvez pas quitter ce projet car vous êtes le dernier administrateur",
