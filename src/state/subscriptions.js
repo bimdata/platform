@@ -79,7 +79,13 @@ const getSpaceActiveDatapack = space => {
 };
 
 const getPlatformSubscriptionLink = space => {
-  return SubscriptionService.createPlatformSubscription(space);
+  if (space.id) {
+    // Call "generate subscription link" route to upgrade an existing space
+    return SubscriptionService.generatePlatformSubscriptionLink(space);
+  } else {
+    // Call "create subscription" route to create a new space
+    return SubscriptionService.createPlatformSubscription(space);
+  }
 };
 
 /**
