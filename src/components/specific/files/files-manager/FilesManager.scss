@@ -1,9 +1,9 @@
 .files-manager {
   position: relative;
+  overflow-x: hidden;
 
   &:deep() {
     --header-height: 38px;
-    --submenu-height: 28px;
 
     .bimdata-card__header {
       height: var(--header-height);
@@ -17,7 +17,7 @@
     .bimdata-card__content {
       position: relative;
       z-index: 0;
-      height: calc(100% - var(--header-height) - var(--submenu-height));
+      height: calc(100% - var(--header-height));
 
       display: grid;
       grid-template-columns: 400px 1fr;
