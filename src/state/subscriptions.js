@@ -73,6 +73,11 @@ const getSpaceActiveSubscription = space => {
   return getSpaceSubscriptions(space).find(sub => sub.status === "active");
 };
 
+const getSpaceActiveDatapack = space => {
+  const subscription = getSpaceActiveSubscription(space);
+  return subscription?.data_packs.find(d => d.status === "active");
+};
+
 const getPlatformSubscriptionLink = space => {
   return SubscriptionService.createPlatformSubscription(space);
 };
@@ -138,6 +143,7 @@ export function useSubscriptions() {
     fetchSpaceInformation,
     getSpaceSubscriptions,
     getSpaceActiveSubscription,
+    getSpaceActiveDatapack,
     getPlatformSubscriptionLink,
     waitForCreatedSpace,
     createDatapack,

@@ -67,6 +67,7 @@
             fill
             square
             icon
+            :disabled="quantity === 0"
             @click="decrement"
           >
             <BIMDataIcon name="minus" size="xxxs" />
@@ -141,7 +142,7 @@ export default {
       type: Object,
       required: true
     },
-    subscription: {
+    datapack: {
       type: Object,
       default: null
     }
@@ -154,7 +155,6 @@ export default {
 
     const loading = inject("loading", false);
 
-    const datapack = ref(null);
     const quantity = ref(0);
 
     const baseSize = ref(+PRO_PLAN_STORAGE);
@@ -172,10 +172,9 @@ export default {
     const totalPrice = computed(() => quantity.value * unitPrice.value);
 
     watch(
-      () => props.subscription,
-      sub => {
-        datapack.value = sub?.data_packs[0];
-        quantity.value = datapack.value?.quantity || 0;
+      () => props.datapack,
+      datapack => {
+        quantity.value = datapack?.quantity || 0;
       },
       { immediate: true }
     );
@@ -198,8 +197,8 @@ export default {
     const submit = async () => {
       try {
         loading.value = true;
-        if (datapack.value) {
-          await updateDatapack(props.space, datapack.value, quantity.value);
+        if (props.datapack) {
+          await updateDatapack(props.space, props.datapack, quantity.value);
           emit("datapack-updated", {
             quantity: quantity.value,
             size: totalSize.value
@@ -224,7 +223,6 @@ export default {
       // References
       baseSize,
       currency,
-      datapack,
       datapackSize,
       loading,
       quantity,

@@ -8,14 +8,15 @@
         {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
       </span>
       <span>
-        ({{ $t("DatapackInfo.including", { quantity: datapacksQuantity }) }})
+        ({{
+          $t("DatapackInfo.including", { quantity: datapack?.quantity || 0 })
+        }})
       </span>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
 import { formatBytes } from "@/utils/files.js";
 
 export default {
@@ -24,21 +25,13 @@ export default {
       type: Object,
       required: true
     },
-    subscription: {
+    datapack: {
       type: Object,
       default: null
     }
   },
-  setup(props) {
-    const datapacksQuantity = computed(() =>
-      (props.subscription?.data_packs || [])
-        .map(d => d.quantity)
-        .reduce((a, b) => a + b, 0)
-    );
-
+  setup() {
     return {
-      // References
-      datapacksQuantity,
       // Methods
       formatBytes
     };
