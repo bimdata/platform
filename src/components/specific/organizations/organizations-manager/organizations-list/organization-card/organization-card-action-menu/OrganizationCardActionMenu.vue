@@ -19,7 +19,7 @@
         <BIMDataButton ghost rounded icon @click="$emit('update')">
           <BIMDataIcon name="edit" size="xxs" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="$emit('delete')">
+        <BIMDataButton ghost rounded icon disabled @click="$emit('delete')">
           <BIMDataIcon name="delete" size="xxs" />
         </BIMDataButton>
       </div>

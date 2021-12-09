@@ -53,7 +53,7 @@
   "SubscriptionPro": {
     "subscribeTitle": "Create Professional Plan",
     "upgradeTitle": "Upgrade to pro platform",
-    "text": "You are about to create your pro plan. This includes: {size} of storage, unlimited projects, unlimited users.",
+    "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
     "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
   },
   "UserProjects": {
@@ -112,7 +112,7 @@
   "BillingActionsCell": {
     "updateButtonText": "Modify the payment card",
     "datapackButtonText": "Manage datapacks",
-    "cancelButtonText": "Cancel this payment"
+    "cancelButtonText": "Cancel this subscription"
   },
 
   "BillingsTable": {
@@ -159,7 +159,7 @@
   },
 
   "DatapackForm": {
-    "baseNote": "Storage included",
+    "baseNote": "Storage",
     "baseText": "Included with pro plan",
     "datapackNote": "Additional storage",
     "datapackText": "",
@@ -587,17 +587,17 @@
     "title": "Your subscription",
     "subTitle": "Professionnal plan",
     "priceUnit": "/ month",
-    "bulletsHead": "Subscription includes",
+    "bulletsHead": "The subscription includes",
     "bullet1": "{size} of storage",
     "bullet2": "BIMData Platform",
-    "bullet3": "Unlimited users",
-    "bullet4": "Unlimited projects",
-    "bullet5": "Unlimited comments (BCF)",
-    "bullet6": "SaaS License",
-    "bullet7": "IFC Merge / Split",
-    "bullet8": "IFC Edition",
-    "bullet9": "Support",
-    "bullet10": "Microsoft Power BI connector"
+    "bullet3": "3D Viewer",
+    "bullet4": "2D Viewer",
+    "bullet5": "Unlimited projects",
+    "bullet6": "Unlimited users",
+    "bullet7": "Unlimited comments (BCF)",
+    "bullet8": "IFC Merge / Split",
+    "bullet9": "IFC Edition",
+    "bullet10": "Support"
   },
 
   "SpaceCard": {

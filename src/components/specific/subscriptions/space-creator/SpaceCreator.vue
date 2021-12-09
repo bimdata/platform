@@ -1,16 +1,17 @@
 <template>
   <div class="space-creator flex m-t-18">
-    <BIMDataCard class="orga-card text-center">
+    <BIMDataCard class="orga-card">
       <template #content>
         <div class="flex items-center justify-center">
           <BIMDataIcon
+            style="min-width: 22px"
             margin="2px 0 0 0"
             name="organization"
             size="m"
             fill
             color="primary"
           />
-          <h3 class="color-primary">
+          <h3 class="text-center color-primary">
             {{ $t("SpaceCreator.createSelectOrgaTitle") }}
           </h3>
         </div>
@@ -52,10 +53,18 @@
             @element-click="orga = $event"
           >
             <template #header>
-              {{ orga.name }}
+              <BIMDataTextBox
+                maxWidth="220px"
+                :text="orga.name"
+                :tooltip="false"
+              />
             </template>
             <template #element="{ element }">
-              {{ element.name }}
+              <BIMDataTextBox
+                maxWidth="240px"
+                :text="element.name"
+                :tooltip="false"
+              />
             </template>
           </BIMDataDropdownList>
         </div>

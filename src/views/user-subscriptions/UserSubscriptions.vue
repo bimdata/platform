@@ -13,29 +13,40 @@
         <p>
           {{ $t("UserSubscriptions.text") }}
         </p>
-        <BIMDataDropdownList
-          :list="organizations"
-          :perPage="6"
-          elementKey="dropdown"
-          :closeOnElementClick="true"
-          @element-click="selectedOrga = $event"
-        >
-          <template #header>
-            <div class="flex items-center">
-              <span
-                class="number-organizations flex items-center justify-center"
-              >
-                {{ organizations.length }}
-              </span>
-              <span class="m-l-12">
-                {{ selectedOrga.name }}
-              </span>
-            </div>
-          </template>
-          <template #element="{ element }">
-            {{ element.name }}
-          </template>
-        </BIMDataDropdownList>
+        <div>
+          <div class="primary-font-bold">
+            {{ $t("UserSubscriptions.list") }}
+          </div>
+          <BIMDataDropdownList
+            :list="organizations"
+            :perPage="6"
+            elementKey="dropdown"
+            :closeOnElementClick="true"
+            @element-click="selectedOrga = $event"
+          >
+            <template #header>
+              <div class="flex items-center">
+                <span
+                  class="number-organizations flex items-center justify-center m-r-12"
+                >
+                  {{ organizations.length }}
+                </span>
+                <BIMDataTextBox
+                  maxWidth="240px"
+                  :text="selectedOrga.name"
+                  :tooltip="false"
+                />
+              </div>
+            </template>
+            <template #element="{ element }">
+              <BIMDataTextBox
+                maxWidth="280px"
+                :text="element.name"
+                :tooltip="false"
+              />
+            </template>
+          </BIMDataDropdownList>
+        </div>
       </div>
       <div class="user-subscriptions__header__right">
         <SubscribeCard />

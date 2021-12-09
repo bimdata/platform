@@ -56,7 +56,7 @@
   "SubscriptionPro": {
     "subscribeTitle": "Créer un espace pro",
     "upgradeTitle": "Passer à la platforme professionnelle",
-    "text": "Vous êtes sur le point de créer votre plan professionel. Votre plan inclus: {size} de stockage, création de projets illimités, utilisateurs illimités.",
+    "text": "Vous êtes sur le point de lancer votre abonnement professionel. Il inclus: {size} de stockage, création de projets illimités avec utilisateurs illimités.",
     "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "UserProjects": {
@@ -69,7 +69,8 @@
   },
   "UserSubscriptions": {
     "title": "Abonnement à la plateforme",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    "text": "Naviguez parmis vos organisations pour gérer les abonnements et factures de vos espaces plateforme.",
+    "list": "Liste de mes organisations :"
   },
 
 
@@ -116,7 +117,7 @@
   "BillingActionsCell": {
     "updateButtonText": "Modifier la carte de paiement",
     "datapackButtonText": "Gérer mes datapacks",
-    "cancelButtonText": "Annuler ce paiement"
+    "cancelButtonText": "Annuler cet abonnement"
   },
 
   "BillingsTable": {
@@ -163,14 +164,14 @@
   },
 
   "DatapackForm": {
-    "baseNote": "Stockage inclus",
+    "baseNote": "Stockage",
     "baseText": "Inclus dans l'abonnement",
     "datapackNote": "Stockage additionnel",
     "datapackText": "",
     "priceUnit": " / GB / mois",
     "totalUnit": " / mois",
-    "actualStorage": "",
-    "newStorage": "",
+    "actualStorage": "Stockage actuel",
+    "newStorage": "Nouveau stockage",
     "submitButtonText": "Valider",
     "cancelButtonText": "Annuler"
   },
@@ -592,20 +593,20 @@
   },
 
   "ProPlanInfo": {
-    "title": "Votre souscription",
-    "subTitle": "Professionnelle",
+    "title": "Votre abonnement",
+    "subTitle": "Professionnel",
     "priceUnit": "/ mois",
-    "bulletsHead": "La souscription inclue",
+    "bulletsHead": "L'abonnement inclut",
     "bullet1": "{size} de stockage",
     "bullet2": "BIMData Plateforme",
-    "bullet3": "Utilisateurs illimités",
-    "bullet4": "Projets illimités",
-    "bullet5": "Commentaires (BCF) illimités",
-    "bullet6": "Licence SaaS",
-    "bullet7": "Fusion / Division IFC",
-    "bullet8": "Edition IFC",
-    "bullet9": "Support par emails",
-    "bullet10": "Connecteur Microsoft Power BI"
+    "bullet3": "Visionneuse 3D",
+    "bullet4": "Visionneuse 2D",
+    "bullet5": "Projets illimités",
+    "bullet6": "Utilisateurs illimités",
+    "bullet7": "Commentaires (BCF) illimités",
+    "bullet8": "Fusion / Division IFC",
+    "bullet9": "Edition IFC",
+    "bullet10": "Support par email"
   },
 
   "SpaceCard": {
@@ -650,7 +651,7 @@
     "selectOrgaRadio": "Sélectionner une organisation",
     "orgaValidateButton": "Valider",
     "createSpaceTitle": "Créer un espace",
-    "createSpaceText": "Texte expliquant ce qu'est un espace ici.",
+    "createSpaceText": "Votre espace regroupe vos différents projets BIM.",
     "createSpaceInput": "Nom de mon nouvel espace",
     "spaceValidateButton": "Valider"
   },
@@ -676,9 +677,8 @@
   "SpaceSizePreview": {
     "title": "Stockage",
     "actualStorage": "Stockage actuel",
-    "actualStorageText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "newStorage": "Nouveau stockage",
-    "newStorageText": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit."
+    "newStorageText": "En souscrivant à l'abonnement professionnel, vous bénéficiez de {size} de stockage. Vous pouvez acheter du stockage additionnel directement depuis votre espace."
   },
 
   "SpaceUsersManager": {
@@ -693,8 +693,8 @@
 
   "SubscribeCard": {
     "title": "Créez votre nouvel espace",
-    "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à le version profesionnelle.",
-    "button": "Créer un espace"
+    "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
+    "button": "Souscrire à un abonnement"
   },
 
   "UserCard": {

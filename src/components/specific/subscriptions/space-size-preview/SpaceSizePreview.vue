@@ -24,9 +24,9 @@
           </span>
         </template>
       </ProgressBar>
-      <BIMDataText color="color-granite-light">
+      <!-- <BIMDataText color="color-granite-light">
         {{ $t("SpaceSizePreview.actualStorageText") }}
-      </BIMDataText>
+      </BIMDataText> -->
     </div>
     <div class="space-size-preview__new-size">
       <ProgressBar width="100%" :progress="newUsedSizePercent">
@@ -47,7 +47,11 @@
         </template>
       </ProgressBar>
       <BIMDataText color="color-granite-light">
-        {{ $t("SpaceSizePreview.newStorageText") }}
+        {{
+          $t("SpaceSizePreview.newStorageText", {
+            size: formatBytes(newSizeAvailable)
+          })
+        }}
       </BIMDataText>
     </div>
   </div>
