@@ -59,7 +59,7 @@
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
             @back-parent-folder="backToParent"
-            @openVisaManager="openVisaManager"
+            @open-visa-manager="openVisaManager"
           />
         </div>
 
