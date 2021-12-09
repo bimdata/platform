@@ -23,11 +23,7 @@
             <BIMDataIcon name="ellipsis" size="l" fill color="granite-light" />
           </BIMDataButton>
           <BIMDataIcon name="group" size="xxl" />
-          <TextBox
-            class="group-card__title"
-            :text="group.name"
-            :maxLength="32"
-          />
+          <BIMDataTextBox class="group-card__title" :text="group.name" />
           <UserAvatarList
             class="group-card__avatars"
             :users="group.members"

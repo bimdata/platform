@@ -22,7 +22,6 @@
     }
 
     &__name {
-      display: block;
       font-weight: bold;
     }
 
@@ -56,9 +55,13 @@
         cursor: initial;
       }
 
+      &__icon {
+        min-width: 14px;
+      }
+
       &__name {
         flex-grow: 1;
-        align-self: flex-end;
+        max-width: calc(100% - 50px);
         padding: 0 calc(var(--spacing-unit) / 2);
       }
     }

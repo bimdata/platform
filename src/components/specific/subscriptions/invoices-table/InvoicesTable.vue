@@ -14,7 +14,12 @@
           :placeholder="$t('InvoicesTable.tablePlaceholder')"
         >
           <template #cell-space="{ row: payment }">
-            {{ (subscriptionsMap[payment.subscription_id].cloud || {}).name }}
+            <BIMDataTextBox
+              maxWidth="300px"
+              :text="
+                (subscriptionsMap[payment.subscription_id].cloud || {}).name
+              "
+            />
           </template>
           <template #cell-date="{ row: payment }">
             {{ $d(payment.payout_date, "short") }}

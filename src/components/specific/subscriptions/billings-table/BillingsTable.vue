@@ -13,9 +13,11 @@
           :perPage="7"
         >
           <template #cell-space="{ row: sub }">
-            <span class="space-cell" @click="goToSpaceBoard(sub.cloud)">
-              {{ (sub.cloud || {}).name }}
-            </span>
+            <BIMDataTextBox
+              class="space-cell"
+              :text="(sub.cloud || {}).name"
+              @click="goToSpaceBoard(sub.cloud)"
+            />
           </template>
           <template #cell-nextpayment="{ row: sub }">
             {{ $d(sub.next_bill_date, "short") }}

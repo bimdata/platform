@@ -1,7 +1,10 @@
 .billings-table {
-  .space-cell:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  .space-cell {
+    max-width: 300px;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   .status-cell {

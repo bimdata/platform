@@ -2,9 +2,9 @@
   <div class="files-manager-breadcrumb">
     <span class="files-manager-breadcrumb__path">
       <template v-for="(folder, index) of path" :key="folder.id">
-        <TextBox
+        <BIMDataTextBox
+          maxWidth="100px"
           :text="folder.name"
-          :maxLength="24"
           @click="selectFile(folder)"
           tooltipColor="silver-light"
           :style="{
@@ -15,10 +15,10 @@
         <span>></span>
       </template>
     </span>
-    <TextBox
+    <BIMDataTextBox
       class="files-manager-breadcrumb__file"
+      width="100px"
       :text="file.name"
-      :maxLength="24"
       tooltipColor="silver-light"
       :style="{ marginLeft: path.length ? '15px' : '5px' }"
     />
@@ -27,7 +27,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useFiles } from "@/state/files";
+import { useFiles } from "@/state/files.js";
 
 export default {
   props: {

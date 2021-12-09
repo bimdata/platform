@@ -27,7 +27,9 @@
           />
         </template>
         <template #footer>
-          <TextBox :text="project.name" :maxLength="30" />
+          <div class="project-card__title">
+            <BIMDataTextBox :text="project.name" />
+          </div>
         </template>
       </BIMDataCard>
     </template>

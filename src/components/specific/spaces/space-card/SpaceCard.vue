@@ -14,11 +14,17 @@
       <SpaceCardImage :space="space" topStripe />
     </template>
     <template #footer>
-      <TextBox :text="space.name" :maxLength="30" />
-      <div class="title-underline"></div>
-      <div class="sub-title">
-        <div class="sub-title__text">{{ $t("SpaceCard.projects") }}</div>
-        <div class="sub-title__number">{{ nbProjects }}</div>
+      <div class="space-card__title">
+        <BIMDataTextBox :text="space.name" />
+      </div>
+      <div class="space-card__title-underline"></div>
+      <div class="space-card__sub-title">
+        <div class="space-card__sub-title__text">
+          {{ $t("SpaceCard.projects") }}
+        </div>
+        <div class="space-card__sub-title__number">
+          {{ nbProjects }}
+        </div>
       </div>
     </template>
   </BIMDataCard>

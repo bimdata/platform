@@ -15,9 +15,7 @@ import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import BIMDataText from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataText.js";
-
-// Generic components
-import TextBox from "@/components/generic/text-box/TextBox.vue";
+import BIMDataTextBox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextbox.js";
 
 // Image components
 import BillingsTableEmptyImage from "@/components/images/BillingsTableEmptyImage.vue";
@@ -48,7 +46,7 @@ export default {
   BIMDataSpinner,
   BIMDataTabs,
   BIMDataText,
-  TextBox,
+  BIMDataTextBox,
 
   // Images
   BillingsTableEmptyImage,

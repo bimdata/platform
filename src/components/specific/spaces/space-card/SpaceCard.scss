@@ -46,18 +46,19 @@
       height: calc(100% - #{$card-content-height});
       padding: 0;
 
-      .text-box {
-        color: var(--color-text);
+      .space-card__title {
+        width: 80%;
+        text-align: center;
       }
 
-      .title-underline {
+      .space-card__title-underline {
         height: 1px;
         width: 50px;
         margin: calc(var(--spacing-unit) * 2 / 3) 0;
         background-color: var(--color-silver);
       }
 
-      .sub-title {
+      .space-card__sub-title {
         text-align: center;
         line-height: 14px;
 

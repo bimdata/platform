@@ -26,7 +26,7 @@
       <template v-else>
         <div class="project-card-action-menu__menu">
           <div class="project-card-action-menu__menu__title">
-            <TextBox :text="project.name" :maxLength="32" />
+            <BIMDataTextBox width="220px" :text="project.name" />
             <BIMDataButton
               data-test="btn-close-menu"
               ghost

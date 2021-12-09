@@ -5,7 +5,7 @@
     </div>
     <div class="organization-space-card__info">
       <div class="organization-space-card__info__name">
-        <TextBox :text="space.name" :maxLength="36" />
+        <BIMDataTextBox maxWidth="260px" :text="space.name" />
       </div>
       <div class="organization-space-card__info__data">
         <span class="organization-space-card__info__data--date">

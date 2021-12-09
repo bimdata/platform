@@ -1,9 +1,9 @@
 <template>
   <div class="breadcrumb-selector" v-click-away="close">
     <div class="breadcrumb-selector__header">
-      <TextBox
+      <BIMDataTextBox
+        class="breadcrumb-selector__header__text"
         :text="header"
-        :maxLength="24"
         @click="$emit('header-clicked')"
       />
       <BIMDataIcon
@@ -12,7 +12,7 @@
         size="xs"
         :rotate="isOpen ? 90 : 0"
         @click="toggle"
-        margin="0 0 1px 6px"
+        margin="0 0 0 6px"
       />
     </div>
     <transition name="slide-fade-down">
@@ -30,10 +30,9 @@
             :key="item[keyProp]"
             @click="() => selectItem(item)"
           >
-            <TextBox
+            <BIMDataTextBox
               :text="item[labelProp]"
-              :maxLength="24"
-              cutOn="end"
+              cutPosition="end"
               :tooltip="false"
             />
           </div>
@@ -47,13 +46,8 @@
 import { computed } from "vue";
 import { useToggle } from "@/composables/toggle";
 import { useListFilter } from "@/composables/list-filter";
-// Components
-import TextBox from "@/components/generic/text-box/TextBox";
 
 export default {
-  components: {
-    TextBox
-  },
   props: {
     list: {
       type: Array,

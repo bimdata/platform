@@ -1,16 +1,16 @@
 <template>
   <div class="space-selected flex items-center">
     <div class="m-r-24 flex items-center">
-      <span class="m-r-12 primary-font-bold">
+      <span class="m-r-12 primary-font-bold" style="white-space: nowrap">
         {{ $t("SpaceSelected.selectedOrga") }}
       </span>
-      <TextBox :text="space.organization.name" :maxLength="56" />
+      <BIMDataTextBox maxWidth="160px" :text="space.organization.name" />
     </div>
     <div class="flex items-center">
-      <span class="m-r-12 primary-font-bold">
+      <span class="m-r-12 primary-font-bold" style="white-space: nowrap">
         {{ $t("SpaceSelected.selectedSpace") }}
       </span>
-      <TextBox :text="space.name" :maxLength="56" />
+      <BIMDataTextBox maxWidth="160px" :text="space.name" />
     </div>
   </div>
 </template>

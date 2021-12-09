@@ -36,7 +36,7 @@
       <template v-else>
         <div class="group-card-action-menu__menu">
           <div class="group-card-action-menu__menu__title">
-            <TextBox :text="group.name" :maxLength="32" />
+            <BIMDataTextBox maxWidth="200px" :text="group.name" />
             <BIMDataButton
               data-test="btn-close-menu"
               ghost

@@ -4,7 +4,7 @@
       <BIMDataIcon name="key" size="l" />
       <span class="folder-access-manager__title__text">
         {{ $t("FolderAccessManager.title") }} -
-        <TextBox :text="folder.name" :maxLength="16" />
+        <BIMDataTextBox width="auto" maxWidth="100px" :text="folder.name" />
       </span>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
         <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
