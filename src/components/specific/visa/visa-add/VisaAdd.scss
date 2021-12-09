@@ -13,7 +13,6 @@
   &__content {
     border: 2px solid blue;
     height: 100%;
-    padding: var(--spacing-unit);
 
     &__header {
       display: flex;
@@ -23,10 +22,11 @@
         display: flex;
         flex-grow: 1;
         margin: auto 0;
-  
-       span {
-         margin-left: var(--spacing-unit);
-       }
+        
+        span {
+          margin: auto 0 auto var(--spacing-unit);
+          font-size: 1rem;
+        }
       }
     }
   
@@ -80,5 +80,4 @@
   .safeZone {
     filter: blur(4px); 
   }
-  
 }

@@ -1,9 +1,8 @@
 <template>
   <div class="visa-add-validator">
-    {{ console.log(peopleList, peopleList) }}
     <div class="visa-add-validator__header">
       <div class="visa-add-validator__header__left-side">
-        <BIMDataButton ghost rounded icon>
+        <BIMDataButton ghost rounded icon @click="$emit('get-back')">
           <BIMDataIcon name="arrow" size="xxs" />
         </BIMDataButton>
         <span>{{ $t("Visa.add.validatorView.getBack") }}</span>
@@ -31,15 +30,15 @@
       <VisaAddValidatorPeople :peopleList="peopleList" />
     </div>
     <div class="visa-add-validator__action">
-      <BIMDataButton color="primary" fill radius width="100%">
-        Accepter
+      <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
+        {{ $t("Visa.add.validatorView.accept") }}
       </BIMDataButton>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useProjects } from "@/state/projects";
 import { fullName } from "@/utils/random";
 
@@ -59,14 +58,18 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
-  setup(props) {
+  emits: ["close", "validator-list", "get-back", "safe-zone-handler"],
+  setup(props, { emit }) {
     const { fetchFolderProjectUsers } = useProjects();
     const filter = ref("");
-    const peopleList = ref([]);
+    const peopleListRaw = ref([]);
+
+    const peopleList = computed(() => {
+      return peopleListRaw.value.filter(({ isFindable }) => isFindable);
+    });
 
     watch(filter, () => {
-      peopleList.value = peopleList.value.map(people => ({
+      peopleListRaw.value = peopleListRaw.value.map(people => ({
         ...people,
         isFindable:
           filter.value === ""
@@ -86,24 +89,31 @@ export default {
         { id: props.fileParentId }
       );
 
-      peopleList.value = res.map(people => ({
+      peopleListRaw.value = res.map(people => ({
         ...people,
         fullName: fullName(people),
         hasAccess: people.permission >= 50,
         isFindable: true,
+        isSelected: false,
         searchContent: `${people.firstname || ""}${people.lastname || ""}${
           people.email || ""
         }`.toLowerCase()
       }));
     };
 
+    const onClick = () => {
+      emit("validator-list", peopleList);
+      emit("get-back");
+    };
+
     onMounted(() => getList());
 
     return {
-      //references
+      // references
       peopleList,
       filter,
-      console
+      // methods
+      onClick
     };
   }
 };

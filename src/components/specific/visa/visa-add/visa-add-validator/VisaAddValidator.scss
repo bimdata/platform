@@ -12,6 +12,7 @@
     &__left-side {
       display: flex;
       span {
+        font-size: 1rem;
         margin-left: var(--spacing-unit);
         margin: auto 0;
       }
@@ -19,12 +20,14 @@
 
     &__middle {
       margin: auto 0;
+      color: var(--color-black);
       font-size: 1rem;
       font-weight: bold;
     }
 
   }
   &__search-bar {
+    font-size: 1.1rem;
     margin: 5% 0;
   }
   &__people-list {

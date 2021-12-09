@@ -179,7 +179,7 @@ class ProjectService {
         folderPk: folder.id
       });
     } catch (error) {
-      new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
+      throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
     }
   }
 }

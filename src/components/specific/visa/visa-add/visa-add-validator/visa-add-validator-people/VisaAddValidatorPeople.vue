@@ -1,11 +1,15 @@
 <template>
-  {{ console.log("list", list) }}
   <div
     class="visa-add-validator-people"
-    v-for="people in list"
+    v-for="people in peopleList"
     :key="people.id"
   >
-    <BIMDataCheckbox :disabled="!people.hasAccess"> </BIMDataCheckbox>
+    <BIMDataCheckbox
+      :disabled="!people.hasAccess"
+      :modelValue="people.isSelected"
+      @update:modelValue="toggle(people, $event)"
+    >
+    </BIMDataCheckbox>
     <div
       class="visa-add-validator-people__picture"
       :class="{ hide: !people.hasAccess }"
@@ -33,15 +37,13 @@
     >
       <div class="visa-add-validator-people__acces-denied">
         <BIMDataIcon name="warning" size="s" class="fill-high" />
-        <span>{{ $t("Visa.add.validatorView.accesDenied") }}</span>
+        <span>{{ $t("Visa.add.validatorView.accessDenied") }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
-
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 
 export default {
@@ -55,19 +57,12 @@ export default {
     }
   },
   emits: [],
-  setup(props) {
-    const list = ref([]);
-
-    watch(
-      () => props.peopleList,
-      () => {
-        list.value = props.peopleList.filter(({ isFindable }) => isFindable);
-      }
-    );
+  setup() {
+    const toggle = (people, checked) => (people.isSelected = checked);
 
     return {
-      console,
-      list
+      // methods
+      toggle
     };
   }
 };

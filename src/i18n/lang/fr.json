@@ -500,7 +500,8 @@
       "validatorView": {
         "getBack": "Retour",
         "validator": "Validant",
-        "accesDenied": "Pas d'accès au fichier"
+        "accessDenied": "Pas d'accès au fichier",
+        "accept": "Accepter"
 
       }
     },
@@ -552,6 +553,7 @@
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
-    "visaCreateError": "Erreur lors de la création du visa"
+    "visaCreateError": "Erreur lors de la création du visa",
+    "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur"
   }
 }

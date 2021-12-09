@@ -4,7 +4,9 @@
       <VisaAddValidator
         :baseInfo="baseInfo"
         :fileParentId="fileParentId"
-        @close="closeSelectingValidator"
+        @validator-list="getValidatorList"
+        @get-back="getBack"
+        @safe-zone-handler="safeZoneHandler"
       />
     </template>
     <transition name="fade">
@@ -19,7 +21,7 @@
         <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
           <div class="visa-add__content__header">
             <div class="visa-add__content__header__left-side">
-              <BIMDataIcon name="validate" size="xxs" />
+              <BIMDataIcon name="visa" size="s" />
               <span>{{ $t("Visa.add.title") }}</span>
             </div>
             <div class="visa-add__content__header__right-side">
@@ -94,14 +96,15 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { createVisa } = useVisa();
+    const { createVisa, createValidation } = useVisa();
 
     const dateInput = ref("");
     const descInput = ref("");
+    const isSelectingValidator = ref(false);
     const hasDateError = ref(false);
     const isSafeZone = ref(false);
     const isClosing = ref(null);
-    const isSelectingValidator = ref(false);
+    const validatorList = ref([]);
 
     const isDateConform = ({ value }) => {
       const dateToCompare = formatToDateObject(value);
@@ -114,11 +117,11 @@ export default {
     };
 
     const safeZoneHandler = () =>
-      dateInput.value.length || descInput.value.length
+      dateInput.value.length ||
+      descInput.value.length ||
+      validatorList.value.length
         ? (isSafeZone.value = true)
         : emit("close");
-
-    const onClose = event => (isClosing.value = event);
 
     watch(isClosing, () => {
       isSafeZone.value = false;
@@ -128,16 +131,26 @@ export default {
       isClosing.value = null;
     });
 
+    const onClose = event => (isClosing.value = event);
+    const getBack = () => (isSelectingValidator.value = false);
+    const getValidatorList = event => (validatorList.value = event.value);
+
     const submit = async () => {
       const dateConform = isDateConform(dateInput);
 
       if (dateConform) {
         try {
           hasDateError.value = false;
-          await createVisa(
+          const res = await createVisa(
             descInput.value,
             formatDate(dateInput.value),
             props.baseInfo
+          );
+          const visaId = res.id;
+
+          await validatorList.value.forEach(
+            async ({ isSelected, id }) =>
+              isSelected && (await createValidation(visaId, id, props.baseInfo))
           );
         } finally {
           console.log("form sent");
@@ -155,11 +168,13 @@ export default {
       isSafeZone,
       isClosing,
       isSelectingValidator,
+      validatorList,
       // Methods
       submit,
       onClose,
       safeZoneHandler,
-      console
+      getValidatorList,
+      getBack
     };
   }
 };

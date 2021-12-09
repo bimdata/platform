@@ -18,6 +18,22 @@ class VisaService {
       throw new RuntimeError(ERRORS.VISA_CREATE_ERROR, error);
     }
   }
+  async createValidation(visaId, validatorId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.createValidation({
+        data: {
+          validatorId
+        },
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_CREATE_VALIDATION_ERROR, error);
+    }
+  }
 }
 
 const service = new VisaService();
