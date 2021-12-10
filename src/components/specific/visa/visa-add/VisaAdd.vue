@@ -148,9 +148,10 @@ export default {
           );
           const visaId = res.id;
 
-          await validatorList.value.forEach(
-            async ({ isSelected, id }) =>
-              isSelected && (await createValidation(visaId, id, props.baseInfo))
+          await Promise.all(
+            validatorList.value
+              .filter(({ isSelected }) => isSelected)
+              .map(({ id }) => createValidation(visaId, id, props.baseInfo))
           );
         } finally {
           console.log("form sent");

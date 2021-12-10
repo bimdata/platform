@@ -3,8 +3,4 @@ function getRandomElement(array) {
   return array[n];
 }
 
-function fullName({ firstname, lastname }) {
-  return firstname && lastname && `${firstname} ${lastname}`;
-}
-
-export { getRandomElement, fullName };
+export { getRandomElement };

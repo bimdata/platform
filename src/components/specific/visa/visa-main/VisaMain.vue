@@ -1,6 +1,5 @@
 <template>
   <div class="visa-main">
-    {{ console.log("file", file) }}
     <VisaAdd
       @close="$emit('close', $event)"
       :baseInfo="baseInfo"
@@ -35,8 +34,7 @@ export default {
         cloudPk: currentSpace.value.id,
         projectPk: currentProject.value.id,
         documentPk: props.file.id
-      },
-      console
+      }
     };
   }
 };

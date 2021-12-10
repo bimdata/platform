@@ -39,6 +39,7 @@
 
 <script>
 import { ref, onMounted, watch, computed } from "vue";
+import { useListFilter } from "@/composables/list-filter";
 import { useProjects } from "@/state/projects";
 import { fullName } from "@/utils/random";
 
@@ -65,7 +66,8 @@ export default {
     const peopleListRaw = ref([]);
 
     const peopleList = computed(() => {
-      return peopleListRaw.value.filter(({ isFindable }) => isFindable);
+      return useListFilter(peopleListRaw, file => file.isFindable).filteredList
+        .value;
     });
 
     watch(filter, () => {
