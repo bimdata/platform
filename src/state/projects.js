@@ -145,6 +145,10 @@ const fetchFolderProjectUsers = async (project, folder) => {
   return users;
 };
 
+const fetchFileInProject = async (project, file) => {
+  return ProjectService.fetchFileInProject(project, file);
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -166,6 +170,7 @@ export function useProjects() {
     updateProjectUser,
     deleteProjectUser,
     leaveProject,
-    fetchFolderProjectUsers
+    fetchFolderProjectUsers,
+    fetchFileInProject
   };
 }

@@ -34,6 +34,20 @@ class VisaService {
       throw new RuntimeError(ERRORS.VISA_CREATE_VALIDATION_ERROR, error);
     }
   }
+
+  async fetchVisa(visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.getVisa({
+        cloudPk,
+        projectPk,
+        documentPk,
+        id: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);
+    }
+  }
 }
 
 const service = new VisaService();

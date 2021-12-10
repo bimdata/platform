@@ -8,10 +8,15 @@ const createValidation = async (visaId, validatorId, baseInfo) => {
   return VisaService.createValidation(visaId, validatorId, baseInfo);
 };
 
+const fetchVisa = async (visaId, baseInfo) => {
+  return VisaService.fetchVisa(visaId, baseInfo);
+};
+
 export function useVisa() {
   return {
     // Methods
     createVisa,
-    createValidation
+    createValidation,
+    fetchVisa
   };
 }

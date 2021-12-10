@@ -12,6 +12,7 @@ const ERRORS = Object.freeze({
   PROJECT_CREATE_ERROR: "projectCreateError",
   PROJECT_UPDATE_ERROR: "projectUpdateError",
   PROJECT_DELETE_ERROR: "projectDeleteError",
+  PROJECT_FETCH_FILE_ERROR: "projectFetchFileError",
   INVITATIONS_FETCH_ERROR: "invitationsFetchError",
   INVITATION_SEND_ERROR: "invitationSendError",
   INVITATION_RESEND_ERROR: "invitationResendError",
@@ -38,7 +39,8 @@ const ERRORS = Object.freeze({
   GROUP_UPDATE_ERROR: "groupUpdateError",
   GROUP_DELETE_ERROR: "groupDeleteError",
   VISA_CREATE_ERROR: "visaCreateError",
-  VISA_CREATE_VALIDATION_ERROR: "visaCreateValidationError"
+  VISA_CREATE_VALIDATION_ERROR: "visaCreateValidationError",
+  VISA_FETCH_ERROR: "visaFetchError"
 });
 
 class RuntimeError {

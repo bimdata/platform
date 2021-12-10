@@ -509,6 +509,13 @@
       "content": "Êtes-vous sûr de vouloir quitter cette page ?",
       "goBack": "Oui, quitter cette page",
       "keepView": "Annuler, rester ici"
+    },
+    "summary": {
+     "title": "Demande en cours",
+     "appliedBy": "Demande de validation par",
+     "validate": "Valider",
+     "deny": "Refuser",
+     "comment": "Commenter"
     }
   },
 
@@ -528,6 +535,7 @@
     "projectCreateError": "Une erreur est survenue lors de la création du projet",
     "projectUpdateError": "Échec de la mise à jour du projet",
     "projectDeleteError": "Échec de la suppression du projet",
+    "projectFetchFileError": "Impossible de récupérer ce document",
     "invitationsFetchError": "Impossible de récupérer la liste des invitations",
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
@@ -554,6 +562,7 @@
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
     "visaCreateError": "Erreur lors de la création du visa",
-    "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur"
+    "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
+    "visaFetchError": "Impossible de récupérer le visa"
   }
 }

@@ -182,6 +182,18 @@ class ProjectService {
       throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
     }
   }
+
+  async fetchFileInProject(project, file) {
+    try {
+      return await apiClient.collaborationApi.getDocument({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        id: file.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_FETCH_FILE_ERROR, error);
+    }
+  }
 }
 
 const service = new ProjectService();
