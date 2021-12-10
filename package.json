@@ -12,7 +12,7 @@
   "dependencies": {
     "@bimdata/design-system": "^1.0.0",
     "@bimdata/typescript-fetch-api-client": "^6.19.0",
-    "@bimdata/viewer": "^1.9.0-rc.13",
+    "@bimdata/viewer": "^1.9.0-rc.14",
     "@uppy/core": "^2.0.2",
     "@uppy/xhr-upload": "^2.0.2",
     "detect-browser": "^5.2.0",
