@@ -68,7 +68,8 @@ export default {
       currentSpace,
       fetchSpaceInformation,
       loadSpaceSubscriptions,
-      getSpaceActiveDatapack
+      getSpaceActiveDatapack,
+      waitForUpdatedSpaceSize
     } = useSubscriptions();
 
     const loading = ref(false);
@@ -77,16 +78,23 @@ export default {
     const spaceInfo = ref({});
     const datapack = ref(null);
 
-    const loadSpaceData = async space => {
-      if (space && space.id) {
+    watch(
+      () => currentSpace.value,
+      async space => {
         spaceInfo.value = await fetchSpaceInformation(space);
         datapack.value = await loadSpaceSubscriptions(space).then(() =>
           getSpaceActiveDatapack(space)
         );
-      }
-    };
+      },
+      { immediate: true }
+    );
 
-    const onSuccess = ({ size }) => {
+    const onSuccess = async ({ size }) => {
+      await waitForUpdatedSpaceSize(
+        currentSpace.value,
+        spaceInfo.value.smartDataSizeAvailable
+      );
+
       pushNotification(
         {
           type: "success",
@@ -106,12 +114,6 @@ export default {
         }
       });
     };
-
-    watch(
-      () => currentSpace.value,
-      space => loadSpaceData(space),
-      { immediate: true }
-    );
 
     return {
       // References

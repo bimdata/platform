@@ -109,7 +109,7 @@
         color="primary"
         fill
         radius
-        :disabled="quantity === datapack?.quantity"
+        :disabled="quantity === (datapack?.quantity || 0)"
         @click="submit"
       >
         {{ $t("DatapackForm.submitButtonText") }}

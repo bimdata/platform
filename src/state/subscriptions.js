@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import OrganizationService from "@/services/OrganizationService.js";
+import SpaceService from "@/services/SpaceService.js";
 import SubscriptionService from "@/services/SubscriptionService.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -93,7 +94,7 @@ const getPlatformSubscriptionLink = space => {
  * of its organization every 2 seconds until one of them is found to have
  * the same name. As space names are unique in a given organization this
  * will mean that the space (given as a parameter) has been created.
- * Then it return the newly created space.
+ * Then it returns the newly created space.
  *
  * @param {Object} space
  * @returns {Object}
@@ -134,6 +135,29 @@ const updateDatapack = (space, datapack, quantity) => {
   );
 };
 
+/**
+ * This method takes a space and an initial size as parameters and check
+ * every 500ms for the space size until it find it to be different from
+ * the initial size, which means space size has been updated on the backend side.
+ * Then it returns the new space size.
+ *
+ * @param {Object} space
+ * @param {Number} size
+ * @returns {Number}
+ */
+const waitForUpdatedSpaceSize = async (space, size) => {
+  let newSize = size;
+  while (newSize === size) {
+    // Fetch space size from API
+    newSize = (await SpaceService.fetchSpaceSize(space)).smartDataSizeAvailable;
+
+    if (newSize !== size) break; // Exit loop if space size is updated
+    await delay(500); // else wait 500 ms before next check
+  }
+
+  return newSize;
+};
+
 export function useSubscriptions() {
   const readonlyState = readonly(state);
   return {
@@ -153,6 +177,7 @@ export function useSubscriptions() {
     getPlatformSubscriptionLink,
     waitForCreatedSpace,
     createDatapack,
-    updateDatapack
+    updateDatapack,
+    waitForUpdatedSpaceSize
   };
 }
