@@ -496,7 +496,14 @@
       "errorDate": "Date invalide",
       "description": "Description",
       "cancel": "Annuler",
-      "validate": "Valider"
+      "validate": "Valider",
+      "validatorView": {
+        "getBack": "Retour",
+        "validator": "Validant",
+        "accessDenied": "Pas d'accès au fichier",
+        "accept": "Accepter"
+
+      }
     },
     "safeZone": {
       "content": "Êtes-vous sûr de vouloir quitter cette page ?",
@@ -526,6 +533,7 @@
     "invitationResendError": "Echec du renvoi de l'invitation",
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
+    "usersProjectFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
     "userLeaveError": "Vous ne pouvez pas quitter ce projet car vous êtes le dernier administrateur",
@@ -545,6 +553,7 @@
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
-    "visaCreateError": "Erreur lors de la création du visa"
+    "visaCreateError": "Erreur lors de la création du visa",
+    "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur"
   }
 }

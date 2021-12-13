@@ -1,6 +1,10 @@
 <template>
   <div class="visa-main">
-    <VisaAdd @close="$emit('close', $event)" :baseInfo="baseInfo" />
+    <VisaAdd
+      @close="$emit('close', $event)"
+      :baseInfo="baseInfo"
+      :fileParentId="file.parentId"
+    />
   </div>
 </template>
 

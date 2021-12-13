@@ -134,6 +134,17 @@ const leaveProject = async project => {
   await ProjectService.leaveProject(project);
 };
 
+const fetchFolderProjectUsers = async (project, folder) => {
+  const { mapUsers } = useUser();
+  let users = [];
+  users = await ProjectService.fetchFolderProjectUsers(project, folder);
+  users = mapUsers(users);
+  users.sort((a, b) =>
+    `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
+  );
+  return users;
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -154,6 +165,7 @@ export function useProjects() {
     cancelProjectInvitation,
     updateProjectUser,
     deleteProjectUser,
-    leaveProject
+    leaveProject,
+    fetchFolderProjectUsers
   };
 }
