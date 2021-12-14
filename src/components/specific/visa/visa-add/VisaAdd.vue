@@ -5,7 +5,7 @@
         :baseInfo="baseInfo"
         :fileParentId="fileParentId"
         @validator-list="getValidatorList"
-        @set-back="getBack"
+        @get-back="getBack"
         @safe-zone-handler="safeZoneHandler"
       />
     </template>
