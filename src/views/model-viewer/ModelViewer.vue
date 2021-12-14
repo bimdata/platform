@@ -60,6 +60,7 @@ export default {
       header: {
         warnings: false
       },
+      measure3d: true,
       split: true,
       "structure-properties": {
         merge: true,
