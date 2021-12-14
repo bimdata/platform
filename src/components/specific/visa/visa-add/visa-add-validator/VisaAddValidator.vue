@@ -41,7 +41,7 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 import { useProjects } from "@/state/projects";
-import { fullName } from "@/utils/random";
+import { fullName } from "@/utils/users";
 
 import VisaAddValidatorPeople from "@/components/specific/visa/visa-add/visa-add-validator/visa-add-validator-people/VisaAddValidatorPeople";
 

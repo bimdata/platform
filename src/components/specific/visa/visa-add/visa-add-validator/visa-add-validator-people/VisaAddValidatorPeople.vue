@@ -14,11 +14,7 @@
       class="visa-add-validator-people__picture"
       :class="{ hide: !people.hasAccess }"
     >
-      <UserAvatar
-        class="app-header-menu__btn__avatar"
-        :user="people"
-        size="40"
-      />
+      <UserAvatar :user="people" size="40" />
     </div>
     <div v-if="people.fullName" class="visa-add-validator-people__info">
       <span class="visa-add-validator-people__info__main">{{

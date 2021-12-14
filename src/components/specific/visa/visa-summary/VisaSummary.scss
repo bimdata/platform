@@ -1,6 +1,9 @@
 .visa-summary {
   border: 2px solid blue;
   padding: var(--spacing-unit);
+  max-height: 675px;
+  overflow: scroll;
+  overflow-x: hidden;
 
   &__header {
     border: 2px solid green;
@@ -29,20 +32,28 @@
       }
     }
 
+    &__desc {
+      font-size: 1rem;
+      color: var(--color-primary);
+      margin: var(--spacing-unit) auto;
+    }
+
     &__deadline {
       display: flex;
       justify-content: space-between;
+      &__title {
+       font-size: 1rem;
+      }
       &__date {
         color: var(--color-high);
         font-weight: bold;
-
       }
     }
   }
 
   &__action-button {
     border: 2px solid yellow;
-
+    margin: var(--spacing-unit) auto;
     display: flex;
     justify-content: space-between;
     
@@ -70,4 +81,13 @@
     }
   }
 
+  &__validator {
+    margin-top: var(--spacing-unit);
+    &__title {
+      font-size: 1rem;
+    }    
+    &__people-list {
+
+    }
+  }
 }

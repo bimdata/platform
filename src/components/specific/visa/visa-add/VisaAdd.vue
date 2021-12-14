@@ -5,7 +5,7 @@
         :baseInfo="baseInfo"
         :fileParentId="fileParentId"
         @validator-list="getValidatorList"
-        @get-back="getBack"
+        @set-back="getBack"
         @safe-zone-handler="safeZoneHandler"
       />
     </template>
@@ -94,7 +94,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "get-visa-id"],
+  emits: ["close", "set-visa-id"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
 
@@ -151,11 +151,13 @@ export default {
           await Promise.all(
             validatorList.value
               .filter(({ isSelected }) => isSelected)
-              .map(({ id }) => createValidation(visaId, id, props.baseInfo))
+              .map(({ id }) =>
+                createValidation(visaId.value, id, props.baseInfo)
+              )
           );
         } finally {
           console.log("form sent");
-          emit("get-visa-id", visaId.value);
+          emit("set-visa-id", visaId.value);
         }
       } else {
         hasDateError.value = true;

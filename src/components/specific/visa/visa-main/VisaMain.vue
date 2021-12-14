@@ -5,11 +5,16 @@
         :baseInfo="baseInfo"
         :fileParentId="file.parentId"
         @close="$emit('close', $event)"
-        @get-visa-id="getVisaId"
+        @set-visa-id="setVisaId"
       />
     </template>
     <template v-else>
-      <VisaSummary :baseInfo="baseInfo" :visaId="visaId" />
+      <VisaSummary
+        :baseInfo="baseInfo"
+        :visaId="visaId"
+        @close="$emit('close', $event)"
+        @set-visa-id="setVisaId"
+      />
     </template>
   </div>
 </template>
@@ -38,9 +43,9 @@ export default {
   setup(props) {
     const { currentSpace } = useSpaces();
     const { currentProject } = useProjects();
-    const visaId = ref(33);
+    const visaId = ref(39);
 
-    const getVisaId = event => (visaId.value = event);
+    const setVisaId = event => (visaId.value = event);
 
     return {
       //references
@@ -51,7 +56,7 @@ export default {
         documentPk: props.file.id
       },
       // methods
-      getVisaId
+      setVisaId
     };
   }
 };

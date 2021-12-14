@@ -1,6 +1,4 @@
 <template>
-  {{ console.log("visa", visa) }}
-  {{ console.log("file", file) }}
   <template v-if="visa">
     <div class="visa-summary">
       <div class="visa-summary__header">
@@ -9,7 +7,7 @@
           <span>{{ $t("Visa.summary.title") }}</span>
         </div>
         <div class="visa-summary__header__right-side">
-          <BIMDataButton ghost rounded icon>
+          <BIMDataButton ghost rounded icon @click="onClose">
             <BIMDataIcon name="close" size="xxxs" />
           </BIMDataButton>
         </div>
@@ -23,7 +21,9 @@
           {{ visa.description }}
         </div>
         <div class="visa-summary__content__deadline">
-          <span>Echéance</span>
+          <span class="visa-summary__content__deadline__title">{{
+            $t("Visa.summary.term")
+          }}</span>
           <span class="visa-summary__content__deadline__date">{{
             visa.deadline
           }}</span>
@@ -34,9 +34,10 @@
           style="background-color: var(--color-success)"
           fill
           radius
+          @click="validateVisa"
           >{{ $t("Visa.summary.validate") }}</BIMDataButton
         >
-        <BIMDataButton color="high" fill radius>{{
+        <BIMDataButton color="high" fill radius @click="refuseVisa">{{
           $t("Visa.summary.deny")
         }}</BIMDataButton>
         <BIMDataButton color="primary" fill radius>{{
@@ -44,25 +45,32 @@
         }}</BIMDataButton>
       </div>
       <div class="visa-summary__file">
-        <FileIcon :name="file.fileExt" size="20" />
-        <span>{{ file.fileName }}</span>
+        <FileIcon :name="visa.document.fileExt" size="20" />
+        <span>{{ visa.document.fileName }}</span>
       </div>
-      <div class="visa-summary__validator"></div>
+      <div class="visa-summary__validator">
+        <span class="visa-summary__validator__title">{{
+          $t("Visa.summary.validator")
+        }}</span>
+        <div class="visa-summary__validator__people-list">
+          <VisaSummaryPeople :peopleList="visa.validations" />
+        </div>
+      </div>
     </div>
   </template>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
+import VisaSummaryPeople from "./visa-summary-people/VisaSummaryPeople";
 
 import { useVisa } from "@/state/visa";
-// import { useProjects } from "@/state/projects";
-import { fullName } from "@/utils/random";
+import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
 import { fileExtension } from "@/utils/files";
 
 export default {
-  components: {},
+  components: { VisaSummaryPeople },
   props: {
     baseInfo: {
       type: Object,
@@ -73,14 +81,10 @@ export default {
       required: true
     }
   },
-  setup(props) {
-    const { fetchVisa } = useVisa();
-    // const { fetchFileInProject } = useProjects();
+  emits: ["close", "set-visa-id"],
+  setup(props, { emit }) {
+    const { fetchVisa, acceptVisa, denyVisa } = useVisa();
     const visa = ref(null);
-    const file = ref({
-      fileName: "gif_cat.webp",
-      fileExt: fileExtension("gif_cat.webp")
-    });
 
     const getVisa = async () => {
       const res = await fetchVisa(props.visaId, props.baseInfo);
@@ -90,34 +94,40 @@ export default {
         creator: {
           ...res.creator,
           fullName: fullName(res.creator)
-        }
+        },
+        document: {
+          ...res.document,
+          fileExt: fileExtension(res.document.fileName)
+        },
+        validations: res.validations.map(elem => ({
+          ...elem,
+          fullName: fullName(elem.validator)
+        }))
       };
     };
 
-    // const getFile = async () => {
-    //   const res = await fetchFileInProject(
-    //     {
-    //       id: props.baseInfo.projectPk,
-    //       cloud: {
-    //         id: props.baseInfo.cloudPk
-    //       }
-    //     },
-    //     { id: props.baseInfo.documentPk }
-    //   );
-    //   file.value = res;
+    const validateVisa = async () => {
+      await acceptVisa(30, props.visaId, props.baseInfo);
+      getVisa();
+    };
+    const refuseVisa = async () => {
+      await denyVisa(30, props.visaId, props.baseInfo);
+      getVisa();
+    };
 
-    //   return {
-    //     ...res,
-    //     fileExtension: fileExtension(res.name)
-    //   };
-    // };
+    const onClose = () => {
+      emit("set-visa-id", null);
+      emit("close");
+    };
 
     onMounted(() => getVisa());
     return {
       // references
       visa,
-      file,
-      console
+      // methods
+      validateVisa,
+      refuseVisa,
+      onClose
     };
   }
 };

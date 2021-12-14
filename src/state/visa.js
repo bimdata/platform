@@ -12,11 +12,20 @@ const fetchVisa = async (visaId, baseInfo) => {
   return VisaService.fetchVisa(visaId, baseInfo);
 };
 
+const acceptVisa = async (validationId, visaId, baseInfo) => {
+  return VisaService.acceptVisa(validationId, visaId, baseInfo);
+};
+const denyVisa = async (validationId, visaId, baseInfo) => {
+  return VisaService.denyVisa(validationId, visaId, baseInfo);
+};
+
 export function useVisa() {
   return {
     // Methods
     createVisa,
     createValidation,
-    fetchVisa
+    fetchVisa,
+    acceptVisa,
+    denyVisa
   };
 }
