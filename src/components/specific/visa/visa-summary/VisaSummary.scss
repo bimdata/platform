@@ -1,7 +1,7 @@
 .visa-summary {
   border: 2px solid blue;
   padding: var(--spacing-unit);
-  max-height: 675px;
+  height: 100%;
   overflow: scroll;
   overflow-x: hidden;
 
@@ -14,7 +14,7 @@
       display: flex;
       flex-grow: 1;
       margin: auto 0;
-      
+
       span {
         margin: auto 0 auto var(--spacing-unit);
         font-size: 1rem;
@@ -24,7 +24,7 @@
 
   &__content {
     border: 2px solid orange;
-      
+
     &__applicant {
       span {
         color: var(--color-primary);
@@ -42,7 +42,7 @@
       display: flex;
       justify-content: space-between;
       &__title {
-       font-size: 1rem;
+        font-size: 1rem;
       }
       &__date {
         color: var(--color-high);
@@ -56,12 +56,11 @@
     margin: var(--spacing-unit) auto;
     display: flex;
     justify-content: space-between;
-    
+
     button {
       color: var(--color-white);
       width: 30%;
     }
-    
   }
 
   &__file {
@@ -85,6 +84,6 @@
     margin-top: var(--spacing-unit);
     &__title {
       font-size: 1rem;
-    }    
+    }
   }
 }
