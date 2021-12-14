@@ -62,7 +62,7 @@ export default {
       },
       split: true,
       "structure-properties": {
-        merge: true,
+        merge: false,
         export: true,
         editProperties: true
       },
