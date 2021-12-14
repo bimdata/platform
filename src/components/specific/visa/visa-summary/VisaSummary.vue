@@ -99,19 +99,25 @@ export default {
           ...res.document,
           fileExt: fileExtension(res.document.fileName)
         },
-        validations: res.validations.map(elem => ({
-          ...elem,
-          fullName: fullName(elem.validator)
-        }))
+        validations: res.validations
+          .map(elem => ({
+            ...elem,
+            fullName: fullName(elem.validator)
+          }))
+          .sort((a, b) => {
+            if (!a.fullName) return 1;
+            if (!b.fullName) return -1;
+            return a.fullName < b.fullName ? -1 : 1;
+          })
       };
     };
 
     const validateVisa = async () => {
-      await acceptVisa(30, props.visaId, props.baseInfo);
+      await acceptVisa(48, props.visaId, props.baseInfo);
       getVisa();
     };
     const refuseVisa = async () => {
-      await denyVisa(30, props.visaId, props.baseInfo);
+      await denyVisa(48, props.visaId, props.baseInfo);
       getVisa();
     };
 
