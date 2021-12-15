@@ -25,8 +25,8 @@
 
     <transition name="fade">
       <FileUploader
-        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         class="project-overview__block--upload"
+        v-show="showFileUploader && spaceInfo.remainingSmartDataSize > 0"
         :project="project"
         :allowedFileTypes="['.ifc', '.ifczip']"
         @file-uploaded="reloadModels"
@@ -76,7 +76,7 @@ import { debounce } from "@/utils/async.js";
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
-import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
+import ModelsManager from "@/components/specific/models/models-manager/ModelsManagerV2.vue";
 import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";
 import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager.vue";
 
