@@ -94,7 +94,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "set-visa-id"],
+  emits: ["close", "set-file-to-manage", "set-visa-id", "fetch-visas"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
 
@@ -157,7 +157,10 @@ export default {
           );
         } finally {
           console.log("form sent");
+          emit("set-file-to-manage", null);
           emit("set-visa-id", visaId.value);
+          emit("set-base-info", "documentPk", props.fileParentId);
+          emit("fetch-visas");
         }
       } else {
         hasDateError.value = true;

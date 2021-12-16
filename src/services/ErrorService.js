@@ -41,7 +41,9 @@ const ERRORS = Object.freeze({
   VISA_CREATE_VALIDATION_ERROR: "visaCreateValidationError",
   VISA_FETCH_ERROR: "visaFetchError",
   VISA_ACCEPT_ERROR: "visaAcceptError",
-  VISA_DENY_ERROR: "visaDenyError"
+  VISA_DENY_ERROR: "visaDenyError",
+  VISA_FECTH_CREATED_ERROR: "visaFetchCreatedError",
+  VISA_FECTH_VALIDATOR_ERROR: "visaFetchValidatorError"
 });
 
 class RuntimeError {

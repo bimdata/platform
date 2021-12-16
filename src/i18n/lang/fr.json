@@ -489,6 +489,7 @@
   },
 
   "Visa": {
+    "button": "Validations / VISA",
     "add": {
       "title": "Demande de validation",
       "validator": "Validant",
@@ -522,6 +523,11 @@
       "deny": "Refusé",
       "pending": "En attente"
      }
+    },
+    "list": {
+      "title": "Demande en cours",
+      "visaValidator": "Mes validations",
+      "visaCreated": "Mes demandes"
     }
   },
 
@@ -570,7 +576,9 @@
     "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
     "visaFetchError": "Impossible de récupérer le visa",
     "visaAcceptError": "Erreur lors de l'envoi de votre réponse",
-    "visaDenyError": "Erreur lors de l'envoi de votre réponse"
+    "visaDenyError": "Erreur lors de l'envoi de votre réponse",
+    "visaFetchCreatedError": "Impossible de récupérer les visas",
+    "visaFetchValidatorError": "Impossible de récupérer les visas"
 
   }
 }

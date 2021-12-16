@@ -24,6 +24,21 @@
             v-model="searchText"
             clear
           />
+          <BIMDataButton
+            class="files-manager__actions__visa"
+            color="primary"
+            fill
+            radius
+            @click="openVisaManager"
+          >
+            <span class="files-manager__actions__visa__content">
+              <span class="files-manager__actions__visa__content__counter">{{
+                userVisas.toValidateVisas.length +
+                  userVisas.createdVisas.length || ""
+              }}</span>
+              {{ $t("Visa.button") }}
+            </span>
+          </BIMDataButton>
         </div>
         <FileTree
           class="files-manager__tree"
@@ -77,7 +92,14 @@
             <VisaMain
               v-if="showVisaManager"
               @close="closeVisaManager"
+              @set-file-to-manage="setFileToManage"
+              @set-is-visa-list="setIsVisaList"
+              @fetch-visas="fetchVisas"
               :file="fileToManage"
+              :userVisas="userVisas"
+              :isVisaList="isVisaList"
+              :cloudPk="cloudPk"
+              :projectPk="projectPk"
             />
           </div>
         </transition>
@@ -105,10 +127,14 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 import FILE_TYPES from "@/config/file-types";
+import { useSpaces } from "@/state/spaces";
+import { useProjects } from "@/state/projects";
+
 import { useFiles } from "@/state/files";
+import { useVisa } from "@/state/visa";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
@@ -157,9 +183,14 @@ export default {
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
+    const { currentSpace } = useSpaces();
+    const { currentProject } = useProjects();
+
+    const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
     const currentFolder = ref(null);
     const currentFiles = ref([]);
+    const userVisas = ref({ createdVisas: [], toValidateVisas: [] });
 
     watch(
       () => props.fileStructure,
@@ -240,6 +271,8 @@ export default {
     const showVisaManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
+    const isVisaList = ref(false);
+
     let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
@@ -269,12 +302,20 @@ export default {
       }, 100);
     };
 
-    const openVisaManager = file => {
-      fileToManage.value = file;
+    const openVisaManager = event => {
+      if (event.fileName) {
+        fileToManage.value = event;
+      } else {
+        isVisaList.value = true;
+        fileToManage.value = { id: null };
+      }
       showVisaManager.value = true;
       showAccessManager.value = false;
       showSidePanel.value = true;
     };
+
+    const setFileToManage = event => (setFileToManage.value = event);
+    const setIsVisaList = event => (isVisaList.value = event);
 
     const closeVisaManager = () => {
       showSidePanel.value = false;
@@ -283,6 +324,33 @@ export default {
         fileToManage.value = null;
       }, 100);
     };
+
+    const getVisas = async () => {
+      const resValidator = await fetchToValidateVisas({
+        cloudPk: currentSpace.value.id,
+        projectPk: currentProject.value.id
+      });
+
+      const resCreated = await fetchCreatedVisas({
+        cloudPk: currentSpace.value.id,
+        projectPk: currentProject.value.id
+      });
+
+      userVisas.value = {
+        toValidateVisas:
+          resValidator.sort((a, b) =>
+            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+          ) || [],
+        createdVisas:
+          resCreated.sort((a, b) =>
+            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+          ) || []
+      };
+    };
+
+    const fetchVisas = () => getVisas();
+
+    onMounted(fetchVisas);
 
     return {
       // References
@@ -298,6 +366,11 @@ export default {
       showDeleteModal,
       showSidePanel,
       fileToManage,
+      cloudPk: currentSpace.value.id,
+      projectPk: currentProject.value.id,
+      userVisas,
+      isVisaList,
+      console,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -310,7 +383,10 @@ export default {
       uploadFiles,
       backToParent,
       closeVisaManager,
-      openVisaManager
+      openVisaManager,
+      setFileToManage,
+      setIsVisaList,
+      fetchVisas
     };
   }
 };
