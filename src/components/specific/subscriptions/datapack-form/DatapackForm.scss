@@ -1,0 +1,73 @@
+.datapack-form {
+  display: flex;
+  gap: calc(var(--spacing-unit) * 4);
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+
+  &__card {
+    width: 280px;
+    height: 326px;
+    padding: calc(var(--spacing-unit) * 3);
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-unit);
+  }
+
+  &__btn {
+    margin: var(--spacing-unit) 0;
+  }
+
+  &__base {
+    &__size {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--color-granite);
+    }
+    &__note {
+      color: var(--color-granite-light);
+    }
+    &__text {
+      margin-top: calc(var(--spacing-unit) * 2 + 4px);
+    }
+  }
+
+  &__datapack {
+    &__size {
+      &::before {
+        content: "+ ";
+      }
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--color-primary);
+    }
+    &__note {
+      color: var(--color-granite-light);
+    }
+    &__total {
+      margin-top: calc(var(--spacing-unit) * 2);
+      &__value {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--color-primary);
+      }
+      &__unit {
+        color: var(--color-granite);
+      }
+    }
+
+    &__controls {
+      margin-top: auto;
+      display: flex;
+      gap: calc(var(--spacing-unit) * 2);
+    }
+  }
+}

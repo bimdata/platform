@@ -1,6 +1,5 @@
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
-import ModelService from "./ModelService";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 class ProjectService {
   async fetchUserProjects() {

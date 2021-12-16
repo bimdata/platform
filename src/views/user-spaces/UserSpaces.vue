@@ -26,18 +26,35 @@
           <BIMDataIcon name="alphabeticalSort" size="s" />
         </BIMDataButton>
         <BIMDataButton
-          data-test="btn-open-create"
-          class="user-spaces__header__btn-create"
-          color="primary"
+          v-if="isSubscriptionEnabled"
+          width="120px"
           fill
           radius
-          @click="openCreationForm"
+          @click="openOrganizationsManager"
+        >
+          {{ $t("UserSpaces.organizationsButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
+          data-test="btn-open-create"
+          class="user-spaces__header__btn-create"
+          width="120px"
+          :color="isSubscriptionEnabled ? 'secondary' : 'primary'"
+          fill
+          radius
+          @click="
+            () =>
+              isSubscriptionEnabled ? goToSubscriptionPro() : openCreationForm()
+          "
         >
           <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
           <span>{{ $t("UserSpaces.createButtonText") }}</span>
         </BIMDataButton>
       </template>
     </ViewHeader>
+
+    <SidePanel :title="$t('OrganizationsManager.title')">
+      <OrganizationsManager :organizations="organizations" />
+    </SidePanel>
 
     <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
       <transition-group name="grid">
@@ -53,31 +70,37 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useListSort } from "@/composables/list-sort";
-import { useToggle } from "@/composables/toggle";
-import { useSpaces } from "@/state/spaces";
+import { useRouter } from "vue-router";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useListSort } from "@/composables/list-sort.js";
+import { useSidePanel } from "@/composables/side-panel.js";
+import { useToggle } from "@/composables/toggle.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import routeNames from "@/router/route-names.js";
+import { useOrganizations } from "@/state/organizations.js";
+import { useSpaces } from "@/state/spaces.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
-import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import OrganizationsManager from "@/components/specific/organizations/organizations-manager/OrganizationsManager.vue";
+import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard.vue";
+import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard.vue";
 
 export default {
   components: {
-    ViewHeader,
     AppBreadcrumb,
+    OrganizationsManager,
     SpaceCard,
-    SpaceCreationCard
+    SpaceCreationCard,
+    SidePanel,
+    ViewHeader
   },
   setup() {
+    const router = useRouter();
+    const { openSidePanel } = useSidePanel();
+    const { userOrganizations } = useOrganizations();
     const { userSpaces } = useSpaces();
-
-    const {
-      isOpen: showCreationForm,
-      open: openCreationForm,
-      close: closeCreationForm
-    } = useToggle();
 
     const { filteredList: displayedSpaces, searchText } = useListFilter(
       userSpaces,
@@ -89,14 +112,28 @@ export default {
       space => space.name
     );
 
+    const {
+      isOpen: showCreationForm,
+      open: openCreationForm,
+      close: closeCreationForm
+    } = useToggle();
+
+    const goToSubscriptionPro = () => {
+      router.push({ name: routeNames.subscriptionPro });
+    };
+
     return {
       // References
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      organizations: userOrganizations,
       searchText,
       showCreationForm,
       spaces: displayedSpaces,
       // Methods
       closeCreationForm,
+      goToSubscriptionPro,
       openCreationForm,
+      openOrganizationsManager: openSidePanel,
       sortSpaces
     };
   }

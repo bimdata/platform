@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard-welcome-tile">
-    <DashboardLogo />
+    <span class="dashboard-welcome-tile__logo">
+      <DashboardWelcomeTileImage />
+    </span>
     <span class="dashboard-welcome-tile__title">
       {{ $t("DashboardWelcomeTile.title") }}
     </span>
@@ -12,11 +14,12 @@
 
 <script>
 import { useUser } from "@/state/user";
-import DashboardLogo from "../../../../../public/static/dashboard-logo.vue";
+// Components
+import DashboardWelcomeTileImage from "./DashboardWelcomeTileImage.vue";
 
 export default {
   components: {
-    DashboardLogo
+    DashboardWelcomeTileImage
   },
   setup() {
     const { user } = useUser();

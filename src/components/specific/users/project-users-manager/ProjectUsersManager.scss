@@ -1,8 +1,5 @@
 .project-users-manager {
-  &.bimdata-card:deep() > .bimdata-card__content {
-    height: calc(100% - 37px);
-    padding: 0;
-  }
+  @include block-card;
 
   &__manager {
     height: 100%;

@@ -12,7 +12,7 @@ const INACTIVE = "inactive";
  * @param {Object} project
  * @returns {String}
  */
-function status(project) {
+function projectStatus(project) {
   const today = new Date();
   const createDate = new Date(project.createdAt);
   const updateDate = new Date(project.updatedAt);
@@ -31,4 +31,4 @@ function status(project) {
   }
 }
 
-export { status };
+export { projectStatus };

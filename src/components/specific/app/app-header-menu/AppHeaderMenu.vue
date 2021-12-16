@@ -18,9 +18,6 @@
       </template>
       <template #element>
         <div class="app-header-menu__container" @click.stop="() => {}">
-          <!-- <BIMDataButton ghost squared>
-            {{ $t("AppHeaderMenu.entrySettings") }}
-          </BIMDataButton> -->
           <BIMDataButton ghost squared @click="openBIMDataConnect">
             {{ $t("AppHeaderMenu.entryConnect") }}
           </BIMDataButton>
@@ -35,6 +32,9 @@
             {{ $t("AppHeaderMenu.entryOldPlatform") }}
           </BIMDataButton>
           <div class="separator"></div>
+          <BIMDataButton ghost squared @click="goToUserSubscriptions">
+            <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
+          </BIMDataButton>
           <BIMDataButton ghost squared @click="openLanguageSelector">
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
@@ -65,12 +65,15 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
-import { useAuth } from "@/state/auth";
-import { useUser } from "@/state/user";
+import { useRouter } from "vue-router";
+import routeNames from "@/router/route-names.js";
+import { useToggle } from "@/composables/toggle.js";
+import { useAuth } from "@/state/auth.js";
+import { useSpaces } from "@/state/spaces.js";
+import { useUser } from "@/state/user.js";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import LanguageSelector from "./language-selector/LanguageSelector";
+import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
+import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
   components: {
@@ -78,7 +81,9 @@ export default {
     LanguageSelector
   },
   setup() {
+    const router = useRouter();
     const { signOut } = useAuth();
+    const { currentSpace } = useSpaces();
     const { user } = useUser();
 
     const openBIMDataConnect = () => {
@@ -97,6 +102,15 @@ export default {
       window.open(`${process.env.VUE_APP_URL_OLD_PLATFORM}`);
     };
 
+    const goToUserSubscriptions = () => {
+      router.push({
+        name: routeNames.userSubscriptions,
+        query: {
+          organization: currentSpace.value?.organization.id
+        }
+      });
+    };
+
     const {
       isOpen: showLanguageSelector,
       open: openLanguageSelector,
@@ -109,6 +123,7 @@ export default {
       user,
       // Methods
       closeLanguageSelector,
+      goToUserSubscriptions,
       openBIMDataConnect,
       openDocumentation,
       openLanguageSelector,

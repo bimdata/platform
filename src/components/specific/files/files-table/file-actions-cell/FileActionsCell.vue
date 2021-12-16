@@ -76,9 +76,10 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle";
-import { routeNames } from "@/router";
-import { isFolder } from "@/utils/file-structure";
+import { useToggle } from "@/composables/toggle.js";
+import routeNames from "@/router/route-names.js";
+import { isFolder } from "@/utils/file-structure.js";
+
 export default {
   props: {
     project: {

@@ -26,7 +26,7 @@
         :key="visa.id"
         @click="onClickToReachVisa(visa.id, visa.document.id)"
       >
-        <FileIcon :name="fileExtension(visa.document.name)" size="20" />
+        <BIMDataFileIcon :name="fileExtension(visa.document.name)" size="20" />
         <div class="visa-list__content__visa__desc">
           <span class="visa-list__content__visa__desc__title">{{
             visa.document.name

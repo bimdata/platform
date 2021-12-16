@@ -1,7 +1,8 @@
 import { useAuth } from "@/state/auth.js";
 
+const { isAuthenticated, authenticate } = useAuth();
+
 export default async function authGuard(route) {
-  const { isAuthenticated, authenticate } = useAuth();
   if (isAuthenticated.value) {
     return true;
   } else if (route.matched.some(r => r.meta.requiresAuth)) {

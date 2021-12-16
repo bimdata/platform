@@ -1,0 +1,35 @@
+.billings-table {
+  .space-cell {
+    max-width: 300px;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .status-cell {
+    &--active,
+    &--deleted {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+
+    &--active {
+      color: var(--color-success);
+    }
+
+    &--deleted {
+      color: var(--color-high);
+    }
+  }
+
+  &__empty {
+    &:deep(.bimdata-card__content) {
+      height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

@@ -286,7 +286,7 @@ function isIfc(file) {
   return file.type === FILE_TYPES.IFC;
 }
 
-function isDocument(file) { 
+function isDocument(file) {
   return file.type === FILE_TYPES.DOCUMENT;
 }
 

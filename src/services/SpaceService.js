@@ -1,5 +1,5 @@
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
+import apiClient from "./api-client.js";
+import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class SpaceService {
   async fetchUserSpaces() {
@@ -19,6 +19,17 @@ class SpaceService {
     } catch (error) {
       ErrorService.handleError(error);
       return null;
+    }
+  }
+
+  async fetchSpaceSize(space) {
+    try {
+      return await apiClient.collaborationApi.getCloudSize({
+        id: space.id
+      });
+    } catch (error) {
+      ErrorService.handleError(error);
+      return {};
     }
   }
 

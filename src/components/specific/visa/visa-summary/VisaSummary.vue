@@ -45,7 +45,7 @@
         }}</BIMDataButton>
       </div>
       <div class="visa-summary__file">
-        <FileIcon :name="visa.document.fileExt" size="20" />
+        <BIMDataFileIcon :name="visa.document.fileExt" size="20" />
         <span>{{ visa.document.fileName }}</span>
       </div>
       <div class="visa-summary__validator">

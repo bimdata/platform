@@ -50,7 +50,7 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
-    const { selectGroup, removeGroupMembers } = useGroups();
+    const { setCurrentGroup, removeGroupMembers } = useGroups();
 
     const fullName = computed(() => {
       if (props.user.userId) {
@@ -61,7 +61,7 @@ export default {
 
     const remove = async () => {
       await removeGroupMembers(props.project, props.group, [props.user]);
-      selectGroup(props.group.id); // Needed to reload member list
+      setCurrentGroup(props.group.id); // Needed to reload member list
     };
 
     return {

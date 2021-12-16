@@ -25,7 +25,9 @@
     </div>
 
     <div class="models-card-model-preview__switcher" v-if="images.length > 0">
-      <TextBox :text="image.name" :maxLength="44" />
+      <div class="models-card-model-preview__switcher__text">
+        <BIMDataTextBox :text="image.name" tooltipPosition="top" />
+      </div>
       <template v-if="images.length > 1">
         <BIMDataButton
           class="models-card-model-preview__switcher__btn-previous"

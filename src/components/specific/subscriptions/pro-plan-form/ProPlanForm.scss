@@ -1,0 +1,69 @@
+.pro-plan-form {
+  position: relative;
+  height: 100%;
+  padding: calc(var(--spacing-unit) * 3);
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__title {
+      margin: 0;
+    }
+
+    &__price {
+      .value {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+      .unit {
+        color: var(--color-granite-light);
+      }
+    }
+  }
+
+  &__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-white);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .bimdata-spinner {
+      transform: scale(2);
+    }
+  }
+
+  &__success {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-white);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 4);
+
+    &__title {
+      max-width: 66%;
+      margin: 0;
+      text-align: center;
+    }
+
+    &__message {
+      max-width: 80%;
+      text-align: center;
+      color: var(--color-granite-light);
+    }
+  }
+}

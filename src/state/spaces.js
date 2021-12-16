@@ -1,32 +1,42 @@
 import { reactive, readonly, toRefs } from "vue";
-import SpaceService from "@/services/SpaceService";
-import { useUser } from "@/state/user";
+import SpaceService from "@/services/SpaceService.js";
+import SubscriptionService from "@/services/SubscriptionService.js";
+import { mapSpaces, mapUsers } from "@/state/mappers.js";
+import { useOrganizations } from "@/state/organizations.js";
+import { useProjects } from "@/state/projects.js";
+import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userSpaces: [],
   currentSpace: null,
+  spaceInfo: {},
   spaceUsers: [],
   spaceInvitations: []
 });
 
+const setCurrentSpace = id => {
+  state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
+  return readonly(state.currentSpace);
+};
+
 const loadUserSpaces = async () => {
-  const { mapSpaces } = useUser();
-  let spaces = await SpaceService.fetchUserSpaces();
-  spaces = mapSpaces(spaces);
-  spaces.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  state.userSpaces = spaces;
+  const spaces = await SpaceService.fetchUserSpaces();
+  const freeSpaces = await SubscriptionService.fetchFreeSpaces();
+  state.userSpaces = mapSpaces(spaces, freeSpaces);
   return spaces;
 };
 
+const loadSpaceInfo = async space => {
+  const spaceInfo = await SubscriptionService.fetchSpaceInformation(space);
+  state.spaceInfo = spaceInfo;
+  return spaceInfo;
+};
+
 const loadSpaceUsers = async space => {
-  const { mapUsers } = useUser();
   let users = [];
   if (space.isAdmin) {
     users = await SpaceService.fetchSpaceUsers(space);
     users = mapUsers(users);
-    users.sort((a, b) =>
-      `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
-    );
   }
   state.spaceUsers = users;
   return users;
@@ -43,43 +53,48 @@ const loadSpaceInvitations = async space => {
 
 const createSpace = async space => {
   const newSpace = await SpaceService.createSpace(space);
-  state.userSpaces = [{ ...newSpace, isAdmin: true }].concat(state.userSpaces);
+
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+
   return newSpace;
 };
 
 const updateSpace = async space => {
   const newSpace = await SpaceService.updateSpace(space);
-  softUpdateSpace(newSpace);
-  return newSpace;
-};
 
-const softUpdateSpace = space => {
-  state.userSpaces = state.userSpaces.map(s =>
-    s.id === space.id ? { ...s, ...space } : s
-  );
-  return space;
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+
+  return newSpace;
 };
 
 const removeSpaceImage = async space => {
   const newSpace = await SpaceService.removeSpaceImage(space);
-  softUpdateSpace(newSpace);
+
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+
   return newSpace;
 };
 
 const deleteSpace = async space => {
   await SpaceService.deleteSpace(space);
-  softDeleteSpace(space);
-  return space;
-};
 
-const softDeleteSpace = space => {
-  state.userSpaces = state.userSpaces.filter(s => s.id !== space.id);
-  return space;
-};
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserSpaces();
+  const { loadOrganizationSpaces } = useOrganizations();
+  await loadOrganizationSpaces(space.organization);
+  const { loadUserProjects } = useProjects();
+  await loadUserProjects();
 
-const selectSpace = id => {
-  state.currentSpace = state.userSpaces.find(space => space.id === id) || null;
-  return readonly(state.currentSpace);
+  return space;
 };
 
 const sendSpaceInvitation = async (space, invitation, options = {}) => {
@@ -121,16 +136,15 @@ export function useSpaces() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    setCurrentSpace,
     loadUserSpaces,
+    loadSpaceInfo,
     loadSpaceUsers,
     loadSpaceInvitations,
     createSpace,
     updateSpace,
-    softUpdateSpace,
     removeSpaceImage,
     deleteSpace,
-    softDeleteSpace,
-    selectSpace,
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,

@@ -1,0 +1,20 @@
+.organization-card-action-menu {
+  position: relative;
+
+  &__btn {
+    color: var(--color-granite-light);
+  }
+
+  &__container {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    display: flex;
+    gap: calc(var(--spacing-unit) / 2);
+    margin-right: calc(var(--spacing-unit) / 2);
+    padding: 0 calc(var(--spacing-unit) / 2);
+    border-radius: 4px;
+    background-color: var(--color-white);
+    box-shadow: 0 2px 10px 0 var(--color-white);
+  }
+}

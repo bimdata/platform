@@ -5,6 +5,7 @@ import BIMDataCard from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataCheckbox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataCheckbox.js";
 import BIMDataDropdownList from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownList.js";
 import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataDropdownMenu.js";
+import BIMDataFileIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataFileIcon.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
 import BIMDataRadio from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataRadio.js";
@@ -13,11 +14,21 @@ import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSelect.js";
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
+import BIMDataText from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataText.js";
 import BIMDataTextarea from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextarea.js";
+import BIMDataTextBox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextbox.js";
 
-// Generic components
-import FileIcon from "@/components/generic/file-icon/FileIcon.vue";
-import TextBox from "@/components/generic/text-box/TextBox.vue";
+// Image components
+import BillingsTableEmptyImage from "@/components/images/BillingsTableEmptyImage.vue";
+import BulletMarkImage from "@/components/images/BulletMarkImage.vue";
+import InvitationAvatarImage from "@/components/images/InvitationAvatarImage.vue";
+import InvoicesTableEmptyImage from "@/components/images/InvoicesTableEmptyImage.vue";
+import OrganizationFormSuccessImage from "@/components/images/OrganizationFormSuccessImage.vue";
+import ProPlanFormSuccessImage from "@/components/images/ProPlanFormSuccessImage.vue";
+import ProPlanInfoHeadingImage from "@/components/images/ProPlanInfoHeadingImage.vue";
+import SpaceSizePreviewImage from "@/components/images/SpaceSizePreviewImage.vue";
+import StorageImage from "@/components/images/StorageImage.vue";
+import SubscribeCardImage from "@/components/images/SubscribeCardImage.vue";
 
 export default {
   BIMDataBigSpinner,
@@ -26,6 +37,7 @@ export default {
   BIMDataCheckbox,
   BIMDataDropdownList,
   BIMDataDropdownMenu,
+  BIMDataFileIcon,
   BIMDataIcon,
   BIMDataInput,
   BIMDataRadio,
@@ -34,7 +46,19 @@ export default {
   BIMDataSelect,
   BIMDataSpinner,
   BIMDataTabs,
+  BIMDataText,
   BIMDataTextarea,
-  FileIcon,
-  TextBox
+  BIMDataTextBox,
+
+  // Images
+  BillingsTableEmptyImage,
+  BulletMarkImage,
+  InvitationAvatarImage,
+  InvoicesTableEmptyImage,
+  OrganizationFormSuccessImage,
+  ProPlanFormSuccessImage,
+  ProPlanInfoHeadingImage,
+  SpaceSizePreviewImage,
+  StorageImage,
+  SubscribeCardImage
 };
