@@ -78,11 +78,12 @@ export default {
 
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
-    const currentModel = ref();
+    const currentModel = ref(null);
     const models = ref([]);
     const nonArchivedModels = computed(() => {
       return models.value.filter(model => !model.archived);
     });
+
     watch(
       () => props.project,
       async () => {
@@ -90,6 +91,7 @@ export default {
       },
       { immediate: true }
     );
+
     watch(nonArchivedModels, () => {
       currentModel.value = nonArchivedModels.value[0];
     });
