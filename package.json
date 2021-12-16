@@ -10,9 +10,10 @@
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
   "dependencies": {
+    "@bimdata/christmas-sleigh-viewer-plugin": "^2.0.0",
     "@bimdata/design-system": "^1.1.0-rc.9",
     "@bimdata/typescript-fetch-api-client": "^6.20.0",
-    "@bimdata/viewer": "^1.9.0-rc.10",
+    "@bimdata/viewer": "^1.9.0-rc.19",
     "@uppy/core": "^2.1.2",
     "@uppy/xhr-upload": "^2.0.5",
     "detect-browser": "^5.3.0",
