@@ -94,7 +94,7 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "set-visa-id"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
 
@@ -105,6 +105,7 @@ export default {
     const isSafeZone = ref(false);
     const isClosing = ref(null);
     const validatorList = ref([]);
+    const visaId = ref(null);
 
     const isDateConform = ({ value }) => {
       const dateToCompare = formatToDateObject(value);
@@ -146,15 +147,17 @@ export default {
             formatDate(dateInput.value),
             props.baseInfo
           );
-          const visaId = res.id;
-
+          visaId.value = res.id;
           await Promise.all(
             validatorList.value
               .filter(({ isSelected }) => isSelected)
-              .map(({ id }) => createValidation(visaId, id, props.baseInfo))
+              .map(({ id }) =>
+                createValidation(visaId.value, id, props.baseInfo)
+              )
           );
         } finally {
           console.log("form sent");
+          emit("set-visa-id", visaId.value);
         }
       } else {
         hasDateError.value = true;
