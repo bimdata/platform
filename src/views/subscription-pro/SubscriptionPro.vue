@@ -32,13 +32,13 @@
           <SpaceCreator
             :organizations="organizations"
             :initialOrga="currentOrga"
-            @space-created="space = $event"
+            @space-created="onSpacePreCreated"
           />
         </template>
       </div>
 
       <transition name="slide-fade-down">
-        <div class="subscription-pro__content__body" v-show="space">
+        <div ref="body" class="subscription-pro__content__body" v-show="space">
           <div class="subscription-pro__content__body__left">
             <ProPlanInfo />
           </div>
@@ -97,27 +97,35 @@ export default {
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
+    const body = ref(null);
+
     if (currentSpace.value) {
       space.value = currentSpace.value;
     }
 
-    const onSpaceCreated = space => {
+    const onSpacePreCreated = preCreatedSpace => {
+      space.value = preCreatedSpace;
+      setTimeout(() => body.value.scrollIntoView({ behavior: "smooth" }));
+    };
+
+    const onSpaceCreated = createdSpace => {
       pushNotification({
         type: "success",
         title: t("Success"),
         message: t("SubscriptionPro.spaceCreatedNotification", {
-          organizationName: space.organization.name,
-          spaceName: space.name
+          organizationName: createdSpace.organization.name,
+          spaceName: createdSpace.name
         })
       });
       router.push({
         name: routeNames.spaceBoard,
-        params: { spaceID: space.id }
+        params: { spaceID: createdSpace.id }
       });
     };
 
     return {
       // References
+      body,
       currentOrga,
       currentSpace,
       newSizeAvailable,
@@ -126,7 +134,8 @@ export default {
       spaceInfo,
       // Methods
       formatBytes,
-      onSpaceCreated
+      onSpaceCreated,
+      onSpacePreCreated
     };
   }
 };

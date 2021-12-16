@@ -20,7 +20,7 @@ import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
 
 // Route components
-import Layout from "@/Layout.vue";
+import AppLayout from "@/AppLayout.vue";
 import OidcCallback from "@/views/oidc-callback/OidcCallback.vue";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError.vue";
 import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
@@ -66,7 +66,7 @@ const routes = [
   {
     path: "/",
     name: root,
-    component: Layout,
+    component: AppLayout,
     meta: {
       // Protect this route and all its children with authentication
       requiresAuth: true
