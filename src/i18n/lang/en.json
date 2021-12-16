@@ -51,7 +51,7 @@
     "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
   },
   "SubscriptionPro": {
-    "subscribeTitle": "Create Professional Plan",
+    "subscribeTitle": "Subscribe to Professional Plan",
     "upgradeTitle": "Upgrade to pro platform",
     "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
     "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"

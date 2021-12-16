@@ -54,7 +54,7 @@
     "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
   },
   "SubscriptionPro": {
-    "subscribeTitle": "Créer un espace pro",
+    "subscribeTitle": "Souscrire à l'abonnement professionnel",
     "upgradeTitle": "Passer à la platforme professionnelle",
     "text": "Vous êtes sur le point de lancer votre abonnement professionel. Il inclus: {size} de stockage, création de projets illimités avec utilisateurs illimités.",
     "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
