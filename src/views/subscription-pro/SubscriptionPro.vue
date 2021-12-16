@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useNotifications } from "@/composables/notifications.js";
@@ -91,7 +91,12 @@ export default {
     const router = useRouter();
     const { pushNotification } = useNotifications();
     const { userOrganizations } = useOrganizations();
-    const { currentOrga, currentSpace } = useSubscriptions();
+    const {
+      currentOrga,
+      currentSpace,
+      fetchSpaceInformation,
+      waitForUpdatedSpaceSize
+    } = useSubscriptions();
 
     const space = ref(null);
     const spaceInfo = ref({});
@@ -99,27 +104,48 @@ export default {
 
     const body = ref(null);
 
-    if (currentSpace.value) {
-      space.value = currentSpace.value;
-    }
+    watch(
+      () => currentSpace.value,
+      async () => {
+        if (currentSpace.value) {
+          space.value = currentSpace.value;
+          spaceInfo.value = await fetchSpaceInformation(currentSpace.value);
+        }
+      },
+      { immediate: true }
+    );
 
     const onSpacePreCreated = preCreatedSpace => {
       space.value = preCreatedSpace;
       setTimeout(() => body.value.scrollIntoView({ behavior: "smooth" }));
     };
 
-    const onSpaceCreated = createdSpace => {
-      pushNotification({
-        type: "success",
-        title: t("Success"),
-        message: t("SubscriptionPro.spaceCreatedNotification", {
-          organizationName: createdSpace.organization.name,
-          spaceName: createdSpace.name
-        })
-      });
+    const onSpaceCreated = async createdSpace => {
+      if (currentSpace.value) {
+        await waitForUpdatedSpaceSize(
+          currentSpace.value,
+          spaceInfo.value.smartDataSizeAvailable,
+          newSizeAvailable.value
+        );
+      }
+
+      pushNotification(
+        {
+          type: "success",
+          title: t("Success"),
+          message: t("SubscriptionPro.spaceCreatedNotification", {
+            organizationName: createdSpace.organization.name,
+            spaceName: createdSpace.name
+          })
+        },
+        8000
+      );
+
       router.push({
         name: routeNames.spaceBoard,
-        params: { spaceID: createdSpace.id }
+        params: {
+          spaceID: createdSpace.id
+        }
       });
     };
 

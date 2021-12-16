@@ -7,12 +7,13 @@
   &__content {
     position: relative;
     height: 6px;
-    border-radius: 15px;
+    border-radius: 14px;
     background-color: var(--color-silver);
+    overflow: hidden;
 
     &__bar {
       height: 100%;
-      border-radius: 15px;
+      border-radius: 14px;
 
       &--good {
         background-color: var(--color-success);

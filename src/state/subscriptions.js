@@ -145,13 +145,13 @@ const updateDatapack = (space, datapack, quantity) => {
  * @param {Number} size
  * @returns {Number}
  */
-const waitForUpdatedSpaceSize = async (space, size) => {
+const waitForUpdatedSpaceSize = async (space, size, expectedSize) => {
   let newSize = size;
-  while (newSize === size) {
+  while (newSize === size && newSize !== expectedSize) {
     // Fetch space size from API
     newSize = (await SpaceService.fetchSpaceSize(space)).smartDataSizeAvailable;
 
-    if (newSize !== size) break; // Exit loop if space size is updated
+    if (newSize !== size || newSize === expectedSize) break; // Exit loop if space size is updated
     await delay(500); // else wait 500 ms before next check
   }
 
