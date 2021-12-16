@@ -25,6 +25,8 @@ import { useSpaces } from "@/state/spaces";
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
 
+import christmasPlugin from '@bimdata/christmas-sleigh-viewer-plugin';
+
 const availablePlugins = {
   bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.1",
   iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.9",
@@ -60,6 +62,7 @@ export default {
       header: {
         warnings: false
       },
+      measure3d: true,
       split: true,
       "structure-properties": {
         merge: false,
@@ -132,6 +135,7 @@ export default {
         )
       );
       loading.value = false;
+      bimdataViewer.registerPlugin(christmasPlugin);
 
       bimdataViewer.mount("#viewer", initialWindow);
 
