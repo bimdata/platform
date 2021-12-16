@@ -65,6 +65,8 @@ import { ref, onMounted } from "vue";
 import VisaSummaryPeople from "./visa-summary-people/VisaSummaryPeople";
 
 import { useVisa } from "@/state/visa";
+import { useUser } from "@/state/user";
+
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
 import { fileExtension } from "@/utils/files";
@@ -79,61 +81,84 @@ export default {
     visaId: {
       type: Number,
       required: true
+    },
+    isVisaList: {
+      type: Boolean,
+      required: true
     }
   },
-  emits: ["close", "set-visa-id"],
+  emits: ["close", "set-visa-id", "set-is-visa-list"],
   setup(props, { emit }) {
     const { fetchVisa, acceptVisa, denyVisa } = useVisa();
+    const { loadUser } = useUser();
     const visa = ref(null);
+    const validationUserId = ref(null);
 
     const getVisa = async () => {
-      const res = await fetchVisa(props.visaId, props.baseInfo);
-      visa.value = {
-        ...res,
-        deadline: formatDateDDMMYYY(res.deadline),
-        creator: {
-          ...res.creator,
-          fullName: fullName(res.creator)
-        },
-        document: {
-          ...res.document,
-          fileExt: fileExtension(res.document.fileName)
-        },
-        validations: res.validations
-          .map(elem => ({
-            ...elem,
-            fullName: fullName(elem.validator)
-          }))
-          .sort((a, b) => {
-            if (!a.fullName) return 1;
-            if (!b.fullName) return -1;
-            return a.fullName < b.fullName ? -1 : 1;
-          })
-      };
+      try {
+        const res = await fetchVisa(props.visaId, props.baseInfo);
+        visa.value = {
+          ...res,
+          deadline: formatDateDDMMYYY(res.deadline),
+          creator: {
+            ...res.creator,
+            fullName: fullName(res.creator)
+          },
+          document: {
+            ...res.document,
+            fileExt: fileExtension(res.document.fileName)
+          },
+          validations: res.validations
+            .map(elem => ({
+              ...elem,
+              userId: elem.validator.userId,
+              fullName: fullName(elem.validator)
+            }))
+            .sort((a, b) => {
+              if (!a.fullName) return 1;
+              if (!b.fullName) return -1;
+              return a.fullName < b.fullName ? -1 : 1;
+            })
+        };
+      } catch {
+        emit("set-is-visa-list", true);
+      }
+    };
+
+    const getValidationUserId = async () => {
+      const { id } = await loadUser();
+      validationUserId.value = visa.value.validations.find(
+        ({ userId }) => userId === id
+      ).id;
     };
 
     const validateVisa = async () => {
-      await acceptVisa(48, props.visaId, props.baseInfo);
+      await acceptVisa(validationUserId.value, props.visaId, props.baseInfo);
       getVisa();
     };
     const refuseVisa = async () => {
-      await denyVisa(48, props.visaId, props.baseInfo);
+      await denyVisa(validationUserId.value, props.visaId, props.baseInfo);
       getVisa();
     };
 
     const onClose = () => {
-      emit("set-visa-id", null);
-      emit("close");
+      emit("set-visa-id", 0);
+      if (!props.isVisaList) emit("close");
     };
 
-    onMounted(() => getVisa());
+    onMounted(async () => {
+      await getVisa();
+      await getValidationUserId();
+    });
     return {
       // references
       visa,
+      validationUserId,
       // methods
       validateVisa,
       refuseVisa,
-      onClose
+      onClose,
+      console
     };
   }
 };

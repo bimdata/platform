@@ -65,10 +65,9 @@ export default {
     const filter = ref("");
     const peopleListRaw = ref([]);
 
-    const peopleList = computed(() => {
-      return useListFilter(peopleListRaw, file => file.isFindable).filteredList
-        .value;
-    });
+    const peopleList = computed(() =>
+      peopleListRaw.value.filter(({ isFindable }) => isFindable)
+    );
 
     watch(filter, () => {
       peopleListRaw.value = peopleListRaw.value.map(people => ({
@@ -113,9 +112,11 @@ export default {
     return {
       // references
       peopleList,
+      peopleListRaw,
       filter,
       // methods
-      onClick
+      onClick,
+      console
     };
   }
 };

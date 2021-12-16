@@ -37,6 +37,16 @@
             background-color: var(--color-white);
           }
         }
+
+        &__visa {
+          margin-left: auto;
+          &__content {
+            &__counter {
+              background-color: var(--color-high);
+            }
+          }
+        }
+
       }
 
       .files-manager__tree {
