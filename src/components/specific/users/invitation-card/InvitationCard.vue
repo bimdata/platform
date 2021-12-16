@@ -1,7 +1,7 @@
 <template>
   <div class="invitation-card">
     <div class="invitation-card__avatar">
-      <img src="/static/invitation-avatar.svg" />
+      <InvitationAvatarImage />
     </div>
     <div class="invitation-card__info">
       <div class="invitation-card__info__email">
@@ -28,9 +28,9 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
+import { useNotifications } from "@/composables/notifications.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
 
 export default {
   props: {

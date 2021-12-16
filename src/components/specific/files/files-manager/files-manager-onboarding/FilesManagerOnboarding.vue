@@ -1,6 +1,6 @@
 <template>
   <div class="files-manager-onboarding">
-    <FilesManagerOnboarding />
+    <FilesManagerOnboardingImage />
     <div>
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
@@ -51,16 +51,16 @@
 </template>
 
 <script>
-import FilesManagerOnboarding from "../../../../../../public/static/files-manager-onboarding.vue";
 import { ref } from "vue";
 // Components
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
 import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
+import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
 
 export default {
   components: {
-    FilesManagerOnboarding,
+    FilesManagerOnboardingImage,
     FileUploadButton,
     FileUploadCard,
     FolderCreationForm

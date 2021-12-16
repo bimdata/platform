@@ -1,0 +1,32 @@
+.organizations-manager {
+  height: 100%;
+
+  &__header {
+    position: absolute;
+    z-index: 2;
+    top: var(--spacing-unit);
+    left: var(--spacing-unit);
+    width: calc(100% - var(--spacing-unit) * 2);
+    height: 44px;
+    padding: calc(var(--spacing-unit) / 2) 0;
+    background-color: var(--color-white);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__loader {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    background-color: var(--color-white);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .bimdata-spinner {
+      transform: scale(2);
+    }
+  }
+}

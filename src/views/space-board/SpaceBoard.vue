@@ -15,36 +15,34 @@
         />
       </template>
       <template #right>
-        <!-- <BIMDataButton
-          data-test="btn-filter"
-          class="space-board__header__btn-filter"
-          fill
-          squared
-          icon
-        >
-          <BIMDataIcon name="filter" size="s" />
-        </BIMDataButton> -->
-        <BIMDataButton
-          data-test="btn-sort"
-          class="space-board__header__btn-sort"
-          fill
-          squared
-          icon
-          @click="sortProjects"
-        >
-          <BIMDataIcon name="alphabeticalSort" size="s" />
-        </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-users"
-          v-if="space.isAdmin"
-          class="space-board__header__btn-users"
-          fill
-          squared
-          icon
-          @click="openUsersManager"
-        >
-          <BIMDataIcon name="addUser" size="s" />
-        </BIMDataButton>
+        <div class="flex items-center">
+          <SpaceSizeInfo
+            v-if="isSubscriptionEnabled && space.isAdmin"
+            :space="space"
+            :spaceInfo="spaceInfo"
+          />
+          <BIMDataButton
+            data-test="btn-sort"
+            class="space-board__header__btn-sort m-r-12"
+            fill
+            squared
+            icon
+            @click="sortProjects"
+          >
+            <BIMDataIcon name="alphabeticalSort" size="s" />
+          </BIMDataButton>
+          <BIMDataButton
+            data-test="btn-users"
+            v-if="space.isAdmin"
+            class="space-board__header__btn-users"
+            fill
+            squared
+            icon
+            @click="openUsersManager"
+          >
+            <BIMDataIcon name="addUser" size="s" />
+          </BIMDataButton>
+        </div>
       </template>
     </ViewHeader>
 
@@ -76,18 +74,21 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter";
-import { useListSort } from "@/composables/list-sort";
-import { useSidePanel } from "@/composables/side-panel";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
+import { useListFilter } from "@/composables/list-filter.js";
+import { useListSort } from "@/composables/list-sort.js";
+import { useSidePanel } from "@/composables/side-panel.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+
 // Components
-import SidePanel from "@/components/generic/side-panel/SidePanel";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
-import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard";
-import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
+import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
+import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
   components: {
@@ -96,12 +97,14 @@ export default {
     AppBreadcrumb,
     ProjectCard,
     ProjectCreationCard,
+    SpaceSizeInfo,
     SpaceUsersManager
   },
   setup() {
-    const { currentSpace, spaceUsers, spaceInvitations } = useSpaces();
-    const { spaceProjects } = useProjects();
     const { openSidePanel } = useSidePanel();
+    const { currentSpace, spaceInfo, spaceUsers, spaceInvitations } =
+      useSpaces();
+    const { spaceProjects } = useProjects();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -116,9 +119,11 @@ export default {
     return {
       // References
       invitations: spaceInvitations,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       projects: displayedProjects,
       searchText,
       space: currentSpace,
+      spaceInfo,
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,

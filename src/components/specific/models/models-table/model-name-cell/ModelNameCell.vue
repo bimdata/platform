@@ -37,7 +37,7 @@
 
       <div v-else class="model-name-cell__content">
         <img src="/static/ifc-logo.svg" />
-        <TextBox :text="model.name" :maxLength="64" />
+        <BIMDataTextBox :text="model.name" />
       </div>
     </transition>
   </div>

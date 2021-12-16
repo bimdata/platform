@@ -15,7 +15,14 @@
         />
       </template>
       <template #right>
-        <app-slot name="project-board-action" />
+        <div class="flex items-center">
+          <SpaceSizeInfo
+            v-if="isSubscriptionEnabled && space.isAdmin"
+            :space="space"
+            :spaceInfo="spaceInfo"
+          />
+          <app-slot name="project-board-action" />
+        </div>
       </template>
     </ViewHeader>
 
@@ -33,15 +40,19 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { useProjects } from "@/state/projects";
-import { useSession } from "@/state/session";
+import { useSession } from "@/composables/session.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+
 // Components
-import AppSlot from "@/components/generic/app-slot/AppSlot";
-import ViewHeader from "@/components/generic/view-header/ViewHeader";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb";
-import ProjectBcf from "./project-bcf/ProjectBcf";
-import ProjectFiles from "./project-files/ProjectFiles";
-import ProjectOverview from "./project-overview/ProjectOverview";
+import AppSlot from "@/components/generic/app-slot/AppSlot.vue";
+import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ProjectBcf from "./project-bcf/ProjectBcf.vue";
+import ProjectFiles from "./project-files/ProjectFiles.vue";
+import ProjectOverview from "./project-overview/ProjectOverview.vue";
+import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
 
 const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {
@@ -69,13 +80,15 @@ export default {
     AppBreadcrumb,
     ProjectBcf,
     ProjectFiles,
-    ProjectOverview
+    ProjectOverview,
+    SpaceSizeInfo
   },
   setup() {
     const route = useRoute();
     const { locale, t } = useI18n();
+    const { currentSpace, spaceInfo } = useSpaces();
     const { currentProject } = useProjects();
-    const { currentProjectView } = useSession();
+    const { projectView } = useSession();
 
     const tabs = ref([]);
     watch(
@@ -94,7 +107,7 @@ export default {
     const changeView = key => {
       const viewKey = PROJECT_VIEWS[key] ? key : DEFAULT_PROJECT_VIEW;
 
-      currentProjectView.set(currentProject.value.id, viewKey);
+      projectView.set(currentProject.value.id, viewKey);
 
       currentTab.value = { id: viewKey };
       currentView.value = PROJECT_VIEWS[viewKey];
@@ -104,7 +117,7 @@ export default {
       // Look for current project view in route hash.
       // Otherwise get current view from session storage.
       const viewKey =
-        route.hash.slice(1) || currentProjectView.get(currentProject.value.id);
+        route.hash.slice(1) || projectView.get(currentProject.value.id);
       // Restore current project view for this project.
       changeView(viewKey);
     });
@@ -113,7 +126,10 @@ export default {
       // References
       currentTab,
       currentView,
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       tabs,
+      space: currentSpace,
+      spaceInfo,
       // Methods
       changeView
     };

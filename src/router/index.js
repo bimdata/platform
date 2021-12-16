@@ -1,12 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { contexts, useLoadingContext } from "@/composables/loading.js";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import routeNames from "./route-names.js";
 import legacyRoutes from "./legacy.js";
+import subscriptionRoutes from "./subscription.js";
 
 // Guards
 import authGuard from "./guards/auth.js";
+import dataGuard from "./guards/data.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
-import rootResolver from "./resolvers/root.js";
 
 // Resolvers
 import groupBoardResolver from "./resolvers/views/group-board.js";
@@ -20,6 +24,7 @@ import Layout from "@/Layout.vue";
 import OidcCallback from "@/views/oidc-callback/OidcCallback.vue";
 import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError.vue";
 import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
+import sessionGuard from "./guards/session.js";
 
 // Lazy loaded view components
 /* eslint-disable */
@@ -41,97 +46,111 @@ const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
 /* eslint-enable */
 
-// Route names
-const routeNames = Object.freeze({
-  root: "root",
-  oidcCallback: "oidc-callback",
-  oidcCallbackError: "oidc-callback-error",
-  dashboard: "dashboard",
-  userSpaces: "user-spaces",
-  spaceBoard: "space-board",
-  userProjects: "user-projects",
-  projectBoard: "project-board",
-  modelViewer: "model-viewer",
-  projectGroups: "project-groups",
-  groupBoard: "group-board",
-  pageNotFound: "page-not-found"
-});
+const {
+  root,
+  oidcCallback,
+  oidcCallbackError,
+  pageNotFound,
+  dashboard,
+  userSpaces,
+  userProjects,
+  spaceBoard,
+  projectBoard,
+  modelViewer,
+  projectGroups,
+  groupBoard,
+  userSubscriptions
+} = routeNames;
 
 const routes = [
   {
     path: "/",
-    name: routeNames.root,
+    name: root,
     component: Layout,
     meta: {
       // Protect this route and all its children with authentication
-      requiresAuth: true,
-      resolver: rootResolver
+      requiresAuth: true
     },
     children: [
       {
         path: "",
-        name: routeNames.dashboard,
+        name: dashboard,
         component: Dashboard
       },
       {
         path: "/spaces",
-        name: routeNames.userSpaces,
-        component: UserSpaces
+        name: userSpaces,
+        component: UserSpaces,
+        meta: {
+          back: dashboard
+        }
       },
       {
         path: "/projects",
-        name: routeNames.userProjects,
-        component: UserProjects
+        name: userProjects,
+        component: UserProjects,
+        meta: {
+          back: dashboard
+        }
       },
       {
         path: "/spaces/:spaceID(\\d+)",
-        name: routeNames.spaceBoard,
+        name: spaceBoard,
         component: SpaceBoard,
         meta: {
+          backRoutes: [userSpaces, userSubscriptions],
+          backDefault: userSpaces,
           guard: spaceBoardGuard,
           resolver: spaceBoardResolver
         }
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)",
-        name: routeNames.projectBoard,
+        name: projectBoard,
         component: ProjectBoard,
         meta: {
+          backRoutes: [spaceBoard, userProjects],
+          backDefault: spaceBoard,
           guard: projectBoardGuard,
           resolver: projectBoardResolver
         }
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/viewer/:modelIDs",
-        name: routeNames.modelViewer,
+        name: modelViewer,
         component: ModelViewer,
         meta: {
+          backDefault: projectBoard,
           resolver: modelViewerResolver
         }
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/groups",
-        name: routeNames.projectGroups,
+        name: projectGroups,
         component: ProjectGroups,
         meta: {
+          back: projectBoard,
           resolver: projectGroupsResolver
         }
       },
       {
         path: "/spaces/:spaceID(\\d+)/projects/:projectID(\\d+)/groups/:groupID(\\d+)",
-        name: routeNames.groupBoard,
+        name: groupBoard,
         component: GroupBoard,
         meta: {
+          back: projectGroups,
           guard: groupBoardGuard,
           resolver: groupBoardResolver
         }
       },
+      // Add subscription routes if enabled
+      ...(IS_SUBSCRIPTION_ENABLED ? subscriptionRoutes : []),
       // Add legacy routes for retro-compatibility
       ...legacyRoutes,
       {
         // Show 'page not found' view for unknown routes
         path: "/:path(.*)*",
-        name: routeNames.pageNotFound,
+        name: pageNotFound,
         component: PageNotFound
       }
     ]
@@ -139,12 +158,12 @@ const routes = [
   {
     // Should match `redirect_uri` path in oidcConfig
     path: "/oidc-callback",
-    name: routeNames.oidcCallback,
+    name: oidcCallback,
     component: OidcCallback
   },
   {
     path: "/oidc-callback-error",
-    name: routeNames.oidcCallbackError,
+    name: oidcCallbackError,
     component: OidcCallbackError
   },
   {
@@ -159,7 +178,11 @@ const router = createRouter({
   routes
 });
 
+const loading = useLoadingContext(contexts.viewContainer);
+
+router.beforeEach(() => (loading.value = true));
 router.beforeEach(authGuard);
+router.beforeEach(dataGuard);
 router.beforeEach(async route => {
   if (route.meta && route.meta.guard) {
     const result = await route.meta.guard(route);
@@ -177,6 +200,7 @@ router.beforeResolve(async route => {
   }
 });
 
-export { routeNames };
+router.afterEach(sessionGuard);
+router.afterEach(() => (loading.value = false));
 
 export default router;

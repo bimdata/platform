@@ -3,7 +3,7 @@
  * Those URLs are needed to be able to use paths from the old platform on the new one.
  */
 
-import { routeNames } from ".";
+import routeNames from "./route-names.js";
 
 const routes = [
   {

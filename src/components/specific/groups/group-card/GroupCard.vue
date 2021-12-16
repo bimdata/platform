@@ -20,14 +20,10 @@
             icon
             @click.stop="openMenu"
           >
-            <BIMDataIcon name="ellipsis" size="l" fill color="tertiary-dark" />
+            <BIMDataIcon name="ellipsis" size="l" fill color="granite-light" />
           </BIMDataButton>
           <BIMDataIcon name="group" size="xxl" />
-          <TextBox
-            class="group-card__title"
-            :text="group.name"
-            :maxLength="32"
-          />
+          <BIMDataTextBox class="group-card__title" :text="group.name" />
           <UserAvatarList
             class="group-card__avatars"
             :users="group.members"
@@ -50,7 +46,7 @@
 <script>
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
 import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList";

@@ -9,7 +9,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useSpaces } from "@/state/spaces";
 // Components
 import BreadcrumbSelector from "@/components/generic/breadcrumb-selector/BreadcrumbSelector";

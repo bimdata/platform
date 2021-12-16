@@ -14,7 +14,7 @@
           v-for="user of displayedUsers"
           :key="user.id"
         >
-          <UserAvatar :user="user" size="48" color="tertiary" />
+          <UserAvatar :user="user" size="48" color="silver-light" />
           <div class="user-add-card__info">
             <div class="user-add-card__info__name">
               {{ user.fullname }}
@@ -67,7 +67,7 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
-    const { selectGroup, addGroupMembers } = useGroups();
+    const { setCurrentGroup, addGroupMembers } = useGroups();
 
     const availableUsers = computed(() => {
       const memberIDs = props.group.members.map(u => u.id);
@@ -88,7 +88,7 @@ export default {
 
     const addMember = async user => {
       await addGroupMembers(props.project, props.group, [user]);
-      selectGroup(props.group.id); // Needed to reload member list
+      setCurrentGroup(props.group.id); // Needed to reload member list
     };
 
     return {

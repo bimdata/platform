@@ -1,6 +1,9 @@
 @import "~@bimdata/design-system/dist/css/design-system.css";
+@import "~@bimdata/design-system/dist/css/fonts.css";
 @import "~@bimdata/design-system/dist/scss/elements/_BIMDataScrollbar.scss";
 @import "~@bimdata/design-system/dist/scss/_BIMDataTransitions.scss";
+@import "~@bimdata/design-system/dist/scss/_BIMDataUtilities.scss";
+
 
 :root {
   --platform-header-height: 62px;

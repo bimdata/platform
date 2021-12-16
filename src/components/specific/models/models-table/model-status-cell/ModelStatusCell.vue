@@ -22,7 +22,7 @@ export default {
     }
   },
   setup(props) {
-    const { fetchModelByID, softUpdateModels } = useModels();
+    const { fetchModelByID, loadProjectModels } = useModels();
 
     const statusName = ref("");
     const statusIcon = ref("");
@@ -66,7 +66,7 @@ export default {
               MODEL_STATUS.IN_PROGRESS !== model.status
             ) {
               clearInterval(checkStatusInterval);
-              softUpdateModels([model]);
+              loadProjectModels(props.project);
             }
           }, 2000);
         }

@@ -27,7 +27,9 @@
           />
         </template>
         <template #footer>
-          <TextBox :text="project.name" :maxLength="30" />
+          <div class="project-card__title">
+            <BIMDataTextBox :text="project.name" />
+          </div>
         </template>
       </BIMDataCard>
     </template>
@@ -42,7 +44,7 @@
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useModels } from "@/state/models";
 
 // Components

@@ -1,0 +1,24 @@
+.subscribe {
+  &__title {
+    height: 32px;
+    margin: 0;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 3);
+    margin-top: calc(var(--spacing-unit) * 3);
+
+    &__text {
+      width: 560px;
+      text-align: center;
+    }
+
+    &__content {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 3);
+    }
+  }
+}

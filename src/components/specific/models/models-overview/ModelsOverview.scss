@@ -1,13 +1,13 @@
 .models-overview {
+  @include block-card($padding: calc(var(--spacing-unit) * 2));
+
   &.bimdata-card {
-    overflow: hidden;
+    // overflow: hidden;
 
     &:deep() > .bimdata-card__content {
       display: flex;
       align-items: center;
       gap: 12px;
-      height: calc(100% - 37px);
-      padding: calc(var(--spacing-unit) * 2);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import GroupService from "@/services/GroupService.js";
 
 export default async function groupBoardGuard(route) {

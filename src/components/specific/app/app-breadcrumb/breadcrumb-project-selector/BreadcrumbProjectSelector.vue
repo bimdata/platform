@@ -22,7 +22,7 @@
 <script>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects";
 import { useSpaces } from "@/state/spaces";
 // Components

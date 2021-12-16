@@ -1,6 +1,6 @@
 <template>
   <div class="users-manager-onboarding">
-    <UsersManagerOnboarding />
+    <UsersManagerOnboardingImage />
     <template v-if="project.isAdmin">
       <div>
         {{ $t("UsersManagerOnboarding.text") }}
@@ -34,15 +34,15 @@
 </template>
 
 <script>
-import UsersManagerOnboarding from "../../../../../../public/static/users-manager-onboarding.vue";
 import { useToggle } from "@/composables/toggle";
 // Components
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
+import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
 
 export default {
   components: {
-    UsersManagerOnboarding,
-    InvitationForm
+    InvitationForm,
+    UsersManagerOnboardingImage
   },
   props: {
     project: {

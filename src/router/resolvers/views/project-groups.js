@@ -1,16 +1,15 @@
 import { useGroups } from "@/state/groups.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
-import { createViewResolver } from "../view-resolver-factory.js";
 
-export default createViewResolver(async route => {
-  const spaces = useSpaces();
-  const projects = useProjects();
-  const groups = useGroups();
+const spaces = useSpaces();
+const projects = useProjects();
+const groups = useGroups();
 
-  spaces.selectSpace(+route.params.spaceID);
-  projects.loadSpaceProjects(spaces.currentSpace.value);
+export default async function projectBoardResolver(route) {
+  spaces.setCurrentSpace(+route.params.spaceID);
+  await projects.loadSpaceProjects(spaces.currentSpace.value);
 
-  projects.selectProject(+route.params.projectID);
+  projects.setCurrentProject(+route.params.projectID);
   await groups.loadProjectGroups(projects.currentProject.value);
-});
+}

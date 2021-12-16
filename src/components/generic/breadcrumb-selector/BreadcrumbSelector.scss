@@ -4,11 +4,16 @@
   &__header {
     padding: calc(var(--spacing-unit) / 2);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &__text {
+      flex-grow: 1;
+      max-width: 120px;
+    }
 
     &__icon {
-      margin-left: calc(var(--spacing-unit) / 2);
-      margin-bottom: 1px;
-      vertical-align: bottom;
+      min-width: 16px;
     }
   }
 

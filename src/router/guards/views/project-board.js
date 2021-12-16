@@ -1,4 +1,4 @@
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import ProjectService from "@/services/ProjectService.js";
 
 export default async function projectBoardGuard(route) {

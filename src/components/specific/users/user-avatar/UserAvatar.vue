@@ -1,7 +1,7 @@
 <template>
   <div
     class="user-avatar"
-    :class="`user-avatar--${user.profilePicture ? 'tertiary' : color}`"
+    :class="`user-avatar--${user.profilePicture ? 'silver-light' : color}`"
     :style="{
       width: `${size}px`,
       height: `${size}px`,
@@ -37,7 +37,8 @@ export default {
     color: {
       type: String,
       default: "primary",
-      validate: value => ["primary", "secondary", "tertiary"].includes(value)
+      validate: value =>
+        ["primary", "secondary", "silver-light"].includes(value)
     }
   },
   setup(props) {

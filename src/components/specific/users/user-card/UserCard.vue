@@ -27,7 +27,7 @@
 
       <template v-else>
         <div class="user-card__content">
-          <UserAvatar :user="user" size="42" color="tertiary" />
+          <UserAvatar :user="user" size="42" color="silver-light" />
           <div class="user-card__content__info">
             <div class="user-card__content__info__name">
               {{ fullName }}

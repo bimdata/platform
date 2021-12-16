@@ -22,10 +22,10 @@
         :name="showChildren ? 'folderOpen' : 'folder'"
         size="s"
       />
-      <TextBox
+      <BIMDataTextBox
         class="file-tree-node__node__name"
+        maxWidth="calc(100% - 48px)"
         :text="file.name"
-        :maxLength="32"
       />
     </div>
     <transition name="fade">

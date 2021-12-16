@@ -13,10 +13,10 @@
       </BIMDataButton>
 
       <BIMDataIcon name="folder" size="xs" />
-      <TextBox
+      <BIMDataTextBox
         class="folder-selector__head__name"
+        maxWidth="120px"
         :text="currentFolder.name"
-        :maxLength="32"
       />
       <BIMDataButton
         class="folder-selector__head__btn-close"
@@ -40,13 +40,19 @@
         @click="selectFolder(file)"
         @dblclick="enterFolder(file)"
       >
-        <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
-        <FileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="13" />
-        <FileIcon v-else :name="fileExtension(file.name)" size="13" />
-        <TextBox
+        <span class="folder-selector__body__item__icon">
+          <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
+          <BIMDataFileIcon
+            v-else-if="file.type === 'Ifc'"
+            name="ifc"
+            size="13"
+          />
+          <BIMDataFileIcon v-else :name="fileExtension(file.name)" size="13" />
+        </span>
+        <BIMDataTextBox
           class="folder-selector__body__item__name"
           :text="file.name"
-          :maxLength="32"
+          :tooltip="false"
         />
         <BIMDataIcon
           v-if="isFolder(file)"
@@ -74,10 +80,11 @@
         :class="{ visibility: selectedFolder }"
       >
         {{ $t("FolderSelector.selectedFolder") }}:
-        <TextBox
+        <BIMDataTextBox
           style="font-weight: bold"
+          width="auto"
+          maxWidth="100px"
           :text="selectedFolder ? selectedFolder.name : ''"
-          :maxLength="24"
         />
       </div>
       <BIMDataButton
