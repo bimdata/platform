@@ -4,6 +4,9 @@
   height: 100%;
 
   &:deep() {
+    .bimdata-tabs__container__tab {
+      margin: 0 calc(var(--spacing-unit) * 2);
+    }
     .bimdata-tabs__container__tab.active {
       background-color: transparent;
     }

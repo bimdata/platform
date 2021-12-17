@@ -1,96 +1,69 @@
 <template>
-  <BIMDataCard class="models-manager" :titleHeader="$t('ModelsManager.title')">
-    <template #content>
-      <BIMDataTabs
-        width="100%"
-        height="44px"
-        tabSize="180px"
-        :tabs="tabs"
-        :selected="currentTab"
-        @tab-click="selectTab"
+  <div class="models-manager">
+    <div class="models-manager__head">
+      <div
+        v-for="tab of tabs"
+        :key="tab.id"
+        class="models-manager__tab"
+        :class="{ selected: tab.id === currentTab.id }"
+        @click="selectTab(tab)"
       >
-        <template #tab="{ tab }">
-          <span class="models-manager__tab-label">
-            {{ tab.label }}
-          </span>
-          <span
-            class="models-manager__tab-count"
-            v-if="modelLists[tab.id].length > 0"
-          >
-            {{ modelLists[tab.id].length }}
-          </span>
-        </template>
-      </BIMDataTabs>
+        <span class="models-manager__tab__icon">
+          <img :src="`/static/${tab.id}-file.svg`" />
+        </span>
+        <span class="models-manager__tab__text">
+          {{ tab.label }}
+        </span>
+        <span class="models-manager__tab__count" v-if="tab.models.length > 0">
+          {{ tab.models.length }}
+        </span>
+      </div>
 
+      <BIMDataButton>
+        <BIMDataIcon
+          name="ellipsis"
+          size="l"
+          fill
+          color="granite-light"
+          :rotate="90"
+        />
+      </BIMDataButton>
+    </div>
+    <div class="models-manager__body">
       <transition name="fade">
-        <ModelsActionBar
-          v-show="selection.length > 0"
-          class="models-manager__action-bar"
-          :project="project"
-          :models="selection"
-          :currentTab="currentTab"
-          @archive="archiveModels"
-          @delete="openDeleteModal"
-          @download="downloadModels"
-          @unarchive="unarchiveModels"
-        />
+        <keep-alive>
+          <component
+            :is="currentTab.component"
+            :project="project"
+            :models="currentTab.models"
+          />
+        </keep-alive>
       </transition>
-
-      <ModelsTable
-        :project="project"
-        :models="displayedModels"
-        @archive="archiveModels([$event])"
-        @delete="openDeleteModal([$event])"
-        @download="downloadModels([$event])"
-        @selection-changed="setSelection"
-        @unarchive="unarchiveModels([$event])"
-      />
-
-      <transition name="fade">
-        <ModelsDeleteModal
-          v-if="showDeleteModal"
-          :project="project"
-          :models="modelsToDelete"
-          @close="closeDeleteModal"
-        />
-      </transition>
-
-      <!-- <transition name="fade">
-        <ModelsMergeModal
-          v-if="showMergeModal"
-          :project="project"
-          :models="modelsToMerge"
-          @close="closeMergeModal"
-        />
-      </transition> -->
-    </template>
-  </BIMDataCard>
+    </div>
+  </div>
 </template>
 
 <script>
-import { reactive, ref, watch, watchEffect } from "vue";
-import { useI18n } from "vue-i18n";
-import { useModels } from "@/state/models";
-import { segregate } from "@/utils/models";
+import { ref, watch } from "vue";
 // Components
-import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
-import ModelsActionBar from "./models-action-bar/ModelsActionBar";
-import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
-// import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
+import DWGManager from "./dwg-manager/DWGManager.vue";
+import IFCManager from "./ifc-manager/IFCManager.vue";
+import PDFManager from "./pdf-manager/PDFManager.vue";
+import PTCManager from "./ptc-manager/PTCManager.vue";
 
 const tabsDef = [
-  { id: "ifc" },
-  { id: "split" },
-  // { id: "merge" },
-  { id: "archive" }
+  { id: "ifc", label: "IFC", component: "IFCManager" },
+  { id: "dwg", label: "DWG", component: "DWGManager" },
+  { id: "pdf", label: "PDF", component: "PDFManager" },
+  { id: "ptc", label: "Point Cloud", component: "PTCManager" }
 ];
 
 export default {
   components: {
-    ModelsTable,
-    ModelsActionBar,
-    ModelsDeleteModal
-    // ModelsMergeModal
+    DWGManager,
+    IFCManager,
+    PDFManager,
+    PTCManager
   },
   props: {
     project: {
@@ -103,105 +76,32 @@ export default {
     }
   },
   setup(props) {
-    const { locale, t } = useI18n();
-    const { updateModels, downloadModels: download } = useModels();
-
     const tabs = ref([]);
-    const currentTab = ref(tabsDef[0].id);
-    const selectTab = tab => (currentTab.value = tab.id);
+    const currentTab = ref({});
+
+    const selectTab = tab => {
+      currentTab.value = tab;
+    };
+
     watch(
-      () => locale.value,
-      () => {
+      () => props.models,
+      models => {
         tabs.value = tabsDef.map(tab => ({
           ...tab,
-          label: t(`ModelsManager.tabs.${tab.id}`)
+          // TODO: set models for each tab based on type
+          models: tab.id === "ifc" ? models : []
         }));
+        currentTab.value = tabs.value[0];
       },
       { immediate: true }
     );
 
-    const modelLists = reactive({
-      ifc: [],
-      split: [],
-      // merge: [],
-      archive: []
-    });
-    const displayedModels = ref([]);
-    watch(
-      () => props.models,
-      () => Object.assign(modelLists, segregate(props.models)),
-      { immediate: true }
-    );
-    watchEffect(() => {
-      displayedModels.value = modelLists[currentTab.value];
-    });
-
-    const selection = ref([]);
-    const setSelection = models => {
-      selection.value = models;
-    };
-
-    const modelsToDelete = ref([]);
-    const showDeleteModal = ref(false);
-    const openDeleteModal = models => {
-      modelsToDelete.value = models;
-      showDeleteModal.value = true;
-    };
-    const closeDeleteModal = () => {
-      modelsToDelete.value = [];
-      showDeleteModal.value = false;
-    };
-
-    // const modelsToMerge = ref([]);
-    // const showMergeModal = ref(false);
-    // const openMergeModal = models => {
-    //   modelsToMerge.value = models;
-    //   showMergeModal.value = true;
-    // };
-    // const closeMergeModal = () => {
-    //   modelsToMerge.value = [];
-    //   showMergeModal.value = false;
-    // };
-
-    const archiveModels = async models => {
-      await updateModels(
-        props.project,
-        models.map(model => ({ ...model, archived: true }))
-      );
-    };
-
-    const unarchiveModels = async models => {
-      await updateModels(
-        props.project,
-        models.map(model => ({ ...model, archived: false }))
-      );
-    };
-
-    const downloadModels = async models => {
-      await download(models);
-    };
-
     return {
       // References
       currentTab,
-      displayedModels,
-      modelLists,
-      modelsToDelete,
-      // modelsToMerge,
-      selection,
-      showDeleteModal,
-      // showMergeModal,
       tabs,
       // Methods
-      archiveModels,
-      downloadModels,
-      closeDeleteModal,
-      // closeMergeModal,
-      openDeleteModal,
-      // openMergeModal,
-      selectTab,
-      setSelection,
-      unarchiveModels
+      selectTab
     };
   }
 };

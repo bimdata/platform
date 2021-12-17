@@ -76,7 +76,7 @@ import { debounce } from "@/utils/async.js";
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
-import ModelsManager from "@/components/specific/models/models-manager/ModelsManagerV2.vue";
+import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";
 import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager.vue";
 
