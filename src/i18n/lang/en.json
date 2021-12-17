@@ -130,6 +130,11 @@
       "subscriptionplan": "Subscription plan",
       "status": "Status",
       "amount": "Amount"
+    },
+    "status": {
+      "active": "Active",
+      "deleted": "Deleted",
+      "paused": "Paused"
     }
   },
 

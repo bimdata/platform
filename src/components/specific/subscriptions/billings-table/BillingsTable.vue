@@ -30,7 +30,7 @@
           </template>
           <template #cell-status="{ row: sub }">
             <span :class="`status-cell--${sub.status}`">
-              {{ sub.status }}
+              {{ $t(`BillingsTable.status.${sub.status}`) }}
             </span>
           </template>
           <template #cell-amount="{ row: sub }">

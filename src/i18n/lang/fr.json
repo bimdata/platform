@@ -135,6 +135,11 @@
       "subscriptionplan": "Formule d'abonnement",
       "status": "Statut",
       "amount": "Montant"
+    },
+    "status": {
+      "active": "Actif",
+      "deleted": "Supprimé",
+      "paused": "En pause"
     }
   },
 
