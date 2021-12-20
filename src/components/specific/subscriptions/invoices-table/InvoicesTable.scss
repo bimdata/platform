@@ -1,4 +1,8 @@
 .invoices-table {
+  &__table {
+    overflow: visible;
+  }
+
   &__empty {
     &:deep(.bimdata-card__content) {
       display: flex;

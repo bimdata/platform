@@ -27,7 +27,7 @@
             <template #header>
               <div class="flex items-center">
                 <span
-                  class="number-organizations flex items-center justify-center m-r-12"
+                  class="flex items-center justify-center m-r-12 organization-count"
                 >
                   {{ organizations.length }}
                 </span>

@@ -4,7 +4,7 @@
       {{ $t("BillingsTable.title") }}
     </h2>
 
-    <BIMDataCard v-if="subscriptions.length > 0">
+    <BIMDataCard class="billings-table__table" v-if="subscriptions.length > 0">
       <template #content>
         <GenericTable
           :columns="columns"

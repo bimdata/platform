@@ -4,7 +4,7 @@
       {{ $t("InvoicesTable.title") }}
     </h2>
 
-    <BIMDataCard v-if="subscriptions.length > 0">
+    <BIMDataCard class="invoices-table__table" v-if="subscriptions.length > 0">
       <template #content>
         <GenericTable
           :columns="columns"
@@ -38,7 +38,7 @@
       </template>
     </BIMDataCard>
 
-    <BIMDataCard v-else class="invoices-table__empty">
+    <BIMDataCard class="invoices-table__empty" v-else>
       <template #content>
         <InvoicesTableEmptyImage class="m-b-24" />
         <p>

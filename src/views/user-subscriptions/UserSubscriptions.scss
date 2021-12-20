@@ -16,9 +16,9 @@
       .bimdata-dropdown-list {
         width: 380px;
 
-        .number-organizations {
-          width: 24px;
-          height: 24px;
+        .organization-count {
+          min-width: 20px;
+          height: 20px;
           border-radius: 3px;
           font-weight: bold;
           background-color: var(--color-primary);
