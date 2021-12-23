@@ -15,16 +15,19 @@
       </BIMDataButton>
     </app-slot-content>
 
-    <FilesManager
-      class="project-files__block--files"
-      :spaceInfo="spaceInfo"
-      :project="project"
-      :fileStructure="fileStructure"
-      :groups="groups"
-      @file-uploaded="reloadFileStructure"
-      @folder-permission-updated="reloadFileStructure"
-      @group-permission-updated="reloadFileStructure"
-    />
+    <div class="project-files__block--files">
+      <app-loading name="project-files">
+        <FilesManager
+          :spaceInfo="spaceInfo"
+          :project="project"
+          :fileStructure="fileStructure"
+          :groups="groups"
+          @file-uploaded="reloadFileStructure"
+          @folder-permission-updated="reloadFileStructure"
+          @group-permission-updated="reloadFileStructure"
+        />
+      </app-loading>
+    </div>
   </div>
 </template>
 
@@ -38,11 +41,13 @@ import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
 // Components
+import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import FilesManager from "@/components/specific/files/files-manager/FilesManager.vue";
 
 export default {
   components: {
+    AppLoading,
     AppSlotContent,
     FilesManager
   },
@@ -55,9 +60,11 @@ export default {
     const { projectGroups } = useGroups();
 
     const reloadFileStructure = debounce(async () => {
-      await loadSpaceInfo(currentSpace.value);
-      await loadProjectFileStructure(currentProject.value);
-      await loadProjectModels(currentProject.value);
+      await Promise.all([
+        loadSpaceInfo(currentSpace.value),
+        loadProjectFileStructure(currentProject.value),
+        loadProjectModels(currentProject.value)
+      ]);
     }, 1000);
 
     const goToProjectGroups = () => {

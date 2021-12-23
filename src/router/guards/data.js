@@ -17,15 +17,21 @@ let dataLoaded = false;
 
 export default async function dataGuard() {
   if (isAuthenticated.value && !dataLoaded) {
-    // Note: the order in which methods are called is important !
+    // **NOTE** the order in which methods are called is important !
 
+    // 1) Load current user data
     await loadUser();
-    await loadUserOrganizations();
-    await loadUserSpaces();
-    await loadUserProjects();
 
-    await loadAllOrganizationsSpaces();
-    await loadAllSpacesSubscriptions();
+    // 2) Load organizations, spaces and projects for the current user
+    await Promise.all([
+      loadUserOrganizations(),
+      loadUserSpaces(),
+      loadUserProjects()
+    ]);
+
+    // 3) Load lists of orga spaces and space subs
+    await loadAllOrganizationsSpaces(); // 3.1) load orga spaces
+    await loadAllSpacesSubscriptions(); // 3.2) load space subs
 
     dataLoaded = true;
   }

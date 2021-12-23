@@ -47,29 +47,33 @@
     </ViewHeader>
 
     <SidePanel :title="$t('SpaceUsersManager.title')">
-      <SpaceUsersManager
-        :space="space"
-        :users="users"
-        :invitations="invitations"
-      />
+      <app-loading name="space-users">
+        <SpaceUsersManager
+          :space="space"
+          :users="users"
+          :invitations="invitations"
+        />
+      </app-loading>
     </SidePanel>
 
-    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
-      <transition-group name="grid">
-        <ProjectCreationCard
-          data-test="creation-card"
-          v-if="space.isAdmin"
-          :key="-1"
-          :space="space"
-        />
-        <ProjectCard
-          data-test="project-card"
-          v-for="project in projects"
-          :key="project.id"
-          :project="project"
-        />
-      </transition-group>
-    </BIMDataResponsiveGrid>
+    <app-loading name="space-projects">
+      <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+        <transition-group name="grid">
+          <ProjectCreationCard
+            data-test="creation-card"
+            v-if="space.isAdmin"
+            :key="-1"
+            :space="space"
+          />
+          <ProjectCard
+            data-test="project-card"
+            v-for="project in projects"
+            :key="project.id"
+            :project="project"
+          />
+        </transition-group>
+      </BIMDataResponsiveGrid>
+    </app-loading>
   </div>
 </template>
 
@@ -80,8 +84,8 @@ import { useSidePanel } from "@/composables/side-panel.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
-
 // Components
+import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
 import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
@@ -92,13 +96,14 @@ import SpaceUsersManager from "@/components/specific/users/space-users-manager/S
 
 export default {
   components: {
-    SidePanel,
-    ViewHeader,
     AppBreadcrumb,
+    AppLoading,
     ProjectCard,
     ProjectCreationCard,
+    SidePanel,
     SpaceSizeInfo,
-    SpaceUsersManager
+    SpaceUsersManager,
+    ViewHeader
   },
   setup() {
     const { openSidePanel } = useSidePanel();

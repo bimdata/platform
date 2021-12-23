@@ -5,26 +5,10 @@ const contexts = Object.freeze({
   viewContainer: "view-container"
 });
 
-const state = {
-  [contexts.viewContainer]: { loading: ref(false) }
+const state = {};
+
+const useLoadingContext = name => {
+  return state[name] ?? (state[name] = ref(false));
 };
 
-const createLoadingContext = context => {
-  state[context] = { loading: ref(false) };
-  return state[context].loading;
-};
-
-const removeLoadingContext = context => {
-  delete state[context];
-};
-
-const useLoadingContext = context => {
-  return state[context].loading;
-};
-
-export {
-  contexts,
-  createLoadingContext,
-  removeLoadingContext,
-  useLoadingContext
-};
+export { contexts, useLoadingContext };

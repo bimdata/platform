@@ -8,11 +8,12 @@ const groups = useGroups();
 
 export default async function groupBoardResolver(route) {
   spaces.setCurrentSpace(+route.params.spaceID);
-  await projects.loadSpaceProjects(spaces.currentSpace.value);
+  const project = projects.setCurrentProject(+route.params.projectID);
 
-  projects.setCurrentProject(+route.params.projectID);
-  await projects.loadProjectUsers(projects.currentProject.value);
-  await groups.loadProjectGroups(projects.currentProject.value);
+  await Promise.all([
+    projects.loadProjectUsers(project),
+    groups.loadProjectGroups(project)
+  ]);
 
   groups.setCurrentGroup(+route.params.groupID);
 }

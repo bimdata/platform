@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import { contexts, useLoadingContext } from "@/composables/loading";
+import { contexts, useLoadingContext } from "@/composables/loading.js";
 // Components
-import AppHeader from "@/components/specific/app/app-header/AppHeader";
-import NotificationCard from "@/components/generic/notification-card/NotificationCard";
+import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
+import NotificationCard from "@/components/generic/notification-card/NotificationCard.vue";
 
 export default {
   components: {

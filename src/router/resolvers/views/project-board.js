@@ -1,3 +1,5 @@
+/* eslint-disable */
+import { load } from "@/components/generic/app-loading/app-loading.js";
 import { useGroups } from "@/state/groups.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
@@ -10,16 +12,22 @@ const models = useModels();
 const files = useFiles();
 const groups = useGroups();
 
-export default async function projectBoardResolver(route) {
-  spaces.setCurrentSpace(+route.params.spaceID);
-  await spaces.loadSpaceInfo(spaces.currentSpace.value);
-  await projects.loadSpaceProjects(spaces.currentSpace.value);
+export default function projectBoardResolver(route) {
+  const space = spaces.setCurrentSpace(+route.params.spaceID);
+  const project = projects.setCurrentProject(+route.params.projectID);
 
-  projects.setCurrentProject(+route.params.projectID);
-  await models.loadProjectModels(projects.currentProject.value);
-  await files.loadProjectFileStructure(projects.currentProject.value);
-  await groups.loadProjectGroups(projects.currentProject.value);
+  spaces.loadSpaceInfo(space);
+  projects.loadSpaceProjects(space);
 
-  await projects.loadProjectUsers(projects.currentProject.value);
-  await projects.loadProjectInvitations(projects.currentProject.value);
+  load("project-users", [
+    projects.loadProjectUsers(project),
+    projects.loadProjectInvitations(project)
+  ]);
+  load("project-models", [
+    models.loadProjectModels(project)
+  ]);
+  load("project-files", [
+    files.loadProjectFileStructure(project),
+    groups.loadProjectGroups(project)
+  ]);
 }
