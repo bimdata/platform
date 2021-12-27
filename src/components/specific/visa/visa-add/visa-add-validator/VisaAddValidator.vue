@@ -32,16 +32,18 @@
     <div class="visa-add-validator__action">
       <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
         {{ $t("Visa.add.validatorView.accept") }}
+        <div class="visa-add-validator__action__counter">
+          <span>
+            {{ peopleListCounter }}
+          </span>
+        </div>
       </BIMDataButton>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, watch, computed } from "vue";
-import { useListFilter } from "@/composables/list-filter";
-import { useProjects } from "@/state/projects";
-import { fullName } from "@/utils/users";
+import { ref, watch, computed } from "vue";
 
 import VisaAddValidatorPeople from "@/components/specific/visa/visa-add/visa-add-validator/visa-add-validator-people/VisaAddValidatorPeople";
 
@@ -57,62 +59,50 @@ export default {
     fileParentId: {
       type: Number,
       required: true
+    },
+    peopleListRaw: {
+      type: Array,
+      required: true
     }
   },
   emits: ["close", "validator-list", "get-back", "safe-zone-handler"],
   setup(props, { emit }) {
-    const { fetchFolderProjectUsers } = useProjects();
     const filter = ref("");
-    const peopleListRaw = ref([]);
+    const peopleList = ref([]);
 
-    const peopleList = computed(() =>
-      peopleListRaw.value.filter(({ isFindable }) => isFindable)
+    const peopleListCounter = computed(
+      () => peopleList.value.filter(({ isSelected }) => isSelected).length
     );
 
-    watch(filter, () => {
-      peopleListRaw.value = peopleListRaw.value.map(people => ({
-        ...people,
-        isFindable:
-          filter.value === ""
-            ? true
-            : people.searchContent.includes(filter.value.toLowerCase())
-      }));
-    });
-
-    const getList = async () => {
-      const res = await fetchFolderProjectUsers(
-        {
-          id: props.baseInfo.projectPk,
-          cloud: {
-            id: props.baseInfo.cloudPk
-          }
-        },
-        { id: props.fileParentId }
-      );
-
-      peopleListRaw.value = res.map(people => ({
-        ...people,
-        fullName: fullName(people),
-        hasAccess: people.permission >= 50,
-        isFindable: true,
-        isSelected: false,
-        searchContent: `${people.firstname || ""}${people.lastname || ""}${
-          people.email || ""
-        }`.toLowerCase()
-      }));
-    };
+    watch(
+      filter,
+      () => {
+        peopleList.value = props.peopleListRaw
+          .map(people => ({
+            ...people,
+            isFindable:
+              filter.value === ""
+                ? true
+                : people.searchContent.includes(filter.value.toLowerCase())
+          }))
+          .filter(({ isFindable }) => isFindable)
+          .sort((a, b) => {
+            if (!a.hasAccess) return 1;
+            if (!b.hasAccess) return -1;
+          });
+      },
+      { immediate: true }
+    );
 
     const onClick = () => {
       emit("validator-list", peopleList);
       emit("get-back");
     };
 
-    onMounted(() => getList());
-
     return {
       // references
       peopleList,
-      peopleListRaw,
+      peopleListCounter,
       filter,
       // methods
       onClick,

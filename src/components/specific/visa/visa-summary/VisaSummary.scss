@@ -2,7 +2,7 @@
   border: 2px solid blue;
   padding: var(--spacing-unit);
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 
   &__header {
@@ -24,6 +24,9 @@
 
   &__content {
     border: 2px solid orange;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
 
     &__applicant {
       span {
@@ -33,9 +36,14 @@
     }
 
     &__desc {
-      font-size: 1rem;
-      color: var(--color-primary);
-      margin: var(--spacing-unit) auto;
+      &:deep() {
+        textarea {
+          font-size: 1rem;
+          font-family: var(--primary-font);
+          color: var(--color-primary);
+          resize: vertical; 
+        }
+      }
     }
 
     &__deadline {
@@ -60,6 +68,18 @@
     button {
       color: var(--color-white);
       width: 30%;
+    }
+
+    &__validate {
+      &.active {
+        filter: contrast(70%)
+      }
+    }
+
+    &__deny {
+      &.active {
+        filter: contrast(70%)
+      }
     }
   }
 

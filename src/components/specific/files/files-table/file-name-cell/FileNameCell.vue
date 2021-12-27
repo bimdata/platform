@@ -51,8 +51,12 @@
           "
           size="m"
         />
-        <BIMDataFileIcon v-else-if="file.type === 'Ifc'" name="ifc" size="20" />
-        <BIMDataFileIcon v-else :name="fileExtension(file.name)" size="20" />
+        <BIMDataFileIcon
+          v-else-if="file.type === 'Ifc'"
+          fileName=".ifc"
+          :size="20"
+        />
+        <BIMDataFileIcon v-else :fileName="file.name" :size="20" />
         <BIMDataTextBox :text="file.name" />
       </div>
     </transition>
@@ -62,7 +66,6 @@
 <script>
 import { ref, watch } from "vue";
 import { useFiles } from "@/state/files";
-import { fileExtension } from "@/utils/files";
 
 export default {
   props: {
@@ -148,7 +151,6 @@ export default {
       showUpdateForm,
       // Methods
       closeUpdateForm,
-      fileExtension,
       openUpdateForm,
       renameFile
     };

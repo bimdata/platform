@@ -3,6 +3,7 @@
     <template v-if="currentView === 'visaList'">
       <VisaList
         :userVisas="userVisas"
+        :baseInfo="baseInfo"
         @set-is-visa-list="$emit('set-is-visa-list', $event)"
         @close="$emit('close', $event)"
         @set-visa-id="setVisaId"
@@ -83,13 +84,11 @@ export default {
       [visaId, baseInfo],
       () => {
         if (baseInfo.value.documentPk && visaId.value) {
-          return (currentView.value = "visaSummary");
-        }
-        if (props.isVisaList) {
-          return (currentView.value = "visaList");
-        }
-        if (props.file.id) {
-          return (currentView.value = "visaAdd");
+          currentView.value = "visaSummary";
+        } else if (props.isVisaList) {
+          currentView.value = "visaList";
+        } else if (props.file.id) {
+          currentView.value = "visaAdd";
         }
       },
       { immediate: true }

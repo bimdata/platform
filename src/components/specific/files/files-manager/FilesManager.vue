@@ -138,6 +138,8 @@ import { useProjects } from "@/state/projects";
 
 import { useFiles } from "@/state/files";
 import { useVisa } from "@/state/visa";
+
+import { getUnmatchedUsers } from "@/utils/visas";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
@@ -333,23 +335,24 @@ export default {
     };
 
     const getVisas = async () => {
-      const resValidator = await fetchToValidateVisas({
+      const baseInfo = {
         cloudPk: currentSpace.value.id,
         projectPk: currentProject.value.id
-      });
+      };
 
-      const resCreated = await fetchCreatedVisas({
-        cloudPk: currentSpace.value.id,
-        projectPk: currentProject.value.id
-      });
+      const resValidator = await fetchToValidateVisas(baseInfo);
+      const toValidateVisas = await getUnmatchedUsers(resValidator, baseInfo);
+
+      const resCreated = await fetchCreatedVisas(baseInfo);
+      const createdVisas = await getUnmatchedUsers(resCreated, baseInfo);
 
       userVisas.value = {
         toValidateVisas:
-          resValidator.sort((a, b) =>
+          toValidateVisas.sort((a, b) =>
             a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
           ) || [],
         createdVisas:
-          resCreated.sort((a, b) =>
+          createdVisas.sort((a, b) =>
             a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
           ) || []
       };

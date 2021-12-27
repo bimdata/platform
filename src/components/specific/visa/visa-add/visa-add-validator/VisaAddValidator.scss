@@ -2,7 +2,7 @@
   border: 2px solid purple;
   display: flex;
   flex-direction: column;
-
+  height: 100%;
 
   &__header {
     display: flex;
@@ -30,12 +30,23 @@
     margin: 5% 0;
   }
   &__people-list {
-    height: 450px;
-    overflow: scroll;
+    height: 100%;
+    overflow: auto;
     overflow-x: hidden;
     padding-right: var(--spacing-unit);;
   }
   &__action {
-    margin: auto 0;
+    margin: 4% 0 auto 0;
+    &__counter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      margin-left: 2%;
+      border-radius: 50%;
+      background-color: white;
+      color: var(--color-primary);
+    }
   }
 }

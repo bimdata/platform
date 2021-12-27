@@ -79,6 +79,21 @@ class VisaService {
     }
   }
 
+  async resetVisa(validationId, visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.resetValidation({
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId,
+        id: validationId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_DENY_ERROR, error);
+    }
+  }
+
   async fetchCreatedVisas(baseInfo) {
     const { cloudPk, projectPk } = baseInfo;
     try {
