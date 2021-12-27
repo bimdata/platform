@@ -742,15 +742,24 @@
       }
     },
     "safeZone": {
-      "content": "Êtes-vous sûr de vouloir quitter cette page ?",
-      "goBack": "Oui, quitter cette page",
-      "keepView": "Annuler, rester ici"
+      "add": {
+        "content": "Êtes-vous sûr de vouloir quitter cette page ?",
+        "action": "Oui, quitter cette page",
+        "keepView": "Annuler, rester ici"
+      },
+      "delete": {
+        "content": "Êtes-vous sûr de vouloir supprimer ce visa ?",
+        "action": "Oui, supprimer ce visa",
+        "keepView": "Annuler"
+      }
     },
     "summary": {
      "title": "Demande en cours",
      "appliedBy": "Demande de validation par",
      "validate": "Valider",
      "deny": "Refuser",
+     "delete": "Supprimer",
+     "close": "Cloturer",
      "comment": "Commenter",
      "term": "Échéance",
      "validator": "Validants",

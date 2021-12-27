@@ -2,7 +2,7 @@
   <div class="visa-safe-zone">
     <div class="visa-safe-zone__content">
       <BIMDataIcon name="warning" size="l" class="fill-high" />
-      <span>{{ $t("Visa.safeZone.content") }}</span>
+      <span>{{ $t(`Visa.safeZone.${actionType}.content`) }}</span>
     </div>
     <div class="visa-safe-zone__action">
       <BIMDataButton
@@ -11,14 +11,14 @@
         radius
         width="40%"
         @click="$emit('onClose', true)"
-        >{{ $t("Visa.safeZone.goBack") }}</BIMDataButton
+        >{{ $t(`Visa.safeZone.${actionType}.action`) }}</BIMDataButton
       >
       <BIMDataButton
         outline
         radius
         width="40%"
         @click="$emit('onClose', false)"
-        >{{ $t("Visa.safeZone.keepView") }}</BIMDataButton
+        >{{ $t(`Visa.safeZone.${actionType}.keepView`) }}</BIMDataButton
       >
     </div>
   </div>
@@ -26,6 +26,12 @@
 
 <script>
 export default {
+  props: {
+    actionType: {
+      type: String,
+      required: true
+    }
+  },
   emits: ["onClose"]
 };
 </script>

@@ -5,105 +5,135 @@
   overflow: auto;
   overflow-x: hidden;
 
-  &__header {
-    border: 2px solid green;
-    display: flex;
-    justify-content: space-between;
-
-    &__left-side {
-      display: flex;
-      flex-grow: 1;
-      margin: auto 0;
-
-      span {
-        margin: auto 0 auto var(--spacing-unit);
-        font-size: 1rem;
-      }
-    }
+  &__safe-zone {
+    z-index: 2;
+    position: absolute;
+    top: 15%;
+    left: 14.5%;
   }
 
-  &__content {
-    border: 2px solid orange;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-unit);
+  &__shell {
 
-    &__applicant {
-      span {
-        color: var(--color-primary);
-        font-weight: bold;
-      }
-    }
+    &__header {
+      border: 2px solid green;
+      display: flex;
+      justify-content: space-between;
 
-    &__desc {
-      &:deep() {
-        textarea {
+      &__left-side {
+        display: flex;
+        flex-grow: 1;
+        margin: auto 0;
+
+        span {
+          margin: auto 0 auto var(--spacing-unit);
           font-size: 1rem;
-          font-family: var(--primary-font);
-          color: var(--color-primary);
-          resize: vertical; 
         }
       }
     }
 
-    &__deadline {
+    &__content {
+      border: 2px solid orange;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-unit);
+
+      &__applicant {
+        span {
+          color: var(--color-primary);
+          font-weight: bold;
+        }
+      }
+
+      &__desc {
+        &:deep() {
+          textarea {
+            font-size: 1rem;
+            font-family: var(--primary-font);
+            color: var(--color-primary);
+            resize: vertical; 
+          }
+        }
+      }
+
+      &__deadline {
+        display: flex;
+        justify-content: space-between;
+        &__title {
+          font-size: 1rem;
+        }
+        &__date {
+          color: var(--color-high);
+          font-weight: bold;
+        }
+      }
+    }
+
+    &__action-button {
+      border: 2px solid yellow;
+      margin: var(--spacing-unit) auto;
       display: flex;
       justify-content: space-between;
+
+      button {
+        color: var(--color-white);
+      }
+
+      &__validate {
+        width: 30%;
+        &.active {
+          filter: contrast(70%)
+        }
+      }
+
+      &__deny {
+        width: 30%;
+        &.active {
+          filter: contrast(70%)
+        }
+      }
+
+      &__delete {
+        width: 45%;
+        &.active {
+          filter: contrast(70%)
+        }
+      }
+
+      &__close {
+        width: 45%;
+        &.active {
+          filter: contrast(70%)
+        }
+      }
+    }
+
+    &__file {
+      border: 2px solid purple;
+      
+      display: flex;
+      align-items: center;
+      background-color: var(--color-silver-light);
+      height: 40px;
+      img {
+        margin-left: var(--spacing-unit);
+      }
+      span {
+        margin-left: var(--spacing-unit);
+        text-align: center;
+        color: var(--color-black);
+      }
+    }
+
+    &__validator {
+      margin-top: var(--spacing-unit);
       &__title {
         font-size: 1rem;
       }
-      &__date {
-        color: var(--color-high);
-        font-weight: bold;
-      }
     }
+
+  }
+  .safeZone {
+    filter: blur(4px); 
   }
 
-  &__action-button {
-    border: 2px solid yellow;
-    margin: var(--spacing-unit) auto;
-    display: flex;
-    justify-content: space-between;
-
-    button {
-      color: var(--color-white);
-      width: 30%;
-    }
-
-    &__validate {
-      &.active {
-        filter: contrast(70%)
-      }
-    }
-
-    &__deny {
-      &.active {
-        filter: contrast(70%)
-      }
-    }
-  }
-
-  &__file {
-    border: 2px solid purple;
-    
-    display: flex;
-    align-items: center;
-    background-color: var(--color-silver-light);
-    height: 40px;
-    img {
-      margin-left: var(--spacing-unit);
-    }
-    span {
-      margin-left: var(--spacing-unit);
-      text-align: center;
-      color: var(--color-black);
-    }
-  }
-
-  &__validator {
-    margin-top: var(--spacing-unit);
-    &__title {
-      font-size: 1rem;
-    }
-  }
 }

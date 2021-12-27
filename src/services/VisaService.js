@@ -94,6 +94,34 @@ class VisaService {
     }
   }
 
+  async deleteVisa(visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.deleteVisa({
+        cloudPk,
+        projectPk,
+        documentPk,
+        id: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);
+    }
+  }
+
+  async closeVisa(visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.closeVisa({
+        cloudPk,
+        projectPk,
+        documentPk,
+        id: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);
+    }
+  }
+
   async fetchCreatedVisas(baseInfo) {
     const { cloudPk, projectPk } = baseInfo;
     try {

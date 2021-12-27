@@ -28,6 +28,7 @@
         @close="$emit('close', $event)"
         @set-visa-id="setVisaId"
         @set-is-visa-list="$emit('set-is-visa-list', $event)"
+        @fetch-visas="$emit('fetch-visas')"
       />
     </template>
   </div>

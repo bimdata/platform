@@ -13,7 +13,7 @@
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="visa-add__safe-zone">
-          <VisaSafeZone @onClose="onClose" />
+          <VisaSafeZone actionType="add" @onClose="onClose" />
         </div>
       </template>
     </transition>
@@ -189,16 +189,18 @@ export default {
         { id: props.fileParentId }
       );
 
-      peopleListRaw.value = res.map(people => ({
-        ...people,
-        fullName: fullName(people),
-        hasAccess: people.permission >= 50,
-        isFindable: true,
-        isSelected: false,
-        searchContent: `${people.firstname || ""}${people.lastname || ""}${
-          people.email || ""
-        }`.toLowerCase()
-      }));
+      peopleListRaw.value = res
+        .map(people => ({
+          ...people,
+          fullName: fullName(people),
+          hasAccess: people.permission >= 50,
+          isFindable: true,
+          isSelected: false,
+          searchContent: `${people.firstname || ""}${people.lastname || ""}${
+            people.email || ""
+          }`.toLowerCase()
+        }))
+        .filter(({ isSelf }) => !isSelf);
     };
 
     onMounted(() => getList());
