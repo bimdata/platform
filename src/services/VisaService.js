@@ -118,7 +118,21 @@ class VisaService {
         id: visaId
       });
     } catch (error) {
-      throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);
+      throw new RuntimeError(ERRORS.VISA_CLOSE_ERROR, error);
+    }
+  }
+
+  async resumeVisa(visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.resumeVisa({
+        cloudPk,
+        projectPk,
+        documentPk,
+        id: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_RESUME_ERROR, error);
     }
   }
 

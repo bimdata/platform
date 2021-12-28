@@ -32,6 +32,10 @@ const closeVisa = async (validationId, visaId, baseInfo) => {
   return VisaService.closeVisa(validationId, visaId, baseInfo);
 };
 
+const resumeVisa = async (visaId, baseInfo) => {
+  return VisaService.resumeVisa(visaId, baseInfo);
+};
+
 const fetchCreatedVisas = async baseInfo => {
   return VisaService.fetchCreatedVisas(baseInfo);
 };
@@ -51,6 +55,7 @@ export function useVisa() {
     resetVisa,
     deleteVisa,
     closeVisa,
+    resumeVisa,
     fetchCreatedVisas,
     fetchToValidateVisas
   };

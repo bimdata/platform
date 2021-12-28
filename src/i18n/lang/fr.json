@@ -751,6 +751,11 @@
         "content": "Êtes-vous sûr de vouloir supprimer ce visa ?",
         "action": "Oui, supprimer ce visa",
         "keepView": "Annuler"
+      },
+      "closeVisa": {
+        "content": "Êtes-vous sûr de vouloir cloturer ce visa ?",
+        "action": "Oui, cloturer ce visa",
+        "keepView": "Annuler"
       }
     },
     "summary": {
@@ -826,6 +831,8 @@
     "visaFetchError": "Impossible de récupérer le visa",
     "visaAcceptError": "Erreur lors de l'envoi de votre réponse",
     "visaDenyError": "Erreur lors de l'envoi de votre réponse",
+    "visaCloseError": "Erreur lors de la cloture du visa",
+    "visaResumeError": "Erreur lors de la ré-ouverture du visa",
     "visaFetchCreatedError": "Impossible de récupérer les visas",
     "visaFetchValidatorError": "Impossible de récupérer les visas",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",

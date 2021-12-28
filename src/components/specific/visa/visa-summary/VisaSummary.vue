@@ -3,7 +3,7 @@
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="visa-summary__safe-zone">
-          <VisaSafeZone actionType="delete" @onClose="onDelete" />
+          <VisaSafeZone :actionType="safeZoneInfo.type" @onClose="onSafeZone" />
         </div>
       </template>
     </transition>
@@ -15,7 +15,7 @@
             <span>{{ $t("Visa.summary.title") }}</span>
           </div>
           <div class="visa-summary__shell__header__right-side">
-            <BIMDataButton ghost rounded icon @click="onClose">
+            <BIMDataButton ghost rounded icon @click="actions.close">
               <BIMDataIcon name="close" size="xxxs" />
             </BIMDataButton>
           </div>
@@ -52,7 +52,7 @@
               color="high"
               fill
               radius
-              @click="isSafeZoneToggle"
+              @click="safeZoneHandler('delete')"
               >{{ $t("Visa.summary.delete") }}</BIMDataButton
             >
             <BIMDataButton
@@ -60,27 +60,28 @@
               color="primary"
               fill
               radius
-              @click="terminateVisa"
+              :disabled="visa.status === 'C'"
+              @click="safeZoneHandler('closeVisa')"
               >{{ $t("Visa.summary.close") }}</BIMDataButton
             >
           </template>
           <template v-else>
             <BIMDataButton
               class="visa-summary__shell__action-button__validate"
-              :class="{ active: isValidateButtonClicked }"
+              :class="{ active: actions.validate.isActive }"
               color="success"
               fill
               radius
-              @click="validateVisa"
+              @click="responseHandler('validate')"
               >{{ $t("Visa.summary.validate") }}</BIMDataButton
             >
             <BIMDataButton
               class="visa-summary__shell__action-button__deny"
-              :class="{ active: isDenyButtonClicked }"
+              :class="{ active: actions.refuse.isActive }"
               color="high"
               fill
               radius
-              @click="refuseVisa"
+              @click="responseHandler('refuse')"
               >{{ $t("Visa.summary.deny") }}</BIMDataButton
             >
             <BIMDataButton color="primary" fill radius>{{
@@ -99,7 +100,7 @@
           <div class="visa-summary__shell__validator__people-list">
             <VisaSummaryPeople
               :peopleList="visa.validations"
-              @reset-visa="restoreVisa"
+              @reset-visa="resetResponse"
             />
           </div>
         </div>
@@ -109,7 +110,7 @@
 </template>
 
 <script>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import STATUS from "@/config/visa-status";
 import VisaSummaryPeople from "./visa-summary-people/VisaSummaryPeople";
 import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
@@ -136,7 +137,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "set-visa-id", "set-is-visa-list", "fetch-visas"],
+  emits: ["close", "set-visa-id", "set-is-visa-list"],
   setup(props, { emit }) {
     const {
       fetchVisa,
@@ -146,14 +147,45 @@ export default {
       deleteVisa,
       closeVisa
     } = useVisa();
+
     const { loadUser } = useUser();
-    const isValidateButtonClicked = ref(false);
-    const isDenyButtonClicked = ref(false);
+    const isValidated = ref(false);
+    const isDenied = ref(false);
     const visa = ref(null);
     const validationUserId = ref(null);
     const isAuthor = ref(false);
     const isSafeZone = ref(false);
-    const isDeleting = ref(null);
+    const safeZoneInfo = ref({
+      type: null,
+      action: null
+    });
+    const actions = ref({
+      validate: {
+        isActive: false,
+        action: async () =>
+          acceptVisa(validationUserId.value, props.visaId, props.baseInfo)
+      },
+      refuse: {
+        isActive: false,
+        action: async () =>
+          denyVisa(validationUserId.value, props.visaId, props.baseInfo)
+      },
+      reset: async () =>
+        resetVisa(validationUserId.value, props.visaId, props.baseInfo),
+      delete: async () => deleteVisa(props.visaId, props.baseInfo),
+      closeVisa: async () => closeVisa(props.visaId, props.baseInfo),
+      close: () => {
+        emit("set-visa-id", 0);
+        if (!props.isVisaList) emit("close");
+      }
+    });
+
+    const userStatus = computed(
+      () =>
+        validationUserId.value &&
+        visa.value.validations.find(({ id }) => id === validationUserId.value)
+          .status
+    );
 
     const getVisa = async () => {
       try {
@@ -192,91 +224,74 @@ export default {
       ).id;
     };
 
-    const validateVisa = async () => {
-      if (isValidateButtonClicked.value) {
-        await resetVisa(validationUserId.value, props.visaId, props.baseInfo);
+    const statusVisaHandler = () => {
+      actions.value.validate.isActive = userStatus.value === STATUS.ACCEPT;
+      actions.value.refuse.isActive = userStatus.value === STATUS.DENY;
+    };
+
+    const responseHandler = async type => {
+      if (actions.value[type].isActive) {
+        await actions.value.reset();
       } else {
-        await acceptVisa(validationUserId.value, props.visaId, props.baseInfo);
+        await actions.value[type].action();
       }
       await getVisa();
-      handleStatusVisa();
+      statusVisaHandler();
     };
-    const refuseVisa = async () => {
-      if (isDenyButtonClicked.value) {
-        await resetVisa(validationUserId.value, props.visaId, props.baseInfo);
+
+    const resetResponse = async () => {
+      await actions.value.reset();
+      await getVisa();
+      statusVisaHandler();
+    };
+
+    const safeZoneHandler = type => {
+      if (type) {
+        console.log("type", type);
+
+        isSafeZone.value = true;
+        safeZoneInfo.value = {
+          type,
+          action: actions.value[type]
+        };
       } else {
-        await denyVisa(validationUserId.value, props.visaId, props.baseInfo);
+        isSafeZone.value = false;
+        safeZoneInfo.value = null;
       }
-      await getVisa();
-      handleStatusVisa();
     };
 
-    const restoreVisa = async () => {
-      await resetVisa(validationUserId.value, props.visaId, props.baseInfo);
-      await getVisa();
-      handleStatusVisa();
-    };
-
-    const removeVisa = async () => deleteVisa(props.visaId, props.baseInfo);
-
-    const terminateVisa = async () => {
-      await closeVisa(props.visaId, props.baseInfo);
-      emit("fetch-visas");
-    };
-
-    const handleStatusVisa = () => {
-      isValidateButtonClicked.value = userStatus.value === STATUS.ACCEPT;
-      isDenyButtonClicked.value = userStatus.value === STATUS.DENY;
-    };
-
-    const isSafeZoneToggle = () => (isSafeZone.value = !isSafeZone.value);
-
-    const onDelete = event => (isDeleting.value = event);
-    const onClose = () => {
-      emit("set-visa-id", 0);
-      if (!props.isVisaList) emit("close");
-    };
-
-    watch(isDeleting, async () => {
-      isSafeZone.value = false;
-      if (isDeleting.value) {
-        await removeVisa();
+    const onSafeZone = async event => {
+      const { type } = safeZoneInfo.value;
+      if (event) {
+        await actions.value[type]();
+        actions.value.close();
         emit("fetch-visas");
-        isSafeZoneToggle();
-        onClose();
       }
-      isDeleting.value = null;
-    });
-
-    const userStatus = computed(
-      () =>
-        validationUserId.value &&
-        visa.value.validations.find(({ id }) => id === validationUserId.value)
-          .status
-    );
+      safeZoneHandler();
+      isSafeZone.value = false;
+    };
 
     onMounted(async () => {
       await getVisa();
       !isAuthor.value && (await getValidationUserId());
-      handleStatusVisa();
+      statusVisaHandler();
     });
+
     return {
       // references
       visa,
       isAuthor,
       validationUserId,
-      isValidateButtonClicked,
-      isDenyButtonClicked,
+      isValidated,
+      isDenied,
       isSafeZone,
+      safeZoneInfo,
       // methods
-      validateVisa,
-      refuseVisa,
-      restoreVisa,
-      removeVisa,
-      terminateVisa,
-      onClose,
-      isSafeZoneToggle,
-      onDelete,
+      resetResponse,
+      actions,
+      safeZoneHandler,
+      onSafeZone,
+      responseHandler,
       console
     };
   }
