@@ -27,7 +27,9 @@
           />
         </template>
         <template #footer>
-          <TextBox :text="project.name" :maxLength="30" />
+          <div class="project-card__title">
+            <BIMDataTextBox :text="project.name" />
+          </div>
         </template>
       </BIMDataCard>
     </template>
@@ -42,7 +44,7 @@
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 import { useModels } from "@/state/models";
 
 // Components
@@ -76,11 +78,12 @@ export default {
 
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
-    const currentModel = ref();
+    const currentModel = ref(null);
     const models = ref([]);
     const nonArchivedModels = computed(() => {
       return models.value.filter(model => !model.archived);
     });
+
     watch(
       () => props.project,
       async () => {
@@ -88,6 +91,7 @@ export default {
       },
       { immediate: true }
     );
+
     watch(nonArchivedModels, () => {
       currentModel.value = nonArchivedModels.value[0];
     });

@@ -1,0 +1,16 @@
+.datapack-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__text {
+    &::after {
+      content: " :";
+    }
+  }
+
+  &__info {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}

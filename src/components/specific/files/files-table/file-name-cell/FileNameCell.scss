@@ -24,6 +24,7 @@
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);
     cursor: pointer;
+    max-width: 320px;
 
     &__icon-folder {
       min-width: 22px;

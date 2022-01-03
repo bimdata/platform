@@ -18,8 +18,9 @@
 
 <script>
 import { inject, ref } from "vue";
-import { useUpload } from "@/composables/upload";
-import { useSpaces } from "@/state/spaces";
+import { useUpload } from "@/composables/upload.js";
+import { useOrganizations } from "@/state/organizations.js";
+import { useSpaces } from "@/state/spaces.js";
 
 export default {
   props: {
@@ -30,7 +31,8 @@ export default {
   },
   emits: ["upload-completed", "upload-failed"],
   setup(props, { emit }) {
-    const { softUpdateSpace } = useSpaces();
+    const { loadOrganizationSpaces } = useOrganizations();
+    const { loadUserSpaces } = useSpaces();
     const { spaceImageUploader } = useUpload();
 
     const loading = inject("loading", false);
@@ -41,9 +43,9 @@ export default {
       onUploadStart: () => {
         loading.value = true;
       },
-      onUploadComplete: event => {
-        const image = event.successful[0].response.body.image;
-        softUpdateSpace({ ...props.space, image });
+      onUploadComplete: () => {
+        loadUserSpaces();
+        loadOrganizationSpaces(props.space.organization);
         uploader.reset();
         emit("upload-completed");
       },

@@ -2,6 +2,10 @@ import i18n from "@/i18n";
 import { useNotifications } from "@/composables/notifications";
 
 const ERRORS = Object.freeze({
+  ORGANIZATIONS_FETCH_ERROR: "organizationsFetchError",
+  ORGANIZATION_CREATE_ERROR: "organizationCreateError",
+  ORGANIZATION_UPDATE_ERROR: "organizationUpdateError",
+  ORGANIZATION_DELETE_ERROR: "organizationDeleteError",
   SPACES_FETCH_ERROR: "spacesFetchError",
   SPACE_CREATE_ERROR: "spaceCreateError",
   SPACE_UPDATE_ERROR: "spaceUpdateError",
@@ -35,7 +39,11 @@ const ERRORS = Object.freeze({
   GROUPS_FETCH_ERROR: "groupsFetchError",
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
-  GROUP_DELETE_ERROR: "groupDeleteError"
+  GROUP_DELETE_ERROR: "groupDeleteError",
+  SUBSCRIPTIONS_FETCH_ERROR: "subscriptionsFetchError",
+  PLATFORM_SUBSCRIBE_ERROR: "platformSubscribeError",
+  DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",
+  DATAPACK_UPDATE_ERROR: "datapackUpdateError"
 });
 
 class RuntimeError {

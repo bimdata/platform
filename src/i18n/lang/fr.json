@@ -1,9 +1,12 @@
 {
   "Dashboard": {
-    "spacesButtonTitle": "Espaces",
-    "spacesButtonText": "Mes espaces",
-    "projectsButtonTitle": "Projets",
-    "projectsButtonText": "Mes projets"
+    "spacesTileTitle": "Espaces",
+    "spacesTileBottomText": "Mes espaces",
+    "projectsTileTitle": "Projets",
+    "projectsTileBottomText": "Mes projets",
+    "subscriptionsTileTitle": "Abonnements",
+    "subscriptionsTileText": "Retrouvez toutes vos factures et vos dernières informations de paiement ici.",
+    "subscriptionsTileBottomText": "Gérer mes abonnements"
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Rechercher un membre"
@@ -20,6 +23,10 @@
     },
     "homeButtonText": "Home"
   },
+  "Payment": {
+    "titlePlatform": "Passer à la platforme professionnelle",
+    "titleDatapack": "Ajout d'un DataPack"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Projet",
@@ -33,12 +40,37 @@
   "SpaceBoard": {
     "searchInputPlaceholder": "Rechercher un projet"
   },
+  "Subscribe": {
+    "title": "Choisissez votre abonnement",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  },
+  "SubscriptionDatapack": {
+    "title": "Gérer mes DataPacks",
+    "successNotification": "Vous disposez désormais de {size} dans l'espace {spaceName}"
+  },
+  "SubscriptionFree": {
+    "title": "Créer un espace gratuit",
+    "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: {size}, 6 utilisateurs.",
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
+  },
+  "SubscriptionPro": {
+    "subscribeTitle": "Souscrire à l'abonnement professionnel",
+    "upgradeTitle": "Passer à la platforme professionnelle",
+    "text": "Vous êtes sur le point de lancer votre abonnement professionel. Il inclus: {size} de stockage, création de projets illimités avec utilisateurs illimités.",
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
+  },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Rechercher un espace",
+    "organizationsButtonText": "Organisations",
     "createButtonText": "Créer un espace"
+  },
+  "UserSubscriptions": {
+    "title": "Abonnement à la plateforme",
+    "text": "Naviguez parmis vos organisations pour gérer les abonnements et factures de vos espaces plateforme.",
+    "list": "Liste de mes organisations :"
   },
 
 
@@ -71,8 +103,6 @@
     "title": "Choix de la langue"
   },
 
-
-
   "AppHeaderMenu": {
     "entrySettings": "Paramètres du compte",
     "entryConnect": "BIMData Connect",
@@ -80,7 +110,37 @@
     "entryMarketplace": "Marketplace",
     "entryOldPlatform": "Plateforme V1",
     "entryLanguage": "Choix de la langue",
-    "logoutButtonText": "Se Déconnecter"
+    "logoutButtonText": "Se Déconnecter",
+    "subscriptionPlatform": "Abonnement plateforme"
+  },
+
+  "BillingActionsCell": {
+    "updateButtonText": "Modifier la carte de paiement",
+    "datapackButtonText": "Gérer mes datapacks",
+    "cancelButtonText": "Annuler cet abonnement"
+  },
+
+  "BillingsTable": {
+    "title": "Abonnements",
+    "nextPayment": "le",
+    "professionalPlan": "Professionnelle",
+    "withDatapack": "+ Datapack",
+    "cancelSubscriptionButton": "Annuler l'abonnement",
+    "updateCreditCardButton": "Mettre à jour la carte de crédit",
+    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "subscribeButton": "Passez à notre plateforme Pro",
+    "headers": {
+      "space": "Espace",
+      "nextpayment": "Prochain paiement",
+      "subscriptionplan": "Formule d'abonnement",
+      "status": "Statut",
+      "amount": "Montant"
+    },
+    "status": {
+      "active": "Actif",
+      "deleted": "Supprimé",
+      "paused": "En pause"
+    }
   },
 
   "BreadcrumbGroupSelector": {
@@ -108,6 +168,26 @@
     "message": "Bonjour {name}, content de vous revoir !"
   },
 
+  "DatapackForm": {
+    "baseNote": "Stockage",
+    "baseText": "Inclus dans l'abonnement",
+    "datapackNote": "Stockage additionnel",
+    "datapackText": "",
+    "priceUnit": " / GB / mois",
+    "totalUnit": " / mois",
+    "actualStorage": "Stockage actuel",
+    "newStorage": "Nouveau stockage",
+    "submitButtonText": "Valider",
+    "cancelButtonText": "Annuler"
+  },
+
+  "DatapackInfo": {
+    "title": "Abonnement actuel",
+    "datapacks": "Récapitulatif DataPack actif",
+    "storage": "Récapitulatif GB actif",
+    "including": "dont {quantity} GB de DataPack"
+  },
+
   "FileActionsCell": {
     "openViewerButtonText": "Voir",
     "addTagsButtonText": "Ajouter des tags",
@@ -132,8 +212,7 @@
 
   "FilesDeleteModal": {
     "title": "Suppression de fichiers",
-    "message":
-      "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
+    "message": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
     "cancelButtonText": "Annuler",
     "deleteButtonText": "Supprimer"
   },
@@ -215,6 +294,15 @@
     }
   },
 
+  "FreePlanCard": {
+    "title": "FREE",
+    "price": "0€",
+    "bullet2": "1 Espace gratuit",
+    "bullet3": "6 Utilisateurs",
+    "buttonText": "Créer un espace gratuit",
+    "note": "Pour toujours"
+  },
+
   "GroupCardActionMenu": {
     "renameButtonText": "Renommer",
     "changeColorButtonText": "Modifier la couleur",
@@ -223,8 +311,7 @@
 
   "GroupCardDeleteGuard": {
     "title": "Supprimer le groupe",
-    "message":
-      "Êtes vous sûr de vouloir supprimer (définitivement) le groupe {name} ?",
+    "message": "Êtes vous sûr de vouloir supprimer (définitivement) le groupe {name} ?",
     "deleteButtonText": "Supprimer"
   },
 
@@ -283,6 +370,28 @@
     "cancelButtonText": "Annuler",
     "submitButtonText": "Inviter",
     "successNotifText": "Invitation envoyée"
+  },
+
+  "InvoiceActionsCell": {
+    "downloadButton": "Télécharger la facture"
+  },
+
+  "InvoicesTable": {
+    "title": "Factures",
+    "tablePlaceholder": "Chargement des factures...",
+    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "subscribeButton": "Passez à notre plateforme Pro",
+    "headers": {
+      "amount": "Montant",
+      "status": "Statut",
+      "space": "Espace",
+      "date": "Date"
+    }
+  },
+
+  "InvoiceStatusCell": {
+    "completed": "Payé",
+    "pending": "En attente"
   },
 
   "ModelActionsCell": {
@@ -371,6 +480,61 @@
     }
   },
 
+  "OrganizationCard": {
+    "spaces": "{number} espaces"
+  },
+
+  "OrganizationDeleteGuard": {
+    "title": "Supprimer l'organisation",
+    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "submitButtonText": "Supprimer"
+  },
+
+  "OrganizationForm": {
+    "createTitle": "Création d'organisation",
+    "updateTitle": "Modifier l'organisation",
+    "infoSectionTitle": "Information de base",
+    "nameInputPlaceholder": "Nom",
+    "nameInputErrorMessage": "Nom invalide",
+    "logoInputLabel": "Choisir un logo",
+    "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
+    "submitButtonText": "Valider",
+    "successTitle": "Félicitation votre organisation vient d'être créée",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationsList": {
+    "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
+    "createButtonText": "Créer une organisation",
+    "searchInputPlaceholder": "Rechercher une organisation"
+  },
+
+  "OrganizationsManager": {
+    "title": "Gestion des organizations",
+    "backButtonText": "Retour"
+  },
+
+  "OrganizationSpaceCard": {
+    "projects": "{number} projets"
+  },
+
+  "OrganizationSpacesImport": {
+    "spaceListTitle": "Sélectionnez les espaces à importer",
+    "spaceListPlaceholder": "Aucun espace à importer...",
+    "submitButtonText": "Importer",
+    "successTitle": "Les espaces ont été déplacés",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationSpacesList": {
+    "importButtonText": "Importer un espace",
+    "addButtonText": "Ajouter un espace",
+    "searchInputPlaceholder": "Rechercher",
+    "spaceListTitle": "Liste des espaces de l'organisation"
+  },
+
   "ProjectCardActionMenu": {
     "renameButtonText": "Renommer",
     "deleteButtonText": "Supprimer",
@@ -416,7 +580,42 @@
     "searchInputPlaceholder": "Rechercher un utilisateur"
   },
 
+  "ProPlanCard": {
+    "title": "PROFESSIONEL",
+    "priceUnit": "/ Espace / mois",
+    "bullet2": "Projets illimités",
+    "bullet3": "Utilisateurs illimités",
+    "buttonText": "Souscrire",
+    "note": "extensible pour {price} / GB / mois"
+  },
+
+  "ProPlanForm": {
+    "title": "Prix",
+    "priceUnit": "/ mois",
+    "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
+    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successButtonText": "Page d'accueil"
+  },
+
+  "ProPlanInfo": {
+    "title": "Votre abonnement",
+    "subTitle": "Professionnel",
+    "priceUnit": "/ mois",
+    "bulletsHead": "L'abonnement inclut",
+    "bullet1": "{size} de stockage",
+    "bullet2": "BIMData Plateforme",
+    "bullet3": "Visionneuse 3D",
+    "bullet4": "Visionneuse 2D",
+    "bullet5": "Projets illimités",
+    "bullet6": "Utilisateurs illimités",
+    "bullet7": "Commentaires (BCF) illimités",
+    "bullet8": "Fusion / Division IFC",
+    "bullet9": "Edition IFC",
+    "bullet10": "Support par email"
+  },
+
   "SpaceCard": {
+    "free": "Gratuit",
     "projects": "PROJETS"
   },
 
@@ -450,6 +649,43 @@
     "createButtonText": "Créer"
   },
 
+  "SpaceCreator": {
+    "createSelectOrgaTitle": "Créer ou sélectionner une organisation",
+    "createNewOrgaRadio": "Créer une nouvelle organisation",
+    "createNewOrgaInput": "Nom de ma nouvelle organisation",
+    "selectOrgaRadio": "Sélectionner une organisation",
+    "orgaValidateButton": "Valider",
+    "createSpaceTitle": "Créer un espace",
+    "createSpaceText": "Votre espace regroupe vos différents projets BIM.",
+    "createSpaceInput": "Nom de mon nouvel espace",
+    "spaceValidateButton": "Valider"
+  },
+
+  "SpaceSelected": {
+    "selectedOrga": "Organization sélectionnée:",
+    "selectedSpace": "Espace sélectionné:"
+  },
+
+  "SpaceSelector": {
+    "orgaSelectorLabel": "Organisation selectionnée :",
+    "spaceSelectorLabel": "Espace selectionné :"
+  },
+
+  "SpaceSizeInfo": {
+    "used": "utilisé",
+    "from": "sur",
+    "included": "inclus",
+    "subscribeDatapackButton": "Acheter un DataPack",
+    "subscribePlatformButton": "Passer à la platform pro"
+  },
+
+  "SpaceSizePreview": {
+    "title": "Stockage",
+    "actualStorage": "Stockage actuel",
+    "newStorage": "Nouveau stockage",
+    "newStorageText": "En souscrivant à l'abonnement professionnel, vous bénéficiez de {size} de stockage. Vous pouvez acheter du stockage additionnel directement depuis votre espace."
+  },
+
   "SpaceUsersManager": {
     "title": "Gestion administrateur espace",
     "tabs": {
@@ -458,6 +694,12 @@
     },
     "searchInputPlaceholder": "Rechercher un utilisateur",
     "addUserButtonText": "Ajouter un administrateur"
+  },
+
+  "SubscribeCard": {
+    "title": "Créez votre nouvel espace",
+    "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
+    "button": "Souscrire à un abonnement"
   },
 
   "UserCard": {
@@ -487,12 +729,14 @@
     "inviteButtonText": "Invitation"
   },
 
-
-
   "Error": "Erreur",
   "Success": "Succès",
 
   "Errors": {
+    "organizationsFetchError": "Impossible de récupérer la liste des organizations",
+    "organizationCreateError": "Erreur lors de la création de l'organization",
+    "organizationUpdateError": "Erreur lors le de mise à jour de l'organization",
+    "organizationDeleteError": "Erreur lors de la suppression de l'organization",
     "spacesFetchError": "Impossible de récupérer la liste des espaces",
     "spaceCreateError": "Erreur lors de la création de l'espace",
     "spaceUpdateError": "Erreur de mise à jour de l'espace",
@@ -526,6 +770,10 @@
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
-    "groupDeleteError": "Échec de la suppression du groupe"
+    "groupDeleteError": "Échec de la suppression du groupe",
+    "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
+    "platformSubscribeError": "Erreur lors de la création du lien de souscription",
+    "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",
+    "datapackUpdateError": "Erreur lors de la mise à jour du datapack"
   }
 }

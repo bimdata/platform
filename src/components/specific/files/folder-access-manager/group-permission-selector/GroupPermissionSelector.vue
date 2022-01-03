@@ -1,13 +1,13 @@
 <template>
   <div class="group-permission-selector">
-    <TextBox
+    <BIMDataTextBox
       class="group-permission-selector__label"
+      maxWidth="132px"
       :text="group.name"
-      :maxLength="16"
     />
     <BIMDataDropdownList
       class="group-permission-selector__input"
-      width="150px"
+      width="144px"
       height="32px"
       :list="permissionList"
       :closeOnElementClick="true"

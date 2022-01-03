@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 
 export default {
   props: {

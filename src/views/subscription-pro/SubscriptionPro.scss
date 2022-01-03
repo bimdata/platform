@@ -1,0 +1,55 @@
+.subscription-pro {
+  height: 100%;
+
+  &__title {
+    height: 32px;
+    margin: 0;
+  }
+
+  &__content {
+    padding: calc(var(--spacing-unit) * 3) 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3);
+
+    &__text {
+      max-width: 500px;
+      margin: auto;
+      text-align: center;
+    }
+
+    &__head {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 2);
+    }
+
+    &__body {
+      display: flex;
+      justify-content: center;
+      gap: calc(var(--spacing-unit) * 3);
+
+      &__left,
+      &__center,
+      &__right {
+        box-shadow: var(--box-shadow);
+        background-color: var(--color-white);
+      }
+
+      &__left {
+        width: 400px;
+      }
+
+      &__center {
+        width: 600px;
+      }
+
+      &__right {
+        width: 400px;
+      }
+    }
+  }
+}

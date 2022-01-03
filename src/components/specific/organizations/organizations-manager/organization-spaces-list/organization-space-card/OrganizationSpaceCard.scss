@@ -1,0 +1,36 @@
+.organization-space-card {
+  position: relative;
+  min-height: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+
+  &__image {
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
+    margin-left: calc(var(--spacing-unit) / 2);
+    padding: calc(var(--spacing-unit) / 6);
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 rgba(0 0 0 / 0.1);
+  }
+
+  &__info {
+    flex-grow: 1;
+    padding: 0 var(--spacing-unit);
+    line-height: 18px;
+
+    &__name {
+      font-weight: bold;
+    }
+
+    &__data {
+      font-size: 12px;
+
+      &--date {
+        color: var(--color-granite-light);
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.user-subscriptions {
+  &__header {
+    margin-top: var(--spacing-unit);
+    display: flex;
+    justify-content: space-between;
+    gap: calc(var(--spacing-unit) * 6);
+
+    &__left {
+      max-width: 450px;
+
+      h1 {
+        margin-top: 0;
+        font-family: "robotobold";
+      }
+
+      .bimdata-dropdown-list {
+        width: 380px;
+
+        .organization-count {
+          min-width: 20px;
+          height: 20px;
+          border-radius: 3px;
+          font-weight: bold;
+          background-color: var(--color-primary);
+          color: var(--color-white);
+        }
+
+        &:deep(.bimdata-dropdown-list__content) {
+          width: 100%;
+          background-color: var(--color-white);
+        }
+      }
+    }
+
+    &__right {
+      flex-grow: 1;
+    }
+  }
+
+  &__content {
+    margin-top: calc(var(--spacing-unit) * 3 / 2);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 3);
+
+    .billings-table,
+    .invoices-table {
+      flex: 1;
+    }
+  }
+}

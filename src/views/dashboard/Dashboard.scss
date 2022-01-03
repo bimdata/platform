@@ -11,6 +11,18 @@
 
   &__body {
     margin: calc(var(--spacing-unit) * 3) 0;
+
+    display: flex;
+    gap: calc(var(--spacing-unit) * 2);
+
+    &__left {
+      flex-grow: 1;
+    }
+
+    &__right {
+      padding-top: calc(var(--spacing-unit) * 4.5);
+      padding-bottom: calc(var(--spacing-unit) * 2);
+    }
   }
 }
 

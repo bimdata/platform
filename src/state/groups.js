@@ -1,10 +1,16 @@
 import { reactive, readonly, toRefs } from "vue";
-import GroupService from "@/services/GroupService";
+import GroupService from "@/services/GroupService.js";
 
 const state = reactive({
   projectGroups: [],
   currentGroup: null
 });
+
+const setCurrentGroup = id => {
+  state.currentGroup =
+    state.projectGroups.find(group => group.id === id) || null;
+  return readonly(state.currentGroup);
+};
 
 const loadProjectGroups = async project => {
   let groups = [];
@@ -18,13 +24,13 @@ const loadProjectGroups = async project => {
 
 const createGroup = async (project, group) => {
   const newGroup = await GroupService.createGroup(project, group);
-  state.projectGroups = [newGroup].concat(state.projectGroups);
+  await loadProjectGroups(project);
   return newGroup;
 };
 
 const updateGroup = async (project, group) => {
   const newGroup = await GroupService.updateGroup(project, group);
-  softUpdateGroup(newGroup);
+  await loadProjectGroups(project);
   return newGroup;
 };
 
@@ -34,8 +40,7 @@ const addGroupMembers = async (project, group, membersToAdd) => {
     group,
     membersToAdd
   );
-  const members = group.members.concat(addedMembers);
-  softUpdateGroup({ ...group, members });
+  await loadProjectGroups(project);
   return addedMembers;
 };
 
@@ -45,11 +50,7 @@ const removeGroupMembers = async (project, group, membersToRemove) => {
     group,
     membersToRemove
   );
-  const removedMemberIDs = removedMembers.map(member => member.id);
-  const members = group.members.filter(
-    member => !removedMemberIDs.includes(member.id)
-  );
-  softUpdateGroup({ ...group, members });
+  await loadProjectGroups(project);
   return removedMembers;
 };
 
@@ -77,7 +78,7 @@ const updateGroupMembers = async (project, group, members) => {
     membersToRemove
   );
 
-  softUpdateGroup({ ...group, members });
+  await loadProjectGroups(project);
   return { addedMembers, removedMembers };
 };
 
@@ -90,28 +91,10 @@ const updateGroupPermission = async (project, folder, group, permission) => {
   );
 };
 
-const softUpdateGroup = group => {
-  state.projectGroups = state.projectGroups.map(g =>
-    g.id === group.id ? { ...g, ...group } : g
-  );
-  return group;
-};
-
 const deleteGroup = async (project, group) => {
   await GroupService.deleteGroup(project, group);
-  softDeleteGroup(group);
+  await loadProjectGroups(project);
   return group;
-};
-
-const softDeleteGroup = group => {
-  state.projectGroups = state.projectGroups.filter(g => g.id !== group.id);
-  return group;
-};
-
-const selectGroup = id => {
-  state.currentGroup =
-    state.projectGroups.find(group => group.id === id) || null;
-  return readonly(state.currentGroup);
 };
 
 export function useGroups() {
@@ -120,6 +103,7 @@ export function useGroups() {
     // References
     ...toRefs(readOnlyState),
     // Methods
+    setCurrentGroup,
     loadProjectGroups,
     createGroup,
     updateGroup,
@@ -127,9 +111,6 @@ export function useGroups() {
     removeGroupMembers,
     updateGroupMembers,
     updateGroupPermission,
-    softUpdateGroup,
-    deleteGroup,
-    softDeleteGroup,
-    selectGroup
+    deleteGroup
   };
 }

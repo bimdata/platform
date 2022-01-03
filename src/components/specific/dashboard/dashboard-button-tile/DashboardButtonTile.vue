@@ -3,17 +3,12 @@
     <span class="dashboard-button-tile__title">
       <slot name="title"></slot>
     </span>
-    <span class="dashboard-button-tile__number">
-      <slot name="number"></slot>
+    <span class="dashboard-button-tile__content">
+      <slot name="content"></slot>
     </span>
-    <span class="dashboard-button-tile__text">
-      <slot name="text"></slot>
-      <BIMDataIcon
-        class="arrow-icon"
-        name="arrow"
-        size="s"
-        margin="0 0 0 6px"
-      />
+    <span class="dashboard-button-tile__bottom-text">
+      <slot name="bottom-text"></slot>
+      <BIMDataIcon name="arrow" size="xs" margin="0 0 0 12px" :rotate="180" />
     </span>
   </div>
 </template>

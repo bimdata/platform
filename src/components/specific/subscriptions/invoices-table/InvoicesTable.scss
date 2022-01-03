@@ -1,0 +1,15 @@
+.invoices-table {
+  &__table {
+    overflow: visible;
+  }
+
+  &__empty {
+    &:deep(.bimdata-card__content) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 480px;
+    }
+  }
+}

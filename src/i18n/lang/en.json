@@ -1,9 +1,11 @@
 {
   "Dashboard": {
-    "spacesButtonTitle": "Active Spaces",
-    "spacesButtonText": "View spaces",
-    "projectsButtonTitle": "Active Projects",
-    "projectsButtonText": "View projects"
+    "spacesTileTitle": "Active Spaces",
+    "spacesTileBottomText": "View spaces",
+    "projectsTileTitle": "Active Projects",
+    "projectsTileBottomText": "View projects",
+    "subscriptionsTileTitle": "Billing & Invoices",
+    "subscriptionsTileBottomText": "Manage subscriptions"
   },
   "GroupBoard": {
     "searchInputPlaceholder": "Search members"
@@ -20,6 +22,10 @@
     },
     "homeButtonText": "Home"
   },
+  "Payment": {
+    "titlePlatform": "Upgrade to pro platform",
+    "titleDatapack": "Add DataPack"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Project",
@@ -33,12 +39,33 @@
   "SpaceBoard": {
     "searchInputPlaceholder": "Search projects"
   },
+  "Subscribe": {
+    "title": "Choose your plan"
+  },
+  "SubscriptionDatapack": {
+    "title": "Manage DataPack",
+    "successNotification": "You now have {size} of storage in space {spaceName}"
+  },
+  "SubscriptionFree": {
+    "title": "Create Free Plan",
+    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+  },
+  "SubscriptionPro": {
+    "subscribeTitle": "Subscribe to Professional Plan",
+    "upgradeTitle": "Upgrade to pro platform",
+    "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
+    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+  },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Search spaces",
+    "organizationsButtonText": "Organizations",
     "createButtonText": "Create a space"
+  },
+  "UserSubscriptions": {
+    "title": "Platform subscription"
   },
 
 
@@ -71,8 +98,6 @@
     "title": "Choose a language"
   },
 
-
-
   "AppHeaderMenu": {
     "entrySettings": "Account settings",
     "entryConnect": "BIMData Connect",
@@ -80,7 +105,37 @@
     "entryMarketplace": "Marketplace",
     "entryOldPlatform": "Platform V1",
     "entryLanguage": "Choose a language",
-    "logoutButtonText": "Log Out"
+    "logoutButtonText": "Log Out",
+    "subscriptionPlatform": "Platform subscription"
+  },
+
+  "BillingActionsCell": {
+    "updateButtonText": "Modify the payment card",
+    "datapackButtonText": "Manage datapacks",
+    "cancelButtonText": "Cancel this subscription"
+  },
+
+  "BillingsTable": {
+    "title": "Billing details",
+    "nextPayment": "on",
+    "professionalPlan": "Professionnal",
+    "withDatapack": "with Datapack",
+    "cancelSubscriptionButton": "Cancel subscription",
+    "updateCreditCardButton": "Update credit card",
+    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+    "subscribeButton": "Upgrade to our Pro Platform",
+    "headers": {
+      "space": "Space",
+      "nextpayment": "Next payment",
+      "subscriptionplan": "Subscription plan",
+      "status": "Status",
+      "amount": "Amount"
+    },
+    "status": {
+      "active": "Active",
+      "deleted": "Deleted",
+      "paused": "Paused"
+    }
   },
 
   "BreadcrumbGroupSelector": {
@@ -108,6 +163,26 @@
     "message": "Hi {name}, it's great to see you again !"
   },
 
+  "DatapackForm": {
+    "baseNote": "Storage",
+    "baseText": "Included with pro plan",
+    "datapackNote": "Additional storage",
+    "datapackText": "",
+    "priceUnit": " / GB / month",
+    "totalUnit": " / month",
+    "actualStorage": "Actual storage",
+    "newStorage": "New Storage",
+    "submitButtonText": "Validate",
+    "cancelButtonText": "Cancel"
+  },
+
+  "DatapackInfo": {
+    "title": "Actual subscription",
+    "datapacks": "Active DataPacks",
+    "storage": "Active storage",
+    "including": "including {quantity} GB of DataPack"
+  },
+
   "FileActionsCell": {
     "openViewerButtonText": "Open in viewer",
     "addTagsButtonText": "Add tags",
@@ -132,8 +207,7 @@
 
   "FilesDeleteModal": {
     "title": "Delete files",
-    "message":
-      "This action will permanently delete the following files/folders :",
+    "message": "This action will permanently delete the following files/folders :",
     "cancelButtonText": "Cancel",
     "deleteButtonText": "Delete"
   },
@@ -215,6 +289,15 @@
     }
   },
 
+  "FreePlanCard": {
+    "title": "FREE",
+    "price": "0€",
+    "bullet2": "1 Free space",
+    "bullet3": "6 Users",
+    "buttonText": "Create a free space",
+    "note": "Forever"
+  },
+
   "GroupCardActionMenu": {
     "renameButtonText": "Rename",
     "changeColorButtonText": "Change color",
@@ -223,8 +306,7 @@
 
   "GroupCardDeleteGuard": {
     "title": "Delete group",
-    "message":
-      "You are about to (definitely) delete group {name}, are you sure ?",
+    "message": "You are about to (definitely) delete group {name}, are you sure ?",
     "deleteButtonText": "Delete"
   },
 
@@ -283,6 +365,28 @@
     "cancelButtonText": "Cancel",
     "submitButtonText": "Send invitation",
     "successNotifText": "Invitation sent"
+  },
+
+  "InvoiceActionsCell": {
+    "downloadButton": "Download invoice"
+  },
+
+  "InvoicesTable": {
+    "title": "Invoices",
+    "tablePlaceholder": "Loading invoices...",
+    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+    "subscribeButton": "Upgrade to our Pro Platform",
+    "headers": {
+      "amount": "Amount",
+      "status": "Status",
+      "space": "Space",
+      "date": "Date"
+    }
+  },
+
+  "InvoiceStatusCell": {
+    "completed": "Completed",
+    "pending": "Pending"
   },
 
   "ModelActionsCell": {
@@ -371,6 +475,58 @@
     }
   },
 
+  "OrganizationCard": {
+    "spaces": "{number} spaces"
+  },
+
+  "OrganizationDeleteGuard": {
+    "title": "Delete organization",
+    "submitButtonText": "Delete"
+  },
+
+  "OrganizationForm": {
+    "createTitle": "Create an organization",
+    "updateTitle": "Update organization",
+    "infoSectionTitle": "Basic information",
+    "nameInputPlaceholder": "Name",
+    "nameInputErrorMessage": "Invalid name",
+    "logoInputLabel": "Upload logo",
+    "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
+    "submitButtonText": "Validate",
+    "successTitle": "Congratulation your organization has just been created",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationsList": {
+    "explanationText": "An organization is the entity that gather your billing at BIMData.io",
+    "createButtonText": "Add new organization",
+    "searchInputPlaceholder": "Search an organization"
+  },
+
+  "OrganizationsManager": {
+    "title": "Manage organizations",
+    "backButtonText": "Back"
+  },
+  
+  "OrganizationSpaceCard": {
+    "projects": "{number} projects"
+  },
+
+  "OrganizationSpacesImport": {
+    "spaceListTitle": "Select spaces to import",
+    "spaceListPlaceholder": "No space to import...",
+    "submitButtonText": "Import spaces",
+    "successTitle": "Spaces successfully imported",
+    "successButtonText": "OK"
+  },
+
+  "OrganizationSpacesList": {
+    "importButtonText": "Import space",
+    "addButtonText": "Add new space",
+    "searchInputPlaceholder": "Search",
+    "spaceListTitle": "Organization spaces"
+  },
+
   "ProjectCardActionMenu": {
     "renameButtonText": "Rename",
     "deleteButtonText": "Delete",
@@ -416,7 +572,41 @@
     "searchInputPlaceholder": "Search user"
   },
 
+  "ProPlanCard": {
+    "title": "PROFESSIONAL",
+    "priceUnit": "/ Space / month",
+    "bullet2": "Unlimited projects",
+    "bullet3": "Unlimited users",
+    "buttonText": "Choose professional",
+    "note": "expand 1GB for {price} / month"
+  },
+
+  "ProPlanForm": {
+    "title": "Price",
+    "priceUnit": "/ month",
+    "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
+    "successButtonText": "Home"
+  },
+
+  "ProPlanInfo": {
+    "title": "Your subscription",
+    "subTitle": "Professionnal plan",
+    "priceUnit": "/ month",
+    "bulletsHead": "The subscription includes",
+    "bullet1": "{size} of storage",
+    "bullet2": "BIMData Platform",
+    "bullet3": "3D Viewer",
+    "bullet4": "2D Viewer",
+    "bullet5": "Unlimited projects",
+    "bullet6": "Unlimited users",
+    "bullet7": "Unlimited comments (BCF)",
+    "bullet8": "IFC Merge / Split",
+    "bullet9": "IFC Edition",
+    "bullet10": "Support"
+  },
+
   "SpaceCard": {
+    "free": "Free",
     "projects": "PROJECTS"
   },
 
@@ -450,6 +640,41 @@
     "createButtonText": "Create"
   },
 
+  "SpaceCreator": {
+    "createSelectOrgaTitle": "Create or select an organization",
+    "createNewOrgaRadio": "Create a new organization",
+    "createNewOrgaInput": "Name of my new organization",
+    "selectOrgaRadio": "Select an organization",
+    "orgaValidateButton": "Validate",
+    "createSpaceTitle": "Create a space",
+    "createSpaceInput": "Name of my new space",
+    "spaceValidateButton": "Validate"
+  },
+
+  "SpaceSelected": {
+    "selectedOrga": "Selected organization:",
+    "selectedSpace": "Selected space:"
+  },
+
+  "SpaceSelector": {
+    "orgaSelectorLabel": "Organization selected :",
+    "spaceSelectorLabel": "Space selected :"
+  },
+
+  "SpaceSizeInfo": {
+    "used": "used",
+    "from": "out of",
+    "included": "included",
+    "subscribeDatapackButton": "Upgrade storage",
+    "subscribePlatformButton": "Switch to pro platform"
+  },
+
+  "SpaceSizePreview": {
+    "title": "Storage",
+    "actualStorage": "Actual storage",
+    "newStorage": "New storage"
+  },
+
   "SpaceUsersManager": {
     "title": "Manage space admins",
     "tabs": {
@@ -458,6 +683,11 @@
     },
     "searchInputPlaceholder": "Search user",
     "addUserButtonText": "Add new admin"
+  },
+
+  "SubscribeCard": {
+    "title": "Create your new space",
+    "button": "Create a new space"
   },
 
   "UserCard": {
@@ -487,12 +717,14 @@
     "inviteButtonText": "Invite"
   },
 
-
-
   "Error": "Error",
   "Success": "Success",
 
   "Errors": {
+    "organizationsFetchError": "Fail to fetch organizations",
+    "organizationCreateError": "Fail to create organizations",
+    "organizationUpdateError": "Fail to update organizations",
+    "organizationDeleteError": "Fail to delete organizations",
     "spacesFetchError": "Fail to fetch spaces",
     "spaceCreateError": "Fail to create space",
     "spaceUpdateError": "Fail to update space",
@@ -526,6 +758,10 @@
     "groupsFetchError": "Fail to fetch groups",
     "groupCreateError": "Fail to create group",
     "groupUpdateError": "Fail to update group",
-    "groupDeleteError": "Fail to delete group"
+    "groupDeleteError": "Fail to delete group",
+    "subscriptionsFetchError": "Fail to fetch subscriptions",
+    "platformSubscribeError": "Fail to initialize platform subscription",
+    "datapackSubscribeError": "Fail to create datapack subscription",
+    "datapackUpdateError": "Fail to update datapack subscription"
   }
 }

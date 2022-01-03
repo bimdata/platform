@@ -1,7 +1,7 @@
-import { reactive, readonly, toRefs, watch } from "vue";
-import ProjectService from "@/services/ProjectService";
-import { useUser } from "@/state/user";
-import { projectStatus } from "@/utils/projects.js";
+import { reactive, readonly, toRefs } from "vue";
+import ProjectService from "@/services/ProjectService.js";
+import { mapProjects, mapUsers } from "@/state/mappers.js";
+import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userProjects: [],
@@ -11,38 +11,26 @@ const state = reactive({
   projectInvitations: []
 });
 
+const setCurrentProject = id => {
+  state.currentProject = state.userProjects.find(p => p.id === id) || null;
+  return readonly(state.currentProject);
+};
+
 const loadUserProjects = async () => {
-  const { mapProjects } = useUser();
-  let projects = await ProjectService.fetchUserProjects();
-  projects = mapProjects(projects);
-  projects.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  state.userProjects = projects;
+  const projects = await ProjectService.fetchUserProjects();
+  state.userProjects = mapProjects(projects);
   return projects;
 };
 
-let unwatchUserProjects = () => {};
-const loadSpaceProjects = space => {
-  unwatchUserProjects();
-  unwatchUserProjects = watch(
-    () => state.userProjects,
-    () => {
-      state.spaceProjects = state.userProjects.filter(
-        project => project.cloud.id === space.id
-      );
-    },
-    { immediate: true }
-  );
+const loadSpaceProjects = async space => {
+  const projects = await ProjectService.fetchSpaceProjects(space);
+  state.spaceProjects = mapProjects(projects);
+  return projects;
 };
 
 const loadProjectUsers = async project => {
-  const { mapUsers } = useUser();
-  let users = [];
-  users = await ProjectService.fetchProjectUsers(project);
-  users = mapUsers(users);
-  users.sort((a, b) =>
-    `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
-  );
-  state.projectUsers = users;
+  const users = await ProjectService.fetchProjectUsers(project);
+  state.projectUsers = mapUsers(users);
   return users;
 };
 
@@ -57,44 +45,33 @@ const loadProjectInvitations = async project => {
 
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
-  state.userProjects = [
-    {
-      ...newProject,
-      isAdmin: true,
-      projectStatus: projectStatus(newProject)
-    }
-  ].concat(state.userProjects);
+
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserProjects();
+  await loadSpaceProjects(space);
 
   return newProject;
 };
 
 const updateProject = async project => {
   const newProject = await ProjectService.updateProject(project);
-  softUpdateProject(newProject);
-  return newProject;
-};
 
-const softUpdateProject = project => {
-  state.userProjects = state.userProjects.map(p =>
-    p.id === project.id ? { ...p, ...project } : p
-  );
-  return project;
+  await loadUserProjects();
+  await loadSpaceProjects({ id: project.cloud.id });
+
+  return newProject;
 };
 
 const deleteProject = async project => {
   await ProjectService.deleteProject(project);
-  softDeleteProject(project);
-  return project;
-};
 
-const softDeleteProject = project => {
-  state.userProjects = state.userProjects.filter(p => p.id !== project.id);
-  return project;
-};
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserProjects();
+  await loadSpaceProjects({ id: project.cloud.id });
 
-const selectProject = id => {
-  state.currentProject = state.userProjects.find(p => p.id === id) || null;
-  return readonly(state.currentProject);
+  return project;
 };
 
 const sendProjectInvitation = async (project, invitation, options = {}) => {
@@ -140,16 +117,14 @@ export function useProjects() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    setCurrentProject,
     loadUserProjects,
     loadSpaceProjects,
     loadProjectUsers,
     loadProjectInvitations,
     createProject,
     updateProject,
-    softUpdateProject,
     deleteProject,
-    softDeleteProject,
-    selectProject,
     sendProjectInvitation,
     cancelProjectInvitation,
     updateProjectUser,

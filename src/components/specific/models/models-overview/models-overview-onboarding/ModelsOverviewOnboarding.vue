@@ -1,6 +1,6 @@
 <template>
   <div class="models-overview-onboarding">
-    <ModelsOverviewOnboarding />
+    <ModelsOverviewOnboardingImage />
     <div>
       {{ $t("ModelsOverviewOnboarding.text") }}
     </div>
@@ -19,10 +19,12 @@
 </template>
 
 <script>
-import ModelsOverviewOnboarding from "../../../../../../public/static/models-overview-onboarding.vue";
+// Components
+import ModelsOverviewOnboardingImage from "./ModelsOverviewOnboardingImage.vue";
+
 export default {
   components: {
-    ModelsOverviewOnboarding
+    ModelsOverviewOnboardingImage
   },
   emits: ["open-file-uploader"]
 };

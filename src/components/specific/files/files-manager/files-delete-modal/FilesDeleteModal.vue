@@ -54,7 +54,7 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { softUpdateFileStructure, deleteFiles } = useFiles();
+    const { deleteFiles, softUpdateFileStructure } = useFiles();
 
     const submit = () => {
       deleteFiles(props.project, props.files);

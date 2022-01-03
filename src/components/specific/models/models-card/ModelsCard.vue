@@ -15,7 +15,7 @@
 <script>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { routeNames } from "@/router";
+import routeNames from "@/router/route-names.js";
 // Components
 import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview";
 

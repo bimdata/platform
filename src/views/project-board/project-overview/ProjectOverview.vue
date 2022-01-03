@@ -4,9 +4,10 @@
       <BIMDataButton
         data-test="btn-toggle-upload"
         width="120px"
-        :color="showFileUploader ? 'tertiary-darkest' : 'primary'"
+        :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
+        :disabled="spaceInfo.remainingSmartDataSize <= 0"
         @click="toggleFileUploader"
       >
         <BIMDataIcon
@@ -24,7 +25,7 @@
 
     <transition name="fade">
       <FileUploader
-        v-show="showFileUploader"
+        v-show="showFileUploader && spaceInfo.remainingSmartDataSize > 0"
         class="project-overview__block--upload"
         :project="project"
         :allowedFileTypes="['.ifc', '.ifczip']"
@@ -33,43 +34,55 @@
         @close="closeFileUploader"
       />
     </transition>
-    <ModelsOverview
-      class="project-overview__block--overview"
-      :project="project"
-      :models="models"
-      @open-file-uploader="openFileUploader"
-    />
-    <ProjectUsersManager
-      class="project-overview__block--users"
-      :project="project"
-      :users="users"
-      :invitations="invitations"
-    />
-    <ModelsManager
-      class="project-overview__block--models"
-      :project="project"
-      :models="models"
-    />
+
+    <div class="project-overview__block--overview">
+      <app-loading name="project-models">
+        <ModelsOverview
+          :project="project"
+          :models="models"
+          @open-file-uploader="openFileUploader"
+        />
+      </app-loading>
+    </div>
+
+    <div class="project-overview__block--users">
+      <app-loading name="project-users">
+        <ProjectUsersManager
+          :project="project"
+          :users="users"
+          :invitations="invitations"
+        />
+      </app-loading>
+    </div>
+
+    <div class="project-overview__block--models">
+      <app-loading name="project-models">
+        <ModelsManager :project="project" :models="models" />
+      </app-loading>
+    </div>
   </div>
 </template>
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications";
-import { useToggle } from "@/composables/toggle";
-import { useFiles } from "@/state/files";
-import { useModels } from "@/state/models";
-import { useProjects } from "@/state/projects";
-import { debounce } from "@/utils/async";
+import { useNotifications } from "@/composables/notifications.js";
+import { useToggle } from "@/composables/toggle.js";
+import { useFiles } from "@/state/files.js";
+import { useModels } from "@/state/models.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
+import { debounce } from "@/utils/async.js";
 // Components
+import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
-import FileUploader from "@/components/specific/files/file-uploader/FileUploader";
-import ModelsManager from "@/components/specific/models/models-manager/ModelsManager";
-import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview";
-import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager";
+import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
+import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
+import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";
+import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager.vue";
 
 export default {
   components: {
+    AppLoading,
     AppSlotContent,
     FileUploader,
     ModelsManager,
@@ -78,6 +91,7 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const { currentSpace, spaceInfo, loadSpaceInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
@@ -90,9 +104,12 @@ export default {
       toggle: toggleFileUploader
     } = useToggle();
 
-    const reloadModels = debounce(() => {
-      loadProjectFileStructure(currentProject.value);
-      loadProjectModels(currentProject.value);
+    const reloadModels = debounce(async () => {
+      await Promise.all([
+        loadSpaceInfo(currentSpace.value),
+        loadProjectFileStructure(currentProject.value),
+        loadProjectModels(currentProject.value)
+      ]);
     }, 1000);
 
     const notifyForbiddenUpload = () => {
@@ -109,6 +126,7 @@ export default {
       models: projectModels,
       project: currentProject,
       showFileUploader,
+      spaceInfo,
       users: projectUsers,
       // Methods
       closeFileUploader,

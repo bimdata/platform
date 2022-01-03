@@ -1,9 +1,9 @@
 {
     "Dashboard": {
-        "spacesButtonTitle": "Espacios",
-        "spacesButtonText": "Mis espacios",
-        "projectsButtonTitle": "Proyectos",
-        "projectsButtonText": "Mis proyectos"
+        "spacesTileTitle": "Espacios",
+        "spacesTileBottomText": "Mis espacios",
+        "projectsTileTitle": "Proyectos",
+        "projectsTileBottomText": "Mis proyectos"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Buscar un miembro"
@@ -30,8 +30,12 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Buscar un espacio",
+        "organizationsButtonText": "Organizaciones",
         "createButtonText": "Crear un espacio"
     },
+
+
+
     "ProjectFiles": {
         "groupsButtonText": "Gestión de grupos"
     },
@@ -43,6 +47,9 @@
             "message": "Por favor seleccione un archivo .ifc"
         }
     },
+
+
+
     "BreadcrumbSelector": {
         "inputPlaceholder": "Buscar"
     },
@@ -293,6 +300,33 @@
             "status": "Estatus"
         }
     },
+    "OrganizationCard": {
+        "spaces": "{number} espacios"
+    },
+    "OrganizationForm": {
+        "nameInputPlaceholder": "Nombre",
+        "nameInputErrorMessage": "Este nombre no es válido",
+        "submitButtonText": "Validar",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "createButtonText": "Crear un organización",
+        "searchInputPlaceholder": "Buscar un organización"
+    },
+    "OrganizationsManager": {
+        "title": "Gestión de organizaciones",
+        "backButtonText": "Retorno"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} proyectos"
+    },
+    "OrganizationSpacesImport": {
+        "submitButtonText": "Validar",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "searchInputPlaceholder": "Buscar"
+    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Renombrar",
         "deleteButtonText": "Suprimir"
@@ -408,9 +442,17 @@
             "readWrite": "Lectura / Escritura"
         }
     },
+
+
+
     "Error": "Error",
     "Success": "Éxito",
+
     "Errors": {
+        "organizationsFetchError": "Imposible recuperar la lista de organizaciones",
+        "organizationCreateError": "Error durante la creación del organización",
+        "organizationUpdateError": "Error de puesta en marcha del organización",
+        "organizationDeleteError": "Error en la supresión del organización",
         "spacesFetchError": "Imposible recuperar la lista de espacios",
         "spaceCreateError": "Error durante la creación del espacio",
         "spaceUpdateError": "Error de puesta en marcha del espacio",

@@ -3,17 +3,17 @@ function fileExtension(fileName) {
   return parts.length > 1 ? parts[parts.length - 1] : "";
 }
 
-function formatBytes(bytes) {
-  if (bytes >= 1000000000) {
-    return `${Number(bytes / 1000000000).toFixed(2)} GB`;
+function formatBytes(bytes, decimals = 2) {
+  if (bytes) {
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+
+    return parseFloat((bytes / Math.pow(1024, i)).toFixed(dm)) + " " + sizes[i];
+  } else {
+    return "0 Bytes";
   }
-  if (bytes >= 1000000) {
-    return `${Number(bytes / 1000000).toFixed(2)} MB`;
-  }
-  if (bytes >= 1000) {
-    return `${Number(bytes / 1000).toFixed(2)} KB`;
-  }
-  return `${bytes} B`;
 }
 
 function generateFileKey(fileName, fileSize) {

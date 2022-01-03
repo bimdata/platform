@@ -53,6 +53,10 @@
     background-color: var(--color-white);
     color: var(--color-text);
 
+    &__text {
+      width: calc(#{$card-width} - 2 * var(--spacing-unit) - 72px);
+    }
+
     &__btn-previous {
       margin-left: auto;
     }

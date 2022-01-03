@@ -1,16 +1,17 @@
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
-import { createViewResolver } from "../view-resolver-factory.js";
 
-export default createViewResolver(async route => {
-  const spaces = useSpaces();
-  const projects = useProjects();
-  const models = useModels();
+const spaces = useSpaces();
+const projects = useProjects();
+const models = useModels();
 
-  spaces.selectSpace(+route.params.spaceID);
-  projects.loadSpaceProjects(spaces.currentSpace.value);
+export default async function modelViewerResolver(route) {
+  const space = spaces.setCurrentSpace(+route.params.spaceID);
+  const project = projects.setCurrentProject(+route.params.projectID);
 
-  projects.selectProject(+route.params.projectID);
-  await models.loadProjectModels(projects.currentProject.value);
-});
+  await Promise.all([
+    projects.loadSpaceProjects(space),
+    models.loadProjectModels(project)
+  ]);
+}

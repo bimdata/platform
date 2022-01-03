@@ -1,9 +1,9 @@
 {
     "Dashboard": {
-        "spacesButtonTitle": "Spazi attivi",
-        "spacesButtonText": "Vedi gli spazi",
-        "projectsButtonTitle": "Progetti attivi",
-        "projectsButtonText": "Vedi i progetti"
+        "spacesTileTitle": "Spazi attivi",
+        "spacesTileBottomText": "Vedi gli spazi",
+        "projectsTileTitle": "Progetti attivi",
+        "projectsTileBottomText": "Vedi i progetti"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Cerca tra i membri"
@@ -30,8 +30,12 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Cerca tra gli spazi",
+        "organizationsButtonText": "Organizzazioni",
         "createButtonText": "Crea uno spazio"
     },
+
+
+
     "ProjectFiles": {
         "groupsButtonText": "Gestisci i gruppi"
     },
@@ -43,6 +47,9 @@
             "message": "Seleziona un file .ifc"
         }
     },
+
+
+
     "BreadcrumbSelector": {
         "inputPlaceholder": "Cerca"
     },
@@ -293,6 +300,37 @@
             "status": "Status"
         }
     },
+    "OrganizationCard": {
+        "spaces": "{number} spazi"
+    },
+    "OrganizationForm": {
+        "createTitle": "Crea un organizzazione",
+        "updateTitle": "Rinomina organizzazione",
+        "nameInputPlaceholder": "Nome",
+        "nameInputErrorMessage": "Nome non valido",
+        "submitButtonText": "Convalida",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "createButtonText": "Crea un organizzazione",
+        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
+    },
+    "OrganizationsManager": {
+        "title": "Gestione delle organizzazioni",
+        "backButtonText": "Indietro"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} progetti"
+    },
+    "OrganizationSpacesImport": {
+        "backButtonText": "Indietro",
+        "submitButtonText": "Convalida",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "backButtonText": "Indietro",
+        "searchInputPlaceholder": "Cercare"
+    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Rinomina",
         "deleteButtonText": "Elimina"
@@ -408,9 +446,17 @@
             "readWrite": "Lettura/scrittura"
         }
     },
+
+
+
     "Error": "Errore",
     "Success": "Riuscito",
+
     "Errors": {
+        "organizationsFetchError": "Impossibile recuperare organizzazioni",
+        "organizationCreateError": "Impossibile creare organizzazione",
+        "organizationUpdateError": "Impossibile caricare organizzazione",
+        "organizationDeleteError": "Impossibile eliminare organizzazione",
         "spacesFetchError": "Impossibile recuperare gli spazi",
         "spaceCreateError": "Impossibile creare spazio",
         "spaceUpdateError": "Impossibile caricare spazio",
