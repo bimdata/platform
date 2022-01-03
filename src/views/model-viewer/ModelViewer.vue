@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import christmasPlugin from "@bimdata/christmas-sleigh-viewer-plugin";
 import makeBIMDataViewer from "@bimdata/viewer";
 import { merge, set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
@@ -24,8 +25,6 @@ import { useSpaces } from "@/state/spaces.js";
 // Components
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-
-import christmasPlugin from '@bimdata/christmas-sleigh-viewer-plugin';
 
 const availablePlugins = {
   bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.1",
@@ -134,8 +133,8 @@ export default {
             )
         )
       );
-      loading.value = false;
       bimdataViewer.registerPlugin(christmasPlugin);
+      loading.value = false;
 
       bimdataViewer.mount("#viewer", initialWindow);
 

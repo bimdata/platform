@@ -34,23 +34,32 @@
         @close="closeFileUploader"
       />
     </transition>
-    <ModelsOverview
-      class="project-overview__block--overview"
-      :project="project"
-      :models="models"
-      @open-file-uploader="openFileUploader"
-    />
-    <ProjectUsersManager
-      class="project-overview__block--users"
-      :project="project"
-      :users="users"
-      :invitations="invitations"
-    />
-    <ModelsManager
-      class="project-overview__block--models"
-      :project="project"
-      :models="models"
-    />
+
+    <div class="project-overview__block--overview">
+      <app-loading name="project-models">
+        <ModelsOverview
+          :project="project"
+          :models="models"
+          @open-file-uploader="openFileUploader"
+        />
+      </app-loading>
+    </div>
+
+    <div class="project-overview__block--users">
+      <app-loading name="project-users">
+        <ProjectUsersManager
+          :project="project"
+          :users="users"
+          :invitations="invitations"
+        />
+      </app-loading>
+    </div>
+
+    <div class="project-overview__block--models">
+      <app-loading name="project-models">
+        <ModelsManager :project="project" :models="models" />
+      </app-loading>
+    </div>
   </div>
 </template>
 
@@ -64,6 +73,7 @@ import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
 // Components
+import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
@@ -72,6 +82,7 @@ import ProjectUsersManager from "@/components/specific/users/project-users-manag
 
 export default {
   components: {
+    AppLoading,
     AppSlotContent,
     FileUploader,
     ModelsManager,
@@ -93,10 +104,12 @@ export default {
       toggle: toggleFileUploader
     } = useToggle();
 
-    const reloadModels = debounce(() => {
-      loadSpaceInfo(currentSpace.value);
-      loadProjectFileStructure(currentProject.value);
-      loadProjectModels(currentProject.value);
+    const reloadModels = debounce(async () => {
+      await Promise.all([
+        loadSpaceInfo(currentSpace.value),
+        loadProjectFileStructure(currentProject.value),
+        loadProjectModels(currentProject.value)
+      ]);
     }, 1000);
 
     const notifyForbiddenUpload = () => {
