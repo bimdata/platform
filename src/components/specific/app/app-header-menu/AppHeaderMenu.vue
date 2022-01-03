@@ -32,7 +32,12 @@
             {{ $t("AppHeaderMenu.entryOldPlatform") }}
           </BIMDataButton>
           <div class="separator"></div>
-          <BIMDataButton ghost squared @click="goToUserSubscriptions">
+          <BIMDataButton
+            v-if="isSubscriptionEnabled"
+            ghost
+            squared
+            @click="goToUserSubscriptions"
+          >
             <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
           </BIMDataButton>
           <BIMDataButton ghost squared @click="openLanguageSelector">
@@ -66,6 +71,7 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useToggle } from "@/composables/toggle.js";
 import { useAuth } from "@/state/auth.js";
@@ -119,6 +125,7 @@ export default {
 
     return {
       // References
+      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       showLanguageSelector,
       user,
       // Methods
