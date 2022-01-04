@@ -128,8 +128,7 @@ export default {
       goToModelViewer,
       onClick,
       toggleMenu,
-      isFolder,
-      console
+      isFolder
     };
   }
 };

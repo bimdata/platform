@@ -1,10 +1,8 @@
 <template>
   <div class="visa-add">
     <template v-if="isSelectingValidator">
-      <VisaAddValidator
-        :baseInfo="baseInfo"
-        :fileParentId="fileParentId"
-        :peopleListRaw="validatorList || peopleListRaw"
+      <VisaSelectionValidator
+        :userList="validatorList || userList"
         @validator-list="getValidatorList"
         @get-back="getBack"
         @safe-zone-handler="safeZoneHandler"
@@ -79,16 +77,15 @@
 import { ref, watch, onMounted, computed } from "vue";
 
 import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone";
-import VisaAddValidator from "@/components/specific/visa/visa-add/visa-add-validator/VisaAddValidator";
+import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
 import { formatToDateObject, formatDate, regexDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
-import { fullName } from "@/utils/users";
-import { useProjects } from "@/state/projects";
+import { getUserList } from "@/utils/visas";
 
 export default {
   components: {
     VisaSafeZone,
-    VisaAddValidator
+    VisaSelectionValidator
   },
   props: {
     baseInfo: {
@@ -103,7 +100,6 @@ export default {
   emits: ["close", "set-file-to-manage", "set-visa-id", "fetch-visas"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
-    const { fetchFolderProjectUsers } = useProjects();
 
     const dateInput = ref("");
     const descInput = ref("");
@@ -113,7 +109,7 @@ export default {
     const isClosing = ref(null);
     const validatorList = ref(null);
     const visaId = ref(null);
-    const peopleListRaw = ref([]);
+    const userList = ref([]);
 
     const isDateConform = ({ value }) => {
       const dateToCompare = formatToDateObject(value);
@@ -178,32 +174,7 @@ export default {
       }
     };
 
-    const getList = async () => {
-      const res = await fetchFolderProjectUsers(
-        {
-          id: props.baseInfo.projectPk,
-          cloud: {
-            id: props.baseInfo.cloudPk
-          }
-        },
-        { id: props.fileParentId }
-      );
-
-      peopleListRaw.value = res
-        .map(people => ({
-          ...people,
-          fullName: fullName(people),
-          hasAccess: people.permission >= 50,
-          isFindable: true,
-          isSelected: false,
-          searchContent: `${people.firstname || ""}${people.lastname || ""}${
-            people.email || ""
-          }`.toLowerCase()
-        }))
-        .filter(({ isSelf }) => !isSelf);
-    };
-
-    onMounted(() => getList());
+    onMounted(async () => (userList.value = await getUserList(props)));
 
     return {
       // References
@@ -215,8 +186,7 @@ export default {
       isSelectingValidator,
       validatorList,
       validatorListCounter,
-      peopleListRaw,
-      console,
+      userList,
       // Methods
       submit,
       onClose,

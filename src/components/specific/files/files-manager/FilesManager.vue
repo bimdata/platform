@@ -380,7 +380,6 @@ export default {
       projectPk: currentProject.value.id,
       userVisas,
       isVisaList,
-      console,
       // Methods
       closeAccessManager,
       closeDeleteModal,

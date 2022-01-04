@@ -35,6 +35,21 @@ class VisaService {
     }
   }
 
+  async deleteValidation(validationId, visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.deleteValidation({
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId,
+        id: validationId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_DELETE_VALIDATION_ERROR, error);
+    }
+  }
+
   async fetchVisa(visaId, baseInfo) {
     const { cloudPk, projectPk, documentPk } = baseInfo;
     try {
@@ -104,7 +119,7 @@ class VisaService {
         id: visaId
       });
     } catch (error) {
-      throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);
+      throw new RuntimeError(ERRORS.VISA_DELETE_ERROR, error);
     }
   }
 

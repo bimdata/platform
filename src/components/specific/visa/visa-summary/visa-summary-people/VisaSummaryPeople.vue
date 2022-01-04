@@ -18,7 +18,7 @@
           radius
           ghost
           margin="0 10px 0 0"
-          @click="$emit('reset-visa')"
+          @click="$emit('reset-visa', people.id)"
         >
           <BIMDataIcon name="reset" size="xs" />
         </BIMDataButton>
@@ -46,28 +46,42 @@
         "
         size="xs"
       />
+      <template v-if="isAuthor">
+        <div class="visa-add-summary-people__right-side__actions">
+          <VisaSummaryPeopleActions
+            :validationId="people.id"
+            @reset-visa="$emit('reset-visa', $event)"
+            @delete-val="$emit('delete-val', $event)"
+          />
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import VisaSummaryPeopleActions from "./visa-summary-people-actions/VisaSummaryPeopleActions.vue";
 
 import STATUS from "@/config/visa-status";
+
 export default {
-  components: { UserAvatar },
+  components: { UserAvatar, VisaSummaryPeopleActions },
   props: {
     peopleList: {
       type: Object,
       required: true
+    },
+    isAuthor: {
+      type: Boolean,
+      required: true
     }
   },
-  emits: ["reset-visa"],
+  emits: ["reset-visa", "delete-val"],
   setup() {
     return {
       // references
-      STATUS,
-      console
+      STATUS
     };
   }
 };

@@ -27,7 +27,7 @@
       </BIMDataSearch>
     </div>
     <div class="visa-add-validator__people-list">
-      <VisaAddValidatorPeople :peopleList="peopleList" />
+      <VisaValidatorPeople :userList="peopleList" />
     </div>
     <div class="visa-add-validator__action">
       <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
@@ -45,22 +45,14 @@
 <script>
 import { ref, watch, computed } from "vue";
 
-import VisaAddValidatorPeople from "@/components/specific/visa/visa-add/visa-add-validator/visa-add-validator-people/VisaAddValidatorPeople";
+import VisaValidatorPeople from "./visa-selection-validator-people/VisaSelectionValidatorPeople.vue";
 
 export default {
   components: {
-    VisaAddValidatorPeople
+    VisaValidatorPeople
   },
   props: {
-    baseInfo: {
-      type: Object,
-      required: true
-    },
-    fileParentId: {
-      type: Number,
-      required: true
-    },
-    peopleListRaw: {
+    userList: {
       type: Array,
       required: true
     }
@@ -77,7 +69,7 @@ export default {
     watch(
       filter,
       () => {
-        peopleList.value = props.peopleListRaw
+        peopleList.value = props.userList
           .map(people => ({
             ...people,
             isFindable:
@@ -105,11 +97,10 @@ export default {
       peopleListCounter,
       filter,
       // methods
-      onClick,
-      console
+      onClick
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./VisaAddValidator.scss"></style>
+<style scoped lang="scss" src="./VisaSelectionValidator.scss"></style>

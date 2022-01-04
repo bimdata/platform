@@ -120,8 +120,13 @@
 
     &__validator {
       margin-top: var(--spacing-unit);
-      &__title {
-        font-size: 1rem;
+      &__header {
+        display: flex;
+        justify-content: space-between;
+        &__title {
+          font-size: 1rem;
+          margin: auto 0;
+        }
       }
     }
 

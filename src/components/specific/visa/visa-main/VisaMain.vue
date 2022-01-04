@@ -99,7 +99,6 @@ export default {
       //references
       visaId,
       baseInfo,
-      console,
       currentView,
       // methods
       setVisaId,

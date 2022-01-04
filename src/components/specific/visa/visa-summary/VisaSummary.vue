@@ -1,5 +1,12 @@
 <template>
   <div class="visa-summary">
+    <template v-if="isSelectingValidator">
+      <VisaSelectionValidator
+        :userList="userList"
+        @validator-list="getValidatorList"
+        @get-back="getBack"
+      />
+    </template>
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="visa-summary__safe-zone">
@@ -7,7 +14,7 @@
         </div>
       </template>
     </transition>
-    <template v-if="visa">
+    <template v-if="visa && !isSelectingValidator">
       <div class="visa-summary__shell" :class="{ safeZone: isSafeZone }">
         <div class="visa-summary__shell__header">
           <div class="visa-summary__shell__header__left-side">
@@ -94,13 +101,24 @@
           <span>{{ visa.document.fileName }}</span>
         </div>
         <div class="visa-summary__shell__validator">
-          <span class="visa-summary__shell__validator__title">{{
-            $t("Visa.summary.validator")
-          }}</span>
+          <div class="visa-summary__shell__validator__header">
+            <span class="visa-summary__shell__validator__header__title">{{
+              $t("Visa.summary.validator")
+            }}</span>
+            <BIMDataButton ghost rounded icon>
+              <BIMDataIcon
+                name="addUser"
+                size="s"
+                @click="isSelectingValidator = true"
+              />
+            </BIMDataButton>
+          </div>
           <div class="visa-summary__shell__validator__people-list">
             <VisaSummaryPeople
+              :isAuthor="isAuthor"
               :peopleList="visa.validations"
-              @reset-visa="resetResponse"
+              @reset-visa="actions.reset"
+              @delete-val="actions.deleteVal"
             />
           </div>
         </div>
@@ -110,19 +128,21 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import STATUS from "@/config/visa-status";
 import VisaSummaryPeople from "./visa-summary-people/VisaSummaryPeople";
 import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
+import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
 
 import { useVisa } from "@/state/visa";
 import { useUser } from "@/state/user";
 
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
+import { getUserList } from "@/utils/visas";
 
 export default {
-  components: { VisaSummaryPeople, VisaSafeZone },
+  components: { VisaSummaryPeople, VisaSafeZone, VisaSelectionValidator },
   props: {
     baseInfo: {
       type: Object,
@@ -145,7 +165,9 @@ export default {
       denyVisa,
       resetVisa,
       deleteVisa,
-      closeVisa
+      closeVisa,
+      createValidation,
+      deleteValidation
     } = useVisa();
 
     const { loadUser } = useUser();
@@ -155,6 +177,9 @@ export default {
     const validationUserId = ref(null);
     const isAuthor = ref(false);
     const isSafeZone = ref(false);
+    const userList = ref(null);
+    const validatorList = ref(null);
+    const isSelectingValidator = ref(false);
     const safeZoneInfo = ref({
       type: null,
       action: null
@@ -170,13 +195,20 @@ export default {
         action: async () =>
           denyVisa(validationUserId.value, props.visaId, props.baseInfo)
       },
-      reset: async () =>
-        resetVisa(validationUserId.value, props.visaId, props.baseInfo),
+      reset: async validationId => {
+        await resetVisa(validationId, props.visaId, props.baseInfo);
+        await fetchAllVisaInfo();
+      },
       delete: async () => deleteVisa(props.visaId, props.baseInfo),
       closeVisa: async () => closeVisa(props.visaId, props.baseInfo),
       close: () => {
         emit("set-visa-id", 0);
         if (!props.isVisaList) emit("close");
+      },
+      createVal: async id => createValidation(props.visaId, id, props.baseInfo),
+      deleteVal: async validationId => {
+        deleteValidation(validationId, props.visaId, props.baseInfo);
+        await fetchAllVisaInfo();
       }
     });
 
@@ -192,6 +224,7 @@ export default {
         const { id } = await loadUser();
 
         const res = await fetchVisa(props.visaId, props.baseInfo);
+
         visa.value = {
           ...res,
           deadline: formatDateDDMMYYY(res.deadline),
@@ -231,24 +264,15 @@ export default {
 
     const responseHandler = async type => {
       if (actions.value[type].isActive) {
-        await actions.value.reset();
+        await actions.value.reset(validationUserId.value);
       } else {
         await actions.value[type].action();
       }
-      await getVisa();
-      statusVisaHandler();
-    };
-
-    const resetResponse = async () => {
-      await actions.value.reset();
-      await getVisa();
-      statusVisaHandler();
+      await fetchAllVisaInfo();
     };
 
     const safeZoneHandler = type => {
       if (type) {
-        console.log("type", type);
-
         isSafeZone.value = true;
         safeZoneInfo.value = {
           type,
@@ -271,10 +295,53 @@ export default {
       isSafeZone.value = false;
     };
 
-    onMounted(async () => {
+    const getBack = () => (isSelectingValidator.value = false);
+    const getValidatorList = event => (validatorList.value = event.value);
+
+    watch(validatorList, async () => {
+      await Promise.all(
+        validatorList.value
+          .map(({ isSelected, id, validation }) => {
+            const isToAdd =
+              isSelected &&
+              userList.value.some(user => user.id === id && !user.isSelected);
+            const isToDel =
+              !isSelected &&
+              userList.value.some(user => user.id === id && user.isSelected);
+            return {
+              id,
+              validationId: validation.id,
+              isToAdd,
+              isToDel
+            };
+          })
+          .filter(({ isToAdd, isToDel }) => isToAdd || isToDel)
+          .map(async ({ id, validationId, isToAdd, isToDel }) => {
+            if (isToAdd) {
+              await actions.value.createVal(id);
+            } else if (isToDel) {
+              await actions.value.deleteVal(validationId);
+            }
+          })
+      );
+      await fetchAllVisaInfo();
+    });
+
+    const fetchAllVisaInfo = async () => {
       await getVisa();
-      !isAuthor.value && (await getValidationUserId());
+      userList.value = await getUserList(
+        {
+          baseInfo: props.baseInfo,
+          fileParentId: visa.value.document.parentId
+        },
+        visa.value.validations
+      );
       statusVisaHandler();
+    };
+
+    onMounted(async () => {
+      await fetchAllVisaInfo();
+      !isAuthor.value && (await getValidationUserId());
     });
 
     return {
@@ -286,13 +353,16 @@ export default {
       isDenied,
       isSafeZone,
       safeZoneInfo,
+      userList,
+      isSelectingValidator,
+      validatorList,
       // methods
-      resetResponse,
       actions,
       safeZoneHandler,
       onSafeZone,
       responseHandler,
-      console
+      getValidatorList,
+      getBack
     };
   }
 };

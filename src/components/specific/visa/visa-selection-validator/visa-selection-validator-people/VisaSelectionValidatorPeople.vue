@@ -1,7 +1,7 @@
 <template>
   <div
     class="visa-add-validator-people"
-    v-for="people in peopleList"
+    v-for="people in userList"
     :key="people.id"
   >
     <BIMDataCheckbox
@@ -46,7 +46,7 @@ export default {
     UserAvatar
   },
   props: {
-    peopleList: {
+    userList: {
       type: Array,
       required: true
     }
@@ -63,4 +63,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./VisaAddValidatorPeople.scss"></style>
+<style scoped lang="scss" src="./VisaSelectionValidatorPeople.scss"></style>

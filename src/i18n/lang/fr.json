@@ -771,7 +771,9 @@
      "people": {
       "accept": "Validé",
       "deny": "Refusé",
-      "pending": "En attente"
+      "pending": "En attente",
+      "getRidOfValidator": "Retirer le validant",
+      "refresh": "Rénitialiser la validation"
      }
     },
     "list": {
@@ -835,6 +837,8 @@
     "visaResumeError": "Erreur lors de la ré-ouverture du visa",
     "visaFetchCreatedError": "Impossible de récupérer les visas",
     "visaFetchValidatorError": "Impossible de récupérer les visas",
+    "visaDeleteValidationError": "Impossible de supprimer ce validateur",
+    "visaDeleteError": "Impossible de supprimer ce visa",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",

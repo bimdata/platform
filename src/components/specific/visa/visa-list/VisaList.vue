@@ -97,8 +97,7 @@ export default {
       onClickToReachVisa,
       selectTab,
       formatDateDDMMYYY,
-      fullName,
-      console
+      fullName
     };
   }
 };
