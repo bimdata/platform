@@ -121,7 +121,9 @@ export default {
     };
 
     const onSpaceCreated = async createdSpace => {
-      if (currentSpace.value) {
+      const isSpaceUpgrade = !!currentSpace.value;
+
+      if (isSpaceUpgrade) {
         await waitForUpdatedSpaceSize(
           currentSpace.value,
           spaceInfo.value.smartDataSizeAvailable,
@@ -133,10 +135,17 @@ export default {
         {
           type: "success",
           title: t("Success"),
-          message: t("SubscriptionPro.spaceCreatedNotification", {
-            organizationName: createdSpace.organization.name,
-            spaceName: createdSpace.name
-          })
+          message: t(
+            `SubscriptionPro.${
+              isSpaceUpgrade
+                ? "spaceUpgradedNotification"
+                : "spaceCreatedNotification"
+            }`,
+            {
+              organizationName: createdSpace.organization.name,
+              spaceName: createdSpace.name
+            }
+          )
         },
         8000
       );

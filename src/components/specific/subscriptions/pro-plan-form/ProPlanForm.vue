@@ -76,7 +76,8 @@ export default {
                 loading.value = false;
               },
               onSuccess: () => {
-                isSuccess.value = true;
+                // isSuccess.value = true;
+                loading.value = true;
                 waitForCreatedSpace(space).then(createdSpace =>
                   emit("space-created", createdSpace)
                 );

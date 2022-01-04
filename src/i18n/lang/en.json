@@ -54,7 +54,8 @@
     "subscribeTitle": "Subscribe to Professional Plan",
     "upgradeTitle": "Upgrade to pro platform",
     "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
-    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}",
+    "spaceUpgradedNotification": "Congratulations ! You have just upgraded your space {spaceName} to a pro plan."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Search projects"
