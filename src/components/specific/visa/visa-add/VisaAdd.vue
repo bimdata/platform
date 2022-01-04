@@ -78,9 +78,9 @@ import { ref, watch, onMounted, computed } from "vue";
 
 import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone";
 import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
-import { formatToDateObject, formatDate, regexDate } from "@/utils/date";
+import { formatDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
-import { getUserList } from "@/utils/visas";
+import { getUserList, isDateConform } from "@/utils/visas";
 
 export default {
   components: {
@@ -111,16 +111,6 @@ export default {
     const visaId = ref(null);
     const userList = ref([]);
 
-    const isDateConform = ({ value }) => {
-      const dateToCompare = formatToDateObject(value);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      return (
-        value.match(regexDate) && dateToCompare.getTime() >= today.getTime()
-      );
-    };
-
     const safeZoneHandler = () =>
       dateInput.value.length || descInput.value.length || validatorList.value
         ? (isSafeZone.value = true)
@@ -144,7 +134,7 @@ export default {
     );
 
     const submit = async () => {
-      const dateConform = isDateConform(dateInput);
+      const dateConform = isDateConform(dateInput.value);
 
       if (dateConform) {
         try {

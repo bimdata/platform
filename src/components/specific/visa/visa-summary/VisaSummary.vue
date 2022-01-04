@@ -22,6 +22,21 @@
             <span>{{ $t("Visa.summary.title") }}</span>
           </div>
           <div class="visa-summary__shell__header__right-side">
+            <BIMDataButton
+              v-if="isEditing"
+              ghost
+              rounded
+              icon
+              @click="undoEditing"
+            >
+              <BIMDataIcon name="undo" size="xxxs" />
+            </BIMDataButton>
+            <BIMDataButton ghost rounded icon @click="handleEdit">
+              <BIMDataIcon
+                :name="isEditing ? 'validate' : 'edit'"
+                size="xxxs"
+              />
+            </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="actions.close">
               <BIMDataIcon name="close" size="xxxs" />
             </BIMDataButton>
@@ -33,21 +48,29 @@
             <span>{{ visa.creator.fullName }}</span>
           </div>
           <div
-            v-if="visa.description"
+            v-if="visa.description || isEditing"
             class="visa-summary__shell__content__desc"
           >
             <BIMDataTextarea
               v-model="visa.description"
               name="description"
               width="100%"
-              readonly="true"
+              :readonly="!isEditing"
             />
           </div>
           <div class="visa-summary__shell__content__deadline">
             <span class="visa-summary__shell__content__deadline__title">{{
               $t("Visa.summary.term")
             }}</span>
-            <span class="visa-summary__shell__content__deadline__date">{{
+            <BIMDataInput
+              v-if="isEditing"
+              v-model="visa.deadline"
+              :placeholder="$t('Visa.add.toValidate')"
+              :error="hasDateError"
+              :errorMessage="$t('Visa.add.errorDate')"
+            >
+            </BIMDataInput>
+            <span v-else class="visa-summary__shell__content__deadline__date">{{
               visa.deadline
             }}</span>
           </div>
@@ -130,6 +153,8 @@
 <script>
 import { ref, computed, onMounted, watch } from "vue";
 import STATUS from "@/config/visa-status";
+import { formatDate } from "@/utils/date";
+
 import VisaSummaryPeople from "./visa-summary-people/VisaSummaryPeople";
 import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
 import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
@@ -139,7 +164,7 @@ import { useUser } from "@/state/user";
 
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
-import { getUserList } from "@/utils/visas";
+import { getUserList, isDateConform } from "@/utils/visas";
 
 export default {
   components: { VisaSummaryPeople, VisaSafeZone, VisaSelectionValidator },
@@ -167,12 +192,15 @@ export default {
       deleteVisa,
       closeVisa,
       createValidation,
-      deleteValidation
+      deleteValidation,
+      updateVisa
     } = useVisa();
 
     const { loadUser } = useUser();
     const isValidated = ref(false);
     const isDenied = ref(false);
+    const isEditing = ref(false);
+    const hasDateError = ref(false);
     const visa = ref(null);
     const validationUserId = ref(null);
     const isAuthor = ref(false);
@@ -197,6 +225,10 @@ export default {
       },
       reset: async validationId => {
         await resetVisa(validationId, props.visaId, props.baseInfo);
+        await fetchAllVisaInfo();
+      },
+      update: async data => {
+        await updateVisa(props.visaId, props.baseInfo, data);
         await fetchAllVisaInfo();
       },
       delete: async () => deleteVisa(props.visaId, props.baseInfo),
@@ -339,6 +371,29 @@ export default {
       statusVisaHandler();
     };
 
+    const handleEdit = async () => {
+      if (isEditing.value) {
+        const dateConform = isDateConform(visa.value.deadline);
+        hasDateError.value = !dateConform;
+
+        if (dateConform) {
+          await actions.value.update({
+            description: visa.value.description,
+            deadline: formatDate(visa.value.deadline)
+          });
+
+          isEditing.value = false;
+        }
+      } else {
+        isEditing.value = true;
+      }
+    };
+
+    const undoEditing = async () => {
+      isEditing.value = false;
+      await fetchAllVisaInfo();
+    };
+
     onMounted(async () => {
       await fetchAllVisaInfo();
       !isAuthor.value && (await getValidationUserId());
@@ -356,13 +411,17 @@ export default {
       userList,
       isSelectingValidator,
       validatorList,
+      isEditing,
+      hasDateError,
       // methods
       actions,
+      undoEditing,
       safeZoneHandler,
       onSafeZone,
       responseHandler,
       getValidatorList,
-      getBack
+      getBack,
+      handleEdit
     };
   }
 };

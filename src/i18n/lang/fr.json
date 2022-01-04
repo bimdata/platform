@@ -839,6 +839,7 @@
     "visaFetchValidatorError": "Impossible de récupérer les visas",
     "visaDeleteValidationError": "Impossible de supprimer ce validateur",
     "visaDeleteError": "Impossible de supprimer ce visa",
+    "visaUpdateError": "Impossible de mettre à jour ce visa",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",

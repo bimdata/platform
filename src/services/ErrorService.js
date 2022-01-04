@@ -52,6 +52,7 @@ const ERRORS = Object.freeze({
   VISA_FECTH_VALIDATOR_ERROR: "visaFetchValidatorError",
   VISA_DELETE_VALIDATION_ERROR: "visaDeleteValidationError",
   VISA_DELETE_ERROR: "visaDeleteError",
+  VISA_UPDATE_ERROR: "visaUpdateError",
   SUBSCRIPTIONS_FETCH_ERROR: "subscriptionsFetchError",
   PLATFORM_SUBSCRIBE_ERROR: "platformSubscribeError",
   DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",

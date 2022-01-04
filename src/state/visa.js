@@ -48,6 +48,10 @@ const fetchToValidateVisas = async baseInfo => {
   return VisaService.fetchToValidateVisas(baseInfo);
 };
 
+const updateVisa = async (visaId, baseInfo, data) => {
+  return VisaService.updateVisa(visaId, baseInfo, data);
+};
+
 export function useVisa() {
   return {
     // Methods
@@ -62,6 +66,7 @@ export function useVisa() {
     resumeVisa,
     fetchCreatedVisas,
     fetchToValidateVisas,
-    deleteValidation
+    deleteValidation,
+    updateVisa
   };
 }

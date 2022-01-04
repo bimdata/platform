@@ -1,3 +1,5 @@
+import { formatToDateObject, regexDate } from "./date";
+
 import { useProjects } from "@/state/projects";
 import { fullName } from "@/utils/users";
 
@@ -43,6 +45,14 @@ const getUnmatchedUsers = async (visaList, baseInfo) => {
   return allVisas;
 };
 
+const isDateConform = date => {
+  const dateToCompare = formatToDateObject(date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return date.match(regexDate) && dateToCompare.getTime() >= today.getTime();
+};
+
 const getUserList = async ({ baseInfo, fileParentId }, validationList) => {
   const res = await fetchFolderProjectUsers(
     {
@@ -74,4 +84,4 @@ const getUserList = async ({ baseInfo, fileParentId }, validationList) => {
     .filter(({ isSelf }) => !isSelf);
 };
 
-export { getUnmatchedUsers, getUserList };
+export { isDateConform, getUnmatchedUsers, getUserList };

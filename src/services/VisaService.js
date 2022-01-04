@@ -174,6 +174,21 @@ class VisaService {
       throw new RuntimeError(ERRORS.VISA_FECTH_VALIDATOR_ERROR, error);
     }
   }
+
+  async updateVisa(visaId, baseInfo, data) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.updateVisa({
+        data,
+        cloudPk,
+        projectPk,
+        documentPk,
+        id: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_UPDATE_ERROR, error);
+    }
+  }
 }
 
 const service = new VisaService();

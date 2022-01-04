@@ -29,6 +29,12 @@
           font-size: 1rem;
         }
       }
+      &__right-side {
+        display: flex;
+        flex-grow: 1;
+        margin: auto 0;
+        justify-content: end;
+      }
     }
 
     &__content {
@@ -60,6 +66,7 @@
         justify-content: space-between;
         &__title {
           font-size: 1rem;
+          margin: auto 0;
         }
         &__date {
           color: var(--color-high);
