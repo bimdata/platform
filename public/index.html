@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.png">
     <title>BIMData Platform</title>
-    <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
-    <script type="text/javascript">
-      Paddle.Environment.set('sandbox');
-      Paddle.Setup({ vendor: 2342 });
-    </script>
+
+    <% if (VUE_APP_SUBSCRIPTION_ENABLED === "true") { %>
+      <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+    <% } %>
   </head>
   <body>
     <noscript>
       <strong>
-        We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        We're sorry but BIMData Platform doesn't work properly without JavaScript enabled.
         Please enable it to continue.
       </strong>
     </noscript>

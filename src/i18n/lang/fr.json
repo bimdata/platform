@@ -42,7 +42,7 @@
   },
   "Subscribe": {
     "title": "Choisissez votre abonnement",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    "text": "Vous n'avez le droit qu'à un seul espace gratuit parmi vos organisations. Si cet espace existe déjà, passez à l'abonnement professionel pour plus de fonctionnalités."
   },
   "SubscriptionDatapack": {
     "title": "Gérer mes DataPacks",
@@ -127,7 +127,7 @@
     "withDatapack": "+ Datapack",
     "cancelSubscriptionButton": "Annuler l'abonnement",
     "updateCreditCardButton": "Mettre à jour la carte de crédit",
-    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "emptyTableText": "Les factures apparaitront ici lorsque vous aurez activé vos abonnements.",
     "subscribeButton": "Passez à notre plateforme Pro",
     "headers": {
       "space": "Espace",
@@ -172,7 +172,6 @@
     "baseNote": "Stockage",
     "baseText": "Inclus dans l'abonnement",
     "datapackNote": "Stockage additionnel",
-    "datapackText": "",
     "priceUnit": " / GB / mois",
     "totalUnit": " / mois",
     "actualStorage": "Stockage actuel",
@@ -379,7 +378,7 @@
   "InvoicesTable": {
     "title": "Factures",
     "tablePlaceholder": "Chargement des factures...",
-    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "emptyTableText": "Les factures apparaitront ici lorsque vous aurez activé vos abonnements.",
     "subscribeButton": "Passez à notre plateforme Pro",
     "headers": {
       "amount": "Montant",
@@ -486,7 +485,6 @@
 
   "OrganizationDeleteGuard": {
     "title": "Supprimer l'organisation",
-    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
     "submitButtonText": "Supprimer"
   },
 
@@ -500,7 +498,6 @@
     "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
     "submitButtonText": "Valider",
     "successTitle": "Félicitation votre organisation vient d'être créée",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
     "successButtonText": "OK"
   },
 
@@ -523,8 +520,7 @@
     "spaceListTitle": "Sélectionnez les espaces à importer",
     "spaceListPlaceholder": "Aucun espace à importer...",
     "submitButtonText": "Importer",
-    "successTitle": "Les espaces ont été déplacés",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successTitle": "Félicitation vos espaces viennent d'être déplacés",
     "successButtonText": "OK"
   },
 
@@ -592,9 +588,8 @@
   "ProPlanForm": {
     "title": "Prix",
     "priceUnit": "/ mois",
-    "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
-    "successButtonText": "Page d'accueil"
+    "successTitle": "Félicitation ! Vous avez souscris à un Abonnement Pro !",
+    "successMessage": "Votre paiement a bien été effectué. Vous pouvez dès à présent profiter de votre abonnement professionnel."
   },
 
   "ProPlanInfo": {

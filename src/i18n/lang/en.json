@@ -167,7 +167,6 @@
     "baseNote": "Storage",
     "baseText": "Included with pro plan",
     "datapackNote": "Additional storage",
-    "datapackText": "",
     "priceUnit": " / GB / month",
     "totalUnit": " / month",
     "actualStorage": "Actual storage",
@@ -584,8 +583,7 @@
   "ProPlanForm": {
     "title": "Price",
     "priceUnit": "/ month",
-    "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
-    "successButtonText": "Home"
+    "successTitle": "Congratulation ! You just subscribed to the Pro Platform."
   },
 
   "ProPlanInfo": {
