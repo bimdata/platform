@@ -32,6 +32,17 @@
   
     &__validator {
       margin: calc(var(--spacing-unit ) * 2) 0;
+      &__counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        margin-left: 2%;
+        border-radius: 50%;
+        background-color: white;
+        color: var(--color-primary);
+      }
     }
   
     &__validate-date {
@@ -48,7 +59,6 @@
       }
     }
   
-  
     &__description {
       margin: calc(var(--spacing-unit ) * 3) 0;
   
@@ -56,20 +66,15 @@
         label {
           font-size: 1em;
         }
-  
         textarea {
           font-family: var(--primary-font);
           resize: vertical; 
           max-height: 200px;
         }
-  
-  
       }
-  
       .error {
         color: red;
       }
-  
     }
   
     &__action-button {

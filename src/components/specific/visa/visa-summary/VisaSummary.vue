@@ -17,8 +17,13 @@
           {{ $t("Visa.summary.appliedBy") }}
           <span>{{ visa.creator.fullName }}</span>
         </div>
-        <div class="visa-summary__content__desc">
-          {{ visa.description }}
+        <div v-if="visa.description" class="visa-summary__content__desc">
+          <BIMDataTextarea
+            v-model="visa.description"
+            name="description"
+            width="100%"
+            readonly="true"
+          />
         </div>
         <div class="visa-summary__content__deadline">
           <span class="visa-summary__content__deadline__title">{{
@@ -31,21 +36,29 @@
       </div>
       <div class="visa-summary__action-button">
         <BIMDataButton
-          style="background-color: var(--color-success)"
+          class="visa-summary__action-button__validate"
+          :class="{ active: isValidateButtonClicked }"
+          color="success"
           fill
           radius
           @click="validateVisa"
           >{{ $t("Visa.summary.validate") }}</BIMDataButton
         >
-        <BIMDataButton color="high" fill radius @click="refuseVisa">{{
-          $t("Visa.summary.deny")
-        }}</BIMDataButton>
+        <BIMDataButton
+          class="visa-summary__action-button__deny"
+          :class="{ active: isDenyButtonClicked }"
+          color="high"
+          fill
+          radius
+          @click="refuseVisa"
+          >{{ $t("Visa.summary.deny") }}</BIMDataButton
+        >
         <BIMDataButton color="primary" fill radius>{{
           $t("Visa.summary.comment")
         }}</BIMDataButton>
       </div>
       <div class="visa-summary__file">
-        <BIMDataFileIcon :name="visa.document.fileExt" size="20" />
+        <BIMDataFileIcon :fileName="visa.document.fileName" :size="20" />
         <span>{{ visa.document.fileName }}</span>
       </div>
       <div class="visa-summary__validator">
@@ -53,7 +66,10 @@
           $t("Visa.summary.validator")
         }}</span>
         <div class="visa-summary__validator__people-list">
-          <VisaSummaryPeople :peopleList="visa.validations" />
+          <VisaSummaryPeople
+            :peopleList="visa.validations"
+            @reset-visa="restoreVisa"
+          />
         </div>
       </div>
     </div>
@@ -61,7 +77,8 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
+import STATUS from "@/config/visa-status";
 import VisaSummaryPeople from "./visa-summary-people/VisaSummaryPeople";
 
 import { useVisa } from "@/state/visa";
@@ -69,7 +86,6 @@ import { useUser } from "@/state/user";
 
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
-import { fileExtension } from "@/utils/files";
 
 export default {
   components: { VisaSummaryPeople },
@@ -89,13 +105,17 @@ export default {
   },
   emits: ["close", "set-visa-id", "set-is-visa-list"],
   setup(props, { emit }) {
-    const { fetchVisa, acceptVisa, denyVisa } = useVisa();
+    const { fetchVisa, acceptVisa, denyVisa, resetVisa } = useVisa();
     const { loadUser } = useUser();
+    const isValidateButtonClicked = ref(false);
+    const isDenyButtonClicked = ref(false);
     const visa = ref(null);
     const validationUserId = ref(null);
 
     const getVisa = async () => {
       try {
+        const { id } = await loadUser();
+
         const res = await fetchVisa(props.visaId, props.baseInfo);
         visa.value = {
           ...res,
@@ -104,15 +124,12 @@ export default {
             ...res.creator,
             fullName: fullName(res.creator)
           },
-          document: {
-            ...res.document,
-            fileExt: fileExtension(res.document.fileName)
-          },
           validations: res.validations
             .map(elem => ({
               ...elem,
               userId: elem.validator.userId,
-              fullName: fullName(elem.validator)
+              fullName: fullName(elem.validator),
+              isSelf: elem.validator.userId === id
             }))
             .sort((a, b) => {
               if (!a.fullName) return 1;
@@ -126,20 +143,46 @@ export default {
     };
 
     const getValidationUserId = async () => {
-      const { id } = await loadUser();
       validationUserId.value = visa.value.validations.find(
-        ({ userId }) => userId === id
+        ({ isSelf }) => isSelf
       ).id;
     };
 
     const validateVisa = async () => {
-      await acceptVisa(validationUserId.value, props.visaId, props.baseInfo);
-      getVisa();
+      if (isValidateButtonClicked.value) {
+        await resetVisa(validationUserId.value, props.visaId, props.baseInfo);
+      } else {
+        await acceptVisa(validationUserId.value, props.visaId, props.baseInfo);
+      }
+      await getVisa();
+      handleStatusVisa();
     };
     const refuseVisa = async () => {
-      await denyVisa(validationUserId.value, props.visaId, props.baseInfo);
-      getVisa();
+      if (isDenyButtonClicked.value) {
+        await resetVisa(validationUserId.value, props.visaId, props.baseInfo);
+      } else {
+        await denyVisa(validationUserId.value, props.visaId, props.baseInfo);
+      }
+      await getVisa();
+      handleStatusVisa();
     };
+
+    const restoreVisa = async () => {
+      await resetVisa(validationUserId.value, props.visaId, props.baseInfo);
+      await getVisa();
+      handleStatusVisa();
+    };
+
+    const handleStatusVisa = () => {
+      isValidateButtonClicked.value = userStatus.value === STATUS.ACCEPT;
+      isDenyButtonClicked.value = userStatus.value === STATUS.DENY;
+    };
+
+    const userStatus = computed(
+      () =>
+        visa.value.validations.find(({ id }) => id === validationUserId.value)
+          .status
+    );
 
     const onClose = () => {
       emit("set-visa-id", 0);
@@ -149,14 +192,18 @@ export default {
     onMounted(async () => {
       await getVisa();
       await getValidationUserId();
+      handleStatusVisa();
     });
     return {
       // references
       visa,
       validationUserId,
+      isValidateButtonClicked,
+      isDenyButtonClicked,
       // methods
       validateVisa,
       refuseVisa,
+      restoreVisa,
       onClose,
       console
     };

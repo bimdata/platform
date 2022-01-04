@@ -17,12 +17,8 @@
 
   &__acces-denied {
     display: flex;
-    justify-content: end;
     width: 100%;
-    margin: auto 0 auto var(--spacing-unit);;
-    span {
-      margin: auto 0;
-    }
+    margin: auto 0 auto var(--spacing-unit);
   } 
 
   .hide {

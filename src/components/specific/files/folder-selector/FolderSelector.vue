@@ -44,10 +44,10 @@
           <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
           <BIMDataFileIcon
             v-else-if="file.type === 'Ifc'"
-            name="ifc"
-            size="13"
+            fileName=".ifc"
+            :size="13"
           />
-          <BIMDataFileIcon v-else :name="fileExtension(file.name)" size="13" />
+          <BIMDataFileIcon v-else :fileName="file.name" :size="13" />
         </span>
         <BIMDataTextBox
           class="folder-selector__body__item__name"
@@ -112,7 +112,6 @@
 import { computed, ref, watch } from "vue";
 
 import { useFiles } from "@/state/files";
-import { fileExtension } from "@/utils/files";
 import { isFolder } from "@/utils/file-structure";
 import FILE_PERMISSIONS from "@/config/file-permissions";
 
@@ -226,7 +225,6 @@ export default {
       selectFolder,
       submit,
       isAllowedToMoveFile,
-      fileExtension,
       isFolder
     };
   }

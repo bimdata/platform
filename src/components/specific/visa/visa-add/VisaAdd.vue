@@ -4,6 +4,7 @@
       <VisaAddValidator
         :baseInfo="baseInfo"
         :fileParentId="fileParentId"
+        :peopleListRaw="validatorList || peopleListRaw"
         @validator-list="getValidatorList"
         @get-back="getBack"
         @safe-zone-handler="safeZoneHandler"
@@ -37,8 +38,11 @@
               radius
               width="100%"
               @click="isSelectingValidator = true"
-              >{{ $t("Visa.add.validator") }}</BIMDataButton
-            >
+              >{{ $t("Visa.add.validator") }}
+              <div class="visa-add__content__validator__counter">
+                <span>{{ validatorListCounter }}</span>
+              </div>
+            </BIMDataButton>
           </div>
           <div class="visa-add__content__validate-date">
             <BIMDataInput
@@ -72,12 +76,14 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 
 import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone";
 import VisaAddValidator from "@/components/specific/visa/visa-add/visa-add-validator/VisaAddValidator";
 import { formatToDateObject, formatDate, regexDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
+import { fullName } from "@/utils/users";
+import { useProjects } from "@/state/projects";
 
 export default {
   components: {
@@ -97,6 +103,7 @@ export default {
   emits: ["close", "set-file-to-manage", "set-visa-id", "fetch-visas"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
+    const { fetchFolderProjectUsers } = useProjects();
 
     const dateInput = ref("");
     const descInput = ref("");
@@ -104,8 +111,9 @@ export default {
     const hasDateError = ref(false);
     const isSafeZone = ref(false);
     const isClosing = ref(null);
-    const validatorList = ref([]);
+    const validatorList = ref(null);
     const visaId = ref(null);
+    const peopleListRaw = ref([]);
 
     const isDateConform = ({ value }) => {
       const dateToCompare = formatToDateObject(value);
@@ -118,9 +126,7 @@ export default {
     };
 
     const safeZoneHandler = () =>
-      dateInput.value.length ||
-      descInput.value.length ||
-      validatorList.value.length
+      dateInput.value.length || descInput.value.length || validatorList.value
         ? (isSafeZone.value = true)
         : emit("close");
 
@@ -135,6 +141,11 @@ export default {
     const onClose = event => (isClosing.value = event);
     const getBack = () => (isSelectingValidator.value = false);
     const getValidatorList = event => (validatorList.value = event.value);
+    const validatorListCounter = computed(
+      () =>
+        (validatorList.value || []).filter(({ isSelected }) => isSelected)
+          .length
+    );
 
     const submit = async () => {
       const dateConform = isDateConform(dateInput);
@@ -167,6 +178,31 @@ export default {
       }
     };
 
+    const getList = async () => {
+      const res = await fetchFolderProjectUsers(
+        {
+          id: props.baseInfo.projectPk,
+          cloud: {
+            id: props.baseInfo.cloudPk
+          }
+        },
+        { id: props.fileParentId }
+      );
+
+      peopleListRaw.value = res.map(people => ({
+        ...people,
+        fullName: fullName(people),
+        hasAccess: people.permission >= 50,
+        isFindable: true,
+        isSelected: false,
+        searchContent: `${people.firstname || ""}${people.lastname || ""}${
+          people.email || ""
+        }`.toLowerCase()
+      }));
+    };
+
+    onMounted(() => getList());
+
     return {
       // References
       hasDateError,
@@ -176,6 +212,9 @@ export default {
       isClosing,
       isSelectingValidator,
       validatorList,
+      validatorListCounter,
+      peopleListRaw,
+      console,
       // Methods
       submit,
       onClose,

@@ -26,7 +26,10 @@
         :key="visa.id"
         @click="onClickToReachVisa(visa.id, visa.document.id)"
       >
-        <BIMDataFileIcon :name="fileExtension(visa.document.name)" size="20" />
+        <BIMDataIcon
+          :name="visa.unMatchedUsers.length ? 'warning' : 'refresh'"
+          size="s"
+        />
         <div class="visa-list__content__visa__desc">
           <span class="visa-list__content__visa__desc__title">{{
             visa.document.name
@@ -45,7 +48,6 @@
 <script>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { fileExtension } from "@/utils/files";
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
 
@@ -55,11 +57,16 @@ export default {
     userVisas: {
       type: Object,
       required: true
+    },
+    baseInfo: {
+      type: Object,
+      required: true
     }
   },
   emits: ["close", "set-is-visa-list", "set-visa-id", "set-base-info"],
   setup(props, { emit }) {
     const { t } = useI18n();
+
     const userVisasKeys = Object.keys(props.userVisas);
 
     const tabs = ref([
@@ -89,7 +96,6 @@ export default {
       onClickToClose,
       onClickToReachVisa,
       selectTab,
-      fileExtension,
       formatDateDDMMYYY,
       fullName,
       console

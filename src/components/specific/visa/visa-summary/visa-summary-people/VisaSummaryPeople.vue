@@ -12,6 +12,17 @@
       class="visa-add-summary-people__right-side"
       :class="`visa-add-summary-people__right-side__${people.status}`"
     >
+      <template v-if="people.isSelf && people.status != STATUS.PENDING">
+        <BIMDataButton
+          color="silver"
+          radius
+          ghost
+          margin="0 10px 0 0"
+          @click="$emit('reset-visa')"
+        >
+          <BIMDataIcon name="reset" size="xs" />
+        </BIMDataButton>
+      </template>
       <span>
         {{
           $t(
@@ -51,10 +62,12 @@ export default {
       required: true
     }
   },
+  emits: ["reset-visa"],
   setup() {
     return {
       // references
-      STATUS
+      STATUS,
+      console
     };
   }
 };

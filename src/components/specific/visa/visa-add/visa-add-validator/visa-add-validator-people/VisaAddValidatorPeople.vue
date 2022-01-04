@@ -32,8 +32,7 @@
       class="visa-add-validator-people__acces-denied"
     >
       <div class="visa-add-validator-people__acces-denied">
-        <BIMDataIcon name="warning" size="s" class="fill-high" />
-        <span>{{ $t("Visa.add.validatorView.accessDenied") }}</span>
+        <BIMDataIcon name="warning" size="s" class="fill-warning" />
       </div>
     </div>
   </div>

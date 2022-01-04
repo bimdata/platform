@@ -738,7 +738,6 @@
       "validatorView": {
         "getBack": "Retour",
         "validator": "Validant",
-        "accessDenied": "Pas d'accès au fichier",
         "accept": "Accepter"
       }
     },

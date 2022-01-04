@@ -20,10 +20,11 @@
   }
 
   &__content {
-    overflow: scroll;
+    overflow: auto;
     overflow-x: hidden;
     &__visa {
       display: flex;
+      align-items: center;
       margin: var(--spacing-unit);
       cursor: pointer;
       &__desc {
