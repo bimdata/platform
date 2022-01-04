@@ -1,9 +1,16 @@
 {
     "Dashboard": {
+        "spacesButtonTitle": "Bereiche",
+        "spacesButtonText": "Meine Bereiche",
+        "projectsButtonTitle": "Projekte",
+        "projectsButtonText": "Meine Projekte",
         "spacesTileTitle": "Bereiche",
         "spacesTileBottomText": "Meine Bereiche",
         "projectsTileTitle": "Projekte",
-        "projectsTileBottomText": "Meine Projekte"
+        "projectsTileBottomText": "Meine Projekte",
+        "subscriptionsTileTitle": "Abonnements",
+        "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
+        "subscriptionsTileBottomText": "Meine Abonnements verwalten"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Mitglied suchen"
@@ -30,12 +37,9 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Bereich suchen",
-        "organizationsButtonText": "Organizations",
-        "createButtonText": "Bereich erstellen"
+        "createButtonText": "Bereich erstellen",
+        "organizationsButtonText": "Organizations"
     },
-
-
-
     "ProjectFiles": {
         "groupsButtonText": "Gruppenverwaltung"
     },
@@ -47,9 +51,6 @@
             "message": "Wählen Sie eine Datei .ifc"
         }
     },
-
-
-
     "BreadcrumbSelector": {
         "inputPlaceholder": "Suchen"
     },
@@ -69,7 +70,8 @@
         "entryMarketplace": "Marketplace",
         "entryOldPlatform": "Plattform V1",
         "entryLanguage": "Sprachenauswahl",
-        "logoutButtonText": "Ausloggen"
+        "logoutButtonText": "Ausloggen",
+        "subscriptionPlatform": "Plattform-Abonnement"
     },
     "BreadcrumbGroupSelector": {
         "text": "Gruppen"
@@ -169,11 +171,11 @@
     },
     "FolderSelector": {
         "selectedFolder": "Ausgewählter Ordner",
-        "emptyFolderPlaceholder": "Leerer Ordner",
         "submitButtonText": {
             "moveTo": "Bestätigen",
             "moveHere": "Hierher verschieben"
-        }
+        },
+        "emptyFolderPlaceholder": "Leerer Ordner"
     },
     "GroupAccessSelector": {
         "defaultGroupName": "Alle"
@@ -233,6 +235,9 @@
         "archiveButtonText": "Archivieren",
         "deleteButtonText": "Löschen",
         "unarchiveButtonText": "Dearchivieren"
+    },
+    "ModelLastUpdateCell": {
+        "at": "in"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
@@ -300,36 +305,10 @@
             "status": "Status"
         }
     },
-    "OrganizationCard": {
-        "spaces": "{number} Bereichs"
-    },
-    "OrganizationForm": {
-        "inputPlaceholder": "Name",
-        "nameInputErrorMessage": "Ungültiger Name",
-        "submitButtonText": "Bestätigen",
-        "successButtonText": "OK"
-    },
-    "OrganizationsList": {
-        "createButtonText": "Organisation erstellen",
-        "searchInputPlaceholder": "Suchen"
-    },
-    "OrganizationsManager": {
-        "title": "Verwaltung von organisationen",
-        "backButtonText": "Zurück"
-    },
-    "OrganizationSpaceCard": {
-        "projects": "{number} Projekte"
-    },
-    "OrganizationSpacesImport": {
-        "submitButtonText": "Bestätigen",
-        "successButtonText": "OK"
-    },
-    "OrganizationSpacesList": {
-        "searchInputPlaceholder": "Suchen"
-    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Umbenennen",
-        "deleteButtonText": "Löschen"
+        "deleteButtonText": "Löschen",
+        "leaveButtonText": "Verlassen"
     },
     "ProjectCardDeleteGuard": {
         "title": "Das Projekt löschen",
@@ -349,15 +328,13 @@
         "inputErrorMessage": "Sie müssen einen Namen für das Projekt angeben:",
         "createButtonText": "Erstellen"
     },
-    "ProjectStatusBadge": {
-        "active": "AKTIV"
-    },
     "ProjectUsersManager": {
         "title": "Nutzer",
         "searchInputPlaceholder": "Einen Nutzer suchen"
     },
     "SpaceCard": {
-        "projects": "PROJEKTE"
+        "projects": "PROJEKTE",
+        "free": "Kostenlos"
     },
     "SpaceCardActionMenu": {
         "renameButtonText": "Umbenennen",
@@ -442,17 +419,9 @@
             "readWrite": "Lesen / schreiben"
         }
     },
-
-
-
     "Error": "Fehler",
     "Success": "Erfolg",
-
     "Errors": {
-        "organizationsFetchError": "Fail to fetch organizations",
-        "organizationCreateError": "Fehler beim Erstellen des organisation",
-        "organizationUpdateError": "Fehler bei der Aktualisierung des organisationen",
-        "organizationDeleteError": "Fehler beim Löschen des organisationen",
         "spacesFetchError": "Unmöglich, die Bereichsliste abzurufen",
         "spaceCreateError": "Fehler beim Erstellen des Bereichs",
         "spaceUpdateError": "Fehler bei der Aktualisierung des Bereichs",
@@ -485,6 +454,240 @@
         "groupsFetchError": "Unmöglich, die Gruppenliste abzurufen",
         "groupCreateError": "Fehler beim Erstellen der Gruppe",
         "groupUpdateError": "Fehler bei der Aktualisierung der Gruppe",
-        "groupDeleteError": "Fehler beim Löschen der Gruppe"
+        "groupDeleteError": "Fehler beim Löschen der Gruppe",
+        "organizationsFetchError": "Fail to fetch organizations",
+        "organizationCreateError": "Fehler beim Erstellen des organisation",
+        "organizationUpdateError": "Fehler bei der Aktualisierung des organisationen",
+        "organizationDeleteError": "Fehler beim Löschen des organisationen",
+        "userLeaveError": "Sie können dieses Projekt nicht verlassen, da Sie der letzte Administrator sind",
+        "subscriptionsFetchError": "Die Liste der Abonnements kann nicht abgerufen werden",
+        "platformSubscribeError": "Fehler beim Erstellen des Links für das Abonnement",
+        "datapackSubscribeError": "Fehler beim Abonnieren eines neuen Datapacks",
+        "datapackUpdateError": "Fehler bei der Aktualisierung des Datapacks"
+    },
+    "ProjectStatusBadge": {
+        "new": "NEU",
+        "active": "AKTIV",
+        "inactive": "NICHT AKTIV",
+        "paused": "PAUSE"
+    },
+    "Payment": {
+        "titlePlatform": "Zur professionellen Plattform wechseln",
+        "titleDatapack": "Zufügen eines DataPacks"
+    },
+    "Subscribe": {
+        "title": "Wählen Sie Ihr Abonnement",
+        "text": "Sie dürfen nur einen kostenlosen Raum innerhalb Ihrer Organisation haben. Wenn Sie über so einen Raum bereits verfügen, müssen Sie auf das professionelle Abonnement hochstufen, um weitere Funktionen zu erhalten."
+    },
+    "SubscriptionDatapack": {
+        "title": "Meine DataPacks verwalten",
+        "successNotification": "Sie haben jetzt {size} im Raum {spaceName}"
+    },
+    "SubscriptionFree": {
+        "title": "Kostenlos einen Raum erstellen",
+        "text": "Sie sind dabei, Ihren kostenlosen Raum zu erstellen. Ihr kostenloser Raum umfasst: {size}, 6 Benutzer.",
+        "spaceCreatedNotification": "Sie haben gerade den Raum {spaceName} in Organisation {organizationName} erstellt"
+    },
+    "SubscriptionPro": {
+        "subscribeTitle": "Das professionelle Abonnement beanspruchen",
+        "upgradeTitle": "Zur professionellen Plattform wechseln",
+        "text": "Sie sind im Begriff, Ihr professionelles Abonnement zu starten. Es beinhaltet: {size} Speicherplatz, Erstellung unbegrenzter Projekte mit einer unbegrenzten Anzahl Nutzern.",
+        "spaceCreatedNotification": "Sie haben soeben den Raum {spaceName} in Organisation {organizationName} erstellt"
+    },
+    "UserSubscriptions": {
+        "title": "Abonnement der Plattform",
+        "text": "Durchsuchen Sie Ihre Organisationen, um Abonnements und Rechnungen für Ihre Plattformbereiche zu verwalten.",
+        "list": "Liste meiner Organisationen:"
+    },
+    "BillingActionsCell": {
+        "updateButtonText": "Die Zahlungskarte ändern",
+        "datapackButtonText": "Meine Datapacks verwalten",
+        "cancelButtonText": "Dieses Abonnement kündigen"
+    },
+    "BillingsTable": {
+        "title": "Abonnements",
+        "nextPayment": "am",
+        "professionalPlan": "Professionnelles",
+        "withDatapack": "+ Datapack",
+        "cancelSubscriptionButton": "Abonnement kündigen",
+        "updateCreditCardButton": "Kreditkarte aktualisieren",
+        "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, erscheinen die Rechnungen hier.",
+        "subscribeButton": "Zu unserer Pro-Plattform",
+        "headers": {
+            "space": "Raum",
+            "nextpayment": "Nächste Zahlung",
+            "subscriptionplan": "Abo-Formel",
+            "status": "Status",
+            "amount": "Summe"
+        },
+        "status": {
+            "active": "Aktiv",
+            "deleted": "Gelöscht",
+            "paused": "Pausiert"
+        }
+    },
+    "DatapackForm": {
+        "baseNote": "Speicher",
+        "baseText": "Im Abonnement enthalten",
+        "datapackNote": "Zusätzlicher Speicher",
+        "priceUnit": "/ GB / Monat",
+        "totalUnit": "/ Monat",
+        "actualStorage": "Aktueller Speicherplatz",
+        "newStorage": "Neuer Speicherplatz",
+        "submitButtonText": "Bestätigen",
+        "cancelButtonText": "Kündigen"
+    },
+    "DatapackInfo": {
+        "title": "Aktuelles Abonnement",
+        "datapacks": "Zusammenfassung des aktiven DataPacks",
+        "storage": "Zusammenfassung der aktiven GB",
+        "including": "wovon {quantity} GB DataPack"
+    },
+    "FreePlanCard": {
+        "title": "FREE",
+        "price": "0 €",
+        "bullet2": "1 kostenloser Raum",
+        "bullet3": "6 Nutzer",
+        "buttonText": "Einen kostenlosen Raum erstellen",
+        "note": "für immer"
+    },
+    "GroupMemberInvitation": {
+        "name": "Einladung in Bearbeitung"
+    },
+    "InvoiceActionsCell": {
+        "downloadButton": "Die Rechnung herunterladen"
+    },
+    "InvoicesTable": {
+        "title": "Rechnungen",
+        "tablePlaceholder": "Rechnungen werden geladen ...",
+        "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, werden die Rechnungen hier angezeigt.",
+        "subscribeButton": "Zu unserer Pro-Plattform",
+        "headers": {
+            "amount": "Summe",
+            "status": "Status",
+            "space": "Raum",
+            "date": "Datum"
+        }
+    },
+    "InvoiceStatusCell": {
+        "completed": "Bezahlt",
+        "pending": "Ausstehend"
+    },
+    "OrganizationCard": {
+        "spaces": "{number} Bereichs"
+    },
+    "OrganizationDeleteGuard": {
+        "title": "Organisation löschen",
+        "submitButtonText": "Löschen"
+    },
+    "OrganizationForm": {
+        "createTitle": "Organisation erstellen",
+        "updateTitle": "Organisation ändern",
+        "infoSectionTitle": "Grundinformationen",
+        "nameInputPlaceholder": "Name",
+        "nameInputErrorMessage": "Ungültiger Name",
+        "logoInputLabel": "Ein Logo wählen",
+        "logoInputMessage": "Das Logo muss ein Bild im JP(E)G- oder PNG-Format  sein und die Dateigröße darf 1 MB nicht überschreiten.",
+        "submitButtonText": "Bestätigen",
+        "successTitle": "Herzlichen Glückwunsch, Ihre Organisation wurde gerade erstellt",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "explanationText": "Die Organisation ist die Einheit, die die Rechnungsstellung von BIMData.io-Bereichen zentralisiert",
+        "createButtonText": "Organisation erstellen",
+        "searchInputPlaceholder": "Suchen"
+    },
+    "OrganizationsManager": {
+        "title": "Verwaltung von organisationen",
+        "backButtonText": "Zurück"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} Projekte"
+    },
+    "OrganizationSpacesImport": {
+        "spaceListTitle": "Die zu importierenden Räume auswählen",
+        "spaceListPlaceholder": "Kein Raum zu importieren ...",
+        "submitButtonText": "Bestätigen",
+        "successTitle": "Herzlichen Glückwunsch, Ihre Räume wurden gerade verschoben",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "importButtonText": "Einen Raum importieren",
+        "addButtonText": "Einen Raum hinzufügen",
+        "searchInputPlaceholder": "Suchen",
+        "spaceListTitle": "Liste der Räume der Organisationen"
+    },
+    "ProjectCardLeaveGuard": {
+        "title": "Projekt verlassen",
+        "message": "Sind Sie sicher, dass Sie dieses Projekt verlassen wollen?",
+        "leaveButtonText": "Bestätigen"
+    },
+    "ProPlanCard": {
+        "title": "PROFESSIONELL",
+        "priceUnit": "/ Raum / Monat",
+        "bullet2": "Unbegrenzte Projekte",
+        "bullet3": "Unbegrenzte Nutzer",
+        "buttonText": "Abonnieren",
+        "note": "erweiterbar für {price} / GB / Monat"
+    },
+    "ProPlanForm": {
+        "title": "Preis",
+        "priceUnit": "/ Monat",
+        "successTitle": "Glückwünsch! Sie haben ein Pro-Abonnement abonniert!",
+        "successMessage": "Ihre Zahlung wurde abgeschlossen. Sie können Ihr professionelles Abonnement jetzt nutzen.",
+        "successButtonText": "Startseite"
+    },
+    "ProPlanInfo": {
+        "title": "Ihr Abonnement",
+        "subTitle": "Professionnell",
+        "priceUnit": "/ Monat",
+        "bulletsHead": "Das Abonnement beinhaltet",
+        "bullet1": "{size} Speicherplatz",
+        "bullet2": "BIMData-Plattform",
+        "bullet3": "3D-Viewer",
+        "bullet4": "2D-Viewer",
+        "bullet5": "Unbegrenzte Projekte",
+        "bullet6": "Unbegrenzte Nutzer",
+        "bullet7": "Unbegrenzte Kommentare (BCF)",
+        "bullet8": "IFC-Fusion/-Division",
+        "bullet9": "IFC-Editor",
+        "bullet10": "Support via E-Mail"
+    },
+    "SpaceCreator": {
+        "createSelectOrgaTitle": "Eine Organisation erstellen oder auswählen",
+        "createNewOrgaRadio": "Eine neue Organisation erstellen",
+        "createNewOrgaInput": "Name meiner neuen Organisation",
+        "selectOrgaRadio": "Eine Organisation auswählen",
+        "orgaValidateButton": "Bestätigen",
+        "createSpaceTitle": "Einen Raum erstellen",
+        "createSpaceText": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
+        "createSpaceInput": "Name meines neuen Raums",
+        "spaceValidateButton": "Bestätigen"
+    },
+    "SpaceSelected": {
+        "selectedOrga": "Ausgewählte Organisation:",
+        "selectedSpace": "Ausgewählter Raum:"
+    },
+    "SpaceSelector": {
+        "orgaSelectorLabel": "Ausgewählte Organisation:",
+        "spaceSelectorLabel": "Ausgewählter Raum:"
+    },
+    "SpaceSizeInfo": {
+        "used": "verwendet",
+        "from": "auf",
+        "included": "inklusive",
+        "subscribeDatapackButton": "Ein DataPack kaufen",
+        "subscribePlatformButton": "Zur Pro-Plattform wechseln"
+    },
+    "SpaceSizePreview": {
+        "title": "Speicherplatz",
+        "actualStorage": "Aktueller Speicherplatz",
+        "newStorage": "Neuer Speicherplatz",
+        "newStorageText": "Wenn Sie das professionelle Abonnement beanspruchen, profitieren Sie von {size} Speicherplatz. Zusätzlichen Speicherplatz können Sie direkt von Ihrem Raum aus erwerben."
+    },
+    "SubscribeCard": {
+        "title": "Ihren neuen Raum erstellen",
+        "text": "Möchten Sie alle Vorteile der Plattform nutzen? Wenn Sie zum professionellen Abonnement wechseln, erhalten Sie {size} für Ihre Projekte sowie eine unbegrenzte Anzahl Nutzer.",
+        "button": "Ein Abonnement beanspruchen"
     }
 }

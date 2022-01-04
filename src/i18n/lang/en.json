@@ -1,766 +1,693 @@
 {
-  "Dashboard": {
-    "spacesTileTitle": "Active Spaces",
-    "spacesTileBottomText": "View spaces",
-    "projectsTileTitle": "Active Projects",
-    "projectsTileBottomText": "View projects",
-    "subscriptionsTileTitle": "Billing & Invoices",
-    "subscriptionsTileBottomText": "Manage subscriptions"
-  },
-  "GroupBoard": {
-    "searchInputPlaceholder": "Search members"
-  },
-  "OidcCallbackError": {
-    "message": "An error occured during authentication...",
-    "tryAgainButtonText": "Try Again"
-  },
-  "PageNotFound": {
-    "title": "Page not found",
-    "text": {
-      "line1": "Woopsie! The page that you are looking for does not exist.",
-      "line2": "Please return home."
+    "Dashboard": {
+        "spacesButtonTitle": "Active Spaces",
+        "spacesButtonText": "View spaces",
+        "projectsButtonTitle": "Active Projects",
+        "projectsButtonText": "View projects",
+        "spacesTileTitle": "Active Spaces",
+        "spacesTileBottomText": "View spaces",
+        "projectsTileTitle": "Active Projects",
+        "projectsTileBottomText": "View projects",
+        "subscriptionsTileTitle": "Billing & Invoices",
+        "subscriptionsTileText": "Find all your invoices and your latest payment information here.",
+        "subscriptionsTileBottomText": "Manage subscriptions"
     },
-    "homeButtonText": "Home"
-  },
-  "Payment": {
-    "titlePlatform": "Upgrade to pro platform",
-    "titleDatapack": "Add DataPack"
-  },
-  "ProjectBoard": {
-    "tabs": {
-      "overview": "Project",
-      "files": "Files",
-      "bcf": "BCF"
-    }
-  },
-  "ProjectGroups": {
-    "searchInputPlaceholder": "Search groups"
-  },
-  "SpaceBoard": {
-    "searchInputPlaceholder": "Search projects"
-  },
-  "Subscribe": {
-    "title": "Choose your plan"
-  },
-  "SubscriptionDatapack": {
-    "title": "Manage DataPack",
-    "successNotification": "You now have {size} of storage in space {spaceName}"
-  },
-  "SubscriptionFree": {
-    "title": "Create Free Plan",
-    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
-  },
-  "SubscriptionPro": {
-    "subscribeTitle": "Subscribe to Professional Plan",
-    "upgradeTitle": "Upgrade to pro platform",
-    "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
-    "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}",
-    "spaceUpgradedNotification": "Congratulations ! You have just upgraded your space {spaceName} to a pro plan."
-  },
-  "UserProjects": {
-    "searchInputPlaceholder": "Search projects"
-  },
-  "UserSpaces": {
-    "searchInputPlaceholder": "Search spaces",
-    "organizationsButtonText": "Organizations",
-    "createButtonText": "Create a space"
-  },
-  "UserSubscriptions": {
-    "title": "Platform subscription"
-  },
-
-
-
-  "ProjectBcf": {},
-  "ProjectFiles": {
-    "groupsButtonText": "Manage groups"
-  },
-  "ProjectOverview": {
-    "openFileUploadButtonText": "Add an IFC",
-    "closeFileUploadButtonText": "Close",
-    "forbiddenUploadNotification": {
-      "title": "Upload error",
-      "message": "Please select an .ifc file"
-    }
-  },
-
-
-
-  "BreadcrumbSelector": {
-    "inputPlaceholder": "Search"
-  },
-  "GenericTable": {
-    "pagination": "{start} - {end} of {total}"
-  },
-  "GoBackButton": {
-    "text": "Back"
-  },
-  "LanguageSelector": {
-    "title": "Choose a language"
-  },
-
-  "AppHeaderMenu": {
-    "entrySettings": "Account settings",
-    "entryConnect": "BIMData Connect",
-    "entryDocumentation": "Documentation",
-    "entryMarketplace": "Marketplace",
-    "entryOldPlatform": "Platform V1",
-    "entryLanguage": "Choose a language",
-    "logoutButtonText": "Log Out",
-    "subscriptionPlatform": "Platform subscription"
-  },
-
-  "BillingActionsCell": {
-    "updateButtonText": "Modify the payment card",
-    "datapackButtonText": "Manage datapacks",
-    "cancelButtonText": "Cancel this subscription"
-  },
-
-  "BillingsTable": {
-    "title": "Billing details",
-    "nextPayment": "on",
-    "professionalPlan": "Professionnal",
-    "withDatapack": "with Datapack",
-    "cancelSubscriptionButton": "Cancel subscription",
-    "updateCreditCardButton": "Update credit card",
-    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
-    "subscribeButton": "Upgrade to our Pro Platform",
-    "headers": {
-      "space": "Space",
-      "nextpayment": "Next payment",
-      "subscriptionplan": "Subscription plan",
-      "status": "Status",
-      "amount": "Amount"
+    "GroupBoard": {
+        "searchInputPlaceholder": "Search members"
     },
-    "status": {
-      "active": "Active",
-      "deleted": "Deleted",
-      "paused": "Paused"
-    }
-  },
-
-  "BreadcrumbGroupSelector": {
-    "text": "Groups"
-  },
-
-  "BreadcrumbProjectSelector": {
-    "placeholder": "< No project >"
-  },
-
-  "DashboardInfoTile": {
-    "title": "Security"
-  },
-
-  "DashboardProjectList": {
-    "title": "Recent projects"
-  },
-
-  "DashboardSpaceList": {
-    "title": "Recent spaces"
-  },
-
-  "DashboardWelcomeTile": {
-    "title": "Dashboard",
-    "message": "Hi {name}, it's great to see you again !"
-  },
-
-  "DatapackForm": {
-    "baseNote": "Storage",
-    "baseText": "Included with pro plan",
-    "datapackNote": "Additional storage",
-    "priceUnit": " / GB / month",
-    "totalUnit": " / month",
-    "actualStorage": "Actual storage",
-    "newStorage": "New Storage",
-    "submitButtonText": "Validate",
-    "cancelButtonText": "Cancel"
-  },
-
-  "DatapackInfo": {
-    "title": "Actual subscription",
-    "datapacks": "Active DataPacks",
-    "storage": "Active storage",
-    "including": "including {quantity} GB of DataPack"
-  },
-
-  "FileActionsCell": {
-    "openViewerButtonText": "Open in viewer",
-    "addTagsButtonText": "Add tags",
-    "validationRequestButtonText": "Validation request",
-    "renameButtonText": "Rename",
-    "downloadButtonText": "Download",
-    "addVersionButtonText": "Add version",
-    "manageAccessButtonText": "Manage access",
-    "deleteButtonText": "Delete"
-  },
-
-  "FileNameCell": {
-    "inputErrorMessage": "Invalid file name",
-    "submitButtonText": "Validate"
-  },
-
-  "FilesActionBar": {
-    "deleteButtonText": "Delete",
-    "moveButtonText": "Move to",
-    "downloadButtonText": "Download"
-  },
-
-  "FilesDeleteModal": {
-    "title": "Delete files",
-    "message": "This action will permanently delete the following files/folders :",
-    "cancelButtonText": "Cancel",
-    "deleteButtonText": "Delete"
-  },
-
-  "FilesManager": {
-    "title": "Project Files",
-    "searchInputPlaceholder": "Search"
-  },
-
-  "FilesManagerOnboarding": {
-    "text": "Upload your first file",
-    "uploadFileButtonText": "Upload a file",
-    "createFolderButtonText": "Create a folder"
-  },
-
-  "FilesTable": {
-    "emptyTablePlaceholder": "Empty folder",
-    "folder": "Folder",
-    "headers": {
-      "name": "Name",
-      "type": "Type",
-      "creator": "Created by",
-      "tags": "Tags",
-      "lastupdate": "Last Modified",
-      "size": "Size"
-    }
-  },
-
-  "FileUploadButton": {
-    "addFileButtonText": "Upload a file"
-  },
-
-  "FileUploadCard": {
-    "cancelMessage": "Canceled",
-    "errorMessage": "Upload failed"
-  },
-
-  "FileUploader": {
-    "uploadAreaText": "Drag and drop to store your project assets",
-    "separatorText": "or",
-    "uploadButtonText": "Select an .ifc file"
-  },
-
-  "FolderAccessManager": {
-    "title": "Manage access rights",
-    "searchInputPlaceholder": "Search group",
-    "groupHeader": "Group",
-    "rightsHeader": "Rights",
-    "membersHeader": "Members"
-  },
-
-  "FolderCreationButton": {
-    "buttonText": "New folder"
-  },
-
-  "FolderCreationForm": {
-    "creationFormTitle": "Create folder",
-    "nameInputPlaceholder": "Folder name",
-    "nameInputErrorMessage": "Invalid folder name",
-    "cancelButtonText": "Cancel",
-    "submitButtonText": "Submit"
-  },
-
-  "FolderPermissionSelector": {
-    "label": "All",
-    "options": {
-      "accessDenied": "Access denied",
-      "readOnly": "Read only",
-      "readWrite": "Read / Write"
-    }
-  },
-
-  "FolderSelector": {
-    "selectedFolder": "Selected folder",
-    "emptyFolderPlaceholder": "Empty folder",
-    "submitButtonText": {
-      "moveTo": "Validate",
-      "moveHere": "Move here"
-    }
-  },
-
-  "FreePlanCard": {
-    "title": "FREE",
-    "price": "0€",
-    "bullet2": "1 Free space",
-    "bullet3": "6 Users",
-    "buttonText": "Create a free space",
-    "note": "Forever"
-  },
-
-  "GroupCardActionMenu": {
-    "renameButtonText": "Rename",
-    "changeColorButtonText": "Change color",
-    "deleteButtonText": "Delete"
-  },
-
-  "GroupCardDeleteGuard": {
-    "title": "Delete group",
-    "message": "You are about to (definitely) delete group {name}, are you sure ?",
-    "deleteButtonText": "Delete"
-  },
-
-  "GroupCardUpdateForm": {
-    "title": "Rename group",
-    "inputPlaceholder": "Name",
-    "inputErrorMessage": "Invalid group name",
-    "submitButtonText": "Rename"
-  },
-
-  "GroupCreationCard": {
-    "text": "Create a group",
-    "title": "New group",
-    "inputPlaceholder": "Name",
-    "inputErrorMessage": "Invalid group name",
-    "submitButtonText": "Create"
-  },
-
-  "GroupMemberSelectionCard": {
-    "text": "Add a member"
-  },
-
-  "GroupMemberInvitation": {
-    "name": "Pending invitation"
-  },
-
-  "GroupMembersSelector": {
-    "title": "Manage group members",
-    "searchInputPlaceholder": "Search"
-  },
-
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Access denied",
-      "readOnly": "Read only",
-      "readWrite": "Read / Write"
-    }
-  },
-
-  "InvitationCard": {
-    "pendingMessage": "Invited - Pending.",
-    "resendLinkText": "Send invitation again ?",
-    "resendSuccessNotifText": "Invitation sent again",
-    "cancelSuccessNotifText": "Invitation canceled"
-  },
-
-  "InvitationForm": {
-    "emailInputPlaceholder": "Mail address",
-    "emailInputErrorMessage": "Invalid email",
-    "roleInputLabel": "Role",
-    "roles": {
-      "admin": "Administrator",
-      "user": "User",
-      "guest": "Guest"
+    "OidcCallbackError": {
+        "message": "An error occured during authentication...",
+        "tryAgainButtonText": "Try Again"
     },
-    "cancelButtonText": "Cancel",
-    "submitButtonText": "Send invitation",
-    "successNotifText": "Invitation sent"
-  },
-
-  "InvoiceActionsCell": {
-    "downloadButton": "Download invoice"
-  },
-
-  "InvoicesTable": {
-    "title": "Invoices",
-    "tablePlaceholder": "Loading invoices...",
-    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
-    "subscribeButton": "Upgrade to our Pro Platform",
-    "headers": {
-      "amount": "Amount",
-      "status": "Status",
-      "space": "Space",
-      "date": "Date"
-    }
-  },
-
-  "InvoiceStatusCell": {
-    "completed": "Completed",
-    "pending": "Pending"
-  },
-
-  "ModelActionsCell": {
-    "addTagsButtonText": "Add tags",
-    "renameButtonText": "Rename",
-    "archiveButtonText": "Archive",
-    "unarchiveButtonText": "Unarchive",
-    "deleteButtonText": "Delete"
-  },
-
-  "ModelLocation": {
-    "emptyLocationMessage": "No location data available",
-    "addLocationButtonText": "Fill in"
-  },
-
-  "ModelLocationForm": {
-    "addressInputPlaceholder": "Enter address",
-    "checkButtonText": "Check",
-    "submitButtonText": "Validate",
-    "cancelButtonText": "Change"
-  },
-
-  "ModelNameCell": {
-    "inputErrorMessage": "Invalid model name",
-    "submitButtonText": "Validate"
-  },
-
-  "ModelsActionBar": {
-    "deleteButtonText": "Delete",
-    "archiveButtonText": "Archive",
-    "unarchiveButtonText": "Unarchive",
-    "downloadButtonText": "Download",
-    "mergeButtonText": "Merge"
-  },
-
-  "ModelsCard": {
-    "openButtonText": "Open"
-  },
-
-  "ModelsCardModelPreview": {
-    "emptyPreviewPlaceholder": "No preview available"
-  },
-
-  "ModelsDeleteModal": {
-    "title": "Warning !",
-    "message": "This action will permanently delete the following models :",
-    "cancelButtonText": "Cancel",
-    "deleteButtonText": "Delete"
-  },
-
-  "ModelsManager": {
-    "title": "Project Models",
-    "tabs": {
-      "ifc": "IFC",
-      "split": "Split / Export",
-      "merge": "Merge",
-      "archive": "Archives"
-    }
-  },
-
-  "ModelsMergeModal": {
-    "title": "Merge selection",
-    "inputPlaceholder": "Name of your merge",
-    "inputErrorMessage": "You must provide a name for the file",
-    "submitButtonText": "Export"
-  },
-
-  "ModelsOverview": {
-    "title": "Project Models Overview"
-  },
-
-  "ModelsOverviewOnboarding": {
-    "text": "Upload your first IFC",
-    "uploadButtonText": "Upload IFC"
-  },
-
-  "ModelsTable": {
-    "emptyTablePlaceholder": "No model",
-    "headers": {
-      "id": "ID",
-      "name": "Name",
-      "version": "Version",
-      "creator": "Creator",
-      "lastupdate": "Last modified",
-      "status": "Status"
-    }
-  },
-
-  "OrganizationCard": {
-    "spaces": "{number} spaces"
-  },
-
-  "OrganizationDeleteGuard": {
-    "title": "Delete organization",
-    "submitButtonText": "Delete"
-  },
-
-  "OrganizationForm": {
-    "createTitle": "Create an organization",
-    "updateTitle": "Update organization",
-    "infoSectionTitle": "Basic information",
-    "nameInputPlaceholder": "Name",
-    "nameInputErrorMessage": "Invalid name",
-    "logoInputLabel": "Upload logo",
-    "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
-    "submitButtonText": "Validate",
-    "successTitle": "Congratulation your organization has just been created",
-    "successButtonText": "OK"
-  },
-
-  "OrganizationsList": {
-    "explanationText": "An organization is the entity that gather your billing at BIMData.io",
-    "createButtonText": "Add new organization",
-    "searchInputPlaceholder": "Search an organization"
-  },
-
-  "OrganizationsManager": {
-    "title": "Manage organizations",
-    "backButtonText": "Back"
-  },
-  
-  "OrganizationSpaceCard": {
-    "projects": "{number} projects"
-  },
-
-  "OrganizationSpacesImport": {
-    "spaceListTitle": "Select spaces to import",
-    "spaceListPlaceholder": "No space to import...",
-    "submitButtonText": "Import spaces",
-    "successTitle": "Spaces successfully imported",
-    "successButtonText": "OK"
-  },
-
-  "OrganizationSpacesList": {
-    "importButtonText": "Import space",
-    "addButtonText": "Add new space",
-    "searchInputPlaceholder": "Search",
-    "spaceListTitle": "Organization spaces"
-  },
-
-  "ProjectCardActionMenu": {
-    "renameButtonText": "Rename",
-    "deleteButtonText": "Delete",
-    "leaveButtonText": "Leave"
-  },
-
-  "ProjectCardDeleteGuard": {
-    "title": "Delete project",
-    "message": "Are you sure you want to (permanently) delete this project ?",
-    "deleteButtonText": "Delete"
-  },
-
-  "ProjectCardLeaveGuard": {
-    "title": "Leave projet",
-    "message": "Are you sure you want to leave this project ?",
-    "leaveButtonText": "Validate"
-  },
-
-  "ProjectCardUpdateForm": {
-    "title": "Rename project",
-    "inputPlaceholder": "Name",
-    "inputErrorMessage": "Invalid project name.",
-    "renameButtonText": "Rename"
-  },
-
-  "ProjectCreationCard": {
-    "title": "New project",
-    "text": "Create a new project",
-    "inputPlaceholder": "Name",
-    "inputErrorMessage": "You must provide a name for the project !",
-    "createButtonText": "Create"
-  },
-
-  "ProjectStatusBadge": {
-    "new": "NEW",
-    "active": "ACTIVE",
-    "inactive": "INACTIVE",
-    "paused": "PAUSED"
-  },
-
-  "ProjectUsersManager": {
-    "title": "Project Users",
-    "searchInputPlaceholder": "Search user"
-  },
-
-  "ProPlanCard": {
-    "title": "PROFESSIONAL",
-    "priceUnit": "/ Space / month",
-    "bullet2": "Unlimited projects",
-    "bullet3": "Unlimited users",
-    "buttonText": "Choose professional",
-    "note": "expand 1GB for {price} / month"
-  },
-
-  "ProPlanForm": {
-    "title": "Price",
-    "priceUnit": "/ month",
-    "successTitle": "Congratulation ! You just subscribed to the Pro Platform."
-  },
-
-  "ProPlanInfo": {
-    "title": "Your subscription",
-    "subTitle": "Professionnal plan",
-    "priceUnit": "/ month",
-    "bulletsHead": "The subscription includes",
-    "bullet1": "{size} of storage",
-    "bullet2": "BIMData Platform",
-    "bullet3": "3D Viewer",
-    "bullet4": "2D Viewer",
-    "bullet5": "Unlimited projects",
-    "bullet6": "Unlimited users",
-    "bullet7": "Unlimited comments (BCF)",
-    "bullet8": "IFC Merge / Split",
-    "bullet9": "IFC Edition",
-    "bullet10": "Support"
-  },
-
-  "SpaceCard": {
-    "free": "Free",
-    "projects": "PROJECTS"
-  },
-
-  "SpaceCardActionMenu": {
-    "renameButtonText": "Rename",
-    "removeImageButtonText": "Remove image",
-    "deleteButtonText": "Delete"
-  },
-
-  "SpaceCardDeleteGuard": {
-    "title": "Delete space",
-    "message": "Are you sure ?",
-    "deleteButtonText": "Delete"
-  },
-
-  "SpaceCardImageButton": {
-    "buttonText": "Upload image"
-  },
-
-  "SpaceCardUpdateForm": {
-    "title": "Rename space",
-    "inputPlaceholder": "Name",
-    "inputErrorMessage": "Invalid space name.",
-    "submitButtonText": "Rename"
-  },
-
-  "SpaceCreationCard": {
-    "title": "New space",
-    "inputPlaceholder": "Name",
-    "inputErrorMessage": "You must provide a name for the space !",
-    "createButtonText": "Create"
-  },
-
-  "SpaceCreator": {
-    "createSelectOrgaTitle": "Create or select an organization",
-    "createNewOrgaRadio": "Create a new organization",
-    "createNewOrgaInput": "Name of my new organization",
-    "selectOrgaRadio": "Select an organization",
-    "orgaValidateButton": "Validate",
-    "createSpaceTitle": "Create a space",
-    "createSpaceInput": "Name of my new space",
-    "spaceValidateButton": "Validate"
-  },
-
-  "SpaceSelected": {
-    "selectedOrga": "Selected organization:",
-    "selectedSpace": "Selected space:"
-  },
-
-  "SpaceSelector": {
-    "orgaSelectorLabel": "Organization selected :",
-    "spaceSelectorLabel": "Space selected :"
-  },
-
-  "SpaceSizeInfo": {
-    "used": "used",
-    "from": "out of",
-    "included": "included",
-    "subscribeDatapackButton": "Upgrade storage",
-    "subscribePlatformButton": "Switch to pro platform"
-  },
-
-  "SpaceSizePreview": {
-    "title": "Storage",
-    "actualStorage": "Actual storage",
-    "newStorage": "New storage"
-  },
-
-  "SpaceUsersManager": {
-    "title": "Manage space admins",
-    "tabs": {
-      "admins": "Administrators",
-      "users": "Users"
+    "ProjectBoard": {
+        "tabs": {
+            "overview": "Project",
+            "files": "Files",
+            "bcf": "BCF"
+        }
     },
-    "searchInputPlaceholder": "Search user",
-    "addUserButtonText": "Add new admin"
-  },
-
-  "SubscribeCard": {
-    "title": "Create your new space",
-    "button": "Create a new space"
-  },
-
-  "UserCard": {
-    "self": "you"
-  },
-
-  "UserCardDeleteGuard": {
-    "message": {
-      "space": "Remove {name} from this space ?",
-      "project": "Remove {name} from this project ?"
+    "ProjectGroups": {
+        "searchInputPlaceholder": "Search groups"
     },
-    "submitButtonText": "Remove"
-  },
-
-  "UserCardUpdateForm": {
-    "submitButtonText": "Validate"
-  },
-
-  "UserRoleBadge": {
-    "admin": "Admin",
-    "user": "User",
-    "guest": "Guest"
-  },
-
-  "UsersManagerOnboarding": {
-    "text": "Invite your first collaborator",
-    "inviteButtonText": "Invite"
-  },
-
-  "Error": "Error",
-  "Success": "Success",
-
-  "Errors": {
-    "organizationsFetchError": "Fail to fetch organizations",
-    "organizationCreateError": "Fail to create organizations",
-    "organizationUpdateError": "Fail to update organizations",
-    "organizationDeleteError": "Fail to delete organizations",
-    "spacesFetchError": "Fail to fetch spaces",
-    "spaceCreateError": "Fail to create space",
-    "spaceUpdateError": "Fail to update space",
-    "spaceDeleteError": "Fail to delete space",
-    "spaceImageUpdateError": "Fail to update space image",
-    "spaceImageDeleteError": "Fail to delete space image",
-    "projectsFetchError": "Fail to fetch projects",
-    "projectCreateError": "Fail to create project",
-    "projectUpdateError": "Fail to update project",
-    "projectDeleteError": "Fail to delete project",
-    "invitationsFetchError": "Fail to fetch invitations",
-    "invitationSendError": "Fail to send invitation",
-    "invitationResendError": "Fail to resend invitation",
-    "invitationCancelError": "Fail to cancel invitation",
-    "usersFetchError": "Fail to fetch users",
-    "userUpdateError": "Fail to update user",
-    "userDeleteError": "Fail to delete user",
-    "userLeaveError": "You can't leave the project as you are the last administrator",
-    "modelsFetchError": "Fail to fetch models",
-    "modelUploadError": "Fail to upload model",
-    "modelUpdateError": "Fail to update model",
-    "modelDownloadError": "Fail to download model",
-    "modelMergeError": "Fail to merge models",
-    "modelDeleteError": "Fail to delete model",
-    "fileStructureFetchError": "Fail to fetch file structure",
-    "fileUpdateError": "Fail to update files",
-    "fileDownloadError": "Fail to download files",
-    "fileDeleteError": "Fail to delete files",
-    "folderCreateError": "Fail to create folder",
-    "documentUploadError": "Fail to upload document",
-    "groupsFetchError": "Fail to fetch groups",
-    "groupCreateError": "Fail to create group",
-    "groupUpdateError": "Fail to update group",
-    "groupDeleteError": "Fail to delete group",
-    "subscriptionsFetchError": "Fail to fetch subscriptions",
-    "platformSubscribeError": "Fail to initialize platform subscription",
-    "datapackSubscribeError": "Fail to create datapack subscription",
-    "datapackUpdateError": "Fail to update datapack subscription"
-  }
+    "SpaceBoard": {
+        "searchInputPlaceholder": "Search projects"
+    },
+    "UserProjects": {
+        "searchInputPlaceholder": "Search projects"
+    },
+    "UserSpaces": {
+        "searchInputPlaceholder": "Search spaces",
+        "createButtonText": "Create a space",
+        "organizationsButtonText": "Organizations"
+    },
+    "ProjectFiles": {
+        "groupsButtonText": "Manage groups"
+    },
+    "ProjectOverview": {
+        "openFileUploadButtonText": "Add an IFC",
+        "closeFileUploadButtonText": "Close",
+        "forbiddenUploadNotification": {
+            "title": "Upload error",
+            "message": "Please select an .ifc file"
+        }
+    },
+    "BreadcrumbSelector": {
+        "inputPlaceholder": "Search"
+    },
+    "GenericTable": {
+        "pagination": "{start} - {end} of {total}"
+    },
+    "GoBackButton": {
+        "text": "Back"
+    },
+    "LanguageSelector": {
+        "title": "Choose a language"
+    },
+    "AppHeaderMenu": {
+        "entrySettings": "Account settings",
+        "entryConnect": "BIMData Connect",
+        "entryDocumentation": "Documentation",
+        "entryMarketplace": "Marketplace",
+        "entryOldPlatform": "Platform V1",
+        "entryLanguage": "Choose a language",
+        "logoutButtonText": "Log Out",
+        "subscriptionPlatform": "Platform subscription"
+    },
+    "BreadcrumbGroupSelector": {
+        "text": "Groups"
+    },
+    "BreadcrumbProjectSelector": {
+        "placeholder": "< No project >"
+    },
+    "DashboardInfoTile": {
+        "title": "Security"
+    },
+    "DashboardProjectList": {
+        "title": "Recent projects"
+    },
+    "DashboardSpaceList": {
+        "title": "Recent spaces"
+    },
+    "DashboardWelcomeTile": {
+        "title": "Dashboard",
+        "message": "Hi {name}, it's great to see you again !"
+    },
+    "FileActionsCell": {
+        "openViewerButtonText": "Open in viewer",
+        "addTagsButtonText": "Add tags",
+        "validationRequestButtonText": "Validation request",
+        "renameButtonText": "Rename",
+        "downloadButtonText": "Download",
+        "addVersionButtonText": "Add version",
+        "manageAccessButtonText": "Manage access",
+        "deleteButtonText": "Delete"
+    },
+    "FileNameCell": {
+        "inputErrorMessage": "Invalid file name",
+        "submitButtonText": "Validate"
+    },
+    "FilesActionBar": {
+        "deleteButtonText": "Delete",
+        "moveButtonText": "Move to",
+        "downloadButtonText": "Download"
+    },
+    "FilesDeleteModal": {
+        "title": "Delete files",
+        "message": "This action will permanently delete the following files/folders :",
+        "cancelButtonText": "Cancel",
+        "deleteButtonText": "Delete"
+    },
+    "FilesManager": {
+        "title": "Project Files",
+        "searchInputPlaceholder": "Search"
+    },
+    "FilesManagerOnboarding": {
+        "text": "Upload your first file",
+        "uploadFileButtonText": "Upload a file",
+        "createFolderButtonText": "Create a folder"
+    },
+    "FilesTable": {
+        "emptyTablePlaceholder": "Empty folder",
+        "folder": "Folder",
+        "headers": {
+            "name": "Name",
+            "type": "Type",
+            "creator": "Created by",
+            "tags": "Tags",
+            "lastupdate": "Last Modified",
+            "size": "Size"
+        }
+    },
+    "FileUploadButton": {
+        "addFileButtonText": "Upload a file"
+    },
+    "FileUploadCard": {
+        "cancelMessage": "Canceled",
+        "errorMessage": "Upload failed"
+    },
+    "FileUploader": {
+        "uploadAreaText": "Drag and drop to store your project assets",
+        "separatorText": "or",
+        "uploadButtonText": "Select an .ifc file"
+    },
+    "FolderAccessManager": {
+        "title": "Manage access rights",
+        "groupsButtonText": "Manage groups",
+        "nameHeader": "Name",
+        "rightsHeader": "Rights",
+        "membersHeader": "Members",
+        "searchInputPlaceholder": "Search group",
+        "groupHeader": "Group"
+    },
+    "FolderCreationButton": {
+        "buttonText": "New folder"
+    },
+    "FolderCreationForm": {
+        "creationFormTitle": "Create folder",
+        "nameInputPlaceholder": "Folder name",
+        "nameInputErrorMessage": "Invalid folder name",
+        "cancelButtonText": "Cancel",
+        "submitButtonText": "Submit"
+    },
+    "FolderSelector": {
+        "selectedFolder": "Selected folder",
+        "submitButtonText": {
+            "moveTo": "Validate",
+            "moveHere": "Move here"
+        },
+        "emptyFolderPlaceholder": "Empty folder"
+    },
+    "GroupAccessSelector": {
+        "defaultGroupName": "All"
+    },
+    "GroupCardActionMenu": {
+        "renameButtonText": "Rename",
+        "changeColorButtonText": "Change color",
+        "deleteButtonText": "Delete"
+    },
+    "GroupCardDeleteGuard": {
+        "title": "Delete group",
+        "message": "You are about to (definitely) delete group {name}, are you sure ?",
+        "deleteButtonText": "Delete"
+    },
+    "GroupCardUpdateForm": {
+        "title": "Rename group",
+        "inputPlaceholder": "Name",
+        "inputErrorMessage": "Invalid group name",
+        "submitButtonText": "Rename"
+    },
+    "GroupCreationCard": {
+        "text": "Create a group",
+        "title": "New group",
+        "inputPlaceholder": "Name",
+        "inputErrorMessage": "Invalid group name",
+        "submitButtonText": "Create"
+    },
+    "GroupMemberSelectionCard": {
+        "text": "Add a member",
+        "title": "Manage members",
+        "selectorLabel": "Group members",
+        "cancelButtonText": "Cancel",
+        "submitButtonText": "Validate"
+    },
+    "InvitationCard": {
+        "pendingMessage": "Invited - Pending.",
+        "resendLinkText": "Send invitation again ?",
+        "resendSuccessNotifText": "Invitation sent again",
+        "cancelSuccessNotifText": "Invitation canceled"
+    },
+    "InvitationForm": {
+        "emailInputPlaceholder": "Mail address",
+        "emailInputErrorMessage": "Invalid email",
+        "roleInputLabel": "Role",
+        "roles": {
+            "admin": "Administrator",
+            "user": "User",
+            "guest": "Guest"
+        },
+        "cancelButtonText": "Cancel",
+        "submitButtonText": "Send invitation",
+        "successNotifText": "Invitation sent"
+    },
+    "ModelActionsCell": {
+        "addTagsButtonText": "Add tags",
+        "renameButtonText": "Rename",
+        "archiveButtonText": "Archive",
+        "deleteButtonText": "Delete",
+        "unarchiveButtonText": "Unarchive"
+    },
+    "ModelLastUpdateCell": {
+        "at": "at"
+    },
+    "ModelLocation": {
+        "emptyLocationMessage": "No location data available",
+        "addLocationButtonText": "Fill in"
+    },
+    "ModelLocationForm": {
+        "addressInputPlaceholder": "Enter address",
+        "checkButtonText": "Check",
+        "submitButtonText": "Validate",
+        "cancelButtonText": "Change"
+    },
+    "ModelNameCell": {
+        "inputErrorMessage": "Invalid model name",
+        "submitButtonText": "Validate"
+    },
+    "ModelsActionBar": {
+        "deleteButtonText": "Delete",
+        "archiveButtonText": "Archive",
+        "unarchiveButtonText": "Unarchive",
+        "downloadButtonText": "Download",
+        "mergeButtonText": "Merge"
+    },
+    "ModelsCard": {
+        "openButtonText": "Open"
+    },
+    "ModelsCardModelPreview": {
+        "emptyPreviewPlaceholder": "No preview available"
+    },
+    "ModelsDeleteModal": {
+        "title": "Warning !",
+        "message": "This action will permanently delete the following models :",
+        "cancelButtonText": "Cancel",
+        "deleteButtonText": "Delete"
+    },
+    "ModelsManager": {
+        "title": "Project Models",
+        "tabs": {
+            "ifc": "IFC",
+            "split": "Split / Export",
+            "merge": "Merge",
+            "archive": "Archives"
+        }
+    },
+    "ModelsMergeModal": {
+        "title": "Merge selection",
+        "inputPlaceholder": "Name of your merge",
+        "inputErrorMessage": "You must provide a name for the file",
+        "submitButtonText": "Export"
+    },
+    "ModelsOverview": {
+        "title": "Project Models Overview"
+    },
+    "ModelsOverviewOnboarding": {
+        "text": "Upload your first IFC",
+        "uploadButtonText": "Upload IFC"
+    },
+    "ModelsTable": {
+        "emptyTablePlaceholder": "No model",
+        "headers": {
+            "id": "ID",
+            "name": "Name",
+            "version": "Version",
+            "creator": "Creator",
+            "lastupdate": "Last modified",
+            "status": "Status"
+        }
+    },
+    "ProjectCardActionMenu": {
+        "renameButtonText": "Rename",
+        "deleteButtonText": "Delete",
+        "leaveButtonText": "Leave"
+    },
+    "ProjectCardDeleteGuard": {
+        "title": "Delete project",
+        "message": "Are you sure you want to (permanently) delete this project ?",
+        "deleteButtonText": "Delete"
+    },
+    "ProjectCardUpdateForm": {
+        "title": "Rename project",
+        "inputPlaceholder": "Name",
+        "inputErrorMessage": "Invalid project name.",
+        "renameButtonText": "Rename"
+    },
+    "ProjectCreationCard": {
+        "title": "New project",
+        "text": "Create a new project",
+        "inputPlaceholder": "Name",
+        "inputErrorMessage": "You must provide a name for the project !",
+        "createButtonText": "Create"
+    },
+    "ProjectUsersManager": {
+        "title": "Project Users",
+        "searchInputPlaceholder": "Search user"
+    },
+    "SpaceCard": {
+        "projects": "PROJECTS",
+        "free": "Free"
+    },
+    "SpaceCardActionMenu": {
+        "renameButtonText": "Rename",
+        "removeImageButtonText": "Remove image",
+        "deleteButtonText": "Delete"
+    },
+    "SpaceCardDeleteGuard": {
+        "title": "Delete space",
+        "message": "Are you sure ?",
+        "deleteButtonText": "Delete"
+    },
+    "SpaceCardImageButton": {
+        "buttonText": "Upload image"
+    },
+    "SpaceCardUpdateForm": {
+        "title": "Rename space",
+        "inputPlaceholder": "Name",
+        "inputErrorMessage": "Invalid space name.",
+        "submitButtonText": "Rename"
+    },
+    "SpaceCreationCard": {
+        "title": "New space",
+        "inputPlaceholder": "Name",
+        "inputErrorMessage": "You must provide a name for the space !",
+        "createButtonText": "Create"
+    },
+    "SpaceUsersManager": {
+        "title": "Manage space admins",
+        "tabs": {
+            "admins": "Administrators",
+            "users": "Users"
+        },
+        "searchInputPlaceholder": "Search user",
+        "addUserButtonText": "Add new admin"
+    },
+    "UserCard": {
+        "self": "you"
+    },
+    "UserCardDeleteGuard": {
+        "message": {
+            "space": "Remove {name} from this space ?",
+            "project": "Remove {name} from this project ?"
+        },
+        "submitButtonText": "Remove"
+    },
+    "UserCardUpdateForm": {
+        "submitButtonText": "Validate"
+    },
+    "UserRoleBadge": {
+        "admin": "Admin",
+        "user": "User",
+        "guest": "Guest"
+    },
+    "UsersManagerOnboarding": {
+        "text": "Invite your first collaborator",
+        "inviteButtonText": "Invite"
+    },
+    "PageNotFound": {
+        "title": "Page not found",
+        "text": {
+            "line1": "Woopsie! The page that you are looking for does not exist.",
+            "line2": "Please return home."
+        },
+        "homeButtonText": "Home"
+    },
+    "FolderPermissionSelector": {
+        "label": "All",
+        "options": {
+            "accessDenied": "Access denied",
+            "readOnly": "Read only",
+            "readWrite": "Read / Write"
+        }
+    },
+    "GroupMembersSelector": {
+        "title": "Manage group members",
+        "searchInputPlaceholder": "Search"
+    },
+    "GroupPermissionSelector": {
+        "options": {
+            "accessDenied": "Access denied",
+            "readOnly": "Read only",
+            "readWrite": "Read / Write"
+        }
+    },
+    "Error": "Error",
+    "Success": "Success",
+    "Errors": {
+        "spacesFetchError": "Fail to fetch spaces",
+        "spaceCreateError": "Fail to create space",
+        "spaceUpdateError": "Fail to update space",
+        "spaceDeleteError": "Fail to delete space",
+        "spaceImageUpdateError": "Fail to update space image",
+        "spaceImageDeleteError": "Fail to delete space image",
+        "projectsFetchError": "Fail to fetch projects",
+        "projectCreateError": "Fail to create project",
+        "projectUpdateError": "Fail to update project",
+        "projectDeleteError": "Fail to delete project",
+        "invitationsFetchError": "Fail to fetch invitations",
+        "invitationSendError": "Fail to send invitation",
+        "invitationResendError": "Fail to resend invitation",
+        "invitationCancelError": "Fail to cancel invitation",
+        "usersFetchError": "Fail to fetch users",
+        "userUpdateError": "Fail to update user",
+        "userDeleteError": "Fail to delete user",
+        "modelsFetchError": "Fail to fetch models",
+        "modelUploadError": "Fail to upload model",
+        "modelUpdateError": "Fail to update model",
+        "modelDownloadError": "Fail to download model",
+        "modelMergeError": "Fail to merge models",
+        "modelDeleteError": "Fail to delete model",
+        "fileStructureFetchError": "Fail to fetch file structure",
+        "fileUpdateError": "Fail to update files",
+        "fileDownloadError": "Fail to download files",
+        "fileDeleteError": "Fail to delete files",
+        "folderCreateError": "Fail to create folder",
+        "documentUploadError": "Fail to upload document",
+        "groupsFetchError": "Fail to fetch groups",
+        "groupCreateError": "Fail to create group",
+        "groupUpdateError": "Fail to update group",
+        "groupDeleteError": "Fail to delete group",
+        "organizationsFetchError": "Fail to fetch organizations",
+        "organizationCreateError": "Fail to create organizations",
+        "organizationUpdateError": "Fail to update organizations",
+        "organizationDeleteError": "Fail to delete organizations",
+        "userLeaveError": "You can't leave the project as you are the last administrator",
+        "subscriptionsFetchError": "Fail to fetch subscriptions",
+        "platformSubscribeError": "Fail to initialize platform subscription",
+        "datapackSubscribeError": "Fail to create datapack subscription",
+        "datapackUpdateError": "Fail to update datapack subscription"
+    },
+    "ProjectStatusBadge": {
+        "new": "NEW",
+        "active": "ACTIVE",
+        "inactive": "INACTIVE",
+        "paused": "PAUSED"
+    },
+    "Payment": {
+        "titlePlatform": "Upgrade to pro platform",
+        "titleDatapack": "Add DataPack"
+    },
+    "Subscribe": {
+        "title": "Choose your plan",
+        "text": "You are only allowed a single free space among your organizations. If this space already exists, upgrade to the professional subscription for additional features."
+    },
+    "SubscriptionDatapack": {
+        "title": "Manage DataPack",
+        "successNotification": "You now have {size} of storage in space {spaceName}"
+    },
+    "SubscriptionFree": {
+        "title": "Create Free Plan",
+        "text": "You are about to create your free space.Your free space includes: {size}, 6 users.",
+        "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+    },
+    "SubscriptionPro": {
+        "subscribeTitle": "Subscribe to Professional Plan",
+        "upgradeTitle": "Upgrade to pro platform",
+        "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
+        "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+    },
+    "UserSubscriptions": {
+        "title": "Platform subscription",
+        "text": "Browse through your organizations to manage subscriptions and invoices for your platform spaces.",
+        "list": "My organizations list:"
+    },
+    "BillingActionsCell": {
+        "updateButtonText": "Modify the payment card",
+        "datapackButtonText": "Manage datapacks",
+        "cancelButtonText": "Cancel this subscription"
+    },
+    "BillingsTable": {
+        "title": "Billing details",
+        "nextPayment": "on",
+        "professionalPlan": "Professionnal",
+        "withDatapack": "with Datapack",
+        "cancelSubscriptionButton": "Cancel subscription",
+        "updateCreditCardButton": "Update credit card",
+        "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+        "subscribeButton": "Upgrade to our Pro Platform",
+        "headers": {
+            "space": "Space",
+            "nextpayment": "Next payment",
+            "subscriptionplan": "Subscription plan",
+            "status": "Status",
+            "amount": "Amount"
+        },
+        "status": {
+            "active": "Active",
+            "deleted": "Deleted",
+            "paused": "Paused"
+        }
+    },
+    "DatapackForm": {
+        "baseNote": "Storage",
+        "baseText": "Included with pro plan",
+        "datapackNote": "Additional storage",
+        "priceUnit": " / GB / month",
+        "totalUnit": " / month",
+        "actualStorage": "Actual storage",
+        "newStorage": "New Storage",
+        "submitButtonText": "Validate",
+        "cancelButtonText": "Cancel"
+    },
+    "DatapackInfo": {
+        "title": "Actual subscription",
+        "datapacks": "Active DataPacks",
+        "storage": "Active storage",
+        "including": "including {quantity} GB of DataPack"
+    },
+    "FreePlanCard": {
+        "title": "FREE",
+        "price": "0€",
+        "bullet2": "1 Free space",
+        "bullet3": "6 Users",
+        "buttonText": "Create a free space",
+        "note": "Forever"
+    },
+    "GroupMemberInvitation": {
+        "name": "Pending invitation"
+    },
+    "InvoiceActionsCell": {
+        "downloadButton": "Download invoice"
+    },
+    "InvoicesTable": {
+        "title": "Invoices",
+        "tablePlaceholder": "Loading invoices...",
+        "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+        "subscribeButton": "Upgrade to our Pro Platform",
+        "headers": {
+            "amount": "Amount",
+            "status": "Status",
+            "space": "Space",
+            "date": "Date"
+        }
+    },
+    "InvoiceStatusCell": {
+        "completed": "Completed",
+        "pending": "Pending"
+    },
+    "OrganizationCard": {
+        "spaces": "{number} spaces"
+    },
+    "OrganizationDeleteGuard": {
+        "title": "Delete organization",
+        "submitButtonText": "Delete"
+    },
+    "OrganizationForm": {
+        "createTitle": "Create an organization",
+        "updateTitle": "Update organization",
+        "infoSectionTitle": "Basic information",
+        "nameInputPlaceholder": "Name",
+        "nameInputErrorMessage": "Invalid name",
+        "logoInputLabel": "Upload logo",
+        "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
+        "submitButtonText": "Validate",
+        "successTitle": "Congratulation your organization has just been created",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "explanationText": "An organization is the entity that gather your billing at BIMData.io",
+        "createButtonText": "Add new organization",
+        "searchInputPlaceholder": "Search an organization"
+    },
+    "OrganizationsManager": {
+        "title": "Manage organizations",
+        "backButtonText": "Back"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} projects"
+    },
+    "OrganizationSpacesImport": {
+        "spaceListTitle": "Select spaces to import",
+        "spaceListPlaceholder": "No space to import...",
+        "submitButtonText": "Import spaces",
+        "successTitle": "Spaces successfully imported",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "importButtonText": "Import space",
+        "addButtonText": "Add new space",
+        "searchInputPlaceholder": "Search",
+        "spaceListTitle": "Organization spaces"
+    },
+    "ProjectCardLeaveGuard": {
+        "title": "Leave projet",
+        "message": "Are you sure you want to leave this project ?",
+        "leaveButtonText": "Validate"
+    },
+    "ProPlanCard": {
+        "title": "PROFESSIONAL",
+        "priceUnit": "/ Space / month",
+        "bullet2": "Unlimited projects",
+        "bullet3": "Unlimited users",
+        "buttonText": "Choose professional",
+        "note": "expand 1GB for {price} / month"
+    },
+    "ProPlanForm": {
+        "title": "Price",
+        "priceUnit": "/ month",
+        "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
+        "successMessage": "Your payment has been completed. You can now enjoy your professional subscription.",
+        "successButtonText": "Home"
+    },
+    "ProPlanInfo": {
+        "title": "Your subscription",
+        "subTitle": "Professionnal plan",
+        "priceUnit": "/ month",
+        "bulletsHead": "The subscription includes",
+        "bullet1": "{size} of storage",
+        "bullet2": "BIMData Platform",
+        "bullet3": "3D Viewer",
+        "bullet4": "2D Viewer",
+        "bullet5": "Unlimited projects",
+        "bullet6": "Unlimited users",
+        "bullet7": "Unlimited comments (BCF)",
+        "bullet8": "IFC Merge / Split",
+        "bullet9": "IFC Edition",
+        "bullet10": "Support"
+    },
+    "SpaceCreator": {
+        "createSelectOrgaTitle": "Create or select an organization",
+        "createNewOrgaRadio": "Create a new organization",
+        "createNewOrgaInput": "Name of my new organization",
+        "selectOrgaRadio": "Select an organization",
+        "orgaValidateButton": "Validate",
+        "createSpaceTitle": "Create a space",
+        "createSpaceText": "Your space groups your different BIM projects.",
+        "createSpaceInput": "Name of my new space",
+        "spaceValidateButton": "Validate"
+    },
+    "SpaceSelected": {
+        "selectedOrga": "Selected organization:",
+        "selectedSpace": "Selected space:"
+    },
+    "SpaceSelector": {
+        "orgaSelectorLabel": "Organization selected :",
+        "spaceSelectorLabel": "Space selected :"
+    },
+    "SpaceSizeInfo": {
+        "used": "used",
+        "from": "out of",
+        "included": "included",
+        "subscribeDatapackButton": "Upgrade storage",
+        "subscribePlatformButton": "Switch to pro platform"
+    },
+    "SpaceSizePreview": {
+        "title": "Storage",
+        "actualStorage": "Actual storage",
+        "newStorage": "New storage",
+        "newStorageText": "By purchasing the professional subscription you benefit from {size} of storage. You can purchase additional storage directly from your space."
+    },
+    "SubscribeCard": {
+        "title": "Create your new space",
+        "text": "Would you like to take full advantage of the platform? Make use of {size} for your projects and of unlimited users by upgrading to a professional subscription.",
+        "button": "Create a new space"
+    }
 }
