@@ -1,28 +1,28 @@
 <template>
-  <div class="project-bcf">
-    <BIMDataCard class="bcf-manager" titleHeader="BCF">
-      <template #content>
-        <ProjectBcfOnboardingImage />
-        <div>Project BCF view, coming soon...</div>
-      </template>
-    </BIMDataCard>
+  <div class="project-bcf flex">
+    Some stats here
+    <BcfTopic :project="project" />
   </div>
 </template>
 
 <script>
 import { useProjects } from "@/state/projects.js";
+import { useBcf } from "@/state/bcf.js";
+
 // Components
-import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
+import BcfTopic from "./BcfTopic.vue";
 
 export default {
   components: {
-    ProjectBcfOnboardingImage
+    BcfTopic
   },
   setup() {
     const { currentProject } = useProjects();
+    const { bcfTopics } = useBcf();
 
     return {
-      project: currentProject
+      project: currentProject,
+      bcfTopics
     };
   }
 };
