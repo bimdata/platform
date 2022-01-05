@@ -5,7 +5,6 @@
         :userList="validatorList || userList"
         @validator-list="getValidatorList"
         @get-back="getBack"
-        @safe-zone-handler="safeZoneHandler"
       />
     </template>
     <transition name="fade">
@@ -149,7 +148,7 @@ export default {
             validatorList.value
               .filter(({ isSelected }) => isSelected)
               .map(({ id }) =>
-                createValidation(visaId.value, id, props.baseInfo)
+                createValidation(id, visaId.value, props.baseInfo)
               )
           );
         } finally {

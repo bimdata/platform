@@ -18,7 +18,7 @@ class VisaService {
       throw new RuntimeError(ERRORS.VISA_CREATE_ERROR, error);
     }
   }
-  async createValidation(visaId, validatorId, baseInfo) {
+  async createValidation(validatorId, visaId, baseInfo) {
     const { cloudPk, projectPk, documentPk } = baseInfo;
     try {
       return await apiClient.collaborationApi.createValidation({
@@ -105,7 +105,7 @@ class VisaService {
         id: validationId
       });
     } catch (error) {
-      throw new RuntimeError(ERRORS.VISA_DENY_ERROR, error);
+      throw new RuntimeError(ERRORS.VISA_REFRESH_ERROR, error);
     }
   }
 

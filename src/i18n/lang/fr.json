@@ -747,7 +747,7 @@
         "action": "Oui, quitter cette page",
         "keepView": "Annuler, rester ici"
       },
-      "delete": {
+      "deleteVisa": {
         "content": "Êtes-vous sûr de vouloir supprimer ce visa ?",
         "action": "Oui, supprimer ce visa",
         "keepView": "Annuler"
@@ -759,7 +759,10 @@
       }
     },
     "summary": {
-     "title": "Demande en cours",
+     "title": {
+       "open": "Demande en cours",
+       "closed": "Demande cloturée"
+     },
      "appliedBy": "Demande de validation par",
      "validate": "Valider",
      "deny": "Refuser",
@@ -840,6 +843,7 @@
     "visaDeleteValidationError": "Impossible de supprimer ce validateur",
     "visaDeleteError": "Impossible de supprimer ce visa",
     "visaUpdateError": "Impossible de mettre à jour ce visa",
+    "visaRefreshError": "Impossible de mettre à jour votre réponse",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",

@@ -11,7 +11,7 @@
         {{ $t("Visa.add.validatorView.validator") }}
       </div>
       <div class="visa-add-validator__header__right-side">
-        <BIMDataButton ghost rounded icon @click="$emit('safe-zone-handler')">
+        <BIMDataButton ghost rounded icon @click="$emit('get-back')">
           <BIMDataIcon name="close" size="xxxs" />
         </BIMDataButton>
       </div>
@@ -57,7 +57,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "validator-list", "get-back", "safe-zone-handler"],
+  emits: ["close", "validator-list", "get-back"],
   setup(props, { emit }) {
     const filter = ref("");
     const peopleList = ref([]);

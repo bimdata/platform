@@ -1,5 +1,5 @@
 export default Object.freeze({
-  PENDING: "P",
-  ACCEPT: "A",
-  DENY: "D"
+  OPEN: "O",
+  CLOSE: "C",
+  AWAIT: "A"
 });

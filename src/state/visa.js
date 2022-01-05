@@ -4,8 +4,8 @@ const createVisa = async (description, date, baseInfo) => {
   return VisaService.createVisa(description, date, baseInfo);
 };
 
-const createValidation = async (visaId, validatorId, baseInfo) => {
-  return VisaService.createValidation(visaId, validatorId, baseInfo);
+const createValidation = async (validatorId, visaId, baseInfo) => {
+  return VisaService.createValidation(validatorId, visaId, baseInfo);
 };
 
 const deleteValidation = async (visaId, validatorId, baseInfo) => {

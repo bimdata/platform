@@ -28,6 +28,7 @@
             clear
           />
           <BIMDataButton
+            :disabled="!userVisas"
             class="files-manager__actions__visa"
             color="primary"
             fill
@@ -35,10 +36,11 @@
             @click="openVisaManager"
           >
             <span class="files-manager__actions__visa__content">
-              <span class="files-manager__actions__visa__content__counter">{{
-                userVisas.toValidateVisas.length +
-                  userVisas.createdVisas.length || ""
-              }}</span>
+              <template v-if="userVisasCounter > 0">
+                <div class="files-manager__actions__visa__content__counter">
+                  <span>{{ userVisasCounter || "" }}</span>
+                </div>
+              </template>
               {{ $t("Visa.button") }}
             </span>
           </BIMDataButton>
@@ -199,7 +201,8 @@ export default {
 
     const currentFolder = ref(null);
     const currentFiles = ref([]);
-    const userVisas = ref({ createdVisas: [], toValidateVisas: [] });
+    const userVisas = ref(null);
+    const userVisasCounter = ref(null);
 
     watch(
       () => props.fileStructure,
@@ -356,6 +359,10 @@ export default {
             a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
           ) || []
       };
+
+      userVisasCounter.value =
+        userVisas.value.toValidateVisas.length +
+        userVisas.value.createdVisas.length;
     };
 
     const fetchVisas = () => getVisas();
@@ -380,6 +387,7 @@ export default {
       projectPk: currentProject.value.id,
       userVisas,
       isVisaList,
+      userVisasCounter,
       // Methods
       closeAccessManager,
       closeDeleteModal,

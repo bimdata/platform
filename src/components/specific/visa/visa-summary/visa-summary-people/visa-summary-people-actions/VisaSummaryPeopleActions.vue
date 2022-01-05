@@ -14,7 +14,7 @@
           class="visa-summary-people-actions__menu__btn"
           ghost
           squared
-          @click="onClick('delete-val')"
+          @click="onDelete"
         >
           {{ $t("Visa.summary.people.getRidOfValidator") }}
         </BIMDataButton>
@@ -22,7 +22,7 @@
           class="visa-summary-people-actions__menu__btn"
           ghost
           squared
-          @click="onClick('reset-visa')"
+          @click="onReset"
         >
           {{ $t("Visa.summary.people.refresh") }}
         </BIMDataButton>
@@ -41,7 +41,7 @@ export default {
       required: true
     }
   },
-  emits: ["delete-val", "reset-visa"],
+  emits: ["delete-user", "reset-val"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -49,17 +49,23 @@ export default {
       toggle: toggleMenu
     } = useToggle();
 
-    const onClick = event => {
-      emit(event, props.validationId);
+    const onDelete = () => {
+      emit("delete-user", props.validationId);
       closeMenu();
     };
+    const onReset = () => {
+      emit("reset-val", props.validationId);
+      closeMenu();
+    };
+
     return {
       // references
       showMenu,
       // Methods
       closeMenu,
       toggleMenu,
-      onClick
+      onDelete,
+      onReset
     };
   }
 };
