@@ -1,0 +1,32 @@
+.bcf-topic {
+  min-width: 320px;
+  &__header {
+    min-height: 204px;
+    box-shadow: var(--box-shadow);
+    &__infos {
+      height: 32px;
+      background-color: var(--color-white);
+      &__index {
+        padding: 3px;
+        min-width: 32px;
+        background-color: var(--color-silver);
+        color: var(--color-text);
+      }
+      &__title {
+        color: var(--color-primary);
+      }
+    }
+    &__img {
+      &__status {
+      }
+    }
+  }
+  &__content {
+    margin-top: 3px;
+    min-height: 98px;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    color: var(--color-text);
+    font-size: 12px;
+  }
+}
