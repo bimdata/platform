@@ -106,7 +106,7 @@
           <template v-else>
             <BIMDataButton
               class="visa-summary__shell__action-button__validate"
-              :class="{ active: isActivated }"
+              :class="{ active: isValidated }"
               color="success"
               fill
               radius
@@ -216,10 +216,9 @@ export default {
     } = useVisa();
     const { user } = useUser();
 
-    const isActivated = ref(false);
+    const isValidated = ref(false);
     const isRefused = ref(false);
     const isClosed = ref(false);
-    const isValidated = ref(false);
     const isDenied = ref(false);
     const isEditing = ref(false);
     const hasDateError = ref(false);
@@ -289,6 +288,7 @@ export default {
         visa.value.validations
       );
       isClosed.value = visa.value.status === VISA_STATUS.CLOSE;
+      !isAuthor.value && getValidationUserId();
       statusVisaHandler();
     };
 
@@ -297,10 +297,7 @@ export default {
       if (!props.isVisaList) emit("close");
     };
 
-    onMounted(async () => {
-      await fetchAllVisaInfo();
-      !isAuthor.value && (await getValidationUserId());
-    });
+    onMounted(async () => fetchAllVisaInfo());
 
     /***
      * VALIDATION RESPONSE
@@ -329,18 +326,18 @@ export default {
     );
 
     const statusVisaHandler = () => {
-      isActivated.value = userStatus.value === VALIDATION_STATUS.ACCEPT;
+      isValidated.value = userStatus.value === VALIDATION_STATUS.ACCEPT;
       isRefused.value = userStatus.value === VALIDATION_STATUS.DENY;
     };
 
     const responseHandler = async type => {
       const isActive =
-        type === "validate" ? isValidated.value : isRefused.value;
+        type === "validate" ? !isValidated.value : !isRefused.value;
 
       if (isActive) {
-        await responseActions.reset(validationUserId.value);
-      } else {
         await responseActions[type]();
+      } else {
+        await responseActions.reset(validationUserId.value);
       }
       await fetchAllVisaInfo();
     };
@@ -468,11 +465,10 @@ export default {
     return {
       // references
       visa,
-      isActivated,
+      isValidated,
       isRefused,
       isAuthor,
       validationUserId,
-      isValidated,
       isDenied,
       isSafeZone,
       safeZoneInfo,

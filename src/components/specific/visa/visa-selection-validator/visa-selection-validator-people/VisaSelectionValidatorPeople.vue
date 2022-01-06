@@ -14,7 +14,7 @@
       class="visa-add-validator-people__picture"
       :class="{ hide: !people.hasAccess }"
     >
-      <UserAvatar :user="people" size="40" />
+      <UserAvatar :user="people" size="40" color="silver-light" />
     </div>
     <div v-if="people.fullName" class="visa-add-validator-people__info">
       <BIMDataTextBox

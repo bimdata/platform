@@ -5,7 +5,7 @@
     :key="people.id"
   >
     <div class="visa-add-summary-people__left-side">
-      <UserAvatar :user="people.validator" size="25" />
+      <UserAvatar :user="people.validator" size="25" color="silver-light" />
       <BIMDataTextBox
         class="visa-add-summary-people__left-side__name"
         :text="people.fullName || people.validator.email"
@@ -19,7 +19,6 @@
         v-if="people.isSelf && people.status != VALIDATION_STATUS.PENDING"
       >
         <BIMDataButton
-          color="silver"
           radius
           ghost
           margin="0 10px 0 0"
