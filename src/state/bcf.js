@@ -1,6 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
 import BcfService from "@/services/BcfService.js";
-import { mapProjects } from "@/state/mappers.js";
 
 const state = reactive({
   bcfTopics: []
@@ -8,8 +7,20 @@ const state = reactive({
 
 const loadBcfTopics = async project => {
   const topics = await BcfService.fetchProjectTopics(project);
-  state.bcfTopics = mapProjects(topics);
-  return topics;
+
+  const topicsWithSnapshots = await Promise.all(
+    topics.map(async topic => {
+      const viewpoints = await BcfService.fetchTopicViewpoints(project, topic);
+      return {
+        ...topic,
+        snapshots: viewpoints.map(viewpoint => viewpoint.snapshot)
+      };
+    })
+  );
+
+  state.bcfTopics = topicsWithSnapshots;
+
+  return topicsWithSnapshots;
 };
 
 export function useBcf() {
