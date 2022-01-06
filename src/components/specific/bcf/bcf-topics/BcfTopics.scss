@@ -17,7 +17,31 @@
       }
     }
     &__img {
+      height: calc(204px - 32px);
+      width: 318px;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
       &__status {
+        border-radius: 3px;
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        &.closed {
+          background-color: var(--color-high);
+          color: var(--color-white);
+        }
+        &.opened {
+          background-color: var(--color-success);
+          color: var(--color-white);
+        }
+        &.resolved {
+          background-color: var(--color-granite-light);
+          color: var(--color-white);
+        }
       }
     }
   }

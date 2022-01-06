@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-for="bcfTopic in bcfTopics"
-    :key="bcfTopic.index"
-    class="bcf-topic m-l-48"
-  >
+  <div v-for="bcfTopic in bcfTopics" :key="bcfTopic.index" class="bcf-topic">
     <div class="bcf-topic__header">
       <div class="bcf-topic__header__infos flex">
         <div
@@ -15,23 +11,32 @@
           <span>{{ bcfTopic.title }}</span>
         </div>
       </div>
-      <div class="bcf-topic__header__img">
+      <div class="bcf-topic__header__img flex items-center justify-center">
         <div
-          class="bcf-topic__header__img__status flex m-t-6 m-l-6"
+          class="bcf-topic__header__img__status flex p-6"
+          :class="bcfTopic.topicStatus.toLowerCase()"
           v-if="bcfTopic.topicStatus"
         >
           <BIMDataIcon name="information" fill color="default" />
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
+        <img
+          v-if="bcfTopic.snapshots && bcfTopic.snapshots.length"
+          :src="bcfTopic.snapshots[0].snapshotData"
+          alt=""
+        />
+        <BIMDataIcon v-else name="default" size="xxxl" fill color="default" />
       </div>
     </div>
     <div class="bcf-topic__content p-12">
       <div>
-        <strong>Priorité :</strong> <span>{{ bcfTopic.priority }}</span>
+        <strong>Priorité : </strong>
+        <span v-if="bcfTopic.priority">{{ bcfTopic.priority }}</span>
+        <span v-else>Non renseigné</span>
       </div>
       <div>
-        <strong>Assingé à :</strong>
-        <span v-if="bcfTopic.assigned_to">{{ bcfTopic.assigned_to }}</span>
+        <strong>Assigné à : </strong>
+        <span v-if="bcfTopic.assignedTo">{{ bcfTopic.assignedTo }}</span>
         <span v-else>Non renseigné</span>
       </div>
       <div class="flex justify-around m-t-12">
@@ -47,7 +52,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { useBcf } from "@/state/bcf.js";
 
@@ -61,6 +66,7 @@ export default {
   setup(props) {
     const { loadBcfTopics } = useBcf();
     const bcfTopics = ref([]);
+
     watch(
       () => props.project,
       async () => {
@@ -76,4 +82,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./BcfTopic.scss"></style>
+<style scoped lang="scss" src="./BcfTopics.scss"></style>
