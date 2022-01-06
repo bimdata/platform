@@ -50,6 +50,7 @@
           &__content {
             display: flex;
             align-items: center;
+            gap: var(--spacing-unit);
             &__counter {
               display: flex;
               justify-content: center;
@@ -57,7 +58,6 @@
               width: 15px;
               height: 15px;
               border-radius: 15%;
-              margin-right: var(--spacing-unit);
               background-color: var(--color-high);
             }
           }

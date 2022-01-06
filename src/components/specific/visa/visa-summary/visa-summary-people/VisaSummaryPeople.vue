@@ -6,7 +6,10 @@
   >
     <div class="visa-add-summary-people__left-side">
       <UserAvatar :user="people.validator" size="25" />
-      <span>{{ people.fullName || people.validator.email }}</span>
+      <BIMDataTextBox
+        class="visa-add-summary-people__left-side__name"
+        :text="people.fullName || people.validator.email"
+      />
     </div>
     <div
       class="visa-add-summary-people__right-side"

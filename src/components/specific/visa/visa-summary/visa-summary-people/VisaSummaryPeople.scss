@@ -9,8 +9,9 @@
     display: flex;
     align-items: center;
     margin-left: var(--spacing-unit);
+    width: 45%;
 
-    span {
+    &__name {
       margin-left: var(--spacing-unit);
       font-weight: bold;
     }

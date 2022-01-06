@@ -17,9 +17,10 @@
       <UserAvatar :user="people" size="40" />
     </div>
     <div v-if="people.fullName" class="visa-add-validator-people__info">
-      <span class="visa-add-validator-people__info__main">{{
-        people.fullName
-      }}</span>
+      <BIMDataTextBox
+        class="visa-add-validator-people__info__main"
+        :text="people.fullName"
+      />
       <span>{{ people.email }}</span>
     </div>
     <div v-else class="visa-add-validator-people__info">

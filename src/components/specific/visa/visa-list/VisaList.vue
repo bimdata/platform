@@ -31,13 +31,14 @@
           size="s"
         />
         <div class="visa-list__content__visa__desc">
-          <span class="visa-list__content__visa__desc__title">{{
-            visa.document.name
-          }}</span>
-          <div>
+          <BIMDataTextBox
+            class="visa-list__content__visa__desc__title"
+            :text="visa.document.name"
+          />
+          <div class="visa-list__content__visa__desc__info">
             <span>{{ formatDateDDMMYYY(visa.deadline) }}</span>
             -
-            <span>{{ fullName(visa.creator) }}</span>
+            <BIMDataTextBox :text="fullName(visa.creator)" />
           </div>
         </div>
       </div>

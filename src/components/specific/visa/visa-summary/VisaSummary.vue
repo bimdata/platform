@@ -133,7 +133,11 @@
         </div>
         <div class="visa-summary__shell__file">
           <BIMDataFileIcon :fileName="visa.document.fileName" :size="20" />
-          <span>{{ visa.document.fileName }}</span>
+          <BIMDataTextBox
+            class="visa-summary__shell__file__name"
+            :text="visa.document.name"
+            width="80%"
+          />
         </div>
         <div class="visa-summary__shell__validator">
           <div class="visa-summary__shell__validator__header">
@@ -461,22 +465,6 @@ export default {
       }
     };
 
-    function calcHeight(value) {
-      let numberOfLineBreaks = (value.match(/\n/g) || []).length;
-      // min-height + lines x line-height + padding + border
-      let newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
-      return newHeight;
-    }
-
-    // const fitContent = () => {
-    //   textarea.style.height = calcHeight(textarea.value) + "px";
-    // };
-
-    // let textarea = document.querySelector(".kikoo");
-    // textarea.addEventListener("keyup", elem => {
-    //   elem.style.height = calcHeight(elem.value) + "px";
-    // });
-
     return {
       // references
       visa,
@@ -495,7 +483,6 @@ export default {
       hasDateError,
       isClosed,
       // methods
-      calcHeight,
       close,
       actions,
       fetchAllVisaInfo,

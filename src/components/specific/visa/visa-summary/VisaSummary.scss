@@ -33,7 +33,7 @@
         display: flex;
         flex-grow: 1;
         margin: auto 0;
-        justify-content: end;
+        justify-content: flex-end;
       }
     }
 
@@ -73,6 +73,7 @@
           font-weight: bold;
         }
       }
+
     }
 
     &__action-button {
@@ -123,9 +124,9 @@
       img {
         margin-left: var(--spacing-unit);
       }
-      span {
+      &__name {
         margin-left: var(--spacing-unit);
-        text-align: center;
+        // text-align: center;
         color: var(--color-black);
       }
     }
