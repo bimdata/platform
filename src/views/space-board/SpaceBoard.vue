@@ -1,5 +1,6 @@
 <template>
   <div data-test="space-board" class="view space-board">
+    <SubscriptionStatusBanner class="space-board__banner" :space="space" />
     <ViewHeader class="space-board__header">
       <template #left>
         <AppBreadcrumb />
@@ -90,8 +91,9 @@ import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
-import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
+import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
@@ -103,6 +105,7 @@ export default {
     SidePanel,
     SpaceSizeInfo,
     SpaceUsersManager,
+    SubscriptionStatusBanner,
     ViewHeader
   },
   setup() {

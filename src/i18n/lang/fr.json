@@ -698,6 +698,11 @@
     "button": "Souscrire à un abonnement"
   },
 
+  "SubscriptionStatusBanner": {
+    "activate": "Activate: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "reactivate": "Reactivate: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+
   "UserCard": {
     "self": "vous"
   },
