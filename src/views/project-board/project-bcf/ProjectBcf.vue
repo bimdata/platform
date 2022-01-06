@@ -7,7 +7,6 @@
 
 <script>
 import { useProjects } from "@/state/projects.js";
-import { useBcf } from "@/state/bcf.js";
 
 // Components
 import BcfTopic from "./BcfTopic.vue";
@@ -18,11 +17,9 @@ export default {
   },
   setup() {
     const { currentProject } = useProjects();
-    const { bcfTopics } = useBcf();
 
     return {
-      project: currentProject,
-      bcfTopics
+      project: currentProject
     };
   }
 };
