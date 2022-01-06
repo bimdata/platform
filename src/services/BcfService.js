@@ -10,6 +10,16 @@ class BcfService {
       console.log(error);
     }
   }
+  async fetchTopicViewpoints(project, topic) {
+    try {
+      return await apiClient.bcfApi.getTopicViewpoints({
+        projectsPk: project.id,
+        topicsGuid: topic.guid
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 const service = new BcfService();
