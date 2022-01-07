@@ -18,6 +18,8 @@ import BIMDataText from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/B
 import BIMDataTextBox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextbox.js";
 
 // Image components
+import AlphabeticalAscending from "@/components/images/AlphabeticalAscending.vue";
+import AlphabeticalDescending from "@/components/images/AlphabeticalDescending.vue";
 import BillingsTableEmptyImage from "@/components/images/BillingsTableEmptyImage.vue";
 import BulletMarkImage from "@/components/images/BulletMarkImage.vue";
 import InvitationAvatarImage from "@/components/images/InvitationAvatarImage.vue";
@@ -49,6 +51,8 @@ export default {
   BIMDataTextBox,
 
   // Images
+  AlphabeticalAscending,
+  AlphabeticalDescending,
   BillingsTableEmptyImage,
   BulletMarkImage,
   InvitationAvatarImage,
