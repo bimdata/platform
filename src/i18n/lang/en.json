@@ -530,8 +530,8 @@
         "baseNote": "Storage",
         "baseText": "Included with pro plan",
         "datapackNote": "Additional storage",
-        "priceUnit": " / GB / month",
-        "totalUnit": " / month",
+        "priceUnit": " / GB / month Tax incl.",
+        "totalUnit": " / month Tax incl.",
         "actualStorage": "Actual storage",
         "newStorage": "New Storage",
         "submitButtonText": "Validate",
@@ -636,8 +636,9 @@
         "note": "expand 1GB for {price} / month"
     },
     "ProPlanForm": {
-        "title": "Price",
+        "titleTotal": "Price",
         "priceUnit": "/ month",
+        "noteTotal": "Tax incl.",
         "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
         "successMessage": "Your payment has been completed. You can now enjoy your professional subscription.",
         "successButtonText": "Home"
@@ -645,7 +646,7 @@
     "ProPlanInfo": {
         "title": "Your subscription",
         "subTitle": "Professionnal plan",
-        "priceUnit": "/ month",
+        "priceUnit": "/ month (ex-tax)",
         "bulletsHead": "The subscription includes",
         "bullet1": "{size} of storage",
         "bullet2": "BIMData Platform",

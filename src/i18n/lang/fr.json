@@ -173,8 +173,8 @@
     "baseNote": "Stockage",
     "baseText": "Inclus dans l'abonnement",
     "datapackNote": "Stockage additionnel",
-    "priceUnit": " / GB / mois",
-    "totalUnit": " / mois",
+    "priceUnit": " / GB / mois TTC",
+    "totalUnit": " / mois TTC",
     "actualStorage": "Stockage actuel",
     "newStorage": "Nouveau stockage",
     "submitButtonText": "Valider",
@@ -593,7 +593,10 @@
   },
 
   "ProPlanForm": {
-    "title": "Prix",
+    "titleNet": "Sous-total",
+    "titleTax": "TVA 20%",
+    "titleTotal": "Prix",
+    "noteTotal": "TTC",
     "priceUnit": "/ mois",
     "successTitle": "Félicitation ! Vous avez souscris à un Abonnement Pro !",
     "successMessage": "Votre paiement a bien été effectué. Vous pouvez dès à présent profiter de votre abonnement professionnel."
@@ -602,7 +605,7 @@
   "ProPlanInfo": {
     "title": "Votre abonnement",
     "subTitle": "Professionnel",
-    "priceUnit": "/ mois",
+    "priceUnit": "/ mois HT",
     "bulletsHead": "L'abonnement inclut",
     "bullet1": "{size} de stockage",
     "bullet2": "BIMData Plateforme",

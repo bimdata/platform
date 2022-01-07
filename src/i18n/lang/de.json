@@ -530,8 +530,8 @@
         "baseNote": "Speicher",
         "baseText": "Im Abonnement enthalten",
         "datapackNote": "Zusätzlicher Speicher",
-        "priceUnit": "/ GB / Monat",
-        "totalUnit": "/ Monat",
+        "priceUnit": "/ GB / Monat mit MwSt.",
+        "totalUnit": "/ Monat mit MwSt.",
         "actualStorage": "Aktueller Speicherplatz",
         "newStorage": "Neuer Speicherplatz",
         "submitButtonText": "Bestätigen",
@@ -631,7 +631,8 @@
         "note": "erweiterbar für {price} / GB / Monat"
     },
     "ProPlanForm": {
-        "title": "Preis",
+        "titleTotal": "Preis",
+        "noteTotal": "mit MwSt.",
         "priceUnit": "/ Monat",
         "successTitle": "Glückwünsch! Sie haben ein Pro-Abonnement abonniert!",
         "successMessage": "Ihre Zahlung wurde abgeschlossen. Sie können Ihr professionelles Abonnement jetzt nutzen.",
@@ -640,7 +641,7 @@
     "ProPlanInfo": {
         "title": "Ihr Abonnement",
         "subTitle": "Professionnell",
-        "priceUnit": "/ Monat",
+        "priceUnit": "/ Monat o. MwSt.",
         "bulletsHead": "Das Abonnement beinhaltet",
         "bullet1": "{size} Speicherplatz",
         "bullet2": "BIMData-Plattform",

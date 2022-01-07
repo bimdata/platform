@@ -4,21 +4,45 @@
   padding: calc(var(--spacing-unit) * 3);
 
   &__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    &__title {
-      margin: 0;
+    &__separator {
+      width: 100%;
+      height: 1px;
+      margin: var(--spacing-unit) 0;
+      background-color: var(--color-silver);
     }
 
-    &__price {
-      .value {
-        font-size: 1.8rem;
-        font-weight: bold;
+    &__net,
+    &__tax,
+    &__total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .price {
+        .value {
+          font-size: 1.4rem;
+          font-weight: bold;
+        }
+        .unit {
+          padding-left: calc(var(--spacing-unit) / 3);
+          color: var(--color-granite-light);
+        }
       }
-      .unit {
-        color: var(--color-granite-light);
+    }
+
+    &__total {
+      .title {
+        margin: 0;
+        .note {
+          font-size: 1rem;
+          font-weight: normal;
+        }
+      }
+
+      .price {
+        .value {
+          font-size: 1.8rem;
+        }
       }
     }
   }

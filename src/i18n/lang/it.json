@@ -530,8 +530,8 @@
         "baseNote": "Archiviazione",
         "baseText": "Incluso con il piano pro",
         "datapackNote": "Archiviazione aggiuntiva",
-        "priceUnit": "/ GB / mese",
-        "totalUnit": "/ mese",
+        "priceUnit": "/ GB / mese IVA inclusa",
+        "totalUnit": "/ mese IVA inclusa",
         "actualStorage": "Archiviazione attuale",
         "newStorage": "Nuova archiviazione",
         "submitButtonText": "Convalida",
@@ -631,7 +631,8 @@
         "note": "estendi 1 GB per {price} / mese"
     },
     "ProPlanForm": {
-        "title": "Prezzo",
+        "titleTotal": "Prezzo",
+        "noteTotal": "IVA inclusa",
         "priceUnit": "/ mese",
         "successTitle": "Congratulazioni! Ti sei iscritto alla Piattaforma Pro.",
         "successMessage": "Il tuo pagamento è stato completato. Ora puoi goderti il tuo abbonamento professionale.",
@@ -640,7 +641,7 @@
     "ProPlanInfo": {
         "title": "Il tuo abbonamento",
         "subTitle": "Piano professionale",
-        "priceUnit": "/ mese",
+        "priceUnit": "/ mese IVA esclusa",
         "bulletsHead": "Il tuo abbonamento include",
         "bullet1": "{size} di archiviazione",
         "bullet2": "Piattaforma BIMData",
