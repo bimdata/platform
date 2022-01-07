@@ -492,7 +492,8 @@
         "subscribeTitle": "Subscribe to Professional Plan",
         "upgradeTitle": "Upgrade to pro platform",
         "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
-        "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+        "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}",
+        "spaceUpgradedNotification": "Congratulation ! You just upgraded your space {spaceName} to pro plan."
     },
     "UserSubscriptions": {
         "title": "Platform subscription",
@@ -543,18 +544,13 @@
         "storage": "Active storage",
         "including": "including {quantity} GB of DataPack"
     },
-    "FreePlanInfo": {
+    "FreePlanCard": {
         "title": "FREE",
         "price": "0€",
         "bullet2": "1 Free space",
         "bullet3": "6 Users",
         "buttonText": "Create a free space",
         "note": "Forever"
-    },
-    "FreePlanRedirect": {
-        "title": "Access Free space",
-        "text": "You have already created your free space.",
-        "buttonText": "Go to my free space"
     },
     "GroupMemberInvitation": {
         "name": "Pending invitation"
@@ -636,12 +632,15 @@
         "note": "expand 1GB for {price} / month"
     },
     "ProPlanForm": {
-        "titleTotal": "Price",
+        "title": "Price",
         "priceUnit": "/ month",
-        "noteTotal": "Tax incl.",
         "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
         "successMessage": "Your payment has been completed. You can now enjoy your professional subscription.",
-        "successButtonText": "Home"
+        "successButtonText": "Home",
+        "titleNet": "Price ex-tax",
+        "titleTax": "Taxes",
+        "titleTotal": "Price",
+        "noteTotal": "Tax incl."
     },
     "ProPlanInfo": {
         "title": "Your subscription",
@@ -695,5 +694,22 @@
         "title": "Create your new space",
         "text": "Would you like to take full advantage of the platform? Make use of {size} for your projects and of unlimited users by upgrading to a professional subscription.",
         "button": "Create a new space"
+    },
+    "FreePlanInfo": {
+        "title": "FREE",
+        "price": "0€",
+        "bullet2": "1 Free space",
+        "bullet3": "6 Users",
+        "buttonText": "Create a free space",
+        "note": "Forever"
+    },
+    "FreePlanRedirect": {
+        "title": "Access Free space",
+        "text": "You have already created your free space.",
+        "buttonText": "Go to my free space"
+    },
+    "SubscriptionStatusBanner": {
+        "activate": "",
+        "reactivate": ""
     }
 }
