@@ -28,9 +28,9 @@
           <!-- <BIMDataButton ghost squared @click="openMarketplace">
             {{ $t("AppHeaderMenu.entryMarketplace") }}
           </BIMDataButton> -->
-          <BIMDataButton ghost squared @click="openOldPlatform">
+          <!-- <BIMDataButton ghost squared @click="openOldPlatform">
             {{ $t("AppHeaderMenu.entryOldPlatform") }}
-          </BIMDataButton>
+          </BIMDataButton> -->
           <div class="separator"></div>
           <BIMDataButton
             v-if="isSubscriptionEnabled"
