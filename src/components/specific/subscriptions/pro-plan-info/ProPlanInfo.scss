@@ -25,6 +25,7 @@
       font-weight: bold;
     }
     .unit {
+      padding-left: calc(var(--spacing-unit) / 3);
       color: var(--color-granite-light);
     }
   }

@@ -8,6 +8,7 @@ import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userSpaces: [],
+  freeSpaces: [],
   currentSpace: null,
   spaceInfo: {},
   spaceUsers: [],
@@ -23,6 +24,7 @@ const loadUserSpaces = async () => {
   const spaces = await SpaceService.fetchUserSpaces();
   const freeSpaces = await SubscriptionService.fetchFreeSpaces();
   state.userSpaces = mapSpaces(spaces, freeSpaces);
+  state.freeSpaces = freeSpaces;
   return spaces;
 };
 

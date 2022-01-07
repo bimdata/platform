@@ -57,7 +57,8 @@
     "subscribeTitle": "Souscrire à l'abonnement professionnel",
     "upgradeTitle": "Passer à la platforme professionnelle",
     "text": "Vous êtes sur le point de lancer votre abonnement professionel. Il inclus: {size} de stockage, création de projets illimités avec utilisateurs illimités.",
-    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}",
+    "spaceUpgradedNotification": "Félicitation ! Vous venez de souscrire à un abonnement professionnel pour l'espace {spaceName}."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"
@@ -172,8 +173,8 @@
     "baseNote": "Stockage",
     "baseText": "Inclus dans l'abonnement",
     "datapackNote": "Stockage additionnel",
-    "priceUnit": " / GB / mois",
-    "totalUnit": " / mois",
+    "priceUnit": " / GB / mois TTC",
+    "totalUnit": " / mois TTC",
     "actualStorage": "Stockage actuel",
     "newStorage": "Nouveau stockage",
     "submitButtonText": "Valider",
@@ -293,13 +294,19 @@
     }
   },
 
-  "FreePlanCard": {
+  "FreePlanInfo": {
     "title": "FREE",
     "price": "0€",
     "bullet2": "1 Espace gratuit",
     "bullet3": "6 Utilisateurs",
     "buttonText": "Créer un espace gratuit",
     "note": "Pour toujours"
+  },
+
+  "FreePlanRedirect": {
+    "title": "Mon espace gratuit",
+    "text": "Vous possédez déjà un espace gratuit.",
+    "buttonText": "Accéder à mon espace gratuit"
   },
 
   "GroupCardActionMenu": {
@@ -586,7 +593,10 @@
   },
 
   "ProPlanForm": {
-    "title": "Prix",
+    "titleNet": "Sous-total",
+    "titleTax": "TVA 20%",
+    "titleTotal": "Prix",
+    "noteTotal": "TTC",
     "priceUnit": "/ mois",
     "successTitle": "Félicitation ! Vous avez souscris à un Abonnement Pro !",
     "successMessage": "Votre paiement a bien été effectué. Vous pouvez dès à présent profiter de votre abonnement professionnel."
@@ -595,7 +605,7 @@
   "ProPlanInfo": {
     "title": "Votre abonnement",
     "subTitle": "Professionnel",
-    "priceUnit": "/ mois",
+    "priceUnit": "/ mois HT",
     "bulletsHead": "L'abonnement inclut",
     "bullet1": "{size} de stockage",
     "bullet2": "BIMData Plateforme",
@@ -695,6 +705,11 @@
     "title": "Créez votre nouvel espace",
     "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
     "button": "Souscrire à un abonnement"
+  },
+
+  "SubscriptionStatusBanner": {
+    "activate": "Activate: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "reactivate": "Reactivate: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
 
   "UserCard": {
