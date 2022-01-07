@@ -294,13 +294,19 @@
     }
   },
 
-  "FreePlanCard": {
+  "FreePlanInfo": {
     "title": "FREE",
     "price": "0€",
     "bullet2": "1 Espace gratuit",
     "bullet3": "6 Utilisateurs",
     "buttonText": "Créer un espace gratuit",
     "note": "Pour toujours"
+  },
+
+  "FreePlanRedirect": {
+    "title": "Mon espace gratuit",
+    "text": "Vous possédez déjà un espace gratuit.",
+    "buttonText": "Accéder à mon espace gratuit"
   },
 
   "GroupCardActionMenu": {

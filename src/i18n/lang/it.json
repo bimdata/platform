@@ -543,7 +543,7 @@
         "storage": "Archiviazione attiva",
         "including": "inclusi {quantity} GB di DataPack"
     },
-    "FreePlanCard": {
+    "FreePlanInfo": {
         "title": "GRATIS",
         "price": "0 €",
         "bullet2": "1 spazio gratuito",

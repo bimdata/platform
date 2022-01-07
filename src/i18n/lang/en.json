@@ -543,13 +543,18 @@
         "storage": "Active storage",
         "including": "including {quantity} GB of DataPack"
     },
-    "FreePlanCard": {
+    "FreePlanInfo": {
         "title": "FREE",
         "price": "0€",
         "bullet2": "1 Free space",
         "bullet3": "6 Users",
         "buttonText": "Create a free space",
         "note": "Forever"
+    },
+    "FreePlanRedirect": {
+        "title": "Access Free space",
+        "text": "You have already created your free space.",
+        "buttonText": "Go to my free space"
     },
     "GroupMemberInvitation": {
         "name": "Pending invitation"

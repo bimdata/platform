@@ -543,7 +543,7 @@
         "storage": "Resumen de GB activos",
         "including": "de los cuales {quantity} GB corresponden al DataPack"
     },
-    "FreePlanCard": {
+    "FreePlanInfo": {
         "title": "GRATIS",
         "price": "0€",
         "bullet2": "1 espacio gratuito",

@@ -1,65 +1,27 @@
 <template>
   <BIMDataCard class="free-plan-card">
     <template #content>
-      <div class="free-plan-card__title">
-        {{ $t("FreePlanCard.title") }}
-      </div>
-      <div class="free-plan-card__price">
-        {{ $t("FreePlanCard.price") }}
-      </div>
-      <div class="free-plan-card__separator"></div>
-      <div class="free-plan-card__bullets">
-        <div class="free-plan-card__bullets__bullet size">
-          <BulletMarkImage />
-          <span>{{ size }}</span>
-        </div>
-        <div class="free-plan-card__bullets__bullet">
-          <BulletMarkImage />
-          <span>{{ $t("FreePlanCard.bullet2") }}</span>
-        </div>
-        <div class="free-plan-card__bullets__bullet">
-          <BulletMarkImage />
-          <span>{{ $t("FreePlanCard.bullet3") }}</span>
-        </div>
-      </div>
-      <BIMDataButton
-        width="240px"
-        color="primary"
-        fill
-        radius
-        @click="goToSubscriptionFree"
-      >
-        {{ $t("FreePlanCard.buttonText") }}
-      </BIMDataButton>
-      <div class="free-plan-card__note">
-        {{ $t("FreePlanCard.note") }}
-      </div>
+      <FreePlanRedirect v-if="hasFreeSpace" />
+      <FreePlanInfo v-else />
     </template>
   </BIMDataCard>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-import { FREE_PLAN_STORAGE } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { formatBytes } from "@/utils/files.js";
+// Components
+import FreePlanInfo from "./free-plan-info/FreePlanInfo.vue";
+import FreePlanRedirect from "./free-plan-redirect/FreePlanRedirect.vue";
 
 export default {
-  setup() {
-    const router = useRouter();
-
-    const size = formatBytes(FREE_PLAN_STORAGE);
-
-    const goToSubscriptionFree = () => {
-      router.push({ name: routeNames.subscriptionFree });
-    };
-
-    return {
-      // References
-      size,
-      // Methods
-      goToSubscriptionFree
-    };
+  components: {
+    FreePlanInfo,
+    FreePlanRedirect
+  },
+  props: {
+    hasFreeSpace: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>
