@@ -1,6 +1,6 @@
 <template>
   <div data-test="space-board" class="view space-board">
-    <SubscriptionStatusBanner class="space-board__banner" :space="space" />
+    <!-- <SubscriptionStatusBanner class="space-board__banner" :space="space" /> -->
     <ViewHeader class="space-board__header">
       <template #left>
         <AppBreadcrumb />
