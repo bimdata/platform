@@ -15,14 +15,16 @@
         {{ $t("Subscribe.text") }}
       </p>
       <div class="subscribe__body__content">
-        <FreePlanCard />
-        <ProPlanCard />
+        <FreePlanCard :hasFreeSpace="freeSpaces.length > 0" />
+        <ProPlanCard :hasFreeSpace="freeSpaces.length > 0" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { useSpaces } from "@/state/spaces.js";
+// Components
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import FreePlanCard from "@/components/specific/subscriptions/free-plan-card/FreePlanCard.vue";
@@ -34,6 +36,13 @@ export default {
     GoBackButton,
     ProPlanCard,
     ViewHeader
+  },
+  setup() {
+    const { freeSpaces } = useSpaces();
+
+    return {
+      freeSpaces
+    };
   }
 };
 </script>

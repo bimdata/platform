@@ -1,13 +1,35 @@
 <template>
   <div class="pro-plan-form">
     <div class="pro-plan-form__head">
-      <h1 class="pro-plan-form__head__title">
-        {{ $t("ProPlanForm.title") }}
-      </h1>
-      <span class="pro-plan-form__head__price">
-        <span class="value">{{ proPlanPrice }}</span>
-        <span class="unit">{{ $t("ProPlanForm.priceUnit") }}</span>
-      </span>
+      <div class="pro-plan-form__head__net">
+        <span class="title">
+          {{ $t("ProPlanForm.titleNet") }}
+        </span>
+        <span class="price">
+          <span class="value">{{ netPrice }}</span>
+          <span class="unit">{{ $t("ProPlanForm.priceUnit") }}</span>
+        </span>
+      </div>
+      <div class="pro-plan-form__head__tax">
+        <span class="title">
+          {{ $t("ProPlanForm.titleTax") }}
+        </span>
+        <span class="price">
+          <span class="value">{{ taxPrice }}</span>
+          <span class="unit">{{ $t("ProPlanForm.priceUnit") }}</span>
+        </span>
+      </div>
+      <div class="pro-plan-form__head__separator"></div>
+      <div class="pro-plan-form__head__total">
+        <h1 class="title">
+          {{ $t("ProPlanForm.titleTotal") }}
+          <span class="note">{{ $t("ProPlanForm.noteTotal") }}</span>
+        </h1>
+        <span class="price">
+          <span class="value">{{ totalPrice }}</span>
+          <span class="unit">{{ $t("ProPlanForm.priceUnit") }}</span>
+        </span>
+      </div>
     </div>
     <div class="paddle-checkout-container">
       <!--
@@ -58,10 +80,14 @@ export default {
 
     const loading = ref(false);
     const isSuccess = ref(false);
-    const proPlanPrice = ref("0");
+    const netPrice = ref("0");
+    const taxPrice = ref("0");
+    const totalPrice = ref("0");
 
-    getProPlanPrice().then(({ price, currency }) => {
-      proPlanPrice.value = `${price}${currency}`;
+    getProPlanPrice().then(({ price, tax, currency }) => {
+      netPrice.value = `${price}${currency}`;
+      taxPrice.value = `${tax}${currency}`;
+      totalPrice.value = `${price + tax}${currency}`;
     });
 
     onMounted(async () => {
@@ -97,7 +123,9 @@ export default {
       // References
       isSuccess,
       loading,
-      proPlanPrice,
+      netPrice,
+      taxPrice,
+      totalPrice,
       // Methods
       goToDashboard
     };

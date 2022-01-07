@@ -530,8 +530,8 @@
         "baseNote": "Almacenamiento",
         "baseText": "Incluido en la suscripción",
         "datapackNote": "Almacenamiento adicional",
-        "priceUnit": "/ GB / mes",
-        "totalUnit": "/ mes",
+        "priceUnit": "/ GB / mes IVA incluído",
+        "totalUnit": "/ mes IVA incluído",
         "actualStorage": "Almacenamiento actual",
         "newStorage": "Nuevo almacenamiento",
         "submitButtonText": "Aceptar",
@@ -543,7 +543,7 @@
         "storage": "Resumen de GB activos",
         "including": "de los cuales {quantity} GB corresponden al DataPack"
     },
-    "FreePlanCard": {
+    "FreePlanInfo": {
         "title": "GRATIS",
         "price": "0€",
         "bullet2": "1 espacio gratuito",
@@ -631,7 +631,8 @@
         "note": "extensible por {price} / GB / mes"
     },
     "ProPlanForm": {
-        "title": "Precio",
+        "titleTotal": "Precio",
+        "noteTotal": "IVA incluído",
         "priceUnit": "/ mes",
         "successTitle": "¡Felicitaciones! ¡Se ha suscrito a una Suscripción Pro!",
         "successMessage": "Su pago se ha efectuado correctamente. Desde ahora puede aprovechar su suscripción profesional.",
@@ -640,7 +641,7 @@
     "ProPlanInfo": {
         "title": "Su suscripción",
         "subTitle": "Profesional",
-        "priceUnit": "/ mes",
+        "priceUnit": "/ mes, sin IVA",
         "bulletsHead": "El abono incluido",
         "bullet1": "{size} de almacenamiento",
         "bullet2": "Plataforma BIMData",

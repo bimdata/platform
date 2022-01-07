@@ -28,6 +28,8 @@
     }
 
     &__body {
+      min-height: 780px;
+
       display: flex;
       justify-content: center;
       gap: calc(var(--spacing-unit) * 3);

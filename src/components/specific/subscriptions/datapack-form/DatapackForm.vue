@@ -180,8 +180,8 @@ export default {
     );
 
     // Get localized datapack price from Paddle
-    getDatapackPrice().then(({ price, currency: curr }) => {
-      unitPrice.value = price;
+    getDatapackPrice().then(({ price, tax, currency: curr }) => {
+      unitPrice.value = price + tax;
       currency.value = curr;
     });
 
