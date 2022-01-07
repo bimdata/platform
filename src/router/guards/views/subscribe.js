@@ -8,9 +8,9 @@ const { freeSpaces } = useSpaces();
 export default async function subscribeGuard() {
   // If this is the landing view (i.e. there is no previous route)
   // then continue navigation and skip free space check.
-  if (!previousView.get()?.name) {
-    return true;
-  }
+  // if (!previousView.get()?.name) {
+  //   return true;
+  // }
 
   // Redirect to pro plan subscription
   // if the user already has a free space
