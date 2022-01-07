@@ -1,9 +1,7 @@
 .project-bcf {
   &__actions {
-    &:deep() {
-      .bimdata-btn {
-        color: var(--color-granite-light);
-      }
+    & > .flex {
+      position: relative;
     }
     .active {
       position: relative;

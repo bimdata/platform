@@ -49,11 +49,12 @@
           :class="{ active: activeButton === 'dateSort' }"
           @click="sortByDate"
         >
-          <BIMDataIcon name="calendar" fill color="default" />
+          <BIMDataIcon name="calendar" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton color="default" fill square icon class="m-r-12">
           List
         </BIMDataButton>
+        <BcfFilters />
       </div>
     </div>
     <div class="project-bcf__content flex m-t-36">
@@ -83,10 +84,12 @@ import { useBcf } from "@/state/bcf.js";
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 
 // Components
+import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
 import BcfTopics from "../../../components/specific/bcf/bcf-topics/BcfTopics.vue";
 
 export default {
   components: {
+    BcfFilters,
     BcfTopics,
     AppSlotContent
   },
