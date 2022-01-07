@@ -1,21 +1,12 @@
 .project-bcf {
-  height: 100%;
-
-  .bcf-manager {
-    width: 100%;
-    height: 100%;
-
-    @include block-card;
-
-    &.bimdata-card:deep() > .bimdata-card__content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: calc(var(--spacing-unit) * 4);
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: var(--color-text);
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 308px;
+    grid-column-gap: 60px;
+    grid-row-gap: 60px;
+    &__metrics {
+      grid-area: 1 / 1 / 2 / 3;
     }
   }
 }

@@ -1,0 +1,56 @@
+.bcf-topic {
+  min-width: 320px;
+  &__header {
+    min-height: 204px;
+    box-shadow: var(--box-shadow);
+    &__infos {
+      height: 32px;
+      background-color: var(--color-white);
+      &__index {
+        padding: 3px;
+        min-width: 32px;
+        background-color: var(--color-silver);
+        color: var(--color-text);
+      }
+      &__title {
+        color: var(--color-primary);
+      }
+    }
+    &__img {
+      height: calc(204px - 32px);
+      width: 318px;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      &__status {
+        border-radius: 3px;
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        &.closed {
+          background-color: var(--color-high);
+          color: var(--color-white);
+        }
+        &.opened {
+          background-color: var(--color-success);
+          color: var(--color-white);
+        }
+        &.resolved {
+          background-color: var(--color-granite-light);
+          color: var(--color-white);
+        }
+      }
+    }
+  }
+  &__content {
+    margin-top: 3px;
+    min-height: 98px;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    color: var(--color-text);
+    font-size: 12px;
+  }
+}
