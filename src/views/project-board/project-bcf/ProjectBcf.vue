@@ -10,26 +10,10 @@
       <BIMDataSearch placeholder="Search" color="secondary" radius width="35%">
       </BIMDataSearch>
       <div class="flex">
-        <BIMDataButton
-          data-test="btn-sort"
-          color="default"
-          fill
-          square
-          icon
-          class="m-r-12"
-          @click="sortByIndex"
-        >
+        <BIMDataButton color="default" fill square icon class="m-r-12">
           #
         </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-sort"
-          color="default"
-          fill
-          square
-          icon
-          class="m-r-12"
-          @click="sortByName"
-        >
+        <BIMDataButton color="default" fill square icon class="m-r-12">
           <BIMDataIcon name="alphabeticalSort" fill color="default" />
         </BIMDataButton>
         <BIMDataButton color="default" fill square icon class="m-r-12">
@@ -50,21 +34,13 @@
       >
         Some stats here
       </div>
-      <BcfTopics
-        v-for="bcfTopic in bcfTopics"
-        :key="bcfTopic.index"
-        :project="project"
-        :bcfTopic="bcfTopic"
-      />
+      <BcfTopics :project="project" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
 import { useProjects } from "@/state/projects.js";
-import { useListSort } from "@/composables/list-sort.js";
-import { useBcf } from "@/state/bcf.js";
 
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 
@@ -78,29 +54,9 @@ export default {
   },
   setup() {
     const { currentProject } = useProjects();
-    const { loadBcfTopics } = useBcf();
-    const bcfTopics = ref([]);
 
-    watch(
-      () => currentProject.value,
-      async () => {
-        bcfTopics.value = await loadBcfTopics(currentProject.value);
-      },
-      { immediate: true }
-    );
-    const { sortToggle: sortByName } = useListSort(
-      bcfTopics,
-      topic => topic.name
-    );
-    const { sortToggle: sortByIndex } = useListSort(
-      bcfTopics,
-      topic => topic.index
-    );
     return {
-      project: currentProject,
-      bcfTopics,
-      sortByName,
-      sortByIndex
+      project: currentProject
     };
   }
 };

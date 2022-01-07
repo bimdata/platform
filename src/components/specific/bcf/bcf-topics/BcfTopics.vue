@@ -1,5 +1,5 @@
 <template>
-  <div class="bcf-topic">
+  <div v-for="bcfTopic in bcfTopics" :key="bcfTopic.index" class="bcf-topic">
     <div class="bcf-topic__header">
       <div class="bcf-topic__header__infos flex">
         <div
@@ -52,16 +52,32 @@
 </template>
 
 <script>
+import { computed, ref, watch } from "vue";
+
+import { useBcf } from "@/state/bcf.js";
+
 export default {
   props: {
     project: {
       type: Object,
       required: true
-    },
-    bcfTopic: {
-      type: Object,
-      required: true
     }
+  },
+  setup(props) {
+    const { loadBcfTopics } = useBcf();
+    const bcfTopics = ref([]);
+
+    watch(
+      () => props.project,
+      async () => {
+        bcfTopics.value = await loadBcfTopics(props.project);
+      },
+      { immediate: true }
+    );
+
+    return {
+      bcfTopics
+    };
   }
 };
 </script>
