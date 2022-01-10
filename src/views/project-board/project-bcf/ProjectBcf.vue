@@ -54,7 +54,7 @@
         <BIMDataButton color="default" fill square icon class="m-r-12">
           List
         </BIMDataButton>
-        <BcfFilters />
+        <BcfFilters :bcfTopics="displayedBcfTopics" />
       </div>
     </div>
     <div class="project-bcf__content flex m-t-36">
