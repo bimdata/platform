@@ -6,8 +6,17 @@
         <span>Ajouter un BCF</span>
       </BIMDataButton>
     </app-slot-content>
-    <div class="project-bcf__actions flex justify-between m-t-24">
-      <BIMDataSearch placeholder="Search" color="secondary" radius width="38%">
+    <div
+      class="project-bcf__actions flex justify-between m-t-24"
+      v-if="displayedBcfTopics.length"
+    >
+      <BIMDataSearch
+        placeholder="Search"
+        color="secondary"
+        radius
+        width="38%"
+        v-model="searchText"
+      >
       </BIMDataSearch>
       <div class="flex">
         <BIMDataButton
@@ -65,8 +74,19 @@
         Some stats here
       </div>
       <transition-group name="grid">
+        <div
+          class="project-bcf__content__empty flex items-center justify-center"
+          v-if="loading"
+        >
+          <ProjectBcfOnboardingImage class="m-r-48" />
+          <div class="flex items-center">
+            <BIMDataSpinner class="m-b-12" />
+            <span> loading Bcf topics </span>
+          </div>
+        </div>
         <BcfTopics
-          v-for="bcfTopic in bcfTopics"
+          v-else
+          v-for="bcfTopic in displayedBcfTopics"
           :key="bcfTopic.index"
           :project="project"
           :bcfTopic="bcfTopic"
@@ -80,28 +100,37 @@
 import { computed, ref, watch } from "vue";
 import { useProjects } from "@/state/projects.js";
 import { useListSort } from "@/composables/list-sort.js";
+import { useListFilter } from "@/composables/list-filter";
 import { useBcf } from "@/state/bcf.js";
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 
 // Components
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
 import BcfTopics from "../../../components/specific/bcf/bcf-topics/BcfTopics.vue";
+import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 
 export default {
   components: {
     BcfFilters,
     BcfTopics,
-    AppSlotContent
+    AppSlotContent,
+    ProjectBcfOnboardingImage
   },
   setup() {
     const { currentProject } = useProjects();
     const { loadBcfTopics } = useBcf();
     const bcfTopics = ref([]);
+    const loading = ref(false);
 
     watch(
       () => currentProject.value,
       async () => {
-        bcfTopics.value = await loadBcfTopics(currentProject.value);
+        try {
+          loading.value = true;
+          bcfTopics.value = await loadBcfTopics(currentProject.value);
+        } finally {
+          loading.value = false;
+        }
       },
       { immediate: true }
     );
@@ -121,6 +150,11 @@ export default {
       useListSort(bcfTopics, topic => topic.creationDate);
     const isSortByDateActive = computed(() => dateSortOrder.value === "asc");
 
+    const { filteredList: displayedBcfTopics, searchText } = useListFilter(
+      bcfTopics,
+      topic => topic.title
+    );
+
     const activeButton = ref("");
     const sortByName = () => {
       sortToggleName();
@@ -136,8 +170,10 @@ export default {
     };
 
     return {
+      loading,
       project: currentProject,
-      bcfTopics,
+      displayedBcfTopics,
+      searchText,
       sortByName,
       sortByIndex,
       sortByDate,
