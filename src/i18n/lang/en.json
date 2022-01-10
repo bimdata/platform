@@ -667,7 +667,13 @@
         "createSpaceTitle": "Create a space",
         "createSpaceText": "Your space groups your different BIM projects.",
         "createSpaceInput": "Name of my new space",
-        "spaceValidateButton": "Validate"
+        "spaceValidateButton": "Validate",
+
+        "title": "Create a space",
+        "inputPlaceholder": "Space name",
+        "billingAccountLabel": "Billing account :",
+        "billingAccountButton": "Change",
+        "submitButtonText": "Proceed to payment"
     },
     "SpaceSelected": {
         "selectedOrga": "Selected organization:",

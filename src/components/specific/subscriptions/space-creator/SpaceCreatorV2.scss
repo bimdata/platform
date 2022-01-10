@@ -1,0 +1,48 @@
+.space-creator {
+  width: 518px;
+  height: 430px;
+  padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4);
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--spacing-unit) * 2);
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) / 2);
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__text {
+    width: 80%;
+    text-align: center;
+  }
+
+  &__input {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 2) 0;
+  }
+
+  &__billing-account {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .billing-account-label {
+      font-weight: bold;
+      margin-bottom: calc(var(--spacing-unit) / 2);
+    }
+
+    .billing-account-name {
+      color: var(--color-granite-light);
+    }
+  }
+}

@@ -663,7 +663,14 @@
     "createSpaceTitle": "Créer un espace",
     "createSpaceText": "Votre espace regroupe vos différents projets BIM.",
     "createSpaceInput": "Nom de mon nouvel espace",
-    "spaceValidateButton": "Valider"
+    "spaceValidateButton": "Valider",
+
+    "title": "Créer un espace",
+    "text": "Texte explicatif de pourquoi un nouvel espace",
+    "inputPlaceholder": "Nom de l'espace",
+    "billingAccountLabel": "Compte de facturation :",
+    "billingAccountButton": "Modifier",
+    "submitButtonText": "Passer au paiement"
   },
 
   "SpaceSelected": {

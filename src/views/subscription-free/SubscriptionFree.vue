@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useNotifications } from "@/composables/notifications.js";
@@ -50,10 +51,21 @@ export default {
     const { t } = useI18n();
     const router = useRouter();
     const { pushNotification } = useNotifications();
-    const { userOrganizations } = useOrganizations();
+    const { userOrganizations, getPersonalOrganization } = useOrganizations();
     const { currentOrga } = useSubscriptions();
 
     const size = formatBytes(FREE_PLAN_STORAGE);
+    const orga = ref(null);
+
+    watch(
+      () => currentOrga.value,
+      () => {
+        if (!currentOrga.value) {
+          orga.value = getPersonalOrganization();
+        }
+      },
+      { immediate: true }
+    );
 
     const onSpaceCreated = space => {
       pushNotification({

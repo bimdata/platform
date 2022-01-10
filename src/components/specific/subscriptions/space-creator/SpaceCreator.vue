@@ -165,7 +165,7 @@ export default {
     const newSpace = reactive({
       id: null,
       name: "",
-      organization: null
+      organizationId: null
     });
 
     const submitOrga = async () => {

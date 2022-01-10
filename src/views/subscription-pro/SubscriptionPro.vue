@@ -29,9 +29,9 @@
           <SpaceSelected :space="currentSpace" />
         </template>
         <template v-else>
-          <SpaceCreator
+          <SpaceCreatorV2
             :organizations="organizations"
-            :initialOrga="currentOrga"
+            :initialOrga="orga"
             @space-created="onSpacePreCreated"
           />
         </template>
@@ -72,7 +72,7 @@ import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import ProPlanForm from "@/components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
 import ProPlanInfo from "@/components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";
-import SpaceCreator from "@/components/specific/subscriptions/space-creator/SpaceCreator.vue";
+import SpaceCreatorV2 from "@/components/specific/subscriptions/space-creator/SpaceCreatorV2.vue";
 import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
 import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
@@ -81,7 +81,7 @@ export default {
     GoBackButton,
     ProPlanForm,
     ProPlanInfo,
-    SpaceCreator,
+    SpaceCreatorV2,
     SpaceSelected,
     SpaceSizePreview,
     ViewHeader
@@ -90,7 +90,7 @@ export default {
     const { t } = useI18n();
     const router = useRouter();
     const { pushNotification } = useNotifications();
-    const { userOrganizations } = useOrganizations();
+    const { userOrganizations, getPersonalOrganization } = useOrganizations();
     const {
       currentOrga,
       currentSpace,
@@ -98,12 +98,22 @@ export default {
       waitForUpdatedSpaceSize
     } = useSubscriptions();
 
+    const orga = ref(null);
     const space = ref(null);
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
     const body = ref(null);
 
+    watch(
+      () => currentOrga.value,
+      () => {
+        if (!currentOrga.value) {
+          orga.value = getPersonalOrganization();
+        }
+      },
+      { immediate: true }
+    );
     watch(
       () => currentSpace.value,
       async () => {
@@ -161,9 +171,10 @@ export default {
     return {
       // References
       body,
-      currentOrga,
+      // currentOrga,
       currentSpace,
       newSizeAvailable,
+      orga,
       organizations: userOrganizations,
       space,
       spaceInfo,
