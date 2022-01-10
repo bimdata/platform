@@ -1,4 +1,4 @@
-import { useToggle } from "./toggle";
+import { useToggle } from "./toggle.js";
 
 const { isOpen, open, close } = useToggle();
 

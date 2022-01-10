@@ -1,5 +1,5 @@
 <template>
-  <div class="space-creator">
+  <div class="space-creator" :class="{ disabled }">
     <div class="space-creator__title">
       <BIMDataIcon name="cloud" size="m" fill color="primary" />
       <h2>{{ $t("SpaceCreator.title") }}</h2>
@@ -12,6 +12,7 @@
         ref="spaceNameInput"
         :placeholder="$t('SpaceCreator.inputPlaceholder')"
         :loading="newSpaceLoading"
+        :disabled="disabled"
         v-model="newSpace.name"
         @keyup.enter.stop="() => newSpace.name && submit()"
       />
@@ -22,10 +23,17 @@
           {{ $t("SpaceCreator.billingAccountLabel") }}
         </div>
         <div class="billing-account-name">
-          {{ orga.name }}
+          <BIMDataTextBox maxWidth="220px" :text="orga.name" />
         </div>
       </div>
-      <BIMDataButton width="120px" color="primary" fill radius>
+      <BIMDataButton
+        width="120px"
+        color="primary"
+        fill
+        radius
+        :disabled="disabled"
+        @click="openBillingAccountModal"
+      >
         {{ $t("SpaceCreator.billingAccountButton") }}
       </BIMDataButton>
     </div>
@@ -34,19 +42,35 @@
       color="secondary"
       fill
       radius
-      :disabled="!newSpace.name"
+      :disabled="disabled || !newSpace.name"
       @click="submit"
     >
       {{ $t("SpaceCreator.submitButtonText") }}
     </BIMDataButton>
+
+    <AppModal>
+      <OrganizationSelector
+        :organizations="organizations"
+        :initialOrga="initialOrga"
+        @orga-selected="updateOrga"
+      />
+    </AppModal>
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useSpaces } from "@/state/spaces.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+// Components
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
+import OrganizationSelector from "@/components/specific/subscriptions/organization-selector/OrganizationSelector.vue";
 
 export default {
+  components: {
+    AppModal,
+    OrganizationSelector
+  },
   props: {
     type: {
       type: String,
@@ -60,43 +84,48 @@ export default {
     initialOrga: {
       type: Object,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ["space-created"],
   setup(props, { emit }) {
+    const { openModal, closeModal } = useAppModal();
     const { createSpace } = useSpaces();
 
-    const orga = ref({});
+    const orga = ref(props.initialOrga);
 
     const spaceNameInput = ref(null);
     const newSpaceLoading = ref(false);
-    const newSpace = reactive({
-      name: "",
-      organizationId: null
-    });
+    const newSpace = reactive({ name: "" });
+
+    const openBillingAccountModal = () => {
+      openModal();
+    };
+
+    const updateOrga = organization => {
+      orga.value = organization;
+      closeModal();
+    };
 
     const submit = async () => {
       try {
         newSpaceLoading.value = true;
 
-        newSpace.organizationId = orga.value.id;
-
         if (props.type === "free") {
+          newSpace.organizationId = orga.value.id;
           const createdSpace = await createSpace(newSpace);
           emit("space-created", createdSpace);
         } else {
+          newSpace.organization = { id: orga.value.id };
           emit("space-created", { ...newSpace });
         }
       } finally {
         newSpaceLoading.value = false;
       }
     };
-
-    watch(
-      () => props.initialOrga,
-      initialOrga => (orga.value = initialOrga),
-      { immediate: true }
-    );
 
     onMounted(() => {
       setTimeout(() => spaceNameInput.value.focus(), 200);
@@ -106,10 +135,12 @@ export default {
       // References
       newSpace,
       newSpaceLoading,
+      openBillingAccountModal,
       orga,
       spaceNameInput,
       // Methods
-      submit
+      submit,
+      updateOrga
     };
   }
 };

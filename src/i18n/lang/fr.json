@@ -508,6 +508,14 @@
     "successButtonText": "OK"
   },
 
+  "OrganizationSelector": {
+    "title": "Compte de facturation",
+    "radioLabelSelect": "Sélectionner un compte de facturation",
+    "radioLabelCreate": "Créer un compte de facturation",
+    "inputPlaceholder": "Nom du compte de facturation",
+    "submitButtonText": "Valider"
+  },
+
   "OrganizationsList": {
     "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
     "createButtonText": "Créer une organisation",

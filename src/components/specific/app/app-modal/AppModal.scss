@@ -1,0 +1,25 @@
+.app-modal {
+  &__overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(47, 55, 74, 0.75); // primary, alpha = 0.75
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__box {
+    position: relative;
+    min-width: 400px;
+    min-height: 400px;
+    padding: calc(var(--spacing-unit) * 2);
+    background-color: var(--color-white);
+
+    &__btn-close {
+      position: absolute;
+      top: calc(var(--spacing-unit) / 2);
+      right: calc(var(--spacing-unit) / 2);
+    }
+  }
+}

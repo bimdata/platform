@@ -593,6 +593,13 @@
         "successTitle": "Congratulation your organization has just been created",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "title": "Billing account",
+        "radioLabelSelect": "Select a billing account",
+        "radioLabelCreate": "Create a billing account",
+        "inputPlaceholder": "Name of the account",
+        "submitButtonText": "Validate"
+    },
     "OrganizationsList": {
         "explanationText": "An organization is the entity that gather your billing at BIMData.io",
         "createButtonText": "Add new organization",

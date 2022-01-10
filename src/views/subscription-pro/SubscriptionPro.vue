@@ -30,6 +30,7 @@
         </template>
         <template v-else>
           <SpaceCreatorV2
+            :disabled="!!space"
             :organizations="organizations"
             :initialOrga="orga"
             @space-created="onSpacePreCreated"
