@@ -180,7 +180,7 @@ export default {
         if (mode.value === "create") {
           orga.value = await createOrganization(newOrga);
         }
-        newSpace.organization = { id: orga.value.id };
+        newSpace.organizationId = orga.value.id;
 
         if (props.type === "free") {
           const createdSpace = await createSpace(newSpace);
