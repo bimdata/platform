@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { onBeforeRouteLeave } from "vue-router";
 import { useSidePanel } from "@/composables/side-panel.js";
 
 export default {
@@ -35,6 +36,10 @@ export default {
   },
   setup() {
     const { showSidePanel, closeSidePanel } = useSidePanel();
+
+    onBeforeRouteLeave(() => {
+      if (showSidePanel.value) closeSidePanel();
+    });
 
     return {
       // References
