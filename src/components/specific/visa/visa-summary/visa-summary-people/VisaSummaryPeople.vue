@@ -22,7 +22,11 @@
       :class="`visa-add-summary-people__right-side__${people.status}`"
     >
       <template
-        v-if="people.isSelf && people.status != VALIDATION_STATUS.PENDING"
+        v-if="
+          !isClosed &&
+          people.isSelf &&
+          people.status != VALIDATION_STATUS.PENDING
+        "
       >
         <BIMDataButton
           radius

@@ -110,7 +110,7 @@
               color="primary"
               fill
               radius
-              :disabled="visa.status === 'C'"
+              :disabled="isClosed"
               @click="safeZoneHandler('closeVisa')"
               >{{ $t("Visa.summary.close") }}</BIMDataButton
             >
@@ -118,19 +118,21 @@
           <template v-else>
             <BIMDataButton
               class="visa-summary__shell__action-button__validate"
-              :class="{ active: isValidated }"
+              :class="{ active: isValidated && !isClosed }"
               color="success"
               fill
               radius
+              :disabled="isClosed"
               @click="responseHandler('validate')"
               >{{ $t("Visa.summary.validate") }}</BIMDataButton
             >
             <BIMDataButton
               class="visa-summary__shell__action-button__deny"
-              :class="{ active: isRefused }"
+              :class="{ active: isRefused && !isClosed }"
               color="high"
               fill
               radius
+              :disabled="isClosed"
               @click="responseHandler('refuse')"
               >{{ $t("Visa.summary.deny") }}</BIMDataButton
             >
@@ -139,6 +141,7 @@
               color="primary"
               fill
               radius
+              :disabled="isClosed"
               >{{ $t("Visa.summary.comment") }}</BIMDataButton
             >
           </template>
