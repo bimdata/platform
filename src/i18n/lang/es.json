@@ -592,6 +592,14 @@
         "successTitle": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada.",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "title": "Cuenta de facturación",
+        "radioLabelSelect": "Seleccione una cuenta de facturación",
+        "radioLabelCreate": "Crear una cuenta de facturación",
+        "inputPlaceholder": "Nombre de la cuenta de facturación",
+        "submitButtonText": "Validar",
+        "successMessage": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada."
+    },
     "OrganizationsList": {
         "explanationText": "La cuenta de facturación es la entidad que centraliza las facturas en los espacios BIMData.io",
         "createButtonText": "Crear una cuenta de facturación",

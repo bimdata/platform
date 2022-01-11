@@ -598,7 +598,8 @@
         "radioLabelSelect": "Select a billing account",
         "radioLabelCreate": "Create a billing account",
         "inputPlaceholder": "Name of the account",
-        "submitButtonText": "Validate"
+        "submitButtonText": "Validate",
+        "successMessage": "Congratulation your billing account has just been created"
     },
     "OrganizationsList": {
         "explanationText": "A billing account is the entity that gather your billing at BIMData.io",

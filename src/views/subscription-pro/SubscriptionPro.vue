@@ -99,22 +99,13 @@ export default {
       waitForUpdatedSpaceSize
     } = useSubscriptions();
 
-    const orga = ref(null);
+    const orga = ref(currentOrga.value || getPersonalOrganization());
     const space = ref(null);
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
     const body = ref(null);
 
-    watch(
-      () => currentOrga.value,
-      () => {
-        if (!currentOrga.value) {
-          orga.value = getPersonalOrganization();
-        }
-      },
-      { immediate: true }
-    );
     watch(
       () => currentSpace.value,
       async () => {

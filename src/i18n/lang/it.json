@@ -592,6 +592,14 @@
         "successTitle": "Congratulazioni, hai creato il tuo conto di fatturazione",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "title": "Compte de facturation",
+        "radioLabelSelect": "Seleziona un conto di fatturazione",
+        "radioLabelCreate": "Crea un conto di fatturazione",
+        "inputPlaceholder": "Nome del conto di fatturazione",
+        "submitButtonText": "Convalida",
+        "successMessage": "Congratulazioni, hai creato il tuo conto di fatturazione"
+    },
     "OrganizationsList": {
         "explanationText": "Un conto di fatturazione è l'entità che raccoglie le tue fatture su BIMData.io",
         "createButtonText": "Crea un conto di fatturazione",

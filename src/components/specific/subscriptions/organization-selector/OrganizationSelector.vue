@@ -61,12 +61,23 @@
     >
       {{ $t("OrganizationSelector.submitButtonText") }}
     </BIMDataButton>
+
+    <!-- Creation success message -->
+    <div class="organization-selector__success" v-show="isSuccess">
+      <OrganizationFormSuccessImage
+        class="organization-selector__success__image"
+      />
+      <div class="organization-selector__success__text">
+        {{ $t("OrganizationSelector.successMessage") }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { reactive, ref } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
+import { delay } from "@/utils/async.js";
 
 export default {
   props: {
@@ -89,20 +100,27 @@ export default {
     const newOrgaLoading = ref(false);
     const newOrga = reactive({ name: "" });
 
+    const isSuccess = ref(false);
+
     const submit = async () => {
       try {
         newOrgaLoading.value = true;
         if (mode.value === "create") {
           orga.value = await createOrganization(newOrga);
+          isSuccess.value = true;
+          await delay(2000); // wait 2s before continuing
         }
         emit("orga-selected", orga.value);
       } finally {
+        newOrga.name = "";
         newOrgaLoading.value = false;
+        isSuccess.value = false;
       }
     };
 
     return {
       // Reference
+      isSuccess,
       mode,
       newOrga,
       newOrgaLoading,

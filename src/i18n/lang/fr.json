@@ -253,7 +253,7 @@
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
     "separatorText": "ou",
-    "uploadButtonText": "Selectionner un fichier .ifc"
+    "uploadButtonText": "Sélectionner un fichier .ifc"
   },
 
   "FolderAccessManager": {
@@ -504,7 +504,7 @@
     "logoInputLabel": "Choisir un logo",
     "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
     "submitButtonText": "Valider",
-    "successTitle": "Félicitation votre compte de facturation vient d'être créée",
+    "successTitle": "Félicitation votre compte de facturation vient d'être créé",
     "successButtonText": "OK"
   },
 
@@ -513,7 +513,8 @@
     "radioLabelSelect": "Sélectionner un compte de facturation",
     "radioLabelCreate": "Créer un compte de facturation",
     "inputPlaceholder": "Nom du compte de facturation",
-    "submitButtonText": "Valider"
+    "submitButtonText": "Valider",
+    "successMessage": "Félicitation votre compte de facturation vient d'être créé"
   },
 
   "OrganizationsList": {
