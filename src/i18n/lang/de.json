@@ -592,6 +592,9 @@
         "successTitle": "Herzlichen Glückwunsch, Ihre Organisation wurde gerade erstellt",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "submitButtonText": "Bestätigen"
+    },
     "OrganizationsList": {
         "explanationText": "Die Organisation ist die Einheit, die die Rechnungsstellung von BIMData.io-Bereichen zentralisiert",
         "createButtonText": "Organisation erstellen",
@@ -655,23 +658,13 @@
         "bullet10": "Support via E-Mail"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Eine Organisation erstellen oder auswählen",
-        "createNewOrgaRadio": "Eine neue Organisation erstellen",
-        "createNewOrgaInput": "Name meiner neuen Organisation",
-        "selectOrgaRadio": "Eine Organisation auswählen",
-        "orgaValidateButton": "Bestätigen",
-        "createSpaceTitle": "Einen Raum erstellen",
-        "createSpaceText": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
-        "createSpaceInput": "Name meines neuen Raums",
-        "spaceValidateButton": "Bestätigen"
+        "title": "Einen Raum erstellen",
+        "text": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
+        "inputPlaceholder": "Name meines neuen Raums"
     },
     "SpaceSelected": {
         "selectedOrga": "Ausgewählte Organisation:",
         "selectedSpace": "Ausgewählter Raum:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Ausgewählte Organisation:",
-        "spaceSelectorLabel": "Ausgewählter Raum:"
     },
     "SpaceSizeInfo": {
         "used": "verwendet",

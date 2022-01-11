@@ -18,7 +18,7 @@
         <SpaceCreator
           type="free"
           :organizations="organizations"
-          :initialOrga="currentOrga"
+          :initialOrga="orga"
           @space-created="onSpaceCreated"
         />
       </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useNotifications } from "@/composables/notifications.js";
@@ -54,18 +54,8 @@ export default {
     const { userOrganizations, getPersonalOrganization } = useOrganizations();
     const { currentOrga } = useSubscriptions();
 
+    const orga = ref(currentOrga.value || getPersonalOrganization());
     const size = formatBytes(FREE_PLAN_STORAGE);
-    const orga = ref(null);
-
-    watch(
-      () => currentOrga.value,
-      () => {
-        if (!currentOrga.value) {
-          orga.value = getPersonalOrganization();
-        }
-      },
-      { immediate: true }
-    );
 
     const onSpaceCreated = space => {
       pushNotification({
@@ -86,7 +76,7 @@ export default {
 
     return {
       // References
-      currentOrga,
+      orga,
       organizations: userOrganizations,
       size,
       // Methods

@@ -485,7 +485,7 @@
     },
     "SubscriptionFree": {
         "title": "Create Free Plan",
-        "text": "You are about to create your free space.Your free space includes: {size}, 6 users.",
+        "text": "You are about to create your free space. Your free space includes: {size}, 6 users.",
         "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}"
     },
     "SubscriptionPro": {
@@ -667,30 +667,16 @@
         "bullet10": "Support"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Create or select an organization",
-        "createNewOrgaRadio": "Create a new organization",
-        "createNewOrgaInput": "Name of my new organization",
-        "selectOrgaRadio": "Select an organization",
-        "orgaValidateButton": "Validate",
-        "createSpaceTitle": "Create a space",
-        "createSpaceText": "Your space groups your different BIM projects.",
-        "createSpaceInput": "Name of my new space",
-        "spaceValidateButton": "Validate",
-
         "title": "Create a space",
         "text": "Your space groups your different BIM projects.",
         "inputPlaceholder": "Space name",
         "billingAccountLabel": "Billing account :",
         "billingAccountButton": "Change",
-        "submitButtonText": "Proceed to payment"
+        "submitButtonText": "Continue to payment"
     },
     "SpaceSelected": {
         "selectedOrga": "Billing account:",
         "selectedSpace": "Selected space:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Billing account :",
-        "spaceSelectorLabel": "Space selected :"
     },
     "SpaceSizeInfo": {
         "used": "used",

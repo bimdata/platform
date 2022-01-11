@@ -664,16 +664,6 @@
   },
 
   "SpaceCreator": {
-    "createSelectOrgaTitle": "Créer ou sélectionner une organisation",
-    "createNewOrgaRadio": "Créer une nouvelle organisation",
-    "createNewOrgaInput": "Nom de ma nouvelle organisation",
-    "selectOrgaRadio": "Sélectionner une organisation",
-    "orgaValidateButton": "Valider",
-    "createSpaceTitle": "Créer un espace",
-    "createSpaceText": "Votre espace regroupe vos différents projets BIM.",
-    "createSpaceInput": "Nom de mon nouvel espace",
-    "spaceValidateButton": "Valider",
-
     "title": "Créer un espace",
     "text": "Votre espace regroupe vos différents projets BIM.",
     "inputPlaceholder": "Nom de l'espace",
@@ -685,11 +675,6 @@
   "SpaceSelected": {
     "selectedOrga": "Compte de facturation:",
     "selectedSpace": "Espace sélectionné:"
-  },
-
-  "SpaceSelector": {
-    "orgaSelectorLabel": "Compte de facturation :",
-    "spaceSelectorLabel": "Espace selectionné :"
   },
 
   "SpaceSizeInfo": {

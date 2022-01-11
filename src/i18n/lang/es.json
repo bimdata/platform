@@ -663,23 +663,15 @@
         "bullet10": "Apoyo por correo electrónico"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Crear o seleccionar una organización",
-        "createNewOrgaRadio": "Crear una nueva organización",
-        "createNewOrgaInput": "Nombre de mi nueva organización",
-        "selectOrgaRadio": "Seleccionar una organización",
-        "orgaValidateButton": "Aceptar",
-        "createSpaceTitle": "Crear un espacio",
-        "createSpaceText": "Su espacio reagrupa sus diferentes proyectos BIM.",
-        "createSpaceInput": "Nombre de mi nuevo espacio",
-        "spaceValidateButton": "Aceptar"
+        "title": "Crear un espacio",
+        "text": "Su espacio reagrupa sus diferentes proyectos BIM.",
+        "inputPlaceholder": "Nombre de mi nuevo espacio",
+        "billingAccountLabel": "Cuenta de facturación :",
+        "billingAccountButton": "Editar"
     },
     "SpaceSelected": {
         "selectedOrga": "Cuenta de facturación:",
         "selectedSpace": "Espacio seleccionado:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Cuenta de facturación:",
-        "spaceSelectorLabel": "Espacio seleccionado:"
     },
     "SpaceSizeInfo": {
         "used": "utilizado",

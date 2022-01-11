@@ -663,23 +663,15 @@
         "bullet10": "Supporto"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Crea o seleziona un'organizzazione",
-        "createNewOrgaRadio": "Crea una nuova organizzazione",
-        "createNewOrgaInput": "Nome della mia nuova organizzazione",
-        "selectOrgaRadio": "Seleziona un'organizzazione",
-        "orgaValidateButton": "Convalida",
-        "createSpaceTitle": "Crea uno spazio",
-        "createSpaceText": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
-        "createSpaceInput": "Nome del mio nuovo spazio",
-        "spaceValidateButton": "Convalida"
+        "title": "Crea uno spazio",
+        "text": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
+        "inputPlaceholder": "Nome dello spazio",
+        "billingAccountLabel": "Conto di fatturazione :",
+        "billingAccountButton": "Cambia"
     },
     "SpaceSelected": {
         "selectedOrga": "Conto di fatturazione:",
         "selectedSpace": "Spazio selezionato:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Conto di fatturazione:",
-        "spaceSelectorLabel": "Spazio selezionato:"
     },
     "SpaceSizeInfo": {
         "used": "usato",
