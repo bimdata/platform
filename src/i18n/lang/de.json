@@ -38,7 +38,7 @@
     "UserSpaces": {
         "searchInputPlaceholder": "Bereich suchen",
         "createButtonText": "Bereich erstellen",
-        "organizationsButtonText": "Organizations"
+        "organizationsButtonText": "Organisationen"
     },
     "ProjectFiles": {
         "groupsButtonText": "Gruppenverwaltung"
