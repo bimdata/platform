@@ -38,7 +38,7 @@
     "UserSpaces": {
         "searchInputPlaceholder": "Search spaces",
         "createButtonText": "Create a space",
-        "organizationsButtonText": "Organizations"
+        "organizationsButtonText": "Billing accounts"
     },
     "ProjectFiles": {
         "groupsButtonText": "Manage groups"
@@ -455,10 +455,10 @@
         "groupCreateError": "Fail to create group",
         "groupUpdateError": "Fail to update group",
         "groupDeleteError": "Fail to delete group",
-        "organizationsFetchError": "Fail to fetch organizations",
-        "organizationCreateError": "Fail to create organizations",
-        "organizationUpdateError": "Fail to update organizations",
-        "organizationDeleteError": "Fail to delete organizations",
+        "organizationsFetchError": "Fail to fetch billing accounts",
+        "organizationCreateError": "Fail to create billing accounts",
+        "organizationUpdateError": "Fail to update billing accounts",
+        "organizationDeleteError": "Fail to delete billing accounts",
         "userLeaveError": "You can't leave the project as you are the last administrator",
         "subscriptionsFetchError": "Fail to fetch subscriptions",
         "platformSubscribeError": "Fail to initialize platform subscription",
@@ -477,7 +477,7 @@
     },
     "Subscribe": {
         "title": "Choose your plan",
-        "text": "You are only allowed a single free space among your organizations. If this space already exists, upgrade to the professional subscription for additional features."
+        "text": "You are only allowed a single free space among your billing accounts. If this space already exists, upgrade to the professional subscription for additional features."
     },
     "SubscriptionDatapack": {
         "title": "Manage DataPack",
@@ -485,20 +485,20 @@
     },
     "SubscriptionFree": {
         "title": "Create Free Plan",
-        "text": "You are about to create your free space.Your free space includes: {size}, 6 users.",
-        "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}"
+        "text": "You are about to create your free space. Your free space includes: {size}, 6 users.",
+        "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}"
     },
     "SubscriptionPro": {
         "subscribeTitle": "Subscribe to Professional Plan",
         "upgradeTitle": "Upgrade to pro platform",
         "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
-        "spaceCreatedNotification": "You have just created the space {spaceName} in the organization {organizationName}",
+        "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}",
         "spaceUpgradedNotification": "Congratulation ! You just upgraded your space {spaceName} to pro plan."
     },
     "UserSubscriptions": {
         "title": "Platform subscription",
-        "text": "Browse through your organizations to manage subscriptions and invoices for your platform spaces.",
-        "list": "My organizations list:"
+        "text": "Browse through your billing accounts to manage subscriptions and invoices for your platform spaces.",
+        "list": "My billing accounts:"
     },
     "BillingActionsCell": {
         "updateButtonText": "Modify the payment card",
@@ -578,28 +578,36 @@
         "spaces": "{number} spaces"
     },
     "OrganizationDeleteGuard": {
-        "title": "Delete organization",
+        "title": "Delete billing account",
         "submitButtonText": "Delete"
     },
     "OrganizationForm": {
-        "createTitle": "Create an organization",
-        "updateTitle": "Update organization",
+        "createTitle": "Create a billing account",
+        "updateTitle": "Update billing account",
         "infoSectionTitle": "Basic information",
         "nameInputPlaceholder": "Name",
         "nameInputErrorMessage": "Invalid name",
         "logoInputLabel": "Upload logo",
         "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
         "submitButtonText": "Validate",
-        "successTitle": "Congratulation your organization has just been created",
+        "successTitle": "Congratulation your billing account has just been created",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "title": "Billing account",
+        "radioLabelSelect": "Select a billing account",
+        "radioLabelCreate": "Create a billing account",
+        "inputPlaceholder": "Name of the account",
+        "submitButtonText": "Validate",
+        "successMessage": "Congratulation your billing account has just been created"
+    },
     "OrganizationsList": {
-        "explanationText": "An organization is the entity that gather your billing at BIMData.io",
-        "createButtonText": "Add new organization",
-        "searchInputPlaceholder": "Search an organization"
+        "explanationText": "A billing account is the entity that gather your billing at BIMData.io",
+        "createButtonText": "Add new billing account",
+        "searchInputPlaceholder": "Search an account"
     },
     "OrganizationsManager": {
-        "title": "Manage organizations",
+        "title": "Manage billing accounts",
         "backButtonText": "Back"
     },
     "OrganizationSpaceCard": {
@@ -616,7 +624,7 @@
         "importButtonText": "Import space",
         "addButtonText": "Add new space",
         "searchInputPlaceholder": "Search",
-        "spaceListTitle": "Organization spaces"
+        "spaceListTitle": "Account spaces"
     },
     "ProjectCardLeaveGuard": {
         "title": "Leave projet",
@@ -659,23 +667,16 @@
         "bullet10": "Support"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Create or select an organization",
-        "createNewOrgaRadio": "Create a new organization",
-        "createNewOrgaInput": "Name of my new organization",
-        "selectOrgaRadio": "Select an organization",
-        "orgaValidateButton": "Validate",
-        "createSpaceTitle": "Create a space",
-        "createSpaceText": "Your space groups your different BIM projects.",
-        "createSpaceInput": "Name of my new space",
-        "spaceValidateButton": "Validate"
+        "title": "Create a space",
+        "text": "Your space groups your different BIM projects.",
+        "inputPlaceholder": "Space name",
+        "billingAccountLabel": "Billing account :",
+        "billingAccountButton": "Change",
+        "submitButtonText": "Continue to payment"
     },
     "SpaceSelected": {
-        "selectedOrga": "Selected organization:",
+        "selectedOrga": "Billing account:",
         "selectedSpace": "Selected space:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Organization selected :",
-        "spaceSelectorLabel": "Space selected :"
     },
     "SpaceSizeInfo": {
         "used": "used",

@@ -42,7 +42,7 @@
   },
   "Subscribe": {
     "title": "Choisissez votre abonnement",
-    "text": "Vous n'avez le droit qu'à un seul espace gratuit parmi vos organisations. Si cet espace existe déjà, passez à l'abonnement professionel pour plus de fonctionnalités."
+    "text": "Vous n'avez le droit qu'à un seul espace gratuit parmi tout vos comptes de facturation. Si cet espace existe déjà, passez à l'abonnement professionel pour plus de fonctionnalités."
   },
   "SubscriptionDatapack": {
     "title": "Gérer mes DataPacks",
@@ -51,13 +51,13 @@
   "SubscriptionFree": {
     "title": "Créer un espace gratuit",
     "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: {size}, 6 utilisateurs.",
-    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} rattaché au compte de facturation {organizationName}"
   },
   "SubscriptionPro": {
     "subscribeTitle": "Souscrire à l'abonnement professionnel",
     "upgradeTitle": "Passer à la platforme professionnelle",
     "text": "Vous êtes sur le point de lancer votre abonnement professionel. Il inclus: {size} de stockage, création de projets illimités avec utilisateurs illimités.",
-    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}",
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} rattaché au compte de facturation {organizationName}",
     "spaceUpgradedNotification": "Félicitation ! Vous venez de souscrire à un abonnement professionnel pour l'espace {spaceName}."
   },
   "UserProjects": {
@@ -65,13 +65,13 @@
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Rechercher un espace",
-    "organizationsButtonText": "Organisations",
+    "organizationsButtonText": "Comptes de facturation",
     "createButtonText": "Créer un espace"
   },
   "UserSubscriptions": {
     "title": "Abonnement à la plateforme",
-    "text": "Naviguez parmis vos organisations pour gérer les abonnements et factures de vos espaces plateforme.",
-    "list": "Liste de mes organisations :"
+    "text": "Naviguez parmis vos comptes de facturation pour gérer les abonnements et factures de vos espaces plateforme.",
+    "list": "Liste de mes comptes de facturation :"
   },
 
 
@@ -253,7 +253,7 @@
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
     "separatorText": "ou",
-    "uploadButtonText": "Selectionner un fichier .ifc"
+    "uploadButtonText": "Sélectionner un fichier .ifc"
   },
 
   "FolderAccessManager": {
@@ -491,31 +491,40 @@
   },
 
   "OrganizationDeleteGuard": {
-    "title": "Supprimer l'organisation",
+    "title": "Supprimer le compte de facturation",
     "submitButtonText": "Supprimer"
   },
 
   "OrganizationForm": {
-    "createTitle": "Création d'organisation",
-    "updateTitle": "Modifier l'organisation",
+    "createTitle": "Création d'un compte de facturation",
+    "updateTitle": "Modifier le compte de facturation",
     "infoSectionTitle": "Information de base",
     "nameInputPlaceholder": "Nom",
     "nameInputErrorMessage": "Nom invalide",
     "logoInputLabel": "Choisir un logo",
     "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
     "submitButtonText": "Valider",
-    "successTitle": "Félicitation votre organisation vient d'être créée",
+    "successTitle": "Félicitation votre compte de facturation vient d'être créé",
     "successButtonText": "OK"
   },
 
+  "OrganizationSelector": {
+    "title": "Compte de facturation",
+    "radioLabelSelect": "Sélectionner un compte de facturation",
+    "radioLabelCreate": "Créer un compte de facturation",
+    "inputPlaceholder": "Nom du compte de facturation",
+    "submitButtonText": "Valider",
+    "successMessage": "Félicitation votre compte de facturation vient d'être créé"
+  },
+
   "OrganizationsList": {
-    "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
-    "createButtonText": "Créer une organisation",
-    "searchInputPlaceholder": "Rechercher une organisation"
+    "explanationText": "Le compte de facturation est l'entité qui centralise les facturations des espaces BIMData.io",
+    "createButtonText": "Créer un compte de facturation",
+    "searchInputPlaceholder": "Rechercher un compte"
   },
 
   "OrganizationsManager": {
-    "title": "Gestion des organizations",
+    "title": "Gestion des comptes de facturation",
     "backButtonText": "Retour"
   },
 
@@ -535,7 +544,7 @@
     "importButtonText": "Importer un espace",
     "addButtonText": "Ajouter un espace",
     "searchInputPlaceholder": "Rechercher",
-    "spaceListTitle": "Liste des espaces de l'organisation"
+    "spaceListTitle": "Liste des espaces rattachés au compte de facturation"
   },
 
   "ProjectCardActionMenu": {
@@ -655,25 +664,17 @@
   },
 
   "SpaceCreator": {
-    "createSelectOrgaTitle": "Créer ou sélectionner une organisation",
-    "createNewOrgaRadio": "Créer une nouvelle organisation",
-    "createNewOrgaInput": "Nom de ma nouvelle organisation",
-    "selectOrgaRadio": "Sélectionner une organisation",
-    "orgaValidateButton": "Valider",
-    "createSpaceTitle": "Créer un espace",
-    "createSpaceText": "Votre espace regroupe vos différents projets BIM.",
-    "createSpaceInput": "Nom de mon nouvel espace",
-    "spaceValidateButton": "Valider"
+    "title": "Créer un espace",
+    "text": "Votre espace regroupe vos différents projets BIM.",
+    "inputPlaceholder": "Nom de l'espace",
+    "billingAccountLabel": "Compte de facturation :",
+    "billingAccountButton": "Modifier",
+    "submitButtonText": "Passer au paiement"
   },
 
   "SpaceSelected": {
-    "selectedOrga": "Organization sélectionnée:",
+    "selectedOrga": "Compte de facturation:",
     "selectedSpace": "Espace sélectionné:"
-  },
-
-  "SpaceSelector": {
-    "orgaSelectorLabel": "Organisation selectionnée :",
-    "spaceSelectorLabel": "Espace selectionné :"
   },
 
   "SpaceSizeInfo": {
@@ -743,10 +744,10 @@
   "Success": "Succès",
 
   "Errors": {
-    "organizationsFetchError": "Impossible de récupérer la liste des organizations",
-    "organizationCreateError": "Erreur lors de la création de l'organization",
-    "organizationUpdateError": "Erreur lors le de mise à jour de l'organization",
-    "organizationDeleteError": "Erreur lors de la suppression de l'organization",
+    "organizationsFetchError": "Impossible de récupérer la liste des comptes de facturation",
+    "organizationCreateError": "Erreur lors de la création du compte de facturation",
+    "organizationUpdateError": "Erreur lors le de mise à jour du compte de facturation",
+    "organizationDeleteError": "Erreur lors de la suppression du compte de facturation",
     "spacesFetchError": "Impossible de récupérer la liste des espaces",
     "spaceCreateError": "Erreur lors de la création de l'espace",
     "spaceUpdateError": "Erreur de mise à jour de l'espace",

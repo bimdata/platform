@@ -45,6 +45,10 @@ const loadAllOrganizationsSpaces = async () => {
   ).reduce((acc, spaces) => acc.concat(spaces), []);
 };
 
+const getPersonalOrganization = () => {
+  return readonly(state.userOrganizations.find(orga => orga.is_personnal));
+};
+
 const getOrganizationSpaces = organization => {
   return readonly(state.organizationsSpaces[organization?.id] || []);
 };
@@ -114,6 +118,7 @@ export function useOrganizations() {
     loadUserOrganizations,
     loadOrganizationSpaces,
     loadAllOrganizationsSpaces,
+    getPersonalOrganization,
     getOrganizationSpaces,
     getOrganizationUserSpaces,
     createOrganization,
