@@ -9,20 +9,24 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 77%;
+    width: 67%;
     &__main {
       font-weight: bold;
-      color: var(--color-primary)
+      color: var(--color-primary);
+      margin: auto 0;
+    }
+    .hide {
+      color: var(--color-silver-dark);
     }
   }
 
   &__acces-denied {
     display: flex;
-    width: 100%;
+    justify-content: flex-end;
+    background-color: var(--color-white);
     margin: auto 0 auto var(--spacing-unit);
+
   } 
 
-  .hide {
-    filter: blur(1px)
-  }
+
 }

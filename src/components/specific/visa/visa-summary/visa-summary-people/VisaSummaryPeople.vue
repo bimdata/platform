@@ -5,7 +5,13 @@
     :key="people.id"
   >
     <div class="visa-add-summary-people__left-side">
-      <UserAvatar :user="people.validator" size="25" color="silver-light" />
+      <UserAvatar
+        :user="people.validator"
+        size="27"
+        sizeInitials="14"
+        color="silver-light"
+        style="box-shadow: var(--box-shadow)"
+      />
       <BIMDataTextBox
         class="visa-add-summary-people__left-side__name"
         :text="people.fullName || people.validator.email"

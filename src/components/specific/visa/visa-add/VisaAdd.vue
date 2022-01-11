@@ -14,61 +14,71 @@
         </div>
       </template>
     </transition>
-    <transition name="fade">
-      <template v-if="!isSelectingValidator">
-        <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
-          <div class="visa-add__content__header">
-            <div class="visa-add__content__header__left-side">
-              <BIMDataIcon name="visa" size="s" />
-              <span>{{ $t("Visa.add.title") }}</span>
-            </div>
-            <div class="visa-add__content__header__right-side">
-              <BIMDataButton ghost rounded icon @click="safeZoneHandler">
-                <BIMDataIcon name="close" size="xxxs" />
-              </BIMDataButton>
-            </div>
-          </div>
-          <div class="visa-add__content__validator">
-            <BIMDataButton
-              color="primary"
+    <template v-if="!isSelectingValidator">
+      <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
+        <div class="visa-add__content__header">
+          <div class="visa-add__content__header__left-side">
+            <BIMDataIcon
+              name="visa"
               fill
-              radius
-              width="100%"
-              @click="isSelectingValidator = true"
-              >{{ $t("Visa.add.validator") }}
-              <div class="visa-add__content__validator__counter">
-                <span>{{ validatorListCounter }}</span>
-              </div>
+              color="primary"
+              size="s"
+              margin="2.5px 0 0 0"
+            />
+            <span>{{ $t("Visa.add.title") }}</span>
+          </div>
+          <div class="visa-add__content__header__right-side">
+            <BIMDataButton ghost rounded icon @click="safeZoneHandler">
+              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
             </BIMDataButton>
           </div>
-          <div class="visa-add__content__validate-date">
-            <BIMDataInput
-              v-model="dateInput"
-              :placeholder="$t('Visa.add.toValidate')"
-              :error="hasDateError"
-              :errorMessage="$t('Visa.add.errorDate')"
-            >
-            </BIMDataInput>
-          </div>
-          <div class="visa-add__content__description">
-            <BIMDataTextarea
-              v-model="descInput"
-              :label="$t('Visa.add.description')"
-              name="description"
-              width="100%"
-            />
-          </div>
-          <div class="visa-add__content__action-button">
-            <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
-              $t("Visa.add.cancel")
-            }}</BIMDataButton>
-            <BIMDataButton color="primary" fill radius @click="submit">{{
-              $t("Visa.add.validate")
-            }}</BIMDataButton>
+        </div>
+        <div class="visa-add__content__validator">
+          <BIMDataButton
+            color="primary"
+            fill
+            radius
+            width="100%"
+            @click="isSelectingValidator = true"
+            >{{ $t("Visa.add.validator") }}
+            <div class="visa-add__content__validator__counter">
+              <span>{{ validatorListCounter }}</span>
+            </div>
+          </BIMDataButton>
+        </div>
+        <div class="visa-add__content__validate-date">
+          <BIMDataInput
+            v-model="dateInput"
+            :placeholder="$t('Visa.add.toValidate')"
+            :error="hasDateError"
+            :errorMessage="$t('Visa.add.errorDate')"
+          >
+          </BIMDataInput>
+          <div class="visa-add__content__validate-date__exemple">
+            {{ $t("Visa.add.exempleDate") }}
           </div>
         </div>
-      </template>
-    </transition>
+        <div class="visa-add__content__description">
+          <BIMDataTextarea
+            v-model="descInput"
+            :label="$t('Visa.add.description')"
+            name="description"
+            fitContent
+            :resizable="false"
+            rows="1"
+            width="100%"
+          />
+        </div>
+        <div class="visa-add__content__action-button">
+          <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
+            $t("Visa.add.cancel")
+          }}</BIMDataButton>
+          <BIMDataButton color="primary" fill radius @click="submit">{{
+            $t("Visa.add.validate")
+          }}</BIMDataButton>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

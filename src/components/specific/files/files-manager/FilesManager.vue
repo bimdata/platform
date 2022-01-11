@@ -343,11 +343,8 @@ export default {
         projectPk: currentProject.value.id
       };
 
-      const resValidator = await fetchToValidateVisas(baseInfo);
-      const toValidateVisas = await getUnmatchedUsers(resValidator, baseInfo);
-
-      const resCreated = await fetchCreatedVisas(baseInfo);
-      const createdVisas = await getUnmatchedUsers(resCreated, baseInfo);
+      const toValidateVisas = await fetchToValidateVisas(baseInfo);
+      const createdVisas = await fetchCreatedVisas(baseInfo);
 
       userVisas.value = {
         toValidateVisas:

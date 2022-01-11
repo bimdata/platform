@@ -10,30 +10,35 @@
       @update:modelValue="toggle(people, $event)"
     >
     </BIMDataCheckbox>
-    <div
-      class="visa-add-validator-people__picture"
-      :class="{ hide: !people.hasAccess }"
-    >
+    <div class="visa-add-validator-people__picture">
       <UserAvatar :user="people" size="40" color="silver-light" />
     </div>
     <div v-if="people.fullName" class="visa-add-validator-people__info">
       <BIMDataTextBox
         class="visa-add-validator-people__info__main"
+        :class="{ hide: !people.hasAccess }"
         :text="people.fullName"
       />
-      <span>{{ people.email }}</span>
+      <span
+        class="visa-add-validator-people__info__second"
+        :class="{ hide: !people.hasAccess }"
+        >{{ people.email }}</span
+      >
     </div>
-    <div v-else class="visa-add-validator-people__info">
-      <span class="visa-add-validator-people__info__main">{{
-        people.email
-      }}</span>
+    <div v-else class="visa-add-validator-people__info__main">
+      <span :class="{ hide: !people.hasAccess }">{{ people.email }}</span>
     </div>
     <div
       v-if="!people.hasAccess"
       class="visa-add-validator-people__acces-denied"
     >
       <div class="visa-add-validator-people__acces-denied">
-        <BIMDataIcon name="warning" size="s" class="fill-warning" />
+        <BIMDataIcon
+          name="warning"
+          size="s"
+          class="fill-warning"
+          style="box-shadow: var(--box-shadow); padding: 3px"
+        />
       </div>
     </div>
   </div>

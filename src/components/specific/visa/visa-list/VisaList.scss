@@ -5,7 +5,8 @@
   flex-direction: column;
   &__header {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-unit);
 
     &__left-side {
       display: flex;
@@ -13,8 +14,9 @@
       margin: auto 0;
       
       span {
-        margin: auto 0 auto var(--spacing-unit);
-        font-size: 1rem;
+        margin: auto 0 auto calc(var(--spacing-unit) * 1.4);
+        color: var(--color-primary);
+        font-weight: bold;
       }
     }
   }
@@ -23,6 +25,21 @@
     overflow: auto;
     overflow-x: hidden;
     height: 100%;
+
+    &__empty {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: var(--spacing-unit);
+      box-sizing: margin-box;
+      gap: var(--spacing-unit);
+      height: calc(100% - var(--spacing-unit));
+      background-color: var(--color-silver-light);
+      span {
+        font-size: 1.4em;
+      }
+    }
 
     &__visa {
       display: flex;

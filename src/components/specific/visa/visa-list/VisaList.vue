@@ -2,12 +2,18 @@
   <div class="visa-list">
     <div class="visa-list__header">
       <div class="visa-list__header__left-side">
-        <BIMDataIcon name="visa" size="s" />
+        <BIMDataIcon
+          name="visa"
+          fill
+          color="primary"
+          size="s"
+          margin="2.5px 0 0 0"
+        />
         <span>{{ $t("Visa.list.title") }}</span>
       </div>
       <div class="visa-list__header__right-side">
         <BIMDataButton ghost rounded icon @click="onClickToClose">
-          <BIMDataIcon name="close" size="xxxs" />
+          <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </div>
     </div>
@@ -20,28 +26,60 @@
       @tab-click="selectTab"
     />
     <div class="visa-list__content">
-      <div
-        class="visa-list__content__visa"
-        v-for="visa of userVisas[currentTab]"
-        :key="visa.id"
-        @click="onClickToReachVisa(visa.id, visa.document.id)"
-      >
-        <BIMDataIcon
-          :name="visa.unMatchedUsers.length ? 'warning' : 'refresh'"
-          size="s"
-        />
-        <div class="visa-list__content__visa__desc">
-          <BIMDataTextBox
-            class="visa-list__content__visa__desc__title"
-            :text="visa.document.name"
+      <template v-if="userVisas[currentTab].length === 0">
+        <div class="visa-list__content__empty">
+          <BIMDataIcon
+            name="visa"
+            size="xxl"
+            color="silver"
+            margin="3px 0 0 0"
           />
-          <div class="visa-list__content__visa__desc__info">
-            <span>{{ formatDateDDMMYYY(visa.deadline) }}</span>
-            -
-            <BIMDataTextBox :text="fullName(visa.creator)" />
+          <span>{{
+            $t(
+              `Visa.list.${
+                currentTab === "toValidateVisas"
+                  ? "emptyValidation"
+                  : "emptyDemand"
+              }`
+            )
+          }}</span>
+        </div>
+      </template>
+      <template v-else>
+        <div
+          class="visa-list__content__visa"
+          v-for="visa of userVisas[currentTab]"
+          :key="visa.id"
+          @click="onClickToReachVisa(visa.id, visa.document.id)"
+        >
+          <BIMDataIcon
+            :name="
+              visa.status === visaClosed
+                ? 'validatedFile'
+                : visa.validationsInError.length
+                ? 'deniedFile'
+                : 'inProgressFile'
+            "
+            size="l"
+          />
+          <div class="visa-list__content__visa__desc">
+            <BIMDataTextBox
+              class="visa-list__content__visa__desc__title"
+              :style="`${
+                visa.validationsInError.length
+                  ? 'color: var(--color-high);'
+                  : ''
+              }`"
+              :text="visa.document.name"
+            />
+            <div class="visa-list__content__visa__desc__info">
+              <span>{{ formatDateDDMMYYY(visa.deadline) }}</span>
+              -
+              <BIMDataTextBox :text="fullName(visa.creator)" />
+            </div>
           </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -51,6 +89,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
+import VISA_STATUS from "@/config/visa-status";
 
 export default {
   components: {},
@@ -93,6 +132,7 @@ export default {
       // references
       tabs,
       currentTab,
+      visaClosed: VISA_STATUS.CLOSE,
       // methods
       onClickToClose,
       onClickToReachVisa,

@@ -732,6 +732,7 @@
       "validator": "Validant",
       "toValidate": "A valider avant",
       "errorDate": "Date invalide",
+      "exempleDate": "(Ex: 31/05/1970)",
       "description": "Description",
       "cancel": "Annuler",
       "validate": "Valider",
@@ -743,7 +744,7 @@
     },
     "safeZone": {
       "add": {
-        "content": "Êtes-vous sûr de vouloir quitter cette page ?",
+        "content": "Êtes-vous sûr de vouloir quitter cette page ? Il y'a peut-être des informations non validées.",
         "action": "Oui, quitter cette page",
         "keepView": "Annuler, rester ici"
       },
@@ -782,7 +783,10 @@
     "list": {
       "title": "Demande en cours",
       "visaValidator": "Mes validations",
-      "visaCreated": "Mes demandes"
+      "visaCreated": "Mes demandes",
+      "emptyValidation": "Aucune validation en cours",
+      "emptyDemand": "Aucune demande en cours"
+
     }
   },
 

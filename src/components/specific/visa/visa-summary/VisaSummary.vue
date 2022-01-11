@@ -18,7 +18,13 @@
       <div class="visa-summary__shell" :class="{ safeZone: isSafeZone }">
         <div class="visa-summary__shell__header">
           <div class="visa-summary__shell__header__left-side">
-            <BIMDataIcon name="visa" size="s" />
+            <BIMDataIcon
+              name="visa"
+              fill
+              color="primary"
+              size="s"
+              margin="2.5px 0 0 0"
+            />
             <span>{{
               $t(`Visa.summary.title.${isClosed ? "closed" : "open"}`)
             }}</span>
@@ -31,10 +37,10 @@
               icon
               @click="handleEdit('undo')"
             >
-              <BIMDataIcon name="undo" size="xxxs" />
+              <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
             </BIMDataButton>
             <BIMDataButton
-              v-if="!isClosed"
+              v-if="isAuthor && !isClosed"
               ghost
               rounded
               icon
@@ -42,11 +48,13 @@
             >
               <BIMDataIcon
                 :name="isEditing ? 'validate' : 'edit'"
-                size="xxxs"
+                size="xxs"
+                fill
+                color="granite-light"
               />
             </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="close">
-              <BIMDataIcon name="close" size="xxxs" />
+              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
             </BIMDataButton>
           </div>
         </div>
@@ -61,9 +69,13 @@
           >
             <BIMDataTextarea
               v-model="visa.description"
+              :class="{ editing: isEditing }"
               name="description"
               width="100%"
               :readonly="!isEditing"
+              :resizable="false"
+              rows="1"
+              fitContent
             />
           </div>
           <div class="visa-summary__shell__content__deadline">
@@ -144,7 +156,7 @@
             <span class="visa-summary__shell__validator__header__title">{{
               $t("Visa.summary.validator")
             }}</span>
-            <BIMDataButton v-if="!isClosed" ghost rounded icon>
+            <BIMDataButton v-if="isAuthor && !isClosed" ghost rounded icon>
               <BIMDataIcon
                 name="addUser"
                 size="s"
@@ -251,7 +263,6 @@ export default {
       try {
         const { id } = user.value;
         const res = await fetchVisa(props.visaId, props.baseInfo);
-
         visa.value = {
           ...res,
           deadline: formatDateDDMMYYY(res.deadline),
@@ -489,8 +500,7 @@ export default {
       responseHandler,
       getValidatorList,
       getBack,
-      handleEdit,
-      console
+      handleEdit
     };
   }
 };
