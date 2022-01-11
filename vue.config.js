@@ -8,11 +8,11 @@ module.exports = {
         additionalData: `
           @import "@/styles/variables.scss";
           @import "@/styles/mixins.scss";
-        `,
-      },
-    },
+        `
+      }
+    }
   },
   devServer: {
-    disableHostCheck: true,
-  },
+    disableHostCheck: true
+  }
 };

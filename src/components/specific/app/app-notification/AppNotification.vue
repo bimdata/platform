@@ -1,24 +1,24 @@
 <template>
-  <teleport to="#notification-container">
+  <teleport to="#app-notification-container">
     <transition name="slide-fade-up">
       <div
-        class="notification-card"
-        :class="`notification-card--${notification.type}`"
+        class="app-notification"
+        :class="`app-notification--${notification.type}`"
         v-show="showNotification"
       >
-        <div class="notification-card__icon">
+        <div class="app-notification__icon">
           <BIMDataIcon :name="notifIcons[notification.type]" size="m" />
         </div>
-        <div class="notification-card__text">
-          <div class="notification-card__text__title">
+        <div class="app-notification__content">
+          <div class="app-notification__content__title">
             {{ notification.title }}
           </div>
-          <div class="notification-card__text__message">
+          <div class="app-notification__content__message">
             {{ notification.message }}
           </div>
         </div>
         <BIMDataButton
-          class="notification-card__btn-close"
+          class="app-notification__btn-close"
           ghost
           rounded
           icon
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { useNotifications } from "@/composables/notifications";
+import { useAppNotification } from "./app-notification.js";
 
 const notifIcons = {
   info: "information",
@@ -43,7 +43,7 @@ const notifIcons = {
 
 export default {
   setup() {
-    const { showNotification, notification } = useNotifications();
+    const { showNotification, notification } = useAppNotification();
 
     return {
       // References
@@ -55,4 +55,5 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./NotificationCard.scss"></style>
+<style lang="scss" src="./AppNotification.global.scss"></style>
+<style scoped lang="scss" src="./AppNotification.scss"></style>

@@ -1,4 +1,4 @@
-.notification-card {
+.app-notification {
   display: flex;
   align-items: center;
   width: 400px;
@@ -12,7 +12,7 @@
     width: 22px;
   }
 
-  &__text {
+  &__content {
     flex-grow: 1;
     padding: 0 var(--spacing-unit);
 
@@ -35,29 +35,29 @@
   /* === State Styles === */
 
   &--info {
-    border-color: var(--color-neutral);
-    .notification-card__icon {
-      color: var(--color-neutral);
+    border-color: var(--color-silver-dark);
+    .app-notification__icon {
+      color: var(--color-silver-dark);
     }
   }
 
   &--success {
     border-color: var(--color-success);
-    .notification-card__icon {
+    .app-notification__icon {
       color: var(--color-success);
     }
   }
 
   &--warning {
     border-color: var(--color-warning);
-    .notification-card__icon {
+    .app-notification__icon {
       color: var(--color-warning);
     }
   }
 
   &--error {
     border-color: var(--color-high);
-    .notification-card__icon {
+    .app-notification__icon {
       color: var(--color-high);
     }
   }

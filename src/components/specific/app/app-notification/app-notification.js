@@ -20,7 +20,7 @@ const pushNotification = async (notif, timeout = DEFAULT_TIMEOUT) => {
   notification.value = EMPTY_NOTIFICATION;
 };
 
-export function useNotifications() {
+export function useAppNotification() {
   return {
     // References
     showNotification,

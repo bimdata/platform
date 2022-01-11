@@ -1,16 +1,16 @@
 <template>
-  <teleport :to="`#side-panel-container--${side}`">
+  <teleport :to="`#app-side-panel-container--${side}`">
     <transition :name="`slide-fade-${side}`">
-      <div class="side-panel" v-show="showSidePanel">
-        <div class="side-panel__header">
-          <span class="side-panel__header__title">
+      <div class="app-side-panel" v-show="showSidePanel">
+        <div class="app-side-panel__header">
+          <span class="app-side-panel__header__title">
             <slot name="title">{{ title }}</slot>
           </span>
           <BIMDataButton ghost rounded icon @click="closeSidePanel">
             <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
           </BIMDataButton>
         </div>
-        <div class="side-panel__content">
+        <div class="app-side-panel__content">
           <slot></slot>
         </div>
       </div>
@@ -20,7 +20,7 @@
 
 <script>
 import { onBeforeRouteLeave } from "vue-router";
-import { useSidePanel } from "@/composables/side-panel.js";
+import { useAppSidePanel } from "./app-side-panel.js";
 
 export default {
   props: {
@@ -35,7 +35,7 @@ export default {
     }
   },
   setup() {
-    const { showSidePanel, closeSidePanel } = useSidePanel();
+    const { showSidePanel, closeSidePanel } = useAppSidePanel();
 
     onBeforeRouteLeave(() => {
       if (showSidePanel.value) closeSidePanel();
@@ -51,4 +51,5 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./SidePanel.scss"></style>
+<style lang="scss" src="./AppSidePanel.global.scss"></style>
+<style scoped lang="scss" src="./AppSidePanel.scss"></style>
