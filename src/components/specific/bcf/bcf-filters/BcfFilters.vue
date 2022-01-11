@@ -8,12 +8,12 @@
       width="124px"
       @click="toggleFilters"
       class="btn-color-granite-light"
-      :class="{ 'btn-active': isFiltersActive }"
+      :class="{ 'btn-active': filtersShown }"
     >
       Filters
     </BIMDataButton>
     <transition name="slide-fade-up">
-      <div class="bcf-filters__container p-18" v-show="showFilters">
+      <div class="bcf-filters__container p-18" v-show="filtersShown">
         <div
           class="bcf-filters__container__header flex items-center justify-between"
         >
@@ -23,24 +23,26 @@
             size="xxs"
             fill
             color="primary"
-            @click="showFilters = false"
+            @click="filtersShown = false"
           />
         </div>
         <BIMDataSelect
           width="264px"
+          :multi="true"
           label="Priority"
           :options="priorityOptions"
-          v-model="priority"
+          v-model="priorities"
           class="m-t-24"
         />
         <BIMDataSelect
           width="264px"
+          :multi="true"
           label="Status"
           :options="statusOptions"
           v-model="status"
           class="m-t-24"
         />
-        <div class="flex justify-between m-t-24">
+        <!-- <div class="flex justify-between m-t-24">
           <BIMDataSelect
             width="47%"
             label="Début de création"
@@ -53,19 +55,25 @@
             :options="priorityOptions"
             v-model="priority"
           />
-        </div>
+        </div> -->
         <BIMDataSelect
           width="264px"
+          :multi="true"
           label="Tags"
-          :options="priorityOptions"
-          v-model="priority"
+          :options="tagOptions"
+          v-model="tags"
           class="m-t-24"
         />
         <div class="flex justify-center m-t-24">
-          <BIMDataButton color="primary" ghost radius class="m-r-12"
+          <BIMDataButton
+            color="primary"
+            ghost
+            radius
+            class="m-r-12"
+            @click="resetFilters"
             >Réinitialiser</BIMDataButton
           >
-          <BIMDataButton color="primary" fill radius
+          <BIMDataButton color="primary" fill radius @click="submitFilters"
             ><BIMDataIcon
               name="search"
               fill
@@ -90,44 +98,75 @@ export default {
       required: true
     }
   },
-  setup(props) {
-    const showFilters = ref(false);
-    const isFiltersActive = ref(false);
+  emits: ["submit"],
+  setup(props, { emit }) {
+    const filtersShown = ref(false);
     const toggleFilters = () => {
-      showFilters.value = !showFilters.value;
-      isFiltersActive.value = !isFiltersActive.value;
+      filtersShown.value = !filtersShown.value;
     };
 
     // priority list
-    const priority = ref(null);
-    const uniquePriorityList = computed(() => {
-      return [...new Set(props.bcfTopics.map(bcfTopic => bcfTopic.priority))];
+    const priorities = ref([]);
+    const priorityOptions = computed(() => {
+      const uniquePriorityList = [
+        ...new Set(props.bcfTopics.map(bcfTopic => bcfTopic.priority))
+      ];
+      return uniquePriorityList.map(value =>
+        value === undefined ? "Non défini" : value
+      );
     });
-    const priorityOptions = uniquePriorityList.value.map(value =>
-      value === undefined ? "Non défini" : value
-    );
 
     // status list
-    const status = ref(null);
-    const uniqueStatusList = computed(() => {
-      return [
+    const status = ref([]);
+    const statusOptions = computed(() => {
+      const uniqueStatusList = [
         ...new Set(props.bcfTopics.map(bcfTopic => bcfTopic.topicStatus))
       ];
+      return uniqueStatusList.map(value =>
+        value === undefined ? "Non défini" : value
+      );
     });
-    const statusOptions = uniqueStatusList.value.map(value =>
-      value === undefined ? "Non défini" : value
-    );
+
+    // tags list
+    const tags = ref([]);
+    const tagOptions = computed(() => {
+      return [...new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))];
+    });
+
+    const submitFilters = () => {
+      emit("submit", {
+        priorities: priorities.value,
+        status: status.value,
+        tags: tags.value
+      });
+      filtersShown.value = false;
+    };
+
+    const resetFilters = () => {
+      priorities.value = [];
+      status.value = [];
+      tags.value = [];
+
+      emit("submit", {
+        priorities: priorities.value,
+        status: status.value,
+        tags: tags.value
+      });
+    };
 
     return {
       // References
-      isFiltersActive,
-      priority,
+      priorities,
       priorityOptions,
       status,
       statusOptions,
-      showFilters,
+      tags,
+      tagOptions,
+      filtersShown,
       // Methods
-      toggleFilters
+      toggleFilters,
+      resetFilters,
+      submitFilters
     };
   }
 };
