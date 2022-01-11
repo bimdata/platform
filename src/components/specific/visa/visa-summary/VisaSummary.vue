@@ -287,6 +287,7 @@ export default {
             })
         };
         if (visa.value.creator.userId === id) isAuthor.value = true;
+        isClosed.value = visa.value.status === VISA_STATUS.CLOSE;
       } catch {
         emit("set-is-visa-list", true);
       }
@@ -301,7 +302,6 @@ export default {
         },
         visa.value.validations
       );
-      isClosed.value = visa.value.status === VISA_STATUS.CLOSE;
       !isAuthor.value && getValidationUserId();
       statusVisaHandler();
     };
