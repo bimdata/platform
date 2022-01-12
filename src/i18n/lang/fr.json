@@ -544,7 +544,8 @@
     "importButtonText": "Importer un espace",
     "addButtonText": "Ajouter un espace",
     "searchInputPlaceholder": "Rechercher",
-    "spaceListTitle": "Liste des espaces rattachés au compte de facturation"
+    "spaceListTitle": "Liste des espaces rattachés au compte de facturation",
+    "spaceListPlaceholder": "Aucun espace n'est rattaché à ce compte de facturation."
   },
 
   "ProjectCardActionMenu": {
