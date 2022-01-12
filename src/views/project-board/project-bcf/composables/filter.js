@@ -8,7 +8,7 @@ function useFilter(topics) {
   });
 
   function onFiltersSubmit(submittedFilters) {
-    filters.épriorities = submittedFilters.priorities;
+    filters.priorities = submittedFilters.priorities;
     filters.status = submittedFilters.status;
     filters.tags = submittedFilters.tags;
   }
