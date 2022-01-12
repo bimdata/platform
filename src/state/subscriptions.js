@@ -123,18 +123,6 @@ const waitForCreatedSpace = async space => {
   return newSpace;
 };
 
-const createDatapack = (space, quantity) => {
-  return SubscriptionService.createDatapackSubscription(space, quantity);
-};
-
-const updateDatapack = (space, datapack, quantity) => {
-  return SubscriptionService.updateDatapackSubscription(
-    space,
-    datapack,
-    quantity
-  );
-};
-
 /**
  * This method takes a space and an initial size as parameters and check
  * every 500ms for the space size until it find it to be different from
@@ -143,6 +131,7 @@ const updateDatapack = (space, datapack, quantity) => {
  *
  * @param {Object} space
  * @param {Number} size
+ * @param {Number} expectedSize
  * @returns {Number}
  */
 const waitForUpdatedSpaceSize = async (space, size, expectedSize) => {
@@ -156,6 +145,18 @@ const waitForUpdatedSpaceSize = async (space, size, expectedSize) => {
   }
 
   return newSize;
+};
+
+const createDatapack = (space, quantity) => {
+  return SubscriptionService.createDatapackSubscription(space, quantity);
+};
+
+const updateDatapack = (space, datapack, quantity) => {
+  return SubscriptionService.updateDatapackSubscription(
+    space,
+    datapack,
+    quantity
+  );
 };
 
 export function useSubscriptions() {
@@ -176,8 +177,8 @@ export function useSubscriptions() {
     getSpaceActiveDatapack,
     getPlatformSubscriptionLink,
     waitForCreatedSpace,
+    waitForUpdatedSpaceSize,
     createDatapack,
-    updateDatapack,
-    waitForUpdatedSpaceSize
+    updateDatapack
   };
 }

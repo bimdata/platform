@@ -1,0 +1,64 @@
+.app-notification {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  min-height: 72px;
+  padding: var(--spacing-unit);
+  border-left: 3px solid;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
+
+  &__icon {
+    width: 22px;
+  }
+
+  &__content {
+    flex-grow: 1;
+    padding: 0 var(--spacing-unit);
+
+    &__title {
+      margin-bottom: calc(var(--spacing-unit) / 3);
+      font-weight: bold;
+    }
+
+    &__message {
+      font-size: 0.9rem;
+      color: var(--color-granite-light);
+    }
+  }
+
+  &__btn-close {
+    width: 22px;
+    color: var(--color-silver);
+  }
+
+  /* === State Styles === */
+
+  &--info {
+    border-color: var(--color-silver-dark);
+    .app-notification__icon {
+      color: var(--color-silver-dark);
+    }
+  }
+
+  &--success {
+    border-color: var(--color-success);
+    .app-notification__icon {
+      color: var(--color-success);
+    }
+  }
+
+  &--warning {
+    border-color: var(--color-warning);
+    .app-notification__icon {
+      color: var(--color-warning);
+    }
+  }
+
+  &--error {
+    border-color: var(--color-high);
+    .app-notification__icon {
+      color: var(--color-high);
+    }
+  }
+}

@@ -52,9 +52,9 @@
       </template>
     </ViewHeader>
 
-    <SidePanel :title="$t('OrganizationsManager.title')">
+    <AppSidePanel :title="$t('OrganizationsManager.title')">
       <OrganizationsManager :organizations="organizations" />
-    </SidePanel>
+    </AppSidePanel>
 
     <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
       <transition-group name="grid">
@@ -73,16 +73,16 @@
 import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
-import { useSidePanel } from "@/composables/side-panel.js";
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useToggle } from "@/composables/toggle.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import OrganizationsManager from "@/components/specific/organizations/organizations-manager/OrganizationsManager.vue";
 import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard.vue";
 import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard.vue";
@@ -90,15 +90,15 @@ import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/
 export default {
   components: {
     AppBreadcrumb,
+    AppSidePanel,
     OrganizationsManager,
     SpaceCard,
     SpaceCreationCard,
-    SidePanel,
     ViewHeader
   },
   setup() {
     const router = useRouter();
-    const { openSidePanel } = useSidePanel();
+    const { openSidePanel } = useAppSidePanel();
     const { userOrganizations } = useOrganizations();
     const { userSpaces } = useSpaces();
 

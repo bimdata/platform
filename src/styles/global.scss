@@ -27,36 +27,5 @@ html {
   body {
     margin: 0;
     padding: 0;
-
-    #side-panel-container {
-      &--left,
-      &--right {
-        position: fixed;
-        z-index: 200;
-        top: 0;
-      }
-
-      &--left {
-        left: 0;
-      }
-
-      &--right {
-        right: 0;
-      }
-    }
-
-    #notification-container {
-      position: fixed;
-      z-index: 300;
-      top: calc(var(--platform-header-height) + var(--spacing-unit));
-      right: var(--spacing-unit);
-    }
-
-    #modal-container {
-      position: fixed;
-      z-index: 400;
-      top: 0;
-      left: 0;
-    }
   }
 }

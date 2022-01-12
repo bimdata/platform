@@ -30,4 +30,13 @@
     overflow-x: hidden;
     overflow-y: auto;
   }
+
+  &__placeholder {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: calc(var(--spacing-unit) * 2);
+    color: var(--color-granite-light);
+  }
 }

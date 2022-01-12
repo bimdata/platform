@@ -624,7 +624,8 @@
         "importButtonText": "Import space",
         "addButtonText": "Add new space",
         "searchInputPlaceholder": "Search",
-        "spaceListTitle": "Account spaces"
+        "spaceListTitle": "Account spaces",
+        "spaceListPlaceholder": "No space is attached to this billing account."
     },
     "ProjectCardLeaveGuard": {
         "title": "Leave projet",

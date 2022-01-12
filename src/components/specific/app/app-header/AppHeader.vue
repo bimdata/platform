@@ -1,11 +1,6 @@
 <template>
   <div class="app-header">
-    <img
-      class="app-header__logo"
-      alt="BIMData Platform logo"
-      src="/static/header-logo.svg"
-      @click="goToDashboard"
-    />
+    <PlatformLogo class="app-header__logo" @click="goToDashboard" />
     <app-slot name="app-header-action" />
     <AppHeaderMenu class="app-header__menu" />
   </div>

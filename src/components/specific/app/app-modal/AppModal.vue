@@ -1,5 +1,5 @@
 <template>
-  <teleport to="#modal-container">
+  <teleport to="#app-modal-container">
     <transition name="fade">
       <div class="app-modal__overlay" v-show="showModal">
         <div class="app-modal__box">
@@ -36,4 +36,5 @@ export default {
 };
 </script>
 
+<style lang="scss" src="./AppModal.global.scss"></style>
 <style scoped lang="scss" src="./AppModal.scss"></style>
