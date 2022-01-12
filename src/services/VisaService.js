@@ -175,6 +175,66 @@ class VisaService {
       throw new RuntimeError(ERRORS.VISA_UPDATE_ERROR, error);
     }
   }
+
+  async getVisaComments(visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.getVisaComments({
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_FETCH_ALL_COMMENTS_ERROR, error);
+    }
+  }
+
+  async createVisaComment(visaId, baseInfo, data) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.createVisaComment({
+        data,
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_CREATE_COMMENTS_ERROR, error);
+    }
+  }
+
+  async updateVisaComment(commentId, visaId, baseInfo, data) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.updateVisaComment({
+        data,
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId,
+        id: commentId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_UPDATE_COMMENT_ERROR, error);
+    }
+  }
+
+  async deleteVisaComment(commentId, visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.deleteVisaComment({
+        cloudPk,
+        projectPk,
+        documentPk,
+        visaPk: visaId,
+        id: commentId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_DELETE_COMMENT_ERROR, error);
+    }
+  }
 }
 
 const service = new VisaService();

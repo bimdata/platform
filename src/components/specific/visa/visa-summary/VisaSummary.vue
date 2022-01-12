@@ -181,6 +181,13 @@
             />
           </div>
         </div>
+        <div class="visa-summary__shell__comments">
+          <VisaComments
+            :baseInfo="baseInfo"
+            :visaId="visaId"
+            :isAuthor="isAuthor"
+          />
+        </div>
       </div>
     </template>
   </div>
@@ -195,6 +202,7 @@ import { VISA_STATUS } from "@/config/visa";
 import { formatDate } from "@/utils/date";
 
 import VisaSummaryValidator from "./visa-summary-validator/VisaSummaryValidator";
+import VisaComments from "./visa-comments/VisaComments";
 import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
 import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
 
@@ -207,7 +215,12 @@ import { formatDateDDMMYYY } from "@/utils/date";
 import { isDateConform } from "@/utils/visas";
 
 export default {
-  components: { VisaSummaryValidator, VisaSafeZone, VisaSelectionValidator },
+  components: {
+    VisaSummaryValidator,
+    VisaSafeZone,
+    VisaSelectionValidator,
+    VisaComments
+  },
   props: {
     project: {
       type: Object,

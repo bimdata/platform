@@ -27,4 +27,23 @@ const formatDateDDMMYYY = date => {
   return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
 };
 
-export { formatToDateObject, formatDate, formatDateDDMMYYY, regexDate };
+const formatDateDDMMYYYHHMM = date => {
+  function pad(s) {
+    return s < 10 ? "0" + s : s;
+  }
+  const d = new Date(date);
+  const day = [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join(
+    "/"
+  );
+  return `${day} ${d.getHours()}:${
+    d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()
+  }`;
+};
+
+export {
+  formatToDateObject,
+  formatDate,
+  formatDateDDMMYYY,
+  formatDateDDMMYYYHHMM,
+  regexDate
+};

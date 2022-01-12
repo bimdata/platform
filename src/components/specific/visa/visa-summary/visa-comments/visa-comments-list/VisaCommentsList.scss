@@ -1,0 +1,50 @@
+.visa-comments-list {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    &__left-side {
+      display: flex;
+      align-items: center;
+      margin-left: var(--spacing-unit);
+      max-width:80%;
+
+      &__name {
+        color: var(--color-primary);
+        font-weight: bold;
+        margin-left: var(--spacing-unit);
+  
+      }
+      &__separator {
+        margin: 0 4px;
+      }
+      &__date {
+        min-width: 100px;
+        font-weight: bold;
+      }
+    }
+
+    &__right-side {
+      display: flex;
+    }
+  }
+
+  &__content {
+    margin: 0 var(--spacing-unit);
+    &:deep() {
+      textarea {
+        font-size: 1rem;
+        font-family: var(--primary-font);
+        color: var(--color-primary);
+      }
+      :not(.editing){
+        .bar {
+          display: none; 
+        }
+      }
+    }
+
+
+  }
+
+
+}

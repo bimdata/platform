@@ -782,6 +782,18 @@
       "refresh": "Rénitialiser la validation"
      }
     },
+    "comments": {
+      "comment": "Commenter",
+      "commentary": "Commentaire",
+      "placeholder": "Poster un commentaire",
+      "publish": "Publier",
+      "cancel": "Annuler",
+      "reply": "Répondre",
+      "actions": {
+        "edit": "Editer",
+        "delete": "Supprimer"
+      }
+    },
     "list": {
       "title": "Demande en cours",
       "toValidateVisas": "Mes validations",
@@ -852,6 +864,10 @@
     "visaDeleteError": "Impossible de supprimer ce visa",
     "visaUpdateError": "Impossible de mettre à jour ce visa",
     "visaRefreshError": "Impossible de mettre à jour votre réponse",
+    "visaFetchAllCommentsError": "Impossible de récupérer les commentaires",
+    "visaCreateCommentsError": "Impossible de poster ce commentaire",
+    "visaUpdateCommentError": "Impossible de modifier ce commentaire",
+    "visaDeleteCommentError": "Impossible de supprimer ce commentaire",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",
