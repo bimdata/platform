@@ -1,5 +1,5 @@
 <template>
-  <div class="bcf-filters">
+  <div class="bcf-filters" v-click-away="closeFilters">
     <BIMDataButton
       data-test="btn-toggle-menu"
       color="default"
@@ -8,23 +8,25 @@
       width="124px"
       @click="toggleFilters"
       class="btn-color-granite-light"
-      :class="{ 'btn-active': filtersShown }"
+      :class="{ 'btn-active': showFilters }"
     >
       Filters
     </BIMDataButton>
     <transition name="slide-fade-up">
-      <div class="bcf-filters__container p-18" v-show="filtersShown">
+      <div class="bcf-filters__container p-18" v-show="showFilters">
         <div
           class="bcf-filters__container__header flex items-center justify-between"
         >
           <div class="bcf-filters__container__header__title">Filters</div>
-          <BIMDataIcon
-            name="close"
-            size="xxs"
-            fill
-            color="primary"
-            @click="filtersShown = false"
-          />
+          <BIMDataButton color="primary" ghost rounded icon>
+            <BIMDataIcon
+              name="close"
+              size="xxs"
+              fill
+              color="primary"
+              @click="showFilters = false"
+            />
+          </BIMDataButton>
         </div>
         <BIMDataSelect
           width="264px"
@@ -90,6 +92,7 @@
 
 <script>
 import { computed, ref } from "vue";
+import { useToggle } from "@/composables/toggle";
 
 export default {
   props: {
@@ -100,10 +103,11 @@ export default {
   },
   emits: ["submit"],
   setup(props, { emit }) {
-    const filtersShown = ref(false);
-    const toggleFilters = () => {
-      filtersShown.value = !filtersShown.value;
-    };
+    const {
+      isOpen: showFilters,
+      close: closeFilters,
+      toggle: toggleFilters
+    } = useToggle();
 
     // priority list
     const priorities = ref([]);
@@ -139,7 +143,7 @@ export default {
         status: status.value,
         tags: tags.value
       });
-      filtersShown.value = false;
+      showFilters.value = false;
     };
 
     const resetFilters = () => {
@@ -162,11 +166,12 @@ export default {
       statusOptions,
       tags,
       tagOptions,
-      filtersShown,
+      showFilters,
       // Methods
-      toggleFilters,
       resetFilters,
-      submitFilters
+      submitFilters,
+      closeFilters,
+      toggleFilters
     };
   }
 };
