@@ -22,6 +22,9 @@
     <template #cell-date="{ row: bcfTopic }">
       {{ $d(bcfTopic.creationDate, "long") }}
     </template>
+    <template #cell-actions="{ row: bcfTopic }">
+      <BIMDataButton color="primary" outline radius> Ouvrir </BIMDataButton>
+    </template>
   </GenericTable>
 </template>
 
@@ -65,3 +68,5 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss" src="./BcfTopicsList.scss"></style>
