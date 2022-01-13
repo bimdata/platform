@@ -21,7 +21,7 @@ function useSort(topics) {
   );
   const isSortByDateActive = computed(() => dateSortOrder.value === "asc");
 
-  const activeButton = ref("");
+  const activeButton = ref("dateSort");
   const sortByName = () => {
     sortToggleName();
     activeButton.value = "nameSort";
