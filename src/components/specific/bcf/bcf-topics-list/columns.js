@@ -32,7 +32,7 @@ export default [
   {
     id: "actions",
     label: "Actions",
-    width: "180px",
+    width: "120px",
     align: "center"
   }
 ];
