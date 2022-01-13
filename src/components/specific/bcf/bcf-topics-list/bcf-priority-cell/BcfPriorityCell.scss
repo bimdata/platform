@@ -1,0 +1,18 @@
+.bcf-priority-cell {
+  &--high,
+  &--medium,
+  &--low {
+    height: 44px;
+    width: 100%;
+    color: var(--color-white);
+  }
+  &--high {
+    background-color: var(--color-high);
+  }
+  &--medium {
+    background-color: var(--color-warning);
+  }
+  &--low {
+    background-color: var(--color-granite-light);
+  }
+}
