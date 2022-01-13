@@ -757,6 +757,11 @@
         "content": "Êtes-vous sûr de vouloir cloturer ce visa ?",
         "action": "Oui, cloturer ce visa",
         "keepView": "Annuler"
+      },
+      "deleteComment": {
+        "content": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+        "action": "Oui, supprimer ce commentaire",
+        "keepView": "Annuler"
       }
     },
     "summary": {

@@ -1,8 +1,11 @@
 .visa-comments {
+  span {
+    font-size: 1rem;
+  }
+  &__comment-button {
+    margin: var(--spacing-unit) 0;
+  }
   &__comments-handler {
-    span {
-      font-size: 1rem;
-    }
     &:deep() {
       textarea {
         font-size: 1rem;

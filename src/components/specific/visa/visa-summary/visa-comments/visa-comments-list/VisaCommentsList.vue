@@ -1,8 +1,14 @@
 <template>
-  <!-- {{ console.log("isEditing", isEditing) }}
-  {{ console.log("commentToEdit", commentToEdit) }}
-  {{ console.log("commentsList", commentsList) }} -->
-
+  <!-- {{ console.log("isEditing", isEditing) }}-->
+  {{ console.log("commentToHandle", commentToHandle) }}
+  <!-- {{ console.log("commentsList", commentsList) }}  -->
+  <transition name="fade">
+    <template v-if="isSafeZone">
+      <div class="safe-zone">
+        <VisaSafeZone actionType="deleteComment" @onClose="onSafeZone" />
+      </div>
+    </template>
+  </transition>
   <div
     class="visa-comments-list"
     v-for="comment in commentsList"
@@ -28,7 +34,7 @@
         }}</span>
       </div>
       <div class="visa-comments-list__header__right-side">
-        <template v-if="isEditing && commentToEdit.id === comment.id">
+        <template v-if="isEditing && commentToHandle.id === comment.id">
           <BIMDataButton ghost rounded icon @click="handleEdit(null, 'undo')">
             <BIMDataIcon
               name="undo"
@@ -51,7 +57,7 @@
           <VisaCommentsListActons
             :commentId="comment.id"
             @handle-edit="handleEdit"
-            @handle-delete="handleDelete"
+            @safe-zone-handler="safeZoneHandler"
           />
         </template>
       </div>
@@ -59,10 +65,13 @@
     <div class="visa-comments-list__content">
       <BIMDataTextarea
         v-model="comment.content"
-        :class="{ editing: isEditing }"
+        :class="{ editing: isEditing && commentToHandle.id === comment.id }"
         name="description"
         width="100%"
-        :readonly="!isEditing"
+        :readonly="
+          !isEditing ||
+          (commentToHandle.id && commentToHandle.id !== comment.id)
+        "
         :resizable="false"
         rows="1"
         fitContent
@@ -83,12 +92,14 @@
 <script>
 import { ref } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone.vue";
+
 import VisaCommentsListActons from "./visa-comments-list-actions/VisaCommentsListActions.vue";
 import { formatDateDDMMYYYHHMM } from "@/utils/date";
 import { useVisa } from "@/state/visa";
 
 export default {
-  components: { UserAvatar, VisaCommentsListActons },
+  components: { UserAvatar, VisaCommentsListActons, VisaSafeZone },
   props: {
     commentsList: {
       type: Array,
@@ -108,41 +119,61 @@ export default {
     const { updateComment, deleteComment } = useVisa();
 
     const isEditing = ref(false);
-    const commentToEdit = ref(null);
+    const commentToHandle = ref(null);
     const copyOfContent = ref(null);
+    const isSafeZone = ref(false);
 
     const handleEdit = async (commentId, undo) => {
       if (undo === "undo") {
-        commentToEdit.value.content = copyOfContent.value;
+        commentToHandle.value.content = copyOfContent.value;
         isEditing.value = false;
       } else if (isEditing.value) {
-        await updateComment(commentId, props.visaId, props.baseInfo, {
-          content: commentToEdit.value.content
-        });
+        if (commentToHandle.value.content !== copyOfContent.value) {
+          await updateComment(commentId, props.visaId, props.baseInfo, {
+            content: commentToHandle.value.content
+          });
+        }
         isEditing.value = false;
-        commentToEdit.value = null;
+        commentToHandle.value = null;
       } else if (!isEditing.value) {
-        commentToEdit.value = props.commentsList.find(
+        commentToHandle.value = props.commentsList.find(
           ({ id }) => id === commentId
         );
-        copyOfContent.value = commentToEdit.value.content;
+        copyOfContent.value = commentToHandle.value.content;
         isEditing.value = true;
       }
     };
 
-    const handleDelete = async commentId => {
-      await deleteComment(commentId, props.visaId, props.baseInfo);
-      await emit("get-comments");
+    const safeZoneHandler = commentId => {
+      commentToHandle.value = props.commentsList.find(
+        ({ id }) => id === commentId
+      );
+      isSafeZone.value = true;
+    };
+
+    const onSafeZone = async type => {
+      if (type) {
+        await deleteComment(
+          commentToHandle.value.id,
+          props.visaId,
+          props.baseInfo
+        );
+        await emit("get-comments");
+        commentToHandle.value = null;
+      }
+      isSafeZone.value = false;
     };
 
     return {
       //references
       isEditing,
-      commentToEdit,
+      commentToHandle,
+      isSafeZone,
       // methods
       formatDateDDMMYYYHHMM,
       handleEdit,
-      handleDelete,
+      safeZoneHandler,
+      onSafeZone,
       console
     };
   }

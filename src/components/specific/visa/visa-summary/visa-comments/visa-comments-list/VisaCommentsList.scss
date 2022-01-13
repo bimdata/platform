@@ -45,6 +45,10 @@
 
 
   }
-
-
+}
+.safe-zone {
+  z-index: 2;
+  position: absolute;
+  top: 2.5%;
+  left: 3.5%;
 }

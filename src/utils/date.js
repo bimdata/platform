@@ -32,12 +32,14 @@ const formatDateDDMMYYYHHMM = date => {
     return s < 10 ? "0" + s : s;
   }
   const d = new Date(date);
-  const day = [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join(
-    "/"
-  );
-  return `${day} ${d.getHours()}:${
-    d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()
-  }`;
+  const DDMMYYYY = [
+    pad(d.getDate()),
+    pad(d.getMonth() + 1),
+    d.getFullYear()
+  ].join("/");
+  return `${DDMMYYYY} ${
+    d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()
+  }:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
 };
 
 export {

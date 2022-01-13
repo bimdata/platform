@@ -11,9 +11,11 @@
         >{{ $t("Visa.comments.comment") }}</BIMDataButton
       >
     </template>
+    <template v-if="commentsList.length > 0">
+      <span>{{ $t("Visa.comments.commentary") }}</span>
+    </template>
     <template v-if="!isAuthor || isAuthorCommenting">
       <div class="visa-comments__comments-handler">
-        <span>{{ $t("Visa.comments.commentary") }}</span>
         <BIMDataTextarea
           v-model="textContent"
           :placeholder="$t('Visa.comments.placeholder')"
@@ -121,7 +123,8 @@ export default {
       commentsList,
       // methods
       pushComment,
-      getComments
+      getComments,
+      console
     };
   }
 };

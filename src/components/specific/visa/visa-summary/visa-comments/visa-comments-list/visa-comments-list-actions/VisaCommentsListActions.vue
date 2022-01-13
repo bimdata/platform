@@ -41,7 +41,7 @@ export default {
       type: Number
     }
   },
-  emits: ["handle-edit", "handle-delete"],
+  emits: ["handle-edit", "safe-zone-handler"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -50,7 +50,7 @@ export default {
     } = useToggle();
 
     const onDelete = () => {
-      emit("handle-delete", props.commentId);
+      emit("safe-zone-handler", props.commentId);
       closeMenu();
     };
 
