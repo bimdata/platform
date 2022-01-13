@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 
 export default {
   props: {
@@ -18,23 +18,12 @@ export default {
     }
   },
   setup(props) {
-    const priorityValue = ref("");
-
-    watch(
-      () => props.bcfTopic,
-      () => {
-        if (props.bcfTopic.priority === "High") {
-          priorityValue.value = "high";
-        }
-        if (props.bcfTopic.priority === "Medium") {
-          priorityValue.value = "medium";
-        }
-        if (props.bcfTopic.priority === "Low") {
-          priorityValue.value = "low";
-        }
-      },
-      { immediate: true }
-    );
+    const priorityValue = computed(() => {
+      if (props.bcfTopic.priority) {
+        return props.bcfTopic.priority.toLowerCase();
+      }
+      return "";
+    });
 
     return {
       // References
