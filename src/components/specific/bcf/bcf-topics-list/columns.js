@@ -2,13 +2,13 @@ export default [
   {
     id: "index",
     label: "#",
-    width: "50px",
+    width: "60px",
     align: "center"
   },
   {
     id: "priority",
     label: "Priority",
-    width: "50px",
+    width: "100px",
     align: "center"
   },
   {
