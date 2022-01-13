@@ -26,8 +26,11 @@
           :class="{ active: activeButton === 'indexSort' }"
           @click="sortByIndex"
         >
-          <span v-if="isSortByIndexActive">#</span>
-          <span v-else>?</span>
+          <IndexAscending
+            v-if="isSortByIndexActive"
+            style="heiht: 18px; width: 18px"
+          />
+          <IndexDescending v-else style="heiht: 18px; width: 18px" />
         </BIMDataButton>
         <BIMDataButton
           data-test="btn-sort-name"
@@ -55,10 +58,22 @@
           :class="{ active: activeButton === 'dateSort' }"
           @click="sortByDate"
         >
-          <BIMDataIcon name="calendar" fill color="granite-light" />
+          <DateAscending
+            v-if="isSortByDateActive"
+            style="heiht: 18px; width: 18px"
+          />
+          <DateDescending v-else style="heiht: 18px; width: 18px" />
         </BIMDataButton>
-        <BIMDataButton color="default" fill square icon class="m-r-12">
-          List
+        <BIMDataButton
+          color="default"
+          fill
+          square
+          icon
+          class="m-r-12"
+          @click="toggleDisplayBcfTopics"
+        >
+          <Grid v-if="isDisplayByListActive" style="heiht: 18px; width: 18px" />
+          <List v-else style="heiht: 18px; width: 18px" />
         </BIMDataButton>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
@@ -81,7 +96,13 @@
             <span> loading Bcf topics </span>
           </div>
         </div>
-        <BcfTopics
+        <div v-else-if="displayedBcfTopics.length === 0">empty</div>
+        <BcfTopicsList
+          v-else-if="isDisplayByListActive"
+          class="project-bcf__content__list"
+          :bcfTopics="displayedBcfTopics"
+        />
+        <BcfTopicsGrid
           v-else
           v-for="bcfTopic in displayedBcfTopics"
           :key="bcfTopic.guid"
@@ -97,6 +118,7 @@
 import { ref, watch } from "vue";
 import { useProjects } from "@/state/projects.js";
 import { useBcf } from "@/state/bcf.js";
+
 import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
@@ -104,13 +126,15 @@ import useSort from "./composables/sort.js";
 // Components
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
-import BcfTopics from "../../../components/specific/bcf/bcf-topics/BcfTopics.vue";
+import BcfTopicsGrid from "../../../components/specific/bcf/bcf-topics-grid/BcfTopicsGrid.vue";
+import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 
 export default {
   components: {
     BcfFilters,
-    BcfTopics,
+    BcfTopicsGrid,
+    BcfTopicsList,
     AppSlotContent,
     ProjectBcfOnboardingImage
   },
@@ -150,6 +174,11 @@ export default {
       isSortByDateActive
     } = useSort(bcfTopics);
 
+    const isDisplayByListActive = ref(false);
+    const toggleDisplayBcfTopics = () => {
+      isDisplayByListActive.value = !isDisplayByListActive.value;
+    };
+
     return {
       loading,
       bcfTopics,
@@ -164,7 +193,9 @@ export default {
       activeButton,
       isSortByNameActive,
       isSortByIndexActive,
-      isSortByDateActive
+      isSortByDateActive,
+      toggleDisplayBcfTopics,
+      isDisplayByListActive
     };
   }
 };
