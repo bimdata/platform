@@ -1,0 +1,61 @@
+.open-topic-issue {
+  &__header {
+    height: 27px;
+    &__index,
+    &__date {
+      height: 100%;
+      font-size: 12px;
+    }
+    &__index {
+      &.high,
+      &.medium,
+      &.low {
+        min-width: 50px;
+        color: var(--color-white);
+      }
+      &.high {
+        background-color: var(--color-high);
+      }
+      &.medium {
+        background-color: var(--color-warning);
+      }
+      &.low {
+        background-color: var(--color-granite-light);
+      }
+    }
+    &__date {
+      min-width: 103px;
+      background-color: var(--color-silver-light);
+      color: var(--color-primary);
+    }
+  }
+  &__img {
+    position: relative;
+    background-color: var(--color-silver-light);
+    &__status {
+      border-radius: 3px;
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      &.closed {
+        background-color: var(--color-high);
+        color: var(--color-white);
+      }
+      &.opened {
+        background-color: var(--color-success);
+        color: var(--color-white);
+      }
+      &.resolved {
+        background-color: var(--color-granite-light);
+        color: var(--color-white);
+      }
+    }
+    img {
+      width: 100%;
+    }
+  }
+  &__content {
+  }
+  &__infos {
+  }
+}
