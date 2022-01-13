@@ -512,7 +512,7 @@
         "withDatapack": "with Datapack",
         "cancelSubscriptionButton": "Cancel subscription",
         "updateCreditCardButton": "Update credit card",
-        "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+        "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before..",
         "subscribeButton": "Upgrade to our Pro Platform",
         "headers": {
             "space": "Space",
@@ -561,7 +561,7 @@
     "InvoicesTable": {
         "title": "Invoices",
         "tablePlaceholder": "Loading invoices...",
-        "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before ?",
+        "emptyTableText": "Your invoices will be listed here when you have active subsctiptions.",
         "subscribeButton": "Upgrade to our Pro Platform",
         "headers": {
             "amount": "Amount",

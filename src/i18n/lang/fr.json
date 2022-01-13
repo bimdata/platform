@@ -128,8 +128,8 @@
     "withDatapack": "+ Datapack",
     "cancelSubscriptionButton": "Annuler l'abonnement",
     "updateCreditCardButton": "Mettre à jour la carte de crédit",
-    "emptyTableText": "Les factures apparaitront ici lorsque vous aurez activé vos abonnements.",
-    "subscribeButton": "Passez à notre plateforme Pro",
+    "emptyTableText": "Hm.. Il semble que vous n'ayez jamais souscris à un abonnement. Avez vous déjà essayé notre Plateforme Pro ?",
+    "subscribeButton": "Passez à notre Plateforme Pro",
     "headers": {
       "space": "Espace",
       "nextpayment": "Prochain paiement",
@@ -385,8 +385,8 @@
   "InvoicesTable": {
     "title": "Factures",
     "tablePlaceholder": "Chargement des factures...",
-    "emptyTableText": "Les factures apparaitront ici lorsque vous aurez activé vos abonnements.",
-    "subscribeButton": "Passez à notre plateforme Pro",
+    "emptyTableText": "Vos factures apparaitront ici lorsque vous aurez des abonnements actifs.",
+    "subscribeButton": "Passez à notre Plateforme Pro",
     "headers": {
       "amount": "Montant",
       "status": "Statut",

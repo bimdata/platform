@@ -511,7 +511,6 @@
         "withDatapack": "+ Datapack",
         "cancelSubscriptionButton": "Abonnement kündigen",
         "updateCreditCardButton": "Kreditkarte aktualisieren",
-        "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, erscheinen die Rechnungen hier.",
         "subscribeButton": "Zu unserer Pro-Plattform",
         "headers": {
             "space": "Raum",

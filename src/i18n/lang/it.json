@@ -560,8 +560,8 @@
     "InvoicesTable": {
         "title": "Fatture",
         "tablePlaceholder": "Caricamento delle fatture",
-        "emptyTableText": "Oh, no. Qui non ci sono piani attivi. Probabilmente non hai provato la versione Pro.",
-        "subscribeButton": "Passa alla nostra Piattaforma Pro",
+        "emptyTableText": "Le tue fatture verranno visualizzate qui quando hai abbonamenti attivi.",
+        "subscribeButton": "Passa alla nostra Platform Pro",
         "headers": {
             "amount": "Importo",
             "status": "Stato",
