@@ -20,7 +20,8 @@ export default [
   {
     id: "creator",
     label: "Crée par",
-    width: "200px"
+    width: "200px",
+    align: "center"
   },
   {
     id: "date",

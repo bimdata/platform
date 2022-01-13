@@ -13,8 +13,14 @@
     <template #cell-priority="{ row: bcfTopic }">
       <BcfPriorityCell :bcfTopic="bcfTopic" />
     </template>
+    <template #cell-title="{ row: bcfTopic }">
+      <BIMDataTextBox maxWidth="500px" :text="bcfTopic.title" />
+    </template>
     <template #cell-creator="{ row: { creationAuthor } }">
       {{ creationAuthor }}
+    </template>
+    <template #cell-date="{ row: bcfTopic }">
+      {{ $d(bcfTopic.creationDate, "long") }}
     </template>
   </GenericTable>
 </template>
