@@ -92,4 +92,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./BcfTopics.scss"></style>
+<style scoped lang="scss" src="./BcfTopicsGrid.scss"></style>
