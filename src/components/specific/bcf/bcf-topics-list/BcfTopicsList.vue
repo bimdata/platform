@@ -24,17 +24,7 @@
         {{ $d(bcfTopic.creationDate, "long") }}
       </template>
       <template #cell-actions="{ row: bcfTopic }">
-        <BIMDataButton
-          color="primary"
-          outline
-          radius
-          @click="openBcfTopic(bcfTopic.guid)"
-        >
-          Ouvrir
-        </BIMDataButton>
-        <SidePanel :title="bcfTopic.title">
-          <OpenTopicIssue :bcfTopic="bcfTopic" />
-        </SidePanel>
+        <BcfActionsCell :bcfTopic="bcfTopic" />
       </template>
     </GenericTable>
   </div>
@@ -44,22 +34,18 @@
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { useSidePanel } from "@/composables/side-panel.js";
-
 import columnsDef from "./columns";
-import OpenTopicIssue from "./open-topic-issue/OpenTopicIssue.vue";
 
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 
 import BcfPriorityCell from "./bcf-priority-cell/BcfPriorityCell.vue";
+import BcfActionsCell from "./bcf-actions-cell/BcfActionsCell.vue";
 
 export default {
   components: {
     GenericTable,
     BcfPriorityCell,
-    SidePanel,
-    OpenTopicIssue
+    BcfActionsCell
   },
   props: {
     bcfTopics: {
@@ -81,14 +67,10 @@ export default {
       },
       { immediate: true }
     );
-    const { openSidePanel } = useSidePanel();
+
     return {
-      columns,
-      // Methods
-      openBcfTopic: openSidePanel
+      columns
     };
   }
 };
 </script>
-
-<style scoped lang="scss" src="./BcfTopicsList.scss"></style>
