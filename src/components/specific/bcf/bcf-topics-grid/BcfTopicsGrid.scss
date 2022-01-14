@@ -38,6 +38,10 @@
         height: 100%;
         object-fit: cover;
       }
+      .no-img-topic {
+        width: 120px;
+        height: 120px;
+      }
       &__status {
         border-radius: 3px;
         position: absolute;
@@ -76,5 +80,16 @@
         color: var(--color-granite-light);
       }
     }
+  }
+  &__side-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    padding: var(--spacing-unit);
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+    z-index: 99;
   }
 }
