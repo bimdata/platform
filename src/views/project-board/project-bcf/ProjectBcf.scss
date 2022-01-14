@@ -19,13 +19,9 @@
   }
   &__content {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, 320px);
     grid-template-rows: 308px;
-    grid-column-gap: 60px;
-    grid-row-gap: 60px;
-    &__metrics {
-      grid-area: 1 / 1 / 2 / 3;
-    }
+    gap: 56px;
     &__list {
       grid-area: 1 / 3 / 3 / 6;
     }
