@@ -43,7 +43,10 @@
     </div>
     <div
       class="open-topic-issue__img m-t-12"
-      v-if="bcfTopic.topicStatus || bcfTopic.snapshots.length"
+      v-if="
+        bcfTopic.topicStatus ||
+        (bcfTopic.snapshots.length && bcfTopic.snapshots[0] !== undefined)
+      "
       :style="[
         bcfTopic.snapshots.length
           ? 'background-color: #f7f7f7;'
@@ -74,7 +77,10 @@
         fill
         radius
         width="100%"
-        :disabled="bcfTopic.components.length"
+        :disabled="
+          !bcfTopic.components.length ||
+          !bcfTopic.components[0].selection.length
+        "
         ><BIMDataIcon
           name="model3d"
           fill
