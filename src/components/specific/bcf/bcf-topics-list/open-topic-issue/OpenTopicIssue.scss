@@ -1,5 +1,11 @@
 .open-topic-issue {
   &__header {
+    &__title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+  &__subheader {
     height: 27px;
     &__index,
     &__date {
@@ -30,8 +36,9 @@
     }
   }
   &__img {
+    min-height: 42px;
     position: relative;
-    background-color: var(--color-silver-light);
+    // background-color: var(--color-silver-light);
     &__status {
       border-radius: 3px;
       position: absolute;
@@ -54,8 +61,15 @@
       width: 100%;
     }
   }
-  &__content {
-  }
+  &__content,
   &__infos {
+    box-shadow: var(--box-shadow);
+    line-height: 1.5;
+    span {
+      &:first-child {
+        margin-right: 3px;
+        font-weight: 500;
+      }
+    }
   }
 }
