@@ -42,13 +42,11 @@
       </div>
     </div>
     <div
-      class="open-topic-issue__img m-t-12"
-      v-if="bcfTopic.topicStatus || bcfTopic.snapshots.length"
-      :style="[
-        bcfTopic.snapshots.length
-          ? 'background-color: #f7f7f7;'
-          : 'background-color: transparent;'
-      ]"
+      class="open-topic-issue__img text-center m-t-12"
+      v-if="
+        bcfTopic.topicStatus ||
+        (bcfTopic.snapshots.length && bcfTopic.snapshots[0] !== undefined)
+      "
     >
       <div
         class="open-topic-issue__img__status flex p-6"
@@ -67,6 +65,7 @@
         :src="bcfTopic.snapshots[0].snapshotData"
         alt=""
       />
+      <NoImgTopicBcf class="no-img-topic" v-else />
     </div>
     <div class="open-topic-issue__elements m-t-12">
       <BIMDataButton
@@ -74,7 +73,10 @@
         fill
         radius
         width="100%"
-        :disabled="bcfTopic.components.length"
+        :disabled="
+          !bcfTopic.components.length ||
+          !bcfTopic.components[0].selection.length
+        "
         ><BIMDataIcon
           name="model3d"
           fill
@@ -171,7 +173,12 @@
 <script>
 import { ref } from "vue";
 
+import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
+
 export default {
+  components: {
+    NoImgTopicBcf
+  },
   props: {
     bcfTopic: {
       type: Object,

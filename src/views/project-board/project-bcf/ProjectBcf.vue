@@ -1,11 +1,6 @@
 <template>
   <div class="project-bcf">
-    <app-slot-content name="project-board-action">
-      <BIMDataButton width="140px" color="primary" fill radius>
-        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-        <span>Ajouter un BCF</span>
-      </BIMDataButton>
-    </app-slot-content>
+    <AddBcf />
     <div class="project-bcf__actions flex justify-between m-t-24">
       <BIMDataSearch
         placeholder="Search"
@@ -79,31 +74,32 @@
       </div>
     </div>
     <div class="project-bcf__content flex m-t-36">
+      <BcfTopicsMetrics :bcfTopics="displayedBcfTopics" />
+
+      <!-- loading BCF -->
       <div
-        class="project-bcf__content__metrics flex items-center justify-center"
-        style="width: 701px; background-color: white"
+        class="project-bcf__content__empty flex items-center justify-center"
+        v-if="loading"
       >
-        Some stats here
-      </div>
-      <transition-group name="grid">
-        <div
-          class="project-bcf__content__empty flex items-center justify-center"
-          v-if="loading"
-        >
-          <ProjectBcfOnboardingImage class="m-r-48" />
-          <div class="flex items-center">
-            <BIMDataSpinner class="m-b-12" />
-            <span> loading Bcf topics </span>
-          </div>
+        <ProjectBcfOnboardingImage class="m-r-48" />
+        <div class="flex items-center">
+          <BIMDataSpinner class="m-b-12" />
+          <span> loading Bcf topics </span>
         </div>
-        <div v-else-if="displayedBcfTopics.length === 0">empty</div>
+      </div>
+      <!-- if no Bcf topics -->
+      <CreateBcfTopicCard v-else-if="displayedBcfTopics.length === 0" />
+      <transition-group v-else-if="isDisplayByListActive" name="list">
+        <!-- display Bcf topics in list mode -->
         <BcfTopicsList
-          v-else-if="isDisplayByListActive"
+          key="display-bcf-list"
           class="project-bcf__content__list"
           :bcfTopics="displayedBcfTopics"
         />
+      </transition-group>
+      <transition-group v-else name="grid">
+        <!-- display Bcf topics in grid mode -->
         <BcfTopicsGrid
-          v-else
           v-for="bcfTopic in displayedBcfTopics"
           :key="bcfTopic.guid"
           :project="project"
@@ -124,18 +120,22 @@ import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
 
 // Components
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import AddBcf from "../../../components/specific/bcf/add-bcf/AddBcf.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
 import BcfTopicsGrid from "../../../components/specific/bcf/bcf-topics-grid/BcfTopicsGrid.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
+import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
+import CreateBcfTopicCard from "../../../components/specific/bcf/create-bcf-topic-card/CreateBcfTopicCard.vue";
 import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 
 export default {
   components: {
+    AddBcf,
     BcfFilters,
     BcfTopicsGrid,
     BcfTopicsList,
-    AppSlotContent,
+    BcfTopicsMetrics,
+    CreateBcfTopicCard,
     ProjectBcfOnboardingImage
   },
   setup() {

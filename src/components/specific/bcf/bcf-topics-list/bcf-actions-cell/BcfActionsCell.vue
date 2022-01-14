@@ -4,14 +4,14 @@
       color="primary"
       outline
       radius
-      @click="openBcfTopic(bcfTopic.guid)"
+      @click="openBcfTopic(bcfTopic)"
     >
-      Ouvrir
+      Voir
     </BIMDataButton>
-    <transition name="slide-fade-right">
+    <transition name="slide-fade-left">
       <div
         v-show="showSidePanel"
-        key="test"
+        key="bcf-actions-cell-side-panel"
         class="bcf-actions-cell__side-panel"
       >
         <OpenTopicIssue :bcfTopic="bcfTopic" @close="showSidePanel = false" />
