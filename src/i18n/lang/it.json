@@ -38,7 +38,7 @@
     "UserSpaces": {
         "searchInputPlaceholder": "Cerca tra gli spazi",
         "createButtonText": "Crea uno spazio",
-        "organizationsButtonText": "Organizzazioni"
+        "organizationsButtonText": "Conti di fatturazione"
     },
     "ProjectFiles": {
         "groupsButtonText": "Gestisci i gruppi"
@@ -455,10 +455,10 @@
         "groupCreateError": "Impossibile creare gruppo",
         "groupUpdateError": "Impossibile caricare gruppo",
         "groupDeleteError": "Impossibile eliminare gruppo",
-        "organizationsFetchError": "Impossibile recuperare organizzazioni",
-        "organizationCreateError": "Impossibile creare organizzazione",
-        "organizationUpdateError": "Impossibile caricare organizzazione",
-        "organizationDeleteError": "Impossibile eliminare organizzazione",
+        "organizationsFetchError": "Impossibile recuperare i conti di fatturazione",
+        "organizationCreateError": "Impossibile creare il conto di fatturazione",
+        "organizationUpdateError": "Impossibile caricare il conto di fatturazione",
+        "organizationDeleteError": "Impossibile eliminare il conto di fatturazione",
         "userLeaveError": "Non puoi abbandonare questo progetto perché sei l'ultimo amministratore",
         "subscriptionsFetchError": "Impossibile recuperare gli abbonamenti",
         "platformSubscribeError": "Impossibile inizializzare l'abbonamento alla piattaforma",
@@ -477,7 +477,7 @@
     },
     "Subscribe": {
         "title": "Scegli il tuo piano",
-        "text": "Ti è concesso un solo spazio libero tra le tue organizzazioni. Se questo spazio esiste già, passa all'abbonamento professionale per funzionalità aggiuntive."
+        "text": "Ti è concesso un solo spazio libero tra i tuoi conti di fatturazione. Se questo spazio esiste già, passa all'abbonamento professionale per funzionalità aggiuntive."
     },
     "SubscriptionDatapack": {
         "title": "Gestisci DataPack",
@@ -486,18 +486,18 @@
     "SubscriptionFree": {
         "title": "Crea un piano gratuito",
         "text": "Stai per creare il tuo spazio libero. Il tuo spazio libero include: {size}, 6 utenti.",
-        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nell'organizzazione {organizationName}"
+        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nel conto di fatturazione {organizationName}"
     },
     "SubscriptionPro": {
         "subscribeTitle": "Iscriviti al piano Professionale",
         "upgradeTitle": "Passa alla piattaforma pro",
         "text": "Stai per iscriverti al tuo piano pro. Include: {size} di archiviazione, progetti illimitati senza limiti di utenti.",
-        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nell'organizzazione {organizationName}"
+        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nel conto di fatturazione {organizationName}"
     },
     "UserSubscriptions": {
         "title": "Abbonamento alla piattaforma",
-        "text": "Naviga tra le tue organizzazioni per gestire gli abbonamenti e le fatture per gli spazi della tua piattaforma.",
-        "list": "Elenco delle mie organizzazioni:"
+        "text": "Naviga tra i tuoi conti di fatturazione per gestire gli abbonamenti e le fatture per gli spazi della tua piattaforma.",
+        "list": "Elenco delle mie conti di fatturazione:"
     },
     "BillingActionsCell": {
         "updateButtonText": "Modifica la carta di pagamento",
@@ -560,8 +560,8 @@
     "InvoicesTable": {
         "title": "Fatture",
         "tablePlaceholder": "Caricamento delle fatture",
-        "emptyTableText": "Oh, no. Qui non ci sono piani attivi. Probabilmente non hai provato la versione Pro.",
-        "subscribeButton": "Passa alla nostra Piattaforma Pro",
+        "emptyTableText": "Le tue fatture verranno visualizzate qui quando hai abbonamenti attivi.",
+        "subscribeButton": "Passa alla nostra Platform Pro",
         "headers": {
             "amount": "Importo",
             "status": "Stato",
@@ -577,28 +577,36 @@
         "spaces": "{number} spazi"
     },
     "OrganizationDeleteGuard": {
-        "title": "Elimina l'organizzazione",
+        "title": "Elimina il conto di fatturazione",
         "submitButtonText": "Elimina"
     },
     "OrganizationForm": {
-        "createTitle": "Crea un organizzazione",
-        "updateTitle": "Rinomina organizzazione",
+        "createTitle": "Crea un conto di fatturazione",
+        "updateTitle": "Rinomina conto di fatturazione",
         "infoSectionTitle": "Informazioni di base",
         "nameInputPlaceholder": "Nome",
         "nameInputErrorMessage": "Nome non valido",
         "logoInputLabel": "Carica il logo",
         "logoInputMessage": "Il logo deve essere in formato JP(E)G/PNG. Il file non può essere più grande di 1 MB.",
         "submitButtonText": "Convalida",
-        "successTitle": "Congratulazioni, hai creato la tua organizzazione",
+        "successTitle": "Congratulazioni, hai creato il tuo conto di fatturazione",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "title": "Compte de facturation",
+        "radioLabelSelect": "Seleziona un conto di fatturazione",
+        "radioLabelCreate": "Crea un conto di fatturazione",
+        "inputPlaceholder": "Nome del conto di fatturazione",
+        "submitButtonText": "Convalida",
+        "successMessage": "Congratulazioni, hai creato il tuo conto di fatturazione"
+    },
     "OrganizationsList": {
-        "explanationText": "Un'organizzazione è l'entità che raccoglie le tue fatture su BIMData.io",
-        "createButtonText": "Crea un organizzazione",
-        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
+        "explanationText": "Un conto di fatturazione è l'entità che raccoglie le tue fatture su BIMData.io",
+        "createButtonText": "Crea un conto di fatturazione",
+        "searchInputPlaceholder": "Cercare tra i conti di fatturazione"
     },
     "OrganizationsManager": {
-        "title": "Gestione delle organizzazioni",
+        "title": "Gestione dei conti di fatturazione",
         "backButtonText": "Indietro"
     },
     "OrganizationSpaceCard": {
@@ -615,7 +623,7 @@
         "importButtonText": "Importa uno spazio",
         "addButtonText": "Aggiungi un nuovo spazio",
         "searchInputPlaceholder": "Cercare",
-        "spaceListTitle": "Spazi dell'organizzazione"
+        "spaceListTitle": "Spazi del conto di fatturazione"
     },
     "ProjectCardLeaveGuard": {
         "title": "Esci dal progetto",
@@ -655,23 +663,15 @@
         "bullet10": "Supporto"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Crea o seleziona un'organizzazione",
-        "createNewOrgaRadio": "Crea una nuova organizzazione",
-        "createNewOrgaInput": "Nome della mia nuova organizzazione",
-        "selectOrgaRadio": "Seleziona un'organizzazione",
-        "orgaValidateButton": "Convalida",
-        "createSpaceTitle": "Crea uno spazio",
-        "createSpaceText": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
-        "createSpaceInput": "Nome del mio nuovo spazio",
-        "spaceValidateButton": "Convalida"
+        "title": "Crea uno spazio",
+        "text": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
+        "inputPlaceholder": "Nome dello spazio",
+        "billingAccountLabel": "Conto di fatturazione :",
+        "billingAccountButton": "Cambia"
     },
     "SpaceSelected": {
-        "selectedOrga": "Organizzazione selezionata:",
+        "selectedOrga": "Conto di fatturazione:",
         "selectedSpace": "Spazio selezionato:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Organizzazione selezionata:",
-        "spaceSelectorLabel": "Spazio selezionato:"
     },
     "SpaceSizeInfo": {
         "used": "usato",

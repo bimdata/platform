@@ -47,7 +47,7 @@
       </template>
     </ViewHeader>
 
-    <SidePanel :title="$t('SpaceUsersManager.title')">
+    <AppSidePanel :title="$t('SpaceUsersManager.title')">
       <app-loading name="space-users">
         <SpaceUsersManager
           :space="space"
@@ -55,7 +55,7 @@
           :invitations="invitations"
         />
       </app-loading>
-    </SidePanel>
+    </AppSidePanel>
 
     <app-loading name="space-projects">
       <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
@@ -81,15 +81,15 @@
 <script>
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
-import { useSidePanel } from "@/composables/side-panel.js";
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
 import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
 import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
@@ -100,16 +100,16 @@ export default {
   components: {
     AppBreadcrumb,
     AppLoading,
+    AppSidePanel,
     ProjectCard,
     ProjectCreationCard,
-    SidePanel,
     SpaceSizeInfo,
     SpaceUsersManager,
     SubscriptionStatusBanner,
     ViewHeader
   },
   setup() {
-    const { openSidePanel } = useSidePanel();
+    const { openSidePanel } = useAppSidePanel();
     const { currentSpace, spaceInfo, spaceUsers, spaceInvitations } =
       useSpaces();
     const { spaceProjects } = useProjects();

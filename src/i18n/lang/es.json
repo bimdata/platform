@@ -38,7 +38,7 @@
     "UserSpaces": {
         "searchInputPlaceholder": "Buscar un espacio",
         "createButtonText": "Crear un espacio",
-        "organizationsButtonText": "Organizaciones"
+        "organizationsButtonText": "Cuentas de facturación"
     },
     "ProjectFiles": {
         "groupsButtonText": "Gestión de grupos"
@@ -455,10 +455,10 @@
         "groupCreateError": "Error durante la creación del grupo",
         "groupUpdateError": "Error durante la puesta en marcha del grupo",
         "groupDeleteError": "Fracaso durante la supresión del grupo",
-        "organizationsFetchError": "Imposible recuperar la lista de organizaciones",
-        "organizationCreateError": "Error durante la creación del organización",
-        "organizationUpdateError": "Error de puesta en marcha del organización",
-        "organizationDeleteError": "Error en la supresión del organización",
+        "organizationsFetchError": "Imposible recuperar la lista de cuentas de facturación",
+        "organizationCreateError": "Error durante la creación del cuenta de facturación",
+        "organizationUpdateError": "Error de puesta en marcha del cuenta de facturación",
+        "organizationDeleteError": "Error en la supresión del cuenta de facturación",
         "userLeaveError": "Usted no puede abandonar este proyecto porque es el último administrador",
         "subscriptionsFetchError": "No es posible recuperar la lista de suscripciones",
         "platformSubscribeError": "Error al crear el enlace de suscripción",
@@ -477,7 +477,7 @@
     },
     "Subscribe": {
         "title": "Elija su suscripción",
-        "text": "Solo tiene derecho a un espacio gratuito entre sus organizaciones. Si este espacio ya existe, pase a la suscripción profesional para más funcionalidades."
+        "text": "Solo tiene derecho a un espacio gratuito entre sus cuentas de facturación. Si este espacio ya existe, pase a la suscripción profesional para más funcionalidades."
     },
     "SubscriptionDatapack": {
         "title": "Administrar mis DataPacks",
@@ -486,18 +486,18 @@
     "SubscriptionFree": {
         "title": "Crear un espacio gratuito",
         "text": "Usted está a punto de crear su espacio gratuito. Su espacio gratuito incluye: {size}, 6 usuarios.",
-        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la organización {organizationName}"
+        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la cuenta de facturación {organizationName}"
     },
     "SubscriptionPro": {
         "subscribeTitle": "Suscribirse a la suscripción profesional",
         "upgradeTitle": "Pasar a la plataforma profesional",
         "text": "Está a punto de iniciar su suscripción profesional. Esta incluye {size} de almacenamiento y creación de proyectos ilimitados con usuarios ilimitados.",
-        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la organización {organizationName}"
+        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la cuenta de facturación {organizationName}"
     },
     "UserSubscriptions": {
         "title": "Suscripción a la plataforma",
-        "text": "Navegue entre sus organizaciones para administrar las suscripciones y facturas de sus espacios de plataforma.",
-        "list": "Lista de mis organizaciones:"
+        "text": "Navegue entre sus cuentas de facturación para administrar las suscripciones y facturas de sus espacios de plataforma.",
+        "list": "Lista de mis cuentas de facturación:"
     },
     "BillingActionsCell": {
         "updateButtonText": "Modificar la carta de pago",
@@ -511,7 +511,6 @@
         "withDatapack": "+ Datapack",
         "cancelSubscriptionButton": "Anular la suscripción",
         "updateCreditCardButton": "Actualizar la tarjeta de crédito",
-        "emptyTableText": "Sus facturas aparecerán aquí una vez que haya activado sus suscripciones.",
         "subscribeButton": "Pasar a nuestra plataforma Pro",
         "headers": {
             "space": "Espacio",
@@ -561,7 +560,7 @@
         "title": "Facturas",
         "tablePlaceholder": "Carga de facturas...",
         "emptyTableText": "Las facturas aparecerán aquí una vez que haya activado sus suscripciones.",
-        "subscribeButton": "Pasar a nuestra plataforma Pro",
+        "subscribeButton": "Pasar a nuestra Platform Pro",
         "headers": {
             "amount": "Monto",
             "status": "Estado",
@@ -577,28 +576,36 @@
         "spaces": "{number} espacios"
     },
     "OrganizationDeleteGuard": {
-        "title": "Eliminar organización",
+        "title": "Eliminar cuenta de facturación",
         "submitButtonText": "Eliminar"
     },
     "OrganizationForm": {
-        "createTitle": "Creación de organización",
-        "updateTitle": "Modificar organización",
+        "createTitle": "Creación de cuenta de facturación",
+        "updateTitle": "Modificar cuenta de facturación",
         "infoSectionTitle": "Información de base",
         "nameInputPlaceholder": "Nombre",
         "nameInputErrorMessage": "Este nombre no es válido",
         "logoInputLabel": "Elegir un logo",
         "logoInputMessage": "El logo debe ser una imagen en formato JP(E)G/PNG y el tamaño del fichero no debe exceder 1 MB.",
         "submitButtonText": "Validar",
-        "successTitle": "¡Felicitaciones! Su organización acaba de ser creada.",
+        "successTitle": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada.",
         "successButtonText": "OK"
     },
+    "OrganizationSelector": {
+        "title": "Cuenta de facturación",
+        "radioLabelSelect": "Seleccione una cuenta de facturación",
+        "radioLabelCreate": "Crear una cuenta de facturación",
+        "inputPlaceholder": "Nombre de la cuenta de facturación",
+        "submitButtonText": "Validar",
+        "successMessage": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada."
+    },
     "OrganizationsList": {
-        "explanationText": "La organización es la entidad que centraliza las facturas en los espacios BIMData.io",
-        "createButtonText": "Crear un organización",
-        "searchInputPlaceholder": "Buscar un organización"
+        "explanationText": "La cuenta de facturación es la entidad que centraliza las facturas en los espacios BIMData.io",
+        "createButtonText": "Crear una cuenta de facturación",
+        "searchInputPlaceholder": "Buscar una cuenta de facturación"
     },
     "OrganizationsManager": {
-        "title": "Gestión de organizaciones",
+        "title": "Gestión de cuentas de facturación",
         "backButtonText": "Retorno"
     },
     "OrganizationSpaceCard": {
@@ -615,7 +622,7 @@
         "importButtonText": "Importar un espacio",
         "addButtonText": "Añadir un espacio",
         "searchInputPlaceholder": "Buscar",
-        "spaceListTitle": "Lista de espacios de la organización"
+        "spaceListTitle": "Lista de espacios de la cuenta de facturación"
     },
     "ProjectCardLeaveGuard": {
         "title": "Salir del proyecto",
@@ -655,23 +662,15 @@
         "bullet10": "Apoyo por correo electrónico"
     },
     "SpaceCreator": {
-        "createSelectOrgaTitle": "Crear o seleccionar una organización",
-        "createNewOrgaRadio": "Crear una nueva organización",
-        "createNewOrgaInput": "Nombre de mi nueva organización",
-        "selectOrgaRadio": "Seleccionar una organización",
-        "orgaValidateButton": "Aceptar",
-        "createSpaceTitle": "Crear un espacio",
-        "createSpaceText": "Su espacio reagrupa sus diferentes proyectos BIM.",
-        "createSpaceInput": "Nombre de mi nuevo espacio",
-        "spaceValidateButton": "Aceptar"
+        "title": "Crear un espacio",
+        "text": "Su espacio reagrupa sus diferentes proyectos BIM.",
+        "inputPlaceholder": "Nombre de mi nuevo espacio",
+        "billingAccountLabel": "Cuenta de facturación :",
+        "billingAccountButton": "Editar"
     },
     "SpaceSelected": {
-        "selectedOrga": "Oganización seleccionada:",
+        "selectedOrga": "Cuenta de facturación:",
         "selectedSpace": "Espacio seleccionado:"
-    },
-    "SpaceSelector": {
-        "orgaSelectorLabel": "Organización seleccionada:",
-        "spaceSelectorLabel": "Espacio seleccionado:"
     },
     "SpaceSizeInfo": {
         "used": "utilizado",

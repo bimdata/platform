@@ -68,7 +68,7 @@ export default {
         slider.value.style.height = `${itemHeight + 2 * sliderPadding}px`;
 
         // Calculate the maximum number of items that can be displayed
-        // at the same time according to slider width and items height
+        // at the same time according to slider width and items width
         // taking minimum gap into account
         const nbDisplayed = Math.floor(contentWidth / (itemWidth + minGap));
 

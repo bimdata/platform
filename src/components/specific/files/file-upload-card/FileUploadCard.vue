@@ -1,7 +1,10 @@
 <template>
   <div class="file-upload-card" :class="{ condensed, failed }">
     <div class="file-upload-card--left">
-      <BIMDataFileIcon :name="fileExtension(file.name)" :size="condensed ? 20 : 32" />
+      <BIMDataFileIcon
+        :fileName="fileExtension(file.name)"
+        :size="condensed ? 20 : 32"
+      />
     </div>
     <div class="file-upload-card--center file-upload-card__info">
       <div class="file-upload-card__info__file-name">

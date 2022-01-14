@@ -31,7 +31,7 @@
     <div class="organization-spaces-list__title">
       {{ $t("OrganizationSpacesList.spaceListTitle") }}
     </div>
-    <div class="organization-spaces-list__container">
+    <div class="organization-spaces-list__container" v-if="spaces.length > 0">
       <transition-group name="list">
         <OrganizationSpaceCard
           v-for="space of displayedSpaces"
@@ -40,6 +40,9 @@
           :space="space"
         />
       </transition-group>
+    </div>
+    <div class="organization-spaces-list__placeholder" v-else>
+      {{ $t("OrganizationSpacesList.spaceListPlaceholder") }}
     </div>
   </div>
 </template>
@@ -64,8 +67,12 @@ export default {
 
     const localState = inject("localState");
 
+    const spaces = computed(() =>
+      getOrganizationSpaces(localState.organization)
+    );
+
     const { filteredList: displayedSpaces, searchText } = useListFilter(
-      computed(() => getOrganizationSpaces(localState.organization)),
+      spaces,
       space => space.name
     );
 
@@ -84,6 +91,7 @@ export default {
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       localState,
       searchText,
+      spaces,
       // Methods
       goToSubscriptionPro
     };

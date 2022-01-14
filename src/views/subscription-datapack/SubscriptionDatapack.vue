@@ -38,7 +38,7 @@
 import { provide, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 import routeNames from "@/router/route-names.js";
@@ -61,7 +61,7 @@ export default {
   setup() {
     const { t } = useI18n();
     const router = useRouter();
-    const { pushNotification } = useNotifications();
+    const { pushNotification } = useAppNotification();
     const { userOrganizations } = useOrganizations();
     const {
       currentOrga,

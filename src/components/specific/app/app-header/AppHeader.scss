@@ -10,7 +10,7 @@
 
   &__logo {
     cursor: pointer;
-    height: calc(var(--platform-header-height) - var(--spacing-unit));
+    height: calc(var(--platform-header-height) - 2 * var(--spacing-unit));
   }
 
   &__menu {

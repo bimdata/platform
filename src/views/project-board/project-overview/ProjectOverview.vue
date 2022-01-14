@@ -65,7 +65,7 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
@@ -95,7 +95,7 @@ export default {
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
-    const { pushNotification } = useNotifications();
+    const { pushNotification } = useAppNotification();
 
     const {
       isOpen: showFileUploader,

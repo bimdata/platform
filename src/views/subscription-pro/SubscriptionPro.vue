@@ -30,15 +30,20 @@
         </template>
         <template v-else>
           <SpaceCreator
+            :disabled="!!space"
             :organizations="organizations"
-            :initialOrga="currentOrga"
+            :initialOrga="orga"
             @space-created="onSpacePreCreated"
           />
         </template>
       </div>
 
       <transition name="slide-fade-down">
-        <div ref="body" class="subscription-pro__content__body" v-show="space">
+        <div
+          ref="contentBody"
+          class="subscription-pro__content__body"
+          v-show="space"
+        >
           <div class="subscription-pro__content__body__left">
             <ProPlanInfo />
           </div>
@@ -58,10 +63,10 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
@@ -89,8 +94,8 @@ export default {
   setup() {
     const { t } = useI18n();
     const router = useRouter();
-    const { pushNotification } = useNotifications();
-    const { userOrganizations } = useOrganizations();
+    const { pushNotification } = useAppNotification();
+    const { userOrganizations, getPersonalOrganization } = useOrganizations();
     const {
       currentOrga,
       currentSpace,
@@ -98,26 +103,18 @@ export default {
       waitForUpdatedSpaceSize
     } = useSubscriptions();
 
-    const space = ref(null);
+    const orga = ref(currentOrga.value || getPersonalOrganization());
+    const space = ref(currentSpace.value);
     const spaceInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
-    const body = ref(null);
-
-    watch(
-      () => currentSpace.value,
-      async () => {
-        if (currentSpace.value) {
-          space.value = currentSpace.value;
-          spaceInfo.value = await fetchSpaceInformation(currentSpace.value);
-        }
-      },
-      { immediate: true }
-    );
+    const contentBody = ref(null);
 
     const onSpacePreCreated = preCreatedSpace => {
       space.value = preCreatedSpace;
-      setTimeout(() => body.value.scrollIntoView({ behavior: "smooth" }));
+      setTimeout(() =>
+        contentBody.value.scrollIntoView({ behavior: "smooth" })
+      );
     };
 
     const onSpaceCreated = async createdSpace => {
@@ -131,25 +128,21 @@ export default {
         );
       }
 
-      pushNotification(
-        {
-          type: "success",
-          title: t("Success"),
-          message: t(
-            `SubscriptionPro.${
-              isSpaceUpgrade
-                ? "spaceUpgradedNotification"
-                : "spaceCreatedNotification"
-            }`,
-            {
-              organizationName: createdSpace.organization.name,
-              spaceName: createdSpace.name
-            }
-          )
-        },
-        8000
-      );
-
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t(
+          `SubscriptionPro.${
+            isSpaceUpgrade
+              ? "spaceUpgradedNotification"
+              : "spaceCreatedNotification"
+          }`,
+          {
+            organizationName: createdSpace.organization.name,
+            spaceName: createdSpace.name
+          }
+        )
+      });
       router.push({
         name: routeNames.spaceBoard,
         params: {
@@ -158,12 +151,19 @@ export default {
       });
     };
 
+    onMounted(async () => {
+      if (space.value) {
+        contentBody.value.scrollIntoView({ behavior: "smooth" });
+        spaceInfo.value = await fetchSpaceInformation(space.value);
+      }
+    });
+
     return {
       // References
-      body,
-      currentOrga,
+      contentBody,
       currentSpace,
       newSizeAvailable,
+      orga,
       organizations: userOrganizations,
       space,
       spaceInfo,
