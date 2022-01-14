@@ -32,19 +32,31 @@
       v-if="!people.hasAccess"
       class="visa-add-validator-people__acces-denied"
     >
-      <div class="visa-add-validator-people__acces-denied">
+      <div class="visa-add-validator-people__acces-denied__icon">
         <BIMDataIcon
           name="warning"
-          size="s"
+          size="xl"
           class="fill-warning"
-          style="box-shadow: var(--box-shadow); padding: 3px"
+          style="padding: 10px"
+          @mouseover="handleCurrentPerson(people.id)"
+          @mouseleave="handleCurrentPerson()"
         />
+        <div
+          v-if="isWarningHover && currentPeopleId === people.id"
+          class="visa-add-validator-people__acces-denied__hover"
+        >
+          <span
+            class="visa-add-validator-people__acces-denied__hover__message"
+            >{{ $t("Visa.selectionValidator.warning") }}</span
+          >
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 
 export default {
@@ -59,11 +71,27 @@ export default {
   },
   emits: [],
   setup() {
+    const currentPeopleId = ref(null);
+    const isWarningHover = ref(false);
     const toggle = (people, checked) => (people.isSelected = checked);
 
+    const handleCurrentPerson = peopleId => {
+      if (peopleId) {
+        isWarningHover.value = true;
+        currentPeopleId.value = peopleId;
+      } else {
+        isWarningHover.value = false;
+        currentPeopleId.value = null;
+      }
+    };
+
     return {
+      // references
+      isWarningHover,
+      currentPeopleId,
       // methods
-      toggle
+      toggle,
+      handleCurrentPerson
     };
   }
 };

@@ -4,10 +4,12 @@
       <VisaList
         :userVisas="userVisas"
         :baseInfo="baseInfo"
+        :startTab="startTab"
         @set-is-visa-list="$emit('set-is-visa-list', $event)"
         @close="$emit('close', $event)"
         @set-visa-id="setVisaId"
         @set-base-info="setBaseInfo"
+        @handle-start-tab="handleStartTab"
       />
     </template>
     <template v-if="currentView === 'visaAdd'">
@@ -72,14 +74,17 @@ export default {
   emits: ["close", "set-file-to-manage", "set-is-visa-list", "fetch-visas"],
   setup(props) {
     const currentView = ref(null);
+    const startTab = ref("toValidateVisas");
     const visaId = ref(0);
     const baseInfo = ref({
       cloudPk: props.cloudPk,
       projectPk: props.projectPk,
       documentPk: props.file.id
     });
+
     const setBaseInfo = (prop, event) => (baseInfo.value[prop] = event);
     const setVisaId = event => (visaId.value = event);
+    const handleStartTab = tab => (startTab.value = tab);
 
     watch(
       [visaId, baseInfo],
@@ -100,9 +105,11 @@ export default {
       visaId,
       baseInfo,
       currentView,
+      startTab,
       // methods
       setVisaId,
-      setBaseInfo
+      setBaseInfo,
+      handleStartTab
     };
   }
 };

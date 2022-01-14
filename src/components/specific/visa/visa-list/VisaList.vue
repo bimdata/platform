@@ -61,12 +61,14 @@
                 : 'inProgressFile'
             "
             size="l"
+            fill
+            color="primary"
           />
           <div class="visa-list__content__visa__desc">
             <BIMDataTextBox
               class="visa-list__content__visa__desc__title"
               :style="`${
-                visa.validationsInError.length
+                visa.status !== visaClosed && visa.validationsInError.length
                   ? 'color: var(--color-high);'
                   : ''
               }`"
@@ -101,9 +103,19 @@ export default {
     baseInfo: {
       type: Object,
       required: true
+    },
+    startTab: {
+      type: String,
+      required: true
     }
   },
-  emits: ["close", "set-is-visa-list", "set-visa-id", "set-base-info"],
+  emits: [
+    "close",
+    "set-is-visa-list",
+    "set-visa-id",
+    "set-base-info",
+    "handle-start-tab"
+  ],
   setup(props, { emit }) {
     const { t } = useI18n();
 
@@ -116,7 +128,7 @@ export default {
       },
       { id: userVisasKeys[1], label: t("Visa.list.visaCreated") }
     ]);
-    const currentTab = ref(tabs.value[0].id);
+    const currentTab = ref(props.startTab || tabs.value[0].id);
     const selectTab = tab => (currentTab.value = tab.id);
 
     const onClickToClose = () => {
@@ -126,6 +138,7 @@ export default {
     const onClickToReachVisa = (visaId, fileId) => {
       emit("set-visa-id", visaId);
       emit("set-base-info", "documentPk", fileId);
+      emit("handle-start-tab", currentTab.value);
     };
 
     return {

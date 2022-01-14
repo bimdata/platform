@@ -34,5 +34,28 @@
     &__D {
       color: var(--color-high);    
     }
+
+    &__access-denied {
+      background-color: var(--color-white);
+      box-shadow: var(--box-shadow);
+      margin: auto var(--spacing-unit) auto auto;
+      position: relative;
+
+      &__author {
+        right: 50px;
+      }
+      
+      &__hover {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        background-color: var(--color-silver-light);
+        color: var(--color-primary);
+        height: 100%;
+        width: 200px;
+        top: 1px;
+        left: -285px;
+      }
+    } 
   }
 }

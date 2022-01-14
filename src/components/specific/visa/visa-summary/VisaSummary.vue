@@ -216,7 +216,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "set-visa-id", "set-is-visa-list"],
+  emits: ["close", "set-visa-id", "set-is-visa-list", "fetch-visas"],
   setup(props, { emit }) {
     const {
       fetchVisa,
@@ -278,7 +278,10 @@ export default {
               ...elem,
               userId: elem.validator.userId,
               fullName: fullName(elem.validator),
-              isSelf: elem.validator.userId === id
+              isSelf: elem.validator.userId === id,
+              hasAccess: res.validationsInError.length
+                ? res.validationsInError.some(id => id !== elem.id)
+                : true
             }))
             .sort((a, b) => {
               if (!a.fullName) return 1;
