@@ -25,8 +25,12 @@
         >{{ people.email }}</span
       >
     </div>
-    <div v-else class="visa-add-validator-people__info__main">
-      <span :class="{ hide: !people.hasAccess }">{{ people.email }}</span>
+    <div v-else class="visa-add-validator-people__info">
+      <span
+        class="visa-add-validator-people__info__main"
+        :class="{ hide: !people.hasAccess }"
+        >{{ people.email }}</span
+      >
     </div>
     <div
       v-if="!people.hasAccess"
