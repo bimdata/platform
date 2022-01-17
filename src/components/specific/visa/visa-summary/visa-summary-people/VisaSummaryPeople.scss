@@ -28,34 +28,41 @@
       margin: auto var(--spacing-unit) auto 0;
     }
 
+    &__P {
+      display: flex;
+    }
     &__A {
+      display: flex;
       color: var(--color-success);
     }
     &__D {
-      color: var(--color-high);    
+      display: flex;
+      color: var(--color-high);
     }
 
     &__access-denied {
-      background-color: var(--color-white);
-      box-shadow: var(--box-shadow);
-      margin: auto var(--spacing-unit) auto auto;
-      position: relative;
 
-      &__author {
-        right: 50px;
-      }
-      
+      position: relative;
+      display: flex;
+      justify-content: flex-end; 
+      box-shadow: var(--box-shadow);
+
       &__hover {
         position: absolute;
+        z-index: 2;
+        height: 100%;
         display: flex;
         align-items: center;
+        font-size: 0.8rem;
         background-color: var(--color-silver-light);
+        box-shadow: var(--box-shadow);
         color: var(--color-primary);
-        height: 100%;
-        width: 200px;
-        top: 1px;
-        left: -285px;
-      }
-    } 
+
+        span {
+          margin-left: var(--spacing-unit);
+          width: 230px;
+        }
+      } 
+    }
   }
 }

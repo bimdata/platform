@@ -31,25 +31,20 @@
     <div
       v-if="!people.hasAccess"
       class="visa-add-validator-people__acces-denied"
+      @mouseover="handleCurrentPerson(people.id)"
+      @mouseleave="handleCurrentPerson()"
     >
-      <div class="visa-add-validator-people__acces-denied__icon">
-        <BIMDataIcon
-          name="warning"
-          size="xl"
-          class="fill-warning"
-          style="padding: 10px"
-          @mouseover="handleCurrentPerson(people.id)"
-          @mouseleave="handleCurrentPerson()"
-        />
-        <div
-          v-if="isWarningHover && currentPeopleId === people.id"
-          class="visa-add-validator-people__acces-denied__hover"
-        >
-          <span
-            class="visa-add-validator-people__acces-denied__hover__message"
-            >{{ $t("Visa.selectionValidator.warning") }}</span
-          >
-        </div>
+      <BIMDataIcon
+        name="warning"
+        size="xl"
+        class="fill-warning"
+        style="padding: 10px; z-index: 3"
+      />
+      <div
+        v-if="isWarningHover && currentPeopleId === people.id"
+        class="visa-add-validator-people__acces-denied__hover"
+      >
+        <span>{{ $t("Visa.selectionValidator.warning") }}</span>
       </div>
     </div>
   </div>

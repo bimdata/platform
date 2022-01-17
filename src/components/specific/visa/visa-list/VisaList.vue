@@ -77,7 +77,11 @@
             <div class="visa-list__content__visa__desc__info">
               <span>{{ formatDateDDMMYYY(visa.deadline) }}</span>
               -
-              <BIMDataTextBox :text="fullName(visa.creator)" />
+              <BIMDataTextBox
+                :text="
+                  visa.creator ? fullName(visa.creator) : 'utilisateur supprimé'
+                "
+              />
             </div>
           </div>
         </div>

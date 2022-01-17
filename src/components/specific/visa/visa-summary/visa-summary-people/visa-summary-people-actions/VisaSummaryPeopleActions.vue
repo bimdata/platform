@@ -18,14 +18,16 @@
         >
           {{ $t("Visa.summary.people.getRidOfValidator") }}
         </BIMDataButton>
-        <BIMDataButton
-          class="visa-summary-people-actions__menu__btn"
-          ghost
-          squared
-          @click="onReset"
-        >
-          {{ $t("Visa.summary.people.refresh") }}
-        </BIMDataButton>
+        <template v-if="hasAccess">
+          <BIMDataButton
+            class="visa-summary-people-actions__menu__btn"
+            ghost
+            squared
+            @click="onReset"
+          >
+            {{ $t("Visa.summary.people.refresh") }}
+          </BIMDataButton>
+        </template>
       </div>
     </transition>
   </div>
@@ -38,6 +40,10 @@ export default {
   props: {
     validationId: {
       type: Number,
+      required: true
+    },
+    hasAccess: {
+      type: Boolean,
       required: true
     }
   },

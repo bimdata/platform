@@ -21,23 +21,29 @@
     }
   }
 
-  &__acces-denied {
-    background-color: var(--color-white);
-    box-shadow: var(--box-shadow);
-    margin: auto 0 auto auto;
-    position: relative;
-
+    &__acces-denied {
+      position: relative;
+      display: flex;
+      justify-content: flex-end; 
+      box-shadow: var(--box-shadow);
+      right: -65px;
 
     &__hover {
       position: absolute;
+      z-index: 2;
+      width: 300px;
+      height: 100%;
       display: flex;
       align-items: center;
-      background-color: var(--color-white);
+      font-size: 0.8rem;
+      background-color: var(--color-silver-light);
+      box-shadow: var(--box-shadow);
       color: var(--color-primary);
-      height: 100%;
-      width: 250px;
-      top: 1px;
-      left: -260px;
-    }
-  } 
+
+      span {
+        margin-left: var(--spacing-unit);
+        width: 230px;
+      }
+    } 
+  }
 }

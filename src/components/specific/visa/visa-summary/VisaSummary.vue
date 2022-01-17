@@ -271,16 +271,20 @@ export default {
           deadline: formatDateDDMMYYY(res.deadline),
           creator: {
             ...res.creator,
-            fullName: fullName(res.creator)
+            fullName: res.creator
+              ? fullName(res.creator)
+              : "utilisateur supprimé"
           },
           validations: res.validations
             .map(elem => ({
               ...elem,
-              userId: elem.validator.userId,
-              fullName: fullName(elem.validator),
-              isSelf: elem.validator.userId === id,
+              userId: elem.validator ? elem.validator.userId : 0,
+              fullName: elem.validator
+                ? fullName(elem.validator)
+                : "utilisateur supprimé",
+              isSelf: elem.validator ? elem.validator.userId === id : false,
               hasAccess: res.validationsInError.length
-                ? res.validationsInError.some(id => id !== elem.id)
+                ? !res.validationsInError.some(id => id === elem.id)
                 : true
             }))
             .sort((a, b) => {

@@ -31,11 +31,15 @@ const getUserList = async ({ baseInfo, fileParentId }, validationList) => {
       isFindable: true,
       isSelected:
         (validationList &&
-          validationList.some(({ validator }) => validator.id === people.id)) ||
+          validationList.some(
+            ({ validator }) => validator && validator.id === people.id
+          )) ||
         false,
       validation:
         (validationList &&
-          validationList.find(({ validator }) => validator.id === people.id)) ||
+          validationList.find(
+            ({ validator }) => validator && validator.id === people.id
+          )) ||
         false,
       searchContent: `${people.firstname || ""}${people.lastname || ""}${
         people.email || ""

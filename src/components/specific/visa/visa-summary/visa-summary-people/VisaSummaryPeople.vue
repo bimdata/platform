@@ -6,7 +6,7 @@
   >
     <div class="visa-add-summary-people__left-side">
       <UserAvatar
-        :user="people.validator"
+        :user="people.validator || {}"
         size="27"
         sizeInitials="14"
         color="silver-light"
@@ -17,87 +17,84 @@
         :text="people.fullName || people.validator.email"
       />
     </div>
-    <template v-if="!people.hasAccess">
-      <div
-        class="visa-add-summary-people__right-side__access-denied"
-        :class="`visa-add-summary-people__right-side__access-denied${
-          isAuthor ? '__author' : ''
-        }`"
-        @mouseover="handleCurrentPerson(people.id)"
-        @mouseleave="handleCurrentPerson()"
+    <div class="visa-add-summary-people__right-side">
+      <template
+        v-if="
+          !isClosed &&
+          people.isSelf &&
+          people.status != VALIDATION_STATUS.PENDING
+        "
       >
-        <BIMDataIcon
-          name="warning"
-          size="xl"
-          class="fill-warning"
-          style="padding: 10px"
-        />
-        <div
-          v-if="isWarningHover && currentPeopleId === people.id"
-          class="visa-add-summary-people__right-side__access-denied__hover"
+        <BIMDataButton
+          radius
+          ghost
+          style="margin: 2px 0px 0px 0px"
+          @click="$emit('reset-val', people.id)"
         >
-          <span
-            class="visa-add-summary-people__right-side__access-denied__hover__message"
-            >{{ $t("Visa.selectionValidator.warning") }}</span
-          >
+          <BIMDataIcon name="reset" size="xs" />
+        </BIMDataButton>
+      </template>
+      <template v-if="people.hasAccess">
+        <div :class="`visa-add-summary-people__right-side__${people.status}`">
+          <span>
+            {{
+              $t(
+                `Visa.summary.people.${
+                  people.status === VALIDATION_STATUS.PENDING
+                    ? "pending"
+                    : people.status === VALIDATION_STATUS.ACCEPT
+                    ? "accept"
+                    : "deny"
+                }`
+              )
+            }}
+          </span>
+          <BIMDataIcon
+            :name="
+              people.status === VALIDATION_STATUS.PENDING
+                ? 'sandglass'
+                : people.status === VALIDATION_STATUS.ACCEPT
+                ? 'visa'
+                : 'failed'
+            "
+            size="xs"
+            style="margin-top: 2px"
+          />
         </div>
-      </div>
-    </template>
-    <template v-else>
-      <div
-        class="visa-add-summary-people__right-side"
-        :class="`visa-add-summary-people__right-side__${people.status}`"
-      >
-        <template
-          v-if="
-            !isClosed &&
-            people.isSelf &&
-            people.status != VALIDATION_STATUS.PENDING
-          "
+      </template>
+      <template v-else>
+        <div
+          class="visa-add-summary-people__right-side__access-denied"
+          :style="isAuthor ? 'right: -8px;' : 'right: -12px'"
+          @mouseover="handleCurrentPerson(people.id)"
+          @mouseleave="handleCurrentPerson()"
         >
-          <BIMDataButton
-            radius
-            ghost
-            margin="0 10px 0 0"
-            @click="$emit('reset-val', people.id)"
+          <BIMDataIcon
+            name="warning"
+            customSize="40"
+            class="fill-warning"
+            style="padding: 10px; z-index: 3"
+          />
+          <div
+            v-if="isWarningHover && currentPeopleId === people.id"
+            class="visa-add-summary-people__right-side__access-denied__hover"
+            :style="isAuthor ? 'width: 345px; right: -36px' : 'width: 340px'"
           >
-            <BIMDataIcon name="reset" size="xs" />
-          </BIMDataButton>
-        </template>
-        <span>
-          {{
-            $t(
-              `Visa.summary.people.${
-                people.status === VALIDATION_STATUS.PENDING
-                  ? "pending"
-                  : people.status === VALIDATION_STATUS.ACCEPT
-                  ? "accept"
-                  : "deny"
-              }`
-            )
-          }}
-        </span>
-        <BIMDataIcon
-          :name="
-            people.status === VALIDATION_STATUS.PENDING
-              ? 'sandglass'
-              : people.status === VALIDATION_STATUS.ACCEPT
-              ? 'visa'
-              : 'failed'
-          "
-          size="xs"
-        />
-        <template v-if="isAuthor && !isClosed">
-          <div class="visa-add-summary-people__right-side__actions">
-            <VisaSummaryPeopleActions
-              :validationId="people.id"
-              @reset-val="$emit('reset-val', $event)"
-              @delete-user="$emit('delete-user', $event)"
-            />
+            <span>{{ $t("Visa.selectionValidator.warning") }}</span>
           </div>
-        </template>
-      </div>
-    </template>
+        </div>
+      </template>
+      <template v-if="isAuthor && !isClosed">
+        <div class="visa-add-summary-people__right-side__actions">
+          <VisaSummaryPeopleActions
+            :validationId="people.id"
+            :hasAccess="people.hasAccess"
+            @reset-val="$emit('reset-val', $event)"
+            @delete-user="$emit('delete-user', $event)"
+          />
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
