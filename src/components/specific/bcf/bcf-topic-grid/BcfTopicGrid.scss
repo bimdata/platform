@@ -82,8 +82,8 @@
     }
   }
   &__side-panel {
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 62px;
     right: 0;
     width: 400px;
     height: 100%;

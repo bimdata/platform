@@ -10,20 +10,37 @@
         fill
         radius
         icon
+        @click="openCreateBcfTopic"
       >
         <BIMDataIcon name="plus" fill color="default" size="m" />
       </BIMDataButton>
     </template>
   </BIMDataCard>
+  <SidePanel title="Signaler un problème">
+    <CreateBcfTopic />
+  </SidePanel>
 </template>
 
 <script>
+import { useSidePanel } from "@/composables/side-panel.js";
 import EmptyBcfTopic from "./EmptyBcfTopic.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import CreateBcfTopic from "../create-bcf-topic/CreateBcfTopic.vue";
 export default {
   components: {
-    EmptyBcfTopic
+    EmptyBcfTopic,
+    SidePanel,
+    CreateBcfTopic
+  },
+  setup() {
+    const { openSidePanel } = useSidePanel();
+
+    return {
+      // Methods
+      openCreateBcfTopic: openSidePanel
+    };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./CreateBcfTopicCard.scss"></style>
+<style scoped lang="scss" src="./BcfTopicCreationCard.scss"></style>
