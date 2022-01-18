@@ -113,7 +113,7 @@
       </transition-group>
       <transition-group v-else name="grid">
         <!-- display Bcf topics in grid mode -->
-        <BcfTopicsGrid
+        <BcfTopicGrid
           v-for="bcfTopic in displayedBcfTopics"
           :key="bcfTopic.guid"
           :project="project"
@@ -140,7 +140,7 @@ import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
 import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
-import BcfTopicsGrid from "../../../components/specific/bcf/bcf-topics-grid/BcfTopicsGrid.vue";
+import BcfTopicGrid from "../../../components/specific/bcf/bcf-topic-grid/BcfTopicGrid.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
 import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
@@ -152,7 +152,7 @@ export default {
     SidePanel,
     CreateBcfTopic,
     BcfFilters,
-    BcfTopicsGrid,
+    BcfTopicGrid,
     BcfTopicsList,
     BcfTopicsMetrics,
     BcfTopicCreationCard,
