@@ -1,6 +1,6 @@
 function fileExtension(fileName) {
   const parts = fileName.split(".");
-  return parts.length > 1 ? parts[parts.length - 1] : "";
+  return parts.length > 1 ? `.${parts[parts.length - 1]}` : "";
 }
 
 function formatBytes(bytes, decimals = 2) {
