@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { provide, ref, watch } from "vue";
 import { useProjects } from "@/state/projects.js";
 import { useBcf } from "@/state/bcf.js";
 
@@ -178,6 +178,8 @@ export default {
     const toggleDisplayBcfTopics = () => {
       isDisplayByListActive.value = !isDisplayByListActive.value;
     };
+
+    provide("bcfTopics", bcfTopics);
 
     return {
       loading,

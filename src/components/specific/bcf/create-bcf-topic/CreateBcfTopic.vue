@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
 
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
@@ -90,12 +90,11 @@ import { useNotifications } from "@/composables/notifications.js";
 export default {
   props: {
     bcfTopics: {
-      type: Array,
-      required: true
+      type: Array
     }
   },
   emits: ["submit"],
-  setup(props, { emit }) {
+  setup(props) {
     const nextIndex = computed(() => {
       if (props.bcfTopics && props.bcfTopics.length > 0) {
         return (
@@ -110,7 +109,7 @@ export default {
     });
 
     const { currentProject } = useProjects();
-    const { loadTopicExtensions, createTopic } = useBcf();
+    const { loadTopicExtensions, createTopic, loadBcfTopics } = useBcf();
     const topicExtensions = ref([]);
     watch(
       () => currentProject,
@@ -132,23 +131,35 @@ export default {
     const hasError = ref(false);
     const { pushNotification } = useNotifications();
 
+    const bcfTopics = inject("bcfTopics");
+
     const submit = async () => {
       if (topicTitle.value) {
-        const newTopic = await createTopic(currentProject.value, {
-          title: topicTitle.value,
-          description: topicDescription.value,
-          topicType: topicType.value,
-          priority: topicPriority.value,
-          topicStatus: topicStatus.value,
-          stage: topicPhase.value,
-          assignedTo: topicAssignedTo.value
-        });
-        pushNotification({
-          type: "success",
-          title: "Success",
-          message: "Topic BCF Créée"
-        });
-        emit("submit", newTopic);
+        try {
+          await createTopic(currentProject.value, {
+            title: topicTitle.value,
+            topicType: topicType.value,
+            priority: topicPriority.value,
+            topicStatus: topicStatus.value,
+            stage: topicPhase.value,
+            assignedTo: topicAssignedTo.value,
+            description: topicDescription.value
+          });
+          pushNotification({
+            type: "success",
+            title: "Success",
+            message: "Topic BCF Créée"
+          });
+          bcfTopics.value = await loadBcfTopics(currentProject.value);
+        } finally {
+          topicTitle.value = "";
+          topicType.value = "";
+          topicPriority.value = "";
+          topicStatus.value = "";
+          topicPhase.value = "";
+          topicAssignedTo.value = "";
+          topicDescription.value = "";
+        }
       } else {
         hasError.value = true;
       }
