@@ -52,11 +52,6 @@
           size="m"
         />
         <BIMDataFileIcon
-          v-else-if="file.type === 'Ifc'"
-          fileName=".ifc"
-          :size="20"
-        />
-        <BIMDataFileIcon
           v-else
           :fileName="fileExtension(file.name)"
           :size="20"
