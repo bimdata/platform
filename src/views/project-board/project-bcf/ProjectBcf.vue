@@ -1,6 +1,20 @@
 <template>
   <div class="project-bcf">
-    <AddBcf />
+    <app-slot-content name="project-board-action">
+      <BIMDataButton
+        width="140px"
+        color="primary"
+        fill
+        radius
+        @click="openCreateBcfTopic"
+      >
+        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+        <span>Ajouter un BCF</span>
+      </BIMDataButton>
+    </app-slot-content>
+    <SidePanel title="Signaler un problème">
+      <CreateBcfTopic :bcfTopics="bcfTopics" />
+    </SidePanel>
     <div class="project-bcf__actions flex justify-between m-t-24">
       <BIMDataSearch
         placeholder="Search"
@@ -119,8 +133,12 @@ import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
 
+import { useSidePanel } from "@/composables/side-panel.js";
+
 // Components
-import AddBcf from "../../../components/specific/bcf/add-bcf/AddBcf.vue";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
 import BcfTopicsGrid from "../../../components/specific/bcf/bcf-topics-grid/BcfTopicsGrid.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
@@ -130,7 +148,9 @@ import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 
 export default {
   components: {
-    AddBcf,
+    AppSlotContent,
+    SidePanel,
+    CreateBcfTopic,
     BcfFilters,
     BcfTopicsGrid,
     BcfTopicsList,
@@ -140,6 +160,7 @@ export default {
   },
   setup() {
     const { currentProject } = useProjects();
+    const { openSidePanel } = useSidePanel();
     const { loadBcfTopics } = useBcf();
     const bcfTopics = ref([]);
     const loading = ref(false);
@@ -197,7 +218,8 @@ export default {
       isSortByIndexActive,
       isSortByDateActive,
       toggleDisplayBcfTopics,
-      isDisplayByListActive
+      isDisplayByListActive,
+      openCreateBcfTopic: openSidePanel
     };
   }
 };
