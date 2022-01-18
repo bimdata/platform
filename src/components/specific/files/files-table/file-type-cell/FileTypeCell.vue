@@ -3,10 +3,8 @@
     {{
       file.type === "Folder"
         ? $t("FilesTable.folder")
-        : file.type === "Ifc"
-        ? ".ifc"
         : fileExtension(file.name)
-        ? "." + fileExtension(file.name)
+        ? fileExtension(file.name)
         : "?"
     }}
   </div>
