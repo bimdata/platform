@@ -36,11 +36,12 @@
     }
 
     &__count {
-      width: 18px;
+      min-width: 18px;
       height: 18px;
+      padding: 0 4px;
       line-height: 16px;
       text-align: center;
-      border-radius: 50%;
+      border-radius: calc(18px / 2);
       font-size: 12px;
       background-color: var(--color-primary);
       color: var(--color-white);

@@ -20,7 +20,7 @@
         </div>
       </template>
 
-      <div class="models-manager__menu">
+      <div class="models-manager__menu" v-click-away="closeMenu">
         <BIMDataButton>
           <BIMDataIcon
             color="granite-light"
@@ -99,7 +99,11 @@ export default {
     }
   },
   setup(props) {
-    const { isOpen: showMenu, toggle: toggleMenu } = useToggle();
+    const {
+      isOpen: showMenu,
+      close: closeMenu,
+      toggle: toggleMenu
+    } = useToggle();
 
     const tabs = ref([]);
     const currentTab = ref({});
@@ -128,6 +132,7 @@ export default {
       showMenu,
       tabs,
       // Methods
+      closeMenu,
       selectTab,
       toggleMenu
     };
