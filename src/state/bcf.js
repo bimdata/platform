@@ -44,6 +44,7 @@ const createTopic = async (project, topic) => {
 
 const deleteTopic = async (project, topic) => {
   await BcfService.deleteTopic(project, topic);
+  await loadBcfTopics(project);
   return topic;
 };
 
