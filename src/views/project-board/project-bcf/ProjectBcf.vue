@@ -1,6 +1,20 @@
 <template>
   <div class="project-bcf">
-    <AddBcf />
+    <app-slot-content name="project-board-action">
+      <BIMDataButton
+        width="140px"
+        color="primary"
+        fill
+        radius
+        @click="openCreateBcfTopic"
+      >
+        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+        <span>Ajouter un BCF</span>
+      </BIMDataButton>
+    </app-slot-content>
+    <SidePanel title="Signaler un problème">
+      <CreateBcfTopic :bcfTopics="bcfTopics" />
+    </SidePanel>
     <div class="project-bcf__actions flex justify-between m-t-24">
       <BIMDataSearch
         placeholder="Search"
@@ -88,7 +102,7 @@
         </div>
       </div>
       <!-- if no Bcf topics -->
-      <CreateBcfTopicCard v-else-if="displayedBcfTopics.length === 0" />
+      <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
       <transition-group v-else-if="isDisplayByListActive" name="list">
         <!-- display Bcf topics in list mode -->
         <BcfTopicsList
@@ -99,7 +113,7 @@
       </transition-group>
       <transition-group v-else name="grid">
         <!-- display Bcf topics in grid mode -->
-        <BcfTopicsGrid
+        <BcfTopicGrid
           v-for="bcfTopic in displayedBcfTopics"
           :key="bcfTopic.guid"
           :project="project"
@@ -111,7 +125,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { provide, ref, watch } from "vue";
 import { useProjects } from "@/state/projects.js";
 import { useBcf } from "@/state/bcf.js";
 
@@ -119,27 +133,34 @@ import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
 
+import { useSidePanel } from "@/composables/side-panel.js";
+
 // Components
-import AddBcf from "../../../components/specific/bcf/add-bcf/AddBcf.vue";
+import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
-import BcfTopicsGrid from "../../../components/specific/bcf/bcf-topics-grid/BcfTopicsGrid.vue";
+import BcfTopicGrid from "../../../components/specific/bcf/bcf-topic-grid/BcfTopicGrid.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
-import CreateBcfTopicCard from "../../../components/specific/bcf/create-bcf-topic-card/CreateBcfTopicCard.vue";
+import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
 import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 
 export default {
   components: {
-    AddBcf,
+    AppSlotContent,
+    SidePanel,
+    CreateBcfTopic,
     BcfFilters,
-    BcfTopicsGrid,
+    BcfTopicGrid,
     BcfTopicsList,
     BcfTopicsMetrics,
-    CreateBcfTopicCard,
+    BcfTopicCreationCard,
     ProjectBcfOnboardingImage
   },
   setup() {
     const { currentProject } = useProjects();
+    const { openSidePanel } = useSidePanel();
     const { loadBcfTopics } = useBcf();
     const bcfTopics = ref([]);
     const loading = ref(false);
@@ -179,6 +200,8 @@ export default {
       isDisplayByListActive.value = !isDisplayByListActive.value;
     };
 
+    provide("bcfTopics", bcfTopics);
+
     return {
       loading,
       bcfTopics,
@@ -195,7 +218,8 @@ export default {
       isSortByIndexActive,
       isSortByDateActive,
       toggleDisplayBcfTopics,
-      isDisplayByListActive
+      isDisplayByListActive,
+      openCreateBcfTopic: openSidePanel
     };
   }
 };

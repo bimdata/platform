@@ -1,7 +1,39 @@
 .create-bcf-topic {
+  padding: 0 12px 12px 0;
   height: 100%;
   flex-direction: column;
+  overflow: auto;
+  &__header,
+  &__image,
+  &__content,
   &__footer {
     width: 100%;
+  }
+  &__header {
+    height: 27px;
+    font-size: 12px;
+    &__index,
+    &__date {
+      height: 100%;
+      padding: 3px;
+      background-color: var(--color-silver-light);
+    }
+    &__index {
+      min-width: 50px;
+    }
+    &__date {
+      min-width: 103px;
+    }
+  }
+  &__image {
+    height: 210px;
+    border: 2px dashed #d8d8d8;
+  }
+  &__content {
+    .bimdata-input,
+    .bimdata-select,
+    .bimdata-textarea {
+      margin: 30px 0;
+    }
   }
 }

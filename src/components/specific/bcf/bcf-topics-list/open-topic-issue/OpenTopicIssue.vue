@@ -12,7 +12,7 @@
         <BIMDataButton color="default" ripple rounded icon>
           <BIMDataIcon name="edit" fill color="default" size="xxs" />
         </BIMDataButton>
-        <BIMDataButton color="default" ripple rounded icon>
+        <BIMDataButton color="default" ripple rounded icon @click="removeTopic">
           <BIMDataIcon name="delete" fill color="high" size="xxs" />
         </BIMDataButton>
         <BIMDataButton
@@ -171,9 +171,12 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { inject, ref } from "vue";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
+
+import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
 export default {
   components: {
@@ -197,7 +200,16 @@ export default {
       getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
     }
 
-    return { getPriorityClasses, getStatusClasses };
+    const { currentProject } = useProjects();
+    const { deleteTopic, loadBcfTopics } = useBcf();
+    const bcfTopics = inject("bcfTopics");
+
+    const removeTopic = async () => {
+      await deleteTopic(currentProject.value, props.bcfTopic);
+      bcfTopics.value = await loadBcfTopics(currentProject.value);
+    };
+
+    return { getPriorityClasses, getStatusClasses, removeTopic };
   }
 };
 </script>
