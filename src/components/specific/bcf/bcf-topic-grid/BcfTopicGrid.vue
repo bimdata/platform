@@ -108,7 +108,7 @@ import { reactive, ref } from "vue";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
-import OpenTopicIssue from "../../../specific/bcf/bcf-topics-list/open-topic-issue/OpenTopicIssue.vue";
+import OpenTopicIssue from "../bcf-topics-list/open-topic-issue/OpenTopicIssue.vue";
 
 export default {
   components: {
@@ -154,4 +154,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./BcfTopicsGrid.scss"></style>
+<style scoped lang="scss" src="./BcfTopicGrid.scss"></style>
