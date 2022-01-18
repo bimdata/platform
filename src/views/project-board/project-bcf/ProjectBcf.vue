@@ -88,7 +88,7 @@
         </div>
       </div>
       <!-- if no Bcf topics -->
-      <CreateBcfTopicCard v-else-if="displayedBcfTopics.length === 0" />
+      <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
       <transition-group v-else-if="isDisplayByListActive" name="list">
         <!-- display Bcf topics in list mode -->
         <BcfTopicsList
@@ -125,7 +125,7 @@ import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.
 import BcfTopicsGrid from "../../../components/specific/bcf/bcf-topics-grid/BcfTopicsGrid.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
-import CreateBcfTopicCard from "../../../components/specific/bcf/create-bcf-topic-card/CreateBcfTopicCard.vue";
+import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
 import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 
 export default {
@@ -135,7 +135,7 @@ export default {
     BcfTopicsGrid,
     BcfTopicsList,
     BcfTopicsMetrics,
-    CreateBcfTopicCard,
+    BcfTopicCreationCard,
     ProjectBcfOnboardingImage
   },
   setup() {
