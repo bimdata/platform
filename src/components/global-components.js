@@ -15,7 +15,9 @@ import BIMDataSelect from "@bimdata/design-system/dist/js/BIMDataComponents/vue3
 import BIMDataSpinner from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSpinner.js";
 import BIMDataTabs from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTabs.js";
 import BIMDataText from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataText.js";
+import BIMDataTextarea from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextarea.js";
 import BIMDataTextBox from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTextbox.js";
+import BIMDataTooltip from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataTooltip.js";
 
 // Image components
 import AlphabeticalAscending from "@/components/images/AlphabeticalAscending.vue";
@@ -56,7 +58,9 @@ export default {
   BIMDataSpinner,
   BIMDataTabs,
   BIMDataText,
+  BIMDataTextarea,
   BIMDataTextBox,
+  BIMDataTooltip,
 
   // Images
   AlphabeticalAscending,
