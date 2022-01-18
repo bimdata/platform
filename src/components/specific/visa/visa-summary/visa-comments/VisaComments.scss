@@ -5,21 +5,6 @@
   &__comment-button {
     margin: var(--spacing-unit) 0;
   }
-  &__comments-handler {
-    &:deep() {
-      textarea {
-        font-size: 1rem;
-        font-family: var(--primary-font);
-        color: var(--color-primary);
-      }
-    }
-    &__action-button {
-      display: flex;
-      justify-content: flex-end;
-      gap: var(--spacing-unit);
-    }
-  }
-
   &__comment-list {
     margin-top: var(--spacing-unit);
   }

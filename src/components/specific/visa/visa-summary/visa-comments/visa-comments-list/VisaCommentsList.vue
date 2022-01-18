@@ -1,7 +1,4 @@
 <template>
-  <!-- {{ console.log("isEditing", isEditing) }}-->
-  {{ console.log("commentToHandle", commentToHandle) }}
-  <!-- {{ console.log("commentsList", commentsList) }}  -->
   <transition name="fade">
     <template v-if="isSafeZone">
       <div class="safe-zone">
@@ -11,7 +8,7 @@
   </transition>
   <div
     class="visa-comments-list"
-    v-for="comment in commentsList"
+    v-for="(comment, index) in commentsList"
     :key="comment.id"
   >
     <div class="visa-comments-list__header">
@@ -77,14 +74,30 @@
         fitContent
       />
     </div>
-    <template v-if="!isEditing">
+    <template
+      v-if="!isEditing && !isReplying && index === commentsList.length - 1"
+    >
       <BIMDataButton
         color="secondary"
         radius
         width="30%"
         style="margin: -6% 0 0 74%; font-size: 1.15em"
+        @click="handleIsReplying(commentsList[0].id)"
         >{{ $t("Visa.comments.reply") }}</BIMDataButton
       >
+    </template>
+    <template
+      v-if="
+        isReplying && commentsList[commentsList.length - 1].id === comment.id
+      "
+    >
+      <VisaCommentsInput
+        :replyId="commentsList[0].id"
+        :visaId="visaId"
+        :baseInfo="baseInfo"
+        @toggle-comments-input="handleIsReplying"
+        @get-comments="$emit('get-comments')"
+      />
     </template>
   </div>
 </template>
@@ -93,16 +106,26 @@
 import { ref } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone.vue";
+import VisaCommentsInput from "@/components/specific/visa/visa-summary/visa-comments/visa-comments-input/VisaCommentsInput.vue";
 
 import VisaCommentsListActons from "./visa-comments-list-actions/VisaCommentsListActions.vue";
 import { formatDateDDMMYYYHHMM } from "@/utils/date";
 import { useVisa } from "@/state/visa";
 
 export default {
-  components: { UserAvatar, VisaCommentsListActons, VisaSafeZone },
+  components: {
+    UserAvatar,
+    VisaCommentsListActons,
+    VisaSafeZone,
+    VisaCommentsInput
+  },
   props: {
     commentsList: {
       type: Array,
+      required: true
+    },
+    isThread: {
+      type: Boolean,
       required: true
     },
     visaId: {
@@ -119,6 +142,7 @@ export default {
     const { updateComment, deleteComment } = useVisa();
 
     const isEditing = ref(false);
+    const isReplying = ref(false);
     const commentToHandle = ref(null);
     const copyOfContent = ref(null);
     const isSafeZone = ref(false);
@@ -164,17 +188,30 @@ export default {
       isSafeZone.value = false;
     };
 
+    const handleIsReplying = commentId => {
+      if (commentId) {
+        commentToHandle.value = props.commentsList.find(
+          ({ id }) => id === commentId
+        );
+      } else {
+        commentToHandle.value = null;
+      }
+
+      return (isReplying.value = !isReplying.value);
+    };
+
     return {
       //references
       isEditing,
       commentToHandle,
       isSafeZone,
+      isReplying,
       // methods
       formatDateDDMMYYYHHMM,
       handleEdit,
       safeZoneHandler,
       onSafeZone,
-      console
+      handleIsReplying
     };
   }
 };

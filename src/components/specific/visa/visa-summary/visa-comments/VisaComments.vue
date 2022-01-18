@@ -1,55 +1,37 @@
 <template>
   <div class="visa-comments">
-    <template v-if="isAuthor && !isAuthorCommenting">
+    <template v-if="isAuthor && !isCommenting">
       <BIMDataButton
         class="visa-comments__comment-button"
         color="primary"
         fill
         radius
         width="100%"
-        @click="isAuthorCommenting = true"
+        @click="isCommenting = true"
         >{{ $t("Visa.comments.comment") }}</BIMDataButton
       >
     </template>
     <template v-if="commentsList.length > 0">
       <span>{{ $t("Visa.comments.commentary") }}</span>
     </template>
-    <template v-if="!isAuthor || isAuthorCommenting">
-      <div class="visa-comments__comments-handler">
-        <BIMDataTextarea
-          v-model="textContent"
-          :placeholder="$t('Visa.comments.placeholder')"
-          name="comment"
-          width="100%"
-          :resizable="false"
-          rows="1"
-          fitContent
-        />
-        <div class="visa-comments__comments-handler__action-button">
-          <BIMDataButton
-            v-if="isAuthor && isAuthorCommenting"
-            color="secondary"
-            radius
-            width="30%"
-            @click="isAuthorCommenting = false"
-            >{{ $t("Visa.comments.cancel") }}</BIMDataButton
-          >
-          <BIMDataButton
-            color="primary"
-            fill
-            radius
-            width="30%"
-            @click="pushComment"
-            >{{ $t("Visa.comments.publish") }}</BIMDataButton
-          >
-        </div>
-      </div>
-    </template>
-    <div class="visa-comments__comment-list">
-      <VisaCommentsList
-        :commentsList="commentsList"
+    <template v-if="isCommenting">
+      <VisaCommentsInput
         :visaId="visaId"
         :baseInfo="baseInfo"
+        @toggle-comments-input="toggleCommentsInput"
+        @get-comments="getComments"
+      />
+    </template>
+    <div
+      class="visa-comments__comment-list"
+      v-for="comments in commentsList"
+      :key="comments[0].id"
+    >
+      <VisaCommentsList
+        :commentsList="comments"
+        :visaId="visaId"
+        :baseInfo="baseInfo"
+        :isThread="comments.length === 1 ? false : true"
         @get-comments="getComments"
       />
     </div>
@@ -59,12 +41,14 @@
 <script>
 import { ref, onMounted } from "vue";
 import VisaCommentsList from "./visa-comments-list/VisaCommentsList.vue";
+import VisaCommentsInput from "./visa-comments-input/VisaCommentsInput.vue";
+
 import { useVisa } from "@/state/visa";
 import { useUser } from "@/state/user";
 import { fullName } from "@/utils/users";
 
 export default {
-  components: { VisaCommentsList },
+  components: { VisaCommentsList, VisaCommentsInput },
   props: {
     isAuthor: {
       type: Boolean,
@@ -81,50 +65,49 @@ export default {
   },
   emits: [],
   setup(props) {
-    const { fetchAllComments, createComment } = useVisa();
+    const { fetchAllComments } = useVisa();
     const { user } = useUser();
 
-    const isAuthorCommenting = ref(false);
-    const textContent = ref(null);
+    const isCommenting = ref(false);
     const commentsList = ref([]);
 
     const { id: currentUserId } = user.value;
 
     const getComments = async () => {
+      const myStructure = {};
       const res = await fetchAllComments(props.visaId, props.baseInfo);
 
-      commentsList.value = res
-        .map(elem => ({
+      res.forEach(elem => {
+        const comment = {
           ...elem,
           fullName: fullName(elem.author),
           isSelf: elem.author.userId === currentUserId
-        }))
-        .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-      console.log("commentsList", commentsList);
+        };
+
+        if (comment.replyToCommentId) {
+          myStructure[comment.replyToCommentId].push(comment);
+        } else {
+          myStructure[comment.id] = [comment];
+        }
+      });
+
+      commentsList.value = Object.keys(myStructure)
+        .map(id => myStructure[id])
+        .reverse();
     };
 
-    const pushComment = async () => {
-      if (textContent.value) {
-        const data = {
-          content: textContent.value
-        };
-        await createComment(props.visaId, props.baseInfo, data);
-        textContent.value = null;
-        await getComments();
-      }
-    };
+    const toggleCommentsInput = () =>
+      (isCommenting.value = !isCommenting.value);
 
     onMounted(async () => getComments());
 
     return {
       // references
-      isAuthorCommenting,
-      textContent,
+      isCommenting,
       commentsList,
       // methods
-      pushComment,
       getComments,
-      console
+      toggleCommentsInput
     };
   }
 };
