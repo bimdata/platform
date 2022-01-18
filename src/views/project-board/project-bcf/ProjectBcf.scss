@@ -2,6 +2,9 @@
   &__actions {
     & > .flex {
       position: relative;
+      .bimdata-btn:enabled {
+        color: var(--color-granite-light);
+      }
     }
     .active {
       position: relative;

@@ -9,6 +9,7 @@
       @click="toggleFilters"
       class="btn-color-granite-light"
       :class="{ 'btn-active': showFilters }"
+      :disabled="!bcfTopics.length"
     >
       Filters
     </BIMDataButton>

@@ -34,6 +34,7 @@
           class="m-r-12"
           :class="{ active: activeButton === 'indexSort' }"
           @click="sortByIndex"
+              :disabled="!bcfTopics.length"
         >
           <IndexAscending
             v-if="isSortByIndexActive"
@@ -50,6 +51,7 @@
           class="m-r-12"
           :class="{ active: activeButton === 'nameSort' }"
           @click="sortByName"
+              :disabled="!bcfTopics.length"
         >
           <AlphabeticalAscending
             v-if="isSortByNameActive"
@@ -66,6 +68,7 @@
           class="m-r-12"
           :class="{ active: activeButton === 'dateSort' }"
           @click="sortByDate"
+          :disabled="!bcfTopics.length"
         >
           <DateAscending
             v-if="isSortByDateActive"
@@ -80,6 +83,7 @@
           icon
           class="m-r-12"
           @click="toggleDisplayBcfTopics"
+          :disabled="!bcfTopics.length"
         >
           <Grid v-if="isDisplayByListActive" style="heiht: 18px; width: 18px" />
           <List v-else style="heiht: 18px; width: 18px" />
