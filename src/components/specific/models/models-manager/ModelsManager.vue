@@ -67,6 +67,7 @@
 <script>
 import { ref, watch } from "vue";
 import { useToggle } from "@/composables/toggle.js";
+import { segregateByType } from "@/utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";
@@ -110,10 +111,10 @@ export default {
     watch(
       () => props.models,
       models => {
+        const modelsbyType = segregateByType(models);
         tabs.value = tabsDef.map(tab => ({
           ...tab,
-          // TODO: set models for each tab based on type
-          models: tab.id === "ifc" ? models : [],
+          models: modelsbyType[tab.id] || [],
           displayed: true
         }));
         currentTab.value = tabs.value[0];

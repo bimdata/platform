@@ -62,7 +62,7 @@
 import { reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models.js";
-import { segregate } from "@/utils/models.js";
+import { segregateBySource } from "@/utils/models.js";
 // Components
 import ModelsActionBar from "@/components/specific/models/models-manager/models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "@/components/specific/models/models-manager/models-delete-modal/ModelsDeleteModal.vue";
@@ -112,7 +112,7 @@ export default {
     const displayedModels = ref([]);
     watch(
       () => props.models,
-      () => Object.assign(modelLists, segregate(props.models)),
+      () => Object.assign(modelLists, segregateBySource(props.models)),
       { immediate: true }
     );
     watchEffect(() => {
