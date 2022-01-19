@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import christmasPlugin from "@bimdata/christmas-sleigh-viewer-plugin";
 import makeBIMDataViewer from "@bimdata/viewer";
 import { merge, set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
@@ -133,7 +132,6 @@ export default {
             )
         )
       );
-      bimdataViewer.registerPlugin(christmasPlugin);
       loading.value = false;
 
       bimdataViewer.mount("#viewer", initialWindow);
