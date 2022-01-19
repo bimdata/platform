@@ -6,7 +6,7 @@
       display: flex;
       align-items: center;
       margin-left: var(--spacing-unit);
-      max-width:80%;
+      max-width: 70%;
 
       &__name {
         color: var(--color-primary);
@@ -45,6 +45,9 @@
 
 
   }
+}
+.reply {
+  margin-left: 44px;
 }
 .safe-zone {
   z-index: 2;

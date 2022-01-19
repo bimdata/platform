@@ -1,6 +1,6 @@
 <template>
   <div class="visa-comments">
-    <template v-if="isAuthor && !isCommenting">
+    <template v-if="!isCommenting">
       <BIMDataButton
         class="visa-comments__comment-button"
         color="primary"
@@ -77,19 +77,20 @@ export default {
       const myStructure = {};
       const res = await fetchAllComments(props.visaId, props.baseInfo);
 
-      res.forEach(elem => {
-        const comment = {
-          ...elem,
-          fullName: fullName(elem.author),
-          isSelf: elem.author.userId === currentUserId
-        };
-
-        if (comment.replyToCommentId) {
-          myStructure[comment.replyToCommentId].push(comment);
-        } else {
-          myStructure[comment.id] = [comment];
-        }
-      });
+      res
+        .sort((a, b) => (a.id < b.id ? -1 : 1))
+        .forEach(elem => {
+          const comment = {
+            ...elem,
+            fullName: fullName(elem.author),
+            isSelf: elem.author.userId === currentUserId
+          };
+          if (comment.replyToCommentId) {
+            myStructure[comment.replyToCommentId].push(comment);
+          } else {
+            myStructure[comment.id] = [comment];
+          }
+        });
 
       commentsList.value = Object.keys(myStructure)
         .map(id => myStructure[id])

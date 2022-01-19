@@ -1,33 +1,51 @@
 <template>
   <div class="visa-comments-list-actions" v-click-away="closeMenu">
-    <BIMDataButton
-      class="visa-comments-list-actions__btn"
-      rounded
-      icon
-      @click="toggleMenu"
-    >
-      <BIMDataIcon name="ellipsis" size="l" />
-    </BIMDataButton>
-    <transition name="fade">
-      <div class="visa-comments-list-actions__menu" v-show="showMenu">
+    <div style="display: flex">
+      <template v-if="showMenu && !isEditing && !isDeleting">
         <BIMDataButton
-          class="visa-comments-list-actions__menu__btn"
           ghost
-          squared
-          @click="onEdit"
+          rounded
+          icon
+          @click="$emit('handle-edit', commentId)"
         >
-          {{ $t("Visa.comments.actions.edit") }}
+          <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton
-          class="visa-comments-list-actions__menu__btn"
           ghost
-          squared
-          @click="onDelete"
+          rounded
+          icon
+          @click="$emit('handle-delete', commentId)"
         >
-          {{ $t("Visa.comments.actions.delete") }}
+          <BIMDataIcon name="delete" size="xxs" fill color="granite-light" />
         </BIMDataButton>
-      </div>
-    </transition>
+        <BIMDataButton ghost rounded icon @click="toggleMenu">
+          <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+        </BIMDataButton>
+      </template>
+      <template
+        v-if="
+          (isEditing || isDeleting) &&
+          commentToHandle &&
+          commentToHandle.id === commentId
+        "
+      >
+        <BIMDataButton ghost rounded icon @click="onAction('cancel')">
+          <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
+        </BIMDataButton>
+        <BIMDataButton ghost rounded icon @click="onAction(commentId)">
+          <BIMDataIcon name="validate" size="xxs" fill color="granite-light" />
+        </BIMDataButton>
+      </template>
+      <BIMDataButton
+        v-show="!showMenu && !isEditing && !isDeleting"
+        class="visa-comments-list-actions__btn"
+        rounded
+        icon
+        @click="toggleMenu"
+      >
+        <BIMDataIcon name="ellipsis" size="l" />
+      </BIMDataButton>
+    </div>
   </div>
 </template>
 
@@ -39,9 +57,20 @@ export default {
   props: {
     commentId: {
       type: Number
+    },
+    commentToHandle: {
+      type: Object
+    },
+    isEditing: {
+      type: Boolean,
+      required: true
+    },
+    isDeleting: {
+      type: Boolean,
+      required: true
     }
   },
-  emits: ["handle-edit", "safe-zone-handler"],
+  emits: ["handle-edit", "handle-delete", "safe-zone-handler"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -49,23 +78,18 @@ export default {
       toggle: toggleMenu
     } = useToggle();
 
-    const onDelete = () => {
-      emit("safe-zone-handler", props.commentId);
-      closeMenu();
+    const onAction = payload => {
+      emit(props.isEditing ? "handle-edit" : "handle-delete", payload);
+      toggleMenu();
     };
 
-    const onEdit = () => {
-      emit("handle-edit", props.commentId);
-      closeMenu();
-    };
     return {
       // references
       showMenu,
       // Methods
       closeMenu,
       toggleMenu,
-      onDelete,
-      onEdit
+      onAction
     };
   }
 };

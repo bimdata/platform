@@ -8,6 +8,7 @@
   </transition>
   <div
     class="visa-comments-list"
+    :class="{ reply: isThread && index > 0 ? '__reply' : '' }"
     v-for="(comment, index) in commentsList"
     :key="comment.id"
   >
@@ -31,29 +32,14 @@
         }}</span>
       </div>
       <div class="visa-comments-list__header__right-side">
-        <template v-if="isEditing && commentToHandle.id === comment.id">
-          <BIMDataButton ghost rounded icon @click="handleEdit(null, 'undo')">
-            <BIMDataIcon
-              name="undo"
-              size="xxs"
-              fill
-              color="granite-light"
-              @click="handleEdit(null, 'undo')"
-            />
-          </BIMDataButton>
-          <BIMDataButton ghost rounded icon @click="handleEdit(comment.id)">
-            <BIMDataIcon
-              name="validate"
-              size="xxs"
-              fill
-              color="granite-light"
-            />
-          </BIMDataButton>
-        </template>
-        <template v-if="!isEditing && comment.isSelf">
+        <template v-if="comment.isSelf">
           <VisaCommentsListActons
             :commentId="comment.id"
+            :commentToHandle="commentToHandle"
+            :isEditing="isEditing"
+            :isDeleting="isDeleting"
             @handle-edit="handleEdit"
+            @handle-delete="handleDelete"
             @safe-zone-handler="safeZoneHandler"
           />
         </template>
@@ -97,6 +83,7 @@
         :baseInfo="baseInfo"
         @toggle-comments-input="handleIsReplying"
         @get-comments="$emit('get-comments')"
+        :style="isThread && index > 0 ? 'margin-left: 12px' : ''"
       />
     </template>
   </div>
@@ -142,20 +129,26 @@ export default {
     const { updateComment, deleteComment } = useVisa();
 
     const isEditing = ref(false);
+    const isDeleting = ref(false);
     const isReplying = ref(false);
     const commentToHandle = ref(null);
     const copyOfContent = ref(null);
     const isSafeZone = ref(false);
 
-    const handleEdit = async (commentId, undo) => {
-      if (undo === "undo") {
+    const handleEdit = async commentId => {
+      if (commentId === "cancel") {
         commentToHandle.value.content = copyOfContent.value;
         isEditing.value = false;
       } else if (isEditing.value) {
         if (commentToHandle.value.content !== copyOfContent.value) {
-          await updateComment(commentId, props.visaId, props.baseInfo, {
-            content: commentToHandle.value.content
-          });
+          await updateComment(
+            commentToHandle.value.id,
+            props.visaId,
+            props.baseInfo,
+            {
+              content: commentToHandle.value.content
+            }
+          );
         }
         isEditing.value = false;
         commentToHandle.value = null;
@@ -165,6 +158,26 @@ export default {
         );
         copyOfContent.value = commentToHandle.value.content;
         isEditing.value = true;
+      }
+    };
+
+    const handleDelete = async commentId => {
+      if (commentId === "cancel") {
+        isDeleting.value = false;
+      } else if (isDeleting.value) {
+        await deleteComment(
+          commentToHandle.value.id,
+          props.visaId,
+          props.baseInfo
+        );
+        await emit("get-comments");
+        isDeleting.value = false;
+        commentToHandle.value = null;
+      } else if (!isDeleting.value) {
+        commentToHandle.value = props.commentsList.find(
+          ({ id }) => id === commentId
+        );
+        isDeleting.value = true;
       }
     };
 
@@ -203,12 +216,14 @@ export default {
     return {
       //references
       isEditing,
+      isDeleting,
       commentToHandle,
       isSafeZone,
       isReplying,
       // methods
       formatDateDDMMYYYHHMM,
       handleEdit,
+      handleDelete,
       safeZoneHandler,
       onSafeZone,
       handleIsReplying
