@@ -55,13 +55,13 @@
             :folder="currentFolder"
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
+            @back-parent-folder="backToParent"
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
-            @back-parent-folder="backToParent"
           />
         </div>
 
@@ -188,6 +188,7 @@ export default {
       },
       { immediate: true }
     );
+
     const onFileSelected = file => {
       if (file.type === FILE_TYPES.FOLDER) {
         currentFolder.value = handler.deserialize(file);

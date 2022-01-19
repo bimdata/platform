@@ -46,12 +46,12 @@
 <script>
 import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef from "./columns";
+import columnsDef from "./columns.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable";
-import ModelActionsCell from "./model-actions-cell/ModelActionsCell";
-import ModelNameCell from "./model-name-cell/ModelNameCell";
-import ModelStatusCell from "./model-status-cell/ModelStatusCell";
+import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
+import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
+import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
 
 export default {
   components: {
