@@ -89,22 +89,17 @@
       }
 
       &__validate {
-        width: 31.5%;
+        width: 48.5%;
         &.active {
           filter: contrast(70%)
         }
       }
 
       &__deny {
-        width: 31.5%;
+        width: 48.5%;
         &.active {
           filter: contrast(70%)
         }
-      }
-
-      &__comment {
-        width: 31.5%;
-
       }
 
       &__delete {

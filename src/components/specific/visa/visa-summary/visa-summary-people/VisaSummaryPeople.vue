@@ -4,6 +4,7 @@
     v-for="people in peopleList"
     :key="people.id"
   >
+    {{ console.log("people", people) }}
     <div class="visa-add-summary-people__left-side">
       <UserAvatar
         :user="people.validator || {}"
@@ -40,7 +41,9 @@
             {{
               $t(
                 `Visa.summary.people.${
-                  people.status === VALIDATION_STATUS.PENDING
+                  people.hasCommented
+                    ? "commented"
+                    : people.status === VALIDATION_STATUS.PENDING
                     ? "pending"
                     : people.status === VALIDATION_STATUS.ACCEPT
                     ? "accept"
@@ -51,7 +54,9 @@
           </span>
           <BIMDataIcon
             :name="
-              people.status === VALIDATION_STATUS.PENDING
+              people.hasCommented
+                ? 'rules'
+                : people.status === VALIDATION_STATUS.PENDING
                 ? 'sandglass'
                 : people.status === VALIDATION_STATUS.ACCEPT
                 ? 'visa'
@@ -143,7 +148,8 @@ export default {
       currentPeopleId,
       console,
       // methods
-      handleCurrentPerson
+      handleCurrentPerson,
+      console
     };
   }
 };

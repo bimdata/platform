@@ -136,14 +136,6 @@
               @click="responseHandler('refuse')"
               >{{ $t("Visa.summary.deny") }}</BIMDataButton
             >
-            <BIMDataButton
-              class="visa-summary__shell__action-button__comment"
-              color="primary"
-              fill
-              radius
-              :disabled="isClosed"
-              >{{ $t("Visa.summary.comment") }}</BIMDataButton
-            >
           </template>
         </div>
         <div class="visa-summary__shell__file">
