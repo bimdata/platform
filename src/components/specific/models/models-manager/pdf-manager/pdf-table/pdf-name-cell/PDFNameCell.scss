@@ -1,0 +1,28 @@
+.model-name-cell {
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__update-form {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+
+    &__input {
+      flex-grow: 1;
+      margin: 0 !important;
+    }
+
+    &__btn-close {
+      color: var(--color-granite-light);
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) / 2);
+  }
+}

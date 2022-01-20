@@ -1,12 +1,17 @@
 <template>
   <div class="pdf-manager">
-    <!-- TODO -->
-    <h2>PDF Manager</h2>
+    <PDFTable :project="project" :models="models" />
   </div>
 </template>
 
 <script>
+// Components
+import PDFTable from "./pdf-table/PDFTable.vue";
+
 export default {
+  components: {
+    PDFTable
+  },
   props: {
     project: {
       type: Object,
@@ -14,7 +19,7 @@ export default {
     },
     models: {
       type: Array,
-      default: () => []
+      required: true
     }
   }
 };
@@ -24,10 +29,5 @@ export default {
 .pdf-manager {
   width: 100%;
   height: 100%;
-
-  // TODO
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

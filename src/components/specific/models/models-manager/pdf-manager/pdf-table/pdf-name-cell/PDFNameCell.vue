@@ -36,7 +36,7 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <img src="/static/ifc-logo.svg" />
+        <BIMDataFileIcon fileName=".pdf" :size="16" />
         <BIMDataTextBox :text="model.name" />
       </div>
     </transition>
@@ -45,7 +45,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useModels } from "@/state/models";
+import { useModels } from "@/state/models.js";
 
 export default {
   props: {
@@ -132,4 +132,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelNameCell.scss"></style>
+<style scoped lang="scss" src="./PDFNameCell.scss"></style>

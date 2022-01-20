@@ -1,5 +1,5 @@
 <template>
-  <div class="models-action-bar">
+  <div class="ifc-action-bar">
     <BIMDataButton
       :disabled="
         !project.isAdmin && models.some(m => m.document.userPermission < 100)
@@ -88,4 +88,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelsActionBar.scss"></style>
+<style scoped lang="scss" src="./IFCActionBar.scss"></style>

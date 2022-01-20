@@ -39,7 +39,7 @@
       <AppLoading name="project-models">
         <ModelsOverview
           :project="project"
-          :models="models"
+          :models="ifcs"
           @open-file-uploader="openFileUploader"
         />
       </AppLoading>
@@ -64,9 +64,11 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
+import MODEL_TYPES from "@/config/model-types.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
@@ -97,6 +99,10 @@ export default {
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useAppNotification();
 
+    const ifcs = computed(() =>
+      projectModels.value.filter(model => model.type === MODEL_TYPES.IFC)
+    );
+
     const {
       isOpen: showFileUploader,
       open: openFileUploader,
@@ -122,6 +128,7 @@ export default {
 
     return {
       // References
+      ifcs,
       invitations: projectInvitations,
       models: projectModels,
       project: currentProject,

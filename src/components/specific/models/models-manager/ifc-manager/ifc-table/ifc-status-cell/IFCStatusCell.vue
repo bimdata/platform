@@ -1,5 +1,5 @@
 <template>
-  <span class="model-status-cell" :class="`model-status-cell--${statusName}`">
+  <span class="ifc-status-cell" :class="`ifc-status-cell--${statusName}`">
     <BIMDataSpinner v-if="['pending', 'in-progress'].includes(statusName)" />
     <BIMDataIcon v-else :name="statusIcon" size="s" />
   </span>
@@ -86,4 +86,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelStatusCell.scss"></style>
+<style scoped lang="scss" src="./IFCStatusCell.scss"></style>

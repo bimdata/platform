@@ -1,6 +1,6 @@
-import { downloadAll } from "@/utils/download";
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
+import { downloadAll } from "@/utils/download.js";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 class ModelService {
   async fetchModels(project) {

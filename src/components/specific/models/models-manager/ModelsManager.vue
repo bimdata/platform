@@ -77,8 +77,8 @@ import PTCManager from "./ptc-manager/PTCManager.vue";
 const tabsDef = [
   { id: "ifc", label: "IFC", component: "IFCManager" },
   { id: "dwg", label: "DWG", component: "DWGManager" },
-  { id: "pdf", label: "PDF", component: "PDFManager" },
-  { id: "ptc", label: "Point Cloud", component: "PTCManager" }
+  { id: "pdf", label: "PDF", component: "PDFManager" }
+  // { id: "ptc", label: "Point Cloud", component: "PTCManager" }
 ];
 
 export default {

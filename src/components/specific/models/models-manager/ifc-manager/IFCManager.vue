@@ -24,7 +24,7 @@
     <div class="ifc-manager__separator"></div>
 
     <transition name="fade">
-      <ModelsActionBar
+      <IFCActionBar
         class="ifc-manager__action-bar"
         v-show="selection.length > 0"
         :project="project"
@@ -37,7 +37,7 @@
       />
     </transition>
 
-    <ModelsTable
+    <IFCTable
       :project="project"
       :models="displayedModels"
       @archive="archiveModels([$event])"
@@ -64,17 +64,17 @@ import { useI18n } from "vue-i18n";
 import { useModels } from "@/state/models.js";
 import { segregateBySource } from "@/utils/models.js";
 // Components
-import ModelsActionBar from "@/components/specific/models/models-manager/models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "@/components/specific/models/models-manager/models-delete-modal/ModelsDeleteModal.vue";
-import ModelsTable from "@/components/specific/models/models-table/ModelsTable.vue";
+import IFCActionBar from "./ifc-action-bar/IFCActionBar.vue";
+import IFCTable from "./ifc-table/IFCTable.vue";
 
 const tabsDef = [{ id: "ifc" }, { id: "split" }, { id: "archive" }];
 
 export default {
   components: {
-    ModelsActionBar,
-    ModelsDeleteModal,
-    ModelsTable
+    IFCActionBar,
+    IFCTable,
+    ModelsDeleteModal
   },
   props: {
     project: {
