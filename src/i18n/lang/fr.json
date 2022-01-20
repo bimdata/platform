@@ -797,7 +797,8 @@
       "reply": "Répondre",
       "actions": {
         "edit": "Editer",
-        "delete": "Supprimer"
+        "delete": "Supprimer",
+        "confirmDelete": "Supprimer ce commentaire ?"
       }
     },
     "list": {

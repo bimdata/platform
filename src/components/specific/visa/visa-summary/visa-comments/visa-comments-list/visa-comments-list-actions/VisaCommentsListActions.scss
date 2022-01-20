@@ -4,4 +4,22 @@
   &__btn {
     color: var(--color-granite-light);
   }
+
+  &__delete {
+    position: absolute;
+    display: flex;
+    gap: var(--spacing-unit);
+    align-items: center;
+    justify-content: flex-end;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    width: 325px;
+    height: 40px;
+    right: 10px;
+
+    span {
+      color: var(--color-primary);
+      margin-right: 20px;
+    }
+  }
 }

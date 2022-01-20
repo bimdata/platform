@@ -29,11 +29,9 @@
           <VisaCommentsListActons
             :commentId="comment.id"
             :commentToHandle="commentToHandle"
-            :isEditing="isEditing"
-            :isDeleting="isDeleting"
             @handle-edit="handleEdit"
             @handle-delete="handleDelete"
-            @safe-zone-handler="safeZoneHandler"
+            @set-comment-to-handle="setCommentToHandle"
           />
         </template>
       </div>
@@ -128,6 +126,7 @@ export default {
     const handleEdit = async commentId => {
       if (commentId === "cancel") {
         commentToHandle.value.content = copyOfContent.value;
+        setCommentToHandle();
         isEditing.value = false;
       } else if (isEditing.value) {
         if (commentToHandle.value.content !== copyOfContent.value) {
@@ -141,11 +140,9 @@ export default {
           );
         }
         isEditing.value = false;
-        commentToHandle.value = null;
+        setCommentToHandle();
       } else if (!isEditing.value) {
-        commentToHandle.value = props.commentsList.find(
-          ({ id }) => id === commentId
-        );
+        setCommentToHandle(commentId);
         copyOfContent.value = commentToHandle.value.content;
         isEditing.value = true;
       }
@@ -154,6 +151,7 @@ export default {
     const handleDelete = async commentId => {
       if (commentId === "cancel") {
         isDeleting.value = false;
+        setCommentToHandle();
       } else if (isDeleting.value) {
         await deleteComment(
           commentToHandle.value.id,
@@ -162,25 +160,26 @@ export default {
         );
         await emit("get-comments");
         isDeleting.value = false;
-        commentToHandle.value = null;
+        setCommentToHandle();
       } else if (!isDeleting.value) {
-        commentToHandle.value = props.commentsList.find(
-          ({ id }) => id === commentId
-        );
+        setCommentToHandle(commentId);
         isDeleting.value = true;
       }
     };
 
     const handleIsReplying = commentId => {
+      setCommentToHandle(commentId);
+      return (isReplying.value = !isReplying.value);
+    };
+
+    const setCommentToHandle = commentId => {
       if (commentId) {
-        commentToHandle.value = props.commentsList.find(
+        commentToHandle.value = commentToHandle.value = props.commentsList.find(
           ({ id }) => id === commentId
         );
       } else {
         commentToHandle.value = null;
       }
-
-      return (isReplying.value = !isReplying.value);
     };
 
     return {
@@ -191,6 +190,7 @@ export default {
       isReplying,
       // methods
       formatDateDDMMYYYHHMM,
+      setCommentToHandle,
       handleEdit,
       handleDelete,
       handleIsReplying
