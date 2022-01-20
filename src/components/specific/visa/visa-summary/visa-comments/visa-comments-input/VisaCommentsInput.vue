@@ -1,11 +1,13 @@
 <template>
   <div class="visa-comments-input">
     <BIMDataTextarea
-      v-model="textContent"
-      :placeholder="$t('Visa.comments.placeholder')"
+      ref="textarea"
+      v-model="textAreaContent"
+      :placeholder="
+        $t(`Visa.comments.${replyId ? 'replyComment' : 'postComment'}`)
+      "
       name="comment"
       width="100%"
-      :autofocus="true"
       :resizable="false"
       rows="1"
       fitContent
@@ -31,7 +33,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useVisa } from "@/state/visa";
 
 export default {
@@ -52,28 +54,31 @@ export default {
   emits: ["toggle-comments-input", "get-comments"],
   setup(props, { emit }) {
     const { createComment } = useVisa();
-
-    const textContent = ref(null);
+    const textarea = ref(null);
+    const textAreaContent = ref(null);
 
     const pushComment = async () => {
-      if (textContent.value) {
+      if (textAreaContent.value) {
         const data = {
-          content: textContent.value,
+          content: textAreaContent.value,
           replyToCommentId:
             typeof props.replyId === "number" ? props.replyId : null
         };
         await createComment(props.visaId, props.baseInfo, data);
-        textContent.value = null;
+        textAreaContent.value = null;
         emit("toggle-comments-input");
         emit("get-comments");
       }
     };
 
+    onMounted(() => setTimeout(textarea.value.focus(), 200));
+
     return {
       // methods
       pushComment,
       // references
-      textContent
+      textarea,
+      textAreaContent
     };
   }
 };

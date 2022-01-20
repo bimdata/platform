@@ -790,7 +790,8 @@
     "comments": {
       "comment": "Commenter",
       "commentary": "Commentaire",
-      "placeholder": "Poster un commentaire",
+      "postComment": "Poster un commentaire",
+      "replyComment": "Répondre à un commentaire",
       "publish": "Publier",
       "cancel": "Annuler",
       "reply": "Répondre",

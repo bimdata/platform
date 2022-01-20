@@ -1,11 +1,4 @@
 <template>
-  <transition name="fade">
-    <template v-if="isSafeZone">
-      <div class="safe-zone">
-        <VisaSafeZone actionType="deleteComment" @onClose="onSafeZone" />
-      </div>
-    </template>
-  </transition>
   <div
     class="visa-comments-list"
     :class="{ reply: isThread && index > 0 ? '__reply' : '' }"
@@ -83,7 +76,7 @@
         :baseInfo="baseInfo"
         @toggle-comments-input="handleIsReplying"
         @get-comments="$emit('get-comments')"
-        :style="isThread && index > 0 ? 'margin-left: 12px' : ''"
+        style="margin-left: var(--spacing-unit)"
       />
     </template>
   </div>
@@ -92,7 +85,6 @@
 <script>
 import { ref } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone.vue";
 import VisaCommentsInput from "@/components/specific/visa/visa-summary/visa-comments/visa-comments-input/VisaCommentsInput.vue";
 
 import VisaCommentsListActons from "./visa-comments-list-actions/VisaCommentsListActions.vue";
@@ -103,7 +95,6 @@ export default {
   components: {
     UserAvatar,
     VisaCommentsListActons,
-    VisaSafeZone,
     VisaCommentsInput
   },
   props: {
@@ -133,7 +124,6 @@ export default {
     const isReplying = ref(false);
     const commentToHandle = ref(null);
     const copyOfContent = ref(null);
-    const isSafeZone = ref(false);
 
     const handleEdit = async commentId => {
       if (commentId === "cancel") {
@@ -181,26 +171,6 @@ export default {
       }
     };
 
-    const safeZoneHandler = commentId => {
-      commentToHandle.value = props.commentsList.find(
-        ({ id }) => id === commentId
-      );
-      isSafeZone.value = true;
-    };
-
-    const onSafeZone = async type => {
-      if (type) {
-        await deleteComment(
-          commentToHandle.value.id,
-          props.visaId,
-          props.baseInfo
-        );
-        await emit("get-comments");
-        commentToHandle.value = null;
-      }
-      isSafeZone.value = false;
-    };
-
     const handleIsReplying = commentId => {
       if (commentId) {
         commentToHandle.value = props.commentsList.find(
@@ -218,14 +188,11 @@ export default {
       isEditing,
       isDeleting,
       commentToHandle,
-      isSafeZone,
       isReplying,
       // methods
       formatDateDDMMYYYHHMM,
       handleEdit,
       handleDelete,
-      safeZoneHandler,
-      onSafeZone,
       handleIsReplying
     };
   }

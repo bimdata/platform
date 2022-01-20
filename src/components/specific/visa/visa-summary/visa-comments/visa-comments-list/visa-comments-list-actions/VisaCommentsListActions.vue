@@ -70,7 +70,7 @@ export default {
       required: true
     }
   },
-  emits: ["handle-edit", "handle-delete", "safe-zone-handler"],
+  emits: ["handle-edit", "handle-delete"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
