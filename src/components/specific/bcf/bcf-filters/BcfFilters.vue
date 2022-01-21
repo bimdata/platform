@@ -9,6 +9,7 @@
       @click="toggleFilters"
       class="btn-color-granite-light"
       :class="{ 'btn-active': showFilters }"
+      :disabled="!bcfTopics.length"
     >
       Filters
     </BIMDataButton>
@@ -60,10 +61,11 @@
         </div> -->
         <BIMDataSelect
           width="264px"
-          :multi="true"
+          :multi="tagOptions ? false : true"
           label="Tags"
-          :options="tagOptions"
-          v-model="tags"
+          :nullValue="tagOptions ? true : false"
+          :options="tagOptions ? null : tagOptions"
+          :v-model="tagOptions ? noTag : tags"
           class="m-t-24"
         />
         <div class="flex justify-center m-t-24">
@@ -133,6 +135,7 @@ export default {
 
     // tags list
     const tags = ref([]);
+    const noTag = ref(null);
     const tagOptions = computed(() => {
       return [...new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))];
     });
@@ -165,6 +168,7 @@ export default {
       status,
       statusOptions,
       tags,
+      noTag,
       tagOptions,
       showFilters,
       // Methods

@@ -78,4 +78,11 @@
       }
     }
   }
+  &__infos {
+    & > .flex {
+      span {
+        font-weight: 700;
+      }
+    }
+  }
 }

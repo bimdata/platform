@@ -25,65 +25,110 @@
       >
       </BIMDataSearch>
       <div class="flex">
-        <BIMDataButton
-          data-test="btn-sort-index"
-          color="default"
-          fill
-          square
-          icon
-          class="m-r-12"
-          :class="{ active: activeButton === 'indexSort' }"
-          @click="sortByIndex"
+        <BIMDataTooltip
+          :message="
+            isSortByIndexActive ? 'index ascendant' : 'index descendant'
+          "
+          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <IndexAscending
-            v-if="isSortByIndexActive"
-            style="heiht: 18px; width: 18px"
-          />
-          <IndexDescending v-else style="heiht: 18px; width: 18px" />
-        </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-sort-name"
-          color="default"
-          fill
-          square
-          icon
-          class="m-r-12"
-          :class="{ active: activeButton === 'nameSort' }"
-          @click="sortByName"
+          <template #content>
+            <BIMDataButton
+              data-test="btn-sort-index"
+              color="default"
+              fill
+              square
+              icon
+              class="m-r-12"
+              :class="{ active: activeButton === 'indexSort' }"
+              @click="sortByIndex"
+              :disabled="!bcfTopics.length"
+            >
+              <IndexAscending
+                v-if="isSortByIndexActive"
+                style="heiht: 18px; width: 18px"
+              />
+              <IndexDescending v-else style="heiht: 18px; width: 18px" />
+            </BIMDataButton>
+          </template>
+        </BIMDataTooltip>
+
+        <BIMDataTooltip
+          :message="
+            isSortByNameActive
+              ? 'ordre alphabétique'
+              : 'ordre alphabétique inverse'
+          "
+          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <AlphabeticalAscending
-            v-if="isSortByNameActive"
-            style="heiht: 18px; width: 18px"
-          />
-          <AlphabeticalDescending v-else style="heiht: 18px; width: 18px" />
-        </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-sort-date"
-          color="default"
-          fill
-          square
-          icon
+          <template #content>
+            <BIMDataButton
+              data-test="btn-sort-name"
+              color="default"
+              fill
+              square
+              icon
+              class="m-r-12"
+              :class="{ active: activeButton === 'nameSort' }"
+              @click="sortByName"
+              :disabled="!bcfTopics.length"
+            >
+              <AlphabeticalAscending
+                v-if="isSortByNameActive"
+                style="heiht: 18px; width: 18px"
+              />
+              <AlphabeticalDescending v-else style="heiht: 18px; width: 18px" />
+            </BIMDataButton>
+          </template>
+        </BIMDataTooltip>
+        <BIMDataTooltip
+          ref="dateTooltip"
+          :message="
+            isSortByDateActive ? 'date croissante' : 'date décroissante'
+          "
           class="m-r-12"
-          :class="{ active: activeButton === 'dateSort' }"
-          @click="sortByDate"
+          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <DateAscending
-            v-if="isSortByDateActive"
-            style="heiht: 18px; width: 18px"
-          />
-          <DateDescending v-else style="heiht: 18px; width: 18px" />
-        </BIMDataButton>
-        <BIMDataButton
-          color="default"
-          fill
-          square
-          icon
-          class="m-r-12"
-          @click="toggleDisplayBcfTopics"
+          <template #content>
+            <BIMDataButton
+              data-test="btn-sort-date"
+              color="default"
+              fill
+              square
+              icon
+              :class="{ active: activeButton === 'dateSort' }"
+              @click="sortByDate"
+              :disabled="!bcfTopics.length"
+            >
+              <DateAscending
+                v-if="isSortByDateActive"
+                style="heiht: 18px; width: 18px"
+              />
+              <DateDescending v-else style="heiht: 18px; width: 18px" />
+            </BIMDataButton>
+          </template>
+        </BIMDataTooltip>
+        <BIMDataTooltip
+          :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
+          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <Grid v-if="isDisplayByListActive" style="heiht: 18px; width: 18px" />
-          <List v-else style="heiht: 18px; width: 18px" />
-        </BIMDataButton>
+          <template #content>
+            <BIMDataButton
+              color="default"
+              fill
+              square
+              icon
+              class="m-r-12"
+              @click="toggleDisplayBcfTopics"
+              :disabled="!bcfTopics.length"
+            >
+              <Grid
+                v-if="isDisplayByListActive"
+                style="heiht: 18px; width: 18px"
+              />
+              <List v-else style="heiht: 18px; width: 18px" />
+            </BIMDataButton>
+          </template>
+        </BIMDataTooltip>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
