@@ -20,7 +20,7 @@
           <SpaceSizeInfo
             v-if="isSubscriptionEnabled && space.isAdmin"
             :space="space"
-            :spaceInfo="spaceInfo"
+            :spaceSubInfo="spaceSubInfo"
           />
           <BIMDataButton
             data-test="btn-sort"
@@ -110,7 +110,7 @@ export default {
   },
   setup() {
     const { openSidePanel } = useAppSidePanel();
-    const { currentSpace, spaceInfo, spaceUsers, spaceInvitations } =
+    const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations } =
       useSpaces();
     const { spaceProjects } = useProjects();
 
@@ -131,7 +131,7 @@ export default {
       projects: displayedProjects,
       searchText,
       space: currentSpace,
-      spaceInfo,
+      spaceSubInfo,
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,

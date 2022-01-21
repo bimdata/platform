@@ -1,20 +1,20 @@
 <template>
   <div class="flex">
-    <ProgressBar class="m-r-12" :progress="spaceInfo.usedSizePercent">
+    <ProgressBar class="m-r-12" :progress="spaceSubInfo.usedSizePercent">
       <template #text-below-left>
         <div>
-          {{ formatBytes(spaceInfo.smartDataSize) }}
+          {{ formatBytes(spaceSubInfo.smartDataSize) }}
           {{ $t("SpaceSizeInfo.used") }}
           {{ $t("SpaceSizeInfo.from") }}
-          {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
-          <span v-if="!spaceInfo.isPlatformPaid">
+          {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
+          <span v-if="!spaceSubInfo.isPlatformPro">
             {{ $t("SpaceSizeInfo.included") }}
           </span>
         </div>
       </template>
     </ProgressBar>
     <div
-      v-if="spaceInfo.isPlatformSubscription && spaceInfo.isOrganizationMember"
+      v-if="spaceSubInfo.isPlatformSubscription && spaceSubInfo.isOrganizationMember"
     >
       <BIMDataButton
         class="m-r-18"
@@ -23,7 +23,7 @@
         radius
         @click="
           () =>
-            spaceInfo.isPlatformPaid
+            spaceSubInfo.isPlatformPro
               ? goToSubscriptionDatapack()
               : goToSubscriptionPro()
         "
@@ -31,7 +31,7 @@
         {{
           $t(
             `SpaceSizeInfo.${
-              spaceInfo.isPlatformPaid
+              spaceSubInfo.isPlatformPro
                 ? "subscribeDatapackButton"
                 : "subscribePlatformButton"
             }`
@@ -58,7 +58,7 @@ export default {
       type: Object,
       required: true
     },
-    spaceInfo: {
+    spaceSubInfo: {
       type: Object,
       required: true
     }

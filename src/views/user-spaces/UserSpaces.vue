@@ -52,8 +52,13 @@
       </template>
     </ViewHeader>
 
-    <AppSidePanel :title="$t('OrganizationsManager.title')">
-      <OrganizationsManager :organizations="organizations" />
+    <AppSidePanel
+      v-if="isSubscriptionEnabled"
+      :title="$t('OrganizationsManager.title')"
+    >
+      <app-loading name="spaces-subscriptions">
+        <OrganizationsManager :organizations="organizations" />
+      </app-loading>
     </AppSidePanel>
 
     <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
@@ -80,6 +85,7 @@ import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
+import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
 import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
@@ -90,6 +96,7 @@ import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/
 export default {
   components: {
     AppBreadcrumb,
+    AppLoading,
     AppSidePanel,
     OrganizationsManager,
     SpaceCard,

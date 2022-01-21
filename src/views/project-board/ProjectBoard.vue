@@ -19,7 +19,7 @@
           <SpaceSizeInfo
             v-if="isSubscriptionEnabled && space.isAdmin"
             :space="space"
-            :spaceInfo="spaceInfo"
+            :spaceSubInfo="spaceSubInfo"
           />
           <app-slot name="project-board-action" />
         </div>
@@ -86,7 +86,7 @@ export default {
   setup() {
     const route = useRoute();
     const { locale, t } = useI18n();
-    const { currentSpace, spaceInfo } = useSpaces();
+    const { currentSpace, spaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
@@ -129,7 +129,7 @@ export default {
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       tabs,
       space: currentSpace,
-      spaceInfo,
+      spaceSubInfo,
       // Methods
       changeView
     };

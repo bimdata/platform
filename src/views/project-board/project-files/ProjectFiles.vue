@@ -18,7 +18,7 @@
     <div class="project-files__block--files">
       <app-loading name="project-files">
         <FilesManager
-          :spaceInfo="spaceInfo"
+          :spaceSubInfo="spaceSubInfo"
           :project="project"
           :fileStructure="fileStructure"
           :groups="groups"
@@ -53,7 +53,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const { currentSpace, spaceInfo, loadSpaceInfo } = useSpaces();
+    const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
@@ -61,7 +61,7 @@ export default {
 
     const reloadFileStructure = debounce(async () => {
       await Promise.all([
-        loadSpaceInfo(currentSpace.value),
+        loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
         loadProjectModels(currentProject.value)
       ]);
@@ -82,7 +82,7 @@ export default {
       fileStructure: projectFileStructure,
       groups: projectGroups,
       project: currentProject,
-      spaceInfo,
+      spaceSubInfo,
       // Methods
       goToProjectGroups,
       reloadFileStructure

@@ -13,7 +13,7 @@
           {{ $t("DatapackForm.baseText") }}
         </div>
       </div>
-      <ProgressBar :progress="spaceInfo.usedSizePercent">
+      <ProgressBar :progress="spaceSubInfo.usedSizePercent">
         <template #text-above-left>
           <span class="primary-font-bold">
             {{ $t("DatapackForm.actualStorage") }}
@@ -21,12 +21,12 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smartDataSize) }}
           </span>
         </template>
         <template #text-below-right>
           <span>
-            {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+            {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
           </span>
         </template>
       </ProgressBar>
@@ -93,7 +93,7 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smartDataSize) }}
           </span>
         </template>
         <template #text-below-right>
@@ -138,7 +138,7 @@ export default {
       type: Object,
       required: true
     },
-    spaceInfo: {
+    spaceSubInfo: {
       type: Object,
       required: true
     },
@@ -162,8 +162,8 @@ export default {
     const totalSize = computed(() => baseSize.value + datapackSize.value);
     const totalSizePercent = computed(() => {
       return Math.round(
-        props.spaceInfo.usedSizePercent *
-          (props.spaceInfo.smartDataSizeAvailable / totalSize.value)
+        props.spaceSubInfo.usedSizePercent *
+          (props.spaceSubInfo.smartDataSizeAvailable / totalSize.value)
       );
     });
 

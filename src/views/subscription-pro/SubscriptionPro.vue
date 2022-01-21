@@ -52,7 +52,7 @@
           </div>
           <div class="subscription-pro__content__body__right">
             <SpaceSizePreview
-              :spaceInfo="spaceInfo"
+              :spaceSubInfo="spaceSubInfo"
               :newSizeAvailable="newSizeAvailable"
             />
           </div>
@@ -99,13 +99,13 @@ export default {
     const {
       currentOrga,
       currentSpace,
-      fetchSpaceInformation,
+      fetchSpaceSubInfo,
       waitForUpdatedSpaceSize
     } = useSubscriptions();
 
     const orga = ref(currentOrga.value || getPersonalOrganization());
     const space = ref(currentSpace.value);
-    const spaceInfo = ref({});
+    const spaceSubInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
     const contentBody = ref(null);
@@ -123,7 +123,7 @@ export default {
       if (isSpaceUpgrade) {
         await waitForUpdatedSpaceSize(
           currentSpace.value,
-          spaceInfo.value.smartDataSizeAvailable,
+          spaceSubInfo.value.smartDataSizeAvailable,
           newSizeAvailable.value
         );
       }
@@ -154,7 +154,7 @@ export default {
     onMounted(async () => {
       if (space.value) {
         contentBody.value.scrollIntoView({ behavior: "smooth" });
-        spaceInfo.value = await fetchSpaceInformation(space.value);
+        spaceSubInfo.value = await fetchSpaceSubInfo(space.value);
       }
     });
 
@@ -166,7 +166,7 @@ export default {
       orga,
       organizations: userOrganizations,
       space,
-      spaceInfo,
+      spaceSubInfo,
       // Methods
       formatBytes,
       onSpaceCreated,

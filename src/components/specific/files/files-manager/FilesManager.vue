@@ -13,7 +13,7 @@
           <FileUploadButton
             :disabled="
               (!project.isAdmin && currentFolder.userPermission < 100) ||
-              spaceInfo.remainingTotalSize <= 0
+              spaceSubInfo.remainingTotalSize <= 0
             "
             class="files-manager__actions__btn-new-file"
             width="194px"
@@ -128,7 +128,7 @@ export default {
     FilesManagerOnboarding
   },
   props: {
-    spaceInfo: {
+    spaceSubInfo: {
       type: Object,
       required: true
     },
