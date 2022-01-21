@@ -41,13 +41,7 @@
         {{ $d(bcfTopic.creationDate, "short") }}
       </div>
     </div>
-    <div
-      class="open-topic-issue__img text-center m-t-12"
-      v-if="
-        bcfTopic.topicStatus ||
-        (bcfTopic.snapshots.length && bcfTopic.snapshots[0] !== undefined)
-      "
-    >
+    <div class="open-topic-issue__img text-center m-t-12">
       <div
         class="open-topic-issue__img__status flex p-6"
         :class="getStatusClasses"
