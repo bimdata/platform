@@ -15,12 +15,12 @@
 
 <script>
 import makeBIMDataViewer from "@bimdata/viewer";
-import { merge, set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAuth } from "@/state/auth.js";
 import { useSpaces } from "@/state/spaces.js";
+import { set } from "@/utils/misc.js";
 // Components
 import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -82,7 +82,7 @@ export default {
         return config;
       }, {});
 
-    merge(pluginsConfig, spacePluginsConfig);
+    Object.assign(pluginsConfig, spacePluginsConfig);
 
     // Extract space specific plugins urls from deprecated features
     const featurePlugins = currentSpace.value.features
