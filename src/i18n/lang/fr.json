@@ -768,14 +768,14 @@
      "validate": "Valider",
      "deny": "Refuser",
      "delete": "Supprimer",
-     "commented": "Commenté",
      "close": "Cloturer",
      "comment": "Commenter",
      "term": "Échéance",
      "validator": "Validants",
      "people": {
       "accept": "Validé",
-      "deny": "Refusé",
+      "deny": "Refusé",     
+      "commented": "Commenté",
       "pending": "En attente",
       "getRidOfValidator": "Retirer le validant",
       "refresh": "Rénitialiser la validation"
