@@ -1,4 +1,4 @@
-.visa-comments-list-actions {
+.visa-comment-post-actions {
   position: relative;
 
   &__btn {
@@ -13,13 +13,25 @@
     justify-content: flex-end;
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
-    width: 325px;
     height: 40px;
+    width: 325px;
     right: 10px;
 
     span {
       color: var(--color-primary);
-      margin-right: 20px;
     }
+
+    button:first-of-type {
+      margin-left: 30px;
+    } 
+
+    &__first-comment {
+      width: 370px;
+      button:first-of-type {
+        margin-left: 74px;
+      }
+    }
+
+ 
   }
 }

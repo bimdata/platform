@@ -11,7 +11,7 @@
         >{{ $t("Visa.comments.comment") }}</BIMDataButton
       >
     </template>
-    <template v-if="commentsList.length > 0">
+    <template v-if="threadList.length > 0">
       <span>{{ $t("Visa.comments.commentary") }}</span>
     </template>
     <template v-if="isCommenting">
@@ -23,24 +23,32 @@
       />
     </template>
     <div
-      class="visa-comments__comment-list"
-      v-for="comments in commentsList"
-      :key="comments[0].id"
+      class="visa-comments__thread-list"
+      v-for="commentList in threadList"
+      :key="commentList[0].id"
     >
-      <VisaCommentsList
-        :commentsList="comments"
-        :visaId="visaId"
-        :baseInfo="baseInfo"
-        :isThread="comments.length === 1 ? false : true"
-        @get-comments="getComments"
-      />
+      <div
+        class="visa-comments__comment-list"
+        v-for="(comment, index) in commentList"
+        :key="comment.id"
+      >
+        <VisaCommentPost
+          :comment="comment"
+          :visaId="visaId"
+          :baseInfo="baseInfo"
+          :isAReply="commentList.length > 1 && index > 0 ? false : true"
+          :isLastComment="commentList.length === index + 1"
+          :mainCommentId="commentList[0].id"
+          @get-comments="getComments"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import VisaCommentsList from "./visa-comments-list/VisaCommentsList.vue";
+import VisaCommentPost from "./visa-comment-post/VisaCommentPost.vue";
 import VisaCommentsInput from "./visa-comments-input/VisaCommentsInput.vue";
 
 import { useVisa } from "@/state/visa";
@@ -48,7 +56,7 @@ import { useUser } from "@/state/user";
 import { fullName } from "@/utils/users";
 
 export default {
-  components: { VisaCommentsList, VisaCommentsInput },
+  components: { VisaCommentPost, VisaCommentsInput },
   props: {
     isAuthor: {
       type: Boolean,
@@ -69,7 +77,7 @@ export default {
     const { user } = useUser();
 
     const isCommenting = ref(false);
-    const commentsList = ref([]);
+    const threadList = ref([]);
 
     const { id: currentUserId } = user.value;
 
@@ -92,7 +100,7 @@ export default {
           }
         });
 
-      commentsList.value = Object.keys(myStructure)
+      threadList.value = Object.keys(myStructure)
         .map(id => myStructure[id])
         .reverse();
     };
@@ -105,7 +113,7 @@ export default {
     return {
       // references
       isCommenting,
-      commentsList,
+      threadList,
       // methods
       getComments,
       toggleCommentsInput
