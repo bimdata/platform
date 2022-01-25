@@ -3,10 +3,10 @@ import { createApp } from "vue";
 import vueClickAway from "vue3-click-away";
 import i18n from "@/i18n";
 import router from "@/router/index.js";
-import ErrorService from "@/services/ErrorService";
+import ErrorService from "@/services/ErrorService.js";
 
 import App from "./App.vue";
-import globalComponents from "@/components/global-components";
+import globalComponents from "@/components/global-components.js";
 
 const app = createApp(App)
   .use(vueClickAway)
