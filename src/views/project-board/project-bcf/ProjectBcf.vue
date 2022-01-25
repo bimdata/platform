@@ -133,7 +133,7 @@
       </div>
     </div>
     <div class="project-bcf__content flex m-t-36">
-      <BcfTopicsMetrics :bcfTopics="displayedBcfTopics" />
+      <BcfTopicsMetrics :bcfTopics="displayedBcfTopics" :loading="loading" />
 
       <!-- loading BCF -->
       <div
