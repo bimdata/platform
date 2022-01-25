@@ -32,6 +32,7 @@
   
     &__validator {
       margin: calc(var(--spacing-unit ) * 2) 0;
+
       &__counter {
         display: flex;
         justify-content: center;
@@ -56,7 +57,6 @@
           font-size: 1em;
           margin-top: 18px;
         }
-
       }
 
       &__exemple {
@@ -72,11 +72,13 @@
         label {
           font-size: 1em;
         }
+
         textarea {
           font-family: var(--primary-font);
           max-height: 395px;
         }
       }
+
       .error {
         color: red;
       }

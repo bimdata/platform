@@ -3,6 +3,7 @@
   padding: var(--spacing-unit);
   display: flex;
   flex-direction: column;
+
   &__header {
     display: flex;
     align-items: center;
@@ -36,6 +37,7 @@
       gap: var(--spacing-unit);
       height: calc(100% - var(--spacing-unit));
       background-color: var(--color-silver-light);
+
       span {
         font-size: 1.4em;
       }
@@ -46,6 +48,7 @@
       align-items: center;
       margin: var(--spacing-unit);
       cursor: pointer;
+
       &__desc {
         margin-left: var(--spacing-unit);
         display: flex;
@@ -65,5 +68,4 @@
       }
     }
   }
-
 }
