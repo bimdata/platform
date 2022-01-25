@@ -108,7 +108,7 @@ export default {
         progress.uploaded = bytesUploaded;
         lastProgressTime = Date.now();
       },
-      onUploadComplete: ({ data: document }) => {
+      onUploadComplete: ({ response: document }) => {
         uploading.value = false;
         emit("upload-completed", document);
       },
