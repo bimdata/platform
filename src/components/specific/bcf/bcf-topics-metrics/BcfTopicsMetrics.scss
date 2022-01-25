@@ -2,4 +2,20 @@
   background-color: var(--color-white);
   box-shadow: var(--box-shadow);
   grid-area: 1 / 1 / 2 / 3;
+  &__content {
+    position: relative;
+    &__total {
+      position: absolute;
+      top: 112px;
+      left: 112px;
+      flex-direction: column;
+      line-height: 1;
+      strong {
+        font-size: 20px;
+      }
+    }
+    &__legend {
+      flex-direction: column;
+    }
+  }
 }
