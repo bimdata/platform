@@ -46,7 +46,6 @@ export default {
       onUploadComplete: () => {
         loadUserSpaces();
         loadOrganizationSpaces(props.space.organization);
-        uploader.reset();
         emit("upload-completed");
       },
       onUploadError: () => {
