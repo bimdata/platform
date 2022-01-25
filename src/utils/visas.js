@@ -24,25 +24,25 @@ const getUserList = async ({ baseInfo, fileParentId }, validationList) => {
     { id: fileParentId }
   );
   return res
-    .map(people => ({
-      ...people,
-      fullName: fullName(people),
-      hasAccess: people.permission >= 50,
+    .map(user => ({
+      ...user,
+      fullName: fullName(user),
+      hasAccess: user.permission >= 50,
       isFindable: true,
       isSelected:
         (validationList &&
           validationList.some(
-            ({ validator }) => validator && validator.id === people.id
+            ({ validator }) => validator && validator.id === user.id
           )) ||
         false,
       validation:
         (validationList &&
           validationList.find(
-            ({ validator }) => validator && validator.id === people.id
+            ({ validator }) => validator && validator.id === user.id
           )) ||
         false,
-      searchContent: `${people.firstname || ""}${people.lastname || ""}${
-        people.email || ""
+      searchContent: `${user.firstname || ""} ${user.lastname || ""} ${
+        user.email || ""
       }`.toLowerCase()
     }))
     .filter(({ isSelf }) => !isSelf);

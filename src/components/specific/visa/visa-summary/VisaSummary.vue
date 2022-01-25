@@ -10,7 +10,7 @@
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="visa-summary__safe-zone">
-          <VisaSafeZone :actionType="safeZoneInfo.type" @onClose="onSafeZone" />
+          <VisaSafeZone :actionType="safeZoneInfo.type" @close="onSafeZone" />
         </div>
       </template>
     </transition>
@@ -176,6 +176,7 @@
 
 <script>
 import { ref, computed, onMounted, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import VALIDATION_STATUS from "@/config/visa-validation-status";
 import VISA_STATUS from "@/config/visa-status";
 
@@ -222,6 +223,7 @@ export default {
       updateVisa
     } = useVisa();
     const { user } = useUser();
+    const { t } = useI18n();
 
     const isValidated = ref(false);
     const isRefused = ref(false);
@@ -265,7 +267,7 @@ export default {
             ...res.creator,
             fullName: res.creator
               ? fullName(res.creator)
-              : "utilisateur supprimé"
+              : t("Visa.summary.deletedUser")
           },
           validations: res.validations
             .map(elem => ({
@@ -273,7 +275,7 @@ export default {
               userId: elem.validator ? elem.validator.userId : 0,
               fullName: elem.validator
                 ? fullName(elem.validator)
-                : "utilisateur supprimé",
+                : t("Visa.summary.deletedUser"),
               isSelf: elem.validator ? elem.validator.userId === id : false,
               hasAccess: res.validationsInError.length
                 ? !res.validationsInError.some(id => id === elem.id)
@@ -405,19 +407,19 @@ export default {
     watch(validatorList, async () => {
       await Promise.all(
         validatorList.value
-          .map(people => {
+          .map(validator => {
             return {
-              ...people,
-              validationId: people.validation.id,
+              ...validator,
+              validationId: validator.validation.id,
               isToAdd:
-                people.isSelected &&
-                userList.value.some(
-                  user => user.id === people.id && !user.isSelected
-                ),
+                validator.isSelected &&
+                userList.value
+                  .filter(user => !user.isSelected)
+                  .some(user => user.id === validator.id),
               isToDel:
-                !people.isSelected &&
+                !validator.isSelected &&
                 userList.value.some(
-                  user => user.id === people.id && user.isSelected
+                  user => user.id === validator.id && user.isSelected
                 )
             };
           })

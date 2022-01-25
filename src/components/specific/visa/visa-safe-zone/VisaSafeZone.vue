@@ -10,14 +10,14 @@
         fill
         radius
         width="40%"
-        @click="$emit('onClose', true)"
+        @click="$emit('close', true)"
         >{{ $t(`Visa.safeZone.${actionType}.action`) }}</BIMDataButton
       >
       <BIMDataButton
         outline
         radius
         width="40%"
-        @click="$emit('onClose', false)"
+        @click="$emit('close', false)"
         >{{ $t(`Visa.safeZone.${actionType}.keepView`) }}</BIMDataButton
       >
     </div>
@@ -32,7 +32,7 @@ export default {
       required: true
     }
   },
-  emits: ["onClose"]
+  emits: ["close"]
 };
 </script>
 

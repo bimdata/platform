@@ -38,7 +38,7 @@
             <span class="files-manager__actions__visa__content">
               <template v-if="userVisasCounter > 0">
                 <div class="files-manager__actions__visa__content__counter">
-                  <span>{{ userVisasCounter || "" }}</span>
+                  <span>{{ userVisasCounter }}</span>
                 </div>
               </template>
               {{ $t("Visa.button") }}

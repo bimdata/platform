@@ -8,7 +8,7 @@
       <UserAvatar
         :user="people.validator || {}"
         size="27"
-        sizeInitials="14"
+        initialsSize="14"
         color="silver-light"
         style="box-shadow: var(--box-shadow)"
       />
@@ -37,31 +37,10 @@
       <template v-if="people.hasAccess">
         <div :class="`visa-add-summary-people__right-side__${people.status}`">
           <span>
-            {{
-              $t(
-                `Visa.summary.people.${
-                  people.hasCommented &&
-                  people.status === VALIDATION_STATUS.PENDING
-                    ? "commented"
-                    : people.status === VALIDATION_STATUS.PENDING
-                    ? "pending"
-                    : people.status === VALIDATION_STATUS.ACCEPT
-                    ? "accept"
-                    : "deny"
-                }`
-              )
-            }}
+            {{ $t(`Visa.summary.people.${validationStatus(people)}`) }}
           </span>
           <BIMDataIcon
-            :name="
-              people.hasCommented && people.status === VALIDATION_STATUS.PENDING
-                ? 'comment'
-                : people.status === VALIDATION_STATUS.PENDING
-                ? 'sandglass'
-                : people.status === VALIDATION_STATUS.ACCEPT
-                ? 'visa'
-                : 'failed'
-            "
+            :name="iconStatus(people)"
             size="xs"
             style="margin-top: 2px"
           />
@@ -131,6 +110,34 @@ export default {
     const currentPeopleId = ref(null);
     const isWarningHover = ref(false);
 
+    const validationStatus = people => {
+      const { hasCommented, status } = people;
+
+      if (hasCommented && status === VALIDATION_STATUS.PENDING) {
+        return "commented";
+      } else if (people.status === VALIDATION_STATUS.PENDING) {
+        return "pending";
+      } else if (people.status === VALIDATION_STATUS.ACCEPT) {
+        return "accept";
+      } else if (people.status === VALIDATION_STATUS.DENY) {
+        return "deny";
+      }
+    };
+
+    const iconStatus = people => {
+      const { hasCommented, status } = people;
+
+      if (hasCommented && status === VALIDATION_STATUS.PENDING) {
+        return "comment";
+      } else if (people.status === VALIDATION_STATUS.PENDING) {
+        return "sandglass";
+      } else if (people.status === VALIDATION_STATUS.ACCEPT) {
+        return "visa";
+      } else if (people.status === VALIDATION_STATUS.DENY) {
+        return "failed";
+      }
+    };
+
     const handleCurrentPerson = peopleId => {
       if (peopleId) {
         isWarningHover.value = true;
@@ -147,7 +154,9 @@ export default {
       isWarningHover,
       currentPeopleId,
       // methods
-      handleCurrentPerson
+      handleCurrentPerson,
+      validationStatus,
+      iconStatus
     };
   }
 };

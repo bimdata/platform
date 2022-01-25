@@ -10,7 +10,7 @@
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="visa-add__safe-zone">
-          <VisaSafeZone actionType="add" @onClose="onClose" />
+          <VisaSafeZone actionType="add" @close="onClose" />
         </div>
       </template>
     </transition>

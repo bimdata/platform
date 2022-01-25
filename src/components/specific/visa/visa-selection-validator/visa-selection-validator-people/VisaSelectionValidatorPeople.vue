@@ -1,41 +1,41 @@
 <template>
   <div
     class="visa-add-validator-people"
-    v-for="people in userList"
-    :key="people.id"
+    v-for="user in userList"
+    :key="user.id"
   >
     <BIMDataCheckbox
-      :disabled="!people.hasAccess"
-      :modelValue="people.isSelected"
-      @update:modelValue="toggle(people, $event)"
+      :disabled="!user.hasAccess"
+      :modelValue="user.isSelected"
+      @update:modelValue="toggle(user, $event)"
     >
     </BIMDataCheckbox>
     <div class="visa-add-validator-people__picture">
-      <UserAvatar :user="people" size="40" color="silver-light" />
+      <UserAvatar :user="user" size="40" color="silver-light" />
     </div>
-    <div v-if="people.fullName" class="visa-add-validator-people__info">
+    <div v-if="user.fullName" class="visa-add-validator-people__info">
       <BIMDataTextBox
         class="visa-add-validator-people__info__main"
-        :class="{ hide: !people.hasAccess }"
-        :text="people.fullName"
+        :class="{ hide: !user.hasAccess }"
+        :text="user.fullName"
       />
       <span
         class="visa-add-validator-people__info__second"
-        :class="{ hide: !people.hasAccess }"
-        >{{ people.email }}</span
+        :class="{ hide: !user.hasAccess }"
+        >{{ user.email }}</span
       >
     </div>
     <div v-else class="visa-add-validator-people__info">
       <span
         class="visa-add-validator-people__info__main"
-        :class="{ hide: !people.hasAccess }"
-        >{{ people.email }}</span
+        :class="{ hide: !user.hasAccess }"
+        >{{ user.email }}</span
       >
     </div>
     <div
-      v-if="!people.hasAccess"
+      v-if="!user.hasAccess"
       class="visa-add-validator-people__acces-denied"
-      @mouseover="handleCurrentPerson(people.id)"
+      @mouseover="handleCurrentPerson(user.id)"
       @mouseleave="handleCurrentPerson()"
     >
       <BIMDataIcon
@@ -45,7 +45,7 @@
         style="padding: 10px; z-index: 3"
       />
       <div
-        v-if="isWarningHover && currentPeopleId === people.id"
+        v-if="isWarningHover && currentPeopleId === user.id"
         class="visa-add-validator-people__acces-denied__hover"
       >
         <span>{{ $t("Visa.selectionValidator.warning") }}</span>

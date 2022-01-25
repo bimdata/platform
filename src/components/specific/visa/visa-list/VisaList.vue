@@ -34,15 +34,12 @@
             color="silver"
             margin="3px 0 0 0"
           />
-          <span>{{
-            $t(
-              `Visa.list.${
-                currentTab === "toValidateVisas"
-                  ? "emptyValidation"
-                  : "emptyDemand"
-              }`
-            )
-          }}</span>
+          <span v-if="currentTab === 'toValidateVisas'">
+            {{ $t("Visa.list.emptyValidation") }}
+          </span>
+          <span v-else>
+            {{ $t("Visa.list.emptyDemand") }}
+          </span>
         </div>
       </template>
       <template v-else>
@@ -52,26 +49,15 @@
           :key="visa.id"
           @click="onClickToReachVisa(visa.id, visa.document.id)"
         >
-          <BIMDataIcon
-            :name="
-              visa.status === visaClosed
-                ? 'validatedFile'
-                : visa.validationsInError.length
-                ? 'deniedFile'
-                : 'inProgressFile'
-            "
-            size="l"
-            fill
-            color="primary"
-          />
+          <BIMDataIcon :name="iconStatus(visa)" size="l" fill color="primary" />
           <div class="visa-list__content__visa__desc">
             <BIMDataTextBox
               class="visa-list__content__visa__desc__title"
-              :style="`${
+              :style="
                 visa.status !== visaClosed && visa.validationsInError.length
                   ? 'color: var(--color-high);'
                   : ''
-              }`"
+              "
               :text="visa.document.name"
             />
             <div class="visa-list__content__visa__desc__info">
@@ -145,6 +131,17 @@ export default {
       emit("handle-start-tab", currentTab.value);
     };
 
+    const iconStatus = visa => {
+      const { status, validationsInError } = visa;
+      if (status === VISA_STATUS.CLOSE) {
+        return "validatedFile";
+      } else if (validationsInError.length) {
+        return "deniedFile";
+      } else {
+        return "inProgressFile";
+      }
+    };
+
     return {
       // references
       tabs,
@@ -155,7 +152,8 @@ export default {
       onClickToReachVisa,
       selectTab,
       formatDateDDMMYYY,
-      fullName
+      fullName,
+      iconStatus
     };
   }
 };
