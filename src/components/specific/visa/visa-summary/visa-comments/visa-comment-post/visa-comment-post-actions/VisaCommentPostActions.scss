@@ -21,9 +21,13 @@
       color: var(--color-primary);
     }
 
-    button:first-of-type {
+    button:nth-of-type(1) {
       margin-left: 30px;
     } 
+
+    button:nth-of-type(2) {
+      margin-right: 3px;
+    }
 
     &__first-comment {
       width: 370px;

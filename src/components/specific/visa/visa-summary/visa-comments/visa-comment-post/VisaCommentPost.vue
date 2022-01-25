@@ -134,7 +134,7 @@ export default {
       } else if (isEditing.value) {
         if (props.comment.content !== commentContent.value) {
           await updateComment(props.comment.id, props.visaId, props.baseInfo, {
-            content: props.comment.content
+            content: commentContent.value
           });
         }
         isEditing.value = false;
