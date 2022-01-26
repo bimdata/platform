@@ -161,6 +161,9 @@
         >Poster un commentaire</BIMDataButton
       >
     </div>
+    <div v-if="loading" class="overlay flex items-center justify-center">
+      <BIMDataSpinner />
+    </div>
   </div>
 </template>
 
@@ -197,13 +200,19 @@ export default {
     const { currentProject } = useProjects();
     const { deleteTopic, loadBcfTopics } = useBcf();
     const bcfTopics = inject("bcfTopics");
+    const loading = ref(false);
 
     const removeTopic = async () => {
-      await deleteTopic(currentProject.value, props.bcfTopic);
-      bcfTopics.value = await loadBcfTopics(currentProject.value);
+      try {
+        loading.value = true;
+        await deleteTopic(currentProject.value, props.bcfTopic);
+        bcfTopics.value = await loadBcfTopics(currentProject.value);
+      } finally {
+        loading.value = false;
+      }
     };
 
-    return { getPriorityClasses, getStatusClasses, removeTopic };
+    return { loading, getPriorityClasses, getStatusClasses, removeTopic };
   }
 };
 </script>

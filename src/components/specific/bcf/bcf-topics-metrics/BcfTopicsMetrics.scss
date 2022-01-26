@@ -1,4 +1,8 @@
 .bcf-topics-metrics {
+  height: 100%;
+  &__loading {
+    height: 100%;
+  }
   &__content {
     position: relative;
     &__total {
