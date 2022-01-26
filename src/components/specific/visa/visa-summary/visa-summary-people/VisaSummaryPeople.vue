@@ -49,20 +49,14 @@
       <template v-else>
         <div
           class="visa-add-summary-people__right-side__access-denied"
-          :style="isAuthor ? 'right: -8px;' : 'right: -12px'"
+          :class="{ author: isAuthor, closed: isClosed }"
           @mouseover="handleCurrentPerson(people.id)"
           @mouseleave="handleCurrentPerson()"
         >
-          <BIMDataIcon
-            name="warning"
-            customSize="40"
-            class="fill-warning"
-            style="padding: 10px; z-index: 3"
-          />
+          <BIMDataIcon name="warning" customSize="40" class="fill-warning" />
           <div
             v-if="isWarningHover && currentPeopleId === people.id"
             class="visa-add-summary-people__right-side__access-denied__hover"
-            :style="isAuthor ? 'width: 345px; right: -36px' : 'width: 340px'"
           >
             <span>{{ $t("Visa.selectionValidator.warning") }}</span>
           </div>

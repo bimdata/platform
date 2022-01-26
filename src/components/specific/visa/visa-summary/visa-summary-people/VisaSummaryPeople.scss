@@ -47,11 +47,18 @@
       display: flex;
       justify-content: flex-end; 
       box-shadow: var(--box-shadow);
+      right: -12px;
+
+      svg {
+        padding: 10px;
+        z-index: 3;
+      }
 
       &__hover {
         position: absolute;
         z-index: 2;
         height: 100%;
+        width: 340px;
         display: flex;
         align-items: center;
         font-size: 0.8rem;
@@ -64,6 +71,23 @@
           width: 230px;
         }
       } 
+
+      &.author {
+        right: -8px;
+        .visa-add-summary-people__right-side__access-denied__hover {
+          right: -36px;
+          width: 345px;
+       }
+      }
+
+      &.author.closed {
+        right: -13px;
+
+        .visa-add-summary-people__right-side__access-denied__hover {
+          right: 20px;
+          width: 307px;
+       }
+      }
     }
   }
 }

@@ -24,6 +24,7 @@ const getUserList = async ({ baseInfo, fileParentId }, validationList) => {
     { id: fileParentId }
   );
   return res
+    .filter(({ isSelf }) => !isSelf)
     .map(user => ({
       ...user,
       fullName: fullName(user),
@@ -44,8 +45,7 @@ const getUserList = async ({ baseInfo, fileParentId }, validationList) => {
       searchContent: `${user.firstname || ""} ${user.lastname || ""} ${
         user.email || ""
       }`.toLowerCase()
-    }))
-    .filter(({ isSelf }) => !isSelf);
+    }));
 };
 
 export { isDateConform, getUserList };

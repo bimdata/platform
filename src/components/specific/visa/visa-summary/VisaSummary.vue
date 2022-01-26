@@ -188,10 +188,11 @@ import VisaSelectionValidator from "@/components/specific/visa/visa-selection-va
 
 import { useVisa } from "@/state/visa";
 import { useUser } from "@/state/user";
+import { useProjects } from "@/state/projects";
 
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
-import { getUserList, isDateConform } from "@/utils/visas";
+import { isDateConform } from "@/utils/visas";
 
 export default {
   components: { VisaSummaryPeople, VisaSafeZone, VisaSelectionValidator },
@@ -222,6 +223,7 @@ export default {
       deleteValidation,
       updateVisa
     } = useVisa();
+    const { getUserList } = useProjects();
     const { user } = useUser();
     const { t } = useI18n();
 
@@ -296,13 +298,29 @@ export default {
 
     const fetchAllVisaInfo = async () => {
       await getVisa();
-      userList.value = await getUserList(
+      const users = await getUserList(
         {
           baseInfo: props.baseInfo,
           fileParentId: visa.value.document.parentId
         },
         visa.value.validations
       );
+
+      userList.value = users.map(user => {
+        if (visa.value.validations) {
+          return {
+            ...user,
+            isSelected: visa.value.validations.some(
+              ({ validator }) => validator && validator.id === user.id
+            ),
+            validation: visa.value.validations.find(
+              ({ validator }) => validator && validator.id === user.id
+            )
+          };
+        }
+        return user;
+      });
+
       !isAuthor.value && getValidationUserId();
       statusVisaHandler();
     };
@@ -405,12 +423,14 @@ export default {
     const getValidatorList = event => (validatorList.value = event.value);
 
     watch(validatorList, async () => {
+      console.log("validatorList", validatorList);
+
       await Promise.all(
         validatorList.value
           .map(validator => {
             return {
               ...validator,
-              validationId: validator.validation.id,
+              validationId: validator.validation && validator.validation.id,
               isToAdd:
                 validator.isSelected &&
                 userList.value

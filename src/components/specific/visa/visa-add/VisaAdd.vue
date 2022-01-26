@@ -89,7 +89,8 @@ import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone
 import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
 import { formatDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
-import { getUserList, isDateConform } from "@/utils/visas";
+import { useProjects } from "@/state/projects";
+import { isDateConform } from "@/utils/visas";
 
 export default {
   components: {
@@ -109,6 +110,7 @@ export default {
   emits: ["close", "set-visa", "fetch-visas"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
+    const { getUserList } = useProjects();
 
     const dateInput = ref("");
     const descInput = ref("");
