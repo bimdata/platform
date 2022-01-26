@@ -4,7 +4,7 @@
     &__total {
       position: absolute;
       top: 107px;
-      left: 167px;
+      left: 107px;
       flex-direction: column;
       line-height: 1;
       strong {
@@ -12,6 +12,7 @@
       }
     }
     &__legend {
+      min-width: 200px;
       flex-direction: column;
       font-size: 14px;
     }
