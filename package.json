@@ -12,7 +12,7 @@
   "dependencies": {
     "@bimdata/design-system": "^1.2.0-rc.12",
     "@bimdata/typescript-fetch-api-client": "^6.22.2",
-    "@bimdata/viewer": "^1.9.0-rc.40",
+    "@bimdata/viewer": "^1.9.0-rc.41",
     "mapbox-gl": "^2.6.1",
     "oidc-client": "^1.11.5",
     "seedrandom": "^3.0.5",
