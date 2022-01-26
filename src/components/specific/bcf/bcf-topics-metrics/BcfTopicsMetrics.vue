@@ -1,12 +1,19 @@
 <template>
   <div class="bcf-topics-metrics">
-    <div class="flex items-center justify-center" v-if="bcfTopics.length === 0">
+    <div
+      class="bcf-topics-metrics__loading flex items-center justify-center"
+      v-if="loading"
+    >
+      <BIMDataSpinner />
+    </div>
+    <div
+      class="flex items-center justify-center"
+      v-else-if="bcfTopics.length === 0"
+    >
       <EmptyBcfStats class="m-r-42" />
       <p>Add BCF Topics to start to have some stats here.</p>
     </div>
-    <div v-else-if="loading">
-      <BIMDataSpinner class="m-b-12" /> <span> loading metrics </span>
-    </div>
+
     <div v-else class="bcf-topics-metrics__content flex justify-around">
       <Graph :barsData="barsData" :size="size">
         <div class="bcf-topics-metrics__content__total flex items-center">

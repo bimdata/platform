@@ -2,14 +2,32 @@
   <div class="project-bcf">
     <app-slot-content name="project-board-action">
       <BIMDataButton
-        width="140px"
+        color="default"
+        fill
+        radius
+        @click="openCreateBcfTopic"
+        class="m-r-12"
+      >
+        <BIMDataIcon name="import" size="xxs" margin="0 6px 0 0" /> Importer
+      </BIMDataButton>
+      <BIMDataButton
+        color="default"
+        fill
+        radius
+        @click="openCreateBcfTopic"
+        class="m-r-12"
+      >
+        <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" /> Exporter
+      </BIMDataButton>
+      <BIMDataButton
+        width="130px"
         color="primary"
         fill
         radius
         @click="openCreateBcfTopic"
       >
         <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-        <span>Ajouter un BCF</span>
+        <span>Créer un BCF</span>
       </BIMDataButton>
     </app-slot-content>
     <SidePanel title="Signaler un problème">
@@ -147,11 +165,7 @@
         class="project-bcf__content__empty flex items-center justify-center"
         v-if="loading"
       >
-        <ProjectBcfOnboardingImage class="m-r-48" />
-        <div class="flex items-center">
-          <BIMDataSpinner class="m-b-12" />
-          <span> loading Bcf topics </span>
-        </div>
+        <BIMDataSpinner />
       </div>
       <!-- if no Bcf topics -->
       <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
