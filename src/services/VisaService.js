@@ -2,33 +2,29 @@ import apiClient from "./api-client";
 import { ERRORS, RuntimeError } from "./ErrorService";
 
 class VisaService {
-  async createVisa(description, date, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async createVisa(project, document, visa) {
     try {
       return await apiClient.collaborationApi.createVisa({
-        data: {
-          description,
-          deadline: date
-        },
-        cloudPk,
-        projectPk,
-        documentPk
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        data: visa
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_CREATE_ERROR, error);
     }
   }
-  async createValidation(validatorId, visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+
+  async createValidation(project, document, visa, validatorId) {
     try {
       return await apiClient.collaborationApi.createValidation({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
         data: {
           validatorId
-        },
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId
+        }
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_CREATE_VALIDATION_ERROR, error);

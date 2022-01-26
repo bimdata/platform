@@ -96,15 +96,13 @@
             />
             <VisaMain
               v-if="showVisaManager"
-              @close="closeVisaManager"
-              @set-file-to-manage="setFileToManage"
-              @set-is-visa-list="setIsVisaList"
-              @fetch-visas="fetchVisas"
+              :project="project"
               :file="fileToManage"
               :userVisas="userVisas"
               :isVisaList="isVisaList"
-              :cloudPk="cloudPk"
-              :projectPk="projectPk"
+              @set-is-visa-list="setIsVisaList"
+              @fetch-visas="fetchVisas"
+              @close="closeVisaManager"
             />
           </div>
         </transition>
@@ -135,8 +133,6 @@
 import { ref, watch, onMounted } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 import FILE_TYPES from "@/config/file-types";
-import { useSpaces } from "@/state/spaces";
-import { useProjects } from "@/state/projects";
 
 import { useFiles } from "@/state/files";
 import { useVisa } from "@/state/visa";
@@ -193,8 +189,6 @@ export default {
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
-    const { currentSpace } = useSpaces();
-    const { currentProject } = useProjects();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -325,7 +319,6 @@ export default {
       showSidePanel.value = true;
     };
 
-    const setFileToManage = event => (setFileToManage.value = event);
     const setIsVisaList = event => (isVisaList.value = event);
 
     const closeVisaManager = () => {
@@ -338,8 +331,8 @@ export default {
 
     const getVisas = async () => {
       const baseInfo = {
-        cloudPk: currentSpace.value.id,
-        projectPk: currentProject.value.id
+        cloudPk: props.project.cloud.id,
+        projectPk: props.project.id
       };
 
       const toValidateVisas = await fetchToValidateVisas(baseInfo);
@@ -379,8 +372,6 @@ export default {
       showDeleteModal,
       showSidePanel,
       fileToManage,
-      cloudPk: currentSpace.value.id,
-      projectPk: currentProject.value.id,
       userVisas,
       isVisaList,
       userVisasCounter,
@@ -397,7 +388,6 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
-      setFileToManage,
       setIsVisaList,
       fetchVisas
     };

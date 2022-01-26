@@ -1,11 +1,11 @@
 import VisaService from "@/services/VisaService";
 
-const createVisa = async (description, date, baseInfo) => {
-  return VisaService.createVisa(description, date, baseInfo);
+const createVisa = async (project, document, visa) => {
+  return VisaService.createVisa(project, document, visa);
 };
 
-const createValidation = async (validatorId, visaId, baseInfo) => {
-  return VisaService.createValidation(validatorId, visaId, baseInfo);
+const createValidation = async (project, document, visa, validatorId) => {
+  return VisaService.createValidation(project, document, visa, validatorId);
 };
 
 const deleteValidation = async (visaId, validatorId, baseInfo) => {

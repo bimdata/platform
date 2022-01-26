@@ -97,16 +97,16 @@ export default {
     VisaSelectionValidator
   },
   props: {
-    baseInfo: {
+    project: {
       type: Object,
       required: true
     },
-    fileParentId: {
-      type: Number,
+    file: {
+      type: Object,
       required: true
     }
   },
-  emits: ["close", "set-file-to-manage", "set-visa-id", "fetch-visas"],
+  emits: ["close", "set-visa", "fetch-visas"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
 
@@ -117,11 +117,10 @@ export default {
     const isSafeZone = ref(false);
     const isClosing = ref(null);
     const validatorList = ref(null);
-    const visaId = ref(null);
     const userList = ref([]);
 
     const safeZoneHandler = () =>
-      dateInput.value.length || descInput.value.length || validatorList.value
+      dateInput.value || descInput.value || validatorList.value
         ? (isSafeZone.value = true)
         : emit("close");
 
@@ -146,34 +145,36 @@ export default {
       const dateConform = isDateConform(dateInput.value);
 
       if (dateConform) {
-        try {
-          hasDateError.value = false;
-          const res = await createVisa(
-            descInput.value,
-            formatDate(dateInput.value),
-            props.baseInfo
-          );
-          visaId.value = res.id;
-          await Promise.all(
-            validatorList.value
-              .filter(({ isSelected }) => isSelected)
-              .map(({ id }) =>
-                createValidation(id, visaId.value, props.baseInfo)
-              )
-          );
-        } finally {
-          console.log("form sent");
-          emit("set-file-to-manage", null);
-          emit("set-visa-id", visaId.value);
-          emit("set-base-info", "documentPk", props.fileParentId);
-          emit("fetch-visas");
-        }
+        hasDateError.value = false;
+        const visa = await createVisa(props.project, props.file, {
+          deadline: formatDate(dateInput.value),
+          description: descInput.value
+        });
+        await Promise.all(
+          validatorList.value
+            .filter(({ isSelected }) => isSelected)
+            .map(({ id: validatorId }) =>
+              createValidation(props.project, props.file, visa, validatorId)
+            )
+        );
+        emit("set-visa", visa);
+        emit("set-base-info", "documentPk", props.file.parentId);
+        emit("fetch-visas");
       } else {
         hasDateError.value = true;
       }
     };
 
-    onMounted(async () => (userList.value = await getUserList(props)));
+    onMounted(async () => {
+      userList.value = await getUserList({
+        baseInfo: {
+          cloudPk: props.project.cloud.id,
+          projectPk: props.project.id,
+          documentPk: props.file.id
+        },
+        fileParentId: props.file.parentId
+      });
+    });
 
     return {
       // References

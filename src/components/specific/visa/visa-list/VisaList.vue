@@ -47,7 +47,7 @@
           class="visa-list__content__visa"
           v-for="visa of userVisas[currentTab]"
           :key="visa.id"
-          @click="onClickToReachVisa(visa.id, visa.document.id)"
+          @click="onClickToReachVisa(visa)"
         >
           <BIMDataIcon :name="iconStatus(visa)" size="l" fill color="primary" />
           <div class="visa-list__content__visa__desc">
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
@@ -90,10 +90,6 @@ export default {
       type: Object,
       required: true
     },
-    baseInfo: {
-      type: Object,
-      required: true
-    },
     startTab: {
       type: String,
       required: true
@@ -102,22 +98,24 @@ export default {
   emits: [
     "close",
     "set-is-visa-list",
-    "set-visa-id",
+    "set-visa",
     "set-base-info",
     "handle-start-tab"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
 
-    const userVisasKeys = Object.keys(props.userVisas);
+    const tabs = computed(() => {
+      const userVisasKeys = Object.keys(props.userVisas);
+      return [
+        {
+          id: userVisasKeys[0],
+          label: t("Visa.list.visaValidator")
+        },
+        { id: userVisasKeys[1], label: t("Visa.list.visaCreated") }
+      ];
+    });
 
-    const tabs = ref([
-      {
-        id: userVisasKeys[0],
-        label: t("Visa.list.visaValidator")
-      },
-      { id: userVisasKeys[1], label: t("Visa.list.visaCreated") }
-    ]);
     const currentTab = ref(props.startTab || tabs.value[0].id);
     const selectTab = tab => (currentTab.value = tab.id);
 
@@ -125,9 +123,9 @@ export default {
       emit("set-is-visa-list", false);
       emit("close");
     };
-    const onClickToReachVisa = (visaId, fileId) => {
-      emit("set-visa-id", visaId);
-      emit("set-base-info", "documentPk", fileId);
+    const onClickToReachVisa = visa => {
+      emit("set-visa", visa);
+      emit("set-base-info", "documentPk", visa.document.id);
       emit("handle-start-tab", currentTab.value);
     };
 

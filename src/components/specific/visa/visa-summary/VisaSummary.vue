@@ -209,7 +209,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "set-visa-id", "set-is-visa-list", "fetch-visas"],
+  emits: ["close", "set-visa", "set-is-visa-list", "fetch-visas"],
   setup(props, { emit }) {
     const {
       fetchVisa,
@@ -308,7 +308,7 @@ export default {
     };
 
     const close = () => {
-      emit("set-visa-id", 0);
+      emit("set-visa", null);
       if (!props.isVisaList) emit("close");
     };
 
