@@ -118,16 +118,8 @@ const fetchFolderProjectUsers = async (project, folder) => {
   return users;
 };
 
-const getUserList = async ({ baseInfo, fileParentId }) => {
-  const res = await fetchFolderProjectUsers(
-    {
-      id: baseInfo.projectPk,
-      cloud: {
-        id: baseInfo.cloudPk
-      }
-    },
-    { id: fileParentId }
-  );
+const getUserList = async (project, folder) => {
+  const res = await fetchFolderProjectUsers(project, folder);
   return res
     .filter(({ isSelf }) => !isSelf)
     .map(user => ({

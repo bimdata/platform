@@ -12,8 +12,8 @@ const deleteValidation = async (visaId, validatorId, baseInfo) => {
   return VisaService.deleteValidation(visaId, validatorId, baseInfo);
 };
 
-const fetchVisa = async (visaId, baseInfo) => {
-  return VisaService.fetchVisa(visaId, baseInfo);
+const fetchVisa = async (project, visa) => {
+  return VisaService.fetchVisa(project, visa);
 };
 
 const acceptVisa = async (validationId, visaId, baseInfo) => {

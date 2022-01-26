@@ -61,14 +61,14 @@
         <div class="visa-summary__shell__content">
           <div class="visa-summary__shell__content__applicant">
             {{ $t("Visa.summary.appliedBy") }}
-            <span>{{ visa.creator.fullName }}</span>
+            <span>{{ formatedVisa.creator.fullName }}</span>
           </div>
           <div
             v-if="visa.description || isEditing"
             class="visa-summary__shell__content__desc"
           >
             <BIMDataTextarea
-              v-model="visa.description"
+              v-model="formatedVisa.description"
               :class="{ editing: isEditing }"
               name="description"
               width="100%"
@@ -84,14 +84,14 @@
             }}</span>
             <BIMDataInput
               v-if="isEditing"
-              v-model="visa.deadline"
+              v-model="formatedVisa.deadline"
               :placeholder="$t('Visa.add.toValidate')"
               :error="hasDateError"
               :errorMessage="$t('Visa.add.errorDate')"
             >
             </BIMDataInput>
             <span v-else class="visa-summary__shell__content__deadline__date">{{
-              visa.deadline
+              formatedVisa.deadline
             }}</span>
           </div>
         </div>
@@ -139,10 +139,13 @@
           </template>
         </div>
         <div class="visa-summary__shell__file">
-          <BIMDataFileIcon :fileName="visa.document.fileName" :size="20" />
+          <BIMDataFileIcon
+            :fileName="formatedVisa.document.fileName"
+            :size="20"
+          />
           <BIMDataTextBox
             class="visa-summary__shell__file__name"
-            :text="visa.document.name"
+            :text="formatedVisa.document.name"
             width="80%"
           />
         </div>
@@ -162,7 +165,7 @@
           <div class="visa-summary__shell__validator__people-list">
             <VisaSummaryPeople
               :isAuthor="isAuthor"
-              :peopleList="visa.validations"
+              :peopleList="formatedVisa.validations"
               :isClosed="isClosed"
               @reset-val="resetVal"
               @delete-user="deleteUser"
@@ -197,12 +200,12 @@ import { isDateConform } from "@/utils/visas";
 export default {
   components: { VisaSummaryPeople, VisaSafeZone, VisaSelectionValidator },
   props: {
-    baseInfo: {
+    project: {
       type: Object,
       required: true
     },
-    visaId: {
-      type: Number,
+    visa: {
+      type: Object,
       required: true
     },
     isVisaList: {
@@ -213,7 +216,6 @@ export default {
   emits: ["close", "set-visa", "set-is-visa-list", "fetch-visas"],
   setup(props, { emit }) {
     const {
-      fetchVisa,
       acceptVisa,
       denyVisa,
       resetVisa,
@@ -233,7 +235,7 @@ export default {
     const isDenied = ref(false);
     const isEditing = ref(false);
     const hasDateError = ref(false);
-    const visa = ref(null);
+    const formatedVisa = ref(null);
     const validationUserId = ref(null);
     const isAuthor = ref(false);
     const isSafeZone = ref(false);
@@ -258,62 +260,54 @@ export default {
      * GLOBAL
      */
 
-    const getVisa = async () => {
-      try {
-        const { id } = user.value;
-        const res = await fetchVisa(props.visaId, props.baseInfo);
-        visa.value = {
-          ...res,
-          deadline: formatDateDDMMYYY(res.deadline),
-          creator: {
-            ...res.creator,
-            fullName: res.creator
-              ? fullName(res.creator)
-              : t("Visa.summary.deletedUser")
-          },
-          validations: res.validations
-            .map(elem => ({
-              ...elem,
-              userId: elem.validator ? elem.validator.userId : 0,
-              fullName: elem.validator
-                ? fullName(elem.validator)
-                : t("Visa.summary.deletedUser"),
-              isSelf: elem.validator ? elem.validator.userId === id : false,
-              hasAccess: res.validationsInError.length
-                ? !res.validationsInError.some(id => id === elem.id)
-                : true
-            }))
-            .sort((a, b) => {
-              if (!a.fullName) return 1;
-              if (!b.fullName) return -1;
-              return a.fullName < b.fullName ? -1 : 1;
-            })
-        };
-        if (visa.value.creator.userId === id) isAuthor.value = true;
-        isClosed.value = visa.value.status === VISA_STATUS.CLOSE;
-      } catch {
-        emit("set-is-visa-list", true);
-      }
+    const formatVisa = async () => {
+      const { id } = user.value;
+
+      formatedVisa.value = {
+        ...props.visa,
+        deadline: formatDateDDMMYYY(props.visa.deadline),
+        creator: {
+          ...props.visa.creator,
+          fullName: props.visa.creator
+            ? fullName(props.visa.creator)
+            : t("Visa.summary.deletedUser")
+        },
+        validations: props.visa.validations
+          .map(elem => ({
+            ...elem,
+            userId: elem.validator ? elem.validator.userId : 0,
+            fullName: elem.validator
+              ? fullName(elem.validator)
+              : t("Visa.summary.deletedUser"),
+            isSelf: elem.validator ? elem.validator.userId === id : false,
+            hasAccess: props.visa.validationsInError.length
+              ? !props.visa.validationsInError.some(id => id === elem.id)
+              : true
+          }))
+          .sort((a, b) => {
+            if (!a.fullName) return 1;
+            if (!b.fullName) return -1;
+            return a.fullName < b.fullName ? -1 : 1;
+          })
+      };
+      if (formatedVisa.value.creator.userId === id) isAuthor.value = true;
+      isClosed.value = formatedVisa.value.status === VISA_STATUS.CLOSE;
     };
 
     const fetchAllVisaInfo = async () => {
-      await getVisa();
-      const users = await getUserList(
-        {
-          baseInfo: props.baseInfo,
-          fileParentId: visa.value.document.parentId
-        },
-        visa.value.validations
-      );
+      await formatVisa();
+      const users = await getUserList(props.project, {
+        id: formatedVisa.value.document.parentId
+      });
 
       userList.value = users.map(user => {
-        if (visa.value.validations) {
+        if (formatedVisa.value.validations) {
           return {
             ...user,
-            isSelected: visa.value.validations.some(
+            isSelected: formatedVisa.value.validations.some(
               ({ validator }) => validator && validator.id === user.id
             ),
-            validation: visa.value.validations.find(
+            validation: formatedVisa.value.validations.find(
               ({ validator }) => validator && validator.id === user.id
             )
           };
@@ -346,7 +340,7 @@ export default {
     };
 
     const getValidationUserId = async () => {
-      validationUserId.value = visa.value.validations.find(
+      validationUserId.value = formatedVisa.value.validations.find(
         ({ isSelf }) => isSelf
       ).id;
     };
@@ -354,8 +348,9 @@ export default {
     const userStatus = computed(
       () =>
         validationUserId.value &&
-        visa.value.validations.find(({ id }) => id === validationUserId.value)
-          .status
+        formatedVisa.value.validations.find(
+          ({ id }) => id === validationUserId.value
+        ).status
     );
 
     const statusVisaHandler = () => {
@@ -462,23 +457,23 @@ export default {
     const handleEdit = async undo => {
       if (undo === "undo") {
         isEditing.value = false;
-        visa.value.deadline = copyOfDate.value;
-        visa.value.description = copyOfDescription.value;
+        formatedVisa.value.deadline = copyOfDate.value;
+        formatedVisa.value.description = copyOfDescription.value;
       } else if (isEditing.value) {
-        const dateConform = isDateConform(visa.value.deadline);
+        const dateConform = isDateConform(formatedVisa.value.deadline);
         hasDateError.value = !dateConform;
 
         if (dateConform) {
           await actions.value.update({
-            description: visa.value.description,
-            deadline: formatDate(visa.value.deadline)
+            description: formatedVisa.value.description,
+            deadline: formatDate(formatedVisa.value.deadline)
           });
           isEditing.value = false;
         }
       } else if (!isEditing.value) {
         isEditing.value = true;
-        copyOfDate.value = visa.value.deadline;
-        copyOfDescription.value = visa.value.description;
+        copyOfDate.value = formatedVisa.value.deadline;
+        copyOfDescription.value = formatedVisa.value.description;
       }
     };
 
@@ -499,7 +494,7 @@ export default {
 
     return {
       // references
-      visa,
+      formatedVisa,
       isValidated,
       isRefused,
       isAuthor,

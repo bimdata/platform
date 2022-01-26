@@ -46,14 +46,23 @@ class VisaService {
     }
   }
 
-  async fetchVisa(visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async fetchVisa(project, visa) {
+    // console.log("visa.document", visa.document);
+    // console.log("visa.document.id", visa.document.id);
+
+    console.log("object for fetch", {
+      cloudPk: project.cloud.id,
+      projectPk: project.id,
+      documentPk: visa.document.id,
+      id: visa.id
+    });
+
     try {
       return await apiClient.collaborationApi.getVisa({
-        cloudPk,
-        projectPk,
-        documentPk,
-        id: visaId
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: visa.document.id,
+        id: visa.id
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);

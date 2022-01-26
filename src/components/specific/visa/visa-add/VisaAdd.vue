@@ -107,7 +107,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "set-visa", "fetch-visas"],
+  emits: ["close", "created-visa"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
     const { getUserList } = useProjects();
@@ -159,22 +159,15 @@ export default {
               createValidation(props.project, props.file, visa, validatorId)
             )
         );
-        emit("set-visa", visa);
-        emit("set-base-info", "documentPk", props.file.parentId);
-        emit("fetch-visas");
+        emit("created-visa", visa);
       } else {
         hasDateError.value = true;
       }
     };
 
     onMounted(async () => {
-      userList.value = await getUserList({
-        baseInfo: {
-          cloudPk: props.project.cloud.id,
-          projectPk: props.project.id,
-          documentPk: props.file.id
-        },
-        fileParentId: props.file.parentId
+      userList.value = await getUserList(props.project, {
+        id: props.file.parentId
       });
     });
 

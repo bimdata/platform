@@ -95,13 +95,7 @@ export default {
       required: true
     }
   },
-  emits: [
-    "close",
-    "set-is-visa-list",
-    "set-visa",
-    "set-base-info",
-    "handle-start-tab"
-  ],
+  emits: ["close", "set-is-visa-list", "reach-visa"],
   setup(props, { emit }) {
     const { t } = useI18n();
 
@@ -124,9 +118,7 @@ export default {
       emit("close");
     };
     const onClickToReachVisa = visa => {
-      emit("set-visa", visa);
-      emit("set-base-info", "documentPk", visa.document.id);
-      emit("handle-start-tab", currentTab.value);
+      emit("reach-visa", visa, currentTab.value);
     };
 
     const iconStatus = visa => {
