@@ -8,10 +8,11 @@
       <BIMDataSpinner class="m-b-12" /> <span> loading metrics </span>
     </div>
     <div v-else class="bcf-topics-metrics__content flex justify-around">
-      <Graph :barsData="barsData" :size="size" />
-      <div class="bcf-topics-metrics__content__total flex items-center">
-        <strong>{{ bcfTopics.length }}</strong> <span>issues</span>
-      </div>
+      <Graph :barsData="barsData" :size="size">
+        <div class="bcf-topics-metrics__content__total flex items-center">
+          <strong>{{ bcfTopics.length }}</strong> <span>issues</span>
+        </div>
+      </Graph>
       <div
         class="bcf-topics-metrics__content__legend flex items-start justify-center m-l-12"
       >

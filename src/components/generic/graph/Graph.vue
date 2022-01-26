@@ -1,5 +1,6 @@
 <template>
   <div
+    class="bimdata-graph"
     ref="container"
     :style="
       'width: ' +
@@ -45,6 +46,7 @@
         />
       </g>
     </svg>
+    <slot></slot>
   </div>
 </template>
 
@@ -131,15 +133,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash var(--graph-draw-time, 2s) ease-in forwards;
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
+.bimdata-graph {
+  position: relative;
+  .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash var(--graph-draw-time, 2s) ease-in forwards;
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 }
 </style>
