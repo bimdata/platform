@@ -32,6 +32,9 @@
     grid-template-columns: repeat(auto-fill, 320px);
     grid-template-rows: 308px;
     gap: 56px;
+    &__metrics {
+      grid-area: 1/1/2/3;
+    }
     &__list {
       grid-area: 1 / 3 / 3 / 6;
     }

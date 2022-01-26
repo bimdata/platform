@@ -1,13 +1,10 @@
 .bcf-topics-metrics {
-  background-color: var(--color-white);
-  box-shadow: var(--box-shadow);
-  grid-area: 1 / 1 / 2 / 3;
   &__content {
     position: relative;
     &__total {
       position: absolute;
-      top: 112px;
-      left: 112px;
+      top: 107px;
+      left: 167px;
       flex-direction: column;
       line-height: 1;
       strong {
@@ -16,6 +13,7 @@
     }
     &__legend {
       flex-direction: column;
+      font-size: 14px;
     }
   }
 }
