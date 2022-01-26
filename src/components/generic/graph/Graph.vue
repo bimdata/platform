@@ -21,12 +21,26 @@
           :stroke-width="placeholderBarStrokeWidth"
           fill="none"
         />
+
         <path
+          v-if="barData.percentage < 100"
           class="path"
           :d="getPath(barData.percentage, i)"
           :stroke="barData.color"
           :stroke-width="barStrokeWidth"
           stroke-linecap="round"
+          fill="none"
+        />
+        <circle
+          v-else
+          class="path"
+          :cx="center"
+          :cy="center"
+          :r="getRadius(i)"
+          :stroke="barData.color"
+          :stroke-width="barStrokeWidth"
+          stroke-linecap="round"
+          :transform="`rotate(-90 ${center} ${center})`"
           fill="none"
         />
       </g>
