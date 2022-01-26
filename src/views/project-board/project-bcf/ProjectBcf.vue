@@ -133,7 +133,14 @@
       </div>
     </div>
     <div class="project-bcf__content flex m-t-36">
-      <BcfTopicsMetrics :bcfTopics="displayedBcfTopics" :loading="loading" />
+      <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
+        <template #content>
+          <BcfTopicsMetrics
+            :bcfTopics="displayedBcfTopics"
+            :loading="loading"
+          />
+        </template>
+      </BIMDataCard>
 
       <!-- loading BCF -->
       <div
