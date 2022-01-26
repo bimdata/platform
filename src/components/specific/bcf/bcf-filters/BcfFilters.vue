@@ -5,12 +5,20 @@
       color="default"
       fill
       square
-      width="124px"
+      icon
+      width="120px"
       @click="toggleFilters"
       class="btn-color-granite-light"
       :class="{ 'btn-active': showFilters }"
       :disabled="!bcfTopics.length"
     >
+      <BIMDataIcon
+        name="filter"
+        fill
+        color="default"
+        size="xxs"
+        margin="0 6px 0 0"
+      />
       Filters
     </BIMDataButton>
     <transition name="slide-fade-up">
@@ -160,7 +168,12 @@ export default {
     const submitFilters = () => {
       const startDateConform = isDateConform(startDateInput);
       const endDateConform = isDateConform(endDateInput);
-      if (startDateConform && endDateConform) {
+      if (
+        priorities.value.length ||
+        status.value.length ||
+        tags.value.length ||
+        (startDateConform && endDateConform)
+      ) {
         emit("submit", {
           priorities: priorities.value,
           status: status.value,
@@ -169,22 +182,34 @@ export default {
           endDate: endDateInput.value
         });
         showFilters.value = false;
-      } else {
+      } else if (
+        startDateInput.value &&
+        endDateInput.value &&
+        !startDateConform &&
+        !endDateConform
+      ) {
         hasStartDateError.value = true;
         hasEndDateError.value = true;
+      } else {
+        console.log("message d'erreur ici");
       }
     };
-
     const resetFilters = () => {
       priorities.value = [];
       status.value = [];
       tags.value = [];
+      startDateInput.value = "";
+      endDateInput.value = "";
 
       emit("submit", {
         priorities: priorities.value,
         status: status.value,
-        tags: tags.value
+        tags: tags.value,
+        startDate: startDateInput.value,
+        endDate: endDateInput.value
       });
+      hasStartDateError.value = false;
+      hasEndDateError.value = false;
     };
 
     return {
