@@ -45,20 +45,22 @@
           v-model="status"
           class="m-t-24"
         />
-        <!-- <div class="flex justify-between m-t-24">
-          <BIMDataSelect
-            width="47%"
-            label="Début de création"
-            :options="priorityOptions"
-            v-model="priority"
+        <div class="bcf-filters__container__date flex justify-between m-t-24">
+          <BIMDataInput
+            margin="0"
+            v-model="startDateInput"
+            placeholder="Début de création"
+            :error="hasStartDateError"
+            errorMessage="Error"
           />
-          <BIMDataSelect
-            width="47%"
-            label="Fin de création"
-            :options="priorityOptions"
-            v-model="priority"
+          <BIMDataInput
+            margin="0"
+            v-model="endDateInput"
+            placeholder="Fin de création"
+            :error="hasEndDateError"
+            errorMessage="Error"
           />
-        </div> -->
+        </div>
         <BIMDataSelect
           width="264px"
           :multi="tagOptions ? false : true"
@@ -95,6 +97,7 @@
 <script>
 import { computed, ref } from "vue";
 import { useToggle } from "@/composables/toggle";
+import { formatToDateObject, regexDate } from "@/utils/date";
 
 export default {
   props: {
@@ -140,13 +143,36 @@ export default {
       return [...new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))];
     });
 
+    // date
+    const startDateInput = ref("");
+    const endDateInput = ref("");
+    const hasStartDateError = ref(false);
+    const hasEndDateError = ref(false);
+    const isDateConform = ({ value }) => {
+      const dateToCompare = formatToDateObject(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return (
+        value.match(regexDate) && dateToCompare.getTime() <= today.getTime()
+      );
+    };
+
     const submitFilters = () => {
-      emit("submit", {
-        priorities: priorities.value,
-        status: status.value,
-        tags: tags.value
-      });
-      showFilters.value = false;
+      const startDateConform = isDateConform(startDateInput);
+      const endDateConform = isDateConform(endDateInput);
+      if (startDateConform && endDateConform) {
+        emit("submit", {
+          priorities: priorities.value,
+          status: status.value,
+          tags: tags.value,
+          startDate: startDateInput.value,
+          endDate: endDateInput.value
+        });
+        showFilters.value = false;
+      } else {
+        hasStartDateError.value = true;
+        hasEndDateError.value = true;
+      }
     };
 
     const resetFilters = () => {
@@ -171,6 +197,10 @@ export default {
       noTag,
       tagOptions,
       showFilters,
+      startDateInput,
+      endDateInput,
+      hasStartDateError,
+      hasEndDateError,
       // Methods
       resetFilters,
       submitFilters,

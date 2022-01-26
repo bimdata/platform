@@ -20,5 +20,13 @@
         font-weight: 700;
       }
     }
+    &__date {
+      .bimdata-input:deep() {
+        width: 47%;
+        input {
+          width: 100%;
+        }
+      }
+    }
   }
 }
