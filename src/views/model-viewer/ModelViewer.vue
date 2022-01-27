@@ -34,7 +34,7 @@ const availablePlugins = {
   realiz3D: "https://unpkg.com/@bimdata/realiz3d-viewer-plugin@0.0.2",
   backgroundColor:
     "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
-  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.6"
+  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.7"
 };
 
 export default {
