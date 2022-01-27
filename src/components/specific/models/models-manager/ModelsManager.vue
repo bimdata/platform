@@ -72,21 +72,18 @@ import { segregateByType } from "@/utils/models.js";
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
-import PTCManager from "./ptc-manager/PTCManager.vue";
 
 const tabsDef = [
   { id: "ifc", label: "IFC", component: "IFCManager" },
   { id: "dwg", label: "DWG", component: "DWGManager" },
   { id: "pdf", label: "PDF", component: "PDFManager" }
-  // { id: "ptc", label: "Point Cloud", component: "PTCManager" }
 ];
 
 export default {
   components: {
     DWGManager,
     IFCManager,
-    PDFManager,
-    PTCManager
+    PDFManager
   },
   props: {
     project: {
