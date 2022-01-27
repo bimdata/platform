@@ -1,4 +1,4 @@
-.visa-add-summary-people {
+.visa-summary-validator {
   display: flex;
   justify-content: space-between;
   margin: 4% auto;
@@ -74,7 +74,7 @@
 
       &.author {
         right: -8px;
-        .visa-add-summary-people__right-side__access-denied__hover {
+        .visa-add-summary-user__right-side__access-denied__hover {
           right: -36px;
           width: 345px;
        }
@@ -83,7 +83,7 @@
       &.author.closed {
         right: -13px;
 
-        .visa-add-summary-people__right-side__access-denied__hover {
+        .visa-add-summary-user__right-side__access-denied__hover {
           right: 20px;
           width: 307px;
        }

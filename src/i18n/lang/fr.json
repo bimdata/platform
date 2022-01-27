@@ -773,7 +773,7 @@
      "term": "Échéance",
      "validator": "Validants",
      "deletedUser":" Utilisateur supprimé",
-     "people": {
+     "validatorList": {
       "accept": "Validé",
       "deny": "Refusé",     
       "commented": "Commenté",

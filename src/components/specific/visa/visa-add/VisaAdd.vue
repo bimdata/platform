@@ -107,10 +107,10 @@ export default {
       required: true
     }
   },
-  emits: ["close", "created-visa"],
+  emits: ["create-visa", "close"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
-    const { getUserList } = useProjects();
+    const { getUserProjectList } = useProjects();
 
     const dateInput = ref("");
     const descInput = ref("");
@@ -159,14 +159,14 @@ export default {
               createValidation(props.project, props.file, visa, validatorId)
             )
         );
-        emit("created-visa", visa);
+        emit("create-visa", visa);
       } else {
         hasDateError.value = true;
       }
     };
 
     onMounted(async () => {
-      userList.value = await getUserList(props.project, {
+      userList.value = await getUserProjectList(props.project, {
         id: props.file.parentId
       });
     });

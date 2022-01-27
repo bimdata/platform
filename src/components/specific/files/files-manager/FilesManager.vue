@@ -99,8 +99,6 @@
               :project="project"
               :file="fileToManage"
               :userVisas="userVisas"
-              :isVisaList="isVisaList"
-              @set-is-visa-list="setIsVisaList"
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
             />
@@ -276,7 +274,6 @@ export default {
     const showVisaManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
-    const isVisaList = ref(false);
 
     let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
@@ -311,15 +308,12 @@ export default {
       if (event.fileName) {
         fileToManage.value = event;
       } else {
-        isVisaList.value = true;
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
       showAccessManager.value = false;
       showSidePanel.value = true;
     };
-
-    const setIsVisaList = event => (isVisaList.value = event);
 
     const closeVisaManager = () => {
       showSidePanel.value = false;
@@ -330,13 +324,8 @@ export default {
     };
 
     const getVisas = async () => {
-      const baseInfo = {
-        cloudPk: props.project.cloud.id,
-        projectPk: props.project.id
-      };
-
-      const toValidateVisas = await fetchToValidateVisas(baseInfo);
-      const createdVisas = await fetchCreatedVisas(baseInfo);
+      const toValidateVisas = await fetchToValidateVisas(props.project);
+      const createdVisas = await fetchCreatedVisas(props.project);
 
       userVisas.value = {
         toValidateVisas:
@@ -373,7 +362,6 @@ export default {
       showSidePanel,
       fileToManage,
       userVisas,
-      isVisaList,
       userVisasCounter,
       // Methods
       closeAccessManager,
@@ -388,7 +376,6 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
-      setIsVisaList,
       fetchVisas
     };
   }

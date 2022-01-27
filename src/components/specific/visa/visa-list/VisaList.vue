@@ -12,7 +12,7 @@
         <span>{{ $t("Visa.list.title") }}</span>
       </div>
       <div class="visa-list__header__right-side">
-        <BIMDataButton ghost rounded icon @click="onClickToClose">
+        <BIMDataButton ghost rounded icon @click="$emit('close')">
           <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </div>
@@ -95,7 +95,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "set-is-visa-list", "reach-visa"],
+  emits: ["reach-visa", "close"],
   setup(props, { emit }) {
     const { t } = useI18n();
 
@@ -113,10 +113,6 @@ export default {
     const currentTab = ref(props.startTab || tabs.value[0].id);
     const selectTab = tab => (currentTab.value = tab.id);
 
-    const onClickToClose = () => {
-      emit("set-is-visa-list", false);
-      emit("close");
-    };
     const onClickToReachVisa = visa => {
       emit("reach-visa", visa, currentTab.value);
     };
@@ -138,7 +134,6 @@ export default {
       currentTab,
       visaClosed: VISA_STATUS.CLOSE,
       // methods
-      onClickToClose,
       onClickToReachVisa,
       selectTab,
       formatDateDDMMYYY,

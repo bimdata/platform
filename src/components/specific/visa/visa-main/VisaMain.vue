@@ -4,16 +4,15 @@
       <VisaList
         :userVisas="userVisas"
         :startTab="currentTab"
-        @set-is-visa-list="$emit('set-is-visa-list', $event)"
-        @close="$emit('close', $event)"
         @reach-visa="reachVisa"
+        @close="$emit('close', $event)"
       />
     </template>
     <template v-if="currentView === 'visaAdd'">
       <VisaAdd
         :project="project"
         :file="file"
-        @created-visa="createdVisa"
+        @create-visa="createVisa"
         @close="$emit('close', $event)"
       />
     </template>
@@ -21,11 +20,7 @@
       <VisaSummary
         :project="project"
         :visa="currentVisa"
-        :isVisaList="isVisaList"
-        @close="$emit('close', $event)"
-        @set-visa="visa = $event"
-        @set-is-visa-list="$emit('set-is-visa-list', $event)"
-        @fetch-visas="$emit('fetch-visas')"
+        @close-visa="closeVisa"
       />
     </template>
   </div>
@@ -57,42 +52,19 @@ export default {
     userVisas: {
       type: Object,
       required: true
-    },
-    isVisaList: {
-      type: Boolean,
-      required: true
     }
   },
-  emits: ["close", "set-is-visa-list", "fetch-visas"],
+  emits: ["fetch-visas", "close"],
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 
-    const currentView = ref(props.isVisaList ? "visaList" : "visaAdd");
+    const currentView = ref(props.file.id ? "visaAdd" : "visaList");
     const currentTab = ref("toValidateVisas");
     const currentVisa = ref(null);
-    const baseInfo = ref({
-      cloudPk: props.project.cloud.id,
-      projectPk: props.project.id,
-      documentPk: props.file.id
-    });
 
-    const setBaseInfo = (prop, event) => (baseInfo.value[prop] = event);
-    const handleStartTab = tab => (currentTab.value = tab);
-
-    // watch(
-    //   [visa, baseInfo],
-    //   () => {
-    //     if (props.file.id) {
-    //       currentView.value = "visaAdd";
-    //     }
-    //   },
-    //   { immediate: true }
-    // );
-
-    const createdVisa = async visa => {
+    const createVisa = async visa => {
       currentVisa.value = await fetchVisa(props.project, visa);
       currentView.value = "visaSummary";
-      emit("fetch-visas");
     };
 
     const reachVisa = (visa, tab) => {
@@ -101,17 +73,21 @@ export default {
       currentView.value = "visaSummary";
     };
 
+    const closeVisa = () => {
+      emit("fetch-visas");
+      currentVisa.value = null;
+      currentView.value = "visaList";
+    };
+
     return {
       //references
       currentVisa,
-      baseInfo,
       currentView,
       currentTab,
       // methods
-      setBaseInfo,
-      handleStartTab,
-      createdVisa,
-      reachVisa
+      createVisa,
+      reachVisa,
+      closeVisa
     };
   }
 };

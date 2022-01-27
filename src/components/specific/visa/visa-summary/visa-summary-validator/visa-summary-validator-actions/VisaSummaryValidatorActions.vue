@@ -1,7 +1,7 @@
 <template>
-  <div className="visa-summary-people-actions" v-click-away="closeMenu">
+  <div className="visa-summary-validator-actions" v-click-away="closeMenu">
     <BIMDataButton
-      class="visa-summary-people-actions__btn"
+      class="visa-summary-validator-actions__btn"
       rounded
       icon
       @click="toggleMenu"
@@ -9,23 +9,23 @@
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
     <transition name="fade">
-      <div class="visa-summary-people-actions__menu" v-show="showMenu">
+      <div class="visa-summary-validator-actions__menu" v-show="showMenu">
         <BIMDataButton
-          class="visa-summary-people-actions__menu__btn"
+          class="visa-summary-validator-actions__menu__btn"
           ghost
           squared
           @click="onDelete"
         >
-          {{ $t("Visa.summary.people.getRidOfValidator") }}
+          {{ $t("Visa.summary.validatorList.getRidOfValidator") }}
         </BIMDataButton>
         <template v-if="hasAccess">
           <BIMDataButton
-            class="visa-summary-people-actions__menu__btn"
+            class="visa-summary-validator-actions__menu__btn"
             ghost
             squared
             @click="onReset"
           >
-            {{ $t("Visa.summary.people.refresh") }}
+            {{ $t("Visa.summary.validatorList.refresh") }}
           </BIMDataButton>
         </template>
       </div>
@@ -77,4 +77,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./VisaSummaryPeopleActions.scss"></style>
+<style scoped lang="scss" src="./VisaSummaryValidatorActions.scss"></style>

@@ -118,9 +118,9 @@ const fetchFolderProjectUsers = async (project, folder) => {
   return users;
 };
 
-const getUserList = async (project, folder) => {
-  const res = await fetchFolderProjectUsers(project, folder);
-  return res
+const getUserProjectList = async (project, folder) => {
+  const users = await fetchFolderProjectUsers(project, folder);
+  return users
     .filter(({ isSelf }) => !isSelf)
     .map(user => ({
       ...user,
@@ -153,6 +153,6 @@ export function useProjects() {
     deleteProjectUser,
     leaveProject,
     fetchFolderProjectUsers,
-    getUserList
+    getUserProjectList
   };
 }

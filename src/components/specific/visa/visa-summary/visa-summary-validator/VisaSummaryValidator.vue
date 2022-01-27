@@ -1,46 +1,40 @@
 <template>
-  <div
-    class="visa-add-summary-people"
-    v-for="people in peopleList"
-    :key="people.id"
-  >
-    <div class="visa-add-summary-people__left-side">
+  <div class="visa-summary-validator" v-for="user in userList" :key="user.id">
+    <div class="visa-summary-validator__left-side">
       <UserAvatar
-        :user="people.validator || {}"
+        :user="user.validator || {}"
         size="27"
         initialsSize="14"
         color="silver-light"
         style="box-shadow: var(--box-shadow)"
       />
       <BIMDataTextBox
-        class="visa-add-summary-people__left-side__name"
-        :text="people.fullName || people.validator.email"
+        class="visa-summary-validator__left-side__name"
+        :text="user.fullName || user.validator.email"
       />
     </div>
-    <div class="visa-add-summary-people__right-side">
+    <div class="visa-summary-validator__right-side">
       <template
         v-if="
-          !isClosed &&
-          people.isSelf &&
-          people.status != VALIDATION_STATUS.PENDING
+          !isClosed && user.isSelf && user.status != VALIDATION_STATUS.PENDING
         "
       >
         <BIMDataButton
           radius
           ghost
           style="margin: 2px 0px 0px 0px"
-          @click="$emit('reset-val', people.id)"
+          @click="$emit('reset-val', user.id)"
         >
           <BIMDataIcon name="reset" size="xs" />
         </BIMDataButton>
       </template>
-      <template v-if="people.hasAccess">
-        <div :class="`visa-add-summary-people__right-side__${people.status}`">
+      <template v-if="user.hasAccess">
+        <div :class="`visa-summary-validator__right-side__${user.status}`">
           <span>
-            {{ $t(`Visa.summary.people.${validationStatus(people)}`) }}
+            {{ $t(`Visa.summary.validatorList.${validationStatus(user)}`) }}
           </span>
           <BIMDataIcon
-            :name="iconStatus(people)"
+            :name="iconStatus(user)"
             size="xs"
             style="margin-top: 2px"
           />
@@ -48,25 +42,25 @@
       </template>
       <template v-else>
         <div
-          class="visa-add-summary-people__right-side__access-denied"
+          class="visa-summary-validator__right-side__access-denied"
           :class="{ author: isAuthor, closed: isClosed }"
-          @mouseover="handleCurrentPerson(people.id)"
+          @mouseover="handleCurrentPerson(user.id)"
           @mouseleave="handleCurrentPerson()"
         >
           <BIMDataIcon name="warning" customSize="40" class="fill-warning" />
           <div
-            v-if="isWarningHover && currentPeopleId === people.id"
-            class="visa-add-summary-people__right-side__access-denied__hover"
+            v-if="isWarningHover && currentPeopleId === user.id"
+            class="visa-summary-validator__right-side__access-denied__hover"
           >
             <span>{{ $t("Visa.selectionValidator.warning") }}</span>
           </div>
         </div>
       </template>
       <template v-if="isAuthor && !isClosed">
-        <div class="visa-add-summary-people__right-side__actions">
-          <VisaSummaryPeopleActions
-            :validationId="people.id"
-            :hasAccess="people.hasAccess"
+        <div class="visa-summary-validator__right-side__actions">
+          <VisaSummaryValidatorActions
+            :validationId="user.id"
+            :hasAccess="user.hasAccess"
             @reset-val="$emit('reset-val', $event)"
             @delete-user="$emit('delete-user', $event)"
           />
@@ -79,14 +73,14 @@
 <script>
 import { ref } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import VisaSummaryPeopleActions from "./visa-summary-people-actions/VisaSummaryPeopleActions.vue";
+import VisaSummaryValidatorActions from "./visa-summary-validator-actions/VisaSummaryValidatorActions.vue";
 
 import VALIDATION_STATUS from "@/config/visa-validation-status";
 
 export default {
-  components: { UserAvatar, VisaSummaryPeopleActions },
+  components: { UserAvatar, VisaSummaryValidatorActions },
   props: {
-    peopleList: {
+    userList: {
       type: Object,
       required: true
     },
@@ -104,30 +98,30 @@ export default {
     const currentPeopleId = ref(null);
     const isWarningHover = ref(false);
 
-    const validationStatus = people => {
-      const { hasCommented, status } = people;
+    const validationStatus = user => {
+      const { hasCommented, status } = user;
 
       if (hasCommented && status === VALIDATION_STATUS.PENDING) {
         return "commented";
-      } else if (people.status === VALIDATION_STATUS.PENDING) {
+      } else if (user.status === VALIDATION_STATUS.PENDING) {
         return "pending";
-      } else if (people.status === VALIDATION_STATUS.ACCEPT) {
+      } else if (user.status === VALIDATION_STATUS.ACCEPT) {
         return "accept";
-      } else if (people.status === VALIDATION_STATUS.DENY) {
+      } else if (user.status === VALIDATION_STATUS.DENY) {
         return "deny";
       }
     };
 
-    const iconStatus = people => {
-      const { hasCommented, status } = people;
+    const iconStatus = user => {
+      const { hasCommented, status } = user;
 
       if (hasCommented && status === VALIDATION_STATUS.PENDING) {
         return "comment";
-      } else if (people.status === VALIDATION_STATUS.PENDING) {
+      } else if (user.status === VALIDATION_STATUS.PENDING) {
         return "sandglass";
-      } else if (people.status === VALIDATION_STATUS.ACCEPT) {
+      } else if (user.status === VALIDATION_STATUS.ACCEPT) {
         return "visa";
-      } else if (people.status === VALIDATION_STATUS.DENY) {
+      } else if (user.status === VALIDATION_STATUS.DENY) {
         return "failed";
       }
     };
@@ -156,4 +150,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./VisaSummaryPeople.scss"></style>
+<style scoped lang="scss" src="./VisaSummaryValidator.scss"></style>
