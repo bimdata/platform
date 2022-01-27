@@ -44,11 +44,11 @@
         "groupsButtonText": "Manage groups"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Add an IFC",
+        "openFileUploadButtonText": "Add a model",
         "closeFileUploadButtonText": "Close",
         "forbiddenUploadNotification": {
             "title": "Upload error",
-            "message": "Please select an .ifc file"
+            "message": "Please select a model file: {extensions}"
         }
     },
     "BreadcrumbSelector": {
@@ -148,7 +148,7 @@
     "FileUploader": {
         "uploadAreaText": "Drag and drop to store your project assets",
         "separatorText": "or",
-        "uploadButtonText": "Select an .ifc file"
+        "uploadButtonText": "Select a model file"
     },
     "FolderAccessManager": {
         "title": "Manage access rights",
@@ -680,9 +680,7 @@
         "selectedSpace": "Selected space:"
     },
     "SpaceSizeInfo": {
-        "used": "used",
-        "from": "out of",
-        "included": "included",
+        "usage": "{used} used out of {total}",
         "subscribeDatapackButton": "Upgrade storage",
         "subscribePlatformButton": "Switch to pro platform"
     },

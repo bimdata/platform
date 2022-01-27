@@ -26,9 +26,9 @@
     <transition name="fade">
       <FileUploader
         class="project-overview__block--upload"
-        v-show="showFileUploader && spaceInfo.remainingSmartDataSize > 0"
+        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         :project="project"
-        :allowedFileTypes="['.ifc', '.ifczip']"
+        :allowedFileTypes="modelExtensions"
         @file-uploaded="reloadModels"
         @forbidden-upload-attempt="notifyForbiddenUpload"
         @close="closeFileUploader"
@@ -68,7 +68,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
-import MODEL_TYPES from "@/config/model-types.js";
+import { MODEL_EXTENSIONS, MODEL_TYPES } from "@/config/model-types.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
@@ -122,7 +122,9 @@ export default {
       pushNotification({
         type: "error",
         title: t("ProjectOverview.forbiddenUploadNotification.title"),
-        message: t("ProjectOverview.forbiddenUploadNotification.message")
+        message: t("ProjectOverview.forbiddenUploadNotification.message", {
+          extensions: MODEL_EXTENSIONS.join(", ")
+        })
       });
     };
 
@@ -130,6 +132,7 @@ export default {
       // References
       ifcs,
       invitations: projectInvitations,
+      modelExtensions: MODEL_EXTENSIONS,
       models: projectModels,
       project: currentProject,
       showFileUploader,

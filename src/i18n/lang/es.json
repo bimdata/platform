@@ -44,11 +44,11 @@
         "groupsButtonText": "Gestión de grupos"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Añadir un IFC",
+        "openFileUploadButtonText": "Añadir un modelo",
         "closeFileUploadButtonText": "Cerrar",
         "forbiddenUploadNotification": {
             "title": "Error",
-            "message": "Por favor seleccione un archivo .ifc"
+            "message": "Por favor seleccione un modelo: {extensions}"
         }
     },
     "BreadcrumbSelector": {
@@ -148,7 +148,7 @@
     "FileUploader": {
         "uploadAreaText": "Haga Clic/Deslizar sus archivos aquí",
         "separatorText": "o",
-        "uploadButtonText": "Seleccione un archivo .ifc"
+        "uploadButtonText": "Seleccione un modelo"
     },
     "FolderAccessManager": {
         "title": "Gestión de derechos de acceso",
@@ -673,9 +673,7 @@
         "selectedSpace": "Espacio seleccionado:"
     },
     "SpaceSizeInfo": {
-        "used": "utilizado",
-        "from": "en",
-        "included": "incluido",
+        "usage": "{used} utilizado en {total}",
         "subscribeDatapackButton": "Comprar un DataPack",
         "subscribePlatformButton": "Pasar a la plataforma pro"
     },
