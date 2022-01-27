@@ -11,7 +11,7 @@
 <script>
 import routeNames from "@/router/route-names.js";
 // Components
-import AppSlot from "@/components/generic/app-slot/AppSlot.vue";
+import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import AppHeaderMenu from "@/components/specific/app/app-header-menu/AppHeaderMenu.vue";
 

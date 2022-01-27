@@ -95,8 +95,8 @@ import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";

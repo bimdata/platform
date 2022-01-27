@@ -46,8 +46,8 @@ import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 
 // Components
-import AppSlot from "@/components/generic/app-slot/AppSlot.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";

@@ -73,8 +73,8 @@ import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
 // Components
-import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";

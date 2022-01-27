@@ -86,8 +86,8 @@ import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";

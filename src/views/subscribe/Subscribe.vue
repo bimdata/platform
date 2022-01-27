@@ -25,7 +25,7 @@
 <script>
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import FreePlanCard from "@/components/specific/subscriptions/free-plan-card/FreePlanCard.vue";
 import ProPlanCard from "@/components/specific/subscriptions/pro-plan-card/ProPlanCard.vue";

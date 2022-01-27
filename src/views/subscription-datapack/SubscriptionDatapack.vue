@@ -44,7 +44,7 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
 import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";

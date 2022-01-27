@@ -73,7 +73,7 @@ import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import ProPlanForm from "@/components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
 import ProPlanInfo from "@/components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";

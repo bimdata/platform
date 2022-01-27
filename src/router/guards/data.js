@@ -1,4 +1,4 @@
-import { load } from "@/components/generic/app-loading/app-loading.js";
+import { load } from "@/components/specific/app/app-loading/app-loading.js";
 import { useAuth } from "@/state/auth.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useProjects } from "@/state/projects.js";
