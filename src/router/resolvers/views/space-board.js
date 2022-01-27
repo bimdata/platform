@@ -9,7 +9,7 @@ const projects = useProjects();
 export default async function spaceBoardResolver(route) {
   const space = spaces.setCurrentSpace(+route.params.spaceID);
 
-  spaces.loadSpaceInfo(space);
+  spaces.loadSpaceSubInfo(space);
 
   load("space-users", [
     spaces.loadSpaceUsers(space),

@@ -46,42 +46,46 @@ class SubscriptionService {
     }
   }
 
-  async fetchSpaceInformation(space) {
-    const size = await apiClient.collaborationApi.getCloudSize({
+  async fetchSpaceSubInfo(space) {
+    const subInfo = await apiClient.collaborationApi.getCloudSize({
       id: space.id
     });
 
     // Derive used size from remaining size
-    const usedSizePercent = 100 - size.remainingSmartDataSizePercent;
+    const usedSizePercent = 100 - subInfo.remainingSmartDataSizePercent;
+    // Check whether space is managed by a platform subscription
+    const isPlatformSubscription = subInfo.managedBy === "BIMDATA_PLATFORM";
 
-    const isPlatformSubscription = size.managedBy === "BIMDATA_PLATFORM";
     let isOrganizationMember = false;
-    let isPlatformPaid = false;
+    let isPlatformPro = false;
+    let subscriptions = [];
     let activeSubscriptions = [];
 
     if (isPlatformSubscription) {
       try {
-        const subscriptions = await privateApiClient.get(
+        subscriptions = await privateApiClient.get(
           `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription`
         );
         isOrganizationMember = true;
-        // boolean for upgrade platform or pay platform pro
+      } catch {
+        isOrganizationMember = false;
+      }
+
+      if (isOrganizationMember) {
         activeSubscriptions = subscriptions.filter(
           sub => sub.status === "active"
         );
-        isPlatformPaid = activeSubscriptions.length > 0;
-      } catch {
-        isOrganizationMember = false;
+        isPlatformPro = activeSubscriptions.length > 0;
       }
     }
 
     return {
-      usedSizePercent,
       isPlatformSubscription,
       isOrganizationMember,
-      isPlatformPaid,
+      isPlatformPro,
       activeSubscriptions,
-      ...size
+      usedSizePercent,
+      ...subInfo
     };
   }
 

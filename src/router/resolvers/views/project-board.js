@@ -16,7 +16,7 @@ export default function projectBoardResolver(route) {
   const space = spaces.setCurrentSpace(+route.params.spaceID);
   const project = projects.setCurrentProject(+route.params.projectID);
 
-  spaces.loadSpaceInfo(space);
+  spaces.loadSpaceSubInfo(space);
   projects.loadSpaceProjects(space);
 
   load("project-users", [

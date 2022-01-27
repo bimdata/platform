@@ -7,7 +7,7 @@
         :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
-        :disabled="spaceInfo.remainingSmartDataSize <= 0"
+        :disabled="spaceSubInfo.remainingSmartDataSize <= 0"
         @click="toggleFileUploader"
       >
         <BIMDataIcon
@@ -25,7 +25,7 @@
 
     <transition name="fade">
       <FileUploader
-        v-show="showFileUploader && spaceInfo.remainingSmartDataSize > 0"
+        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         class="project-overview__block--upload"
         :project="project"
         :allowedFileTypes="['.ifc', '.ifczip']"
@@ -91,7 +91,7 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const { currentSpace, spaceInfo, loadSpaceInfo } = useSpaces();
+    const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
@@ -106,7 +106,7 @@ export default {
 
     const reloadModels = debounce(async () => {
       await Promise.all([
-        loadSpaceInfo(currentSpace.value),
+        loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
         loadProjectModels(currentProject.value)
       ]);
@@ -126,7 +126,7 @@ export default {
       models: projectModels,
       project: currentProject,
       showFileUploader,
-      spaceInfo,
+      spaceSubInfo,
       users: projectUsers,
       // Methods
       closeFileUploader,

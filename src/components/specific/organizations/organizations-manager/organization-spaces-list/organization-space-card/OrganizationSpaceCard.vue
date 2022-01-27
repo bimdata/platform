@@ -1,5 +1,9 @@
 <template>
-  <div class="organization-space-card">
+  <div
+    class="organization-space-card"
+    :style="{ cursor: hasAccess ? 'pointer' : 'normal' }"
+    @click="goToSpaceBoard"
+  >
     <div class="organization-space-card__image">
       <SpaceCardImage :space="space" />
     </div>
@@ -17,7 +21,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+import { useSpaces } from "@/state/spaces.js";
+import routeNames from "@/router/route-names.js";
 // Components
 import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
 
@@ -35,12 +42,30 @@ export default {
       required: true
     }
   },
-  setup() {
-    const projects = ref([]);
+  setup(props) {
+    const { router } = useRouter();
+    const { userSpaces } = useSpaces();
+
+    const hasAccess = computed(() =>
+      userSpaces.value.some(space => space.id === props.space.id)
+    );
+
+    const goToSpaceBoard = () => {
+      if (hasAccess.value) {
+        router.push({
+          name: routeNames.goToSpaceBoard,
+          params: {
+            spaceID: props.space.id
+          }
+        });
+      }
+    };
 
     return {
       // References
-      projects
+      hasAccess,
+      // Methods
+      goToSpaceBoard
     };
   }
 };

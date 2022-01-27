@@ -14,9 +14,8 @@
 </template>
 
 <script>
-import christmasPlugin from "@bimdata/christmas-sleigh-viewer-plugin";
 import makeBIMDataViewer from "@bimdata/viewer";
-import { merge, set } from "lodash";
+import { set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
@@ -35,7 +34,7 @@ const availablePlugins = {
   realiz3D: "https://unpkg.com/@bimdata/realiz3d-viewer-plugin@0.0.2",
   backgroundColor:
     "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
-  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.6"
+  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.7"
 };
 
 export default {
@@ -83,7 +82,7 @@ export default {
         return config;
       }, {});
 
-    merge(pluginsConfig, spacePluginsConfig);
+    Object.assign(pluginsConfig, spacePluginsConfig);
 
     // Extract space specific plugins urls from deprecated features
     const featurePlugins = currentSpace.value.features
@@ -133,7 +132,6 @@ export default {
             )
         )
       );
-      bimdataViewer.registerPlugin(christmasPlugin);
       loading.value = false;
 
       bimdataViewer.mount("#viewer", initialWindow);

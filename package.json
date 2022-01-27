@@ -10,12 +10,9 @@
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
   "dependencies": {
-    "@bimdata/christmas-sleigh-viewer-plugin": "^2.0.0",
     "@bimdata/design-system": "^1.2.0-rc.12",
     "@bimdata/typescript-fetch-api-client": "^6.22.2",
-    "@bimdata/viewer": "^1.9.0-rc.37",
-    "@uppy/core": "^2.1.4",
-    "@uppy/xhr-upload": "^2.0.7",
+    "@bimdata/viewer": "^1.9.0-rc.42",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.6.1",
     "oidc-client": "^1.11.5",
