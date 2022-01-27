@@ -136,7 +136,7 @@ export default {
 
     const onClose = event => (isClosing.value = event);
     const getBack = () => (isSelectingValidator.value = false);
-    const getValidatorList = event => (validatorList.value = event.value);
+    const getValidatorList = list => (validatorList.value = list);
     const validatorListCounter = computed(
       () =>
         (validatorList.value || []).filter(({ isSelected }) => isSelected)

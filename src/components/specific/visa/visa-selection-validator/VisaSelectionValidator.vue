@@ -87,7 +87,7 @@ export default {
     );
 
     const onClick = () => {
-      emit("validator-list", peopleList);
+      emit("validator-list", peopleList.value);
       emit("get-back");
     };
 

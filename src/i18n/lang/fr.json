@@ -748,12 +748,12 @@
         "action": "Oui, quitter cette page",
         "keepView": "Annuler, rester ici"
       },
-      "deleteVisa": {
+      "delete": {
         "content": "Êtes-vous sûr de vouloir supprimer ce visa ?",
         "action": "Oui, supprimer ce visa",
         "keepView": "Annuler"
       },
-      "closeVisa": {
+      "close": {
         "content": "Êtes-vous sûr de vouloir cloturer ce visa ?",
         "action": "Oui, cloturer ce visa",
         "keepView": "Annuler"

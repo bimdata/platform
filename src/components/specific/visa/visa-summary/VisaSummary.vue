@@ -2,7 +2,7 @@
   <div class="visa-summary">
     <template v-if="isSelectingValidator">
       <VisaSelectionValidator
-        :userList="userList"
+        :userList="userProjectList"
         @validator-list="getValidatorList"
         @get-back="getBack"
       />
@@ -35,25 +35,34 @@
               ghost
               rounded
               icon
-              @click="handleEdit('undo')"
+              @click="undoEdit"
             >
               <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
             </BIMDataButton>
             <BIMDataButton
-              v-if="isAuthor && !isClosed"
+              v-if="isAuthor && !isClosed && !isEditing"
               ghost
               rounded
               icon
-              @click="handleEdit"
+              @click="initEdit"
+            >
+              <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
+            </BIMDataButton>
+            <BIMDataButton
+              v-if="isAuthor && !isClosed && isEditing"
+              ghost
+              rounded
+              icon
+              @click="confirmEdit"
             >
               <BIMDataIcon
-                :name="isEditing ? 'validate' : 'edit'"
+                name="validate"
                 size="xxs"
                 fill
                 color="granite-light"
               />
             </BIMDataButton>
-            <BIMDataButton ghost rounded icon @click="close">
+            <BIMDataButton ghost rounded icon @click="onClose">
               <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
             </BIMDataButton>
           </div>
@@ -102,7 +111,7 @@
               color="high"
               fill
               radius
-              @click="safeZoneHandler('deleteVisa')"
+              @click="onDeleteVisa"
               >{{ $t("Visa.summary.delete") }}</BIMDataButton
             >
             <BIMDataButton
@@ -111,29 +120,29 @@
               fill
               radius
               :disabled="isClosed"
-              @click="safeZoneHandler('closeVisa')"
+              @click="onCloseVisa"
               >{{ $t("Visa.summary.close") }}</BIMDataButton
             >
           </template>
           <template v-else>
             <BIMDataButton
               class="visa-summary__shell__action-button__validate"
-              :class="{ active: isValidated && !isClosed }"
+              :class="{ active: userValidationStatus.isValidated && !isClosed }"
               color="success"
               fill
               radius
               :disabled="isClosed"
-              @click="responseHandler('validate')"
+              @click="onAcceptValidation"
               >{{ $t("Visa.summary.validate") }}</BIMDataButton
             >
             <BIMDataButton
               class="visa-summary__shell__action-button__deny"
-              :class="{ active: isRefused && !isClosed }"
+              :class="{ active: userValidationStatus.isRefused && !isClosed }"
               color="high"
               fill
               radius
               :disabled="isClosed"
-              @click="responseHandler('refuse')"
+              @click="onDenyValidation"
               >{{ $t("Visa.summary.deny") }}</BIMDataButton
             >
           </template>
@@ -225,43 +234,27 @@ export default {
     const { getUserProjectList } = useProjects();
     const { user } = useUser();
     const { t } = useI18n();
+    const { id: currentUserId } = user.value;
 
-    const isValidated = ref(false);
-    const isRefused = ref(false);
     const isClosed = ref(false);
-    const isDenied = ref(false);
     const isEditing = ref(false);
     const hasDateError = ref(false);
     const formatedVisa = ref(null);
     const validationUserId = ref(null);
     const isAuthor = ref(false);
     const isSafeZone = ref(false);
-    const userList = ref(null);
+    const userProjectList = ref(null);
     const validatorList = ref(null);
     const isSelectingValidator = ref(false);
     const copyOfDate = ref(null);
     const copyOfDescription = ref(null);
-    const safeZoneInfo = ref({
-      type: null,
-      action: null
-    });
-
-    const actions = ref({
-      update: async data => {
-        await updateVisa(props.project, props.visa.document, props.visa, data);
-
-        const updatedVisa = await fetchVisa(props.project, props.visa);
-        await fetchAllVisaInfo(updatedVisa);
-      }
-    });
+    const safeZoneInfo = ref(null);
 
     /**
      * GLOBAL
      */
 
     const formatVisa = async visa => {
-      const { id } = user.value;
-
       formatedVisa.value = {
         ...visa,
         deadline: formatDateDDMMYYY(visa.deadline),
@@ -279,10 +272,12 @@ export default {
               ? fullName(validation.validator)
               : t("Visa.summary.deletedUser"),
             isSelf: validation.validator
-              ? validation.validator.userId === id
+              ? validation.validator.userId === currentUserId
               : false,
             hasAccess: visa.validationsInError.length
-              ? !visa.validationsInError.some(id => id === validation.id)
+              ? !visa.validationsInError.some(
+                  validationInErrorId => validationInErrorId === validation.id
+                )
               : true
           }))
           .sort((a, b) => {
@@ -291,7 +286,9 @@ export default {
             return a.fullName < b.fullName ? -1 : 1;
           })
       };
-      if (formatedVisa.value.creator.userId === id) isAuthor.value = true;
+      if (formatedVisa.value.creator.userId === currentUserId) {
+        isAuthor.value = true;
+      }
       isClosed.value = formatedVisa.value.status === VISA_STATUS.CLOSE;
     };
 
@@ -301,149 +298,128 @@ export default {
         id: formatedVisa.value.document.parentId
       });
 
-      userList.value = users.map(user => {
-        if (formatedVisa.value.validations) {
-          return {
-            ...user,
-            isSelected: formatedVisa.value.validations.some(
-              ({ validator }) => validator && validator.id === user.id
-            ),
-            validation: formatedVisa.value.validations.find(
-              ({ validator }) => validator && validator.id === user.id
-            )
-          };
-        }
-        return user;
+      userProjectList.value = users.map(user => {
+        return {
+          ...user,
+          isSelected: formatedVisa.value.validations.some(
+            ({ validator }) => validator && validator.id === user.id
+          ),
+          validation: formatedVisa.value.validations.find(
+            ({ validator }) => validator && validator.id === user.id
+          )
+        };
       });
-
-      !isAuthor.value && getValidationUserId();
-      statusVisaHandler();
     };
 
-    const close = () => {
+    const reloadVisa = async () => {
+      const visa = await fetchVisa(props.project, props.visa);
+      await fetchAllVisaInfo(visa);
+    };
+
+    const onClose = () => {
       emit("close-visa");
     };
 
-    onMounted(async () => fetchAllVisaInfo(props.visa));
+    onMounted(async () => {
+      fetchAllVisaInfo(props.visa);
+      if (!isAuthor.value) {
+        validationUserId.value = formatedVisa.value.validations.find(
+          ({ isSelf }) => isSelf
+        ).id;
+      }
+    });
 
     /***
-     * VALIDATION RESPONSE
+     * VALIDATION RESPONSE (validator)
      */
 
-    const responseActions = {
-      validate: async () =>
-        acceptValidation(
-          props.project,
-          props.visa.document,
-          props.visa,
-          validationUserId.value
-        ),
-      refuse: async () =>
-        denyValidation(
-          props.project,
-          props.visa.document,
-          props.visa,
-          validationUserId.value
-        ),
-      reset: async validationId =>
-        resetValidation(
-          props.project,
-          props.visa.document,
-          props.visa,
-          validationId
-        )
-    };
+    const userValidationStatus = computed(() => {
+      if (!isAuthor.value) {
+        const status = formatedVisa.value.validations.find(
+          ({ id: validationId }) => validationId === validationUserId.value
+        ).status;
 
-    const getValidationUserId = async () => {
-      validationUserId.value = formatedVisa.value.validations.find(
-        ({ isSelf }) => isSelf
-      ).id;
-    };
-
-    const userStatus = computed(
-      () =>
-        validationUserId.value &&
-        formatedVisa.value.validations.find(
-          ({ id }) => id === validationUserId.value
-        ).status
-    );
-
-    const statusVisaHandler = () => {
-      isValidated.value = userStatus.value === VALIDATION_STATUS.ACCEPT;
-      isRefused.value = userStatus.value === VALIDATION_STATUS.DENY;
-    };
-
-    const responseHandler = async type => {
-      const isActive =
-        type === "validate" ? !isValidated.value : !isRefused.value;
-
-      if (isActive) {
-        await responseActions[type]();
-      } else {
-        await responseActions.reset(validationUserId.value);
-      }
-
-      const updatedVisa = await fetchVisa(props.project, props.visa);
-      await fetchAllVisaInfo(updatedVisa);
-    };
-
-    /***
-     * SAFE ZONE
-     */
-
-    const safeZoneActions = {
-      deleteVisa: async () =>
-        deleteVisa(props.project, props.visa.document, props.visa),
-      closeVisa: async () =>
-        closeVisa(props.project, props.visa.document, props.visa)
-    };
-
-    const onSafeZone = async event => {
-      const { type } = safeZoneInfo.value;
-      if (event) {
-        await safeZoneActions[type]();
-        close();
-      }
-      safeZoneHandler();
-      isSafeZone.value = false;
-    };
-
-    const safeZoneHandler = type => {
-      if (type) {
-        isSafeZone.value = true;
-        safeZoneInfo.value = {
-          type,
-          action: safeZoneActions[type]
+        return {
+          isValidated: status === VALIDATION_STATUS.ACCEPT,
+          isRefused: status === VALIDATION_STATUS.DENY
         };
-      } else {
-        isSafeZone.value = false;
-        safeZoneInfo.value = null;
       }
+      return null;
+    });
+
+    const onAcceptValidation = async () => {
+      if (userValidationStatus.value.isValidated) {
+        await onResetValidation();
+      } else {
+        await acceptValidation(
+          props.project,
+          props.visa.document,
+          props.visa,
+          validationUserId.value
+        );
+        await reloadVisa();
+      }
+    };
+
+    const onDenyValidation = async () => {
+      if (userValidationStatus.value.isRefused) {
+        await onResetValidation();
+      } else {
+        await denyValidation(
+          props.project,
+          props.visa.document,
+          props.visa,
+          validationUserId.value
+        );
+        await reloadVisa();
+      }
+    };
+
+    const onResetValidation = async validationId => {
+      await resetValidation(
+        props.project,
+        props.visa.document,
+        props.visa,
+        (validationId = validationId || validationUserId.value)
+      );
+      await reloadVisa();
+    };
+
+    /***
+     * MANAGE VISA (creator)
+     */
+
+    const onDeleteVisa = () => {
+      isSafeZone.value = true;
+      safeZoneInfo.value = {
+        type: "delete",
+        action: () => deleteVisa(props.project, props.visa.document, props.visa)
+      };
+    };
+
+    const onCloseVisa = () => {
+      isSafeZone.value = true;
+      safeZoneInfo.value = {
+        type: "close",
+        action: () => closeVisa(props.project, props.visa.document, props.visa)
+      };
+    };
+
+    const onSafeZone = async isActionConfirmed => {
+      if (isActionConfirmed) {
+        await safeZoneInfo.value.action();
+        onClose();
+      }
+      isSafeZone.value = false;
+      safeZoneInfo.value = null;
     };
 
     /**
      * MODIFY PEOPLE
      */
 
-    const userActions = {
-      addUser: async userValidatorId =>
-        createValidation(
-          props.project,
-          props.visa.document,
-          props.visa,
-          userValidatorId
-        ),
-      deleteUser: async validationId =>
-        deleteValidation(
-          props.project,
-          props.visa.document,
-          props.visa,
-          validationId
-        )
-    };
-
     const getBack = () => (isSelectingValidator.value = false);
-    const getValidatorList = event => (validatorList.value = event.value);
+    const getValidatorList = list => (validatorList.value = list);
 
     watch(validatorList, async () => {
       await Promise.all(
@@ -454,101 +430,116 @@ export default {
               validationId: validator.validation && validator.validation.id,
               isToAdd:
                 validator.isSelected &&
-                userList.value
+                userProjectList.value
                   .filter(user => !user.isSelected)
                   .some(user => user.id === validator.id),
               isToDel:
                 !validator.isSelected &&
-                userList.value.some(
+                userProjectList.value.some(
                   user => user.id === validator.id && user.isSelected
                 )
             };
           })
           .filter(({ isToAdd, isToDel }) => isToAdd || isToDel)
-          .map(async ({ id, validationId, isToAdd, isToDel }) => {
+          .map(async ({ id: validatorId, validationId, isToAdd, isToDel }) => {
             if (isToAdd) {
-              await userActions.addUser(id);
+              await createValidation(
+                props.project,
+                props.visa.document,
+                props.visa,
+                validatorId
+              );
             } else if (isToDel) {
-              await userActions.deleteUser(validationId);
+              await deleteValidation(
+                props.project,
+                props.visa.document,
+                props.visa,
+                validationId
+              );
             }
           })
       );
-      const updatedVisa = await fetchVisa(props.project, props.visa);
-      await fetchAllVisaInfo(updatedVisa);
+      await reloadVisa();
     });
 
     /**
      * EDITING
      */
 
-    const handleEdit = async undo => {
-      if (undo === "undo") {
-        isEditing.value = false;
-        formatedVisa.value.deadline = copyOfDate.value;
-        formatedVisa.value.description = copyOfDescription.value;
-      } else if (isEditing.value) {
-        const dateConform = isDateConform(formatedVisa.value.deadline);
-        hasDateError.value = !dateConform;
+    const initEdit = () => {
+      copyOfDate.value = formatedVisa.value.deadline;
+      copyOfDescription.value = formatedVisa.value.description;
+      isEditing.value = true;
+    };
 
-        if (dateConform) {
-          await actions.value.update({
-            description: formatedVisa.value.description,
-            deadline: formatDate(formatedVisa.value.deadline)
-          });
-          isEditing.value = false;
-        }
-      } else if (!isEditing.value) {
-        isEditing.value = true;
-        copyOfDate.value = formatedVisa.value.deadline;
-        copyOfDescription.value = formatedVisa.value.description;
+    const undoEdit = () => {
+      formatedVisa.value.deadline = copyOfDate.value;
+      formatedVisa.value.description = copyOfDescription.value;
+      isEditing.value = false;
+    };
+
+    const confirmEdit = async () => {
+      const dateConform = isDateConform(formatedVisa.value.deadline);
+      hasDateError.value = !dateConform;
+      if (dateConform) {
+        await updateVisa(props.project, props.visa.document, props.visa, {
+          description: formatedVisa.value.description,
+          deadline: formatDate(formatedVisa.value.deadline)
+        });
+        await reloadVisa();
+        isEditing.value = false;
       }
     };
 
     /**
-     * PEOPLE ACTIONS for VisaSummaryPeopleActions
+     * VALIDATOR ACTIONS (VisaSummaryValidatorActions)
      */
 
     const usersActions = {
       deleteUser: async validationId => {
-        await userActions.deleteUser(validationId);
-        const updatedVisa = await fetchVisa(props.project, props.visa);
-        await fetchAllVisaInfo(updatedVisa);
+        await deleteValidation(
+          props.project,
+          props.visa.document,
+          props.visa,
+          validationId
+        );
+        await reloadVisa();
       },
       resetVal: async validationId => {
-        await responseActions.reset(validationId);
-        const updatedVisa = await fetchVisa(props.project, props.visa);
-        await fetchAllVisaInfo(updatedVisa);
+        await onResetValidation(validationId);
+        await reloadVisa();
       }
     };
 
     return {
       // references
       formatedVisa,
-      isValidated,
-      isRefused,
       isAuthor,
       validationUserId,
-      isDenied,
       isSafeZone,
       safeZoneInfo,
-      userList,
+      userProjectList,
       isSelectingValidator,
       validatorList,
       isEditing,
       hasDateError,
       isClosed,
       usersActions,
+      userValidationStatus,
       // methods
+      onAcceptValidation,
+      onDenyValidation,
       close,
-      actions,
       fetchAllVisaInfo,
-      safeZoneHandler,
+      onDeleteVisa,
+      onCloseVisa,
       onSafeZone,
-      responseHandler,
       getValidatorList,
       getBack,
-      handleEdit,
-      console
+      initEdit,
+      undoEdit,
+      confirmEdit,
+      onClose
     };
   }
 };
