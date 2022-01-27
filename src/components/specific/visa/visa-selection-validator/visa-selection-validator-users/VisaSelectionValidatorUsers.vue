@@ -1,40 +1,36 @@
 <template>
-  <div
-    class="visa-add-validator-people"
-    v-for="user in userList"
-    :key="user.id"
-  >
+  <div class="visa-add-validator-users" v-for="user in userList" :key="user.id">
     <BIMDataCheckbox
       :disabled="!user.hasAccess"
       :modelValue="user.isSelected"
       @update:modelValue="toggle(user, $event)"
     >
     </BIMDataCheckbox>
-    <div class="visa-add-validator-people__picture">
+    <div class="visa-add-validator-users__picture">
       <UserAvatar :user="user" size="40" color="silver-light" />
     </div>
-    <div v-if="user.fullName" class="visa-add-validator-people__info">
+    <div v-if="user.fullName" class="visa-add-validator-users__info">
       <BIMDataTextBox
-        class="visa-add-validator-people__info__main"
+        class="visa-add-validator-users__info__main"
         :class="{ hide: !user.hasAccess }"
         :text="user.fullName"
       />
       <span
-        class="visa-add-validator-people__info__second"
+        class="visa-add-validator-users__info__second"
         :class="{ hide: !user.hasAccess }"
         >{{ user.email }}</span
       >
     </div>
-    <div v-else class="visa-add-validator-people__info">
+    <div v-else class="visa-add-validator-users__info">
       <span
-        class="visa-add-validator-people__info__main"
+        class="visa-add-validator-users__info__main"
         :class="{ hide: !user.hasAccess }"
         >{{ user.email }}</span
       >
     </div>
     <div
       v-if="!user.hasAccess"
-      class="visa-add-validator-people__acces-denied"
+      class="visa-add-validator-users__acces-denied"
       @mouseover="handleCurrentPerson(user.id)"
       @mouseleave="handleCurrentPerson()"
     >
@@ -46,7 +42,7 @@
       />
       <div
         v-if="isWarningHover && currentPeopleId === user.id"
-        class="visa-add-validator-people__acces-denied__hover"
+        class="visa-add-validator-users__acces-denied__hover"
       >
         <span>{{ $t("Visa.selectionValidator.warning") }}</span>
       </div>
@@ -96,4 +92,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./VisaSelectionValidatorPeople.scss"></style>
+<style scoped lang="scss" src="./VisaSelectionValidatorUsers.scss"></style>

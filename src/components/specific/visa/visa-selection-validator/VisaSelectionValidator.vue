@@ -27,7 +27,7 @@
       </BIMDataSearch>
     </div>
     <div class="visa-add-validator__people-list">
-      <VisaValidatorPeople :userList="peopleList" />
+      <VisaValidatorUsers :userList="peopleList" />
     </div>
     <div class="visa-add-validator__action">
       <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
@@ -45,11 +45,11 @@
 <script>
 import { ref, watch, computed } from "vue";
 
-import VisaValidatorPeople from "./visa-selection-validator-people/VisaSelectionValidatorPeople.vue";
+import VisaValidatorUsers from "./visa-selection-validator-users/VisaSelectionValidatorUsers.vue";
 
 export default {
   components: {
-    VisaValidatorPeople
+    VisaValidatorUsers
   },
   props: {
     userList: {
