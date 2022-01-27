@@ -12,28 +12,33 @@
       </div>
     </div>
     <div class="subscribe-card__end">
-      <BIMDataButton
-        width="228px"
-        height="48px"
-        color="secondary"
-        fill
-        radius
-        @click="goToSubscribe"
-      >
-        <BIMDataIcon name="plus" size="xxs" margin="0 9px 0 0" />
-        <span>{{ $t("SubscribeCard.button") }}</span>
-      </BIMDataButton>
+      <AppLink :to="{ name: routeNames.subscribe }">
+        <BIMDataButton
+          width="228px"
+          height="48px"
+          color="secondary"
+          fill
+          radius
+        >
+          <BIMDataIcon name="plus" size="xxs" margin="0 9px 0 0" />
+          <span>{{ $t("SubscribeCard.button") }}</span>
+        </BIMDataButton>
+      </AppLink>
     </div>
   </div>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
+// Components
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
+  components: {
+    AppLink
+  },
   props: {
     layout: {
       type: String,
@@ -42,19 +47,12 @@ export default {
     }
   },
   setup() {
-    const router = useRouter();
-
     const size = formatBytes(PRO_PLAN_STORAGE);
-
-    const goToSubscribe = () => {
-      router.push({ name: routeNames.subscribe });
-    };
 
     return {
       // References
-      size,
-      // Methods
-      goToSubscribe
+      routeNames,
+      size
     };
   }
 };

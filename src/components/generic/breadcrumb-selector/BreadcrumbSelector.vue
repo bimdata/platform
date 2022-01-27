@@ -11,8 +11,8 @@
         name="chevron"
         size="xs"
         :rotate="isOpen ? 90 : 0"
-        @click="toggle"
         margin="0 0 0 6px"
+        @click="toggle"
       />
     </div>
     <transition name="slide-fade-down">

@@ -14,43 +14,46 @@
       </template>
     </ProgressBar>
     <div
-      v-if="spaceSubInfo.isPlatformSubscription && spaceSubInfo.isOrganizationMember"
+      v-if="
+        spaceSubInfo.isPlatformSubscription && spaceSubInfo.isOrganizationMember
+      "
     >
-      <BIMDataButton
-        class="m-r-18"
-        color="secondary"
-        fill
-        radius
-        @click="
-          () =>
-            spaceSubInfo.isPlatformPro
-              ? goToSubscriptionDatapack()
-              : goToSubscriptionPro()
-        "
+      <AppLink
+        :to="{
+          name: spaceSubInfo.isPlatformPro
+            ? routeNames.subscriptionDatapack
+            : routeNames.subscriptionPro,
+          query: {
+            space: space.id
+          }
+        }"
       >
-        {{
-          $t(
-            `SpaceSizeInfo.${
-              spaceSubInfo.isPlatformPro
-                ? "subscribeDatapackButton"
-                : "subscribePlatformButton"
-            }`
-          )
-        }}
-      </BIMDataButton>
+        <BIMDataButton class="m-r-18" color="secondary" fill radius>
+          {{
+            $t(
+              `SpaceSizeInfo.${
+                spaceSubInfo.isPlatformPro
+                  ? "subscribeDatapackButton"
+                  : "subscribePlatformButton"
+              }`
+            )
+          }}
+        </BIMDataButton>
+      </AppLink>
     </div>
   </div>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
 import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
   components: {
+    AppLink,
     ProgressBar
   },
   props: {
@@ -63,32 +66,11 @@ export default {
       required: true
     }
   },
-  setup(props) {
-    const router = useRouter();
-
-    const goToSubscriptionPro = () => {
-      router.push({
-        name: routeNames.subscriptionPro,
-        query: {
-          space: props.space.id
-        }
-      });
-    };
-
-    const goToSubscriptionDatapack = () => {
-      router.push({
-        name: routeNames.subscriptionDatapack,
-        query: {
-          space: props.space.id
-        }
-      });
-    };
-
+  setup() {
     return {
       // Methods
       formatBytes,
-      goToSubscriptionDatapack,
-      goToSubscriptionPro
+      routeNames
     };
   }
 };
