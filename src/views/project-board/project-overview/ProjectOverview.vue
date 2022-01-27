@@ -1,6 +1,6 @@
 <template>
   <div class="project-overview">
-    <app-slot-content name="project-board-action">
+    <AppSlotContent name="project-board-action">
       <BIMDataButton
         data-test="btn-toggle-upload"
         width="120px"
@@ -21,7 +21,7 @@
             : $t("ProjectOverview.openFileUploadButtonText")
         }}</span>
       </BIMDataButton>
-    </app-slot-content>
+    </AppSlotContent>
 
     <transition name="fade">
       <FileUploader
@@ -36,29 +36,29 @@
     </transition>
 
     <div class="project-overview__block--overview">
-      <app-loading name="project-models">
+      <AppLoading name="project-models">
         <ModelsOverview
           :project="project"
           :models="models"
           @open-file-uploader="openFileUploader"
         />
-      </app-loading>
+      </AppLoading>
     </div>
 
     <div class="project-overview__block--users">
-      <app-loading name="project-users">
+      <AppLoading name="project-users">
         <ProjectUsersManager
           :project="project"
           :users="users"
           :invitations="invitations"
         />
-      </app-loading>
+      </AppLoading>
     </div>
 
     <div class="project-overview__block--models">
-      <app-loading name="project-models">
+      <AppLoading name="project-models">
         <ModelsManager :project="project" :models="models" />
-      </app-loading>
+      </AppLoading>
     </div>
   </div>
 </template>

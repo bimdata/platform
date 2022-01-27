@@ -7,7 +7,7 @@
     <div
       v-if="images.length > 1"
       class="project-card-model-preview__switcher"
-      @click.stop="() => {}"
+      @click.prevent.stop="() => {}"
     >
       <BIMDataIcon
         name="chevron"

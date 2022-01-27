@@ -21,7 +21,7 @@
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
-          <app-slot name="project-board-action" />
+          <AppSlot name="project-board-action" />
         </div>
       </template>
     </ViewHeader>

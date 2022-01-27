@@ -1,7 +1,7 @@
 <template>
   <div
     class="space-card-action-menu"
-    @click.stop="() => {}"
+    @click.prevent.stop="() => {}"
     v-click-away="closeMenu"
   >
     <BIMDataButton
