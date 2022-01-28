@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { onBeforeMount, ref, watch } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useSession } from "@/composables/session.js";
@@ -85,21 +85,16 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
     const { currentSpace, spaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
-    const tabs = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        tabs.value = tabsDef.map(tab => ({
-          ...tab,
-          label: t(`ProjectBoard.tabs.${tab.id}`)
-        }));
-      },
-      { immediate: true }
+    const tabs = computed(() =>
+      tabsDef.map(tab => ({
+        ...tab,
+        label: t(`ProjectBoard.tabs.${tab.id}`)
+      }))
     );
 
     const currentTab = ref(tabsDef[0]);

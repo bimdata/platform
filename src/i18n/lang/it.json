@@ -276,6 +276,7 @@
         "title": "Modelli di progetto",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
             "split": "Dividi/Esporta",
             "merge": "Unisci",
             "archive": "Archivia"
@@ -291,8 +292,8 @@
         "title": "Panoramica dei modelli di progetto"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Carica il tuo primo IFC",
-        "uploadButtonText": "Carica IFC"
+        "text": "Carica il tuo primo modello",
+        "uploadButtonText": "Carica modello"
     },
     "ModelsTable": {
         "emptyTablePlaceholder": "Nessun modello",

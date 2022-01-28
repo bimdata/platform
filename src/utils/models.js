@@ -3,7 +3,7 @@ import MODEL_TYPES from "@/config/model-types.js";
 
 function segregateBySource(models) {
   const result = {
-    ifc: [],
+    upload: [],
     split: [],
     merge: [],
     archive: []
@@ -14,7 +14,7 @@ function segregateBySource(models) {
     } else if (
       [MODEL_SOURCES.UPLOAD, MODEL_SOURCES.OPTIMIZED].includes(model.source)
     ) {
-      result.ifc.push(model);
+      result.upload.push(model);
     } else if (
       [MODEL_SOURCES.SPLIT, MODEL_SOURCES.EXPORT].includes(model.source)
     ) {
@@ -22,7 +22,7 @@ function segregateBySource(models) {
     } else if (MODEL_SOURCES.MERGE === model.source) {
       result.merge.push(model);
     } else {
-      result.ifc.push(model);
+      result.upload.push(model);
     }
   }
   return result;

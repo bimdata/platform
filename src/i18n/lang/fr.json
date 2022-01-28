@@ -452,6 +452,7 @@
     "title": "Modèles du projet",
     "tabs": {
       "ifc": "IFC",
+      "dwg": "DWG",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives"
@@ -470,7 +471,7 @@
   },
 
   "ModelsOverviewOnboarding": {
-    "text": "Téléverser votre premier IFC",
+    "text": "Téléverser votre premier modèle",
     "uploadButtonText": "Téléversement"
   },
 

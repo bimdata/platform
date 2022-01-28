@@ -276,6 +276,7 @@
         "title": "Modelos del proyecto",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
             "split": "Split / Exportar",
             "merge": "Fusionar",
             "archive": "Archivos"
@@ -291,7 +292,7 @@
         "title": "Visión del proyecto"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Transferir vuestro primer IFC",
+        "text": "Transferir vuestro primer modelo",
         "uploadButtonText": "Transferencia"
     },
     "ModelsTable": {

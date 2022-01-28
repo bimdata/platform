@@ -276,6 +276,8 @@
         "title": "Project Models",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
+            "upload": "Upload",
             "split": "Split / Export",
             "merge": "Merge",
             "archive": "Archives"
@@ -291,8 +293,8 @@
         "title": "Project Models Overview"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Upload your first IFC",
-        "uploadButtonText": "Upload IFC"
+        "text": "Upload your first model",
+        "uploadButtonText": "Upload Model"
     },
     "ModelsTable": {
         "emptyTablePlaceholder": "No model",

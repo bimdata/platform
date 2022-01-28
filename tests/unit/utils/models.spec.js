@@ -25,7 +25,7 @@ describe("Models Utils", () => {
     const result = segregateBySource(models);
 
     // Assert
-    expect(result.ifc).toEqual([
+    expect(result.upload).toEqual([
       models[0], models[1], models[2], models[6]
     ]);
     expect(result.split).toEqual([

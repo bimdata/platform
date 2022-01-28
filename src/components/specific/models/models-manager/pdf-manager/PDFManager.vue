@@ -1,16 +1,13 @@
 <template>
-  <div class="pdf-manager">
-    <PDFTable :project="project" :models="models" />
-  </div>
+  <ModelsSubManager :project="project" :models="models" />
 </template>
 
 <script>
-// Components
-import PDFTable from "./pdf-table/PDFTable.vue";
+import ModelsSubManager from "../models-sub-manager/ModelsSubManager.vue";
 
 export default {
   components: {
-    PDFTable
+    ModelsSubManager
   },
   props: {
     project: {
@@ -24,10 +21,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.pdf-manager {
-  width: 100%;
-  height: 100%;
-}
-</style>

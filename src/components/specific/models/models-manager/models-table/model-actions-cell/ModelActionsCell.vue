@@ -140,4 +140,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./IFCActionsCell.scss"></style>
+<style scoped lang="scss" src="./ModelActionsCell.scss"></style>

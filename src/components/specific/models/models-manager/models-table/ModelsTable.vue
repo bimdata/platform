@@ -10,7 +10,7 @@
     :placeholder="$t('ModelsTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: model }">
-      <IFCNameCell
+      <ModelNameCell
         :project="project"
         :model="model"
         :editMode="nameEditMode[model.id]"
@@ -27,10 +27,10 @@
       {{ $d(model.updatedAt, "long") }}
     </template>
     <template #cell-status="{ row: model }">
-      <IFCStatusCell :project="project" :model="model" />
+      <ModelStatusCell :project="project" :model="model" />
     </template>
     <template #cell-actions="{ row: model }">
-      <IFCActionsCell
+      <ModelActionsCell
         :project="project"
         :model="model"
         @archive="$emit('archive', $event)"
@@ -49,16 +49,16 @@ import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
-import IFCActionsCell from "./ifc-actions-cell/IFCActionsCell.vue";
-import IFCNameCell from "./ifc-name-cell/IFCNameCell.vue";
-import IFCStatusCell from "./ifc-status-cell/IFCStatusCell.vue";
+import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
+import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
+import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
 
 export default {
   components: {
     GenericTable,
-    IFCActionsCell,
-    IFCNameCell,
-    IFCStatusCell
+    ModelActionsCell,
+    ModelNameCell,
+    ModelStatusCell
   },
   props: {
     project: {

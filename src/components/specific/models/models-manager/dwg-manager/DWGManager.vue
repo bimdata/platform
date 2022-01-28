@@ -1,16 +1,13 @@
 <template>
-  <div class="dwg-manager">
-    <DWGTable :project="project" :models="models" />
-  </div>
+  <ModelsSubManager :project="project" :models="models" />
 </template>
 
 <script>
-// Components
-import DWGTable from "./dwg-table/DWGTable.vue";
+import ModelsSubManager from "../models-sub-manager/ModelsSubManager.vue";
 
 export default {
   components: {
-    DWGTable
+    ModelsSubManager
   },
   props: {
     project: {
@@ -24,10 +21,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.dwg-manager {
-  width: 100%;
-  height: 100%;
-}
-</style>

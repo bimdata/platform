@@ -1,5 +1,5 @@
 <template>
-  <span class="ifc-status-cell" :class="`ifc-status-cell--${statusName}`">
+  <span class="model-status-cell" :class="`model-status-cell--${statusName}`">
     <BIMDataSpinner v-if="['pending', 'in-progress'].includes(statusName)" />
     <BIMDataIcon v-else :name="statusIcon" size="s" />
   </span>
@@ -7,8 +7,8 @@
 
 <script>
 import { onUnmounted, ref, watch } from "vue";
-import MODEL_STATUS from "@/config/model-statuses";
-import { useModels } from "@/state/models";
+import MODEL_STATUS from "@/config/model-statuses.js";
+import { useModels } from "@/state/models.js";
 
 export default {
   props: {
@@ -86,4 +86,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./IFCStatusCell.scss"></style>
+<style scoped lang="scss" src="./ModelStatusCell.scss"></style>

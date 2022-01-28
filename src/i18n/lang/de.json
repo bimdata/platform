@@ -276,6 +276,7 @@
         "title": "Modelle des Projekts",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
             "split": "Aufteilen / exportieren",
             "merge": "Zusammenführen",
             "archive": "Archiv"
@@ -291,7 +292,7 @@
         "title": "Projektübersicht"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Ihr erstes IFC hochladen",
+        "text": "Ihr erstes Modell hochladen",
         "uploadButtonText": "Hochladen"
     },
     "ModelsTable": {

@@ -1,5 +1,5 @@
 <template>
-  <div class="ifc-action-bar">
+  <div class="models-action-bar">
     <BIMDataButton
       :disabled="
         !project.isAdmin && models.some(m => m.document.userPermission < 100)
@@ -53,18 +53,6 @@
       <BIMDataIcon name="download" size="s" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
-    <!-- 
-    <BIMDataButton
-      width="120px"
-      ghost
-      squared
-      :disabled="models.length < 2"
-      @click="$emit('merge', models)"
-    >
-      <BIMDataIcon name="union" size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>
-    </BIMDataButton>
-    -->
   </div>
 </template>
 
@@ -88,4 +76,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./IFCActionBar.scss"></style>
+<style scoped lang="scss" src="./ModelsActionBar.scss"></style>

@@ -36,7 +36,7 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <BIMDataFileIcon fileName=".pdf" :size="16" />
+        <img src="/static/ifc-logo.svg" />
         <BIMDataTextBox :text="model.name" />
       </div>
     </transition>
@@ -132,4 +132,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./PDFNameCell.scss"></style>
+<style scoped lang="scss" src="./ModelNameCell.scss"></style>
