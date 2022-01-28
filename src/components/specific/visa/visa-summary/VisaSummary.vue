@@ -321,7 +321,7 @@ export default {
     };
 
     onMounted(async () => {
-      fetchAllVisaInfo(props.visa);
+      await fetchAllVisaInfo(props.visa);
       if (!isAuthor.value) {
         validationUserId.value = formatedVisa.value.validations.find(
           ({ isSelf }) => isSelf
