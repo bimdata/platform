@@ -97,7 +97,7 @@
             <VisaMain
               v-if="showVisaManager"
               :project="project"
-              :file="fileToManage"
+              :document="fileToManage"
               :userVisas="userVisas"
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"

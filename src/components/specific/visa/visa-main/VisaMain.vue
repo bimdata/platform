@@ -11,7 +11,7 @@
     <template v-if="currentView === 'visaAdd'">
       <VisaAdd
         :project="project"
-        :file="file"
+        :document="document"
         @create-visa="createVisa"
         @close="$emit('close', $event)"
       />
@@ -45,7 +45,7 @@ export default {
       type: Object,
       required: true
     },
-    file: {
+    document: {
       type: Object,
       required: true
     },
@@ -58,7 +58,7 @@ export default {
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 
-    const currentView = ref(props.file.id ? "visaAdd" : "visaList");
+    const currentView = ref(props.document.id ? "visaAdd" : "visaList");
     const currentTab = ref("toValidateVisas");
     const currentVisa = ref(null);
 

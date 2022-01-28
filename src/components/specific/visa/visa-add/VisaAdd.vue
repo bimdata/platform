@@ -102,7 +102,7 @@ export default {
       type: Object,
       required: true
     },
-    file: {
+    document: {
       type: Object,
       required: true
     }
@@ -148,7 +148,7 @@ export default {
 
       if (dateConform) {
         hasDateError.value = false;
-        const visa = await createVisa(props.project, props.file, {
+        const visa = await createVisa(props.project, props.document, {
           deadline: formatDate(dateInput.value),
           description: descInput.value
         });
@@ -156,7 +156,7 @@ export default {
           validatorList.value
             .filter(({ isSelected }) => isSelected)
             .map(({ id: validatorId }) =>
-              createValidation(props.project, props.file, visa, validatorId)
+              createValidation(props.project, props.document, visa, validatorId)
             )
         );
         emit("create-visa", visa);
@@ -167,7 +167,7 @@ export default {
 
     onMounted(async () => {
       userList.value = await getUserProjectList(props.project, {
-        id: props.file.parentId
+        id: props.document.parentId
       });
     });
 
