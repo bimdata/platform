@@ -2,13 +2,20 @@
   <div class="visa-list">
     <div class="visa-list__header">
       <div class="visa-list__header__left-side">
-        <BIMDataIcon
-          name="visa"
-          fill
-          color="primary"
-          size="s"
-          margin="2.5px 0 0 0"
-        />
+        <template v-if="visasLoading">
+          <div class="visa-list__header__left-side__loader">
+            <BIMDataSpinner />
+          </div>
+        </template>
+        <template v-else>
+          <BIMDataIcon
+            name="visa"
+            fill
+            color="primary"
+            size="s"
+            margin="2.5px 0 0 0"
+          />
+        </template>
         <span>{{ $t("Visa.list.title") }}</span>
       </div>
       <div class="visa-list__header__right-side">
@@ -47,7 +54,7 @@
           class="visa-list__content__visa"
           v-for="visa of userVisas[currentTab]"
           :key="visa.id"
-          @click="onClickToReachVisa(visa)"
+          @click="!visasLoading && onClickToReachVisa(visa)"
         >
           <BIMDataIcon :name="iconStatus(visa)" size="l" fill color="primary" />
           <div class="visa-list__content__visa__desc">
@@ -92,6 +99,10 @@ export default {
     },
     startTab: {
       type: String,
+      required: true
+    },
+    visasLoading: {
+      type: Boolean,
       required: true
     }
   },

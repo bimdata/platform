@@ -99,6 +99,7 @@
               :project="project"
               :document="fileToManage"
               :userVisas="userVisas"
+              :visasLoading="visasLoading"
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
             />
@@ -194,6 +195,7 @@ export default {
     const currentFiles = ref([]);
     const userVisas = ref(null);
     const userVisasCounter = ref(null);
+    const visasLoading = ref(false);
 
     watch(
       () => props.fileStructure,
@@ -323,29 +325,34 @@ export default {
       }, 100);
     };
 
-    const getVisas = async () => {
-      const toValidateVisas = await fetchToValidateVisas(props.project);
-      const createdVisas = await fetchCreatedVisas(props.project);
+    const fetchVisas = async () => {
+      try {
+        visasLoading.value = true;
+        const [toValidateVisas, createdVisas] = await Promise.all([
+          fetchToValidateVisas(props.project),
+          fetchCreatedVisas(props.project)
+        ]);
 
-      userVisas.value = {
-        toValidateVisas:
-          toValidateVisas.sort((a, b) =>
-            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
-          ) || [],
-        createdVisas:
-          createdVisas.sort((a, b) =>
-            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
-          ) || []
-      };
+        userVisas.value = {
+          toValidateVisas:
+            toValidateVisas.sort((a, b) =>
+              a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+            ) || [],
+          createdVisas:
+            createdVisas.sort((a, b) =>
+              a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+            ) || []
+        };
 
-      userVisasCounter.value =
-        userVisas.value.toValidateVisas.length +
-        userVisas.value.createdVisas.length;
+        userVisasCounter.value =
+          userVisas.value.toValidateVisas.length +
+          userVisas.value.createdVisas.length;
+      } finally {
+        visasLoading.value = false;
+      }
     };
 
-    const fetchVisas = () => getVisas();
-
-    onMounted(fetchVisas);
+    onMounted(() => fetchVisas());
 
     return {
       // References
@@ -363,6 +370,7 @@ export default {
       fileToManage,
       userVisas,
       userVisasCounter,
+      visasLoading,
       // Methods
       closeAccessManager,
       closeDeleteModal,

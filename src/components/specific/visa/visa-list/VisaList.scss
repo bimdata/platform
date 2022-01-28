@@ -19,6 +19,13 @@
         color: var(--color-primary);
         font-weight: bold;
       }
+
+      &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 6px;
+      }
     }
   }
 

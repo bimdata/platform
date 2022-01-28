@@ -4,6 +4,7 @@
       <VisaList
         :userVisas="userVisas"
         :startTab="currentTab"
+        :visasLoading="visasLoading"
         @reach-visa="reachVisa"
         @close="$emit('close', $event)"
       />
@@ -51,6 +52,10 @@ export default {
     },
     userVisas: {
       type: Object,
+      required: true
+    },
+    visasLoading: {
+      type: Boolean,
       required: true
     }
   },

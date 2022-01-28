@@ -254,62 +254,69 @@ export default {
      * GLOBAL
      */
 
-    const formatVisa = async visa => {
-      formatedVisa.value = {
-        ...visa,
-        deadline: formatDateDDMMYYY(visa.deadline),
-        creator: {
-          ...visa.creator,
-          fullName: visa.creator
-            ? fullName(visa.creator)
-            : t("Visa.summary.deletedUser")
-        },
-        validations: visa.validations
-          .map(validation => ({
-            ...validation,
-            userId: validation.validator ? validation.validator.userId : 0,
-            fullName: validation.validator
-              ? fullName(validation.validator)
-              : t("Visa.summary.deletedUser"),
-            isSelf: validation.validator
-              ? validation.validator.userId === currentUserId
-              : false,
-            hasAccess: visa.validationsInError.length
-              ? !visa.validationsInError.some(
-                  validationInErrorId => validationInErrorId === validation.id
-                )
-              : true
-          }))
-          .sort((a, b) => {
-            if (!a.fullName) return 1;
-            if (!b.fullName) return -1;
-            return a.fullName < b.fullName ? -1 : 1;
-          })
-      };
-      if (formatedVisa.value.creator.userId === currentUserId) {
-        isAuthor.value = true;
-      }
-      isClosed.value = formatedVisa.value.status === VISA_STATUS.CLOSE;
-    };
+    const formatVisa = visa => ({
+      ...visa,
+      deadline: formatDateDDMMYYY(visa.deadline),
+      creator: {
+        ...visa.creator,
+        fullName: visa.creator
+          ? fullName(visa.creator)
+          : t("Visa.summary.deletedUser")
+      },
+      validations: visa.validations
+        .map(validation => ({
+          ...validation,
+          userId: validation.validator ? validation.validator.userId : 0,
+          fullName: validation.validator
+            ? fullName(validation.validator)
+            : t("Visa.summary.deletedUser"),
+          isSelf: validation.validator
+            ? validation.validator.userId === currentUserId
+            : false,
+          hasAccess: visa.validationsInError.length
+            ? !visa.validationsInError.some(
+                validationInErrorId => validationInErrorId === validation.id
+              )
+            : true
+        }))
+        .sort((a, b) => {
+          if (!a.fullName) return 1;
+          if (!b.fullName) return -1;
+          return a.fullName < b.fullName ? -1 : 1;
+        })
+    });
 
     const fetchAllVisaInfo = async visa => {
-      await formatVisa(visa);
       const users = await getUserProjectList(props.project, {
-        id: formatedVisa.value.document.parentId
+        id: visa.document.parentId
       });
-
       userProjectList.value = users.map(user => {
         return {
           ...user,
-          isSelected: formatedVisa.value.validations.some(
+          isSelected: visa.validations.some(
             ({ validator }) => validator && validator.id === user.id
           ),
-          validation: formatedVisa.value.validations.find(
+          validation: visa.validations.find(
             ({ validator }) => validator && validator.id === user.id
           )
         };
       });
+
+      formatedVisa.value = formatVisa(visa);
     };
+
+    onMounted(async () => {
+      if (props.visa.creator.userId === currentUserId) {
+        isAuthor.value = true;
+      }
+      if (!isAuthor.value) {
+        validationUserId.value = props.visa.validations.find(
+          ({ validator }) => validator.userId === currentUserId
+        ).id;
+      }
+      isClosed.value = props.visa.status === VISA_STATUS.CLOSE;
+      await fetchAllVisaInfo(props.visa);
+    });
 
     const reloadVisa = async () => {
       const visa = await fetchVisa(props.project, props.visa);
@@ -319,15 +326,6 @@ export default {
     const onClose = () => {
       emit("close-visa");
     };
-
-    onMounted(async () => {
-      await fetchAllVisaInfo(props.visa);
-      if (!isAuthor.value) {
-        validationUserId.value = formatedVisa.value.validations.find(
-          ({ isSelf }) => isSelf
-        ).id;
-      }
-    });
 
     /***
      * VALIDATION RESPONSE (validator)
@@ -539,7 +537,8 @@ export default {
       initEdit,
       undoEdit,
       confirmEdit,
-      onClose
+      onClose,
+      console
     };
   }
 };
