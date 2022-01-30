@@ -66,6 +66,7 @@
         box-shadow: var(--box-shadow);
         color: var(--color-primary);
 
+
         span {
           margin-left: var(--spacing-unit);
           width: 230px;
@@ -74,7 +75,8 @@
 
       &.author {
         right: -8px;
-        .visa-add-summary-user__right-side__access-denied__hover {
+
+        .visa-summary-validator__right-side__access-denied__hover {
           right: -36px;
           width: 345px;
        }
@@ -83,7 +85,7 @@
       &.author.closed {
         right: -13px;
 
-        .visa-add-summary-user__right-side__access-denied__hover {
+        .visa-add-summary-validator__right-side__access-denied__hover {
           right: 20px;
           width: 307px;
        }

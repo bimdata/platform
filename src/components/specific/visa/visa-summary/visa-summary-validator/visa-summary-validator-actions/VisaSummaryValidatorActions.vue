@@ -47,7 +47,7 @@ export default {
       required: true
     }
   },
-  emits: ["delete-user", "reset-val"],
+  emits: ["reset-validation", "delete-validation"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -55,12 +55,13 @@ export default {
       toggle: toggleMenu
     } = useToggle();
 
-    const onDelete = () => {
-      emit("delete-user", props.validationId);
+    const onReset = () => {
+      emit("reset-validation", props.validationId);
       closeMenu();
     };
-    const onReset = () => {
-      emit("reset-val", props.validationId);
+
+    const onDelete = () => {
+      emit("delete-validation", props.validationId);
       closeMenu();
     };
 

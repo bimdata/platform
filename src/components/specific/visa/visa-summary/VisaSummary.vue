@@ -176,8 +176,8 @@
               :isAuthor="isAuthor"
               :userList="formatedVisa.validations"
               :isClosed="isClosed"
-              @reset-val="usersActions.resetVal"
-              @delete-user="usersActions.deleteUser"
+              @reset-validation="onResetValidation"
+              @delete-validation="onDeleteValidation"
             />
           </div>
         </div>
@@ -412,6 +412,26 @@ export default {
       safeZoneInfo.value = null;
     };
 
+    const onCreateValidation = async validatorId => {
+      await createValidation(
+        props.project,
+        props.visa.document,
+        props.visa,
+        validatorId
+      );
+      await reloadVisa();
+    };
+
+    const onDeleteValidation = async validationId => {
+      await deleteValidation(
+        props.project,
+        props.visa.document,
+        props.visa,
+        validationId
+      );
+      await reloadVisa();
+    };
+
     /**
      * MODIFY PEOPLE
      */
@@ -441,19 +461,9 @@ export default {
           .filter(({ isToAdd, isToDel }) => isToAdd || isToDel)
           .map(async ({ id: validatorId, validationId, isToAdd, isToDel }) => {
             if (isToAdd) {
-              await createValidation(
-                props.project,
-                props.visa.document,
-                props.visa,
-                validatorId
-              );
+              await onCreateValidation(validatorId);
             } else if (isToDel) {
-              await deleteValidation(
-                props.project,
-                props.visa.document,
-                props.visa,
-                validationId
-              );
+              await onDeleteValidation(validationId);
             }
           })
       );
@@ -489,26 +499,6 @@ export default {
       }
     };
 
-    /**
-     * VALIDATOR ACTIONS (VisaSummaryValidatorActions)
-     */
-
-    const usersActions = {
-      deleteUser: async validationId => {
-        await deleteValidation(
-          props.project,
-          props.visa.document,
-          props.visa,
-          validationId
-        );
-        await reloadVisa();
-      },
-      resetVal: async validationId => {
-        await onResetValidation(validationId);
-        await reloadVisa();
-      }
-    };
-
     return {
       // references
       formatedVisa,
@@ -522,11 +512,12 @@ export default {
       isEditing,
       hasDateError,
       isClosed,
-      usersActions,
       userValidationStatus,
       // methods
       onAcceptValidation,
       onDenyValidation,
+      onResetValidation,
+      onDeleteValidation,
       close,
       fetchAllVisaInfo,
       onDeleteVisa,
@@ -537,8 +528,7 @@ export default {
       initEdit,
       undoEdit,
       confirmEdit,
-      onClose,
-      console
+      onClose
     };
   }
 };

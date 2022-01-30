@@ -60,11 +60,7 @@
           <div class="visa-list__content__visa__desc">
             <BIMDataTextBox
               class="visa-list__content__visa__desc__title"
-              :style="
-                visa.status !== visaClosed && visa.validationsInError.length
-                  ? 'color: var(--color-high);'
-                  : ''
-              "
+              :style="isVisaUnderError(visa) ? 'color: var(--color-high);' : ''"
               :text="visa.document.name"
             />
             <div class="visa-list__content__visa__desc__info">
@@ -121,6 +117,9 @@ export default {
       ];
     });
 
+    const isVisaUnderError = visa =>
+      visa.status !== VISA_STATUS.CLOSE && visa.validationsInError.length;
+
     const currentTab = ref(props.startTab || tabs.value[0].id);
     const selectTab = tab => (currentTab.value = tab.id);
 
@@ -143,13 +142,13 @@ export default {
       // references
       tabs,
       currentTab,
-      visaClosed: VISA_STATUS.CLOSE,
       // methods
       onClickToReachVisa,
       selectTab,
       formatDateDDMMYYY,
       fullName,
-      iconStatus
+      iconStatus,
+      isVisaUnderError
     };
   }
 };

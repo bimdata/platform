@@ -23,7 +23,7 @@
           radius
           ghost
           style="margin: 2px 0px 0px 0px"
-          @click="$emit('reset-val', user.id)"
+          @click="$emit('reset-validation', user.id)"
         >
           <BIMDataIcon name="reset" size="xs" />
         </BIMDataButton>
@@ -44,8 +44,8 @@
         <div
           class="visa-summary-validator__right-side__access-denied"
           :class="{ author: isAuthor, closed: isClosed }"
-          @mouseover="handleCurrentPerson(user.id)"
-          @mouseleave="handleCurrentPerson()"
+          @mouseover="hoveringValidator(user.id)"
+          @mouseleave="hoveringValidator()"
         >
           <BIMDataIcon name="warning" customSize="40" class="fill-warning" />
           <div
@@ -61,8 +61,8 @@
           <VisaSummaryValidatorActions
             :validationId="user.id"
             :hasAccess="user.hasAccess"
-            @reset-val="$emit('reset-val', $event)"
-            @delete-user="$emit('delete-user', $event)"
+            @reset-validation="$emit('reset-validation', $event)"
+            @delete-validation="$emit('delete-validation', $event)"
           />
         </div>
       </template>
@@ -93,7 +93,7 @@ export default {
       required: true
     }
   },
-  emits: ["reset-val", "delete-user"],
+  emits: ["reset-validation", "delete-validation"],
   setup() {
     const currentPeopleId = ref(null);
     const isWarningHover = ref(false);
@@ -126,7 +126,7 @@ export default {
       }
     };
 
-    const handleCurrentPerson = peopleId => {
+    const hoveringValidator = peopleId => {
       if (peopleId) {
         isWarningHover.value = true;
         currentPeopleId.value = peopleId;
@@ -142,7 +142,7 @@ export default {
       isWarningHover,
       currentPeopleId,
       // methods
-      handleCurrentPerson,
+      hoveringValidator,
       validationStatus,
       iconStatus
     };
