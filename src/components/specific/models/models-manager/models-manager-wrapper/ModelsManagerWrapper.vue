@@ -1,5 +1,5 @@
 <template>
-  <div class="models-sub-manager">
+  <div class="models-manager-wrapper">
     <BIMDataTabs
       width="100%"
       height="38px"
@@ -9,11 +9,11 @@
       @tab-click="selectTab"
     >
       <template #tab="{ tab }">
-        <span class="dwg-manager__tab-label">
+        <span class="models-manager-wrapper__tab-label">
           {{ tab.label }}
         </span>
         <span
-          class="models-sub-manager__tab-count"
+          class="models-manager-wrapper__tab-count"
           v-if="modelLists[tab.id].length > 0"
         >
           {{ modelLists[tab.id].length }}
@@ -21,11 +21,11 @@
       </template>
     </BIMDataTabs>
 
-    <div class="models-sub-manager__separator"></div>
+    <div class="models-manager-wrapper__separator"></div>
 
     <transition name="fade">
       <ModelsActionBar
-        class="models-sub-manager__action-bar"
+        class="models-manager-wrapper__action-bar"
         v-show="selection.length > 0"
         :project="project"
         :models="selection"
@@ -170,4 +170,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelsSubManager.scss"></style>
+<style scoped lang="scss" src="./ModelsManagerWrapper.scss"></style>

@@ -1,13 +1,13 @@
 <template>
-  <ModelsSubManager :project="project" :models="models" />
+  <ModelsManagerWrapper :project="project" :models="models" />
 </template>
 
 <script>
-import ModelsSubManager from "../models-sub-manager/ModelsSubManager.vue";
+import ModelsManagerWrapper from "../models-manager-wrapper/ModelsManagerWrapper.vue";
 
 export default {
   components: {
-    ModelsSubManager
+    ModelsManagerWrapper
   },
   props: {
     project: {
