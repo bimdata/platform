@@ -26,7 +26,8 @@ function useFilter(topics) {
       )
       .filter(
         topic =>
-          filters.status.length === 0 || filters.status.includes(topic.status)
+          filters.status.length === 0 ||
+          filters.status.includes(topic.topicStatus)
       )
       .filter(
         topic =>

@@ -43,6 +43,8 @@
           label="Priority"
           :options="priorityOptions"
           v-model="priorities"
+          optionKey="value"
+          optionLabelKey="label"
           class="m-t-24"
         />
         <BIMDataSelect
@@ -51,6 +53,8 @@
           label="Status"
           :options="statusOptions"
           v-model="status"
+          optionKey="value"
+          optionLabelKey="label"
           class="m-t-24"
         />
         <div class="bcf-filters__container__date flex justify-between m-t-24">
@@ -71,11 +75,10 @@
         </div>
         <BIMDataSelect
           width="264px"
-          :multi="tagOptions ? false : true"
+          :multi="true"
           label="Tags"
-          :nullValue="tagOptions ? true : false"
-          :options="tagOptions ? null : tagOptions"
-          :v-model="tagOptions ? noTag : tags"
+          :options="tagOptions"
+          v-model="tags"
           class="m-t-24"
         />
         <div class="flex justify-center m-t-24">
@@ -125,30 +128,42 @@ export default {
     // priority list
     const priorities = ref([]);
     const priorityOptions = computed(() => {
-      const uniquePriorityList = [
-        ...new Set(props.bcfTopics.map(bcfTopic => bcfTopic.priority))
-      ];
-      return uniquePriorityList.map(value =>
-        value === undefined ? "Non défini" : value
-      );
+      return Array.from(
+        new Set(props.bcfTopics.map(bcfTopic => bcfTopic.priority))
+      )
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map(priorityOption => {
+          return {
+            label: priorityOption ? priorityOption : "Non défini",
+            value: priorityOption
+          };
+        });
     });
 
     // status list
     const status = ref([]);
     const statusOptions = computed(() => {
-      const uniqueStatusList = [
-        ...new Set(props.bcfTopics.map(bcfTopic => bcfTopic.topicStatus))
-      ];
-      return uniqueStatusList.map(value =>
-        value === undefined ? "Non défini" : value
-      );
+      return Array.from(
+        new Set(props.bcfTopics.map(bcfTopic => bcfTopic.topicStatus))
+      )
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map(statusOption => {
+          return {
+            label: statusOption ? statusOption : "Non défini",
+            value: statusOption
+          };
+        });
     });
 
     // tags list
     const tags = ref([]);
-    const noTag = ref(null);
+    // const noTag = ref(null);
     const tagOptions = computed(() => {
-      return [...new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))];
+      return Array.from(
+        new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))
+      )
+        .flat()
+        .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
     });
 
     // date
@@ -164,7 +179,7 @@ export default {
         value.match(regexDate) && dateToCompare.getTime() <= today.getTime()
       );
     };
-
+    // Validation date + emit formulaire
     const submitFilters = () => {
       const startDateConform = isDateConform(startDateInput);
       const endDateConform = isDateConform(endDateInput);
@@ -175,8 +190,8 @@ export default {
         (startDateConform && endDateConform)
       ) {
         emit("submit", {
-          priorities: priorities.value,
-          status: status.value,
+          priorities: priorities.value.map(prio => prio.value),
+          status: status.value.map(statut => statut.value),
           tags: tags.value,
           startDate: startDateInput.value,
           endDate: endDateInput.value
@@ -219,7 +234,6 @@ export default {
       status,
       statusOptions,
       tags,
-      noTag,
       tagOptions,
       showFilters,
       startDateInput,
