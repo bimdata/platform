@@ -24,7 +24,7 @@
       </AppLink>
     </AppSlotContent>
 
-    <div class="project-files__block--files">
+    <div class="project-files__content">
       <AppLoading name="project-files">
         <FilesManager
           :spaceSubInfo="spaceSubInfo"
