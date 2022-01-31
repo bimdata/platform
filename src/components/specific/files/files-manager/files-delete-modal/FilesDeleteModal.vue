@@ -17,7 +17,7 @@
             v-for="file of files"
             :key="file.id"
           >
-            "{{ file.name }}"
+            <BIMDataTextBox :text="file.name" />
           </li>
         </ul>
       </div>
