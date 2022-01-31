@@ -44,11 +44,11 @@
         "groupsButtonText": "Gestisci i gruppi"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Aggiungi un IFC",
+        "openFileUploadButtonText": "Aggiungi un modello",
         "closeFileUploadButtonText": "Chiudi",
         "forbiddenUploadNotification": {
             "title": "Errore nel caricamento",
-            "message": "Seleziona un file .ifc"
+            "message": "Seleziona un modello: {extensions}"
         }
     },
     "BreadcrumbSelector": {
@@ -148,7 +148,7 @@
     "FileUploader": {
         "uploadAreaText": "Trascina e rilascia per archiviare le risorse del progetto",
         "separatorText": "o",
-        "uploadButtonText": "Seleziona un file .ifc"
+        "uploadButtonText": "Seleziona un modello"
     },
     "FolderAccessManager": {
         "title": "Gestisci i diritti di accesso",
@@ -276,6 +276,7 @@
         "title": "Modelli di progetto",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
             "split": "Dividi/Esporta",
             "merge": "Unisci",
             "archive": "Archivia"
@@ -291,8 +292,8 @@
         "title": "Panoramica dei modelli di progetto"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Carica il tuo primo IFC",
-        "uploadButtonText": "Carica IFC"
+        "text": "Carica il tuo primo modello",
+        "uploadButtonText": "Carica modello"
     },
     "ModelsTable": {
         "emptyTablePlaceholder": "Nessun modello",
@@ -674,9 +675,7 @@
         "selectedSpace": "Spazio selezionato:"
     },
     "SpaceSizeInfo": {
-        "used": "usato",
-        "from": "su un totale di",
-        "included": "incluso",
+        "usage": "{used} usato su {total}",
         "subscribeDatapackButton": "Aggiorna l'archiviazione",
         "subscribePlatformButton": "Passa alla piattaforma pro"
     },

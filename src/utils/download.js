@@ -1,4 +1,4 @@
-import { delay } from "./async";
+import { delay } from "./async.js";
 
 async function download({ name, url }) {
   const link = document.createElement("a");

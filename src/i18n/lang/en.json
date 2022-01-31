@@ -44,11 +44,11 @@
         "groupsButtonText": "Manage groups"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Add an IFC",
+        "openFileUploadButtonText": "Add a model",
         "closeFileUploadButtonText": "Close",
         "forbiddenUploadNotification": {
             "title": "Upload error",
-            "message": "Please select an .ifc file"
+            "message": "Please select a model file: {extensions}"
         }
     },
     "BreadcrumbSelector": {
@@ -148,7 +148,7 @@
     "FileUploader": {
         "uploadAreaText": "Drag and drop to store your project assets",
         "separatorText": "or",
-        "uploadButtonText": "Select an .ifc file"
+        "uploadButtonText": "Select a model file"
     },
     "FolderAccessManager": {
         "title": "Manage access rights",
@@ -276,6 +276,8 @@
         "title": "Project Models",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
+            "upload": "Upload",
             "split": "Split / Export",
             "merge": "Merge",
             "archive": "Archives"
@@ -291,8 +293,8 @@
         "title": "Project Models Overview"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Upload your first IFC",
-        "uploadButtonText": "Upload IFC"
+        "text": "Upload your first model",
+        "uploadButtonText": "Upload Model"
     },
     "ModelsTable": {
         "emptyTablePlaceholder": "No model",
@@ -680,9 +682,7 @@
         "selectedSpace": "Selected space:"
     },
     "SpaceSizeInfo": {
-        "used": "used",
-        "from": "out of",
-        "included": "included",
+        "usage": "{used} used out of {total}",
         "subscribeDatapackButton": "Upgrade storage",
         "subscribePlatformButton": "Switch to pro platform"
     },

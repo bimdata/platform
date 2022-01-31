@@ -1,8 +1,9 @@
-import MODEL_SOURCES from "@/config/model-sources";
+import MODEL_SOURCES from "@/config/model-sources.js";
+import MODEL_TYPES from "@/config/model-types.js";
 
-function segregate(models) {
+function segregateBySource(models) {
   const result = {
-    ifc: [],
+    upload: [],
     split: [],
     merge: [],
     archive: []
@@ -13,7 +14,7 @@ function segregate(models) {
     } else if (
       [MODEL_SOURCES.UPLOAD, MODEL_SOURCES.OPTIMIZED].includes(model.source)
     ) {
-      result.ifc.push(model);
+      result.upload.push(model);
     } else if (
       [MODEL_SOURCES.SPLIT, MODEL_SOURCES.EXPORT].includes(model.source)
     ) {
@@ -21,10 +22,32 @@ function segregate(models) {
     } else if (MODEL_SOURCES.MERGE === model.source) {
       result.merge.push(model);
     } else {
-      result.ifc.push(model);
+      result.upload.push(model);
     }
   }
   return result;
 }
 
-export { segregate };
+function segregateByType(models) {
+  const result = {
+    dwg: [],
+    ifc: [],
+    pdf: []
+  };
+  for (const model of models) {
+    switch (model.type) {
+      case MODEL_TYPES.DWG:
+        result.dwg.push(model);
+        break;
+      case MODEL_TYPES.IFC:
+        result.ifc.push(model);
+        break;
+      case MODEL_TYPES.PDF:
+        result.pdf.push(model);
+        break;
+    }
+  }
+  return result;
+}
+
+export { segregateBySource, segregateByType };

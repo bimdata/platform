@@ -30,6 +30,6 @@ export default [
   {
     id: "actions",
     label: " ",
-    width: "500px"
+    width: "250px"
   }
 ];

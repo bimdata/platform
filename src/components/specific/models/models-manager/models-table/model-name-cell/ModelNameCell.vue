@@ -45,7 +45,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useModels } from "@/state/models";
+import { useModels } from "@/state/models.js";
 
 export default {
   props: {

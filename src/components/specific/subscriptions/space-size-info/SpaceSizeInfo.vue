@@ -3,13 +3,12 @@
     <ProgressBar class="m-r-12" :progress="spaceSubInfo.usedSizePercent">
       <template #text-below-left>
         <div>
-          {{ formatBytes(spaceSubInfo.smartDataSize) }}
-          {{ $t("SpaceSizeInfo.used") }}
-          {{ $t("SpaceSizeInfo.from") }}
-          {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
-          <span v-if="!spaceSubInfo.isPlatformPro">
-            {{ $t("SpaceSizeInfo.included") }}
-          </span>
+          {{
+            $t("SpaceSizeInfo.usage", {
+              used: formatBytes(spaceSubInfo.smartDataSize),
+              total: formatBytes(spaceSubInfo.smartDataSizeAvailable)
+            })
+          }}
         </div>
       </template>
     </ProgressBar>

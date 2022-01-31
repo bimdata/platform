@@ -1,30 +1,32 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
-    <template v-for="window of ['2d', '3d']" :key="window">
-      <AppLink
-        :to="{
-          name: routeNames.modelViewer,
-          params: {
-            spaceID: project.cloud.id,
-            projectID: project.id,
-            modelIDs: model.id
-          },
-          query: {
-            window
-          }
-        }"
-      >
-        <BIMDataButton
-          class="model-actions-cell__btn model-actions-cell__btn--viewer"
-          color="granite"
-          outline
-          radius
-          icon
-          :disabled="!isModelReady"
+    <template v-if="model.type === 'IFC'">
+      <template v-for="window of ['2d', '3d']" :key="window">
+        <AppLink
+          :to="{
+            name: routeNames.modelViewer,
+            params: {
+              spaceID: project.cloud.id,
+              projectID: project.id,
+              modelIDs: model.id
+            },
+            query: {
+              window
+            }
+          }"
         >
-          {{ window.toUpperCase() }}
-        </BIMDataButton>
-      </AppLink>
+          <BIMDataButton
+            class="model-actions-cell__btn model-actions-cell__btn--viewer"
+            color="granite"
+            outline
+            radius
+            icon
+            :disabled="!isModelReady"
+          >
+            {{ window.toUpperCase() }}
+          </BIMDataButton>
+        </AppLink>
+      </template>
     </template>
     <BIMDataButton
       :disabled="!project.isAdmin && model.document.userPermission < 100"

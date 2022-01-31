@@ -6,6 +6,7 @@
   &__container {
     table {
       width: 100%;
+      table-layout: fixed;
       border-collapse: collapse;
       border-spacing: 0;
 
@@ -20,6 +21,8 @@
 
         &.cell-checkbox:deep() {
           width: 42px;
+          padding-left: calc(var(--spacing-unit) * 2);
+          padding-right: 0;
         }
       }
 
@@ -48,7 +51,7 @@
       padding: var(--spacing-unit);
       font-size: 1rem;
       font-weight: bold;
-      background-color: var(--color-silver-light);
+      // background-color: var(--color-silver-light);
     }
   }
 

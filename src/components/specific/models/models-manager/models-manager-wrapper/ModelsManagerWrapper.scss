@@ -1,0 +1,36 @@
+.models-manager-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &:deep() {
+    .bimdata-tabs__container__tab {
+      margin: 0 calc(var(--spacing-unit) * 2);
+    }
+    .bimdata-tabs__container__tab.active {
+      background-color: transparent;
+    }
+  }
+
+  &__tab-count {
+    margin-left: var(--spacing-unit);
+    padding: 0 4px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  &__separator {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-silver-light);
+  }
+
+  &__action-bar {
+    position: absolute;
+    z-index: 1;
+    margin-top: 8px;
+    margin-left: 60px;
+  }
+}

@@ -16,7 +16,7 @@
           alignItems: 'center'
         }"
       >
-        <BIMDataButton ghost rounded icon style="margin: 5px 14px 5px 3px">
+        <BIMDataButton ghost rounded icon style="margin: 5px 14px">
           <BIMDataIcon
             name="arrow"
             size="xxs"

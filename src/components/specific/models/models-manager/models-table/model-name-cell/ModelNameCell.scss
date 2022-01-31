@@ -12,7 +12,7 @@
 
     &__input {
       flex-grow: 1;
-      margin: 0;
+      margin: 0 !important;
     }
 
     &__btn-close {
@@ -24,6 +24,5 @@
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);
-    max-width: 320px;
   }
 }
