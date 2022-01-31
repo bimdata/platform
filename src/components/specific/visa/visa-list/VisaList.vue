@@ -84,7 +84,7 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
-import VISA_STATUS from "@/config/visa-status";
+import { visaStatus as VISA_STATUS } from "@/config/visa";
 
 export default {
   components: {},

@@ -189,8 +189,8 @@
 <script>
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import VALIDATION_STATUS from "@/config/visa-validation-status";
-import VISA_STATUS from "@/config/visa-status";
+import { userValidationStatus as VALIDATION_STATUS } from "@/config/visa";
+import { visaStatus as VISA_STATUS } from "@/config/visa";
 
 import { formatDate } from "@/utils/date";
 
@@ -286,11 +286,11 @@ export default {
         })
     });
 
-    const fetchAllVisaInfo = async visa => {
+    const fetchDocumentUsers = async visa => {
       const users = await getUserProjectList(props.project, {
         id: visa.document.parentId
       });
-      userProjectList.value = users.map(user => {
+      return users.map(user => {
         return {
           ...user,
           isSelected: visa.validations.some(
@@ -301,8 +301,6 @@ export default {
           )
         };
       });
-
-      formatedVisa.value = formatVisa(visa);
     };
 
     onMounted(async () => {
@@ -315,12 +313,14 @@ export default {
         ).id;
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;
-      await fetchAllVisaInfo(props.visa);
+      userProjectList.value = await fetchDocumentUsers(props.visa);
+      formatedVisa.value = formatVisa(props.visa);
     });
 
     const reloadVisa = async () => {
       const visa = await fetchVisa(props.project, props.visa);
-      await fetchAllVisaInfo(visa);
+      userProjectList.value = await fetchDocumentUsers(visa);
+      formatedVisa.value = formatVisa(visa);
     };
 
     const onClose = () => {
@@ -519,7 +519,7 @@ export default {
       onResetValidation,
       onDeleteValidation,
       close,
-      fetchAllVisaInfo,
+      fetchDocumentUsers,
       onDeleteVisa,
       onCloseVisa,
       onSafeZone,

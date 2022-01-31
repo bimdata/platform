@@ -334,14 +334,12 @@ export default {
         ]);
 
         userVisas.value = {
-          toValidateVisas:
-            toValidateVisas.sort((a, b) =>
-              a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
-            ) || [],
-          createdVisas:
-            createdVisas.sort((a, b) =>
-              a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
-            ) || []
+          toValidateVisas: toValidateVisas.sort((a, b) =>
+            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+          ),
+          createdVisas: createdVisas.sort((a, b) =>
+            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+          )
         };
 
         userVisasCounter.value =
