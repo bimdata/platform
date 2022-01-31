@@ -130,12 +130,14 @@ export default {
     const priorityOptions = computed(() => {
       return Array.from(
         new Set(props.bcfTopics.map(bcfTopic => bcfTopic.priority))
-      ).map(priorityOption => {
-        return {
-          label: priorityOption ? priorityOption : "Non défini",
-          value: priorityOption
-        };
-      });
+      )
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map(priorityOption => {
+          return {
+            label: priorityOption ? priorityOption : "Non défini",
+            value: priorityOption
+          };
+        });
     });
 
     // status list
@@ -143,19 +145,25 @@ export default {
     const statusOptions = computed(() => {
       return Array.from(
         new Set(props.bcfTopics.map(bcfTopic => bcfTopic.topicStatus))
-      ).map(statusOption => {
-        return {
-          label: statusOption ? statusOption : "Non défini",
-          value: statusOption
-        };
-      });
+      )
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map(statusOption => {
+          return {
+            label: statusOption ? statusOption : "Non défini",
+            value: statusOption
+          };
+        });
     });
 
     // tags list
     const tags = ref([]);
     // const noTag = ref(null);
     const tagOptions = computed(() => {
-      return [...new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))];
+      return Array.from(
+        new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))
+      )
+        .flat()
+        .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
     });
 
     // date
@@ -182,8 +190,8 @@ export default {
         (startDateConform && endDateConform)
       ) {
         emit("submit", {
-          priorities: priorities.value.map(prio => prio.priorityOption),
-          status: status.value.map(statut => statut.statusOption),
+          priorities: priorities.value.map(prio => prio.value),
+          status: status.value.map(statut => statut.value),
           tags: tags.value,
           startDate: startDateInput.value,
           endDate: endDateInput.value
