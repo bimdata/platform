@@ -16,7 +16,8 @@ const loadBcfTopics = async project => {
       topics.map(async topic => {
         const viewpoints = await BcfService.fetchTopicViewpoints(
           project,
-          topic
+          topic,
+          "url"
         );
         return {
           ...topic,
@@ -65,6 +66,7 @@ export function useBcf() {
     loadBcfTopics,
     createTopic,
     deleteTopic,
+    importBcf,
     loadTopicExtensions
   };
 }
