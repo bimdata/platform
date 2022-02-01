@@ -48,6 +48,12 @@ const deleteTopic = async (project, topic) => {
   return topic;
 };
 
+const importBcf = async (project, file) => {
+  const bcf = await BcfService.importBcf(project, file);
+  await loadBcfTopics(project);
+  return bcf;
+};
+
 const loadTopicExtensions = async project => {
   const topicExtensions = await BcfService.fetchTopicExtensions(project);
   state.topicExtensions = topicExtensions;
