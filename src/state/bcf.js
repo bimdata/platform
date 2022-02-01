@@ -36,6 +36,12 @@ const loadBcfTopics = async project => {
   return topicsWithSnapshots;
 };
 
+const importBcf = async (project, file) => {
+  const bcf = await BcfService.importBcf(project, file);
+  await loadBcfTopics(project);
+  return bcf;
+};
+
 const createTopic = async (project, topic) => {
   const newTopic = await BcfService.createTopic(project, topic);
   state.bcfTopics = [newTopic].concat(state.bcfTopics);
@@ -61,6 +67,7 @@ export function useBcf() {
     ...toRefs(readonlyState),
     // Methods
     loadBcfTopics,
+    importBcf,
     createTopic,
     deleteTopic,
     loadTopicExtensions

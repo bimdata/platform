@@ -29,6 +29,25 @@ class BcfService {
       console.log(error);
     }
   }
+  async importBcf(project, file) {
+    try {
+      const formData = new FormData();
+      formData.append("name", file.name);
+      formData.append("file", file);
+      await fetch(
+        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/import`,
+        {
+          method: "POST",
+          headers: {
+            authorization: apiClient.config.accessToken()
+          },
+          body: formData
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async createTopic(project, topic) {
     try {
       return await apiClient.bcfApi.createTopic({

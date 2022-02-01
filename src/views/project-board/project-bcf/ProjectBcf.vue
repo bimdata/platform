@@ -1,15 +1,17 @@
 <template>
   <div class="project-bcf">
     <app-slot-content name="project-board-action">
-      <BIMDataButton
-        color="default"
-        fill
-        radius
-        @click="openCreateBcfTopic"
+      <FileUploadButton
         class="m-r-12"
+        width="auto"
+        multiple
+        color="default"
+        :accept="['.bcf']"
+        @upload="uploadFiles"
       >
-        <BIMDataIcon name="import" size="xxs" margin="0 6px 0 0" /> Importer
-      </BIMDataButton>
+        <BIMDataIcon name="import" size="xs" margin="0 6px 0 0" />
+        Importer
+      </FileUploadButton>
       <BIMDataButton
         color="default"
         fill
@@ -210,7 +212,7 @@ import BcfTopicGrid from "../../../components/specific/bcf/bcf-topic-grid/BcfTop
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
 import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
-import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 
 export default {
   components: {
@@ -222,7 +224,7 @@ export default {
     BcfTopicsList,
     BcfTopicsMetrics,
     BcfTopicCreationCard,
-    ProjectBcfOnboardingImage
+    FileUploadButton
   },
   setup() {
     const { currentProject } = useProjects();
@@ -264,7 +266,14 @@ export default {
       isDisplayByListActive.value = !isDisplayByListActive.value;
     };
 
-    provide("bcfTopics", bcfTopics);
+    const uploadFiles = async files => {
+      try {
+        loading.value = true;
+        await importBcf(currentProject.value, files[0]);
+      } finally {
+        loading.value = false;
+      }
+    };
 
     return {
       loading,
@@ -284,6 +293,7 @@ export default {
       toggleDisplayBcfTopics,
       isDisplayByListActive,
       openCreateBcfTopic: openSidePanel,
+      uploadFiles
     };
   }
 };
