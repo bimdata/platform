@@ -1,37 +1,38 @@
 .visa-add {
-  border: 2px solid yellow;
-  height: 100%;
   padding: var(--spacing-unit);
+  height: 100%;
 
   &__safe-zone {
     z-index: 2;
     position: absolute;
-    top: 15%;
-    left: 14.5%;
+    top: 2.5%;
+    left: 3.5%;
   }
 
   &__content {
-    border: 2px solid blue;
     height: 100%;
 
     &__header {
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      gap: var(--spacing-unit);
   
       &__left-side {
         display: flex;
         flex-grow: 1;
         margin: auto 0;
-        
+
         span {
-          margin: auto 0 auto var(--spacing-unit);
-          font-size: 1rem;
+          margin: auto 0 auto calc(var(--spacing-unit) * 1.4);
+          color: var(--color-primary);
+          font-weight: bold;
         }
       }
     }
   
     &__validator {
       margin: calc(var(--spacing-unit ) * 2) 0;
+
       &__counter {
         display: flex;
         justify-content: center;
@@ -57,21 +58,27 @@
           margin-top: 18px;
         }
       }
+
+      &__exemple {
+        margin-top: -7px;
+        font-size: 0.9em;
+      }
     }
   
     &__description {
-      margin: calc(var(--spacing-unit ) * 3) 0;
+      margin: calc(var(--spacing-unit) * 3) 0;
   
       &:deep() {
         label {
           font-size: 1em;
         }
+
         textarea {
           font-family: var(--primary-font);
-          resize: vertical; 
-          max-height: 200px;
+          max-height: 395px;
         }
       }
+
       .error {
         color: red;
       }
@@ -79,7 +86,7 @@
   
     &__action-button {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
     }
   }
   .safeZone {

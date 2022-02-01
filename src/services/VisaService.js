@@ -2,61 +2,69 @@ import apiClient from "./api-client";
 import { ERRORS, RuntimeError } from "./ErrorService";
 
 class VisaService {
-  async createVisa(description, date, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async createVisa(project, document, visa) {
     try {
       return await apiClient.collaborationApi.createVisa({
-        data: {
-          description,
-          deadline: date
-        },
-        cloudPk,
-        projectPk,
-        documentPk
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        data: visa
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_CREATE_ERROR, error);
     }
   }
-  async createValidation(visaId, validatorId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+
+  async createValidation(project, document, visa, validatorId) {
     try {
       return await apiClient.collaborationApi.createValidation({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
         data: {
           validatorId
-        },
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId
+        }
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_CREATE_VALIDATION_ERROR, error);
     }
   }
 
-  async fetchVisa(visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async deleteValidation(project, document, visa, validationId) {
+    try {
+      return await apiClient.collaborationApi.deleteValidation({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
+        id: validationId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_DELETE_VALIDATION_ERROR, error);
+    }
+  }
+
+  async fetchVisa(project, visa) {
     try {
       return await apiClient.collaborationApi.getVisa({
-        cloudPk,
-        projectPk,
-        documentPk,
-        id: visaId
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: visa.document.id,
+        id: visa.id
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_FETCH_ERROR, error);
     }
   }
 
-  async acceptVisa(validationId, visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async acceptValidation(project, document, visa, validationId) {
     try {
       return await apiClient.collaborationApi.acceptValidation({
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId,
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
         id: validationId
       });
     } catch (error) {
@@ -64,14 +72,13 @@ class VisaService {
     }
   }
 
-  async denyVisa(validationId, visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async denyValidation(project, document, visa, validationId) {
     try {
       return await apiClient.collaborationApi.denyValidation({
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId,
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
         id: validationId
       });
     } catch (error) {
@@ -79,42 +86,93 @@ class VisaService {
     }
   }
 
-  async resetVisa(validationId, visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async resetValidation(project, document, visa, validationId) {
     try {
       return await apiClient.collaborationApi.resetValidation({
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId,
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
         id: validationId
       });
     } catch (error) {
-      throw new RuntimeError(ERRORS.VISA_DENY_ERROR, error);
+      throw new RuntimeError(ERRORS.VISA_REFRESH_ERROR, error);
     }
   }
 
-  async fetchCreatedVisas(baseInfo) {
-    const { cloudPk, projectPk } = baseInfo;
+  async deleteVisa(project, document, visa) {
+    try {
+      return await apiClient.collaborationApi.deleteVisa({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        id: visa.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_DELETE_ERROR, error);
+    }
+  }
+
+  async closeVisa(project, document, visa) {
+    try {
+      return await apiClient.collaborationApi.closeVisa({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        id: visa.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_CLOSE_ERROR, error);
+    }
+  }
+
+  async resumeVisa(visaId, baseInfo) {
+    const { cloudPk, projectPk, documentPk } = baseInfo;
+    try {
+      return await apiClient.collaborationApi.resumeVisa({
+        cloudPk,
+        projectPk,
+        documentPk,
+        id: visaId
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_RESUME_ERROR, error);
+    }
+  }
+
+  async fetchCreatedVisas(project) {
     try {
       return await apiClient.collaborationApi.getProjectCreatorVisas({
-        cloudPk,
-        projectPk
+        cloudPk: project.cloud.id,
+        projectPk: project.id
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_FECTH_CREATED_ERROR, error);
     }
   }
 
-  async fetchToValidateVisas(baseInfo) {
-    const { cloudPk, projectPk } = baseInfo;
+  async fetchToValidateVisas(project) {
     try {
       return await apiClient.collaborationApi.getProjectValidatorVisas({
-        cloudPk,
-        projectPk
+        cloudPk: project.cloud.id,
+        projectPk: project.id
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_FECTH_VALIDATOR_ERROR, error);
+    }
+  }
+
+  async updateVisa(project, document, visa, data) {
+    try {
+      return await apiClient.collaborationApi.updateVisa({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        id: visa.id,
+        data
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.VISA_UPDATE_ERROR, error);
     }
   }
 }

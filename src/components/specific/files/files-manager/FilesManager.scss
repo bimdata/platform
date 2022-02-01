@@ -48,7 +48,16 @@
         &__visa {
           margin-left: auto;
           &__content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-unit);
             &__counter {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 15px;
+              height: 15px;
+              border-radius: 15%;
               background-color: var(--color-high);
             }
           }

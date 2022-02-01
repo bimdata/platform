@@ -11,7 +11,7 @@
         {{ $t("Visa.add.validatorView.validator") }}
       </div>
       <div class="visa-add-validator__header__right-side">
-        <BIMDataButton ghost rounded icon @click="$emit('safe-zone-handler')">
+        <BIMDataButton ghost rounded icon @click="$emit('get-back')">
           <BIMDataIcon name="close" size="xxxs" />
         </BIMDataButton>
       </div>
@@ -27,7 +27,7 @@
       </BIMDataSearch>
     </div>
     <div class="visa-add-validator__people-list">
-      <VisaAddValidatorPeople :peopleList="peopleList" />
+      <VisaValidatorUsers :userList="peopleList" />
     </div>
     <div class="visa-add-validator__action">
       <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
@@ -45,27 +45,19 @@
 <script>
 import { ref, watch, computed } from "vue";
 
-import VisaAddValidatorPeople from "@/components/specific/visa/visa-add/visa-add-validator/visa-add-validator-people/VisaAddValidatorPeople";
+import VisaValidatorUsers from "./visa-selection-validator-users/VisaSelectionValidatorUsers.vue";
 
 export default {
   components: {
-    VisaAddValidatorPeople
+    VisaValidatorUsers
   },
   props: {
-    baseInfo: {
-      type: Object,
-      required: true
-    },
-    fileParentId: {
-      type: Number,
-      required: true
-    },
-    peopleListRaw: {
+    userList: {
       type: Array,
       required: true
     }
   },
-  emits: ["close", "validator-list", "get-back", "safe-zone-handler"],
+  emits: ["close", "validator-list", "get-back"],
   setup(props, { emit }) {
     const filter = ref("");
     const peopleList = ref([]);
@@ -77,7 +69,7 @@ export default {
     watch(
       filter,
       () => {
-        peopleList.value = props.peopleListRaw
+        peopleList.value = props.userList
           .map(people => ({
             ...people,
             isFindable:
@@ -95,7 +87,7 @@ export default {
     );
 
     const onClick = () => {
-      emit("validator-list", peopleList);
+      emit("validator-list", peopleList.value);
       emit("get-back");
     };
 
@@ -105,11 +97,10 @@ export default {
       peopleListCounter,
       filter,
       // methods
-      onClick,
-      console
+      onClick
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./VisaAddValidator.scss"></style>
+<style scoped lang="scss" src="./VisaSelectionValidator.scss"></style>

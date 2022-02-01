@@ -50,7 +50,7 @@
         </BIMDataButton>
         <BIMDataButton
           v-if="
-            !isFolder(file) && project.isAdmin && file.userPermission === 100
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
           "
           class="file-actions-cell__menu__btn"
           ghost
@@ -128,8 +128,7 @@ export default {
       goToModelViewer,
       onClick,
       toggleMenu,
-      isFolder,
-      console
+      isFolder
     };
   }
 };

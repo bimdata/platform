@@ -1,77 +1,84 @@
 <template>
   <div class="visa-add">
     <template v-if="isSelectingValidator">
-      <VisaAddValidator
-        :baseInfo="baseInfo"
-        :fileParentId="fileParentId"
-        :peopleListRaw="validatorList || peopleListRaw"
+      <VisaSelectionValidator
+        :userList="validatorList || userList"
         @validator-list="getValidatorList"
         @get-back="getBack"
-        @safe-zone-handler="safeZoneHandler"
       />
     </template>
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="visa-add__safe-zone">
-          <VisaSafeZone @onClose="onClose" />
+          <VisaSafeZone actionType="add" @close="onClose" />
         </div>
       </template>
     </transition>
-    <transition name="fade">
-      <template v-if="!isSelectingValidator">
-        <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
-          <div class="visa-add__content__header">
-            <div class="visa-add__content__header__left-side">
-              <BIMDataIcon name="visa" size="s" />
-              <span>{{ $t("Visa.add.title") }}</span>
-            </div>
-            <div class="visa-add__content__header__right-side">
-              <BIMDataButton ghost rounded icon @click="safeZoneHandler">
-                <BIMDataIcon name="close" size="xxxs" />
-              </BIMDataButton>
-            </div>
-          </div>
-          <div class="visa-add__content__validator">
-            <BIMDataButton
-              color="primary"
+    <template v-if="!isSelectingValidator">
+      <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
+        <div class="visa-add__content__header">
+          <div class="visa-add__content__header__left-side">
+            <BIMDataIcon
+              name="visa"
               fill
-              radius
-              width="100%"
-              @click="isSelectingValidator = true"
-              >{{ $t("Visa.add.validator") }}
-              <div class="visa-add__content__validator__counter">
-                <span>{{ validatorListCounter }}</span>
-              </div>
+              color="primary"
+              size="s"
+              margin="2.5px 0 0 0"
+            />
+            <span>{{ $t("Visa.add.title") }}</span>
+          </div>
+          <div class="visa-add__content__header__right-side">
+            <BIMDataButton ghost rounded icon @click="safeZoneHandler">
+              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
             </BIMDataButton>
           </div>
-          <div class="visa-add__content__validate-date">
-            <BIMDataInput
-              v-model="dateInput"
-              :placeholder="$t('Visa.add.toValidate')"
-              :error="hasDateError"
-              :errorMessage="$t('Visa.add.errorDate')"
-            >
-            </BIMDataInput>
-          </div>
-          <div class="visa-add__content__description">
-            <BIMDataTextarea
-              v-model="descInput"
-              :label="$t('Visa.add.description')"
-              name="description"
-              width="100%"
-            />
-          </div>
-          <div class="visa-add__content__action-button">
-            <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
-              $t("Visa.add.cancel")
-            }}</BIMDataButton>
-            <BIMDataButton color="primary" fill radius @click="submit">{{
-              $t("Visa.add.validate")
-            }}</BIMDataButton>
+        </div>
+        <div class="visa-add__content__validator">
+          <BIMDataButton
+            color="primary"
+            fill
+            radius
+            width="100%"
+            @click="isSelectingValidator = true"
+            >{{ $t("Visa.add.validator") }}
+            <div class="visa-add__content__validator__counter">
+              <span>{{ validatorListCounter }}</span>
+            </div>
+          </BIMDataButton>
+        </div>
+        <div class="visa-add__content__validate-date">
+          <BIMDataInput
+            v-model="dateInput"
+            :placeholder="$t('Visa.add.toValidate')"
+            :error="hasDateError"
+            :errorMessage="$t('Visa.add.errorDate')"
+          >
+          </BIMDataInput>
+          <div class="visa-add__content__validate-date__exemple">
+            {{ $t("Visa.add.exempleDate") }}
           </div>
         </div>
-      </template>
-    </transition>
+        <div class="visa-add__content__description">
+          <BIMDataTextarea
+            v-model="descInput"
+            :label="$t('Visa.add.description')"
+            name="description"
+            fitContent
+            :resizable="false"
+            rows="1"
+            width="100%"
+          />
+        </div>
+        <div class="visa-add__content__action-button">
+          <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
+            $t("Visa.add.cancel")
+          }}</BIMDataButton>
+          <BIMDataButton color="primary" fill radius @click="submit">{{
+            $t("Visa.add.validate")
+          }}</BIMDataButton>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -79,31 +86,31 @@
 import { ref, watch, onMounted, computed } from "vue";
 
 import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone";
-import VisaAddValidator from "@/components/specific/visa/visa-add/visa-add-validator/VisaAddValidator";
-import { formatToDateObject, formatDate, regexDate } from "@/utils/date";
+import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
+import { formatDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
-import { fullName } from "@/utils/users";
 import { useProjects } from "@/state/projects";
+import { isDateConform } from "@/utils/visas";
 
 export default {
   components: {
     VisaSafeZone,
-    VisaAddValidator
+    VisaSelectionValidator
   },
   props: {
-    baseInfo: {
+    project: {
       type: Object,
       required: true
     },
-    fileParentId: {
-      type: Number,
+    document: {
+      type: Object,
       required: true
     }
   },
-  emits: ["close", "set-file-to-manage", "set-visa-id", "fetch-visas"],
+  emits: ["create-visa", "close"],
   setup(props, { emit }) {
     const { createVisa, createValidation } = useVisa();
-    const { fetchFolderProjectUsers } = useProjects();
+    const { getUserProjectList } = useProjects();
 
     const dateInput = ref("");
     const descInput = ref("");
@@ -112,21 +119,10 @@ export default {
     const isSafeZone = ref(false);
     const isClosing = ref(null);
     const validatorList = ref(null);
-    const visaId = ref(null);
-    const peopleListRaw = ref([]);
-
-    const isDateConform = ({ value }) => {
-      const dateToCompare = formatToDateObject(value);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      return (
-        value.match(regexDate) && dateToCompare.getTime() >= today.getTime()
-      );
-    };
+    const userList = ref([]);
 
     const safeZoneHandler = () =>
-      dateInput.value.length || descInput.value.length || validatorList.value
+      dateInput.value || descInput.value || validatorList.value
         ? (isSafeZone.value = true)
         : emit("close");
 
@@ -140,7 +136,7 @@ export default {
 
     const onClose = event => (isClosing.value = event);
     const getBack = () => (isSelectingValidator.value = false);
-    const getValidatorList = event => (validatorList.value = event.value);
+    const getValidatorList = list => (validatorList.value = list);
     const validatorListCounter = computed(
       () =>
         (validatorList.value || []).filter(({ isSelected }) => isSelected)
@@ -148,60 +144,32 @@ export default {
     );
 
     const submit = async () => {
-      const dateConform = isDateConform(dateInput);
+      const dateConform = isDateConform(dateInput.value);
 
       if (dateConform) {
-        try {
-          hasDateError.value = false;
-          const res = await createVisa(
-            descInput.value,
-            formatDate(dateInput.value),
-            props.baseInfo
-          );
-          visaId.value = res.id;
-          await Promise.all(
-            validatorList.value
-              .filter(({ isSelected }) => isSelected)
-              .map(({ id }) =>
-                createValidation(visaId.value, id, props.baseInfo)
-              )
-          );
-        } finally {
-          console.log("form sent");
-          emit("set-file-to-manage", null);
-          emit("set-visa-id", visaId.value);
-          emit("set-base-info", "documentPk", props.fileParentId);
-          emit("fetch-visas");
-        }
+        hasDateError.value = false;
+        const visa = await createVisa(props.project, props.document, {
+          deadline: formatDate(dateInput.value),
+          description: descInput.value
+        });
+        await Promise.all(
+          validatorList.value
+            .filter(({ isSelected }) => isSelected)
+            .map(({ id: validatorId }) =>
+              createValidation(props.project, props.document, visa, validatorId)
+            )
+        );
+        emit("create-visa", visa);
       } else {
         hasDateError.value = true;
       }
     };
 
-    const getList = async () => {
-      const res = await fetchFolderProjectUsers(
-        {
-          id: props.baseInfo.projectPk,
-          cloud: {
-            id: props.baseInfo.cloudPk
-          }
-        },
-        { id: props.fileParentId }
-      );
-
-      peopleListRaw.value = res.map(people => ({
-        ...people,
-        fullName: fullName(people),
-        hasAccess: people.permission >= 50,
-        isFindable: true,
-        isSelected: false,
-        searchContent: `${people.firstname || ""}${people.lastname || ""}${
-          people.email || ""
-        }`.toLowerCase()
-      }));
-    };
-
-    onMounted(() => getList());
+    onMounted(async () => {
+      userList.value = await getUserProjectList(props.project, {
+        id: props.document.parentId
+      });
+    });
 
     return {
       // References
@@ -213,8 +181,7 @@ export default {
       isSelectingValidator,
       validatorList,
       validatorListCounter,
-      peopleListRaw,
-      console,
+      userList,
       // Methods
       submit,
       onClose,

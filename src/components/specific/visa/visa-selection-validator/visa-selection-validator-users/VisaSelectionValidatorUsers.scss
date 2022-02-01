@@ -1,0 +1,49 @@
+.visa-add-validator-users {
+  margin: 4% auto;
+  display: flex;
+  align-items: center;
+  &__picture {
+    margin: auto var(--spacing-unit);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    &__main {
+      font-weight: bold;
+      color: var(--color-primary);
+      margin: auto 0;
+    }
+    .hide {
+      color: var(--color-silver-dark);
+    }
+  }
+
+    &__acces-denied {
+      position: relative;
+      display: flex;
+      justify-content: flex-end; 
+      box-shadow: var(--box-shadow);
+      right: -65px;
+
+    &__hover {
+      position: absolute;
+      z-index: 2;
+      width: 300px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      background-color: var(--color-silver-light);
+      box-shadow: var(--box-shadow);
+      color: var(--color-primary);
+
+      span {
+        margin-left: var(--spacing-unit);
+        width: 230px;
+      }
+    } 
+  }
+}

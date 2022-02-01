@@ -1,35 +1,59 @@
 import VisaService from "@/services/VisaService";
 
-const createVisa = async (description, date, baseInfo) => {
-  return VisaService.createVisa(description, date, baseInfo);
+const createVisa = async (project, document, visa) => {
+  return VisaService.createVisa(project, document, visa);
 };
 
-const createValidation = async (visaId, validatorId, baseInfo) => {
-  return VisaService.createValidation(visaId, validatorId, baseInfo);
+const createValidation = async (project, document, visa, validatorId) => {
+  return VisaService.createValidation(project, document, visa, validatorId);
 };
 
-const fetchVisa = async (visaId, baseInfo) => {
-  return VisaService.fetchVisa(visaId, baseInfo);
+const deleteValidation = async (project, document, visa, validationId) => {
+  return VisaService.deleteValidation(project, document, visa, validationId);
 };
 
-const acceptVisa = async (validationId, visaId, baseInfo) => {
-  return VisaService.acceptVisa(validationId, visaId, baseInfo);
+const fetchVisa = async (project, visa) => {
+  return VisaService.fetchVisa(project, visa);
 };
 
-const denyVisa = async (validationId, visaId, baseInfo) => {
-  return VisaService.denyVisa(validationId, visaId, baseInfo);
+const acceptValidation = async (project, document, visa, validationId) => {
+  return VisaService.acceptValidation(project, document, visa, validationId);
 };
 
-const resetVisa = async (validationId, visaId, baseInfo) => {
-  return VisaService.resetVisa(validationId, visaId, baseInfo);
+const denyValidation = async (project, document, visa, validationId) => {
+  return VisaService.denyValidation(project, document, visa, validationId);
 };
 
-const fetchCreatedVisas = async baseInfo => {
-  return VisaService.fetchCreatedVisas(baseInfo);
+const resetValidation = async (project, document, visa, validationId) => {
+  return VisaService.resetValidation(project, document, visa, validationId);
 };
 
-const fetchToValidateVisas = async baseInfo => {
-  return VisaService.fetchToValidateVisas(baseInfo);
+const deleteVisa = async (project, document, visa) => {
+  return VisaService.deleteVisa(project, document, visa);
+};
+
+const closeVisa = async (project, document, visa) => {
+  return VisaService.closeVisa(project, document, visa);
+};
+
+const resumeVisa = async (visaId, baseInfo) => {
+  return VisaService.resumeVisa(visaId, baseInfo);
+};
+
+const fetchCreatedVisas = async project => {
+  return (await VisaService.fetchCreatedVisas(project)).sort((a, b) =>
+    a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+  );
+};
+
+const fetchToValidateVisas = async project => {
+  return (await VisaService.fetchToValidateVisas(project)).sort((a, b) =>
+    a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+  );
+};
+
+const updateVisa = async (project, document, visa, data) => {
+  return VisaService.updateVisa(project, document, visa, data);
 };
 
 export function useVisa() {
@@ -38,10 +62,15 @@ export function useVisa() {
     createVisa,
     createValidation,
     fetchVisa,
-    acceptVisa,
-    denyVisa,
-    resetVisa,
+    acceptValidation,
+    denyValidation,
+    resetValidation,
+    deleteVisa,
+    closeVisa,
+    resumeVisa,
     fetchCreatedVisas,
-    fetchToValidateVisas
+    fetchToValidateVisas,
+    deleteValidation,
+    updateVisa
   };
 }

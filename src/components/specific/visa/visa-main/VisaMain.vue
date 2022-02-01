@@ -2,40 +2,35 @@
   <div class="visa-main">
     <template v-if="currentView === 'visaList'">
       <VisaList
-        :userVisas="userVisas"
-        :baseInfo="baseInfo"
-        @set-is-visa-list="$emit('set-is-visa-list', $event)"
+        :toValidateVisas="toValidateVisas"
+        :createdVisas="createdVisas"
+        :visasLoading="visasLoading"
+        @reach-visa="reachVisa"
         @close="$emit('close', $event)"
-        @set-visa-id="setVisaId"
-        @set-base-info="setBaseInfo"
       />
     </template>
     <template v-if="currentView === 'visaAdd'">
       <VisaAdd
-        :baseInfo="baseInfo"
-        :fileParentId="file.parentId"
+        :project="project"
+        :document="document"
+        @create-visa="createVisa"
         @close="$emit('close', $event)"
-        @set-file-to-manage="$emit('set-file-to-manage', $event)"
-        @set-visa-id="setVisaId"
-        @fetch-visas="$emit('fetch-visas')"
       />
     </template>
     <template v-if="currentView === 'visaSummary'">
       <VisaSummary
-        :baseInfo="baseInfo"
-        :visaId="visaId"
-        :isVisaList="isVisaList"
-        @close="$emit('close', $event)"
-        @set-visa-id="setVisaId"
-        @set-is-visa-list="$emit('set-is-visa-list', $event)"
+        :project="project"
+        :visa="currentVisa"
+        @close-visa="closeVisa"
       />
     </template>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
+import { useVisa } from "@/state/visa";
 import VisaAdd from "@/components/specific/visa/visa-add/VisaAdd";
 import VisaSummary from "@/components/specific/visa/visa-summary/VisaSummary";
 import VisaList from "../visa-list/VisaList";
@@ -47,62 +42,58 @@ export default {
     VisaList
   },
   props: {
-    file: {
+    project: {
       type: Object,
       required: true
     },
-    userVisas: {
+    document: {
       type: Object,
       required: true
     },
-    isVisaList: {
+    toValidateVisas: {
+      type: Array,
+      required: true
+    },
+    createdVisas: {
+      type: Array,
+      required: true
+    },
+    visasLoading: {
       type: Boolean,
-      required: true
-    },
-    cloudPk: {
-      type: Number,
-      required: true
-    },
-    projectPk: {
-      type: Number,
       required: true
     }
   },
-  emits: ["close", "set-file-to-manage", "set-is-visa-list", "fetch-visas"],
-  setup(props) {
-    const currentView = ref(null);
-    const visaId = ref(0);
-    const baseInfo = ref({
-      cloudPk: props.cloudPk,
-      projectPk: props.projectPk,
-      documentPk: props.file.id
-    });
-    const setBaseInfo = (prop, event) => (baseInfo.value[prop] = event);
-    const setVisaId = event => (visaId.value = event);
+  emits: ["fetch-visas", "close"],
+  setup(props, { emit }) {
+    const { fetchVisa } = useVisa();
 
-    watch(
-      [visaId, baseInfo],
-      () => {
-        if (baseInfo.value.documentPk && visaId.value) {
-          currentView.value = "visaSummary";
-        } else if (props.isVisaList) {
-          currentView.value = "visaList";
-        } else if (props.file.id) {
-          currentView.value = "visaAdd";
-        }
-      },
-      { immediate: true }
-    );
+    const currentView = ref(props.document.id ? "visaAdd" : "visaList");
+    const currentVisa = ref(null);
+
+    const createVisa = async visa => {
+      currentVisa.value = await fetchVisa(props.project, visa);
+      currentView.value = "visaSummary";
+    };
+
+    const reachVisa = visa => {
+      currentVisa.value = visa;
+      currentView.value = "visaSummary";
+    };
+
+    const closeVisa = () => {
+      emit("fetch-visas");
+      currentVisa.value = null;
+      currentView.value = "visaList";
+    };
 
     return {
       //references
-      visaId,
-      baseInfo,
-      console,
+      currentVisa,
       currentView,
       // methods
-      setVisaId,
-      setBaseInfo
+      createVisa,
+      reachVisa,
+      closeVisa
     };
   }
 };
