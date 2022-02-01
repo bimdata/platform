@@ -41,11 +41,15 @@ const resumeVisa = async (visaId, baseInfo) => {
 };
 
 const fetchCreatedVisas = async project => {
-  return VisaService.fetchCreatedVisas(project);
+  return (await VisaService.fetchCreatedVisas(project)).sort((a, b) =>
+    a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+  );
 };
 
 const fetchToValidateVisas = async project => {
-  return VisaService.fetchToValidateVisas(project);
+  return (await VisaService.fetchToValidateVisas(project)).sort((a, b) =>
+    a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+  );
 };
 
 const updateVisa = async (project, document, visa, data) => {

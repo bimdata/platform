@@ -75,7 +75,7 @@ import { ref } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import VisaSummaryValidatorActions from "./visa-summary-validator-actions/VisaSummaryValidatorActions.vue";
 
-import { userValidationStatus as VALIDATION_STATUS } from "@/config/visa";
+import { VALIDATION_STATUS } from "@/config/visa";
 
 export default {
   components: { UserAvatar, VisaSummaryValidatorActions },

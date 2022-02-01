@@ -73,7 +73,7 @@
             <span>{{ formatedVisa.creator.fullName }}</span>
           </div>
           <div
-            v-if="visa.description || isEditing"
+            v-if="formatedVisa.description || isEditing"
             class="visa-summary__shell__content__desc"
           >
             <BIMDataTextarea
@@ -189,8 +189,8 @@
 <script>
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { userValidationStatus as VALIDATION_STATUS } from "@/config/visa";
-import { visaStatus as VISA_STATUS } from "@/config/visa";
+import { VALIDATION_STATUS } from "@/config/visa";
+import { VISA_STATUS } from "@/config/visa";
 
 import { formatDate } from "@/utils/date";
 

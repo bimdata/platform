@@ -784,8 +784,8 @@
     },
     "list": {
       "title": "Demande en cours",
-      "visaValidator": "Mes validations",
-      "visaCreated": "Mes demandes",
+      "toValidateVisas": "Mes validations",
+      "createdVisas": "Mes demandes",
       "emptyValidation": "Aucune validation en cours",
       "emptyDemand": "Aucune demande en cours"
     },

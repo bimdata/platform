@@ -2,8 +2,8 @@
   <div class="visa-main">
     <template v-if="currentView === 'visaList'">
       <VisaList
-        :userVisas="userVisas"
-        :startTab="currentTab"
+        :toValidateVisas="toValidateVisas"
+        :createdVisas="createdVisas"
         :visasLoading="visasLoading"
         @reach-visa="reachVisa"
         @close="$emit('close', $event)"
@@ -50,8 +50,12 @@ export default {
       type: Object,
       required: true
     },
-    userVisas: {
-      type: Object,
+    toValidateVisas: {
+      type: Array,
+      required: true
+    },
+    createdVisas: {
+      type: Array,
       required: true
     },
     visasLoading: {
@@ -64,7 +68,6 @@ export default {
     const { fetchVisa } = useVisa();
 
     const currentView = ref(props.document.id ? "visaAdd" : "visaList");
-    const currentTab = ref("toValidateVisas");
     const currentVisa = ref(null);
 
     const createVisa = async visa => {
@@ -72,9 +75,8 @@ export default {
       currentView.value = "visaSummary";
     };
 
-    const reachVisa = (visa, tab) => {
+    const reachVisa = visa => {
       currentVisa.value = visa;
-      currentTab.value = tab;
       currentView.value = "visaSummary";
     };
 
@@ -88,7 +90,6 @@ export default {
       //references
       currentVisa,
       currentView,
-      currentTab,
       // methods
       createVisa,
       reachVisa,

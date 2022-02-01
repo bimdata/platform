@@ -28,7 +28,7 @@
             clear
           />
           <BIMDataButton
-            :disabled="!userVisas"
+            :disabled="!visasCounter"
             class="files-manager__actions__visa"
             color="primary"
             fill
@@ -36,9 +36,9 @@
             @click="openVisaManager"
           >
             <span class="files-manager__actions__visa__content">
-              <template v-if="userVisasCounter > 0">
+              <template v-if="visasCounter > 0">
                 <div class="files-manager__actions__visa__content__counter">
-                  <span>{{ userVisasCounter }}</span>
+                  <span>{{ visasCounter }}</span>
                 </div>
               </template>
               {{ $t("Visa.button") }}
@@ -98,7 +98,8 @@
               v-if="showVisaManager"
               :project="project"
               :document="fileToManage"
-              :userVisas="userVisas"
+              :toValidateVisas="toValidateVisas"
+              :createdVisas="createdVisas"
               :visasLoading="visasLoading"
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
@@ -129,7 +130,7 @@
 </template>
 
 <script>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useListFilter } from "@/composables/list-filter";
 import FILE_TYPES from "@/config/file-types";
 
@@ -193,8 +194,8 @@ export default {
 
     const currentFolder = ref(null);
     const currentFiles = ref([]);
-    const userVisas = ref(null);
-    const userVisasCounter = ref(null);
+    const toValidateVisas = ref([]);
+    const createdVisas = ref([]);
     const visasLoading = ref(false);
 
     watch(
@@ -328,27 +329,22 @@ export default {
     const fetchVisas = async () => {
       try {
         visasLoading.value = true;
-        const [toValidateVisas, createdVisas] = await Promise.all([
+
+        const [toValidateResponse, createdResponse] = await Promise.all([
           fetchToValidateVisas(props.project),
           fetchCreatedVisas(props.project)
         ]);
 
-        userVisas.value = {
-          toValidateVisas: toValidateVisas.sort((a, b) =>
-            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
-          ),
-          createdVisas: createdVisas.sort((a, b) =>
-            a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
-          )
-        };
-
-        userVisasCounter.value =
-          userVisas.value.toValidateVisas.length +
-          userVisas.value.createdVisas.length;
+        toValidateVisas.value = toValidateResponse;
+        createdVisas.value = createdResponse;
       } finally {
         visasLoading.value = false;
       }
     };
+
+    const visasCounter = computed(
+      () => toValidateVisas.value.length + createdVisas.value.length
+    );
 
     onMounted(() => fetchVisas());
 
@@ -366,9 +362,10 @@ export default {
       showDeleteModal,
       showSidePanel,
       fileToManage,
-      userVisas,
-      userVisasCounter,
+      toValidateVisas,
+      createdVisas,
       visasLoading,
+      visasCounter,
       // Methods
       closeAccessManager,
       closeDeleteModal,

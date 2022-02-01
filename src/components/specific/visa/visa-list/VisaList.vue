@@ -29,11 +29,11 @@
       height="40px"
       tabSize="50%"
       :tabs="tabs"
-      :selected="currentTab"
+      :selected="currentTab.id"
       @tab-click="selectTab"
     />
     <div class="visa-list__content">
-      <template v-if="userVisas[currentTab].length === 0">
+      <template v-if="currentTab.visas.length === 0">
         <div class="visa-list__content__empty">
           <BIMDataIcon
             name="visa"
@@ -41,7 +41,7 @@
             color="silver"
             margin="3px 0 0 0"
           />
-          <span v-if="currentTab === 'toValidateVisas'">
+          <span v-if="currentTab.id === 'toValidateVisas'">
             {{ $t("Visa.list.emptyValidation") }}
           </span>
           <span v-else>
@@ -52,9 +52,9 @@
       <template v-else>
         <div
           class="visa-list__content__visa"
-          v-for="visa of userVisas[currentTab]"
+          v-for="visa of currentTab.visas"
           :key="visa.id"
-          @click="!visasLoading && onClickToReachVisa(visa)"
+          @click="!visasLoading && $emit('reach-visa', visa)"
         >
           <BIMDataIcon :name="iconStatus(visa)" size="l" fill color="primary" />
           <div class="visa-list__content__visa__desc">
@@ -84,17 +84,19 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { fullName } from "@/utils/users";
 import { formatDateDDMMYYY } from "@/utils/date";
-import { visaStatus as VISA_STATUS } from "@/config/visa";
+import { VISA_STATUS } from "@/config/visa";
+
+// This variable is shared between all componant instances.
+let lastUsedTabIndex = 0;
 
 export default {
-  components: {},
   props: {
-    userVisas: {
-      type: Object,
+    toValidateVisas: {
+      type: Array,
       required: true
     },
-    startTab: {
-      type: String,
+    createdVisas: {
+      type: Array,
       required: true
     },
     visasLoading: {
@@ -103,29 +105,34 @@ export default {
     }
   },
   emits: ["reach-visa", "close"],
-  setup(props, { emit }) {
+  setup(props) {
     const { t } = useI18n();
 
     const tabs = computed(() => {
-      const userVisasKeys = Object.keys(props.userVisas);
       return [
         {
-          id: userVisasKeys[0],
-          label: t("Visa.list.visaValidator")
+          id: "toValidateVisas",
+          label: t("Visa.list.toValidateVisas"),
+          visas: props.toValidateVisas
         },
-        { id: userVisasKeys[1], label: t("Visa.list.visaCreated") }
+        {
+          id: "createdVisas",
+          label: t("Visa.list.createdVisas"),
+          visas: props.createdVisas
+        }
       ];
     });
 
+    const currentTabIndex = ref(lastUsedTabIndex);
+    const currentTab = computed(() => tabs.value[currentTabIndex.value]);
+
+    const selectTab = tab => {
+      lastUsedTabIndex = tabs.value.indexOf(tab);
+      currentTabIndex.value = lastUsedTabIndex;
+    };
+
     const isVisaUnderError = visa =>
       visa.status !== VISA_STATUS.CLOSE && visa.validationsInError.length;
-
-    const currentTab = ref(props.startTab || tabs.value[0].id);
-    const selectTab = tab => (currentTab.value = tab.id);
-
-    const onClickToReachVisa = visa => {
-      emit("reach-visa", visa, currentTab.value);
-    };
 
     const iconStatus = visa => {
       const { status, validationsInError } = visa;
@@ -143,7 +150,6 @@ export default {
       tabs,
       currentTab,
       // methods
-      onClickToReachVisa,
       selectTab,
       formatDateDDMMYYY,
       fullName,
