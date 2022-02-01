@@ -2,10 +2,10 @@
   <div class="visa-comment-post-actions">
     <div style="display: flex">
       <template v-if="showMenu">
-        <BIMDataButton ghost rounded icon @click="onOpen('edit')">
+        <BIMDataButton ghost rounded icon @click="onOpenEdit">
           <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="onOpen('delete')">
+        <BIMDataButton ghost rounded icon @click="onOpenDelete">
           <BIMDataIcon name="delete" size="xxs" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton ghost rounded icon @click="toggleMenu">
@@ -13,10 +13,10 @@
         </BIMDataButton>
       </template>
       <template v-if="isEditing">
-        <BIMDataButton ghost rounded icon @click="onAction('cancel')">
+        <BIMDataButton ghost rounded icon @click="onUndoEdit">
           <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="onAction">
+        <BIMDataButton ghost rounded icon @click="onConfirmEdit">
           <BIMDataIcon name="validate" size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </template>
@@ -25,14 +25,14 @@
       v-if="isDeleting"
       class="visa-comment-post-actions__delete"
       :class="`visa-comment-post-actions__delete${
-        isAReply ? '__first-comment' : ''
+        isAReply ? '' : '__first-comment'
       }`"
     >
       <span> {{ $t("Visa.comments.actions.confirmDelete") }}</span>
-      <BIMDataButton fill radius color="high" @click="onAction">
+      <BIMDataButton fill radius color="high" @click="onConfirmDelete">
         {{ $t("Visa.comments.actions.delete") }}
       </BIMDataButton>
-      <BIMDataButton ghost rounded icon @click="onAction('cancel')">
+      <BIMDataButton ghost rounded icon @click="isDeleting = false">
         <BIMDataIcon name="close" size="xxs" fill color="primary" />
       </BIMDataButton>
     </div>
@@ -64,7 +64,13 @@ export default {
       required: true
     }
   },
-  emits: ["handle-edit", "handle-delete", "toggle-close"],
+  emits: [
+    "init-edit",
+    "undo-edit",
+    "confirm-edit",
+    "confirm-delete",
+    "toggle-close"
+  ],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -75,29 +81,34 @@ export default {
     const isEditing = ref(false);
     const isDeleting = ref(false);
 
-    const onOpen = actionType => {
-      if (actionType === "edit") {
-        emit("handle-edit");
-        isEditing.value = true;
-      } else if (actionType === "delete") {
-        isDeleting.value = true;
-      }
+    const onOpenEdit = () => {
+      emit("init-edit");
+      isEditing.value = true;
       closeMenu();
     };
 
-    const onAction = cancel => {
-      if (isEditing.value) {
-        emit("handle-edit", cancel);
-        isEditing.value = false;
-      } else if (isDeleting.value) {
-        emit("handle-delete", cancel);
-        isDeleting.value = false;
-      }
+    const onUndoEdit = () => {
+      emit("undo-edit");
+      isEditing.value = false;
+    };
+
+    const onConfirmEdit = () => {
+      emit("confirm-edit");
+      isEditing.value = false;
+    };
+
+    const onOpenDelete = () => {
+      isDeleting.value = true;
+      closeMenu();
+    };
+
+    const onConfirmDelete = () => {
+      emit("confirm-delete");
+      isDeleting.value = false;
     };
 
     const onClose = () => {
-      emit("handle-edit", "cancel");
-      emit("handle-delete", "cancel");
+      emit("undo-edit");
       isEditing.value = false;
       isDeleting.value = false;
       closeMenu();
@@ -117,10 +128,12 @@ export default {
       // Methods
       closeMenu,
       toggleMenu,
-      onOpen,
-      onAction,
-      onClose,
-      console
+      onOpenEdit,
+      onOpenDelete,
+      onUndoEdit,
+      onConfirmEdit,
+      onConfirmDelete,
+      onClose
     };
   }
 };

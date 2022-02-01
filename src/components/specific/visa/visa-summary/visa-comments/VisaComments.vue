@@ -16,10 +16,8 @@
     </template>
     <template v-if="isCommenting">
       <VisaCommentsInput
-        :visaId="visaId"
-        :baseInfo="baseInfo"
-        @toggle-comments-input="toggleCommentsInput"
-        @get-comments="getComments"
+        @post-comment="postComment"
+        @close-comments-input="isCommenting = false"
       />
     </template>
     <div
@@ -33,13 +31,13 @@
         :key="comment.id"
       >
         <VisaCommentPost
+          :mainComment="commentList[0]"
           :comment="comment"
-          :visaId="visaId"
-          :baseInfo="baseInfo"
-          :isAReply="commentList.length > 1 && index > 0 ? false : true"
+          :project="project"
+          :visa="visa"
+          :isAReply="commentList.length > 1 && index > 0"
           :isLastComment="commentList.length === index + 1"
-          :mainCommentId="commentList[0].id"
-          @get-comments="getComments"
+          @reload-comments="reloadComments"
         />
       </div>
     </div>
@@ -58,22 +56,26 @@ import { fullName } from "@/utils/users";
 export default {
   components: { VisaCommentPost, VisaCommentsInput },
   props: {
+    comments: {
+      type: Array,
+      required: true
+    },
+    project: {
+      type: Object,
+      required: true
+    },
+    visa: {
+      type: Object,
+      required: true
+    },
     isAuthor: {
       type: Boolean,
-      required: true
-    },
-    visaId: {
-      type: Number,
-      required: true
-    },
-    baseInfo: {
-      type: Object,
       required: true
     }
   },
   emits: [],
   setup(props) {
-    const { fetchAllComments } = useVisa();
+    const { fetchAllComments, createComment } = useVisa();
     const { user } = useUser();
 
     const isCommenting = ref(false);
@@ -81,42 +83,52 @@ export default {
 
     const { id: currentUserId } = user.value;
 
-    const getComments = async () => {
-      const myStructure = {};
-      const res = await fetchAllComments(props.visaId, props.baseInfo);
-
-      res
-        .sort((a, b) => (a.id < b.id ? -1 : 1))
-        .forEach(elem => {
-          const comment = {
-            ...elem,
-            fullName: fullName(elem.author),
-            isSelf: elem.author.userId === currentUserId
-          };
+    const formatComments = comments => {
+      const threadCreator = {};
+      comments
+        .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
+        .map(comment => ({
+          ...comment,
+          fullName: fullName(comment.author),
+          isSelf: comment.author.userId === currentUserId
+        }))
+        .forEach(comment => {
           if (comment.replyToCommentId) {
-            myStructure[comment.replyToCommentId].push(comment);
+            threadCreator[comment.replyToCommentId].push(comment);
           } else {
-            myStructure[comment.id] = [comment];
+            threadCreator[comment.id] = [comment];
           }
         });
 
-      threadList.value = Object.keys(myStructure)
-        .map(id => myStructure[id])
+      return Object.keys(threadCreator)
+        .map(id => threadCreator[id])
         .reverse();
     };
 
-    const toggleCommentsInput = () =>
-      (isCommenting.value = !isCommenting.value);
+    onMounted(() => (threadList.value = formatComments(props.comments)));
 
-    onMounted(async () => getComments());
+    const reloadComments = async () => {
+      const comments = await fetchAllComments(
+        props.project,
+        props.visa.document,
+        props.visa
+      );
+      threadList.value = formatComments(comments);
+    };
+
+    const postComment = async data => {
+      await createComment(props.project, props.visa.document, props.visa, data);
+      isCommenting.value = false;
+      reloadComments();
+    };
 
     return {
       // references
       isCommenting,
       threadList,
       // methods
-      getComments,
-      toggleCommentsInput
+      reloadComments,
+      postComment
     };
   }
 };

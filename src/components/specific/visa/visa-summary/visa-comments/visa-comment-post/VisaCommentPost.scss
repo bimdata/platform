@@ -1,4 +1,7 @@
 .visa-comment-post {
+  &__reply {
+    margin-left: 44px;
+  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -42,10 +45,6 @@
         }
       }
     }
-
-
   }
 }
-.reply {
-  margin-left: 44px;
-}
+

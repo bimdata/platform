@@ -4,7 +4,7 @@
       ref="textarea"
       v-model="textAreaContent"
       :placeholder="
-        $t(`Visa.comments.${replyId ? 'replyComment' : 'postComment'}`)
+        $t(`Visa.comments.${mainComment ? 'replyComment' : 'postComment'}`)
       "
       name="comment"
       width="100%"
@@ -17,7 +17,7 @@
         color="secondary"
         radius
         width="30%"
-        @click="$emit('toggle-comments-input')"
+        @click="$emit('close-comments-input')"
         >{{ $t("Visa.comments.cancel") }}</BIMDataButton
       >
       <BIMDataButton
@@ -34,26 +34,16 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import { useVisa } from "@/state/visa";
 
 export default {
   props: {
-    visaId: {
-      type: Number,
-      required: true
-    },
-    baseInfo: {
+    mainComment: {
       type: Object,
-      required: true
-    },
-    replyId: {
-      type: Number,
       default: () => null
     }
   },
-  emits: ["toggle-comments-input", "get-comments"],
+  emits: ["post-comment", "close-comments-input"],
   setup(props, { emit }) {
-    const { createComment } = useVisa();
     const textarea = ref(null);
     const textAreaContent = ref(null);
 
@@ -61,13 +51,9 @@ export default {
       if (textAreaContent.value) {
         const data = {
           content: textAreaContent.value,
-          replyToCommentId:
-            typeof props.replyId === "number" ? props.replyId : null
+          replyToCommentId: props.mainComment && props.mainComment.id
         };
-        await createComment(props.visaId, props.baseInfo, data);
-        textAreaContent.value = null;
-        emit("toggle-comments-input");
-        emit("get-comments");
+        emit("post-comment", data);
       }
     };
 

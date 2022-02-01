@@ -176,60 +176,56 @@ class VisaService {
     }
   }
 
-  async getVisaComments(visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async getVisaComments(project, document, visa) {
     try {
       return await apiClient.collaborationApi.getVisaComments({
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_FETCH_ALL_COMMENTS_ERROR, error);
     }
   }
 
-  async createVisaComment(visaId, baseInfo, data) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async createVisaComment(project, document, visa, data) {
     try {
       return await apiClient.collaborationApi.createVisaComment({
-        data,
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
+        data
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_CREATE_COMMENTS_ERROR, error);
     }
   }
 
-  async updateVisaComment(commentId, visaId, baseInfo, data) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async updateVisaComment(project, document, visa, comment, data) {
     try {
       return await apiClient.collaborationApi.updateVisaComment({
-        data,
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId,
-        id: commentId
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
+        id: comment.id,
+        data
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_UPDATE_COMMENT_ERROR, error);
     }
   }
 
-  async deleteVisaComment(commentId, visaId, baseInfo) {
-    const { cloudPk, projectPk, documentPk } = baseInfo;
+  async deleteVisaComment(project, document, visa, comment) {
     try {
       return await apiClient.collaborationApi.deleteVisaComment({
-        cloudPk,
-        projectPk,
-        documentPk,
-        visaPk: visaId,
-        id: commentId
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        documentPk: document.id,
+        visaPk: visa.id,
+        id: comment.id
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.VISA_DELETE_COMMENT_ERROR, error);

@@ -183,8 +183,9 @@
         </div>
         <div class="visa-summary__shell__comments">
           <VisaComments
-            :baseInfo="baseInfo"
-            :visaId="visaId"
+            :comments="formatedVisa.comments"
+            :project="project"
+            :visa="visa"
             :isAuthor="isAuthor"
           />
         </div>

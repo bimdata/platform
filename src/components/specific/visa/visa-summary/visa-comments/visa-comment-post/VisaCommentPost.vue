@@ -1,7 +1,7 @@
 <template>
   <div
     class="visa-comment-post"
-    :class="{ reply: isAReply ? '' : '__reply' }"
+    :class="`visa-comment-post${isAReply ? '__reply' : ''}`"
     v-click-away="toggleClose"
   >
     <div class="visa-comment-post__header">
@@ -9,7 +9,7 @@
         <UserAvatar
           :user="comment.author"
           size="27"
-          sizeInitials="14"
+          initialsSize="14"
           color="silver-light"
           style="box-shadow: var(--box-shadow)"
         />
@@ -26,12 +26,12 @@
       <div class="visa-comment-post__header__right-side">
         <template v-if="comment.isSelf">
           <VisaCommentPostActions
-            :commentId="comment.id"
-            :commentToHandle="commentToHandle"
             :isAReply="isAReply"
-            :isClosed="isClosed"
-            @handle-edit="handleEdit"
-            @handle-delete="handleDelete"
+            :isClosed="isActionClosed"
+            @init-edit="isEditing = true"
+            @undo-edit="undoEdit"
+            @confirm-edit="confirmEdit"
+            @confirm-delete="confirmDelete"
             @toggle-close="toggleClose"
           />
         </template>
@@ -56,18 +56,16 @@
         color="secondary"
         radius
         width="30%"
-        style="margin: -6% 0 0 74%; font-size: 1.15em"
-        @click="toggleIsReplying(mainCommentId)"
+        style="margin: -5% 0 0 74%; font-size: 1.15em"
+        @click="isReplying = true"
         >{{ $t("Visa.comments.reply") }}</BIMDataButton
       >
     </template>
     <template v-if="isReplying">
       <VisaCommentsInput
-        :replyId="mainCommentId"
-        :visaId="visaId"
-        :baseInfo="baseInfo"
-        @toggle-comments-input="toggleIsReplying"
-        @get-comments="$emit('get-comments')"
+        :mainComment="mainComment"
+        @post-comment="postComment"
+        @close-comments-input="isReplying = false"
         style="margin-left: var(--spacing-unit)"
       />
     </template>
@@ -98,82 +96,89 @@ export default {
       type: Boolean,
       required: true
     },
+    project: {
+      type: Object,
+      required: true
+    },
+    visa: {
+      type: Object,
+      required: true
+    },
     isLastComment: {
       type: Boolean,
       required: true
     },
-    mainCommentId: {
-      type: Number,
-      required: true
-    },
-    visaId: {
-      type: Number,
-      required: true
-    },
-    baseInfo: {
+    mainComment: {
       type: Object,
       required: true
     }
   },
-  emits: ["get-comments"],
+  emits: ["reload-comments"],
   setup(props, { emit }) {
-    const { updateComment, deleteComment } = useVisa();
+    const { updateComment, deleteComment, createComment } = useVisa();
 
     const isEditing = ref(false);
-    const isDeleting = ref(false);
     const isReplying = ref(false);
     const commentToHandle = ref(null);
     const commentContent = ref(props.comment.content);
-    const isClosed = ref(false);
+    const isActionClosed = ref(false);
     const textarea = ref(null);
 
-    const handleEdit = async cancel => {
-      if (cancel === "cancel") {
-        commentContent.value = props.comment.content;
-        isEditing.value = false;
-      } else if (isEditing.value) {
-        if (props.comment.content !== commentContent.value) {
-          await updateComment(props.comment.id, props.visaId, props.baseInfo, {
+    const undoEdit = () => {
+      commentContent.value = props.comment.content;
+      isEditing.value = false;
+    };
+
+    const confirmEdit = async () => {
+      if (props.comment.content !== commentContent.value) {
+        await updateComment(
+          props.project,
+          props.visa.document,
+          props.visa,
+          props.comment,
+          {
             content: commentContent.value
-          });
-        }
-        isEditing.value = false;
-      } else if (!isEditing.value) {
-        isEditing.value = true;
+          }
+        );
       }
+      isEditing.value = false;
     };
 
-    const handleDelete = async cancel => {
-      if (cancel === "cancel") {
-        isDeleting.value = false;
-      } else {
-        await deleteComment(props.comment.id, props.visaId, props.baseInfo);
-        await emit("get-comments");
-        isDeleting.value = false;
-      }
+    const confirmDelete = async () => {
+      await deleteComment(
+        props.project,
+        props.visa.document,
+        props.visa,
+        props.comment
+      );
+      emit("reload-comments");
     };
 
-    const toggleIsReplying = () => (isReplying.value = !isReplying.value);
-    const toggleClose = () => (isClosed.value = !isClosed.value);
+    const postComment = async data => {
+      await createComment(props.project, props.visa.document, props.visa, data);
+      isReplying.value = false;
+      emit("reload-comments");
+    };
+
+    const toggleClose = () => (isActionClosed.value = !isActionClosed.value);
 
     watch(isEditing, () => isEditing.value && textarea.value.focus());
 
     return {
       //references
       isEditing,
-      isDeleting,
       commentToHandle,
       isReplying,
-      isClosed,
+      isActionClosed,
       commentContent,
       textarea,
       // methods
       formatDateDDMMYYYHHMM,
-      handleEdit,
-      handleDelete,
-      toggleIsReplying,
+      undoEdit,
+      confirmEdit,
+      confirmDelete,
       toggleClose,
-      console
+      postComment
     };
   }
 };
