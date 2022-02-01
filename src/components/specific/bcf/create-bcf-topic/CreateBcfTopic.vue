@@ -85,7 +85,7 @@ import { computed, inject, ref, watch } from "vue";
 
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 
 export default {
   props: {
@@ -129,9 +129,7 @@ export default {
     const topicPhase = ref();
     const topicAssignedTo = ref();
     const hasError = ref(false);
-    const { pushNotification } = useNotifications();
-
-    const bcfTopics = inject("bcfTopics");
+    const { pushNotification } = useAppNotification();
 
     const submit = async () => {
       if (topicTitle.value) {

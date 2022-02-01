@@ -16,24 +16,24 @@
       </BIMDataButton>
     </template>
   </BIMDataCard>
-  <SidePanel title="Signaler un problème">
+  <AppSidePanel title="Signaler un problème">
     <CreateBcfTopic />
-  </SidePanel>
+  </AppSidePanel>
 </template>
 
 <script>
-import { useSidePanel } from "@/composables/side-panel.js";
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import EmptyBcfTopic from "./EmptyBcfTopic.vue";
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import CreateBcfTopic from "../create-bcf-topic/CreateBcfTopic.vue";
 export default {
   components: {
     EmptyBcfTopic,
-    SidePanel,
+    AppSidePanel,
     CreateBcfTopic
   },
   setup() {
-    const { openSidePanel } = useSidePanel();
+    const { openSidePanel } = useAppSidePanel();
 
     return {
       // Methods
