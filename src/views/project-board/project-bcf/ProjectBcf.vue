@@ -30,9 +30,9 @@
         <span>Créer un BCF</span>
       </BIMDataButton>
     </app-slot-content>
-    <SidePanel title="Signaler un problème">
+    <AppSidePanel title="Signaler un problème">
       <CreateBcfTopic :bcfTopics="bcfTopics" />
-    </SidePanel>
+    </AppSidePanel>
     <div class="project-bcf__actions flex justify-between m-t-24">
       <BIMDataSearch
         placeholder="Search"
@@ -199,11 +199,11 @@ import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
 
-import { useSidePanel } from "@/composables/side-panel.js";
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 
 // Components
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
+import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
+import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
 import BcfTopicGrid from "../../../components/specific/bcf/bcf-topic-grid/BcfTopicGrid.vue";
@@ -215,7 +215,7 @@ import ProjectBcfOnboardingImage from "./ProjectBcfOnboardingImage.vue";
 export default {
   components: {
     AppSlotContent,
-    SidePanel,
+    AppSidePanel,
     CreateBcfTopic,
     BcfFilters,
     BcfTopicGrid,
@@ -226,7 +226,7 @@ export default {
   },
   setup() {
     const { currentProject } = useProjects();
-    const { openSidePanel } = useSidePanel();
+    const { openSidePanel } = useAppSidePanel();
     const { loadBcfTopics } = useBcf();
     const bcfTopics = ref([]);
     const loading = ref(false);
