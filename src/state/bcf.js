@@ -27,10 +27,6 @@ const loadBcfTopics = async project => {
     );
   }
 
-  topicsWithSnapshots.sort((a, b) =>
-    a.creationDate < b.creationDate ? 1 : -1
-  );
-
   state.bcfTopics = topicsWithSnapshots;
 
   return topicsWithSnapshots;

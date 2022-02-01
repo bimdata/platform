@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { computed, inject, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
@@ -131,8 +131,6 @@ export default {
     const hasError = ref(false);
     const { pushNotification } = useAppNotification();
 
-    const bcfTopics = inject("bcfTopics");
-
     const submit = async () => {
       if (topicTitle.value) {
         try {
@@ -150,7 +148,7 @@ export default {
             title: "Success",
             message: "Topic BCF Créée"
           });
-          bcfTopics.value = await loadBcfTopics(currentProject.value);
+          await loadBcfTopics(currentProject.value);
         } finally {
           topicTitle.value = "";
           topicType.value = "";

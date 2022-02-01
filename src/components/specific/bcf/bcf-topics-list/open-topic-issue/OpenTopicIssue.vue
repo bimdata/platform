@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import { inject, ref } from "vue";
+import { ref } from "vue";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 
@@ -198,15 +198,13 @@ export default {
     }
 
     const { currentProject } = useProjects();
-    const { deleteTopic, loadBcfTopics } = useBcf();
-    const bcfTopics = inject("bcfTopics");
+    const { deleteTopic } = useBcf();
     const loading = ref(false);
 
     const removeTopic = async () => {
       try {
         loading.value = true;
         await deleteTopic(currentProject.value, props.bcfTopic);
-        bcfTopics.value = await loadBcfTopics(currentProject.value);
       } finally {
         loading.value = false;
       }
