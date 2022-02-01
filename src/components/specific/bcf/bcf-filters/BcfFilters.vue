@@ -134,7 +134,7 @@ export default {
         .sort((a, b) => (a > b ? 1 : -1))
         .map(priorityOption => {
           return {
-            label: priorityOption ? priorityOption : "Non défini",
+            label: priorityOption || "Non défini",
             value: priorityOption
           };
         });
@@ -149,7 +149,7 @@ export default {
         .sort((a, b) => (a > b ? 1 : -1))
         .map(statusOption => {
           return {
-            label: statusOption ? statusOption : "Non défini",
+            label: statusOption || "Non défini",
             value: statusOption
           };
         });

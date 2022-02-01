@@ -10,11 +10,12 @@ class BcfService {
       console.log(error);
     }
   }
-  async fetchTopicViewpoints(project, topic) {
+  async fetchTopicViewpoints(project, topic, imgFormat = null) {
     try {
       return await apiClient.bcfApi.getTopicViewpoints({
         projectsPk: project.id,
-        topicsGuid: topic.guid
+        topicsGuid: topic.guid,
+        imgFormat: imgFormat ? "url" : null
       });
     } catch (error) {
       console.log(error);
