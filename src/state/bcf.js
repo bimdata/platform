@@ -27,10 +27,6 @@ const loadBcfTopics = async project => {
     );
   }
 
-  topicsWithSnapshots.sort((a, b) =>
-    a.creationDate < b.creationDate ? 1 : -1
-  );
-
   state.bcfTopics = topicsWithSnapshots;
 
   return topicsWithSnapshots;
@@ -46,6 +42,12 @@ const deleteTopic = async (project, topic) => {
   await BcfService.deleteTopic(project, topic);
   await loadBcfTopics(project);
   return topic;
+};
+
+const importBcf = async (project, file) => {
+  const bcf = await BcfService.importBcf(project, file);
+  await loadBcfTopics(project);
+  return bcf;
 };
 
 const loadTopicExtensions = async project => {
