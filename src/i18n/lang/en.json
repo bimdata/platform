@@ -526,7 +526,8 @@
         "status": {
             "active": "Active",
             "deleted": "Deleted",
-            "paused": "Paused"
+            "paused": "Paused",
+            "custom": "Managed by BIMData.io"
         }
     },
     "DatapackForm": {
@@ -562,7 +563,6 @@
     },
     "InvoicesTable": {
         "title": "Invoices",
-        "tablePlaceholder": "Loading invoices...",
         "emptyTableText": "Your invoices will be listed here when you have active subsctiptions.",
         "subscribeButton": "Upgrade to our Pro Platform",
         "headers": {

@@ -560,7 +560,6 @@
     },
     "InvoicesTable": {
         "title": "Fatture",
-        "tablePlaceholder": "Caricamento delle fatture",
         "emptyTableText": "Le tue fatture verranno visualizzate qui quando hai abbonamenti attivi.",
         "subscribeButton": "Passa alla nostra Platform Pro",
         "headers": {
