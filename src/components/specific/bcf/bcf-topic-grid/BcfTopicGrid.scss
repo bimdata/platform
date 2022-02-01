@@ -1,5 +1,6 @@
 .bcf-topic {
   min-width: 320px;
+  position: relative;
   &__header {
     min-height: 204px;
     box-shadow: var(--box-shadow);
@@ -78,6 +79,32 @@
       }
       .low {
         color: var(--color-granite-light);
+      }
+    }
+  }
+  &__elements {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: var(--color-white);
+    &__header {
+      height: 31px;
+      background: var(--color-white);
+      box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
+      font-size: 12px;
+    }
+    &__content {
+      max-height: calc(100% - 31px);
+      overflow: auto;
+      li {
+        height: 26px;
+        color: var(--color-granite);
+        font-size: 11px;
+        &:nth-child(odd) {
+          background-color: var(--color-silver-light);
+        }
       }
     }
   }

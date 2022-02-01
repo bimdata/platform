@@ -56,6 +56,7 @@
             !bcfTopic.components.length ||
             !bcfTopic.components[0].selection.length
           "
+          @click="openElements"
         >
           <BIMDataIcon
             name="model3d"
@@ -100,11 +101,43 @@
         <OpenTopicIssue :bcfTopic="bcfTopic" @close="showSidePanel = false" />
       </div>
     </transition>
+    <div class="bcf-topic__elements" v-if="showElements">
+      <div
+        class="bcf-topic__elements__header flex items-center justify-between p-6"
+      >
+        <BIMDataButton
+          color="default"
+          ripple
+          icon
+          radius
+          @click="closeElements"
+        >
+          <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
+          Back</BIMDataButton
+        >
+        <div>
+          <strong>{{ bcfTopic.components[0].selection.length }}</strong>
+          éléments concernés
+        </div>
+      </div>
+      <div class="bcf-topic__elements__content p-6">
+        <ul class="bimdata-list m-t-6">
+          <li
+            v-for="element in bcfTopic.components[0].selection"
+            :key="element"
+            class="flex items-center p-x-6"
+          >
+            {{ element.ifcGuid }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { reactive, ref } from "vue";
+import { useToggle } from "@/composables/toggle.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
@@ -143,12 +176,21 @@ export default {
       bcfTopicToOpen.value = topic;
     };
 
+    const {
+      isOpen: showElements,
+      open: openElements,
+      close: closeElements
+    } = useToggle();
+
     return {
       getPriorityClasses,
       getStatusClasses,
       bcfTopicToOpen,
       showSidePanel,
-      openBcfTopic
+      showElements,
+      openBcfTopic,
+      openElements,
+      closeElements
     };
   }
 };
