@@ -20,10 +20,4 @@ const regexDate = new RegExp(
 // from dd/mm/yyy (string) to yyyy-mm-dd (date Object)
 const formatDate = date => new Date(date.split("/").reverse().join("-"));
 
-const formatDateDDMMYYY = date => {
-  return date.toLocaleString("fr-FR", {
-    dateStyle: "short"
-  });
-};
-
-export { formatToDateObject, formatDate, formatDateDDMMYYY, regexDate };
+export { formatToDateObject, formatDate, regexDate };

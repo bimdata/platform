@@ -64,7 +64,7 @@
               :text="visa.document.name"
             />
             <div class="visa-list__content__visa__desc__info">
-              <span>{{ formatDateDDMMYYY(visa.deadline) }}</span>
+              <span>{{ $d(visa.deadline, "short") }} </span>
               -
               <BIMDataTextBox
                 :text="
@@ -83,7 +83,6 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { fullName } from "@/utils/users";
-import { formatDateDDMMYYY } from "@/utils/date";
 import { VISA_STATUS } from "@/config/visa";
 
 // This variable is shared between all componant instances.
@@ -151,7 +150,6 @@ export default {
       currentTab,
       // methods
       selectTab,
-      formatDateDDMMYYY,
       fullName,
       iconStatus,
       isVisaUnderError

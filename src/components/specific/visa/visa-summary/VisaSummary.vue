@@ -212,7 +212,6 @@ import { useUser } from "@/state/user";
 import { useProjects } from "@/state/projects";
 
 import { fullName } from "@/utils/users";
-import { formatDateDDMMYYY } from "@/utils/date";
 import { isDateConform } from "@/utils/visas";
 
 export default {
@@ -247,7 +246,7 @@ export default {
     } = useVisa();
     const { getUserProjectList } = useProjects();
     const { user } = useUser();
-    const { t } = useI18n();
+    const { t, d } = useI18n();
     const { id: currentUserId } = user.value;
 
     const isClosed = ref(false);
@@ -270,7 +269,7 @@ export default {
 
     const formatVisa = visa => ({
       ...visa,
-      deadline: formatDateDDMMYYY(visa.deadline),
+      deadline: d(visa.deadline),
       creator: {
         ...visa.creator,
         fullName: visa.creator
