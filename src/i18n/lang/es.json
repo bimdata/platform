@@ -559,7 +559,6 @@
     },
     "InvoicesTable": {
         "title": "Facturas",
-        "tablePlaceholder": "Carga de facturas...",
         "emptyTableText": "Las facturas aparecerán aquí una vez que haya activado sus suscripciones.",
         "subscribeButton": "Pasar a nuestra Platform Pro",
         "headers": {

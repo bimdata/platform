@@ -4,14 +4,13 @@
       {{ $t("InvoicesTable.title") }}
     </h2>
 
-    <BIMDataCard class="invoices-table__table" v-if="subscriptions.length > 0">
+    <BIMDataCard class="invoices-table__table" v-if="payments.length > 0">
       <template #content>
         <GenericTable
           :columns="columns"
           :rows="payments"
           :paginated="true"
           :perPage="7"
-          :placeholder="$t('InvoicesTable.tablePlaceholder')"
         >
           <template #cell-space="{ row: payment }">
             <AppLink

@@ -140,7 +140,8 @@
     "status": {
       "active": "Actif",
       "deleted": "Supprimé",
-      "paused": "En pause"
+      "paused": "En pause",
+      "custom": "Géré par BIMData.io"
     }
   },
 
@@ -384,7 +385,6 @@
 
   "InvoicesTable": {
     "title": "Factures",
-    "tablePlaceholder": "Chargement des factures...",
     "emptyTableText": "Vos factures apparaitront ici lorsque vous aurez des abonnements actifs.",
     "subscribeButton": "Passez à notre Plateforme Pro",
     "headers": {

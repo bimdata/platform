@@ -26,7 +26,9 @@
             </AppLink>
           </template>
           <template #cell-nextpayment="{ row: sub }">
-            {{ $d(sub.next_bill_date, "short") }}
+            <div v-if="!sub.is_custom" >
+              {{ $d(sub.next_bill_date, "short") }}
+            </div>
           </template>
           <template #cell-subscriptionplan="{ row: sub }">
             {{ $t("BillingsTable.professionalPlan") }}
@@ -35,21 +37,26 @@
             </span>
           </template>
           <template #cell-status="{ row: sub }">
-            <span :class="`status-cell--${sub.status}`">
+            <span v-if="sub.is_custom" class="status-cell--custom">
+              {{ $t("BillingsTable.status.custom") }}
+            </span>
+            <span v-else :class="`status-cell--${sub.status}`">
               {{ $t(`BillingsTable.status.${sub.status}`) }}
             </span>
           </template>
           <template #cell-amount="{ row: sub }">
-            {{
-              +sub.unit_price +
-              sub.data_packs
-                .map(d => +d.unit_price * d.quantity)
-                .reduce((a, b) => a + b, 0)
-            }}
-            <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
+            <div v-if="!sub.is_custom" >
+              {{
+                +sub.unit_price +
+                sub.data_packs
+                  .map(d => +d.unit_price * d.quantity)
+                  .reduce((a, b) => a + b, 0)
+              }}
+              <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
+            </div>
           </template>
           <template #cell-actions="{ row: sub }">
-            <BillingActionsCell v-if="sub.status === 'active'" :billing="sub" />
+            <BillingActionsCell v-if="sub.status === 'active' && !sub.is_custom" :billing="sub" />
           </template>
         </GenericTable>
       </template>
