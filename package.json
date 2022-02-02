@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@bimdata/christmas-sleigh-viewer-plugin": "^2.0.0",
-    "@bimdata/design-system": "^1.2.0-rc.15",
+    "@bimdata/design-system": "^1.2.0-rc.18",
     "@bimdata/typescript-fetch-api-client": "^6.22.3",
     "@bimdata/viewer": "^1.9.0-rc.19",
     "@uppy/core": "^2.1.2",

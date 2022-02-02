@@ -181,6 +181,14 @@
             />
           </div>
         </div>
+        <div class="visa-summary__shell__comments">
+          <VisaComments
+            :comments="formatedVisa.comments"
+            :project="project"
+            :visa="visa"
+            :isAuthor="isAuthor"
+          />
+        </div>
       </div>
     </template>
   </div>
@@ -195,6 +203,7 @@ import { VISA_STATUS } from "@/config/visa";
 import { formatDate } from "@/utils/date";
 
 import VisaSummaryValidator from "./visa-summary-validator/VisaSummaryValidator";
+import VisaComments from "./visa-comments/VisaComments";
 import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
 import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
 
@@ -203,11 +212,15 @@ import { useUser } from "@/state/user";
 import { useProjects } from "@/state/projects";
 
 import { fullName } from "@/utils/users";
-import { formatDateDDMMYYY } from "@/utils/date";
 import { isDateConform } from "@/utils/visas";
 
 export default {
-  components: { VisaSummaryValidator, VisaSafeZone, VisaSelectionValidator },
+  components: {
+    VisaSummaryValidator,
+    VisaSafeZone,
+    VisaSelectionValidator,
+    VisaComments
+  },
   props: {
     project: {
       type: Object,
@@ -233,7 +246,7 @@ export default {
     } = useVisa();
     const { getUserProjectList } = useProjects();
     const { user } = useUser();
-    const { t } = useI18n();
+    const { t, d } = useI18n();
     const { id: currentUserId } = user.value;
 
     const isClosed = ref(false);
@@ -256,7 +269,7 @@ export default {
 
     const formatVisa = visa => ({
       ...visa,
-      deadline: formatDateDDMMYYY(visa.deadline),
+      deadline: d(visa.deadline),
       creator: {
         ...visa.creator,
         fullName: visa.creator

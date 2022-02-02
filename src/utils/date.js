@@ -19,12 +19,5 @@ const regexDate = new RegExp(
 
 // from dd/mm/yyy (string) to yyyy-mm-dd (date Object)
 const formatDate = date => new Date(date.split("/").reverse().join("-"));
-const formatDateDDMMYYY = date => {
-  function pad(s) {
-    return s < 10 ? "0" + s : s;
-  }
-  const d = new Date(date);
-  return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
-};
 
-export { formatToDateObject, formatDate, formatDateDDMMYYY, regexDate };
+export { formatToDateObject, formatDate, regexDate };

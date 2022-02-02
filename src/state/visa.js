@@ -56,6 +56,22 @@ const updateVisa = async (project, document, visa, data) => {
   return VisaService.updateVisa(project, document, visa, data);
 };
 
+const fetchAllComments = async (project, document, visa) => {
+  return VisaService.getVisaComments(project, document, visa);
+};
+
+const createComment = async (project, document, visa, data) => {
+  return VisaService.createVisaComment(project, document, visa, data);
+};
+
+const updateComment = async (project, document, visa, comment, data) => {
+  return VisaService.updateVisaComment(project, document, visa, comment, data);
+};
+
+const deleteComment = async (project, document, visa, comment) => {
+  return VisaService.deleteVisaComment(project, document, visa, comment);
+};
+
 export function useVisa() {
   return {
     // Methods
@@ -71,6 +87,10 @@ export function useVisa() {
     fetchCreatedVisas,
     fetchToValidateVisas,
     deleteValidation,
-    updateVisa
+    updateVisa,
+    fetchAllComments,
+    createComment,
+    updateComment,
+    deleteComment
   };
 }

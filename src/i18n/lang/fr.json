@@ -757,6 +757,11 @@
         "content": "Êtes-vous sûr de vouloir cloturer ce visa ?",
         "action": "Oui, cloturer ce visa",
         "keepView": "Annuler"
+      },
+      "deleteComment": {
+        "content": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+        "action": "Oui, supprimer ce commentaire",
+        "keepView": "Annuler"
       }
     },
     "summary": {
@@ -781,6 +786,20 @@
       "getRidOfValidator": "Retirer le validant",
       "refresh": "Rénitialiser la validation"
      }
+    },
+    "comments": {
+      "comment": "Commenter",
+      "commentary": "Commentaire",
+      "postComment": "Poster un commentaire",
+      "replyComment": "Répondre à un commentaire",
+      "publish": "Publier",
+      "cancel": "Annuler",
+      "reply": "Répondre",
+      "actions": {
+        "edit": "Editer",
+        "delete": "Supprimer",
+        "confirmDelete": "Supprimer ce commentaire ?"
+      }
     },
     "list": {
       "title": "Demande en cours",
@@ -852,6 +871,10 @@
     "visaDeleteError": "Impossible de supprimer ce visa",
     "visaUpdateError": "Impossible de mettre à jour ce visa",
     "visaRefreshError": "Impossible de mettre à jour votre réponse",
+    "visaFetchAllCommentsError": "Impossible de récupérer les commentaires",
+    "visaCreateCommentsError": "Impossible de poster ce commentaire",
+    "visaUpdateCommentError": "Impossible de modifier ce commentaire",
+    "visaDeleteCommentError": "Impossible de supprimer ce commentaire",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",
