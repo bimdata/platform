@@ -1,4 +1,13 @@
 .project-bcf {
+  &__settings {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    height: 100%;
+    width: 500px;
+    z-index: 999;
+  }
   &__actions {
     & > .flex {
       position: relative;

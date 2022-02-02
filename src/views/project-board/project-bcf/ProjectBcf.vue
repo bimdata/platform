@@ -1,6 +1,16 @@
 <template>
   <div class="project-bcf">
     <app-slot-content name="project-board-action">
+      <BIMDataButton
+        color="primary"
+        outline
+        radius
+        icon
+        class="m-r-12"
+        @click="openBcfSettings"
+      >
+        <BIMDataIcon name="settings" size="xxs" color="default" />
+      </BIMDataButton>
       <FileUploadButton
         class="m-r-12"
         width="auto"
@@ -34,6 +44,9 @@
     <AppSidePanel title="Signaler un problème">
       <CreateBcfTopic :bcfTopics="bcfTopics" />
     </AppSidePanel>
+    <div class="project-bcf__settings" v-show="showBcfSettings">
+      <BcfSettings @close="closeBcfSettings" />
+    </div>
     <div class="project-bcf__actions flex justify-between m-t-24">
       <BIMDataSearch
         placeholder="Search"
@@ -199,14 +212,14 @@ import { useBcf } from "@/state/bcf.js";
 import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
-
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
+import { useToggle } from "@/composables/toggle";
 
 // Components
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
+import BcfSettings from "../../../components/specific/bcf/bcf-settings/BcfSettings.vue";
 import BcfTopicGrid from "../../../components/specific/bcf/bcf-topic-grid/BcfTopicGrid.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
@@ -219,6 +232,7 @@ export default {
     AppSidePanel,
     CreateBcfTopic,
     BcfFilters,
+    BcfSettings,
     BcfTopicGrid,
     BcfTopicsList,
     BcfTopicsMetrics,
@@ -275,6 +289,12 @@ export default {
       }
     };
 
+    const {
+      isOpen: showBcfSettings,
+      close: closeBcfSettings,
+      open: openBcfSettings
+    } = useToggle();
+
     return {
       loading,
       bcfTopics,
@@ -289,6 +309,9 @@ export default {
       isSortByNameActive,
       isSortByIndexActive,
       isSortByDateActive,
+      openBcfSettings,
+      closeBcfSettings,
+      showBcfSettings,
       toggleDisplayBcfTopics,
       isDisplayByListActive,
       openCreateBcfTopic: openSidePanel,
