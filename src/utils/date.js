@@ -19,27 +19,18 @@ const regexDate = new RegExp(
 
 // from dd/mm/yyy (string) to yyyy-mm-dd (date Object)
 const formatDate = date => new Date(date.split("/").reverse().join("-"));
+
 const formatDateDDMMYYY = date => {
-  function pad(s) {
-    return s < 10 ? "0" + s : s;
-  }
-  const d = new Date(date);
-  return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
+  return date.toLocaleString("fr-FR", {
+    dateStyle: "short"
+  });
 };
 
 const formatDateDDMMYYYHHMM = date => {
-  function pad(s) {
-    return s < 10 ? "0" + s : s;
-  }
-  const d = new Date(date);
-  const DDMMYYYY = [
-    pad(d.getDate()),
-    pad(d.getMonth() + 1),
-    d.getFullYear()
-  ].join("/");
-  return `${DDMMYYYY} ${
-    d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()
-  }:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
+  return date.toLocaleString("fr-FR", {
+    dateStyle: "short",
+    timeStyle: "short"
+  });
 };
 
 export {
