@@ -24,9 +24,7 @@
     <div
       v-if="isDeleting"
       class="visa-comment-post-actions__delete"
-      :class="`visa-comment-post-actions__delete${
-        isAReply ? '' : '__first-comment'
-      }`"
+      :class="`visa-comment-post-actions__delete${isAReply ? '__reply' : ''}`"
     >
       <span> {{ $t("Visa.comments.actions.confirmDelete") }}</span>
       <BIMDataButton fill radius color="high" @click="onConfirmDelete">
@@ -59,7 +57,7 @@ export default {
       type: Boolean,
       required: true
     },
-    isClosed: {
+    areActionsClosed: {
       type: Boolean,
       required: true
     }
@@ -116,8 +114,8 @@ export default {
     };
 
     watch(
-      () => props.isClosed,
-      () => props.isClosed && onClose()
+      () => props.areActionsClosed,
+      () => props.areActionsClosed && onClose()
     );
 
     return {

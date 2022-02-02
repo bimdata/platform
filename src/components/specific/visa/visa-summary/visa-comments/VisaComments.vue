@@ -101,8 +101,8 @@ export default {
         });
 
       return Object.keys(threadCreator)
-        .map(id => threadCreator[id])
-        .reverse();
+        .sort((a, b) => (a < b ? 1 : -1))
+        .map(id => threadCreator[id]);
     };
 
     onMounted(() => (threadList.value = formatComments(props.comments)));

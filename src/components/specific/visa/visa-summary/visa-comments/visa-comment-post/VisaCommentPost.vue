@@ -2,7 +2,7 @@
   <div
     class="visa-comment-post"
     :class="`visa-comment-post${isAReply ? '__reply' : ''}`"
-    v-click-away="toggleClose"
+    v-click-away="toggleCloseActions"
   >
     <div class="visa-comment-post__header">
       <div class="visa-comment-post__header__left-side">
@@ -27,12 +27,12 @@
         <template v-if="comment.isSelf">
           <VisaCommentPostActions
             :isAReply="isAReply"
-            :isClosed="isActionClosed"
+            :areActionsClosed="areActionsClosed"
             @init-edit="isEditing = true"
             @undo-edit="undoEdit"
             @confirm-edit="confirmEdit"
             @confirm-delete="confirmDelete"
-            @toggle-close="toggleClose"
+            @toggle-close="toggleCloseActions"
           />
         </template>
       </div>
@@ -64,7 +64,7 @@
     <template v-if="isReplying">
       <VisaCommentsInput
         :mainComment="mainComment"
-        @post-comment="postComment"
+        @post-comment="replyComment"
         @close-comments-input="isReplying = false"
         style="margin-left: var(--spacing-unit)"
       />
@@ -88,6 +88,10 @@ export default {
     VisaCommentsInput
   },
   props: {
+    mainComment: {
+      type: Object,
+      required: true
+    },
     comment: {
       type: Object,
       required: true
@@ -107,10 +111,6 @@ export default {
     isLastComment: {
       type: Boolean,
       required: true
-    },
-    mainComment: {
-      type: Object,
-      required: true
     }
   },
   emits: ["reload-comments"],
@@ -121,7 +121,7 @@ export default {
     const isReplying = ref(false);
     const commentToHandle = ref(null);
     const commentContent = ref(props.comment.content);
-    const isActionClosed = ref(false);
+    const areActionsClosed = ref(false);
     const textarea = ref(null);
 
     const undoEdit = () => {
@@ -154,13 +154,14 @@ export default {
       emit("reload-comments");
     };
 
-    const postComment = async data => {
+    const replyComment = async data => {
       await createComment(props.project, props.visa.document, props.visa, data);
       isReplying.value = false;
       emit("reload-comments");
     };
 
-    const toggleClose = () => (isActionClosed.value = !isActionClosed.value);
+    const toggleCloseActions = () =>
+      (areActionsClosed.value = !areActionsClosed.value);
 
     watch(isEditing, () => isEditing.value && textarea.value.focus());
 
@@ -169,7 +170,7 @@ export default {
       isEditing,
       commentToHandle,
       isReplying,
-      isActionClosed,
+      areActionsClosed,
       commentContent,
       textarea,
       // methods
@@ -177,8 +178,8 @@ export default {
       undoEdit,
       confirmEdit,
       confirmDelete,
-      toggleClose,
-      postComment
+      toggleCloseActions,
+      replyComment
     };
   }
 };

@@ -14,7 +14,7 @@
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
     height: 40px;
-    width: 325px;
+    width: 368px;
     right: 10px;
 
     span {
@@ -22,20 +22,19 @@
     }
 
     button:nth-of-type(1) {
-      margin-left: 30px;
+      margin-left: 64px;
     } 
 
     button:nth-of-type(2) {
       margin-right: 3px;
     }
 
-    &__first-comment {
-      width: 370px;
+    &__reply {
+      width: 325px;
+      
       button:first-of-type {
-        margin-left: 74px;
+        margin-left: 23px;
       }
     }
-
- 
   }
 }

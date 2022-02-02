@@ -2,6 +2,7 @@
   &__reply {
     margin-left: 44px;
   }
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -17,9 +18,11 @@
         margin-left: var(--spacing-unit);
   
       }
+
       &__separator {
         margin: 0 4px;
       }
+
       &__date {
         min-width: 100px;
         font-weight: bold;
@@ -33,12 +36,14 @@
 
   &__content {
     margin: 0 var(--spacing-unit);
+
     &:deep() {
       textarea {
         font-size: 1rem;
         font-family: var(--primary-font);
         color: var(--color-primary);
       }
+      
       :not(.editing){
         .bar {
           display: none; 
