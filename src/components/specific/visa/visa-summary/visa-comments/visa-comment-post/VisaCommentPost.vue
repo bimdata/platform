@@ -20,7 +20,7 @@
         />
         <span class="visa-comment-post__header__left-side__separator">•</span>
         <span class="visa-comment-post__header__left-side__date">{{
-          formatDateDDMMYYYHHMM(comment.createdAt)
+          $d(comment.createdAt, "long")
         }}</span>
       </div>
       <div class="visa-comment-post__header__right-side">
@@ -78,7 +78,6 @@ import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import VisaCommentsInput from "@/components/specific/visa/visa-summary/visa-comments/visa-comments-input/VisaCommentsInput.vue";
 
 import VisaCommentPostActions from "./visa-comment-post-actions/VisaCommentPostActions.vue";
-import { formatDateDDMMYYYHHMM } from "@/utils/date";
 import { useVisa } from "@/state/visa";
 
 export default {
@@ -174,7 +173,6 @@ export default {
       commentContent,
       textarea,
       // methods
-      formatDateDDMMYYYHHMM,
       undoEdit,
       confirmEdit,
       confirmDelete,

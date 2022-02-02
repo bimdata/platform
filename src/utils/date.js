@@ -26,17 +26,4 @@ const formatDateDDMMYYY = date => {
   });
 };
 
-const formatDateDDMMYYYHHMM = date => {
-  return date.toLocaleString("fr-FR", {
-    dateStyle: "short",
-    timeStyle: "short"
-  });
-};
-
-export {
-  formatToDateObject,
-  formatDate,
-  formatDateDDMMYYY,
-  formatDateDDMMYYYHHMM,
-  regexDate
-};
+export { formatToDateObject, formatDate, formatDateDDMMYYY, regexDate };
