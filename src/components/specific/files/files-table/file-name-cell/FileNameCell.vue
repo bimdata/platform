@@ -54,7 +54,7 @@
         />
         <BIMDataFileIcon
           v-else
-          :fileName="fileExtension(file.name)"
+          :fileName="fileExtension(file.fileName)"
           :size="20"
         />
         <BIMDataTextBox :text="file.name" />
