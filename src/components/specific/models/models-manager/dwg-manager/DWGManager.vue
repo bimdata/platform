@@ -1,5 +1,5 @@
 <template>
-  <ModelsManagerWrapper :project="project" :models="models" />
+  <ModelsManagerWrapper :project="project" :models="models" modelType="DWG" />
 </template>
 
 <script>

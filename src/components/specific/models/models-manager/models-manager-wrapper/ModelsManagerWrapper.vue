@@ -68,7 +68,11 @@ import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
 import ModelsTable from "../models-table/ModelsTable.vue";
 
-const tabsDef = [{ id: "upload" }, { id: "split" }, { id: "archive" }];
+const tabsDef = {
+  DWG: [{ id: "upload" }, { id: "archive" }],
+  IFC: [{ id: "upload" }, { id: "split" }, { id: "archive" }],
+  PDF: [{ id: "upload" }, { id: "archive" }]
+};
 
 export default {
   components: {
@@ -84,6 +88,11 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    modelType: {
+      type: String,
+      default: "IFC",
+      validator: value => ["DWG", "IFC", "PDF"].includes(value)
     }
   },
   setup(props) {
@@ -91,12 +100,12 @@ export default {
     const { updateModels, downloadModels: download } = useModels();
 
     const tabs = computed(() =>
-      tabsDef.map(tab => ({
+      tabsDef[props.modelType].map(tab => ({
         ...tab,
         label: t(`ModelsManager.tabs.${tab.id}`)
       }))
     );
-    const currentTab = ref(tabsDef[0].id);
+    const currentTab = ref(tabs.value[0].id);
     const selectTab = tab => (currentTab.value = tab.id);
 
     const modelLists = reactive({
