@@ -3,9 +3,7 @@
     {{
       file.type === "Folder"
         ? $t("FilesTable.folder")
-        : fileExtension(file.name)
-        ? fileExtension(file.name)
-        : "?"
+        : fileExtension(file.fileName) || "?"
     }}
   </div>
 </template>

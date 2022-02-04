@@ -21,7 +21,7 @@
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
-          <app-slot name="project-board-action" />
+          <AppSlot name="project-board-action" />
         </div>
       </template>
     </ViewHeader>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { onBeforeMount, ref, watch } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useSession } from "@/composables/session.js";
@@ -46,8 +46,8 @@ import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 
 // Components
-import AppSlot from "@/components/generic/app-slot/AppSlot.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
@@ -85,21 +85,16 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
     const { currentSpace, spaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
-    const tabs = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        tabs.value = tabsDef.map(tab => ({
-          ...tab,
-          label: t(`ProjectBoard.tabs.${tab.id}`)
-        }));
-      },
-      { immediate: true }
+    const tabs = computed(() =>
+      tabsDef.map(tab => ({
+        ...tab,
+        label: t(`ProjectBoard.tabs.${tab.id}`)
+      }))
     );
 
     const currentTab = ref(tabsDef[0]);

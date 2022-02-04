@@ -1,27 +1,33 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
-    <BIMDataButton
-      class="model-actions-cell__btn model-actions-cell__btn--viewer"
-      color="granite"
-      outline
-      radius
-      icon
-      :disabled="!isModelReady"
-      @click="goToModelViewer('2d')"
-    >
-      2D
-    </BIMDataButton>
-    <BIMDataButton
-      class="model-actions-cell__btn model-actions-cell__btn--viewer"
-      color="granite"
-      outline
-      radius
-      icon
-      :disabled="!isModelReady"
-      @click="goToModelViewer('3d')"
-    >
-      3D
-    </BIMDataButton>
+    <template v-if="model.type === 'IFC'">
+      <template v-for="window of ['2d', '3d']" :key="window">
+        <AppLink
+          :to="{
+            name: routeNames.modelViewer,
+            params: {
+              spaceID: project.cloud.id,
+              projectID: project.id,
+              modelIDs: model.id
+            },
+            query: {
+              window
+            }
+          }"
+        >
+          <BIMDataButton
+            class="model-actions-cell__btn model-actions-cell__btn--viewer"
+            color="granite"
+            outline
+            radius
+            icon
+            :disabled="!isModelReady"
+          >
+            {{ window.toUpperCase() }}
+          </BIMDataButton>
+        </AppLink>
+      </template>
+    </template>
     <BIMDataButton
       :disabled="!project.isAdmin && model.document.userPermission < 100"
       class="model-actions-cell__btn"
@@ -45,9 +51,6 @@
 
     <transition name="fade">
       <div class="model-actions-cell__menu" v-show="showMenu">
-        <!-- <BIMDataButton class="model-actions-cell__menu__btn" ghost squared>
-          {{ $t("ModelActionsCell.addTagsButtonText") }}
-        </BIMDataButton> -->
         <BIMDataButton
           class="model-actions-cell__menu__btn"
           ghost
@@ -86,12 +89,16 @@
 
 <script>
 import { computed } from "vue";
-import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle";
-import MODEL_STATUS from "@/config/model-statuses";
+import { useToggle } from "@/composables/toggle.js";
+import MODEL_STATUS from "@/config/model-statuses.js";
 import routeNames from "@/router/route-names.js";
+// Components
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
+  components: {
+    AppLink
+  },
   props: {
     project: {
       type: Object,
@@ -104,8 +111,6 @@ export default {
   },
   emits: ["archive", "delete", "download", "update"],
   setup(props, { emit }) {
-    const router = useRouter();
-
     const {
       isOpen: showMenu,
       close: closeMenu,
@@ -118,20 +123,6 @@ export default {
         MODEL_STATUS.IN_PROGRESS !== props.model.status
     );
 
-    const goToModelViewer = window => {
-      router.push({
-        name: routeNames.modelViewer,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id,
-          modelIDs: props.model.id
-        },
-        query: {
-          window
-        }
-      });
-    };
-
     const onClick = event => {
       closeMenu();
       emit(event, props.model);
@@ -140,10 +131,10 @@ export default {
     return {
       // References
       isModelReady,
+      routeNames,
       showMenu,
       // Methods
       closeMenu,
-      goToModelViewer,
       onClick,
       toggleMenu
     };

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { load } from "@/components/generic/app-loading/app-loading.js";
+import { load } from "@/components/specific/app/app-loading/app-loading.js";
 import { useGroups } from "@/state/groups.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";

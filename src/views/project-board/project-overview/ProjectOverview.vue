@@ -1,6 +1,6 @@
 <template>
   <div class="project-overview">
-    <app-slot-content name="project-board-action">
+    <AppSlotContent name="project-board-action">
       <BIMDataButton
         data-test="btn-toggle-upload"
         width="120px"
@@ -21,14 +21,14 @@
             : $t("ProjectOverview.openFileUploadButtonText")
         }}</span>
       </BIMDataButton>
-    </app-slot-content>
+    </AppSlotContent>
 
     <transition name="fade">
       <FileUploader
-        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         class="project-overview__block--upload"
+        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         :project="project"
-        :allowedFileTypes="['.ifc', '.ifczip']"
+        :allowedFileTypes="modelExtensions"
         @file-uploaded="reloadModels"
         @forbidden-upload-attempt="notifyForbiddenUpload"
         @close="closeFileUploader"
@@ -36,45 +36,47 @@
     </transition>
 
     <div class="project-overview__block--overview">
-      <app-loading name="project-models">
+      <AppLoading name="project-models">
         <ModelsOverview
           :project="project"
-          :models="models"
+          :models="ifcs"
           @open-file-uploader="openFileUploader"
         />
-      </app-loading>
+      </AppLoading>
     </div>
 
     <div class="project-overview__block--users">
-      <app-loading name="project-users">
+      <AppLoading name="project-users">
         <ProjectUsersManager
           :project="project"
           :users="users"
           :invitations="invitations"
         />
-      </app-loading>
+      </AppLoading>
     </div>
 
     <div class="project-overview__block--models">
-      <app-loading name="project-models">
+      <AppLoading name="project-models">
         <ModelsManager :project="project" :models="models" />
-      </app-loading>
+      </AppLoading>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
+import { MODEL_EXTENSIONS, MODEL_TYPES } from "@/config/model-types.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
 // Components
-import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";
@@ -97,6 +99,10 @@ export default {
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useAppNotification();
 
+    const ifcs = computed(() =>
+      projectModels.value.filter(model => model.type === MODEL_TYPES.IFC)
+    );
+
     const {
       isOpen: showFileUploader,
       open: openFileUploader,
@@ -116,13 +122,17 @@ export default {
       pushNotification({
         type: "error",
         title: t("ProjectOverview.forbiddenUploadNotification.title"),
-        message: t("ProjectOverview.forbiddenUploadNotification.message")
+        message: t("ProjectOverview.forbiddenUploadNotification.message", {
+          extensions: MODEL_EXTENSIONS.join(", ")
+        })
       });
     };
 
     return {
       // References
+      ifcs,
       invitations: projectInvitations,
+      modelExtensions: MODEL_EXTENSIONS,
       models: projectModels,
       project: currentProject,
       showFileUploader,

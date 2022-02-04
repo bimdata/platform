@@ -7,7 +7,7 @@
       rounded
       icon
       :disabled="models.length === 0"
-      @click.stop="$emit('open-viewer')"
+      @click.prevent.stop="$emit('open-viewer')"
     >
       <BIMDataIcon name="show" size="s" />
     </BIMDataButton>
@@ -19,7 +19,7 @@
       ripple
       rounded
       icon
-      @click.stop="$emit('open-menu')"
+      @click.prevent.stop="$emit('open-menu')"
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>

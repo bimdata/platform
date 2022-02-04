@@ -10,17 +10,21 @@
       >
         {{ $t("OrganizationSpacesList.importButtonText") }}
       </BIMDataButton>
-      <BIMDataButton
+      <AppLink
         v-if="isSubscriptionEnabled"
-        width="48%"
-        color="secondary"
-        fill
-        radius
-        @click="goToSubscriptionPro"
+        style="width: 48%"
+        :to="{
+          name: routeNames.subscriptionPro,
+          query: {
+            organization: localState.organization.id
+          }
+        }"
       >
-        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-        <span>{{ $t("OrganizationSpacesList.addButtonText") }}</span>
-      </BIMDataButton>
+        <BIMDataButton width="100%" color="secondary" fill radius>
+          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+          <span>{{ $t("OrganizationSpacesList.addButtonText") }}</span>
+        </BIMDataButton>
+      </AppLink>
     </div>
     <BIMDataSearch
       width="100%"
@@ -49,20 +53,20 @@
 
 <script>
 import { computed, inject } from "vue";
-import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 // Components
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import OrganizationSpaceCard from "./organization-space-card/OrganizationSpaceCard.vue";
 
 export default {
   components: {
+    AppLink,
     OrganizationSpaceCard
   },
   setup() {
-    const router = useRouter();
     const { getOrganizationSpaces } = useOrganizations();
 
     const localState = inject("localState");
@@ -76,24 +80,14 @@ export default {
       space => space.name
     );
 
-    const goToSubscriptionPro = () => {
-      router.push({
-        name: routeNames.subscriptionPro,
-        query: {
-          organization: localState.organization.id
-        }
-      });
-    };
-
     return {
       // References
       displayedSpaces,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       localState,
+      routeNames,
       searchText,
-      spaces,
-      // Methods
-      goToSubscriptionPro
+      spaces
     };
   }
 };

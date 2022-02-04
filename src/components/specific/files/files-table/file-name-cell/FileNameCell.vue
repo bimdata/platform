@@ -43,17 +43,18 @@
       >
         <BIMDataIcon
           v-if="file.type === 'Folder'"
-          class="file-name-cell__content__icon-folder"
           :name="
             !project.isAdmin && file.userPermission < 100
               ? 'readonlyFolder'
               : 'folder'
           "
           size="m"
+          fill
+          color="primary"
         />
         <BIMDataFileIcon
           v-else
-          :fileName="fileExtension(file.name)"
+          :fileName="fileExtension(file.fileName)"
           :size="20"
         />
         <BIMDataTextBox :text="file.name" />

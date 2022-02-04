@@ -14,7 +14,7 @@ export default [
   },
   {
     id: "tags",
-    width: "200px"
+    width: "100px"
   },
   {
     id: "lastupdate",

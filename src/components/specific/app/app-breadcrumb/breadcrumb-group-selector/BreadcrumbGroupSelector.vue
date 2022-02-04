@@ -17,7 +17,7 @@ import routeNames from "@/router/route-names.js";
 import { useGroups } from "@/state/groups.js";
 import { useProjects } from "@/state/projects.js";
 // Components
-import BreadcrumbSelector from "@/components/generic/breadcrumb-selector/BreadcrumbSelector.vue";
+import BreadcrumbSelector from "../breadcrumb-selector/BreadcrumbSelector.vue";
 
 export default {
   components: {

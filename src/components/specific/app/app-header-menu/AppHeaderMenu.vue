@@ -18,28 +18,35 @@
       </template>
       <template #element>
         <div class="app-header-menu__container" @click.stop="() => {}">
-          <BIMDataButton ghost squared @click="openBIMDataConnect">
-            {{ $t("AppHeaderMenu.entryConnect") }}
-          </BIMDataButton>
+          <a class="external-link" :href="bimdataConnectUrl" target="blank">
+            <BIMDataButton width="100%" ghost squared>
+              {{ $t("AppHeaderMenu.entryConnect") }}
+            </BIMDataButton>
+          </a>
           <div class="separator"></div>
-          <BIMDataButton ghost squared @click="openDocumentation">
-            {{ $t("AppHeaderMenu.entryDocumentation") }}
-          </BIMDataButton>
-          <!-- <BIMDataButton ghost squared @click="openMarketplace">
-            {{ $t("AppHeaderMenu.entryMarketplace") }}
-          </BIMDataButton> -->
-          <!-- <BIMDataButton ghost squared @click="openOldPlatform">
-            {{ $t("AppHeaderMenu.entryOldPlatform") }}
-          </BIMDataButton> -->
+          <a class="external-link" :href="documentationUrl" target="blank">
+            <BIMDataButton width="100%" ghost squared>
+              {{ $t("AppHeaderMenu.entryDocumentation") }}
+            </BIMDataButton>
+          </a>
           <div class="separator"></div>
-          <BIMDataButton
-            v-if="isSubscriptionEnabled"
-            ghost
-            squared
-            @click="goToUserSubscriptions"
+          <AppLink
+            :to="{
+              name: routeNames.userSubscriptions,
+              query: {
+                organization: space?.organization.id
+              }
+            }"
           >
-            <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
-          </BIMDataButton>
+            <BIMDataButton
+              v-if="isSubscriptionEnabled"
+              width="100%"
+              ghost
+              squared
+            >
+              <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
+            </BIMDataButton>
+          </AppLink>
           <BIMDataButton ghost squared @click="openLanguageSelector">
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
@@ -70,7 +77,6 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useToggle } from "@/composables/toggle.js";
@@ -78,44 +84,20 @@ import { useAuth } from "@/state/auth.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useUser } from "@/state/user.js";
 // Components
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
   components: {
-    UserAvatar,
-    LanguageSelector
+    AppLink,
+    LanguageSelector,
+    UserAvatar
   },
   setup() {
-    const router = useRouter();
     const { signOut } = useAuth();
     const { currentSpace } = useSpaces();
     const { user } = useUser();
-
-    const openBIMDataConnect = () => {
-      window.open(`${process.env.VUE_APP_URL_BIMDATACONNECT}`);
-    };
-
-    const openDocumentation = () => {
-      window.open(`${process.env.VUE_APP_URL_DOCUMENTATION}`);
-    };
-
-    const openMarketplace = () => {
-      window.open(`${process.env.VUE_APP_URL_MARKETPLACE}`);
-    };
-
-    const openOldPlatform = () => {
-      window.open(`${process.env.VUE_APP_URL_OLD_PLATFORM}`);
-    };
-
-    const goToUserSubscriptions = () => {
-      router.push({
-        name: routeNames.userSubscriptions,
-        query: {
-          organization: currentSpace.value?.organization.id
-        }
-      });
-    };
 
     const {
       isOpen: showLanguageSelector,
@@ -123,19 +105,21 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
+    const bimdataConnectUrl = process.env.VUE_APP_URL_BIMDATACONNECT;
+    const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
+
     return {
       // References
+      bimdataConnectUrl,
+      documentationUrl,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      routeNames,
       showLanguageSelector,
+      space: currentSpace,
       user,
       // Methods
       closeLanguageSelector,
-      goToUserSubscriptions,
-      openBIMDataConnect,
-      openDocumentation,
       openLanguageSelector,
-      openMarketplace,
-      openOldPlatform,
       signOut
     };
   }

@@ -24,9 +24,9 @@
 <script>
 import { ref, watch } from "vue";
 // Components
-import ModelLocation from "@/components/specific/models/model-location/ModelLocation";
-import ModelsCard from "@/components/specific/models/models-card/ModelsCard";
-import ModelsOverviewOnboarding from "./models-overview-onboarding/ModelsOverviewOnboarding";
+import ModelLocation from "@/components/specific/models/model-location/ModelLocation.vue";
+import ModelsCard from "@/components/specific/models/models-card/ModelsCard.vue";
+import ModelsOverviewOnboarding from "./models-overview-onboarding/ModelsOverviewOnboarding.vue";
 
 export default {
   components: {

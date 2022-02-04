@@ -42,7 +42,7 @@ import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-si
 import { useGroups } from "@/state/groups.js";
 import { useProjects } from "@/state/projects.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import GroupMemberCard from "@/components/specific/groups/group-member-card/GroupMemberCard.vue";

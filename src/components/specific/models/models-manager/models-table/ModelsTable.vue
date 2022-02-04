@@ -44,14 +44,14 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef from "./columns";
+import columnsDef from "./columns.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable";
-import ModelActionsCell from "./model-actions-cell/ModelActionsCell";
-import ModelNameCell from "./model-name-cell/ModelNameCell";
-import ModelStatusCell from "./model-status-cell/ModelStatusCell";
+import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
+import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
+import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
 
 export default {
   components: {
@@ -72,19 +72,14 @@ export default {
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
 
-    const columns = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`ModelsTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+    const columns = computed(() => {
+      return columnsDef.map(col => ({
+        ...col,
+        label: col.label || t(`ModelsTable.headers.${col.id}`)
+      }));
+    });
 
     let nameEditMode;
     watch(

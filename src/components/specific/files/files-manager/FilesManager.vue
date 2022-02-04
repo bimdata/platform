@@ -38,8 +38,8 @@
         <div class="files-manager__files">
           <transition name="fade">
             <FilesActionBar
-              v-show="selection.length > 0"
               class="files-manager__files__action-bar"
+              v-show="selection.length > 0"
               :project="project"
               :fileStructure="fileStructure"
               :files="selection"
@@ -55,13 +55,13 @@
             :folder="currentFolder"
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
+            @back-parent-folder="backToParent"
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
-            @back-parent-folder="backToParent"
           />
         </div>
 
@@ -103,18 +103,18 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useListFilter } from "@/composables/list-filter";
-import FILE_TYPES from "@/config/file-types";
-import { useFiles } from "@/state/files";
+import { useListFilter } from "@/composables/list-filter.js";
+import FILE_TYPES from "@/config/file-types.js";
+import { useFiles } from "@/state/files.js";
 // Components
-import FileTree from "@/components/specific/files/file-tree/FileTree";
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import FilesTable from "@/components/specific/files/files-table/FilesTable";
-import FolderAccessManager from "@/components/specific/files/folder-access-manager/FolderAccessManager";
-import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton";
-import FilesActionBar from "./files-action-bar/FilesActionBar";
-import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal";
-import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding";
+import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
+import FilesTable from "@/components/specific/files/files-table/FilesTable.vue";
+import FolderAccessManager from "@/components/specific/files/folder-access-manager/FolderAccessManager.vue";
+import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton.vue";
+import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
+import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
+import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
 
 export default {
   components: {
@@ -188,6 +188,7 @@ export default {
       },
       { immediate: true }
     );
+
     const onFileSelected = file => {
       if (file.type === FILE_TYPES.FOLDER) {
         currentFolder.value = handler.deserialize(file);

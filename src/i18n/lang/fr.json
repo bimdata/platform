@@ -81,11 +81,11 @@
     "groupsButtonText": "Gestion des groupes"
   },
   "ProjectOverview": {
-    "openFileUploadButtonText": "Ajouter un IFC",
+    "openFileUploadButtonText": "Ajouter un modèle",
     "closeFileUploadButtonText": "Fermer",
     "forbiddenUploadNotification": {
       "title": "Erreur",
-      "message": "Veuillez sélectionner un fichier .ifc"
+      "message": "Veuillez sélectionner un fichier de modèle: {extensions}"
     }
   },
 
@@ -140,7 +140,8 @@
     "status": {
       "active": "Actif",
       "deleted": "Supprimé",
-      "paused": "En pause"
+      "paused": "En pause",
+      "custom": "Géré par BIMData.io"
     }
   },
 
@@ -253,7 +254,7 @@
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
     "separatorText": "ou",
-    "uploadButtonText": "Sélectionner un fichier .ifc"
+    "uploadButtonText": "Sélectionner un modèle"
   },
 
   "FolderAccessManager": {
@@ -384,7 +385,6 @@
 
   "InvoicesTable": {
     "title": "Factures",
-    "tablePlaceholder": "Chargement des factures...",
     "emptyTableText": "Vos factures apparaitront ici lorsque vous aurez des abonnements actifs.",
     "subscribeButton": "Passez à notre Plateforme Pro",
     "headers": {
@@ -452,6 +452,7 @@
     "title": "Modèles du projet",
     "tabs": {
       "ifc": "IFC",
+      "dwg": "DWG",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives"
@@ -470,7 +471,7 @@
   },
 
   "ModelsOverviewOnboarding": {
-    "text": "Téléverser votre premier IFC",
+    "text": "Téléverser votre premier modèle",
     "uploadButtonText": "Téléversement"
   },
 
@@ -679,9 +680,7 @@
   },
 
   "SpaceSizeInfo": {
-    "used": "utilisé",
-    "from": "sur",
-    "included": "inclus",
+    "usage": "{used} utilisé sur {total}",
     "subscribeDatapackButton": "Acheter un DataPack",
     "subscribePlatformButton": "Passer à la platform pro"
   },
