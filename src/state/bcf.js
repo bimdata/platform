@@ -58,7 +58,6 @@ const loadTopicExtensions = async project => {
 };
 
 const updateTopicExtensions = async (project, extensions) => {
-  console.log({ extensions });
   const newTopicExtensions = await BcfService.updateTopicExtensions(
     project,
     extensions

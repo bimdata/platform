@@ -81,7 +81,7 @@ export default {
       default: ""
     }
   },
-  emits: ["edit"],
+  emits: ["edit", "add"],
   setup(props, { emit }) {
     const { isOpen, close, toggle } = useToggle();
 
@@ -103,7 +103,9 @@ export default {
       newTopicExtensions.value = newTopicExtensions.concat([
         newTopicExtensionName.value
       ]);
-      emit("edit", newTopicExtensions.value);
+      emit("add", newTopicExtensions.value);
+    };
+
     };
 
     return {

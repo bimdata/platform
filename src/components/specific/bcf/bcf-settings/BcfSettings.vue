@@ -31,6 +31,7 @@
           title="Priority"
           :topicExtensions="topicExtensions.priority"
           @edit="editPriority($event)"
+          @add="addPriority($event)"
         />
         <SettingCard
           v-if="topicExtensions.topicLabel"
@@ -94,9 +95,20 @@ export default {
       }
     };
 
+    const addPriority = async priorities => {
+      try {
+        await updateTopicExtensions(currentProject.value, {
+          priority: priorities
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return {
       topicExtensions,
-      editPriority
+      editPriority,
+      addPriority
     };
   }
 };
