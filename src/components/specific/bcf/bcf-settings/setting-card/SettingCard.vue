@@ -35,6 +35,15 @@
           <span>ajouter un élément</span>
         </BIMDataButton>
       </div>
+      <transition name="list">
+        <div v-if="showAddExtension">
+          <BIMDataInput
+            placeholder="Add a new priority"
+            v-model="newTopicExtensionName"
+            @keyup.enter.stop="addTopicExtension"
+          />
+        </div>
+      </transition>
       <ul class="setting-card__content bimdata-list">
         <li
           v-for="(topicExtension, index) in topicExtensions"
@@ -53,6 +62,8 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 import { useToggle } from "@/composables/toggle";
 
 import SettingCardItem from "./setting-card-item/SettingCardItem.vue";
@@ -86,15 +97,26 @@ export default {
       emit("edit", newTopicExtensions);
     };
 
+    const newTopicExtensionName = ref("");
+    const addTopicExtension = () => {
+      const newTopicExtensions = props.topicExtensions.slice();
+      newTopicExtensions.value = newTopicExtensions.concat([
+        newTopicExtensionName.value
+      ]);
+      emit("edit", newTopicExtensions.value);
+    };
+
     return {
       isOpen,
       toggle,
       showAddExtension,
+      newTopicExtensionName,
       // methods
       close,
       closeAddExtension,
       toggleAddExtension,
-      setTopicExtension
+      setTopicExtension,
+      addTopicExtension
     };
   }
 };
