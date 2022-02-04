@@ -30,6 +30,16 @@ class BcfService {
       console.log(error);
     }
   }
+  async updateTopicExtensions(project, extensions) {
+    try {
+      return await apiClient.bcfApi.updateExtensions({
+        projectsPk: project.id,
+        data: extensions
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async createTopic(project, topic) {
     try {
       return await apiClient.bcfApi.createTopic({
