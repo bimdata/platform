@@ -24,7 +24,7 @@
         class="setting-card__subheader flex items-center justify-between m-t-6 m-b-12"
       >
         Liste des {{ title }}
-        <BIMDataButton color="default" fill radius>
+        <BIMDataButton color="default" fill radius @click="toggleAddExtension">
           <BIMDataIcon
             name="plus"
             fill
@@ -37,11 +37,15 @@
       </div>
       <ul class="setting-card__content bimdata-list">
         <li
-          v-for="topicExtension in topicExtensions"
+          v-for="(topicExtension, index) in topicExtensions"
           :key="topicExtension"
-          class="flex items-center p-x-12 m-b-6"
+          class="flex items-center justify-between p-x-12 m-b-6"
         >
-          {{ topicExtension }}
+          <SettingCardItem
+            :title="title"
+            :topicExtension="topicExtension"
+            @edit="setTopicExtension(index, $event)"
+          />
         </li>
       </ul>
     </div>
@@ -50,7 +54,12 @@
 
 <script>
 import { useToggle } from "@/composables/toggle";
+
+import SettingCardItem from "./setting-card-item/SettingCardItem.vue";
 export default {
+  components: {
+    SettingCardItem
+  },
   props: {
     topicExtensions: {
       type: Array,
@@ -61,12 +70,31 @@ export default {
       default: ""
     }
   },
-  setup() {
+  emits: ["edit"],
+  setup(props, { emit }) {
     const { isOpen, close, toggle } = useToggle();
+
+    const {
+      isOpen: showAddExtension,
+      close: closeAddExtension,
+      toggle: toggleAddExtension
+    } = useToggle();
+
+    const setTopicExtension = (index, extensionName) => {
+      const newTopicExtensions = props.topicExtensions.slice();
+      newTopicExtensions[index] = extensionName;
+      emit("edit", newTopicExtensions);
+    };
+
     return {
       isOpen,
+      toggle,
+      showAddExtension,
+      // methods
       close,
-      toggle
+      closeAddExtension,
+      toggleAddExtension,
+      setTopicExtension
     };
   }
 };

@@ -30,6 +30,7 @@
           v-if="topicExtensions.priority"
           title="Priority"
           :topicExtensions="topicExtensions.priority"
+          @edit="editPriority($event)"
         />
         <SettingCard
           v-if="topicExtensions.topicLabel"
@@ -71,7 +72,8 @@ export default {
   emits: ["close"],
   setup() {
     const { currentProject } = useProjects();
-    const { loadTopicExtensions, topicExtensions } = useBcf();
+    const { loadTopicExtensions, topicExtensions, updateTopicExtensions } =
+      useBcf();
     watch(
       () => currentProject,
       async () => {
@@ -82,8 +84,19 @@ export default {
       }
     );
 
+    const editPriority = async priorities => {
+      try {
+        await updateTopicExtensions(currentProject.value, {
+          priority: priorities
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return {
-      topicExtensions
+      topicExtensions,
+      editPriority
     };
   }
 };

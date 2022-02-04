@@ -109,12 +109,12 @@ export default {
     });
 
     const { currentProject } = useProjects();
-    const { loadTopicExtensions, createTopic, loadBcfTopics } = useBcf();
-    const topicExtensions = ref([]);
+    const { loadTopicExtensions, createTopic, loadBcfTopics, topicExtensions } =
+      useBcf();
     watch(
-      () => currentProject,
+      () => currentProject.value,
       async () => {
-        topicExtensions.value = await loadTopicExtensions(currentProject.value);
+        await loadTopicExtensions(currentProject.value);
       },
       {
         immediate: true
