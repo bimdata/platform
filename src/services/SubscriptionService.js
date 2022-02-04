@@ -55,7 +55,7 @@ class SubscriptionService {
     const usedSizePercent = 100 - subInfo.remainingSmartDataSizePercent;
     // Check whether space is managed by a platform subscription
     const isPlatformSubscription = subInfo.managedBy === "BIMDATA_PLATFORM";
-    const isCustomSubscription =  subInfo.is_custom;
+    const isCustomSubscription = subInfo.is_custom;
 
     let isOrganizationMember = false;
     let isPlatformPro = false;
@@ -82,6 +82,7 @@ class SubscriptionService {
 
     return {
       isPlatformSubscription,
+      isCustomSubscription,
       isOrganizationMember,
       isPlatformPro,
       activeSubscriptions,

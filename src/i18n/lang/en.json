@@ -684,7 +684,7 @@
     "SpaceSizeInfo": {
         "usage": "{used} used out of {total}",
         "subscribeDatapackButton": "Upgrade storage",
-        "subscribePlatformButton": "Switch to pro platform"
+        "subscribePlatformButton": "Upgrade to pro subscription"
     },
     "SpaceSizePreview": {
         "title": "Storage",
