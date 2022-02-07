@@ -21,6 +21,17 @@ class BcfService {
       console.log(error);
     }
   }
+  async updateProjectTopics(project, topic) {
+    try {
+      return await apiClient.bcfApi.getTopics({
+        projectsPk: project.id,
+        guid: topic.guid,
+        data: topic
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async fetchTopicExtensions(project) {
     try {
       return await apiClient.bcfApi.getExtensions({
