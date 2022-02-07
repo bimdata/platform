@@ -36,12 +36,25 @@
         </BIMDataButton>
       </div>
       <transition name="list">
-        <div v-if="showAddExtension">
+        <div v-if="showAddExtension" class="m-b-12">
           <BIMDataInput
             placeholder="Add a new priority"
             v-model="newTopicExtensionName"
             @keyup.enter.stop="addTopicExtension"
           />
+
+          <div class="flex items-center justify-end">
+            <BIMDataButton ghost radius class="m-r-6" @click="closeAddExtension"
+              >Annuler</BIMDataButton
+            >
+            <BIMDataButton
+              color="primary"
+              fill
+              radius
+              @click="addTopicExtension"
+              >Valider</BIMDataButton
+            >
+          </div>
         </div>
       </transition>
       <ul class="setting-card__content bimdata-list">
