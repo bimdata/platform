@@ -1,0 +1,32 @@
+.edit-bcf-topic {
+  &__header {
+    span {
+      width: calc(100% - 46px);
+    }
+  }
+  &__subheader {
+    height: 27px;
+    font-size: 12px;
+    &__index,
+    &__date {
+      height: 100%;
+      background-color: var(--color-silver-light);
+    }
+    &__index {
+      min-width: 27px;
+    }
+  }
+  &__image {
+    min-height: 42px;
+    position: relative;
+    background-color: var(--color-silver-light);
+    img {
+      width: 100%;
+    }
+  }
+  &__content {
+    .bimdata-select {
+      margin: 30px 0;
+    }
+  }
+}
