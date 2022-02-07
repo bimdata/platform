@@ -95,11 +95,13 @@ export default {
   setup(props, { emit }) {
     const { isOpen, close, toggle } = useToggle();
 
-    const {
-      isOpen: showAddExtension,
-      close: closeAddExtension,
-      toggle: toggleAddExtension
-    } = useToggle();
+    const { isOpen: showAddExtension, toggle: toggleAddExtension } =
+      useToggle();
+
+    const closeAddExtension = () => {
+      newTopicExtensionName.value = "";
+      showAddExtension.value = false;
+    };
 
     const setTopicExtension = (index, extensionName) => {
       const newTopicExtensions = props.topicExtensions.slice();
@@ -114,6 +116,7 @@ export default {
         newTopicExtensionName.value
       ]);
       emit("add", newTopicExtensions.value);
+      newTopicExtensionName.value = "";
     };
 
     const deleteTopicExtension = (index, extensionName) => {
