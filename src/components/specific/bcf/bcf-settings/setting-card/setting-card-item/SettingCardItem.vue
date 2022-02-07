@@ -1,39 +1,41 @@
 <template>
-  <span v-if="!editTopicExtension">{{ topicExtension }}</span>
-  <transition v-else>
-    <BIMDataInput
-      :placeholder="title"
-      v-model="extension.name"
-      @keyup.enter.stop="submit"
-    />
-  </transition>
-  <div>
-    <BIMDataIcon
-      v-if="!editTopicExtension"
-      name="edit"
-      size="xxs"
-      fill
-      color="default"
-      margin="0 12px 0 0"
-      @click="editTopicExtension = true"
-    />
-    <BIMDataIcon
-      v-else
-      name="close"
-      size="xxs"
-      fill
-      color="default"
-      margin="0 12px 0 0"
-      @click="editTopicExtension = false"
-    />
-    <BIMDataIcon
-      name="delete"
-      size="xxs"
-      fill
-      color="high"
-      @click="deleteTopicExtension(extension.name)"
-    />
-  </div>
+  <li class="setting-card-item flex items-center justify-between p-x-12 m-b-6">
+    <span v-if="!editTopicExtension">{{ topicExtension }}</span>
+    <transition v-else>
+      <BIMDataInput
+        :placeholder="title"
+        v-model="extension.name"
+        @keyup.enter.stop="submit"
+      />
+    </transition>
+    <div>
+      <BIMDataIcon
+        v-if="!editTopicExtension"
+        name="edit"
+        size="xxs"
+        fill
+        color="default"
+        margin="0 12px 0 0"
+        @click="editTopicExtension = true"
+      />
+      <BIMDataIcon
+        v-else
+        name="close"
+        size="xxs"
+        fill
+        color="default"
+        margin="0 12px 0 0"
+        @click="editTopicExtension = false"
+      />
+      <BIMDataIcon
+        name="delete"
+        size="xxs"
+        fill
+        color="high"
+        @click="deleteTopicExtension(extension.name)"
+      />
+    </div>
+  </li>
 </template>
 
 <script>
@@ -73,3 +75,5 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss" src="./SettingCardItem.scss"></style>

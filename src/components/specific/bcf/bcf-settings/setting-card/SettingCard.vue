@@ -58,18 +58,14 @@
         </div>
       </transition>
       <ul class="setting-card__content bimdata-list">
-        <li
+        <SettingCardItem
+          :title="title"
+          :topicExtension="topicExtension"
+          @edit="setTopicExtension(index, $event)"
+          @delete="deleteTopicExtension(index, $event)"
           v-for="(topicExtension, index) in topicExtensions"
           :key="topicExtension"
-          class="flex items-center justify-between p-x-12 m-b-6"
-        >
-          <SettingCardItem
-            :title="title"
-            :topicExtension="topicExtension"
-            @edit="setTopicExtension(index, $event)"
-            @delete="deleteTopicExtension(index, $event)"
-          />
-        </li>
+        />
       </ul>
     </div>
   </div>
