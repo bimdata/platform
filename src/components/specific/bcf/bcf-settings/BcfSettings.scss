@@ -1,0 +1,20 @@
+.bcf-settings {
+  height: 100%;
+  &__header {
+    height: 60px;
+    & > svg {
+      cursor: pointer;
+    }
+  }
+  &__content {
+    height: calc(100% - 60px);
+    flex-direction: column;
+    &__settings {
+      height: calc(100% - 32px - 12px);
+      overflow: auto;
+      p {
+        margin-top: 0;
+      }
+    }
+  }
+}

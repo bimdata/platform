@@ -57,6 +57,15 @@ const loadTopicExtensions = async project => {
   return topicExtensions;
 };
 
+const updateTopicExtensions = async (project, extensions) => {
+  const newTopicExtensions = await BcfService.updateTopicExtensions(
+    project,
+    extensions
+  );
+  await loadTopicExtensions(project);
+  return newTopicExtensions;
+};
+
 export function useBcf() {
   const readonlyState = readonly(state);
   return {
@@ -67,6 +76,7 @@ export function useBcf() {
     createTopic,
     deleteTopic,
     importBcf,
-    loadTopicExtensions
+    loadTopicExtensions,
+    updateTopicExtensions
   };
 }
