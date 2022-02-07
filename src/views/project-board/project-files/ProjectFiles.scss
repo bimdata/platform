@@ -14,10 +14,12 @@
     }
   }
 
-  // Set files-table height and make it scrollable
+  // Set files-table height and make it scrollable.
+  // TODO: this is very ugly.. should find a way to do it better.
   &:deep() {
     .files-table {
-      /* Details:
+      /**
+       * Details:
        * 100vh                             | full viewport height
        *  - var(--platform-header-height)  | platform header height
        *  - 7 * var(--spacing-unit)        | 2 * view container padding
@@ -27,7 +29,7 @@
        *  - 2 * var(--spacing-unit)        | 2 * files-manager content paddin
        *  - 32px                           | files-manager actions height
        *  - var(--spacing-unit)            | files-manager grid gap
-       */
+       **/
       height: calc(
         100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 102px
       );
@@ -41,6 +43,14 @@
           top: 0;
           z-index: 1;
           background-color: var(--color-white);
+        }
+
+        /**
+         * Take breadcrumb height into account to compute
+         * placeholder height and avoid unnecessary scrollbar.
+         **/
+        &__placeholder {
+          height: calc(100% - 44px - 42px) !important;
         }
       }
     }
