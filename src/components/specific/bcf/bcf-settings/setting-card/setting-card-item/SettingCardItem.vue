@@ -26,7 +26,13 @@
       margin="0 12px 0 0"
       @click="editTopicExtension = false"
     />
-    <BIMDataIcon name="delete" size="xxs" fill color="high" />
+    <BIMDataIcon
+      name="delete"
+      size="xxs"
+      fill
+      color="high"
+      @click="deleteTopicExtension(extension.name)"
+    />
   </div>
 </template>
 
@@ -42,7 +48,7 @@ export default {
       type: String
     }
   },
-  emits: ["edit"],
+  emits: ["edit", "delete"],
 
   setup(props, { emit }) {
     const editTopicExtension = ref(false);
@@ -54,10 +60,15 @@ export default {
       }
     };
 
+    const deleteTopicExtension = () => {
+      emit("delete", extension.name);
+    };
+
     return {
       extension,
       editTopicExtension,
-      submit
+      submit,
+      deleteTopicExtension
     };
   }
 };

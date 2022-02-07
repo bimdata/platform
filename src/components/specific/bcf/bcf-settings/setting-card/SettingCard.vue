@@ -54,6 +54,7 @@
             :title="title"
             :topicExtension="topicExtension"
             @edit="setTopicExtension(index, $event)"
+            @delete="deleteTopicExtension(index, $event)"
           />
         </li>
       </ul>
@@ -81,7 +82,7 @@ export default {
       default: ""
     }
   },
-  emits: ["edit", "add"],
+  emits: ["edit", "add", "delete"],
   setup(props, { emit }) {
     const { isOpen, close, toggle } = useToggle();
 
@@ -106,6 +107,11 @@ export default {
       emit("add", newTopicExtensions.value);
     };
 
+    const deleteTopicExtension = (index, extensionName) => {
+      const newTopicExtensions = props.topicExtensions
+        .slice()
+        .filter(newTopicExtension => newTopicExtension !== extensionName);
+      emit("delete", newTopicExtensions);
     };
 
     return {
@@ -118,7 +124,8 @@ export default {
       closeAddExtension,
       toggleAddExtension,
       setTopicExtension,
-      addTopicExtension
+      addTopicExtension,
+      deleteTopicExtension
     };
   }
 };

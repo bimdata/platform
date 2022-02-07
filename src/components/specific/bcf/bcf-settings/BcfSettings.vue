@@ -30,8 +30,9 @@
           v-if="topicExtensions.priority"
           title="Priority"
           :topicExtensions="topicExtensions.priority"
-          @edit="editPriority($event)"
-          @add="addPriority($event)"
+          @edit="updatePriority($event)"
+          @add="updatePriority($event)"
+          @delete="updatePriority($event)"
         />
         <SettingCard
           v-if="topicExtensions.topicLabel"
@@ -85,17 +86,7 @@ export default {
       }
     );
 
-    const editPriority = async priorities => {
-      try {
-        await updateTopicExtensions(currentProject.value, {
-          priority: priorities
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const addPriority = async priorities => {
+    const updatePriority = async priorities => {
       try {
         await updateTopicExtensions(currentProject.value, {
           priority: priorities
@@ -107,8 +98,7 @@ export default {
 
     return {
       topicExtensions,
-      editPriority,
-      addPriority
+      updatePriority
     };
   }
 };
