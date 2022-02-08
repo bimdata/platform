@@ -89,8 +89,18 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.85);
     height: 100%;
     width: 100%;
+  }
+  .delete-modal {
+    flex-direction: column;
+    height: auto;
+    background-color: var(--color-white);
+    width: 90%;
+    box-shadow: var(--box-shadow);
+    &__btns {
+      width: 100%;
+    }
   }
 }

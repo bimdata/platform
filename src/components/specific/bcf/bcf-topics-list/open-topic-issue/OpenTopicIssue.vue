@@ -1,5 +1,10 @@
 <template>
-  <div class="open-topic-issue">
+  <EditBcfTopic
+    v-if="isOpenEditTopic"
+    :bcfTopic="bcfTopic"
+    @close="isOpenEditTopic = false"
+  />
+  <div v-else class="open-topic-issue">
     <div class="open-topic-issue__header flex items-center justify-between">
       <div
         class="open-topic-issue__header__title flex justify-center items-center p-x-6"
@@ -9,10 +14,22 @@
       <div
         class="open-topic-issue__header__actions flex justify-center items-center"
       >
-        <BIMDataButton color="default" ripple rounded icon>
+        <BIMDataButton
+          color="default"
+          ripple
+          rounded
+          icon
+          @click="isOpenEditTopic = !isOpenEditTopic"
+        >
           <BIMDataIcon name="edit" fill color="default" size="xxs" />
         </BIMDataButton>
-        <BIMDataButton color="default" ripple rounded icon @click="removeTopic">
+        <BIMDataButton
+          color="default"
+          ripple
+          rounded
+          icon
+          @click="deleteTopicModal = true"
+        >
           <BIMDataIcon name="delete" fill color="high" size="xxs" />
         </BIMDataButton>
         <BIMDataButton
@@ -67,10 +84,7 @@
         fill
         radius
         width="100%"
-        :disabled="
-          !bcfTopic.components.length ||
-          !bcfTopic.components[0].selection.length
-        "
+        :disabled="topicElements.length === 0"
         ><BIMDataIcon
           name="model3d"
           fill
@@ -78,20 +92,12 @@
           size="xs"
           margin="0 6px 0 0"
         />
-        <span
-          class="m-r-6"
-          v-if="
-            bcfTopic.components.length &&
-            bcfTopic.components[0].selection.length
-          "
-          >{{ bcfTopic.components[0].selection.length }}</span
-        >
+        <span class="m-r-6" v-if="topicElements.length > 0">{{
+          topicElements.length
+        }}</span>
         <span>
           {{
-            bcfTopic.components.length &&
-            bcfTopic.components[0].selection.length
-              ? "Elements"
-              : "Aucun élément concerné"
+            topicElements.length > 0 ? "Elements" : "Aucun élément concerné"
           }}</span
         ></BIMDataButton
       >
@@ -134,19 +140,19 @@
       <div>
         <span class="color-primary">Statut:</span>
         <span class="color-granite">{{
-          bcfTopic.topicStatus ? bcfTopic.topicStatus : "Pas de statut spécifié"
+          bcfTopic.topicStatus || "Pas de statut spécifié"
         }}</span>
       </div>
       <div>
         <span class="color-primary">Phase :</span>
         <span class="color-granite">{{
-          bcfTopic.stage ? bcfTopic.stage : "Pas de phase renseignée"
+          bcfTopic.stage || "Pas de phase renseignée"
         }}</span>
       </div>
       <div>
         <span class="color-primary">Priorité:</span>
         <span class="color-granite">{{
-          bcfTopic.priority ? bcfTopic.priority : "Non défini"
+          bcfTopic.priority || "Non défini"
         }}</span>
       </div>
       <div class="m-t-12">
@@ -161,6 +167,37 @@
         >Poster un commentaire</BIMDataButton
       >
     </div>
+    <div
+      v-if="deleteTopicModal"
+      class="overlay flex items-center justify-center"
+    >
+      <div class="delete-modal flex items-center justify-center p-y-18">
+        <BIMDataIcon name="warning" fill color="high" size="xs" />
+        <span class="m-y-12"
+          >Vous êtes sur le point de supprimer
+          <strong>{{ bcfTopic.title }}</strong></span
+        >
+        <div class="delete-modal__btns flex justify-center items-center">
+          <BIMDataButton
+            color="high"
+            fill
+            radius
+            @click="removeTopic"
+            class="m-r-18"
+          >
+            Supprimer ce BCF
+          </BIMDataButton>
+          <BIMDataButton
+            color="primary"
+            outline
+            radius
+            @click="deleteTopicModal = false"
+          >
+            Conserver ce BCF
+          </BIMDataButton>
+        </div>
+      </div>
+    </div>
     <div v-if="loading" class="overlay flex items-center justify-center">
       <BIMDataSpinner />
     </div>
@@ -168,15 +205,17 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
+import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
 
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 
 export default {
   components: {
+    EditBcfTopic,
     NoImgTopicBcf
   },
   props: {
@@ -200,6 +239,7 @@ export default {
     const { currentProject } = useProjects();
     const { deleteTopic } = useBcf();
     const loading = ref(false);
+    const deleteTopicModal = ref(false);
 
     const removeTopic = async () => {
       try {
@@ -210,7 +250,29 @@ export default {
       }
     };
 
-    return { loading, getPriorityClasses, getStatusClasses, removeTopic };
+    const isOpenEditTopic = ref(false);
+
+    const topicElements = computed(() => {
+      if (
+        props.bcfTopic.components &&
+        props.bcfTopic.components.length > 0 &&
+        props.bcfTopic.components[0].selection
+      ) {
+        return props.bcfTopic.components[0].selection;
+      } else {
+        return [];
+      }
+    });
+
+    return {
+      loading,
+      deleteTopicModal,
+      isOpenEditTopic,
+      getPriorityClasses,
+      getStatusClasses,
+      removeTopic,
+      topicElements
+    };
   }
 };
 </script>
