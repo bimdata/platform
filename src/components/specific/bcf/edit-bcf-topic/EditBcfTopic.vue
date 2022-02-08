@@ -142,13 +142,13 @@ export default {
         } else {
           topicStatus.value = null;
         }
-        if (props.bcfTopic.topicPhase) {
-          topicPhase.value = props.bcfTopic.topicPhase;
+        if (props.bcfTopic.stage) {
+          topicPhase.value = props.bcfTopic.stage;
         } else {
           topicPhase.value = null;
         }
-        if (props.bcfTopic.userIdType) {
-          topicAssignedTo.value = props.bcfTopic.userIdType;
+        if (props.bcfTopic.assignedTo) {
+          topicAssignedTo.value = props.bcfTopic.assignedTo;
         } else {
           topicAssignedTo.value = null;
         }
