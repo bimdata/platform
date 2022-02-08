@@ -1,7 +1,7 @@
 <template>
   <div class="file-type-cell">
     {{
-      file.type === "Folder"
+      isFolder(file)
         ? $t("FilesTable.folder")
         : fileExtension(file.fileName) || "?"
     }}
@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import { fileExtension } from "@/utils/files";
+import { isFolder } from "@/utils/file-structure.js";
+import { fileExtension } from "@/utils/files.js";
 
 export default {
   props: {
@@ -20,7 +21,8 @@ export default {
   },
   setup() {
     return {
-      fileExtension
+      fileExtension,
+      isFolder
     };
   }
 };
