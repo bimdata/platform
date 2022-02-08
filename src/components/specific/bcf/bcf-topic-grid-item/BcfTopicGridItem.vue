@@ -52,10 +52,7 @@
           fill
           radius
           width="48%"
-          :disabled="
-            !bcfTopic.components.length ||
-            !bcfTopic.components[0].selection.length
-          "
+          :disabled="topicElements.length === 0"
           @click="openElements"
         >
           <BIMDataIcon
@@ -65,22 +62,12 @@
             size="xs"
             margin="0 6px 0 0"
           />
-          <span
-            class="m-r-6"
-            v-if="
-              bcfTopic.components.length &&
-              bcfTopic.components[0].selection.length
-            "
-            >{{ bcfTopic.components[0].selection.length }}</span
-          >
+          <span class="m-r-6" v-if="topicElements.length > 0">
+            {{ topicElements.length }}
+          </span>
           <span>
-            {{
-              bcfTopic.components.length &&
-              bcfTopic.components[0].selection.length
-                ? "Elements"
-                : "0 Element"
-            }}</span
-          >
+            {{ topicElements.length ? "Elements" : "0 Element" }}
+          </span>
         </BIMDataButton>
         <BIMDataButton
           color="primary"
@@ -93,6 +80,42 @@
       </div>
     </div>
     <transition name="slide-fade-left">
+      <div class="bcf-topic__elements" v-show="showElements">
+        <div
+          class="bcf-topic__elements__header flex items-center justify-between p-6"
+        >
+          <BIMDataButton
+            color="default"
+            ripple
+            icon
+            radius
+            @click="closeElements"
+          >
+            <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
+            Back</BIMDataButton
+          >
+          <div v-if="topicElements.length > 0">
+            <strong>{{ topicElements.length }}</strong>
+            éléments concernés
+          </div>
+        </div>
+        <div
+          class="bcf-topic__elements__content p-6"
+          v-if="topicElements.length > 0"
+        >
+          <ul class="bimdata-list m-t-6">
+            <li
+              v-for="element in topicElements"
+              :key="element"
+              class="flex items-center p-x-6"
+            >
+              {{ element.ifcGuid }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </transition>
+    <transition name="slide-fade-left">
       <div
         v-show="showSidePanel"
         key="bcf-topic-side-panel"
@@ -101,42 +124,11 @@
         <OpenTopicIssue :bcfTopic="bcfTopic" @close="showSidePanel = false" />
       </div>
     </transition>
-    <div class="bcf-topic__elements" v-if="showElements">
-      <div
-        class="bcf-topic__elements__header flex items-center justify-between p-6"
-      >
-        <BIMDataButton
-          color="default"
-          ripple
-          icon
-          radius
-          @click="closeElements"
-        >
-          <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
-          Back</BIMDataButton
-        >
-        <div>
-          <strong>{{ bcfTopic.components[0].selection.length }}</strong>
-          éléments concernés
-        </div>
-      </div>
-      <div class="bcf-topic__elements__content p-6">
-        <ul class="bimdata-list m-t-6">
-          <li
-            v-for="element in bcfTopic.components[0].selection"
-            :key="element"
-            class="flex items-center p-x-6"
-          >
-            {{ element.ifcGuid }}
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useToggle } from "@/composables/toggle.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
@@ -160,14 +152,20 @@ export default {
   },
   setup(props) {
     const getPriorityClasses = ref("");
-    if (props.bcfTopic.priority) {
-      getPriorityClasses.value = props.bcfTopic.priority.toLowerCase();
-    }
-
     const getStatusClasses = ref("");
-    if (props.bcfTopic.topicStatus) {
-      getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
-    }
+
+    watch(
+      () => props.bcfTopic,
+      () => {
+        if (props.bcfTopic.priority) {
+          getPriorityClasses.value = props.bcfTopic.priority.toLowerCase();
+        }
+        if (props.bcfTopic.topicStatus) {
+          getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
+        }
+      },
+      { immediate: true }
+    );
 
     const showSidePanel = ref(false);
     const bcfTopicToOpen = reactive({});
@@ -182,10 +180,23 @@ export default {
       close: closeElements
     } = useToggle();
 
+    const topicElements = computed(() => {
+      if (
+        props.bcfTopic.components &&
+        props.bcfTopic.components.length > 0 &&
+        props.bcfTopic.components[0].selection
+      ) {
+        return props.bcfTopic.components[0].selection;
+      } else {
+        return [];
+      }
+    });
+
     return {
       getPriorityClasses,
       getStatusClasses,
       bcfTopicToOpen,
+      topicElements,
       showSidePanel,
       showElements,
       openBcfTopic,
@@ -196,4 +207,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./BcfTopicGrid.scss"></style>
+<style scoped lang="scss" src="./BcfTopicGridItem.scss"></style>
