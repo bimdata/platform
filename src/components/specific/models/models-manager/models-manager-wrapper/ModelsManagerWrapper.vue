@@ -38,6 +38,7 @@
     </transition>
 
     <ModelsTable
+      class="models-manager-wrapper__table"
       :project="project"
       :models="displayedModels"
       @archive="archiveModels([$event])"

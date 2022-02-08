@@ -197,7 +197,8 @@
     "downloadButtonText": "Télécharger",
     "addVersionButtonText": "Ajouter une version",
     "manageAccessButtonText": "Gérer les accès",
-    "deleteButtonText": "Supprimer"
+    "deleteButtonText": "Supprimer",
+    "VisaButtonText": "Demande de validation"
   },
 
   "FileNameCell": {
@@ -740,6 +741,96 @@
     "inviteButtonText": "Invitation"
   },
 
+  "Visa": {
+    "button": "Validations / VISA",
+    "add": {
+      "title": "Demande de validation",
+      "validator": "Validant",
+      "toValidate": "A valider avant",
+      "errorDate": "Date invalide",
+      "exempleDate": "(Ex: 31/05/2022)",
+      "description": "Description",
+      "cancel": "Annuler",
+      "validate": "Valider",
+      "validatorView": {
+        "getBack": "Retour",
+        "validator": "Validant",
+        "accept": "Accepter"
+      }
+    },
+    "safeZone": {
+      "add": {
+        "content": "Êtes-vous sûr de vouloir quitter cette page ? Il y a peut-être des informations non validées.",
+        "action": "Oui, quitter cette page",
+        "keepView": "Annuler, rester ici"
+      },
+      "delete": {
+        "content": "Êtes-vous sûr de vouloir supprimer ce visa ?",
+        "action": "Oui, supprimer ce visa",
+        "keepView": "Annuler"
+      },
+      "close": {
+        "content": "Êtes-vous sûr de vouloir cloturer ce visa ?",
+        "action": "Oui, cloturer ce visa",
+        "keepView": "Annuler"
+      },
+      "deleteComment": {
+        "content": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+        "action": "Oui, supprimer ce commentaire",
+        "keepView": "Annuler"
+      }
+    },
+    "summary": {
+     "title": {
+       "open": "Demande en cours",
+       "closed": "Demande cloturée"
+     },
+     "appliedBy": "Demande de validation par",
+     "validate": "Valider",
+     "deny": "Refuser",
+     "delete": "Supprimer",
+     "close": "Cloturer",
+     "comment": "Commenter",
+     "term": "Échéance",
+     "validator": "Validants",
+     "deletedUser":" Utilisateur supprimé",
+     "validatorList": {
+      "accept": "Validé",
+      "deny": "Refusé",     
+      "commented": "Commenté",
+      "pending": "En attente",
+      "getRidOfValidator": "Retirer le validant",
+      "refresh": "Rénitialiser la validation"
+     }
+    },
+    "comments": {
+      "comment": "Commenter",
+      "commentary": "Commentaire",
+      "postComment": "Poster un commentaire",
+      "replyComment": "Répondre à un commentaire",
+      "publish": "Publier",
+      "cancel": "Annuler",
+      "reply": "Répondre",
+      "actions": {
+        "edit": "Editer",
+        "delete": "Supprimer",
+        "confirmDelete": "Supprimer ce commentaire ?"
+      }
+    },
+    "list": {
+      "title": "Demande en cours",
+      "toValidateVisas": "Mes validations",
+      "createdVisas": "Mes demandes",
+      "emptyValidation": "Aucune validation en cours",
+      "emptyDemand": "Aucune demande en cours"
+    },
+    "selectionValidator": {
+      "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
+    }
+  },
+
+
+
   "Error": "Erreur",
   "Success": "Succès",
 
@@ -758,6 +849,7 @@
     "projectCreateError": "Une erreur est survenue lors de la création du projet",
     "projectUpdateError": "Échec de la mise à jour du projet",
     "projectDeleteError": "Échec de la suppression du projet",
+    "projectFetchFileError": "Impossible de récupérer ce document",
     "invitationsFetchError": "Impossible de récupérer la liste des invitations",
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
@@ -782,6 +874,23 @@
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
+    "visaCreateError": "Erreur lors de la création du visa",
+    "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
+    "visaFetchError": "Impossible de récupérer le visa",
+    "visaAcceptError": "Erreur lors de l'envoi de votre réponse",
+    "visaDenyError": "Erreur lors de l'envoi de votre réponse",
+    "visaCloseError": "Erreur lors de la cloture du visa",
+    "visaResumeError": "Erreur lors de la ré-ouverture du visa",
+    "visaFetchCreatedError": "Impossible de récupérer les visas",
+    "visaFetchValidatorError": "Impossible de récupérer les visas",
+    "visaDeleteValidationError": "Impossible de supprimer ce validateur",
+    "visaDeleteError": "Impossible de supprimer ce visa",
+    "visaUpdateError": "Impossible de mettre à jour ce visa",
+    "visaRefreshError": "Impossible de mettre à jour votre réponse",
+    "visaFetchAllCommentsError": "Impossible de récupérer les commentaires",
+    "visaCreateCommentsError": "Impossible de poster ce commentaire",
+    "visaUpdateCommentError": "Impossible de modifier ce commentaire",
+    "visaDeleteCommentError": "Impossible de supprimer ce commentaire",
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",

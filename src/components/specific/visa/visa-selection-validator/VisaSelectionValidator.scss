@@ -1,0 +1,51 @@
+.visa-add-validator {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    &__left-side {
+      display: flex;
+      span {
+        font-size: 1rem;
+        margin-left: var(--spacing-unit);
+        margin: auto 0;
+      }
+    }
+
+    &__middle {
+      margin: auto 0;
+      color: var(--color-primary);
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+  }
+  &__search-bar {
+    font-size: 1.1rem;
+    margin: 5% 0;
+  }
+  &__people-list {
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    padding-right: var(--spacing-unit);;
+  }
+  &__action {
+    margin: 4% 0 auto 0;
+    &__counter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      margin-left: 2%;
+      border-radius: 50%;
+      background-color: white;
+      color: var(--color-primary);
+    }
+  }
+}

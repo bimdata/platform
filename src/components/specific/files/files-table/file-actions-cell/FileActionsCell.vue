@@ -21,22 +21,6 @@
         >
           {{ $t("FileActionsCell.openViewerButtonText") }}
         </BIMDataButton>
-        <!-- <BIMDataButton
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('add-tags')"
-        >
-          {{ $t("FileActionsCell.addTagsButtonText") }}
-        </BIMDataButton> -->
-        <!-- <BIMDataButton
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('request-validation')"
-        >
-          {{ $t("FileActionsCell.validationRequestButtonText") }}
-        </BIMDataButton> -->
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -55,14 +39,6 @@
         >
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
-        <!-- <BIMDataButton
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('add-version')"
-        >
-          {{ $t("FileActionsCell.addVersionButtonText") }}
-        </BIMDataButton> -->
         <BIMDataButton
           v-if="project.isAdmin && file.type === 'Folder'"
           class="file-actions-cell__menu__btn"
@@ -71,6 +47,17 @@
           @click="onClick('manage-access')"
         >
           {{ $t("FileActionsCell.manageAccessButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
+          v-if="
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('open-visa-manager')"
+        >
+          {{ $t("FileActionsCell.VisaButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
@@ -89,8 +76,9 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
+import { isFolder } from "@/utils/file-structure.js";
 
 export default {
   props: {
@@ -103,15 +91,7 @@ export default {
       required: true
     }
   },
-  emits: [
-    "add-tags",
-    "add-version",
-    "delete",
-    "download",
-    "manage-access",
-    "request-validation",
-    "update"
-  ],
+  emits: ["delete", "download", "manage-access", "update", "open-visa-manager"],
   setup(props, { emit }) {
     const router = useRouter();
 
@@ -147,7 +127,8 @@ export default {
       closeMenu,
       goToModelViewer,
       onClick,
-      toggleMenu
+      toggleMenu,
+      isFolder
     };
   }
 };

@@ -2,6 +2,7 @@ import { reactive, readonly, toRefs } from "vue";
 import ProjectService from "@/services/ProjectService.js";
 import { mapProjects, mapUsers } from "@/state/mappers.js";
 import { useUser } from "@/state/user.js";
+import { fullName } from "@/utils/users";
 
 const state = reactive({
   userProjects: [],
@@ -111,6 +112,27 @@ const leaveProject = async project => {
   await ProjectService.leaveProject(project);
 };
 
+const fetchFolderProjectUsers = async (project, folder) => {
+  let users = await ProjectService.fetchFolderProjectUsers(project, folder);
+  users = mapUsers(users);
+  return users;
+};
+
+const getUserProjectList = async (project, folder) => {
+  const users = await fetchFolderProjectUsers(project, folder);
+  return users
+    .filter(({ isSelf }) => !isSelf)
+    .map(user => ({
+      ...user,
+      fullName: fullName(user),
+      hasAccess: user.permission >= 50,
+      isFindable: true,
+      searchContent: `${user.firstname || ""} ${user.lastname || ""} ${
+        user.email || ""
+      }`.toLowerCase()
+    }));
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -129,6 +151,8 @@ export function useProjects() {
     cancelProjectInvitation,
     updateProjectUser,
     deleteProjectUser,
-    leaveProject
+    leaveProject,
+    fetchFolderProjectUsers,
+    getUserProjectList
   };
 }
