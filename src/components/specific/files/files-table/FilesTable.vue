@@ -75,6 +75,7 @@
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
         @update="nameEditMode[file.id] = true"
+        @open-visa-manager="$emit('open-visa-manager', $event)"
       />
     </template>
   </GenericTable>
@@ -129,7 +130,8 @@ export default {
     "file-uploaded",
     "manage-access",
     "selection-changed",
-    "back-parent-folder"
+    "back-parent-folder",
+    "open-visa-manager"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();

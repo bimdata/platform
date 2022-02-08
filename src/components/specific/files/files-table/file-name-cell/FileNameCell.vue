@@ -42,7 +42,7 @@
         @click="$emit('file-clicked', file)"
       >
         <BIMDataIcon
-          v-if="file.type === 'Folder'"
+          v-if="isFolder(file)"
           :name="
             !project.isAdmin && file.userPermission < 100
               ? 'readonlyFolder'
@@ -52,11 +52,7 @@
           fill
           color="primary"
         />
-        <BIMDataFileIcon
-          v-else
-          :fileName="fileExtension(file.fileName)"
-          :size="20"
-        />
+        <BIMDataFileIcon v-else :fileName="file.fileName" :size="20" />
         <BIMDataTextBox :text="file.name" />
       </div>
     </transition>
@@ -65,8 +61,8 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useFiles } from "@/state/files";
-import { fileExtension } from "@/utils/files";
+import { useFiles } from "@/state/files.js";
+import { isFolder } from "@/utils/file-structure.js";
 
 export default {
   props: {
@@ -152,7 +148,7 @@ export default {
       showUpdateForm,
       // Methods
       closeUpdateForm,
-      fileExtension,
+      isFolder,
       openUpdateForm,
       renameFile
     };
