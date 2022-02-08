@@ -39,6 +39,16 @@ const createTopic = async (project, topic) => {
   return newTopic;
 };
 
+const updateTopic = async (project, bcfTopic, topic) => {
+  const newTopic = await BcfService.updateProjectTopics(
+    project,
+    bcfTopic,
+    topic
+  );
+  await loadBcfTopics(project);
+  return newTopic;
+};
+
 const deleteTopic = async (project, topic) => {
   await BcfService.deleteTopic(project, topic);
   await loadBcfTopics(project);
@@ -74,6 +84,7 @@ export function useBcf() {
     // Methods
     loadBcfTopics,
     createTopic,
+    updateTopic,
     deleteTopic,
     importBcf,
     loadTopicExtensions,
