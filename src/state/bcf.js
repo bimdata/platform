@@ -39,8 +39,12 @@ const createTopic = async (project, topic) => {
   return newTopic;
 };
 
-const updateTopic = async (project, topic) => {
-  const newTopic = await BcfService.updateTopic(project, topic);
+const updateTopic = async (project, bcfTopic, topic) => {
+  const newTopic = await BcfService.updateProjectTopics(
+    project,
+    bcfTopic,
+    topic
+  );
   await loadBcfTopics(project);
   return newTopic;
 };

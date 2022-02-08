@@ -39,9 +39,7 @@
       <BIMDataInput
         placeholder="Title*"
         v-model="topicTitle"
-        :error="hasError"
         errorMessage="Titre manquant"
-        @keyup.enter.stop="submit"
       />
       <BIMDataSelect
         width="100%"
@@ -81,12 +79,21 @@
         fitContent
         resizable
       />
-      <BIMDataInput placeholder="Tags" v-model="topicTags" margin="30px 0" />
+      <!-- <BIMDataInput placeholder="Tags" v-model="topicTags" margin="30px 0" /> -->
     </div>
     <div class="edit-bcf-topic__footer m-t-24">
-      <BIMDataButton width="100%" color="primary" fill radius @click="submit">
-        Modifier
+      <BIMDataButton
+        width="100%"
+        color="primary"
+        fill
+        radius
+        @click="updateBcfTopic"
+      >
+        Modifier ce BCF
       </BIMDataButton>
+    </div>
+    <div v-if="loading" class="overlay flex items-center justify-center">
+      <BIMDataSpinner />
     </div>
   </div>
 </template>
@@ -95,6 +102,7 @@
 import { ref, watch } from "vue";
 
 import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
 export default {
   props: {
@@ -105,7 +113,7 @@ export default {
   },
   emits: ["close"],
   setup(props) {
-    const { topicExtensions } = useBcf();
+    const { topicExtensions, updateTopic } = useBcf();
     const topicTitle = ref("");
     const topicType = ref("");
     const topicPriority = ref("");
@@ -113,7 +121,7 @@ export default {
     const topicPhase = ref("");
     const topicAssignedTo = ref("");
     const topicDescription = ref("");
-    const topicTags = ref([]);
+    // const topicTags = ref([]);
 
     watch(
       () => props.bcfTopic,
@@ -149,15 +157,38 @@ export default {
         } else {
           topicDescription.value = null;
         }
-        if (props.bcfTopic.labels) {
-          topicTags.value = props.bcfTopic.labels;
-        } else {
-          topicTags.value = [];
-        }
+        // if (props.bcfTopic.labels) {
+        //   topicTags.value = props.bcfTopic.labels;
+        // } else {
+        //   topicTags.value = [];
+        // }
       },
       { immediate: true }
     );
+
+    const { currentProject } = useProjects();
+    const loading = ref(false);
+
+    const updateBcfTopic = async () => {
+      try {
+        loading.value = true;
+        await updateTopic(currentProject.value, props.bcfTopic, {
+          title: topicTitle.value,
+          topicType: topicType.value,
+          priority: topicPriority.value,
+          topicStatus: topicStatus.value,
+          stage: topicPhase.value,
+          assignedTo: topicAssignedTo.value,
+          description: topicDescription.value
+          // labels: topicTags.value
+        });
+      } finally {
+        loading.value = false;
+      }
+    };
+
     return {
+      loading,
       topicTitle,
       topicType,
       topicPriority,
@@ -165,7 +196,9 @@ export default {
       topicPhase,
       topicAssignedTo,
       topicDescription,
-      topicExtensions
+      topicExtensions,
+      // Methods
+      updateBcfTopic
     };
   }
 };

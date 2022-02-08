@@ -21,11 +21,11 @@ class BcfService {
       console.log(error);
     }
   }
-  async updateProjectTopics(project, topic) {
+  async updateProjectTopics(project, bcfTopic, topic) {
     try {
-      return await apiClient.bcfApi.getTopics({
+      return await apiClient.bcfApi.fullUpdateTopic({
         projectsPk: project.id,
-        guid: topic.guid,
+        guid: bcfTopic.guid,
         data: topic
       });
     } catch (error) {
