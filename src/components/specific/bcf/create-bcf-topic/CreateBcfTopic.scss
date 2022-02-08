@@ -35,5 +35,18 @@
     .bimdata-textarea {
       margin: 30px 0;
     }
+    &:deep() {
+      .bimdata-input {
+        input {
+          color: var(--color-primary);
+        }
+      }
+      .bimdata-textarea {
+        textarea {
+          font-family: var(--primary-font);
+          color: var(--color-primary);
+        }
+      }
+    }
   }
 }

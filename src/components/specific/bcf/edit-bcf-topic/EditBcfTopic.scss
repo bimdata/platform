@@ -25,8 +25,21 @@
     }
   }
   &__content {
-    .bimdata-select {
-      margin: 30px 0;
+    &:deep() {
+      .bimdata-input {
+        input {
+          color: var(--color-primary);
+        }
+      }
+      .bimdata-select {
+        margin: 30px 0;
+      }
+      .bimdata-textarea {
+        textarea {
+          font-family: var(--primary-font);
+          color: var(--color-primary);
+        }
+      }
     }
   }
   .overlay {
