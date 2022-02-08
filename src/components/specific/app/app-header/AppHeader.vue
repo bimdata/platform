@@ -1,37 +1,29 @@
 <template>
   <div class="app-header">
-    <img
-      class="app-header__logo"
-      alt="BIMData Platform logo"
-      src="/static/header-logo.svg"
-      @click="goToDashboard"
-    />
+    <AppLink :to="{ name: routeNames.dashboard }">
+      <PlatformLogo class="app-header__logo" />
+    </AppLink>
     <app-slot name="app-header-action" />
     <AppHeaderMenu class="app-header__menu" />
   </div>
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 // Components
-import AppSlot from "@/components/generic/app-slot/AppSlot";
-import AppHeaderMenu from "@/components/specific/app/app-header-menu/AppHeaderMenu";
+import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppHeaderMenu from "@/components/specific/app/app-header-menu/AppHeaderMenu.vue";
 
 export default {
   components: {
+    AppLink,
     AppSlot,
     AppHeaderMenu
   },
   setup() {
-    const router = useRouter();
-
-    const goToDashboard = () => {
-      router.push({ name: routeNames.dashboard });
-    };
-
     return {
-      goToDashboard
+      routeNames
     };
   }
 };

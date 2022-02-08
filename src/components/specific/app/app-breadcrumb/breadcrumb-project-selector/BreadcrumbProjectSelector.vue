@@ -2,7 +2,7 @@
   <BreadcrumbSelector
     :list="spaces"
     labelProp="name"
-    :header="selectedSpace.name"
+    :header="selectedSpace?.name"
     @item-selected="selectSpace"
     @header-clicked="goToSpace"
   />
@@ -11,7 +11,7 @@
     v-if="projects.length > 0"
     :list="projects"
     labelProp="name"
-    :header="selectedProject.name"
+    :header="selectedProject?.name"
     @item-selected="goToProject"
   />
   <div v-else>
@@ -23,10 +23,10 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
 // Components
-import BreadcrumbSelector from "@/components/generic/breadcrumb-selector/BreadcrumbSelector";
+import BreadcrumbSelector from "../breadcrumb-selector/BreadcrumbSelector.vue";
 
 export default {
   components: {
@@ -37,13 +37,24 @@ export default {
     const { userSpaces, currentSpace } = useSpaces();
     const { userProjects, spaceProjects, currentProject } = useProjects();
 
-    const projects = ref(spaceProjects.value);
-    const selectedSpace = ref(currentSpace.value);
-    const selectedProject = ref(currentProject.value);
+    const projects = ref([]);
+    const selectedSpace = ref(null);
+    const selectedProject = ref(null);
 
     watch(
+      () => spaceProjects.value,
+      () => (projects.value = spaceProjects.value),
+      { immediate: true }
+    );
+    watch(
+      () => currentSpace.value,
+      space => (selectedSpace.value = space),
+      { immediate: true }
+    );
+    watch(
       () => currentProject.value,
-      () => (selectedProject.value = currentProject.value)
+      project => (selectedProject.value = project),
+      { immediate: true }
     );
 
     const goToProject = project => {

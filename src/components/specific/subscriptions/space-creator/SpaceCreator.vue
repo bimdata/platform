@@ -1,134 +1,76 @@
 <template>
-  <div class="space-creator flex m-t-18">
-    <BIMDataCard class="orga-card">
-      <template #content>
-        <div class="flex items-center justify-center">
-          <BIMDataIcon
-            style="min-width: 22px"
-            margin="2px 0 0 0"
-            name="organization"
-            size="m"
-            fill
-            color="primary"
-          />
-          <h3 class="text-center color-primary">
-            {{ $t("SpaceCreator.createSelectOrgaTitle") }}
-          </h3>
+  <div class="space-creator" :class="{ disabled }">
+    <div class="space-creator__title">
+      <BIMDataIcon name="cloud" size="m" fill color="primary" />
+      <h2>{{ $t("SpaceCreator.title") }}</h2>
+    </div>
+    <div class="space-creator__text">
+      {{ $t("SpaceCreator.text") }}
+    </div>
+    <div class="space-creator__input">
+      <BIMDataInput
+        ref="spaceNameInput"
+        :placeholder="$t('SpaceCreator.inputPlaceholder')"
+        :loading="newSpaceLoading"
+        :disabled="disabled"
+        v-model="newSpace.name"
+        @keyup.enter.stop="() => newSpace.name && submit()"
+      />
+    </div>
+    <div class="space-creator__billing-account">
+      <div>
+        <div class="billing-account-label">
+          {{ $t("SpaceCreator.billingAccountLabel") }}
         </div>
-        <div>
-          <BIMDataRadio
-            v-if="organizations.length > 0"
-            :disabled="step !== 1"
-            name="mode"
-            value="create"
-            :text="$t('SpaceCreator.createNewOrgaRadio')"
-            v-model="mode"
-          >
-          </BIMDataRadio>
-          <BIMDataInput
-            :disabled="step !== 1 || mode !== 'create'"
-            ref="orgaNameInput"
-            :placeholder="$t('SpaceCreator.createNewOrgaInput')"
-            :loading="newOrgaLoading"
-            v-model="newOrga.name"
-            @keyup.enter.stop="() => (newOrga.name ? submitOrga() : null)"
-          />
+        <div class="billing-account-name">
+          <BIMDataTextBox maxWidth="220px" :text="orga.name" />
         </div>
-        <div v-if="organizations.length > 0">
-          <BIMDataRadio
-            :disabled="step !== 1"
-            name="mode"
-            value="select"
-            :text="$t('SpaceCreator.selectOrgaRadio')"
-            v-model="mode"
-          >
-          </BIMDataRadio>
-          <BIMDataDropdownList
-            :disabled="step !== 1 || mode === 'create'"
-            class="m-t-12"
-            width="300px"
-            :list="organizations"
-            :perPage="6"
-            :closeOnElementClick="true"
-            @element-click="orga = $event"
-          >
-            <template #header>
-              <BIMDataTextBox
-                maxWidth="220px"
-                :text="orga.name"
-                :tooltip="false"
-              />
-            </template>
-            <template #element="{ element }">
-              <BIMDataTextBox
-                maxWidth="240px"
-                :text="element.name"
-                :tooltip="false"
-              />
-            </template>
-          </BIMDataDropdownList>
-        </div>
-        <BIMDataButton
-          :disabled="step !== 1 || (mode === 'create' && !newOrga.name)"
-          class="m-t-12"
-          color="primary"
-          fill
-          radius
-          @click="submitOrga"
-        >
-          {{ $t("SpaceCreator.orgaValidateButton") }}
-        </BIMDataButton>
-      </template>
-    </BIMDataCard>
+      </div>
+      <BIMDataButton
+        width="120px"
+        color="primary"
+        fill
+        radius
+        :disabled="disabled"
+        @click="openBillingAccountModal"
+      >
+        {{ $t("SpaceCreator.billingAccountButton") }}
+      </BIMDataButton>
+    </div>
+    <BIMDataButton
+      width="100%"
+      color="secondary"
+      fill
+      radius
+      :disabled="disabled || !newSpace.name"
+      @click="submit"
+    >
+      {{ $t("SpaceCreator.submitButtonText") }}
+    </BIMDataButton>
 
-    <BIMDataCard class="space-card text-center">
-      <template #content>
-        <div class="flex items-center justify-center">
-          <BIMDataIcon
-            margin="0 2px 2px 0"
-            name="cloud"
-            size="m"
-            fill
-            color="primary"
-          />
-          <h3 class="color-primary">
-            {{ $t("SpaceCreator.createSpaceTitle") }}
-          </h3>
-        </div>
-        <p>
-          {{ $t("SpaceCreator.createSpaceText") }}
-        </p>
-        <div>
-          <BIMDataInput
-            :disabled="step !== 2"
-            ref="spaceNameInput"
-            :placeholder="$t('SpaceCreator.createSpaceInput')"
-            :loading="newSpaceLoading"
-            v-model="newSpace.name"
-            @keyup.enter.stop="() => (newSpace.name ? submitSpace() : null)"
-          />
-        </div>
-        <BIMDataButton
-          class="m-t-12"
-          color="primary"
-          fill
-          radius
-          :disabled="step !== 2 || !newSpace.name"
-          @click="submitSpace"
-        >
-          {{ $t("SpaceCreator.spaceValidateButton") }}
-        </BIMDataButton>
-      </template>
-    </BIMDataCard>
+    <AppModal>
+      <OrganizationSelector
+        :organizations="organizations"
+        :initialOrga="initialOrga"
+        @orga-selected="updateOrga"
+      />
+    </AppModal>
   </div>
 </template>
 
 <script>
-import { ref, reactive, watch } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
+import { ref, reactive, onMounted } from "vue";
 import { useSpaces } from "@/state/spaces.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+// Components
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
+import OrganizationSelector from "@/components/specific/subscriptions/organization-selector/OrganizationSelector.vue";
 
 export default {
+  components: {
+    AppModal,
+    OrganizationSelector
+  },
   props: {
     type: {
       type: String,
@@ -141,45 +83,45 @@ export default {
     },
     initialOrga: {
       type: Object,
-      default: null
+      required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ["space-created"],
   setup(props, { emit }) {
-    const { createOrganization } = useOrganizations();
+    const { openModal, closeModal } = useAppModal();
     const { createSpace } = useSpaces();
 
-    const mode = ref("create");
-    const step = ref(1);
-    const orga = ref({});
-
-    const orgaNameInput = ref(null);
-    const newOrgaLoading = ref(false);
-    const newOrga = reactive({
-      id: null,
-      name: ""
-    });
+    const orga = ref(props.initialOrga);
 
     const spaceNameInput = ref(null);
     const newSpaceLoading = ref(false);
-    const newSpace = reactive({
-      id: null,
-      name: "",
-      organization: null
-    });
+    const newSpace = reactive({ name: "" });
 
-    const submitOrga = async () => {
-      step.value = 2;
-      setTimeout(() => spaceNameInput.value.focus(), 200);
+    const openBillingAccountModal = () => {
+      openModal();
     };
 
-    const submitSpace = async () => {
+    const updateOrga = organization => {
+      orga.value = organization;
+      closeModal();
+    };
+
+    const submit = async () => {
       try {
         newSpaceLoading.value = true;
 
-        if (mode.value === "create") {
-          orga.value = await createOrganization(newOrga);
-        }
+        // TODO: Try to fix/improve
+        // Here we set both `organizationId` and `organization.id`
+        // because they are both used elsewhere in the code.
+        // Setting only one of the two would break in some cases.
+        // More specifically:
+        //  - `organizationId` is needed in POST call to create a new space attached to the right orga
+        //  - `organization.id` is used in other methods (state/services) to access space orga
+        newSpace.organizationId = orga.value.id;
         newSpace.organization = { id: orga.value.id };
 
         if (props.type === "free") {
@@ -188,50 +130,25 @@ export default {
         } else {
           emit("space-created", { ...newSpace });
         }
-        step.value = 3;
       } finally {
         newSpaceLoading.value = false;
       }
     };
 
-    watch(
-      [() => props.organizations, () => props.initialOrga],
-      ([organizations, initialOrga]) => {
-        if (organizations.length > 0) {
-          mode.value = initialOrga ? "select" : "create";
-          orga.value = initialOrga ?? organizations[0];
-          if (initialOrga) submitOrga();
-        } else {
-          mode.value = "create";
-          orga.value = {};
-        }
-      },
-      { immediate: true }
-    );
-
-    watch(
-      () => mode.value,
-      () => {
-        if (mode.value === "create") {
-          setTimeout(() => orgaNameInput.value.focus(), 200);
-        }
-      },
-      { immediate: true }
-    );
+    onMounted(() => {
+      setTimeout(() => spaceNameInput.value.focus(), 200);
+    });
 
     return {
-      mode,
-      newOrga,
-      newOrgaLoading,
+      // References
       newSpace,
       newSpaceLoading,
+      openBillingAccountModal,
       orga,
-      orgaNameInput,
       spaceNameInput,
-      step,
       // Methods
-      submitOrga,
-      submitSpace
+      submit,
+      updateOrga
     };
   }
 };

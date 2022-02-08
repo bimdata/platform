@@ -42,7 +42,7 @@
   },
   "Subscribe": {
     "title": "Choisissez votre abonnement",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    "text": "Vous n'avez le droit qu'à un seul espace gratuit parmi tout vos comptes de facturation. Si cet espace existe déjà, passez à l'abonnement professionel pour plus de fonctionnalités."
   },
   "SubscriptionDatapack": {
     "title": "Gérer mes DataPacks",
@@ -51,26 +51,27 @@
   "SubscriptionFree": {
     "title": "Créer un espace gratuit",
     "text": "Vous êtes sur le point de créer votre espace gratuit. Votre espace gratuit inclus: {size}, 6 utilisateurs.",
-    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} rattaché au compte de facturation {organizationName}"
   },
   "SubscriptionPro": {
     "subscribeTitle": "Souscrire à l'abonnement professionnel",
     "upgradeTitle": "Passer à la platforme professionnelle",
     "text": "Vous êtes sur le point de lancer votre abonnement professionel. Il inclus: {size} de stockage, création de projets illimités avec utilisateurs illimités.",
-    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} dans l'organisation {organizationName}"
+    "spaceCreatedNotification": "Vous venez de créer l'espace {spaceName} rattaché au compte de facturation {organizationName}",
+    "spaceUpgradedNotification": "Félicitation ! Vous venez de souscrire à un abonnement professionnel pour l'espace {spaceName}."
   },
   "UserProjects": {
     "searchInputPlaceholder": "Rechercher un projet"
   },
   "UserSpaces": {
     "searchInputPlaceholder": "Rechercher un espace",
-    "organizationsButtonText": "Organisations",
+    "organizationsButtonText": "Comptes de facturation",
     "createButtonText": "Créer un espace"
   },
   "UserSubscriptions": {
     "title": "Abonnement à la plateforme",
-    "text": "Naviguez parmis vos organisations pour gérer les abonnements et factures de vos espaces plateforme.",
-    "list": "Liste de mes organisations :"
+    "text": "Naviguez parmis vos comptes de facturation pour gérer les abonnements et factures de vos espaces plateforme.",
+    "list": "Liste de mes comptes de facturation :"
   },
 
 
@@ -80,11 +81,11 @@
     "groupsButtonText": "Gestion des groupes"
   },
   "ProjectOverview": {
-    "openFileUploadButtonText": "Ajouter un IFC",
+    "openFileUploadButtonText": "Ajouter un modèle",
     "closeFileUploadButtonText": "Fermer",
     "forbiddenUploadNotification": {
       "title": "Erreur",
-      "message": "Veuillez sélectionner un fichier .ifc"
+      "message": "Veuillez sélectionner un fichier de modèle: {extensions}"
     }
   },
 
@@ -127,14 +128,20 @@
     "withDatapack": "+ Datapack",
     "cancelSubscriptionButton": "Annuler l'abonnement",
     "updateCreditCardButton": "Mettre à jour la carte de crédit",
-    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
-    "subscribeButton": "Passez à notre plateforme Pro",
+    "emptyTableText": "Hm.. Il semble que vous n'ayez jamais souscris à un abonnement. Avez vous déjà essayé notre Plateforme Pro ?",
+    "subscribeButton": "Passez à notre Plateforme Pro",
     "headers": {
       "space": "Espace",
       "nextpayment": "Prochain paiement",
       "subscriptionplan": "Formule d'abonnement",
       "status": "Statut",
       "amount": "Montant"
+    },
+    "status": {
+      "active": "Actif",
+      "deleted": "Supprimé",
+      "paused": "En pause",
+      "custom": "Géré par BIMData.io"
     }
   },
 
@@ -167,9 +174,8 @@
     "baseNote": "Stockage",
     "baseText": "Inclus dans l'abonnement",
     "datapackNote": "Stockage additionnel",
-    "datapackText": "",
-    "priceUnit": " / GB / mois",
-    "totalUnit": " / mois",
+    "priceUnit": " / GB / mois TTC",
+    "totalUnit": " / mois TTC",
     "actualStorage": "Stockage actuel",
     "newStorage": "Nouveau stockage",
     "submitButtonText": "Valider",
@@ -249,7 +255,7 @@
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
     "separatorText": "ou",
-    "uploadButtonText": "Selectionner un fichier .ifc"
+    "uploadButtonText": "Sélectionner un modèle"
   },
 
   "FolderAccessManager": {
@@ -290,13 +296,19 @@
     }
   },
 
-  "FreePlanCard": {
+  "FreePlanInfo": {
     "title": "FREE",
     "price": "0€",
     "bullet2": "1 Espace gratuit",
     "bullet3": "6 Utilisateurs",
     "buttonText": "Créer un espace gratuit",
     "note": "Pour toujours"
+  },
+
+  "FreePlanRedirect": {
+    "title": "Mon espace gratuit",
+    "text": "Vous possédez déjà un espace gratuit.",
+    "buttonText": "Accéder à mon espace gratuit"
   },
 
   "GroupCardActionMenu": {
@@ -374,9 +386,8 @@
 
   "InvoicesTable": {
     "title": "Factures",
-    "tablePlaceholder": "Chargement des factures...",
-    "emptyTableText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
-    "subscribeButton": "Passez à notre plateforme Pro",
+    "emptyTableText": "Vos factures apparaitront ici lorsque vous aurez des abonnements actifs.",
+    "subscribeButton": "Passez à notre Plateforme Pro",
     "headers": {
       "amount": "Montant",
       "status": "Statut",
@@ -442,6 +453,7 @@
     "title": "Modèles du projet",
     "tabs": {
       "ifc": "IFC",
+      "dwg": "DWG",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives"
@@ -460,7 +472,7 @@
   },
 
   "ModelsOverviewOnboarding": {
-    "text": "Téléverser votre premier IFC",
+    "text": "Téléverser votre premier modèle",
     "uploadButtonText": "Téléversement"
   },
 
@@ -481,33 +493,40 @@
   },
 
   "OrganizationDeleteGuard": {
-    "title": "Supprimer l'organisation",
-    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "title": "Supprimer le compte de facturation",
     "submitButtonText": "Supprimer"
   },
 
   "OrganizationForm": {
-    "createTitle": "Création d'organisation",
-    "updateTitle": "Modifier l'organisation",
+    "createTitle": "Création d'un compte de facturation",
+    "updateTitle": "Modifier le compte de facturation",
     "infoSectionTitle": "Information de base",
     "nameInputPlaceholder": "Nom",
     "nameInputErrorMessage": "Nom invalide",
     "logoInputLabel": "Choisir un logo",
     "logoInputMessage": "Le logo doit être une image au format JP(E)G/PNG et la taille du fichier ne doit pas excéder 1 MB.",
     "submitButtonText": "Valider",
-    "successTitle": "Félicitation votre organisation vient d'être créée",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successTitle": "Félicitation votre compte de facturation vient d'être créé",
     "successButtonText": "OK"
   },
 
+  "OrganizationSelector": {
+    "title": "Compte de facturation",
+    "radioLabelSelect": "Sélectionner un compte de facturation",
+    "radioLabelCreate": "Créer un compte de facturation",
+    "inputPlaceholder": "Nom du compte de facturation",
+    "submitButtonText": "Valider",
+    "successMessage": "Félicitation votre compte de facturation vient d'être créé"
+  },
+
   "OrganizationsList": {
-    "explanationText": "L'organisation est l'entité qui centralise les facturations des espaces BIMData.io",
-    "createButtonText": "Créer une organisation",
-    "searchInputPlaceholder": "Rechercher une organisation"
+    "explanationText": "Le compte de facturation est l'entité qui centralise les facturations des espaces BIMData.io",
+    "createButtonText": "Créer un compte de facturation",
+    "searchInputPlaceholder": "Rechercher un compte"
   },
 
   "OrganizationsManager": {
-    "title": "Gestion des organizations",
+    "title": "Gestion des comptes de facturation",
     "backButtonText": "Retour"
   },
 
@@ -519,8 +538,7 @@
     "spaceListTitle": "Sélectionnez les espaces à importer",
     "spaceListPlaceholder": "Aucun espace à importer...",
     "submitButtonText": "Importer",
-    "successTitle": "Les espaces ont été déplacés",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
+    "successTitle": "Félicitation vos espaces viennent d'être déplacés",
     "successButtonText": "OK"
   },
 
@@ -528,7 +546,8 @@
     "importButtonText": "Importer un espace",
     "addButtonText": "Ajouter un espace",
     "searchInputPlaceholder": "Rechercher",
-    "spaceListTitle": "Liste des espaces de l'organisation"
+    "spaceListTitle": "Liste des espaces rattachés au compte de facturation",
+    "spaceListPlaceholder": "Aucun espace n'est rattaché à ce compte de facturation."
   },
 
   "ProjectCardActionMenu": {
@@ -586,17 +605,19 @@
   },
 
   "ProPlanForm": {
-    "title": "Prix",
+    "titleNet": "Sous-total",
+    "titleTax": "TVA 20%",
+    "titleTotal": "Prix",
+    "noteTotal": "TTC",
     "priceUnit": "/ mois",
-    "successTitle": "Félicitation ! Vous avez souscris à la Plateforme Pro !",
-    "successMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius est sed efficitur tempus. Pellentesque ac porttitor massa.",
-    "successButtonText": "Page d'accueil"
+    "successTitle": "Félicitation ! Vous avez souscris à un Abonnement Pro !",
+    "successMessage": "Votre paiement a bien été effectué. Vous pouvez dès à présent profiter de votre abonnement professionnel."
   },
 
   "ProPlanInfo": {
     "title": "Votre abonnement",
     "subTitle": "Professionnel",
-    "priceUnit": "/ mois",
+    "priceUnit": "/ mois HT",
     "bulletsHead": "L'abonnement inclut",
     "bullet1": "{size} de stockage",
     "bullet2": "BIMData Plateforme",
@@ -646,31 +667,21 @@
   },
 
   "SpaceCreator": {
-    "createSelectOrgaTitle": "Créer ou sélectionner une organisation",
-    "createNewOrgaRadio": "Créer une nouvelle organisation",
-    "createNewOrgaInput": "Nom de ma nouvelle organisation",
-    "selectOrgaRadio": "Sélectionner une organisation",
-    "orgaValidateButton": "Valider",
-    "createSpaceTitle": "Créer un espace",
-    "createSpaceText": "Votre espace regroupe vos différents projets BIM.",
-    "createSpaceInput": "Nom de mon nouvel espace",
-    "spaceValidateButton": "Valider"
+    "title": "Créer un espace",
+    "text": "Votre espace regroupe vos différents projets BIM.",
+    "inputPlaceholder": "Nom de l'espace",
+    "billingAccountLabel": "Compte de facturation :",
+    "billingAccountButton": "Modifier",
+    "submitButtonText": "Passer au paiement"
   },
 
   "SpaceSelected": {
-    "selectedOrga": "Organization sélectionnée:",
+    "selectedOrga": "Compte de facturation:",
     "selectedSpace": "Espace sélectionné:"
   },
 
-  "SpaceSelector": {
-    "orgaSelectorLabel": "Organisation selectionnée :",
-    "spaceSelectorLabel": "Espace selectionné :"
-  },
-
   "SpaceSizeInfo": {
-    "used": "utilisé",
-    "from": "sur",
-    "included": "inclus",
+    "usage": "{used} utilisé sur {total}",
     "subscribeDatapackButton": "Acheter un DataPack",
     "subscribePlatformButton": "Passer à la platform pro"
   },
@@ -696,6 +707,11 @@
     "title": "Créez votre nouvel espace",
     "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
     "button": "Souscrire à un abonnement"
+  },
+
+  "SubscriptionStatusBanner": {
+    "activate": "Activate: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "reactivate": "Reactivate: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
 
   "UserCard": {
@@ -819,10 +835,10 @@
   "Success": "Succès",
 
   "Errors": {
-    "organizationsFetchError": "Impossible de récupérer la liste des organizations",
-    "organizationCreateError": "Erreur lors de la création de l'organization",
-    "organizationUpdateError": "Erreur lors le de mise à jour de l'organization",
-    "organizationDeleteError": "Erreur lors de la suppression de l'organization",
+    "organizationsFetchError": "Impossible de récupérer la liste des comptes de facturation",
+    "organizationCreateError": "Erreur lors de la création du compte de facturation",
+    "organizationUpdateError": "Erreur lors le de mise à jour du compte de facturation",
+    "organizationDeleteError": "Erreur lors de la suppression du compte de facturation",
     "spacesFetchError": "Impossible de récupérer la liste des espaces",
     "spaceCreateError": "Erreur lors de la création de l'espace",
     "spaceUpdateError": "Erreur de mise à jour de l'espace",

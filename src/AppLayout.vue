@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout">
-    <NotificationCard />
+    <AppNotification />
     <AppHeader />
     <div class="app-layout__view-container" :class="{ loading }">
       <router-view></router-view>
@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import { contexts, useLoadingContext } from "@/composables/loading";
+import { contexts, useLoadingContext } from "@/composables/loading.js";
 // Components
-import AppHeader from "@/components/specific/app/app-header/AppHeader";
-import NotificationCard from "@/components/generic/notification-card/NotificationCard";
+import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
+import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
 
 export default {
   components: {
     AppHeader,
-    NotificationCard
+    AppNotification
   },
   setup() {
     const loading = useLoadingContext(contexts.viewContainer);

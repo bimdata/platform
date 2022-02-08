@@ -7,7 +7,7 @@
       <SpaceSizePreviewImage />
     </div>
     <div class="space-size-preview__actual-size">
-      <ProgressBar width="100%" :progress="spaceInfo.usedSizePercent">
+      <ProgressBar width="100%" :progress="spaceSubInfo.usedSizePercent">
         <template #text-above-left>
           <span>
             {{ $t("SpaceSizePreview.actualStorage") }}
@@ -15,12 +15,12 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smartDataSize) }}
           </span>
         </template>
         <template #text-below-right>
           <span>
-            {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+            {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
           </span>
         </template>
       </ProgressBar>
@@ -37,7 +37,7 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smartDataSize) }}
           </span>
         </template>
         <template #text-below-right>
@@ -68,7 +68,7 @@ export default {
     ProgressBar
   },
   props: {
-    spaceInfo: {
+    spaceSubInfo: {
       type: Object,
       required: true
     },
@@ -80,8 +80,8 @@ export default {
   setup(props) {
     const newUsedSizePercent = computed(() => {
       return Math.round(
-        props.spaceInfo.usedSizePercent *
-          (props.spaceInfo.smartDataSizeAvailable / props.newSizeAvailable)
+        props.spaceSubInfo.usedSizePercent *
+          (props.spaceSubInfo.smartDataSizeAvailable / props.newSizeAvailable)
       );
     });
 

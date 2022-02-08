@@ -1,12 +1,12 @@
 /* eslint-disable */
 import { createApp } from "vue";
-import i18n from "@/i18n";
+import { BIMDataClickAway } from "@bimdata/design-system/dist/js/BIMDataDirectives/vue3/index.js";
+import i18n from "@/i18n/index.js";
 import router from "@/router/index.js";
-import ErrorService from "@/services/ErrorService";
+import globalComponents from "@/components/global-components.js";
+import ErrorService from "@/services/ErrorService.js";
 
 import App from "./App.vue";
-import globalComponents from "@/components/global-components";
-import { BIMDataClickAway } from "@bimdata/design-system/dist/js/BIMDataDirectives/vue3/index.js";
 
 
 const app = createApp(App)

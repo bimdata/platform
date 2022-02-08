@@ -11,17 +11,27 @@
     &--overview {
       flex-grow: 1;
       height: 480px;
+      background-color: var(--color-white);
     }
 
     &--users {
       width: 560px;
       height: 480px;
+      background-color: var(--color-white);
     }
 
     &--models {
       width: 100%;
       height: 560px;
+      background-color: var(--color-white);
     }
+  }
+
+  .models-overview,
+  .models-manager,
+  .project-users-manager {
+    width: 100%;
+    height: 100%;
   }
 }
 

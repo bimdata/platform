@@ -1,59 +1,64 @@
 .space-creator {
-  display: grid;
-  grid-template-columns: 400px 400px;
-  gap: calc(var(--spacing-unit) * 4);
-
-  &::v-deep(.bimdata-card) {
-    overflow: inherit;
-
-    h3 {
-      margin: 12px 0 18px 6px;
-      font-size: 20px;
-    }
-
-    .bimdata-radio > span {
-      font-size: 13px;
-    }
-
-    .bimdata-card__content {
-      padding: 24px 48px;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      flex-direction: column;
-    }
-  }
-}
-
-.orga-card,
-.space-card {
   position: relative;
+  width: 518px;
+  height: 430px;
+  padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4);
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-white);
 
-  &::before {
-    width: 34px;
-    height: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--spacing-unit) * 2);
 
-    position: absolute;
-    top: calc(-34px / 2);
-    left: calc(50% - (34px / 2));
+  &.disabled {
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-silver);
+      opacity: 0.25;
+    }
+  }
 
-    display: inline-flex;
+  &__title {
+    display: flex;
     align-items: center;
-    justify-content: center;
-
-    font-weight: bold;
-    background-color: var(--color-secondary);
+    gap: calc(var(--spacing-unit) / 2);
+    h2 {
+      margin: 0;
+    }
   }
-}
 
-.orga-card {
-  &::before {
-    content: "1";
+  &__text {
+    width: 80%;
+    text-align: center;
   }
-}
 
-.space-card {
-  &::before {
-    content: "2";
+  &__input {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 2) 0;
+  }
+
+  &__billing-account {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .billing-account-label {
+      font-weight: bold;
+      margin-bottom: calc(var(--spacing-unit) / 2);
+      color: var(--color-granite);
+    }
+
+    .billing-account-name {
+      color: var(--color-granite-light);
+    }
   }
 }

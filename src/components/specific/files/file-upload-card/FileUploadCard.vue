@@ -55,8 +55,8 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { useUpload } from "@/composables/upload";
-import { formatBytes } from "@/utils/files";
+import { useUpload } from "@/composables/upload.js";
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   props: {
@@ -95,7 +95,7 @@ export default {
       onUploadStart: () => {
         uploading.value = true;
       },
-      onUploadProgress: (file, { bytesUploaded, bytesTotal }) => {
+      onUploadProgress: ({ bytesUploaded, bytesTotal }) => {
         if (lastProgressTime) {
           const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
           const dx = bytesUploaded - progress.uploaded; // in bytes
@@ -105,10 +105,8 @@ export default {
         progress.uploaded = bytesUploaded;
         lastProgressTime = Date.now();
       },
-      onUploadComplete: event => {
-        const document = event.successful[0].response.body;
+      onUploadComplete: ({ response: document }) => {
         uploading.value = false;
-        uploader.reset();
         emit("upload-completed", document);
       },
       onUploadError: () => {

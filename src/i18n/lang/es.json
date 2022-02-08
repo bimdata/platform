@@ -1,9 +1,16 @@
 {
     "Dashboard": {
+        "spacesButtonTitle": "Espacios",
+        "spacesButtonText": "Mis espacios",
+        "projectsButtonTitle": "Proyectos",
+        "projectsButtonText": "Mis proyectos",
         "spacesTileTitle": "Espacios",
         "spacesTileBottomText": "Mis espacios",
         "projectsTileTitle": "Proyectos",
-        "projectsTileBottomText": "Mis proyectos"
+        "projectsTileBottomText": "Mis proyectos",
+        "subscriptionsTileTitle": "Suscripciones",
+        "subscriptionsTileText": "Acceda a todas sus facturas y la última información de pago aquí.",
+        "subscriptionsTileBottomText": "Administrar mis suscripciones"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Buscar un miembro"
@@ -30,26 +37,20 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Buscar un espacio",
-        "organizationsButtonText": "Organizaciones",
-        "createButtonText": "Crear un espacio"
+        "createButtonText": "Crear un espacio",
+        "organizationsButtonText": "Cuentas de facturación"
     },
-
-
-
     "ProjectFiles": {
         "groupsButtonText": "Gestión de grupos"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Añadir un IFC",
+        "openFileUploadButtonText": "Añadir un modelo",
         "closeFileUploadButtonText": "Cerrar",
         "forbiddenUploadNotification": {
             "title": "Error",
-            "message": "Por favor seleccione un archivo .ifc"
+            "message": "Por favor seleccione un modelo: {extensions}"
         }
     },
-
-
-
     "BreadcrumbSelector": {
         "inputPlaceholder": "Buscar"
     },
@@ -69,7 +70,8 @@
         "entryMarketplace": "Marketplace",
         "entryOldPlatform": "Plataforma V1",
         "entryLanguage": "Selección de idioma",
-        "logoutButtonText": "Desconectar"
+        "logoutButtonText": "Desconectar",
+        "subscriptionPlatform": "Suscripción de plataforma:"
     },
     "BreadcrumbGroupSelector": {
         "text": "Grupos"
@@ -146,7 +148,7 @@
     "FileUploader": {
         "uploadAreaText": "Haga Clic/Deslizar sus archivos aquí",
         "separatorText": "o",
-        "uploadButtonText": "Seleccione un archivo .ifc"
+        "uploadButtonText": "Seleccione un modelo"
     },
     "FolderAccessManager": {
         "title": "Gestión de derechos de acceso",
@@ -169,11 +171,11 @@
     },
     "FolderSelector": {
         "selectedFolder": "Carpeta seleccionada",
-        "emptyFolderPlaceholder": "Carpeta vacía",
         "submitButtonText": {
             "moveTo": "Validar",
             "moveHere": "Mueva aquí"
-        }
+        },
+        "emptyFolderPlaceholder": "Carpeta vacía"
     },
     "GroupAccessSelector": {
         "defaultGroupName": "Todo el mundo"
@@ -234,6 +236,9 @@
         "deleteButtonText": "Suprimir",
         "unarchiveButtonText": "Desarchivar"
     },
+    "ModelLastUpdateCell": {
+        "at": "a"
+    },
     "ModelLocation": {
         "emptyLocationMessage": "Datos de seguimiento no disponibles",
         "addLocationButtonText": "Infórmese"
@@ -271,6 +276,7 @@
         "title": "Modelos del proyecto",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
             "split": "Split / Exportar",
             "merge": "Fusionar",
             "archive": "Archivos"
@@ -286,7 +292,7 @@
         "title": "Visión del proyecto"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Transferir vuestro primer IFC",
+        "text": "Transferir vuestro primer modelo",
         "uploadButtonText": "Transferencia"
     },
     "ModelsTable": {
@@ -300,36 +306,10 @@
             "status": "Estatus"
         }
     },
-    "OrganizationCard": {
-        "spaces": "{number} espacios"
-    },
-    "OrganizationForm": {
-        "nameInputPlaceholder": "Nombre",
-        "nameInputErrorMessage": "Este nombre no es válido",
-        "submitButtonText": "Validar",
-        "successButtonText": "OK"
-    },
-    "OrganizationsList": {
-        "createButtonText": "Crear un organización",
-        "searchInputPlaceholder": "Buscar un organización"
-    },
-    "OrganizationsManager": {
-        "title": "Gestión de organizaciones",
-        "backButtonText": "Retorno"
-    },
-    "OrganizationSpaceCard": {
-        "projects": "{number} proyectos"
-    },
-    "OrganizationSpacesImport": {
-        "submitButtonText": "Validar",
-        "successButtonText": "OK"
-    },
-    "OrganizationSpacesList": {
-        "searchInputPlaceholder": "Buscar"
-    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Renombrar",
-        "deleteButtonText": "Suprimir"
+        "deleteButtonText": "Suprimir",
+        "leaveButtonText": "Salir"
     },
     "ProjectCardDeleteGuard": {
         "title": "Suprimir el proyecto",
@@ -349,15 +329,13 @@
         "inputErrorMessage": "¡Debe darle un nombre al proyecto!",
         "createButtonText": "Crear"
     },
-    "ProjectStatusBadge": {
-        "active": "ACTIVO"
-    },
     "ProjectUsersManager": {
         "title": "Usuarios",
         "searchInputPlaceholder": "Buscar un usuario"
     },
     "SpaceCard": {
-        "projects": "PROYECTOS"
+        "projects": "PROYECTOS",
+        "free": "Gratuito"
     },
     "SpaceCardActionMenu": {
         "renameButtonText": "Renombrar",
@@ -442,17 +420,9 @@
             "readWrite": "Lectura / Escritura"
         }
     },
-
-
-
     "Error": "Error",
     "Success": "Éxito",
-
     "Errors": {
-        "organizationsFetchError": "Imposible recuperar la lista de organizaciones",
-        "organizationCreateError": "Error durante la creación del organización",
-        "organizationUpdateError": "Error de puesta en marcha del organización",
-        "organizationDeleteError": "Error en la supresión del organización",
         "spacesFetchError": "Imposible recuperar la lista de espacios",
         "spaceCreateError": "Error durante la creación del espacio",
         "spaceUpdateError": "Error de puesta en marcha del espacio",
@@ -485,6 +455,237 @@
         "groupsFetchError": "Imposible recuperar la lista de grupos",
         "groupCreateError": "Error durante la creación del grupo",
         "groupUpdateError": "Error durante la puesta en marcha del grupo",
-        "groupDeleteError": "Fracaso durante la supresión del grupo"
+        "groupDeleteError": "Fracaso durante la supresión del grupo",
+        "organizationsFetchError": "Imposible recuperar la lista de cuentas de facturación",
+        "organizationCreateError": "Error durante la creación del cuenta de facturación",
+        "organizationUpdateError": "Error de puesta en marcha del cuenta de facturación",
+        "organizationDeleteError": "Error en la supresión del cuenta de facturación",
+        "userLeaveError": "Usted no puede abandonar este proyecto porque es el último administrador",
+        "subscriptionsFetchError": "No es posible recuperar la lista de suscripciones",
+        "platformSubscribeError": "Error al crear el enlace de suscripción",
+        "datapackSubscribeError": "Fallo en la suscripción de un nuevo paquete de datos",
+        "datapackUpdateError": "Error al actualizar el paquete de datos"
+    },
+    "ProjectStatusBadge": {
+        "new": "NUEVO",
+        "active": "ACTIVO",
+        "inactive": "INACTIVO",
+        "paused": "PAUSA"
+    },
+    "Payment": {
+        "titlePlatform": "Pasar a la plataforma profesional",
+        "titleDatapack": "Añadir un DataPack"
+    },
+    "Subscribe": {
+        "title": "Elija su suscripción",
+        "text": "Solo tiene derecho a un espacio gratuito entre sus cuentas de facturación. Si este espacio ya existe, pase a la suscripción profesional para más funcionalidades."
+    },
+    "SubscriptionDatapack": {
+        "title": "Administrar mis DataPacks",
+        "successNotification": "Ahora cuenta con {size} en el espacio {spaceName}"
+    },
+    "SubscriptionFree": {
+        "title": "Crear un espacio gratuito",
+        "text": "Usted está a punto de crear su espacio gratuito. Su espacio gratuito incluye: {size}, 6 usuarios.",
+        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la cuenta de facturación {organizationName}"
+    },
+    "SubscriptionPro": {
+        "subscribeTitle": "Suscribirse a la suscripción profesional",
+        "upgradeTitle": "Pasar a la plataforma profesional",
+        "text": "Está a punto de iniciar su suscripción profesional. Esta incluye {size} de almacenamiento y creación de proyectos ilimitados con usuarios ilimitados.",
+        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la cuenta de facturación {organizationName}"
+    },
+    "UserSubscriptions": {
+        "title": "Suscripción a la plataforma",
+        "text": "Navegue entre sus cuentas de facturación para administrar las suscripciones y facturas de sus espacios de plataforma.",
+        "list": "Lista de mis cuentas de facturación:"
+    },
+    "BillingActionsCell": {
+        "updateButtonText": "Modificar la carta de pago",
+        "datapackButtonText": "Administrar mis datapacks",
+        "cancelButtonText": "Anular esta suscripción"
+    },
+    "BillingsTable": {
+        "title": "Suscripciones",
+        "nextPayment": "El",
+        "professionalPlan": "Profesional",
+        "withDatapack": "+ Datapack",
+        "cancelSubscriptionButton": "Anular la suscripción",
+        "updateCreditCardButton": "Actualizar la tarjeta de crédito",
+        "subscribeButton": "Pasar a nuestra plataforma Pro",
+        "headers": {
+            "space": "Espacio",
+            "nextpayment": "Próximo pago",
+            "subscriptionplan": "Fórmula de suscripción",
+            "status": "Estado",
+            "amount": "Monto"
+        },
+        "status": {
+            "active": "Activo",
+            "deleted": "Borrado",
+            "paused": "En pausa"
+        }
+    },
+    "DatapackForm": {
+        "baseNote": "Almacenamiento",
+        "baseText": "Incluido en la suscripción",
+        "datapackNote": "Almacenamiento adicional",
+        "priceUnit": "/ GB / mes IVA incluído",
+        "totalUnit": "/ mes IVA incluído",
+        "actualStorage": "Almacenamiento actual",
+        "newStorage": "Nuevo almacenamiento",
+        "submitButtonText": "Aceptar",
+        "cancelButtonText": "Anular"
+    },
+    "DatapackInfo": {
+        "title": "Suscripción actual",
+        "datapacks": "Resumen del DataPack activo",
+        "storage": "Resumen de GB activos",
+        "including": "de los cuales {quantity} GB corresponden al DataPack"
+    },
+    "FreePlanInfo": {
+        "title": "GRATIS",
+        "price": "0€",
+        "bullet2": "1 espacio gratuito",
+        "bullet3": "6 usuarios",
+        "buttonText": "Crear un espacio gratuito",
+        "note": "Para siempre"
+    },
+    "GroupMemberInvitation": {
+        "name": "Invitación en curso"
+    },
+    "InvoiceActionsCell": {
+        "downloadButton": "Descargar factura"
+    },
+    "InvoicesTable": {
+        "title": "Facturas",
+        "emptyTableText": "Las facturas aparecerán aquí una vez que haya activado sus suscripciones.",
+        "subscribeButton": "Pasar a nuestra Platform Pro",
+        "headers": {
+            "amount": "Monto",
+            "status": "Estado",
+            "space": "Espacio",
+            "date": "Fecha"
+        }
+    },
+    "InvoiceStatusCell": {
+        "completed": "Pagado",
+        "pending": "En espera"
+    },
+    "OrganizationCard": {
+        "spaces": "{number} espacios"
+    },
+    "OrganizationDeleteGuard": {
+        "title": "Eliminar cuenta de facturación",
+        "submitButtonText": "Eliminar"
+    },
+    "OrganizationForm": {
+        "createTitle": "Creación de cuenta de facturación",
+        "updateTitle": "Modificar cuenta de facturación",
+        "infoSectionTitle": "Información de base",
+        "nameInputPlaceholder": "Nombre",
+        "nameInputErrorMessage": "Este nombre no es válido",
+        "logoInputLabel": "Elegir un logo",
+        "logoInputMessage": "El logo debe ser una imagen en formato JP(E)G/PNG y el tamaño del fichero no debe exceder 1 MB.",
+        "submitButtonText": "Validar",
+        "successTitle": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada.",
+        "successButtonText": "OK"
+    },
+    "OrganizationSelector": {
+        "title": "Cuenta de facturación",
+        "radioLabelSelect": "Seleccione una cuenta de facturación",
+        "radioLabelCreate": "Crear una cuenta de facturación",
+        "inputPlaceholder": "Nombre de la cuenta de facturación",
+        "submitButtonText": "Validar",
+        "successMessage": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada."
+    },
+    "OrganizationsList": {
+        "explanationText": "La cuenta de facturación es la entidad que centraliza las facturas en los espacios BIMData.io",
+        "createButtonText": "Crear una cuenta de facturación",
+        "searchInputPlaceholder": "Buscar una cuenta de facturación"
+    },
+    "OrganizationsManager": {
+        "title": "Gestión de cuentas de facturación",
+        "backButtonText": "Retorno"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} proyectos"
+    },
+    "OrganizationSpacesImport": {
+        "spaceListTitle": "Seleccionar los espacios para importar",
+        "spaceListPlaceholder": "No hay espacios para importar...",
+        "submitButtonText": "Validar",
+        "successTitle": "¡Felicitaciones! Sus espacios acaban de ser desplazados.",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "importButtonText": "Importar un espacio",
+        "addButtonText": "Añadir un espacio",
+        "searchInputPlaceholder": "Buscar",
+        "spaceListTitle": "Lista de espacios de la cuenta de facturación"
+    },
+    "ProjectCardLeaveGuard": {
+        "title": "Salir del proyecto",
+        "message": "¿Está seguro de que quiere salir de este proyecto?",
+        "leaveButtonText": "Aceptar"
+    },
+    "ProPlanCard": {
+        "title": "PROFESIONAL",
+        "priceUnit": "/ Espacio / mes",
+        "bullet2": "Proyectos ilimitados",
+        "bullet3": "Usuarios ilimitados",
+        "buttonText": "Suscribirse",
+        "note": "extensible por {price} / GB / mes"
+    },
+    "ProPlanForm": {
+        "titleTotal": "Precio",
+        "noteTotal": "IVA incluído",
+        "priceUnit": "/ mes",
+        "successTitle": "¡Felicitaciones! ¡Se ha suscrito a una Suscripción Pro!",
+        "successMessage": "Su pago se ha efectuado correctamente. Desde ahora puede aprovechar su suscripción profesional.",
+        "successButtonText": "Página de inicio"
+    },
+    "ProPlanInfo": {
+        "title": "Su suscripción",
+        "subTitle": "Profesional",
+        "priceUnit": "/ mes, sin IVA",
+        "bulletsHead": "El abono incluido",
+        "bullet1": "{size} de almacenamiento",
+        "bullet2": "Plataforma BIMData",
+        "bullet3": "Visualizador 3D",
+        "bullet4": "Visualizador 2D",
+        "bullet5": "Proyectos ilimitados",
+        "bullet6": "Usuarios ilimitados",
+        "bullet7": "Comentarios (BCF) ilimitados",
+        "bullet8": "Fusión / División IFC",
+        "bullet9": "Edición IFC",
+        "bullet10": "Apoyo por correo electrónico"
+    },
+    "SpaceCreator": {
+        "title": "Crear un espacio",
+        "text": "Su espacio reagrupa sus diferentes proyectos BIM.",
+        "inputPlaceholder": "Nombre de mi nuevo espacio",
+        "billingAccountLabel": "Cuenta de facturación :",
+        "billingAccountButton": "Editar"
+    },
+    "SpaceSelected": {
+        "selectedOrga": "Cuenta de facturación:",
+        "selectedSpace": "Espacio seleccionado:"
+    },
+    "SpaceSizeInfo": {
+        "usage": "{used} utilizado en {total}",
+        "subscribeDatapackButton": "Comprar un DataPack",
+        "subscribePlatformButton": "Pasar a la plataforma pro"
+    },
+    "SpaceSizePreview": {
+        "title": "Almacenamiento",
+        "actualStorage": "Almacenamiento actual",
+        "newStorage": "Nuevo almacenamiento",
+        "newStorageText": "Al suscribirse a la suscripción profesional, aprovecha {size} de almacenamiento. Puede comprar almacenamiento adicional desde su espacio."
+    },
+    "SubscribeCard": {
+        "title": "Crear su nuevo espacio",
+        "text": "¿Quiere aprovechar la plataforma al máximo? Aproveche {size} para sus proyectos y usuarios ilimitados pasándose a la suscripción profesional.",
+        "button": "Suscribirse a una suscripción"
     }
 }

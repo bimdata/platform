@@ -6,32 +6,48 @@
     v-click-away="closeMenu"
   >
     <template #front-face>
-      <BIMDataCard @click="goToGroupBoard">
-        <template #content>
-          <div
-            class="group-card__top-stripe"
-            :style="{ backgroundColor: group.color }"
-          ></div>
-          <BIMDataButton
-            v-if="actionMenu"
-            class="group-card__btn-menu"
-            ghost
-            rounded
-            icon
-            @click.stop="openMenu"
-          >
-            <BIMDataIcon name="ellipsis" size="l" fill color="granite-light" />
-          </BIMDataButton>
-          <BIMDataIcon name="group" size="xxl" />
-          <BIMDataTextBox class="group-card__title" :text="group.name" />
-          <UserAvatarList
-            class="group-card__avatars"
-            :users="group.members"
-            itemSize="72"
-            itemGap="44"
-          />
-        </template>
-      </BIMDataCard>
+      <AppLink
+        :to="{
+          name: routeNames.groupBoard,
+          params: {
+            spaceID: project.cloud.id,
+            projectID: project.id,
+            groupID: group.id
+          }
+        }"
+      >
+        <BIMDataCard>
+          <template #content>
+            <div
+              class="group-card__top-stripe"
+              :style="{ backgroundColor: group.color }"
+            ></div>
+            <BIMDataButton
+              v-if="actionMenu"
+              class="group-card__btn-menu"
+              ghost
+              rounded
+              icon
+              @click.prevent.stop="openMenu"
+            >
+              <BIMDataIcon
+                name="ellipsis"
+                size="l"
+                fill
+                color="granite-light"
+              />
+            </BIMDataButton>
+            <BIMDataIcon name="group" size="xxl" />
+            <BIMDataTextBox class="group-card__title" :text="group.name" />
+            <UserAvatarList
+              class="group-card__avatars"
+              :users="group.members"
+              itemSize="72"
+              itemGap="44"
+            />
+          </template>
+        </BIMDataCard>
+      </AppLink>
     </template>
     <template #back-face>
       <GroupCardActionMenu
@@ -44,19 +60,20 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
 // Components
-import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
-import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList";
-import GroupCardActionMenu from "./group-card-action-menu/GroupCardActionMenu";
+import FlippableCard from "@/components/generic/flippable-card/FlippableCard.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList.vue";
+import GroupCardActionMenu from "./group-card-action-menu/GroupCardActionMenu.vue";
 
 export default {
   components: {
+    AppLink,
     FlippableCard,
-    UserAvatarList,
-    GroupCardActionMenu
+    GroupCardActionMenu,
+    UserAvatarList
   },
   props: {
     project: {
@@ -72,27 +89,15 @@ export default {
       default: true
     }
   },
-  setup(props) {
-    const router = useRouter();
+  setup() {
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
-
-    const goToGroupBoard = () => {
-      router.push({
-        name: routeNames.groupBoard,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id,
-          groupID: props.group.id
-        }
-      });
-    };
 
     return {
       // References
+      routeNames,
       showMenu,
       // Methods
       closeMenu,
-      goToGroupBoard,
       openMenu
     };
   }

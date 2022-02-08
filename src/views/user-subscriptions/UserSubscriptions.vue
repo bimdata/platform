@@ -27,7 +27,7 @@
             <template #header>
               <div class="flex items-center">
                 <span
-                  class="number-organizations flex items-center justify-center m-r-12"
+                  class="flex items-center justify-center m-r-12 organization-count"
                 >
                   {{ organizations.length }}
                 </span>
@@ -65,7 +65,7 @@ import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import BillingsTable from "@/components/specific/subscriptions/billings-table/BillingsTable.vue";
 import InvoicesTable from "@/components/specific/subscriptions/invoices-table/InvoicesTable.vue";
@@ -104,9 +104,8 @@ export default {
 
           let allPayments = await Promise.all(
             subscriptions.value
-              // TODO: this is to avoid errors when fetching payments of a deleted space.
-              // Should be removed when a solution is found.
-              .filter(sub => sub.cloud)
+              // When a cloud is deleted, the subscription history stays
+              .filter(sub => sub.cloud && !sub.is_custom)
               .map(sub => {
                 return loadSubscriptionPayments(
                   selectedOrga.value,

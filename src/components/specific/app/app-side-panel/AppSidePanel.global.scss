@@ -1,0 +1,20 @@
+/**
+ * Layout of the side panel containers.
+ * Containers can be found in <body> (see `public/index.html`).
+ */
+#app-side-panel-container {
+  &--left,
+  &--right {
+    position: fixed;
+    z-index: 200;
+    top: 0;
+  }
+
+  &--left {
+    left: 0;
+  }
+
+  &--right {
+    right: 0;
+  }
+}

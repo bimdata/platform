@@ -1,4 +1,17 @@
 .space-board {
+  height: 100%;
+
+  &__banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  // Add top padding to header when banner is displayed
+  &__banner.visible + &__header {
+    padding-top: var(--spacing-unit);
+  }
+
   &__header {
     &__search {
       background-color: var(--color-white);

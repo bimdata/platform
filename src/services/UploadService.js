@@ -1,107 +1,81 @@
-import Uppy from "@uppy/core";
-import XHRUpload from "@uppy/xhr-upload";
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
-
-let fileUploadInstanceID = 0;
+import { createFileUploader } from "@/utils/upload.js";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 class UploadService {
   createSpaceImageUploader(
     space,
     { onUploadStart, onUploadComplete, onUploadError }
   ) {
-    const uppy = new Uppy({
-      id: `space-image-${space.id}`,
-      autoProceed: true,
-      allowMultipleUploads: false,
-      restrictions: {
-        maxFileSize: +process.env.VUE_APP_MAX_UPLOAD_SIZE,
-        maxNumberOfFiles: 1,
-        minNumberOfFiles: 1
+    const uploader = createFileUploader(
+      {
+        method: "PATCH",
+        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
+        accessToken: apiClient.config.accessToken().split(" ")[1]
+      },
+      {
+        onUploadStart,
+        onUploadComplete,
+        onUploadError: event => {
+          ErrorService.handleError(
+            new RuntimeError(ERRORS.SPACE_IMAGE_UPDATE_ERROR, event)
+          );
+          onUploadError(event);
+        }
       }
-    });
+    );
 
-    uppy.use(XHRUpload, {
-      method: "PATCH",
-      endpoint: `${process.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
-      fieldName: "image",
-      metaFields: [],
-      headers: {
-        Authorization: apiClient.config.accessToken()
-      }
-    });
+    const upload = file => {
+      const data = new FormData();
+      data.append("image", file);
 
-    uppy.on("file-added", onUploadStart);
-    uppy.on("complete", onUploadComplete);
-    uppy.on("upload-error", (file, error) => {
-      ErrorService.handleError(
-        new RuntimeError(ERRORS.SPACE_IMAGE_UPDATE_ERROR, error)
-      );
-      onUploadError(file, error);
-    });
+      uploader.upload(data);
+    };
 
-    const upload = file =>
-      uppy.addFile({
-        name: file.name,
-        type: file.type,
-        data: file
-      });
+    const cancel = () => {
+      uploader.cancel();
+    };
 
-    const reset = () => uppy.reset();
-
-    return { upload, reset };
+    return { upload, cancel };
   }
 
   createProjectFileUploader(
     project,
     { onUploadStart, onUploadProgress, onUploadComplete, onUploadError }
   ) {
-    const uppy = new Uppy({
-      id: `project-file-${fileUploadInstanceID++}`,
-      autoProceed: true,
-      allowMultipleUploads: false,
-      restrictions: {
-        maxFileSize: +process.env.VUE_APP_MAX_UPLOAD_SIZE,
-        maxNumberOfFiles: 1,
-        minNumberOfFiles: 1
-      }
-    });
-
-    uppy.use(XHRUpload, {
-      method: "POST",
-      endpoint: `${process.env.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
-      fieldName: "file",
-      metaFields: ["name", "parent_id"],
-      headers: {
-        Authorization: apiClient.config.accessToken()
-      }
-    });
-
-    uppy.on("file-added", onUploadStart);
-    uppy.on("upload-progress", onUploadProgress);
-    uppy.on("complete", onUploadComplete);
-    uppy.on("upload-error", (file, error) => {
-      ErrorService.handleError(
-        new RuntimeError(ERRORS.DOCUMENT_UPLOAD_ERROR, error)
-      );
-      onUploadError(file, error);
-    });
-
-    const upload = (file, parentId) =>
-      uppy.addFile({
-        name: file.name,
-        type: file.type,
-        data: file,
-        meta: {
-          parent_id: parentId || project.rootFolderId
+    const uploader = createFileUploader(
+      {
+        method: "POST",
+        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
+        accessToken: apiClient.config.accessToken().split(" ")[1]
+      },
+      {
+        onUploadStart,
+        onUploadProgress,
+        onUploadComplete,
+        onUploadError: event => {
+          ErrorService.handleError(
+            new RuntimeError(ERRORS.DOCUMENT_UPLOAD_ERROR, event)
+          );
+          onUploadError(event);
         }
-      });
+      }
+    );
 
-    const cancel = () => uppy.cancelAll();
+    const upload = (file, parentId) => {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("name", file.name);
+      if (parentId) data.append("parent_id", parentId);
 
-    const reset = () => uppy.reset();
+      uploader.upload(data);
+    };
 
-    return { upload, cancel, reset };
+    const cancel = () => {
+      uploader.cancel();
+    };
+
+    return { upload, cancel };
   }
 }
 

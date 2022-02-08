@@ -53,16 +53,6 @@
       <BIMDataIcon name="download" size="s" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
-    <!-- <BIMDataButton
-      width="120px"
-      ghost
-      squared
-      :disabled="models.length < 2"
-      @click="$emit('merge', models)"
-    >
-      <BIMDataIcon name="union" size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>
-    </BIMDataButton> -->
   </div>
 </template>
 

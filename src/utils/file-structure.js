@@ -1,5 +1,5 @@
 /* eslint-disable */
-import FILE_TYPES from "@/config/file-types";
+import FILE_TYPES from "@/config/file-types.js";
 
 /**
  * Compute a file UUID.

@@ -1,11 +1,58 @@
 .project-files {
-  display: flex;
+  height: 100%;
 
-  &__block {
-    &--files {
+  &__content {
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    max-height: 100%;
+    background-color: var(--color-white);
+
+    .files-manager {
       width: 100%;
-      min-height: 560px;
-      max-height: 100%;
+      height: 100%;
+    }
+  }
+
+  // Set files-table height and make it scrollable.
+  // TODO: this is very ugly.. should find a way to do it better.
+  &:deep() {
+    .files-table {
+      /**
+       * Details:
+       * 100vh                             | full viewport height
+       *  - var(--platform-header-height)  | platform header height
+       *  - 7 * var(--spacing-unit)        | 2 * view container padding
+       *  - 32px                           | view header height
+       *  - 4 * var(--spacing-unit)        | 2 * project-board body padding
+       *  - 38px                           | files-manager header height
+       *  - 2 * var(--spacing-unit)        | 2 * files-manager content paddin
+       *  - 32px                           | files-manager actions height
+       *  - var(--spacing-unit)            | files-manager grid gap
+       **/
+      height: calc(
+        100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 102px
+      );
+
+      .generic-table__container {
+        height: 100%;
+        overflow: auto;
+
+        table thead tr th {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          background-color: var(--color-white);
+        }
+
+        /**
+         * Take breadcrumb height into account to compute
+         * placeholder height and avoid unnecessary scrollbar.
+         **/
+        &__placeholder {
+          height: calc(100% - 44px - 42px) !important;
+        }
+      }
     }
   }
 }

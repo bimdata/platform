@@ -8,8 +8,9 @@ import { useUser } from "@/state/user.js";
 
 const state = reactive({
   userSpaces: [],
+  freeSpaces: [],
   currentSpace: null,
-  spaceInfo: {},
+  spaceSubInfo: {},
   spaceUsers: [],
   spaceInvitations: []
 });
@@ -23,13 +24,14 @@ const loadUserSpaces = async () => {
   const spaces = await SpaceService.fetchUserSpaces();
   const freeSpaces = await SubscriptionService.fetchFreeSpaces();
   state.userSpaces = mapSpaces(spaces, freeSpaces);
+  state.freeSpaces = freeSpaces;
   return spaces;
 };
 
-const loadSpaceInfo = async space => {
-  const spaceInfo = await SubscriptionService.fetchSpaceInformation(space);
-  state.spaceInfo = spaceInfo;
-  return spaceInfo;
+const loadSpaceSubInfo = async space => {
+  const spaceSubInfo = await SubscriptionService.fetchSpaceSubInfo(space);
+  state.spaceSubInfo = spaceSubInfo;
+  return spaceSubInfo;
 };
 
 const loadSpaceUsers = async space => {
@@ -138,7 +140,7 @@ export function useSpaces() {
     // Methods
     setCurrentSpace,
     loadUserSpaces,
-    loadSpaceInfo,
+    loadSpaceSubInfo,
     loadSpaceUsers,
     loadSpaceInvitations,
     createSpace,

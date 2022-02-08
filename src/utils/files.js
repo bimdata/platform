@@ -1,19 +1,21 @@
 function fileExtension(fileName) {
   const parts = fileName.split(".");
-  return parts.length > 1 ? parts[parts.length - 1] : "";
+  const extension = parts[parts.length - 1];
+  return parts.length > 1 && extension ? `.${extension}` : "";
 }
 
 function formatBytes(bytes, decimals = 2) {
-  if (bytes) {
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const { floor, log, pow } = Math;
 
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  const b = parseFloat(bytes);
 
-    return parseFloat((bytes / Math.pow(1024, i)).toFixed(dm)) + " " + sizes[i];
-  } else {
-    return "0 Bytes";
-  }
+  if (!b || Number.isNaN(b)) return "0 Bytes";
+
+  const d = decimals < 0 ? 0 : decimals;
+  const i = b < 1 ? 0 : floor(log(b) / log(1024));
+
+  return (b / pow(1024, i)).toFixed(d) + " " + sizes[i];
 }
 
 function generateFileKey(fileName, fileSize) {

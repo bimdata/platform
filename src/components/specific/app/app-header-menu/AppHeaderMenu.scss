@@ -36,6 +36,11 @@
       background-color: var(--color-silver);
     }
 
+    .external-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .bimdata-btn {
       justify-content: flex-start;
     }

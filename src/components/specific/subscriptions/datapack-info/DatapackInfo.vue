@@ -5,7 +5,7 @@
     </div>
     <div class="datapack-info__info">
       <span>
-        {{ formatBytes(spaceInfo.smartDataSizeAvailable) }}
+        {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
       </span>
       <span>
         ({{
@@ -21,7 +21,7 @@ import { formatBytes } from "@/utils/files.js";
 
 export default {
   props: {
-    spaceInfo: {
+    spaceSubInfo: {
       type: Object,
       required: true
     },

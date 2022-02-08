@@ -6,18 +6,11 @@
     @click="selectImage"
   >
     {{ $t("SpaceCardImageButton.buttonText") }}
-    <input
-      hidden
-      ref="fileInput"
-      type="file"
-      accept="image/*"
-      @change="uploadImage"
-    />
   </BIMDataButton>
 </template>
 
 <script>
-import { inject, ref } from "vue";
+import { inject } from "vue";
 import { useUpload } from "@/composables/upload.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -37,8 +30,6 @@ export default {
 
     const loading = inject("loading", false);
 
-    const fileInput = ref(null);
-
     const uploader = spaceImageUploader(props.space, {
       onUploadStart: () => {
         loading.value = true;
@@ -46,7 +37,6 @@ export default {
       onUploadComplete: () => {
         loadUserSpaces();
         loadOrganizationSpaces(props.space.organization);
-        uploader.reset();
         emit("upload-completed");
       },
       onUploadError: () => {
@@ -55,9 +45,6 @@ export default {
       }
     });
 
-    const selectImage = () => {
-      fileInput.value.click();
-    };
     const uploadImage = event => {
       const file = event.target.files[0];
       if (file) {
@@ -65,12 +52,17 @@ export default {
       }
     };
 
+    const selectImage = () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.onchange = uploadImage;
+      input.click();
+    };
+
     return {
-      // References,
-      fileInput,
       // Methods
-      selectImage,
-      uploadImage
+      selectImage
     };
   }
 };

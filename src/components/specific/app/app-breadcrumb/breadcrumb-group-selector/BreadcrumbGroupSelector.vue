@@ -14,10 +14,10 @@
 <script>
 import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
-import { useGroups } from "@/state/groups";
-import { useProjects } from "@/state/projects";
+import { useGroups } from "@/state/groups.js";
+import { useProjects } from "@/state/projects.js";
 // Components
-import BreadcrumbSelector from "@/components/generic/breadcrumb-selector/BreadcrumbSelector";
+import BreadcrumbSelector from "../breadcrumb-selector/BreadcrumbSelector.vue";
 
 export default {
   components: {
@@ -51,8 +51,8 @@ export default {
 
     return {
       // References
-      selectedGroup: currentGroup,
       groups: projectGroups,
+      selectedGroup: currentGroup,
       // Methods
       goToGroupBoard,
       goToProjectGroups

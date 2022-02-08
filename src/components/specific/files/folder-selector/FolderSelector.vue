@@ -42,12 +42,7 @@
       >
         <span class="folder-selector__body__item__icon">
           <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
-          <BIMDataFileIcon
-            v-else-if="file.type === 'Ifc'"
-            fileName=".ifc"
-            :size="13"
-          />
-          <BIMDataFileIcon v-else :fileName="file.name" :size="13" />
+          <BIMDataFileIcon v-else :fileName="file.fileName" :size="13" />
         </span>
         <BIMDataTextBox
           class="folder-selector__body__item__name"

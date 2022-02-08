@@ -28,7 +28,7 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 
@@ -49,7 +49,7 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
-    const { pushNotification } = useNotifications();
+    const { pushNotification } = useAppNotification();
     const { sendSpaceInvitation, cancelSpaceInvitation } = useSpaces();
     const { sendProjectInvitation, cancelProjectInvitation } = useProjects();
 

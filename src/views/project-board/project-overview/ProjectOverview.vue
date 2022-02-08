@@ -1,13 +1,13 @@
 <template>
   <div class="project-overview">
-    <app-slot-content name="project-board-action">
+    <AppSlotContent name="project-board-action">
       <BIMDataButton
         data-test="btn-toggle-upload"
         width="120px"
         :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
-        :disabled="spaceInfo.remainingSmartDataSize <= 0"
+        :disabled="spaceSubInfo.remainingSmartDataSize <= 0"
         @click="toggleFileUploader"
       >
         <BIMDataIcon
@@ -21,50 +21,62 @@
             : $t("ProjectOverview.openFileUploadButtonText")
         }}</span>
       </BIMDataButton>
-    </app-slot-content>
+    </AppSlotContent>
 
     <transition name="fade">
       <FileUploader
-        v-show="showFileUploader && spaceInfo.remainingSmartDataSize > 0"
         class="project-overview__block--upload"
+        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         :project="project"
-        :allowedFileTypes="['.ifc', '.ifczip']"
+        :allowedFileTypes="modelExtensions"
         @file-uploaded="reloadModels"
         @forbidden-upload-attempt="notifyForbiddenUpload"
         @close="closeFileUploader"
       />
     </transition>
-    <ModelsOverview
-      class="project-overview__block--overview"
-      :project="project"
-      :models="models"
-      @open-file-uploader="openFileUploader"
-    />
-    <ProjectUsersManager
-      class="project-overview__block--users"
-      :project="project"
-      :users="users"
-      :invitations="invitations"
-    />
-    <ModelsManager
-      class="project-overview__block--models"
-      :project="project"
-      :models="models"
-    />
+
+    <div class="project-overview__block--overview">
+      <AppLoading name="project-models">
+        <ModelsOverview
+          :project="project"
+          :models="ifcs"
+          @open-file-uploader="openFileUploader"
+        />
+      </AppLoading>
+    </div>
+
+    <div class="project-overview__block--users">
+      <AppLoading name="project-users">
+        <ProjectUsersManager
+          :project="project"
+          :users="users"
+          :invitations="invitations"
+        />
+      </AppLoading>
+    </div>
+
+    <div class="project-overview__block--models">
+      <AppLoading name="project-models">
+        <ModelsManager :project="project" :models="models" />
+      </AppLoading>
+    </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
+import { MODEL_EXTENSIONS, MODEL_TYPES } from "@/config/model-types.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
 // Components
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";
@@ -72,6 +84,7 @@ import ProjectUsersManager from "@/components/specific/users/project-users-manag
 
 export default {
   components: {
+    AppLoading,
     AppSlotContent,
     FileUploader,
     ModelsManager,
@@ -80,11 +93,15 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const { currentSpace, spaceInfo, loadSpaceInfo } = useSpaces();
+    const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
-    const { pushNotification } = useNotifications();
+    const { pushNotification } = useAppNotification();
+
+    const ifcs = computed(() =>
+      projectModels.value.filter(model => model.type === MODEL_TYPES.IFC)
+    );
 
     const {
       isOpen: showFileUploader,
@@ -93,27 +110,33 @@ export default {
       toggle: toggleFileUploader
     } = useToggle();
 
-    const reloadModels = debounce(() => {
-      loadSpaceInfo(currentSpace.value);
-      loadProjectFileStructure(currentProject.value);
-      loadProjectModels(currentProject.value);
+    const reloadModels = debounce(async () => {
+      await Promise.all([
+        loadSpaceSubInfo(currentSpace.value),
+        loadProjectFileStructure(currentProject.value),
+        loadProjectModels(currentProject.value)
+      ]);
     }, 1000);
 
     const notifyForbiddenUpload = () => {
       pushNotification({
         type: "error",
         title: t("ProjectOverview.forbiddenUploadNotification.title"),
-        message: t("ProjectOverview.forbiddenUploadNotification.message")
+        message: t("ProjectOverview.forbiddenUploadNotification.message", {
+          extensions: MODEL_EXTENSIONS.join(", ")
+        })
       });
     };
 
     return {
       // References
+      ifcs,
       invitations: projectInvitations,
+      modelExtensions: MODEL_EXTENSIONS,
       models: projectModels,
       project: currentProject,
       showFileUploader,
-      spaceInfo,
+      spaceSubInfo,
       users: projectUsers,
       // Methods
       closeFileUploader,

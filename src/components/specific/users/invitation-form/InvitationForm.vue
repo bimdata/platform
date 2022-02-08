@@ -46,11 +46,10 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useNotifications } from "@/composables/notifications";
-import PROJECT_ROLES from "@/config/project-roles";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
-// import { useUser } from "@/state/user";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import PROJECT_ROLES from "@/config/project-roles.js";
+import { useProjects } from "@/state/projects.js";
+import { useSpaces } from "@/state/spaces.js";
 
 const roleList = [
   { id: "admin", value: PROJECT_ROLES.ADMIN },
@@ -72,8 +71,7 @@ export default {
   emits: ["close", "success"],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
-    const { pushNotification } = useNotifications();
-    // const { spaceRoles, projectRoles } = useUser();
+    const { pushNotification } = useAppNotification();
     const { sendSpaceInvitation } = useSpaces();
     const { sendProjectInvitation } = useProjects();
 
@@ -83,17 +81,6 @@ export default {
       [() => props.space, () => props.project, () => locale.value],
       () => {
         let availableRoles = roleList;
-
-        // Filter role list according to current user role in space/project
-        // if (props.project) {
-        //   availableRoles = roleList.filter(
-        //     r => r.value <= projectRoles.value[props.project.id]
-        //   );
-        // } else if (props.space) {
-        //   availableRoles = roleList.filter(
-        //     r => r.value <= spaceRoles.value[props.space.id]
-        //   );
-        // }
 
         roleOptions.value = availableRoles.map(r => ({
           ...r,

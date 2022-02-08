@@ -1,12 +1,13 @@
 function getPrice(obj) {
-  const grossPrice = obj.price.gross;
+  const { net, tax } = obj.price;
   let i = 0;
-  while (Number.isNaN(+grossPrice.slice(i))) {
+  while (Number.isNaN(+net.slice(i))) {
     i++;
   }
   return {
-    price: +grossPrice.slice(i),
-    currency: grossPrice.slice(0, i)
+    currency: net.slice(0, i),
+    price: +net.slice(i),
+    tax: +tax.slice(i)
   };
 }
 

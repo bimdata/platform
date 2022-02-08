@@ -21,9 +21,11 @@ import BIMDataTextBox from "@bimdata/design-system/dist/js/BIMDataComponents/vue
 // Image components
 import BillingsTableEmptyImage from "@/components/images/BillingsTableEmptyImage.vue";
 import BulletMarkImage from "@/components/images/BulletMarkImage.vue";
+import FreePlanRedirectImage from "@/components/images/FreePlanRedirectImage.vue";
 import InvitationAvatarImage from "@/components/images/InvitationAvatarImage.vue";
 import InvoicesTableEmptyImage from "@/components/images/InvoicesTableEmptyImage.vue";
 import OrganizationFormSuccessImage from "@/components/images/OrganizationFormSuccessImage.vue";
+import PlatformLogo from "@/components/images/PlatformLogo.vue";
 import ProPlanFormSuccessImage from "@/components/images/ProPlanFormSuccessImage.vue";
 import ProPlanInfoHeadingImage from "@/components/images/ProPlanInfoHeadingImage.vue";
 import SpaceSizePreviewImage from "@/components/images/SpaceSizePreviewImage.vue";
@@ -53,9 +55,11 @@ export default {
   // Images
   BillingsTableEmptyImage,
   BulletMarkImage,
+  FreePlanRedirectImage,
   InvitationAvatarImage,
   InvoicesTableEmptyImage,
   OrganizationFormSuccessImage,
+  PlatformLogo,
   ProPlanFormSuccessImage,
   ProPlanInfoHeadingImage,
   SpaceSizePreviewImage,

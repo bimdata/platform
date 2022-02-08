@@ -4,7 +4,7 @@
       {{ $t("BillingsTable.title") }}
     </h2>
 
-    <BIMDataCard v-if="subscriptions.length > 0">
+    <BIMDataCard class="billings-table__table" v-if="subscriptions.length > 0">
       <template #content>
         <GenericTable
           :columns="columns"
@@ -13,14 +13,22 @@
           :perPage="7"
         >
           <template #cell-space="{ row: sub }">
-            <BIMDataTextBox
-              class="space-cell"
-              :text="(sub.cloud || {}).name"
-              @click="goToSpaceBoard(sub.cloud)"
-            />
+            <AppLink
+              v-if="sub.cloud"
+              :to="{
+                name: routeNames.spaceBoard,
+                params: {
+                  spaceID: sub.cloud.id
+                }
+              }"
+            >
+              <BIMDataTextBox class="space-cell" :text="sub.cloud.name" />
+            </AppLink>
           </template>
           <template #cell-nextpayment="{ row: sub }">
-            {{ $d(sub.next_bill_date, "short") }}
+            <div v-if="!sub.is_custom" >
+              {{ $d(sub.next_bill_date, "short") }}
+            </div>
           </template>
           <template #cell-subscriptionplan="{ row: sub }">
             {{ $t("BillingsTable.professionalPlan") }}
@@ -29,21 +37,26 @@
             </span>
           </template>
           <template #cell-status="{ row: sub }">
-            <span :class="`status-cell--${sub.status}`">
-              {{ sub.status }}
+            <span v-if="sub.is_custom" class="status-cell--custom">
+              {{ $t("BillingsTable.status.custom") }}
+            </span>
+            <span v-else :class="`status-cell--${sub.status}`">
+              {{ $t(`BillingsTable.status.${sub.status}`) }}
             </span>
           </template>
           <template #cell-amount="{ row: sub }">
-            {{
-              +sub.unit_price +
-              sub.data_packs
-                .map(d => +d.unit_price * d.quantity)
-                .reduce((a, b) => a + b, 0)
-            }}
-            <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
+            <div v-if="!sub.is_custom" >
+              {{
+                +sub.unit_price +
+                sub.data_packs
+                  .map(d => +d.unit_price * d.quantity)
+                  .reduce((a, b) => a + b, 0)
+              }}
+              <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
+            </div>
           </template>
           <template #cell-actions="{ row: sub }">
-            <BillingActionsCell v-if="sub.status === 'active'" :billing="sub" />
+            <BillingActionsCell v-if="sub.status === 'active' && !sub.is_custom" :billing="sub" />
           </template>
         </GenericTable>
       </template>
@@ -55,15 +68,11 @@
         <p>
           {{ $t("BillingsTable.emptyTableText") }}
         </p>
-        <BIMDataButton
-          class="m-t-18"
-          color="primary"
-          fill
-          radius
-          @click="goToSubscriptionPro"
-        >
-          {{ $t("BillingsTable.subscribeButton") }}
-        </BIMDataButton>
+        <AppLink :to="{ name: routeNames.subscriptionPro }">
+          <BIMDataButton class="m-t-18" color="primary" fill radius>
+            {{ $t("BillingsTable.subscribeButton") }}
+          </BIMDataButton>
+        </AppLink>
       </template>
     </BIMDataCard>
   </div>
@@ -72,15 +81,16 @@
 <script>
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import BillingActionsCell from "./billing-actions-cell/BillingActionsCell.vue";
 
 export default {
   components: {
+    AppLink,
     BillingActionsCell,
     GenericTable
   },
@@ -91,7 +101,6 @@ export default {
     }
   },
   setup() {
-    const router = useRouter();
     const { locale, t } = useI18n();
     const columns = ref([]);
 
@@ -106,27 +115,10 @@ export default {
       { immediate: true }
     );
 
-    const goToSubscriptionPro = () => {
-      router.push({ name: routeNames.subscriptionPro });
-    };
-
-    const goToSpaceBoard = space => {
-      if (space) {
-        router.push({
-          name: routeNames.spaceBoard,
-          params: {
-            spaceID: space.id
-          }
-        });
-      }
-    };
-
     return {
       // References
       columns,
-      // Methods
-      goToSpaceBoard,
-      goToSubscriptionPro
+      routeNames
     };
   }
 };

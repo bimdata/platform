@@ -1,9 +1,16 @@
 {
     "Dashboard": {
+        "spacesButtonTitle": "Spazi attivi",
+        "spacesButtonText": "Vedi gli spazi",
+        "projectsButtonTitle": "Progetti attivi",
+        "projectsButtonText": "Vedi i progetti",
         "spacesTileTitle": "Spazi attivi",
         "spacesTileBottomText": "Vedi gli spazi",
         "projectsTileTitle": "Progetti attivi",
-        "projectsTileBottomText": "Vedi i progetti"
+        "projectsTileBottomText": "Vedi i progetti",
+        "subscriptionsTileTitle": "Fatturazione",
+        "subscriptionsTileText": "Qui trovi tutte le tue fatture e i tuoi ultimi dati di pagamento.",
+        "subscriptionsTileBottomText": "Gestisci gli abbonamenti"
     },
     "GroupBoard": {
         "searchInputPlaceholder": "Cerca tra i membri"
@@ -30,26 +37,20 @@
     },
     "UserSpaces": {
         "searchInputPlaceholder": "Cerca tra gli spazi",
-        "organizationsButtonText": "Organizzazioni",
-        "createButtonText": "Crea uno spazio"
+        "createButtonText": "Crea uno spazio",
+        "organizationsButtonText": "Conti di fatturazione"
     },
-
-
-
     "ProjectFiles": {
         "groupsButtonText": "Gestisci i gruppi"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Aggiungi un IFC",
+        "openFileUploadButtonText": "Aggiungi un modello",
         "closeFileUploadButtonText": "Chiudi",
         "forbiddenUploadNotification": {
             "title": "Errore nel caricamento",
-            "message": "Seleziona un file .ifc"
+            "message": "Seleziona un modello: {extensions}"
         }
     },
-
-
-
     "BreadcrumbSelector": {
         "inputPlaceholder": "Cerca"
     },
@@ -69,7 +70,8 @@
         "entryMarketplace": "Mercato",
         "entryOldPlatform": "Piattaforma V1",
         "entryLanguage": "Scegli una lingua",
-        "logoutButtonText": "Esci"
+        "logoutButtonText": "Esci",
+        "subscriptionPlatform": "Abbonamento alla piattaforma"
     },
     "BreadcrumbGroupSelector": {
         "text": "Gruppi"
@@ -146,7 +148,7 @@
     "FileUploader": {
         "uploadAreaText": "Trascina e rilascia per archiviare le risorse del progetto",
         "separatorText": "o",
-        "uploadButtonText": "Seleziona un file .ifc"
+        "uploadButtonText": "Seleziona un modello"
     },
     "FolderAccessManager": {
         "title": "Gestisci i diritti di accesso",
@@ -169,11 +171,11 @@
     },
     "FolderSelector": {
         "selectedFolder": "Cartella selezionata",
-        "emptyFolderPlaceholder": "Cartella vuota",
         "submitButtonText": {
             "moveTo": "Convalida",
             "moveHere": "Sposta qui"
-        }
+        },
+        "emptyFolderPlaceholder": "Cartella vuota"
     },
     "GroupAccessSelector": {
         "defaultGroupName": "Tutto"
@@ -234,6 +236,9 @@
         "deleteButtonText": "Cancella",
         "unarchiveButtonText": "Estrai"
     },
+    "ModelLastUpdateCell": {
+        "at": "in"
+    },
     "ModelLocation": {
         "emptyLocationMessage": "Nessun dato di localizzazione disponibile",
         "addLocationButtonText": "Riempi"
@@ -271,6 +276,7 @@
         "title": "Modelli di progetto",
         "tabs": {
             "ifc": "IFC",
+            "dwg": "DWG",
             "split": "Dividi/Esporta",
             "merge": "Unisci",
             "archive": "Archivia"
@@ -286,8 +292,8 @@
         "title": "Panoramica dei modelli di progetto"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Carica il tuo primo IFC",
-        "uploadButtonText": "Carica IFC"
+        "text": "Carica il tuo primo modello",
+        "uploadButtonText": "Carica modello"
     },
     "ModelsTable": {
         "emptyTablePlaceholder": "Nessun modello",
@@ -300,40 +306,10 @@
             "status": "Status"
         }
     },
-    "OrganizationCard": {
-        "spaces": "{number} spazi"
-    },
-    "OrganizationForm": {
-        "createTitle": "Crea un organizzazione",
-        "updateTitle": "Rinomina organizzazione",
-        "nameInputPlaceholder": "Nome",
-        "nameInputErrorMessage": "Nome non valido",
-        "submitButtonText": "Convalida",
-        "successButtonText": "OK"
-    },
-    "OrganizationsList": {
-        "createButtonText": "Crea un organizzazione",
-        "searchInputPlaceholder": "Cercare tra gli organizzazioni"
-    },
-    "OrganizationsManager": {
-        "title": "Gestione delle organizzazioni",
-        "backButtonText": "Indietro"
-    },
-    "OrganizationSpaceCard": {
-        "projects": "{number} progetti"
-    },
-    "OrganizationSpacesImport": {
-        "backButtonText": "Indietro",
-        "submitButtonText": "Convalida",
-        "successButtonText": "OK"
-    },
-    "OrganizationSpacesList": {
-        "backButtonText": "Indietro",
-        "searchInputPlaceholder": "Cercare"
-    },
     "ProjectCardActionMenu": {
         "renameButtonText": "Rinomina",
-        "deleteButtonText": "Elimina"
+        "deleteButtonText": "Elimina",
+        "leaveButtonText": "Esci"
     },
     "ProjectCardDeleteGuard": {
         "title": "Elimina progetto",
@@ -353,15 +329,13 @@
         "inputErrorMessage": "È necessario fornire un nome per il progetto!",
         "createButtonText": "Crea"
     },
-    "ProjectStatusBadge": {
-        "active": "ATTIVO"
-    },
     "ProjectUsersManager": {
         "title": "Utenti del progetto",
         "searchInputPlaceholder": "Cerca utenti"
     },
     "SpaceCard": {
-        "projects": "PROGETTI"
+        "projects": "PROGETTI",
+        "free": "Gratuito"
     },
     "SpaceCardActionMenu": {
         "renameButtonText": "Rinomina",
@@ -446,17 +420,9 @@
             "readWrite": "Lettura/scrittura"
         }
     },
-
-
-
     "Error": "Errore",
     "Success": "Riuscito",
-
     "Errors": {
-        "organizationsFetchError": "Impossibile recuperare organizzazioni",
-        "organizationCreateError": "Impossibile creare organizzazione",
-        "organizationUpdateError": "Impossibile caricare organizzazione",
-        "organizationDeleteError": "Impossibile eliminare organizzazione",
         "spacesFetchError": "Impossibile recuperare gli spazi",
         "spaceCreateError": "Impossibile creare spazio",
         "spaceUpdateError": "Impossibile caricare spazio",
@@ -489,6 +455,238 @@
         "groupsFetchError": "Impossibile recuperare gruppi",
         "groupCreateError": "Impossibile creare gruppo",
         "groupUpdateError": "Impossibile caricare gruppo",
-        "groupDeleteError": "Impossibile eliminare gruppo"
+        "groupDeleteError": "Impossibile eliminare gruppo",
+        "organizationsFetchError": "Impossibile recuperare i conti di fatturazione",
+        "organizationCreateError": "Impossibile creare il conto di fatturazione",
+        "organizationUpdateError": "Impossibile caricare il conto di fatturazione",
+        "organizationDeleteError": "Impossibile eliminare il conto di fatturazione",
+        "userLeaveError": "Non puoi abbandonare questo progetto perché sei l'ultimo amministratore",
+        "subscriptionsFetchError": "Impossibile recuperare gli abbonamenti",
+        "platformSubscribeError": "Impossibile inizializzare l'abbonamento alla piattaforma",
+        "datapackSubscribeError": "Impossibile creare l'abbonamento datapack",
+        "datapackUpdateError": "Impossibile aggiornare l'abbonamento datapack"
+    },
+    "ProjectStatusBadge": {
+        "new": "NUOVO",
+        "active": "ATTIVO",
+        "inactive": "INATTIVO",
+        "paused": "IN PAUSA"
+    },
+    "Payment": {
+        "titlePlatform": "Passa alla piattaforma pro",
+        "titleDatapack": "Aggiungi DataPack"
+    },
+    "Subscribe": {
+        "title": "Scegli il tuo piano",
+        "text": "Ti è concesso un solo spazio libero tra i tuoi conti di fatturazione. Se questo spazio esiste già, passa all'abbonamento professionale per funzionalità aggiuntive."
+    },
+    "SubscriptionDatapack": {
+        "title": "Gestisci DataPack",
+        "successNotification": "Ora hai {size} di archiviazione nello spazio {spaceName}"
+    },
+    "SubscriptionFree": {
+        "title": "Crea un piano gratuito",
+        "text": "Stai per creare il tuo spazio libero. Il tuo spazio libero include: {size}, 6 utenti.",
+        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nel conto di fatturazione {organizationName}"
+    },
+    "SubscriptionPro": {
+        "subscribeTitle": "Iscriviti al piano Professionale",
+        "upgradeTitle": "Passa alla piattaforma pro",
+        "text": "Stai per iscriverti al tuo piano pro. Include: {size} di archiviazione, progetti illimitati senza limiti di utenti.",
+        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nel conto di fatturazione {organizationName}"
+    },
+    "UserSubscriptions": {
+        "title": "Abbonamento alla piattaforma",
+        "text": "Naviga tra i tuoi conti di fatturazione per gestire gli abbonamenti e le fatture per gli spazi della tua piattaforma.",
+        "list": "Elenco delle mie conti di fatturazione:"
+    },
+    "BillingActionsCell": {
+        "updateButtonText": "Modifica la carta di pagamento",
+        "datapackButtonText": "Gestisci i datapack",
+        "cancelButtonText": "Annulla questo abbonamento"
+    },
+    "BillingsTable": {
+        "title": "Dettagli di fatturazione",
+        "nextPayment": "il",
+        "professionalPlan": "Professionale",
+        "withDatapack": "con Datapack",
+        "cancelSubscriptionButton": "Annulla abbonamento",
+        "updateCreditCardButton": "Aggiorna la carta di credito",
+        "emptyTableText": "Oh, no. Qui non ci sono piani attivi. Probabilmente non hai provato la versione Pro.",
+        "subscribeButton": "Passa alla nostra Piattaforma Pro",
+        "headers": {
+            "space": "Spazio",
+            "nextpayment": "Prossimo pagamento",
+            "subscriptionplan": "Piano di abbonamento",
+            "status": "Stato",
+            "amount": "Importo"
+        },
+        "status": {
+            "active": "Attivo",
+            "deleted": "Eliminato",
+            "paused": "In pausa"
+        }
+    },
+    "DatapackForm": {
+        "baseNote": "Archiviazione",
+        "baseText": "Incluso con il piano pro",
+        "datapackNote": "Archiviazione aggiuntiva",
+        "priceUnit": "/ GB / mese IVA inclusa",
+        "totalUnit": "/ mese IVA inclusa",
+        "actualStorage": "Archiviazione attuale",
+        "newStorage": "Nuova archiviazione",
+        "submitButtonText": "Convalida",
+        "cancelButtonText": "Annulla"
+    },
+    "DatapackInfo": {
+        "title": "Abbonamento attuale",
+        "datapacks": "Datapack attivi",
+        "storage": "Archiviazione attiva",
+        "including": "inclusi {quantity} GB di DataPack"
+    },
+    "FreePlanInfo": {
+        "title": "GRATIS",
+        "price": "0 €",
+        "bullet2": "1 spazio gratuito",
+        "bullet3": "6 utenti",
+        "buttonText": "Crea uno spazio gratuito",
+        "note": "Per sempre"
+    },
+    "GroupMemberInvitation": {
+        "name": "Invito in sospeso"
+    },
+    "InvoiceActionsCell": {
+        "downloadButton": "Scarica la fattura"
+    },
+    "InvoicesTable": {
+        "title": "Fatture",
+        "emptyTableText": "Le tue fatture verranno visualizzate qui quando hai abbonamenti attivi.",
+        "subscribeButton": "Passa alla nostra Platform Pro",
+        "headers": {
+            "amount": "Importo",
+            "status": "Stato",
+            "space": "Spazio",
+            "date": "Data"
+        }
+    },
+    "InvoiceStatusCell": {
+        "completed": "Completato",
+        "pending": "In attesa"
+    },
+    "OrganizationCard": {
+        "spaces": "{number} spazi"
+    },
+    "OrganizationDeleteGuard": {
+        "title": "Elimina il conto di fatturazione",
+        "submitButtonText": "Elimina"
+    },
+    "OrganizationForm": {
+        "createTitle": "Crea un conto di fatturazione",
+        "updateTitle": "Rinomina conto di fatturazione",
+        "infoSectionTitle": "Informazioni di base",
+        "nameInputPlaceholder": "Nome",
+        "nameInputErrorMessage": "Nome non valido",
+        "logoInputLabel": "Carica il logo",
+        "logoInputMessage": "Il logo deve essere in formato JP(E)G/PNG. Il file non può essere più grande di 1 MB.",
+        "submitButtonText": "Convalida",
+        "successTitle": "Congratulazioni, hai creato il tuo conto di fatturazione",
+        "successButtonText": "OK"
+    },
+    "OrganizationSelector": {
+        "title": "Compte de facturation",
+        "radioLabelSelect": "Seleziona un conto di fatturazione",
+        "radioLabelCreate": "Crea un conto di fatturazione",
+        "inputPlaceholder": "Nome del conto di fatturazione",
+        "submitButtonText": "Convalida",
+        "successMessage": "Congratulazioni, hai creato il tuo conto di fatturazione"
+    },
+    "OrganizationsList": {
+        "explanationText": "Un conto di fatturazione è l'entità che raccoglie le tue fatture su BIMData.io",
+        "createButtonText": "Crea un conto di fatturazione",
+        "searchInputPlaceholder": "Cercare tra i conti di fatturazione"
+    },
+    "OrganizationsManager": {
+        "title": "Gestione dei conti di fatturazione",
+        "backButtonText": "Indietro"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} progetti"
+    },
+    "OrganizationSpacesImport": {
+        "spaceListTitle": "Seleziona gli spazi da importare",
+        "spaceListPlaceholder": "Nessuno spazio da importare...",
+        "submitButtonText": "Convalida",
+        "successTitle": "Spazio importato con successo",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "importButtonText": "Importa uno spazio",
+        "addButtonText": "Aggiungi un nuovo spazio",
+        "searchInputPlaceholder": "Cercare",
+        "spaceListTitle": "Spazi del conto di fatturazione"
+    },
+    "ProjectCardLeaveGuard": {
+        "title": "Esci dal progetto",
+        "message": "Sei sicuro di voler lasciare questo progetto?",
+        "leaveButtonText": "Convalida"
+    },
+    "ProPlanCard": {
+        "title": "PROFESSIONALE",
+        "priceUnit": "/ Spazio / mese",
+        "bullet2": "Progetti illimitati",
+        "bullet3": "Utenti illimitati",
+        "buttonText": "Scegli la versione professionale",
+        "note": "estendi 1 GB per {price} / mese"
+    },
+    "ProPlanForm": {
+        "titleTotal": "Prezzo",
+        "noteTotal": "IVA inclusa",
+        "priceUnit": "/ mese",
+        "successTitle": "Congratulazioni! Ti sei iscritto alla Piattaforma Pro.",
+        "successMessage": "Il tuo pagamento è stato completato. Ora puoi goderti il tuo abbonamento professionale.",
+        "successButtonText": "Home"
+    },
+    "ProPlanInfo": {
+        "title": "Il tuo abbonamento",
+        "subTitle": "Piano professionale",
+        "priceUnit": "/ mese IVA esclusa",
+        "bulletsHead": "Il tuo abbonamento include",
+        "bullet1": "{size} di archiviazione",
+        "bullet2": "Piattaforma BIMData",
+        "bullet3": "Visualizzatore 3D",
+        "bullet4": "Visualizzatore 2D",
+        "bullet5": "Progetti illimitati",
+        "bullet6": "Utenti illimitati",
+        "bullet7": "Commenti illimitati (BCF)",
+        "bullet8": "Unione / Divisione IFC",
+        "bullet9": "Edizione IFC",
+        "bullet10": "Supporto"
+    },
+    "SpaceCreator": {
+        "title": "Crea uno spazio",
+        "text": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
+        "inputPlaceholder": "Nome dello spazio",
+        "billingAccountLabel": "Conto di fatturazione :",
+        "billingAccountButton": "Cambia"
+    },
+    "SpaceSelected": {
+        "selectedOrga": "Conto di fatturazione:",
+        "selectedSpace": "Spazio selezionato:"
+    },
+    "SpaceSizeInfo": {
+        "usage": "{used} usato su {total}",
+        "subscribeDatapackButton": "Aggiorna l'archiviazione",
+        "subscribePlatformButton": "Passa alla piattaforma pro"
+    },
+    "SpaceSizePreview": {
+        "title": "Archiviazione",
+        "actualStorage": "Archiviazione attuale",
+        "newStorage": "Nuova archiviazione",
+        "newStorageText": "Acquistando l'abbonamento professionale beneficerai di {size} di spazio di archiviazione. Puoi acquistare spazio di archiviazione aggiuntivo direttamente dal tuo spazio."
+    },
+    "SubscribeCard": {
+        "title": "Crea il tuo nuovo spazio",
+        "text": "Vuoi sfruttare appieno la piattaforma? Utilizza {size} per i tuoi progetti e utenti illimitati effettuando l'upgrade a un abbonamento professionale.",
+        "button": "Crea un nuovo spazio"
     }
 }

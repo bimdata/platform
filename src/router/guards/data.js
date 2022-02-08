@@ -1,3 +1,4 @@
+import { load } from "@/components/specific/app/app-loading/app-loading.js";
 import { useAuth } from "@/state/auth.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useProjects } from "@/state/projects.js";
@@ -17,15 +18,23 @@ let dataLoaded = false;
 
 export default async function dataGuard() {
   if (isAuthenticated.value && !dataLoaded) {
-    // Note: the order in which methods are called is important !
+    // **NOTE** the order in which methods are called is important !
 
+    // 1) Load current user data
     await loadUser();
-    await loadUserOrganizations();
-    await loadUserSpaces();
-    await loadUserProjects();
 
-    await loadAllOrganizationsSpaces();
-    await loadAllSpacesSubscriptions();
+    // 2) Load organizations, spaces and projects of the current user
+    await Promise.all([
+      loadUserOrganizations(),
+      loadUserSpaces(),
+      loadUserProjects()
+    ]);
+
+    // 3) Load lists of orga spaces and space subs (non-blocking)
+    load("spaces-subscriptions", [
+      loadAllOrganizationsSpaces() // 3.1) load orga spaces
+        .then(() => loadAllSpacesSubscriptions()) // 3.2) load space subs
+    ]);
 
     dataLoaded = true;
   }

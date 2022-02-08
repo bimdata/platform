@@ -1,5 +1,5 @@
-import i18n from "@/i18n";
-import { useNotifications } from "@/composables/notifications";
+import i18n from "@/i18n/index.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 
 const ERRORS = Object.freeze({
   ORGANIZATIONS_FETCH_ERROR: "organizationsFetchError",
@@ -86,7 +86,7 @@ class HttpServerError extends RuntimeError {
 class ErrorService {
   constructor() {
     this.t = i18n.global.t;
-    this.notify = useNotifications().pushNotification;
+    this.notify = useAppNotification().pushNotification;
   }
 
   handleError(error) {

@@ -30,15 +30,20 @@
         </template>
         <template v-else>
           <SpaceCreator
+            :disabled="!!space"
             :organizations="organizations"
-            :initialOrga="currentOrga"
+            :initialOrga="orga"
             @space-created="onSpacePreCreated"
           />
         </template>
       </div>
 
       <transition name="slide-fade-down">
-        <div ref="body" class="subscription-pro__content__body" v-show="space">
+        <div
+          ref="contentBody"
+          class="subscription-pro__content__body"
+          v-show="space"
+        >
           <div class="subscription-pro__content__body__left">
             <ProPlanInfo />
           </div>
@@ -47,7 +52,7 @@
           </div>
           <div class="subscription-pro__content__body__right">
             <SpaceSizePreview
-              :spaceInfo="spaceInfo"
+              :spaceSubInfo="spaceSubInfo"
               :newSizeAvailable="newSizeAvailable"
             />
           </div>
@@ -58,17 +63,17 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useNotifications } from "@/composables/notifications.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import ProPlanForm from "@/components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
 import ProPlanInfo from "@/components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";
@@ -89,58 +94,55 @@ export default {
   setup() {
     const { t } = useI18n();
     const router = useRouter();
-    const { pushNotification } = useNotifications();
-    const { userOrganizations } = useOrganizations();
+    const { pushNotification } = useAppNotification();
+    const { userOrganizations, getPersonalOrganization } = useOrganizations();
     const {
       currentOrga,
       currentSpace,
-      fetchSpaceInformation,
+      fetchSpaceSubInfo,
       waitForUpdatedSpaceSize
     } = useSubscriptions();
 
-    const space = ref(null);
-    const spaceInfo = ref({});
+    const orga = ref(currentOrga.value || getPersonalOrganization());
+    const space = ref(currentSpace.value);
+    const spaceSubInfo = ref({});
     const newSizeAvailable = ref(+PRO_PLAN_STORAGE);
 
-    const body = ref(null);
-
-    watch(
-      () => currentSpace.value,
-      async () => {
-        if (currentSpace.value) {
-          space.value = currentSpace.value;
-          spaceInfo.value = await fetchSpaceInformation(currentSpace.value);
-        }
-      },
-      { immediate: true }
-    );
+    const contentBody = ref(null);
 
     const onSpacePreCreated = preCreatedSpace => {
       space.value = preCreatedSpace;
-      setTimeout(() => body.value.scrollIntoView({ behavior: "smooth" }));
+      setTimeout(() =>
+        contentBody.value.scrollIntoView({ behavior: "smooth" })
+      );
     };
 
     const onSpaceCreated = async createdSpace => {
-      if (currentSpace.value) {
+      const isSpaceUpgrade = !!currentSpace.value;
+
+      if (isSpaceUpgrade) {
         await waitForUpdatedSpaceSize(
           currentSpace.value,
-          spaceInfo.value.smartDataSizeAvailable,
+          spaceSubInfo.value.smartDataSizeAvailable,
           newSizeAvailable.value
         );
       }
 
-      pushNotification(
-        {
-          type: "success",
-          title: t("Success"),
-          message: t("SubscriptionPro.spaceCreatedNotification", {
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t(
+          `SubscriptionPro.${
+            isSpaceUpgrade
+              ? "spaceUpgradedNotification"
+              : "spaceCreatedNotification"
+          }`,
+          {
             organizationName: createdSpace.organization.name,
             spaceName: createdSpace.name
-          })
-        },
-        8000
-      );
-
+          }
+        )
+      });
       router.push({
         name: routeNames.spaceBoard,
         params: {
@@ -149,15 +151,22 @@ export default {
       });
     };
 
+    onMounted(async () => {
+      if (space.value) {
+        contentBody.value.scrollIntoView({ behavior: "smooth" });
+        spaceSubInfo.value = await fetchSpaceSubInfo(space.value);
+      }
+    });
+
     return {
       // References
-      body,
-      currentOrga,
+      contentBody,
       currentSpace,
       newSizeAvailable,
+      orga,
       organizations: userOrganizations,
       space,
-      spaceInfo,
+      spaceSubInfo,
       // Methods
       formatBytes,
       onSpaceCreated,

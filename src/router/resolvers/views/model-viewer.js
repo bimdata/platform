@@ -7,9 +7,11 @@ const projects = useProjects();
 const models = useModels();
 
 export default async function modelViewerResolver(route) {
-  spaces.setCurrentSpace(+route.params.spaceID);
-  await projects.loadSpaceProjects(spaces.currentSpace.value);
+  const space = spaces.setCurrentSpace(+route.params.spaceID);
+  const project = projects.setCurrentProject(+route.params.projectID);
 
-  projects.setCurrentProject(+route.params.projectID);
-  await models.loadProjectModels(projects.currentProject.value);
+  await Promise.all([
+    projects.loadSpaceProjects(space),
+    models.loadProjectModels(project)
+  ]);
 }

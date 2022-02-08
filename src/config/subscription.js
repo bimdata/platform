@@ -1,15 +1,29 @@
+/**
+ * This is the production deployment date for subscription features.
+ * It is defined here in order to display some info to our users
+ * based on their spaces creation date.
+ */
+const SUBSCRIPTION_START_DATE = new Date("2022-01-10T01:00:00");
+
+// Env variables
 const SUBSCRIPTION_ENABLED = process.env.VUE_APP_SUBSCRIPTION_ENABLED;
-const FREE_PLAN_STORAGE = process.env.VUE_APP_FREE_PLAN_STORAGE;
+const PADDLE_SANDBOX = process.env.VUE_APP_PADDLE_SANDBOX;
+const PADDLE_VENDOR_ID = process.env.VUE_APP_PADDLE_VENDOR_ID;
 const PRO_PLAN_ID = process.env.VUE_APP_PRO_PLAN_ID;
-const PRO_PLAN_STORAGE = process.env.VUE_APP_PRO_PLAN_STORAGE;
 const DATAPACK_PLAN_ID = process.env.VUE_APP_DATAPACK_PLAN_ID;
+const FREE_PLAN_STORAGE = process.env.VUE_APP_FREE_PLAN_STORAGE;
+const PRO_PLAN_STORAGE = process.env.VUE_APP_PRO_PLAN_STORAGE;
 
 const IS_SUBSCRIPTION_ENABLED = SUBSCRIPTION_ENABLED === "true";
+const IS_PADDLE_SANDBOX = PADDLE_SANDBOX === "true";
 
 export {
+  SUBSCRIPTION_START_DATE,
   IS_SUBSCRIPTION_ENABLED,
-  FREE_PLAN_STORAGE,
+  IS_PADDLE_SANDBOX,
+  PADDLE_VENDOR_ID,
   PRO_PLAN_ID,
-  PRO_PLAN_STORAGE,
-  DATAPACK_PLAN_ID
+  DATAPACK_PLAN_ID,
+  FREE_PLAN_STORAGE,
+  PRO_PLAN_STORAGE
 };

@@ -6,7 +6,6 @@
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="user-spaces__header__search"
           width="300px"
           :placeholder="$t('UserSpaces.searchInputPlaceholder')"
@@ -16,7 +15,6 @@
       </template>
       <template #right>
         <BIMDataButton
-          data-test="btn-sort"
           class="user-spaces__header__btn-sort"
           fill
           squared
@@ -34,27 +32,45 @@
         >
           {{ $t("UserSpaces.organizationsButtonText") }}
         </BIMDataButton>
-        <BIMDataButton
-          data-test="btn-open-create"
-          class="user-spaces__header__btn-create"
-          width="120px"
-          :color="isSubscriptionEnabled ? 'secondary' : 'primary'"
-          fill
-          radius
-          @click="
-            () =>
-              isSubscriptionEnabled ? goToSubscriptionPro() : openCreationForm()
-          "
-        >
-          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-          <span>{{ $t("UserSpaces.createButtonText") }}</span>
-        </BIMDataButton>
+
+        <template v-if="isSubscriptionEnabled">
+          <AppLink :to="{ name: routeNames.subscriptionPro }">
+            <BIMDataButton
+              class="user-spaces__header__btn-create"
+              width="120px"
+              color="secondary"
+              fill
+              radius
+            >
+              <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+              <span>{{ $t("UserSpaces.createButtonText") }}</span>
+            </BIMDataButton>
+          </AppLink>
+        </template>
+        <template v-else>
+          <BIMDataButton
+            class="user-spaces__header__btn-create"
+            width="120px"
+            color="primary"
+            fill
+            radius
+            @click="openCreationForm()"
+          >
+            <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+            <span>{{ $t("UserSpaces.createButtonText") }}</span>
+          </BIMDataButton>
+        </template>
       </template>
     </ViewHeader>
 
-    <SidePanel :title="$t('OrganizationsManager.title')">
-      <OrganizationsManager :organizations="organizations" />
-    </SidePanel>
+    <AppSidePanel
+      v-if="isSubscriptionEnabled"
+      :title="$t('OrganizationsManager.title')"
+    >
+      <AppLoading name="spaces-subscriptions">
+        <OrganizationsManager :organizations="organizations" />
+      </AppLoading>
+    </AppSidePanel>
 
     <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
       <transition-group name="grid">
@@ -70,19 +86,20 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
-import { useSidePanel } from "@/composables/side-panel.js";
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useToggle } from "@/composables/toggle.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import SidePanel from "@/components/generic/side-panel/SidePanel.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import OrganizationsManager from "@/components/specific/organizations/organizations-manager/OrganizationsManager.vue";
 import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard.vue";
 import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/SpaceCreationCard.vue";
@@ -90,15 +107,16 @@ import SpaceCreationCard from "@/components/specific/spaces/space-creation-card/
 export default {
   components: {
     AppBreadcrumb,
+    AppLink,
+    AppLoading,
+    AppSidePanel,
     OrganizationsManager,
     SpaceCard,
     SpaceCreationCard,
-    SidePanel,
     ViewHeader
   },
   setup() {
-    const router = useRouter();
-    const { openSidePanel } = useSidePanel();
+    const { openSidePanel } = useAppSidePanel();
     const { userOrganizations } = useOrganizations();
     const { userSpaces } = useSpaces();
 
@@ -118,20 +136,16 @@ export default {
       close: closeCreationForm
     } = useToggle();
 
-    const goToSubscriptionPro = () => {
-      router.push({ name: routeNames.subscriptionPro });
-    };
-
     return {
       // References
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       organizations: userOrganizations,
+      routeNames,
       searchText,
       showCreationForm,
       spaces: displayedSpaces,
       // Methods
       closeCreationForm,
-      goToSubscriptionPro,
       openCreationForm,
       openOrganizationsManager: openSidePanel,
       sortSpaces
