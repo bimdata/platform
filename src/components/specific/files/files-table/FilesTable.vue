@@ -65,7 +65,7 @@
       {{ $d(file.updatedAt, "long") }}
     </template>
     <template #cell-size="{ row: file }">
-      {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
+      {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
@@ -84,6 +84,7 @@
 <script>
 import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
 import columnsDef from "./columns.js";
 // Components
@@ -193,6 +194,7 @@ export default {
       // Methods
       cleanUpload,
       formatBytes,
+      isFolder,
       onUploadCompleted
     };
   }

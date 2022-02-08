@@ -135,6 +135,7 @@ import { useListFilter } from "@/composables/list-filter.js";
 import FILE_TYPES from "@/config/file-types.js";
 import { useFiles } from "@/state/files.js";
 import { useVisa } from "@/state/visa.js";
+import { isFolder } from "@/utils/file-structure.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -226,7 +227,7 @@ export default {
     );
 
     const onFileSelected = file => {
-      if (file.type === FILE_TYPES.FOLDER) {
+      if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       }
     };

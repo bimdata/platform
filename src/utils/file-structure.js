@@ -8,7 +8,7 @@ import FILE_TYPES from "@/config/file-types.js";
  * @returns {String}
  */
 function uuid(file) {
-  return `${file.type}-${file.id}`;
+  return `${file.nature}-${file.id}`;
 }
 
 /**
@@ -24,8 +24,8 @@ function validate(file, requiredFields = []) {
   if (!file.id && file.id !== 0) {
     throw new Error(`[file validation] file id not set: ${file.id}`);
   }
-  if (!file.type) {
-    throw new Error(`[file validation] file type not set: ${file.type}`);
+  if (!file.nature) {
+    throw new Error(`[file validation] file type not set: ${file.nature}`);
   }
   for (const field of requiredFields) {
     if (!file[field] && file[field] !== 0) {
@@ -266,7 +266,7 @@ function segregate(files) {
   const folders = [];
   const documents = [];
   for (const file of files) {
-    if (file.type === FILE_TYPES.FOLDER) {
+    if (isFolder(file)) {
       folders.push(file);
     } else {
       documents.push(file);
@@ -279,15 +279,7 @@ function segregate(files) {
 }
 
 function isFolder(file) { 
-  return file.type === FILE_TYPES.FOLDER;
-}
-
-function isIfc(file) { 
-  return file.type === FILE_TYPES.IFC;
-}
-
-function isDocument(file) {
-  return file.type === FILE_TYPES.DOCUMENT;
+  return file.nature === FILE_TYPES.FOLDER;
 }
 
 

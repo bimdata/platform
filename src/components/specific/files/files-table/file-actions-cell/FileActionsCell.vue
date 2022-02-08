@@ -13,7 +13,7 @@
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
         <BIMDataButton
-          v-if="file.type === 'Ifc'"
+          v-if="file.modelType === 'IFC'"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -40,7 +40,7 @@
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
         <BIMDataButton
-          v-if="project.isAdmin && file.type === 'Folder'"
+          v-if="project.isAdmin && isFolder(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -107,7 +107,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelIDs: props.file.ifcId
+          modelIDs: props.file.modelId
         },
         query: {
           window: "3d"
