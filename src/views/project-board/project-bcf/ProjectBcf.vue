@@ -25,7 +25,7 @@
         color="default"
         fill
         radius
-        @click="openCreateBcfTopic"
+        @click="exportBcfTopics"
         class="m-r-12"
       >
         <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" /> Exporter
@@ -193,7 +193,7 @@
       </transition-group>
       <transition-group v-else name="grid">
         <!-- display Bcf topics in grid mode -->
-        <BcfTopicGrid
+        <BcfTopicGridItem
           v-for="bcfTopic in displayedBcfTopics"
           :key="bcfTopic.guid"
           :project="project"
@@ -206,9 +206,11 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useProjects } from "@/state/projects.js";
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
+// composables
 import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
@@ -217,14 +219,15 @@ import { useToggle } from "@/composables/toggle";
 // Components
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
-import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
 import BcfSettings from "../../../components/specific/bcf/bcf-settings/BcfSettings.vue";
-import BcfTopicGrid from "../../../components/specific/bcf/bcf-topic-grid/BcfTopicGrid.vue";
+
+import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
+import BcfTopicGridItem from "../../../components/specific/bcf/bcf-topic-grid-item/BcfTopicGridItem.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
-import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
+import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 
 export default {
   components: {
@@ -233,7 +236,7 @@ export default {
     CreateBcfTopic,
     BcfFilters,
     BcfSettings,
-    BcfTopicGrid,
+    BcfTopicGridItem,
     BcfTopicsList,
     BcfTopicsMetrics,
     BcfTopicCreationCard,
