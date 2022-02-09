@@ -13,7 +13,7 @@
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
         <BIMDataButton
-          v-if="file.modelType === 'IFC'"
+          v-if="isIFC(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -23,12 +23,7 @@
         </BIMDataButton>
 
         <BIMDataButton
-          v-if="
-            !file.modelId &&
-            ['.jpeg', '.jpg', '.pdf', '.png'].includes(
-              fileExtension(file.fileName)
-            )
-          "
+          v-if="!isFolder(file) && canConvertToModel(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -58,7 +53,7 @@
         </BIMDataButton>
 
         <BIMDataButton
-          v-if="project.isAdmin && isFolder(file)"
+          v-if="isFolder(file) && project.isAdmin"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -99,7 +94,7 @@ import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
-import { fileExtension } from "@/utils/files.js";
+import { canConvertToModel, isIFC } from "@/utils/models.js";
 
 export default {
   props: {
@@ -152,12 +147,13 @@ export default {
       // References
       showMenu,
       // Methods
+      canConvertToModel,
       closeMenu,
-      fileExtension,
       goToModelViewer,
+      isFolder,
+      isIFC,
       onClick,
-      toggleMenu,
-      isFolder
+      toggleMenu
     };
   }
 };

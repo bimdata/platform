@@ -16,7 +16,18 @@ const MODEL_EXTENSIONS = Object.freeze([
   ".dxf",
   ".ifc",
   ".ifczip",
-  ".pdf"
+  ".jpeg",
+  ".jpg",
+  ".pdf",
+  ".png"
+]);
+
+// eslint-disable-next-line prettier/prettier
+const CONVERTIBLE_EXTENSIONS = Object.freeze([
+  ".jpeg",
+  ".jpg",
+  ".pdf",
+  ".png"
 ]);
 
 const MODEL_SOURCE = Object.freeze({
@@ -34,4 +45,10 @@ const MODEL_STATUS = Object.freeze({
   ERROR: "E"
 });
 
-export { MODEL_EXTENSIONS, MODEL_SOURCE, MODEL_STATUS, MODEL_TYPE };
+export {
+  CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
+  MODEL_SOURCE,
+  MODEL_STATUS,
+  MODEL_TYPE
+};

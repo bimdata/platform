@@ -1,4 +1,9 @@
-import { MODEL_TYPE, MODEL_SOURCE } from "@/config/models.js";
+import {
+  CONVERTIBLE_EXTENSIONS,
+  MODEL_TYPE,
+  MODEL_SOURCE
+} from "@/config/models.js";
+import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {
   const result = {
@@ -49,4 +54,15 @@ function segregateByType(models) {
   return result;
 }
 
-export { segregateBySource, segregateByType };
+function isIFC(file) {
+  return file.modelType === MODEL_TYPE.IFC;
+}
+
+function canConvertToModel(file) {
+  return (
+    !file.modelId &&
+    CONVERTIBLE_EXTENSIONS.includes(fileExtension(file.fileName))
+  );
+}
+
+export { canConvertToModel, isIFC, segregateBySource, segregateByType };
