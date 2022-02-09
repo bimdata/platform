@@ -90,6 +90,21 @@ class BcfService {
       console.log(error);
     }
   }
+  async exportBcf(project) {
+    try {
+      return await fetch(
+        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/export`,
+        {
+          method: "GET",
+          headers: {
+            authorization: apiClient.config.accessToken()
+          }
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 const service = new BcfService();

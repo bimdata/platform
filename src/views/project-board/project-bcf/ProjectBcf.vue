@@ -245,7 +245,7 @@ export default {
   setup() {
     const { currentProject } = useProjects();
     const { openSidePanel } = useAppSidePanel();
-    const { bcfTopics, loadBcfTopics, importBcf } = useBcf();
+    const { bcfTopics, loadBcfTopics, importBcf, exportBcf } = useBcf();
     const loading = ref(false);
 
     watch(
@@ -292,6 +292,38 @@ export default {
       }
     };
 
+    const saveAs = async (response, fileName) => {
+      const content = await response.arrayBuffer();
+      const blob = new Blob([content], { type: "application/octet-stream" });
+
+      const URL = window.URL;
+      const a = document.createElement("a");
+      a.download = fileName;
+      a.rel = "noopener";
+      a.href = URL.createObjectURL(blob);
+      setTimeout(function () {
+        URL.revokeObjectURL(a.href);
+      }, 4e4);
+      setTimeout(function () {
+        a.click();
+      }, 0);
+    };
+
+    const exportBcfTopics = async () => {
+      const response = await exportBcf(currentProject.value);
+      const fileName = decodeURI(
+        response.headers.get("Content-Disposition")
+      ).match("[^']*$");
+      if (fileName) {
+        fileName[0];
+      }
+      if (response.ok) {
+        await saveAs(response, fileName);
+      } else {
+        console.log("coucou");
+      }
+    };
+
     const {
       isOpen: showBcfSettings,
       close: closeBcfSettings,
@@ -318,7 +350,8 @@ export default {
       toggleDisplayBcfTopics,
       isDisplayByListActive,
       openCreateBcfTopic: openSidePanel,
-      uploadFiles
+      uploadFiles,
+      exportBcfTopics
     };
   }
 };
