@@ -1,4 +1,5 @@
 .open-topic-issue {
+  height: 100%;
   font-size: 12px;
   &__header {
     &__title {
@@ -6,82 +7,85 @@
       font-weight: 500;
     }
   }
-  &__subheader {
-    height: 27px;
-    &__index,
-    &__date {
-      height: 100%;
-      font-size: 12px;
+  &__content {
+    height: calc(100% - 32px);
+    overflow: auto;
+    &__subheader {
+      height: 27px;
+      &__index,
+      &__date {
+        height: 100%;
+        font-size: 12px;
+      }
+      &__index {
+        &.high,
+        &.medium,
+        &.low {
+          min-width: 50px;
+          color: var(--color-white);
+        }
+        &.high {
+          background-color: var(--color-high);
+        }
+        &.medium {
+          background-color: var(--color-warning);
+        }
+        &.low {
+          background-color: var(--color-granite-light);
+        }
+      }
+      &__date {
+        min-width: 103px;
+        background-color: var(--color-silver-light);
+        color: var(--color-primary);
+      }
     }
-    &__index {
-      &.high,
-      &.medium,
-      &.low {
-        min-width: 50px;
-        color: var(--color-white);
-      }
-      &.high {
-        background-color: var(--color-high);
-      }
-      &.medium {
-        background-color: var(--color-warning);
-      }
-      &.low {
-        background-color: var(--color-granite-light);
-      }
-    }
-    &__date {
-      min-width: 103px;
+    &__img {
+      min-height: 42px;
+      position: relative;
       background-color: var(--color-silver-light);
-      color: var(--color-primary);
-    }
-  }
-  &__img {
-    min-height: 42px;
-    position: relative;
-    background-color: var(--color-silver-light);
-    &__status {
-      border-radius: 3px;
-      position: absolute;
-      left: 6px;
-      top: 6px;
-      &.closed {
-        background-color: var(--color-high);
-        color: var(--color-white);
+      &__status {
+        border-radius: 3px;
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        &.closed {
+          background-color: var(--color-high);
+          color: var(--color-white);
+        }
+        &.opened {
+          background-color: var(--color-success);
+          color: var(--color-white);
+        }
+        &.resolved {
+          background-color: var(--color-granite-light);
+          color: var(--color-white);
+        }
       }
-      &.opened {
-        background-color: var(--color-success);
-        color: var(--color-white);
+      img {
+        width: 100%;
       }
-      &.resolved {
-        background-color: var(--color-granite-light);
-        color: var(--color-white);
-      }
-    }
-    img {
-      width: 100%;
-    }
-    .no-img-topic {
-      padding: 12px;
-      width: 170px;
-      height: 170px;
-    }
-  }
-  &__content,
-  &__infos {
-    box-shadow: var(--box-shadow);
-    line-height: 1.5;
-    span {
-      &:first-child {
-        margin-right: 3px;
-        font-weight: 500;
+      .no-img-topic {
+        padding: 12px;
+        width: 170px;
+        height: 170px;
       }
     }
-  }
-  &__infos {
-    & > .flex {
+    &__card {
+      box-shadow: var(--box-shadow);
+      line-height: 1.5;
       span {
-        font-weight: 700;
+        &:first-child {
+          margin-right: 3px;
+          font-weight: 500;
+        }
+      }
+    }
+    &__card {
+      & > .flex {
+        span {
+          font-weight: 700;
+        }
       }
     }
   }
@@ -89,7 +93,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(47, 55, 74, 0.9);
     height: 100%;
     width: 100%;
   }

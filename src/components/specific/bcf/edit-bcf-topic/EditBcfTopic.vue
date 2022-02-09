@@ -13,75 +13,79 @@
       </BIMDataButton>
       <span class="text-center">Édition {{ bcfTopic.title }}</span>
     </div>
-    <div
-      class="edit-bcf-topic__subheader flex items-center justify-between m-t-12"
-    >
+    <div class="edit-bcf-topic__content p-r-6">
       <div
-        class="edit-bcf-topic__subheader__index flex items-center justify-center p-x-6"
+        class="edit-bcf-topic__content__subheader flex items-center justify-between m-t-12"
       >
-        {{ bcfTopic.index }}
+        <div
+          class="edit-bcf-topic__content__subheader__index flex items-center justify-center p-x-6"
+        >
+          {{ bcfTopic.index }}
+        </div>
+        <div
+          class="edit-bcf-topic__content__subheader__date flex items-center justify-center p-x-6"
+        >
+          {{ $d(bcfTopic.creationDate, "short") }}
+        </div>
       </div>
       <div
-        class="edit-bcf-topic__subheader__date flex items-center justify-center p-x-6"
+        class="edit-bcf-topic__content__image flex items-center justify-center m-t-12"
       >
-        {{ $d(bcfTopic.creationDate, "short") }}
+        <img
+          v-if="bcfTopic.snapshots[0]"
+          :src="bcfTopic.snapshots[0].snapshotData"
+        />
+        <span v-else> Drag and drop an image, or Browse </span>
       </div>
-    </div>
-    <div class="edit-bcf-topic__image flex items-center justify-center m-t-12">
-      <img
-        v-if="bcfTopic.snapshots[0]"
-        :src="bcfTopic.snapshots[0].snapshotData"
-      />
-      <span v-else> Drag and drop an image, or Browse </span>
-    </div>
 
-    <div class="edit-bcf-topic__content m-t-36">
-      <BIMDataInput
-        placeholder="Title*"
-        v-model="topicTitle"
-        errorMessage="Titre manquant"
-      />
-      <BIMDataSelect
-        width="100%"
-        label="Type"
-        :options="topicExtensions.topicType"
-        v-model="topicType"
-      />
-      <BIMDataSelect
-        width="100%"
-        label="Priority"
-        :options="topicExtensions.priority"
-        v-model="topicPriority"
-      />
-      <BIMDataSelect
-        width="100%"
-        label="Statut"
-        :options="topicExtensions.topicStatus"
-        v-model="topicStatus"
-      />
-      <BIMDataSelect
-        width="100%"
-        label="Phase"
-        :options="topicExtensions.stage"
-        v-model="topicPhase"
-      />
-      <BIMDataSelect
-        width="100%"
-        label="Assigned to"
-        :options="topicExtensions.userIdType"
-        v-model="topicAssignedTo"
-      />
-      <BIMDataTextarea
-        label="Description"
-        name="description"
-        v-model="topicDescription"
-        width="100%"
-        fitContent
-        resizable
-      />
-      <!-- <BIMDataInput placeholder="Tags" v-model="topicTags" margin="30px 0" /> -->
+      <div class="edit-bcf-topic__content__content m-t-36">
+        <BIMDataInput
+          placeholder="Title*"
+          v-model="topicTitle"
+          errorMessage="Titre manquant"
+        />
+        <BIMDataSelect
+          width="100%"
+          label="Type"
+          :options="topicExtensions.topicType"
+          v-model="topicType"
+        />
+        <BIMDataSelect
+          width="100%"
+          label="Priority"
+          :options="topicExtensions.priority"
+          v-model="topicPriority"
+        />
+        <BIMDataSelect
+          width="100%"
+          label="Statut"
+          :options="topicExtensions.topicStatus"
+          v-model="topicStatus"
+        />
+        <BIMDataSelect
+          width="100%"
+          label="Phase"
+          :options="topicExtensions.stage"
+          v-model="topicPhase"
+        />
+        <BIMDataSelect
+          width="100%"
+          label="Assigned to"
+          :options="topicExtensions.userIdType"
+          v-model="topicAssignedTo"
+        />
+        <BIMDataTextarea
+          label="Description"
+          name="description"
+          v-model="topicDescription"
+          width="100%"
+          fitContent
+          resizable
+        />
+        <!-- <BIMDataInput placeholder="Tags" v-model="topicTags" margin="30px 0" /> -->
+      </div>
     </div>
-    <div class="edit-bcf-topic__footer m-t-24">
+    <div class="edit-bcf-topic__footer m-t-12">
       <BIMDataButton
         width="100%"
         color="primary"
