@@ -89,7 +89,7 @@
 <script>
 import { computed } from "vue";
 import { useToggle } from "@/composables/toggle.js";
-import MODEL_STATUS from "@/config/model-statuses.js";
+import { MODEL_STATUS } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
 // Components
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";

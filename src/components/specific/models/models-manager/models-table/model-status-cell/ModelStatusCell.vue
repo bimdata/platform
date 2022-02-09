@@ -7,7 +7,7 @@
 
 <script>
 import { onUnmounted, ref, watch } from "vue";
-import MODEL_STATUS from "@/config/model-statuses.js";
+import { MODEL_STATUS } from "@/config/models.js";
 import { useModels } from "@/state/models.js";
 
 export default {

@@ -1,5 +1,4 @@
-import MODEL_SOURCES from "@/config/model-sources.js";
-import MODEL_TYPES from "@/config/model-types.js";
+import { MODEL_SOURCE, MODEL_TYPE } from "@/config/models.js";
 import { segregateBySource, segregateByType } from "@/utils/models.js";
 
 describe("Models Utils", () => {
@@ -7,17 +6,17 @@ describe("Models Utils", () => {
   it("Should segregate by source", () => {
     // Arrange
     const models = [
-      { id: 0, source: MODEL_SOURCES.UPLOAD },
-      { id: 1, source: MODEL_SOURCES.UPLOAD },
-      { id: 2, source: MODEL_SOURCES.OPTIMIZED },
-      { id: 3, source: MODEL_SOURCES.SPLIT },
-      { id: 4, source: MODEL_SOURCES.EXPORT },
-      { id: 5, source: MODEL_SOURCES.MERGE },
+      { id: 0, source: MODEL_SOURCE.UPLOAD },
+      { id: 1, source: MODEL_SOURCE.UPLOAD },
+      { id: 2, source: MODEL_SOURCE.OPTIMIZED },
+      { id: 3, source: MODEL_SOURCE.SPLIT },
+      { id: 4, source: MODEL_SOURCE.EXPORT },
+      { id: 5, source: MODEL_SOURCE.MERGE },
       { id: 6, source: "Unknown" },
-      { id: 7, source: MODEL_SOURCES.UPLOAD, archived: true },
-      { id: 8, source: MODEL_SOURCES.OPTIMIZED, archived: true },
-      { id: 9, source: MODEL_SOURCES.EXPORT, archived: true },
-      { id: 10, source: MODEL_SOURCES.MERGE, archived: true },
+      { id: 7, source: MODEL_SOURCE.UPLOAD, archived: true },
+      { id: 8, source: MODEL_SOURCE.OPTIMIZED, archived: true },
+      { id: 9, source: MODEL_SOURCE.EXPORT, archived: true },
+      { id: 10, source: MODEL_SOURCE.MERGE, archived: true },
       { id: 11, source: "Unknown", archived: true },
     ];
 
@@ -42,13 +41,13 @@ describe("Models Utils", () => {
   it("Should segregate by type", () => {
     // Arrange
     const models = [
-      { id: 0, type: MODEL_TYPES.DWG },
-      { id: 1, type: MODEL_TYPES.IFC },
-      { id: 2, type: MODEL_TYPES.DWG },
-      { id: 3, type: MODEL_TYPES.PDF },
-      { id: 4, type: MODEL_TYPES.IFC },
-      { id: 5, type: MODEL_TYPES.IFC },
-      { id: 6, type: MODEL_TYPES.DWG },
+      { id: 0, type: MODEL_TYPE.DWG },
+      { id: 1, type: MODEL_TYPE.IFC },
+      { id: 2, type: MODEL_TYPE.DWG },
+      { id: 3, type: MODEL_TYPE.PDF },
+      { id: 4, type: MODEL_TYPE.IFC },
+      { id: 5, type: MODEL_TYPE.IFC },
+      { id: 6, type: MODEL_TYPE.DWG },
     ];
 
     // Act
