@@ -1,5 +1,5 @@
 /* eslint-disable */
-import FILE_TYPES from "@/config/file-types.js";
+import { FILE_TYPE } from "@/config/files.js";
 
 /**
  * Compute a file UUID.
@@ -88,7 +88,7 @@ function createFileNode(nodeMap, file) {
     _children: (file.children || []).map(child => uuid(child)),
 
     get parent() {
-      return this.file.parentId ? nodeMap.get(`${FILE_TYPES.FOLDER}-${this.file.parentId}`) : null;
+      return this.file.parentId ? nodeMap.get(`${FILE_TYPE.FOLDER}-${this.file.parentId}`) : null;
     },
     get children() {
       return this._children.map(nodeId => nodeMap.get(nodeId));
@@ -282,7 +282,7 @@ function segregate(files) {
 }
 
 function isFolder(file) { 
-  return file.nature === FILE_TYPES.FOLDER;
+  return file.nature === FILE_TYPE.FOLDER;
 }
 
 

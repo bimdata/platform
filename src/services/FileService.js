@@ -1,8 +1,8 @@
-import { download } from "@/utils/download";
-import FILE_TYPES from "@/config/file-types";
-import { segregate } from "@/utils/file-structure";
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
+import { FILE_TYPE } from "@/config/files.js";
+import { download } from "@/utils/download.js";
+import { segregate } from "@/utils/file-structure.js";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 const FOLDER_UPDATABLE_FIELDS = ["name", "parentId", "defaultPermission"];
 const DOCUMENT_UPDATABLE_FIELDS = ["name", "parentId"];
@@ -120,7 +120,7 @@ class FileService {
       if (files.length === 0) {
         return;
       }
-      if (files.length === 1 && files[0].type !== FILE_TYPES.FOLDER) {
+      if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
         downloadName = files[0].fileName;
         downloadUrl = files[0].file;
       } else {
