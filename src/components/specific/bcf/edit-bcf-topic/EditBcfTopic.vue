@@ -1,7 +1,7 @@
 <template>
   <div class="edit-bcf-topic">
     <div class="edit-bcf-topic__header flex items-center justify-between">
-      <BIMDataButton color="default" ripple icon @click="$emit('close')">
+      <BIMDataButton color="default" ripple icon @click="goBack">
         <BIMDataIcon
           name="arrow"
           fill
@@ -92,6 +92,35 @@
         Modifier ce BCF
       </BIMDataButton>
     </div>
+    <div v-if="openModal" class="overlay flex items-center justify-center">
+      <div class="edit-modal flex items-center justify-center p-y-18 p-x-12">
+        <BIMDataIcon name="warning" fill color="high" size="xs" />
+        <span class="text-center m-y-12"
+          >Vous êtes sur le point de quitter l'édition de l'issue
+          <strong>{{ bcfTopic.title }}</strong> mais il y'a des modifications
+          non enregistrées.</span
+        >
+        <div class="edit-modal__btns flex justify-center items-center">
+          <BIMDataButton
+            color="high"
+            fill
+            radius
+            @click="$emit('close')"
+            class="m-r-12"
+          >
+            Annuler les modifications
+          </BIMDataButton>
+          <BIMDataButton
+            color="primary"
+            outline
+            radius
+            @click="openModal = false"
+          >
+            Continuer les modifications
+          </BIMDataButton>
+        </div>
+      </div>
+    </div>
     <div v-if="loading" class="overlay flex items-center justify-center">
       <BIMDataSpinner />
     </div>
@@ -112,7 +141,7 @@ export default {
     }
   },
   emits: ["close"],
-  setup(props) {
+  setup(props, { emit }) {
     const { topicExtensions, updateTopic } = useBcf();
     const topicTitle = ref("");
     const topicType = ref("");
@@ -187,8 +216,26 @@ export default {
       }
     };
 
+    const openModal = ref(false);
+    const goBack = () => {
+      if (
+        topicTitle.value !== props.bcfTopic.title ||
+        topicType.value !== props.bcfTopic.topicType ||
+        topicPriority.value !== props.bcfTopic.priority ||
+        topicStatus.value !== props.bcfTopic.topicStatus ||
+        topicPhase.value !== props.bcfTopic.stage ||
+        topicAssignedTo.value !== props.bcfTopic.assignedTo ||
+        topicDescription.value !== props.bcfTopic.description
+      ) {
+        openModal.value = true;
+      } else {
+        emit("close");
+      }
+    };
+
     return {
       loading,
+      openModal,
       topicTitle,
       topicType,
       topicPriority,
@@ -198,7 +245,8 @@ export default {
       topicDescription,
       topicExtensions,
       // Methods
-      updateBcfTopic
+      updateBcfTopic,
+      goBack
     };
   }
 };
