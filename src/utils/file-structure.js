@@ -124,7 +124,10 @@ class FileStructureHandler {
 
   serialize(fileStructure) {
     validate(fileStructure);
-    this.root = { id: fileStructure.id, type: fileStructure.type };
+    this.root = {
+      id: fileStructure.id,
+      nature: fileStructure.nature
+    };
     this.nodeMap = createNodeMap(fileStructure);
   }
 
