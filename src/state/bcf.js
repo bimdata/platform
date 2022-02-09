@@ -61,6 +61,12 @@ const importBcf = async (project, file) => {
   return bcf;
 };
 
+const exportBcf = async project => {
+  const bcf = await BcfService.exportBcf(project);
+  await loadBcfTopics(project);
+  return bcf;
+};
+
 const loadTopicExtensions = async project => {
   const topicExtensions = await BcfService.fetchTopicExtensions(project);
   state.topicExtensions = topicExtensions;
@@ -87,6 +93,7 @@ export function useBcf() {
     updateTopic,
     deleteTopic,
     importBcf,
+    exportBcf,
     loadTopicExtensions,
     updateTopicExtensions
   };
