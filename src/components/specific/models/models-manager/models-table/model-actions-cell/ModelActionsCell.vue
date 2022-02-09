@@ -16,12 +16,12 @@
           }"
         >
           <BIMDataButton
+            :disabled="!isModelReady"
             class="model-actions-cell__btn model-actions-cell__btn--viewer"
             color="granite"
             outline
             radius
             icon
-            :disabled="!isModelReady"
           >
             {{ window.toUpperCase() }}
           </BIMDataButton>
@@ -65,13 +65,12 @@
           squared
           @click="onClick(model.archived ? 'unarchive' : 'archive')"
         >
-          {{
-            $t(
-              `ModelActionsCell.${
-                model.archived ? "unarchiveButtonText" : "archiveButtonText"
-              }`
-            )
-          }}
+          <template v-if="model.archived">
+            {{ $t("ModelActionsCell.unarchiveButtonText") }}
+          </template>
+          <template v-else>
+            {{ $t("ModelActionsCell.archiveButtonText") }}
+          </template>
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"

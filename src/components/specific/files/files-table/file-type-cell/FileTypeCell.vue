@@ -1,10 +1,11 @@
 <template>
   <div class="file-type-cell">
-    {{
-      isFolder(file)
-        ? $t("FilesTable.folder")
-        : fileExtension(file.fileName) || "?"
-    }}
+    <template v-if="isFolder(file)">
+      {{ $t("FilesTable.folder") }}
+    </template>
+    <template v-else>
+      {{ fileExtension(file.fileName).slice(0, 8) || "?" }}
+    </template>
   </div>
 </template>
 
