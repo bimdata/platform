@@ -5,7 +5,7 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 class ModelService {
   async fetchModels(project) {
     try {
-      return await apiClient.ifcApi.getIfcs({
+      return await apiClient.modelApi.getModels({
         cloudPk: project.cloud.id,
         projectPk: project.id
       });
@@ -19,7 +19,7 @@ class ModelService {
 
   async fetchModelByID(project, id) {
     try {
-      return await apiClient.ifcApi.getIfc({
+      return await apiClient.modelApi.getModel({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         id
@@ -30,11 +30,25 @@ class ModelService {
     }
   }
 
+  async createModel(project, file) {
+    try {
+      return await apiClient.modelApi.createModel({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        data: {
+          documentId: file.id
+        }
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_CREATE_ERROR, error);
+    }
+  }
+
   async updateModels(project, models) {
     try {
       return await Promise.all(
         models.map(model =>
-          apiClient.ifcApi.updateIfc({
+          apiClient.modelApi.updateModel({
             cloudPk: project.cloud.id,
             projectPk: project.id,
             id: model.id,
@@ -64,7 +78,7 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model =>
-          apiClient.ifcApi.deleteIfc({
+          apiClient.modelApi.deleteModel({
             cloudPk: project.cloud.id,
             projectPk: project.id,
             id: model.id
@@ -77,10 +91,10 @@ class ModelService {
   }
 
   fetchModelElements(project, model, params = {}) {
-    return apiClient.ifcApi.getElements({
+    return apiClient.modelApi.getElements({
       cloudPk: project.cloud.id,
       projectPk: project.id,
-      ifcPk: model.id,
+      modelPk: model.id,
       ...params
     });
   }
@@ -91,10 +105,10 @@ class ModelService {
 
   async createModelElements(project, model, elements) {
     try {
-      return await apiClient.ifcApi.createElement({
+      return await apiClient.modelApi.createElement({
         cloudPk: project.cloud.id,
         projectPk: project.id,
-        ifcPk: model.id,
+        modelPk: model.id,
         data: elements
       });
     } catch (error) {
@@ -104,10 +118,10 @@ class ModelService {
 
   async updateModelElements(project, model, elements) {
     try {
-      return await apiClient.ifcApi.bulkUpdateElements({
+      return await apiClient.modelApi.bulkUpdateElements({
         cloudPk: project.cloud.id,
         projectPk: project.id,
-        ifcPk: model.id,
+        modelPk: model.id,
         data: elements
       });
     } catch (error) {
@@ -119,10 +133,10 @@ class ModelService {
     try {
       return await Promise.all(
         elements.map(element =>
-          apiClient.ifcApi.deleteElement({
+          apiClient.modelApi.deleteElement({
             cloudPk: project.cloud.id,
             projectPk: project.id,
-            ifcPk: model.id,
+            modelPk: model.id,
             uuid: element.uuid
           })
         )
@@ -140,10 +154,10 @@ class ModelService {
       }));
       return await Promise.all(
         properties.map(property =>
-          apiClient.ifcApi.createElementPropertySetProperty({
+          apiClient.modelApi.createElementPropertySetProperty({
             cloudPk: project.cloud.id,
             projectPk: project.id,
-            ifcPk: model.id,
+            modelPk: model.id,
             elementUuid: element.uuid,
             propertysetPk: pset.id,
             data: property
@@ -165,20 +179,20 @@ class ModelService {
       return await Promise.all(
         properties.map(property => {
           if (property.id) {
-            return apiClient.ifcApi.updateElementPropertySetProperty({
+            return apiClient.modelApi.updateElementPropertySetProperty({
               cloudPk: project.cloud.id,
               projectPk: project.id,
-              ifcPk: model.id,
+              modelPk: model.id,
               elementUuid: element.uuid,
               propertysetPk: pset.id,
               id: property.id,
               data: property
             });
           } else {
-            return apiClient.ifcApi.createElementPropertySetProperty({
+            return apiClient.modelApi.createElementPropertySetProperty({
               cloudPk: project.cloud.id,
               projectPk: project.id,
-              ifcPk: model.id,
+              modelPk: model.id,
               elementUuid: element.uuid,
               propertysetPk: pset.id,
               data: property
@@ -195,10 +209,10 @@ class ModelService {
     try {
       return await Promise.all(
         props.map(property =>
-          apiClient.ifcApi.removeElementPropertySetProperty({
+          apiClient.modelApi.removeElementPropertySetProperty({
             cloudPk: project.cloud.id,
             projectPk: project.id,
-            ifcPk: model.id,
+            modelPk: model.id,
             elementUuid: element.uuid,
             propertysetPk: pset.id,
             id: property.id
@@ -242,7 +256,7 @@ class ModelService {
 
   async mergeModels(project, models, name) {
     try {
-      return await apiClient.ifcApi.mergeIfcs({
+      return await apiClient.modelApi.mergeIfcs({
         cloudPk: project.cloud.id,
         projectPk: project.id,
         data: {

@@ -73,6 +73,7 @@
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
             @back-parent-folder="backToParent"
+            @create-model="createModelFromFile"
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
@@ -131,10 +132,13 @@
 
 <script>
 import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
-import FILE_TYPES from "@/config/file-types.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useFiles } from "@/state/files.js";
+import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
+import { isFolder } from "@/utils/file-structure.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -179,14 +183,19 @@ export default {
   emits: [
     "file-uploaded",
     "folder-permission-updated",
-    "group-permission-updated"
+    "group-permission-updated",
+    "model-created"
   ],
-  setup(props) {
+  setup(props, { emit }) {
+    const { t } = useI18n();
+    const { pushNotification } = useAppNotification();
+
     const {
       fileStructureHandler: handler,
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
+    const { createModel } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -211,12 +220,12 @@ export default {
       () => currentFolder.value,
       folder => {
         const childrenFolders = folder.children
-          .filter(child => child.type === FILE_TYPES.FOLDER)
+          .filter(child => isFolder(child))
           .sort((a, b) =>
             a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
           );
         const childrenFiles = folder.children
-          .filter(child => child.type !== FILE_TYPES.FOLDER)
+          .filter(child => !isFolder(child))
           .sort((a, b) =>
             a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
           );
@@ -226,7 +235,7 @@ export default {
     );
 
     const onFileSelected = file => {
-      if (file.type === FILE_TYPES.FOLDER) {
+      if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       }
     };
@@ -250,6 +259,16 @@ export default {
     const uploadFiles = files => {
       filesToUpload.value = files;
       setTimeout(() => (filesToUpload.value = []), 100);
+    };
+
+    const createModelFromFile = async file => {
+      const model = await createModel(props.project, file);
+      emit("model-created", model);
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("FilesManager.createModelNotification")
+      });
     };
 
     const filesToDelete = ref([]);
@@ -368,6 +387,7 @@ export default {
       // Methods
       closeAccessManager,
       closeDeleteModal,
+      createModelFromFile,
       downloadFiles,
       moveFiles,
       openAccessManager,

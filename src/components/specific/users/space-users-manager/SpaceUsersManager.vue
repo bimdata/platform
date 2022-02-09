@@ -65,7 +65,7 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useToggle } from "@/composables/toggle.js";
-import SPACE_ROLES from "@/config/space-roles.js";
+import { SPACE_ROLE } from "@/config/spaces.js";
 // Components
 import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard.vue";
 import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm.vue";
@@ -116,10 +116,10 @@ export default {
       () => props.users,
       () => {
         admins.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLES.ADMIN
+          user => user.cloudRole === SPACE_ROLE.ADMIN
         );
         users.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLES.USER
+          user => user.cloudRole === SPACE_ROLE.USER
         );
       },
       { immediate: true }

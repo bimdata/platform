@@ -13,7 +13,7 @@
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
         <BIMDataButton
-          v-if="file.type === 'Ifc'"
+          v-if="file.modelType === 'IFC'"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -21,6 +21,22 @@
         >
           {{ $t("FileActionsCell.openViewerButtonText") }}
         </BIMDataButton>
+
+        <BIMDataButton
+          v-if="
+            !file.modelId &&
+            ['.jpeg', '.jpg', '.pdf', '.png'].includes(
+              fileExtension(file.fileName)
+            )
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('create-model')"
+        >
+          {{ $t("FileActionsCell.createModelButtonText") }}
+        </BIMDataButton>
+
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -30,6 +46,7 @@
         >
           {{ $t("FileActionsCell.renameButtonText") }}
         </BIMDataButton>
+
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -39,8 +56,9 @@
         >
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
+
         <BIMDataButton
-          v-if="project.isAdmin && file.type === 'Folder'"
+          v-if="project.isAdmin && isFolder(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -48,6 +66,7 @@
         >
           {{ $t("FileActionsCell.manageAccessButtonText") }}
         </BIMDataButton>
+
         <BIMDataButton
           v-if="
             !isFolder(file) && (project.isAdmin || file.userPermission === 100)
@@ -59,6 +78,7 @@
         >
           {{ $t("FileActionsCell.VisaButtonText") }}
         </BIMDataButton>
+
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -79,6 +99,7 @@ import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
+import { fileExtension } from "@/utils/files.js";
 
 export default {
   props: {
@@ -91,7 +112,14 @@ export default {
       required: true
     }
   },
-  emits: ["delete", "download", "manage-access", "update", "open-visa-manager"],
+  emits: [
+    "create-model",
+    "delete",
+    "download",
+    "manage-access",
+    "open-visa-manager",
+    "update"
+  ],
   setup(props, { emit }) {
     const router = useRouter();
 
@@ -107,7 +135,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelIDs: props.file.ifcId
+          modelIDs: props.file.modelId
         },
         query: {
           window: "3d"
@@ -125,6 +153,7 @@ export default {
       showMenu,
       // Methods
       closeMenu,
+      fileExtension,
       goToModelViewer,
       onClick,
       toggleMenu,

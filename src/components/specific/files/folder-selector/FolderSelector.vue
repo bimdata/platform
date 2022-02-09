@@ -105,10 +105,9 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-
-import { useFiles } from "@/state/files";
-import { isFolder } from "@/utils/file-structure";
-import FILE_PERMISSIONS from "@/config/file-permissions";
+import { FILE_PERMISSION } from "@/config/files.js";
+import { useFiles } from "@/state/files.js";
+import { isFolder } from "@/utils/file-structure.js";
 
 export default {
   props: {
@@ -144,7 +143,7 @@ export default {
           child =>
             !props.files.some(f => child.id === f.id) &&
             (props.project.isAdmin ||
-              child.userPermission === FILE_PERMISSIONS.READ_WRITE)
+              child.userPermission === FILE_PERMISSION.READ_WRITE)
         )
         .sort((a, b) => {
           if (isFolder(a) && !isFolder(b)) return -1;

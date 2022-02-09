@@ -16,12 +16,12 @@
           }"
         >
           <BIMDataButton
+            :disabled="!isModelReady"
             class="model-actions-cell__btn model-actions-cell__btn--viewer"
             color="granite"
             outline
             radius
             icon
-            :disabled="!isModelReady"
           >
             {{ window.toUpperCase() }}
           </BIMDataButton>
@@ -65,13 +65,12 @@
           squared
           @click="onClick(model.archived ? 'unarchive' : 'archive')"
         >
-          {{
-            $t(
-              `ModelActionsCell.${
-                model.archived ? "unarchiveButtonText" : "archiveButtonText"
-              }`
-            )
-          }}
+          <template v-if="model.archived">
+            {{ $t("ModelActionsCell.unarchiveButtonText") }}
+          </template>
+          <template v-else>
+            {{ $t("ModelActionsCell.archiveButtonText") }}
+          </template>
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
@@ -90,7 +89,7 @@
 <script>
 import { computed } from "vue";
 import { useToggle } from "@/composables/toggle.js";
-import MODEL_STATUS from "@/config/model-statuses.js";
+import { MODEL_STATUS } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
 // Components
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";

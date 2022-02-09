@@ -27,6 +27,7 @@ const ERRORS = Object.freeze({
   USER_LEAVE_ERROR: "userLeaveError",
   MODELS_FETCH_ERROR: "modelsFetchError",
   MODEL_UPLOAD_ERROR: "modelUploadError",
+  MODEL_CREATE_ERROR: "modelCreateError",
   MODEL_UPDATE_ERROR: "modelUpdateError",
   MODEL_DOWNLOAD_ERROR: "modelDownloadError",
   MODEL_MERGE_ERROR: "modelMergeError",

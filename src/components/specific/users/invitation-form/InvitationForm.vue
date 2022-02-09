@@ -47,14 +47,14 @@
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import PROJECT_ROLES from "@/config/project-roles.js";
+import { PROJECT_ROLE } from "@/config/projects.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 
 const roleList = [
-  { id: "admin", value: PROJECT_ROLES.ADMIN },
-  { id: "user", value: PROJECT_ROLES.USER },
-  { id: "guest", value: PROJECT_ROLES.GUEST }
+  { id: "admin", value: PROJECT_ROLE.ADMIN },
+  { id: "user", value: PROJECT_ROLE.USER },
+  { id: "guest", value: PROJECT_ROLE.GUEST }
 ];
 
 export default {
