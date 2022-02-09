@@ -71,11 +71,12 @@
       <FileActionsCell
         :project="project"
         :file="file"
+        @create-model="$emit('create-model', $event)"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
-        @update="nameEditMode[file.id] = true"
         @open-visa-manager="$emit('open-visa-manager', $event)"
+        @update="nameEditMode[file.id] = true"
       />
     </template>
   </GenericTable>
@@ -125,14 +126,15 @@ export default {
     }
   },
   emits: [
+    "back-parent-folder",
+    "create-model",
     "delete",
     "download",
     "file-clicked",
     "file-uploaded",
     "manage-access",
-    "selection-changed",
-    "back-parent-folder",
-    "open-visa-manager"
+    "open-visa-manager",
+    "selection-changed"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();

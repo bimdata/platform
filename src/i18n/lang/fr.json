@@ -191,6 +191,7 @@
 
   "FileActionsCell": {
     "openViewerButtonText": "Voir",
+    "createModelButtonText": "Définir comme modèle",
     "addTagsButtonText": "Ajouter des tags",
     "validationRequestButtonText": "Demande de validation",
     "renameButtonText": "Renommer",
@@ -221,7 +222,8 @@
 
   "FilesManager": {
     "title": "Documents du projet",
-    "searchInputPlaceholder": "Rechercher"
+    "searchInputPlaceholder": "Rechercher",
+    "createModelNotification": "Modèle créé avec succès"
   },
 
   "FilesManagerOnboarding": {
@@ -860,6 +862,7 @@
     "userLeaveError": "Vous ne pouvez pas quitter ce projet car vous êtes le dernier administrateur",
     "modelsFetchError": "Impossible de récupérer la liste des modèles",
     "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
+    "modelCreateError": "Erreur lors de la création du modèle",
     "modelUpdateError": "Échec de la mise à jour du modèle",
     "modelDownloadError": "Une erreur est survenue lors du téléchargement",
     "modelMergeError": "Échec de la fusion des modèles",

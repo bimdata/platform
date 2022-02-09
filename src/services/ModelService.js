@@ -30,6 +30,20 @@ class ModelService {
     }
   }
 
+  async createModel(project, file) {
+    try {
+      return await apiClient.modelApi.createModel({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        data: {
+          documentId: file.id
+        }
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_CREATE_ERROR, error);
+    }
+  }
+
   async updateModels(project, models) {
     try {
       return await Promise.all(

@@ -17,6 +17,11 @@ const fetchModelByID = async (project, id) => {
   return model;
 };
 
+const createModel = async (project, file) => {
+  const newModel = await ModelService.createModel(project, file);
+  return newModel;
+};
+
 const updateModels = async (project, models) => {
   const newModels = await ModelService.updateModels(project, models);
   await loadProjectModels(project);
@@ -160,6 +165,7 @@ export function useModels() {
     // Methods
     loadProjectModels,
     fetchModelByID,
+    createModel,
     updateModels,
     updateModelName,
     mergeModels,
