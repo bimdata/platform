@@ -93,6 +93,16 @@
     "BreadcrumbProjectSelector": {
         "placeholder": "< No project >"
     },
+    "BcfSettings": {
+        "goBackButton": "Back",
+        "title": "BCF Settings",
+        "piorityTitle": "Priorities",
+        "labelTitle": "Labels",
+        "statusTitle": "Status",
+        "typeTitle": "Types",
+        "stageTitle": "Stages",
+        "validateButton": "Validate BCF settings"
+    },
     "DashboardInfoTile": {
         "title": "Security"
     },

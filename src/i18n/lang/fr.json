@@ -164,6 +164,17 @@
     "placeholder": "< Aucun projet >"
   },
 
+  "BcfSettings": {
+    "goBackButton": "Retour",
+    "title": "Paramètres BCF",
+    "piorityTitle": "Priorités",
+    "labelTitle": "Labels",
+    "statusTitle": "Statut",
+    "typeTitle": "Types",
+    "stageTitle": "Étapes",
+    "validateButton": "Valider les paramètres BCF"
+},
+
   "DashboardInfoTile": {
     "title": "Securité"
   },

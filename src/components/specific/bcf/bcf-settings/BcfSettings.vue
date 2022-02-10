@@ -9,9 +9,9 @@
           size="xxs"
           margin="0 6px 0 0"
         />
-        <span>Back</span>
+        <span> {{ $t("BcfSettings.goBackButton") }}</span>
       </BIMDataButton>
-      <span>Paramètres BCF</span>
+      <span> {{ $t("BcfSettings.title") }}</span>
       <BIMDataIcon
         name="close"
         fill
@@ -28,7 +28,7 @@
         </p>
         <SettingCard
           v-if="topicExtensions.priority"
-          title="Priority"
+          :title="$t('BcfSettings.piorityTitle')"
           :topicExtensions="topicExtensions.priority"
           @edit="updatePriority($event)"
           @add="updatePriority($event)"
@@ -36,27 +36,27 @@
         />
         <SettingCard
           v-if="topicExtensions.topicLabel"
-          title="Label"
+          :title="$t('BcfSettings.labelTitle')"
           :topicExtensions="topicExtensions.topicLabel"
         />
         <SettingCard
           v-if="topicExtensions.topicStatus"
-          title="Status"
+          :title="$t('BcfSettings.statusTitle')"
           :topicExtensions="topicExtensions.topicStatus"
         />
         <SettingCard
           v-if="topicExtensions.topicType"
-          title="Type"
+          :title="$t('BcfSettings.typeTitle')"
           :topicExtensions="topicExtensions.topicType"
         />
         <SettingCard
           v-if="topicExtensions.stage"
-          title="Stage"
+          :title="$t('BcfSettings.stageTitle')"
           :topicExtensions="topicExtensions.stage"
         />
       </div>
       <BIMDataButton color="primary" fill radius class="m-x-18">
-        Valider les paramètres BCF
+        {{ $t("BcfSettings.validateButton") }}
       </BIMDataButton>
     </div>
   </div>
