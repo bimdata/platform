@@ -50,10 +50,10 @@
 
 <script>
 import { ref } from "vue";
-import { fileExtension, generateFileKey } from "@/utils/files";
+import { fileExtension, generateFileKey } from "@/utils/files.js";
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
+import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
 
 export default {
   components: {
@@ -90,22 +90,25 @@ export default {
       const forbiddenUploads = [];
       files = files.filter(file => {
         let shouldUpload = true;
+        let fileType = file.type.toLowerCase();
+        let fileExt = fileExtension(file.name).toLowerCase();
+
         if (props.allowedFileTypes.length > 0) {
           // Only keep allowed files
-          shouldUpload =
-            props.allowedFileTypes.includes(file.type) ||
-            props.allowedFileTypes.includes(fileExtension(file.name));
+          shouldUpload = props.allowedFileTypes
+            .map(type => type.toLowerCase())
+            .some(type => type === fileType || type === fileExt);
         }
         if (props.forbiddenFileTypes.length > 0) {
           // Discard forbidden files
-          shouldUpload = !(
-            props.forbiddenFileTypes.includes(file.type) ||
-            props.forbiddenFileTypes.includes(fileExtension(file.name))
-          );
+          shouldUpload = !props.forbiddenFileTypes
+            .map(type => type.toLowerCase())
+            .some(type => type === fileType || type === fileExt);
         }
         if (!shouldUpload) {
           forbiddenUploads.push(file);
         }
+
         return shouldUpload;
       });
       if (forbiddenUploads.length > 0) {

@@ -54,15 +54,25 @@ function segregateByType(models) {
   return result;
 }
 
+function isModel(file) {
+  return !!file.modelId;
+}
+
 function isIFC(file) {
-  return file.modelType === MODEL_TYPE.IFC;
+  return isModel(file) && file.modelType === MODEL_TYPE.IFC;
 }
 
 function canConvertToModel(file) {
   return (
-    !file.modelId &&
-    CONVERTIBLE_EXTENSIONS.includes(fileExtension(file.fileName))
+    !isModel(file) &&
+    CONVERTIBLE_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase())
   );
 }
 
-export { canConvertToModel, isIFC, segregateBySource, segregateByType };
+export {
+  canConvertToModel,
+  isIFC,
+  isModel,
+  segregateBySource,
+  segregateByType
+};
