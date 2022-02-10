@@ -2,11 +2,7 @@
   <li class="setting-card-item flex items-center justify-between p-x-12 m-b-6">
     <span v-if="!editTopicExtension">{{ topicExtension }}</span>
     <transition v-else>
-      <BIMDataInput
-        :placeholder="title"
-        v-model="extension.name"
-        @keyup.enter.stop="submit"
-      />
+      <BIMDataInput v-model="extension.name" @keyup.enter.stop="submit" />
     </transition>
     <div>
       <BIMDataIcon

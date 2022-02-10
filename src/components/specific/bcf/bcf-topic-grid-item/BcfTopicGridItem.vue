@@ -47,14 +47,7 @@
         <span v-else>Non renseigné</span>
       </div>
       <div class="flex justify-around m-t-12">
-        <BIMDataButton
-          color="default"
-          fill
-          radius
-          width="48%"
-          :disabled="topicElements.length === 0"
-          @click="openElements"
-        >
+        <div class="flex items-center">
           <BIMDataIcon
             name="model3d"
             fill
@@ -68,7 +61,7 @@
           <span>
             {{ topicElements.length ? "Elements" : "0 Element" }}
           </span>
-        </BIMDataButton>
+        </div>
         <BIMDataButton
           color="primary"
           fill
@@ -79,42 +72,6 @@
         >
       </div>
     </div>
-    <transition name="slide-fade-left">
-      <div class="bcf-topic__elements" v-show="showElements">
-        <div
-          class="bcf-topic__elements__header flex items-center justify-between p-6"
-        >
-          <BIMDataButton
-            color="default"
-            ripple
-            icon
-            radius
-            @click="closeElements"
-          >
-            <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
-            Back</BIMDataButton
-          >
-          <div v-if="topicElements.length > 0">
-            <strong>{{ topicElements.length }}</strong>
-            éléments concernés
-          </div>
-        </div>
-        <div
-          class="bcf-topic__elements__content p-6"
-          v-if="topicElements.length > 0"
-        >
-          <ul class="bimdata-list m-t-6">
-            <li
-              v-for="element in topicElements"
-              :key="element"
-              class="flex items-center p-x-6"
-            >
-              {{ element.ifcGuid }}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </transition>
     <transition name="slide-fade-left">
       <div
         v-show="showSidePanel"
@@ -129,7 +86,6 @@
 
 <script>
 import { computed, reactive, ref, watch } from "vue";
-import { useToggle } from "@/composables/toggle.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
@@ -174,12 +130,6 @@ export default {
       bcfTopicToOpen.value = topic;
     };
 
-    const {
-      isOpen: showElements,
-      open: openElements,
-      close: closeElements
-    } = useToggle();
-
     const topicElements = computed(() => {
       if (
         props.bcfTopic.components &&
@@ -198,10 +148,7 @@ export default {
       bcfTopicToOpen,
       topicElements,
       showSidePanel,
-      showElements,
-      openBcfTopic,
-      openElements,
-      closeElements
+      openBcfTopic
     };
   }
 };
