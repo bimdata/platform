@@ -31,7 +31,7 @@
                 >
                   {{ organizations.length }}
                 </span>
-                <BIMDataTextBox
+                <BIMDataTextbox
                   maxWidth="240px"
                   :text="selectedOrga.name"
                   :tooltip="false"
@@ -39,7 +39,7 @@
               </div>
             </template>
             <template #element="{ element }">
-              <BIMDataTextBox
+              <BIMDataTextbox
                 maxWidth="280px"
                 :text="element.name"
                 :tooltip="false"

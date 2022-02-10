@@ -10,7 +10,7 @@
       <UserAvatar :user="user" size="40" color="silver-light" />
     </div>
     <div v-if="user.fullName" class="visa-add-validator-users__info">
-      <BIMDataTextBox
+      <BIMDataTextbox
         class="visa-add-validator-users__info__main"
         :class="{ hide: !user.hasAccess }"
         :text="user.fullName"

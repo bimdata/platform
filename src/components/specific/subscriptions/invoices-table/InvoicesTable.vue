@@ -22,7 +22,7 @@
                 }
               }"
             >
-              <BIMDataTextBox
+              <BIMDataTextbox
                 maxWidth="300px"
                 :text="subscriptionsMap[payment.subscription_id].cloud.name"
               />

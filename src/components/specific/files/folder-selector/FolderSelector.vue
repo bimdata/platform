@@ -13,7 +13,7 @@
       </BIMDataButton>
 
       <BIMDataIcon name="folder" size="xs" />
-      <BIMDataTextBox
+      <BIMDataTextbox
         class="folder-selector__head__name"
         maxWidth="120px"
         :text="currentFolder.name"
@@ -44,7 +44,7 @@
           <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
           <BIMDataFileIcon v-else :fileName="file.fileName" :size="13" />
         </span>
-        <BIMDataTextBox
+        <BIMDataTextbox
           class="folder-selector__body__item__name"
           :text="file.name"
           :tooltip="false"
@@ -75,7 +75,7 @@
         :class="{ visibility: selectedFolder }"
       >
         {{ $t("FolderSelector.selectedFolder") }}:
-        <BIMDataTextBox
+        <BIMDataTextbox
           style="font-weight: bold"
           width="auto"
           maxWidth="100px"

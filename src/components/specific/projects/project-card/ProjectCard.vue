@@ -37,7 +37,7 @@
           </template>
           <template #footer>
             <div class="project-card__title">
-              <BIMDataTextBox :text="project.name" />
+              <BIMDataTextbox :text="project.name" />
             </div>
           </template>
         </BIMDataCard>

@@ -13,7 +13,7 @@
           color="silver-light"
           style="box-shadow: var(--box-shadow)"
         />
-        <BIMDataTextBox
+        <BIMDataTextbox
           class="visa-comment-post__header__left-side__name"
           :text="comment.fullName || comment.author.email"
           maxWidth="30%"

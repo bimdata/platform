@@ -1,6 +1,6 @@
 <template>
   <div class="folder-permission-selector">
-    <BIMDataTextBox
+    <BIMDataTextbox
       class="folder-permission-selector__label"
       maxWidth="132px"
       :text="$t('FolderPermissionSelector.label')"

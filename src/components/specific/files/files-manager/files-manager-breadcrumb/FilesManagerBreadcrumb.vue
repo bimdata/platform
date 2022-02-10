@@ -2,7 +2,7 @@
   <div class="files-manager-breadcrumb">
     <span class="files-manager-breadcrumb__path">
       <template v-for="(folder, index) of path" :key="folder.id">
-        <BIMDataTextBox
+        <BIMDataTextbox
           maxWidth="100px"
           :text="folder.name"
           @click="selectFile(folder)"
@@ -15,7 +15,7 @@
         <span>></span>
       </template>
     </span>
-    <BIMDataTextBox
+    <BIMDataTextbox
       class="files-manager-breadcrumb__file"
       width="100px"
       :text="file.name"

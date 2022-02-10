@@ -1,6 +1,6 @@
 <template>
   <div class="group-permission-selector">
-    <BIMDataTextBox
+    <BIMDataTextbox
       class="group-permission-selector__label"
       maxWidth="132px"
       :text="group.name"

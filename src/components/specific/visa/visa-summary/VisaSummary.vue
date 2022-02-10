@@ -152,7 +152,7 @@
             :fileName="formatedVisa.document.fileName"
             :size="20"
           />
-          <BIMDataTextBox
+          <BIMDataTextbox
             class="visa-summary__shell__file__name"
             :text="formatedVisa.document.name"
             width="80%"
