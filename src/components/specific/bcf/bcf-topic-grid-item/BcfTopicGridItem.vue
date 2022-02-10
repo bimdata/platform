@@ -35,16 +35,16 @@
     </div>
     <div class="bcf-topic__content p-12">
       <div class="bcf-topic__content__priority">
-        <strong>Priorité : </strong>
+        <strong>{{ $t("BcfTopicGridItem.priority") }} </strong>
         <span v-if="bcfTopic.priority" :class="getPriorityClasses">{{
           bcfTopic.priority
         }}</span>
-        <span v-else>Non renseigné</span>
+        <span v-else>{{ $t("BcfTopicGridItem.notSpecified") }}</span>
       </div>
       <div>
-        <strong>Assigné à : </strong>
+        <strong>{{ $t("BcfTopicGridItem.assignedTo") }}</strong>
         <span v-if="bcfTopic.assignedTo">{{ bcfTopic.assignedTo }}</span>
-        <span v-else>Non renseigné</span>
+        <span v-else>{{ $t("BcfTopicGridItem.notSpecified") }}</span>
       </div>
       <div class="flex justify-around m-t-12">
         <div class="flex items-center">
@@ -59,7 +59,11 @@
             {{ topicElements.length }}
           </span>
           <span>
-            {{ topicElements.length ? "Elements" : "0 Element" }}
+            {{
+              topicElements.length
+                ? $t("BcfTopicGridItem.elements")
+                : $t("BcfTopicGridItem.noElements")
+            }}
           </span>
         </div>
         <BIMDataButton
@@ -68,7 +72,7 @@
           radius
           width="48%"
           @click="openBcfTopic(bcfTopic)"
-          >Voir</BIMDataButton
+          >{{ $t("BcfTopicGridItem.see") }}</BIMDataButton
         >
       </div>
     </div>

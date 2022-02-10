@@ -134,6 +134,14 @@
     "text": "Create a new BCF topic",
     "createBcfSideTitle": "Report a problem"
   },
+  "BcfTopicGridItem": {
+    "priority": "Priority : ",
+    "assignedTo": "Assigned to :",
+    "notSpecified": "Not specified",
+    "elements": "Elements",
+    "noElements": "0 Element",
+    "see": "See"
+  },
 
   "DashboardInfoTile": {
     "title": "Security"
