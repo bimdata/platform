@@ -48,7 +48,7 @@ import { useGroups } from "@/state/groups.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
-import { debounce, delay } from "@/utils/async.js";
+import { debounce } from "@/utils/async.js";
 // Components
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
@@ -70,10 +70,6 @@ export default {
     const { projectGroups } = useGroups();
 
     const reloadData = debounce(async () => {
-      // Wait a bit before refecthing data in order to mitigate
-      // issues related to database replication/synchronization
-      await delay(500);
-
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
