@@ -74,8 +74,6 @@
     "list": "Liste de mes comptes de facturation :"
   },
 
-
-
   "ProjectBcf": {
     "importButtonText": "Importer",
     "exportButtonText": "Exporter",
@@ -100,8 +98,6 @@
       "message": "Veuillez sélectionner un fichier de modèle: {extensions}"
     }
   },
-
-
 
   "BreadcrumbSelector": {
     "inputPlaceholder": "Rechercher"
@@ -167,13 +163,34 @@
   "BcfSettings": {
     "goBackButton": "Retour",
     "title": "Paramètres BCF",
-    "piorityTitle": "Priorités",
-    "labelTitle": "Labels",
-    "statusTitle": "Statut",
-    "typeTitle": "Types",
-    "stageTitle": "Étapes",
     "validateButton": "Valider les paramètres BCF"
-},
+  },
+  "SettingCard": {
+    "addButton": "ajouter un élément",
+    "cancelButton": "Annuler",
+    "validateButton": "Valider",
+    "title": {
+      "priority": "Priorités",
+      "topicLabel": "Labels",
+      "topicStatus": "Statuts",
+      "topicType": "Types",
+      "stage": "Étapes"
+    },
+    "input": {
+      "priority": "Ajouter une nouvelle priorité",
+      "topicLabel": "Ajouter un nouveau label",
+      "topicStatus": "Ajouter un nouveau statut",
+      "topicType": "Ajouter un nouveau type",
+      "stage": "Ajouter une nouvelle étape"
+    },
+    "text": {
+      "priority": "Liste des priorités",
+      "topicLabel": "Liste des labels",
+      "topicStatus": "Liste des statuts",
+      "topicType": "Liste des types",
+      "stage": "Liste des étapes"
+    }
+  },
 
   "DashboardInfoTile": {
     "title": "Securité"
