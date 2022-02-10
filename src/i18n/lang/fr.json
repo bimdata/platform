@@ -191,6 +191,10 @@
       "stage": "Liste des étapes"
     }
   },
+  "BcfTopicCreationCard": {
+    "text": "Créer un nouveau topic BCF",
+    "createBcfSideTitle": "Signaler un problème"
+  },
 
   "DashboardInfoTile": {
     "title": "Securité"

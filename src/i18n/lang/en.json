@@ -130,6 +130,10 @@
       "stage": "Stage list"
     }
   },
+  "BcfTopicCreationCard": {
+    "text": "Create a new BCF topic",
+    "createBcfSideTitle": "Report a problem"
+  },
 
   "DashboardInfoTile": {
     "title": "Security"
