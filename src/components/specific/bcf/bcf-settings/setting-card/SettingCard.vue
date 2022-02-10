@@ -1,7 +1,7 @@
 <template>
   <div class="setting-card p-12 m-y-12">
     <div class="setting-card__header flex items-center justify-between">
-      <strong>{{ title }}</strong>
+      <strong>{{ $t(`SettingCard.title.${extension}`) }}</strong>
       <div class="flex items-center">
         <div
           class="setting-card__header__length flex items-center justify-center m-r-30"
@@ -23,7 +23,7 @@
       <div
         class="setting-card__subheader flex items-center justify-between m-t-6 m-b-12"
       >
-        Liste des {{ title }}
+        {{ $t(`SettingCard.text.${extension}`) }}
         <BIMDataButton color="default" fill radius @click="toggleAddExtension">
           <BIMDataIcon
             name="plus"
@@ -32,13 +32,13 @@
             size="xxxs"
             margin="0 6px 0 0"
           />
-          <span>ajouter un élément</span>
+          <span>{{ $t("SettingCard.addButton") }}</span>
         </BIMDataButton>
       </div>
       <transition name="list">
         <div v-if="showAddExtension" class="m-b-12">
           <BIMDataInput
-            placeholder="Add a new priority"
+            :placeholder="$t(`SettingCard.input.${extension}`)"
             v-model="newTopicExtensionName"
             @keyup.enter.stop="addTopicExtension"
           />
@@ -82,6 +82,10 @@ export default {
     SettingCardItem
   },
   props: {
+    extension: {
+      type: String,
+      required: true
+    },
     topicExtensions: {
       type: Array,
       required: true
