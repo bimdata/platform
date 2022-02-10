@@ -40,6 +40,20 @@
         "createButtonText": "Create a space",
         "organizationsButtonText": "Billing accounts"
     },
+
+    "ProjectBcf": {
+        "importButtonText": "Import",
+        "exportButtonText": "Export",
+        "createBcfButtonText": "Create a BCF",
+        "createBcfTitle": "Report a problem",
+        "searchInputPlaceholder": "Search",
+        "ascendingIndexTooltip": "ascending index",
+        "descendingIndexTooltip": "descending index",
+        "alphabeticalAscendingOrderTooltip": "alphabetical order",
+        "alphabeticalDescendingOrderTooltip": "reverse alphabetical order",
+        "ascendingDateTooltip": "ascending date",
+        "descendingDateTooltip": "descending date"
+      },
     "ProjectFiles": {
         "groupsButtonText": "Manage groups"
     },

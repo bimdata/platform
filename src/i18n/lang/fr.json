@@ -76,7 +76,19 @@
 
 
 
-  "ProjectBcf": {},
+  "ProjectBcf": {
+    "importButtonText": "Importer",
+    "exportButtonText": "Exporter",
+    "createBcfButtonText": "Créer un BCF",
+    "createBcfTitle": "Signaler un problème",
+    "searchInputPlaceholder": "Rechercher",
+    "ascendingIndexTooltip": "index ascendant",
+    "descendingIndexTooltip": "index descendant",
+    "alphabeticalAscendingOrderTooltip": "ordre alphabétique",
+    "alphabeticalDescendingOrderTooltip": "ordre alphabétique inverse",
+    "ascendingDateTooltip": "date croissante",
+    "descendingDateTooltip": "date décroissante"
+  },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
   },
