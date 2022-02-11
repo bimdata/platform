@@ -249,6 +249,18 @@
     "priority": "Priorité",
     "notDefined": "non défini"
   },
+  "CreateBcfTopic": {
+    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "typeLabel": "Type",
+    "priorityLabel": "Priorité",
+    "statusLabel": "Statut",
+    "stageLabel": "Phase",
+    "assignedToLabel": "Assigné à",
+    "dueDateLabel": "Date d'échéance",
+    "descriptionLabel": "Description",
+    "tagsPlaceholder": "Tags",
+    "validateButton": "Valider"
+  },
 
   "DashboardInfoTile": {
     "title": "Securité"
