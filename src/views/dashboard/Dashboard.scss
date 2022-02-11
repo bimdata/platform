@@ -40,8 +40,22 @@
 
 @media only screen and (max-width: 1400px) {
   .dashboard {
+    --tile-height: 200px;
+
     &__head {
       grid-template-columns: repeat(2, minmax(var(--tile-width), 1fr));
+    }
+  }
+}
+
+@media only screen and (max-width: 1240px) {
+  .dashboard {
+    &__body {
+      flex-direction: column-reverse;
+
+      &__right {
+        padding: var(--spacing-unit) 0;
+      }
     }
   }
 }
@@ -53,6 +67,10 @@
 
       &:deep() {
         .dashboard-info-tile {
+          height: var(--tile-height);
+        }
+
+        .app-link > .dashboard-button-tile {
           height: var(--tile-height);
         }
       }
