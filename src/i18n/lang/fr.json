@@ -213,6 +213,9 @@
       "actions": "Actions"
     }
   },
+  "BcfActionsCell": {
+    "seeButton": "Voir"
+  },
 
   "DashboardInfoTile": {
     "title": "Securité"
