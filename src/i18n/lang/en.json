@@ -142,6 +142,16 @@
     "noElements": "0 Element",
     "see": "See"
   },
+  "BcfTopicsList": {
+    "headers": {
+      "index": "#",
+      "priority": "Priority",
+      "title": "Title",
+      "creator": "Created by",
+      "date": "Date",
+      "actions": "Actions"
+    }
+  },
 
   "DashboardInfoTile": {
     "title": "Security"
