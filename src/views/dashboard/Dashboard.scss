@@ -38,7 +38,7 @@
   }
 }
 
-@media only screen and (max-width: 1400px) {
+@include media-breakpoint-down(xxl) {
   .dashboard {
     --tile-height: 200px;
 
@@ -48,7 +48,7 @@
   }
 }
 
-@media only screen and (max-width: 1240px) {
+@include media-breakpoint-down(xl) {
   .dashboard {
     &__body {
       flex-direction: column-reverse;
@@ -60,7 +60,7 @@
   }
 }
 
-@media only screen and (max-width: 992px) {
+@include media-breakpoint-down(lg) {
   .dashboard {
     &__head {
       grid-template-columns: 1fr;
