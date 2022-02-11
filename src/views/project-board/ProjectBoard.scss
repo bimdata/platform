@@ -14,13 +14,21 @@
     padding-top: var(--spacing-unit);
   }
 
-  &__header:deep() {
-    .bimdata-tabs__container__tab.active {
-      background-color: rgba(47, 55, 74, 0.1);
+  &__header {
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-unit);
     }
 
-    .bimdata-tabs__container__tab:hover {
-      background-color: rgba(47, 55, 74, 0.05);
+    &:deep() {
+      .bimdata-tabs__container__tab.active {
+        background-color: rgba(47, 55, 74, 0.1);
+      }
+
+      .bimdata-tabs__container__tab:hover {
+        background-color: rgba(47, 55, 74, 0.05);
+      }
     }
 
     .beta-badge {

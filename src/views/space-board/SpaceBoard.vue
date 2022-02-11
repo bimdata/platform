@@ -16,7 +16,7 @@
         />
       </template>
       <template #right>
-        <div class="flex items-center">
+        <div class="space-board__header__actions">
           <SpaceSizeInfo
             v-if="isSubscriptionEnabled && space.isAdmin"
             :space="space"
@@ -24,7 +24,7 @@
           />
           <BIMDataButton
             data-test="btn-sort"
-            class="space-board__header__btn-sort m-r-12"
+            class="space-board__header__btn"
             fill
             squared
             icon
@@ -35,7 +35,7 @@
           <BIMDataButton
             data-test="btn-users"
             v-if="space.isAdmin"
-            class="space-board__header__btn-users"
+            class="space-board__header__btn"
             fill
             squared
             icon
@@ -98,7 +98,7 @@ import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
 import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
-import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
+// import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
@@ -110,7 +110,7 @@ export default {
     ProjectCreationCard,
     SpaceSizeInfo,
     SpaceUsersManager,
-    SubscriptionStatusBanner,
+    // SubscriptionStatusBanner,
     ViewHeader
   },
   setup() {

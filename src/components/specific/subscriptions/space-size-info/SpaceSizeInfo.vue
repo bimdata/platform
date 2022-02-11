@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="space-size-info flex">
     <ProgressBar class="m-r-12" :progress="spaceSubInfo.usedSizePercent">
       <template #text-below-left>
         <div>
@@ -12,36 +12,30 @@
         </div>
       </template>
     </ProgressBar>
-    <div
+    <AppLink
       v-if="
         spaceSubInfo.isPlatformSubscription &&
         spaceSubInfo.isOrganizationMember &&
         !spaceSubInfo.isCustomSubscription
       "
+      :to="{
+        name: spaceSubInfo.isPlatformPro
+          ? routeNames.subscriptionDatapack
+          : routeNames.subscriptionPro,
+        query: {
+          space: space.id
+        }
+      }"
     >
-      <AppLink
-        :to="{
-          name: spaceSubInfo.isPlatformPro
-            ? routeNames.subscriptionDatapack
-            : routeNames.subscriptionPro,
-          query: {
-            space: space.id
-          }
-        }"
-      >
-        <BIMDataButton class="m-r-18" color="secondary" fill radius>
-          {{
-            $t(
-              `SpaceSizeInfo.${
-                spaceSubInfo.isPlatformPro
-                  ? "subscribeDatapackButton"
-                  : "subscribePlatformButton"
-              }`
-            )
-          }}
-        </BIMDataButton>
-      </AppLink>
-    </div>
+      <BIMDataButton color="secondary" fill radius>
+        <template v-if="spaceSubInfo.isPlatformPro">
+          {{ $t("SpaceSizeInfo.subscribeDatapackButton") }}
+        </template>
+        <template v-else>
+          {{ $t("SpaceSizeInfo.subscribePlatformButton") }}
+        </template>
+      </BIMDataButton>
+    </AppLink>
   </div>
 </template>
 
@@ -69,9 +63,10 @@ export default {
   },
   setup() {
     return {
+      // References
+      routeNames,
       // Methods
-      formatBytes,
-      routeNames
+      formatBytes
     };
   }
 };
