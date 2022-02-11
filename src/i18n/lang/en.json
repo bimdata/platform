@@ -182,6 +182,12 @@
     "noTags": "No tags",
     "commentButton": "Post a comment"
   },
+  "BcfTopicsMetrics": {
+    "emptyText": "Add BCF Topics to start to have some stats here.",
+    "issues": "issues",
+    "priority": "Priority",
+    "notDefined": "not defined"
+  },
 
   "DashboardInfoTile": {
     "title": "Security"

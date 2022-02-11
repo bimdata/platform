@@ -243,6 +243,12 @@
     "noTags": "Pas de tags",
     "commentButton": "Poster un commentaire"
   },
+  "BcfTopicsMetrics": {
+    "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
+    "issues": "problème",
+    "priority": "Priorité",
+    "notDefined": "non défini"
+  },
 
   "DashboardInfoTile": {
     "title": "Securité"
