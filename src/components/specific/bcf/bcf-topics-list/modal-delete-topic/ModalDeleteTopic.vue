@@ -20,8 +20,8 @@
         </BIMDataButton>
       </div>
     </div>
-    <div v-if="loading" class="flex items-center justify-center">
-      <BIMDataLoading></BIMDataLoading>
+    <div v-if="loading">
+      <BIMDataLoading />
     </div>
   </div>
 </template>
