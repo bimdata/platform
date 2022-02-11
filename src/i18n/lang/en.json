@@ -200,6 +200,25 @@
     "tagsPlaceholder": "Tags",
     "validateButton": "Validate"
   },
+  "EditBcfTopic": {
+    "goBackButton": "Back",
+    "editing": "Editing",
+    "dragDropImageText": "Drag and drop an image, or Browse",
+    "titlePlaceholder": "Title*",
+    "typeLabel": "Type",
+    "priorityLabel": "Priority",
+    "statusLabel": "Status",
+    "stageLabel": "Stage",
+    "assignedToLabel": "Assigned to",
+    "descriptionLabel": "Description",
+    "tagsPlaceholder": "Tags",
+    "editButton": "Modify this BCF"
+  },
+  "EditBcfTopicModal": {
+    "modalText": "You are about to quit editing issue {name} but there are unsaved changes.",
+    "cancelButton": "Discard changes",
+    "continueButton": "Continue editing"
+  },
 
   "DashboardInfoTile": {
     "title": "Security"

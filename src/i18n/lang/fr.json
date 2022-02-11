@@ -261,6 +261,25 @@
     "tagsPlaceholder": "Tags",
     "validateButton": "Valider"
   },
+  "EditBcfTopic": {
+    "goBackButton": "Retour",
+    "editing": "Edition",
+    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "titlePlaceholder": "Titre*",
+    "typeLabel": "Type",
+    "priorityLabel": "Priorité",
+    "statusLabel": "Statut",
+    "stageLabel": "Phase",
+    "assignedToLabel": "Assigné à",
+    "descriptionLabel": "Description",
+    "tagsPlaceholder": "Tags",
+    "editButton": "Modifier ce BCF"
+  },
+  "EditBcfTopicModal": {
+    "modalText": "Vous êtes sur le point de quitter l'édition de l'issue {name} mais il y'a des modifications non enregistrées.",
+    "cancelButton": "Annuler les modifications",
+    "continueButton": "Continuer les modifications"
+  },
 
   "DashboardInfoTile": {
     "title": "Securité"
