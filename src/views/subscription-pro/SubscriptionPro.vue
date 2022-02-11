@@ -6,13 +6,12 @@
       </template>
       <template #center>
         <h1 class="subscription-pro__title">
-          {{
-            $t(
-              `SubscriptionPro.${
-                currentSpace ? "upgradeTitle" : "subscribeTitle"
-              }`
-            )
-          }}
+          <template v-if="currentSpace">
+            {{ $t("SubscriptionPro.upgradeTitle") }}
+          </template>
+          <template v-else>
+            {{ $t("SubscriptionPro.subscribeTitle") }}
+          </template>
         </h1>
       </template>
     </ViewHeader>
