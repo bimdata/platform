@@ -8,6 +8,7 @@ import BIMDataDropdownMenu from "@bimdata/design-system/dist/js/BIMDataComponent
 import BIMDataFileIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataFileIcon.js";
 import BIMDataIcon from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataIcon.js";
 import BIMDataInput from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataInput.js";
+import BIMDataLoading from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataLoading.js";
 import BIMDataRadio from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataRadio.js";
 import BIMDataResponsiveGrid from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataResponsiveGrid.js";
 import BIMDataSearch from "@bimdata/design-system/dist/js/BIMDataComponents/vue3/BIMDataSearch.js";
@@ -51,6 +52,7 @@ export default {
   BIMDataFileIcon,
   BIMDataIcon,
   BIMDataInput,
+  BIMDataLoading,
   BIMDataRadio,
   BIMDataResponsiveGrid,
   BIMDataSearch,

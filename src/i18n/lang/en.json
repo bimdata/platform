@@ -155,6 +155,33 @@
   "BcfActionsCell": {
     "seeButton": "See"
   },
+  "ModalDeleteTopic": {
+    "deleteText": "You are about to delete {name}",
+    "deleteBcfButton": "Delete this BCF",
+    "keepBcfButton": "Keep this BCF"
+  },
+  "OpenTopicIssue": {
+    "elements": "Elements",
+    "noElements": "0 Element",
+    "type": "Type:",
+    "noTypeSpecified": "No type specified",
+    "description": "Description :",
+    "noDescriptionProvided": "No description provided",
+    "assignedTo": "Assigned to:",
+    "notAssigned": "Not assigned",
+    "dueDate": "Due date:",
+    "noDueDate": "No due date",
+    "informations": "Informations",
+    "status": "Status:",
+    "noStatusSpecified": "No status specified",
+    "stage": "Stage:",
+    "noStageProvided": "No stage provided",
+    "priority": "Priority:",
+    "priorityNotDefined": "Not defined",
+    "tags": "Tags:",
+    "noTags": "No tags",
+    "commentButton": "Post a comment"
+  },
 
   "DashboardInfoTile": {
     "title": "Security"

@@ -174,21 +174,21 @@
       "topicLabel": "Labels",
       "topicStatus": "Statuts",
       "topicType": "Types",
-      "stage": "Étapes"
+      "stage": "Phases"
     },
     "input": {
       "priority": "Ajouter une nouvelle priorité",
       "topicLabel": "Ajouter un nouveau label",
       "topicStatus": "Ajouter un nouveau statut",
       "topicType": "Ajouter un nouveau type",
-      "stage": "Ajouter une nouvelle étape"
+      "stage": "Ajouter une nouvelle phase"
     },
     "text": {
       "priority": "Liste des priorités",
       "topicLabel": "Liste des labels",
       "topicStatus": "Liste des statuts",
       "topicType": "Liste des types",
-      "stage": "Liste des étapes"
+      "stage": "Liste des phases"
     }
   },
   "BcfTopicCreationCard": {
@@ -215,6 +215,33 @@
   },
   "BcfActionsCell": {
     "seeButton": "Voir"
+  },
+  "ModalDeleteTopic": {
+    "deleteText": "Vous êtes sur le point de supprimer {name}",
+    "deleteBcfButton": "Supprimer ce BCF",
+    "keepBcfButton": "Conserver ce BCF"
+  },
+  "OpenTopicIssue": {
+    "elements": "Élements",
+    "noElements": "0 Élement",
+    "type": "Type :",
+    "noTypeSpecified": "Pas de type spécifié",
+    "description": "Description :",
+    "noDescriptionProvided": "Pas de description renseignée",
+    "assignedTo": "Assigné à :",
+    "notAssigned": "Non assigné",
+    "dueDate": "Échéance :",
+    "noDueDate": "Pas de date d'échéance",
+    "informations": "Informations",
+    "status": "Statut :",
+    "noStatusSpecified": "Pas de statut spécifié",
+    "stage": "Phase :",
+    "noStageProvided": "Pas de phase renseignée",
+    "priority": "Priorité :",
+    "priorityNotDefined": "Non défini",
+    "tags": "Tags :",
+    "noTags": "Pas de tags",
+    "commentButton": "Poster un commentaire"
   },
 
   "DashboardInfoTile": {

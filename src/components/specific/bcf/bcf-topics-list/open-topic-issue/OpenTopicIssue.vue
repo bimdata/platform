@@ -92,108 +92,97 @@
             {{ topicElements.length }}
           </span>
           <span>
-            {{ topicElements.length ? "Elements" : "0 Element" }}
+            {{
+              topicElements.length
+                ? $t("OpenTopicIssue.elements")
+                : $t("OpenTopicIssue.noElements")
+            }}
           </span>
         </div>
         <div>
-          <span class="color-primary">Type:</span>
+          <span class="color-primary">{{ $t("OpenTopicIssue.type") }}</span>
           <span class="color-granite">{{
-            bcfTopic.topicType ? bcfTopic.topicType : "Pas de type spécifié"
+            bcfTopic.topicType
+              ? bcfTopic.topicType
+              : $t("OpenTopicIssue.noTypeSpecified")
           }}</span>
         </div>
         <div>
-          <span class="color-primary">Description:</span>
+          <span class="color-primary">
+            {{ $t("OpenTopicIssue.description") }}
+          </span>
           <span class="color-granite">{{
             bcfTopic.description
               ? bcfTopic.description
-              : "Pas de description renseignée"
+              : $t("OpenTopicIssue.noDescriptionProvided")
           }}</span>
         </div>
         <div>
-          <span class="color-primary">Assigné à :</span>
+          <span class="color-primary">
+            {{ $t("OpenTopicIssue.assignedTo") }}
+          </span>
           <span class="color-granite">{{
-            bcfTopic.assignedTo ? bcfTopic.assignedTo : "Non assigné"
+            bcfTopic.assignedTo
+              ? bcfTopic.assignedTo
+              : $t("OpenTopicIssue.notAssigned")
           }}</span>
         </div>
         <div>
-          <span class="color-primary">Échéance:</span>
+          <span class="color-primary">
+            {{ $t("OpenTopicIssue.dueDate") }}
+          </span>
           <span class="color-granite">{{
             bcfTopic.dueDate
               ? $d(bcfTopic.dueDate, "short")
-              : "Pas de date d'échéance"
+              : $t("OpenTopicIssue.noDueDate")
           }}</span>
         </div>
       </div>
       <div class="open-topic-issue__content__card m-t-12 p-12 text-left">
         <div class="flex items-center m-b-12">
           <BIMDataIcon name="bcf" fill color="default" />
-          <span class="m-l-6">Informations</span>
+          <span class="m-l-6"> {{ $t("OpenTopicIssue.informations") }} </span>
         </div>
         <div>
-          <span class="color-primary">Statut:</span>
+          <span class="color-primary">{{ $t("OpenTopicIssue.status") }}</span>
           <span class="color-granite">{{
-            bcfTopic.topicStatus || "Pas de statut spécifié"
+            bcfTopic.topicStatus || $t("OpenTopicIssue.noStatusSpecified")
           }}</span>
         </div>
         <div>
-          <span class="color-primary">Phase :</span>
+          <span class="color-primary"> {{ $t("OpenTopicIssue.stage") }} </span>
           <span class="color-granite">{{
-            bcfTopic.stage || "Pas de phase renseignée"
+            bcfTopic.stage || $t("OpenTopicIssue.noStageProvided")
           }}</span>
         </div>
         <div>
-          <span class="color-primary">Priorité:</span>
+          <span class="color-primary">
+            {{ $t("OpenTopicIssue.priority") }}
+          </span>
           <span class="color-granite">{{
-            bcfTopic.priority || "Non défini"
+            bcfTopic.priority || $t("OpenTopicIssue.priorityNotDefined")
           }}</span>
         </div>
         <div class="m-t-12">
-          <span class="color-primary">Tags:</span>
+          <span class="color-primary"> {{ $t("OpenTopicIssue.tags") }} </span>
           <span class="color-granite">{{
-            bcfTopic.labels.length ? bcfTopic.labels.join(", ") : "Pas de tags"
+            bcfTopic.labels.length
+              ? bcfTopic.labels.join(", ")
+              : $t("OpenTopicIssue.noTags")
           }}</span>
         </div>
       </div>
       <div class="open-topic-issue__comment m-t-12">
-        <BIMDataButton width="100%" color="primary" fill radius
-          >Poster un commentaire</BIMDataButton
-        >
+        <BIMDataButton width="100%" color="primary" fill radius>
+          {{ $t("OpenTopicIssue.commentButton") }}
+        </BIMDataButton>
       </div>
     </div>
-    <div
+    <ModalDeleteTopic
       v-if="deleteTopicModal"
-      class="overlay flex items-center justify-center"
-    >
-      <div class="delete-modal flex items-center justify-center p-y-18">
-        <BIMDataIcon name="warning" fill color="high" size="xs" />
-        <span class="m-y-12"
-          >Vous êtes sur le point de supprimer
-          <strong>{{ bcfTopic.title }}</strong></span
-        >
-        <div class="delete-modal__btns flex justify-center items-center">
-          <BIMDataButton
-            color="high"
-            fill
-            radius
-            @click="removeTopic"
-            class="m-r-18"
-          >
-            Supprimer ce BCF
-          </BIMDataButton>
-          <BIMDataButton
-            color="primary"
-            outline
-            radius
-            @click="deleteTopicModal = false"
-          >
-            Conserver ce BCF
-          </BIMDataButton>
-        </div>
-      </div>
-    </div>
-    <div v-if="loading" class="overlay flex items-center justify-center">
-      <BIMDataSpinner />
-    </div>
+      :bcfTopic="bcfTopic"
+      @close="deleteTopicModal = false"
+    />
   </div>
 </template>
 
@@ -202,14 +191,13 @@ import { computed, ref } from "vue";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
-
-import { useBcf } from "@/state/bcf.js";
-import { useProjects } from "@/state/projects.js";
+import ModalDeleteTopic from "../modal-delete-topic/ModalDeleteTopic.vue";
 
 export default {
   components: {
     EditBcfTopic,
-    NoImgTopicBcf
+    NoImgTopicBcf,
+    ModalDeleteTopic
   },
   props: {
     bcfTopic: {
@@ -229,19 +217,7 @@ export default {
       getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
     }
 
-    const { currentProject } = useProjects();
-    const { deleteTopic } = useBcf();
-    const loading = ref(false);
     const deleteTopicModal = ref(false);
-
-    const removeTopic = async () => {
-      try {
-        loading.value = true;
-        await deleteTopic(currentProject.value, props.bcfTopic);
-      } finally {
-        loading.value = false;
-      }
-    };
 
     const isOpenEditTopic = ref(false);
 
@@ -258,12 +234,10 @@ export default {
     });
 
     return {
-      loading,
       deleteTopicModal,
       isOpenEditTopic,
       getPriorityClasses,
       getStatusClasses,
-      removeTopic,
       topicElements
     };
   }
