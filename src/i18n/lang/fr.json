@@ -160,6 +160,18 @@
     "placeholder": "< Aucun projet >"
   },
 
+  "BcfFilters": {
+    "filtersButton": "Filtres",
+    "priorityLabel": "Priorité",
+    "statusLabel": "Statut",
+    "startDatePlaceholder": "Date de début",
+    "startDateExempleDate": "(Ex: 31/04/2022)",
+    "endDatePlaceholder": "Date de fin",
+    "endDateExempleDate": "(Ex: 31/05/2022)",
+    "tagsLabel": "Tags",
+    "resetButton": "Réinitialiser",
+    "searchButton": "Rechercher"
+  },
   "BcfSettings": {
     "goBackButton": "Retour",
     "title": "Paramètres BCF",

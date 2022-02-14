@@ -19,7 +19,7 @@
         size="xxs"
         margin="0 6px 0 0"
       />
-      Filters
+      {{ $t("BcfFilters.filtersButton") }}
     </BIMDataButton>
     <transition name="slide-fade-up">
       <div class="bcf-filters__container p-18" v-show="showFilters">
@@ -40,7 +40,7 @@
         <BIMDataSelect
           width="264px"
           :multi="true"
-          label="Priority"
+          :label="$t('BcfFilters.priorityLabel')"
           :options="priorityOptions"
           v-model="priorities"
           optionKey="value"
@@ -50,7 +50,7 @@
         <BIMDataSelect
           width="264px"
           :multi="true"
-          label="Status"
+          :label="$t('BcfFilters.statusLabel')"
           :options="statusOptions"
           v-model="status"
           optionKey="value"
@@ -58,25 +58,31 @@
           class="m-t-24"
         />
         <div class="bcf-filters__container__date flex justify-between m-t-24">
-          <BIMDataInput
-            margin="0"
-            v-model="startDateInput"
-            placeholder="Début de création"
-            :error="hasStartDateError"
-            errorMessage="Error"
-          />
-          <BIMDataInput
-            margin="0"
-            v-model="endDateInput"
-            placeholder="Fin de création"
-            :error="hasEndDateError"
-            errorMessage="Error"
-          />
+          <div class="m-r-6">
+            <BIMDataInput
+              margin="0"
+              v-model="startDateInput"
+              :placeholder="$t('BcfFilters.startDatePlaceholder')"
+              :error="hasStartDateError"
+              errorMessage="Error"
+            />
+            <p class="m-y-6">{{ $t("BcfFilters.startDateExempleDate") }}</p>
+          </div>
+          <div>
+            <BIMDataInput
+              margin="0"
+              v-model="endDateInput"
+              :placeholder="$t('BcfFilters.endDatePlaceholder')"
+              :error="hasEndDateError"
+              errorMessage="Error"
+            />
+            <p class="m-y-6">{{ $t("BcfFilters.endDateExempleDate") }}</p>
+          </div>
         </div>
         <BIMDataSelect
           width="264px"
           :multi="true"
-          label="Tags"
+          :label="$t('BcfFilters.tagsLabel')"
           :options="tagOptions"
           v-model="tags"
           class="m-t-24"
@@ -88,17 +94,18 @@
             radius
             class="m-r-12"
             @click="resetFilters"
-            >Réinitialiser</BIMDataButton
+            >{{ $t("BcfFilters.resetButton") }}</BIMDataButton
           >
-          <BIMDataButton color="primary" fill radius @click="submitFilters"
-            ><BIMDataIcon
+          <BIMDataButton color="primary" fill radius @click="submitFilters">
+            <BIMDataIcon
               name="search"
               fill
               color="default"
               margin="0 6px 0 0"
               size="xxs"
-            /><span>Search</span></BIMDataButton
-          >
+            />
+            <span>{{ $t("BcfFilters.searchButton") }}</span>
+          </BIMDataButton>
         </div>
       </div>
     </transition>
