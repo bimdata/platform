@@ -209,7 +209,7 @@
   },
   "BcfTopicGridItem": {
     "priority": "Priorité : ",
-    "assignedTo": "Assigné à :",
+    "assignedTo": "Assigné à : ",
     "notSpecified": "Non renseigné",
     "elements": "Élements",
     "noElements": "0 Élement",

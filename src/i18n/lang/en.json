@@ -147,8 +147,8 @@
     "createBcfSideTitle": "Report a problem"
   },
   "BcfTopicGridItem": {
-    "priority": "Priority : ",
-    "assignedTo": "Assigned to :",
+    "priority": "Priority: ",
+    "assignedTo": "Assigned to: ",
     "notSpecified": "Not specified",
     "elements": "Elements",
     "noElements": "0 Element",
@@ -177,7 +177,7 @@
     "noElements": "0 Element",
     "type": "Type:",
     "noTypeSpecified": "No type specified",
-    "description": "Description :",
+    "description": "Description: ",
     "noDescriptionProvided": "No description provided",
     "assignedTo": "Assigned to:",
     "notAssigned": "Not assigned",
