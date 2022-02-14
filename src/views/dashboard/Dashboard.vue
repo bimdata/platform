@@ -32,11 +32,11 @@
           </template>
         </DashboardButtonTile>
       </AppLink>
-      <AppLink :to="{ name: routeNames.userSubscriptions }">
-        <DashboardButtonTile
-          v-if="isSubscriptionEnabled"
-          data-test="btn-subscriptions"
-        >
+      <AppLink
+        v-if="isSubscriptionEnabled"
+        :to="{ name: routeNames.userSubscriptions }"
+      >
+        <DashboardButtonTile data-test="btn-subscriptions">
           <template #title>
             {{ $t("Dashboard.subscriptionsTileTitle") }}
           </template>
