@@ -89,22 +89,4 @@
       }
     }
   }
-  .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: rgba(47, 55, 74, 0.9);
-    height: 100%;
-    width: 100%;
-  }
-  .delete-modal {
-    flex-direction: column;
-    height: auto;
-    background-color: var(--color-white);
-    width: 90%;
-    box-shadow: var(--box-shadow);
-    &__btns {
-      width: 100%;
-    }
-  }
 }

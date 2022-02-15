@@ -15,7 +15,7 @@
     <div
       class="create-bcf-topic__image flex items-center justify-center m-t-24"
     >
-      Drag and drop an image, or Browse
+      {{ $t("CreateBcfTopic.dragDropImageText") }}
     </div>
 
     <div class="create-bcf-topic__content m-t-36">
@@ -28,53 +28,56 @@
       />
       <BIMDataSelect
         width="100%"
-        label="Type"
+        :label="$t('CreateBcfTopic.typeLabel')"
         :options="topicExtensions.topicType"
         v-model="topicType"
       />
       <BIMDataSelect
         width="100%"
-        label="Priority"
+        :label="$t('CreateBcfTopic.priorityLabel')"
         :options="topicExtensions.priority"
         v-model="topicPriority"
       />
       <BIMDataSelect
         width="100%"
-        label="Statut"
+        :label="$t('CreateBcfTopic.statusLabel')"
         :options="topicExtensions.topicStatus"
         v-model="topicStatus"
       />
       <BIMDataSelect
         width="100%"
-        label="Phase"
+        :label="$t('CreateBcfTopic.stageLabel')"
         :options="topicExtensions.stage"
         v-model="topicPhase"
       />
       <BIMDataSelect
         width="100%"
-        label="Assigned to"
+        :label="$t('CreateBcfTopic.stageLabel')"
         :options="topicExtensions.userIdType"
         v-model="topicAssignedTo"
       />
       <!-- <BIMDataSelect
         width="100%"
-        label="Due date"
+        :label="$t('CreateBcfTopic.dueDateLabel')"
         :options="options"
         v-model="selection"
       /> -->
       <BIMDataTextarea
-        label="Description"
+        :label="$t('CreateBcfTopic.descriptionLabel')"
         name="description"
         v-model="topicDescription"
         width="100%"
         fitContent
         resizable
       />
-      <BIMDataInput placeholder="Tags" v-model="topicTitle" />
+      <BIMDataInput
+        :placeholder="$t('CreateBcfTopic.tagsPlaceholder')"
+        v-model="topicTitle"
+      />
     </div>
     <div class="create-bcf-topic__footer m-t-24">
       <BIMDataButton width="100%" color="primary" fill radius @click="submit">
-        Valider
+        {{ $t("CreateBcfTopic.validateButton") }}
       </BIMDataButton>
     </div>
   </div>

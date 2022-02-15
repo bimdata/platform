@@ -19,7 +19,8 @@
         :accept="['.bcf']"
         @upload="uploadFiles"
       >
-        <BIMDataIcon name="import" size="xs" margin="0 6px 0 0" /> Importer
+        <BIMDataIcon name="import" size="xs" margin="0 6px 0 0" />
+        {{ $t("ProjectBcf.importButtonText") }}
       </FileUploadButton>
       <BIMDataButton
         color="default"
@@ -28,7 +29,8 @@
         @click="exportBcfTopics"
         class="m-r-12"
       >
-        <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" /> Exporter
+        <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" />
+        {{ $t("ProjectBcf.exportButtonText") }}
       </BIMDataButton>
       <BIMDataButton
         width="130px"
@@ -38,10 +40,10 @@
         @click="openCreateBcfTopic"
       >
         <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-        <span>Créer un BCF</span>
+        <span>{{ $t("ProjectBcf.createBcfButtonText") }}</span>
       </BIMDataButton>
     </app-slot-content>
-    <AppSidePanel title="Signaler un problème">
+    <AppSidePanel :title="$t('ProjectBcf.createBcfTitle')">
       <CreateBcfTopic :bcfTopics="bcfTopics" />
     </AppSidePanel>
     <div class="project-bcf__settings" v-show="showBcfSettings">
@@ -49,7 +51,7 @@
     </div>
     <div class="project-bcf__actions flex justify-between m-t-24">
       <BIMDataSearch
-        placeholder="Search"
+        :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
         color="secondary"
         radius
         width="38%"
@@ -59,7 +61,9 @@
       <div class="flex">
         <BIMDataTooltip
           :message="
-            isSortByIndexActive ? 'index ascendant' : 'index descendant'
+            isSortByIndexActive
+              ? $t('ProjectBcf.ascendingIndexTooltip')
+              : $t('ProjectBcf.descendingIndexTooltip')
           "
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
@@ -87,8 +91,8 @@
         <BIMDataTooltip
           :message="
             isSortByNameActive
-              ? 'ordre alphabétique'
-              : 'ordre alphabétique inverse'
+              ? $t('ProjectBcf.alphabeticalAscendingOrderTooltip')
+              : $t('ProjectBcf.alphabeticalDescendingOrderTooltip')
           "
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
@@ -115,7 +119,9 @@
         <BIMDataTooltip
           ref="dateTooltip"
           :message="
-            isSortByDateActive ? 'date croissante' : 'date décroissante'
+            isSortByDateActive
+              ? $t('ProjectBcf.ascendingDateTooltip')
+              : $t('ProjectBcf.ascendingDateTooltip')
           "
           class="m-r-12"
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"

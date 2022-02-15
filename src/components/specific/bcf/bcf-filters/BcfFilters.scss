@@ -25,11 +25,8 @@
       }
     }
     &__date {
-      .bimdata-input:deep() {
-        width: 47%;
-        input {
-          width: 100%;
-        }
+      p {
+        font-size: 11px;
       }
     }
   }

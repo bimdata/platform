@@ -56,17 +56,4 @@
     width: 100%;
     z-index: 10;
   }
-  .edit-modal {
-    flex-direction: column;
-    height: auto;
-    background-color: var(--color-white);
-    width: 90%;
-    box-shadow: var(--box-shadow);
-    &__btns {
-      width: 100%;
-      .bimdata-btn {
-        padding: 0 10px;
-      }
-    }
-  }
 }

@@ -9,7 +9,6 @@
       :perPage="13"
       :rowHeight="44"
       @selection-changed="$emit('selection-changed', $event)"
-      :placeholder="$t('FilesTable.emptyTablePlaceholder')"
     >
       <template #cell-priority="{ row: bcfTopic }">
         <BcfPriorityCell :bcfTopic="bcfTopic" />
@@ -62,7 +61,7 @@ export default {
       () => {
         columns.value = columnsDef.map(col => ({
           ...col,
-          label: col.label || t(`FilesTable.headers.${col.id}`)
+          label: col.label || t(`BcfTopicsList.headers.${col.id}`)
         }));
       },
       { immediate: true }

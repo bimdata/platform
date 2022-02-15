@@ -74,9 +74,19 @@
     "list": "Liste de mes comptes de facturation :"
   },
 
-
-
-  "ProjectBcf": {},
+  "ProjectBcf": {
+    "importButtonText": "Importer",
+    "exportButtonText": "Exporter",
+    "createBcfButtonText": "Créer un BCF",
+    "createBcfTitle": "Signaler un problème",
+    "searchInputPlaceholder": "Rechercher",
+    "ascendingIndexTooltip": "index ascendant",
+    "descendingIndexTooltip": "index descendant",
+    "alphabeticalAscendingOrderTooltip": "ordre alphabétique",
+    "alphabeticalDescendingOrderTooltip": "ordre alphabétique inverse",
+    "ascendingDateTooltip": "date croissante",
+    "descendingDateTooltip": "date décroissante"
+  },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
   },
@@ -88,8 +98,6 @@
       "message": "Veuillez sélectionner un fichier de modèle: {extensions}"
     }
   },
-
-
 
   "BreadcrumbSelector": {
     "inputPlaceholder": "Rechercher"
@@ -150,6 +158,139 @@
 
   "BreadcrumbProjectSelector": {
     "placeholder": "< Aucun projet >"
+  },
+
+  "BcfFilters": {
+    "filtersButton": "Filtres",
+    "priorityLabel": "Priorité",
+    "statusLabel": "Statut",
+    "startDatePlaceholder": "Date de début",
+    "startDateExempleDate": "(Ex: 31/04/2022)",
+    "endDatePlaceholder": "Date de fin",
+    "endDateExempleDate": "(Ex: 31/05/2022)",
+    "tagsLabel": "Tags",
+    "resetButton": "Réinitialiser",
+    "searchButton": "Rechercher"
+  },
+  "BcfSettings": {
+    "goBackButton": "Retour",
+    "title": "Paramètres BCF",
+    "validateButton": "Valider les paramètres BCF"
+  },
+  "SettingCard": {
+    "addButton": "ajouter un élément",
+    "cancelButton": "Annuler",
+    "validateButton": "Valider",
+    "title": {
+      "priority": "Priorités",
+      "topicLabel": "Labels",
+      "topicStatus": "Statuts",
+      "topicType": "Types",
+      "stage": "Phases"
+    },
+    "input": {
+      "priority": "Ajouter une nouvelle priorité",
+      "topicLabel": "Ajouter un nouveau label",
+      "topicStatus": "Ajouter un nouveau statut",
+      "topicType": "Ajouter un nouveau type",
+      "stage": "Ajouter une nouvelle phase"
+    },
+    "text": {
+      "priority": "Liste des priorités",
+      "topicLabel": "Liste des labels",
+      "topicStatus": "Liste des statuts",
+      "topicType": "Liste des types",
+      "stage": "Liste des phases"
+    }
+  },
+  "BcfTopicCreationCard": {
+    "text": "Créer un nouveau topic BCF",
+    "createBcfSideTitle": "Signaler un problème"
+  },
+  "BcfTopicGridItem": {
+    "priority": "Priorité : ",
+    "assignedTo": "Assigné à : ",
+    "notSpecified": "Non renseigné",
+    "elements": "Élements",
+    "noElements": "0 Élement",
+    "see": "Voir"
+  },
+  "BcfTopicsList": {
+    "headers": {
+      "index": "#",
+      "priority": "Priorité",
+      "title": "Titre",
+      "creator": "Crée par",
+      "date": "Date",
+      "actions": "Actions"
+    }
+  },
+  "BcfActionsCell": {
+    "seeButton": "Voir"
+  },
+  "ModalDeleteTopic": {
+    "deleteText": "Vous êtes sur le point de supprimer {name}",
+    "deleteBcfButton": "Supprimer ce BCF",
+    "keepBcfButton": "Conserver ce BCF"
+  },
+  "OpenTopicIssue": {
+    "elements": "Élements",
+    "noElements": "0 Élement",
+    "type": "Type :",
+    "noTypeSpecified": "Pas de type spécifié",
+    "description": "Description :",
+    "noDescriptionProvided": "Pas de description renseignée",
+    "assignedTo": "Assigné à :",
+    "notAssigned": "Non assigné",
+    "dueDate": "Échéance :",
+    "noDueDate": "Pas de date d'échéance",
+    "informations": "Informations",
+    "status": "Statut :",
+    "noStatusSpecified": "Pas de statut spécifié",
+    "stage": "Phase :",
+    "noStageProvided": "Pas de phase renseignée",
+    "priority": "Priorité :",
+    "priorityNotDefined": "Non défini",
+    "tags": "Tags :",
+    "noTags": "Pas de tags",
+    "commentButton": "Poster un commentaire"
+  },
+  "BcfTopicsMetrics": {
+    "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
+    "issues": "problème",
+    "priority": "Priorité",
+    "notDefined": "non défini"
+  },
+  "CreateBcfTopic": {
+    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "typeLabel": "Type",
+    "priorityLabel": "Priorité",
+    "statusLabel": "Statut",
+    "stageLabel": "Phase",
+    "assignedToLabel": "Assigné à",
+    "dueDateLabel": "Date d'échéance",
+    "descriptionLabel": "Description",
+    "tagsPlaceholder": "Tags",
+    "validateButton": "Valider"
+  },
+  "EditBcfTopic": {
+    "goBackButton": "Retour",
+    "editing": "Edition",
+    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "titlePlaceholder": "Titre*",
+    "typeLabel": "Type",
+    "priorityLabel": "Priorité",
+    "statusLabel": "Statut",
+    "stageLabel": "Phase",
+    "assignedToLabel": "Assigné à",
+    "descriptionLabel": "Description",
+    "tagsPlaceholder": "Tags",
+    "editButton": "Modifier ce BCF"
+  },
+  "EditBcfTopicModal": {
+    "modalText": "Vous êtes sur le point de quitter l'édition de l'issue {name} mais il y'a des modifications non enregistrées.",
+    "cancelButton": "Annuler les modifications",
+    "continueButton": "Continuer les modifications"
   },
 
   "DashboardInfoTile": {

@@ -6,7 +6,7 @@
       radius
       @click="openBcfTopic(bcfTopic)"
     >
-      Voir
+      {{ $t("BcfActionsCell.seeButton") }}
     </BIMDataButton>
     <transition name="slide-fade-left">
       <div

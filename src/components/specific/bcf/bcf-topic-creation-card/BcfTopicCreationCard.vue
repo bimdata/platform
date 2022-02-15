@@ -2,7 +2,7 @@
   <BIMDataCard class="create-bcf-topic flex items-center justify-center">
     <template #content>
       <EmptyBcfTopic />
-      <p class="color-primary m-y-24">Créer un nouveau topic BCF</p>
+      <p class="color-primary m-y-24">{{ $t("BcfTopicCreationCard.text") }}</p>
       <BIMDataButton
         width="40px"
         height="40px"
@@ -16,7 +16,7 @@
       </BIMDataButton>
     </template>
   </BIMDataCard>
-  <AppSidePanel title="Signaler un problème">
+  <AppSidePanel :title="$t('BcfTopicCreationCard.createBcfSideTitle')">
     <CreateBcfTopic />
   </AppSidePanel>
 </template>

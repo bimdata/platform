@@ -9,9 +9,9 @@
           size="xxs"
           margin="0 6px 0 0"
         />
-        <span>Back</span>
+        <span> {{ $t("BcfSettings.goBackButton") }}</span>
       </BIMDataButton>
-      <span>Paramètres BCF</span>
+      <span> {{ $t("BcfSettings.title") }}</span>
       <BIMDataIcon
         name="close"
         fill
@@ -26,37 +26,19 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-        <SettingCard
-          v-if="topicExtensions.priority"
-          title="Priority"
-          :topicExtensions="topicExtensions.priority"
-          @edit="updatePriority($event)"
-          @add="updatePriority($event)"
-          @delete="updatePriority($event)"
-        />
-        <SettingCard
-          v-if="topicExtensions.topicLabel"
-          title="Label"
-          :topicExtensions="topicExtensions.topicLabel"
-        />
-        <SettingCard
-          v-if="topicExtensions.topicStatus"
-          title="Status"
-          :topicExtensions="topicExtensions.topicStatus"
-        />
-        <SettingCard
-          v-if="topicExtensions.topicType"
-          title="Type"
-          :topicExtensions="topicExtensions.topicType"
-        />
-        <SettingCard
-          v-if="topicExtensions.stage"
-          title="Stage"
-          :topicExtensions="topicExtensions.stage"
-        />
+        <template v-for="extension of extensionKeys" :key="extension">
+          <SettingCard
+            v-if="topicExtensions[extension]"
+            :extension="extension"
+            :topicExtensions="topicExtensions[extension]"
+            @edit="updateExtension(extension, $event)"
+            @add="updateExtension(extension, $event)"
+            @delete="updateExtension(extension, $event)"
+          />
+        </template>
       </div>
       <BIMDataButton color="primary" fill radius class="m-x-18">
-        Valider les paramètres BCF
+        {{ $t("BcfSettings.validateButton") }}
       </BIMDataButton>
     </div>
   </div>
@@ -67,6 +49,15 @@ import { watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import SettingCard from "./setting-card/SettingCard.vue";
+
+const extensionKeys = [
+  "priority",
+  "topicLabel",
+  "topicStatus",
+  "topicType",
+  "stage"
+];
+
 export default {
   components: {
     SettingCard
@@ -86,10 +77,10 @@ export default {
       }
     );
 
-    const updatePriority = async priorities => {
+    const updateExtension = async (extension, value) => {
       try {
         await updateTopicExtensions(currentProject.value, {
-          priority: priorities
+          [extension]: value
         });
       } catch (error) {
         console.log(error);
@@ -97,8 +88,9 @@ export default {
     };
 
     return {
+      extensionKeys,
       topicExtensions,
-      updatePriority
+      updateExtension
     };
   }
 };

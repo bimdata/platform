@@ -11,13 +11,14 @@
       v-else-if="bcfTopics.length === 0"
     >
       <EmptyBcfStats class="m-r-42" />
-      <p>Add BCF Topics to start to have some stats here.</p>
+      <p>{{ $t("BcfTopicsMetrics.emptyText") }}</p>
     </div>
 
     <div v-else class="bcf-topics-metrics__content flex justify-around">
       <Graph :barsData="barsData" :size="size">
         <div class="bcf-topics-metrics__content__total flex items-center">
-          <strong>{{ bcfTopics.length }}</strong> <span>issues</span>
+          <strong>{{ bcfTopics.length }}</strong>
+          <span>{{ $t("BcfTopicsMetrics.issues") }}</span>
         </div>
       </Graph>
       <div
@@ -38,7 +39,10 @@
           ></div>
           <strong class="m-x-6">{{ barData.percentage }} %</strong>
           <span
-            >Priorité {{ barData.label ? barData.label : "non défini" }}</span
+            >{{ $t("BcfTopicsMetrics.priority") }}
+            {{
+              barData.label ? barData.label : $t("BcfTopicsMetrics.notDefined")
+            }}</span
           >
         </div>
       </div>

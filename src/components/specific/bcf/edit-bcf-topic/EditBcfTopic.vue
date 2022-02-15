@@ -9,9 +9,11 @@
           size="xxs"
           margin="0 6px 0 0"
         />
-        Back
+        {{ $t("EditBcfTopic.goBackButton") }}
       </BIMDataButton>
-      <span class="text-center">Édition {{ bcfTopic.title }}</span>
+      <span class="text-center"
+        >{{ $t("EditBcfTopic.editing") }} {{ bcfTopic.title }}</span
+      >
     </div>
     <div class="edit-bcf-topic__content p-r-6">
       <div
@@ -35,54 +37,54 @@
           v-if="bcfTopic.snapshots[0]"
           :src="bcfTopic.snapshots[0].snapshotData"
         />
-        <span v-else> Drag and drop an image, or Browse </span>
+        <span v-else> {{ $t("EditBcfTopic.dragDropImageText") }} </span>
       </div>
 
       <div class="edit-bcf-topic__content__content m-t-36">
         <BIMDataInput
-          placeholder="Title*"
+          :placeholder="$t('EditBcfTopic.titlePlaceholder')"
           v-model="topicTitle"
           errorMessage="Titre manquant"
         />
         <BIMDataSelect
           width="100%"
-          label="Type"
+          :label="$t('EditBcfTopic.typeLabel')"
           :options="topicExtensions.topicType"
           v-model="topicType"
         />
         <BIMDataSelect
           width="100%"
-          label="Priority"
+          :label="$t('EditBcfTopic.priorityLabel')"
           :options="topicExtensions.priority"
           v-model="topicPriority"
         />
         <BIMDataSelect
           width="100%"
-          label="Statut"
+          :label="$t('EditBcfTopic.statusLabel')"
           :options="topicExtensions.topicStatus"
           v-model="topicStatus"
         />
         <BIMDataSelect
           width="100%"
-          label="Phase"
+          :label="$t('EditBcfTopic.stageLabel')"
           :options="topicExtensions.stage"
           v-model="topicPhase"
         />
         <BIMDataSelect
           width="100%"
-          label="Assigned to"
+          :label="$t('EditBcfTopic.assignedToLabel')"
           :options="topicExtensions.userIdType"
           v-model="topicAssignedTo"
         />
         <BIMDataTextarea
-          label="Description"
+          :label="$t('EditBcfTopic.descriptionLabel')"
           name="description"
           v-model="topicDescription"
           width="100%"
           fitContent
           resizable
         />
-        <!-- <BIMDataInput placeholder="Tags" v-model="topicTags" margin="30px 0" /> -->
+        <!-- <BIMDataInput :placeholder="$t('EditBcfTopic.tagsPlaceholder')" v-model="topicTags" margin="30px 0" /> -->
       </div>
     </div>
     <div class="edit-bcf-topic__footer m-t-12">
@@ -93,40 +95,17 @@
         radius
         @click="updateBcfTopic"
       >
-        Modifier ce BCF
+        {{ $t("EditBcfTopic.editButton") }}
       </BIMDataButton>
     </div>
-    <div v-if="openModal" class="overlay flex items-center justify-center">
-      <div class="edit-modal flex items-center justify-center p-y-18 p-x-12">
-        <BIMDataIcon name="warning" fill color="high" size="xs" />
-        <span class="text-center m-y-12"
-          >Vous êtes sur le point de quitter l'édition de l'issue
-          <strong>{{ bcfTopic.title }}</strong> mais il y'a des modifications
-          non enregistrées.</span
-        >
-        <div class="edit-modal__btns flex justify-center items-center">
-          <BIMDataButton
-            color="high"
-            fill
-            radius
-            @click="$emit('close')"
-            class="m-r-12"
-          >
-            Annuler les modifications
-          </BIMDataButton>
-          <BIMDataButton
-            color="primary"
-            outline
-            radius
-            @click="openModal = false"
-          >
-            Continuer les modifications
-          </BIMDataButton>
-        </div>
-      </div>
-    </div>
+    <EditBcfTopicModal
+      v-if="openModal"
+      :bcfTopic="bcfTopic"
+      @close="$emit('close')"
+      @continue="openModal = false"
+    />
     <div v-if="loading" class="overlay flex items-center justify-center">
-      <BIMDataSpinner />
+      <BIMDataLoading />
     </div>
   </div>
 </template>
@@ -137,7 +116,12 @@ import { ref, watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 
+import EditBcfTopicModal from "./edit-bcf-topic-modal/EditBcfTopicModal.vue";
+
 export default {
+  components: {
+    EditBcfTopicModal
+  },
   props: {
     bcfTopic: {
       type: Object,
