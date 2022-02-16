@@ -1,6 +1,8 @@
+import { isConvertibleToModel } from "@/utils/models.js";
 import { createFileUploader } from "@/utils/upload.js";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
+import ModelService from "./ModelService.js";
 
 class UploadService {
   createSpaceImageUploader(
@@ -76,6 +78,24 @@ class UploadService {
     };
 
     return { upload, cancel };
+  }
+
+  createProjectModelUploader(
+    project,
+    { onUploadStart, onUploadProgress, onUploadComplete, onUploadError }
+  ) {
+    return this.createProjectFileUploader(project, {
+      onUploadStart,
+      onUploadProgress,
+      onUploadError,
+      onUploadComplete: async e => {
+        const document = e.response;
+        if (isConvertibleToModel(document)) {
+          await ModelService.createModel(project, document);
+        }
+        onUploadComplete(e);
+      }
+    });
   }
 }
 

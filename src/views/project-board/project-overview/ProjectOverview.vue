@@ -25,6 +25,7 @@
 
     <transition name="fade">
       <FileUploader
+        isModelUploader
         class="project-overview__block--upload"
         v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         :project="project"
