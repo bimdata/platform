@@ -1,5 +1,6 @@
 import {
   CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
   MODEL_TYPE,
   MODEL_SOURCE
 } from "@/config/models.js";
@@ -62,17 +63,23 @@ function isIFC(file) {
   return isModel(file) && file.modelType === MODEL_TYPE.IFC;
 }
 
-function canConvertToModel(file) {
+function isSmartFile(file) {
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+}
+
+function isConvertibleToModel(file) {
   return (
-    !isModel(file) &&
-    CONVERTIBLE_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase())
+    CONVERTIBLE_EXTENSIONS.includes(
+      fileExtension(file.fileName).toLowerCase()
+    ) && !isModel(file)
   );
 }
 
 export {
-  canConvertToModel,
+  isConvertibleToModel,
   isIFC,
   isModel,
+  isSmartFile,
   segregateBySource,
   segregateByType
 };

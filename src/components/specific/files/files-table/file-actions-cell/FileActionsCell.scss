@@ -19,9 +19,6 @@
 
     &__btn {
       justify-content: flex-start;
-      &.bimdata-btn__ghost--default:deep() {
-        color: var(--color-text);
-      }
     }
   }
 }
