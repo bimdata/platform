@@ -33,19 +33,19 @@
         </BIMDataButton>
 
         <div class="models-manager__menu__container" v-show="showMenu">
-          <div
-            class="models-manager__menu__item"
-            :class="{ disabled: tab.models.length > 0 }"
-            v-for="tab of tabs"
-            :key="tab.id"
-          >
-            <BIMDataCheckbox
-              :disabled="tab.models.length > 0"
-              :modelValue="tab.models.length > 0 || tab.displayed"
-              @update:modelValue="tab.displayed = !tab.displayed"
-            />
-            <span>{{ `.${tab.id}` }}</span>
-          </div>
+          <template v-for="tab of tabs" :key="tab.id">
+            <div
+              class="models-manager__menu__item"
+              :class="{ disabled: tab.models.length > 0 }"
+            >
+              <BIMDataCheckbox
+                :disabled="tab.models.length > 0"
+                :modelValue="tab.models.length > 0 || tab.displayed"
+                @update:modelValue="tab.displayed = !tab.displayed"
+              />
+              <span>{{ `.${tab.id}` }}</span>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -112,13 +112,15 @@ export default {
     watch(
       () => props.models,
       models => {
-        const modelsbyType = segregateByType(models);
+        const modelsByType = segregateByType(models);
         tabs.value = tabsDef.map(tab => ({
           ...tab,
-          models: modelsbyType[tab.id] || [],
+          models: modelsByType[tab.id] || [],
           displayed: true
         }));
-        currentTab.value = tabs.value[0];
+        currentTab.value =
+          tabs.value.find(tab => tab.id === currentTab.value?.id) ||
+          tabs.value[0];
       },
       { immediate: true }
     );
