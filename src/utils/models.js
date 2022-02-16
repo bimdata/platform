@@ -59,6 +59,11 @@ function isModel(file) {
   return !!file.modelId;
 }
 
+function isPlanModel(model) {
+  const { JPG, PDF, PNG } = MODEL_TYPE;
+  return [JPG, PDF, PNG].includes(model.type);
+}
+
 function isIFC(file) {
   return isModel(file) && file.modelType === MODEL_TYPE.IFC;
 }
@@ -79,6 +84,7 @@ export {
   isConvertibleToModel,
   isIFC,
   isModel,
+  isPlanModel,
   isSmartFile,
   segregateBySource,
   segregateByType

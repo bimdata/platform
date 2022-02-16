@@ -6,6 +6,7 @@ const MODEL_TYPE = Object.freeze({
   GLTF: "GLTF",
   IFC: "IFC",
   JPEG: "JPEG",
+  JPG: "JPEG",
   OBJ: "OBJ",
   PDF: "PDF",
   PNG: "PNG"
