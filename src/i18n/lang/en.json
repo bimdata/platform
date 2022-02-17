@@ -208,6 +208,7 @@
     "stageLabel": "Stage",
     "assignedToLabel": "Assigned to",
     "dueDateLabel": "Due date",
+    "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
     "tagsPlaceholder": "Tags",
     "validateButton": "Validate"

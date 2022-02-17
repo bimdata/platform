@@ -52,16 +52,20 @@
       />
       <BIMDataSelect
         width="100%"
-        :label="$t('CreateBcfTopic.stageLabel')"
+        :label="$t('CreateBcfTopic.assignedToLabel')"
         :options="topicExtensions.userIdType"
         v-model="topicAssignedTo"
       />
-      <!-- <BIMDataSelect
-        width="100%"
-        :label="$t('CreateBcfTopic.dueDateLabel')"
-        :options="options"
-        v-model="selection"
-      /> -->
+      <div class="due-date">
+        <BIMDataInput
+          margin="0"
+          v-model="topicDate"
+          :placeholder="$t('CreateBcfTopic.dueDateLabel')"
+          :error="hasDateError"
+          errorMessage="Format de date ou date incorrecte"
+        />
+        <p class="m-y-6">{{ $t("CreateBcfTopic.dateExample") }}</p>
+      </div>
       <BIMDataTextarea
         :label="$t('CreateBcfTopic.descriptionLabel')"
         name="description"
@@ -89,6 +93,8 @@ import { computed, ref, watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+
+import { formatToDateObject, regexDate } from "@/utils/date";
 
 export default {
   props: {
@@ -131,21 +137,43 @@ export default {
     const topicStatus = ref();
     const topicPhase = ref();
     const topicAssignedTo = ref();
+    const topicDate = ref("");
     const hasError = ref(false);
+    const hasDateError = ref(false);
     const { pushNotification } = useAppNotification();
 
+    const isDateConform = ({ value }) => {
+      if (!value) {
+        return true;
+      }
+      if (!value.match(regexDate)) {
+        return false;
+      }
+      const dateToCompare = formatToDateObject(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return dateToCompare.getTime() >= today.getTime();
+    };
     const submit = async () => {
-      if (topicTitle.value) {
+      if (!isDateConform(topicDate)) {
+        hasDateError.value = true;
+        return;
+      }
+      if (topicTitle.value && isDateConform(topicDate)) {
+        const body = {
+          title: topicTitle.value,
+          topicType: topicType.value,
+          priority: topicPriority.value,
+          topicStatus: topicStatus.value,
+          stage: topicPhase.value,
+          assignedTo: topicAssignedTo.value,
+          description: topicDescription.value
+        };
+        if (topicDate.value) {
+          body.dueDate = formatToDateObject(topicDate.value);
+        }
         try {
-          await createTopic(currentProject.value, {
-            title: topicTitle.value,
-            topicType: topicType.value,
-            priority: topicPriority.value,
-            topicStatus: topicStatus.value,
-            stage: topicPhase.value,
-            assignedTo: topicAssignedTo.value,
-            description: topicDescription.value
-          });
+          await createTopic(currentProject.value, body);
           pushNotification({
             type: "success",
             title: "Success",
@@ -154,12 +182,14 @@ export default {
           await loadBcfTopics(currentProject.value);
         } finally {
           topicTitle.value = "";
-          topicType.value = "";
-          topicPriority.value = "";
-          topicStatus.value = "";
-          topicPhase.value = "";
-          topicAssignedTo.value = "";
+          topicType.value = null;
+          topicPriority.value = null;
+          topicStatus.value = null;
+          topicPhase.value = null;
+          topicAssignedTo.value = null;
+          topicDate.value = "";
           topicDescription.value = "";
+          hasDateError.value = false;
         }
       } else {
         hasError.value = true;
@@ -168,12 +198,14 @@ export default {
 
     return {
       hasError,
+      hasDateError,
       topicTitle,
       topicType,
       topicPriority,
       topicStatus,
       topicPhase,
       topicAssignedTo,
+      topicDate,
       topicDescription,
       nextIndex,
       topicExtensions,
