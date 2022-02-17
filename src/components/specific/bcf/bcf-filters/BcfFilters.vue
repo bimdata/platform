@@ -66,7 +66,7 @@
               :error="hasStartDateError"
               errorMessage="Error"
             />
-            <p class="m-y-6">{{ $t("BcfFilters.startDateExempleDate") }}</p>
+            <p class="m-y-6">{{ $t("BcfFilters.startDateExample") }}</p>
           </div>
           <div>
             <BIMDataInput
@@ -76,7 +76,7 @@
               :error="hasEndDateError"
               errorMessage="Error"
             />
-            <p class="m-y-6">{{ $t("BcfFilters.endDateExempleDate") }}</p>
+            <p class="m-y-6">{{ $t("BcfFilters.endDateExample") }}</p>
           </div>
         </div>
         <BIMDataSelect

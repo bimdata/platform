@@ -99,9 +99,9 @@
     "priorityLabel": "Priority",
     "statusLabel": "Status",
     "startDatePlaceholder": "Start date",
-    "startDateExempleDate": "(Ex: 31/04/2022)",
+    "startDateExample": "(Ex: 28/04/2022)",
     "endDatePlaceholder": "End date",
-    "endDateExempleDate": "(Ex: 31/05/2022)",
+    "endDateExample": "(Ex: 28/05/2022)",
     "tagsLabel": "Tags",
     "resetButton": "Reset",
     "searchButton": "Search"
