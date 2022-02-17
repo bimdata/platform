@@ -56,7 +56,7 @@
         :options="topicExtensions.userIdType"
         v-model="topicAssignedTo"
       />
-      <div>
+      <div class="due-date">
         <BIMDataInput
           margin="0"
           v-model="topicDate"
