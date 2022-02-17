@@ -16,7 +16,7 @@
         <BIMDataTextbox
           class="visa-comment-post__header__left-side__name"
           :text="comment.fullName || comment.author.email"
-          maxWidth="30%"
+          maxWidth="60%"
         />
         <span class="visa-comment-post__header__left-side__separator">•</span>
         <span class="visa-comment-post__header__left-side__date">{{
