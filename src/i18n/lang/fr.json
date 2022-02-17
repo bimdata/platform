@@ -269,6 +269,7 @@
     "stageLabel": "Phase",
     "assignedToLabel": "Assigné à",
     "dueDateLabel": "Date d'échéance",
+    "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
     "tagsPlaceholder": "Tags",
     "validateButton": "Valider"
