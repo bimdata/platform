@@ -29,7 +29,6 @@
       </template>
     </template>
     <BIMDataButton
-      :disabled="!project.isAdmin && model.document.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
