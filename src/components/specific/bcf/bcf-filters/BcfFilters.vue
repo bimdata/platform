@@ -66,7 +66,7 @@
               :error="hasStartDateError"
               errorMessage="Error"
             />
-            <p class="m-y-6">{{ $t("BcfFilters.startDateExempleDate") }}</p>
+            <p class="m-y-6">{{ $t("BcfFilters.startDateExample") }}</p>
           </div>
           <div>
             <BIMDataInput
@@ -76,7 +76,7 @@
               :error="hasEndDateError"
               errorMessage="Error"
             />
-            <p class="m-y-6">{{ $t("BcfFilters.endDateExempleDate") }}</p>
+            <p class="m-y-6">{{ $t("BcfFilters.endDateExample") }}</p>
           </div>
         </div>
         <BIMDataSelect
@@ -178,7 +178,8 @@ export default {
     const endDateInput = ref("");
     const hasStartDateError = ref(false);
     const hasEndDateError = ref(false);
-    const isDateConform = ({ value }) => {
+
+    const isStartDateConform = ({ value }) => {
       const dateToCompare = formatToDateObject(value);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -186,10 +187,20 @@ export default {
         value.match(regexDate) && dateToCompare.getTime() <= today.getTime()
       );
     };
+    const isEndDateConform = (startValue, endValue) => {
+      const startDateToCompare = formatToDateObject(startValue.value);
+      const endDateToCompare = formatToDateObject(endValue.value);
+      if (startValue.value < endValue.value) {
+        return startDateToCompare.getTime() <= endDateToCompare.getTime();
+      } else {
+        return false;
+      }
+    };
+
     // Validation date + emit formulaire
     const submitFilters = () => {
-      const startDateConform = isDateConform(startDateInput);
-      const endDateConform = isDateConform(endDateInput);
+      const startDateConform = isStartDateConform(startDateInput);
+      const endDateConform = isEndDateConform(startDateInput, endDateInput);
       if (
         priorities.value.length ||
         status.value.length ||

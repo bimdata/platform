@@ -6,9 +6,10 @@
   &__content {
     position: relative;
     &__total {
+      width: 60px;
       position: absolute;
-      top: 107px;
-      left: 107px;
+      top: calc((245px / 2) - (32px / 2));
+      left: calc((245px / 2) - (60px / 2));
       flex-direction: column;
       line-height: 1;
       strong {

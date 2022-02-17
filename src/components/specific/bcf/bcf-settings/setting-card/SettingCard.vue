@@ -44,15 +44,19 @@
           />
 
           <div class="flex items-center justify-end">
-            <BIMDataButton ghost radius class="m-r-6" @click="closeAddExtension"
-              >Annuler</BIMDataButton
+            <BIMDataButton
+              ghost
+              radius
+              class="m-r-6"
+              @click="closeAddExtension"
+              >{{ $t("SettingCard.cancelButton") }}</BIMDataButton
             >
             <BIMDataButton
               color="primary"
               fill
               radius
               @click="addTopicExtension"
-              >Valider</BIMDataButton
+              >{{ $t("SettingCard.validateButton") }}</BIMDataButton
             >
           </div>
         </div>
