@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="visaCommentPost"
     class="visa-comment-post"
     :class="`visa-comment-post${isAReply ? '__reply' : ''}`"
     v-click-away="toggleCloseActions"
@@ -73,7 +74,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, nextTick } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import VisaCommentsInput from "@/components/specific/visa/visa-summary/visa-comments/visa-comments-input/VisaCommentsInput.vue";
 
@@ -122,6 +123,7 @@ export default {
     const commentContent = ref(props.comment.content);
     const areActionsClosed = ref(false);
     const textarea = ref(null);
+    const visaCommentPost = ref(null);
 
     const undoEdit = () => {
       commentContent.value = props.comment.content;
@@ -164,20 +166,14 @@ export default {
 
     watch(isEditing, () => isEditing.value && textarea.value.focus());
 
-    const onReply = elem => {
-      const postEl = elem.path[1];
-      const { height: heightPost, bottom: bottomPost } =
-        postEl.getBoundingClientRect();
-
-      const visaSumEl = document.querySelector(".visa-summary");
-      const { bottom: bottomVisa } = visaSumEl.getBoundingClientRect();
-
-      if (bottomPost > bottomVisa) {
-        visaSumEl.scrollBy(0, bottomVisa - bottomPost + 100);
-      } else {
-        visaSumEl.scrollTop = heightPost;
-      }
+    const onReply = async () => {
       isReplying.value = true;
+      await nextTick();
+
+      visaCommentPost.value.scrollIntoView({
+        block: "center",
+        behavior: "smooth"
+      });
     };
 
     return {
@@ -187,6 +183,7 @@ export default {
       areActionsClosed,
       commentContent,
       textarea,
+      visaCommentPost,
       // methods
       undoEdit,
       confirmEdit,
