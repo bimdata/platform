@@ -57,7 +57,7 @@
         radius
         width="30%"
         style="margin: -5% 0 0 74%; font-size: 1.15em"
-        @click="isReplying = true"
+        @click="onReply"
         >{{ $t("Visa.comments.reply") }}</BIMDataButton
       >
     </template>
@@ -95,6 +95,7 @@ export default {
       type: Object,
       required: true
     },
+
     isAReply: {
       type: Boolean,
       required: true
@@ -118,7 +119,6 @@ export default {
 
     const isEditing = ref(false);
     const isReplying = ref(false);
-    const commentToHandle = ref(null);
     const commentContent = ref(props.comment.content);
     const areActionsClosed = ref(false);
     const textarea = ref(null);
@@ -164,10 +164,25 @@ export default {
 
     watch(isEditing, () => isEditing.value && textarea.value.focus());
 
+    const onReply = elem => {
+      const postEl = elem.path[1];
+      const { height: heightPost, bottom: bottomPost } =
+        postEl.getBoundingClientRect();
+
+      const visaSumEl = document.querySelector(".visa-summary");
+      const { bottom: bottomVisa } = visaSumEl.getBoundingClientRect();
+
+      if (bottomPost > bottomVisa) {
+        visaSumEl.scrollBy(0, bottomVisa - bottomPost + 100);
+      } else {
+        visaSumEl.scrollTop = heightPost;
+      }
+      isReplying.value = true;
+    };
+
     return {
       //references
       isEditing,
-      commentToHandle,
       isReplying,
       areActionsClosed,
       commentContent,
@@ -177,7 +192,8 @@ export default {
       confirmEdit,
       confirmDelete,
       toggleCloseActions,
-      replyComment
+      replyComment,
+      onReply
     };
   }
 };
