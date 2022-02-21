@@ -30,11 +30,12 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 export default {
   props: {
     modelValue: { type: Array, default: () => [] }
   },
+  emits: ["update:modelValue"],
   setup(props, { emit }) {
     const tags = ref(props.modelValue);
     const newTag = ref("");
@@ -45,10 +46,14 @@ export default {
     const removeTag = index => {
       tags.value.splice(index, 1);
     };
+
+    watchEffect(() => {
+      tags.value = props.modelValue;
+    });
+
     const onTagsChange = () => {
       emit("update:modelValue", tags.value);
       tags.value = [];
-      console.log(tags.value);
     };
     return { tags, newTag, addTag, removeTag, onTagsChange };
   }
