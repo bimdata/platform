@@ -8,11 +8,11 @@
     <div class="visa-comment-post__header">
       <div class="visa-comment-post__header__left-side">
         <UserAvatar
+          class="visa-comment-post__header__left-side__user-avatar"
           :user="comment.author"
           size="27"
           initialsSize="14"
           color="silver-light"
-          style="box-shadow: var(--box-shadow)"
         />
         <BIMDataTextbox
           class="visa-comment-post__header__left-side__name"
@@ -54,20 +54,20 @@
     </div>
     <template v-if="isLastComment && !isEditing && !isReplying">
       <BIMDataButton
+        class="visa-comment-post__content__reply-button"
         color="secondary"
         radius
         width="30%"
-        style="margin: -5% 0 0 74%; font-size: 1.15em"
         @click="onReply"
         >{{ $t("Visa.comments.reply") }}</BIMDataButton
       >
     </template>
     <template v-if="isReplying">
       <VisaCommentsInput
+        class="visa-comment-post__content__answer-input"
         :mainComment="mainComment"
         @post-comment="replyComment"
         @close-comments-input="isReplying = false"
-        style="margin-left: var(--spacing-unit)"
       />
     </template>
   </div>
