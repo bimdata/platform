@@ -12,6 +12,10 @@
       margin-left: var(--spacing-unit);
       max-width: 70%;
 
+      &__user-avatar {
+        box-shadow: var(--box-shadow)
+      }
+
       &__name {
         color: var(--color-primary);
         font-weight: bold;
@@ -36,6 +40,15 @@
 
   &__content {
     margin: 0 var(--spacing-unit);
+
+    &__reply-button {
+      margin: -5% 0 0 74%; 
+      font-size: 1.15em;
+    }
+
+    &__answer-input {
+      margin-left: var(--spacing-unit)
+    }
 
     &:deep() {
       textarea {
