@@ -84,7 +84,7 @@
           fitContent
           resizable
         />
-        <!-- <BIMDataInput :placeholder="$t('EditBcfTopic.tagsPlaceholder')" v-model="topicTags" margin="30px 0" /> -->
+        <TagsInput v-model="topicTags" class="m-t-24" />
       </div>
     </div>
     <div class="edit-bcf-topic__footer m-t-12">
@@ -117,10 +117,12 @@ import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 
 import EditBcfTopicModal from "./edit-bcf-topic-modal/EditBcfTopicModal.vue";
+import TagsInput from "../create-bcf-topic/tags-input/TagsInput.vue";
 
 export default {
   components: {
-    EditBcfTopicModal
+    EditBcfTopicModal,
+    TagsInput
   },
   props: {
     bcfTopic: {
@@ -138,7 +140,7 @@ export default {
     const topicPhase = ref("");
     const topicAssignedTo = ref("");
     const topicDescription = ref("");
-    // const topicTags = ref([]);
+    const topicTags = ref([]);
 
     watch(
       () => props.bcfTopic,
@@ -174,11 +176,11 @@ export default {
         } else {
           topicDescription.value = null;
         }
-        // if (props.bcfTopic.labels) {
-        //   topicTags.value = props.bcfTopic.labels;
-        // } else {
-        //   topicTags.value = [];
-        // }
+        if (props.bcfTopic.labels) {
+          topicTags.value = props.bcfTopic.labels;
+        } else {
+          topicTags.value = [];
+        }
       },
       { immediate: true }
     );
@@ -196,8 +198,8 @@ export default {
           topicStatus: topicStatus.value,
           stage: topicPhase.value,
           assignedTo: topicAssignedTo.value,
-          description: topicDescription.value
-          // labels: topicTags.value
+          description: topicDescription.value,
+          labels: topicTags.value
         });
       } finally {
         loading.value = false;
@@ -208,12 +210,12 @@ export default {
     const goBack = () => {
       if (
         topicTitle.value !== props.bcfTopic.title ||
-        topicType.value !== props.bcfTopic.topicType ||
-        topicPriority.value !== props.bcfTopic.priority ||
-        topicStatus.value !== props.bcfTopic.topicStatus ||
-        topicPhase.value !== props.bcfTopic.stage ||
-        topicAssignedTo.value !== props.bcfTopic.assignedTo ||
-        topicDescription.value !== props.bcfTopic.description
+        topicType.value !== (props.bcfTopic.topicType || null) ||
+        topicPriority.value !== (props.bcfTopic.priority || null) ||
+        topicStatus.value !== (props.bcfTopic.topicStatus || null) ||
+        topicPhase.value !== (props.bcfTopic.stage || null) ||
+        topicAssignedTo.value !== (props.bcfTopic.assignedTo || null) ||
+        topicDescription.value !== (props.bcfTopic.description || "" || null)
       ) {
         openModal.value = true;
       } else {
@@ -232,6 +234,7 @@ export default {
       topicAssignedTo,
       topicDescription,
       topicExtensions,
+      topicTags,
       // Methods
       updateBcfTopic,
       goBack

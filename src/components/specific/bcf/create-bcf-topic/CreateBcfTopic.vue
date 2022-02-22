@@ -74,10 +74,7 @@
         fitContent
         resizable
       />
-      <BIMDataInput
-        :placeholder="$t('CreateBcfTopic.tagsPlaceholder')"
-        v-model="topicTitle"
-      />
+      <TagsInput v-model="topicTags" />
     </div>
     <div class="create-bcf-topic__footer m-t-24">
       <BIMDataButton width="100%" color="primary" fill radius @click="submit">
@@ -93,10 +90,14 @@ import { computed, ref, watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-
 import { formatToDateObject, regexDate } from "@/utils/date";
 
+import TagsInput from "./tags-input/TagsInput.vue";
+
 export default {
+  components: {
+    TagsInput
+  },
   props: {
     bcfTopics: {
       type: Array
@@ -138,6 +139,7 @@ export default {
     const topicPhase = ref();
     const topicAssignedTo = ref();
     const topicDate = ref("");
+    const topicTags = ref([]);
     const hasError = ref(false);
     const hasDateError = ref(false);
     const { pushNotification } = useAppNotification();
@@ -154,6 +156,7 @@ export default {
       today.setHours(0, 0, 0, 0);
       return dateToCompare.getTime() >= today.getTime();
     };
+
     const submit = async () => {
       if (!isDateConform(topicDate)) {
         hasDateError.value = true;
@@ -167,7 +170,8 @@ export default {
           topicStatus: topicStatus.value,
           stage: topicPhase.value,
           assignedTo: topicAssignedTo.value,
-          description: topicDescription.value
+          description: topicDescription.value,
+          labels: topicTags.value
         };
         if (topicDate.value) {
           body.dueDate = formatToDateObject(topicDate.value);
@@ -189,6 +193,7 @@ export default {
           topicAssignedTo.value = null;
           topicDate.value = "";
           topicDescription.value = "";
+          topicTags.value = [];
           hasDateError.value = false;
         }
       } else {
@@ -207,6 +212,7 @@ export default {
       topicAssignedTo,
       topicDate,
       topicDescription,
+      topicTags,
       nextIndex,
       topicExtensions,
       // Methods

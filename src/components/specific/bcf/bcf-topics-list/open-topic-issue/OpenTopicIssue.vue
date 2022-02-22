@@ -165,11 +165,7 @@
         </div>
         <div class="m-t-12">
           <span class="color-primary"> {{ $t("OpenTopicIssue.tags") }} </span>
-          <span class="color-granite">{{
-            bcfTopic.labels.length
-              ? bcfTopic.labels.join(", ")
-              : $t("OpenTopicIssue.noTags")
-          }}</span>
+          <span class="color-granite">{{ topicTags }}</span>
         </div>
       </div>
       <div class="open-topic-issue__comment m-t-12">
@@ -188,6 +184,7 @@
 
 <script>
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
@@ -207,6 +204,8 @@ export default {
   },
   emits: ["close"],
   setup(props) {
+    const { t } = useI18n();
+
     const getPriorityClasses = ref("");
     if (props.bcfTopic.priority) {
       getPriorityClasses.value = props.bcfTopic.priority.toLowerCase();
@@ -233,12 +232,23 @@ export default {
       }
     });
 
+    const topicTags = computed(() => {
+      if (props.bcfTopic.labels && props.bcfTopic.labels.length) {
+        return Array.from(props.bcfTopic.labels)
+          .sort((a, b) => (a > b ? 1 : -1))
+          .join(", ");
+      } else {
+        return t("OpenTopicIssue.noTags");
+      }
+    });
+
     return {
       deleteTopicModal,
       isOpenEditTopic,
       getPriorityClasses,
       getStatusClasses,
-      topicElements
+      topicElements,
+      topicTags
     };
   }
 };
