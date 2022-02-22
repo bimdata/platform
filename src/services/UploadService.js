@@ -13,7 +13,7 @@ class UploadService {
       {
         method: "PATCH",
         url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
-        accessToken: apiClient.config.accessToken().split(" ")[1]
+        accessToken: apiClient.accessToken
       },
       {
         onUploadStart,
@@ -49,7 +49,7 @@ class UploadService {
       {
         method: "POST",
         url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
-        accessToken: apiClient.config.accessToken().split(" ")[1]
+        accessToken: apiClient.accessToken
       },
       {
         onUploadStart,
