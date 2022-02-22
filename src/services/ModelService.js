@@ -1,4 +1,5 @@
 import { downloadAll } from "@/utils/download.js";
+import { isPlanModel } from "@/utils/models.js";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
@@ -77,13 +78,18 @@ class ModelService {
   async deleteModels(project, models) {
     try {
       return await Promise.all(
-        models.map(model =>
-          apiClient.modelApi.deleteModel({
+        models.map(model => {
+          const params = {
             cloudPk: project.cloud.id,
             projectPk: project.id,
             id: model.id
-          })
-        )
+          };
+          if (isPlanModel(model)) {
+            return apiClient.modelApi.deleteModelWithoutDoc(params);
+          } else {
+            return apiClient.modelApi.deleteModel(params);
+          }
+        })
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_DELETE_ERROR, error);

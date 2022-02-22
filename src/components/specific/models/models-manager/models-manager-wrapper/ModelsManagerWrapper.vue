@@ -44,6 +44,7 @@
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
+      @remove-model="removeModel($event)"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
     />
@@ -98,7 +99,11 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
-    const { updateModels, downloadModels: download } = useModels();
+    const {
+      deleteModels,
+      downloadModels: download,
+      updateModels
+    } = useModels();
 
     const tabs = computed(() =>
       tabsDef[props.modelType].map(tab => ({
@@ -129,17 +134,6 @@ export default {
       selection.value = models;
     };
 
-    const modelsToDelete = ref([]);
-    const showDeleteModal = ref(false);
-    const openDeleteModal = models => {
-      modelsToDelete.value = models;
-      showDeleteModal.value = true;
-    };
-    const closeDeleteModal = () => {
-      modelsToDelete.value = [];
-      showDeleteModal.value = false;
-    };
-
     const archiveModels = async models => {
       await updateModels(
         props.project,
@@ -152,6 +146,21 @@ export default {
         props.project,
         models.map(model => ({ ...model, archived: false }))
       );
+    };
+
+    const removeModel = async model => {
+      await deleteModels(props.project, [model]);
+    };
+
+    const modelsToDelete = ref([]);
+    const showDeleteModal = ref(false);
+    const openDeleteModal = models => {
+      modelsToDelete.value = models;
+      showDeleteModal.value = true;
+    };
+    const closeDeleteModal = () => {
+      modelsToDelete.value = [];
+      showDeleteModal.value = false;
     };
 
     const downloadModels = async models => {
@@ -172,6 +181,7 @@ export default {
       downloadModels,
       closeDeleteModal,
       openDeleteModal,
+      removeModel,
       selectTab,
       setSelection,
       unarchiveModels

@@ -169,7 +169,7 @@ export default {
       () => {
         fileUploads.value = fileUploads.value.concat(
           props.filesToUpload.map(file =>
-            Object.assign(file, { key: generateFileKey(file.name, file.size) })
+            Object.assign(file, { key: generateFileKey(file) })
           )
         );
       },

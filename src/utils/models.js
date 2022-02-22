@@ -1,5 +1,6 @@
 import {
   CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
   MODEL_TYPE,
   MODEL_SOURCE
 } from "@/config/models.js";
@@ -58,21 +59,33 @@ function isModel(file) {
   return !!file.modelId;
 }
 
+function isPlanModel(model) {
+  const { JPG, PDF, PNG } = MODEL_TYPE;
+  return [JPG, PDF, PNG].includes(model.type);
+}
+
 function isIFC(file) {
   return isModel(file) && file.modelType === MODEL_TYPE.IFC;
 }
 
-function canConvertToModel(file) {
+function isSmartFile(file) {
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+}
+
+function isConvertibleToModel(file) {
   return (
-    !isModel(file) &&
-    CONVERTIBLE_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase())
+    CONVERTIBLE_EXTENSIONS.includes(
+      fileExtension(file.fileName).toLowerCase()
+    ) && !isModel(file)
   );
 }
 
 export {
-  canConvertToModel,
+  isConvertibleToModel,
   isIFC,
   isModel,
+  isPlanModel,
+  isSmartFile,
   segregateBySource,
   segregateByType
 };

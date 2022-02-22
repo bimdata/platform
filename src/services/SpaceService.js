@@ -89,8 +89,8 @@ class SpaceService {
         {
           method: "PATCH",
           headers: {
-            Authorization: apiClient.config.accessToken(),
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            ...apiClient.authHeader
           },
           body: JSON.stringify({
             image: null

@@ -23,7 +23,8 @@
         </BIMDataButton>
 
         <BIMDataButton
-          v-if="!isFolder(file) && canConvertToModel(file)"
+          v-if="!isFolder(file) && isSmartFile(file)"
+          :disabled="!isConvertibleToModel(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -94,7 +95,7 @@ import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
-import { canConvertToModel, isIFC } from "@/utils/models.js";
+import { isConvertibleToModel, isIFC, isSmartFile } from "@/utils/models.js";
 
 export default {
   props: {
@@ -147,11 +148,12 @@ export default {
       // References
       showMenu,
       // Methods
-      canConvertToModel,
       closeMenu,
       goToModelViewer,
+      isConvertibleToModel,
       isFolder,
       isIFC,
+      isSmartFile,
       onClick,
       toggleMenu
     };

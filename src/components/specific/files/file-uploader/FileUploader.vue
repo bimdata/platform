@@ -3,6 +3,7 @@
     <div class="file-uploader__upload-list">
       <transition-group name="list">
         <FileUploadCard
+          :isModelUpload="isModelUploader"
           v-for="file of fileUploads"
           :key="file.key"
           :project="project"
@@ -61,6 +62,10 @@ export default {
     FileUploadCard
   },
   props: {
+    isModelUploader: {
+      type: Boolean,
+      default: false
+    },
     project: {
       type: Object,
       required: true
@@ -115,7 +120,7 @@ export default {
         emit("forbidden-upload-attempt", forbiddenUploads);
       }
       files = files.map(file =>
-        Object.assign(file, { key: generateFileKey(file.name, file.size) })
+        Object.assign(file, { key: generateFileKey(file) })
       );
       fileUploads.value = fileUploads.value.concat(files);
     };

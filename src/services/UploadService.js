@@ -1,6 +1,8 @@
+import { isConvertibleToModel } from "@/utils/models.js";
 import { createFileUploader } from "@/utils/upload.js";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
+import ModelService from "./ModelService.js";
 
 class UploadService {
   createSpaceImageUploader(
@@ -11,7 +13,7 @@ class UploadService {
       {
         method: "PATCH",
         url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
-        accessToken: apiClient.config.accessToken().split(" ")[1]
+        accessToken: apiClient.accessToken
       },
       {
         onUploadStart,
@@ -47,7 +49,7 @@ class UploadService {
       {
         method: "POST",
         url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
-        accessToken: apiClient.config.accessToken().split(" ")[1]
+        accessToken: apiClient.accessToken
       },
       {
         onUploadStart,
@@ -76,6 +78,24 @@ class UploadService {
     };
 
     return { upload, cancel };
+  }
+
+  createProjectModelUploader(
+    project,
+    { onUploadStart, onUploadProgress, onUploadComplete, onUploadError }
+  ) {
+    return this.createProjectFileUploader(project, {
+      onUploadStart,
+      onUploadProgress,
+      onUploadError,
+      onUploadComplete: async e => {
+        const document = e.response;
+        if (isConvertibleToModel(document)) {
+          await ModelService.createModel(project, document);
+        }
+        onUploadComplete(e);
+      }
+    });
   }
 }
 

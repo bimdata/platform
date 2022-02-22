@@ -21,7 +21,7 @@ const privateApiFetch = async ({ method = "GET", path, body, json = true }) => {
     {
       method,
       headers: {
-        Authorization: apiClient.config.accessToken(),
+        ...apiClient.authHeader,
         ...(json ? { "Content-Type": "application/json;charset=UTF-8" } : {})
       },
       body: body ? (json ? JSON.stringify(body) : body) : undefined
