@@ -51,7 +51,7 @@
     </div>
 
     <div class="models-manager__body">
-      <transition name="fade">
+      <transition name="fade" mode="out-in">
         <keep-alive>
           <component
             :is="currentTab.component"
