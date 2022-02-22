@@ -74,5 +74,8 @@
         
       }
     }
+    .disabled {
+      filter: grayscale(100%);
+    }
   }
 }

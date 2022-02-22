@@ -52,6 +52,7 @@
       <template v-else>
         <div
           class="visa-list__content__visa"
+          :class="{ disabled: visasLoading }"
           v-for="visa of currentTab.visas"
           :key="visa.id"
           @click="!visasLoading && $emit('reach-visa', visa)"

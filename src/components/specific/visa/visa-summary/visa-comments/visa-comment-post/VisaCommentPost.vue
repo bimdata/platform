@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="visaCommentPost"
     class="visa-comment-post"
     :class="`visa-comment-post${isAReply ? '__reply' : ''}`"
     v-click-away="toggleCloseActions"
@@ -16,7 +17,7 @@
         <BIMDataTextbox
           class="visa-comment-post__header__left-side__name"
           :text="comment.fullName || comment.author.email"
-          maxWidth="30%"
+          maxWidth="60%"
         />
         <span class="visa-comment-post__header__left-side__separator">•</span>
         <span class="visa-comment-post__header__left-side__date">{{
@@ -57,7 +58,7 @@
         radius
         width="30%"
         style="margin: -5% 0 0 74%; font-size: 1.15em"
-        @click="isReplying = true"
+        @click="onReply"
         >{{ $t("Visa.comments.reply") }}</BIMDataButton
       >
     </template>
@@ -73,7 +74,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, nextTick } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import VisaCommentsInput from "@/components/specific/visa/visa-summary/visa-comments/visa-comments-input/VisaCommentsInput.vue";
 
@@ -95,6 +96,7 @@ export default {
       type: Object,
       required: true
     },
+
     isAReply: {
       type: Boolean,
       required: true
@@ -118,10 +120,10 @@ export default {
 
     const isEditing = ref(false);
     const isReplying = ref(false);
-    const commentToHandle = ref(null);
     const commentContent = ref(props.comment.content);
     const areActionsClosed = ref(false);
     const textarea = ref(null);
+    const visaCommentPost = ref(null);
 
     const undoEdit = () => {
       commentContent.value = props.comment.content;
@@ -164,20 +166,31 @@ export default {
 
     watch(isEditing, () => isEditing.value && textarea.value.focus());
 
+    const onReply = async () => {
+      isReplying.value = true;
+      await nextTick();
+
+      visaCommentPost.value.scrollIntoView({
+        block: "center",
+        behavior: "smooth"
+      });
+    };
+
     return {
       //references
       isEditing,
-      commentToHandle,
       isReplying,
       areActionsClosed,
       commentContent,
       textarea,
+      visaCommentPost,
       // methods
       undoEdit,
       confirmEdit,
       confirmDelete,
       toggleCloseActions,
-      replyComment
+      replyComment,
+      onReply
     };
   }
 };
