@@ -712,8 +712,8 @@
   },
 
   "SubscriptionStatusBanner": {
-    "activate": "Activate: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "reactivate": "Reactivate: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    "activate": "Cet espace gratuit a atteint ses limites, passez à l'abonnement professionnel pour débloquer toutes les fonctionnalités de BIMData.",
+    "reactivate": "Cet espace n'est actuellement relié à aucun abonnement. Pour débloquer toutes les fonctionnalités de BIMData, passez à l'abonnement professionnel"
   },
 
   "UserCard": {

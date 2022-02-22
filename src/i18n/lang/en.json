@@ -712,9 +712,5 @@
         "title": "Access Free space",
         "text": "You have already created your free space.",
         "buttonText": "Go to my free space"
-    },
-    "SubscriptionStatusBanner": {
-        "activate": "",
-        "reactivate": ""
     }
 }
