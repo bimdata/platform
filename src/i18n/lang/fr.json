@@ -408,6 +408,7 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
+    "removeButtonText": "Marquer comme document",
     "deleteButtonText": "Supprimer"
   },
 

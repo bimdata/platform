@@ -236,6 +236,7 @@
         "renameButtonText": "Rename",
         "archiveButtonText": "Archive",
         "deleteButtonText": "Delete",
+        "removeButtonText": "Unmark as model",
         "unarchiveButtonText": "Unarchive"
     },
     "ModelLastUpdateCell": {

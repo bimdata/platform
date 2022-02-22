@@ -71,15 +71,27 @@
             {{ $t("ModelActionsCell.archiveButtonText") }}
           </template>
         </BIMDataButton>
-        <BIMDataButton
-          class="model-actions-cell__menu__btn"
-          color="high"
-          ghost
-          squared
-          @click="onClick('delete')"
-        >
-          {{ $t("ModelActionsCell.deleteButtonText") }}
-        </BIMDataButton>
+        <template v-if="model.type === 'PDF'">
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            ghost
+            squared
+            @click="onClick('remove-model')"
+          >
+            {{ $t("ModelActionsCell.removeButtonText") }}
+          </BIMDataButton>
+        </template>
+        <template v-else>
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            color="high"
+            ghost
+            squared
+            @click="onClick('delete')"
+          >
+            {{ $t("ModelActionsCell.deleteButtonText") }}
+          </BIMDataButton>
+        </template>
       </div>
     </transition>
   </div>
@@ -107,7 +119,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "update"],
+  emits: ["archive", "delete", "download", "remove-model", "update"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
