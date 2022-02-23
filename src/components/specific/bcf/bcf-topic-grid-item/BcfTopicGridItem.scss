@@ -70,17 +70,17 @@
     box-shadow: var(--box-shadow);
     color: var(--color-text);
     font-size: 12px;
-    &__priority {
-      .high {
-        color: var(--color-high);
-      }
-      .medium {
-        color: var(--color-warning);
-      }
-      .low {
-        color: var(--color-granite-light);
-      }
-    }
+    // &__priority {
+    //   .high {
+    //     color: var(--color-high);
+    //   }
+    //   .medium {
+    //     color: var(--color-warning);
+    //   }
+    //   .low {
+    //     color: var(--color-granite-light);
+    //   }
+    // }
   }
   &__side-panel {
     position: fixed;

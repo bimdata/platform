@@ -4,7 +4,7 @@
       <div class="bcf-topic__header__infos flex">
         <div
           class="bcf-topic__header__infos__index flex items-center justify-center"
-          :class="getPriorityClasses"
+          :style="{ 'background-color': `#${priorityColor}` }"
         >
           {{ bcfTopic.index }}
         </div>
@@ -38,7 +38,7 @@
         <strong>
           {{ $t("BcfTopicGridItem.priority") }}
         </strong>
-        <span :class="getPriorityClasses">
+        <span :style="{ color: `#${priorityColor}` }">
           {{ bcfTopic.priority || $t("BcfTopicGridItem.notSpecified") }}
         </span>
       </div>
@@ -112,24 +112,26 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
+    },
+    detailedExtensions: {
+      type: Object,
+      required: true
     }
   },
   setup(props) {
-    const getPriorityClasses = ref("");
-    const getStatusClasses = ref("");
+    const priorityColor = computed(() => {
+      if (props.bcfTopic.priority) {
+        const priorityDetail = props.detailedExtensions.priorities.find(
+          priority => priority.priority === props.bcfTopic.priority
+        );
+        if (priorityDetail && priorityDetail.color) {
+          return priorityDetail.color;
+        }
+      }
+      return "555555";
+    });
 
-    watch(
-      () => props.bcfTopic,
-      () => {
-        if (props.bcfTopic.priority) {
-          getPriorityClasses.value = props.bcfTopic.priority.toLowerCase();
-        }
-        if (props.bcfTopic.topicStatus) {
-          getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
-        }
-      },
-      { immediate: true }
-    );
+    const getStatusClasses = ref("");
 
     const showSidePanel = ref(false);
     const bcfTopicToOpen = reactive({});
@@ -151,7 +153,7 @@ export default {
     });
 
     return {
-      getPriorityClasses,
+      priorityColor,
       getStatusClasses,
       bcfTopicToOpen,
       topicElements,

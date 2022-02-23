@@ -35,22 +35,64 @@ class BcfService {
   async fetchTopicExtensions(project) {
     try {
       return await apiClient.bcfApi.getExtensions({
-        projectsPk: project.id
+        id: project.id
       });
     } catch (error) {
       console.log(error);
     }
   }
-  async updateTopicExtensions(project, extensions) {
+  async fetchTopicDetailedExtensions(project) {
     try {
-      return await apiClient.bcfApi.updateExtensions({
-        projectsPk: project.id,
-        data: extensions
+      return await apiClient.bcfApi.getDetailedExtensions({
+        id: project.id
       });
     } catch (error) {
       console.log(error);
     }
   }
+
+  // extension priority
+  async createTopicExtensionPriority(project, data) {
+    try {
+      return await apiClient.bcfApi.createExtensionPriority({
+        projectsPk: project.id,
+        data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async deleteTopicExtensionPriority(project, priority) {
+    try {
+      return await apiClient.bcfApi.deleteExtensionPriority({
+        projectsPk: project.id,
+        id: priority.id
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateTopicExtensionPriority(project, extensionId, data) {
+    try {
+      return await apiClient.bcfApi.updateExtensionPriority({
+        projectsPk: project.id,
+        id: extensionId,
+        data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  // async updateTopicExtensions(project, extensions) {
+  //   try {
+  //     return await apiClient.bcfApi.updateExtensions({
+  //       projectsPk: project.id,
+  //       data: extensions
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   async createTopic(project, topic) {
     try {
       return await apiClient.bcfApi.createTopic({

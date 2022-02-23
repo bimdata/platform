@@ -66,6 +66,10 @@ export default {
       type: Array,
       required: true
     },
+    topicExtensions: {
+      type: Object,
+      required: true
+    },
     loading: {
       type: Boolean
     }

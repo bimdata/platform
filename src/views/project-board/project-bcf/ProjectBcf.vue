@@ -175,6 +175,7 @@
         <template #content>
           <BcfTopicsMetrics
             :bcfTopics="displayedBcfTopics"
+            :topicExtensions="topicDetailedExtensions"
             :loading="loading"
           />
         </template>
@@ -204,6 +205,7 @@
           :key="bcfTopic.guid"
           :project="project"
           :bcfTopic="bcfTopic"
+          :detailedExtensions="topicDetailedExtensions"
         />
       </transition-group>
     </div>
@@ -251,7 +253,13 @@ export default {
   setup() {
     const { currentProject } = useProjects();
     const { openSidePanel } = useAppSidePanel();
-    const { bcfTopics, loadBcfTopics, importBcf, exportBcf } = useBcf();
+    const {
+      bcfTopics,
+      loadBcfTopics,
+      importBcf,
+      exportBcf,
+      topicDetailedExtensions
+    } = useBcf();
     const loading = ref(false);
 
     watch(
@@ -341,6 +349,7 @@ export default {
       bcfTopics,
       project: currentProject,
       displayedBcfTopics,
+      topicDetailedExtensions,
       onFiltersSubmit,
       searchText,
       sortByName,

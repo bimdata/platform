@@ -5,9 +5,9 @@
       <div class="flex items-center">
         <div
           class="setting-card__header__length flex items-center justify-center m-r-30"
-          v-if="topicExtensions"
+          v-if="topicDetailedExtensions"
         >
-          {{ topicExtensions.length }}
+          {{ topicDetailedExtensions.length }}
         </div>
         <BIMDataIcon
           name="chevron"
@@ -67,7 +67,7 @@
           :topicExtension="topicExtension"
           @edit="setTopicExtension(index, $event)"
           @delete="deleteTopicExtension(index, $event)"
-          v-for="(topicExtension, index) in topicExtensions"
+          v-for="(topicExtension, index) in topicDetailedExtensions"
           :key="topicExtension"
         />
       </ul>
@@ -90,7 +90,7 @@ export default {
       type: String,
       required: true
     },
-    topicExtensions: {
+    topicDetailedExtensions: {
       type: Array,
       required: true
     },
@@ -112,14 +112,14 @@ export default {
     };
 
     const setTopicExtension = (index, extensionName) => {
-      const newTopicExtensions = props.topicExtensions.slice();
+      const newTopicExtensions = props.topicDetailedExtensions.slice();
       newTopicExtensions[index] = extensionName;
       emit("edit", newTopicExtensions);
     };
 
     const newTopicExtensionName = ref("");
     const addTopicExtension = () => {
-      const newTopicExtensions = props.topicExtensions.slice();
+      const newTopicExtensions = props.topicDetailedExtensions.slice();
       newTopicExtensions.value = newTopicExtensions.concat([
         newTopicExtensionName.value
       ]);
@@ -128,7 +128,7 @@ export default {
     };
 
     const deleteTopicExtension = (index, extensionName) => {
-      const newTopicExtensions = props.topicExtensions
+      const newTopicExtensions = props.topicDetailedExtensions
         .slice()
         .filter(newTopicExtension => newTopicExtension !== extensionName);
       emit("delete", newTopicExtensions);

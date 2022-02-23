@@ -182,25 +182,25 @@
     "cancelButton": "Annuler",
     "validateButton": "Valider",
     "title": {
-      "priority": "Priorités",
-      "topicLabel": "Labels",
-      "topicStatus": "Statuts",
-      "topicType": "Types",
-      "stage": "Phases"
+      "priorities": "Priorités",
+      "labels": "Labels",
+      "topicStatuses": "Statuts",
+      "topicTypes": "Types",
+      "stages": "Phases"
     },
     "input": {
-      "priority": "Ajouter une nouvelle priorité",
-      "topicLabel": "Ajouter un nouveau label",
-      "topicStatus": "Ajouter un nouveau statut",
-      "topicType": "Ajouter un nouveau type",
-      "stage": "Ajouter une nouvelle phase"
+      "priorities": "Ajouter une nouvelle priorité",
+      "labels": "Ajouter un nouveau label",
+      "topicStatuses": "Ajouter un nouveau statut",
+      "topicTypes": "Ajouter un nouveau type",
+      "stages": "Ajouter une nouvelle phase"
     },
     "text": {
-      "priority": "Liste des priorités",
-      "topicLabel": "Liste des labels",
-      "topicStatus": "Liste des statuts",
-      "topicType": "Liste des types",
-      "stage": "Liste des phases"
+      "priorities": "Liste des priorités",
+      "labels": "Liste des labels",
+      "topicStatuses": "Liste des statuts",
+      "topicTypes": "Liste des types",
+      "stages": "Liste des phases"
     }
   },
   "BcfTopicCreationCard": {
@@ -210,7 +210,7 @@
   "BcfTopicGridItem": {
     "priority": "Priorité : ",
     "assignedTo": "Assigné à : ",
-    "notSpecified": "Non renseigné",
+    "notSpecified": "Non défini",
     "elements": "Élements",
     "noElements": "0 Élement",
     "see": "Voir"

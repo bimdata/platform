@@ -3,7 +3,8 @@ import BcfService from "@/services/BcfService.js";
 
 const state = reactive({
   bcfTopics: [],
-  topicExtensions: []
+  topicExtensions: [],
+  topicDetailedExtensions: []
 });
 
 const loadBcfTopics = async project => {
@@ -73,6 +74,34 @@ const loadTopicExtensions = async project => {
   return topicExtensions;
 };
 
+const loadTopicDetailedExtensions = async project => {
+  const topicDetailedExtensions = await BcfService.fetchTopicDetailedExtensions(
+    project
+  );
+  state.topicDetailedExtensions = topicDetailedExtensions;
+  return topicDetailedExtensions;
+};
+
+// extension priority
+const createTopicExtensionPriority = async (project, newPriority) => {
+  const newTopicExtensionPriority =
+    await BcfService.createTopicExtensionPriority(project, newPriority);
+  await loadTopicDetailedExtensions(project);
+  return newTopicExtensionPriority;
+};
+const deleteTopicExtensionPriority = async (project, priority) => {
+  const newTopicExtensionPriority =
+    await BcfService.deleteTopicExtensionPriority(project, priority);
+  await loadTopicDetailedExtensions(project);
+  return newTopicExtensionPriority;
+};
+const updateTopicExtensionPriority = async (project, id, priority) => {
+  const newTopicExtensionPriority =
+    await BcfService.updateTopicExtensionPriority(project, id, priority);
+  await loadTopicDetailedExtensions(project);
+  return newTopicExtensionPriority;
+};
+
 const updateTopicExtensions = async (project, extensions) => {
   const newTopicExtensions = await BcfService.updateTopicExtensions(
     project,
@@ -95,6 +124,10 @@ export function useBcf() {
     importBcf,
     exportBcf,
     loadTopicExtensions,
+    loadTopicDetailedExtensions,
+    createTopicExtensionPriority,
+    deleteTopicExtensionPriority,
+    updateTopicExtensionPriority,
     updateTopicExtensions
   };
 }

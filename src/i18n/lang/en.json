@@ -121,25 +121,25 @@
     "cancelButton": "Cancel",
     "validateButton": "Validate",
     "title": {
-      "priority": "Priorities",
-      "topicLabel": "Labels",
-      "topicStatus": "Status",
-      "topicType": "Types",
-      "stage": "Stages"
+      "priorities": "Priorities",
+      "labels": "Labels",
+      "topicStatuses": "Status",
+      "topicTypes": "Types",
+      "stages": "Stages"
     },
     "input": {
-      "priority": "Add a new priority",
-      "topicLabel": "Add a new label",
-      "topicStatus": "Add new status",
-      "topicType": "Add a new type",
-      "stage": "Add a new stage"
+      "priorities": "Add a new priority",
+      "labels": "Add a new label",
+      "topicStatuses": "Add new status",
+      "topicTypes": "Add a new type",
+      "stages": "Add a new stage"
     },
     "text": {
-      "priority": "Priority list",
-      "topicLabel": "Labels list",
-      "topicStatus": "Status list",
-      "topicType": "Type list",
-      "stage": "Stage list"
+      "priorities": "Priority list",
+      "labels": "Labels list",
+      "topicStatuses": "Status list",
+      "topicTypes": "Type list",
+      "stages": "Stage list"
     }
   },
   "BcfTopicCreationCard": {

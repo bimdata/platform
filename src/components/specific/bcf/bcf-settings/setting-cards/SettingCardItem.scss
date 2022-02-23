@@ -1,0 +1,20 @@
+.setting-card-item {
+  position: relative;
+  svg {
+    cursor: pointer;
+  }
+  &__color {
+    display: block;
+    width: 19px;
+    height: 19px;
+    border-radius: 3px;
+    border: 1px solid var(--color-silver);
+    cursor: pointer;
+  }
+  &__color-selector {
+    position: absolute;
+    top: 37px;
+    right: -12px;
+    z-index: 1;
+  }
+}
