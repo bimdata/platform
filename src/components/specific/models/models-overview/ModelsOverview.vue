@@ -47,6 +47,7 @@ export default {
   emits: ["open-file-uploader"],
   setup(props) {
     const displayedModel = ref(null);
+
     watch(
       () => props.models,
       () => {

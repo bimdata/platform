@@ -8,7 +8,7 @@
         <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
         <span>{{ $t("OrganizationsManager.backButtonText") }}</span>
       </BIMDataButton>
-      <BIMDataTextBox
+      <BIMDataTextbox
         v-if="localState.organization"
         maxWidth="260px"
         :text="localState.organization.name"

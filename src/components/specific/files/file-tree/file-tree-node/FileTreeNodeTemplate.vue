@@ -22,7 +22,7 @@
         :name="showChildren ? 'folderOpen' : 'folder'"
         size="s"
       />
-      <BIMDataTextBox
+      <BIMDataTextbox
         class="file-tree-node__node__name"
         maxWidth="calc(100% - 48px)"
         :text="file.name"

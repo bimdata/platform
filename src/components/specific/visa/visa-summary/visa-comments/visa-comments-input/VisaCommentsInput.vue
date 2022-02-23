@@ -11,6 +11,7 @@
       :resizable="false"
       rows="1"
       fitContent
+      @keyup.ctrl.enter="pushComment"
     />
     <div class="visa-comments-input__action-button">
       <BIMDataButton

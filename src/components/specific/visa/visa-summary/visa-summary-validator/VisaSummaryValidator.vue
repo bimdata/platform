@@ -8,7 +8,7 @@
         color="silver-light"
         style="box-shadow: var(--box-shadow)"
       />
-      <BIMDataTextBox
+      <BIMDataTextbox
         class="visa-summary-validator__left-side__name"
         :text="user.fullName || user.validator.email"
       />

@@ -2,8 +2,6 @@
   @include block-card($padding: calc(var(--spacing-unit) * 2));
 
   &.bimdata-card {
-    // overflow: hidden;
-
     &:deep() > .bimdata-card__content {
       display: flex;
       align-items: center;

@@ -22,7 +22,7 @@
                 }
               }"
             >
-              <BIMDataTextBox class="space-cell" :text="sub.cloud.name" />
+              <BIMDataTextbox class="space-cell" :text="sub.cloud.name" />
             </AppLink>
           </template>
           <template #cell-nextpayment="{ row: sub }">

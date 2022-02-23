@@ -1,4 +1,10 @@
-import { MODEL_TYPE, MODEL_SOURCE } from "@/config/models.js";
+import {
+  CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
+  MODEL_TYPE,
+  MODEL_SOURCE
+} from "@/config/models.js";
+import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {
   const result = {
@@ -49,4 +55,37 @@ function segregateByType(models) {
   return result;
 }
 
-export { segregateBySource, segregateByType };
+function isModel(file) {
+  return !!file.modelId;
+}
+
+function isPlanModel(model) {
+  const { JPG, PDF, PNG } = MODEL_TYPE;
+  return [JPG, PDF, PNG].includes(model.type);
+}
+
+function isIFC(file) {
+  return isModel(file) && file.modelType === MODEL_TYPE.IFC;
+}
+
+function isSmartFile(file) {
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+}
+
+function isConvertibleToModel(file) {
+  return (
+    CONVERTIBLE_EXTENSIONS.includes(
+      fileExtension(file.fileName).toLowerCase()
+    ) && !isModel(file)
+  );
+}
+
+export {
+  isConvertibleToModel,
+  isIFC,
+  isModel,
+  isPlanModel,
+  isSmartFile,
+  segregateBySource,
+  segregateByType
+};

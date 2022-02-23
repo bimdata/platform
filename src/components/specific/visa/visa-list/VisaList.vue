@@ -52,13 +52,14 @@
       <template v-else>
         <div
           class="visa-list__content__visa"
+          :class="{ disabled: visasLoading }"
           v-for="visa of currentTab.visas"
           :key="visa.id"
           @click="!visasLoading && $emit('reach-visa', visa)"
         >
           <BIMDataIcon :name="iconStatus(visa)" size="l" fill color="primary" />
           <div class="visa-list__content__visa__desc">
-            <BIMDataTextBox
+            <BIMDataTextbox
               class="visa-list__content__visa__desc__title"
               :style="isVisaUnderError(visa) ? 'color: var(--color-high);' : ''"
               :text="visa.document.name"
@@ -66,7 +67,7 @@
             <div class="visa-list__content__visa__desc__info">
               <span>{{ $d(visa.deadline, "short") }} </span>
               -
-              <BIMDataTextBox
+              <BIMDataTextbox
                 :text="
                   visa.creator ? fullName(visa.creator) : 'utilisateur supprimé'
                 "

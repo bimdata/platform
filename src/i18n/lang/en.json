@@ -236,6 +236,7 @@
         "renameButtonText": "Rename",
         "archiveButtonText": "Archive",
         "deleteButtonText": "Delete",
+        "removeButtonText": "Unmark as model",
         "unarchiveButtonText": "Unarchive"
     },
     "ModelLastUpdateCell": {
@@ -712,9 +713,5 @@
         "title": "Access Free space",
         "text": "You have already created your free space.",
         "buttonText": "Go to my free space"
-    },
-    "SubscriptionStatusBanner": {
-        "activate": "",
-        "reactivate": ""
     }
 }

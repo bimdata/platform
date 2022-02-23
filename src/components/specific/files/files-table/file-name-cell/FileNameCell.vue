@@ -53,7 +53,7 @@
           color="primary"
         />
         <BIMDataFileIcon v-else :fileName="file.fileName" :size="20" />
-        <BIMDataTextBox :text="file.name" />
+        <BIMDataTextbox :text="file.name" />
       </div>
     </transition>
   </div>

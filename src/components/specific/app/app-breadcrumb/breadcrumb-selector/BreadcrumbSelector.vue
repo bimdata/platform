@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumb-selector" v-click-away="close">
     <div class="breadcrumb-selector__header">
-      <BIMDataTextBox
+      <BIMDataTextbox
         class="breadcrumb-selector__header__text"
         :text="header"
         @click="$emit('header-clicked')"
@@ -30,7 +30,7 @@
             :key="item[keyProp]"
             @click="() => selectItem(item)"
           >
-            <BIMDataTextBox
+            <BIMDataTextbox
               :text="item[labelProp]"
               cutPosition="end"
               :tooltip="false"

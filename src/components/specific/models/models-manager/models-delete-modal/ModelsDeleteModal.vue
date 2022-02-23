@@ -16,7 +16,7 @@
             v-for="model of models"
             :key="model.id"
           >
-            <BIMDataTextBox :text="model.name" />
+            <BIMDataTextbox :text="model.name" />
           </li>
         </ul>
       </div>

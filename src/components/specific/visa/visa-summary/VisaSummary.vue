@@ -152,7 +152,7 @@
             :fileName="formatedVisa.document.fileName"
             :size="20"
           />
-          <BIMDataTextBox
+          <BIMDataTextbox
             class="visa-summary__shell__file__name"
             :text="formatedVisa.document.name"
             width="80%"
@@ -212,7 +212,7 @@ import { useUser } from "@/state/user";
 import { useProjects } from "@/state/projects";
 
 import { fullName } from "@/utils/users";
-import { isDateConform } from "@/utils/visas";
+import { isDateValid } from "@/utils/visas";
 
 export default {
   components: {
@@ -500,9 +500,9 @@ export default {
     };
 
     const confirmEdit = async () => {
-      const dateConform = isDateConform(formatedVisa.value.deadline);
-      hasDateError.value = !dateConform;
-      if (dateConform) {
+      const dateValid = isDateValid(formatedVisa.value.deadline);
+      hasDateError.value = !dateValid;
+      if (dateValid) {
         await updateVisa(props.project, props.visa.document, props.visa, {
           description: formatedVisa.value.description,
           deadline: formatDate(formatedVisa.value.deadline)

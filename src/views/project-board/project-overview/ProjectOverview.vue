@@ -25,10 +25,11 @@
 
     <transition name="fade">
       <FileUploader
+        isModelUploader
         class="project-overview__block--upload"
         v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         :project="project"
-        :allowedFileTypes="modelExtensions"
+        :allowedFileTypes="allowedExtensions"
         @file-uploaded="reloadData"
         @forbidden-upload-attempt="notifyForbiddenUpload"
         @close="closeFileUploader"
@@ -68,12 +69,12 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
-import { MODEL_EXTENSIONS, MODEL_TYPE } from "@/config/models.js";
+import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
-import { debounce, delay } from "@/utils/async.js";
+import { debounce } from "@/utils/async.js";
 // Components
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
@@ -111,10 +112,6 @@ export default {
     } = useToggle();
 
     const reloadData = debounce(async () => {
-      // Wait a bit before refecthing data in order to mitigate
-      // issues related to database replication/synchronization
-      await delay(500);
-
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
@@ -127,7 +124,7 @@ export default {
         type: "error",
         title: t("ProjectOverview.forbiddenUploadNotification.title"),
         message: t("ProjectOverview.forbiddenUploadNotification.message", {
-          extensions: MODEL_EXTENSIONS.join(", ")
+          extensions: UPLOADABLE_EXTENSIONS.join(", ")
         })
       });
     };
@@ -136,7 +133,7 @@ export default {
       // References
       ifcs,
       invitations: projectInvitations,
-      modelExtensions: MODEL_EXTENSIONS,
+      allowedExtensions: UPLOADABLE_EXTENSIONS,
       models: projectModels,
       project: currentProject,
       showFileUploader,

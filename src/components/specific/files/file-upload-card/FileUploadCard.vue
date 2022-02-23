@@ -60,6 +60,10 @@ import { formatBytes } from "@/utils/files.js";
 
 export default {
   props: {
+    isModelUpload: {
+      type: Boolean,
+      default: false
+    },
     project: {
       type: Object,
       required: true
@@ -78,7 +82,7 @@ export default {
   },
   emits: ["upload-completed", "upload-canceled", "upload-failed"],
   setup(props, { emit }) {
-    const { projectFileUploader } = useUpload();
+    const { projectFileUploader, projectModelUploader } = useUpload();
 
     const uploading = ref(false);
     const canceled = ref(false);
@@ -91,7 +95,7 @@ export default {
       rate: 0
     });
 
-    const uploader = projectFileUploader(props.project, {
+    const handlers = {
       onUploadStart: () => {
         uploading.value = true;
       },
@@ -114,7 +118,14 @@ export default {
         failed.value = true;
         emit("upload-failed");
       }
-    });
+    };
+
+    let uploader;
+    if (props.isModelUpload) {
+      uploader = projectModelUploader(props.project, handlers);
+    } else {
+      uploader = projectFileUploader(props.project, handlers);
+    }
 
     const cancelUpload = () => {
       uploader.cancel();

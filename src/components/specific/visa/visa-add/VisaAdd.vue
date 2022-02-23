@@ -90,7 +90,7 @@ import VisaSelectionValidator from "@/components/specific/visa/visa-selection-va
 import { formatDate } from "@/utils/date";
 import { useVisa } from "@/state/visa";
 import { useProjects } from "@/state/projects";
-import { isDateConform } from "@/utils/visas";
+import { isDateValid } from "@/utils/visas";
 
 export default {
   components: {
@@ -144,9 +144,9 @@ export default {
     );
 
     const submit = async () => {
-      const dateConform = isDateConform(dateInput.value);
+      const dateValid = isDateValid(dateInput.value);
 
-      if (dateConform) {
+      if (dateValid) {
         hasDateError.value = false;
         const visa = await createVisa(props.project, props.document, {
           deadline: formatDate(dateInput.value),
