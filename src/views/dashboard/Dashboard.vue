@@ -3,7 +3,11 @@
     <div class="dashboard__head">
       <DashboardWelcomeTile />
       <AppLink :to="{ name: routeNames.userSpaces }">
-        <DashboardButtonTile data-test="btn-spaces" color="primary">
+        <DashboardButtonTile
+          data-guide="space-button"
+          data-test="btn-spaces"
+          color="primary"
+        >
           <template #title>
             {{ $t("Dashboard.spacesTileTitle") }}
           </template>
@@ -17,7 +21,10 @@
           </template>
         </DashboardButtonTile>
       </AppLink>
-      <AppLink :to="{ name: routeNames.userProjects }">
+      <AppLink
+        data-guide="project-button"
+        :to="{ name: routeNames.userProjects }"
+      >
         <DashboardButtonTile data-test="btn-projects" color="secondary">
           <template #title>
             {{ $t("Dashboard.projectsTileTitle") }}
@@ -74,6 +81,8 @@ import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
 import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
+// import steps from "../../config/onboarding.js";
+
 export default {
   components: {
     AppLink,
@@ -93,6 +102,7 @@ export default {
       projects: userProjects,
       routeNames,
       spaces: userSpaces
+      // steps
     };
   }
 };

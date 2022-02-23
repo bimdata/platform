@@ -6,6 +6,7 @@
       </template>
       <template #center>
         <BIMDataSearch
+          data-guide="project-input-search"
           data-test="input-search"
           class="user-projects__header__search"
           width="300px"
