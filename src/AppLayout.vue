@@ -1,6 +1,6 @@
 <template>
   <div ref="appLayout" class="app-layout">
-    <BIMDataGuidedTour :inputSteps="steps" :elementToObserve="appLayout" />
+    <BIMDataGuidedTour :tours="tours" :elementToObserve="appLayout" />
     <AppNotification />
     <AppHeader />
     <div class="app-layout__view-container" :class="{ loading }">
@@ -20,7 +20,7 @@ import { contexts, useLoadingContext } from "@/composables/loading.js";
 // Components
 import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
 import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
-import steps from "./config/guidedTour.js";
+import tours from "./config/guidedTour/guidedTour.js";
 
 export default {
   components: {
@@ -32,7 +32,7 @@ export default {
     const appLayout = ref(null);
     return {
       loading,
-      steps,
+      tours,
       appLayout
     };
   }
