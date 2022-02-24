@@ -1,8 +1,19 @@
 <template>
   <div class="space-size-info flex">
-    <ProgressBar class="m-r-12" :progress="spaceSubInfo.usedSizePercent">
+    <ProgressBar
+      class="m-r-12"
+      :width="isXL ? '115px' : '230px'"
+      :progress="spaceSubInfo.usedSizePercent"
+    >
       <template #text-below-left>
-        <div>
+        <div v-if="isXL">
+          {{
+            `${
+              Math.round((100 * spaceSubInfo.smartDataSize) / GB) / 100
+            } / ${formatBytes(spaceSubInfo.smartDataSizeAvailable)}`
+          }}
+        </div>
+        <div v-else>
           {{
             $t("SpaceSizeInfo.usage", {
               used: formatBytes(spaceSubInfo.smartDataSize),
@@ -40,6 +51,8 @@
 </template>
 
 <script>
+import { useStandardBreakpoints } from "@/composables/responsive.js";
+import SIZE_UNIT from "@/config/size-unit.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
@@ -64,9 +77,12 @@ export default {
   setup() {
     return {
       // References
+      GB: SIZE_UNIT.GB,
       routeNames,
       // Methods
-      formatBytes
+      formatBytes,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

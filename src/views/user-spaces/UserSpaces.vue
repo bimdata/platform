@@ -136,8 +136,6 @@ export default {
     const { userOrganizations } = useOrganizations();
     const { userSpaces } = useSpaces();
 
-    const { isLG, isMD, isSM, isXS } = useStandardBreakpoints();
-
     const { filteredList: displayedSpaces, searchText } = useListFilter(
       userSpaces,
       space => space.name
@@ -156,10 +154,6 @@ export default {
 
     return {
       // References
-      isLG,
-      isMD,
-      isSM,
-      isXS,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       organizations: userOrganizations,
       routeNames,
@@ -170,7 +164,9 @@ export default {
       closeCreationForm,
       openCreationForm,
       openOrganizationsManager: openSidePanel,
-      sortSpaces
+      sortSpaces,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

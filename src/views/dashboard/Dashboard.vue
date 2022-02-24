@@ -112,16 +112,15 @@ export default {
       () => userSpaces.value.length + userProjects.value.length < 4
     );
 
-    const { isLG } = useStandardBreakpoints();
-
     return {
       // References
-      isLG,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       projects: userProjects,
       routeNames,
       spaces: userSpaces,
-      isSubscribeHorizontal
+      isSubscribeHorizontal,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

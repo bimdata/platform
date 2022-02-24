@@ -9,8 +9,8 @@
         <BIMDataSearch
           data-test="input-search"
           class="space-board__header__search"
-          width="300px"
-          :placeholder="$t('SpaceBoard.searchInputPlaceholder')"
+          :width="isMD ? '150px' : isLG ? '225px' : '300px'"
+          :placeholder="isXS ? '' : $t('SpaceBoard.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
@@ -84,9 +84,10 @@
 </template>
 
 <script>
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -98,7 +99,7 @@ import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
 import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
 import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
-// import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
+import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
@@ -110,7 +111,7 @@ export default {
     ProjectCreationCard,
     SpaceSizeInfo,
     SpaceUsersManager,
-    // SubscriptionStatusBanner,
+    SubscriptionStatusBanner,
     ViewHeader
   },
   setup() {
@@ -140,7 +141,9 @@ export default {
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,
-      sortProjects
+      sortProjects,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };
