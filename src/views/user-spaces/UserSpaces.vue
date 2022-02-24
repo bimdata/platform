@@ -7,14 +7,15 @@
       <template #center>
         <BIMDataSearch
           class="user-spaces__header__search"
-          width="300px"
-          :placeholder="$t('UserSpaces.searchInputPlaceholder')"
+          :width="isMD ? '150px' : isLG ? '225px' : '300px'"
+          :placeholder="isXS ? '' : $t('UserSpaces.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
       </template>
       <template #right>
         <BIMDataButton
+          v-show="!isMD"
           class="user-spaces__header__btn-sort"
           fill
           squared
@@ -25,25 +26,34 @@
         </BIMDataButton>
         <BIMDataButton
           v-if="isSubscriptionEnabled"
-          width="120px"
+          :width="isSM ? undefined : '120px'"
           fill
           radius
+          :icon="isSM"
           @click="openOrganizationsManager"
         >
-          {{ $t("UserSpaces.organizationsButtonText") }}
+          <template v-if="isSM">
+            <BIMDataIcon name="organization" size="xs" />
+          </template>
+          <template v-else>
+            {{ $t("UserSpaces.organizationsButtonText") }}
+          </template>
         </BIMDataButton>
 
         <template v-if="isSubscriptionEnabled">
           <AppLink :to="{ name: routeNames.subscriptionPro }">
             <BIMDataButton
               class="user-spaces__header__btn-create"
-              width="120px"
+              :width="isSM ? undefined : '120px'"
               color="secondary"
               fill
               radius
+              :icon="isSM"
             >
-              <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-              <span>{{ $t("UserSpaces.createButtonText") }}</span>
+              <BIMDataIcon name="plus" :size="isSM ? 'xxs' : 'xxxs'" />
+              <span v-if="!isSM" style="margin-left: 6px">
+                {{ $t("UserSpaces.createButtonText") }}
+              </span>
             </BIMDataButton>
           </AppLink>
         </template>
@@ -72,7 +82,12 @@
       </AppLoading>
     </AppSidePanel>
 
-    <BIMDataResponsiveGrid itemWidth="215px" rowGap="36px" columnGap="36px">
+    <BIMDataResponsiveGrid
+      itemWidth="215px"
+      rowGap="36px"
+      columnGap="36px"
+      :style="{ justifyContent: isSM ? 'center' : '' }"
+    >
       <transition-group name="grid">
         <SpaceCreationCard
           v-if="showCreationForm"
@@ -86,9 +101,10 @@
 </template>
 
 <script>
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useToggle } from "@/composables/toggle.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
@@ -120,6 +136,8 @@ export default {
     const { userOrganizations } = useOrganizations();
     const { userSpaces } = useSpaces();
 
+    const { isLG, isMD, isSM, isXS } = useStandardBreakpoints();
+
     const { filteredList: displayedSpaces, searchText } = useListFilter(
       userSpaces,
       space => space.name
@@ -138,6 +156,10 @@ export default {
 
     return {
       // References
+      isLG,
+      isMD,
+      isSM,
+      isXS,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       organizations: userOrganizations,
       routeNames,
