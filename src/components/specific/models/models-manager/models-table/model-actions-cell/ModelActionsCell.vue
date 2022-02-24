@@ -1,33 +1,36 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
-    <template v-if="model.type === 'IFC'">
-      <template v-for="window of ['2d', '3d']" :key="window">
-        <AppLink
-          :to="{
-            name: routeNames.modelViewer,
-            params: {
-              spaceID: project.cloud.id,
-              projectID: project.id,
-              modelIDs: model.id
-            },
-            query: {
-              window
-            }
-          }"
-        >
-          <BIMDataButton
-            :disabled="!isModelReady"
-            class="model-actions-cell__btn model-actions-cell__btn--viewer"
-            color="granite"
-            outline
-            radius
-            icon
-          >
-            {{ window.toUpperCase() }}
-          </BIMDataButton>
-        </AppLink>
+    <template v-if="model.type === MODEL_TYPE.IFC">
+      <template v-for="window of [WINDOWS.V2D, WINDOWS.V3D]" :key="window">
+        <ViewerButton
+          :disabled="!isModelReady"
+          :project="project"
+          :model="model"
+          :window="window"
+        />
       </template>
     </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.DWG">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DWG"
+        text="2D"
+      />
+    </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.PDF">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.PLAN"
+        text="2D"
+      />
+    </template>
+
     <BIMDataButton
       class="model-actions-cell__btn"
       ripple
@@ -100,14 +103,14 @@
 <script>
 import { computed } from "vue";
 import { useToggle } from "@/composables/toggle.js";
-import { MODEL_STATUS } from "@/config/models.js";
-import routeNames from "@/router/route-names.js";
+import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
+import { WINDOWS } from "@/config/viewer.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import ViewerButton from "./ViewerButton.vue";
 
 export default {
   components: {
-    AppLink
+    ViewerButton
   },
   props: {
     project: {
@@ -141,8 +144,9 @@ export default {
     return {
       // References
       isModelReady,
-      routeNames,
+      MODEL_TYPE,
       showMenu,
+      WINDOWS,
       // Methods
       closeMenu,
       onClick,
