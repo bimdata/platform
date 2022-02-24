@@ -26,9 +26,25 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-        <SettingCardPriority
-          v-if="topicDetailedExtensions.priorities"
-          :topicDetailedExtensions="topicDetailedExtensions.priorities"
+        <SettingCard
+          extensionType="Priority"
+          :availableExtensions="detailedExtensions.priorities"
+        />
+        <SettingCard
+          extensionType="Type"
+          :availableExtensions="detailedExtensions.topicTypes"
+        />
+        <SettingCard
+          extensionType="Stage"
+          :availableExtensions="detailedExtensions.stages"
+        />
+        <SettingCard
+          extensionType="Status"
+          :availableExtensions="detailedExtensions.topicStatuses"
+        />
+        <SettingCard
+          extensionType="Label"
+          :availableExtensions="detailedExtensions.topicLabels"
         />
       </div>
     </div>
@@ -39,28 +55,20 @@
 import { watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
-import SettingCardPriority from "./setting-cards/setting-card-priority/SettingCardPriority.vue";
-
-const extensionKeys = [
-  "priorities",
-  "labels",
-  "topicStatuses",
-  "topicTypes",
-  "stages"
-];
+import SettingCard from "./setting-card/SettingCard.vue";
 
 export default {
   components: {
-    SettingCardPriority
+    SettingCard
   },
   emits: ["close"],
   setup() {
     const { currentProject } = useProjects();
-    const { loadTopicDetailedExtensions, topicDetailedExtensions } = useBcf();
+    const { loadDetailedExtensions, detailedExtensions } = useBcf();
     watch(
       () => currentProject,
       async () => {
-        await loadTopicDetailedExtensions(currentProject.value);
+        await loadDetailedExtensions(currentProject.value);
       },
       {
         immediate: true
@@ -68,8 +76,7 @@ export default {
     );
 
     return {
-      extensionKeys,
-      topicDetailedExtensions
+      detailedExtensions
     };
   }
 };

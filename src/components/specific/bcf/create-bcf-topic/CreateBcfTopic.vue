@@ -29,31 +29,39 @@
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.typeLabel')"
-        :options="topicExtensions.topicType"
+        :options="detailedExtensions.topicTypes"
+        optionKey="id"
+        optionLabelKey="topicType"
         v-model="topicType"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.priorityLabel')"
-        :options="topicExtensions.priority"
+        :options="detailedExtensions.priorities"
+        optionKey="id"
+        optionLabelKey="priority"
         v-model="topicPriority"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.statusLabel')"
-        :options="topicExtensions.topicStatus"
+        :options="detailedExtensions.topicStatuses"
+        optionKey="id"
+        optionLabelKey="topicStatus"
         v-model="topicStatus"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.stageLabel')"
-        :options="topicExtensions.stage"
+        :options="detailedExtensions.stages"
+        optionKey="id"
+        optionLabelKey="stage"
         v-model="topicPhase"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.assignedToLabel')"
-        :options="topicExtensions.userIdType"
+        :options="extensions.userIdType"
         v-model="topicAssignedTo"
       />
       <div class="due-date">
@@ -119,12 +127,17 @@ export default {
     });
 
     const { currentProject } = useProjects();
-    const { loadTopicExtensions, createTopic, loadBcfTopics, topicExtensions } =
-      useBcf();
+    const {
+      loadExtensions,
+      createTopic,
+      loadBcfTopics,
+      extensions,
+      detailedExtensions
+    } = useBcf();
     watch(
       () => currentProject.value,
       async () => {
-        await loadTopicExtensions(currentProject.value);
+        await loadExtensions(currentProject.value);
       },
       {
         immediate: true
@@ -214,7 +227,8 @@ export default {
       topicDescription,
       topicTags,
       nextIndex,
-      topicExtensions,
+      extensions,
+      detailedExtensions,
       // Methods
       submit
     };

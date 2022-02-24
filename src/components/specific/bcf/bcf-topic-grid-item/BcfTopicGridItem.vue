@@ -4,7 +4,10 @@
       <div class="bcf-topic__header__infos flex">
         <div
           class="bcf-topic__header__infos__index flex items-center justify-center"
-          :style="{ 'background-color': `#${priorityColor}` }"
+          :style="{
+            'background-color': `#${priorityColor}`,
+            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
+          }"
         >
           {{ bcfTopic.index }}
         </div>
@@ -15,7 +18,10 @@
       <div class="bcf-topic__header__img flex items-center justify-center">
         <div
           class="bcf-topic__header__img__status flex p-6"
-          :class="getStatusClasses"
+          :style="{
+            'background-color': `#${statusColor}`,
+            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
+          }"
           v-if="bcfTopic.topicStatus"
         >
           <BIMDataIcon name="information" fill color="default" />
@@ -93,7 +99,8 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref } from "vue";
+import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
@@ -128,10 +135,22 @@ export default {
           return priorityDetail.color;
         }
       }
-      return "555555";
+      return "D8D8D8";
     });
 
-    const getStatusClasses = ref("");
+    const statusColor = computed(() => {
+      if (props.bcfTopic.topicStatus) {
+        const statusDetail = props.detailedExtensions.topicStatuses.find(
+          status => status.topicStatus === props.bcfTopic.topicStatus
+        );
+        if (statusDetail && statusDetail.color) {
+          return statusDetail.color;
+        }
+      }
+      return "";
+    });
+
+    // const getStatusClasses = ref("");
 
     const showSidePanel = ref(false);
     const bcfTopicToOpen = reactive({});
@@ -153,8 +172,9 @@ export default {
     });
 
     return {
+      adjustColor,
       priorityColor,
-      getStatusClasses,
+      statusColor,
       bcfTopicToOpen,
       topicElements,
       showSidePanel,

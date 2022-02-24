@@ -174,8 +174,9 @@
       <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
         <template #content>
           <BcfTopicsMetrics
+            v-if="detailedExtensions"
             :bcfTopics="displayedBcfTopics"
-            :topicExtensions="topicDetailedExtensions"
+            :priorities="detailedExtensions.priorities"
             :loading="loading"
           />
         </template>
@@ -205,7 +206,7 @@
           :key="bcfTopic.guid"
           :project="project"
           :bcfTopic="bcfTopic"
-          :detailedExtensions="topicDetailedExtensions"
+          :detailedExtensions="detailedExtensions"
         />
       </transition-group>
     </div>
@@ -258,7 +259,7 @@ export default {
       loadBcfTopics,
       importBcf,
       exportBcf,
-      topicDetailedExtensions
+      detailedExtensions
     } = useBcf();
     const loading = ref(false);
 
@@ -349,7 +350,7 @@ export default {
       bcfTopics,
       project: currentProject,
       displayedBcfTopics,
-      topicDetailedExtensions,
+      detailedExtensions,
       onFiltersSubmit,
       searchText,
       sortByName,

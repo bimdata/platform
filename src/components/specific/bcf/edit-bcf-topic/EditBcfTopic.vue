@@ -49,31 +49,31 @@
         <BIMDataSelect
           width="100%"
           :label="$t('EditBcfTopic.typeLabel')"
-          :options="topicExtensions.topicType"
+          :options="extensions.topicType"
           v-model="topicType"
         />
         <BIMDataSelect
           width="100%"
           :label="$t('EditBcfTopic.priorityLabel')"
-          :options="topicExtensions.priority"
+          :options="extensions.priority"
           v-model="topicPriority"
         />
         <BIMDataSelect
           width="100%"
           :label="$t('EditBcfTopic.statusLabel')"
-          :options="topicExtensions.topicStatus"
+          :options="extensions.topicStatus"
           v-model="topicStatus"
         />
         <BIMDataSelect
           width="100%"
           :label="$t('EditBcfTopic.stageLabel')"
-          :options="topicExtensions.stage"
+          :options="extensions.stage"
           v-model="topicPhase"
         />
         <BIMDataSelect
           width="100%"
           :label="$t('EditBcfTopic.assignedToLabel')"
-          :options="topicExtensions.userIdType"
+          :options="extensions.userIdType"
           v-model="topicAssignedTo"
         />
         <BIMDataTextarea
@@ -132,7 +132,7 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { topicExtensions, updateTopic } = useBcf();
+    const { extensions, updateTopic } = useBcf();
     const topicTitle = ref("");
     const topicType = ref("");
     const topicPriority = ref("");
@@ -233,7 +233,7 @@ export default {
       topicPhase,
       topicAssignedTo,
       topicDescription,
-      topicExtensions,
+      extensions,
       topicTags,
       // Methods
       updateBcfTopic,

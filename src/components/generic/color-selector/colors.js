@@ -59,7 +59,7 @@ const colors = Object.freeze({
   whitesmoke: "f5f5f5",
   silver: "c0c0c0",
   darkgray: "a9a9a9",
-  grey: "808080",
+  grey: "7a7a7a",
   black: "000000"
 });
 

@@ -182,25 +182,25 @@
     "cancelButton": "Annuler",
     "validateButton": "Valider",
     "title": {
-      "priorities": "Priorités",
-      "labels": "Labels",
-      "topicStatuses": "Statuts",
-      "topicTypes": "Types",
-      "stages": "Phases"
+      "Priority": "Priorités",
+      "Label": "Labels",
+      "Status": "Statuts",
+      "Type": "Types",
+      "Stage": "Phases"
     },
     "input": {
-      "priorities": "Ajouter une nouvelle priorité",
-      "labels": "Ajouter un nouveau label",
-      "topicStatuses": "Ajouter un nouveau statut",
-      "topicTypes": "Ajouter un nouveau type",
-      "stages": "Ajouter une nouvelle phase"
+      "Priority": "Ajouter une nouvelle priorité",
+      "Label": "Ajouter un nouveau label",
+      "Status": "Ajouter un nouveau statut",
+      "Type": "Ajouter un nouveau type",
+      "Stage": "Ajouter une nouvelle phase"
     },
     "text": {
-      "priorities": "Liste des priorités",
-      "labels": "Liste des labels",
-      "topicStatuses": "Liste des statuts",
-      "topicTypes": "Liste des types",
-      "stages": "Liste des phases"
+      "Priority": "Liste des priorités",
+      "Label": "Liste des labels",
+      "Status": "Liste des statuts",
+      "Type": "Liste des types",
+      "Stage": "Liste des phases"
     }
   },
   "BcfTopicCreationCard": {
@@ -259,7 +259,7 @@
     "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
     "issues": "problèmes",
     "priority": "Priorité",
-    "notDefined": "non défini"
+    "notDefined": "Aucune priorité"
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",

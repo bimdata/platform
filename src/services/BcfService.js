@@ -32,7 +32,7 @@ class BcfService {
       console.log(error);
     }
   }
-  async fetchTopicExtensions(project) {
+  async fetchExtensions(project) {
     try {
       return await apiClient.bcfApi.getExtensions({
         id: project.id
@@ -41,7 +41,7 @@ class BcfService {
       console.log(error);
     }
   }
-  async fetchTopicDetailedExtensions(project) {
+  async fetchDetailedExtensions(project) {
     try {
       return await apiClient.bcfApi.getDetailedExtensions({
         id: project.id
@@ -51,10 +51,9 @@ class BcfService {
     }
   }
 
-  // extension priority
-  async createTopicExtensionPriority(project, data) {
+  async createExtension(project, extensionType, data) {
     try {
-      return await apiClient.bcfApi.createExtensionPriority({
+      return await apiClient.bcfApi["createExtension" + extensionType]({
         projectsPk: project.id,
         data
       });
@@ -62,9 +61,9 @@ class BcfService {
       console.log(error);
     }
   }
-  async deleteTopicExtensionPriority(project, priority) {
+  async deleteExtension(project, extensionType, priority) {
     try {
-      return await apiClient.bcfApi.deleteExtensionPriority({
+      return await apiClient.bcfApi["deleteExtension" + extensionType]({
         projectsPk: project.id,
         id: priority.id
       });
@@ -72,9 +71,9 @@ class BcfService {
       console.log(error);
     }
   }
-  async updateTopicExtensionPriority(project, extensionId, data) {
+  async updateExtension(project, extensionType, extensionId, data) {
     try {
-      return await apiClient.bcfApi.updateExtensionPriority({
+      return await apiClient.bcfApi["updateExtension" + extensionType]({
         projectsPk: project.id,
         id: extensionId,
         data
@@ -83,16 +82,7 @@ class BcfService {
       console.log(error);
     }
   }
-  // async updateTopicExtensions(project, extensions) {
-  //   try {
-  //     return await apiClient.bcfApi.updateExtensions({
-  //       projectsPk: project.id,
-  //       data: extensions
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+
   async createTopic(project, topic) {
     try {
       return await apiClient.bcfApi.createTopic({
