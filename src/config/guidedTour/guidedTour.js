@@ -1,4 +1,4 @@
-import IntroPlatform from "./platform/IntroPlatform.vue";
+import IntroOutroPlatform from "./platform/IntroOutroPlatform.vue";
 
 const tours = [
   {
@@ -7,16 +7,17 @@ const tours = [
       {
         props: {
           title: "Welcome my friend",
-          content:
-            "Here is your starting to point to the future, are you ready ?"
+          content: "Lets explore the features",
+          img: "/static/guidedTour/platform/draw_intro.png"
         },
-        layout: IntroPlatform
+        layout: IntroOutroPlatform
       },
       {
         target: "space-button",
         props: {
           title: "SPACE BUTTON",
-          content: "this is where your differents spaces are"
+          content:
+            "this is where your differents spaces are, you will have the time to explore "
         }
       },
       {
@@ -24,7 +25,7 @@ const tours = [
         clickable: true,
         props: {
           title: "PROJECT BUTTON",
-          content: "click on the button to come in the section"
+          content: "click on the button to reach the section"
         }
       },
       {
@@ -33,6 +34,22 @@ const tours = [
           title: "PROJECT INPUT SEARCH",
           content: "you can looking for a specific project typing it name"
         }
+      },
+      {
+        target: "project-card",
+        clickable: true,
+        props: {
+          title: "PROJECT CARD",
+          content: "click in here to acces the project"
+        }
+      },
+      {
+        props: {
+          title: "Now, it's your turn",
+          content: "have a good day",
+          img: "/static/guidedTour/platform/draw_outro.png"
+        },
+        layout: IntroOutroPlatform
       }
     ]
   }

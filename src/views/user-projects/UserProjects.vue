@@ -41,6 +41,7 @@
     <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
       <transition-group name="grid">
         <ProjectCard
+          data-guide="project-card"
           v-for="project in projects"
           :key="project.id"
           :project="project"
