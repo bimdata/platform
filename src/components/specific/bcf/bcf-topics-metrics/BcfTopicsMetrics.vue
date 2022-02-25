@@ -80,10 +80,12 @@ export default {
   setup(props) {
     const barsData = computed(() => {
       if (props.priorities?.length && props.bcfTopics.length) {
+        // Add empty priority to match topics without priorities
         const shownPriorities = [...props.priorities];
         shownPriorities.push({
           priority: undefined
-        }); // Add empty priority to match topics without priorities
+        });
+
         return shownPriorities
           .map(priority => {
             let barData = {};
@@ -100,7 +102,9 @@ export default {
             barData.label = priority.priority;
             return barData;
           })
-          .sort((a, b) => (a.percentage > b.percentage ? -1 : 1));
+          .sort((a, b) =>
+            parseInt(a.percentage) > parseInt(b.percentage) ? -1 : 1
+          );
       }
       return [];
     });
