@@ -1,10 +1,10 @@
 <template>
   <div class="specific-component intro-platform">
     <div class="intro-platform__title">
-      {{ props.title }}
+      {{ title }}
     </div>
     <span class="intro-platform__content">
-      {{ props.content }}
+      {{ content }}
     </span>
     <img src="/static/guidedTour/platform/draw_intro.png" />
   </div>
@@ -13,14 +13,12 @@
 <script>
 export default {
   props: {
-    props: {
-      type: Object
+    title: {
+      type: String
+    },
+    content: {
+      type: String
     }
-  },
-  setup() {
-    return {
-      console
-    };
   }
 };
 </script>
