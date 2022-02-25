@@ -12,12 +12,6 @@
     }
   }
 
-  &__btn--viewer {
-    &:disabled {
-      opacity: 0.4;
-    }
-  }
-
   &__menu {
     position: absolute;
     z-index: 1;
