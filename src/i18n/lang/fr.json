@@ -271,7 +271,7 @@
     "dueDateLabel": "Date d'échéance (JJ/MM/AAAA)",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
-    "tagsPlaceholder": "Tags",
+    "tagsLabel": "Tags",
     "validateButton": "Valider"
   },
   "EditBcfTopic": {
