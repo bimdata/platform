@@ -149,6 +149,7 @@
   "BcfTopicGridItem": {
     "priority": "Priority: ",
     "assignedTo": "Assigned to: ",
+    "noPriority": "Any",
     "notSpecified": "Not specified",
     "elements": "Elements",
     "noElements": "0 Element",
@@ -198,7 +199,7 @@
     "emptyText": "Add BCF Topics to start to have some stats here.",
     "issues": "issues",
     "priority": "Priority",
-    "notDefined": "not defined"
+    "notDefined": "No priority"
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Drag and drop an image, or Browse",
@@ -210,7 +211,7 @@
     "dueDateLabel": "Due date",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
-    "tagsPlaceholder": "Tags",
+    "tagsLabel": "Tags",
     "validateButton": "Validate"
   },
   "EditBcfTopic": {

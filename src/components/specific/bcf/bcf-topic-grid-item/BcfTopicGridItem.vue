@@ -45,7 +45,7 @@
           {{ $t("BcfTopicGridItem.priority") }}
         </strong>
         <span :style="{ color: `#${priorityColor}` }">
-          {{ bcfTopic.priority || $t("BcfTopicGridItem.notSpecified") }}
+          {{ bcfTopic.priority || $t("BcfTopicGridItem.noPriority") }}
         </span>
       </div>
       <div>

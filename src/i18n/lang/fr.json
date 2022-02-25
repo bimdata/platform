@@ -183,7 +183,7 @@
     "validateButton": "Valider",
     "title": {
       "Priority": "Priorités",
-      "Label": "Labels",
+      "Label": "Tags",
       "Status": "Statuts",
       "Type": "Types",
       "Stage": "Phases"
@@ -197,7 +197,7 @@
     },
     "text": {
       "Priority": "Liste des priorités",
-      "Label": "Liste des labels",
+      "Label": "Liste des tags",
       "Status": "Liste des statuts",
       "Type": "Liste des types",
       "Stage": "Liste des phases"
@@ -210,6 +210,7 @@
   "BcfTopicGridItem": {
     "priority": "Priorité : ",
     "assignedTo": "Assigné à : ",
+    "noPriority": "Aucune",
     "notSpecified": "Non défini",
     "elements": "Élements",
     "noElements": "0 Élement",
