@@ -7,7 +7,7 @@
           class="setting-card__header__length flex items-center justify-center m-r-30"
           v-if="availableExtensions"
         >
-          {{ availableExtensions.length }}
+          <span>{{ availableExtensions.length }}</span>
         </div>
         <BIMDataIcon
           name="chevron"
@@ -109,6 +109,7 @@ export default {
         color: getRandomHexColor()
       });
       newExtensionName.value = "";
+      showAddExtension.value = false;
     };
 
     return {
