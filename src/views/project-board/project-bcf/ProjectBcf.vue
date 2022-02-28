@@ -174,7 +174,9 @@
       <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
         <template #content>
           <BcfTopicsMetrics
+            v-if="detailedExtensions"
             :bcfTopics="displayedBcfTopics"
+            :priorities="detailedExtensions.priorities"
             :loading="loading"
           />
         </template>
@@ -204,6 +206,7 @@
           :key="bcfTopic.guid"
           :project="project"
           :bcfTopic="bcfTopic"
+          :detailedExtensions="detailedExtensions"
         />
       </transition-group>
     </div>
@@ -251,7 +254,13 @@ export default {
   setup() {
     const { currentProject } = useProjects();
     const { openSidePanel } = useAppSidePanel();
-    const { bcfTopics, loadBcfTopics, importBcf, exportBcf } = useBcf();
+    const {
+      bcfTopics,
+      loadBcfTopics,
+      importBcf,
+      exportBcf,
+      detailedExtensions
+    } = useBcf();
     const loading = ref(false);
 
     watch(
@@ -341,6 +350,7 @@ export default {
       bcfTopics,
       project: currentProject,
       displayedBcfTopics,
+      detailedExtensions,
       onFiltersSubmit,
       searchText,
       sortByName,

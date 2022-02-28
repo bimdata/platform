@@ -49,7 +49,10 @@
       >
         <div
           class="open-topic-issue__content__subheader__index flex justify-center items-center p-x-6"
-          :class="getPriorityClasses"
+          :style="{
+            'background-color': `#${priorityColor}`,
+            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
+          }"
         >
           {{ bcfTopic.index }}
         </div>
@@ -62,7 +65,10 @@
       <div class="open-topic-issue__content__img text-center m-t-12">
         <div
           class="open-topic-issue__content__img__status flex p-6"
-          :class="getStatusClasses"
+          :style="{
+            'background-color': `#${statusColor}`,
+            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
+          }"
           v-if="bcfTopic.topicStatus"
         >
           <BIMDataIcon name="information" fill color="default" />
@@ -169,35 +175,61 @@
         </div>
       </div>
       <div class="open-topic-issue__comment m-t-12">
-        <BIMDataButton width="100%" color="primary" fill radius>
-          {{ $t("OpenTopicIssue.commentButton") }}
-        </BIMDataButton>
       </div>
     </div>
-    <ModalDeleteTopic
-      v-if="deleteTopicModal"
-      :bcfTopic="bcfTopic"
-      @close="deleteTopicModal = false"
-    />
+    <SafeZoneModal v-if="deleteTopicModal">
+      <template #text>
+        {{ $t("ModalDeleteTopic.deleteText", { name: bcfTopic.title }) }}
+      </template>
+      <template #actions>
+        <BIMDataButton
+          color="high"
+          fill
+          radius
+          class="m-r-12"
+          @click="removeTopic"
+        >
+          {{ $t("ModalDeleteTopic.deleteBcfButton") }}
+        </BIMDataButton>
+        <BIMDataButton
+          color="primary"
+          outline
+          radius
+          @click="deleteTopicModal = false"
+        >
+          {{ $t("ModalDeleteTopic.keepBcfButton") }}
+        </BIMDataButton>
+      </template>
+    </SafeZoneModal>
+    <div v-if="loading">
+      <BIMDataLoading />
+    </div>
   </div>
 </template>
 
 <script>
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
+import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
-import ModalDeleteTopic from "../modal-delete-topic/ModalDeleteTopic.vue";
+import SafeZoneModal from "@/components/generic/safe-zone-modal/SafeZoneModal.vue";
 
 export default {
   components: {
     EditBcfTopic,
     NoImgTopicBcf,
-    ModalDeleteTopic
+    SafeZoneModal
   },
   props: {
     bcfTopic: {
+      type: Object,
+      required: true
+    },
+    detailedExtensions: {
       type: Object,
       required: true
     }
@@ -206,19 +238,44 @@ export default {
   setup(props) {
     const { t } = useI18n();
 
-    const getPriorityClasses = ref("");
-    if (props.bcfTopic.priority) {
-      getPriorityClasses.value = props.bcfTopic.priority.toLowerCase();
-    }
+    const priorityColor = computed(() => {
+      if (props.bcfTopic.priority) {
+        const priorityDetail = props.detailedExtensions.priorities.find(
+          priority => priority.priority === props.bcfTopic.priority
+        );
+        if (priorityDetail && priorityDetail.color) {
+          return priorityDetail.color;
+        }
+      }
+      return "D8D8D8";
+    });
 
-    const getStatusClasses = ref("");
-    if (props.bcfTopic.topicStatus) {
-      getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
-    }
+    const statusColor = computed(() => {
+      if (props.bcfTopic.topicStatus) {
+        const statusDetail = props.detailedExtensions.topicStatuses.find(
+          status => status.topicStatus === props.bcfTopic.topicStatus
+        );
+        if (statusDetail && statusDetail.color) {
+          return statusDetail.color;
+        }
+      }
+      return "";
+    });
 
     const deleteTopicModal = ref(false);
-
     const isOpenEditTopic = ref(false);
+    const loading = ref(false);
+    const { currentProject } = useProjects();
+    const { deleteTopic } = useBcf();
+
+    const removeTopic = async () => {
+      try {
+        loading.value = true;
+        await deleteTopic(currentProject.value, props.bcfTopic);
+      } finally {
+        loading.value = false;
+      }
+    };
 
     const topicElements = computed(() => {
       if (
@@ -245,10 +302,13 @@ export default {
     return {
       deleteTopicModal,
       isOpenEditTopic,
-      getPriorityClasses,
-      getStatusClasses,
+      priorityColor,
+      statusColor,
       topicElements,
-      topicTags
+      topicTags,
+      adjustColor,
+      loading,
+      removeTopic
     };
   }
 };

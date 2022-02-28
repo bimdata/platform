@@ -8,7 +8,7 @@
       @keydown.delete="newTag.length || removeTag(tags.length - 1)"
     />
     <label for="bimdata-input">
-      {{ $t("CreateBcfTopic.tagsPlaceholder") }}
+      {{ $t("CreateBcfTopic.tagsLabel") }}
     </label>
     <span class="bar"></span>
     <ul class="tags bimdata-list m-t-6">

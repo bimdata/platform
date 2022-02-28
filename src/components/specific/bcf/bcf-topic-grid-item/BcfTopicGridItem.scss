@@ -12,18 +12,6 @@
         min-width: 32px;
         background-color: var(--color-silver);
         color: var(--color-text);
-        &.high {
-          color: var(--color-white);
-          background-color: var(--color-high);
-        }
-        &.medium {
-          color: var(--color-white);
-          background-color: var(--color-warning);
-        }
-        &.low {
-          color: var(--color-white);
-          background-color: var(--color-granite-light);
-        }
       }
       &__title {
         width: calc(100% - 32px - (12px * 2));
@@ -70,17 +58,6 @@
     box-shadow: var(--box-shadow);
     color: var(--color-text);
     font-size: 12px;
-    &__priority {
-      .high {
-        color: var(--color-high);
-      }
-      .medium {
-        color: var(--color-warning);
-      }
-      .low {
-        color: var(--color-granite-light);
-      }
-    }
   }
   &__side-panel {
     position: fixed;

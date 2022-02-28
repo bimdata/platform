@@ -18,21 +18,7 @@
         font-size: 12px;
       }
       &__index {
-        &.high,
-        &.medium,
-        &.low {
-          min-width: 50px;
-          color: var(--color-white);
-        }
-        &.high {
-          background-color: var(--color-high);
-        }
-        &.medium {
-          background-color: var(--color-warning);
-        }
-        &.low {
-          background-color: var(--color-granite-light);
-        }
+        min-width: 50px;
       }
       &__date {
         min-width: 103px;

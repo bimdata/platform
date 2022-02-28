@@ -38,12 +38,10 @@
             }"
           ></div>
           <strong class="m-x-6">{{ barData.percentage }} %</strong>
-          <span
-            >{{ $t("BcfTopicsMetrics.priority") }}
-            {{
-              barData.label ? barData.label : $t("BcfTopicsMetrics.notDefined")
-            }}</span
-          >
+          <span>
+            {{ barData.label && $t("BcfTopicsMetrics.priority") }}
+            {{ barData.label || $t("BcfTopicsMetrics.notDefined") }}
+          </span>
         </div>
       </div>
     </div>
@@ -51,7 +49,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 
 import EmptyBcfStats from "./EmptyBcfStats.vue";
 import Graph from "../../../generic/graph/Graph.vue";
@@ -66,6 +64,10 @@ export default {
       type: Array,
       required: true
     },
+    priorities: {
+      type: Object,
+      required: true
+    },
     loading: {
       type: Boolean
     }
@@ -76,40 +78,39 @@ export default {
     Graph
   },
   setup(props) {
-    const priorityOptions = ref([]);
-    watch(
-      () => props.bcfTopics,
-      () => {
-        priorityOptions.value = [
-          ...new Set(props.bcfTopics.map(bcfTopic => bcfTopic.priority))
-        ];
-      }
-    );
+    const barsData = computed(() => {
+      if (props.priorities?.length && props.bcfTopics.length) {
+        // Add empty priority to match topics without priorities
+        const shownPriorities = [...props.priorities];
+        shownPriorities.push({
+          priority: undefined
+        });
 
-    const barsData = ref([]);
-    watch(
-      () => priorityOptions.value,
-      () => {
-        if (priorityOptions.value) {
-          (barsData.value = []),
-            priorityOptions.value.forEach(priority => {
-              let barData = {};
-              barData.color = "palevioletred";
-              const v1 = props.bcfTopics.filter(
-                bcfTopic => bcfTopic.priority === priority
-              ).length;
-              const calcPercentage = (v1 * 100) / props.bcfTopics.length;
-              barData.percentage = calcPercentage.toFixed(0);
-              barData.label = priority;
-              barsData.value.push(barData);
-            });
-        }
-      },
-      { immediate: true }
-    );
+        return shownPriorities
+          .map(priority => {
+            let barData = {};
+            if (priority.color !== undefined) {
+              barData.color = `#${priority.color}`;
+            } else {
+              barData.color = `#D8D8D8`;
+            }
+            const topicCount = props.bcfTopics.filter(
+              bcfTopic => bcfTopic.priority === priority.priority
+            ).length;
+            const calcPercentage = (topicCount * 100) / props.bcfTopics.length;
+            barData.percentage = calcPercentage.toFixed(0);
+            barData.label = priority.priority;
+            return barData;
+          })
+          .sort((a, b) =>
+            parseInt(a.percentage) > parseInt(b.percentage) ? -1 : 1
+          );
+      }
+      return [];
+    });
+
     return {
-      barsData,
-      priorityOptions
+      barsData
     };
   }
 };

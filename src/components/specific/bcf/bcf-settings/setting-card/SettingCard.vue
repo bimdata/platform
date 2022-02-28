@@ -1,13 +1,13 @@
 <template>
   <div class="setting-card p-12 m-y-12">
     <div class="setting-card__header flex items-center justify-between">
-      <strong>{{ $t(`SettingCard.title.${extension}`) }}</strong>
+      <strong>{{ $t(`SettingCard.title.${extensionType}`) }}</strong>
       <div class="flex items-center">
         <div
           class="setting-card__header__length flex items-center justify-center m-r-30"
-          v-if="topicExtensions"
+          v-if="availableExtensions"
         >
-          {{ topicExtensions.length }}
+          <span>{{ availableExtensions.length }}</span>
         </div>
         <BIMDataIcon
           name="chevron"
@@ -23,7 +23,7 @@
       <div
         class="setting-card__subheader flex items-center justify-between m-t-6 m-b-12"
       >
-        {{ $t(`SettingCard.text.${extension}`) }}
+        {{ $t(`SettingCard.text.${extensionType}`) }}
         <BIMDataButton color="default" fill radius @click="toggleAddExtension">
           <BIMDataIcon
             name="plus"
@@ -38,9 +38,9 @@
       <transition name="list">
         <div v-if="showAddExtension" class="m-b-12">
           <BIMDataInput
-            :placeholder="$t(`SettingCard.input.${extension}`)"
-            v-model="newTopicExtensionName"
-            @keyup.enter.stop="addTopicExtension"
+            :placeholder="$t(`SettingCard.input.${extensionType}`)"
+            v-model="newExtensionName"
+            @keyup.enter.stop="addExtension"
           />
 
           <div class="flex items-center justify-end">
@@ -51,24 +51,18 @@
               @click="closeAddExtension"
               >{{ $t("SettingCard.cancelButton") }}</BIMDataButton
             >
-            <BIMDataButton
-              color="primary"
-              fill
-              radius
-              @click="addTopicExtension"
-              >{{ $t("SettingCard.validateButton") }}</BIMDataButton
-            >
+            <BIMDataButton color="primary" fill radius @click="addExtension">{{
+              $t("SettingCard.validateButton")
+            }}</BIMDataButton>
           </div>
         </div>
       </transition>
       <ul class="setting-card__content bimdata-list">
-        <SettingCardItem
-          :title="title"
-          :topicExtension="topicExtension"
-          @edit="setTopicExtension(index, $event)"
-          @delete="deleteTopicExtension(index, $event)"
-          v-for="(topicExtension, index) in topicExtensions"
-          :key="topicExtension"
+        <Extension
+          v-for="extension in availableExtensions"
+          :extensionType="extensionType"
+          :extension="extension"
+          :key="extension.id"
         />
       </ul>
     </div>
@@ -77,75 +71,57 @@
 
 <script>
 import { ref } from "vue";
-
+import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 import { useToggle } from "@/composables/toggle";
+import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
 
-import SettingCardItem from "./setting-card-item/SettingCardItem.vue";
+import Extension from "./Extension.vue";
 export default {
   components: {
-    SettingCardItem
+    Extension
   },
   props: {
-    extension: {
-      type: String,
-      required: true
+    availableExtensions: {
+      type: Array
     },
-    topicExtensions: {
-      type: Array,
-      required: true
-    },
-    title: {
-      type: String,
-      default: ""
+    extensionType: {
+      type: String
     }
   },
-  emits: ["edit", "add", "delete"],
-  setup(props, { emit }) {
+  setup(props) {
     const { isOpen, close, toggle } = useToggle();
 
     const { isOpen: showAddExtension, toggle: toggleAddExtension } =
       useToggle();
 
     const closeAddExtension = () => {
-      newTopicExtensionName.value = "";
+      newExtensionName.value = "";
       showAddExtension.value = false;
     };
 
-    const setTopicExtension = (index, extensionName) => {
-      const newTopicExtensions = props.topicExtensions.slice();
-      newTopicExtensions[index] = extensionName;
-      emit("edit", newTopicExtensions);
-    };
-
-    const newTopicExtensionName = ref("");
-    const addTopicExtension = () => {
-      const newTopicExtensions = props.topicExtensions.slice();
-      newTopicExtensions.value = newTopicExtensions.concat([
-        newTopicExtensionName.value
-      ]);
-      emit("add", newTopicExtensions.value);
-      newTopicExtensionName.value = "";
-    };
-
-    const deleteTopicExtension = (index, extensionName) => {
-      const newTopicExtensions = props.topicExtensions
-        .slice()
-        .filter(newTopicExtension => newTopicExtension !== extensionName);
-      emit("delete", newTopicExtensions);
+    const { currentProject } = useProjects();
+    const { createExtension } = useBcf();
+    const newExtensionName = ref("");
+    const addExtension = async () => {
+      await createExtension(currentProject.value, props.extensionType, {
+        priority: newExtensionName.value,
+        color: getRandomHexColor()
+      });
+      newExtensionName.value = "";
+      showAddExtension.value = false;
     };
 
     return {
       isOpen,
       toggle,
       showAddExtension,
-      newTopicExtensionName,
+      newExtensionName,
       // methods
       close,
       closeAddExtension,
       toggleAddExtension,
-      setTopicExtension,
-      addTopicExtension,
-      deleteTopicExtension
+      addExtension
     };
   }
 };

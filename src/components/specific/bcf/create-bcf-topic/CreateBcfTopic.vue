@@ -29,31 +29,39 @@
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.typeLabel')"
-        :options="topicExtensions.topicType"
+        :options="detailedExtensions.topicTypes"
+        optionKey="id"
+        optionLabelKey="topicType"
         v-model="topicType"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.priorityLabel')"
-        :options="topicExtensions.priority"
+        :options="detailedExtensions.priorities"
+        optionKey="id"
+        optionLabelKey="priority"
         v-model="topicPriority"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.statusLabel')"
-        :options="topicExtensions.topicStatus"
+        :options="detailedExtensions.topicStatuses"
+        optionKey="id"
+        optionLabelKey="topicStatus"
         v-model="topicStatus"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.stageLabel')"
-        :options="topicExtensions.stage"
+        :options="detailedExtensions.stages"
+        optionKey="id"
+        optionLabelKey="stage"
         v-model="topicPhase"
       />
       <BIMDataSelect
         width="100%"
         :label="$t('CreateBcfTopic.assignedToLabel')"
-        :options="topicExtensions.userIdType"
+        :options="extensions.userIdType"
         v-model="topicAssignedTo"
       />
       <div class="due-date">
@@ -74,12 +82,23 @@
         fitContent
         resizable
       />
-      <TagsInput v-model="topicTags" />
+      <BIMDataSelect
+        :multi="true"
+        width="100%"
+        :label="$t('CreateBcfTopic.tagsLabel')"
+        :options="detailedExtensions.topicLabels"
+        optionKey="id"
+        optionLabelKey="label"
+        v-model="topicTags"
+      />
     </div>
     <div class="create-bcf-topic__footer m-t-24">
       <BIMDataButton width="100%" color="primary" fill radius @click="submit">
         {{ $t("CreateBcfTopic.validateButton") }}
       </BIMDataButton>
+    </div>
+    <div v-if="loading" class="overlay flex items-center justify-center">
+      <BIMDataLoading />
     </div>
   </div>
 </template>
@@ -92,12 +111,7 @@ import { useProjects } from "@/state/projects.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { formatToDateObject, regexDate } from "@/utils/date";
 
-import TagsInput from "./tags-input/TagsInput.vue";
-
 export default {
-  components: {
-    TagsInput
-  },
   props: {
     bcfTopics: {
       type: Array
@@ -105,6 +119,15 @@ export default {
   },
   emits: ["submit"],
   setup(props) {
+    const { currentProject } = useProjects();
+    const {
+      loadExtensions,
+      createTopic,
+      loadBcfTopics,
+      extensions,
+      detailedExtensions
+    } = useBcf();
+
     const nextIndex = computed(() => {
       if (props.bcfTopics && props.bcfTopics.length > 0) {
         return (
@@ -118,13 +141,10 @@ export default {
       }
     });
 
-    const { currentProject } = useProjects();
-    const { loadTopicExtensions, createTopic, loadBcfTopics, topicExtensions } =
-      useBcf();
     watch(
       () => currentProject.value,
       async () => {
-        await loadTopicExtensions(currentProject.value);
+        await loadExtensions(currentProject.value);
       },
       {
         immediate: true
@@ -143,6 +163,7 @@ export default {
     const hasError = ref(false);
     const hasDateError = ref(false);
     const { pushNotification } = useAppNotification();
+    const loading = ref(false);
 
     const isDateConform = ({ value }) => {
       if (!value) {
@@ -165,18 +186,19 @@ export default {
       if (topicTitle.value && isDateConform(topicDate)) {
         const body = {
           title: topicTitle.value,
-          topicType: topicType.value,
-          priority: topicPriority.value,
-          topicStatus: topicStatus.value,
-          stage: topicPhase.value,
-          assignedTo: topicAssignedTo.value,
-          description: topicDescription.value,
-          labels: topicTags.value
+          topicType: topicType.value?.topicType,
+          priority: topicPriority.value?.priority,
+          topicStatus: topicStatus.value?.topicStatus,
+          stage: topicPhase.value?.stage,
+          assignedTo: topicAssignedTo?.value,
+          description: topicDescription?.value,
+          labels: topicTags.value?.map(topicTag => topicTag.label)
         };
         if (topicDate.value) {
           body.dueDate = formatToDateObject(topicDate.value);
         }
         try {
+          loading.value = true;
           await createTopic(currentProject.value, body);
           pushNotification({
             type: "success",
@@ -195,6 +217,7 @@ export default {
           topicDescription.value = "";
           topicTags.value = [];
           hasDateError.value = false;
+          loading.value = false;
         }
       } else {
         hasError.value = true;
@@ -202,6 +225,7 @@ export default {
     };
 
     return {
+      loading,
       hasError,
       hasDateError,
       topicTitle,
@@ -214,7 +238,8 @@ export default {
       topicDescription,
       topicTags,
       nextIndex,
-      topicExtensions,
+      extensions,
+      detailedExtensions,
       // Methods
       submit
     };

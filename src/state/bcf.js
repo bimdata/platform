@@ -3,7 +3,14 @@ import BcfService from "@/services/BcfService.js";
 
 const state = reactive({
   bcfTopics: [],
-  topicExtensions: []
+  extensions: [],
+  detailedExtensions: {
+    topicTypes: [],
+    priorities: [],
+    topicStatuses: [],
+    labels: [],
+    stages: []
+  }
 });
 
 const loadBcfTopics = async project => {
@@ -67,19 +74,45 @@ const exportBcf = async project => {
   return bcf;
 };
 
-const loadTopicExtensions = async project => {
-  const topicExtensions = await BcfService.fetchTopicExtensions(project);
-  state.topicExtensions = topicExtensions;
-  return topicExtensions;
+const loadExtensions = async project => {
+  const extensions = await BcfService.fetchExtensions(project);
+  state.extensions = extensions;
+  return extensions;
 };
 
-const updateTopicExtensions = async (project, extensions) => {
-  const newTopicExtensions = await BcfService.updateTopicExtensions(
+const loadDetailedExtensions = async project => {
+  const detailedExtensions = await BcfService.fetchDetailedExtensions(project);
+  state.detailedExtensions = detailedExtensions;
+  return detailedExtensions;
+};
+
+const createExtension = async (project, extensionType, data) => {
+  const newExtension = await BcfService.createExtension(
     project,
-    extensions
+    extensionType,
+    data
   );
-  await loadTopicExtensions(project);
-  return newTopicExtensions;
+  await loadDetailedExtensions(project);
+  return newExtension;
+};
+const deleteExtension = async (project, extensionType, priority) => {
+  const newExtension = await BcfService.deleteExtension(
+    project,
+    extensionType,
+    priority
+  );
+  await loadDetailedExtensions(project);
+  return newExtension;
+};
+const updateExtension = async (project, extensionType, id, priority) => {
+  const newExtension = await BcfService.updateExtension(
+    project,
+    extensionType,
+    id,
+    priority
+  );
+  await loadDetailedExtensions(project);
+  return newExtension;
 };
 
 export function useBcf() {
@@ -94,7 +127,10 @@ export function useBcf() {
     deleteTopic,
     importBcf,
     exportBcf,
-    loadTopicExtensions,
-    updateTopicExtensions
+    loadExtensions,
+    loadDetailedExtensions,
+    createExtension,
+    deleteExtension,
+    updateExtension
   };
 }

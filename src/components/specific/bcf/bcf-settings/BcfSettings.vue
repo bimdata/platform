@@ -26,20 +26,27 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-        <template v-for="extension of extensionKeys" :key="extension">
-          <SettingCard
-            v-if="topicExtensions[extension]"
-            :extension="extension"
-            :topicExtensions="topicExtensions[extension]"
-            @edit="updateExtension(extension, $event)"
-            @add="updateExtension(extension, $event)"
-            @delete="updateExtension(extension, $event)"
-          />
-        </template>
+        <SettingCard
+          extensionType="Priority"
+          :availableExtensions="detailedExtensions.priorities"
+        />
+        <SettingCard
+          extensionType="Type"
+          :availableExtensions="detailedExtensions.topicTypes"
+        />
+        <SettingCard
+          extensionType="Stage"
+          :availableExtensions="detailedExtensions.stages"
+        />
+        <SettingCard
+          extensionType="Status"
+          :availableExtensions="detailedExtensions.topicStatuses"
+        />
+        <SettingCard
+          extensionType="Label"
+          :availableExtensions="detailedExtensions.topicLabels"
+        />
       </div>
-      <BIMDataButton color="primary" fill radius class="m-x-18">
-        {{ $t("BcfSettings.validateButton") }}
-      </BIMDataButton>
     </div>
   </div>
 </template>
@@ -50,14 +57,6 @@ import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import SettingCard from "./setting-card/SettingCard.vue";
 
-const extensionKeys = [
-  "priority",
-  "topicLabel",
-  "topicStatus",
-  "topicType",
-  "stage"
-];
-
 export default {
   components: {
     SettingCard
@@ -65,32 +64,19 @@ export default {
   emits: ["close"],
   setup() {
     const { currentProject } = useProjects();
-    const { loadTopicExtensions, topicExtensions, updateTopicExtensions } =
-      useBcf();
+    const { loadDetailedExtensions, detailedExtensions } = useBcf();
     watch(
       () => currentProject,
       async () => {
-        await loadTopicExtensions(currentProject.value);
+        await loadDetailedExtensions(currentProject.value);
       },
       {
         immediate: true
       }
     );
 
-    const updateExtension = async (extension, value) => {
-      try {
-        await updateTopicExtensions(currentProject.value, {
-          [extension]: value
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     return {
-      extensionKeys,
-      topicExtensions,
-      updateExtension
+      detailedExtensions
     };
   }
 };

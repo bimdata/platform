@@ -182,25 +182,25 @@
     "cancelButton": "Annuler",
     "validateButton": "Valider",
     "title": {
-      "priority": "Priorités",
-      "topicLabel": "Labels",
-      "topicStatus": "Statuts",
-      "topicType": "Types",
-      "stage": "Phases"
+      "Priority": "Priorités",
+      "Label": "Tags",
+      "Status": "Statuts",
+      "Type": "Types",
+      "Stage": "Phases"
     },
     "input": {
-      "priority": "Ajouter une nouvelle priorité",
-      "topicLabel": "Ajouter un nouveau label",
-      "topicStatus": "Ajouter un nouveau statut",
-      "topicType": "Ajouter un nouveau type",
-      "stage": "Ajouter une nouvelle phase"
+      "Priority": "Ajouter une nouvelle priorité",
+      "Label": "Ajouter un nouveau label",
+      "Status": "Ajouter un nouveau statut",
+      "Type": "Ajouter un nouveau type",
+      "Stage": "Ajouter une nouvelle phase"
     },
     "text": {
-      "priority": "Liste des priorités",
-      "topicLabel": "Liste des labels",
-      "topicStatus": "Liste des statuts",
-      "topicType": "Liste des types",
-      "stage": "Liste des phases"
+      "Priority": "Liste des priorités",
+      "Label": "Liste des tags",
+      "Status": "Liste des statuts",
+      "Type": "Liste des types",
+      "Stage": "Liste des phases"
     }
   },
   "BcfTopicCreationCard": {
@@ -210,7 +210,8 @@
   "BcfTopicGridItem": {
     "priority": "Priorité : ",
     "assignedTo": "Assigné à : ",
-    "notSpecified": "Non renseigné",
+    "noPriority": "Aucune",
+    "notSpecified": "Non défini",
     "elements": "Élements",
     "noElements": "0 Élement",
     "see": "Voir"
@@ -259,7 +260,7 @@
     "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
     "issues": "problèmes",
     "priority": "Priorité",
-    "notDefined": "non défini"
+    "notDefined": "Aucune priorité"
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
@@ -271,7 +272,7 @@
     "dueDateLabel": "Date d'échéance (JJ/MM/AAAA)",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
-    "tagsPlaceholder": "Tags",
+    "tagsLabel": "Tags",
     "validateButton": "Valider"
   },
   "EditBcfTopic": {

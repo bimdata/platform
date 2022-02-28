@@ -4,7 +4,10 @@
       <div class="bcf-topic__header__infos flex">
         <div
           class="bcf-topic__header__infos__index flex items-center justify-center"
-          :class="getPriorityClasses"
+          :style="{
+            'background-color': `#${priorityColor}`,
+            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
+          }"
         >
           {{ bcfTopic.index }}
         </div>
@@ -15,7 +18,10 @@
       <div class="bcf-topic__header__img flex items-center justify-center">
         <div
           class="bcf-topic__header__img__status flex p-6"
-          :class="getStatusClasses"
+          :style="{
+            'background-color': `#${statusColor}`,
+            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
+          }"
           v-if="bcfTopic.topicStatus"
         >
           <BIMDataIcon name="information" fill color="default" />
@@ -38,8 +44,8 @@
         <strong>
           {{ $t("BcfTopicGridItem.priority") }}
         </strong>
-        <span :class="getPriorityClasses">
-          {{ bcfTopic.priority || $t("BcfTopicGridItem.notSpecified") }}
+        <span :style="{ color: `#${priorityColor}` }">
+          {{ bcfTopic.priority || $t("BcfTopicGridItem.noPriority") }}
         </span>
       </div>
       <div>
@@ -86,14 +92,19 @@
         key="bcf-topic-side-panel"
         class="bcf-topic__side-panel"
       >
-        <OpenTopicIssue :bcfTopic="bcfTopic" @close="showSidePanel = false" />
+        <OpenTopicIssue
+          :bcfTopic="bcfTopic"
+          @close="showSidePanel = false"
+          :detailedExtensions="detailedExtensions"
+        />
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref } from "vue";
+import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
@@ -112,24 +123,38 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
+    },
+    detailedExtensions: {
+      type: Object,
+      required: true
     }
   },
   setup(props) {
-    const getPriorityClasses = ref("");
-    const getStatusClasses = ref("");
+    const priorityColor = computed(() => {
+      if (props.bcfTopic.priority) {
+        const priorityDetail = props.detailedExtensions.priorities.find(
+          priority => priority.priority === props.bcfTopic.priority
+        );
+        if (priorityDetail && priorityDetail.color) {
+          return priorityDetail.color;
+        }
+      }
+      return "D8D8D8";
+    });
 
-    watch(
-      () => props.bcfTopic,
-      () => {
-        if (props.bcfTopic.priority) {
-          getPriorityClasses.value = props.bcfTopic.priority.toLowerCase();
+    const statusColor = computed(() => {
+      if (props.bcfTopic.topicStatus) {
+        const statusDetail = props.detailedExtensions.topicStatuses.find(
+          status => status.topicStatus === props.bcfTopic.topicStatus
+        );
+        if (statusDetail && statusDetail.color) {
+          return statusDetail.color;
         }
-        if (props.bcfTopic.topicStatus) {
-          getStatusClasses.value = props.bcfTopic.topicStatus.toLowerCase();
-        }
-      },
-      { immediate: true }
-    );
+      }
+      return "";
+    });
+
+    // const getStatusClasses = ref("");
 
     const showSidePanel = ref(false);
     const bcfTopicToOpen = reactive({});
@@ -151,8 +176,9 @@ export default {
     });
 
     return {
-      getPriorityClasses,
-      getStatusClasses,
+      adjustColor,
+      priorityColor,
+      statusColor,
       bcfTopicToOpen,
       topicElements,
       showSidePanel,

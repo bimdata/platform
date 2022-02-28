@@ -13,7 +13,7 @@
     "
   >
     <svg width="100%" height="100%" :viewBox="viewBox">
-      <g v-for="(barData, i) of barsData" :key="i">
+      <g v-for="(barData, i) of relevantBarsData" :key="i">
         <circle
           :cx="center"
           :cy="center"
@@ -122,11 +122,14 @@ export default {
     viewBoxSize() {
       return (
         this.firstBarDistanceFromCenter * 2 +
-        this.interBarDistance * this.barsData.length * 2
+        this.interBarDistance * this.relevantBarsData.length * 2
       );
     },
     viewBox() {
       return `0 0 ${this.viewBoxSize} ${this.viewBoxSize}`;
+    },
+    relevantBarsData() {
+      return this.barsData.filter(({ percentage }) => percentage > 0).reverse();
     }
   }
 };
