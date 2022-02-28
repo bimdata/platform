@@ -49,19 +49,32 @@
         </DashboardButtonTile>
       </AppLink>
     </div>
-    <div class="dashboard__body">
-      <div class="dashboard__body__left">
-        <DashboardSpaceList :spaces="spaces" />
-        <DashboardProjectList :projects="projects" />
-      </div>
-      <div class="dashboard__body__right">
-        <SubscribeCard v-if="isSubscriptionEnabled" layout="vertical" />
-      </div>
+    <div class="dashboard__body" :class="{ isSubscribeHorizontal }">
+      <template v-if="isSubscribeHorizontal">
+        <div>
+          <SubscribeCard v-if="isSubscriptionEnabled" layout="horizontal" />
+        </div>
+        <div class="dashboard__body__down">
+          <DashboardSpaceList :spaces="spaces" />
+          <DashboardProjectList :projects="projects" />
+        </div>
+      </template>
+      <template v-else>
+        <div class="dashboard__body__left">
+          <DashboardSpaceList :spaces="spaces" isCarousel />
+          <DashboardProjectList :projects="projects" isCarousel />
+        </div>
+        <div class="dashboard__body__right">
+          <SubscribeCard v-if="isSubscriptionEnabled" layout="vertical" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
@@ -87,12 +100,17 @@ export default {
     const { userSpaces } = useSpaces();
     const { userProjects } = useProjects();
 
+    const isSubscribeHorizontal = computed(
+      () => userSpaces.value.length + userProjects.value.length < 4
+    );
+
     return {
       // References
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       projects: userProjects,
       routeNames,
-      spaces: userSpaces
+      spaces: userSpaces,
+      isSubscribeHorizontal
     };
   }
 };

@@ -3,8 +3,15 @@
 
   &__title {
     margin-bottom: var(--spacing-unit);
-    padding-left: var(--spacing-unit);
+    :not(.isCarousel) {
+      padding-left: var(--spacing-unit);
+    }
     font-size: 1.2rem;
     font-weight: bold;
+  }
+
+  &__content {
+    display: flex;
+    gap: 20px;
   }
 }
