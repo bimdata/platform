@@ -92,7 +92,11 @@
         key="bcf-topic-side-panel"
         class="bcf-topic__side-panel"
       >
-        <OpenTopicIssue :bcfTopic="bcfTopic" @close="showSidePanel = false" />
+        <OpenTopicIssue
+          :bcfTopic="bcfTopic"
+          @close="showSidePanel = false"
+          :detailedExtensions="detailedExtensions"
+        />
       </div>
     </transition>
   </div>
