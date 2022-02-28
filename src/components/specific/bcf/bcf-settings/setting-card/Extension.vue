@@ -31,8 +31,9 @@
         fill
         color="high"
         margin="0 12px 0 0"
-        @click="submitDelete(extension)"
+        @click="isDeleteSafeZoneOpen = true"
       />
+
       <template v-if="typesWithColor.includes(extensionType)">
         <span
           class="setting-card-item__color"
@@ -55,6 +56,34 @@
           "
         />
       </template>
+
+      <div
+        class="setting-card-item__delete__safe-zone flex items-center justify-between p-x-12"
+        v-if="isDeleteSafeZoneOpen"
+      >
+        <p>Supprimer cette {{ extensionType }}</p>
+        <div class="flex items-center">
+          <BIMDataButton
+            color="high"
+            fill
+            radius
+            height="28px"
+            class="m-r-6"
+            @click="submitDelete(extension)"
+          >
+            Supprimer
+          </BIMDataButton>
+          <BIMDataButton
+            color="primary"
+            ghost
+            rounded
+            icon
+            @click="isDeleteSafeZoneOpen = false"
+          >
+            <BIMDataIcon name="close" size="xxxs" />
+          </BIMDataButton>
+        </div>
+      </div>
     </div>
   </li>
 </template>
@@ -97,6 +126,7 @@ export default {
 
     const editExtension = ref(false);
     const displayColorSelector = ref(false);
+    const isDeleteSafeZoneOpen = ref(false);
 
     const extensionValue = ref(
       props.extension[typeFieldMap[props.extensionType]]
@@ -127,7 +157,9 @@ export default {
           currentProject.value,
           props.extensionType,
           props.extension.id,
-          { color: colorValue }
+          {
+            color: colorValue
+          }
         );
         extensionColor.value = colorValue;
       }
@@ -146,6 +178,7 @@ export default {
       extensionColor,
       displayColorSelector,
       editExtension,
+      isDeleteSafeZoneOpen,
       submitValue,
       submitColor,
       submitDelete,
