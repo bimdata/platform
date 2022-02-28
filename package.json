@@ -12,7 +12,7 @@
   "dependencies": {
     "@bimdata/design-system": "1.2.0-rc.28",
     "@bimdata/typescript-fetch-api-client": "7.1.4",
-    "@bimdata/viewer": "^1.9.0-rc.55",
+    "@bimdata/viewer": "^1.9.0-rc.56",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.7.0",
     "oidc-client": "^1.11.5",
