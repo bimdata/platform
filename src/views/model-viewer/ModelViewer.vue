@@ -57,7 +57,8 @@ export default {
         editProperties: true
       },
       "viewer2d-background": true,
-      plan: true
+      plan: true,
+      buildingMaker: true,
     };
 
     // Extract space specific plugins config
