@@ -72,13 +72,15 @@ export default {
 
     const translation = ref(0);
     const handleMouseMove = event => {
-      const containerRect = container.value.getBoundingClientRect();
-      const viewportRect = viewport.value.getBoundingClientRect();
-      let offset = Math.abs(
-        Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
-      );
-      offset = Math.min(i, nbSlices);
-      translation.value = (offset - 1) * viewportRect.width;
+      if (container.value && viewport.value) {
+        const containerRect = container.value.getBoundingClientRect();
+        const viewportRect = viewport.value.getBoundingClientRect();
+        let offset = Math.abs(
+          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
+        );
+        offset = Math.min(offset, nbSlices);
+        translation.value = (offset - 1) * viewportRect.width;
+      }
     };
 
     const images = ref([]);
