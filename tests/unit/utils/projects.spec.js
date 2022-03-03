@@ -1,4 +1,4 @@
-import { statusLimitNew, statusLimitActive } from "@/config/project-status.js";
+import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
 import { projectStatus } from "@/utils/projects.js";
 
 describe("Projects Utils - project status", () => {

@@ -14,7 +14,9 @@
     </ProgressBar>
     <div
       v-if="
-        spaceSubInfo.isPlatformSubscription && spaceSubInfo.isOrganizationMember
+        spaceSubInfo.isPlatformSubscription &&
+        spaceSubInfo.isOrganizationMember &&
+        !spaceSubInfo.isCustomSubscription
       "
     >
       <AppLink

@@ -1,5 +1,6 @@
 <template>
   <div data-test="project-board" class="view project-board">
+    <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
         <AppBreadcrumb />
@@ -53,6 +54,7 @@ import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
 import ProjectOverview from "./project-overview/ProjectOverview.vue";
 import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
 const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {
@@ -81,7 +83,8 @@ export default {
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
-    SpaceSizeInfo
+    SpaceSizeInfo,
+    SubscriptionStatusBanner
   },
   setup() {
     const route = useRoute();

@@ -31,9 +31,10 @@
           :project="project"
           :fileStructure="fileStructure"
           :groups="groups"
-          @file-uploaded="reloadFileStructure"
-          @folder-permission-updated="reloadFileStructure"
-          @group-permission-updated="reloadFileStructure"
+          @file-uploaded="reloadData"
+          @folder-permission-updated="reloadData"
+          @group-permission-updated="reloadData"
+          @model-created="reloadData"
         />
       </AppLoading>
     </div>
@@ -68,7 +69,7 @@ export default {
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
     const { projectGroups } = useGroups();
 
-    const reloadFileStructure = debounce(async () => {
+    const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
@@ -84,7 +85,7 @@ export default {
       routeNames,
       spaceSubInfo,
       // Methods
-      reloadFileStructure
+      reloadData
     };
   }
 };

@@ -65,15 +65,17 @@
       {{ $d(file.updatedAt, "long") }}
     </template>
     <template #cell-size="{ row: file }">
-      {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
+      {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
         :project="project"
         :file="file"
+        @create-model="$emit('create-model', $event)"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
+        @open-visa-manager="$emit('open-visa-manager', $event)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -83,6 +85,7 @@
 <script>
 import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
 import columnsDef from "./columns.js";
 // Components
@@ -123,13 +126,15 @@ export default {
     }
   },
   emits: [
+    "back-parent-folder",
+    "create-model",
     "delete",
     "download",
     "file-clicked",
     "file-uploaded",
     "manage-access",
-    "selection-changed",
-    "back-parent-folder"
+    "open-visa-manager",
+    "selection-changed"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
@@ -164,7 +169,7 @@ export default {
       () => {
         fileUploads.value = fileUploads.value.concat(
           props.filesToUpload.map(file =>
-            Object.assign(file, { key: generateFileKey(file.name, file.size) })
+            Object.assign(file, { key: generateFileKey(file) })
           )
         );
       },
@@ -191,6 +196,7 @@ export default {
       // Methods
       cleanUpload,
       formatBytes,
+      isFolder,
       onUploadCompleted
     };
   }

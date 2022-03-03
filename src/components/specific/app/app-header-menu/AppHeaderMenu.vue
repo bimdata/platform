@@ -31,6 +31,7 @@
           </a>
           <div class="separator"></div>
           <AppLink
+            v-if="isSubscriptionEnabled"
             :to="{
               name: routeNames.userSubscriptions,
               query: {
@@ -38,12 +39,7 @@
               }
             }"
           >
-            <BIMDataButton
-              v-if="isSubscriptionEnabled"
-              width="100%"
-              ghost
-              squared
-            >
+            <BIMDataButton width="100%" ghost squared>
               <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
             </BIMDataButton>
           </AppLink>

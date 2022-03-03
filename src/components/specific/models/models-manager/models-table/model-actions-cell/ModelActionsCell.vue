@@ -1,35 +1,37 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
-    <template v-if="model.type === 'IFC'">
-      <template v-for="window of ['2d', '3d']" :key="window">
-        <AppLink
-          :to="{
-            name: routeNames.modelViewer,
-            params: {
-              spaceID: project.cloud.id,
-              projectID: project.id,
-              modelIDs: model.id
-            },
-            query: {
-              window
-            }
-          }"
-        >
-          <BIMDataButton
-            class="model-actions-cell__btn model-actions-cell__btn--viewer"
-            color="granite"
-            outline
-            radius
-            icon
-            :disabled="!isModelReady"
-          >
-            {{ window.toUpperCase() }}
-          </BIMDataButton>
-        </AppLink>
+    <template v-if="model.type === MODEL_TYPE.IFC">
+      <template v-for="window of [WINDOWS.V2D, WINDOWS.V3D]" :key="window">
+        <ViewerButton
+          :disabled="!isModelReady"
+          :project="project"
+          :model="model"
+          :window="window"
+        />
       </template>
     </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.DWG">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DWG"
+        text="2D"
+      />
+    </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.PDF">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.PLAN"
+        text="2D"
+      />
+    </template>
+
     <BIMDataButton
-      :disabled="!project.isAdmin && model.document.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
@@ -39,7 +41,7 @@
       <BIMDataIcon name="download" size="m" />
     </BIMDataButton>
     <BIMDataButton
-      :disabled="!project.isAdmin && model.document.userPermission < 100"
+      :disabled="model.document.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
@@ -65,23 +67,34 @@
           squared
           @click="onClick(model.archived ? 'unarchive' : 'archive')"
         >
-          {{
-            $t(
-              `ModelActionsCell.${
-                model.archived ? "unarchiveButtonText" : "archiveButtonText"
-              }`
-            )
-          }}
+          <template v-if="model.archived">
+            {{ $t("ModelActionsCell.unarchiveButtonText") }}
+          </template>
+          <template v-else>
+            {{ $t("ModelActionsCell.archiveButtonText") }}
+          </template>
         </BIMDataButton>
-        <BIMDataButton
-          class="model-actions-cell__menu__btn"
-          color="high"
-          ghost
-          squared
-          @click="onClick('delete')"
-        >
-          {{ $t("ModelActionsCell.deleteButtonText") }}
-        </BIMDataButton>
+        <template v-if="model.type === 'PDF'">
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            ghost
+            squared
+            @click="onClick('remove-model')"
+          >
+            {{ $t("ModelActionsCell.removeButtonText") }}
+          </BIMDataButton>
+        </template>
+        <template v-else>
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            color="high"
+            ghost
+            squared
+            @click="onClick('delete')"
+          >
+            {{ $t("ModelActionsCell.deleteButtonText") }}
+          </BIMDataButton>
+        </template>
       </div>
     </transition>
   </div>
@@ -90,14 +103,14 @@
 <script>
 import { computed } from "vue";
 import { useToggle } from "@/composables/toggle.js";
-import MODEL_STATUS from "@/config/model-statuses.js";
-import routeNames from "@/router/route-names.js";
+import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
+import { WINDOWS } from "@/config/viewer.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import ViewerButton from "./ViewerButton.vue";
 
 export default {
   components: {
-    AppLink
+    ViewerButton
   },
   props: {
     project: {
@@ -109,7 +122,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "update"],
+  emits: ["archive", "delete", "download", "remove-model", "update"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -131,8 +144,9 @@ export default {
     return {
       // References
       isModelReady,
-      routeNames,
+      MODEL_TYPE,
       showMenu,
+      WINDOWS,
       // Methods
       closeMenu,
       onClick,

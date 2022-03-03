@@ -16,7 +16,7 @@
       </div>
       <div class="organization-space-card__info">
         <div class="organization-space-card__info__name">
-          <BIMDataTextBox maxWidth="260px" :text="space.name" />
+          <BIMDataTextbox maxWidth="260px" :text="space.name" />
         </div>
         <div class="organization-space-card__info__data">
           <span class="organization-space-card__info__data--date">

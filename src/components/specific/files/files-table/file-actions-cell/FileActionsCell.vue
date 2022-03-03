@@ -13,7 +13,7 @@
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
         <BIMDataButton
-          v-if="file.type === 'Ifc'"
+          v-if="isIFC(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -21,22 +21,18 @@
         >
           {{ $t("FileActionsCell.openViewerButtonText") }}
         </BIMDataButton>
-        <!-- <BIMDataButton
+
+        <BIMDataButton
+          v-if="!isFolder(file) && isSmartFile(file)"
+          :disabled="!isConvertibleToModel(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
-          @click="onClick('add-tags')"
+          @click="onClick('create-model')"
         >
-          {{ $t("FileActionsCell.addTagsButtonText") }}
-        </BIMDataButton> -->
-        <!-- <BIMDataButton
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('request-validation')"
-        >
-          {{ $t("FileActionsCell.validationRequestButtonText") }}
-        </BIMDataButton> -->
+          {{ $t("FileActionsCell.createModelButtonText") }}
+        </BIMDataButton>
+
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -46,6 +42,7 @@
         >
           {{ $t("FileActionsCell.renameButtonText") }}
         </BIMDataButton>
+
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -55,16 +52,9 @@
         >
           {{ $t("FileActionsCell.downloadButtonText") }}
         </BIMDataButton>
-        <!-- <BIMDataButton
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('add-version')"
-        >
-          {{ $t("FileActionsCell.addVersionButtonText") }}
-        </BIMDataButton> -->
+
         <BIMDataButton
-          v-if="project.isAdmin && file.type === 'Folder'"
+          v-if="isFolder(file) && project.isAdmin"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -72,6 +62,19 @@
         >
           {{ $t("FileActionsCell.manageAccessButtonText") }}
         </BIMDataButton>
+
+        <BIMDataButton
+          v-if="
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('open-visa-manager')"
+        >
+          {{ $t("FileActionsCell.VisaButtonText") }}
+        </BIMDataButton>
+
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -89,8 +92,10 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
+import { isFolder } from "@/utils/file-structure.js";
+import { isConvertibleToModel, isIFC, isSmartFile } from "@/utils/models.js";
 
 export default {
   props: {
@@ -104,12 +109,11 @@ export default {
     }
   },
   emits: [
-    "add-tags",
-    "add-version",
+    "create-model",
     "delete",
     "download",
     "manage-access",
-    "request-validation",
+    "open-visa-manager",
     "update"
   ],
   setup(props, { emit }) {
@@ -127,7 +131,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelIDs: props.file.ifcId
+          modelIDs: props.file.modelId
         },
         query: {
           window: "3d"
@@ -146,6 +150,10 @@ export default {
       // Methods
       closeMenu,
       goToModelViewer,
+      isConvertibleToModel,
+      isFolder,
+      isIFC,
+      isSmartFile,
       onClick,
       toggleMenu
     };

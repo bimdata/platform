@@ -25,11 +25,12 @@
 
     <transition name="fade">
       <FileUploader
+        isModelUploader
         class="project-overview__block--upload"
         v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
         :project="project"
-        :allowedFileTypes="modelExtensions"
-        @file-uploaded="reloadModels"
+        :allowedFileTypes="allowedExtensions"
+        @file-uploaded="reloadData"
         @forbidden-upload-attempt="notifyForbiddenUpload"
         @close="closeFileUploader"
       />
@@ -68,7 +69,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useToggle } from "@/composables/toggle.js";
-import { MODEL_EXTENSIONS, MODEL_TYPES } from "@/config/model-types.js";
+import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
@@ -100,7 +101,7 @@ export default {
     const { pushNotification } = useAppNotification();
 
     const ifcs = computed(() =>
-      projectModels.value.filter(model => model.type === MODEL_TYPES.IFC)
+      projectModels.value.filter(model => model.type === MODEL_TYPE.IFC)
     );
 
     const {
@@ -110,7 +111,7 @@ export default {
       toggle: toggleFileUploader
     } = useToggle();
 
-    const reloadModels = debounce(async () => {
+    const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
@@ -123,7 +124,7 @@ export default {
         type: "error",
         title: t("ProjectOverview.forbiddenUploadNotification.title"),
         message: t("ProjectOverview.forbiddenUploadNotification.message", {
-          extensions: MODEL_EXTENSIONS.join(", ")
+          extensions: UPLOADABLE_EXTENSIONS.join(", ")
         })
       });
     };
@@ -132,7 +133,7 @@ export default {
       // References
       ifcs,
       invitations: projectInvitations,
-      modelExtensions: MODEL_EXTENSIONS,
+      allowedExtensions: UPLOADABLE_EXTENSIONS,
       models: projectModels,
       project: currentProject,
       showFileUploader,
@@ -142,7 +143,7 @@ export default {
       closeFileUploader,
       notifyForbiddenUpload,
       openFileUploader,
-      reloadModels,
+      reloadData,
       toggleFileUploader
     };
   }

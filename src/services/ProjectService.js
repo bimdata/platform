@@ -169,6 +169,18 @@ class ProjectService {
       throw new RuntimeError(ERRORS.USER_LEAVE_ERROR, error);
     }
   }
+
+  async fetchFolderProjectUsers(project, folder) {
+    try {
+      return await apiClient.collaborationApi.getFolderProjectUsers({
+        cloudPk: project.cloud.id,
+        projectPk: project.id,
+        folderPk: folder.id
+      });
+    } catch (error) {
+      throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
+    }
+  }
 }
 
 const service = new ProjectService();

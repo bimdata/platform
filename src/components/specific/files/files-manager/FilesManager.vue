@@ -27,6 +27,23 @@
             v-model="searchText"
             clear
           />
+          <BIMDataButton
+            :disabled="!visasCounter"
+            class="files-manager__actions__visa"
+            color="primary"
+            fill
+            radius
+            @click="openVisaManager"
+          >
+            <span class="files-manager__actions__visa__content">
+              <template v-if="visasCounter > 0">
+                <div class="files-manager__actions__visa__content__counter">
+                  <span>{{ visasCounter }}</span>
+                </div>
+              </template>
+              {{ $t("Visa.button") }}
+            </span>
+          </BIMDataButton>
         </div>
         <FileTree
           class="files-manager__tree"
@@ -56,12 +73,14 @@
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
             @back-parent-folder="backToParent"
+            @create-model="createModelFromFile"
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
+            @open-visa-manager="openVisaManager"
           />
         </div>
 
@@ -75,6 +94,16 @@
               @folder-permission-updated="$emit('folder-permission-updated')"
               @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
+            />
+            <VisaMain
+              v-if="showVisaManager"
+              :project="project"
+              :document="fileToManage"
+              :toValidateVisas="toValidateVisas"
+              :createdVisas="createdVisas"
+              :visasLoading="visasLoading"
+              @fetch-visas="fetchVisas"
+              @close="closeVisaManager"
             />
           </div>
         </transition>
@@ -102,16 +131,21 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
-import FILE_TYPES from "@/config/file-types.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useFiles } from "@/state/files.js";
+import { useModels } from "@/state/models.js";
+import { useVisa } from "@/state/visa.js";
+import { isFolder } from "@/utils/file-structure.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
 import FilesTable from "@/components/specific/files/files-table/FilesTable.vue";
 import FolderAccessManager from "@/components/specific/files/folder-access-manager/FolderAccessManager.vue";
 import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton.vue";
+import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
@@ -125,7 +159,8 @@ export default {
     FolderCreationButton,
     FilesActionBar,
     FilesDeleteModal,
-    FilesManagerOnboarding
+    FilesManagerOnboarding,
+    VisaMain
   },
   props: {
     spaceSubInfo: {
@@ -148,17 +183,27 @@ export default {
   emits: [
     "file-uploaded",
     "folder-permission-updated",
-    "group-permission-updated"
+    "group-permission-updated",
+    "model-created"
   ],
-  setup(props) {
+  setup(props, { emit }) {
+    const { t } = useI18n();
+    const { pushNotification } = useAppNotification();
+
     const {
       fileStructureHandler: handler,
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
+    const { createModel } = useModels();
+
+    const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
     const currentFolder = ref(null);
     const currentFiles = ref([]);
+    const toValidateVisas = ref([]);
+    const createdVisas = ref([]);
+    const visasLoading = ref(false);
 
     watch(
       () => props.fileStructure,
@@ -175,12 +220,12 @@ export default {
       () => currentFolder.value,
       folder => {
         const childrenFolders = folder.children
-          .filter(child => child.type === FILE_TYPES.FOLDER)
+          .filter(child => isFolder(child))
           .sort((a, b) =>
             a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
           );
         const childrenFiles = folder.children
-          .filter(child => child.type !== FILE_TYPES.FOLDER)
+          .filter(child => !isFolder(child))
           .sort((a, b) =>
             a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
           );
@@ -190,7 +235,7 @@ export default {
     );
 
     const onFileSelected = file => {
-      if (file.type === FILE_TYPES.FOLDER) {
+      if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       }
     };
@@ -216,6 +261,16 @@ export default {
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
+    const createModelFromFile = async file => {
+      const model = await createModel(props.project, file);
+      emit("model-created", model);
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("FilesManager.createModelNotification")
+      });
+    };
+
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
     const openDeleteModal = models => {
@@ -237,11 +292,15 @@ export default {
 
     const showSidePanel = ref(false);
     const showAccessManager = ref(false);
+    const showVisaManager = ref(false);
     const folderToManage = ref(null);
+    const fileToManage = ref(null);
+
     let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
+      showVisaManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
@@ -266,6 +325,47 @@ export default {
       }, 100);
     };
 
+    const openVisaManager = event => {
+      if (event.fileName) {
+        fileToManage.value = event;
+      } else {
+        fileToManage.value = { id: null };
+      }
+      showVisaManager.value = true;
+      showAccessManager.value = false;
+      showSidePanel.value = true;
+    };
+
+    const closeVisaManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showVisaManager.value = false;
+        fileToManage.value = null;
+      }, 100);
+    };
+
+    const fetchVisas = async () => {
+      try {
+        visasLoading.value = true;
+
+        const [toValidateResponse, createdResponse] = await Promise.all([
+          fetchToValidateVisas(props.project),
+          fetchCreatedVisas(props.project)
+        ]);
+
+        toValidateVisas.value = toValidateResponse;
+        createdVisas.value = createdResponse;
+      } finally {
+        visasLoading.value = false;
+      }
+    };
+
+    const visasCounter = computed(
+      () => toValidateVisas.value.length + createdVisas.value.length
+    );
+
+    onMounted(() => fetchVisas());
+
     return {
       // References
       currentFolder,
@@ -276,11 +376,18 @@ export default {
       searchText,
       selection,
       showAccessManager,
+      showVisaManager,
       showDeleteModal,
       showSidePanel,
+      fileToManage,
+      toValidateVisas,
+      createdVisas,
+      visasLoading,
+      visasCounter,
       // Methods
       closeAccessManager,
       closeDeleteModal,
+      createModelFromFile,
       downloadFiles,
       moveFiles,
       openAccessManager,
@@ -288,7 +395,10 @@ export default {
       openDeleteModal,
       setSelection,
       uploadFiles,
-      backToParent
+      backToParent,
+      closeVisaManager,
+      openVisaManager,
+      fetchVisas
     };
   }
 };

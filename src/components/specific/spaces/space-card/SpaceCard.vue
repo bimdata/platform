@@ -18,7 +18,7 @@
       </template>
       <template #footer>
         <div class="space-card__title">
-          <BIMDataTextBox :text="space.name" />
+          <BIMDataTextbox :text="space.name" />
         </div>
         <div class="space-card__title-underline"></div>
         <div class="space-card__sub-title">

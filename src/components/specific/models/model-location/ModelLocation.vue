@@ -60,12 +60,12 @@
 </template>
 
 <script>
-import { provide, ref, watch } from "vue";
-import { useModels } from "@/state/models";
-import { DMS2DD, getCoordinatesFromAddress } from "@/utils/location";
+import { onActivated, provide, ref, watch } from "vue";
+import { useModels } from "@/state/models.js";
+import { DMS2DD, getCoordinatesFromAddress } from "@/utils/location.js";
 // Components
-import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper";
-import ModelLocationForm from "@/components/specific/models/model-location-form/ModelLocationForm";
+import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper.vue";
+import ModelLocationForm from "@/components/specific/models/model-location-form/ModelLocationForm.vue";
 
 export default {
   components: {
@@ -139,12 +139,14 @@ export default {
       () => props.model,
       () => {
         reset();
-        if (props.model) {
-          setLocation();
-        }
+        if (props.model) setLocation();
       },
       { immediate: true }
     );
+
+    onActivated(() => {
+      if (props.model) setLocation();
+    });
 
     return {
       // References

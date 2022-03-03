@@ -22,10 +22,10 @@
         @element-click="orga = $event"
       >
         <template #header>
-          <BIMDataTextBox maxWidth="220px" :text="orga.name" :tooltip="false" />
+          <BIMDataTextbox maxWidth="220px" :text="orga.name" :tooltip="false" />
         </template>
         <template #element="{ element }">
-          <BIMDataTextBox
+          <BIMDataTextbox
             maxWidth="240px"
             :text="element.name"
             :tooltip="false"

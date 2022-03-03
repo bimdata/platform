@@ -1,5 +1,10 @@
-import MODEL_SOURCES from "@/config/model-sources.js";
-import MODEL_TYPES from "@/config/model-types.js";
+import {
+  CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
+  MODEL_TYPE,
+  MODEL_SOURCE
+} from "@/config/models.js";
+import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {
   const result = {
@@ -12,14 +17,14 @@ function segregateBySource(models) {
     if (model.archived) {
       result.archive.push(model);
     } else if (
-      [MODEL_SOURCES.UPLOAD, MODEL_SOURCES.OPTIMIZED].includes(model.source)
+      [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
     ) {
       result.upload.push(model);
     } else if (
-      [MODEL_SOURCES.SPLIT, MODEL_SOURCES.EXPORT].includes(model.source)
+      [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
     ) {
       result.split.push(model);
-    } else if (MODEL_SOURCES.MERGE === model.source) {
+    } else if (MODEL_SOURCE.MERGE === model.source) {
       result.merge.push(model);
     } else {
       result.upload.push(model);
@@ -36,13 +41,13 @@ function segregateByType(models) {
   };
   for (const model of models) {
     switch (model.type) {
-      case MODEL_TYPES.DWG:
+      case MODEL_TYPE.DWG:
         result.dwg.push(model);
         break;
-      case MODEL_TYPES.IFC:
+      case MODEL_TYPE.IFC:
         result.ifc.push(model);
         break;
-      case MODEL_TYPES.PDF:
+      case MODEL_TYPE.PDF:
         result.pdf.push(model);
         break;
     }
@@ -50,4 +55,37 @@ function segregateByType(models) {
   return result;
 }
 
-export { segregateBySource, segregateByType };
+function isModel(file) {
+  return !!file.modelId;
+}
+
+function isPlanModel(model) {
+  const { JPG, PDF, PNG } = MODEL_TYPE;
+  return [JPG, PDF, PNG].includes(model.type);
+}
+
+function isIFC(file) {
+  return isModel(file) && file.modelType === MODEL_TYPE.IFC;
+}
+
+function isSmartFile(file) {
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+}
+
+function isConvertibleToModel(file) {
+  return (
+    CONVERTIBLE_EXTENSIONS.includes(
+      fileExtension(file.fileName).toLowerCase()
+    ) && !isModel(file)
+  );
+}
+
+export {
+  isConvertibleToModel,
+  isIFC,
+  isModel,
+  isPlanModel,
+  isSmartFile,
+  segregateBySource,
+  segregateByType
+};

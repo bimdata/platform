@@ -1,17 +1,17 @@
 <template>
   <div class="file-type-cell">
-    {{
-      file.type === "Folder"
-        ? $t("FilesTable.folder")
-        : fileExtension(file.name)
-        ? fileExtension(file.name)
-        : "?"
-    }}
+    <template v-if="isFolder(file)">
+      {{ $t("FilesTable.folder") }}
+    </template>
+    <template v-else>
+      {{ fileExtension(file.fileName).slice(0, 8) || "?" }}
+    </template>
   </div>
 </template>
 
 <script>
-import { fileExtension } from "@/utils/files";
+import { isFolder } from "@/utils/file-structure.js";
+import { fileExtension } from "@/utils/files.js";
 
 export default {
   props: {
@@ -22,7 +22,8 @@ export default {
   },
   setup() {
     return {
-      fileExtension
+      fileExtension,
+      isFolder
     };
   }
 };

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import FILE_TYPES from "@/config/file-types.js";
+import { FILE_TYPE } from "@/config/files.js";
 
 /**
  * Compute a file UUID.
@@ -8,7 +8,7 @@ import FILE_TYPES from "@/config/file-types.js";
  * @returns {String}
  */
 function uuid(file) {
-  return `${file.type}-${file.id}`;
+  return `${file.nature}-${file.id}`;
 }
 
 /**
@@ -24,8 +24,8 @@ function validate(file, requiredFields = []) {
   if (!file.id && file.id !== 0) {
     throw new Error(`[file validation] file id not set: ${file.id}`);
   }
-  if (!file.type) {
-    throw new Error(`[file validation] file type not set: ${file.type}`);
+  if (!file.nature) {
+    throw new Error(`[file validation] file type not set: ${file.nature}`);
   }
   for (const field of requiredFields) {
     if (!file[field] && file[field] !== 0) {
@@ -88,7 +88,7 @@ function createFileNode(nodeMap, file) {
     _children: (file.children || []).map(child => uuid(child)),
 
     get parent() {
-      return this.file.parentId ? nodeMap.get(`${FILE_TYPES.FOLDER}-${this.file.parentId}`) : null;
+      return this.file.parentId ? nodeMap.get(`${FILE_TYPE.FOLDER}-${this.file.parentId}`) : null;
     },
     get children() {
       return this._children.map(nodeId => nodeMap.get(nodeId));
@@ -124,7 +124,10 @@ class FileStructureHandler {
 
   serialize(fileStructure) {
     validate(fileStructure);
-    this.root = { id: fileStructure.id, type: fileStructure.type };
+    this.root = {
+      id: fileStructure.id,
+      nature: fileStructure.nature
+    };
     this.nodeMap = createNodeMap(fileStructure);
   }
 
@@ -266,7 +269,7 @@ function segregate(files) {
   const folders = [];
   const documents = [];
   for (const file of files) {
-    if (file.type === FILE_TYPES.FOLDER) {
+    if (isFolder(file)) {
       folders.push(file);
     } else {
       documents.push(file);
@@ -279,7 +282,7 @@ function segregate(files) {
 }
 
 function isFolder(file) { 
-  return file.type === FILE_TYPES.FOLDER;
+  return file.nature === FILE_TYPE.FOLDER;
 }
 
 

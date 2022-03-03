@@ -40,7 +40,9 @@
     "createButtonText": "Create a space",
     "organizationsButtonText": "Billing accounts"
   },
-
+  "ProjectFiles": {
+    "groupsButtonText": "Manage groups"
+  },
   "ProjectBcf": {
     "importButtonText": "Import",
     "exportButtonText": "Export",
@@ -53,9 +55,6 @@
     "alphabeticalDescendingOrderTooltip": "reverse alphabetical order",
     "ascendingDateTooltip": "ascending date",
     "descendingDateTooltip": "descending date"
-  },
-  "ProjectFiles": {
-    "groupsButtonText": "Manage groups"
   },
   "ProjectOverview": {
     "openFileUploadButtonText": "Add a model",
@@ -87,13 +86,6 @@
     "logoutButtonText": "Log Out",
     "subscriptionPlatform": "Platform subscription"
   },
-  "BreadcrumbGroupSelector": {
-    "text": "Groups"
-  },
-  "BreadcrumbProjectSelector": {
-    "placeholder": "< No project >"
-  },
-
   "BcfFilters": {
     "filtersButton": "Filters",
     "priorityLabel": "Priority",
@@ -233,7 +225,12 @@
     "cancelButton": "Discard changes",
     "continueButton": "Continue editing"
   },
-
+  "BreadcrumbGroupSelector": {
+    "text": "Groups"
+  },
+  "BreadcrumbProjectSelector": {
+    "placeholder": "< No project >"
+  },
   "DashboardInfoTile": {
     "title": "Security"
   },
@@ -249,6 +246,7 @@
   },
   "FileActionsCell": {
     "openViewerButtonText": "Open in viewer",
+    "createModelButtonText": "Mark as a model",
     "addTagsButtonText": "Add tags",
     "validationRequestButtonText": "Validation request",
     "renameButtonText": "Rename",
@@ -274,7 +272,8 @@
   },
   "FilesManager": {
     "title": "Project Files",
-    "searchInputPlaceholder": "Search"
+    "searchInputPlaceholder": "Search",
+    "createModelNotification": "Model successfully created"
   },
   "FilesManagerOnboarding": {
     "text": "Upload your first file",
@@ -389,6 +388,7 @@
     "renameButtonText": "Rename",
     "archiveButtonText": "Archive",
     "deleteButtonText": "Delete",
+    "removeButtonText": "Unmark as model",
     "unarchiveButtonText": "Unarchive"
   },
   "ModelLastUpdateCell": {
@@ -598,6 +598,7 @@
     "userDeleteError": "Fail to delete user",
     "modelsFetchError": "Fail to fetch models",
     "modelUploadError": "Fail to upload model",
+    "modelCreateError": "Fail to create model",
     "modelUpdateError": "Fail to update model",
     "modelDownloadError": "Fail to download model",
     "modelMergeError": "Fail to merge models",
@@ -681,7 +682,8 @@
     "status": {
       "active": "Active",
       "deleted": "Deleted",
-      "paused": "Paused"
+      "paused": "Paused",
+      "custom": "Managed by BIMData.io"
     }
   },
   "DatapackForm": {
@@ -717,7 +719,6 @@
   },
   "InvoicesTable": {
     "title": "Invoices",
-    "tablePlaceholder": "Loading invoices...",
     "emptyTableText": "Your invoices will be listed here when you have active subsctiptions.",
     "subscribeButton": "Upgrade to our Pro Platform",
     "headers": {
@@ -839,7 +840,7 @@
   "SpaceSizeInfo": {
     "usage": "{used} used out of {total}",
     "subscribeDatapackButton": "Upgrade storage",
-    "subscribePlatformButton": "Switch to pro platform"
+    "subscribePlatformButton": "Upgrade to pro subscription"
   },
   "SpaceSizePreview": {
     "title": "Storage",
@@ -864,9 +865,148 @@
     "title": "Access Free space",
     "text": "You have already created your free space.",
     "buttonText": "Go to my free space"
-  },
-  "SubscriptionStatusBanner": {
-    "activate": "",
-    "reactivate": ""
   }
+},
+"InvoiceStatusCell": {
+  "completed": "Completed",
+  "pending": "Pending"
+},
+"OrganizationCard": {
+  "spaces": "{number} spaces"
+},
+"OrganizationDeleteGuard": {
+  "title": "Delete billing account",
+  "submitButtonText": "Delete"
+},
+"OrganizationForm": {
+  "createTitle": "Create a billing account",
+  "updateTitle": "Update billing account",
+  "infoSectionTitle": "Basic information",
+  "nameInputPlaceholder": "Name",
+  "nameInputErrorMessage": "Invalid name",
+  "logoInputLabel": "Upload logo",
+  "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
+  "submitButtonText": "Validate",
+  "successTitle": "Congratulation your billing account has just been created",
+  "successButtonText": "OK"
+},
+"OrganizationSelector": {
+  "title": "Billing account",
+  "radioLabelSelect": "Select a billing account",
+  "radioLabelCreate": "Create a billing account",
+  "inputPlaceholder": "Name of the account",
+  "submitButtonText": "Validate",
+  "successMessage": "Congratulation your billing account has just been created"
+},
+"OrganizationsList": {
+  "explanationText": "A billing account is the entity that gather your billing at BIMData.io",
+  "createButtonText": "Add new billing account",
+  "searchInputPlaceholder": "Search an account"
+},
+"OrganizationsManager": {
+  "title": "Manage billing accounts",
+  "backButtonText": "Back"
+},
+"OrganizationSpaceCard": {
+  "projects": "{number} projects"
+},
+"OrganizationSpacesImport": {
+  "spaceListTitle": "Select spaces to import",
+  "spaceListPlaceholder": "No space to import...",
+  "submitButtonText": "Import spaces",
+  "successTitle": "Spaces successfully imported",
+  "successButtonText": "OK"
+},
+"OrganizationSpacesList": {
+  "importButtonText": "Import space",
+  "addButtonText": "Add new space",
+  "searchInputPlaceholder": "Search",
+  "spaceListTitle": "Account spaces",
+  "spaceListPlaceholder": "No space is attached to this billing account."
+},
+"ProjectCardLeaveGuard": {
+  "title": "Leave projet",
+  "message": "Are you sure you want to leave this project ?",
+  "leaveButtonText": "Validate"
+},
+"ProPlanCard": {
+  "title": "PROFESSIONAL",
+  "priceUnit": "/ Space / month",
+  "bullet2": "Unlimited projects",
+  "bullet3": "Unlimited users",
+  "buttonText": "Choose professional",
+  "note": "expand 1GB for {price} / month"
+},
+"ProPlanForm": {
+  "title": "Price",
+  "priceUnit": "/ month",
+  "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
+  "successMessage": "Your payment has been completed. You can now enjoy your professional subscription.",
+  "successButtonText": "Home",
+  "titleNet": "Price ex-tax",
+  "titleTax": "Taxes",
+  "titleTotal": "Price",
+  "noteTotal": "Tax incl."
+},
+"ProPlanInfo": {
+  "title": "Your subscription",
+  "subTitle": "Professionnal plan",
+  "priceUnit": "/ month (ex-tax)",
+  "bulletsHead": "The subscription includes",
+  "bullet1": "{size} of storage",
+  "bullet2": "BIMData Platform",
+  "bullet3": "3D Viewer",
+  "bullet4": "2D Viewer",
+  "bullet5": "Unlimited projects",
+  "bullet6": "Unlimited users",
+  "bullet7": "Unlimited comments (BCF)",
+  "bullet8": "IFC Merge / Split",
+  "bullet9": "IFC Edition",
+  "bullet10": "Support"
+},
+"SpaceCreator": {
+  "title": "Create a space",
+  "text": "Your space groups your different BIM projects.",
+  "inputPlaceholder": "Space name",
+  "billingAccountLabel": "Billing account :",
+  "billingAccountButton": "Change",
+  "submitButtonText": "Continue to payment"
+},
+"SpaceSelected": {
+  "selectedOrga": "Billing account:",
+  "selectedSpace": "Selected space:"
+},
+"SpaceSizeInfo": {
+  "usage": "{used} used out of {total}",
+  "subscribeDatapackButton": "Upgrade storage",
+  "subscribePlatformButton": "Switch to pro platform"
+},
+"SpaceSizePreview": {
+  "title": "Storage",
+  "actualStorage": "Actual storage",
+  "newStorage": "New storage",
+  "newStorageText": "By purchasing the professional subscription you benefit from {size} of storage. You can purchase additional storage directly from your space."
+},
+"SubscribeCard": {
+  "title": "Create your new space",
+  "text": "Would you like to take full advantage of the platform? Make use of {size} for your projects and of unlimited users by upgrading to a professional subscription.",
+  "button": "Create a new space"
+},
+"FreePlanInfo": {
+  "title": "FREE",
+  "price": "0€",
+  "bullet2": "1 Free space",
+  "bullet3": "6 Users",
+  "buttonText": "Create a free space",
+  "note": "Forever"
+},
+"FreePlanRedirect": {
+  "title": "Access Free space",
+  "text": "You have already created your free space.",
+  "buttonText": "Go to my free space"
+},
+"SubscriptionStatusBanner": {
+  "activate": "",
+  "reactivate": ""
+}
 }

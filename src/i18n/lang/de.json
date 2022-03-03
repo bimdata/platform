@@ -559,7 +559,6 @@
     },
     "InvoicesTable": {
         "title": "Rechnungen",
-        "tablePlaceholder": "Rechnungen werden geladen ...",
         "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, werden die Rechnungen hier angezeigt.",
         "subscribeButton": "Zu unserer Pro-Plattform",
         "headers": {

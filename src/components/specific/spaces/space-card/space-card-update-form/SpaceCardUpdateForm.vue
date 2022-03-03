@@ -21,7 +21,7 @@
       :error="hasError"
       :errorMessage="$t('SpaceCardUpdateForm.inputErrorMessage')"
       @keyup.esc.stop="close"
-      @keyup.enter.stop="submit"
+      @keyup.enter.prevent.stop="submit"
     />
     <BIMDataButton
       data-test="btn-submit-update"

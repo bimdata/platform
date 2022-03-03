@@ -21,7 +21,7 @@
               v-if="actionMenu"
               class="project-card__action-bar"
               :project="project"
-              :models="nonArchivedModels"
+              :models="displayedModels"
               @open-viewer="goToModelViewer"
               @open-menu="openMenu"
             />
@@ -31,13 +31,13 @@
             ></div>
             <ProjectStatusBadge :status="project.projectStatus" />
             <ProjectCardModelPreview
-              :models="nonArchivedModels"
+              :models="displayedModels"
               @preview-changed="onPreviewChange"
             />
           </template>
           <template #footer>
             <div class="project-card__title">
-              <BIMDataTextBox :text="project.name" />
+              <BIMDataTextbox :text="project.name" />
             </div>
           </template>
         </BIMDataCard>
@@ -54,9 +54,9 @@
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
+import { MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
 import { useModels } from "@/state/models.js";
-
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard.vue";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
@@ -92,8 +92,11 @@ export default {
 
     const currentModel = ref(null);
     const models = ref([]);
-    const nonArchivedModels = computed(() => {
-      return models.value.filter(model => !model.archived);
+    const displayedModels = computed(() => {
+      // Only show non archived IFC previews
+      return models.value.filter(
+        model => model.type === MODEL_TYPE.IFC && !model.archived
+      );
     });
 
     watch(
@@ -104,8 +107,8 @@ export default {
       { immediate: true }
     );
 
-    watch(nonArchivedModels, () => {
-      currentModel.value = nonArchivedModels.value[0];
+    watch(displayedModels, () => {
+      currentModel.value = displayedModels.value[0];
     });
 
     const onPreviewChange = model => {
@@ -126,7 +129,7 @@ export default {
     return {
       // References
       currentModel,
-      nonArchivedModels,
+      displayedModels,
       routeNames,
       showMenu,
       // Methods

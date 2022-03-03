@@ -5,7 +5,7 @@
     :style="{
       width: `${size}px`,
       height: `${size}px`,
-      fontSize: `${+size * 0.382}px`
+      fontSize: `${initialsSize ? initialsSize : +size * 0.382}px`
     }"
   >
     <template v-if="user.profilePicture">
@@ -33,6 +33,9 @@ export default {
       type: [Number, String],
       default: 32,
       validate: value => value >= 32
+    },
+    initialsSize: {
+      type: [Number, String]
     },
     color: {
       type: String,

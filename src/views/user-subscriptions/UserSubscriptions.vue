@@ -31,7 +31,7 @@
                 >
                   {{ organizations.length }}
                 </span>
-                <BIMDataTextBox
+                <BIMDataTextbox
                   maxWidth="240px"
                   :text="selectedOrga.name"
                   :tooltip="false"
@@ -39,7 +39,7 @@
               </div>
             </template>
             <template #element="{ element }">
-              <BIMDataTextBox
+              <BIMDataTextbox
                 maxWidth="280px"
                 :text="element.name"
                 :tooltip="false"
@@ -104,9 +104,8 @@ export default {
 
           let allPayments = await Promise.all(
             subscriptions.value
-              // TODO: this is to avoid errors when fetching payments of a deleted space.
-              // Should be removed when a solution is found.
-              .filter(sub => sub.cloud)
+              // When a cloud is deleted, the subscription history stays
+              .filter(sub => sub.cloud && !sub.is_custom)
               .map(sub => {
                 return loadSubscriptionPayments(
                   selectedOrga.value,

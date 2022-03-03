@@ -17,7 +17,7 @@
             v-for="file of files"
             :key="file.id"
           >
-            <BIMDataTextBox :text="file.name" />
+            <BIMDataTextbox :text="file.name" />
           </li>
         </ul>
       </div>

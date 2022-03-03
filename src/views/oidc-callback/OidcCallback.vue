@@ -15,8 +15,13 @@ export default {
     const { signInCallback } = useAuth();
 
     onMounted(async () => {
-      const result = await signInCallback();
-      router.push({ path: result.state ? result.state : "/" });
+      try {
+        const result = await signInCallback();
+        router.push({ path: result.state ? result.state : "/" });
+      } catch(e) {
+        console.error(e);
+        router.push('/')
+      }
     });
   }
 };

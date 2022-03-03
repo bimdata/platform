@@ -1,0 +1,15 @@
+.visa-comments-input {
+  &:deep() {
+    textarea {
+      font-size: 1rem;
+      font-family: var(--primary-font);
+      color: var(--color-primary);
+    }
+  }
+  
+  &__action-button {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-unit);
+  }
+}
