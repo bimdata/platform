@@ -10,34 +10,37 @@ const state = reactive({
     topicStatuses: [],
     labels: [],
     stages: []
-  }
+  },
+  comments: []
 });
 
 const loadBcfTopics = async project => {
   const topics = await BcfService.fetchProjectTopics(project);
 
-  let topicsWithSnapshots = [];
+  let topicsWithSnapshotsAndComments = [];
 
   if (topics) {
-    topicsWithSnapshots = await Promise.all(
+    topicsWithSnapshotsAndComments = await Promise.all(
       topics.map(async topic => {
         const viewpoints = await BcfService.fetchTopicViewpoints(
           project,
           topic,
           "url"
         );
+        const comments = await fetchAllComments(project, topic);
         return {
           ...topic,
           snapshots: viewpoints.map(viewpoint => viewpoint.snapshot),
-          components: viewpoints.map(viewpoint => viewpoint.components)
+          components: viewpoints.map(viewpoint => viewpoint.components),
+          comments
         };
       })
     );
   }
 
-  state.bcfTopics = topicsWithSnapshots;
+  state.bcfTopics = topicsWithSnapshotsAndComments;
 
-  return topicsWithSnapshots;
+  return topicsWithSnapshotsAndComments;
 };
 
 const createTopic = async (project, topic) => {
@@ -115,6 +118,33 @@ const updateExtension = async (project, extensionType, id, priority) => {
   return newExtension;
 };
 
+// comments
+const fetchAllComments = async (project, topic) => {
+  const comments = await BcfService.fetchAllComments(project, topic);
+  state.comments = comments;
+  return comments;
+};
+const createComment = async (project, topic, data) => {
+  const newComment = await BcfService.createComment(project, topic, data);
+  await fetchAllComments(project, topic);
+  return newComment;
+};
+const deleteComment = async (project, topic, comment) => {
+  const newComment = await BcfService.deleteComment(project, topic, comment);
+  await fetchAllComments(project, topic);
+  return newComment;
+};
+const updateComment = async (project, topic, id, comment) => {
+  const newComment = await BcfService.updateComment(
+    project,
+    topic,
+    id,
+    comment
+  );
+  await fetchAllComments(project, topic);
+  return newComment;
+};
+
 export function useBcf() {
   const readonlyState = readonly(state);
   return {
@@ -131,6 +161,10 @@ export function useBcf() {
     loadDetailedExtensions,
     createExtension,
     deleteExtension,
-    updateExtension
+    updateExtension,
+    fetchAllComments,
+    createComment,
+    deleteComment,
+    updateComment
   };
 }
