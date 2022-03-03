@@ -9,7 +9,7 @@
       <div
         class="open-topic-issue__header__title flex justify-center items-center p-x-6"
       >
-        <BIMDataTextBox maxWidth="250px" :text="bcfTopic.title" />
+        <BIMDataTextbox maxWidth="250px" :text="bcfTopic.title" />
       </div>
       <div
         class="open-topic-issue__header__actions flex justify-center items-center"

@@ -14,7 +14,7 @@
         <BcfPriorityCell :bcfTopic="bcfTopic" />
       </template>
       <template #cell-title="{ row: bcfTopic }">
-        <BIMDataTextBox maxWidth="500px" :text="bcfTopic.title" />
+        <BIMDataTextbox maxWidth="500px" :text="bcfTopic.title" />
       </template>
       <template #cell-creator="{ row: { creationAuthor } }">
         {{ creationAuthor }}

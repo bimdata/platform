@@ -12,7 +12,7 @@
           {{ bcfTopic.index }}
         </div>
         <div class="bcf-topic__header__infos__title flex items-center m-l-12">
-          <BIMDataTextBox maxWidth="100% - 48px" :text="bcfTopic.title" />
+          <BIMDataTextbox maxWidth="100% - 48px" :text="bcfTopic.title" />
         </div>
       </div>
       <div class="bcf-topic__header__img flex items-center justify-center">
