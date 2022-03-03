@@ -35,6 +35,7 @@
           "
           :src="bcfTopic.snapshots[0].snapshotData"
           alt=""
+          loading="lazy"
         />
         <NoImgTopicBcf class="no-img-topic" v-else />
       </div>
@@ -153,8 +154,6 @@ export default {
       }
       return "";
     });
-
-    // const getStatusClasses = ref("");
 
     const showSidePanel = ref(false);
     const bcfTopicToOpen = reactive({});

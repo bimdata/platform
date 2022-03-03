@@ -137,6 +137,52 @@ class BcfService {
       console.log(error);
     }
   }
+
+  // comments
+  async fetchAllComments(project, topic) {
+    try {
+      return await apiClient.bcfApi.getComments({
+        projectsPk: project.id,
+        topicsGuid: topic.guid
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async createComment(project, topic, data) {
+    try {
+      return await apiClient.bcfApi.createComment({
+        projectsPk: project.id,
+        topicsGuid: topic.guid,
+        data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async deleteComment(project, topic, comment) {
+    try {
+      return await apiClient.bcfApi.deleteComment({
+        projectsPk: project.id,
+        topicsGuid: topic.guid,
+        guid: comment.guid
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateComment(project, topic, comment, data) {
+    try {
+      return await apiClient.bcfApi.updateComment({
+        projectsPk: project.id,
+        topicsGuid: topic.guid,
+        guid: comment.guid,
+        data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 const service = new BcfService();

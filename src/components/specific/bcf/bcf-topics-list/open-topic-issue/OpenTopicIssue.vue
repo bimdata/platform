@@ -30,7 +30,7 @@
           icon
           @click="deleteTopicModal = true"
         >
-          <BIMDataIcon name="delete" fill color="high" size="xxs" />
+          <BIMDataIcon name="delete" fill color="default" size="xxs" />
         </BIMDataButton>
         <BIMDataButton
           color="default"
@@ -175,6 +175,7 @@
         </div>
       </div>
       <div class="open-topic-issue__comment m-t-12">
+        <BcfComments :bcfTopic="bcfTopic" />
       </div>
     </div>
     <SafeZoneModal v-if="deleteTopicModal">
@@ -216,12 +217,14 @@ import { useProjects } from "@/state/projects.js";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
+import BcfComments from "@/components/specific/bcf/bcf-comments/BcfComments.vue";
 import SafeZoneModal from "@/components/generic/safe-zone-modal/SafeZoneModal.vue";
 
 export default {
   components: {
     EditBcfTopic,
     NoImgTopicBcf,
+    BcfComments,
     SafeZoneModal
   },
   props: {
