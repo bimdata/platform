@@ -131,9 +131,7 @@ export default {
     } = useToggle();
 
     const isModelReady = computed(
-      () =>
-        MODEL_STATUS.PENDING !== props.model.status &&
-        MODEL_STATUS.IN_PROGRESS !== props.model.status
+      () => MODEL_STATUS.COMPLETED === props.model.status
     );
 
     const onClick = event => {
