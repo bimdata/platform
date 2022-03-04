@@ -1,0 +1,63 @@
+.edit-bcf-topic {
+  height: 100%;
+  &__header {
+    span {
+      width: calc(100% - 46px);
+    }
+  }
+  &__content {
+    height: calc(100% - 32px - 32px - 12px);
+    overflow: auto;
+    &__subheader {
+      height: 27px;
+      font-size: 12px;
+      &__index,
+      &__date {
+        height: 100%;
+        background-color: var(--color-silver-light);
+      }
+      &__index {
+        min-width: 27px;
+      }
+    }
+    &__image:not(.no-img) {
+      min-height: 42px;
+      position: relative;
+      background-color: var(--color-silver-light);
+      img {
+        width: 100%;
+      }
+    }
+    .no-img {
+      height: 210px;
+      border: 2px dashed #d8d8d8;
+    }
+    &__content {
+      &:deep() {
+        .bimdata-input {
+          input {
+            color: var(--color-primary);
+          }
+        }
+        .bimdata-select {
+          margin: 30px 0;
+        }
+        .bimdata-textarea {
+          textarea {
+            font-family: var(--primary-font);
+            color: var(--color-primary);
+          }
+        }
+      }
+    }
+  }
+  .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(47, 55, 74, 0.9);
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+  }
+}

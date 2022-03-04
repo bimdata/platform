@@ -1,0 +1,38 @@
+.bcf-comment {
+  &__header {
+    position: relative;
+    font-size: 11px;
+    &__left {
+    }
+    &__right {
+      &__actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: var(--color-white);
+      }
+      &__delete {
+        width: 96%;
+        top: 0;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--color-white);
+        box-shadow: var(--box-shadow);
+        height: 40px;
+        right: 2%;
+      }
+    }
+  }
+  &__content {
+    &:deep() {
+      .bimdata-textarea {
+        margin-bottom: 6px;
+      }
+      :not(.editing) .bar {
+        display: none;
+      }
+    }
+  }
+}
