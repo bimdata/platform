@@ -1,5 +1,4 @@
 .bcf-topic {
-  min-width: 320px;
   position: relative;
   &__header {
     min-height: 204px;
@@ -20,7 +19,6 @@
     }
     &__img {
       height: calc(204px - 32px);
-      width: 318px;
       position: relative;
       img {
         width: 100%;
