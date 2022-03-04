@@ -1,14 +1,17 @@
 .project-card-action-bar {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   padding-left: calc(var(--spacing-unit) / 3);
 
-  &__action-btn {
+  &__btn {
     color: var(--color-granite-light);
 
     &:disabled {
       color: var(--color-silver);
     }
+  }
+
+  .action-menu {
+    margin-left: auto;
   }
 }

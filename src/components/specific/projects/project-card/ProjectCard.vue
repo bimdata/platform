@@ -18,8 +18,9 @@
         <BIMDataCard>
           <template #content>
             <ProjectCardActionBar
-              v-if="actionMenu"
               class="project-card__action-bar"
+              :actionMenu="actionMenu"
+              :viewerButton="viewerButton"
               :project="project"
               :models="displayedModels"
               @open-viewer="goToModelViewer"
@@ -80,6 +81,10 @@ export default {
       required: true
     },
     actionMenu: {
+      type: Boolean,
+      default: true
+    },
+    viewerButton: {
       type: Boolean,
       default: true
     }
