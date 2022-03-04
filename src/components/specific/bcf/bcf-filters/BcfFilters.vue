@@ -38,7 +38,7 @@
           </BIMDataButton>
         </div>
         <BIMDataSelect
-          width="264px"
+          width="100%"
           :multi="true"
           :label="$t('BcfFilters.priorityLabel')"
           :options="priorityOptions"
@@ -48,7 +48,7 @@
           class="m-t-24"
         />
         <BIMDataSelect
-          width="264px"
+          width="100%"
           :multi="true"
           :label="$t('BcfFilters.statusLabel')"
           :options="statusOptions"
@@ -80,7 +80,7 @@
           </div>
         </div>
         <BIMDataSelect
-          width="264px"
+          width="100%"
           :multi="true"
           :label="$t('BcfFilters.tagsLabel')"
           :options="tagOptions"
