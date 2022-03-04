@@ -1,7 +1,9 @@
 <template>
   <div class="overlay flex items-center justify-center">
     <div class="safe-zone" :style="{ width }">
-      <div class="safe-zone__content flex flex-col items-center justify-center">
+      <div
+        class="safe-zone__content flex flex-col items-center justify-center p-18"
+      >
         <BIMDataIcon :name="iconName" size="l" fill color="high" />
         <p><slot name="text"></slot></p>
       </div>
