@@ -11,9 +11,10 @@
         />
         {{ $t("EditBcfTopic.goBackButton") }}
       </BIMDataButton>
-      <span class="text-center"
-        >{{ $t("EditBcfTopic.editing") }} {{ bcfTopic.title }}</span
-      >
+      <span class="text-center">
+        {{ $t("EditBcfTopic.editing") }}
+        <BIMDataTextbox maxWidth="70%" :text="bcfTopic.title" />
+      </span>
     </div>
     <div class="edit-bcf-topic__content p-r-6">
       <div
