@@ -64,6 +64,7 @@ const deleteTopic = async (project, topic) => {
 const importBcf = async (project, file) => {
   const bcf = await BcfService.importBcf(project, file);
   await loadBcfTopics(project);
+  await loadDetailedExtensions(project);
   return bcf;
 };
 
