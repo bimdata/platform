@@ -113,7 +113,7 @@ class BcfService {
         {
           method: "POST",
           headers: {
-            authorization: apiClient.config.accessToken()
+            ...apiClient.authHeader
           },
           body: formData
         }
@@ -129,7 +129,7 @@ class BcfService {
         {
           method: "GET",
           headers: {
-            authorization: apiClient.config.accessToken()
+            ...apiClient.authHeader
           }
         }
       );
