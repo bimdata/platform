@@ -12,6 +12,8 @@ function adjustBorderColor(color, amount) {
   );
 }
 
+// https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html
+// https://www.w3.org/TR/AERT/#color-contrast
 function adjustColor(bgColor, lightTextColor, darkTextColor) {
   const color = bgColor.charAt(0) === "#" ? bgColor.substring(1, 7) : bgColor;
   // hex to R
