@@ -1,7 +1,7 @@
 <template>
   <div class="bcf-comment-input m-t-24">
     <BIMDataTextarea
-      label="Poster un commentaire"
+      :label="isAReply ? 'Répondre à un commentaire' : 'Poster un commentaire'"
       name="example"
       v-model="topicComment"
       :autofocus="true"
@@ -41,6 +41,13 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
+    },
+    isAReply: {
+      type: Boolean,
+      required: true
+    },
+    comment: {
+      type: Object
     }
   },
   emits: ["close"],
@@ -51,9 +58,16 @@ export default {
     const topicComment = ref("");
     const publishComment = async () => {
       try {
-        await createComment(currentProject.value, props.bcfTopic, {
-          comment: topicComment.value
-        });
+        if (props.isAReply) {
+          await createComment(currentProject.value, props.bcfTopic, {
+            comment: topicComment.value,
+            replyToCommentGuid: props.comment.guid
+          });
+        } else {
+          await createComment(currentProject.value, props.bcfTopic, {
+            comment: topicComment.value
+          });
+        }
       } finally {
         topicComment.value = null;
       }

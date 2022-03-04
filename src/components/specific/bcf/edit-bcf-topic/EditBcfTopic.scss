@@ -20,13 +20,17 @@
         min-width: 27px;
       }
     }
-    &__image {
+    &__image:not(.no-img) {
       min-height: 42px;
       position: relative;
       background-color: var(--color-silver-light);
       img {
         width: 100%;
       }
+    }
+    .no-img {
+      height: 210px;
+      border: 2px dashed #d8d8d8;
     }
     &__content {
       &:deep() {

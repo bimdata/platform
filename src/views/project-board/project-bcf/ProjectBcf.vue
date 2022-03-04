@@ -145,7 +145,7 @@
             </BIMDataButton>
           </template>
         </BIMDataTooltip>
-        <BIMDataTooltip
+        <!-- <BIMDataTooltip
           :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
@@ -166,7 +166,7 @@
               <List v-else style="heiht: 18px; width: 18px" />
             </BIMDataButton>
           </template>
-        </BIMDataTooltip>
+        </BIMDataTooltip> -->
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
