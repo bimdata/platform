@@ -36,7 +36,9 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <img src="/static/ifc-logo.svg" />
+        <img v-if="model.type === 'IFC'" src="/static/ifc-logo.svg" />
+        <img v-if="model.type === 'DWG'" src="/static/dwg-file.svg" />
+        <img v-if="model.type === 'PDF'" src="/static/pdf-file.svg" />
         <BIMDataTextbox :text="model.name" />
       </div>
     </transition>
