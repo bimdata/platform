@@ -14,20 +14,24 @@
     <!-- Input first level comment -->
     <div class="bcf-comments__post-comment m-t-24" v-if="isBcfCommentOpen">
       <p class="color-granite m-b-24">Commentaire</p>
-      <BcfCommentInput :bcfTopic="bcfTopic" @close="isBcfCommentOpen = false" />
+      <BcfCommentInput
+        :bcfTopic="bcfTopic"
+        @close="isBcfCommentOpen = false"
+        :isAReply="false"
+      />
     </div>
 
     <!-- list of comments -->
-    <div v-if="comments?.length" class="bcf-comments__list m-t-18">
+    <div v-if="bcfTopic.comments?.length" class="bcf-comments__list m-t-18">
       <p class="color-granite">
         {{
-          comments?.length > 1
-            ? comments.length + " Commentaires"
+          bcfTopic.comments?.length > 1
+            ? bcfTopic.comments.length + " Commentaires"
             : "0 Commentaire"
         }}
       </p>
       <BcfCommentAndReplies
-        v-for="comment in comments"
+        v-for="comment in bcfTopic.comments"
         :key="comment"
         :comment="comment"
         :bcfTopic="bcfTopic"
@@ -59,7 +63,7 @@ export default {
     const isBcfCommentOpen = ref(false);
     const topicComment = ref("");
     const { currentProject } = useProjects();
-    const { fetchAllComments, comments } = useBcf();
+    const { fetchAllComments } = useBcf();
 
     watch(
       [currentProject, () => props.bcfTopic],
@@ -71,8 +75,7 @@ export default {
 
     return {
       isBcfCommentOpen,
-      topicComment,
-      comments
+      topicComment
     };
   }
 };

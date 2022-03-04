@@ -32,6 +32,7 @@
       </div>
       <div
         class="edit-bcf-topic__content__image flex items-center justify-center m-t-12"
+        :class="{ 'no-img': !bcfTopic.snapshots[0] }"
       >
         <img
           v-if="bcfTopic.snapshots[0]"

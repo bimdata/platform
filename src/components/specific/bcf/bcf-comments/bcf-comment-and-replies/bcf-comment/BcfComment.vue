@@ -20,7 +20,7 @@
       </div>
 
       <div class="bcf-comment__header__right">
-        <div class="bcf-comment__right__actions flex">
+        <div class="bcf-comment__header__right__actions flex">
           <template v-if="showMenu">
             <BIMDataButton ghost rounded icon @click="onOpenEdit">
               <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
@@ -41,7 +41,7 @@
             <BIMDataButton ghost rounded icon @click="isEditing = false">
               <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
             </BIMDataButton>
-            <BIMDataButton ghost rounded icon @click="onConfirmEdit">
+            <BIMDataButton ghost rounded icon @click="confirmEdit">
               <BIMDataIcon
                 name="validate"
                 size="xxs"
@@ -61,7 +61,7 @@
               fill
               radius
               color="high"
-              @click="onConfirmDelete"
+              @click="confirmDelete"
               class="m-r-6"
             >
               Supprimer
@@ -95,12 +95,16 @@
         rows="1"
       />
     </div>
+    <template v-if="loading">
+      <BIMDataLoading />
+    </template>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
 import { useProjects } from "@/state/projects.js";
+import { useBcf } from "@/state/bcf.js";
 import { useToggle } from "@/composables/toggle.js";
 
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
@@ -112,15 +116,16 @@ export default {
     comment: {
       type: Object,
       required: true
+    },
+    bcfTopic: {
+      type: Object,
+      required: true
     }
-    // isAReply: {
-    //   type: Boolean,
-    //   required: true
-    // }
   },
   emits: ["confirm-delete", "confirm-edit"],
-  setup(props, { emit }) {
-    const { projectUsers } = useProjects();
+  setup(props) {
+    const { projectUsers, currentProject } = useProjects();
+    const { deleteComment, updateComment } = useBcf();
     const {
       isOpen: showMenu,
       close: closeMenu,
@@ -128,6 +133,7 @@ export default {
     } = useToggle();
 
     const commentContent = ref(props.comment.comment);
+    const loading = ref(false);
 
     const authorDetail = projectUsers.value.find(
       projectUser => projectUser.email === props.comment.author
@@ -138,9 +144,18 @@ export default {
       isDeleting.value = true;
       closeMenu();
     };
-    const onConfirmDelete = () => {
-      emit("confirm-delete", commentContent.value);
-      isDeleting.value = false;
+    const confirmDelete = async () => {
+      try {
+        loading.value = true;
+        await deleteComment(
+          currentProject.value,
+          props.bcfTopic,
+          props.comment
+        );
+        isDeleting.value = false;
+      } finally {
+        loading.value = false;
+      }
     };
 
     const isEditing = ref(false);
@@ -148,12 +163,28 @@ export default {
       isEditing.value = true;
       closeMenu();
     };
-    const onConfirmEdit = () => {
-      emit("confirm-edit", commentContent.value);
-      isEditing.value = false;
+    const confirmEdit = async () => {
+      if (props.comment.comment !== commentContent.value) {
+        try {
+          loading.value = true;
+
+          await updateComment(
+            currentProject.value,
+            props.bcfTopic,
+            props.comment,
+            {
+              comment: commentContent.value
+            }
+          );
+          isEditing.value = false;
+        } finally {
+          loading.value = false;
+        }
+      }
     };
 
     return {
+      loading,
       authorDetail,
       commentContent,
       isDeleting,
@@ -163,9 +194,9 @@ export default {
       closeMenu,
       toggleMenu,
       onOpenDelete,
-      onConfirmDelete,
-      onOpenEdit,
-      onConfirmEdit
+      confirmDelete,
+      confirmEdit,
+      onOpenEdit
     };
   }
 };

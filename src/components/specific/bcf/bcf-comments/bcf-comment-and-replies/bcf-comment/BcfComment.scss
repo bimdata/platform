@@ -9,6 +9,7 @@
         position: absolute;
         top: 0;
         right: 0;
+        background-color: var(--color-white);
       }
       &__delete {
         width: 96%;
@@ -26,6 +27,9 @@
   }
   &__content {
     &:deep() {
+      .bimdata-textarea {
+        margin-bottom: 6px;
+      }
       :not(.editing) .bar {
         display: none;
       }

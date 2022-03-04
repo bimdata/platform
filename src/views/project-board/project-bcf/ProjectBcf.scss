@@ -42,9 +42,9 @@
   }
   &__content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 320px);
+    grid-template-columns: repeat(auto-fill, 18.4%);
     grid-template-rows: 308px;
-    gap: 56px;
+    gap: 2%;
     &__metrics {
       grid-area: 1/1/2/3;
       &.bimdata-card:deep() {
