@@ -79,7 +79,7 @@ export default {
   },
   setup(props) {
     const barsData = computed(() => {
-      if (props.priorities?.length && props.bcfTopics.length) {
+      if (props.bcfTopics.length) {
         // Add empty priority to match topics without priorities
         const shownPriorities = [...props.priorities];
         shownPriorities.push({
