@@ -284,7 +284,7 @@ export default {
       if (
         props.bcfTopic.components &&
         props.bcfTopic.components.length > 0 &&
-        props.bcfTopic.components[0].selection
+        props.bcfTopic.components[0]?.selection
       ) {
         return props.bcfTopic.components[0].selection;
       } else {
