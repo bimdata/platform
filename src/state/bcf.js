@@ -26,10 +26,10 @@ const loadBcfTopics = async project => {
         "url"
       );
 
-      const rootComments = await fetchAllComments(project, topic);
+      const allComments = await fetchAllComments(project, topic);
       topic.snapshots = viewpoints.map(viewpoint => viewpoint.snapshot);
       topic.components = viewpoints.map(viewpoint => viewpoint.components);
-      topic.comments = rootComments;
+      topic.comments = allComments;
       return topic;
     })
   );
@@ -116,50 +116,8 @@ const updateExtension = async (project, extensionType, id, priority) => {
 // comments
 const fetchAllComments = async (project, topic) => {
   let allComments = await BcfService.fetchAllComments(project, topic);
-
-  const rootComments = allComments.filter(
-    comment => comment.replyToCommentGuid === undefined
-  );
-  const replies = allComments.filter(
-    comment => comment.replyToCommentGuid !== undefined
-  );
-
-  rootComments.forEach(rootComment => {
-    rootComment.replies = [];
-  });
-
-  let unattachedReplies = replies;
-  const genealogy = new Map();
-  let maxGeneration = 100; // Set a hard limit to avoid infinite loops
-  while (unattachedReplies.length > 0 && maxGeneration-- > 0) {
-    unattachedReplies = unattachedReplies.reduce((acc, reply) => {
-      const parent = rootComments.find(
-        rootComment => rootComment.guid === reply.replyToCommentGuid
-      );
-      if (parent) {
-        parent.replies.push(reply);
-        genealogy.set(reply.guid, parent);
-      } else {
-        const grandParent = genealogy.get(reply.replyToCommentGuid);
-        if (grandParent) {
-          grandParent.replies.push(reply);
-          genealogy.set(reply.guid, grandParent);
-        } else {
-          acc.push(reply);
-        }
-      }
-      return acc;
-    }, []);
-  }
-
-  rootComments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
-
-  rootComments.forEach(rootComment => {
-    rootComment.replies.sort((a, b) =>
-      a.date.getTime() > b.date.getTime() ? 1 : -1
-    );
-  });
-  return rootComments;
+  allComments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
+  return allComments;
 };
 const createComment = async (project, topic, data) => {
   const newComment = await BcfService.createComment(project, topic, data);
