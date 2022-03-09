@@ -175,7 +175,7 @@
         </div>
       </div>
       <div class="open-topic-issue__comment m-t-12">
-        <BcfComments :bcfTopic="bcfTopic" />
+        <BcfComments :bcfTopic="bcfTopic" :comments="comments" />
       </div>
     </div>
     <SafeZoneModal v-if="deleteTopicModal">
@@ -235,6 +235,9 @@ export default {
     detailedExtensions: {
       type: Object,
       required: true
+    },
+    comments: {
+      type: Array
     }
   },
   emits: ["close"],

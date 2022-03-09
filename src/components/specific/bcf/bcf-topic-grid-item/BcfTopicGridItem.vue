@@ -97,6 +97,7 @@
           :bcfTopic="bcfTopic"
           @close="showSidePanel = false"
           :detailedExtensions="detailedExtensions"
+          :comments="comments"
         />
       </div>
     </transition>
@@ -104,8 +105,11 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
+
+import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
@@ -131,6 +135,9 @@ export default {
     }
   },
   setup(props) {
+    const { currentProject } = useProjects();
+    const { fetchAllComments } = useBcf();
+
     const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
         const priorityDetail = props.detailedExtensions.priorities.find(
@@ -156,10 +163,13 @@ export default {
     });
 
     const showSidePanel = ref(false);
-    const bcfTopicToOpen = reactive({});
-    const openBcfTopic = topic => {
+    const comments = ref([]);
+    const openBcfTopic = async () => {
       showSidePanel.value = true;
-      bcfTopicToOpen.value = topic;
+      comments.value = await fetchAllComments(
+        currentProject.value,
+        props.bcfTopic
+      );
     };
 
     const topicElements = computed(() => {
@@ -175,10 +185,10 @@ export default {
     });
 
     return {
+      comments,
       adjustColor,
       priorityColor,
       statusColor,
-      bcfTopicToOpen,
       topicElements,
       showSidePanel,
       openBcfTopic

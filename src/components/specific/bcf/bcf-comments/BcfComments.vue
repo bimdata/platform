@@ -49,16 +49,14 @@
     </div>
 
     <!-- list of comments -->
-    <div v-if="bcfTopic.comments?.length" class="bcf-comments__list m-t-18">
+    <div v-if="comments?.length" class="bcf-comments__list m-t-18">
       <p class="color-granite">
         {{
-          bcfTopic.comments?.length
-            ? bcfTopic.comments.length + " Commentaires"
-            : "0 Commentaire"
+          comments?.length ? comments.length + " Commentaires" : "0 Commentaire"
         }}
       </p>
       <BcfComment
-        v-for="comment in bcfTopic.comments"
+        v-for="comment in comments"
         :key="comment"
         :bcfTopic="bcfTopic"
         :comment="comment"
@@ -82,27 +80,22 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
+    },
+    comments: {
+      type: Array
     }
   },
   setup(props) {
-    const isBcfCommentOpen = ref(false);
-    const topicComment = ref("");
     const { currentProject } = useProjects();
-    const { createComment, fetchAllComments } = useBcf();
-
-    watch(
-      [currentProject, () => props.bcfTopic],
-      async () => {
-        await fetchAllComments(currentProject.value, props.bcfTopic);
-      },
-      { immediate: true }
-    );
+    const { createComment } = useBcf();
+    const isBcfCommentOpen = ref(false);
 
     const textarea = ref(null);
     watch(isBcfCommentOpen, () =>
       setTimeout(() => isBcfCommentOpen.value && textarea.value.focus(), 100)
     );
 
+    const topicComment = ref("");
     const publishComment = async () => {
       try {
         await createComment(currentProject.value, props.bcfTopic, {
