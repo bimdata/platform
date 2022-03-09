@@ -3,6 +3,7 @@
   height: 100%;
   flex-direction: column;
   overflow: auto;
+  overflow-x: hidden;
   &__header,
   &__image,
   &__content,
