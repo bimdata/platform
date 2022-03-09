@@ -82,6 +82,16 @@
         <BIMDataSelect
           width="100%"
           :multi="true"
+          label="Assigned to"
+          :options="userOptions"
+          v-model="users"
+          optionKey="value"
+          optionLabelKey="label"
+          class="m-t-24"
+        />
+        <BIMDataSelect
+          width="100%"
+          :multi="true"
           :label="$t('BcfFilters.tagsLabel')"
           :options="tagOptions"
           v-model="tags"
@@ -141,7 +151,7 @@ export default {
         .sort((a, b) => (a > b ? 1 : -1))
         .map(priorityOption => {
           return {
-            label: priorityOption || "Non défini",
+            label: priorityOption || "Aucune priorité",
             value: priorityOption
           };
         });
@@ -164,13 +174,27 @@ export default {
 
     // tags list
     const tags = ref([]);
-    // const noTag = ref(null);
     const tagOptions = computed(() => {
       return Array.from(
         new Set(props.bcfTopics.flatMap(bcfTopic => bcfTopic.labels))
       )
         .flat()
         .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+    });
+
+    // assigned to list
+    const users = ref([]);
+    const userOptions = computed(() => {
+      return Array.from(
+        new Set(props.bcfTopics.map(bcfTopic => bcfTopic.assignedTo))
+      )
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map(userOption => {
+          return {
+            label: userOption || "Non défini",
+            value: userOption
+          };
+        });
     });
 
     // date
@@ -201,16 +225,19 @@ export default {
     const submitFilters = () => {
       const startDateConform = isStartDateConform(startDateInput);
       const endDateConform = isEndDateConform(startDateInput, endDateInput);
+
       if (
         priorities.value.length ||
         status.value.length ||
         tags.value.length ||
+        users.value.length ||
         (startDateConform && endDateConform)
       ) {
         emit("submit", {
           priorities: priorities.value.map(prio => prio.value),
           status: status.value.map(statut => statut.value),
           tags: tags.value,
+          users: users.value.map(user => user.value),
           startDate: startDateInput.value,
           endDate: endDateInput.value
         });
@@ -231,6 +258,7 @@ export default {
       priorities.value = [];
       status.value = [];
       tags.value = [];
+      users.value = [];
       startDateInput.value = "";
       endDateInput.value = "";
 
@@ -238,6 +266,7 @@ export default {
         priorities: priorities.value,
         status: status.value,
         tags: tags.value,
+        users: users.value,
         startDate: startDateInput.value,
         endDate: endDateInput.value
       });
@@ -253,6 +282,8 @@ export default {
       statusOptions,
       tags,
       tagOptions,
+      users,
+      userOptions,
       showFilters,
       startDateInput,
       endDateInput,

@@ -47,8 +47,8 @@
         <ColorSelector
           v-if="displayColorSelector"
           class="setting-card-item__color-selector"
-          :selectedColor="extensionColor"
-          @color-select="submitColor"
+          :modelValue="extensionColor"
+          @update:modelValue="submitColor"
           v-click-away="
             () => {
               displayColorSelector = false;

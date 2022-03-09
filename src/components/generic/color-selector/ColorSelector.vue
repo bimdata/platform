@@ -9,11 +9,11 @@
         <div
           class="color-selector__line__element"
           v-for="([colorName, colorValue], j) of colorLine"
-          :class="{ selected: colorValue === selectedColor }"
+          :class="{ selected: colorValue === modelValue }"
           :key="`colorElement${j}ofColorLine${i}`"
           :style="`background-color: #${colorValue}`"
           :title="colorName"
-          @click="$emit('color-select', colorValue)"
+          @click="$emit('update:modelValue', colorValue)"
         ></div>
       </div>
     </template>
@@ -34,9 +34,10 @@ const colorLines = Object.entries(colors).reduce((acc, cur, i) => {
 
 export default {
   props: {
-    selectedColor: {
+    modelValue: {
       type: String,
-      default: null
+      default: null,
+      validator: value => Object.values(colors).includes(value)
     }
   },
   data() {
@@ -44,11 +45,7 @@ export default {
       colorLines
     };
   },
-  methods: {
-    toColorString(color) {
-      return `#${color.toString(16).padStart(6, 0)}`;
-    }
-  }
+  emits: ["update:modelValue"]
 };
 </script>
 
