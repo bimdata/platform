@@ -1,4 +1,7 @@
+import i18n from "../../i18n/index.js";
 import IntroOutroPlatform from "./platform/IntroOutroPlatform.vue";
+
+const { t } = i18n.global;
 
 const tours = [
   {
@@ -6,41 +9,35 @@ const tours = [
     steps: [
       {
         props: {
-          title: "Welcome my friend",
-          content: "Lets explore the features",
+          title: t("GuidedTour.platform.intro.title"),
+          content: t("GuidedTour.platform.intro.content"),
           img: "/static/guidedTour/platform/draw_intro.png"
         },
         layout: IntroOutroPlatform
       },
       {
-        target: "space-button",
+        name: "actionButtons",
+        target: ["btn-spaces", "btn-projects", "btn-subscriptions"],
         props: {
-          title: "SPACE BUTTON",
-          content:
-            "this is where your differents spaces are, you will have the time to explore "
+          title: t("GuidedTour.platform.actionButtons.title"),
+          content: t("GuidedTour.platform.actionButtons.content")
         }
       },
       {
-        target: "project-button",
+        name: "firstSpace",
+        target: "dashboard-space",
+        props: {
+          title: t("GuidedTour.platform.firstSpace.title"),
+          content: t("GuidedTour.platform.firstSpace.content")
+        }
+      },
+      {
+        name: "firstProject",
         clickable: true,
+        target: "dashboard-project",
         props: {
-          title: "PROJECT BUTTON",
-          content: "click on the button to reach the section"
-        }
-      },
-      {
-        target: "project-input-search",
-        props: {
-          title: "PROJECT INPUT SEARCH",
-          content: "you can looking for a specific project typing it name"
-        }
-      },
-      {
-        target: "project-card",
-        clickable: true,
-        props: {
-          title: "PROJECT CARD",
-          content: "click in here to acces the project"
+          title: t("GuidedTour.platform.firstProject.title"),
+          content: t("GuidedTour.platform.firstProject.content")
         }
       },
       {

@@ -2,12 +2,8 @@
   <div data-test="dashboard" class="view dashboard">
     <div class="dashboard__head">
       <DashboardWelcomeTile />
-      <AppLink :to="{ name: routeNames.userSpaces }">
-        <DashboardButtonTile
-          data-guide="space-button"
-          data-test="btn-spaces"
-          color="primary"
-        >
+      <AppLink :to="{ name: routeNames.userSpaces }" data-guide="btn-spaces">
+        <DashboardButtonTile data-test="btn-spaces" color="primary">
           <template #title>
             {{ $t("Dashboard.spacesTileTitle") }}
           </template>
@@ -22,8 +18,8 @@
         </DashboardButtonTile>
       </AppLink>
       <AppLink
-        data-guide="project-button"
         :to="{ name: routeNames.userProjects }"
+        data-guide="btn-projects"
       >
         <DashboardButtonTile data-test="btn-projects" color="secondary">
           <template #title>
@@ -42,6 +38,7 @@
       <AppLink
         v-if="isSubscriptionEnabled"
         :to="{ name: routeNames.userSubscriptions }"
+        data-guide="btn-subscriptions"
       >
         <DashboardButtonTile data-test="btn-subscriptions">
           <template #title>

@@ -32,7 +32,8 @@ export default {
   gap: 12px;
   padding: 24px;
   &__title {
-    font-size: 24px;
+    font-size: calc(var(--spacing-unit) * 2);
+    font-weight: bold;
   }
 }
 </style>
