@@ -1,6 +1,9 @@
 <template>
   <div class="setting-card p-12 m-y-12">
-    <div class="setting-card__header flex items-center justify-between">
+    <div
+      class="setting-card__header flex items-center justify-between"
+      @click="toggle"
+    >
       <strong>{{ $t(`SettingCard.title.${extensionType}`) }}</strong>
       <div class="flex items-center">
         <div
@@ -15,7 +18,6 @@
           color="default"
           size="xxs"
           :rotate="isOpen ? 90 : 0"
-          @click="toggle"
         />
       </div>
     </div>
