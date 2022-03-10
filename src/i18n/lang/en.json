@@ -208,7 +208,6 @@
   },
   "EditBcfTopic": {
     "goBackButton": "Back",
-    "editing": "Editing",
     "dragDropImageText": "Drag and drop an image, or Browse",
     "titlePlaceholder": "Title*",
     "typeLabel": "Type",
