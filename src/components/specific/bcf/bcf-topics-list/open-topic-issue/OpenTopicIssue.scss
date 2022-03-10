@@ -27,7 +27,7 @@
       }
     }
     &__img {
-      min-height: 42px;
+      height: 210px;
       position: relative;
       background-color: var(--color-silver-light);
       &__status {
@@ -50,6 +50,8 @@
       }
       img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
       .no-img-topic {
         padding: 12px;
