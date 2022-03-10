@@ -45,6 +45,11 @@
               <span>{{ validatorListCounter }}</span>
             </div>
           </BIMDataButton>
+          <template v-if="hasNoValidator">
+            <div class="visa-add__content__validator__error">
+              {{ $t("Visa.add.errorValidator") }}
+            </div>
+          </template>
         </div>
         <div class="visa-add__content__validate-date">
           <BIMDataInput
@@ -116,6 +121,7 @@ export default {
     const descInput = ref("");
     const isSelectingValidator = ref(false);
     const hasDateError = ref(false);
+    const hasNoValidator = ref(false);
     const isSafeZone = ref(false);
     const isClosing = ref(null);
     const validatorList = ref(null);
@@ -146,8 +152,10 @@ export default {
     const submit = async () => {
       const dateValid = isDateValid(dateInput.value);
 
-      if (dateValid) {
+      if (dateValid && validatorListCounter.value) {
         hasDateError.value = false;
+        hasNoValidator.value = false;
+
         const visa = await createVisa(props.project, props.document, {
           deadline: formatDate(dateInput.value),
           description: descInput.value
@@ -161,7 +169,8 @@ export default {
         );
         emit("create-visa", visa);
       } else {
-        hasDateError.value = true;
+        hasDateError.value = !dateValid;
+        hasNoValidator.value = !validatorListCounter.value;
       }
     };
 
@@ -174,6 +183,7 @@ export default {
     return {
       // References
       hasDateError,
+      hasNoValidator,
       dateInput,
       descInput,
       isSafeZone,

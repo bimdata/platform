@@ -889,11 +889,13 @@
 
   "Visa": {
     "button": "Validations / VISA",
+    "noVisa": "Il n’y a pas encore de VISA créé",
     "add": {
       "title": "Demande de validation",
       "validator": "Validant",
       "toValidate": "A valider avant",
       "errorDate": "Date invalide",
+      "errorValidator": "Vous devez ajouter au moins 1 validant",
       "exempleDate": "(Ex: 31/05/2022)",
       "description": "Description",
       "cancel": "Annuler",

@@ -21,11 +21,7 @@
         </BIMDataButton>
       </template>
     </div>
-    <div
-      v-if="isDeleting"
-      class="visa-comment-post-actions__delete"
-      :class="`visa-comment-post-actions__delete${isAReply ? '__reply' : ''}`"
-    >
+    <div v-if="isDeleting" class="visa-comment-post-actions__delete">
       <span> {{ $t("Visa.comments.actions.confirmDelete") }}</span>
       <BIMDataButton fill radius color="high" @click="onConfirmDelete">
         {{ $t("Visa.comments.actions.delete") }}
@@ -53,10 +49,6 @@ import { useToggle } from "@/composables/toggle.js";
 export default {
   components: {},
   props: {
-    isAReply: {
-      type: Boolean,
-      required: true
-    },
     areActionsClosed: {
       type: Boolean,
       required: true
