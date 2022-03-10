@@ -1,5 +1,6 @@
 import { reactive, shallowReadonly, toRefs } from "vue";
 import BcfService from "@/services/BcfService.js";
+import mapLimit from "async/mapLimit";
 
 const state = reactive({
   bcfTopics: [],
@@ -18,21 +19,17 @@ const loadBcfTopics = async project => {
 
   let topicsWithSnapshotsAndComments = [];
 
-  topicsWithSnapshotsAndComments = await Promise.all(
-    topics.map(async topic => {
-      const viewpoints = await BcfService.fetchTopicViewpoints(
-        project,
-        topic,
-        "url"
-      );
+  topicsWithSnapshotsAndComments = await mapLimit(topics, 10, async topic => {
+    const viewpoints = await BcfService.fetchTopicViewpoints(
+      project,
+      topic,
+      "url"
+    );
 
-      const allComments = await fetchAllComments(project, topic);
-      topic.snapshots = viewpoints.map(viewpoint => viewpoint.snapshot);
-      topic.components = viewpoints.map(viewpoint => viewpoint.components);
-      topic.comments = allComments;
-      return topic;
-    })
-  );
+    topic.snapshots = viewpoints.map(viewpoint => viewpoint.snapshot);
+    topic.components = viewpoints.map(viewpoint => viewpoint.components);
+    return topic;
+  });
 
   state.bcfTopics = topicsWithSnapshotsAndComments;
 
