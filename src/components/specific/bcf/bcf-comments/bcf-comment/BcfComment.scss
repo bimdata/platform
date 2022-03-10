@@ -3,6 +3,12 @@
     position: relative;
     font-size: 11px;
     &__left {
+      &__user {
+        width: 32px;
+        height: 32px;
+        background-color: var(--color-silver-light);
+        border-radius: 50px;
+      }
     }
     &__right {
       &__actions {
