@@ -74,5 +74,15 @@
         }
       }
     }
+    &:deep() {
+      .bimdata-input {
+        input {
+          font-size: 13px;
+        }
+      }
+      .bimdata-select {
+        font-size: 13px;
+      }
+    }
   }
 }

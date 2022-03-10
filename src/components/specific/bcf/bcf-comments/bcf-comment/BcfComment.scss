@@ -29,6 +29,10 @@
     &:deep() {
       .bimdata-textarea {
         margin-bottom: 6px;
+        textarea {
+          color: var(--color-granite);
+          font-family: "Roboto";
+        }
       }
       :not(.editing) .bar {
         display: none;

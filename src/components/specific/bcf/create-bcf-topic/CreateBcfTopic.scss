@@ -40,12 +40,17 @@
       .bimdata-input {
         input {
           color: var(--color-primary);
+          font-size: 13px;
         }
+      }
+      .bimdata-select {
+        font-size: 13px;
       }
       .bimdata-textarea {
         textarea {
           font-family: var(--primary-font);
           color: var(--color-primary);
+          font-size: 13px;
         }
       }
     }
