@@ -45,8 +45,11 @@
           }
         }
 
-        &__visa {
+        &__visa-tooltip {
           margin-left: auto;
+        }
+
+        &__visa {
           &__content {
             display: flex;
             align-items: center;
