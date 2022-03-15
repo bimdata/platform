@@ -12,13 +12,13 @@
             data-test="user-name"
             class="app-header-menu__btn__fullname"
             maxWidth="130px"
-            tooltip="false"
+            :tooltip="false"
             :text="fullName(user)"
           />
           <BIMDataTextbox
             class="app-header-menu__btn__email"
             maxWidth="130px"
-            tooltip="false"
+            :tooltip="false"
             :text="user.email"
           />
         </div>
@@ -31,11 +31,13 @@
               <BIMDataTextbox
                 class="user-name"
                 maxWidth="200px"
+                :tooltip="false"
                 :text="fullName(user)"
               />
               <BIMDataTextbox
                 class="user-email"
                 maxWidth="200px"
+                :tooltip="false"
                 :text="user.email"
               />
             </div>
