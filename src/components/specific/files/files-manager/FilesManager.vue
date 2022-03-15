@@ -32,7 +32,7 @@
             :text="$t('Visa.noVisa')"
             position="left"
             color="high"
-            :disabled="visasCounter"
+            :disabled="visasCounter !== 0"
           >
             <BIMDataButton
               :disabled="!visasCounter"
