@@ -8,10 +8,7 @@ import { FILE_TYPE } from "@/config/files.js";
  * @returns {String}
  */
 function uuid(file) {
-  if (file.nature) {
-    return `${file.nature}-${file.id}`;
-  } 
-  return `${file.modelId ? 'Model' : 'Document'}-${file.id}`;
+  return `${file.nature}-${file.id}`;
 }
 
 /**

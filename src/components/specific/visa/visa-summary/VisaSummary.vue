@@ -166,7 +166,12 @@
               icon
               width="40px"
               height="40px"
-              @click="$emit('reach-file', formatedVisa.document)"
+              @click="
+                $emit('reach-file', {
+                  ...formatedVisa.document,
+                  nature: formatedVisa.document.modelId ? 'Model' : 'Document'
+                })
+              "
             >
               <BIMDataIcon name="folder" size="xs" fill />
             </BIMDataButton>
