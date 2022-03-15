@@ -156,7 +156,7 @@
             <BIMDataTextbox
               class="visa-summary__shell__file__content__name"
               :text="formatedVisa.document.name"
-              width="80%"
+              width="calc(100% - 20px - 12px * 3)"
             />
           </div>
           <div class="visa-summary__shell__file__btn-file">
