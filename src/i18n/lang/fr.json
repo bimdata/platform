@@ -889,7 +889,7 @@
 
   "Visa": {
     "button": "Validations / VISA",
-    "noVisa": "Il n’y a pas encore de VISA créé",
+    "noVisa": "Il n'y a pas encore de VISA créé",
     "add": {
       "title": "Demande de validation",
       "validator": "Validant",
