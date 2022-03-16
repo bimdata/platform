@@ -28,13 +28,9 @@
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
         <img
-          v-if="
-            bcfTopic.snapshots &&
-            bcfTopic.snapshots.length > 0 &&
-            bcfTopic.snapshots[0] !== undefined
-          "
-          :src="bcfTopic.snapshots[0].snapshotData"
-          alt=""
+          v-if="viewpointWithSnapshot.length > 0"
+          :src="viewpointWithSnapshot[0].snapshot.snapshotData"
+          alt="ViewPoint"
           loading="lazy"
         />
         <NoImgTopicBcf class="no-img-topic" v-else />
@@ -104,8 +100,11 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
+
+import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
 import NoImgTopicBcf from "../../../images/NoImgTopicBcf.vue";
 
@@ -131,6 +130,15 @@ export default {
     }
   },
   setup(props) {
+    const { currentProject } = useProjects();
+    const { loadTopicComments } = useBcf();
+
+    const viewpointWithSnapshot = computed(() => {
+      return props.bcfTopic.viewpoints.filter(viewpoint =>
+        Boolean(viewpoint.snapshot)
+      );
+    });
+
     const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
         const priorityDetail = props.detailedExtensions.priorities.find(
@@ -156,10 +164,11 @@ export default {
     });
 
     const showSidePanel = ref(false);
-    const bcfTopicToOpen = reactive({});
-    const openBcfTopic = topic => {
+    const openBcfTopic = async () => {
       showSidePanel.value = true;
-      bcfTopicToOpen.value = topic;
+      if (!props.bcfTopic.comments) {
+        await loadTopicComments(currentProject.value, props.bcfTopic);
+      }
     };
 
     const topicElements = computed(() => {
@@ -175,10 +184,10 @@ export default {
     });
 
     return {
+      viewpointWithSnapshot,
       adjustColor,
       priorityColor,
       statusColor,
-      bcfTopicToOpen,
       topicElements,
       showSidePanel,
       openBcfTopic

@@ -3,7 +3,7 @@
     class="file-upload-button"
     :width="width"
     :height="height"
-    color="primary"
+    :color="color"
     fill
     radius
     :disabled="disabled"
@@ -48,6 +48,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    color: {
+      type: String,
+      default: "primary"
     }
   },
   emits: ["upload"],

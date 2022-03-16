@@ -11,9 +11,12 @@
           style="box-shadow: var(--box-shadow)"
           class="m-r-12"
         />
-        <span v-else
-          ><BIMDataIcon name="user" fill color="granite" size="xs"
-        /></span>
+        <span
+          v-else
+          class="bcf-comment__header__left__user flex items-center justify-center m-r-12"
+        >
+          <BIMDataIcon name="user" fill color="granite" size="xxs" />
+        </span>
         <strong>{{ comment.author }}</strong>
         <span class="color-granite m-x-6">•</span>
         <strong class="color-granite">{{ $d(comment.date, "long") }}</strong>
@@ -167,7 +170,6 @@ export default {
       if (props.comment.comment !== commentContent.value) {
         try {
           loading.value = true;
-
           await updateComment(
             currentProject.value,
             props.bcfTopic,

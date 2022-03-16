@@ -11,32 +11,64 @@
       {{ $t("OpenTopicIssue.commentButton") }}
     </BIMDataButton>
 
-    <!-- Input first level comment -->
+    <!-- Input create a comment -->
     <div class="bcf-comments__post-comment m-t-24" v-if="isBcfCommentOpen">
       <p class="color-granite m-b-24">Commentaire</p>
-      <BcfCommentInput
-        :bcfTopic="bcfTopic"
-        @close="isBcfCommentOpen = false"
-        :isAReply="false"
-      />
+      <div class="bcf-comment-input m-t-24">
+        <BIMDataTextarea
+          ref="textarea"
+          label="Poster un commentaire"
+          name="example"
+          v-model="topicComment"
+          autofocus
+          resizable
+          width="100%"
+        />
+        <div></div>
+        <div class="flex items-center justify-end">
+          <BIMDataButton
+            color="primary"
+            ghost
+            radius
+            class="m-r-6"
+            @click="isBcfCommentOpen = false"
+          >
+            Annuler
+          </BIMDataButton>
+          <BIMDataButton
+            color="primary"
+            fill
+            radius
+            width="135px"
+            @click="publishComment"
+          >
+            Publier
+          </BIMDataButton>
+        </div>
+      </div>
     </div>
 
     <!-- list of comments -->
-    <div v-if="bcfTopic.comments?.length" class="bcf-comments__list m-t-18">
+    <div class="bcf-comments__list m-t-18">
       <p class="color-granite">
         {{
-          bcfTopic.comments?.length > 1
+          bcfTopic.comments?.length
             ? bcfTopic.comments.length + " Commentaires"
             : "0 Commentaire"
         }}
       </p>
-      <BcfCommentAndReplies
-        v-for="comment in bcfTopic.comments"
-        :key="comment"
-        :comment="comment"
-        :bcfTopic="bcfTopic"
-      />
+      <div v-if="bcfTopic.comments?.length">
+        <BcfComment
+          v-for="comment in bcfTopic.comments"
+          :key="comment"
+          :bcfTopic="bcfTopic"
+          :comment="comment"
+        />
+      </div>
     </div>
+    <template v-if="loading">
+      <BIMDataLoading />
+    </template>
   </div>
 </template>
 
@@ -45,13 +77,11 @@ import { ref, watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 
-import BcfCommentAndReplies from "./bcf-comment-and-replies/BcfCommentAndReplies.vue";
-import BcfCommentInput from "./bcf-comment-input/BcfCommentInput.vue";
+import BcfComment from "./bcf-comment/BcfComment.vue";
 
 export default {
   components: {
-    BcfCommentAndReplies,
-    BcfCommentInput
+    BcfComment
   },
   props: {
     bcfTopic: {
@@ -60,25 +90,39 @@ export default {
     }
   },
   setup(props) {
-    const isBcfCommentOpen = ref(false);
-    const topicComment = ref("");
     const { currentProject } = useProjects();
-    const { fetchAllComments } = useBcf();
+    const { createComment } = useBcf();
+    const isBcfCommentOpen = ref(false);
 
-    watch(
-      [currentProject, () => props.bcfTopic],
-      async () => {
-        await fetchAllComments(currentProject.value, props.bcfTopic);
-      },
-      { immediate: true }
+    const textarea = ref(null);
+    watch(isBcfCommentOpen, () =>
+      setTimeout(() => isBcfCommentOpen.value && textarea.value.focus(), 100)
     );
 
+    const loading = ref(false);
+    const topicComment = ref("");
+
+    const publishComment = async () => {
+      try {
+        loading.value = true;
+        await createComment(currentProject.value, props.bcfTopic, {
+          comment: topicComment.value
+        });
+      } finally {
+        loading.value = false;
+        topicComment.value = null;
+      }
+    };
+
     return {
+      loading,
+      textarea,
+      topicComment,
       isBcfCommentOpen,
-      topicComment
+      publishComment
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./BcfCommentReplies.scss"></style>
+<style scoped lang="scss" src="./BcfComments.scss"></style>

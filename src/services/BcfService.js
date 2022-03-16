@@ -21,17 +21,24 @@ class BcfService {
       console.log(error);
     }
   }
-  async updateProjectTopics(project, bcfTopic, topic) {
+  async updateProjectTopics(project, bcfTopic, data) {
     try {
-      return await apiClient.bcfApi.fullUpdateTopic({
-        projectsPk: project.id,
-        guid: bcfTopic.guid,
-        data: topic
-      });
+      return await fetch(
+        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic/${bcfTopic.guid}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+            ...apiClient.authHeader
+          },
+          body: JSON.stringify(data)
+        }
+      );
     } catch (error) {
       console.log(error);
     }
   }
+
   async fetchExtensions(project) {
     try {
       return await apiClient.bcfApi.getExtensions({
@@ -83,6 +90,24 @@ class BcfService {
     }
   }
 
+  async createFullTopic(project, topic) {
+    try {
+      await fetch(
+        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            ...apiClient.authHeader
+          },
+          body: JSON.stringify(topic)
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async createTopic(project, topic) {
     try {
       return await apiClient.bcfApi.createTopic({
@@ -103,6 +128,30 @@ class BcfService {
       console.log(error);
     }
   }
+
+  async createViewpoint(project, topic, data) {
+    try {
+      return await apiClient.bcfApi.createViewpoint({
+        projectsPk: project.id,
+        topicsGuid: topic.guid,
+        data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async deleteViewpoint(project, topic, viewpoint) {
+    try {
+      return await apiClient.bcfApi.deleteViewpoint({
+        projectsPk: project.id,
+        topicsGuid: topic.guid,
+        guid: viewpoint.guid
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async importBcf(project, file) {
     try {
       const formData = new FormData();

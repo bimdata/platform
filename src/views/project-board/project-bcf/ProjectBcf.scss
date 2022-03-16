@@ -43,9 +43,12 @@
   &__content {
     display: grid;
     grid-template-columns: repeat(auto-fill, 18.4%);
-    gap: 2%;
+    grid-template-rows: 307px;
+    column-gap: 2%;
+    row-gap: 36px;
     &__metrics {
       grid-area: 1/1/2/3;
+      overflow: hidden;
       &.bimdata-card:deep() {
         .bimdata-card__content {
           height: calc(100% - 38px);
