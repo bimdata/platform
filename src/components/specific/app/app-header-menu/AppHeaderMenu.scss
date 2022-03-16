@@ -12,13 +12,14 @@
 
   &__btn {
     display: grid;
-    grid-template-columns: 36px auto;
+    grid-template-columns: 36px 135px;
     grid-template-rows: 14px 14px;
     align-items: center;
     gap: 2px 4px;
     padding: calc(var(--spacing-unit) / 2);
     text-align: left;
     width: 190px;
+
     &__avatar {
       grid-row: 1 / span 2;
     }
@@ -32,7 +33,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
     font-size: 12px;
 
     .user-info {
@@ -47,6 +47,7 @@
       }
 
       .user-content {
+        width: 100%;
         text-align: center;
         .user-name {
           font-weight: bold;
