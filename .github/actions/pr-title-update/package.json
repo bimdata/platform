@@ -1,0 +1,16 @@
+{
+    "name": "pr-title-update",
+    "version": "1.0.0",
+    "description": "A GitHub Action that updates the PR title with url platform",
+    "main": "dist/index.js",
+    "scripts": {
+      "build": "ncc build src/main.js -o dist --minify"
+    },
+    "dependencies": {
+      "@actions/core": "^1.6.0",
+      "@actions/github": "^5.0.0"
+    },
+    "devDependencies": {
+      "@vercel/ncc": "^0.33.3"
+    }
+  }
