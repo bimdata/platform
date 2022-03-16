@@ -43,23 +43,22 @@
             </div>
           </div>
           <div class="separator"></div>
-          <a class="external-link" :href="bimdataConnectUrl" target="blank">
-            <BIMDataButton width="100%" ghost squared>
+          <a
+            class="external-link"
+            :href="bimdataConnectProfileUrl"
+            target="blank"
+          >
+            <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entrySettings") }}
             </BIMDataButton>
           </a>
-          <a class="external-link" :href="bimdataConnectUrl" target="blank">
-            <BIMDataButton width="100%" ghost squared>
-              {{ $t("AppHeaderMenu.entryConnect") }}
-            </BIMDataButton>
-          </a>
           <a class="external-link" :href="documentationUrl" target="blank">
-            <BIMDataButton width="100%" ghost squared>
+            <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryDocumentation") }}
             </BIMDataButton>
           </a>
           <a class="external-link" :href="marketPlaceUrl" target="blank">
-            <BIMDataButton width="100%" ghost squared>
+            <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryMarketplace") }}
             </BIMDataButton>
           </a>
@@ -68,6 +67,7 @@
             class="btn-language"
             ghost
             squared
+            height="40px"
             @click="openLanguageSelector"
           >
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
@@ -126,13 +126,14 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
-    const bimdataConnectUrl = process.env.VUE_APP_URL_BIMDATACONNECT;
+    const bimdataConnectProfileUrl =
+      process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
     const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
     const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
 
     return {
       // References
-      bimdataConnectUrl,
+      bimdataConnectProfileUrl,
       documentationUrl,
       marketPlaceUrl,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
