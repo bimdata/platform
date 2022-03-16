@@ -4,6 +4,7 @@ import {
   MODEL_TYPE,
   MODEL_SOURCE
 } from "@/config/models.js";
+import { WINDOWS } from "@/config/viewer.js";
 import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {
@@ -80,6 +81,17 @@ function isConvertibleToModel(file) {
   );
 }
 
+function windowType(file) {
+  switch (file.modelType) {
+    case MODEL_TYPE.IFC:
+      return WINDOWS.V3D;
+    case MODEL_TYPE.DWG:
+      return WINDOWS.DWG;
+    default:
+      return WINDOWS.PLAN;
+  }
+}
+
 export {
   isConvertibleToModel,
   isIFC,
@@ -87,5 +99,6 @@ export {
   isPlanModel,
   isSmartFile,
   segregateBySource,
-  segregateByType
+  segregateByType,
+  windowType
 };

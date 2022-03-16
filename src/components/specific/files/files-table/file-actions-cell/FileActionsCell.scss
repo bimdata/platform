@@ -19,6 +19,11 @@
 
     &__btn {
       justify-content: flex-start;
+
+      &__viewer {
+        width: 100%;
+        justify-content: flex-start;
+      }
     }
   }
 }
