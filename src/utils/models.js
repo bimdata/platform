@@ -4,6 +4,7 @@ import {
   MODEL_TYPE,
   MODEL_SOURCE
 } from "@/config/models.js";
+import { WINDOWS } from "@/config/viewer.js";
 import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {
@@ -69,7 +70,16 @@ function isIFC(file) {
 }
 
 function isSmartFile(file) {
-  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+  const { IFC, DWG, PDF, DXF } = MODEL_EXTENSIONS;
+
+  return [IFC, DWG, PDF, DXF].includes(
+    fileExtension(file.fileName).toLowerCase()
+  );
+}
+
+function isViewable(file) {
+  const { IFC, DWG, PDF, DXF } = MODEL_TYPE;
+  return [IFC, DWG, PDF, DXF].includes(file.modelType);
 }
 
 function isConvertibleToModel(file) {
@@ -80,6 +90,16 @@ function isConvertibleToModel(file) {
   );
 }
 
+function windowType(file) {
+  const { modelType } = file;
+  const { IFC, DWG } = MODEL_TYPE;
+
+  if (modelType === IFC) return WINDOWS.V3D;
+  if (modelType === DWG) return WINDOWS.DWG;
+
+  return WINDOWS.PLAN;
+}
+
 export {
   isConvertibleToModel,
   isIFC,
@@ -87,5 +107,7 @@ export {
   isPlanModel,
   isSmartFile,
   segregateBySource,
-  segregateByType
+  segregateByType,
+  isViewable,
+  windowType
 };
