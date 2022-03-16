@@ -32,8 +32,8 @@ async function run() {
 
     const platform_url = core.getInput("platform_url", { required: true });
     const body = `${platform_url}
-    
-    ${github.context.payload.pull_request.body}`;
+
+${github.context.payload.pull_request.body}`;
     const pull_number = github.context.payload.pull_request.number;
     const owner = github.context.repo.owner;
     const repo = github.context.repo.repo;
