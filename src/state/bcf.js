@@ -122,19 +122,20 @@ const updateExtension = async (project, extensionType, id, priority) => {
 };
 
 // comments
-const fetchAllComments = async (project, topic) => {
+const loadTopicComments = async (project, topic) => {
   let allComments = await BcfService.fetchAllComments(project, topic);
   allComments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
+  topic.comments = allComments;
   return allComments;
 };
 const createComment = async (project, topic, data) => {
   const newComment = await BcfService.createComment(project, topic, data);
-  topic.comments = await fetchAllComments(project, topic);
+  await loadTopicComments(project, topic);
   return newComment;
 };
 const deleteComment = async (project, topic, comment) => {
   const newComment = await BcfService.deleteComment(project, topic, comment);
-  topic.comments = await fetchAllComments(project, topic);
+  await loadTopicComments(project, topic);
   return newComment;
 };
 const updateComment = async (project, topic, comment, data) => {
@@ -144,7 +145,7 @@ const updateComment = async (project, topic, comment, data) => {
     comment,
     data
   );
-  topic.comments = await fetchAllComments(project, topic);
+  await loadTopicComments(project, topic);
   return newComment;
 };
 
@@ -168,7 +169,7 @@ export function useBcf() {
     createExtension,
     deleteExtension,
     updateExtension,
-    fetchAllComments,
+    loadTopicComments,
     createComment,
     deleteComment,
     updateComment

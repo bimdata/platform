@@ -93,7 +93,6 @@
           :bcfTopic="bcfTopic"
           @close="showSidePanel = false"
           :detailedExtensions="detailedExtensions"
-          :comments="comments"
         />
       </div>
     </transition>
@@ -132,7 +131,8 @@ export default {
   },
   setup(props) {
     const { currentProject } = useProjects();
-    const { fetchAllComments } = useBcf();
+    const { loadTopicComments } = useBcf();
+
     const viewpointWithSnapshot = computed(() => {
       return props.bcfTopic.viewpoints.filter(viewpoint =>
         Boolean(viewpoint.snapshot)
@@ -164,13 +164,11 @@ export default {
     });
 
     const showSidePanel = ref(false);
-    const comments = ref([]);
     const openBcfTopic = async () => {
       showSidePanel.value = true;
-      comments.value = await fetchAllComments(
-        currentProject.value,
-        props.bcfTopic
-      );
+      if (!props.bcfTopic.comments) {
+        await loadTopicComments(currentProject.value, props.bcfTopic);
+      }
     };
 
     const topicElements = computed(() => {
