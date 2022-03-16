@@ -14,8 +14,66 @@
     </div>
     <div
       class="create-bcf-topic__image flex items-center justify-center m-t-24"
+      :class="{ 'no-img': !viewpoints.length > 0 }"
     >
-      {{ $t("CreateBcfTopic.dragDropImageText") }}
+      <div class="img-previews flex" v-if="viewpoints.length > 0">
+        <div
+          class="img-preview"
+          v-for="(viewpoint, i) in viewpoints.slice(0, 4)"
+          :key="i"
+        >
+          <img :src="viewpoint.snapshot.snapshot_data" loading="lazy" />
+          <BIMDataButton
+            color="default"
+            fill
+            rounded
+            icon
+            @click="removeViewpoint(i)"
+            class="remove-viewpoint"
+          >
+            <BIMDataIcon name="delete" size="xs" fill color="high" />
+          </BIMDataButton>
+        </div>
+      </div>
+      <div class="img-input" v-else>
+        <div class="img-input__title">
+          <!-- {{ $t("CreateBcfTopic.dragDropImageText") }} -->
+          <label for="files">Parcourir</label>
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            multiple
+            @change="upload"
+            id="files"
+            style="display: none"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="create-bcf-topic__add-img flex justify-center m-t-18"
+      v-if="viewpoints.length > 0"
+    >
+      <BIMDataButton
+        width="100%"
+        color="primary"
+        fill
+        radius
+        :disabled="viewpoints.length >= 4"
+      >
+        <label for="files" class="flex items-center justify-center">
+          <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
+          Ajouter une image
+        </label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          multiple
+          @change="upload"
+          id="files"
+          style="display: none"
+        />
+      </BIMDataButton>
     </div>
 
     <div class="create-bcf-topic__content m-t-36">
@@ -93,7 +151,14 @@
       />
     </div>
     <div class="create-bcf-topic__footer m-t-24">
-      <BIMDataButton width="100%" color="primary" fill radius @click="submit">
+      <BIMDataButton
+        width="100%"
+        color="primary"
+        fill
+        radius
+        @click="submit"
+        :disabled="topicTitle === ''"
+      >
         {{ $t("CreateBcfTopic.validateButton") }}
       </BIMDataButton>
     </div>
@@ -122,10 +187,10 @@ export default {
     const { currentProject } = useProjects();
     const {
       loadExtensions,
-      createTopic,
       loadBcfTopics,
       extensions,
-      detailedExtensions
+      detailedExtensions,
+      createFullTopic
     } = useBcf();
 
     const nextIndex = computed(() => {
@@ -150,6 +215,26 @@ export default {
         immediate: true
       }
     );
+
+    const viewpoints = ref([]);
+    const upload = event => {
+      [...event.target.files].forEach(file => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          viewpoints.value.push({
+            snapshot: {
+              snapshot_type: file.type,
+              snapshot_data: reader.result
+            }
+          });
+        });
+        reader.readAsDataURL(file);
+      });
+    };
+
+    const removeViewpoint = index => {
+      viewpoints.value.splice(index, 1);
+    };
 
     const topicTitle = ref("");
     const topicDescription = ref("");
@@ -186,39 +271,38 @@ export default {
       if (topicTitle.value && isDateConform(topicDate)) {
         const body = {
           title: topicTitle.value,
-          topicType: topicType.value?.topicType,
+          topic_type: topicType.value?.topicType,
           priority: topicPriority.value?.priority,
-          topicStatus: topicStatus.value?.topicStatus,
+          topic_status: topicStatus.value?.topicStatus,
           stage: topicPhase.value?.stage,
-          assignedTo: topicAssignedTo?.value,
+          assigned_to: topicAssignedTo?.value,
           description: topicDescription?.value,
-          labels: topicTags.value?.map(topicTag => topicTag.label)
+          labels: topicTags.value?.map(topicTag => topicTag.label),
+          viewpoints: viewpoints.value
         };
         if (topicDate.value) {
           body.dueDate = formatToDateObject(topicDate.value);
         }
-        try {
-          loading.value = true;
-          await createTopic(currentProject.value, body);
-          pushNotification({
-            type: "success",
-            title: "Success",
-            message: "Topic BCF Créée"
-          });
-          await loadBcfTopics(currentProject.value);
-        } finally {
-          topicTitle.value = "";
-          topicType.value = null;
-          topicPriority.value = null;
-          topicStatus.value = null;
-          topicPhase.value = null;
-          topicAssignedTo.value = null;
-          topicDate.value = "";
-          topicDescription.value = "";
-          topicTags.value = [];
-          hasDateError.value = false;
-          loading.value = false;
-        }
+        loading.value = true;
+        await createFullTopic(currentProject.value, body);
+        pushNotification({
+          type: "success",
+          title: "Success",
+          message: "Topic BCF Créée"
+        });
+        await loadBcfTopics(currentProject.value);
+        topicTitle.value = "";
+        topicType.value = null;
+        topicPriority.value = null;
+        topicStatus.value = null;
+        topicPhase.value = null;
+        topicAssignedTo.value = null;
+        topicDate.value = "";
+        topicDescription.value = "";
+        topicTags.value = [];
+        viewpoints.value = [];
+        hasDateError.value = false;
+        loading.value = false;
       } else {
         hasError.value = true;
       }
@@ -240,8 +324,10 @@ export default {
       nextIndex,
       extensions,
       detailedExtensions,
-      // Methods
-      submit
+      viewpoints,
+      removeViewpoint,
+      submit,
+      upload
     };
   }
 };

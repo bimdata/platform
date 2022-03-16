@@ -26,8 +26,7 @@ const loadBcfTopics = async project => {
       "url"
     );
 
-    topic.snapshots = viewpoints.map(viewpoint => viewpoint.snapshot);
-    topic.components = viewpoints.map(viewpoint => viewpoint.components);
+    topic.viewpoints = viewpoints;
     return topic;
   });
 
@@ -36,12 +35,16 @@ const loadBcfTopics = async project => {
   return topicsWithSnapshotsAndComments;
 };
 
+const createFullTopic = async (project, topic) => {
+  const newTopic = await BcfService.createFullTopic(project, topic, "url");
+  await loadBcfTopics(project);
+  return newTopic;
+};
 const createTopic = async (project, topic) => {
   const newTopic = await BcfService.createTopic(project, topic);
   await loadBcfTopics(project);
   return newTopic;
 };
-
 const updateTopic = async (project, bcfTopic, topic) => {
   const newTopic = await BcfService.updateProjectTopics(
     project,
@@ -51,11 +54,20 @@ const updateTopic = async (project, bcfTopic, topic) => {
   await loadBcfTopics(project);
   return newTopic;
 };
-
 const deleteTopic = async (project, topic) => {
   await BcfService.deleteTopic(project, topic);
   await loadBcfTopics(project);
   return topic;
+};
+
+const createViewpoint = async (project, topic, data) => {
+  const newViewpoint = await BcfService.createViewpoint(project, topic, data);
+  await loadBcfTopics(project);
+  return newViewpoint;
+};
+const deleteViewpoint = (project, topic, viewpoint) => {
+  return BcfService.deleteViewpoint(project, topic, viewpoint);
+  // We don't want to reload topic here because this method may be called many times in parallel
 };
 
 const importBcf = async (project, file) => {
@@ -64,7 +76,6 @@ const importBcf = async (project, file) => {
   await loadDetailedExtensions(project);
   return bcf;
 };
-
 const exportBcf = project => {
   return BcfService.exportBcf(project);
 };
@@ -144,9 +155,12 @@ export function useBcf() {
     ...toRefs(readonlyState),
     // Methods
     loadBcfTopics,
+    createFullTopic,
     createTopic,
     updateTopic,
     deleteTopic,
+    createViewpoint,
+    deleteViewpoint,
     importBcf,
     exportBcf,
     loadExtensions,
