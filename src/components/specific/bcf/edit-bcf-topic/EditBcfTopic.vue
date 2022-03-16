@@ -83,7 +83,11 @@
           radius
           :disabled="viewpointWithSnapshot.length >= 4"
         >
-          <label for="files" class="flex items-center justify-center">
+          <label
+            for="files"
+            class="flex items-center justify-center"
+            :disabled="viewpointWithSnapshot.length >= 4"
+          >
             <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
             Ajouter une image
           </label>
@@ -94,6 +98,7 @@
             @change="upload"
             id="files"
             style="display: none"
+            :disabled="viewpointWithSnapshot.length >= 4"
           />
         </BIMDataButton>
       </div>

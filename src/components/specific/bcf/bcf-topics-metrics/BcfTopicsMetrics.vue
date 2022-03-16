@@ -27,7 +27,7 @@
         <div
           v-for="barData in barsData"
           :key="barData"
-          class="flex items-center m-y-6"
+          class="flex items-center"
         >
           <div
             :style="{
