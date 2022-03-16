@@ -13,7 +13,7 @@
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
         <AppLink
-          v-if="isModel(file)"
+          v-if="isViewable(file)"
           class="file-actions-cell__menu__btn"
           :to="{
             name: routeNames.modelViewer,
@@ -112,6 +112,7 @@ import {
   isIFC,
   isModel,
   isSmartFile,
+  isViewable,
   windowType
 } from "@/utils/models.js";
 
@@ -159,6 +160,7 @@ export default {
       closeMenu,
       windowType,
       isConvertibleToModel,
+      isViewable,
       isFolder,
       isModel,
       isIFC,

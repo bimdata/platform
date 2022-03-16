@@ -73,6 +73,11 @@ function isSmartFile(file) {
   return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
 }
 
+function isViewable(file) {
+  const { IFC, DWG, PDF, DXF } = MODEL_TYPE;
+  return [IFC, DWG, PDF, DXF].includes(file.modelType);
+}
+
 function isConvertibleToModel(file) {
   return (
     CONVERTIBLE_EXTENSIONS.includes(
@@ -82,14 +87,13 @@ function isConvertibleToModel(file) {
 }
 
 function windowType(file) {
-  switch (file.modelType) {
-    case MODEL_TYPE.IFC:
-      return WINDOWS.V3D;
-    case MODEL_TYPE.DWG:
-      return WINDOWS.DWG;
-    default:
-      return WINDOWS.PLAN;
-  }
+  const { modelType } = file;
+  const { IFC, DWG } = MODEL_TYPE;
+
+  if (modelType === IFC) return WINDOWS.V3D;
+  if (modelType === DWG) return WINDOWS.DWG;
+
+  return WINDOWS.PLAN;
 }
 
 export {
@@ -100,5 +104,6 @@ export {
   isSmartFile,
   segregateBySource,
   segregateByType,
+  isViewable,
   windowType
 };
