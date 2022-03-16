@@ -1,6 +1,7 @@
 .visa-comments {
-  span {
+  &__comment-title {
     font-size: 1rem;
+    margin-bottom: var(--spacing-unit);
   }
 
   &__comment-button {

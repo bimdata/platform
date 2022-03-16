@@ -8,42 +8,66 @@
             :user="user"
             size="34"
           />
-          <span data-test="user-name" class="app-header-menu__btn__fullname">
-            {{ `${user.firstname} ${user.lastname}` }}
-          </span>
-          <span class="app-header-menu__btn__email">
-            {{ user.email }}
-          </span>
+          <BIMDataTextbox
+            data-test="user-name"
+            class="app-header-menu__btn__fullname"
+            :tooltip="false"
+            :text="fullName(user)"
+          />
+          <BIMDataTextbox
+            class="app-header-menu__btn__email"
+            :tooltip="false"
+            :text="user.email"
+          />
         </div>
       </template>
       <template #element>
         <div class="app-header-menu__container" @click.stop="() => {}">
-          <a class="external-link" :href="bimdataConnectUrl" target="blank">
-            <BIMDataButton width="100%" ghost squared>
-              {{ $t("AppHeaderMenu.entryConnect") }}
+          <div class="user-info">
+            <UserAvatar class="user-avatar" :user="user" size="50" />
+            <div class="user-content">
+              <BIMDataTextbox
+                class="user-name"
+                width="calc(100% - var(--spacing-unit) * 2)"
+                :tooltip="false"
+                :text="fullName(user)"
+              />
+              <BIMDataTextbox
+                class="user-email"
+                width="calc(100% - var(--spacing-unit) * 2)"
+                :tooltip="false"
+                :text="user.email"
+              />
+            </div>
+          </div>
+          <div class="separator"></div>
+          <a
+            class="external-link"
+            :href="bimdataConnectProfileUrl"
+            target="blank"
+          >
+            <BIMDataButton width="100%" height="40px" ghost squared>
+              {{ $t("AppHeaderMenu.entrySettings") }}
             </BIMDataButton>
           </a>
-          <div class="separator"></div>
           <a class="external-link" :href="documentationUrl" target="blank">
-            <BIMDataButton width="100%" ghost squared>
+            <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryDocumentation") }}
             </BIMDataButton>
           </a>
-          <div class="separator"></div>
-          <AppLink
-            v-if="isSubscriptionEnabled"
-            :to="{
-              name: routeNames.userSubscriptions,
-              query: {
-                organization: space?.organization.id
-              }
-            }"
-          >
-            <BIMDataButton width="100%" ghost squared>
-              <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
+          <a class="external-link" :href="marketPlaceUrl" target="blank">
+            <BIMDataButton width="100%" height="40px" ghost squared>
+              {{ $t("AppHeaderMenu.entryMarketplace") }}
             </BIMDataButton>
-          </AppLink>
-          <BIMDataButton ghost squared @click="openLanguageSelector">
+          </a>
+          <div class="separator"></div>
+          <BIMDataButton
+            class="btn-language"
+            ghost
+            squared
+            height="40px"
+            @click="openLanguageSelector"
+          >
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
@@ -55,7 +79,6 @@
             radius
             @click="signOut"
           >
-            <BIMDataIcon name="logout" size="xxs" margin="0 6px 0 0" />
             <span>{{ $t("AppHeaderMenu.logoutButtonText") }}</span>
           </BIMDataButton>
 
@@ -79,14 +102,14 @@ import { useToggle } from "@/composables/toggle.js";
 import { useAuth } from "@/state/auth.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useUser } from "@/state/user.js";
+import { fullName } from "@/utils/users";
+
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
   components: {
-    AppLink,
     LanguageSelector,
     UserAvatar
   },
@@ -101,13 +124,16 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
-    const bimdataConnectUrl = process.env.VUE_APP_URL_BIMDATACONNECT;
+    const bimdataConnectProfileUrl =
+      process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
     const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
+    const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
 
     return {
       // References
-      bimdataConnectUrl,
+      bimdataConnectProfileUrl,
       documentationUrl,
+      marketPlaceUrl,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
       routeNames,
       showLanguageSelector,
@@ -116,6 +142,7 @@ export default {
       // Methods
       closeLanguageSelector,
       openLanguageSelector,
+      fullName,
       signOut
     };
   }

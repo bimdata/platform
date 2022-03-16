@@ -22,6 +22,7 @@
         :project="project"
         :visa="currentVisa"
         @close-visa="closeVisa"
+        @reach-file="$emit('reach-file', $event)"
       />
     </template>
   </div>
@@ -63,7 +64,7 @@ export default {
       required: true
     }
   },
-  emits: ["fetch-visas", "close"],
+  emits: ["fetch-visas", "close", "reach-file"],
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 

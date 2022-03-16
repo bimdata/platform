@@ -148,15 +148,34 @@
           </template>
         </div>
         <div class="visa-summary__shell__file">
-          <BIMDataFileIcon
-            :fileName="formatedVisa.document.fileName"
-            :size="20"
-          />
-          <BIMDataTextbox
-            class="visa-summary__shell__file__name"
-            :text="formatedVisa.document.name"
-            width="80%"
-          />
+          <div class="visa-summary__shell__file__content">
+            <BIMDataFileIcon
+              :fileName="formatedVisa.document.fileName"
+              :size="20"
+            />
+            <BIMDataTextbox
+              class="visa-summary__shell__file__content__name"
+              :text="formatedVisa.document.name"
+              width="calc(100% - 20px - 12px * 3)"
+            />
+          </div>
+          <div class="visa-summary__shell__file__btn-file">
+            <BIMDataButton
+              ghost
+              rounded
+              icon
+              width="40px"
+              height="40px"
+              @click="
+                $emit('reach-file', {
+                  ...formatedVisa.document,
+                  nature: formatedVisa.document.modelId ? 'Model' : 'Document'
+                })
+              "
+            >
+              <BIMDataIcon name="folder" size="xs" fill />
+            </BIMDataButton>
+          </div>
         </div>
         <div class="visa-summary__shell__validator">
           <div class="visa-summary__shell__validator__header">
@@ -231,7 +250,7 @@ export default {
       required: true
     }
   },
-  emits: ["close-visa"],
+  emits: ["close-visa", "reach-file"],
   setup(props, { emit }) {
     const {
       fetchVisa,
