@@ -49,19 +49,26 @@
     </div>
 
     <!-- list of comments -->
-    <div v-if="comments?.length" class="bcf-comments__list m-t-18">
+    <div class="bcf-comments__list m-t-18">
       <p class="color-granite">
         {{
-          comments?.length ? comments.length + " Commentaires" : "0 Commentaire"
+          bcfTopic.comments?.length
+            ? bcfTopic.comments.length + " Commentaires"
+            : "0 Commentaire"
         }}
       </p>
-      <BcfComment
-        v-for="comment in comments"
-        :key="comment"
-        :bcfTopic="bcfTopic"
-        :comment="comment"
-      />
+      <div v-if="bcfTopic.comments?.length">
+        <BcfComment
+          v-for="comment in bcfTopic.comments"
+          :key="comment"
+          :bcfTopic="bcfTopic"
+          :comment="comment"
+        />
+      </div>
     </div>
+    <template v-if="loading">
+      <BIMDataLoading />
+    </template>
   </div>
 </template>
 
@@ -80,9 +87,6 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
-    },
-    comments: {
-      type: Array
     }
   },
   setup(props) {
@@ -95,18 +99,23 @@ export default {
       setTimeout(() => isBcfCommentOpen.value && textarea.value.focus(), 100)
     );
 
+    const loading = ref(false);
     const topicComment = ref("");
+
     const publishComment = async () => {
       try {
+        loading.value = true;
         await createComment(currentProject.value, props.bcfTopic, {
           comment: topicComment.value
         });
       } finally {
+        loading.value = false;
         topicComment.value = null;
       }
     };
 
     return {
+      loading,
       textarea,
       topicComment,
       isBcfCommentOpen,

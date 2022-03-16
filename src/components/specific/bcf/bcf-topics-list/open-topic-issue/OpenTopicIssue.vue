@@ -62,7 +62,12 @@
           {{ $d(bcfTopic.creationDate, "short") }}
         </div>
       </div>
-      <div class="open-topic-issue__content__img text-center m-t-12">
+      <div
+        class="open-topic-issue__content__img text-center m-t-12"
+        :class="{
+          'no-img': viewpointWithSnapshot.length === 0
+        }"
+      >
         <div
           class="open-topic-issue__content__img__status flex p-6"
           :style="{
@@ -74,15 +79,18 @@
           <BIMDataIcon name="information" fill color="default" />
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
-        <img
-          v-if="
-            bcfTopic.snapshots &&
-            bcfTopic.snapshots.length > 0 &&
-            bcfTopic.snapshots[0] !== undefined
-          "
-          :src="bcfTopic.snapshots[0].snapshotData"
-          alt=""
-        />
+        <div class="img-previews flex" v-if="viewpointWithSnapshot.length > 0">
+          <div
+            class="img-preview"
+            v-for="viewpoint in viewpointWithSnapshot"
+            :key="viewpoint.guid"
+          >
+            <img
+              v-if="viewpoint.snapshot.snapshotData"
+              :src="viewpoint.snapshot.snapshotData"
+            />
+          </div>
+        </div>
         <NoImgTopicBcf class="no-img-topic" v-else />
       </div>
       <div class="open-topic-issue__content__card m-t-12 p-12 text-left">
@@ -175,7 +183,7 @@
         </div>
       </div>
       <div class="open-topic-issue__comment m-t-12">
-        <BcfComments :bcfTopic="bcfTopic" :comments="comments" />
+        <BcfComments :bcfTopic="bcfTopic" />
       </div>
     </div>
     <SafeZoneModal v-if="deleteTopicModal">
@@ -235,14 +243,17 @@ export default {
     detailedExtensions: {
       type: Object,
       required: true
-    },
-    comments: {
-      type: Array
     }
   },
   emits: ["close"],
   setup(props) {
     const { t } = useI18n();
+
+    const viewpointWithSnapshot = computed(() => {
+      return props.bcfTopic.viewpoints.filter(viewpoint =>
+        Boolean(viewpoint.snapshot)
+      );
+    });
 
     const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
@@ -306,6 +317,7 @@ export default {
     });
 
     return {
+      viewpointWithSnapshot,
       deleteTopicModal,
       isOpenEditTopic,
       priorityColor,

@@ -170,7 +170,6 @@ export default {
       if (props.comment.comment !== commentContent.value) {
         try {
           loading.value = true;
-
           await updateComment(
             currentProject.value,
             props.bcfTopic,

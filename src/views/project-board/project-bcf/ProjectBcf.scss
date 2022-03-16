@@ -48,6 +48,7 @@
     row-gap: 36px;
     &__metrics {
       grid-area: 1/1/2/3;
+      overflow: hidden;
       &.bimdata-card:deep() {
         .bimdata-card__content {
           height: calc(100% - 38px);

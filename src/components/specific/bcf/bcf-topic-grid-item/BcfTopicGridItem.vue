@@ -28,13 +28,9 @@
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
         <img
-          v-if="
-            bcfTopic.snapshots &&
-            bcfTopic.snapshots.length > 0 &&
-            bcfTopic.snapshots[0] !== undefined
-          "
-          :src="bcfTopic.snapshots[0].snapshotData"
-          alt=""
+          v-if="viewpointWithSnapshot.length > 0"
+          :src="viewpointWithSnapshot[0].snapshot.snapshotData"
+          alt="ViewPoint"
           loading="lazy"
         />
         <NoImgTopicBcf class="no-img-topic" v-else />
@@ -97,7 +93,6 @@
           :bcfTopic="bcfTopic"
           @close="showSidePanel = false"
           :detailedExtensions="detailedExtensions"
-          :comments="comments"
         />
       </div>
     </transition>
@@ -136,7 +131,13 @@ export default {
   },
   setup(props) {
     const { currentProject } = useProjects();
-    const { fetchAllComments } = useBcf();
+    const { loadTopicComments } = useBcf();
+
+    const viewpointWithSnapshot = computed(() => {
+      return props.bcfTopic.viewpoints.filter(viewpoint =>
+        Boolean(viewpoint.snapshot)
+      );
+    });
 
     const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
@@ -163,13 +164,11 @@ export default {
     });
 
     const showSidePanel = ref(false);
-    const comments = ref([]);
     const openBcfTopic = async () => {
       showSidePanel.value = true;
-      comments.value = await fetchAllComments(
-        currentProject.value,
-        props.bcfTopic
-      );
+      if (!props.bcfTopic.comments) {
+        await loadTopicComments(currentProject.value, props.bcfTopic);
+      }
     };
 
     const topicElements = computed(() => {
@@ -185,7 +184,7 @@ export default {
     });
 
     return {
-      comments,
+      viewpointWithSnapshot,
       adjustColor,
       priorityColor,
       statusColor,
