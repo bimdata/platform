@@ -278,7 +278,6 @@
   },
   "EditBcfTopic": {
     "goBackButton": "Retour",
-    "editing": "Edition",
     "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
     "titlePlaceholder": "Titre*",
     "typeLabel": "Type",
@@ -927,27 +926,27 @@
       }
     },
     "summary": {
-     "title": {
-       "open": "Demande en cours",
-       "closed": "Demande cloturée"
-     },
-     "appliedBy": "Demande de validation par",
-     "validate": "Valider",
-     "deny": "Refuser",
-     "delete": "Supprimer",
-     "close": "Cloturer",
-     "comment": "Commenter",
-     "term": "Échéance",
-     "validator": "Validants",
-     "deletedUser":" Utilisateur supprimé",
-     "validatorList": {
-      "accept": "Validé",
-      "deny": "Refusé",     
-      "commented": "Commenté",
-      "pending": "En attente",
-      "getRidOfValidator": "Retirer le validant",
-      "refresh": "Rénitialiser la validation"
-     }
+      "title": {
+        "open": "Demande en cours",
+        "closed": "Demande cloturée"
+      },
+      "appliedBy": "Demande de validation par",
+      "validate": "Valider",
+      "deny": "Refuser",
+      "delete": "Supprimer",
+      "close": "Cloturer",
+      "comment": "Commenter",
+      "term": "Échéance",
+      "validator": "Validants",
+      "deletedUser": " Utilisateur supprimé",
+      "validatorList": {
+        "accept": "Validé",
+        "deny": "Refusé",
+        "commented": "Commenté",
+        "pending": "En attente",
+        "getRidOfValidator": "Retirer le validant",
+        "refresh": "Rénitialiser la validation"
+      }
     },
     "comments": {
       "comment": "Commenter",
@@ -974,8 +973,6 @@
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
     }
   },
-
-
 
   "Error": "Erreur",
   "Success": "Succès",
