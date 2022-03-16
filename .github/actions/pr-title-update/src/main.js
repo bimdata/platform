@@ -1,24 +1,11 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-function updatePR({
-  token,
-  title,
-  pull_number,
-  owner,
-  repo,
-}) {
-  
-  title
-  const options = {
-      owner,
-      repo,
-      pull_number,
-      title,
-  };
-  
+function updatePR({token, title, pull_number, owner, repo}) {
   const octokit = github.getOctokit(token);
-  return octokit.rest.pulls.update(options);
+  return octokit.rest.pulls.update({
+    owner, repo, pull_number, title,
+  });
 }
 
 async function run() {
@@ -49,13 +36,7 @@ async function run() {
     const owner = github.context.repo.owner;
     const repo = github.context.repo.repo;
 
-    await updatePR({
-      token,
-      title,
-      pull_number,
-      owner,
-      repo,
-    });
+    await updatePR({token, title, pull_number, owner, repo});
   } catch (error) {
     core.error(error);
     core.setFailed(error.message);
