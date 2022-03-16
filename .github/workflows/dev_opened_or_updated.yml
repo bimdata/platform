@@ -55,7 +55,12 @@ jobs:
             --rm \
             -e ANSIBLE_VAULT_PASSWD="${{ secrets.ANSIBLE_VAULT_PASSWD }}" \
             docker-registry.bimdata.io/bimdata/deployment:kubernetes-test \
-            ansible-playbook -u deploy -i inventories/staging --tags platform_dev --extra-vars "branch_name=${{ steps.branch.outputs.name }}" deploy.yml
+            ansible-playbook \
+              -u deploy \
+              -i inventories/staging \
+              --tags platform_dev \
+              --extra-vars "branch_name=${{ steps.branch.outputs.name }} ansible_ssh_private_key_file=./files/deploy_rsa" \
+              deploy.yml
       - name: Define platform url
         id: platform
         run: |
