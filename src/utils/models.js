@@ -70,7 +70,11 @@ function isIFC(file) {
 }
 
 function isSmartFile(file) {
-  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+  const { IFC, DWG, PDF, DXF } = MODEL_EXTENSIONS;
+
+  return [IFC, DWG, PDF, DXF].includes(
+    fileExtension(file.fileName).toLowerCase()
+  );
 }
 
 function isViewable(file) {
