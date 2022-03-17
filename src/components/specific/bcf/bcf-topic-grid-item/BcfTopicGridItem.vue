@@ -6,7 +6,11 @@
           class="bcf-topic__header__infos__index flex items-center justify-center"
           :style="{
             'background-color': `#${priorityColor}`,
-            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
+            color: adjustColor(
+              `#${priorityColor}`,
+              '#ffffff',
+              'var(--color-text)'
+            )
           }"
         >
           {{ bcfTopic.index }}
@@ -20,7 +24,11 @@
           class="bcf-topic__header__img__status flex p-6"
           :style="{
             'background-color': `#${statusColor}`,
-            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
+            color: adjustColor(
+              `#${statusColor}`,
+              '#ffffff',
+              'var(--color-text)'
+            )
           }"
           v-if="bcfTopic.topicStatus"
         >
@@ -160,7 +168,7 @@ export default {
           return statusDetail.color;
         }
       }
-      return "";
+      return "D8D8D8";
     });
 
     const showSidePanel = ref(false);
