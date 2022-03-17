@@ -49,7 +49,7 @@
     <div class="project-bcf__settings" v-show="showBcfSettings">
       <BcfSettings @close="closeBcfSettings" />
     </div>
-    <div class="project-bcf__actions flex justify-between m-t-24">
+    <div class="project-bcf__actions flex justify-between">
       <BIMDataSearch
         :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
         color="secondary"
@@ -170,7 +170,7 @@
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
-    <div class="project-bcf__content flex m-t-36">
+    <div class="project-bcf__content flex m-t-24">
       <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
         <template #content>
           <BcfTopicsMetrics
