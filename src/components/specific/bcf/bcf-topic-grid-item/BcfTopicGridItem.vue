@@ -35,6 +35,9 @@
           <BIMDataIcon name="information" fill color="default" />
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
+        <div class="bcf-topic__header__img__date p-6">
+          {{ $d(bcfTopic.creationDate, "short") }}
+        </div>
         <img
           v-if="viewpointWithSnapshot.length > 0"
           :src="viewpointWithSnapshot[0].snapshot.snapshotData"
