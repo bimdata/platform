@@ -73,7 +73,6 @@
     "text": "Naviguez parmis vos comptes de facturation pour gérer les abonnements et factures de vos espaces plateforme.",
     "list": "Liste de mes comptes de facturation :"
   },
-
   "ProjectBcf": {
     "importButtonText": "Importer",
     "exportButtonText": "Exporter",
@@ -98,7 +97,6 @@
       "message": "Veuillez sélectionner un fichier de modèle: {extensions}"
     }
   },
-
   "BreadcrumbSelector": {
     "inputPlaceholder": "Rechercher"
   },
@@ -111,7 +109,6 @@
   "LanguageSelector": {
     "title": "Choix de la langue"
   },
-
   "AppHeaderMenu": {
     "entrySettings": "Paramètres du compte",
     "entryConnect": "BIMData Connect",
@@ -122,13 +119,11 @@
     "logoutButtonText": "Se Déconnecter",
     "subscriptionPlatform": "Abonnement plateforme"
   },
-
   "BillingActionsCell": {
     "updateButtonText": "Modifier la carte de paiement",
     "datapackButtonText": "Gérer mes datapacks",
     "cancelButtonText": "Annuler cet abonnement"
   },
-
   "BillingsTable": {
     "title": "Abonnements",
     "nextPayment": "le",
@@ -152,15 +147,12 @@
       "custom": "Géré par BIMData.io"
     }
   },
-
   "BreadcrumbGroupSelector": {
     "text": "Groupes"
   },
-
   "BreadcrumbProjectSelector": {
     "placeholder": "< Aucun projet >"
   },
-
   "BcfFilters": {
     "filtersButton": "Filtres",
     "priorityLabel": "Priorité",
@@ -236,6 +228,8 @@
     "keepBcfButton": "Conserver ce BCF"
   },
   "OpenTopicIssue": {
+    "openViewer": "Ouvrir dans le viewer",
+    "openViewerNoModels": "Il n'y a aucun modèle prêt pour une visualisation",
     "elements": "Élements",
     "noElements": "0 Élement",
     "type": "Type :",
@@ -294,24 +288,19 @@
     "cancelButton": "Annuler les modifications",
     "continueButton": "Continuer les modifications"
   },
-
   "DashboardInfoTile": {
     "title": "Securité"
   },
-
   "DashboardProjectList": {
     "title": "Projets récents"
   },
-
   "DashboardSpaceList": {
     "title": "Espaces récents"
   },
-
   "DashboardWelcomeTile": {
     "title": "Dashboard",
     "message": "Bonjour {name}, content de vous revoir !"
   },
-
   "DatapackForm": {
     "baseNote": "Stockage",
     "baseText": "Inclus dans l'abonnement",
@@ -323,14 +312,12 @@
     "submitButtonText": "Valider",
     "cancelButtonText": "Annuler"
   },
-
   "DatapackInfo": {
     "title": "Abonnement actuel",
     "datapacks": "Récapitulatif DataPack actif",
     "storage": "Récapitulatif GB actif",
     "including": "dont {quantity} GB de DataPack"
   },
-
   "FileActionsCell": {
     "openViewerButtonText": "Voir",
     "createModelButtonText": "Définir comme modèle",
@@ -343,37 +330,31 @@
     "deleteButtonText": "Supprimer",
     "VisaButtonText": "Demande de validation"
   },
-
   "FileNameCell": {
     "inputErrorMessage": "Nom de fichier invalide",
     "submitButtonText": "Valider"
   },
-
   "FilesActionBar": {
     "deleteButtonText": "Supprimer",
     "moveButtonText": "Déplacer vers",
     "downloadButtonText": "Télécharger"
   },
-
   "FilesDeleteModal": {
     "title": "Suppression de fichiers",
     "message": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
     "cancelButtonText": "Annuler",
     "deleteButtonText": "Supprimer"
   },
-
   "FilesManager": {
     "title": "Documents du projet",
     "searchInputPlaceholder": "Rechercher",
     "createModelNotification": "Modèle créé avec succès"
   },
-
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
     "uploadFileButtonText": "Téléverser un fichier",
     "createFolderButtonText": "Créer un dossier"
   },
-
   "FilesTable": {
     "emptyTablePlaceholder": "Dossier vide",
     "folder": "Dossier",
@@ -386,22 +367,18 @@
       "size": "Taille"
     }
   },
-
   "FileUploadButton": {
     "addFileButtonText": "Charger un fichier"
   },
-
   "FileUploadCard": {
     "cancelMessage": "Annulé",
     "errorMessage": "Le téléversement a échoué"
   },
-
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
     "separatorText": "ou",
     "uploadButtonText": "Sélectionner un modèle"
   },
-
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
     "searchInputPlaceholder": "Rechercher un groupe",
@@ -409,11 +386,9 @@
     "rightsHeader": "Droits",
     "membersHeader": "Membres"
   },
-
   "FolderCreationButton": {
     "buttonText": "Nouveau dossier"
   },
-
   "FolderCreationForm": {
     "creationFormTitle": "Créer un dossier",
     "nameInputPlaceholder": "Nom du dossier",
@@ -421,7 +396,6 @@
     "cancelButtonText": "Annuler",
     "submitButtonText": "Valider"
   },
-
   "FolderPermissionSelector": {
     "label": "Tout le monde",
     "options": {
@@ -430,7 +404,6 @@
       "readWrite": "Lecture / Écriture"
     }
   },
-
   "FolderSelector": {
     "selectedFolder": "Dossier sélectionné",
     "emptyFolderPlaceholder": "Dossier vide",
@@ -439,7 +412,6 @@
       "moveHere": "Déplacer ici"
     }
   },
-
   "FreePlanInfo": {
     "title": "FREE",
     "price": "0€",
@@ -448,32 +420,27 @@
     "buttonText": "Créer un espace gratuit",
     "note": "Pour toujours"
   },
-
   "FreePlanRedirect": {
     "title": "Mon espace gratuit",
     "text": "Vous possédez déjà un espace gratuit.",
     "buttonText": "Accéder à mon espace gratuit"
   },
-
   "GroupCardActionMenu": {
     "renameButtonText": "Renommer",
     "changeColorButtonText": "Modifier la couleur",
     "deleteButtonText": "Supprimer"
   },
-
   "GroupCardDeleteGuard": {
     "title": "Supprimer le groupe",
     "message": "Êtes vous sûr de vouloir supprimer (définitivement) le groupe {name} ?",
     "deleteButtonText": "Supprimer"
   },
-
   "GroupCardUpdateForm": {
     "title": "Renommer le groupe",
     "inputPlaceholder": "Nom",
     "inputErrorMessage": "Nom de groupe invalide",
     "submitButtonText": "Renommer"
   },
-
   "GroupCreationCard": {
     "text": "Créer un groupe",
     "title": "Nouveau groupe",
@@ -481,20 +448,16 @@
     "inputErrorMessage": "Nom de groupe invalide",
     "submitButtonText": "Créer"
   },
-
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
   },
-
   "GroupMemberInvitation": {
     "name": "Invitation en cours"
   },
-
   "GroupMembersSelector": {
     "title": "Gestion des membres du groupe",
     "searchInputPlaceholder": "Rechercher"
   },
-
   "GroupPermissionSelector": {
     "options": {
       "accessDenied": "Accès refusé",
@@ -502,14 +465,12 @@
       "readWrite": "Lecture / Écriture"
     }
   },
-
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
     "resendLinkText": "Renvoyer l'invitation ?",
     "resendSuccessNotifText": "Invitation renvoyée",
     "cancelSuccessNotifText": "Invitation annulée"
   },
-
   "InvitationForm": {
     "emailInputPlaceholder": "Email de l'utilisateur",
     "emailInputErrorMessage": "Email invalide",
@@ -523,11 +484,9 @@
     "submitButtonText": "Inviter",
     "successNotifText": "Invitation envoyée"
   },
-
   "InvoiceActionsCell": {
     "downloadButton": "Télécharger la facture"
   },
-
   "InvoicesTable": {
     "title": "Factures",
     "emptyTableText": "Vos factures apparaitront ici lorsque vous aurez des abonnements actifs.",
@@ -539,12 +498,10 @@
       "date": "Date"
     }
   },
-
   "InvoiceStatusCell": {
     "completed": "Payé",
     "pending": "En attente"
   },
-
   "ModelActionsCell": {
     "addTagsButtonText": "Ajouter des tags",
     "renameButtonText": "Renommer",
@@ -553,24 +510,20 @@
     "removeButtonText": "Marquer comme document",
     "deleteButtonText": "Supprimer"
   },
-
   "ModelLocation": {
     "emptyLocationMessage": "Aucune données de localisation disponible",
     "addLocationButtonText": "Renseigner"
   },
-
   "ModelLocationForm": {
     "addressInputPlaceholder": "Entrer une adresse",
     "checkButtonText": "Vérifier",
     "submitButtonText": "Valider",
     "cancelButtonText": "Changer"
   },
-
   "ModelNameCell": {
     "inputErrorMessage": "Nom de modèle invalide",
     "submitButtonText": "Valider"
   },
-
   "ModelsActionBar": {
     "deleteButtonText": "Supprimer",
     "archiveButtonText": "Archiver",
@@ -578,22 +531,18 @@
     "downloadButtonText": "Télécharger",
     "mergeButtonText": "Fusionner"
   },
-
   "ModelsCard": {
     "openButtonText": "Ouvrir"
   },
-
   "ModelsCardModelPreview": {
     "emptyPreviewPlaceholder": "Aucune prévisualisation"
   },
-
   "ModelsDeleteModal": {
     "title": "Attention !",
     "message": "Cette action est irresversible. Cela supprimera :",
     "cancelButtonText": "Annuler",
     "deleteButtonText": "Supprimer"
   },
-
   "ModelsManager": {
     "title": "Modèles du projet",
     "tabs": {
@@ -604,23 +553,19 @@
       "archive": "Archives"
     }
   },
-
   "ModelsMergeModal": {
     "title": "Fusionner la sélection",
     "inputPlaceholder": "Nom de votre fusion d'ifc",
     "inputErrorMessage": "Vous devez renseigner un nom pour le fichier",
     "submitButtonText": "Exporter"
   },
-
   "ModelsOverview": {
     "title": "Aperçu du projet"
   },
-
   "ModelsOverviewOnboarding": {
     "text": "Téléverser votre premier modèle",
     "uploadButtonText": "Téléversement"
   },
-
   "ModelsTable": {
     "emptyTablePlaceholder": "Aucun modèle",
     "headers": {
@@ -632,16 +577,13 @@
       "status": "Statut"
     }
   },
-
   "OrganizationCard": {
     "spaces": "{number} espaces"
   },
-
   "OrganizationDeleteGuard": {
     "title": "Supprimer le compte de facturation",
     "submitButtonText": "Supprimer"
   },
-
   "OrganizationForm": {
     "createTitle": "Création d'un compte de facturation",
     "updateTitle": "Modifier le compte de facturation",
@@ -654,7 +596,6 @@
     "successTitle": "Félicitation votre compte de facturation vient d'être créé",
     "successButtonText": "OK"
   },
-
   "OrganizationSelector": {
     "title": "Compte de facturation",
     "radioLabelSelect": "Sélectionner un compte de facturation",
@@ -663,22 +604,18 @@
     "submitButtonText": "Valider",
     "successMessage": "Félicitation votre compte de facturation vient d'être créé"
   },
-
   "OrganizationsList": {
     "explanationText": "Le compte de facturation est l'entité qui centralise les facturations des espaces BIMData.io",
     "createButtonText": "Créer un compte de facturation",
     "searchInputPlaceholder": "Rechercher un compte"
   },
-
   "OrganizationsManager": {
     "title": "Gestion des comptes de facturation",
     "backButtonText": "Retour"
   },
-
   "OrganizationSpaceCard": {
     "projects": "{number} projets"
   },
-
   "OrganizationSpacesImport": {
     "spaceListTitle": "Sélectionnez les espaces à importer",
     "spaceListPlaceholder": "Aucun espace à importer...",
@@ -686,7 +623,6 @@
     "successTitle": "Félicitation vos espaces viennent d'être déplacés",
     "successButtonText": "OK"
   },
-
   "OrganizationSpacesList": {
     "importButtonText": "Importer un espace",
     "addButtonText": "Ajouter un espace",
@@ -694,32 +630,27 @@
     "spaceListTitle": "Liste des espaces rattachés au compte de facturation",
     "spaceListPlaceholder": "Aucun espace n'est rattaché à ce compte de facturation."
   },
-
   "ProjectCardActionMenu": {
     "renameButtonText": "Renommer",
     "deleteButtonText": "Supprimer",
     "leaveButtonText": "Quitter"
   },
-
   "ProjectCardDeleteGuard": {
     "title": "Supprimer le projet",
     "message": "Êtes vous sûr de vouloir supprimer (définitivement) ce projet ?",
     "deleteButtonText": "Supprimer"
   },
-
   "ProjectCardLeaveGuard": {
     "title": "Quitter le projet",
     "message": "Êtes vous sûr de vouloir quitter ce projet ?",
     "leaveButtonText": "Valider"
   },
-
   "ProjectCardUpdateForm": {
     "title": "Renommer le projet",
     "inputPlaceholder": "Nom",
     "inputErrorMessage": "Ce nom de projet n'est pas valide.",
     "renameButtonText": "Renommer"
   },
-
   "ProjectCreationCard": {
     "title": "Nouveau projet",
     "text": "Créer un nouveau projet",
@@ -727,19 +658,16 @@
     "inputErrorMessage": "Vous devez donner un nom au projet !",
     "createButtonText": "Créer"
   },
-
   "ProjectStatusBadge": {
     "new": "NOUVEAU",
     "active": "ACTIF",
     "inactive": "INACTIF",
     "paused": "PAUSE"
   },
-
   "ProjectUsersManager": {
     "title": "Utilisateurs",
     "searchInputPlaceholder": "Rechercher un utilisateur"
   },
-
   "ProPlanCard": {
     "title": "PROFESSIONEL",
     "priceUnit": "/ Espace / mois",
@@ -748,7 +676,6 @@
     "buttonText": "Souscrire",
     "note": "extensible pour {price} / GB / mois"
   },
-
   "ProPlanForm": {
     "titleNet": "Sous-total",
     "titleTax": "TVA 20%",
@@ -758,7 +685,6 @@
     "successTitle": "Félicitation ! Vous avez souscris à un Abonnement Pro !",
     "successMessage": "Votre paiement a bien été effectué. Vous pouvez dès à présent profiter de votre abonnement professionnel."
   },
-
   "ProPlanInfo": {
     "title": "Votre abonnement",
     "subTitle": "Professionnel",
@@ -775,42 +701,35 @@
     "bullet9": "Edition IFC",
     "bullet10": "Support par email"
   },
-
   "SpaceCard": {
     "free": "Gratuit",
     "projects": "PROJETS"
   },
-
   "SpaceCardActionMenu": {
     "renameButtonText": "Renommer",
     "removeImageButtonText": "Supprimer l'image",
     "deleteButtonText": "Supprimer cet espace"
   },
-
   "SpaceCardDeleteGuard": {
     "title": "Supprimer l'espace",
     "message": "Êtes vous sûr de vouloir supprimer (définitivement) cet espace ?",
     "deleteButtonText": "Supprimer"
   },
-
   "SpaceCardImageButton": {
     "buttonText": "Changer l'image"
   },
-
   "SpaceCardUpdateForm": {
     "title": "Renommer l'espace",
     "inputPlaceholder": "Nom",
     "inputErrorMessage": "Ce nom d'espace n'est pas valide.",
     "submitButtonText": "Renommer"
   },
-
   "SpaceCreationCard": {
     "title": "Nouvel espace",
     "inputPlaceholder": "Nom",
     "inputErrorMessage": "Vous devez donner un nom à l'espace !",
     "createButtonText": "Créer"
   },
-
   "SpaceCreator": {
     "title": "Créer un espace",
     "text": "Votre espace regroupe vos différents projets BIM.",
@@ -819,25 +738,21 @@
     "billingAccountButton": "Modifier",
     "submitButtonText": "Passer au paiement"
   },
-
   "SpaceSelected": {
     "selectedOrga": "Compte de facturation:",
     "selectedSpace": "Espace sélectionné:"
   },
-
   "SpaceSizeInfo": {
     "usage": "{used} utilisé sur {total}",
     "subscribeDatapackButton": "Acheter un DataPack",
     "subscribePlatformButton": "Passer à la platform pro"
   },
-
   "SpaceSizePreview": {
     "title": "Stockage",
     "actualStorage": "Stockage actuel",
     "newStorage": "Nouveau stockage",
     "newStorageText": "En souscrivant à l'abonnement professionnel, vous bénéficiez de {size} de stockage. Vous pouvez acheter du stockage additionnel directement depuis votre espace."
   },
-
   "SpaceUsersManager": {
     "title": "Gestion administrateur espace",
     "tabs": {
@@ -847,22 +762,18 @@
     "searchInputPlaceholder": "Rechercher un utilisateur",
     "addUserButtonText": "Ajouter un administrateur"
   },
-
   "SubscribeCard": {
     "title": "Créez votre nouvel espace",
     "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
     "button": "Souscrire à un abonnement"
   },
-
   "SubscriptionStatusBanner": {
     "activate": "Cet espace gratuit a atteint ses limites, passez à l'abonnement professionnel pour débloquer toutes les fonctionnalités de BIMData.",
     "reactivate": "Cet espace n'est actuellement relié à aucun abonnement. Pour débloquer toutes les fonctionnalités de BIMData, passez à l'abonnement professionnel"
   },
-
   "UserCard": {
     "self": "vous"
   },
-
   "UserCardDeleteGuard": {
     "message": {
       "space": "Supprimer {name} de cet espace ?",
@@ -870,22 +781,18 @@
     },
     "submitButtonText": "Supprimer"
   },
-
   "UserCardUpdateForm": {
     "submitButtonText": "Valider"
   },
-
   "UserRoleBadge": {
     "admin": "Admin",
     "user": "Utilisateur",
     "guest": "Invité"
   },
-
   "UsersManagerOnboarding": {
     "text": "Inviter votre premier collaborateur",
     "inviteButtonText": "Invitation"
   },
-
   "Visa": {
     "button": "Validations / VISA",
     "noVisa": "Il n'y a pas encore de VISA créé",
@@ -975,10 +882,8 @@
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
     }
   },
-
   "Error": "Erreur",
   "Success": "Succès",
-
   "Errors": {
     "organizationsFetchError": "Impossible de récupérer la liste des comptes de facturation",
     "organizationCreateError": "Erreur lors de la création du compte de facturation",

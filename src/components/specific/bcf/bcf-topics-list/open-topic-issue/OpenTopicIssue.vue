@@ -7,12 +7,23 @@
   <div v-else class="open-topic-issue">
     <div class="open-topic-issue__header flex items-center justify-between">
       <div
-        class="open-topic-issue__header__title flex justify-center items-center p-x-6"
+        class="
+          open-topic-issue__header__title
+          flex
+          justify-center
+          items-center
+          p-x-6
+        "
       >
         <BIMDataTextbox maxWidth="250px" :text="bcfTopic.title" />
       </div>
       <div
-        class="open-topic-issue__header__actions flex justify-center items-center"
+        class="
+          open-topic-issue__header__actions
+          flex
+          justify-center
+          items-center
+        "
       >
         <BIMDataButton
           color="default"
@@ -45,19 +56,36 @@
     </div>
     <div class="open-topic-issue__content p-r-6 p-b-6 p-l-6">
       <div
-        class="open-topic-issue__content__subheader flex items-center justify-between m-t-12"
+        class="
+          open-topic-issue__content__subheader
+          flex
+          items-center
+          justify-between
+          m-t-12
+        "
       >
         <div
-          class="open-topic-issue__content__subheader__index flex justify-center items-center p-x-6"
+          class="
+            open-topic-issue__content__subheader__index
+            flex
+            justify-center
+            items-center
+            p-x-6
+          "
           :style="{
             'background-color': `#${priorityColor}`,
-            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
+            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a'),
           }"
         >
           {{ bcfTopic.index }}
         </div>
         <div
-          class="open-topic-issue__content__subheader__date flex justify-center items-center"
+          class="
+            open-topic-issue__content__subheader__date
+            flex
+            justify-center
+            items-center
+          "
         >
           {{ $d(bcfTopic.creationDate, "short") }}
         </div>
@@ -65,14 +93,14 @@
       <div
         class="open-topic-issue__content__img text-center m-t-12"
         :class="{
-          'no-img': viewpointWithSnapshot.length === 0
+          'no-img': viewpointWithSnapshot.length === 0,
         }"
       >
         <div
           class="open-topic-issue__content__img__status flex p-6"
           :style="{
             'background-color': `#${statusColor}`,
-            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
+            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a'),
           }"
           v-if="bcfTopic.topicStatus"
         >
@@ -92,6 +120,34 @@
           </div>
         </div>
         <NoImgTopicBcf class="no-img-topic" v-else />
+      </div>
+      <div>
+        <template v-if="modelIDs.length > 0">
+          <AppLink
+            :to="{
+              name: routeNames.modelViewer,
+              params: {
+                spaceID: currentProject.cloud.id,
+                projectID: currentProject.id,
+                modelIDs: modelIDs.join(','),
+              },
+              query: {
+                topicGuid: bcfTopic.guid,
+              },
+            }"
+          >
+            <BIMDataButton width="100%" color="primary" fill radius>
+              {{ $t("OpenTopicIssue.openViewer") }}
+            </BIMDataButton>
+          </AppLink>
+        </template>
+        <template v-else>
+          <BIMDataTooltip :text="$t('OpenTopicIssue.openViewerNoModels')">
+            <BIMDataButton width="100%" color="primary" fill radius disabled>
+              {{ $t("OpenTopicIssue.openViewer") }}
+            </BIMDataButton>
+          </BIMDataTooltip>
+        </template>
       </div>
       <div class="open-topic-issue__content__card m-t-12 p-12 text-left">
         <div class="flex items-center m-b-12">
@@ -222,35 +278,43 @@ import { useI18n } from "vue-i18n";
 import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
+import { useModels } from "@/state/models.js";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
 import BcfComments from "@/components/specific/bcf/bcf-comments/BcfComments.vue";
 import SafeZoneModal from "@/components/generic/safe-zone-modal/SafeZoneModal.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import routeNames from "@/router/route-names.js";
+import { MODEL_TYPE, MODEL_STATUS } from "@/config/models";
 
 export default {
   components: {
     EditBcfTopic,
     NoImgTopicBcf,
     BcfComments,
-    SafeZoneModal
+    SafeZoneModal,
+    AppLink,
   },
   props: {
     bcfTopic: {
       type: Object,
-      required: true
+      required: true,
     },
     detailedExtensions: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["close"],
   setup(props) {
     const { t } = useI18n();
+    const { currentProject } = useProjects();
+    const { deleteTopic } = useBcf();
+    const { projectModels } = useModels();
 
     const viewpointWithSnapshot = computed(() => {
-      return props.bcfTopic.viewpoints.filter(viewpoint =>
+      return props.bcfTopic.viewpoints.filter((viewpoint) =>
         Boolean(viewpoint.snapshot)
       );
     });
@@ -258,7 +322,7 @@ export default {
     const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
         const priorityDetail = props.detailedExtensions.priorities.find(
-          priority => priority.priority === props.bcfTopic.priority
+          (priority) => priority.priority === props.bcfTopic.priority
         );
         if (priorityDetail && priorityDetail.color) {
           return priorityDetail.color;
@@ -270,7 +334,7 @@ export default {
     const statusColor = computed(() => {
       if (props.bcfTopic.topicStatus) {
         const statusDetail = props.detailedExtensions.topicStatuses.find(
-          status => status.topicStatus === props.bcfTopic.topicStatus
+          (status) => status.topicStatus === props.bcfTopic.topicStatus
         );
         if (statusDetail && statusDetail.color) {
           return statusDetail.color;
@@ -282,8 +346,6 @@ export default {
     const deleteTopicModal = ref(false);
     const isOpenEditTopic = ref(false);
     const loading = ref(false);
-    const { currentProject } = useProjects();
-    const { deleteTopic } = useBcf();
 
     const removeTopic = async () => {
       try {
@@ -316,6 +378,24 @@ export default {
       }
     });
 
+    const modelIDs = computed(() => {
+      let ids = [];
+      if (props.bcfTopic.ifcs && props.bcfTopic.ifcs.length) {
+        ids = props.bcfTopic.ifcs;
+      } else {
+        const ifcs = projectModels.value
+          .filter((model) => model.type === MODEL_TYPE.IFC)
+          .filter((model) => model.status === MODEL_STATUS.COMPLETED)
+          .sort((a, b) =>
+            a.createdAt.getTime() > b.createdAt.getTime() ? 1 : -1
+          );
+        if (ifcs.length > 0) {
+          ids.push(ifcs[0]);
+        }
+      }
+      return ids;
+    });
+
     return {
       viewpointWithSnapshot,
       deleteTopicModal,
@@ -326,9 +406,12 @@ export default {
       topicTags,
       adjustColor,
       loading,
-      removeTopic
+      removeTopic,
+      routeNames,
+      currentProject,
+      modelIDs,
     };
-  }
+  },
 };
 </script>
 

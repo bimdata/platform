@@ -107,7 +107,7 @@ export default {
           accessToken: accessToken.value,
           cloudId: spaceID,
           projectId: projectID,
-          ifcIds: modelIDs,
+          modelIds: modelIDs,
         },
         plugins: pluginsConfig,
         locale: locale.value,
