@@ -205,6 +205,10 @@
             bcfTopic.priority || $t("OpenTopicIssue.priorityNotDefined")
           }}</span>
         </div>
+        <div>
+          <span class="color-primary"> Auteur : </span>
+          <span class="color-granite">{{ bcfTopic.creationAuthor }}</span>
+        </div>
         <div class="m-t-12">
           <span class="color-primary"> {{ $t("OpenTopicIssue.tags") }} </span>
           <span class="color-granite">{{ topicTags }}</span>
