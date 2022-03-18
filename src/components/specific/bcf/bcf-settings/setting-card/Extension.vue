@@ -65,7 +65,7 @@
         class="setting-card-item__delete__safe-zone flex items-center justify-between p-x-12"
         v-if="isDeleteSafeZoneOpen"
       >
-        <p>Supprimer cette {{ extensionType }}</p>
+        <p>{{ $t("Extension.deleteExtensionText") }}</p>
         <div class="flex items-center">
           <BIMDataButton
             color="high"
@@ -75,7 +75,7 @@
             class="m-r-6"
             @click="submitDelete(extension)"
           >
-            Supprimer
+            {{ $t("Extension.deleteButton") }}
           </BIMDataButton>
           <BIMDataButton
             color="primary"
