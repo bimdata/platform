@@ -380,7 +380,7 @@ export default {
 
     const modelIDs = computed(() => {
       let ids = [];
-      if (props.bcfTopic.ifcs && props.bcfTopic.ifcs.length) {
+      if (props.bcfTopic.ifcs?.length) {
         ids = props.bcfTopic.ifcs;
       } else {
         const ifcs = projectModels.value
