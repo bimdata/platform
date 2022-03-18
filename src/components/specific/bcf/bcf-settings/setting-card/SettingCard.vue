@@ -40,6 +40,7 @@
       <transition name="list">
         <div v-if="showAddExtension" class="m-b-12">
           <BIMDataInput
+            ref="input"
             :placeholder="$t(`SettingCard.input.${extensionType}`)"
             v-model="newExtensionName"
             @keyup.enter.stop="addExtension"
@@ -72,7 +73,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import { useToggle } from "@/composables/toggle";
@@ -107,6 +108,11 @@ export default {
     const { isOpen: showAddExtension, toggle: toggleAddExtension } =
       useToggle();
 
+    const input = ref(null);
+    watch(showAddExtension, () =>
+      setTimeout(() => showAddExtension.value && input.value.focus(), 100)
+    );
+
     const closeAddExtension = () => {
       newExtensionName.value = "";
       showAddExtension.value = false;
@@ -136,6 +142,7 @@ export default {
     };
 
     return {
+      input,
       isOpen,
       toggle,
       showAddExtension,
