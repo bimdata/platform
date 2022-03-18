@@ -63,8 +63,9 @@
             <BIMDataIcon name="unarchive" fill color="default" size="m" />
           </span>
           <BIMDataButton color="primary" outline radius class="m-t-18">
-            <!-- {{ $t("CreateBcfTopic.dragDropImageText") }} -->
-            <label for="files">Veuillez sélectionner un fichier</label>
+            <label for="files">
+              {{ $t("EditBcfTopic.dragDropImageText") }}</label
+            >
             <input
               type="file"
               accept="image/png, image/jpeg"
@@ -102,7 +103,7 @@
             :disabled="viewpointWithSnapshot.length >= 4"
           >
             <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
-            Ajouter une image
+            {{ $t("EditBcfTopic.addPictureButton") }}
           </label>
         </BIMDataButton>
       </div>
@@ -111,7 +112,7 @@
         <BIMDataInput
           :placeholder="$t('EditBcfTopic.titlePlaceholder')"
           v-model="topicTitle"
-          errorMessage="Titre manquant"
+          :errorMessage="$t('EditBcfTopic.titleErrorMessage')"
         />
         <BIMDataSelect
           width="100%"
