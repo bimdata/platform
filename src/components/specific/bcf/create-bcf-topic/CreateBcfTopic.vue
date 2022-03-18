@@ -35,10 +35,13 @@
           </BIMDataButton>
         </div>
       </div>
-      <div class="img-input" v-else>
-        <div class="img-input__title">
+      <div class="img-input flex flex-col items-center justify-center" v-else>
+        <span class="flex items-center justify-center">
+          <BIMDataIcon name="unarchive" fill color="default" size="m" />
+        </span>
+        <BIMDataButton color="primary" outline radius class="m-t-18">
           <!-- {{ $t("CreateBcfTopic.dragDropImageText") }} -->
-          <label for="files">Parcourir</label>
+          <label for="files">Veuillez sélectionner un fichier</label>
           <input
             type="file"
             accept="image/png, image/jpeg"
@@ -47,7 +50,7 @@
             id="files"
             style="display: none"
           />
-        </div>
+        </BIMDataButton>
       </div>
     </div>
     <div
@@ -61,14 +64,6 @@
         radius
         :disabled="viewpoints.length >= 4"
       >
-        <label
-          for="files"
-          class="flex items-center justify-center"
-          :disabled="viewpoints.length >= 4"
-        >
-          <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
-          Ajouter une image
-        </label>
         <input
           type="file"
           accept="image/png, image/jpeg"
@@ -78,6 +73,10 @@
           style="display: none"
           :disabled="viewpoints.length >= 4"
         />
+        <label for="files" class="flex items-center justify-center">
+          <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
+          Ajouter une image
+        </label>
       </BIMDataButton>
     </div>
 
