@@ -79,6 +79,16 @@ import { useToggle } from "@/composables/toggle";
 import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
 
 import Extension from "./Extension.vue";
+
+const typeFieldMap = {
+  Stage: "stage",
+  Priority: "priority",
+  Label: "label",
+  Type: "topicType",
+  Status: "topicStatus"
+};
+
+const typesWithColor = ["Status", "Priority"];
 export default {
   components: {
     Extension
@@ -105,13 +115,24 @@ export default {
     const { currentProject } = useProjects();
     const { createExtension } = useBcf();
     const newExtensionName = ref("");
+    const extensionValue = ref([typeFieldMap[props.extensionType]]);
     const addExtension = async () => {
-      await createExtension(currentProject.value, props.extensionType, {
-        priority: newExtensionName.value,
-        color: getRandomHexColor()
-      });
-      newExtensionName.value = "";
-      showAddExtension.value = false;
+      if (typesWithColor.includes(props.extensionType)) {
+        const data = {
+          [extensionValue.value]: newExtensionName.value,
+          color: getRandomHexColor()
+        };
+        await createExtension(currentProject.value, props.extensionType, data);
+        newExtensionName.value = "";
+        showAddExtension.value = false;
+      } else {
+        const data = {
+          [extensionValue.value]: newExtensionName.value
+        };
+        await createExtension(currentProject.value, props.extensionType, data);
+        newExtensionName.value = "";
+        showAddExtension.value = false;
+      }
     };
 
     return {
@@ -119,6 +140,8 @@ export default {
       toggle,
       showAddExtension,
       newExtensionName,
+      typeFieldMap,
+      typesWithColor,
       // methods
       close,
       closeAddExtension,
