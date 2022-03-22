@@ -144,6 +144,16 @@
           :options="extensions.userIdType"
           v-model="topicAssignedTo"
         />
+        <div class="due-date m-b-30">
+          <BIMDataInput
+            margin="0"
+            v-model="topicDate"
+            :placeholder="$t('CreateBcfTopic.dueDateLabel')"
+            :error="hasDateError"
+            :errorMessage="$t('CreateBcfTopic.dateErrorMessage')"
+          />
+          <p class="m-y-6">{{ $t("CreateBcfTopic.dateExample") }}</p>
+        </div>
         <BIMDataTextarea
           :label="$t('EditBcfTopic.descriptionLabel')"
           name="description"
@@ -181,8 +191,10 @@
 <script>
 import { ref, watch, computed } from "vue";
 
+import { useI18n } from "vue-i18n";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
+import { formatToDateObject, regexDate, formatDate } from "@/utils/date";
 
 import EditBcfTopicModal from "./edit-bcf-topic-modal/EditBcfTopicModal.vue";
 import TagsInput from "../create-bcf-topic/tags-input/TagsInput.vue";
@@ -208,15 +220,19 @@ export default {
       );
     });
 
+    const { d } = useI18n();
+
     const { extensions, updateTopic, deleteViewpoint } = useBcf();
     const topicTitle = ref("");
     const topicType = ref("");
     const topicPriority = ref("");
     const topicStatus = ref("");
     const topicPhase = ref("");
+    const topicDate = ref("");
     const topicAssignedTo = ref("");
     const topicDescription = ref("");
     const topicTags = ref([]);
+    const hasDateError = ref(false);
     const viewpointsToDelete = ref([]);
 
     const viewpoints = ref(props.bcfTopic.viewpoints);
@@ -269,6 +285,11 @@ export default {
         } else {
           topicAssignedTo.value = null;
         }
+        if (props.bcfTopic.dueDate) {
+          topicDate.value = d(props.bcfTopic.dueDate);
+        } else {
+          topicDate.value = null;
+        }
         if (props.bcfTopic.description) {
           topicDescription.value = props.bcfTopic.description;
         } else {
@@ -294,12 +315,29 @@ export default {
     const snakeify = obj =>
       _.transform(obj, (acc, value, key, target) => {
         const snakeKey = _.isArray(target) ? key : _.snakeCase(key);
-
-        acc[snakeKey] = _.isObject(value) ? snakeify(value) : value;
+        acc[snakeKey] =
+          _.isObject(value) && !_.isDate(value) ? snakeify(value) : value;
       });
 
+    const isDateConform = ({ value }) => {
+      if (!value) {
+        return true;
+      }
+      if (!value.match(regexDate)) {
+        return false;
+      }
+      const dateToCompare = formatToDateObject(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return dateToCompare.getTime() >= today.getTime();
+    };
+
     const updateBcfTopic = async () => {
-      try {
+      if (!isDateConform(topicDate)) {
+        hasDateError.value = true;
+        return;
+      }
+      if (topicTitle.value && isDateConform(topicDate)) {
         loading.value = true;
         const viewpoints_json = viewpoints.value.map(viewpoint => {
           const viewpoint_json = { ...viewpoint };
@@ -326,6 +364,9 @@ export default {
           labels: topicTags.value,
           viewpoints: viewpoints_json
         };
+        if (topicDate.value) {
+          body.dueDate = formatDate(topicDate.value);
+        }
         if (viewpointsToDelete.value.length > 0) {
           await Promise.all(
             viewpointsToDelete.value.map(viewpoint =>
@@ -334,7 +375,6 @@ export default {
           );
         }
         await updateTopic(currentProject.value, props.bcfTopic, snakeify(body));
-      } finally {
         loading.value = false;
       }
     };
@@ -367,6 +407,8 @@ export default {
       topicStatus,
       topicPhase,
       topicAssignedTo,
+      topicDate,
+      hasDateError,
       topicDescription,
       extensions,
       topicTags,
