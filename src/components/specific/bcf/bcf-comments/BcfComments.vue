@@ -51,7 +51,7 @@
     <!-- list of comments -->
     <div class="bcf-comments__list m-t-18">
       <p class="color-granite" v-if="bcfTopic.comments?.length">
-        {{ bcfTopic.comments.length + " Commentaires" }}
+        {{ bcfTopic.comments.length + " " + $t("BcfComments.commentsText") }}
       </p>
       <div v-if="bcfTopic.comments?.length">
         <BcfComment
