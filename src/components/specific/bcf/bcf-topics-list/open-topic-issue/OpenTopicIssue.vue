@@ -7,23 +7,12 @@
   <div v-else class="open-topic-issue">
     <div class="open-topic-issue__header flex items-center justify-between">
       <div
-        class="
-          open-topic-issue__header__title
-          flex
-          justify-center
-          items-center
-          p-x-6
-        "
+        class="open-topic-issue__header__title flex justify-center items-center p-x-6"
       >
         <BIMDataTextbox maxWidth="250px" :text="bcfTopic.title" />
       </div>
       <div
-        class="
-          open-topic-issue__header__actions
-          flex
-          justify-center
-          items-center
-        "
+        class="open-topic-issue__header__actions flex justify-center items-center"
       >
         <BIMDataButton
           color="default"
@@ -56,36 +45,19 @@
     </div>
     <div class="open-topic-issue__content p-r-6 p-b-6 p-l-6">
       <div
-        class="
-          open-topic-issue__content__subheader
-          flex
-          items-center
-          justify-between
-          m-t-12
-        "
+        class="open-topic-issue__content__subheader flex items-center justify-between m-t-12"
       >
         <div
-          class="
-            open-topic-issue__content__subheader__index
-            flex
-            justify-center
-            items-center
-            p-x-6
-          "
+          class="open-topic-issue__content__subheader__index flex justify-center items-center p-x-6"
           :style="{
             'background-color': `#${priorityColor}`,
-            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a'),
+            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
           }"
         >
           {{ bcfTopic.index }}
         </div>
         <div
-          class="
-            open-topic-issue__content__subheader__date
-            flex
-            justify-center
-            items-center
-          "
+          class="open-topic-issue__content__subheader__date flex justify-center items-center"
         >
           {{ $d(bcfTopic.creationDate, "short") }}
         </div>
@@ -93,14 +65,14 @@
       <div
         class="open-topic-issue__content__img text-center m-t-12"
         :class="{
-          'no-img': viewpointWithSnapshot.length === 0,
+          'no-img': viewpointWithSnapshot.length === 0
         }"
       >
         <div
           class="open-topic-issue__content__img__status flex p-6"
           :style="{
             'background-color': `#${statusColor}`,
-            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a'),
+            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
           }"
           v-if="bcfTopic.topicStatus"
         >
@@ -121,7 +93,7 @@
         </div>
         <NoImgTopicBcf class="no-img-topic" v-else />
       </div>
-      <div>
+      <div class="m-t-12">
         <template v-if="modelIDs.length > 0">
           <AppLink
             :to="{
@@ -129,11 +101,11 @@
               params: {
                 spaceID: currentProject.cloud.id,
                 projectID: currentProject.id,
-                modelIDs: modelIDs.join(','),
+                modelIDs: modelIDs.join(',')
               },
               query: {
-                topicGuid: bcfTopic.guid,
-              },
+                topicGuid: bcfTopic.guid
+              }
             }"
           >
             <BIMDataButton width="100%" color="primary" fill radius>
@@ -294,17 +266,17 @@ export default {
     NoImgTopicBcf,
     BcfComments,
     SafeZoneModal,
-    AppLink,
+    AppLink
   },
   props: {
     bcfTopic: {
       type: Object,
-      required: true,
+      required: true
     },
     detailedExtensions: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   emits: ["close"],
   setup(props) {
@@ -314,7 +286,7 @@ export default {
     const { projectModels } = useModels();
 
     const viewpointWithSnapshot = computed(() => {
-      return props.bcfTopic.viewpoints.filter((viewpoint) =>
+      return props.bcfTopic.viewpoints.filter(viewpoint =>
         Boolean(viewpoint.snapshot)
       );
     });
@@ -322,7 +294,7 @@ export default {
     const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
         const priorityDetail = props.detailedExtensions.priorities.find(
-          (priority) => priority.priority === props.bcfTopic.priority
+          priority => priority.priority === props.bcfTopic.priority
         );
         if (priorityDetail && priorityDetail.color) {
           return priorityDetail.color;
@@ -334,7 +306,7 @@ export default {
     const statusColor = computed(() => {
       if (props.bcfTopic.topicStatus) {
         const statusDetail = props.detailedExtensions.topicStatuses.find(
-          (status) => status.topicStatus === props.bcfTopic.topicStatus
+          status => status.topicStatus === props.bcfTopic.topicStatus
         );
         if (statusDetail && statusDetail.color) {
           return statusDetail.color;
@@ -384,8 +356,8 @@ export default {
         ids = props.bcfTopic.ifcs;
       } else {
         const ifcs = projectModels.value
-          .filter((model) => model.type === MODEL_TYPE.IFC)
-          .filter((model) => model.status === MODEL_STATUS.COMPLETED)
+          .filter(model => model.type === MODEL_TYPE.IFC)
+          .filter(model => model.status === MODEL_STATUS.COMPLETED)
           .sort((a, b) =>
             a.createdAt.getTime() > b.createdAt.getTime() ? 1 : -1
           );
@@ -409,9 +381,9 @@ export default {
       removeTopic,
       routeNames,
       currentProject,
-      modelIDs,
+      modelIDs
     };
-  },
+  }
 };
 </script>
 
