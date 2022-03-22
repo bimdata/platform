@@ -93,6 +93,34 @@
         </div>
         <NoImgTopicBcf class="no-img-topic" v-else />
       </div>
+      <div class="m-t-12">
+        <template v-if="modelIDs.length > 0">
+          <AppLink
+            :to="{
+              name: routeNames.modelViewer,
+              params: {
+                spaceID: currentProject.cloud.id,
+                projectID: currentProject.id,
+                modelIDs: modelIDs.join(',')
+              },
+              query: {
+                topicGuid: bcfTopic.guid
+              }
+            }"
+          >
+            <BIMDataButton width="100%" color="primary" fill radius>
+              {{ $t("OpenTopicIssue.openViewer") }}
+            </BIMDataButton>
+          </AppLink>
+        </template>
+        <template v-else>
+          <BIMDataTooltip :text="$t('OpenTopicIssue.openViewerNoModels')">
+            <BIMDataButton width="100%" color="primary" fill radius disabled>
+              {{ $t("OpenTopicIssue.openViewer") }}
+            </BIMDataButton>
+          </BIMDataTooltip>
+        </template>
+      </div>
       <div class="open-topic-issue__content__card m-t-12 p-12 text-left">
         <div class="flex items-center m-b-12">
           <BIMDataIcon
@@ -222,18 +250,23 @@ import { useI18n } from "vue-i18n";
 import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
+import { useModels } from "@/state/models.js";
 
 import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
 import BcfComments from "@/components/specific/bcf/bcf-comments/BcfComments.vue";
 import SafeZoneModal from "@/components/generic/safe-zone-modal/SafeZoneModal.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import routeNames from "@/router/route-names.js";
+import { MODEL_TYPE, MODEL_STATUS } from "@/config/models";
 
 export default {
   components: {
     EditBcfTopic,
     NoImgTopicBcf,
     BcfComments,
-    SafeZoneModal
+    SafeZoneModal,
+    AppLink
   },
   props: {
     bcfTopic: {
@@ -248,6 +281,9 @@ export default {
   emits: ["close"],
   setup(props) {
     const { t } = useI18n();
+    const { currentProject } = useProjects();
+    const { deleteTopic } = useBcf();
+    const { projectModels } = useModels();
 
     const viewpointWithSnapshot = computed(() => {
       return props.bcfTopic.viewpoints.filter(viewpoint =>
@@ -282,8 +318,6 @@ export default {
     const deleteTopicModal = ref(false);
     const isOpenEditTopic = ref(false);
     const loading = ref(false);
-    const { currentProject } = useProjects();
-    const { deleteTopic } = useBcf();
 
     const removeTopic = async () => {
       try {
@@ -316,6 +350,24 @@ export default {
       }
     });
 
+    const modelIDs = computed(() => {
+      let ids = [];
+      if (props.bcfTopic.ifcs?.length) {
+        ids = props.bcfTopic.ifcs;
+      } else {
+        const ifcs = projectModels.value
+          .filter(model => model.type === MODEL_TYPE.IFC)
+          .filter(model => model.status === MODEL_STATUS.COMPLETED)
+          .sort((a, b) =>
+            a.createdAt.getTime() > b.createdAt.getTime() ? 1 : -1
+          );
+        if (ifcs.length > 0) {
+          ids.push(ifcs[0]);
+        }
+      }
+      return ids;
+    });
+
     return {
       viewpointWithSnapshot,
       deleteTopicModal,
@@ -326,7 +378,10 @@ export default {
       topicTags,
       adjustColor,
       loading,
-      removeTopic
+      removeTopic,
+      routeNames,
+      currentProject,
+      modelIDs
     };
   }
 };
