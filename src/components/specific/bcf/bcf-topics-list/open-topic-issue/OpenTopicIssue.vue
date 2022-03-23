@@ -65,7 +65,7 @@
       <div
         class="open-topic-issue__content__img text-center m-t-12"
         :class="{
-          'no-img': viewpointWithSnapshot.length === 0
+          'flex items-center justify-center': viewpointWithSnapshot.length === 0
         }"
       >
         <div
@@ -79,7 +79,10 @@
           <BIMDataIcon name="information" fill color="default" />
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
-        <CarouselList v-if="viewpointWithSnapshot.length > 0">
+        <CarouselList
+          v-if="viewpointWithSnapshot.length > 0"
+          :sliderPadding="0"
+        >
           <div
             class="img-preview"
             v-for="viewpoint in viewpointWithSnapshot"
@@ -92,21 +95,9 @@
             />
           </div>
         </CarouselList>
-        <!-- <div class="img-previews flex" v-if="viewpointWithSnapshot.length > 0">
-          <div
-            class="img-preview"
-            v-for="viewpoint in viewpointWithSnapshot"
-            :key="viewpoint.guid"
-          >
-            <img
-              v-if="viewpoint.snapshot.snapshotData"
-              :src="viewpoint.snapshot.snapshotData"
-            />
-          </div>
-        </div> -->
         <NoImgTopicBcf class="no-img-topic" v-else />
       </div>
-      <div class="open-topic-issue__content__card m-t-6 p-12 text-left">
+      <div class="open-topic-issue__content__card m-t-12 p-12 text-left">
         <div class="flex items-center m-b-12">
           <BIMDataIcon
             name="model3d"
