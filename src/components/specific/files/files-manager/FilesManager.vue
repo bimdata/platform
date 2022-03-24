@@ -10,16 +10,31 @@
             :project="project"
             :folder="currentFolder"
           />
-          <FileUploadButton
-            :disabled="
-              (!project.isAdmin && currentFolder.userPermission < 100) ||
-              spaceSubInfo.remainingTotalSize <= 0
-            "
+          <BIMDataTooltip
             class="files-manager__actions__btn-new-file"
-            width="194px"
-            multiple
-            @upload="uploadFiles"
-          />
+            color="high"
+            :disabled="
+              (project.isAdmin || currentFolder.userPermission === 100) &&
+              spaceSubInfo.remainingTotalSize > 0
+            "
+            :text="
+              $t(
+                `FilesManager.uploadDisableMessage.${
+                  spaceSubInfo.remainingTotalSize <= 0 ? 'size' : 'permission'
+                }`
+              )
+            "
+          >
+            <FileUploadButton
+              :disabled="
+                (!project.isAdmin && currentFolder.userPermission < 100) ||
+                spaceSubInfo.remainingTotalSize <= 0
+              "
+              width="194px"
+              multiple
+              @upload="uploadFiles"
+            />
+          </BIMDataTooltip>
           <BIMDataSearch
             class="files-manager__actions__input-search"
             width="400px"
@@ -29,10 +44,10 @@
           />
           <BIMDataTooltip
             class="files-manager__actions__visa-tooltip"
-            :text="$t('Visa.noVisa')"
             position="left"
             color="high"
             :disabled="visasCounter !== 0"
+            :text="$t('Visa.noVisa')"
           >
             <BIMDataButton
               :disabled="!visasCounter"

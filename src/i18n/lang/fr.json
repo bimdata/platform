@@ -348,7 +348,11 @@
   "FilesManager": {
     "title": "Documents du projet",
     "searchInputPlaceholder": "Rechercher",
-    "createModelNotification": "Modèle créé avec succès"
+    "createModelNotification": "Modèle créé avec succès",
+    "uploadDisableMessage": {
+      "permission": "Vous n'avez pas les droits requis",
+      "size": "Vous ne disposez plus d'assez d'espace de stockage"
+    }
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",

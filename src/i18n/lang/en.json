@@ -272,7 +272,11 @@
   "FilesManager": {
     "title": "Project Files",
     "searchInputPlaceholder": "Search",
-    "createModelNotification": "Model successfully created"
+    "createModelNotification": "Model successfully created",
+    "uploadDisableMessage": {
+      "permission": "You do not have required rights",
+      "size": "You reached your storage limit"
+    }
   },
   "FilesManagerOnboarding": {
     "text": "Upload your first file",
