@@ -491,11 +491,11 @@
         "title": "Aperçu",
         "content": "Naviguez parmis les aperçus de vos modèles et renseignez leur position"
       },    
-      "userList": {
+      "usersManager": {
         "title": "Collaboration",
         "content": "Invitez vos collaborateurs aux projets"
       },
-      "docManager": {
+      "modelsManager": {
         "title": "Modèles",
         "content": "Téléversez vos modèles (IFC, DWG, PDF...) pour commencer à bimer"
       },

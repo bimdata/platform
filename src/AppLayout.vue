@@ -1,6 +1,9 @@
 <template>
   <div class="app-layout">
-    <BIMDataGuidedTour :tours="tours" :elementToObserve="appLayout" />
+    <BIMDataGuidedTour
+      :tours="tours"
+      :elementToObserve="appLayoutViewContainer"
+    />
     <AppNotification />
     <AppHeader />
     <div

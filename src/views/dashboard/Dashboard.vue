@@ -1,7 +1,7 @@
 <template>
   <div data-test="dashboard" class="view dashboard">
     <div class="dashboard__head">
-      <DashboardWelcomeTile />
+      <DashboardWelcomeTile data-guide="welcome-title" />
       <AppLink :to="{ name: routeNames.userSpaces }" data-guide="btn-spaces">
         <DashboardButtonTile data-test="btn-spaces" color="primary">
           <template #title>

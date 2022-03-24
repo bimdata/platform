@@ -6,7 +6,7 @@
     <span class="intro-platform__content">
       {{ content }}
     </span>
-    <img src="/static/guidedTour/platform/draw_intro.png" />
+    <img :src="img" />
   </div>
 </template>
 
@@ -17,6 +17,9 @@ export default {
       type: String
     },
     content: {
+      type: String
+    },
+    img: {
       type: String
     }
   }
@@ -30,7 +33,9 @@ export default {
   align-items: center;
   position: absolute;
   gap: 12px;
-  padding: 24px;
+  &__content {
+    text-align: center;
+  }
   &__title {
     font-size: calc(var(--spacing-unit) * 2);
     font-weight: bold;
