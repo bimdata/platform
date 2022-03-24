@@ -554,7 +554,8 @@
       "dwg": "DWG",
       "split": "Split / Export",
       "merge": "Merge",
-      "archive": "Archives"
+      "archive": "Archives",
+      "metaBuildings": "Meta Buildings"
     }
   },
   "ModelsMergeModal": {

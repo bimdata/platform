@@ -49,6 +49,7 @@ function segregateByType(models) {
         result.ifc.push(model);
         break;
       case MODEL_TYPE.PDF:
+      case MODEL_TYPE.META_BUILDING:
         result.pdf.push(model);
         break;
     }

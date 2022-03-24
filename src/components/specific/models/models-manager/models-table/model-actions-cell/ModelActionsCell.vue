@@ -21,7 +21,11 @@
       />
     </template>
 
-    <template v-else-if="model.type === MODEL_TYPE.PDF">
+    <template
+      v-else-if="
+        model.type === MODEL_TYPE.PDF || model.type === MODEL_TYPE.META_BUILDING
+      "
+    >
       <ViewerButton
         :disabled="!isModelReady"
         :project="project"
@@ -41,6 +45,7 @@
       <BIMDataIcon name="download" size="m" />
     </BIMDataButton>
     <BIMDataButton
+      v-if="model.type !== MODEL_TYPE.META_BUILDING"
       :disabled="model.document.userPermission < 100"
       class="model-actions-cell__btn"
       ripple

@@ -63,6 +63,7 @@
 <script>
 import { computed, reactive, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
+import { MODEL_TYPE } from "@/config/models.js";
 import { useModels } from "@/state/models.js";
 import { segregateBySource } from "@/utils/models.js";
 // Components
@@ -73,7 +74,7 @@ import ModelsTable from "../models-table/ModelsTable.vue";
 const tabsDef = {
   DWG: [{ id: "upload" }, { id: "archive" }],
   IFC: [{ id: "upload" }, { id: "split" }, { id: "archive" }],
-  PDF: [{ id: "upload" }, { id: "archive" }]
+  PDF: [{ id: "upload" }, { id: "metaBuildings" }, { id: "archive" }]
 };
 
 export default {
@@ -117,12 +118,31 @@ export default {
     const modelLists = reactive({
       upload: [],
       split: [],
-      archive: []
+      archive: [],
+      metaBuildings: []
     });
     const displayedModels = ref([]);
     watch(
       () => props.models,
-      () => Object.assign(modelLists, segregateBySource(props.models)),
+      () => {
+        if (props.modelType === "PDF") {
+          const metaBuildings = [];
+          const other = [];
+          props.models.forEach(model => {
+            if (model.type === MODEL_TYPE.META_BUILDING) {
+              metaBuildings.push(model);
+            } else {
+              other.push(model);
+            }
+          });
+          Object.assign(modelLists, {
+            ...segregateBySource(other),
+            metaBuildings
+          });
+        } else {
+          Object.assign(modelLists, segregateBySource(props.models));
+        }
+      },
       { immediate: true }
     );
     watchEffect(() => {
