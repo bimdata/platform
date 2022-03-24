@@ -4,6 +4,7 @@
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
           <FolderCreationButton
+            data-guide="btn-new-folder"
             :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
             width="194px"
@@ -26,6 +27,7 @@
             "
           >
             <FileUploadButton
+              data-guide="btn-upload-file"
               :disabled="
                 (!project.isAdmin && currentFolder.userPermission < 100) ||
                 spaceSubInfo.remainingTotalSize <= 0
@@ -69,6 +71,7 @@
           </BIMDataTooltip>
         </div>
         <FileTree
+          data-guide="file-tree"
           class="files-manager__tree"
           :project="project"
           :fileStructure="fileStructure"

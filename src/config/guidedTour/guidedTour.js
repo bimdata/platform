@@ -41,9 +41,73 @@ const tours = [
         }
       },
       {
+        name: "modelsOverview",
+        target: "preview-ifc",
         props: {
-          title: "Now, it's your turn",
-          content: "have a good day",
+          title: t("GuidedTour.platform.previewIfc.title"),
+          content: t("GuidedTour.platform.previewIfc.content")
+        }
+      },
+      {
+        name: "usersManager",
+        target: "users-manager",
+        props: {
+          title: t("GuidedTour.platform.usersManager.title"),
+          content: t("GuidedTour.platform.usersManager.content")
+        }
+      },
+      {
+        name: "modelsManager",
+        target: "models-manager",
+        props: {
+          title: t("GuidedTour.platform.modelsManager.title"),
+          content: t("GuidedTour.platform.modelsManager.content")
+        }
+      },
+      {
+        name: "gedButton",
+        clickable: true,
+        spotlightOffset: false,
+        target: "project-tabs",
+        targetDetail: "> ul > li:nth-child(2)",
+        props: {
+          title: t("GuidedTour.platform.gedButton.title"),
+          content: t("GuidedTour.platform.gedButton.content")
+        }
+      },
+      {
+        name: "fileTree",
+        target: ["btn-new-folder", "btn-upload-file", "file-tree"],
+        props: {
+          title: t("GuidedTour.platform.fileTree.title"),
+          content: t("GuidedTour.platform.fileTree.content")
+        }
+      },
+      {
+        name: "groupManager",
+        target: "btn-manage-groups",
+        props: {
+          title: t("GuidedTour.platform.groupManager.title"),
+          content: t("GuidedTour.platform.groupManager.content")
+        }
+      },
+      {
+        name: "changeSpace",
+        clickable: true,
+        spotlightOffset: false,
+        target: "btn-change-space",
+        targetDetail: "> .breadcrumb-selector > div > div",
+        props: {
+          title: t("GuidedTour.platform.changeSpace.title"),
+          content: t("GuidedTour.platform.changeSpace.content")
+        }
+      },
+      {
+        name: "outro",
+        target: "btn-create-project",
+        props: {
+          title: t("GuidedTour.platform.outro.title"),
+          content: t("GuidedTour.platform.outro.content"),
           img: "/static/guidedTour/platform/draw_outro.png"
         },
         layout: IntroOutroPlatform
