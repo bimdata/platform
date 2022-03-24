@@ -67,7 +67,6 @@ const tours = [
       {
         name: "gedButton",
         clickable: true,
-        spotlightOffset: false,
         target: "project-tabs",
         targetDetail: "> ul > li:nth-child(2)",
         props: {
