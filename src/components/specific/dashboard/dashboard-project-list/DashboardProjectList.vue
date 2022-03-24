@@ -8,7 +8,6 @@
       :is="isCarousel ? 'CarouselList' : 'div'"
     >
       <ProjectCard
-        data-guide="dashboard-project"
         v-for="project in displayedProjects"
         :key="project.id"
         :project="project"
