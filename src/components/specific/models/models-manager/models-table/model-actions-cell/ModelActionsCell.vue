@@ -35,18 +35,19 @@
       />
     </template>
 
+    <template v-if="model.document">
+      <BIMDataButton
+        class="model-actions-cell__btn"
+        ripple
+        rounded
+        icon
+        @click="onClick('download')"
+      >
+        <BIMDataIcon name="download" size="m" />
+      </BIMDataButton>
+    </template>
     <BIMDataButton
-      class="model-actions-cell__btn"
-      ripple
-      rounded
-      icon
-      @click="onClick('download')"
-    >
-      <BIMDataIcon name="download" size="m" />
-    </BIMDataButton>
-    <BIMDataButton
-      v-if="model.type !== MODEL_TYPE.META_BUILDING"
-      :disabled="model.document.userPermission < 100"
+      :disabled="model.document?.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
@@ -58,14 +59,16 @@
 
     <transition name="fade">
       <div class="model-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton
-          class="model-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('update')"
-        >
-          {{ $t("ModelActionsCell.renameButtonText") }}
-        </BIMDataButton>
+        <template v-if="model.document">
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            ghost
+            squared
+            @click="onClick('update')"
+          >
+            {{ $t("ModelActionsCell.renameButtonText") }}
+          </BIMDataButton>
+        </template>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
           ghost
@@ -79,7 +82,7 @@
             {{ $t("ModelActionsCell.archiveButtonText") }}
           </template>
         </BIMDataButton>
-        <template v-if="model.type === 'PDF'">
+        <template v-if="model.type === MODEL_TYPE.PDF">
           <BIMDataButton
             class="model-actions-cell__menu__btn"
             ghost
