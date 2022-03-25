@@ -10,6 +10,7 @@ const MODEL_TYPE = Object.freeze({
   IFC: "IFC",
   JPEG: "JPEG",
   JPG: "JPEG",
+  META_BUILDING: "METABUILDING",
   OBJ: "OBJ",
   PDF: "PDF",
   PNG: "PNG"

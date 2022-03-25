@@ -35,23 +35,12 @@ function segregateBySource(models) {
 }
 
 function segregateByType(models) {
-  const result = {
-    dwg: [],
-    ifc: [],
-    pdf: []
-  };
+  const result = {};
   for (const model of models) {
-    switch (model.type) {
-      case MODEL_TYPE.DWG:
-        result.dwg.push(model);
-        break;
-      case MODEL_TYPE.IFC:
-        result.ifc.push(model);
-        break;
-      case MODEL_TYPE.PDF:
-        result.pdf.push(model);
-        break;
+    if (!result[model.type]) {
+      result[model.type] = [];
     }
+    result[model.type].push(model);
   }
   return result;
 }

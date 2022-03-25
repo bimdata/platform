@@ -36,9 +36,14 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <img v-if="model.type === 'IFC'" src="/static/ifc-logo.svg" />
-        <img v-if="model.type === 'DWG'" src="/static/dwg-file.svg" />
-        <img v-if="model.type === 'PDF'" src="/static/pdf-file.svg" />
+        <img v-if="model.type === MODEL_TYPE.IFC" src="/static/ifc-logo.svg" />
+        <img v-if="model.type === MODEL_TYPE.DWG" src="/static/dwg-file.svg" />
+        <img v-if="model.type === MODEL_TYPE.PDF" src="/static/pdf-file.svg" />
+        <BIMDataIcon
+          v-if="model.type === MODEL_TYPE.META_BUILDING"
+          name="building"
+          size="s"
+        />
         <BIMDataTextbox :text="model.name" />
       </div>
     </transition>
@@ -47,6 +52,7 @@
 
 <script>
 import { ref, watch } from "vue";
+import { MODEL_TYPE } from "@/config/models.js";
 import { useModels } from "@/state/models.js";
 
 export default {
@@ -122,8 +128,9 @@ export default {
       // References
       hasError,
       loading,
-      nameInput,
       modelName,
+      MODEL_TYPE,
+      nameInput,
       showUpdateForm,
       // Methods
       closeUpdateForm,
