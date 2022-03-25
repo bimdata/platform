@@ -29,7 +29,7 @@ import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.
 export default {
   components: {
     AppSlotContent,
-    GoBackButton,
+    GoBackButton
   },
   setup() {
     const route = useRoute();
@@ -41,36 +41,36 @@ export default {
     const apiUrl = process.env.VUE_APP_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
-    const modelIDs = route.params.modelIDs.split(",").map((id) => +id);
+    const modelIDs = route.params.modelIDs.split(",").map(id => +id);
     const initialWindow = route.query.window || DEFAULT_WINDOW;
     const topicGuid = route.query.topicGuid;
 
     // Initial plugins config
     const pluginsConfig = {
       header: {
-        warnings: false,
+        warnings: false
       },
       measure3d: true,
       split: true,
       "structure-properties": {
         merge: true,
         export: true,
-        editProperties: true,
+        editProperties: true
       },
       "viewer2d-background": true,
       plan: true,
       buildingMaker: true,
       bcf: {
-        topicGuid,
-      },
+        topicGuid
+      }
     };
 
     // Extract space specific plugins config
     // and merges it into initial config
     const spacePluginsConfig = currentSpace.value.features
-      .filter((feature) => feature.name.startsWith("viewer-bimdata-plugin-"))
-      .map((feature) => feature.name.split("viewer-bimdata-plugin-")[1])
-      .map((config) => config.split(":"))
+      .filter(feature => feature.name.startsWith("viewer-bimdata-plugin-"))
+      .map(feature => feature.name.split("viewer-bimdata-plugin-")[1])
+      .map(config => config.split(":"))
       .reduce((config, [featurePath, state]) => {
         const path = featurePath.split(".");
         set(config, path, state === "true");
@@ -81,17 +81,17 @@ export default {
 
     // Extract space specific plugins urls from deprecated features
     const featurePlugins = currentSpace.value.features
-      .filter((feature) => feature.name.startsWith("viewer-plugin-"))
-      .map((feature) => feature.name.split("viewer-plugin-")[1])
-      .map((pluginName) => AVAILABLE_PLUGINS[pluginName])
+      .filter(feature => feature.name.startsWith("viewer-plugin-"))
+      .map(feature => feature.name.split("viewer-plugin-")[1])
+      .map(pluginName => AVAILABLE_PLUGINS[pluginName])
       .filter(Boolean); // keep only existing plugins
 
     // Extract space specific plugins urls from marketplace
     const appPlugins = currentSpace.value.marketplaceApps
-      .filter((app) => app.viewerPluginsUrls && app.viewerPluginsUrls.length)
-      .map((app) => app.viewerPluginsUrls)
+      .filter(app => app.viewerPluginsUrls && app.viewerPluginsUrls.length)
+      .map(app => app.viewerPluginsUrls)
       .reduce((set, urls) => {
-        urls.forEach((url) => set.add(url));
+        urls.forEach(url => set.add(url));
         return set;
       }, new Set());
 
@@ -107,22 +107,26 @@ export default {
           accessToken: accessToken.value,
           cloudId: spaceID,
           projectId: projectID,
-          modelIds: modelIDs,
+          modelIds: modelIDs
         },
         plugins: pluginsConfig,
         locale: locale.value,
+        ui: {
+          version: false,
+          bimdataLogo: false
+        }
       });
 
       await Promise.all(
         // Webpack annotation is needed to prevent Webpack from using its own
         // import function instead of standard JS import function.
         // (see: https://stackoverflow.com/a/56998596/8298197)
-        pluginUrls.map((url) =>
+        pluginUrls.map(url =>
           import(/* webpackIgnore: true */ url)
-            .then((pluginModule) =>
+            .then(pluginModule =>
               bimdataViewer.registerPlugin(pluginModule.default)
             )
-            .catch((error) =>
+            .catch(error =>
               console.error(`Error while registering plugin at ${url}: `, error)
             )
         )
@@ -132,10 +136,10 @@ export default {
       bimdataViewer.mount("#viewer", initialWindow);
 
       // Keep viewer access token and locale in sync with application
-      unwatchAccessToken = watch(accessToken, (token) => {
+      unwatchAccessToken = watch(accessToken, token => {
         bimdataViewer.setAccessToken(token);
       });
-      unwatchLocale = watch(locale, (lang) => {
+      unwatchLocale = watch(locale, lang => {
         bimdataViewer.setLocale(lang);
       });
     });
@@ -146,9 +150,9 @@ export default {
     });
 
     return {
-      loading,
+      loading
     };
-  },
+  }
 };
 </script>
 
