@@ -362,7 +362,7 @@ export default {
             a.createdAt.getTime() > b.createdAt.getTime() ? 1 : -1
           );
         if (ifcs.length > 0) {
-          ids.push(ifcs[0]);
+          ids.push(ifcs[0].id);
         }
       }
       return ids;
