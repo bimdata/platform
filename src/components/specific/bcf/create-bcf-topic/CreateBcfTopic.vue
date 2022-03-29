@@ -35,10 +35,14 @@
           </BIMDataButton>
         </div>
       </div>
-      <div class="img-input" v-else>
-        <div class="img-input__title">
-          <!-- {{ $t("CreateBcfTopic.dragDropImageText") }} -->
-          <label for="files">Parcourir</label>
+      <div class="img-input flex flex-col items-center justify-center" v-else>
+        <span class="flex items-center justify-center">
+          <BIMDataIcon name="unarchive" fill color="default" size="m" />
+        </span>
+        <BIMDataButton color="primary" outline radius class="m-t-18">
+          <label for="files">
+            {{ $t("CreateBcfTopic.dragDropImageText") }}
+          </label>
           <input
             type="file"
             accept="image/png, image/jpeg"
@@ -47,7 +51,7 @@
             id="files"
             style="display: none"
           />
-        </div>
+        </BIMDataButton>
       </div>
     </div>
     <div
@@ -61,14 +65,6 @@
         radius
         :disabled="viewpoints.length >= 4"
       >
-        <label
-          for="files"
-          class="flex items-center justify-center"
-          :disabled="viewpoints.length >= 4"
-        >
-          <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
-          Ajouter une image
-        </label>
         <input
           type="file"
           accept="image/png, image/jpeg"
@@ -78,15 +74,19 @@
           style="display: none"
           :disabled="viewpoints.length >= 4"
         />
+        <label for="files" class="flex items-center justify-center">
+          <BIMDataIcon name="camera" size="xs" margin="0 12px 0 0" />
+          {{ $t("CreateBcfTopic.addPictureButton") }}
+        </label>
       </BIMDataButton>
     </div>
 
     <div class="create-bcf-topic__content m-t-36">
       <BIMDataInput
-        placeholder="Title*"
+        :placeholder="$t('CreateBcfTopic.titlePlaceholder')"
         v-model="topicTitle"
         :error="hasError"
-        errorMessage="Titre manquant"
+        :errorMessage="$t('CreateBcfTopic.titleErrorMessage')"
         @keyup.enter.stop="submit"
       />
       <BIMDataSelect
@@ -133,7 +133,7 @@
           v-model="topicDate"
           :placeholder="$t('CreateBcfTopic.dueDateLabel')"
           :error="hasDateError"
-          errorMessage="Format de date ou date incorrecte"
+          :errorMessage="$t('CreateBcfTopic.dateErrorMessage')"
         />
         <p class="m-y-6">{{ $t("CreateBcfTopic.dateExample") }}</p>
       </div>

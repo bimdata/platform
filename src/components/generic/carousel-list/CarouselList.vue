@@ -39,13 +39,19 @@
 <script>
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
-// Slider padding:
-const sliderPadding = 12; // px
-// Minimum amount of space between items:
-const minGap = 24; // px
-
 export default {
-  setup() {
+  props: {
+    sliderPadding: {
+      type: Number,
+      default: 12
+    },
+    // Minimum amount of space between items:
+    minGap: {
+      type: Number,
+      default: 24
+    }
+  },
+  setup(props) {
     const slider = ref(null);
 
     const index = ref(0);
@@ -55,7 +61,7 @@ export default {
     const distributeItems = () => {
       const sliderWidth = slider.value.getBoundingClientRect().width;
       // Compute the actual width that will be available to distribute items
-      const contentWidth = sliderWidth - 2 * sliderPadding;
+      const contentWidth = sliderWidth - 2 * props.sliderPadding;
 
       const children = Array.from(slider.value.children);
 
@@ -65,15 +71,18 @@ export default {
           children[0].getBoundingClientRect();
 
         // Set slider height according to items height and slider padding
-        slider.value.style.height = `${itemHeight + 2 * sliderPadding}px`;
+        slider.value.style.height = `${itemHeight + 2 * props.sliderPadding}px`;
 
         // Calculate the maximum number of items that can be displayed
         // at the same time according to slider width and items width
         // taking minimum gap into account
-        const nbDisplayed = Math.floor(contentWidth / (itemWidth + minGap));
+        let nbDisplayed = Math.floor(contentWidth / (itemWidth + props.minGap));
+        if (nbDisplayed === 0) {
+          nbDisplayed = 1;
+        }
 
         // Calculate the actual gap between items
-        let gap = minGap;
+        let gap = props.minGap;
         if (nbDisplayed > 1) {
           gap = (contentWidth - nbDisplayed * itemWidth) / (nbDisplayed - 1);
         }
@@ -87,8 +96,8 @@ export default {
           offsets.push(offset);
           Object.assign(children[i].style, {
             position: "absolute",
-            top: `${sliderPadding}px`,
-            left: `${sliderPadding + offset}px`
+            top: `${props.sliderPadding}px`,
+            left: `${props.sliderPadding + offset}px`
           });
         }
 
