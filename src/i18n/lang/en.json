@@ -86,17 +86,35 @@
       "logoutButtonText": "Log Out",
       "subscriptionPlatform": "Platform subscription"
   },
+
+  "BcfComments": {
+    "commentButton": "Post a comment",
+    "commentLabel": "Post a comment",
+    "commentText": "Comment",
+    "cancelButton": "Cancel",
+    "publishButton": "Publish",
+    "commentsText": "Comments"
+  },
+  "BcfComment": {
+    "deleteCommentText": "Delete this comment ?",
+    "deleteButton": "Delete"
+  },
   "BcfFilters": {
     "filtersButton": "Filters",
+    "filtersTitle": "Filters",
     "priorityLabel": "Priority",
     "statusLabel": "Status",
     "startDatePlaceholder": "Start date",
     "startDateExample": "(Ex: 28/04/2022)",
     "endDatePlaceholder": "End date",
     "endDateExample": "(Ex: 28/05/2022)",
+    "assignedToLabel": "Assigned to",
     "tagsLabel": "Tags",
     "resetButton": "Reset",
-    "searchButton": "Search"
+    "searchButton": "Search",
+    "noPriority": "No priority",
+    "undefinedStatus": "Undefined",
+    "undefinedUser": "Undefined"
   },
   "BcfSettings": {
     "goBackButton": "Back",
@@ -133,6 +151,10 @@
       "Type": "Type list",
       "Stage": "Stage list"
     }
+  },
+  "Extension": {
+    "deleteExtensionText": "Remove this setting",
+    "deleteButton": "Delete"
   },
   "BcfTopicCreationCard": {
     "text": "Create a new BCF topic",
@@ -184,8 +206,7 @@
     "priority": "Priority:",
     "priorityNotDefined": "Not defined",
     "tags": "Tags:",
-    "noTags": "No tags",
-    "commentButton": "Post a comment"
+    "noTags": "No tags"
   },
   "BcfTopicsMetrics": {
     "emptyText": "Add BCF Topics to start to have some stats here.",
@@ -194,13 +215,17 @@
     "notDefined": "No priority"
   },
   "CreateBcfTopic": {
-    "dragDropImageText": "Drag and drop an image, or Browse",
+    "dragDropImageText": "Please select a file",
+    "addPictureButton": "Add a picture",
+    "titlePlaceholder": "Title *",
+    "titleErrorMessage": "Missing title",
     "typeLabel": "Type",
     "priorityLabel": "Priority",
     "statusLabel": "Status",
     "stageLabel": "Stage",
     "assignedToLabel": "Assigned to",
     "dueDateLabel": "Due date",
+    "dateErrorMessage": "Date format or incorrect date",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
     "tagsLabel": "Tags",
@@ -208,8 +233,10 @@
   },
   "EditBcfTopic": {
     "goBackButton": "Back",
-    "dragDropImageText": "Drag and drop an image, or Browse",
+    "dragDropImageText": "Please select a file",
+    "addPictureButton": "Add a picture",
     "titlePlaceholder": "Title*",
+    "titleErrorMessage": "Missing title",
     "typeLabel": "Type",
     "priorityLabel": "Priority",
     "statusLabel": "Status",
