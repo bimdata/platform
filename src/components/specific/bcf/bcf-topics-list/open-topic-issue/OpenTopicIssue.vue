@@ -65,7 +65,7 @@
       <div
         class="open-topic-issue__content__img text-center m-t-12"
         :class="{
-          'no-img': viewpointWithSnapshot.length === 0
+          'flex items-center justify-center': viewpointWithSnapshot.length === 0
         }"
       >
         <div
@@ -79,18 +79,22 @@
           <BIMDataIcon name="information" fill color="default" />
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
         </div>
-        <div class="img-previews flex" v-if="viewpointWithSnapshot.length > 0">
+        <CarouselList
+          v-if="viewpointWithSnapshot.length > 0"
+          :sliderPadding="0"
+        >
           <div
             class="img-preview"
             v-for="viewpoint in viewpointWithSnapshot"
             :key="viewpoint.guid"
+            style
           >
             <img
               v-if="viewpoint.snapshot.snapshotData"
               :src="viewpoint.snapshot.snapshotData"
             />
           </div>
-        </div>
+        </CarouselList>
         <NoImgTopicBcf class="no-img-topic" v-else />
       </div>
       <div class="m-t-12">
@@ -205,6 +209,10 @@
             bcfTopic.priority || $t("OpenTopicIssue.priorityNotDefined")
           }}</span>
         </div>
+        <div>
+          <span class="color-primary"> Auteur : </span>
+          <span class="color-granite">{{ bcfTopic.creationAuthor }}</span>
+        </div>
         <div class="m-t-12">
           <span class="color-primary"> {{ $t("OpenTopicIssue.tags") }} </span>
           <span class="color-granite">{{ topicTags }}</span>
@@ -252,9 +260,10 @@ import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import { useModels } from "@/state/models.js";
 
-import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
-import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
 import BcfComments from "@/components/specific/bcf/bcf-comments/BcfComments.vue";
+import CarouselList from "@/components/generic/carousel-list/CarouselList";
+import EditBcfTopic from "@/components/specific/bcf/edit-bcf-topic/EditBcfTopic.vue";
+import NoImgTopicBcf from "../../../../images/NoImgTopicBcf.vue";
 import SafeZoneModal from "@/components/generic/safe-zone-modal/SafeZoneModal.vue";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import routeNames from "@/router/route-names.js";
@@ -262,6 +271,7 @@ import { MODEL_TYPE, MODEL_STATUS } from "@/config/models";
 
 export default {
   components: {
+    CarouselList,
     EditBcfTopic,
     NoImgTopicBcf,
     BcfComments,
@@ -276,6 +286,10 @@ export default {
     detailedExtensions: {
       type: Object,
       required: true
+    },
+    isCarousel: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ["close"],

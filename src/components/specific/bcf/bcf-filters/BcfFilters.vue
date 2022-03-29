@@ -26,7 +26,9 @@
         <div
           class="bcf-filters__container__header flex items-center justify-between"
         >
-          <div class="bcf-filters__container__header__title">Filters</div>
+          <div class="bcf-filters__container__header__title">
+            {{ $t("BcfFilters.filtersTitle") }}
+          </div>
           <BIMDataButton color="primary" ghost rounded icon>
             <BIMDataIcon
               name="close"
@@ -82,7 +84,7 @@
         <BIMDataSelect
           width="100%"
           :multi="true"
-          label="Assigned to"
+          :label="$t('BcfFilters.assignedToLabel')"
           :options="userOptions"
           v-model="users"
           optionKey="value"
@@ -124,6 +126,7 @@
 
 <script>
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useToggle } from "@/composables/toggle";
 import { formatToDateObject, regexDate } from "@/utils/date";
 
@@ -136,6 +139,8 @@ export default {
   },
   emits: ["submit"],
   setup(props, { emit }) {
+    const { t } = useI18n();
+
     const {
       isOpen: showFilters,
       close: closeFilters,
@@ -151,7 +156,7 @@ export default {
         .sort((a, b) => (a > b ? 1 : -1))
         .map(priorityOption => {
           return {
-            label: priorityOption || "Aucune priorité",
+            label: priorityOption || t("BcfFilters.noPriority"),
             value: priorityOption
           };
         });
@@ -166,7 +171,7 @@ export default {
         .sort((a, b) => (a > b ? 1 : -1))
         .map(statusOption => {
           return {
-            label: statusOption || "Non défini",
+            label: statusOption || t("BcfFilters.undefinedStatus"),
             value: statusOption
           };
         });
@@ -191,7 +196,7 @@ export default {
         .sort((a, b) => (a > b ? 1 : -1))
         .map(userOption => {
           return {
-            label: userOption || "Non défini",
+            label: userOption || t("BcfFilters.undefinedUser"),
             value: userOption
           };
         });
