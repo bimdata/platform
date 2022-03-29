@@ -6,6 +6,9 @@
   &__content {
     position: relative;
     height: inherit;
+    .bimdata-graph {
+      flex: 1;
+    }
     &__total {
       width: 100%;
       position: absolute;
@@ -19,9 +22,9 @@
     }
     &__legend {
       height: 100%;
-      width: fit-content;
       max-width: 300px;
       flex-wrap: wrap;
+      flex: 1;
       gap: 12px;
       flex-direction: column;
       font-size: 14px;
