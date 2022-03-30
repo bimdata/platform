@@ -36,8 +36,8 @@
           </BIMDataButton>
         </AppLink>
         <BIMDataButton
-          v-if="!isFolder(file) && isSmartFile(file)"
-          :disabled="!isConvertibleToModel(file)"
+          v-if="!isFolder(file) && isConvertible(file)"
+          :disabled="isModel(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -108,14 +108,14 @@ import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
 import {
-  isConvertibleToModel,
+  isConvertible,
   isIFC,
   isModel,
   isSmartFile,
   isViewable,
   windowType
 } from "@/utils/models.js";
-
+// Components
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
@@ -158,15 +158,15 @@ export default {
       showMenu,
       // Methods
       closeMenu,
-      windowType,
-      isConvertibleToModel,
+      isConvertible,
       isViewable,
       isFolder,
       isModel,
       isIFC,
       isSmartFile,
       onClick,
-      toggleMenu
+      toggleMenu,
+      windowType
     };
   }
 };
