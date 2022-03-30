@@ -82,13 +82,13 @@ const tabsDef = [
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
-  {
-    id: "tab1",
-    label: "DWG",
-    icon: "/static/dwg-file.svg",
-    modelTypes: [MODEL_TYPE.DWG],
-    component: "DWGManager"
-  },
+  // {
+  //   id: "tab1",
+  //   label: "DWG",
+  //   icon: "/static/dwg-file.svg",
+  //   modelTypes: [MODEL_TYPE.DWG],
+  //   component: "DWGManager"
+  // },
   {
     id: "tab2",
     label: "PDF",
