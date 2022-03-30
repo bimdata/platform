@@ -19,7 +19,11 @@ import { set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { AVAILABLE_PLUGINS, DEFAULT_WINDOW } from "@/config/viewer.js";
+import {
+  AVAILABLE_PLUGINS,
+  DEFAULT_WINDOW,
+  PLUGINS_CONFIG
+} from "@/config/viewer.js";
 import { useAuth } from "@/state/auth.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
@@ -46,24 +50,12 @@ export default {
     const topicGuid = route.query.topicGuid;
 
     // Initial plugins config
-    const pluginsConfig = {
-      header: {
-        warnings: false
-      },
-      measure3d: true,
-      split: true,
-      "structure-properties": {
-        merge: true,
-        export: true,
-        editProperties: true
-      },
-      "viewer2d-background": true,
-      plan: true,
-      buildingMaker: true,
+    const pluginsConfig = PLUGINS_CONFIG;
+    Object.assign(pluginsConfig, {
       bcf: {
         topicGuid
       }
-    };
+    });
 
     // Extract space specific plugins config
     // and merges it into initial config
