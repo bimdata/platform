@@ -43,7 +43,7 @@
                 :modelValue="tab.models.length > 0 || tab.displayed"
                 @update:modelValue="tab.displayed = !tab.displayed"
               />
-              <span>{{ `.${tab.id}` }}</span>
+              <span>{{ tab.label }}</span>
             </div>
           </template>
         </div>
