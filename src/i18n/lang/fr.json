@@ -276,8 +276,12 @@
   "BcfTopicsMetrics": {
     "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
     "issues": "problèmes",
-    "priority": "Priorité",
-    "notDefined": "Aucune priorité"
+    "extension": {
+      "Priority": "Priorité",
+      "PriorityNotDefined": "Aucune priorité",
+      "Status": "Statut",
+      "StatusNotDefined": "Aucun statut"
+    }
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Veuillez sélectionner un fichier",

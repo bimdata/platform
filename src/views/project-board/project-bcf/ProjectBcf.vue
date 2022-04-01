@@ -170,18 +170,31 @@
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
-    <div class="project-bcf__content flex m-t-24">
-      <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
-        <template #content>
-          <BcfTopicsMetrics
-            v-if="detailedExtensions"
-            :bcfTopics="displayedBcfTopics"
-            :priorities="detailedExtensions.priorities"
-            :loading="loading"
-          />
-        </template>
-      </BIMDataCard>
 
+    <div class="project-bcf__content flex m-t-24">
+      <div class="project-bcf__content__metrics m-r-24">
+        <p class="text-center">
+          Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
+        </p>
+        <BcfTopicsMetrics
+          v-if="bcfTopics.length"
+          :bcfTopics="displayedBcfTopics"
+          extensionType="Status"
+          :availableExtensions="detailedExtensions.topicStatuses"
+        />
+        <BcfTopicsMetrics
+          v-if="bcfTopics.length"
+          :bcfTopics="displayedBcfTopics"
+          extensionType="Priority"
+          :availableExtensions="detailedExtensions.priorities"
+          class="m-t-24"
+        />
+        <EmptyBcfTopicsMetrics
+          v-else
+          :bcfTopics="displayedBcfTopics"
+          :loading="loading"
+        />
+      </div>
       <!-- loading BCF -->
       <div
         class="project-bcf__content__empty flex items-center justify-center"
@@ -193,21 +206,21 @@
       <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
       <transition-group v-else-if="isDisplayByListActive" name="list">
         <!-- display Bcf topics in list mode -->
-        <BcfTopicsList
-          key="display-bcf-list"
-          class="project-bcf__content__list"
-          :bcfTopics="displayedBcfTopics"
-        />
+        <div class="project-bcf__content__list" key="display-bcf-list">
+          <BcfTopicsList :bcfTopics="displayedBcfTopics" />
+        </div>
       </transition-group>
       <transition-group v-else name="grid">
         <!-- display Bcf topics in grid mode -->
-        <BcfTopicGridItem
-          v-for="bcfTopic in displayedBcfTopics"
-          :key="bcfTopic.guid"
-          :project="project"
-          :bcfTopic="bcfTopic"
-          :detailedExtensions="detailedExtensions"
-        />
+        <div class="project-bcf__content__grid" key="display-bcf-grid">
+          <BcfTopicGridItem
+            v-for="bcfTopic in displayedBcfTopics"
+            :key="bcfTopic.guid"
+            :project="project"
+            :bcfTopic="bcfTopic"
+            :detailedExtensions="detailedExtensions"
+          />
+        </div>
       </transition-group>
     </div>
   </div>
@@ -236,6 +249,7 @@ import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-cre
 import BcfTopicGridItem from "../../../components/specific/bcf/bcf-topic-grid-item/BcfTopicGridItem.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
+import EmptyBcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/EmptyBcfTopicsMetrics.vue";
 import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 
 export default {
@@ -248,6 +262,7 @@ export default {
     BcfTopicGridItem,
     BcfTopicsList,
     BcfTopicsMetrics,
+    EmptyBcfTopicsMetrics,
     BcfTopicCreationCard,
     FileUploadButton
   },

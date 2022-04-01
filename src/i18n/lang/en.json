@@ -224,8 +224,12 @@
   "BcfTopicsMetrics": {
     "emptyText": "Add BCF Topics to start to have some stats here.",
     "issues": "issues",
-    "priority": "Priority",
-    "notDefined": "No priority"
+    "extension": {
+      "Priority": "Priority",
+      "PriorityNotDefined": "No priority",
+      "Status": "Status",
+      "StatusNotDefined": "No status"
+    }
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Please select a file",
