@@ -21,14 +21,21 @@ const DEFAULT_WINDOW = WINDOWS.V3D;
 
 const PLUGINS_CONFIG = {
   header: {
-    warnings: false
+    warnings: false,
   },
   measure3d: true,
   split: true,
   "structure-properties": {
     merge: false,
     export: true,
-    editProperties: true
+    editProperties: true,
+  },
+  structure: {
+    merge: true,
+    export: true,
+  },
+  properties: {
+    editProperties: true,
   },
   "viewer2d-background": true,
   plan: true,
