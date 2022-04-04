@@ -1,25 +1,25 @@
 <template>
   <div class="project-card-action-bar">
     <BIMDataButton
-      data-test="btn-open-viewer"
-      class="project-card-action-bar__action-btn"
+      v-if="viewerButton"
+      class="project-card-action-bar__btn viewer-button"
       ghost
       rounded
       icon
       :disabled="models.length === 0"
-      @click.stop="$emit('open-viewer')"
+      @click.prevent.stop="$emit('open-viewer')"
     >
       <BIMDataIcon name="show" size="s" />
     </BIMDataButton>
 
     <BIMDataButton
-      data-test="btn-open-menu"
-      class="project-card-action-bar__action-btn"
+      v-if="actionMenu"
+      class="project-card-action-bar__btn action-menu"
       color="default"
       ripple
       rounded
       icon
-      @click.stop="$emit('open-menu')"
+      @click.prevent.stop="$emit('open-menu')"
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
@@ -36,6 +36,14 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    actionMenu: {
+      type: Boolean,
+      default: true
+    },
+    viewerButton: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ["open-viewer", "open-menu"]

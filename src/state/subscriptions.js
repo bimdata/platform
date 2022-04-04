@@ -62,8 +62,8 @@ const loadSubscriptionPayments = (orga, space, subscription) => {
   );
 };
 
-const fetchSpaceInformation = space => {
-  return SubscriptionService.fetchSpaceInformation(space);
+const fetchSpaceSubInfo = space => {
+  return SubscriptionService.fetchSpaceSubInfo(space);
 };
 
 const getSpaceSubscriptions = space => {
@@ -171,7 +171,7 @@ export function useSubscriptions() {
     loadSpaceSubscriptions,
     loadAllSpacesSubscriptions,
     loadSubscriptionPayments,
-    fetchSpaceInformation,
+    fetchSpaceSubInfo,
     getSpaceSubscriptions,
     getSpaceActiveSubscription,
     getSpaceActiveDatapack,

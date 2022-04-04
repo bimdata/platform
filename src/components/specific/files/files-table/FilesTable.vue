@@ -16,7 +16,7 @@
           alignItems: 'center'
         }"
       >
-        <BIMDataButton ghost rounded icon style="margin: 5px 14px 5px 3px">
+        <BIMDataButton ghost rounded icon style="margin: 5px 14px">
           <BIMDataIcon
             name="arrow"
             size="xxs"
@@ -65,15 +65,17 @@
       {{ $d(file.updatedAt, "long") }}
     </template>
     <template #cell-size="{ row: file }">
-      {{ file.type !== "Folder" && file.size ? formatBytes(file.size) : "-" }}
+      {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
         :project="project"
         :file="file"
+        @create-model="$emit('create-model', $event)"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
+        @open-visa-manager="$emit('open-visa-manager', $event)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -83,16 +85,17 @@
 <script>
 import { reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { formatBytes, generateFileKey } from "@/utils/files";
-import columnsDef from "./columns";
+import { isFolder } from "@/utils/file-structure.js";
+import { formatBytes, generateFileKey } from "@/utils/files.js";
+import columnsDef from "./columns.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
-import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb";
-import FileActionsCell from "./file-actions-cell/FileActionsCell";
-import FileNameCell from "./file-name-cell/FileNameCell";
-import FileTagsCell from "./file-tags-cell/FileTagsCell";
-import FileTypeCell from "./file-type-cell/FileTypeCell";
+import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
+import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
+import FileNameCell from "./file-name-cell/FileNameCell.vue";
+import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
+import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 
 export default {
   components: {
@@ -123,13 +126,15 @@ export default {
     }
   },
   emits: [
+    "back-parent-folder",
+    "create-model",
     "delete",
     "download",
     "file-clicked",
     "file-uploaded",
     "manage-access",
-    "selection-changed",
-    "back-parent-folder"
+    "open-visa-manager",
+    "selection-changed"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
@@ -164,7 +169,7 @@ export default {
       () => {
         fileUploads.value = fileUploads.value.concat(
           props.filesToUpload.map(file =>
-            Object.assign(file, { key: generateFileKey(file.name, file.size) })
+            Object.assign(file, { key: generateFileKey(file) })
           )
         );
       },
@@ -191,6 +196,7 @@ export default {
       // Methods
       cleanUpload,
       formatBytes,
+      isFolder,
       onUploadCompleted
     };
   }

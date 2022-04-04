@@ -22,7 +22,7 @@
                   <SpaceCardImage :space="space" />
                 </div>
                 <div class="organization-import-card__info">
-                  <BIMDataTextBox
+                  <BIMDataTextbox
                     class="organization-import-card__info__name"
                     maxWidth="220px"
                     :text="space.name"

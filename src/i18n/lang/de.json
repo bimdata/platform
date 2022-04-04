@@ -44,11 +44,11 @@
         "groupsButtonText": "Gruppenverwaltung"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "IFC hinzufügen",
+        "openFileUploadButtonText": "Modell hinzufügen",
         "closeFileUploadButtonText": "Schließen",
         "forbiddenUploadNotification": {
             "title": "Fehler",
-            "message": "Wählen Sie eine Datei .ifc"
+            "message": "Wählen Sie eine Modell Datei: {extensions}"
         }
     },
     "BreadcrumbSelector": {
@@ -100,7 +100,8 @@
         "downloadButtonText": "Herunterladen",
         "addVersionButtonText": "Version hinzufügen",
         "manageAccessButtonText": "Zugang verwalten",
-        "deleteButtonText": "Löschen"
+        "deleteButtonText": "Löschen",
+        "VisaButtonText": "Bestätigungsantrag"
     },
     "FileNameCell": {
         "inputErrorMessage": "Ungültiger Dateiname",
@@ -148,7 +149,7 @@
     "FileUploader": {
         "uploadAreaText": "Dateien hier herklicken/herziehen",
         "separatorText": "oder",
-        "uploadButtonText": "Datei wählen .ifc"
+        "uploadButtonText": "Modell Datei wählen"
     },
     "FolderAccessManager": {
         "title": "Zugang verwalten",
@@ -278,7 +279,8 @@
             "ifc": "IFC",
             "split": "Aufteilen / exportieren",
             "merge": "Zusammenführen",
-            "archive": "Archiv"
+            "archive": "Archiv",
+            "dwg": "DWG"
         }
     },
     "ModelsMergeModal": {
@@ -291,7 +293,7 @@
         "title": "Projektübersicht"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Ihr erstes IFC hochladen",
+        "text": "Ihr erstes Modell hochladen",
         "uploadButtonText": "Hochladen"
     },
     "ModelsTable": {
@@ -463,7 +465,25 @@
         "subscriptionsFetchError": "Die Liste der Abonnements kann nicht abgerufen werden",
         "platformSubscribeError": "Fehler beim Erstellen des Links für das Abonnement",
         "datapackSubscribeError": "Fehler beim Abonnieren eines neuen Datapacks",
-        "datapackUpdateError": "Fehler bei der Aktualisierung des Datapacks"
+        "datapackUpdateError": "Fehler bei der Aktualisierung des Datapacks",
+        "projectFetchFileError": "Dieses Dokument kann nicht abgerufen werden",
+        "visaCreateError": "Fehler bei der Erstellung des Visums",
+        "visaCreateValidationError": "Fehler beim Hinzufügen einer/s Bestätigenden",
+        "visaFetchError": "Dieses Visum kann nicht aufgerufen werden",
+        "visaAcceptError": "Fehler beim Senden Ihrer Antwort",
+        "visaDenyError": "Fehler beim Senden Ihrer Antwort",
+        "visaCloseError": "Fehler beim Schließen des Visums",
+        "visaResumeError": "Fehler beim Wiederöffnen des Visums",
+        "visaFetchCreatedError": "Visa können nicht aufgerufen werden",
+        "visaFetchValidatorError": "Visa können nicht aufgerufen werden",
+        "visaDeleteValidationError": "Dieser Nutzer kann nicht gelöscht werden",
+        "visaDeleteError": "Dieses Visum kann nicht gelöscht werden",
+        "visaUpdateError": "Dieses Visum kann nicht aktualisiert werden",
+        "visaRefreshError": "Ihre Antwort kann nicht aktualisiert werden",
+        "visaFetchAllCommentsError": "Die Kommentare können nicht aufgerufen werden",
+        "visaCreateCommentsError": "Dieser Kommentar kann nicht veröffentlicht werden",
+        "visaUpdateCommentError": "Dieser Kommentar kann nicht bearbeitet werden",
+        "visaDeleteCommentError": "Dieser Kommentar kann nicht gelöscht werden"
     },
     "ProjectStatusBadge": {
         "new": "NEU",
@@ -492,7 +512,8 @@
         "subscribeTitle": "Das professionelle Abonnement beanspruchen",
         "upgradeTitle": "Zur professionellen Plattform wechseln",
         "text": "Sie sind im Begriff, Ihr professionelles Abonnement zu starten. Es beinhaltet: {size} Speicherplatz, Erstellung unbegrenzter Projekte mit einer unbegrenzten Anzahl Nutzern.",
-        "spaceCreatedNotification": "Sie haben soeben den Raum {spaceName} in Organisation {organizationName} erstellt"
+        "spaceCreatedNotification": "Sie haben soeben den Raum {spaceName} in Organisation {organizationName} erstellt",
+        "spaceUpgradedNotification": "Herzlichen Glückwunsch! Sie haben soeben ein professionelles Abonnement für den Bereich {spaceName} abgeschlossen."
     },
     "UserSubscriptions": {
         "title": "Abonnement der Plattform",
@@ -511,6 +532,7 @@
         "withDatapack": "+ Datapack",
         "cancelSubscriptionButton": "Abonnement kündigen",
         "updateCreditCardButton": "Kreditkarte aktualisieren",
+        "emptyTableText": "Hm.. Es scheint, als hätten Sie noch nie ein Abonnement abgeschlossen. Haben Sie unsere Pro-Plattform schon einmal ausprobiert?",
         "subscribeButton": "Zu unserer Pro-Plattform",
         "headers": {
             "space": "Raum",
@@ -522,7 +544,8 @@
         "status": {
             "active": "Aktiv",
             "deleted": "Gelöscht",
-            "paused": "Pausiert"
+            "paused": "Pausiert",
+            "custom": "Verwaltet durch BIMData.io"
         }
     },
     "DatapackForm": {
@@ -542,7 +565,7 @@
         "storage": "Zusammenfassung der aktiven GB",
         "including": "wovon {quantity} GB DataPack"
     },
-    "FreePlanInfo": {
+    "FreePlanCard": {
         "title": "FREE",
         "price": "0 €",
         "bullet2": "1 kostenloser Raum",
@@ -591,9 +614,6 @@
         "successTitle": "Herzlichen Glückwunsch, Ihre Organisation wurde gerade erstellt",
         "successButtonText": "OK"
     },
-    "OrganizationSelector": {
-        "submitButtonText": "Bestätigen"
-    },
     "OrganizationsList": {
         "explanationText": "Die Organisation ist die Einheit, die die Rechnungsstellung von BIMData.io-Bereichen zentralisiert",
         "createButtonText": "Organisation erstellen",
@@ -617,7 +637,8 @@
         "importButtonText": "Einen Raum importieren",
         "addButtonText": "Einen Raum hinzufügen",
         "searchInputPlaceholder": "Suchen",
-        "spaceListTitle": "Liste der Räume der Organisationen"
+        "spaceListTitle": "Liste der Räume der Organisationen",
+        "spaceListPlaceholder": "Diesem Rechnungskonto ist kein Bereich zugeordnet."
     },
     "ProjectCardLeaveGuard": {
         "title": "Projekt verlassen",
@@ -633,12 +654,15 @@
         "note": "erweiterbar für {price} / GB / Monat"
     },
     "ProPlanForm": {
-        "titleTotal": "Preis",
-        "noteTotal": "mit MwSt.",
+        "title": "Preis",
         "priceUnit": "/ Monat",
         "successTitle": "Glückwünsch! Sie haben ein Pro-Abonnement abonniert!",
         "successMessage": "Ihre Zahlung wurde abgeschlossen. Sie können Ihr professionelles Abonnement jetzt nutzen.",
-        "successButtonText": "Startseite"
+        "successButtonText": "Startseite",
+        "titleNet": "Zwischensumme",
+        "titleTax": "MwSt 20%",
+        "titleTotal": "Preis",
+        "noteTotal": "mit MwSt."
     },
     "ProPlanInfo": {
         "title": "Ihr Abonnement",
@@ -656,11 +680,6 @@
         "bullet9": "IFC-Editor",
         "bullet10": "Support via E-Mail"
     },
-    "SpaceCreator": {
-        "title": "Einen Raum erstellen",
-        "text": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
-        "inputPlaceholder": "Name meines neuen Raums"
-    },
     "SpaceSelected": {
         "selectedOrga": "Ausgewählte Organisation:",
         "selectedSpace": "Ausgewählter Raum:"
@@ -670,7 +689,8 @@
         "from": "auf",
         "included": "inklusive",
         "subscribeDatapackButton": "Ein DataPack kaufen",
-        "subscribePlatformButton": "Zur Pro-Plattform wechseln"
+        "subscribePlatformButton": "Zur Pro-Plattform wechseln",
+        "usage": "{used} verwendet auf {total}"
     },
     "SpaceSizePreview": {
         "title": "Speicherplatz",
@@ -682,5 +702,125 @@
         "title": "Ihren neuen Raum erstellen",
         "text": "Möchten Sie alle Vorteile der Plattform nutzen? Wenn Sie zum professionellen Abonnement wechseln, erhalten Sie {size} für Ihre Projekte sowie eine unbegrenzte Anzahl Nutzer.",
         "button": "Ein Abonnement beanspruchen"
+    },
+    "FreePlanInfo": {
+        "title": "FREE",
+        "price": "0 €",
+        "bullet2": "1 kostenloser Raum",
+        "bullet3": "6 Nutzer",
+        "buttonText": "Einen kostenlosen Raum erstellen",
+        "note": "für immer"
+    },
+    "FreePlanRedirect": {
+        "title": "Mein kostenloser Bereich",
+        "text": "Sie besitzen bereits einen kostenlosen Bereich.",
+        "buttonText": "Zugang zu meinem kostenlosen Bereich"
+    },
+    "SubscriptionStatusBanner": {
+        "activate": "Dieser kostenlose Bereich hat seine Grenzen erreicht. Wechseln Sie zu einem professionellen Abonnement, um alle Funktionen von BIMData freizuschalten.",
+        "reactivate": "Dieser Bereich ist derzeit nicht mit einem Abonnement verbunden. Um alle Funktionen von BIMData freizuschalten, wechseln Sie zu einem professionellen Abonnement."
+    },
+    "OrganizationSelector": {
+        "title": "Rechnungskonto",
+        "radioLabelSelect": "Ein Rechnungskonto auswählen",
+        "radioLabelCreate": "Ein Rechnungskonto erstellen",
+        "inputPlaceholder": "Name des Rechnungskontos",
+        "submitButtonText": "Bestätigen",
+        "successMessage": "Herzlichen Glückwunsch, Ihr Rechnungskonto wurde soeben erstellt."
+    },
+    "SpaceCreator": {
+        "title": "Einen Raum erstellen",
+        "text": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
+        "inputPlaceholder": "Name meines neuen Raums",
+        "billingAccountLabel": "Rechnungskonto:",
+        "billingAccountButton": "Ändern",
+        "submitButtonText": "Zur Zahlung übergehen"
+    },
+    "Visa": {
+        "button": "Bestätigungen / VISUM",
+        "add": {
+            "title": "Bestätigungsantrag",
+            "validator": "Bestätigend",
+            "toValidate": "Zu bestätigen vor",
+            "errorDate": "ungültiges Datum",
+            "exempleDate": "(z.B. 31.05.2022)",
+            "description": "Beschreibung",
+            "cancel": "Abbrechen",
+            "validate": "Bestätigen",
+            "validatorView": {
+                "getBack": "Zurück",
+                "validator": "Bestätigend",
+                "accept": "Akzeptieren"
+            }
+        },
+        "safeZone": {
+            "add": {
+                "content": "Sind Sie sicher, dass Sie diese Seite verlassen möchten? Möglicherweise gibt es noch unbestätigte Informationen.",
+                "action": "Ja, diese Seite verlassen",
+                "keepView": "Abbrechen, auf dieser Seite bleiben"
+            },
+            "delete": {
+                "content": "Sind Sie sicher, dass Sie dieses Visum löschen wollen?",
+                "action": "Ja, dieses Visum löschen",
+                "keepView": "Abbrechen"
+            },
+            "close": {
+                "content": "Sind Sie sicher, dass Sie dieses Visum abschließen möchten?",
+                "action": "Ja, dieses Visum abschließen",
+                "keepView": "Abbrechen"
+            },
+            "deleteComment": {
+                "content": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?",
+                "action": "Ja, diesen Kommentar löschen",
+                "keepView": "Abbrechen"
+            }
+        },
+        "summary": {
+            "title": {
+                "open": "Antrag läuft",
+                "closed": "Antrag abgeschloßen"
+            },
+            "appliedBy": "Bestätigungsantrag durch",
+            "validate": "Bestätigen",
+            "deny": "Ablehnen",
+            "delete": "Löschen",
+            "close": "Schließen",
+            "comment": "Kommentieren",
+            "term": "Fälligkeit",
+            "validator": "Bestätigende",
+            "deletedUser": "Gelöschter Nutzer",
+            "validatorList": {
+                "accept": "Bestätigt",
+                "deny": "Abgelehnt",
+                "commented": "Kommentiert",
+                "pending": "Ausstehend",
+                "getRidOfValidator": "Den/die Bestätigende/n entfernen",
+                "refresh": "Die Bestätigung neu starten"
+            }
+        },
+        "comments": {
+            "comment": "Kommentieren",
+            "commentary": "Kommentar",
+            "postComment": "Einen Kommentar veröffentlichen",
+            "replyComment": "Auf einen Kommentar antworten",
+            "publish": "Veröffentlichen",
+            "cancel": "Abbrechen",
+            "reply": "Antworten",
+            "actions": {
+                "edit": "Bearbeiten",
+                "delete": "Löschen",
+                "confirmDelete": "Diesen Kommentar löschen?"
+            }
+        },
+        "list": {
+            "title": "Anfrage in Bearbeitung",
+            "toValidateVisas": "Meine Bestätigungen",
+            "createdVisas": "Meine Anfragen",
+            "emptyValidation": "Keine Bestätigungen ausstehend",
+            "emptyDemand": "Keine Anfrage ausstehend"
+        },
+        "selectionValidator": {
+            "warning": "Dieser Nutzer hat keine Zugangsrechte zum Ordner."
+        }
     }
 }

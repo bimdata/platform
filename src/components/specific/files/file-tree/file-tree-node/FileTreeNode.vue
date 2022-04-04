@@ -1,7 +1,8 @@
 <script>
 import { h, ref, watch } from "vue";
-import FILE_TYPES from "@/config/file-types";
-import FileTreeNodeTemplate from "./FileTreeNodeTemplate";
+import { FILE_TYPE } from "@/config/files.js";
+
+import FileTreeNodeTemplate from "./FileTreeNodeTemplate.vue";
 
 let FileTreeNode;
 
@@ -22,7 +23,7 @@ FileTreeNode = {
       () => props.file,
       () => {
         children.value = (props.file.children || [])
-          .filter(child => child.type === FILE_TYPES.FOLDER)
+          .filter(child => child.type === FILE_TYPE.FOLDER)
           .sort((a, b) => (a.name < b.name ? -1 : 1));
       },
       { immediate: true }

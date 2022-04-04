@@ -4,7 +4,7 @@ export default [
   },
   {
     id: "type",
-    width: "100px",
+    width: "80px",
     align: "center"
   },
   {
@@ -12,10 +12,10 @@ export default [
     width: "200px",
     align: "center"
   },
-  {
-    id: "tags",
-    width: "200px"
-  },
+  // {
+  //   id: "tags",
+  //   width: "100px"
+  // },
   {
     id: "lastupdate",
     width: "180px",

@@ -44,11 +44,11 @@
         "groupsButtonText": "Gestisci i gruppi"
     },
     "ProjectOverview": {
-        "openFileUploadButtonText": "Aggiungi un IFC",
+        "openFileUploadButtonText": "Aggiungi un modello",
         "closeFileUploadButtonText": "Chiudi",
         "forbiddenUploadNotification": {
             "title": "Errore nel caricamento",
-            "message": "Seleziona un file .ifc"
+            "message": "Seleziona un modello: {extensions}"
         }
     },
     "BreadcrumbSelector": {
@@ -100,7 +100,8 @@
         "downloadButtonText": "Scarica",
         "addVersionButtonText": "Aggiungi versione",
         "manageAccessButtonText": "Gestisci l'accesso",
-        "deleteButtonText": "Cancella"
+        "deleteButtonText": "Cancella",
+        "VisaButtonText": "Richiesta di convalida"
     },
     "FileNameCell": {
         "inputErrorMessage": "Nome file non valido",
@@ -148,7 +149,7 @@
     "FileUploader": {
         "uploadAreaText": "Trascina e rilascia per archiviare le risorse del progetto",
         "separatorText": "o",
-        "uploadButtonText": "Seleziona un file .ifc"
+        "uploadButtonText": "Seleziona un modello"
     },
     "FolderAccessManager": {
         "title": "Gestisci i diritti di accesso",
@@ -278,7 +279,8 @@
             "ifc": "IFC",
             "split": "Dividi/Esporta",
             "merge": "Unisci",
-            "archive": "Archivia"
+            "archive": "Archivia",
+            "dwg": "DWG"
         }
     },
     "ModelsMergeModal": {
@@ -291,8 +293,8 @@
         "title": "Panoramica dei modelli di progetto"
     },
     "ModelsOverviewOnboarding": {
-        "text": "Carica il tuo primo IFC",
-        "uploadButtonText": "Carica IFC"
+        "text": "Carica il tuo primo modello",
+        "uploadButtonText": "Carica modello"
     },
     "ModelsTable": {
         "emptyTablePlaceholder": "Nessun modello",
@@ -463,7 +465,25 @@
         "subscriptionsFetchError": "Impossibile recuperare gli abbonamenti",
         "platformSubscribeError": "Impossibile inizializzare l'abbonamento alla piattaforma",
         "datapackSubscribeError": "Impossibile creare l'abbonamento datapack",
-        "datapackUpdateError": "Impossibile aggiornare l'abbonamento datapack"
+        "datapackUpdateError": "Impossibile aggiornare l'abbonamento datapack",
+        "projectFetchFileError": "Impossibile recuperare questo documento",
+        "visaCreateError": "Errore durante la creazione del visto",
+        "visaCreateValidationError": "Errore durante l'aggiunta di un validatore",
+        "visaFetchError": "Impossibile recuperare il visto",
+        "visaAcceptError": "Errore durante l'invio della risposta",
+        "visaDenyError": "Errore durante l'invio della risposta",
+        "visaCloseError": "Errore durante la chiusura del visto",
+        "visaResumeError": "Errore durante la riapertura del visto",
+        "visaFetchCreatedError": "Impossibile recuperare i visti",
+        "visaFetchValidatorError": "Impossibile recuperare i visti",
+        "visaDeleteValidationError": "Impossibile eliminare questo validatore",
+        "visaDeleteError": "Impossibile eliminare questo visto",
+        "visaUpdateError": "Impossibile aggiornare questo visto",
+        "visaRefreshError": "Impossibile aggiornare la tua risposta",
+        "visaFetchAllCommentsError": "Impossibile recuperare i commenti",
+        "visaCreateCommentsError": "Impossibile pubblicare questo commento",
+        "visaUpdateCommentError": "Impossibile modificare questo commento",
+        "visaDeleteCommentError": "Impossibile eliminare questo commento"
     },
     "ProjectStatusBadge": {
         "new": "NUOVO",
@@ -492,7 +512,8 @@
         "subscribeTitle": "Iscriviti al piano Professionale",
         "upgradeTitle": "Passa alla piattaforma pro",
         "text": "Stai per iscriverti al tuo piano pro. Include: {size} di archiviazione, progetti illimitati senza limiti di utenti.",
-        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nel conto di fatturazione {organizationName}"
+        "spaceCreatedNotification": "Hai appena creato lo spazio {spaceName} nel conto di fatturazione {organizationName}",
+        "spaceUpgradedNotification": "Congratulazioni! Hai appena sottoscritto un abbonamento professionale per lo spazio {spaceName}."
     },
     "UserSubscriptions": {
         "title": "Abbonamento alla piattaforma",
@@ -523,7 +544,8 @@
         "status": {
             "active": "Attivo",
             "deleted": "Eliminato",
-            "paused": "In pausa"
+            "paused": "In pausa",
+            "custom": "Gestito da BIMData.io"
         }
     },
     "DatapackForm": {
@@ -543,7 +565,7 @@
         "storage": "Archiviazione attiva",
         "including": "inclusi {quantity} GB di DataPack"
     },
-    "FreePlanInfo": {
+    "FreePlanCard": {
         "title": "GRATIS",
         "price": "0 €",
         "bullet2": "1 spazio gratuito",
@@ -592,14 +614,6 @@
         "successTitle": "Congratulazioni, hai creato il tuo conto di fatturazione",
         "successButtonText": "OK"
     },
-    "OrganizationSelector": {
-        "title": "Compte de facturation",
-        "radioLabelSelect": "Seleziona un conto di fatturazione",
-        "radioLabelCreate": "Crea un conto di fatturazione",
-        "inputPlaceholder": "Nome del conto di fatturazione",
-        "submitButtonText": "Convalida",
-        "successMessage": "Congratulazioni, hai creato il tuo conto di fatturazione"
-    },
     "OrganizationsList": {
         "explanationText": "Un conto di fatturazione è l'entità che raccoglie le tue fatture su BIMData.io",
         "createButtonText": "Crea un conto di fatturazione",
@@ -623,7 +637,8 @@
         "importButtonText": "Importa uno spazio",
         "addButtonText": "Aggiungi un nuovo spazio",
         "searchInputPlaceholder": "Cercare",
-        "spaceListTitle": "Spazi del conto di fatturazione"
+        "spaceListTitle": "Spazi del conto di fatturazione",
+        "spaceListPlaceholder": "Nessuno spazio collegato a questo account di fatturazione."
     },
     "ProjectCardLeaveGuard": {
         "title": "Esci dal progetto",
@@ -639,12 +654,15 @@
         "note": "estendi 1 GB per {price} / mese"
     },
     "ProPlanForm": {
-        "titleTotal": "Prezzo",
-        "noteTotal": "IVA inclusa",
+        "title": "Prezzo",
         "priceUnit": "/ mese",
         "successTitle": "Congratulazioni! Ti sei iscritto alla Piattaforma Pro.",
         "successMessage": "Il tuo pagamento è stato completato. Ora puoi goderti il tuo abbonamento professionale.",
-        "successButtonText": "Home"
+        "successButtonText": "Home",
+        "titleNet": "Subtotale",
+        "titleTax": "IVA 20%",
+        "titleTotal": "Prezzo",
+        "noteTotal": "IVA inclusa"
     },
     "ProPlanInfo": {
         "title": "Il tuo abbonamento",
@@ -662,13 +680,6 @@
         "bullet9": "Edizione IFC",
         "bullet10": "Supporto"
     },
-    "SpaceCreator": {
-        "title": "Crea uno spazio",
-        "text": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
-        "inputPlaceholder": "Nome dello spazio",
-        "billingAccountLabel": "Conto di fatturazione :",
-        "billingAccountButton": "Cambia"
-    },
     "SpaceSelected": {
         "selectedOrga": "Conto di fatturazione:",
         "selectedSpace": "Spazio selezionato:"
@@ -678,7 +689,8 @@
         "from": "su un totale di",
         "included": "incluso",
         "subscribeDatapackButton": "Aggiorna l'archiviazione",
-        "subscribePlatformButton": "Passa alla piattaforma pro"
+        "subscribePlatformButton": "Passa alla piattaforma pro",
+        "usage": "{used} usato su {total}"
     },
     "SpaceSizePreview": {
         "title": "Archiviazione",
@@ -690,5 +702,125 @@
         "title": "Crea il tuo nuovo spazio",
         "text": "Vuoi sfruttare appieno la piattaforma? Utilizza {size} per i tuoi progetti e utenti illimitati effettuando l'upgrade a un abbonamento professionale.",
         "button": "Crea un nuovo spazio"
+    },
+    "FreePlanInfo": {
+        "title": "GRATIS",
+        "price": "0 €",
+        "bullet2": "1 spazio gratuito",
+        "bullet3": "6 utenti",
+        "buttonText": "Crea uno spazio gratuito",
+        "note": "Per sempre"
+    },
+    "FreePlanRedirect": {
+        "title": "Il mio spazio gratuito",
+        "text": "Possiedi già uno spazio gratuito.",
+        "buttonText": "Accedi al tuo spazio gratuito"
+    },
+    "SubscriptionStatusBanner": {
+        "activate": "Questo spazio gratuito ha raggiunto il suo limite; passa all'abbonamento professionale per sbloccare tutte le funzionalità de BIMData.",
+        "reactivate": "Questo spazio non è attualmente collegato a nessun abbonamento. Per sbloccare tutte le funzionalità di BIMData, passa all'abbonamento professionale."
+    },
+    "OrganizationSelector": {
+        "title": "Compte de facturation",
+        "radioLabelSelect": "Seleziona un conto di fatturazione",
+        "radioLabelCreate": "Crea un conto di fatturazione",
+        "inputPlaceholder": "Nome del conto di fatturazione",
+        "submitButtonText": "Convalida",
+        "successMessage": "Congratulazioni, hai creato il tuo conto di fatturazione"
+    },
+    "SpaceCreator": {
+        "title": "Crea uno spazio",
+        "text": "Il tuo spazio raggruppa i tuoi diversi progetti BIM.",
+        "inputPlaceholder": "Nome dello spazio",
+        "billingAccountLabel": "Conto di fatturazione :",
+        "billingAccountButton": "Cambia",
+        "submitButtonText": "Vai al pagamento"
+    },
+    "Visa": {
+        "button": "Approvazioni / VISTI",
+        "add": {
+            "title": "Richiesta di convalida",
+            "validator": "Revisore",
+            "toValidate": "Da convalidare entro il",
+            "errorDate": "Data non valida",
+            "exempleDate": "(ad es. 31/05/2022)",
+            "description": "Descrizione",
+            "cancel": "Annulla",
+            "validate": "Convalida",
+            "validatorView": {
+                "getBack": "Indietro",
+                "validator": "Revisore",
+                "accept": "Accetta"
+            }
+        },
+        "safeZone": {
+            "add": {
+                "content": "Sei sicuro di voler chiudere questa pagina? Potrebbero esserci delle informazioni non convalidate.",
+                "action": "Sì, chiudi la pagina",
+                "keepView": "Annulla, resta sulla pagina"
+            },
+            "delete": {
+                "content": "Sei sicuro di voler eliminare questo visto?",
+                "action": "Sì, elimina il visto",
+                "keepView": "Annulla"
+            },
+            "close": {
+                "content": "Sei sicuro di voler chiudere questo visto?",
+                "action": "Sì, chiudi il visto",
+                "keepView": "Annulla"
+            },
+            "deleteComment": {
+                "content": "Sei sicuro di voler eliminare questo commento?",
+                "action": "Sì, elimina il commento",
+                "keepView": "Annulla"
+            }
+        },
+        "summary": {
+            "title": {
+                "open": "Richiesta in corso",
+                "closed": "Richiesta chiusa"
+            },
+            "appliedBy": "Richiesta di convalida di",
+            "validate": "Convalida",
+            "deny": "Respingi",
+            "delete": "Elimina",
+            "close": "Chiudi",
+            "comment": "Commenta",
+            "term": "Scadenza",
+            "validator": "Revisori",
+            "deletedUser": "Utente eliminato",
+            "validatorList": {
+                "accept": "Convalidato",
+                "deny": "Respinto",
+                "commented": "Commentato",
+                "pending": "In attesa",
+                "getRidOfValidator": "Rimuovi il revisore",
+                "refresh": "Ripristina la convalida"
+            }
+        },
+        "comments": {
+            "comment": "Commenta",
+            "commentary": "Commento",
+            "postComment": "Lascia un commento",
+            "replyComment": "Rispondi a un commento",
+            "publish": "Pubblica",
+            "cancel": "Annulla",
+            "reply": "Rispondi",
+            "actions": {
+                "edit": "Modifica",
+                "delete": "Elimina",
+                "confirmDelete": "Eliminare questo commento?"
+            }
+        },
+        "list": {
+            "title": "Richiesta in corso",
+            "toValidateVisas": "Le mie convalide",
+            "createdVisas": "Le mie richieste",
+            "emptyValidation": "Nessuna convalida in corso",
+            "emptyDemand": "Nessuna richiesta in corso"
+        },
+        "selectionValidator": {
+            "warning": "Questo utente non dispone dell'autorizzazione per accedere al file."
+        }
     }
 }

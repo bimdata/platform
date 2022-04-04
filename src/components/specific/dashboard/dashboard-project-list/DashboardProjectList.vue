@@ -1,16 +1,19 @@
 <template>
   <div class="dashboard-project-list">
-    <div class="dashboard-project-list__title">
+    <div class="dashboard-project-list__title" :class="{ isCarousel }">
       {{ $t("DashboardProjectList.title") }}
     </div>
-    <CarouselList>
+    <component
+      :class="isCarousel ? '' : 'dashboard-project-list__content'"
+      :is="isCarousel ? 'CarouselList' : 'div'"
+    >
       <ProjectCard
         v-for="project in displayedProjects"
         :key="project.id"
         :project="project"
         :actionMenu="false"
       />
-    </CarouselList>
+    </component>
   </div>
 </template>
 
@@ -29,6 +32,10 @@ export default {
     projects: {
       type: Array,
       required: true
+    },
+    isCarousel: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {

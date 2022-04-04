@@ -17,10 +17,10 @@
       </div>
 
       <div class="subscription-datapack__content__body">
-        <DatapackInfo :spaceInfo="spaceInfo" :datapack="datapack" />
+        <DatapackInfo :spaceSubInfo="spaceSubInfo" :datapack="datapack" />
         <DatapackForm
           :space="currentSpace"
-          :spaceInfo="spaceInfo"
+          :spaceSubInfo="spaceSubInfo"
           :datapack="datapack"
           @datapack-created="onSuccess"
           @datapack-updated="onSuccess"
@@ -44,7 +44,7 @@ import { useSubscriptions } from "@/state/subscriptions.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
 import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";
@@ -66,7 +66,7 @@ export default {
     const {
       currentOrga,
       currentSpace,
-      fetchSpaceInformation,
+      fetchSpaceSubInfo,
       loadSpaceSubscriptions,
       getSpaceActiveDatapack,
       waitForUpdatedSpaceSize
@@ -75,13 +75,13 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const spaceInfo = ref({});
+    const spaceSubInfo = ref({});
     const datapack = ref(null);
 
     watch(
       () => currentSpace.value,
       async space => {
-        spaceInfo.value = await fetchSpaceInformation(space);
+        spaceSubInfo.value = await fetchSpaceSubInfo(space);
         datapack.value = await loadSpaceSubscriptions(space).then(() =>
           getSpaceActiveDatapack(space)
         );
@@ -92,7 +92,7 @@ export default {
     const onSuccess = async ({ size }) => {
       await waitForUpdatedSpaceSize(
         currentSpace.value,
-        spaceInfo.value.smartDataSizeAvailable
+        spaceSubInfo.value.smartDataSizeAvailable
       );
 
       pushNotification(
@@ -122,7 +122,7 @@ export default {
       datapack,
       loading,
       organizations: userOrganizations,
-      spaceInfo,
+      spaceSubInfo,
       // Methods
       onSuccess
     };

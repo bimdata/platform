@@ -4,15 +4,11 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        // Make SASS variables and mixins available everywhere
+        // Make global SASS mixins available everywhere
         additionalData: `
-          @import "@/styles/variables.scss";
           @import "@/styles/mixins.scss";
         `
       }
     }
-  },
-  devServer: {
-    disableHostCheck: true
   }
 };

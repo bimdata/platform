@@ -6,32 +6,43 @@
     v-click-away="closeMenu"
   >
     <template #front-face>
-      <BIMDataCard @click="goToProjectBoard">
-        <template #content>
-          <ProjectCardActionBar
-            v-if="actionMenu"
-            class="project-card__action-bar"
-            :project="project"
-            :models="nonArchivedModels"
-            @open-viewer="goToModelViewer"
-            @open-menu="openMenu"
-          />
-          <div
-            class="project-card__left-stripe"
-            :class="`project-card__left-stripe--${project.projectStatus}`"
-          ></div>
-          <ProjectStatusBadge :status="project.projectStatus" />
-          <ProjectCardModelPreview
-            :models="nonArchivedModels"
-            @preview-changed="onPreviewChange"
-          />
-        </template>
-        <template #footer>
-          <div class="project-card__title">
-            <BIMDataTextBox :text="project.name" />
-          </div>
-        </template>
-      </BIMDataCard>
+      <AppLink
+        :to="{
+          name: routeNames.projectBoard,
+          params: {
+            spaceID: project.cloud.id,
+            projectID: project.id
+          }
+        }"
+      >
+        <BIMDataCard>
+          <template #content>
+            <ProjectCardActionBar
+              class="project-card__action-bar"
+              :actionMenu="actionMenu"
+              :viewerButton="viewerButton"
+              :project="project"
+              :models="displayedModels"
+              @open-viewer="goToModelViewer"
+              @open-menu="openMenu"
+            />
+            <div
+              class="project-card__left-stripe"
+              :class="`project-card__left-stripe--${project.projectStatus}`"
+            ></div>
+            <ProjectStatusBadge :status="project.projectStatus" />
+            <ProjectCardModelPreview
+              :models="displayedModels"
+              @preview-changed="onPreviewChange"
+            />
+          </template>
+          <template #footer>
+            <div class="project-card__title">
+              <BIMDataTextbox :text="project.name" />
+            </div>
+          </template>
+        </BIMDataCard>
+      </AppLink>
     </template>
 
     <template #back-face>
@@ -43,19 +54,21 @@
 <script>
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
+import { MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
-import { useModels } from "@/state/models";
-
+import { useModels } from "@/state/models.js";
 // Components
-import FlippableCard from "@/components/generic/flippable-card/FlippableCard";
-import ProjectStatusBadge from "@/components/specific/projects/project-status-badge/ProjectStatusBadge";
-import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar";
-import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu";
-import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview";
+import FlippableCard from "@/components/generic/flippable-card/FlippableCard.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import ProjectStatusBadge from "@/components/specific/projects/project-status-badge/ProjectStatusBadge.vue";
+import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar.vue";
+import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu.vue";
+import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview.vue";
 
 export default {
   components: {
+    AppLink,
     FlippableCard,
     ProjectCardActionBar,
     ProjectCardActionMenu,
@@ -70,6 +83,10 @@ export default {
     actionMenu: {
       type: Boolean,
       default: true
+    },
+    viewerButton: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props) {
@@ -80,8 +97,11 @@ export default {
 
     const currentModel = ref(null);
     const models = ref([]);
-    const nonArchivedModels = computed(() => {
-      return models.value.filter(model => !model.archived);
+    const displayedModels = computed(() => {
+      // Only show non archived IFC previews
+      return models.value.filter(
+        model => model.type === MODEL_TYPE.IFC && !model.archived
+      );
     });
 
     watch(
@@ -92,8 +112,8 @@ export default {
       { immediate: true }
     );
 
-    watch(nonArchivedModels, () => {
-      currentModel.value = nonArchivedModels.value[0];
+    watch(displayedModels, () => {
+      currentModel.value = displayedModels.value[0];
     });
 
     const onPreviewChange = model => {
@@ -111,25 +131,15 @@ export default {
       });
     };
 
-    const goToProjectBoard = () => {
-      router.push({
-        name: routeNames.projectBoard,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id
-        }
-      });
-    };
-
     return {
       // References
       currentModel,
+      displayedModels,
+      routeNames,
       showMenu,
-      nonArchivedModels,
       // Methods
       closeMenu,
       goToModelViewer,
-      goToProjectBoard,
       onPreviewChange,
       openMenu
     };

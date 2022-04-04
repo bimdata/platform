@@ -4,13 +4,13 @@
       <span class="m-r-12 primary-font-bold" style="white-space: nowrap">
         {{ $t("SpaceSelected.selectedOrga") }}
       </span>
-      <BIMDataTextBox maxWidth="160px" :text="space.organization.name" />
+      <BIMDataTextbox maxWidth="160px" :text="space.organization.name" />
     </div>
     <div class="flex items-center">
       <span class="m-r-12 primary-font-bold" style="white-space: nowrap">
         {{ $t("SpaceSelected.selectedSpace") }}
       </span>
-      <BIMDataTextBox maxWidth="160px" :text="space.name" />
+      <BIMDataTextbox maxWidth="160px" :text="space.name" />
     </div>
   </div>
 </template>

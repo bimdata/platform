@@ -2,7 +2,7 @@
   <div class="models-action-bar">
     <BIMDataButton
       :disabled="
-        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+        !project.isAdmin && models.some(m => m.document?.userPermission < 100)
       "
       width="120px"
       color="high"
@@ -16,15 +16,17 @@
 
     <BIMDataButton
       :disabled="
-        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+        !project.isAdmin && models.some(m => m.document?.userPermission < 100)
       "
       width="120px"
       ghost
       squared
-      @click="$emit(currentTab === 'archive' ? 'unarchive' : 'archive', models)"
+      @click="
+        $emit(models.every(m => m.archived) ? 'unarchive' : 'archive', models)
+      "
     >
       <BIMDataIcon
-        :name="currentTab === 'archive' ? 'unarchive' : 'archive'"
+        :name="models.every(m => m.archived) ? 'unarchive' : 'archive'"
         size="xs"
         margin="0 6px 0 0"
       />
@@ -32,7 +34,7 @@
         {{
           $t(
             `ModelsActionBar.${
-              currentTab === "archive"
+              models.every(m => m.archived)
                 ? "unarchiveButtonText"
                 : "archiveButtonText"
             }`
@@ -43,7 +45,9 @@
 
     <BIMDataButton
       :disabled="
-        !project.isAdmin && models.some(m => m.document.userPermission < 100)
+        (!project.isAdmin &&
+          models.some(m => m.document.userPermission < 100)) ||
+        models.every(m => !m.document)
       "
       width="120px"
       ghost
@@ -53,16 +57,6 @@
       <BIMDataIcon name="download" size="s" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
-    <!-- <BIMDataButton
-      width="120px"
-      ghost
-      squared
-      :disabled="models.length < 2"
-      @click="$emit('merge', models)"
-    >
-      <BIMDataIcon name="union" size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("ModelsActionBar.mergeButtonText") }}</span>
-    </BIMDataButton> -->
   </div>
 </template>
 
@@ -76,10 +70,6 @@ export default {
     models: {
       type: Array,
       default: () => []
-    },
-    currentTab: {
-      type: String,
-      default: ""
     }
   },
   emits: ["delete", "archive", "download", "unarchive"]

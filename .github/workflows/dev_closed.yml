@@ -1,0 +1,37 @@
+name: Platform dev closed
+
+on: 
+  pull_request:
+    types:
+      - closed
+
+env:
+  app: platform_dev
+
+jobs:
+  remove_app_and_deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Login to BIMData Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker-registry.bimdata.io
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
+      - name: Define branch_name var
+        id: branch
+        run: |
+          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _)"
+      - name: Delete app deployment
+        run: |
+          docker run \
+            --pull always \
+            --rm \
+            -e ANSIBLE_VAULT_PASSWD="${{ secrets.ANSIBLE_VAULT_PASSWD }}" \
+            docker-registry.bimdata.io/bimdata/deployment:kubernetes-latest \
+            ansible-playbook \
+              -u deploy \
+              -i inventories/staging \
+              --tags platform_dev \
+              --extra-vars "branch_name=${{ steps.branch.outputs.name }} ansible_ssh_private_key_file=./files/deploy_rsa"\
+              undeploy.yml

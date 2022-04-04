@@ -1,8 +1,15 @@
-import MODEL_SOURCES from "@/config/model-sources";
+import {
+  CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
+  MODEL_TYPE,
+  MODEL_SOURCE
+} from "@/config/models.js";
+import { WINDOWS } from "@/config/viewer.js";
+import { fileExtension } from "./files.js";
 
-function segregate(models) {
+function segregateBySource(models) {
   const result = {
-    ifc: [],
+    upload: [],
     split: [],
     merge: [],
     archive: []
@@ -11,20 +18,79 @@ function segregate(models) {
     if (model.archived) {
       result.archive.push(model);
     } else if (
-      [MODEL_SOURCES.UPLOAD, MODEL_SOURCES.OPTIMIZED].includes(model.source)
+      [MODEL_SOURCE.UPLOAD, MODEL_SOURCE.OPTIMIZED].includes(model.source)
     ) {
-      result.ifc.push(model);
+      result.upload.push(model);
     } else if (
-      [MODEL_SOURCES.SPLIT, MODEL_SOURCES.EXPORT].includes(model.source)
+      [MODEL_SOURCE.SPLIT, MODEL_SOURCE.EXPORT].includes(model.source)
     ) {
       result.split.push(model);
-    } else if (MODEL_SOURCES.MERGE === model.source) {
+    } else if (MODEL_SOURCE.MERGE === model.source) {
       result.merge.push(model);
     } else {
-      result.ifc.push(model);
+      result.upload.push(model);
     }
   }
   return result;
 }
 
-export { segregate };
+function segregateByType(models) {
+  const result = {};
+  for (const model of models) {
+    if (!result[model.type]) {
+      result[model.type] = [];
+    }
+    result[model.type].push(model);
+  }
+  return result;
+}
+
+function isModel(file) {
+  return !!file.modelId;
+}
+
+function isPlanModel(model) {
+  const { JPG, PDF, PNG } = MODEL_TYPE;
+  return [JPG, PDF, PNG].includes(model.type);
+}
+
+function isIFC(file) {
+  return isModel(file) && file.modelType === MODEL_TYPE.IFC;
+}
+
+function isSmartFile(file) {
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+}
+
+function isViewable(file) {
+  const { IFC, DWG, PDF, DXF } = MODEL_TYPE;
+  return [IFC, DWG, PDF, DXF].includes(file.modelType);
+}
+
+function isConvertible(file) {
+  return CONVERTIBLE_EXTENSIONS.includes(
+    fileExtension(file.fileName).toLowerCase()
+  );
+}
+
+function windowType(file) {
+  const { modelType } = file;
+  const { IFC, DWG } = MODEL_TYPE;
+
+  if (modelType === IFC) return WINDOWS.V3D;
+  if (modelType === DWG) return WINDOWS.DWG;
+
+  return WINDOWS.PLAN;
+}
+
+export {
+  isConvertible,
+  isIFC,
+  isModel,
+  isPlanModel,
+  isSmartFile,
+  segregateBySource,
+  segregateByType,
+  isViewable,
+  windowType
+};

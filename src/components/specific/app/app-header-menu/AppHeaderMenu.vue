@@ -8,39 +8,66 @@
             :user="user"
             size="34"
           />
-          <span data-test="user-name" class="app-header-menu__btn__fullname">
-            {{ `${user.firstname} ${user.lastname}` }}
-          </span>
-          <span class="app-header-menu__btn__email">
-            {{ user.email }}
-          </span>
+          <BIMDataTextbox
+            data-test="user-name"
+            class="app-header-menu__btn__fullname"
+            :tooltip="false"
+            :text="fullName(user)"
+          />
+          <BIMDataTextbox
+            class="app-header-menu__btn__email"
+            :tooltip="false"
+            :text="user.email"
+          />
         </div>
       </template>
       <template #element>
         <div class="app-header-menu__container" @click.stop="() => {}">
-          <BIMDataButton ghost squared @click="openBIMDataConnect">
-            {{ $t("AppHeaderMenu.entryConnect") }}
-          </BIMDataButton>
+          <div class="user-info">
+            <UserAvatar class="user-avatar" :user="user" size="50" />
+            <div class="user-content">
+              <BIMDataTextbox
+                class="user-name"
+                width="calc(100% - var(--spacing-unit) * 2)"
+                :tooltip="false"
+                :text="fullName(user)"
+              />
+              <BIMDataTextbox
+                class="user-email"
+                width="calc(100% - var(--spacing-unit) * 2)"
+                :tooltip="false"
+                :text="user.email"
+              />
+            </div>
+          </div>
           <div class="separator"></div>
-          <BIMDataButton ghost squared @click="openDocumentation">
-            {{ $t("AppHeaderMenu.entryDocumentation") }}
-          </BIMDataButton>
-          <!-- <BIMDataButton ghost squared @click="openMarketplace">
-            {{ $t("AppHeaderMenu.entryMarketplace") }}
-          </BIMDataButton> -->
-          <!-- <BIMDataButton ghost squared @click="openOldPlatform">
-            {{ $t("AppHeaderMenu.entryOldPlatform") }}
-          </BIMDataButton> -->
+          <a
+            class="external-link"
+            :href="bimdataConnectProfileUrl"
+            target="blank"
+          >
+            <BIMDataButton width="100%" height="40px" ghost squared>
+              {{ $t("AppHeaderMenu.entrySettings") }}
+            </BIMDataButton>
+          </a>
+          <a class="external-link" :href="documentationUrl" target="blank">
+            <BIMDataButton width="100%" height="40px" ghost squared>
+              {{ $t("AppHeaderMenu.entryDocumentation") }}
+            </BIMDataButton>
+          </a>
+          <a class="external-link" :href="marketPlaceUrl" target="blank">
+            <BIMDataButton width="100%" height="40px" ghost squared>
+              {{ $t("AppHeaderMenu.entryMarketplace") }}
+            </BIMDataButton>
+          </a>
           <div class="separator"></div>
           <BIMDataButton
-            v-if="isSubscriptionEnabled"
+            class="btn-language"
             ghost
             squared
-            @click="goToUserSubscriptions"
+            height="40px"
+            @click="openLanguageSelector"
           >
-            <span>{{ $t("AppHeaderMenu.subscriptionPlatform") }}</span>
-          </BIMDataButton>
-          <BIMDataButton ghost squared @click="openLanguageSelector">
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
@@ -52,7 +79,6 @@
             radius
             @click="signOut"
           >
-            <BIMDataIcon name="logout" size="xxs" margin="0 6px 0 0" />
             <span>{{ $t("AppHeaderMenu.logoutButtonText") }}</span>
           </BIMDataButton>
 
@@ -70,52 +96,27 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useToggle } from "@/composables/toggle.js";
 import { useAuth } from "@/state/auth.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useUser } from "@/state/user.js";
+import { fullName } from "@/utils/users";
+
 // Components
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
   components: {
-    UserAvatar,
-    LanguageSelector
+    LanguageSelector,
+    UserAvatar
   },
   setup() {
-    const router = useRouter();
     const { signOut } = useAuth();
     const { currentSpace } = useSpaces();
     const { user } = useUser();
-
-    const openBIMDataConnect = () => {
-      window.open(`${process.env.VUE_APP_URL_BIMDATACONNECT}`);
-    };
-
-    const openDocumentation = () => {
-      window.open(`${process.env.VUE_APP_URL_DOCUMENTATION}`);
-    };
-
-    const openMarketplace = () => {
-      window.open(`${process.env.VUE_APP_URL_MARKETPLACE}`);
-    };
-
-    const openOldPlatform = () => {
-      window.open(`${process.env.VUE_APP_URL_OLD_PLATFORM}`);
-    };
-
-    const goToUserSubscriptions = () => {
-      router.push({
-        name: routeNames.userSubscriptions,
-        query: {
-          organization: currentSpace.value?.organization.id
-        }
-      });
-    };
 
     const {
       isOpen: showLanguageSelector,
@@ -123,19 +124,25 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
+    const bimdataConnectProfileUrl =
+      process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
+    const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
+    const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
+
     return {
       // References
+      bimdataConnectProfileUrl,
+      documentationUrl,
+      marketPlaceUrl,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      routeNames,
       showLanguageSelector,
+      space: currentSpace,
       user,
       // Methods
       closeLanguageSelector,
-      goToUserSubscriptions,
-      openBIMDataConnect,
-      openDocumentation,
       openLanguageSelector,
-      openMarketplace,
-      openOldPlatform,
+      fullName,
       signOut
     };
   }

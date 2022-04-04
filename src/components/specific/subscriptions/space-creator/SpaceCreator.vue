@@ -23,7 +23,7 @@
           {{ $t("SpaceCreator.billingAccountLabel") }}
         </div>
         <div class="billing-account-name">
-          <BIMDataTextBox maxWidth="220px" :text="orga.name" />
+          <BIMDataTextbox maxWidth="220px" :text="orga.name" />
         </div>
       </div>
       <BIMDataButton

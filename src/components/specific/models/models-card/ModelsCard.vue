@@ -1,10 +1,21 @@
 <template>
   <BIMDataCard class="models-card">
     <template #left>
-      <BIMDataButton color="primary" fill radius @click="goToModelViewer">
-        <BIMDataIcon name="show" size="xs" margin="0 6px 0 0" />
-        <span>{{ $t("ModelsCard.openButtonText") }}</span>
-      </BIMDataButton>
+      <AppLink
+        :to="{
+          name: routeNames.modelViewer,
+          params: {
+            spaceID: project.cloud.id,
+            projectID: project.id,
+            modelIDs: model.id
+          }
+        }"
+      >
+        <BIMDataButton color="primary" fill radius>
+          <BIMDataIcon name="show" size="xs" margin="0 6px 0 0" />
+          <span>{{ $t("ModelsCard.openButtonText") }}</span>
+        </BIMDataButton>
+      </AppLink>
     </template>
     <template #content>
       <ModelsCardModelPreview :models="models" @model-changed="onModelChange" />
@@ -14,13 +25,14 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 // Components
-import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview.vue";
 
 export default {
   components: {
+    AppLink,
     ModelsCardModelPreview
   },
   props: {
@@ -35,9 +47,8 @@ export default {
   },
   emits: ["model-changed"],
   setup(props, { emit }) {
-    const router = useRouter();
-
     const currentModel = ref(null);
+
     watch(
       () => props.models,
       () => {
@@ -53,20 +64,11 @@ export default {
       }
     };
 
-    const goToModelViewer = () => {
-      router.push({
-        name: routeNames.modelViewer,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id,
-          modelIDs: currentModel.value.id
-        }
-      });
-    };
-
     return {
+      // References
+      model: currentModel,
+      routeNames,
       // Methods
-      goToModelViewer,
       onModelChange
     };
   }

@@ -15,27 +15,20 @@
 
 <script>
 import makeBIMDataViewer from "@bimdata/viewer";
-import { merge, set } from "lodash";
+import { set } from "lodash";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import {
+  AVAILABLE_PLUGINS,
+  DEFAULT_WINDOW,
+  PLUGINS_CONFIG
+} from "@/config/viewer.js";
 import { useAuth } from "@/state/auth.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import AppSlotContent from "@/components/generic/app-slot/AppSlotContent.vue";
+import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-
-const availablePlugins = {
-  bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.1",
-  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.9",
-  gltfExtractor:
-    "https://unpkg.com/@bimdata/gltf-extractor-viewer-plugin@1.0.2",
-  svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.2",
-  realiz3D: "https://unpkg.com/@bimdata/realiz3d-viewer-plugin@0.0.2",
-  backgroundColor:
-    "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
-  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.7"
-};
 
 export default {
   components: {
@@ -53,22 +46,16 @@ export default {
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs = route.params.modelIDs.split(",").map(id => +id);
-    const initialWindow = route.query.window || "3d";
+    const initialWindow = route.query.window || DEFAULT_WINDOW;
+    const topicGuid = route.query.topicGuid;
 
     // Initial plugins config
-    const pluginsConfig = {
-      header: {
-        warnings: false
-      },
-      measure3d: true,
-      split: true,
-      "structure-properties": {
-        merge: false,
-        export: true,
-        editProperties: true
-      },
-      "viewer2d-background": true
-    };
+    const pluginsConfig = PLUGINS_CONFIG;
+    Object.assign(pluginsConfig, {
+      bcf: {
+        topicGuid
+      }
+    });
 
     // Extract space specific plugins config
     // and merges it into initial config
@@ -82,13 +69,13 @@ export default {
         return config;
       }, {});
 
-    merge(pluginsConfig, spacePluginsConfig);
+    Object.assign(pluginsConfig, spacePluginsConfig);
 
     // Extract space specific plugins urls from deprecated features
     const featurePlugins = currentSpace.value.features
       .filter(feature => feature.name.startsWith("viewer-plugin-"))
       .map(feature => feature.name.split("viewer-plugin-")[1])
-      .map(pluginName => availablePlugins[pluginName])
+      .map(pluginName => AVAILABLE_PLUGINS[pluginName])
       .filter(Boolean); // keep only existing plugins
 
     // Extract space specific plugins urls from marketplace
@@ -112,10 +99,14 @@ export default {
           accessToken: accessToken.value,
           cloudId: spaceID,
           projectId: projectID,
-          ifcIds: modelIDs
+          modelIds: modelIDs
         },
         plugins: pluginsConfig,
-        locale: locale.value
+        locale: locale.value,
+        ui: {
+          version: false,
+          bimdataLogo: false
+        }
       });
 
       await Promise.all(

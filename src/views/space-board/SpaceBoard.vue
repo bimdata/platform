@@ -1,6 +1,6 @@
 <template>
   <div data-test="space-board" class="view space-board">
-    <!-- <SubscriptionStatusBanner class="space-board__banner" :space="space" /> -->
+    <SubscriptionStatusBanner class="space-board__banner" :space="space" />
     <ViewHeader class="space-board__header">
       <template #left>
         <AppBreadcrumb />
@@ -20,7 +20,7 @@
           <SpaceSizeInfo
             v-if="isSubscriptionEnabled && space.isAdmin"
             :space="space"
-            :spaceInfo="spaceInfo"
+            :spaceSubInfo="spaceSubInfo"
           />
           <BIMDataButton
             data-test="btn-sort"
@@ -58,7 +58,12 @@
     </AppSidePanel>
 
     <app-loading name="space-projects">
-      <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+      <BIMDataResponsiveGrid
+        class="space-board__body"
+        itemWidth="320px"
+        rowGap="36px"
+        columnGap="36px"
+      >
         <transition-group name="grid">
           <ProjectCreationCard
             data-test="creation-card"
@@ -86,8 +91,8 @@ import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import AppLoading from "@/components/generic/app-loading/AppLoading.vue";
-import ViewHeader from "@/components/generic/view-header/ViewHeader.vue";
+import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
@@ -110,7 +115,7 @@ export default {
   },
   setup() {
     const { openSidePanel } = useAppSidePanel();
-    const { currentSpace, spaceInfo, spaceUsers, spaceInvitations } =
+    const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations } =
       useSpaces();
     const { spaceProjects } = useProjects();
 
@@ -131,7 +136,7 @@ export default {
       projects: displayedProjects,
       searchText,
       space: currentSpace,
-      spaceInfo,
+      spaceSubInfo,
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,

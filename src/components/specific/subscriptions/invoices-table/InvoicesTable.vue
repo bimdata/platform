@@ -4,22 +4,29 @@
       {{ $t("InvoicesTable.title") }}
     </h2>
 
-    <BIMDataCard class="invoices-table__table" v-if="subscriptions.length > 0">
+    <BIMDataCard class="invoices-table__table" v-if="payments.length > 0">
       <template #content>
         <GenericTable
           :columns="columns"
           :rows="payments"
           :paginated="true"
           :perPage="7"
-          :placeholder="$t('InvoicesTable.tablePlaceholder')"
         >
           <template #cell-space="{ row: payment }">
-            <BIMDataTextBox
-              maxWidth="300px"
-              :text="
-                (subscriptionsMap[payment.subscription_id].cloud || {}).name
-              "
-            />
+            <AppLink
+              v-if="subscriptionsMap[payment.subscription_id].cloud"
+              :to="{
+                name: routeNames.spaceBoard,
+                params: {
+                  spaceID: subscriptionsMap[payment.subscription_id].cloud.id
+                }
+              }"
+            >
+              <BIMDataTextbox
+                maxWidth="300px"
+                :text="subscriptionsMap[payment.subscription_id].cloud.name"
+              />
+            </AppLink>
           </template>
           <template #cell-date="{ row: payment }">
             {{ $d(payment.payout_date, "short") }}
@@ -44,15 +51,11 @@
         <p>
           {{ $t("InvoicesTable.emptyTableText") }}
         </p>
-        <BIMDataButton
-          class="m-t-18"
-          color="primary"
-          fill
-          radius
-          @click="goToSubscriptionPro"
-        >
-          {{ $t("InvoicesTable.subscribeButton") }}
-        </BIMDataButton>
+        <AppLink :to="{ name: routeNames.subscriptionPro }">
+          <BIMDataButton class="m-t-18" color="primary" fill radius>
+            {{ $t("InvoicesTable.subscribeButton") }}
+          </BIMDataButton>
+        </AppLink>
       </template>
     </BIMDataCard>
   </div>
@@ -61,17 +64,18 @@
 <script>
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
 import routeNames from "@/router/route-names.js";
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import InvoiceActionsCell from "./invoice-actions-cell/InvoiceActionsCell.vue";
 import InvoiceStatusCell from "./invoice-status-cell/InvoiceStatusCell.vue";
 
 export default {
   components: {
     GenericTable,
+    AppLink,
     InvoiceActionsCell,
     InvoiceStatusCell
   },
@@ -86,7 +90,6 @@ export default {
     }
   },
   setup(props) {
-    const router = useRouter();
     const { locale, t } = useI18n();
     const columns = ref([]);
 
@@ -114,16 +117,11 @@ export default {
       { immediate: true }
     );
 
-    const goToSubscriptionPro = () => {
-      router.push({ name: routeNames.subscriptionPro });
-    };
-
     return {
       // References
       columns,
-      subscriptionsMap,
-      // Methods
-      goToSubscriptionPro
+      routeNames,
+      subscriptionsMap
     };
   }
 };

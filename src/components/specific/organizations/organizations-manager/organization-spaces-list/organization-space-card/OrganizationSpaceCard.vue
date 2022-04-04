@@ -1,28 +1,44 @@
 <template>
-  <div class="organization-space-card">
-    <div class="organization-space-card__image">
-      <SpaceCardImage :space="space" />
-    </div>
-    <div class="organization-space-card__info">
-      <div class="organization-space-card__info__name">
-        <BIMDataTextBox maxWidth="260px" :text="space.name" />
+  <AppLink
+    :to="{
+      name: routeNames.spaceBoard,
+      params: {
+        spaceID: space.id
+      }
+    }"
+  >
+    <div
+      class="organization-space-card"
+      :style="{ cursor: hasAccess ? 'pointer' : 'default' }"
+    >
+      <div class="organization-space-card__image">
+        <SpaceCardImage :space="space" />
       </div>
-      <div class="organization-space-card__info__data">
-        <span class="organization-space-card__info__data--date">
-          {{ $d(space.created_at || space.createdAt, "short") }}
-        </span>
+      <div class="organization-space-card__info">
+        <div class="organization-space-card__info__name">
+          <BIMDataTextbox maxWidth="260px" :text="space.name" />
+        </div>
+        <div class="organization-space-card__info__data">
+          <span class="organization-space-card__info__data--date">
+            {{ $d(space.created_at || space.createdAt, "short") }}
+          </span>
+        </div>
       </div>
     </div>
-  </div>
+  </AppLink>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed } from "vue";
+import { useSpaces } from "@/state/spaces.js";
+import routeNames from "@/router/route-names.js";
 // Components
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
 
 export default {
   components: {
+    AppLink,
     SpaceCardImage
   },
   props: {
@@ -35,12 +51,17 @@ export default {
       required: true
     }
   },
-  setup() {
-    const projects = ref([]);
+  setup(props) {
+    const { userSpaces } = useSpaces();
+
+    const hasAccess = computed(() =>
+      userSpaces.value.some(space => space.id === props.space.id)
+    );
 
     return {
       // References
-      projects
+      hasAccess,
+      routeNames
     };
   }
 };

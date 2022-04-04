@@ -7,6 +7,10 @@
     grid-template-columns: repeat(auto-fit, minmax(var(--tile-width), 1fr));
     grid-template-rows: repeat(auto-fit, var(--tile-height));
     gap: calc(var(--spacing-unit) * 2);
+
+    .app-link > .dashboard-button-tile {
+      height: 100%;
+    }
   }
 
   &__body {
@@ -23,6 +27,14 @@
       padding-top: calc(var(--spacing-unit) * 4.5);
       padding-bottom: calc(var(--spacing-unit) * 2);
     }
+
+    &__down {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 2);
+    }
+  }
+  .isSubscribeHorizontal {
+    flex-direction: column;
   }
 }
 

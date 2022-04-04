@@ -1,0 +1,40 @@
+.visa-comment-post-actions {
+  position: relative;
+
+  &__btn {
+    color: var(--color-granite-light);
+  }
+
+  &__delete {
+    position: absolute;
+    display: flex;
+    gap: var(--spacing-unit);
+    align-items: center;
+    justify-content: flex-end;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    height: 40px;
+    width: 368px;
+    right: 10px;
+
+    span {
+      color: var(--color-primary);
+    }
+
+    button:nth-of-type(1) {
+      margin-left: 64px;
+    } 
+
+    button:nth-of-type(2) {
+      margin-right: 3px;
+    }
+
+    &__reply {
+      width: 325px;
+      
+      button:first-of-type {
+        margin-left: 23px;
+      }
+    }
+  }
+}

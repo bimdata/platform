@@ -26,7 +26,7 @@ import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
-import BreadcrumbSelector from "@/components/generic/breadcrumb-selector/BreadcrumbSelector.vue";
+import BreadcrumbSelector from "../breadcrumb-selector/BreadcrumbSelector.vue";
 
 export default {
   components: {

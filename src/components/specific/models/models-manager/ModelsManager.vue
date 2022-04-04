@@ -1,96 +1,108 @@
 <template>
-  <BIMDataCard class="models-manager" :titleHeader="$t('ModelsManager.title')">
-    <template #content>
-      <BIMDataTabs
-        width="100%"
-        height="44px"
-        tabSize="180px"
-        :tabs="tabs"
-        :selected="currentTab"
-        @tab-click="selectTab"
-      >
-        <template #tab="{ tab }">
-          <span class="models-manager__tab-label">
+  <div class="models-manager">
+    <div class="models-manager__head">
+      <template v-for="tab of tabs" :key="tab.id">
+        <div
+          v-if="tab.displayed"
+          class="models-manager__tab"
+          :class="{ selected: tab.id === currentTab.id }"
+          @click="selectTab(tab)"
+        >
+          <span class="models-manager__tab__icon">
+            <img :src="tab.icon" />
+          </span>
+          <span class="models-manager__tab__text">
             {{ tab.label }}
           </span>
-          <span
-            class="models-manager__tab-count"
-            v-if="modelLists[tab.id].length > 0"
-          >
-            {{ modelLists[tab.id].length }}
+          <span class="models-manager__tab__count" v-if="tab.models.length > 0">
+            {{ tab.models.length }}
           </span>
-        </template>
-      </BIMDataTabs>
+        </div>
+      </template>
 
-      <transition name="fade">
-        <ModelsActionBar
-          v-show="selection.length > 0"
-          class="models-manager__action-bar"
-          :project="project"
-          :models="selection"
-          :currentTab="currentTab"
-          @archive="archiveModels"
-          @delete="openDeleteModal"
-          @download="downloadModels"
-          @unarchive="unarchiveModels"
-        />
+      <div class="models-manager__menu" v-click-away="closeMenu">
+        <BIMDataButton>
+          <BIMDataIcon
+            color="granite-light"
+            name="ellipsis"
+            size="l"
+            fill
+            :rotate="90"
+            @click="toggleMenu"
+          />
+        </BIMDataButton>
+
+        <div class="models-manager__menu__container" v-show="showMenu">
+          <template v-for="tab of tabs" :key="tab.id">
+            <div
+              class="models-manager__menu__item"
+              :class="{ disabled: tab.models.length > 0 }"
+            >
+              <BIMDataCheckbox
+                :disabled="tab.models.length > 0"
+                :modelValue="tab.models.length > 0 || tab.displayed"
+                @update:modelValue="tab.displayed = !tab.displayed"
+              />
+              <span>{{ tab.label }}</span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <div class="models-manager__body">
+      <transition name="fade" mode="out-in">
+        <keep-alive>
+          <component
+            :is="currentTab.component"
+            :project="project"
+            :models="currentTab.models"
+          />
+        </keep-alive>
       </transition>
-
-      <ModelsTable
-        :project="project"
-        :models="displayedModels"
-        @archive="archiveModels([$event])"
-        @delete="openDeleteModal([$event])"
-        @download="downloadModels([$event])"
-        @selection-changed="setSelection"
-        @unarchive="unarchiveModels([$event])"
-      />
-
-      <transition name="fade">
-        <ModelsDeleteModal
-          v-if="showDeleteModal"
-          :project="project"
-          :models="modelsToDelete"
-          @close="closeDeleteModal"
-        />
-      </transition>
-
-      <!-- <transition name="fade">
-        <ModelsMergeModal
-          v-if="showMergeModal"
-          :project="project"
-          :models="modelsToMerge"
-          @close="closeMergeModal"
-        />
-      </transition> -->
-    </template>
-  </BIMDataCard>
+    </div>
+  </div>
 </template>
 
 <script>
-import { reactive, ref, watch, watchEffect } from "vue";
-import { useI18n } from "vue-i18n";
-import { useModels } from "@/state/models";
-import { segregate } from "@/utils/models";
+import { ref, watch } from "vue";
+import { useToggle } from "@/composables/toggle.js";
+import { MODEL_TYPE } from "@/config/models.js";
+import { segregateByType } from "@/utils/models.js";
 // Components
-import ModelsTable from "@/components/specific/models/models-table/ModelsTable";
-import ModelsActionBar from "./models-action-bar/ModelsActionBar";
-import ModelsDeleteModal from "./models-delete-modal/ModelsDeleteModal";
-// import ModelsMergeModal from "./models-merge-modal/ModelsMergeModal";
+import DWGManager from "./dwg-manager/DWGManager.vue";
+import IFCManager from "./ifc-manager/IFCManager.vue";
+import PDFManager from "./pdf-manager/PDFManager.vue";
 
 const tabsDef = [
-  { id: "ifc" },
-  { id: "split" },
-  // { id: "merge" },
-  { id: "archive" }
+  {
+    id: "tab0",
+    label: "IFC",
+    icon: "/static/ifc-file.svg",
+    modelTypes: [MODEL_TYPE.IFC],
+    component: "IFCManager"
+  },
+  {
+    id: "tab1",
+    label: "DWG",
+    icon: "/static/dwg-file.svg",
+    modelTypes: [MODEL_TYPE.DWG],
+    component: "DWGManager"
+  },
+  {
+    id: "tab2",
+    label: "PDF",
+    icon: "/static/pdf-file.svg",
+    modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
+    component: "PDFManager"
+  }
 ];
 
 export default {
   components: {
-    ModelsTable,
-    ModelsActionBar,
-    ModelsDeleteModal
-    // ModelsMergeModal
+    DWGManager,
+    IFCManager,
+    PDFManager
   },
   props: {
     project: {
@@ -103,105 +115,44 @@ export default {
     }
   },
   setup(props) {
-    const { locale, t } = useI18n();
-    const { updateModels, downloadModels: download } = useModels();
+    const {
+      isOpen: showMenu,
+      close: closeMenu,
+      toggle: toggleMenu
+    } = useToggle();
 
     const tabs = ref([]);
-    const currentTab = ref(tabsDef[0].id);
-    const selectTab = tab => (currentTab.value = tab.id);
+    const currentTab = ref({});
+
+    const selectTab = tab => {
+      currentTab.value = tab;
+    };
+
     watch(
-      () => locale.value,
-      () => {
+      () => props.models,
+      models => {
+        const modelsByType = segregateByType(models);
         tabs.value = tabsDef.map(tab => ({
           ...tab,
-          label: t(`ModelsManager.tabs.${tab.id}`)
+          models: tab.modelTypes.flatMap(type => modelsByType[type] || []),
+          displayed: true
         }));
+        currentTab.value =
+          tabs.value.find(tab => tab.id === currentTab.value?.id) ||
+          tabs.value[0];
       },
       { immediate: true }
     );
 
-    const modelLists = reactive({
-      ifc: [],
-      split: [],
-      // merge: [],
-      archive: []
-    });
-    const displayedModels = ref([]);
-    watch(
-      () => props.models,
-      () => Object.assign(modelLists, segregate(props.models)),
-      { immediate: true }
-    );
-    watchEffect(() => {
-      displayedModels.value = modelLists[currentTab.value];
-    });
-
-    const selection = ref([]);
-    const setSelection = models => {
-      selection.value = models;
-    };
-
-    const modelsToDelete = ref([]);
-    const showDeleteModal = ref(false);
-    const openDeleteModal = models => {
-      modelsToDelete.value = models;
-      showDeleteModal.value = true;
-    };
-    const closeDeleteModal = () => {
-      modelsToDelete.value = [];
-      showDeleteModal.value = false;
-    };
-
-    // const modelsToMerge = ref([]);
-    // const showMergeModal = ref(false);
-    // const openMergeModal = models => {
-    //   modelsToMerge.value = models;
-    //   showMergeModal.value = true;
-    // };
-    // const closeMergeModal = () => {
-    //   modelsToMerge.value = [];
-    //   showMergeModal.value = false;
-    // };
-
-    const archiveModels = async models => {
-      await updateModels(
-        props.project,
-        models.map(model => ({ ...model, archived: true }))
-      );
-    };
-
-    const unarchiveModels = async models => {
-      await updateModels(
-        props.project,
-        models.map(model => ({ ...model, archived: false }))
-      );
-    };
-
-    const downloadModels = async models => {
-      await download(models);
-    };
-
     return {
       // References
       currentTab,
-      displayedModels,
-      modelLists,
-      modelsToDelete,
-      // modelsToMerge,
-      selection,
-      showDeleteModal,
-      // showMergeModal,
+      showMenu,
       tabs,
       // Methods
-      archiveModels,
-      downloadModels,
-      closeDeleteModal,
-      // closeMergeModal,
-      openDeleteModal,
-      // openMergeModal,
+      closeMenu,
       selectTab,
-      setSelection,
-      unarchiveModels
+      toggleMenu
     };
   }
 };

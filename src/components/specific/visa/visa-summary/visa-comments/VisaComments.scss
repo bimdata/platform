@@ -1,0 +1,14 @@
+.visa-comments {
+  &__comment-title {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-unit);
+  }
+
+  &__comment-button {
+    margin: var(--spacing-unit) 0;
+  }
+  
+  &__comment-list {
+    margin-top: var(--spacing-unit);
+  }
+}

@@ -1,10 +1,7 @@
 <template>
   <div class="file-upload-card" :class="{ condensed, failed }">
     <div class="file-upload-card--left">
-      <BIMDataFileIcon
-        :fileName="fileExtension(file.name)"
-        :size="condensed ? 20 : 32"
-      />
+      <BIMDataFileIcon :fileName="file.name" :size="condensed ? 20 : 32" />
     </div>
     <div class="file-upload-card--center file-upload-card__info">
       <div class="file-upload-card__info__file-name">
@@ -58,11 +55,15 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { useUpload } from "@/composables/upload";
-import { fileExtension, formatBytes } from "@/utils/files";
+import { useUpload } from "@/composables/upload.js";
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   props: {
+    isModelUpload: {
+      type: Boolean,
+      default: false
+    },
     project: {
       type: Object,
       required: true
@@ -81,7 +82,7 @@ export default {
   },
   emits: ["upload-completed", "upload-canceled", "upload-failed"],
   setup(props, { emit }) {
-    const { projectFileUploader } = useUpload();
+    const { projectFileUploader, projectModelUploader } = useUpload();
 
     const uploading = ref(false);
     const canceled = ref(false);
@@ -94,11 +95,11 @@ export default {
       rate: 0
     });
 
-    const uploader = projectFileUploader(props.project, {
+    const handlers = {
       onUploadStart: () => {
         uploading.value = true;
       },
-      onUploadProgress: (file, { bytesUploaded, bytesTotal }) => {
+      onUploadProgress: ({ bytesUploaded, bytesTotal }) => {
         if (lastProgressTime) {
           const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
           const dx = bytesUploaded - progress.uploaded; // in bytes
@@ -108,10 +109,8 @@ export default {
         progress.uploaded = bytesUploaded;
         lastProgressTime = Date.now();
       },
-      onUploadComplete: event => {
-        const document = event.successful[0].response.body;
+      onUploadComplete: ({ response: document }) => {
         uploading.value = false;
-        uploader.reset();
         emit("upload-completed", document);
       },
       onUploadError: () => {
@@ -119,7 +118,14 @@ export default {
         failed.value = true;
         emit("upload-failed");
       }
-    });
+    };
+
+    let uploader;
+    if (props.isModelUpload) {
+      uploader = projectModelUploader(props.project, handlers);
+    } else {
+      uploader = projectFileUploader(props.project, handlers);
+    }
 
     const cancelUpload = () => {
       uploader.cancel();
@@ -140,7 +146,6 @@ export default {
       uploading,
       // Methods
       cancelUpload,
-      fileExtension,
       formatBytes
     };
   }

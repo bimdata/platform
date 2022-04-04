@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { load } from "@/components/generic/app-loading/app-loading.js";
+import { load } from "@/components/specific/app/app-loading/app-loading.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 
@@ -9,7 +9,7 @@ const projects = useProjects();
 export default async function spaceBoardResolver(route) {
   const space = spaces.setCurrentSpace(+route.params.spaceID);
 
-  spaces.loadSpaceInfo(space);
+  spaces.loadSpaceSubInfo(space);
 
   load("space-users", [
     spaces.loadSpaceUsers(space),

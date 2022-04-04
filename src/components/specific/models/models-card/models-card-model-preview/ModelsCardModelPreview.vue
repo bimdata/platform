@@ -7,7 +7,7 @@
     <div
       class="models-card-model-preview__container"
       ref="container"
-      @mousemove="translate"
+      @mousemove="handleMouseMove"
     >
       <div
         v-if="image && image.url"
@@ -26,7 +26,7 @@
 
     <div class="models-card-model-preview__switcher" v-if="images.length > 0">
       <div class="models-card-model-preview__switcher__text">
-        <BIMDataTextBox :text="image.name" tooltipPosition="top" />
+        <BIMDataTextbox :text="image.name" tooltipPosition="top" />
       </div>
       <template v-if="images.length > 1">
         <BIMDataButton
@@ -71,28 +71,37 @@ export default {
     const viewport = ref(null);
 
     const translation = ref(0);
-    const translate = event => {
+    const handleMouseMove = event => {
       if (container.value && viewport.value) {
-        const c = container.value.getBoundingClientRect();
-        const v = viewport.value.getBoundingClientRect();
-        let i = Math.abs(
-          Math.ceil(nbSlices * (1 - (event.clientX - c.x) / c.width))
+        const containerRect = container.value.getBoundingClientRect();
+        const viewportRect = viewport.value.getBoundingClientRect();
+        let offset = Math.abs(
+          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
         );
-        i = Math.min(i, nbSlices);
-        translation.value = (i - 1) * v.width;
+        offset = Math.min(offset, nbSlices);
+        translation.value = (offset - 1) * viewportRect.width;
       }
     };
 
     const images = ref([]);
-    const image = ref(null);
+    const image = ref({});
     const index = ref(0);
 
     const previousImage = () => {
+      // Can't go below 0
       if (index.value > 0) index.value--;
     };
     const nextImage = () => {
+      // Can't go above max length
       if (index.value < images.value.length - 1) index.value++;
     };
+
+    watch(index, (newIndex, oldIndex) => {
+      if (newIndex !== oldIndex) {
+        image.value = images.value[newIndex] || {};
+        emit("model-changed", props.models[newIndex]);
+      }
+    });
 
     watch(
       () => props.models,
@@ -104,17 +113,11 @@ export default {
             name: model.name,
             url: model.viewer360File
           }));
-        image.value = images.value.length > 0 ? images.value[0] : null;
+        image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;
       },
       { immediate: true }
     );
-    watch(index, (newIndex, oldIndex) => {
-      if (newIndex !== oldIndex) {
-        image.value = images.value[newIndex] || null;
-        emit("model-changed", props.models[newIndex]);
-      }
-    });
 
     return {
       // References
@@ -126,7 +129,7 @@ export default {
       // Methods
       nextImage,
       previousImage,
-      translate
+      handleMouseMove
     };
   }
 };
