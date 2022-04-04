@@ -31,6 +31,7 @@ const PLUGINS_CONFIG = {
     editProperties: true
   },
   "viewer2d-background": true,
+  dwg: false,
   plan: true,
   buildingMaker: true
 };
