@@ -50,15 +50,41 @@
       <BcfSettings @close="closeBcfSettings" />
     </div>
     <div class="project-bcf__actions flex justify-between">
-      <BIMDataSearch
-        :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
-        color="secondary"
-        radius
-        width="38%"
-        v-model="searchText"
-      >
-      </BIMDataSearch>
       <div class="flex">
+        <BIMDataTooltip
+          maxWidth="100px"
+          :message="
+            showMetrics
+              ? $t('ProjectBcf.showStatisticsTooltip')
+              : $t('ProjectBcf.hideStatisticsTooltip')
+          "
+          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
+        >
+          <template #content>
+            <BIMDataButton
+              data-test="btn-sort-index"
+              color="default"
+              fill
+              square
+              icon
+              class="m-r-12"
+              @click="toggleMetrics"
+              :disabled="!bcfTopics.length"
+            >
+              <Graph style="heiht: 18px; width: 18px" />
+            </BIMDataButton>
+          </template>
+        </BIMDataTooltip>
+        <BIMDataSearch
+          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
+          color="secondary"
+          radius
+          width="42%"
+          v-model="searchText"
+        >
+        </BIMDataSearch>
+      </div>
+      <div class="flex justify-end">
         <BIMDataTooltip
           :message="
             isSortByIndexActive
@@ -172,7 +198,7 @@
     </div>
 
     <div class="project-bcf__content flex m-t-24">
-      <div class="project-bcf__content__metrics m-r-24">
+      <div class="project-bcf__content__metrics m-r-24" v-show="!showMetrics">
         <p class="text-center">
           Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
         </p>
@@ -360,6 +386,12 @@ export default {
       open: openBcfSettings
     } = useToggle();
 
+    const {
+      isOpen: showMetrics,
+      close: closeMetrics,
+      toggle: toggleMetrics
+    } = useToggle();
+
     return {
       loading,
       bcfTopics,
@@ -378,6 +410,9 @@ export default {
       openBcfSettings,
       closeBcfSettings,
       showBcfSettings,
+      showMetrics,
+      closeMetrics,
+      toggleMetrics,
       toggleDisplayBcfTopics,
       isDisplayByListActive,
       openCreateBcfTopic: openSidePanel,

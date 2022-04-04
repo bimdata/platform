@@ -5,6 +5,9 @@
       <div
         class="bcf-topics-metrics__content__legend flex items-start justify-center m-l-12"
       >
+        <strong>
+          {{ $t(`BcfTopicsMetrics.extension.${extensionType}Title`) }}
+        </strong>
         <div
           v-for="barData in barsData"
           :key="barData"
@@ -15,10 +18,10 @@
               width: '10px',
               height: '10px',
               'border-radius': '50px',
-              'background-color': barData.color
+              border: `3px solid ${barData.color}`
             }"
           ></div>
-          <strong class="m-x-6">{{ barData.percentage }} %</strong>
+          <strong class="m-x-6">{{ barData.percentage.toFixed(0) }} %</strong>
           <span>
             {{
               barData.label && $t(`BcfTopicsMetrics.extension.${extensionType}`)
@@ -76,8 +79,6 @@ export default {
         // Add empty priority to match topics without priorities
         const shownExtensions = [...props.availableExtensions];
 
-        console.log({ shownExtensions });
-
         shownExtensions.push({
           [extensionValue.value]: undefined
         });
@@ -97,9 +98,7 @@ export default {
                 shownExtension[extensionValue.value]
             ).length;
 
-            const calcPercentage = (topicCount * 100) / props.bcfTopics.length;
-
-            barData.percentage = calcPercentage.toFixed(1);
+            barData.percentage = (topicCount * 100) / props.bcfTopics.length;
 
             barData.label = shownExtension[extensionValue.value];
 

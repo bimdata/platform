@@ -11,11 +11,12 @@
   &__actions {
     & > .flex {
       position: relative;
+      flex: 1;
       .bimdata-tooltip:deep() {
         // @TODO adapt BIMDataTooltip for Vue 3
         .bimdata-tooltip__text {
           top: 36px !important;
-          left: 40%;
+          left: 35%;
         }
       }
       .bimdata-btn:enabled {
@@ -57,13 +58,16 @@
       grid-template-columns: repeat(auto-fill, 336px);
       justify-content: space-between;
       grid-template-rows: 307px;
-      column-gap: 1%;
-      row-gap: 22px;
-      width: 78%;
+      gap: 1%;
+      flex: 1;
+    }
+    &__list {
+      flex: 1;
     }
     &__empty {
-      background-color: var(--color-white);
       width: 22%;
+      height: 307px;
+      background-color: var(--color-white);
       box-shadow: var(--box-shadow);
       & > .flex {
         flex-direction: column;

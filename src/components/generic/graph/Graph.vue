@@ -15,6 +15,7 @@
       />
       <g v-for="(barData, i) of displayedBarsData" :key="i">
         <path
+          v-if="barData.percentage > 0"
           class="path"
           :d="getPath(barData)"
           :stroke="barData.color"
