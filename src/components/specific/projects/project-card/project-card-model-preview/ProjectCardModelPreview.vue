@@ -2,7 +2,7 @@
   <div
     class="project-card-model-preview"
     ref="container"
-    @mousemove="translate"
+    @mousemove="handleMouseMove"
   >
     <div
       v-if="images.length > 1"
@@ -45,15 +45,15 @@ export default {
     const viewport = ref(null);
 
     const translation = ref(0);
-    const translate = event => {
+    const handleMouseMove = event => {
       if (container.value && viewport.value) {
-        const c = container.value.getBoundingClientRect();
-        const v = viewport.value.getBoundingClientRect();
-        let i = Math.abs(
-          Math.ceil(nbSlices * (1 - (event.clientX - c.x) / c.width))
+        const containerRect = container.value.getBoundingClientRect();
+        const viewportRect = viewport.value.getBoundingClientRect();
+        let offset = Math.abs(
+          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
         );
-        i = Math.min(i, nbSlices);
-        translation.value = (i - 1) * v.width;
+        offset = Math.min(offset, nbSlices);
+        translation.value = (offset - 1) * viewportRect.width;
       }
     };
 
@@ -62,28 +62,36 @@ export default {
     const index = ref(0);
 
     const previousImage = () => {
+      // Can't go below 0
       if (index.value > 0) index.value--;
     };
     const nextImage = () => {
+      // Can't go above max length
       if (index.value < images.value.length - 1) index.value++;
     };
+
+    watch(index, (newIndex, oldIndex) => {
+      if (newIndex !== oldIndex) {
+        image.value = images.value[newIndex] || {};
+        emit("preview-changed", props.models[newIndex]);
+      }
+    });
 
     watch(
       () => props.models,
       () => {
-        images.value = props.models.map((model, i) => ({
-          index: i + 1,
-          url: model.viewer360File
-        }));
+        images.value = props.models
+          .filter(model => !model.archived)
+          .map((model, i) => ({
+            index: i + 1,
+            name: model.name,
+            url: model.viewer360File
+          }));
         image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;
       },
       { immediate: true }
     );
-    watch(index, i => {
-      image.value = images.value[i] || {};
-      emit("preview-changed", props.models[i]);
-    });
 
     return {
       // References
@@ -95,7 +103,7 @@ export default {
       // Methods
       nextImage,
       previousImage,
-      translate
+      handleMouseMove
     };
   }
 };

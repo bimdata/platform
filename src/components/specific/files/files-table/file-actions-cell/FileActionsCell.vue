@@ -12,19 +12,32 @@
 
     <transition name="fade">
       <div class="file-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton
-          v-if="isIFC(file)"
+        <AppLink
+          v-if="isViewable(file)"
           class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="goToModelViewer()"
+          :to="{
+            name: routeNames.modelViewer,
+            params: {
+              spaceID: project.cloud.id,
+              projectID: project.id,
+              modelIDs: file.modelId
+            },
+            query: {
+              window: windowType(file)
+            }
+          }"
         >
-          {{ $t("FileActionsCell.openViewerButtonText") }}
-        </BIMDataButton>
-
+          <BIMDataButton
+            class="file-actions-cell__menu__btn__viewer"
+            ghost
+            squared
+          >
+            {{ $t("FileActionsCell.openViewerButtonText") }}
+          </BIMDataButton>
+        </AppLink>
         <BIMDataButton
-          v-if="!isFolder(file) && isSmartFile(file)"
-          :disabled="!isConvertibleToModel(file)"
+          v-if="!isFolder(file) && isConvertible(file)"
+          :disabled="isModel(file)"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -91,13 +104,24 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
-import { isConvertibleToModel, isIFC, isSmartFile } from "@/utils/models.js";
+import {
+  isConvertible,
+  isIFC,
+  isModel,
+  isSmartFile,
+  isViewable,
+  windowType
+} from "@/utils/models.js";
+// Components
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
+  components: {
+    AppLink
+  },
   props: {
     project: {
       type: Object,
@@ -117,27 +141,11 @@ export default {
     "update"
   ],
   setup(props, { emit }) {
-    const router = useRouter();
-
     const {
       isOpen: showMenu,
       close: closeMenu,
       toggle: toggleMenu
     } = useToggle();
-
-    const goToModelViewer = () => {
-      router.push({
-        name: routeNames.modelViewer,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id,
-          modelIDs: props.file.modelId
-        },
-        query: {
-          window: "3d"
-        }
-      });
-    };
 
     const onClick = event => {
       closeMenu();
@@ -146,16 +154,19 @@ export default {
 
     return {
       // References
+      routeNames,
       showMenu,
       // Methods
       closeMenu,
-      goToModelViewer,
-      isConvertibleToModel,
+      isConvertible,
+      isViewable,
       isFolder,
+      isModel,
       isIFC,
       isSmartFile,
       onClick,
-      toggleMenu
+      toggleMenu,
+      windowType
     };
   }
 };

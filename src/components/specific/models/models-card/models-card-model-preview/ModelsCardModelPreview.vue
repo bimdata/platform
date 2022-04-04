@@ -72,17 +72,19 @@ export default {
 
     const translation = ref(0);
     const handleMouseMove = event => {
-      const containerRect = container.value.getBoundingClientRect();
-      const viewportRect = viewport.value.getBoundingClientRect();
-      let offset = Math.abs(
-        Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
-      );
-      offset = Math.min(i, nbSlices);
-      translation.value = (offset - 1) * viewportRect.width;
+      if (container.value && viewport.value) {
+        const containerRect = container.value.getBoundingClientRect();
+        const viewportRect = viewport.value.getBoundingClientRect();
+        let offset = Math.abs(
+          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
+        );
+        offset = Math.min(offset, nbSlices);
+        translation.value = (offset - 1) * viewportRect.width;
+      }
     };
 
     const images = ref([]);
-    const image = ref(null);
+    const image = ref({});
     const index = ref(0);
 
     const previousImage = () => {
@@ -96,7 +98,7 @@ export default {
 
     watch(index, (newIndex, oldIndex) => {
       if (newIndex !== oldIndex) {
-        image.value = images.value[newIndex] || null;
+        image.value = images.value[newIndex] || {};
         emit("model-changed", props.models[newIndex]);
       }
     });
@@ -111,7 +113,7 @@ export default {
             name: model.name,
             url: model.viewer360File
           }));
-        image.value = images.value.length > 0 ? images.value[0] : null;
+        image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;
       },
       { immediate: true }

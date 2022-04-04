@@ -1,8 +1,5 @@
 .visa-comment-post {
-  &__reply {
-    margin-left: 44px;
-  }
-
+  
   &__header {
     display: flex;
     justify-content: space-between;
@@ -40,15 +37,6 @@
 
   &__content {
     margin: 0 var(--spacing-unit);
-
-    &__reply-button {
-      margin: -5% 0 0 74%; 
-      font-size: 1.15em;
-    }
-
-    &__answer-input {
-      margin-left: var(--spacing-unit)
-    }
 
     &:deep() {
       textarea {

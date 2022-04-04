@@ -3,16 +3,22 @@
     .bimdata-dropdown__content {
       padding: 0;
     }
+
+    .bimdata-dropdown__elements {
+      width: 250px;
+      margin-left: -27px;
+    }
   }
 
   &__btn {
     display: grid;
-    grid-template-columns: 36px auto;
+    grid-template-columns: 36px 135px;
     grid-template-rows: 14px 14px;
     align-items: center;
     gap: 2px 4px;
     padding: calc(var(--spacing-unit) / 2);
     text-align: left;
+    width: 190px;
 
     &__avatar {
       grid-row: 1 / span 2;
@@ -27,13 +33,32 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
     font-size: 12px;
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-unit);
+      height: 115px;
+
+      .user-avatar {
+        margin-top: calc(var(--spacing-unit) / 2);
+      }
+
+      .user-content {
+        width: 100%;
+        text-align: center;
+        .user-name {
+          font-weight: bold;
+        }
+      }
+    }
 
     .separator {
       height: 1px;
       margin: calc(var(--spacing-unit) / 2) var(--spacing-unit);
-      background-color: var(--color-silver);
+      background-color: var(--color-silver-light);
     }
 
     .external-link {
@@ -45,9 +70,13 @@
       justify-content: flex-start;
     }
 
+    .btn-language {
+      justify-content: space-between;
+    }
+
     .lang-badge {
-      margin-left: calc(var(--spacing-unit) / 2);
-      padding: calc(var(--spacing-unit) / 4) calc(var(--spacing-unit) / 2);
+      padding: calc(var(--spacing-unit) / 6) var(--spacing-unit);
+      font-weight: bold;
       border-radius: 2px;
       background-color: var(--color-silver);
       text-transform: uppercase;

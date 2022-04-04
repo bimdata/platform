@@ -65,10 +65,12 @@ class ModelService {
   async downloadModels(models) {
     try {
       return await downloadAll(
-        models.map(model => ({
-          name: model.document.fileName,
-          url: model.document.file
-        }))
+        models
+          .filter(model => model.document)
+          .map(model => ({
+            name: model.document.fileName,
+            url: model.document.file
+          }))
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_DOWNLOAD_ERROR, error);

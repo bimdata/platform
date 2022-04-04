@@ -1,16 +1,19 @@
 <template>
   <div class="dashboard-space-list">
-    <div class="dashboard-space-list__title">
+    <div class="dashboard-space-list__title" :class="{ isCarousel }">
       {{ $t("DashboardSpaceList.title") }}
     </div>
-    <CarouselList>
+    <component
+      :class="isCarousel ? '' : 'dashboard-space-list__content'"
+      :is="isCarousel ? 'CarouselList' : 'div'"
+    >
       <SpaceCard
         v-for="space in displayedSpaces"
         :key="space.id"
         :space="space"
         :actionMenu="false"
       />
-    </CarouselList>
+    </component>
   </div>
 </template>
 
@@ -29,6 +32,10 @@ export default {
     spaces: {
       type: Array,
       required: true
+    },
+    isCarousel: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {

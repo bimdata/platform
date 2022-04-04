@@ -18,7 +18,11 @@
       <template #right>
         <div class="flex items-center">
           <SpaceSizeInfo
-            v-if="isSubscriptionEnabled && space.isAdmin"
+            v-if="
+              isSubscriptionEnabled &&
+              space.isAdmin &&
+              currentView !== 'ProjectBcf'
+            "
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />

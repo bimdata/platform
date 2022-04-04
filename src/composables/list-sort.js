@@ -13,15 +13,16 @@ export function useListSort(list, mapper = elem => elem) {
     initialList.value = sortedList;
   };
 
-  let sortOrder = "none";
+  const sortOrder = ref("none");
   const sortToggle = () => {
-    sortOrder = sortOrder === "asc" ? "desc" : "asc";
-    sort(sortOrder);
+    sortOrder.value = sortOrder.value === "asc" ? "desc" : "asc";
+    sort(sortOrder.value);
   };
 
   return {
     sortedList: initialList,
     sort,
+    sortOrder,
     sortToggle
   };
 }

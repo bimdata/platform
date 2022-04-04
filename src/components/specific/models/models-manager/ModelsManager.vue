@@ -9,7 +9,7 @@
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
-            <img :src="`/static/${tab.id}-file.svg`" />
+            <img :src="tab.icon" />
           </span>
           <span class="models-manager__tab__text">
             {{ tab.label }}
@@ -43,7 +43,7 @@
                 :modelValue="tab.models.length > 0 || tab.displayed"
                 @update:modelValue="tab.displayed = !tab.displayed"
               />
-              <span>{{ `.${tab.id}` }}</span>
+              <span>{{ tab.label }}</span>
             </div>
           </template>
         </div>
@@ -67,6 +67,7 @@
 <script>
 import { ref, watch } from "vue";
 import { useToggle } from "@/composables/toggle.js";
+import { MODEL_TYPE } from "@/config/models.js";
 import { segregateByType } from "@/utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
@@ -74,9 +75,27 @@ import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
 
 const tabsDef = [
-  { id: "ifc", label: "IFC", component: "IFCManager" },
-  { id: "dwg", label: "DWG", component: "DWGManager" },
-  { id: "pdf", label: "PDF", component: "PDFManager" }
+  {
+    id: "tab0",
+    label: "IFC",
+    icon: "/static/ifc-file.svg",
+    modelTypes: [MODEL_TYPE.IFC],
+    component: "IFCManager"
+  },
+  {
+    id: "tab1",
+    label: "DWG",
+    icon: "/static/dwg-file.svg",
+    modelTypes: [MODEL_TYPE.DWG],
+    component: "DWGManager"
+  },
+  {
+    id: "tab2",
+    label: "PDF",
+    icon: "/static/pdf-file.svg",
+    modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
+    component: "PDFManager"
+  }
 ];
 
 export default {
@@ -115,7 +134,7 @@ export default {
         const modelsByType = segregateByType(models);
         tabs.value = tabsDef.map(tab => ({
           ...tab,
-          models: modelsByType[tab.id] || [],
+          models: tab.modelTypes.flatMap(type => modelsByType[type] || []),
           displayed: true
         }));
         currentTab.value =

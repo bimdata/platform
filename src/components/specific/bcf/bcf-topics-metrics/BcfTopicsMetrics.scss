@@ -1,0 +1,31 @@
+.bcf-topics-metrics {
+  height: 100%;
+  &__loading {
+    height: 100%;
+  }
+  &__content {
+    position: relative;
+    height: inherit;
+    &__total {
+      width: 100%;
+      position: absolute;
+      top: calc((245px / 2) - (32px / 2));
+      left: 0;
+      flex-direction: column;
+      line-height: 1;
+      strong {
+        font-size: 20px;
+      }
+    }
+    &__legend {
+      height: 100%;
+      width: fit-content;
+      max-width: 300px;
+      flex-wrap: wrap;
+      gap: 12px;
+      flex-direction: column;
+      font-size: 14px;
+      overflow: auto;
+    }
+  }
+}

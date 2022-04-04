@@ -11,8 +11,10 @@
         >{{ $t("Visa.comments.comment") }}</BIMDataButton
       >
     </template>
-    <template v-if="threadList.length > 0">
-      <span>{{ $t("Visa.comments.commentary") }}</span>
+    <template v-if="commentList.length > 0">
+      <div class="visa-comments__comment-title">
+        <span>{{ $t("Visa.comments.commentary") }}</span>
+      </div>
     </template>
     <template v-if="isCommenting">
       <VisaCommentsInput
@@ -22,24 +24,15 @@
     </template>
     <div
       class="visa-comments__thread-list"
-      v-for="commentList in threadList"
-      :key="commentList[0].id"
+      v-for="comment in commentList"
+      :key="comment.id"
     >
-      <div
-        class="visa-comments__comment-list"
-        v-for="(comment, index) in commentList"
-        :key="comment.id"
-      >
-        <VisaCommentPost
-          :mainComment="commentList[0]"
-          :comment="comment"
-          :project="project"
-          :visa="visa"
-          :isAReply="commentList.length > 1 && index > 0"
-          :isLastComment="commentList.length === index + 1"
-          @reload-comments="reloadComments"
-        />
-      </div>
+      <VisaCommentPost
+        :comment="comment"
+        :project="project"
+        :visa="visa"
+        @reload-comments="reloadComments"
+      />
     </div>
   </div>
 </template>
@@ -79,33 +72,21 @@ export default {
     const { user } = useUser();
 
     const isCommenting = ref(false);
-    const threadList = ref([]);
+    const commentList = ref([]);
 
     const { id: currentUserId } = user.value;
 
     const formatComments = comments => {
-      const threadCreator = {};
-      comments
-        .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
+      return comments
+        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         .map(comment => ({
           ...comment,
           fullName: fullName(comment.author),
           isSelf: comment.author.userId === currentUserId
-        }))
-        .forEach(comment => {
-          if (comment.replyToCommentId) {
-            threadCreator[comment.replyToCommentId].push(comment);
-          } else {
-            threadCreator[comment.id] = [comment];
-          }
-        });
-
-      return Object.keys(threadCreator)
-        .sort((a, b) => (a < b ? 1 : -1))
-        .map(id => threadCreator[id]);
+        }));
     };
 
-    onMounted(() => (threadList.value = formatComments(props.comments)));
+    onMounted(() => (commentList.value = formatComments(props.comments)));
 
     const reloadComments = async () => {
       const comments = await fetchAllComments(
@@ -113,7 +94,7 @@ export default {
         props.visa.document,
         props.visa
       );
-      threadList.value = formatComments(comments);
+      commentList.value = formatComments(comments);
     };
 
     const postComment = async data => {
@@ -125,10 +106,11 @@ export default {
     return {
       // references
       isCommenting,
-      threadList,
+      commentList,
       // methods
       reloadComments,
-      postComment
+      postComment,
+      console
     };
   }
 };

@@ -100,7 +100,8 @@
         "downloadButtonText": "Descargar",
         "addVersionButtonText": "Añadir una versión",
         "manageAccessButtonText": "Gestionar los accesos",
-        "deleteButtonText": "Suprimir"
+        "deleteButtonText": "Suprimir",
+        "VisaButtonText": "Solicitud de aprobación"
     },
     "FileNameCell": {
         "inputErrorMessage": "Nombre de archivo inválido",
@@ -276,10 +277,10 @@
         "title": "Modelos del proyecto",
         "tabs": {
             "ifc": "IFC",
-            "dwg": "DWG",
             "split": "Split / Exportar",
             "merge": "Fusionar",
-            "archive": "Archivos"
+            "archive": "Archivos",
+            "dwg": "DWG"
         }
     },
     "ModelsMergeModal": {
@@ -464,7 +465,25 @@
         "subscriptionsFetchError": "No es posible recuperar la lista de suscripciones",
         "platformSubscribeError": "Error al crear el enlace de suscripción",
         "datapackSubscribeError": "Fallo en la suscripción de un nuevo paquete de datos",
-        "datapackUpdateError": "Error al actualizar el paquete de datos"
+        "datapackUpdateError": "Error al actualizar el paquete de datos",
+        "projectFetchFileError": "Imposible recuperar este documento",
+        "visaCreateError": "Error en la creación de la aprobación",
+        "visaCreateValidationError": "Error al añadir una persona autorizada a otorgar aprobaciones",
+        "visaFetchError": "Imposible recuperar la aprobación",
+        "visaAcceptError": "Error en el envío de su respuesta",
+        "visaDenyError": "Error en el envío de su respuesta",
+        "visaCloseError": "Error en el cierre de la aprobación",
+        "visaResumeError": "Error en la reapertura de la aprobación",
+        "visaFetchCreatedError": "Imposible recuperar las aprobaciones",
+        "visaFetchValidatorError": "Imposible recuperar las aprobaciones",
+        "visaDeleteValidationError": "Imposible eliminar a este usuario autorizado para otorgar aprobaciones",
+        "visaDeleteError": "Imposible eliminar esta aprobación",
+        "visaUpdateError": "Imposible actualizar esta aprobación",
+        "visaRefreshError": "Imposible actualizar su respuesta",
+        "visaFetchAllCommentsError": "Imposible recuperar los comentarios",
+        "visaCreateCommentsError": "Imposible publicar este comentario",
+        "visaUpdateCommentError": "Imposible modificar este comentario",
+        "visaDeleteCommentError": "Imposible eliminar este comentario"
     },
     "ProjectStatusBadge": {
         "new": "NUEVO",
@@ -493,7 +512,8 @@
         "subscribeTitle": "Suscribirse a la suscripción profesional",
         "upgradeTitle": "Pasar a la plataforma profesional",
         "text": "Está a punto de iniciar su suscripción profesional. Esta incluye {size} de almacenamiento y creación de proyectos ilimitados con usuarios ilimitados.",
-        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la cuenta de facturación {organizationName}"
+        "spaceCreatedNotification": "Usted acaba de crear el espacio {spaceName} en la cuenta de facturación {organizationName}",
+        "spaceUpgradedNotification": "¡Felicitaciones! Se ha suscrito a un abono profesional para el espacio {spaceName}."
     },
     "UserSubscriptions": {
         "title": "Suscripción a la plataforma",
@@ -512,6 +532,7 @@
         "withDatapack": "+ Datapack",
         "cancelSubscriptionButton": "Anular la suscripción",
         "updateCreditCardButton": "Actualizar la tarjeta de crédito",
+        "emptyTableText": "Sus facturas aparecerán aquí una vez que haya activado sus suscripciones.",
         "subscribeButton": "Pasar a nuestra plataforma Pro",
         "headers": {
             "space": "Espacio",
@@ -523,7 +544,8 @@
         "status": {
             "active": "Activo",
             "deleted": "Borrado",
-            "paused": "En pausa"
+            "paused": "En pausa",
+            "custom": "Gestionado por BIMData.io"
         }
     },
     "DatapackForm": {
@@ -543,7 +565,7 @@
         "storage": "Resumen de GB activos",
         "including": "de los cuales {quantity} GB corresponden al DataPack"
     },
-    "FreePlanInfo": {
+    "FreePlanCard": {
         "title": "GRATIS",
         "price": "0€",
         "bullet2": "1 espacio gratuito",
@@ -559,6 +581,7 @@
     },
     "InvoicesTable": {
         "title": "Facturas",
+        "tablePlaceholder": "Carga de facturas...",
         "emptyTableText": "Las facturas aparecerán aquí una vez que haya activado sus suscripciones.",
         "subscribeButton": "Pasar a nuestra Platform Pro",
         "headers": {
@@ -591,14 +614,6 @@
         "successTitle": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada.",
         "successButtonText": "OK"
     },
-    "OrganizationSelector": {
-        "title": "Cuenta de facturación",
-        "radioLabelSelect": "Seleccione una cuenta de facturación",
-        "radioLabelCreate": "Crear una cuenta de facturación",
-        "inputPlaceholder": "Nombre de la cuenta de facturación",
-        "submitButtonText": "Validar",
-        "successMessage": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada."
-    },
     "OrganizationsList": {
         "explanationText": "La cuenta de facturación es la entidad que centraliza las facturas en los espacios BIMData.io",
         "createButtonText": "Crear una cuenta de facturación",
@@ -622,7 +637,8 @@
         "importButtonText": "Importar un espacio",
         "addButtonText": "Añadir un espacio",
         "searchInputPlaceholder": "Buscar",
-        "spaceListTitle": "Lista de espacios de la cuenta de facturación"
+        "spaceListTitle": "Lista de espacios de la cuenta de facturación",
+        "spaceListPlaceholder": "No hay ningún espacio vinculado a esta cuenta de facturación"
     },
     "ProjectCardLeaveGuard": {
         "title": "Salir del proyecto",
@@ -638,12 +654,15 @@
         "note": "extensible por {price} / GB / mes"
     },
     "ProPlanForm": {
-        "titleTotal": "Precio",
-        "noteTotal": "IVA incluído",
+        "title": "Precio",
         "priceUnit": "/ mes",
         "successTitle": "¡Felicitaciones! ¡Se ha suscrito a una Suscripción Pro!",
         "successMessage": "Su pago se ha efectuado correctamente. Desde ahora puede aprovechar su suscripción profesional.",
-        "successButtonText": "Página de inicio"
+        "successButtonText": "Página de inicio",
+        "titleNet": "Subtotal",
+        "titleTax": "IVA 20%",
+        "titleTotal": "Precio",
+        "noteTotal": "IVA incluído"
     },
     "ProPlanInfo": {
         "title": "Su suscripción",
@@ -661,21 +680,17 @@
         "bullet9": "Edición IFC",
         "bullet10": "Apoyo por correo electrónico"
     },
-    "SpaceCreator": {
-        "title": "Crear un espacio",
-        "text": "Su espacio reagrupa sus diferentes proyectos BIM.",
-        "inputPlaceholder": "Nombre de mi nuevo espacio",
-        "billingAccountLabel": "Cuenta de facturación :",
-        "billingAccountButton": "Editar"
-    },
     "SpaceSelected": {
         "selectedOrga": "Cuenta de facturación:",
         "selectedSpace": "Espacio seleccionado:"
     },
     "SpaceSizeInfo": {
-        "usage": "{used} utilizado en {total}",
+        "used": "utilizado",
+        "from": "en",
+        "included": "incluido",
         "subscribeDatapackButton": "Comprar un DataPack",
-        "subscribePlatformButton": "Pasar a la plataforma pro"
+        "subscribePlatformButton": "Pasar a la plataforma pro",
+        "usage": "{used} utilizado en {total}"
     },
     "SpaceSizePreview": {
         "title": "Almacenamiento",
@@ -687,5 +702,125 @@
         "title": "Crear su nuevo espacio",
         "text": "¿Quiere aprovechar la plataforma al máximo? Aproveche {size} para sus proyectos y usuarios ilimitados pasándose a la suscripción profesional.",
         "button": "Suscribirse a una suscripción"
+    },
+    "FreePlanInfo": {
+        "title": "GRATIS",
+        "price": "0€",
+        "bullet2": "1 espacio gratuito",
+        "bullet3": "6 usuarios",
+        "buttonText": "Crear un espacio gratuito",
+        "note": "Para siempre"
+    },
+    "FreePlanRedirect": {
+        "title": "Mi espacio gratuito",
+        "text": "Usted ya tiene un espacio gratuito.",
+        "buttonText": "Acceder a mi espacio gratuito"
+    },
+    "SubscriptionStatusBanner": {
+        "activate": "Este espacio gratuito ha llegado a su límite. Pase al abono profesional para desbloquear todas las funcionalidades de BIMData.",
+        "reactivate": "Este espacio no se encuentra actualmente vinculado a ningún abono. Para desbloquear todas las funcionalidades de BIMData, pase al abono profesional."
+    },
+    "OrganizationSelector": {
+        "title": "Cuenta de facturación",
+        "radioLabelSelect": "Seleccione una cuenta de facturación",
+        "radioLabelCreate": "Crear una cuenta de facturación",
+        "inputPlaceholder": "Nombre de la cuenta de facturación",
+        "submitButtonText": "Validar",
+        "successMessage": "¡Felicitaciones! Su cuenta de facturación acaba de ser creada."
+    },
+    "SpaceCreator": {
+        "title": "Crear un espacio",
+        "text": "Su espacio reagrupa sus diferentes proyectos BIM.",
+        "inputPlaceholder": "Nombre de mi nuevo espacio",
+        "billingAccountLabel": "Cuenta de facturación :",
+        "billingAccountButton": "Editar",
+        "submitButtonText": "Continuar al pago"
+    },
+    "Visa": {
+        "button": "Confirmaciones / APROBACIÓN",
+        "add": {
+            "title": "Solicitud de confirmación",
+            "validator": "Confirmando",
+            "toValidate": "Confirmar antes de",
+            "errorDate": "Fecha inválida",
+            "exempleDate": "(Por ej.: 31/05/2022)",
+            "description": "Descripción",
+            "cancel": "Anular",
+            "validate": "Confirmar",
+            "validatorView": {
+                "getBack": "Volver",
+                "validator": "Confirmando",
+                "accept": "Aceptar"
+            }
+        },
+        "safeZone": {
+            "add": {
+                "content": "¿Está seguro/a de que desea salir de esta página? Puede haber datos no confirmados.",
+                "action": "Sí, salir de esta página",
+                "keepView": "Anular y permanecer en la página"
+            },
+            "delete": {
+                "content": "¿Está seguro/a de que desea eliminar esta aprobación?",
+                "action": "Sí, eliminar esta aprobación",
+                "keepView": "Anular"
+            },
+            "close": {
+                "content": "¿Está seguro/a de que desea cerrar esta aprobación?",
+                "action": "Sí, cerrar esta aprobación",
+                "keepView": "Anular"
+            },
+            "deleteComment": {
+                "content": "¿Está seguro/a de que desea eliminar este comentario?",
+                "action": "Sí, eliminar este comentario",
+                "keepView": "Anular"
+            }
+        },
+        "summary": {
+            "title": {
+                "open": "Solicitud en curso",
+                "closed": "Solicitud cerrada"
+            },
+            "appliedBy": "Solicitud de confirmación de",
+            "validate": "Confirmar",
+            "deny": "Rechazar",
+            "delete": "Eliminar",
+            "close": "Cerrar",
+            "comment": "Dejar un comentario",
+            "term": "Fecha de finalización",
+            "validator": "Confirmado por",
+            "deletedUser": "Usuario eliminado",
+            "validatorList": {
+                "accept": "Confirmado",
+                "deny": "Rechazado",
+                "commented": "Comentado",
+                "pending": "En espera",
+                "getRidOfValidator": "Eliminar el usuario autorizado a confirmar",
+                "refresh": "Reiniciar la confirmación"
+            }
+        },
+        "comments": {
+            "comment": "Dejar un comentario",
+            "commentary": "Comentario",
+            "postComment": "Publicar un comentario",
+            "replyComment": "Responder a un comentario",
+            "publish": "Publicar",
+            "cancel": "Anular",
+            "reply": "Responder",
+            "actions": {
+                "edit": "Editar",
+                "delete": "Eliminar",
+                "confirmDelete": "¿Eliminar este comentario?"
+            }
+        },
+        "list": {
+            "title": "Solicitud en curso",
+            "toValidateVisas": "Mis confirmaciones",
+            "createdVisas": "Mis solicitudes",
+            "emptyValidation": "Ninguna confirmación en curso",
+            "emptyDemand": "Ninguna solicitud en curso"
+        },
+        "selectionValidator": {
+            "warning": "Este usuario no tiene authorización para acceder al archivo."
+        }
     }
 }

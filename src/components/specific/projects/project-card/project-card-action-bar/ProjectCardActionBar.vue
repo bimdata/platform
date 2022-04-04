@@ -1,8 +1,8 @@
 <template>
   <div class="project-card-action-bar">
     <BIMDataButton
-      data-test="btn-open-viewer"
-      class="project-card-action-bar__action-btn"
+      v-if="viewerButton"
+      class="project-card-action-bar__btn viewer-button"
       ghost
       rounded
       icon
@@ -13,8 +13,8 @@
     </BIMDataButton>
 
     <BIMDataButton
-      data-test="btn-open-menu"
-      class="project-card-action-bar__action-btn"
+      v-if="actionMenu"
+      class="project-card-action-bar__btn action-menu"
       color="default"
       ripple
       rounded
@@ -36,6 +36,14 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    actionMenu: {
+      type: Boolean,
+      default: true
+    },
+    viewerButton: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ["open-viewer", "open-menu"]

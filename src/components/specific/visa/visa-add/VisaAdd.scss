@@ -44,6 +44,11 @@
         background-color: white;
         color: var(--color-primary);
       }
+
+      &__error {
+        margin-top: 14px;
+        color: var(--color-high);
+      }
     }
   
     &__validate-date {
@@ -55,7 +60,7 @@
         .error {
           display: block;
           font-size: 1em;
-          margin-top: 18px;
+          margin-top: 14px;
         }
       }
 
