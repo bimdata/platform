@@ -26,7 +26,7 @@ const PLUGINS_CONFIG = {
   measure3d: true,
   split: true,
   "structure-properties": {
-    merge: false,
+    merge: true,
     export: true,
     editProperties: true,
   },
