@@ -12,6 +12,7 @@
             :folder="currentFolder"
           />
           <BIMDataTooltip
+            data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="
@@ -27,7 +28,6 @@
             "
           >
             <FileUploadButton
-              data-guide="btn-upload-file"
               :disabled="
                 (!project.isAdmin && currentFolder.userPermission < 100) ||
                 spaceSubInfo.remainingTotalSize <= 0
