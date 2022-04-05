@@ -4,6 +4,7 @@
       :tours="tours"
       :elementToObserve="appLayoutViewContainer"
     />
+
     <AppNotification />
     <AppHeader />
     <div
