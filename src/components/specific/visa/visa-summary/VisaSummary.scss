@@ -109,17 +109,28 @@
     &__file {      
       display: flex;
       align-items: center;
-      background-color: var(--color-silver-light);
-      border-radius: 3px;
-      height: 40px;
+      &__content {      
+        display: flex;
+        align-items: center;
+        width: 87%;
+        background-color: var(--color-silver-light);
+        border-radius: 3px;
+        height: 40px;
 
-      img {
-        margin-left: var(--spacing-unit);
+        img {
+          margin-left: var(--spacing-unit);
+        }
+
+        &__name {
+          margin-left: var(--spacing-unit);
+          color: var(--color-primary);
+        }
       }
-
-      &__name {
-        margin-left: var(--spacing-unit);
-        color: var(--color-primary);
+      
+      &__btn-file {
+        margin-left: auto;
+        border-radius: 3px;
+        background-color: var(--color-silver-light);
       }
     }
 

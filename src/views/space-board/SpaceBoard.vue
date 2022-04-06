@@ -1,6 +1,6 @@
 <template>
   <div data-test="space-board" class="view space-board">
-    <!-- <SubscriptionStatusBanner class="space-board__banner" :space="space" /> -->
+    <SubscriptionStatusBanner class="space-board__banner" :space="space" />
     <ViewHeader class="space-board__header">
       <template #left>
         <AppBreadcrumb />
@@ -58,7 +58,12 @@
     </AppSidePanel>
 
     <app-loading name="space-projects">
-      <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+      <BIMDataResponsiveGrid
+        class="space-board__body"
+        itemWidth="320px"
+        rowGap="36px"
+        columnGap="36px"
+      >
         <transition-group name="grid">
           <ProjectCreationCard
             data-test="creation-card"

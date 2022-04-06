@@ -2,7 +2,6 @@
   <div
     ref="visaCommentPost"
     class="visa-comment-post"
-    :class="`visa-comment-post${isAReply ? '__reply' : ''}`"
     v-click-away="toggleCloseActions"
   >
     <div class="visa-comment-post__header">
@@ -17,7 +16,7 @@
         <BIMDataTextbox
           class="visa-comment-post__header__left-side__name"
           :text="comment.fullName || comment.author.email"
-          maxWidth="60%"
+          maxWidth="45%"
         />
         <span class="visa-comment-post__header__left-side__separator">•</span>
         <span class="visa-comment-post__header__left-side__date">{{
@@ -27,7 +26,6 @@
       <div class="visa-comment-post__header__right-side">
         <template v-if="comment.isSelf">
           <VisaCommentPostActions
-            :isAReply="isAReply"
             :areActionsClosed="areActionsClosed"
             @init-edit="isEditing = true"
             @undo-edit="undoEdit"
@@ -52,31 +50,12 @@
         autofocus
       />
     </div>
-    <template v-if="isLastComment && !isEditing && !isReplying">
-      <BIMDataButton
-        class="visa-comment-post__content__reply-button"
-        color="secondary"
-        radius
-        width="30%"
-        @click="onReply"
-        >{{ $t("Visa.comments.reply") }}</BIMDataButton
-      >
-    </template>
-    <template v-if="isReplying">
-      <VisaCommentsInput
-        class="visa-comment-post__content__answer-input"
-        :mainComment="mainComment"
-        @post-comment="replyComment"
-        @close-comments-input="isReplying = false"
-      />
-    </template>
   </div>
 </template>
 
 <script>
-import { ref, watch, nextTick } from "vue";
+import { ref, watch } from "vue";
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import VisaCommentsInput from "@/components/specific/visa/visa-summary/visa-comments/visa-comments-input/VisaCommentsInput.vue";
 
 import VisaCommentPostActions from "./visa-comment-post-actions/VisaCommentPostActions.vue";
 import { useVisa } from "@/state/visa";
@@ -84,21 +63,11 @@ import { useVisa } from "@/state/visa";
 export default {
   components: {
     UserAvatar,
-    VisaCommentPostActions,
-    VisaCommentsInput
+    VisaCommentPostActions
   },
   props: {
-    mainComment: {
-      type: Object,
-      required: true
-    },
     comment: {
       type: Object,
-      required: true
-    },
-
-    isAReply: {
-      type: Boolean,
       required: true
     },
     project: {
@@ -108,18 +77,13 @@ export default {
     visa: {
       type: Object,
       required: true
-    },
-    isLastComment: {
-      type: Boolean,
-      required: true
     }
   },
   emits: ["reload-comments"],
   setup(props, { emit }) {
-    const { updateComment, deleteComment, createComment } = useVisa();
+    const { updateComment, deleteComment } = useVisa();
 
     const isEditing = ref(false);
-    const isReplying = ref(false);
     const commentContent = ref(props.comment.content);
     const areActionsClosed = ref(false);
     const textarea = ref(null);
@@ -155,31 +119,14 @@ export default {
       emit("reload-comments");
     };
 
-    const replyComment = async data => {
-      await createComment(props.project, props.visa.document, props.visa, data);
-      isReplying.value = false;
-      emit("reload-comments");
-    };
-
     const toggleCloseActions = () =>
       (areActionsClosed.value = !areActionsClosed.value);
 
     watch(isEditing, () => isEditing.value && textarea.value.focus());
 
-    const onReply = async () => {
-      isReplying.value = true;
-      await nextTick();
-
-      visaCommentPost.value.scrollIntoView({
-        block: "center",
-        behavior: "smooth"
-      });
-    };
-
     return {
       //references
       isEditing,
-      isReplying,
       areActionsClosed,
       commentContent,
       textarea,
@@ -188,9 +135,7 @@ export default {
       undoEdit,
       confirmEdit,
       confirmDelete,
-      toggleCloseActions,
-      replyComment,
-      onReply
+      toggleCloseActions
     };
   }
 };

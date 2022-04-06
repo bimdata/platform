@@ -17,7 +17,10 @@
   // Set files-table height and make it scrollable.
   // TODO: this is very ugly.. should find a way to do it better.
   &:deep() {
+    .file-tree,
     .files-table {
+      overflow: auto;
+
       /**
        * Details:
        * 100vh                             | full viewport height

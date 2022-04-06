@@ -3,6 +3,17 @@
   grid-template-rows: 32px 1fr;
   min-height: 100%;
 
+  &__banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  // Add top padding to header when banner is displayed
+  &__banner.visible + &__header {
+    padding-top: var(--spacing-unit);
+  }
+
   &__header:deep() {
     .bimdata-tabs__container__tab.active {
       background-color: rgba(47, 55, 74, 0.1);

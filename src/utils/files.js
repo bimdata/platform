@@ -18,10 +18,10 @@ function formatBytes(bytes, decimals = 2) {
   return (b / pow(1024, i)).toFixed(d) + " " + sizes[i];
 }
 
-function generateFileKey(fileName, fileSize) {
-  let key = Math.max(fileSize, 1000);
+function generateFileKey(file) {
+  let key = Math.max(file.size, 1000);
   key = Math.random() * key + 1;
-  key = `${key}-${fileName}`;
+  key = `${key}-${file.name}`;
   return key;
 }
 

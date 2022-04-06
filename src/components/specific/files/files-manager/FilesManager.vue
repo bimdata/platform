@@ -10,16 +10,31 @@
             :project="project"
             :folder="currentFolder"
           />
-          <FileUploadButton
-            :disabled="
-              (!project.isAdmin && currentFolder.userPermission < 100) ||
-              spaceSubInfo.remainingTotalSize <= 0
-            "
+          <BIMDataTooltip
             class="files-manager__actions__btn-new-file"
-            width="194px"
-            multiple
-            @upload="uploadFiles"
-          />
+            color="high"
+            :disabled="
+              (project.isAdmin || currentFolder.userPermission === 100) &&
+              spaceSubInfo.remainingTotalSize > 0
+            "
+            :text="
+              $t(
+                `FilesManager.uploadDisableMessage.${
+                  spaceSubInfo.remainingTotalSize <= 0 ? 'size' : 'permission'
+                }`
+              )
+            "
+          >
+            <FileUploadButton
+              :disabled="
+                (!project.isAdmin && currentFolder.userPermission < 100) ||
+                spaceSubInfo.remainingTotalSize <= 0
+              "
+              width="194px"
+              multiple
+              @upload="uploadFiles"
+            />
+          </BIMDataTooltip>
           <BIMDataSearch
             class="files-manager__actions__input-search"
             width="400px"
@@ -27,23 +42,31 @@
             v-model="searchText"
             clear
           />
-          <BIMDataButton
-            :disabled="!visasCounter"
-            class="files-manager__actions__visa"
-            color="primary"
-            fill
-            radius
-            @click="openVisaManager"
+          <BIMDataTooltip
+            class="files-manager__actions__visa-tooltip"
+            position="left"
+            color="high"
+            :disabled="visasCounter !== 0"
+            :text="$t('Visa.noVisa')"
           >
-            <span class="files-manager__actions__visa__content">
-              <template v-if="visasCounter > 0">
-                <div class="files-manager__actions__visa__content__counter">
-                  <span>{{ visasCounter }}</span>
-                </div>
-              </template>
-              {{ $t("Visa.button") }}
-            </span>
-          </BIMDataButton>
+            <BIMDataButton
+              :disabled="!visasCounter"
+              class="files-manager__actions__visa"
+              color="primary"
+              fill
+              radius
+              @click="openVisaManager"
+            >
+              <span class="files-manager__actions__visa__content">
+                <template v-if="visasCounter > 0">
+                  <div class="files-manager__actions__visa__content__counter">
+                    <span>{{ visasCounter }}</span>
+                  </div>
+                </template>
+                {{ $t("Visa.button") }}
+              </span>
+            </BIMDataButton>
+          </BIMDataTooltip>
         </div>
         <FileTree
           class="files-manager__tree"
@@ -104,6 +127,7 @@
               :visasLoading="visasLoading"
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
+              @reach-file="backToParent"
             />
           </div>
         </transition>

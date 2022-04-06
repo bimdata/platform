@@ -5,18 +5,18 @@
       height="38px"
       tabSize="120px"
       :tabs="tabs"
-      :selected="currentTab"
+      :selected="currentTab.id"
       @tab-click="selectTab"
     >
       <template #tab="{ tab }">
         <span class="models-manager-wrapper__tab-label">
-          {{ tab.label }}
+          {{ $t(`ModelsManager.tabs.${tab.label}`) }}
         </span>
         <span
           class="models-manager-wrapper__tab-count"
-          v-if="modelLists[tab.id].length > 0"
+          v-if="tab.models.length > 0"
         >
-          {{ modelLists[tab.id].length }}
+          {{ tab.models.length }}
         </span>
       </template>
     </BIMDataTabs>
@@ -29,7 +29,6 @@
         v-show="selection.length > 0"
         :project="project"
         :models="selection"
-        :currentTab="currentTab"
         @archive="archiveModels"
         @delete="openDeleteModal"
         @download="downloadModels"
@@ -44,6 +43,7 @@
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
+      @remove-model="removeModel($event)"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
     />
@@ -60,20 +60,12 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch, watchEffect } from "vue";
-import { useI18n } from "vue-i18n";
+import { ref, watchEffect } from "vue";
 import { useModels } from "@/state/models.js";
-import { segregateBySource } from "@/utils/models.js";
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
 import ModelsTable from "../models-table/ModelsTable.vue";
-
-const tabsDef = {
-  DWG: [{ id: "upload" }, { id: "archive" }],
-  IFC: [{ id: "upload" }, { id: "split" }, { id: "archive" }],
-  PDF: [{ id: "upload" }, { id: "archive" }]
-};
 
 export default {
   components: {
@@ -90,54 +82,30 @@ export default {
       type: Array,
       required: true
     },
-    modelType: {
-      type: String,
-      default: "IFC",
-      validator: value => ["DWG", "IFC", "PDF"].includes(value)
+    tabs: {
+      type: Array,
+      required: true,
+      validator: value => value.length > 0
     }
   },
   setup(props) {
-    const { t } = useI18n();
-    const { updateModels, downloadModels: download } = useModels();
+    const {
+      deleteModels,
+      downloadModels: download,
+      updateModels
+    } = useModels();
 
-    const tabs = computed(() =>
-      tabsDef[props.modelType].map(tab => ({
-        ...tab,
-        label: t(`ModelsManager.tabs.${tab.id}`)
-      }))
-    );
-    const currentTab = ref(tabs.value[0].id);
-    const selectTab = tab => (currentTab.value = tab.id);
+    const currentTab = ref(props.tabs[0]);
+    const selectTab = tab => (currentTab.value = tab);
 
-    const modelLists = reactive({
-      upload: [],
-      split: [],
-      archive: []
-    });
     const displayedModels = ref([]);
-    watch(
-      () => props.models,
-      () => Object.assign(modelLists, segregateBySource(props.models)),
-      { immediate: true }
-    );
     watchEffect(() => {
-      displayedModels.value = modelLists[currentTab.value];
+      displayedModels.value = currentTab.value.models;
     });
 
     const selection = ref([]);
     const setSelection = models => {
       selection.value = models;
-    };
-
-    const modelsToDelete = ref([]);
-    const showDeleteModal = ref(false);
-    const openDeleteModal = models => {
-      modelsToDelete.value = models;
-      showDeleteModal.value = true;
-    };
-    const closeDeleteModal = () => {
-      modelsToDelete.value = [];
-      showDeleteModal.value = false;
     };
 
     const archiveModels = async models => {
@@ -154,6 +122,21 @@ export default {
       );
     };
 
+    const removeModel = async model => {
+      await deleteModels(props.project, [model]);
+    };
+
+    const modelsToDelete = ref([]);
+    const showDeleteModal = ref(false);
+    const openDeleteModal = models => {
+      modelsToDelete.value = models;
+      showDeleteModal.value = true;
+    };
+    const closeDeleteModal = () => {
+      modelsToDelete.value = [];
+      showDeleteModal.value = false;
+    };
+
     const downloadModels = async models => {
       await download(models);
     };
@@ -162,16 +145,15 @@ export default {
       // References
       currentTab,
       displayedModels,
-      modelLists,
       modelsToDelete,
       selection,
       showDeleteModal,
-      tabs,
       // Methods
       archiveModels,
       downloadModels,
       closeDeleteModal,
       openDeleteModal,
+      removeModel,
       selectTab,
       setSelection,
       unarchiveModels

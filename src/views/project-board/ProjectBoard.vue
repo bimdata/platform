@@ -1,5 +1,6 @@
 <template>
   <div data-test="project-board" class="view project-board">
+    <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
         <AppBreadcrumb />
@@ -17,7 +18,11 @@
       <template #right>
         <div class="flex items-center">
           <SpaceSizeInfo
-            v-if="isSubscriptionEnabled && space.isAdmin"
+            v-if="
+              isSubscriptionEnabled &&
+              space.isAdmin &&
+              currentView !== 'ProjectBcf'
+            "
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
@@ -53,6 +58,7 @@ import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
 import ProjectOverview from "./project-overview/ProjectOverview.vue";
 import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
 const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {
@@ -81,7 +87,8 @@ export default {
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
-    SpaceSizeInfo
+    SpaceSizeInfo,
+    SubscriptionStatusBanner
   },
   setup() {
     const route = useRoute();

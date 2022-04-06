@@ -1,8 +1,9 @@
+import { toCamelCaseFields } from "./misc.js";
+
 /**
- *
  * @param {Object} param0
  * @param {Object} param1
- * @returns {XMLHttpRequest} the upload request
+ * @returns {Object} file uploader
  */
 function createFileUploader(
   { method, url, accessToken },
@@ -40,14 +41,12 @@ function createFileUploader(
           percentage: (e.loaded / e.total) * 100
         });
       });
-      request.upload.addEventListener("load", e => {
+      request.addEventListener("load", e => {
         onUploadComplete({
           bytesUploaded: e.loaded,
           bytesTotal: e.total,
           percentage: (e.loaded / e.total) * 100,
-          response: request.responseText
-            ? JSON.parse(request.responseText)
-            : null
+          response: toCamelCaseFields(request.response)
         });
         this.request = null;
       });
@@ -62,6 +61,7 @@ function createFileUploader(
 
       request.open(method, url);
       request.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+      request.responseType = "json";
 
       this.request = request;
       this.request.send(data);

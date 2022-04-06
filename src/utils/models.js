@@ -1,8 +1,10 @@
 import {
   CONVERTIBLE_EXTENSIONS,
+  MODEL_EXTENSIONS,
   MODEL_TYPE,
   MODEL_SOURCE
 } from "@/config/models.js";
+import { WINDOWS } from "@/config/viewer.js";
 import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {
@@ -33,23 +35,12 @@ function segregateBySource(models) {
 }
 
 function segregateByType(models) {
-  const result = {
-    dwg: [],
-    ifc: [],
-    pdf: []
-  };
+  const result = {};
   for (const model of models) {
-    switch (model.type) {
-      case MODEL_TYPE.DWG:
-        result.dwg.push(model);
-        break;
-      case MODEL_TYPE.IFC:
-        result.ifc.push(model);
-        break;
-      case MODEL_TYPE.PDF:
-        result.pdf.push(model);
-        break;
+    if (!result[model.type]) {
+      result[model.type] = [];
     }
+    result[model.type].push(model);
   }
   return result;
 }
@@ -58,21 +49,48 @@ function isModel(file) {
   return !!file.modelId;
 }
 
+function isPlanModel(model) {
+  const { JPG, PDF, PNG } = MODEL_TYPE;
+  return [JPG, PDF, PNG].includes(model.type);
+}
+
 function isIFC(file) {
   return isModel(file) && file.modelType === MODEL_TYPE.IFC;
 }
 
-function canConvertToModel(file) {
-  return (
-    !isModel(file) &&
-    CONVERTIBLE_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase())
+function isSmartFile(file) {
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+}
+
+function isViewable(file) {
+  const { IFC, DWG, PDF, DXF } = MODEL_TYPE;
+  return [IFC, DWG, PDF, DXF].includes(file.modelType);
+}
+
+function isConvertible(file) {
+  return CONVERTIBLE_EXTENSIONS.includes(
+    fileExtension(file.fileName).toLowerCase()
   );
 }
 
+function windowType(file) {
+  const { modelType } = file;
+  const { IFC, DWG } = MODEL_TYPE;
+
+  if (modelType === IFC) return WINDOWS.V3D;
+  if (modelType === DWG) return WINDOWS.DWG;
+
+  return WINDOWS.PLAN;
+}
+
 export {
-  canConvertToModel,
+  isConvertible,
   isIFC,
   isModel,
+  isPlanModel,
+  isSmartFile,
   segregateBySource,
-  segregateByType
+  segregateByType,
+  isViewable,
+  windowType
 };

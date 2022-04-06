@@ -1,9 +1,16 @@
 <template>
-  <div ref="appLayout" class="app-layout">
-    <BIMDataGuidedTour :tours="tours" :elementToObserve="appLayout" />
+  <div class="app-layout">
+    <BIMDataGuidedTour
+      :tours="tours"
+      :elementToObserve="appLayoutViewContainer"
+    />
     <AppNotification />
     <AppHeader />
-    <div class="app-layout__view-container" :class="{ loading }">
+    <div
+      ref="appLayoutViewContainer"
+      class="app-layout__view-container"
+      :class="{ loading }"
+    >
       <router-view></router-view>
     </div>
     <transition name="fade">
@@ -29,11 +36,11 @@ export default {
   },
   setup() {
     const loading = useLoadingContext(contexts.viewContainer);
-    const appLayout = ref(null);
+    const appLayoutViewContainer = ref(null);
     return {
       loading,
       tours,
-      appLayout
+      appLayoutViewContainer
     };
   }
 };
