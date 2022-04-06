@@ -91,8 +91,6 @@ import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-
 import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
 import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
-// import steps from "../../config/onboarding.js";
-
 export default {
   components: {
     AppLink,
