@@ -7,6 +7,7 @@
   >
     <template #front-face>
       <AppLink
+        data-guide="dashboard-project"
         :to="{
           name: routeNames.projectBoard,
           params: {

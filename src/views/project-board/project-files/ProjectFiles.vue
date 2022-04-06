@@ -12,6 +12,7 @@
       >
         <BIMDataButton
           v-if="project.isAdmin"
+          data-guide="btn-manage-groups"
           data-test="btn-manage-groups"
           width="120px"
           color="primary"

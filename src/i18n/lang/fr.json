@@ -469,6 +469,58 @@
       "readWrite": "Lecture / Écriture"
     }
   },
+  "GuidedTour": {
+    "platform": {
+      "intro": {
+        "title": "Bienvenue",
+        "content": "Explorons ensemble les fonctionnalités !"
+      },
+      "actionButtons": {
+        "title": "Raccourcis",
+        "content": "Accédez à l’ensemble de vos espaces, projets et abonnements directement depuis les raccourcis"
+      },
+      "firstSpace": {
+        "title": "Dashboard",
+        "content": "Accédez à vos espaces et projets récents depuis le dashboard"
+      },
+      "firstProject": {
+        "title": "Dashboard",
+        "content": "Accédez à vos espaces et projets récents depuis le dashboard"
+      },
+      "previewIfc": {
+        "title": "Aperçu",
+        "content": "Naviguez parmis les aperçus de vos modèles et renseignez leur position"
+      },    
+      "usersManager": {
+        "title": "Collaboration",
+        "content": "Invitez vos collaborateurs aux projets"
+      },
+      "modelsManager": {
+        "title": "Modèles",
+        "content": "Téléversez vos modèles (IFC, DWG, PDF...) pour commencer à bimer"
+      },
+      "gedButton": {
+        "title": "Modèles",
+        "content": "Téléversez vos modèles (IFC, DWG, PDF...) pour commencer à bimer"
+      },
+      "fileTree": {
+        "title": "Vos dossiers",
+        "content": "Créez et téléversez vos dossiers et fichiers pour faciliter la gestion de projets"
+      },
+      "groupManager": {
+        "title": "Gestion des droits",
+        "content": "Gérez vos dossiers, les droits d’accès et plus encore"
+      },
+      "changeSpace": {
+        "title": "Gestion des droits",
+        "content": "Gérez vos dossiers, les droits d’accès et plus encore"
+      },
+      "outro": {
+        "title": "Bravo !",
+        "content": "Bravo ! Vous êtes arrivé au bout de ce tutoriel ! Maintenant, il ne vous reste plus qu’à lancer votre premier projet"
+      }
+    }
+  },
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
     "resendLinkText": "Renvoyer l'invitation ?",

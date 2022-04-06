@@ -47,6 +47,7 @@
 
       <div
         v-else
+        data-guide="btn-create-project"
         data-test="btn-open-create"
         class="project-creation-card__btn-open"
         @click="openCreationForm"
