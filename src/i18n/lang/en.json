@@ -229,8 +229,10 @@
     "extension": {
       "Priority": "Priority",
       "PriorityNotDefined": "No priority",
+      "PriorityTitle": "Priorities",
       "Status": "Status",
-      "StatusNotDefined": "No status"
+      "StatusNotDefined": "No status",
+      "StatusTitle": "Status"
     }
   },
   "CreateBcfTopic": {

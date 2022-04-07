@@ -20,7 +20,6 @@
           :d="getPath(barData)"
           :stroke="barData.color"
           :stroke-width="barStrokeWidth"
-          stroke-linecap="round"
           fill="none"
         />
       </g>
@@ -70,6 +69,7 @@ export default {
   methods: {
     getPath(barData) {
       let percentage = barData.percentage - 2 * this.roundCapPercentageOffset;
+
       let previousPercentageSum =
         barData.previousPercentageSum + this.roundCapPercentageOffset;
 
@@ -109,7 +109,7 @@ export default {
   },
   computed: {
     roundCapPercentageOffset() {
-      const distance = this.barStrokeWidth / 2 + 1.5;
+      const distance = this.barStrokeWidth / 2 - 4;
       const perimeter = this.barDistanceFromCenter * 2 * Math.PI;
 
       return (distance / perimeter) * 100;
