@@ -42,6 +42,7 @@ const tours = [
         name: "firstProject",
         clickable: true,
         target: "dashboard-project",
+        targetToClick: "dashboard-project",
         props: {
           title: t("GuidedTour.platform.firstProject.title"),
           content: t("GuidedTour.platform.firstProject.content"),

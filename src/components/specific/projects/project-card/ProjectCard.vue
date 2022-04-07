@@ -8,6 +8,7 @@
     <template #front-face>
       <AppLink
         data-guide="dashboard-project"
+        :data-guide-click="project.isAdmin ? 'dashboard-project' : ''"
         :to="{
           name: routeNames.projectBoard,
           params: {
