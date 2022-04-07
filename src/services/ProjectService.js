@@ -15,9 +15,9 @@ class ProjectService {
 
   async fetchSpaceProjects(space) {
     try {
-      return await apiClient.collaborationApi.getProjects({
-        cloudPk: space.id
-      });
+      return await apiClient.collaborationApi.getProjects(
+        space.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error)
@@ -28,10 +28,10 @@ class ProjectService {
 
   async fetchProjectByID(space, id) {
     try {
-      return await apiClient.collaborationApi.getProject({
-        cloudPk: space.id,
+      return await apiClient.collaborationApi.getProject(
+        space.id,
         id
-      });
+      );
     } catch (error) {
       ErrorService.handleError(error);
       return null;
@@ -40,10 +40,10 @@ class ProjectService {
 
   async fetchProjectUsers(project) {
     try {
-      return await apiClient.collaborationApi.getProjectUsers({
-        cloudPk: project.cloud.id,
-        projectPk: project.id
-      });
+      return await apiClient.collaborationApi.getProjectUsers(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.USERS_FETCH_ERROR, error)
@@ -54,10 +54,10 @@ class ProjectService {
 
   async fetchProjectInvitations(project) {
     try {
-      return await apiClient.collaborationApi.getProjectInvitations({
-        cloudPk: project.cloud.id,
-        projectPk: project.id
-      });
+      return await apiClient.collaborationApi.getProjectInvitations(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.INVITATIONS_FETCH_ERROR, error)
@@ -68,10 +68,10 @@ class ProjectService {
 
   async createProject(space, project) {
     try {
-      return await apiClient.collaborationApi.createProject({
-        cloudPk: space.id,
-        data: project
-      });
+      return await apiClient.collaborationApi.createProject(
+        space.id,
+        project
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.PROJECT_CREATE_ERROR, error);
     }
@@ -79,11 +79,11 @@ class ProjectService {
 
   async updateProject(project) {
     try {
-      return await apiClient.collaborationApi.updateProject({
-        cloudPk: project.cloud.id,
-        id: project.id,
-        data: project
-      });
+      return await apiClient.collaborationApi.updateProject(
+        project.cloud.id,
+        project.id,
+        project
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.PROJECT_UPDATE_ERROR, error);
     }
@@ -91,10 +91,10 @@ class ProjectService {
 
   async deleteProject(project) {
     try {
-      return await apiClient.collaborationApi.deleteProject({
-        cloudPk: project.cloud.id,
-        id: project.id
-      });
+      return await apiClient.collaborationApi.deleteProject(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.PROJECT_DELETE_ERROR, error);
     }
@@ -102,15 +102,15 @@ class ProjectService {
 
   async sendProjectInvitation(project, invitation) {
     try {
-      return await apiClient.collaborationApi.inviteProjectUser({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        data: {
+      return await apiClient.collaborationApi.inviteProjectUser(
+        project.cloud.id,
+        project.id,
+        {
           email: invitation.email,
           role: invitation.role,
           redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
         }
-      });
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
     }
@@ -118,11 +118,11 @@ class ProjectService {
 
   async cancelProjectInvitation(project, invitation) {
     try {
-      return await apiClient.collaborationApi.cancelProjectUserInvitation({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id: invitation.id
-      });
+      return await apiClient.collaborationApi.cancelProjectUserInvitation(
+        project.cloud.id,
+        invitation.id,
+        project.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.INVITATION_CANCEL_ERROR, error);
     }
@@ -132,12 +132,12 @@ class ProjectService {
     try {
       // TODO: API model should be updated to return
       // user data instead of role value.
-      await apiClient.collaborationApi.updateProjectUser({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id: user.id,
-        data: user
-      });
+      await apiClient.collaborationApi.updateProjectUser(
+        project.cloud.id,
+        user.id,
+        project.id,
+        user
+      );
       return {
         ...user,
         role: undefined
@@ -149,11 +149,11 @@ class ProjectService {
 
   async deleteProjectUser(project, user) {
     try {
-      return await apiClient.collaborationApi.deleteProjectUser({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id: user.id
-      });
+      return await apiClient.collaborationApi.deleteProjectUser(
+        project.cloud.id,
+        user.id,
+        project.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
     }
@@ -161,10 +161,10 @@ class ProjectService {
 
   async leaveProject(project) {
     try {
-      return await apiClient.collaborationApi.leaveProject({
-        cloudPk: project.cloud.id,
-        id: project.id
-      });
+      return await apiClient.collaborationApi.leaveProject(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_LEAVE_ERROR, error);
     }
@@ -172,11 +172,11 @@ class ProjectService {
 
   async fetchFolderProjectUsers(project, folder) {
     try {
-      return await apiClient.collaborationApi.getFolderProjectUsers({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        folderPk: folder.id
-      });
+      return await apiClient.collaborationApi.getFolderProjectUsers(
+        project.cloud.id,
+        folder.id,
+        project.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
     }

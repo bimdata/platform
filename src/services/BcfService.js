@@ -3,20 +3,18 @@ import apiClient from "./api-client.js";
 class BcfService {
   async fetchProjectTopics(project) {
     try {
-      return await apiClient.bcfApi.getTopics({
-        projectsPk: project.id
-      });
+      return await apiClient.bcfApi.getTopics(project.id);
     } catch (error) {
       console.log(error);
     }
   }
   async fetchTopicViewpoints(project, topic, imgFormat = null) {
     try {
-      return await apiClient.bcfApi.getTopicViewpoints({
-        projectsPk: project.id,
-        topicsGuid: topic.guid,
-        imgFormat: imgFormat ? "url" : null
-      });
+      return await apiClient.bcfApi.getTopicViewpoints(
+        project.id,
+        topic.guid,
+        imgFormat ? "url" : null
+      );
     } catch (error) {
       console.log(error);
     }
@@ -41,18 +39,14 @@ class BcfService {
 
   async fetchExtensions(project) {
     try {
-      return await apiClient.bcfApi.getExtensions({
-        id: project.id
-      });
+      return await apiClient.bcfApi.getExtensions(project.id);
     } catch (error) {
       console.log(error);
     }
   }
   async fetchDetailedExtensions(project) {
     try {
-      return await apiClient.bcfApi.getDetailedExtensions({
-        id: project.id
-      });
+      return await apiClient.bcfApi.getDetailedExtensions(project.id);
     } catch (error) {
       console.log(error);
     }
@@ -60,31 +54,31 @@ class BcfService {
 
   async createExtension(project, extensionType, data) {
     try {
-      return await apiClient.bcfApi["createExtension" + extensionType]({
-        projectsPk: project.id,
+      return await apiClient.bcfApi["createExtension" + extensionType](
+        project.id,
         data
-      });
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async deleteExtension(project, extensionType, priority) {
     try {
-      return await apiClient.bcfApi["deleteExtension" + extensionType]({
-        projectsPk: project.id,
-        id: priority.id
-      });
+      return await apiClient.bcfApi["deleteExtension" + extensionType](
+        priority.id,
+        project.id
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async updateExtension(project, extensionType, extensionId, data) {
     try {
-      return await apiClient.bcfApi["updateExtension" + extensionType]({
-        projectsPk: project.id,
-        id: extensionId,
+      return await apiClient.bcfApi["updateExtension" + extensionType](
+        extensionId,
+        project.id,
         data
-      });
+      );
     } catch (error) {
       console.log(error);
     }
@@ -110,20 +104,19 @@ class BcfService {
 
   async createTopic(project, topic) {
     try {
-      return await apiClient.bcfApi.createTopic({
-        projectsPk: project.id,
-        data: topic
-      });
+      return await apiClient.bcfApi.createTopic(
+        project.idtopic
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async deleteTopic(project, topic) {
     try {
-      return await apiClient.bcfApi.deleteTopic({
-        projectsPk: project.id,
-        guid: topic.guid
-      });
+      return await apiClient.bcfApi.deleteTopic(
+        topic.guid,
+        project.id
+      );
     } catch (error) {
       console.log(error);
     }
@@ -131,22 +124,22 @@ class BcfService {
 
   async createViewpoint(project, topic, data) {
     try {
-      return await apiClient.bcfApi.createViewpoint({
-        projectsPk: project.id,
-        topicsGuid: topic.guid,
+      return await apiClient.bcfApi.createViewpoint(
+        project.id,
+        topic.guid,
         data
-      });
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async deleteViewpoint(project, topic, viewpoint) {
     try {
-      return await apiClient.bcfApi.deleteViewpoint({
-        projectsPk: project.id,
-        topicsGuid: topic.guid,
-        guid: viewpoint.guid
-      });
+      return await apiClient.bcfApi.deleteViewpoint(
+        viewpoint.guid,
+        project.id,
+        topic.guid
+      );
     } catch (error) {
       console.log(error);
     }
@@ -190,44 +183,44 @@ class BcfService {
   // comments
   async fetchAllComments(project, topic) {
     try {
-      return await apiClient.bcfApi.getComments({
-        projectsPk: project.id,
-        topicsGuid: topic.guid
-      });
+      return await apiClient.bcfApi.getComments(
+        project.id,
+        topic.guid
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async createComment(project, topic, data) {
     try {
-      return await apiClient.bcfApi.createComment({
-        projectsPk: project.id,
-        topicsGuid: topic.guid,
+      return await apiClient.bcfApi.createComment(
+        project.id,
+        topic.guid,
         data
-      });
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async deleteComment(project, topic, comment) {
     try {
-      return await apiClient.bcfApi.deleteComment({
-        projectsPk: project.id,
-        topicsGuid: topic.guid,
-        guid: comment.guid
-      });
+      return await apiClient.bcfApi.deleteComment(
+        comment.guid,
+        project.id,
+        topic.guid
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async updateComment(project, topic, comment, data) {
     try {
-      return await apiClient.bcfApi.updateComment({
-        projectsPk: project.id,
-        topicsGuid: topic.guid,
-        guid: comment.guid,
+      return await apiClient.bcfApi.updateComment(
+        comment.guid,
+        project.id,
+        topic.guid,
         data
-      });
+      );
     } catch (error) {
       console.log(error);
     }
