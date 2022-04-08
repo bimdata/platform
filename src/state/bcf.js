@@ -1,18 +1,27 @@
+import mapLimit from "async/mapLimit";
 import { reactive, shallowReadonly, toRefs } from "vue";
 import BcfService from "@/services/BcfService.js";
-import mapLimit from "async/mapLimit";
 
 const state = reactive({
   bcfTopics: [],
-  extensions: [],
+  extensions: {
+    topicType: [],
+    priority: [],
+    topicStatus: [],
+    stage: [],
+    userIdType: [],
+    topicLabel: []
+  },
   detailedExtensions: {
     topicTypes: [],
     priorities: [],
     topicStatuses: [],
-    labels: [],
-    stages: []
+    stages: [],
+    topicLabels: []
   }
 });
+
+// --- BCF Topics ---
 
 const loadBcfTopics = async project => {
   const topics = await BcfService.fetchProjectTopics(project);
@@ -35,36 +44,40 @@ const loadBcfTopics = async project => {
   return topicsWithSnapshotsAndComments;
 };
 
-const createFullTopic = async (project, topic) => {
-  const newTopic = await BcfService.createFullTopic(project, topic, "url");
-  await loadBcfTopics(project);
-  return newTopic;
-};
 const createTopic = async (project, topic) => {
   const newTopic = await BcfService.createTopic(project, topic);
   await loadBcfTopics(project);
   return newTopic;
 };
-const updateTopic = async (project, bcfTopic, topic) => {
-  const newTopic = await BcfService.updateProjectTopics(
-    project,
-    bcfTopic,
-    topic
-  );
+
+const createFullTopic = async (project, topic) => {
+  const newTopic = await BcfService.createFullTopic(project, topic);
   await loadBcfTopics(project);
   return newTopic;
 };
+
+const updateTopic = async (project, bcfTopic, topic) => {
+  const newTopic = await BcfService.updateFullTopic(project, bcfTopic, topic);
+  await loadBcfTopics(project);
+  return newTopic;
+};
+
 const deleteTopic = async (project, topic) => {
   await BcfService.deleteTopic(project, topic);
   await loadBcfTopics(project);
   return topic;
 };
 
-const createViewpoint = async (project, topic, data) => {
-  const newViewpoint = await BcfService.createViewpoint(project, topic, data);
+const createViewpoint = async (project, topic, viewpoint) => {
+  const newViewpoint = await BcfService.createViewpoint(
+    project,
+    topic,
+    viewpoint
+  );
   await loadBcfTopics(project);
   return newViewpoint;
 };
+
 const deleteViewpoint = (project, topic, viewpoint) => {
   return BcfService.deleteViewpoint(project, topic, viewpoint);
   // We don't want to reload topic here because this method may be called many times in parallel
@@ -76,9 +89,12 @@ const importBcf = async (project, file) => {
   await loadDetailedExtensions(project);
   return bcf;
 };
+
 const exportBcf = project => {
   return BcfService.exportBcf(project);
 };
+
+// --- BCF Extensions ---
 
 const loadExtensions = async project => {
   const extensions = await BcfService.fetchExtensions(project);
@@ -101,15 +117,7 @@ const createExtension = async (project, extensionType, data) => {
   await loadDetailedExtensions(project);
   return newExtension;
 };
-const deleteExtension = async (project, extensionType, priority) => {
-  const newExtension = await BcfService.deleteExtension(
-    project,
-    extensionType,
-    priority
-  );
-  await loadDetailedExtensions(project);
-  return newExtension;
-};
+
 const updateExtension = async (project, extensionType, id, priority) => {
   const newExtension = await BcfService.updateExtension(
     project,
@@ -121,23 +129,37 @@ const updateExtension = async (project, extensionType, id, priority) => {
   return newExtension;
 };
 
-// comments
+const deleteExtension = async (project, extensionType, priority) => {
+  const newExtension = await BcfService.deleteExtension(
+    project,
+    extensionType,
+    priority
+  );
+  await loadDetailedExtensions(project);
+  return newExtension;
+};
+
+// --- BCF Topic Comments ---
+
 const loadTopicComments = async (project, topic) => {
   let allComments = await BcfService.fetchAllComments(project, topic);
   allComments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
   topic.comments = allComments;
   return allComments;
 };
+
 const createComment = async (project, topic, data) => {
   const newComment = await BcfService.createComment(project, topic, data);
   await loadTopicComments(project, topic);
   return newComment;
 };
+
 const deleteComment = async (project, topic, comment) => {
   const newComment = await BcfService.deleteComment(project, topic, comment);
   await loadTopicComments(project, topic);
   return newComment;
 };
+
 const updateComment = async (project, topic, comment, data) => {
   const newComment = await BcfService.updateComment(
     project,
@@ -156,8 +178,8 @@ export function useBcf() {
     ...toRefs(readonlyState),
     // Methods
     loadBcfTopics,
-    createFullTopic,
     createTopic,
+    createFullTopic,
     updateTopic,
     deleteTopic,
     createViewpoint,
@@ -167,11 +189,11 @@ export function useBcf() {
     loadExtensions,
     loadDetailedExtensions,
     createExtension,
-    deleteExtension,
     updateExtension,
+    deleteExtension,
     loadTopicComments,
     createComment,
-    deleteComment,
-    updateComment
+    updateComment,
+    deleteComment
   };
 }
