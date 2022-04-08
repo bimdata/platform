@@ -69,9 +69,14 @@
               icon
               class="m-r-12"
               @click="toggleMetrics"
-              :disabled="!bcfTopics.length"
+              :class="{ active: !showMetrics }"
             >
-              <Graph style="heiht: 18px; width: 18px" />
+              <Graph
+                style="heiht: 18px; width: 18px"
+                :activeColor="
+                  !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
+                "
+              />
             </BIMDataButton>
           </template>
         </BIMDataTooltip>
@@ -171,7 +176,7 @@
             </BIMDataButton>
           </template>
         </BIMDataTooltip>
-        <!-- <BIMDataTooltip
+        <BIMDataTooltip
           :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
@@ -192,13 +197,13 @@
               <List v-else style="heiht: 18px; width: 18px" />
             </BIMDataButton>
           </template>
-        </BIMDataTooltip> -->
+        </BIMDataTooltip>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
 
     <div class="project-bcf__content flex m-t-24">
-      <div class="project-bcf__content__metrics m-r-24" v-show="!showMetrics">
+      <div class="project-bcf__content__metrics m-r-24" v-if="!showMetrics">
         <p class="text-center">
           Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
         </p>
@@ -230,14 +235,19 @@
       </div>
       <!-- if no Bcf topics -->
       <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
+
+      <!-- display Bcf topics in list mode -->
       <transition-group v-else-if="isDisplayByListActive" name="list">
-        <!-- display Bcf topics in list mode -->
         <div class="project-bcf__content__list" key="display-bcf-list">
-          <BcfTopicsList :bcfTopics="displayedBcfTopics" />
+          <BcfTopicsList
+            :bcfTopics="displayedBcfTopics"
+            :detailedExtensions="detailedExtensions"
+          />
         </div>
       </transition-group>
+
+      <!-- display Bcf topics in grid mode -->
       <transition-group v-else name="grid">
-        <!-- display Bcf topics in grid mode -->
         <div class="project-bcf__content__grid" key="display-bcf-grid">
           <BcfTopicGridItem
             v-for="bcfTopic in displayedBcfTopics"
@@ -245,6 +255,9 @@
             :project="project"
             :bcfTopic="bcfTopic"
             :detailedExtensions="detailedExtensions"
+            :showSidePanel="bcfTopicPanelShown === bcfTopic"
+            @showPanel="bcfTopicPanelShown = bcfTopic"
+            @hidePanel="bcfTopicPanelShown = null"
           />
         </div>
       </transition-group>
@@ -392,9 +405,12 @@ export default {
       toggle: toggleMetrics
     } = useToggle();
 
+    const bcfTopicPanelShown = ref(null);
+
     return {
       loading,
       bcfTopics,
+      bcfTopicPanelShown,
       project: currentProject,
       displayedBcfTopics,
       detailedExtensions,
