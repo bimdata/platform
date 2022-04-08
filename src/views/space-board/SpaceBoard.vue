@@ -23,6 +23,7 @@
             :spaceSubInfo="spaceSubInfo"
           />
           <BIMDataButton
+            v-if="!isMD"
             data-test="btn-sort"
             class="space-board__header__btn"
             fill
@@ -48,16 +49,16 @@
     </ViewHeader>
 
     <AppSidePanel :title="$t('SpaceUsersManager.title')">
-      <app-loading name="space-users">
+      <AppLoading name="space-users">
         <SpaceUsersManager
           :space="space"
           :users="users"
           :invitations="invitations"
         />
-      </app-loading>
+      </AppLoading>
     </AppSidePanel>
 
-    <app-loading name="space-projects">
+    <AppLoading name="space-projects">
       <BIMDataResponsiveGrid
         class="space-board__body"
         itemWidth="320px"
@@ -79,7 +80,7 @@
           />
         </transition-group>
       </BIMDataResponsiveGrid>
-    </app-loading>
+    </AppLoading>
   </div>
 </template>
 

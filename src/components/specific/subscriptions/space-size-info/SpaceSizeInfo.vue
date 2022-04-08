@@ -2,7 +2,7 @@
   <div class="space-size-info flex">
     <ProgressBar
       class="m-r-12"
-      :width="isXL ? '115px' : '230px'"
+      :width="isMD ? '80px' : isXL ? '115px' : '230px'"
       :progress="spaceSubInfo.usedSizePercent"
     >
       <template #text-below-left>
@@ -38,8 +38,11 @@
         }
       }"
     >
-      <BIMDataButton color="secondary" fill radius>
-        <template v-if="spaceSubInfo.isPlatformPro">
+      <BIMDataButton color="secondary" fill radius :icon="isMD">
+        <template v-if="isMD">
+          <BIMDataIcon name="plus" size="xs" />
+        </template>
+        <template v-else-if="spaceSubInfo.isPlatformPro">
           {{ $t("SpaceSizeInfo.subscribeDatapackButton") }}
         </template>
         <template v-else>

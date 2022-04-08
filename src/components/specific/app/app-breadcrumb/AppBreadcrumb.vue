@@ -1,8 +1,15 @@
 <template>
   <div class="app-breadcrumb">
     <GoBackButton />
-    <template v-if="breadcrumb">
-      <div class="breadcrumb-separator"></div>
+    <template v-if="breadcrumb && !isSM">
+      <div
+        class="breadcrumb-separator"
+        :style="{
+          margin: `0 ${
+            isMD ? 'calc(var(--spacing-unit) / 2)' : 'var(--spacing-unit)'
+          }`
+        }"
+      ></div>
       <component :is="breadcrumb" />
     </template>
   </div>
@@ -10,6 +17,7 @@
 
 <script>
 import { useRoute } from "vue-router";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import routeNames from "@/router/route-names.js";
 // Components
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
@@ -34,7 +42,8 @@ export default {
     const route = useRoute();
 
     return {
-      breadcrumb: BREADCRUMB_COMPONENTS[route.name]
+      breadcrumb: BREADCRUMB_COMPONENTS[route.name],
+      ...useStandardBreakpoints()
     };
   }
 };

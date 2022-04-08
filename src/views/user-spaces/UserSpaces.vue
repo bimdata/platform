@@ -26,13 +26,13 @@
         </BIMDataButton>
         <BIMDataButton
           v-if="isSubscriptionEnabled"
-          :width="isSM ? undefined : '120px'"
+          :width="isMD ? undefined : '120px'"
           fill
           radius
-          :icon="isSM"
+          :icon="isMD"
           @click="openOrganizationsManager"
         >
-          <template v-if="isSM">
+          <template v-if="isMD">
             <BIMDataIcon name="organization" size="xs" />
           </template>
           <template v-else>
@@ -44,14 +44,14 @@
           <AppLink :to="{ name: routeNames.subscriptionPro }">
             <BIMDataButton
               class="user-spaces__header__btn-create"
-              :width="isSM ? undefined : '120px'"
+              :width="isMD ? undefined : '120px'"
               color="secondary"
               fill
               radius
-              :icon="isSM"
+              :icon="isMD"
             >
               <BIMDataIcon name="plus" :size="isSM ? 'xxs' : 'xxxs'" />
-              <span v-if="!isSM" style="margin-left: 6px">
+              <span v-if="!isMD" style="margin-left: 6px">
                 {{ $t("UserSpaces.createButtonText") }}
               </span>
             </BIMDataButton>
@@ -84,8 +84,8 @@
 
     <BIMDataResponsiveGrid
       itemWidth="215px"
-      rowGap="36px"
-      columnGap="36px"
+      :rowGap="isMD ? '12px' : '36px'"
+      :columnGap="isMD ? '12px' : '36px'"
       :style="{ justifyContent: isSM ? 'center' : '' }"
     >
       <transition-group name="grid">
