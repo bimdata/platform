@@ -326,7 +326,7 @@ export default {
           return statusDetail.color;
         }
       }
-      return "";
+      return "D8D8D8";
     });
 
     const deleteTopicModal = ref(false);
