@@ -237,6 +237,7 @@
     "headers": {
       "index": "#",
       "priority": "Priorité",
+      "status": "Statut",
       "title": "Titre",
       "creator": "Crée par",
       "date": "Date",

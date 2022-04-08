@@ -1,27 +1,29 @@
 <template>
   <div class="bcf-actions-cell">
-    <BIMDataButton
-      color="primary"
-      outline
-      radius
-      @click="openBcfTopic(bcfTopic)"
-    >
+    <BIMDataButton color="primary" fill radius @click="openBcfTopic(bcfTopic)">
       {{ $t("BcfActionsCell.seeButton") }}
     </BIMDataButton>
     <transition name="slide-fade-left">
       <div
-        v-show="showSidePanel"
+        v-if="showSidePanel"
         key="bcf-actions-cell-side-panel"
         class="bcf-actions-cell__side-panel"
       >
-        <OpenTopicIssue :bcfTopic="bcfTopic" @close="showSidePanel = false" />
+        <OpenTopicIssue
+          :bcfTopic="bcfTopic"
+          @close="showSidePanel = false"
+          :detailedExtensions="detailedExtensions"
+        />
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
+
+import { useBcf } from "@/state/bcf.js";
+import { useProjects } from "@/state/projects.js";
 
 import OpenTopicIssue from "../open-topic-issue/OpenTopicIssue.vue";
 
@@ -33,17 +35,24 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
+    },
+    detailedExtensions: {
+      type: Object,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
+    const { currentProject } = useProjects();
+    const { loadTopicComments } = useBcf();
+
     const showSidePanel = ref(false);
-    const bcfTopicToOpen = reactive({});
-    const openBcfTopic = topic => {
+    const openBcfTopic = async () => {
       showSidePanel.value = true;
-      bcfTopicToOpen.value = topic;
+      if (!props.bcfTopic.comments) {
+        await loadTopicComments(currentProject.value, props.bcfTopic);
+      }
     };
     return {
-      bcfTopicToOpen,
       showSidePanel,
       openBcfTopic
     };
