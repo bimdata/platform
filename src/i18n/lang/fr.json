@@ -78,7 +78,9 @@
     "exportButtonText": "Exporter",
     "createBcfButtonText": "Créer un BCF",
     "createBcfTitle": "Signaler un problème",
-    "searchInputPlaceholder": "Rechercher",
+    "showStatisticsTooltip": "Afficher les statistiques",
+    "hideStatisticsTooltip": "Masquer les statistiques",
+    "searchInputPlaceholder": "Recherche par numéro d'index, nom, créateur ou tag",
     "ascendingIndexTooltip": "index ascendant",
     "descendingIndexTooltip": "index descendant",
     "alphabeticalAscendingOrderTooltip": "ordre alphabétique",
@@ -276,8 +278,14 @@
   "BcfTopicsMetrics": {
     "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
     "issues": "problèmes",
-    "priority": "Priorité",
-    "notDefined": "Aucune priorité"
+    "extension": {
+      "Priority": "Priorité",
+      "PriorityNotDefined": "Aucune priorité",
+      "PriorityTitle": "Priorités",
+      "Status": "Statut",
+      "StatusNotDefined": "Aucun statut",
+      "StatusTitle": "Statuts"
+    }
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Veuillez sélectionner un fichier",

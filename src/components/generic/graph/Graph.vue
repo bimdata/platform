@@ -1,77 +1,50 @@
 <template>
-  <div
-    class="bimdata-graph"
-    ref="container"
-    :style="
-      'width: ' +
-      size +
-      'px; height: ' +
-      size +
-      'px; padding: 0; --graph-draw-time:' +
-      graphDrawTime +
-      's;'
-    "
-  >
-    <svg width="100%" height="100%" :viewBox="viewBox">
-      <g v-for="(barData, i) of relevantBarsData" :key="i">
-        <circle
-          :cx="center"
-          :cy="center"
-          :r="getRadius(i)"
-          :stroke="placeholderBarStroke"
-          :stroke-width="placeholderBarStrokeWidth"
-          fill="none"
-        />
-
+  <div class="bimdata-graph" ref="container">
+    <svg
+      :viewBox="viewBox"
+      :style="'--graph-draw-time:' + graphDrawTime + 's;'"
+    >
+      <circle
+        v-if="placeholder"
+        :cx="center"
+        :cy="center"
+        :r="barDistanceFromCenter"
+        :stroke="placeholderBarStroke"
+        :stroke-width="placeholderBarStrokeWidth"
+        fill="none"
+      />
+      <g v-for="(barData, i) of displayedBarsData" :key="i">
         <path
-          v-if="barData.percentage < 100"
+          v-if="barData.percentage > 0"
           class="path"
-          :d="getPath(barData.percentage, i)"
+          :d="getPath(barData)"
           :stroke="barData.color"
           :stroke-width="barStrokeWidth"
-          stroke-linecap="round"
-          fill="none"
-        />
-        <circle
-          v-else
-          class="path"
-          :cx="center"
-          :cy="center"
-          :r="getRadius(i)"
-          :stroke="barData.color"
-          :stroke-width="barStrokeWidth"
-          stroke-linecap="round"
-          :transform="`rotate(-90 ${center} ${center})`"
           fill="none"
         />
       </g>
     </svg>
-    <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    size: {
-      type: Number,
-      default: 200
-    },
     graphDrawTime: {
       type: Number,
-      default: 2
+      default: 4
     },
-    firstBarDistanceFromCenter: {
+    barDistanceFromCenter: {
       type: Number,
-      default: 57
-    },
-    interBarDistance: {
-      type: Number,
-      default: 16
+      default: 50
     },
     barStrokeWidth: {
       type: Number,
       default: 10
+    },
+    placeholder: {
+      type: Boolean,
+      default: false
     },
     placeholderBarStrokeWidth: {
       type: Number,
@@ -79,57 +52,87 @@ export default {
     },
     placeholderBarStroke: {
       type: String,
-      default: "#D8D8D8"
+      default: "#EBEBEB"
     },
     barsData: {
       type: Array,
       default: () => [],
-      validator(value) {
-        return value?.every(
-          barData =>
-            typeof barData?.color === "string" &&
-            barData?.percentage <= 100 &&
-            barData?.percentage >= 0
+      validator(barsData) {
+        return (
+          barsData?.every(barData => typeof barData?.color === "string") &&
+          barsData?.reduce((sum, barData) => sum + barData.percentage, "0") <=
+            "100"
         );
       }
     }
   },
   methods: {
-    getPath(percentage, index) {
-      const radius = this.getRadius(index);
-      return `M${this.center},${
-        this.center - radius
-      } A${radius} ${radius} 0 ${this.getTarget(percentage, radius)}`;
-    },
-    getTarget(percentage, radius) {
-      const radAngle = (percentage / 100) * Math.PI * 2 - Math.PI / 2;
+    getPath(barData) {
+      let percentage = barData.percentage - 2 * this.roundCapPercentageOffset;
 
-      const largeArcFlag = percentage > 50 ? 1 : 0;
+      let previousPercentageSum =
+        barData.previousPercentageSum + this.roundCapPercentageOffset;
+
+      if (+barData.percentage === 100) {
+        percentage = 99.999;
+        previousPercentageSum = 0;
+      }
+
+      const startPosition = this.getPercentagePosition(previousPercentageSum);
+
+      const radius = this.barDistanceFromCenter;
+      return `M${startPosition.x},${
+        startPosition.y
+      } A${radius} ${radius} 0 ${this.getTarget(
+        percentage,
+        previousPercentageSum
+      )}`;
+    },
+    getPercentagePosition(percentage) {
+      const radius = this.barDistanceFromCenter;
+      const radAngle = (percentage / 100) * Math.PI * 2 - Math.PI / 2;
 
       const x = radius * Math.cos(radAngle) + this.center;
       const y = radius * Math.sin(radAngle) + this.center;
 
-      return `${largeArcFlag} 1 ${x},${y}`;
+      return { x, y };
     },
-    getRadius(index) {
-      return this.firstBarDistanceFromCenter + index * this.interBarDistance;
+    getTarget(percentage, previousPercentageSum) {
+      const largeArcFlag = percentage > 50 ? 1 : 0;
+
+      const { x, y } = this.getPercentagePosition(
+        percentage + previousPercentageSum
+      );
+
+      return `${largeArcFlag} 1 ${x},${y}`;
     }
   },
   computed: {
+    roundCapPercentageOffset() {
+      const distance = this.barStrokeWidth / 2 - 4;
+      const perimeter = this.barDistanceFromCenter * 2 * Math.PI;
+
+      return (distance / perimeter) * 100;
+    },
     center() {
       return this.viewBoxSize / 2;
     },
+    displayedBarsData() {
+      let sum = 0;
+      return this.barsData.map(barData => {
+        const res = {
+          ...barData,
+          previousPercentageSum: sum
+        };
+        sum += +barData.percentage;
+        return res;
+      });
+    },
     viewBoxSize() {
-      return (
-        this.firstBarDistanceFromCenter * 2 +
-        this.interBarDistance * this.relevantBarsData.length * 2
-      );
+      return this.barDistanceFromCenter * 2 + this.barStrokeWidth;
     },
     viewBox() {
       return `0 0 ${this.viewBoxSize} ${this.viewBoxSize}`;
-    },
-    relevantBarsData() {
-      return this.barsData.filter(({ percentage }) => percentage > 0).reverse();
     }
   }
 };
