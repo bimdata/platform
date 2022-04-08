@@ -188,6 +188,7 @@
     "headers": {
       "index": "#",
       "priority": "Priority",
+      "status": "Status",
       "title": "Title",
       "creator": "Created by",
       "date": "Date",
