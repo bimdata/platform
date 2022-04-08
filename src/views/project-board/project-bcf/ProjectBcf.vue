@@ -50,15 +50,46 @@
       <BcfSettings @close="closeBcfSettings" />
     </div>
     <div class="project-bcf__actions flex justify-between">
-      <BIMDataSearch
-        :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
-        color="secondary"
-        radius
-        width="38%"
-        v-model="searchText"
-      >
-      </BIMDataSearch>
       <div class="flex">
+        <BIMDataTooltip
+          maxWidth="100px"
+          :message="
+            showMetrics
+              ? $t('ProjectBcf.showStatisticsTooltip')
+              : $t('ProjectBcf.hideStatisticsTooltip')
+          "
+          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
+        >
+          <template #content>
+            <BIMDataButton
+              data-test="btn-sort-index"
+              color="default"
+              fill
+              square
+              icon
+              class="m-r-12"
+              @click="toggleMetrics"
+              :class="{ active: !showMetrics }"
+            >
+              <Graph
+                style="heiht: 18px; width: 18px"
+                :activeColor="
+                  !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
+                "
+              />
+            </BIMDataButton>
+          </template>
+        </BIMDataTooltip>
+        <BIMDataSearch
+          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
+          color="secondary"
+          radius
+          width="42%"
+          v-model="searchText"
+        >
+        </BIMDataSearch>
+      </div>
+      <div class="flex justify-end">
         <BIMDataTooltip
           :message="
             isSortByIndexActive
@@ -145,7 +176,7 @@
             </BIMDataButton>
           </template>
         </BIMDataTooltip>
-        <!-- <BIMDataTooltip
+        <BIMDataTooltip
           :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
@@ -166,22 +197,35 @@
               <List v-else style="heiht: 18px; width: 18px" />
             </BIMDataButton>
           </template>
-        </BIMDataTooltip> -->
+        </BIMDataTooltip>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
-    <div class="project-bcf__content flex m-t-24">
-      <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
-        <template #content>
-          <BcfTopicsMetrics
-            v-if="detailedExtensions"
-            :bcfTopics="displayedBcfTopics"
-            :priorities="detailedExtensions.priorities"
-            :loading="loading"
-          />
-        </template>
-      </BIMDataCard>
 
+    <div class="project-bcf__content flex m-t-24">
+      <div class="project-bcf__content__metrics m-r-24" v-if="!showMetrics">
+        <p class="text-center">
+          Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
+        </p>
+        <BcfTopicsMetrics
+          v-if="bcfTopics.length"
+          :bcfTopics="displayedBcfTopics"
+          extensionType="Status"
+          :availableExtensions="detailedExtensions.topicStatuses"
+        />
+        <BcfTopicsMetrics
+          v-if="bcfTopics.length"
+          :bcfTopics="displayedBcfTopics"
+          extensionType="Priority"
+          :availableExtensions="detailedExtensions.priorities"
+          class="m-t-24"
+        />
+        <EmptyBcfTopicsMetrics
+          v-else
+          :bcfTopics="displayedBcfTopics"
+          :loading="loading"
+        />
+      </div>
       <!-- loading BCF -->
       <div
         class="project-bcf__content__empty flex items-center justify-center"
@@ -191,23 +235,31 @@
       </div>
       <!-- if no Bcf topics -->
       <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
+
+      <!-- display Bcf topics in list mode -->
       <transition-group v-else-if="isDisplayByListActive" name="list">
-        <!-- display Bcf topics in list mode -->
-        <BcfTopicsList
-          key="display-bcf-list"
-          class="project-bcf__content__list"
-          :bcfTopics="displayedBcfTopics"
-        />
+        <div class="project-bcf__content__list" key="display-bcf-list">
+          <BcfTopicsList
+            :bcfTopics="displayedBcfTopics"
+            :detailedExtensions="detailedExtensions"
+          />
+        </div>
       </transition-group>
+
+      <!-- display Bcf topics in grid mode -->
       <transition-group v-else name="grid">
-        <!-- display Bcf topics in grid mode -->
-        <BcfTopicGridItem
-          v-for="bcfTopic in displayedBcfTopics"
-          :key="bcfTopic.guid"
-          :project="project"
-          :bcfTopic="bcfTopic"
-          :detailedExtensions="detailedExtensions"
-        />
+        <div class="project-bcf__content__grid" key="display-bcf-grid">
+          <BcfTopicGridItem
+            v-for="bcfTopic in displayedBcfTopics"
+            :key="bcfTopic.guid"
+            :project="project"
+            :bcfTopic="bcfTopic"
+            :detailedExtensions="detailedExtensions"
+            :showSidePanel="bcfTopicPanelShown === bcfTopic"
+            @showPanel="bcfTopicPanelShown = bcfTopic"
+            @hidePanel="bcfTopicPanelShown = null"
+          />
+        </div>
       </transition-group>
     </div>
   </div>
@@ -236,6 +288,7 @@ import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-cre
 import BcfTopicGridItem from "../../../components/specific/bcf/bcf-topic-grid-item/BcfTopicGridItem.vue";
 import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
 import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
+import EmptyBcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/EmptyBcfTopicsMetrics.vue";
 import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
 
 export default {
@@ -248,6 +301,7 @@ export default {
     BcfTopicGridItem,
     BcfTopicsList,
     BcfTopicsMetrics,
+    EmptyBcfTopicsMetrics,
     BcfTopicCreationCard,
     FileUploadButton
   },
@@ -345,9 +399,18 @@ export default {
       open: openBcfSettings
     } = useToggle();
 
+    const {
+      isOpen: showMetrics,
+      close: closeMetrics,
+      toggle: toggleMetrics
+    } = useToggle();
+
+    const bcfTopicPanelShown = ref(null);
+
     return {
       loading,
       bcfTopics,
+      bcfTopicPanelShown,
       project: currentProject,
       displayedBcfTopics,
       detailedExtensions,
@@ -363,6 +426,9 @@ export default {
       openBcfSettings,
       closeBcfSettings,
       showBcfSettings,
+      showMetrics,
+      closeMetrics,
+      toggleMetrics,
       toggleDisplayBcfTopics,
       isDisplayByListActive,
       openCreateBcfTopic: openSidePanel,

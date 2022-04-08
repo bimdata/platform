@@ -48,7 +48,9 @@
     "exportButtonText": "Export",
     "createBcfButtonText": "Create a BCF",
     "createBcfTitle": "Report a problem",
-    "searchInputPlaceholder": "Search",
+    "showStatisticsTooltip": "Show statistics",
+    "hideStatisticsTooltip": "Hide statistics",
+    "searchInputPlaceholder": "Search by index #, name, creator or tag",
     "ascendingIndexTooltip": "ascending index",
     "descendingIndexTooltip": "descending index",
     "alphabeticalAscendingOrderTooltip": "alphabetical order",
@@ -85,6 +87,19 @@
       "entryLanguage": "Choose a language",
       "logoutButtonText": "Log Out",
       "subscriptionPlatform": "Platform subscription"
+  },
+
+  "BcfComments": {
+    "commentButton": "Post a comment",
+    "commentLabel": "Post a comment",
+    "commentText": "Comment",
+    "cancelButton": "Cancel",
+    "publishButton": "Publish",
+    "commentsText": "Comments"
+  },
+  "BcfComment": {
+    "deleteCommentText": "Delete this comment ?",
+    "deleteButton": "Delete"
   },
 
   "BcfComments": {
@@ -211,8 +226,14 @@
   "BcfTopicsMetrics": {
     "emptyText": "Add BCF Topics to start to have some stats here.",
     "issues": "issues",
-    "priority": "Priority",
-    "notDefined": "No priority"
+    "extension": {
+      "Priority": "Priority",
+      "PriorityNotDefined": "No priority",
+      "PriorityTitle": "Priorities",
+      "Status": "Status",
+      "StatusNotDefined": "No status",
+      "StatusTitle": "Status"
+    }
   },
   "CreateBcfTopic": {
     "dragDropImageText": "Please select a file",
