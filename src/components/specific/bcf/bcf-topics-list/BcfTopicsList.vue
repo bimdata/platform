@@ -6,15 +6,28 @@
       :rows="bcfTopics"
       rowKey="id"
       :paginated="true"
-      :perPage="13"
+      :perPage="14"
       :rowHeight="44"
       @selection-changed="$emit('selection-changed', $event)"
     >
+      <template #cell-index="{ row: bcfTopic }">
+        {{ bcfTopic.index }}
+      </template>
       <template #cell-priority="{ row: bcfTopic }">
-        <BcfPriorityCell :bcfTopic="bcfTopic" />
+        <BcfPriorityCell
+          :bcfTopic="bcfTopic"
+          :detailedExtensions="detailedExtensions"
+        />
+      </template>
+      <template #cell-status="{ row: bcfTopic }">
+        <BcfStatusCell
+          v-if="bcfTopic.topicStatus"
+          :bcfTopic="bcfTopic"
+          :detailedExtensions="detailedExtensions"
+        />
       </template>
       <template #cell-title="{ row: bcfTopic }">
-        <BIMDataTextbox maxWidth="500px" :text="bcfTopic.title" />
+        <BIMDataTextbox maxWidth="100%" :text="bcfTopic.title" />
       </template>
       <template #cell-creator="{ row: { creationAuthor } }">
         {{ creationAuthor }}
@@ -23,7 +36,10 @@
         {{ $d(bcfTopic.creationDate, "long") }}
       </template>
       <template #cell-actions="{ row: bcfTopic }">
-        <BcfActionsCell :bcfTopic="bcfTopic" />
+        <BcfActionsCell
+          :bcfTopic="bcfTopic"
+          :detailedExtensions="detailedExtensions"
+        />
       </template>
     </GenericTable>
   </div>
@@ -38,17 +54,23 @@ import columnsDef from "./columns";
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 
 import BcfPriorityCell from "./bcf-priority-cell/BcfPriorityCell.vue";
+import BcfStatusCell from "./bcf-status-cell/BcfStatusCell.vue";
 import BcfActionsCell from "./bcf-actions-cell/BcfActionsCell.vue";
 
 export default {
   components: {
     GenericTable,
     BcfPriorityCell,
+    BcfStatusCell,
     BcfActionsCell
   },
   props: {
     bcfTopics: {
       type: Array,
+      required: true
+    },
+    detailedExtensions: {
+      type: Object,
       required: true
     }
   },
