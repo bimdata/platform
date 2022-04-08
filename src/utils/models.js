@@ -59,11 +59,7 @@ function isIFC(file) {
 }
 
 function isSmartFile(file) {
-  const { IFC, DWG, PDF, DXF } = MODEL_EXTENSIONS;
-
-  return [IFC, DWG, PDF, DXF].includes(
-    fileExtension(file.fileName).toLowerCase()
-  );
+  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
 }
 
 function isViewable(file) {
@@ -71,11 +67,9 @@ function isViewable(file) {
   return [IFC, DWG, PDF, DXF].includes(file.modelType);
 }
 
-function isConvertibleToModel(file) {
-  return (
-    CONVERTIBLE_EXTENSIONS.includes(
-      fileExtension(file.fileName).toLowerCase()
-    ) && !isModel(file)
+function isConvertible(file) {
+  return CONVERTIBLE_EXTENSIONS.includes(
+    fileExtension(file.fileName).toLowerCase()
   );
 }
 
@@ -90,7 +84,7 @@ function windowType(file) {
 }
 
 export {
-  isConvertibleToModel,
+  isConvertible,
   isIFC,
   isModel,
   isPlanModel,

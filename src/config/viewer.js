@@ -19,4 +19,27 @@ const WINDOWS = Object.freeze({
 
 const DEFAULT_WINDOW = WINDOWS.V3D;
 
-export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, WINDOWS };
+const PLUGINS_CONFIG = {
+  header: {
+    warnings: false,
+  },
+  measure3d: true,
+  split: true,
+  "structure-properties": {
+    merge: true,
+    export: true,
+    editProperties: true,
+  },
+  structure: {
+    merge: true,
+    export: true,
+  },
+  properties: {
+    editProperties: true,
+  },
+  "viewer2d-background": true,
+  plan: true,
+  buildingMaker: true
+};
+
+export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };

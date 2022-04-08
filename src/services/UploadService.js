@@ -1,4 +1,4 @@
-import { isConvertibleToModel } from "@/utils/models.js";
+import { isConvertible, isModel } from "@/utils/models.js";
 import { createFileUploader } from "@/utils/upload.js";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
@@ -90,7 +90,7 @@ class UploadService {
       onUploadError,
       onUploadComplete: async e => {
         const document = e.response;
-        if (isConvertibleToModel(document)) {
+        if (isConvertible(document) && !isModel()) {
           await ModelService.createModel(project, document);
         }
         onUploadComplete(e);
