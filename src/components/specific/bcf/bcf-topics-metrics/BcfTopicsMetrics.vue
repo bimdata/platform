@@ -1,7 +1,11 @@
 <template>
   <div class="bcf-topics-metrics">
     <div class="bcf-topics-metrics__content flex justify-around items-center">
-      <Graph :barsData="barsData" :placeholder="true"></Graph>
+      <Graph
+        :barsData="barsData"
+        :placeholder="true"
+        :graphDrawTime="2.5"
+      ></Graph>
       <div
         class="bcf-topics-metrics__content__legend flex items-start justify-center m-l-12"
       >
