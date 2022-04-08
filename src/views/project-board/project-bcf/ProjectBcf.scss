@@ -11,15 +11,18 @@
   &__actions {
     & > .flex {
       position: relative;
+      &:first-child {
+        width: 50%;
+      }
       .bimdata-tooltip:deep() {
         // @TODO adapt BIMDataTooltip for Vue 3
         .bimdata-tooltip__text {
           top: 36px !important;
-          left: 40%;
+          left: 35%;
         }
       }
       .bimdata-btn:enabled {
-        color: var(--color-granite-light);
+        color: var(--color-primary);
       }
       .bimdata-btn:disabled {
         background-color: var(--color-white);
@@ -28,39 +31,37 @@
     }
     .active:enabled {
       position: relative;
-      &::before {
-        content: " ";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.08);
-        transition: box-shadow 0.2s ease;
-      }
+      background-color: var(--color-secondary);
     }
   }
+
   &__content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 18.4%);
-    grid-template-rows: 307px;
-    column-gap: 2%;
-    row-gap: 36px;
     &__metrics {
-      grid-area: 1/1/2/3;
-      overflow: hidden;
-      &.bimdata-card:deep() {
-        .bimdata-card__content {
-          height: calc(100% - 38px);
-        }
+      width: 22%;
+      height: 100%;
+      min-width: 360px;
+      overflow: auto;
+      position: sticky;
+      top: 0%;
+      p {
+        font-size: 18px;
       }
     }
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 336px);
+      justify-content: space-between;
+      grid-template-rows: 307px;
+      gap: 1%;
+      flex: 1;
+    }
     &__list {
-      grid-area: 1 / 3 / 3 / 6;
+      flex: 1;
     }
     &__empty {
+      width: 22%;
+      height: 307px;
       background-color: var(--color-white);
-      grid-area: 1 / 3 / 2 / 3;
       box-shadow: var(--box-shadow);
       & > .flex {
         flex-direction: column;

@@ -6,6 +6,7 @@ import BulletMarkImage from "@/components/images/BulletMarkImage.vue";
 import DateAscending from "@/components/images/DateAscending.vue";
 import DateDescending from "@/components/images/DateDescending.vue";
 import FreePlanRedirectImage from "@/components/images/FreePlanRedirectImage.vue";
+import Graph from "@/components/images/Graph.vue";
 import Grid from "@/components/images/Grid.vue";
 import IndexAscending from "@/components/images/IndexAscending.vue";
 import IndexDescending from "@/components/images/IndexDescending.vue";
@@ -29,6 +30,7 @@ export default {
   DateAscending,
   DateDescending,
   FreePlanRedirectImage,
+  Graph,
   Grid,
   IndexAscending,
   IndexDescending,
