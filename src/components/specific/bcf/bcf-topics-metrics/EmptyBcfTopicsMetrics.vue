@@ -1,7 +1,7 @@
 <template>
   <div
     class="bcf-topics-metrics__loading flex items-center justify-center"
-    v-if="loading"
+    v-if="!bcfTopics.length === 0 && loading"
   >
     <BIMDataSpinner />
   </div>
