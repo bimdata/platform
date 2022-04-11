@@ -3,23 +3,25 @@
     <AppSlotContent name="project-board-action">
       <BIMDataButton
         data-test="btn-toggle-upload"
-        width="120px"
+        :width="isMD ? undefined : '120px'"
         :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
+        :icon="isMD"
         :disabled="spaceSubInfo.remainingSmartDataSize <= 0"
         @click="toggleFileUploader"
       >
         <BIMDataIcon
-          :name="showFileUploader ? 'close' : 'plus'"
-          size="xxxs"
-          margin="0 6px 0 0"
+          :name="showFileUploader ? 'close' : isMD ? 'addFile' : 'plus'"
+          :size="isMD ? 'xxs' : 'xxxs'"
         />
-        <span>{{
-          showFileUploader
-            ? $t("ProjectOverview.closeFileUploadButtonText")
-            : $t("ProjectOverview.openFileUploadButtonText")
-        }}</span>
+        <span v-if="!isMD" style="margin-left: 6px">
+          {{
+            showFileUploader
+              ? $t("ProjectOverview.closeFileUploadButtonText")
+              : $t("ProjectOverview.openFileUploadButtonText")
+          }}
+        </span>
       </BIMDataButton>
     </AppSlotContent>
 
@@ -74,6 +76,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
@@ -152,7 +155,9 @@ export default {
       notifyForbiddenUpload,
       openFileUploader,
       reloadData,
-      toggleFileUploader
+      toggleFileUploader,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

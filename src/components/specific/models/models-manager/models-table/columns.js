@@ -24,12 +24,12 @@ export default [
   },
   {
     id: "status",
-    width: "100px",
+    width: "80px",
     align: "center"
   },
   {
     id: "actions",
     label: " ",
-    width: "250px"
+    width: "200px"
   }
 ];
