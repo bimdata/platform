@@ -3,19 +3,19 @@
     <AppSlotContent name="project-board-action">
       <BIMDataButton
         data-test="btn-toggle-upload"
-        :width="isMD ? undefined : '120px'"
+        :width="isLG ? undefined : '120px'"
         :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
-        :icon="isMD"
+        :icon="isLG"
         :disabled="spaceSubInfo.remainingSmartDataSize <= 0"
         @click="toggleFileUploader"
       >
         <BIMDataIcon
-          :name="showFileUploader ? 'close' : isMD ? 'addFile' : 'plus'"
-          :size="isMD ? 'xxs' : 'xxxs'"
+          :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
+          :size="isLG ? 'xxs' : 'xxxs'"
         />
-        <span v-if="!isMD" style="margin-left: 6px">
+        <span v-if="!isLG" style="margin-left: 6px">
           {{
             showFileUploader
               ? $t("ProjectOverview.closeFileUploadButtonText")

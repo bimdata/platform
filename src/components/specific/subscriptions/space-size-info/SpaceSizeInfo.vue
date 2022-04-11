@@ -2,11 +2,11 @@
   <div class="space-size-info flex">
     <ProgressBar
       class="m-r-12"
-      :width="isMD ? '80px' : isXL ? '115px' : '230px'"
+      :width="isLG ? '80px' : isXXL ? '115px' : '230px'"
       :progress="spaceSubInfo.usedSizePercent"
     >
       <template #text-below-left>
-        <div v-if="isXL">
+        <div v-if="isXXL">
           {{
             `${
               Math.round((100 * spaceSubInfo.smartDataSize) / GB) / 100
@@ -38,8 +38,8 @@
         }
       }"
     >
-      <BIMDataButton color="secondary" fill radius :icon="isMD">
-        <template v-if="isMD">
+      <BIMDataButton color="secondary" fill radius :icon="isLG">
+        <template v-if="isLG">
           <BIMDataIcon name="plus" size="xs" />
         </template>
         <template v-else-if="spaceSubInfo.isPlatformPro">

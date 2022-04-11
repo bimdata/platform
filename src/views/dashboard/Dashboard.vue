@@ -71,7 +71,7 @@
         <div class="dashboard__body__right">
           <SubscribeCard
             v-if="isSubscriptionEnabled"
-            :layout="isLG ? 'horizontal' : 'vertical'"
+            :layout="isXL ? 'horizontal' : 'vertical'"
           />
         </div>
       </template>

@@ -9,8 +9,8 @@
         <BIMDataSearch
           data-test="input-search"
           class="space-board__header__search"
-          :width="isMD ? '150px' : isLG ? '225px' : '300px'"
-          :placeholder="isXS ? '' : $t('SpaceBoard.searchInputPlaceholder')"
+          :width="isLG ? '150px' : isXL ? '225px' : '300px'"
+          :placeholder="isSM ? '' : $t('SpaceBoard.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
@@ -23,7 +23,7 @@
             :spaceSubInfo="spaceSubInfo"
           />
           <BIMDataButton
-            v-if="!isMD"
+            v-if="!isLG"
             data-test="btn-sort"
             class="space-board__header__btn"
             fill

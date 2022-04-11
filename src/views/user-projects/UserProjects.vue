@@ -9,8 +9,8 @@
           data-guide="project-input-search"
           data-test="input-search"
           class="user-projects__header__search"
-          :width="isMD ? '150px' : isLG ? '225px' : '300px'"
-          :placeholder="isXS ? '' : $t('UserProjects.searchInputPlaceholder')"
+          :width="isLG ? '150px' : isXL ? '225px' : '300px'"
+          :placeholder="isSM ? '' : $t('UserProjects.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />

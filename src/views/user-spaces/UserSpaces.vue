@@ -7,15 +7,15 @@
       <template #center>
         <BIMDataSearch
           class="user-spaces__header__search"
-          :width="isMD ? '150px' : isLG ? '225px' : '300px'"
-          :placeholder="isXS ? '' : $t('UserSpaces.searchInputPlaceholder')"
+          :width="isLG ? '150px' : isXL ? '225px' : '300px'"
+          :placeholder="isSM ? '' : $t('UserSpaces.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
       </template>
       <template #right>
         <BIMDataButton
-          v-show="!isMD"
+          v-show="!isLG"
           class="user-spaces__header__btn-sort"
           fill
           squared
@@ -26,13 +26,13 @@
         </BIMDataButton>
         <BIMDataButton
           v-if="isSubscriptionEnabled"
-          :width="isMD ? undefined : '120px'"
+          :width="isLG ? undefined : '120px'"
           fill
           radius
-          :icon="isMD"
+          :icon="isLG"
           @click="openOrganizationsManager"
         >
-          <template v-if="isMD">
+          <template v-if="isLG">
             <BIMDataIcon name="organization" size="xs" />
           </template>
           <template v-else>
@@ -44,14 +44,14 @@
           <AppLink :to="{ name: routeNames.subscriptionPro }">
             <BIMDataButton
               class="user-spaces__header__btn-create"
-              :width="isMD ? undefined : '120px'"
+              :width="isLG ? undefined : '120px'"
               color="secondary"
               fill
               radius
-              :icon="isMD"
+              :icon="isLG"
             >
-              <BIMDataIcon name="plus" :size="isSM ? 'xxs' : 'xxxs'" />
-              <span v-if="!isMD" style="margin-left: 6px">
+              <BIMDataIcon name="plus" :size="isMD ? 'xxs' : 'xxxs'" />
+              <span v-if="!isLG" style="margin-left: 6px">
                 {{ $t("UserSpaces.createButtonText") }}
               </span>
             </BIMDataButton>
@@ -84,9 +84,9 @@
 
     <BIMDataResponsiveGrid
       itemWidth="215px"
-      :rowGap="isMD ? '12px' : '36px'"
-      :columnGap="isMD ? '12px' : '36px'"
-      :style="{ justifyContent: isSM ? 'center' : '' }"
+      :rowGap="isLG ? '12px' : '36px'"
+      :columnGap="isLG ? '12px' : '36px'"
+      :style="{ justifyContent: isMD ? 'center' : '' }"
     >
       <transition-group name="grid">
         <SpaceCreationCard

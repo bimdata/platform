@@ -11,7 +11,7 @@
           @model-changed="onModelChange"
         />
         <ModelLocation
-          v-if="!isMD"
+          v-if="!isLG"
           :project="project"
           :model="displayedModel"
         />

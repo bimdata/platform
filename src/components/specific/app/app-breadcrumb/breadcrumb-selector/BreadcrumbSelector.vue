@@ -3,7 +3,7 @@
     <div class="breadcrumb-selector__header">
       <BIMDataTextbox
         class="breadcrumb-selector__header__text"
-        :maxWidth="isMD ? '80px' : '120px'"
+        :maxWidth="isLG ? '80px' : '120px'"
         :text="header"
         @click="$emit('header-clicked')"
       />

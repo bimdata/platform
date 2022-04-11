@@ -74,11 +74,11 @@ export default {
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
     const { t } = useI18n();
-    const { isMD } = useStandardBreakpoints();
+    const { isLG } = useStandardBreakpoints();
 
     const columns = computed(() => {
       let filteredColumns = columnsDef;
-      if (isMD.value) {
+      if (isLG.value) {
         filteredColumns = filteredColumns.filter(col =>
           ["name", "status", "actions"].includes(col.id)
         );

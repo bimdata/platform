@@ -14,14 +14,14 @@
           v-if="project.isAdmin"
           data-guide="btn-manage-groups"
           data-test="btn-manage-groups"
-          :width="isMD ? undefined : '120px'"
+          :width="isLG ? undefined : '120px'"
           color="primary"
           fill
           radius
-          :icon="isMD"
+          :icon="isLG"
         >
           <BIMDataIcon name="group" size="s" />
-          <span v-if="!isMD" style="margin-left: 6px">
+          <span v-if="!isLG" style="margin-left: 6px">
             {{ $t("ProjectFiles.groupsButtonText") }}
           </span>
         </BIMDataButton>

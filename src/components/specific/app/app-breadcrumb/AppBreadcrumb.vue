@@ -1,12 +1,12 @@
 <template>
   <div class="app-breadcrumb">
     <GoBackButton />
-    <template v-if="breadcrumb && !isSM">
+    <template v-if="breadcrumb && !isMD">
       <div
         class="breadcrumb-separator"
         :style="{
           margin: `0 ${
-            isMD ? 'calc(var(--spacing-unit) / 2)' : 'var(--spacing-unit)'
+            isLG ? 'calc(var(--spacing-unit) / 2)' : 'var(--spacing-unit)'
           }`
         }"
       ></div>

@@ -25,12 +25,12 @@ function defineBreakpoints(breakpoints = {}) {
 }
 
 const stdBreakpoints = defineBreakpoints({
-  isXS: ({ width }) => width <= BREAKPOINTS.SM,
-  isSM: ({ width }) => width <= BREAKPOINTS.MD,
-  isMD: ({ width }) => width <= BREAKPOINTS.LG,
-  isLG: ({ width }) => width <= BREAKPOINTS.XL,
-  isXL: ({ width }) => width <= BREAKPOINTS.XXL,
-  isXXL: () => true
+  isXS: ({ width }) => width <= BREAKPOINTS.XS,
+  isSM: ({ width }) => width <= BREAKPOINTS.SM,
+  isMD: ({ width }) => width <= BREAKPOINTS.MD,
+  isLG: ({ width }) => width <= BREAKPOINTS.LG,
+  isXL: ({ width }) => width <= BREAKPOINTS.XL,
+  isXXL: ({ width }) => width <= BREAKPOINTS.XXL
 });
 
 function useStandardBreakpoints() {
