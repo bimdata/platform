@@ -18,6 +18,16 @@
       span > span {
         font-size: 13px;
       }
+      .bimdata-paginated-list:deep() {
+        line-height: 24px;
+        ul:first-child {
+          min-height: 144px;
+          li {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }

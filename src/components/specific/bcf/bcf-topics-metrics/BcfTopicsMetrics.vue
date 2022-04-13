@@ -12,31 +12,37 @@
         <strong>
           {{ $t(`BcfTopicsMetrics.extension.${extensionType}Title`) }}
         </strong>
-        <div
-          v-for="barData in barsData"
-          :key="barData"
-          class="flex items-center"
+        <BIMDataPaginatedList
+          :list="barsData"
+          :perPage="6"
+          :first="false"
+          :last="false"
+          :numberDataElements="false"
+          :backgroundColor="'transparent'"
         >
-          <div
-            :style="{
-              width: '10px',
-              height: '10px',
-              'border-radius': '50px',
-              border: `3px solid ${barData.color}`
-            }"
-          ></div>
-          <strong class="m-x-6">{{ barData.percentage.toFixed(0) }} %</strong>
-          <span>
-            {{
-              barData.label && $t(`BcfTopicsMetrics.extension.${extensionType}`)
-            }}
-            {{
-              barData.label ||
-              $t(`BcfTopicsMetrics.extension.${extensionType}NotDefined`)
-            }}
-            <span>({{ barData.total }})</span>
-          </span>
-        </div>
+          <template #element="{ element: barData }">
+            <div
+              :style="{
+                width: '10px',
+                height: '10px',
+                'border-radius': '50px',
+                border: `3px solid ${barData.color}`
+              }"
+            ></div>
+            <strong class="m-x-6">{{ barData.percentage.toFixed(0) }} %</strong>
+            <span>
+              {{
+                barData.label &&
+                $t(`BcfTopicsMetrics.extension.${extensionType}`)
+              }}
+              {{
+                barData.label ||
+                $t(`BcfTopicsMetrics.extension.${extensionType}NotDefined`)
+              }}
+              <span>({{ barData.total }})</span>
+            </span>
+          </template>
+        </BIMDataPaginatedList>
       </div>
     </div>
   </div>
