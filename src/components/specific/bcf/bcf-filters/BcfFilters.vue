@@ -94,6 +94,16 @@
         <BIMDataSelect
           width="100%"
           :multi="true"
+          label="creator"
+          :options="creatorOptions"
+          v-model="creators"
+          optionKey="value"
+          optionLabelKey="label"
+          class="m-t-24"
+        />
+        <BIMDataSelect
+          width="100%"
+          :multi="true"
           :label="$t('BcfFilters.tagsLabel')"
           :options="tagOptions"
           v-model="tags"
@@ -202,6 +212,21 @@ export default {
         });
     });
 
+    // creator's list
+    const creators = ref([]);
+    const creatorOptions = computed(() => {
+      return Array.from(
+        new Set(props.bcfTopics.map(bcfTopic => bcfTopic.creationAuthor))
+      )
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map(creatorOption => {
+          return {
+            label: creatorOption || t("BcfFilters.undefinedCreator"),
+            value: creatorOption
+          };
+        });
+    });
+
     // date
     const startDateInput = ref("");
     const endDateInput = ref("");
@@ -236,6 +261,7 @@ export default {
         status.value.length ||
         tags.value.length ||
         users.value.length ||
+        creators.value.length ||
         (startDateConform && endDateConform)
       ) {
         emit("submit", {
@@ -243,6 +269,7 @@ export default {
           status: status.value.map(statut => statut.value),
           tags: tags.value,
           users: users.value.map(user => user.value),
+          creators: creators.value.map(creator => creator.value),
           startDate: startDateInput.value,
           endDate: endDateInput.value
         });
@@ -264,6 +291,7 @@ export default {
       status.value = [];
       tags.value = [];
       users.value = [];
+      creators.value = [];
       startDateInput.value = "";
       endDateInput.value = "";
 
@@ -272,6 +300,7 @@ export default {
         status: status.value,
         tags: tags.value,
         users: users.value,
+        creators: creators.value,
         startDate: startDateInput.value,
         endDate: endDateInput.value
       });
@@ -289,6 +318,8 @@ export default {
       tagOptions,
       users,
       userOptions,
+      creators,
+      creatorOptions,
       showFilters,
       startDateInput,
       endDateInput,

@@ -6,6 +6,7 @@ function useFilter(topics) {
     status: [],
     tags: [],
     users: [],
+    creators: [],
     startDate: "",
     endDate: ""
   });
@@ -15,6 +16,7 @@ function useFilter(topics) {
     filters.status = submittedFilters.status;
     filters.tags = submittedFilters.tags;
     filters.users = submittedFilters.users;
+    filters.creators = submittedFilters.creators;
     filters.startDate = submittedFilters.startDate;
     filters.endDate = submittedFilters.endDate;
   }
@@ -39,6 +41,11 @@ function useFilter(topics) {
       .filter(
         topic =>
           filters.users.length === 0 || filters.users.includes(topic.assignedTo)
+      )
+      .filter(
+        topic =>
+          filters.creators.length === 0 ||
+          filters.creators.includes(topic.creationAuthor)
       )
       .filter(topic => {
         if (filters.startDate && filters.endDate) {
