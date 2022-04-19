@@ -4,7 +4,11 @@
       extension[typeFieldMap[extensionType]]
     }}</span>
     <transition v-else>
-      <BIMDataInput v-model="extensionValue" @keyup.enter.stop="submitValue" />
+      <BIMDataInput
+        v-model="extensionValue"
+        @keyup.enter.stop="submitValue"
+        ref="input"
+      />
     </transition>
     <div class="flex items-center">
       <BIMDataIcon
@@ -61,7 +65,7 @@
         class="setting-card-item__delete__safe-zone flex items-center justify-between p-x-12"
         v-if="isDeleteSafeZoneOpen"
       >
-        <p>Supprimer cette {{ extensionType }}</p>
+        <p>{{ $t("Extension.deleteExtensionText") }}</p>
         <div class="flex items-center">
           <BIMDataButton
             color="high"
@@ -71,7 +75,7 @@
             class="m-r-6"
             @click="submitDelete(extension)"
           >
-            Supprimer
+            {{ $t("Extension.deleteButton") }}
           </BIMDataButton>
           <BIMDataButton
             color="primary"
@@ -89,7 +93,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { adjustBorderColor } from "../adjustColor.js";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
@@ -128,10 +132,14 @@ export default {
     const displayColorSelector = ref(false);
     const isDeleteSafeZoneOpen = ref(false);
 
+    const input = ref(null);
+    watch(editExtension, () =>
+      setTimeout(() => editExtension.value && input.value.focus(), 50)
+    );
+
     const extensionValue = ref(
       props.extension[typeFieldMap[props.extensionType]]
     );
-
     const submitValue = async () => {
       if (
         extensionValue.value !==
@@ -174,6 +182,7 @@ export default {
     };
 
     return {
+      input,
       extensionValue,
       extensionColor,
       displayColorSelector,

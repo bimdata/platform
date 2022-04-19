@@ -74,16 +74,43 @@
         @close="closeBcfSettings"
       />
     </div>
-
-    <div class="project-bcf__actions flex justify-between m-t-24">
-      <BIMDataSearch
-        width="38%"
-        :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
-        color="secondary"
-        radius
-        v-model="searchText"
-      />
+    <div class="project-bcf__actions flex justify-between">
       <div class="flex">
+        <BIMDataTooltip
+          maxWidth="100px"
+          :message="
+            showMetrics
+              ? $t('ProjectBcf.showStatisticsTooltip')
+              : $t('ProjectBcf.hideStatisticsTooltip')
+          "
+        >
+          <BIMDataButton
+            class="m-r-12"
+            :class="{ active: !showMetrics }"
+            color="default"
+            fill
+            square
+            icon
+            @click="toggleMetrics"
+          >
+            <Graph
+              style="heiht: 18px; width: 18px"
+              :activeColor="
+                !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
+              "
+            />
+          </BIMDataButton>
+        </BIMDataTooltip>
+        <BIMDataSearch
+          width="42%"
+          color="secondary"
+          radius
+          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
+          v-model="searchText"
+        >
+        </BIMDataSearch>
+      </div>
+      <div class="flex justify-end">
         <BIMDataTooltip
           :message="
             isSortByIndexActive
@@ -117,13 +144,12 @@
           "
         >
           <BIMDataButton
-            data-test="btn-sort-name"
+            class="m-r-12"
+            :class="{ active: activeButton === 'nameSort' }"
             color="default"
             fill
             square
             icon
-            class="m-r-12"
-            :class="{ active: activeButton === 'nameSort' }"
             @click="sortByName"
             :disabled="!bcfTopics.length"
           >
@@ -159,22 +185,55 @@
             <DateDescending v-else style="heiht: 18px; width: 18px" />
           </BIMDataButton>
         </BIMDataTooltip>
-
+        <BIMDataTooltip
+          :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
+        >
+          <BIMDataButton
+            color="default"
+            fill
+            square
+            icon
+            class="m-r-12"
+            @click="toggleDisplayBcfTopics"
+            :disabled="!bcfTopics.length"
+          >
+            <Grid
+              v-if="isDisplayByListActive"
+              style="heiht: 18px; width: 18px"
+            />
+            <List v-else style="heiht: 18px; width: 18px" />
+          </BIMDataButton>
+        </BIMDataTooltip>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
-    <div class="project-bcf__content flex m-t-36">
-      <BIMDataCard class="project-bcf__content__metrics" titleHeader="Stats">
-        <template #content>
-          <BcfStatistics
-            v-if="detailedExtensions"
-            :bcfTopics="displayedBcfTopics"
-            :priorities="detailedExtensions.priorities"
-            :loading="loading"
-          />
-        </template>
-      </BIMDataCard>
 
+    <div class="project-bcf__content flex m-t-24">
+      <div class="project-bcf__content__metrics m-r-24" v-if="!showMetrics">
+        <p class="text-center">
+          Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
+        </p>
+        <BcfTopicsMetrics
+          v-if="bcfTopics.length"
+          :bcfTopics="displayedBcfTopics"
+          extensionType="Status"
+          :availableExtensions="detailedExtensions.topicStatuses"
+        />
+        <BcfTopicsMetrics
+          v-if="bcfTopics.length"
+          :bcfTopics="displayedBcfTopics"
+          extensionType="Priority"
+          :availableExtensions="detailedExtensions.priorities"
+          class="m-t-24"
+        />
+        <EmptyBcfTopicsMetrics
+          v-else
+          :bcfTopics="displayedBcfTopics"
+          :loading="loading"
+        />
+      </div>
+
+      <!-- loading BCF -->
       <div
         v-if="loading"
         class="project-bcf__content__empty flex items-center justify-center"
@@ -224,7 +283,7 @@ import { useModels } from "@/state/models.js";
 import {
   BcfFilters,
   BcfSettings,
-  BcfStatistics,
+  // BcfStatistics,
   BcfTopicCard,
   BcfTopicCreate,
   BcfTopicCreationCard,
@@ -234,17 +293,21 @@ import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vu
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 
+import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
+import EmptyBcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/EmptyBcfTopicsMetrics.vue";
+
 export default {
   components: {
     AppSlotContent,
     AppSidePanel,
     BcfFilters,
     BcfSettings,
-    BcfStatistics,
     BcfTopicCard,
     BcfTopicCreate,
+    BcfTopicsMetrics,
     BcfTopicCreationCard,
     BcfTopicOverview,
+    EmptyBcfTopicsMetrics,
     FileUploadButton
   },
   setup() {
@@ -391,11 +454,20 @@ export default {
       isDisplayByListActive.value = !isDisplayByListActive.value;
     };
 
+    const {
+      isOpen: showMetrics,
+      close: closeMetrics,
+      toggle: toggleMetrics
+    } = useToggle();
+
+    const bcfTopicPanelShown = ref(null);
+
     return {
       // References
       activeButton,
       bcfTopics,
       currentBcfTopic,
+      bcfTopicPanelShown,
       detailedExtensions,
       displayedBcfTopics,
       extensions,
@@ -407,12 +479,14 @@ export default {
       models: projectModels,
       project: currentProject,
       searchText,
-      users: projectUsers,
       showBcfSettings,
       showBcfTopicCreate,
       showBcfTopicOverview,
+      showMetrics,
+      users: projectUsers,
       // Methods
       closeBcfSettings,
+      closeMetrics,
       exportBcfTopics,
       importBcfTopics,
       onFiltersSubmit,
@@ -423,7 +497,8 @@ export default {
       sortByDate,
       sortByIndex,
       sortByName,
-      toggleDisplayBcfTopics
+      toggleDisplayBcfTopics,
+      toggleMetrics
     };
   }
 };
