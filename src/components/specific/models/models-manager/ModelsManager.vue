@@ -91,6 +91,13 @@ const tabsDef = [
   },
   {
     id: "tab2",
+    label: "DXF",
+    icon: "/static/dwg-file.svg",
+    modelTypes: [MODEL_TYPE.DXF],
+    component: "DWGManager"
+  },
+  {
+    id: "tab3",
     label: "PDF",
     icon: "/static/pdf-file.svg",
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
