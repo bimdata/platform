@@ -105,7 +105,8 @@ class BcfService {
   async createTopic(project, topic) {
     try {
       return await apiClient.bcfApi.createTopic(
-        project.idtopic
+        project.id,
+        topic
       );
     } catch (error) {
       console.log(error);
