@@ -103,10 +103,6 @@ export default {
         },
         plugins: pluginsConfig,
         locale: locale.value,
-        ui: {
-          version: false,
-          bimdataLogo: false
-        }
       });
 
       await Promise.all(
