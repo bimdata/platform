@@ -1,7 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import UserService from "@/services/UserService.js";
 import PlatformService from "@/services/PlatformService.js";
-import { useAuth } from "@/state/auth";
 
 const state = reactive({
   isNew: false,
@@ -26,15 +25,9 @@ const loadUser = async () => {
   return user;
 };
 
-const loadGuidedTours = async () => {
-  const { accessToken } = useAuth();
-  return PlatformService.loadGuidedTours(accessToken.value);
-};
+const loadGuidedTours = () => PlatformService.loadGuidedTours();
 
-const setTourCompleted = async tour => {
-  const { accessToken } = useAuth();
-  return PlatformService.setTourCompleted(accessToken.value, tour);
-};
+const setTourCompleted = tour => PlatformService.setTourCompleted(tour);
 
 const setIsNew = value => {
   state.isNew = value;

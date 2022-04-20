@@ -1,3 +1,5 @@
+import apiClient from "./api-client.js";
+
 class PlatformService {
   loginCallback(accessToken) {
     return fetch(
@@ -11,14 +13,14 @@ class PlatformService {
       }
     );
   }
-  async loadGuidedTours(accessToken) {
+  async loadGuidedTours() {
     const res = await fetch(
       `${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`
+          ...apiClient.authHeader
         }
       }
     );
@@ -26,15 +28,18 @@ class PlatformService {
     return res.json();
   }
 
-  async setTourCompleted(accessToken, tour) {
-    const res = fetch(`${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`
-      },
-      body: JSON.stringify({ name: tour })
-    });
+  async setTourCompleted(tour) {
+    const res = await fetch(
+      `${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...apiClient.authHeader
+        },
+        body: JSON.stringify({ name: tour })
+      }
+    );
 
     return res.json();
   }
