@@ -28,17 +28,12 @@ const loadUser = async () => {
 
 const loadGuidedTours = async () => {
   const { accessToken } = useAuth();
-  const guidedTour = await PlatformService.loadGuidedTours(accessToken.value);
-  return guidedTour.json();
+  return PlatformService.loadGuidedTours(accessToken.value);
 };
 
-const completedTour = async tour => {
+const setTourCompleted = async tour => {
   const { accessToken } = useAuth();
-  const guidedTour = await PlatformService.completedTour(
-    accessToken.value,
-    tour
-  );
-  return guidedTour.json();
+  return PlatformService.setTourCompleted(accessToken.value, tour);
 };
 
 const setIsNew = value => {
@@ -54,6 +49,6 @@ export function useUser() {
     loadUser,
     setIsNew,
     loadGuidedTours,
-    completedTour
+    setTourCompleted
   };
 }

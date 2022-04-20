@@ -11,18 +11,23 @@ class PlatformService {
       }
     );
   }
-  loadGuidedTours(accessToken) {
-    return fetch(`${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`
+  async loadGuidedTours(accessToken) {
+    const res = await fetch(
+      `${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`
+        }
       }
-    });
+    );
+
+    return res.json();
   }
 
-  completedTour(accessToken, tour) {
-    return fetch(`${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`, {
+  async setTourCompleted(accessToken, tour) {
+    const res = fetch(`${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,6 +35,8 @@ class PlatformService {
       },
       body: JSON.stringify({ name: tour })
     });
+
+    return res.json();
   }
 }
 

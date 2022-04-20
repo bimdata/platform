@@ -5,7 +5,7 @@
         :tours="tours"
         :tourToDisplay="tourToDisplay"
         :elementToObserve="appLayoutViewContainer"
-        @completed-tour="completedTour($event)"
+        @set-completed-tour="setTourCompleted($event)"
       />
     </template>
     <AppNotification />
@@ -43,7 +43,7 @@ export default {
   setup() {
     const loading = useLoadingContext(contexts.viewContainer);
     const appLayoutViewContainer = ref(null);
-    const { loadGuidedTours, completedTour } = useUser();
+    const { loadGuidedTours, setTourCompleted } = useUser();
     const tourToDisplay = ref(null);
 
     onMounted(async () => {
@@ -62,7 +62,7 @@ export default {
       loading,
       tourToDisplay,
       appLayoutViewContainer,
-      completedTour
+      setTourCompleted
     };
   }
 };
