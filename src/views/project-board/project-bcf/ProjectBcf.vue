@@ -2,11 +2,11 @@
   <div class="project-bcf">
     <AppSlotContent name="project-board-action">
       <BIMDataButton
+        class="m-r-12"
         color="primary"
         outline
         radius
         icon
-        class="m-r-12"
         @click="openBcfSettings"
       >
         <BIMDataIcon name="settings" size="xxs" color="default" />
@@ -74,8 +74,9 @@
         @close="closeBcfSettings"
       />
     </div>
-    <div class="project-bcf__actions flex justify-between">
-      <div class="flex">
+
+    <div class="project-bcf__actions">
+      <div class="project-bcf__actions--start">
         <BIMDataTooltip
           maxWidth="100px"
           :message="
@@ -85,7 +86,6 @@
           "
         >
           <BIMDataButton
-            class="m-r-12"
             :class="{ active: !showMetrics }"
             color="default"
             fill
@@ -102,7 +102,7 @@
           </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataSearch
-          width="42%"
+          width="calc(50% - 32px - var(--spacing-unit))"
           color="secondary"
           radius
           :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
@@ -110,8 +110,9 @@
         >
         </BIMDataSearch>
       </div>
-      <div class="flex justify-end">
+      <div class="project-bcf__actions--end">
         <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
           :message="
             isSortByIndexActive
               ? $t('ProjectBcf.ascendingIndexTooltip')
@@ -119,9 +120,8 @@
           "
         >
           <BIMDataButton
-            class="m-r-12"
+            :disabled="bcfTopics.length === 0"
             :class="{ active: activeButton === 'indexSort' }"
-            :disabled="!bcfTopics.length"
             color="default"
             fill
             square
@@ -137,6 +137,7 @@
         </BIMDataTooltip>
 
         <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
           :message="
             isSortByNameActive
               ? $t('ProjectBcf.alphabeticalAscendingOrderTooltip')
@@ -144,14 +145,13 @@
           "
         >
           <BIMDataButton
-            class="m-r-12"
+            :disabled="bcfTopics.length === 0"
             :class="{ active: activeButton === 'nameSort' }"
             color="default"
             fill
             square
             icon
             @click="sortByName"
-            :disabled="!bcfTopics.length"
           >
             <AlphabeticalAscending
               v-if="isSortByNameActive"
@@ -161,8 +161,7 @@
           </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataTooltip
-          ref="dateTooltip"
-          class="m-r-12"
+          :disabled="bcfTopics.length === 0"
           :message="
             isSortByDateActive
               ? $t('ProjectBcf.ascendingDateTooltip')
@@ -170,8 +169,8 @@
           "
         >
           <BIMDataButton
+            :disabled="bcfTopics.length === 0"
             :class="{ active: activeButton === 'dateSort' }"
-            :disabled="!bcfTopics.length"
             color="default"
             fill
             square
@@ -186,16 +185,16 @@
           </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
           :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
         >
           <BIMDataButton
+            :disabled="bcfTopics.length === 0"
             color="default"
             fill
             square
             icon
-            class="m-r-12"
             @click="toggleDisplayBcfTopics"
-            :disabled="!bcfTopics.length"
           >
             <Grid
               v-if="isDisplayByListActive"
@@ -208,60 +207,58 @@
       </div>
     </div>
 
-    <div class="project-bcf__content flex m-t-24">
-      <div class="project-bcf__content__metrics m-r-24" v-if="!showMetrics">
-        <p class="text-center">
-          Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
-        </p>
-        <BcfTopicsMetrics
-          v-if="bcfTopics.length"
-          :bcfTopics="displayedBcfTopics"
-          extensionType="Status"
-          :availableExtensions="detailedExtensions.topicStatuses"
-        />
-        <BcfTopicsMetrics
-          v-if="bcfTopics.length"
-          :bcfTopics="displayedBcfTopics"
-          extensionType="Priority"
-          :availableExtensions="detailedExtensions.priorities"
-          class="m-t-24"
-        />
-        <EmptyBcfTopicsMetrics
-          v-else
-          :bcfTopics="displayedBcfTopics"
-          :loading="loading"
-        />
-      </div>
+    <div class="project-bcf__content">
+      <transition name="fade">
+        <div v-show="!showMetrics" class="project-bcf__content__metrics">
+          <div class="project-bcf__content__metrics__title">
+            Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
+          </div>
+          <template v-if="bcfTopics.length > 0">
+            <BcfTopicsMetrics
+              :bcfTopics="displayedBcfTopics"
+              extensionType="Status"
+              :availableExtensions="detailedExtensions.topicStatuses"
+            />
+            <BcfTopicsMetrics
+              :bcfTopics="displayedBcfTopics"
+              extensionType="Priority"
+              :availableExtensions="detailedExtensions.priorities"
+            />
+          </template>
+          <template v-else>
+            <EmptyBcfTopicsMetrics
+              :bcfTopics="displayedBcfTopics"
+              :loading="loading"
+            />
+          </template>
+        </div>
+      </transition>
 
-      <!-- loading BCF -->
-      <div
-        v-if="loading"
-        class="project-bcf__content__empty flex items-center justify-center"
-      >
-        <BIMDataSpinner />
-      </div>
+      <transition name="fade" mode="out-in">
+        <div v-if="loading" class="project-bcf__content__loader">
+          <BIMDataSpinner />
+        </div>
 
-      <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
+        <!--
+        <div v-else-if="isDisplayByListActive" class="project-bcf__content__list">
+          <BcfTopicsTable :bcfTopics="displayedBcfTopics" />
+        </div>
+        -->
 
-      <!--
-      <transition-group v-else-if="isDisplayByListActive" name="list">
-        <BcfTopicsTable
-          class="project-bcf__content__list"
-          :bcfTopics="displayedBcfTopics"
-        />
-      </transition-group>
-      -->
-
-      <transition-group v-else name="grid">
-        <BcfTopicCard
-          v-for="topic in displayedBcfTopics"
-          :key="topic.guid"
-          :project="project"
-          :bcfTopic="topic"
-          :detailedExtensions="detailedExtensions"
-          @open-bcf-topic="openBcfTopicOverview(topic)"
-        />
-      </transition-group>
+        <div v-else class="project-bcf__content__grid">
+          <transition-group name="grid">
+            <BcfTopicCreationCard v-if="bcfTopics.length === 0" :key="-1" />
+            <BcfTopicCard
+              v-for="topic in displayedBcfTopics"
+              :key="topic.guid"
+              :project="project"
+              :bcfTopic="topic"
+              :detailedExtensions="detailedExtensions"
+              @open-bcf-topic="openBcfTopicOverview(topic)"
+            />
+          </transition-group>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -460,14 +457,11 @@ export default {
       toggle: toggleMetrics
     } = useToggle();
 
-    const bcfTopicPanelShown = ref(null);
-
     return {
       // References
       activeButton,
       bcfTopics,
       currentBcfTopic,
-      bcfTopicPanelShown,
       detailedExtensions,
       displayedBcfTopics,
       extensions,

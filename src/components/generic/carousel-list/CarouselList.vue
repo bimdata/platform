@@ -45,8 +45,8 @@ export default {
       type: Number,
       default: 12
     },
-    // Minimum amount of space between items:
     minGap: {
+      // Minimum amount of space between items
       type: Number,
       default: 24
     }
@@ -76,10 +76,10 @@ export default {
         // Calculate the maximum number of items that can be displayed
         // at the same time according to slider width and items width
         // taking minimum gap into account
-        let nbDisplayed = Math.floor(contentWidth / (itemWidth + props.minGap));
-        if (nbDisplayed === 0) {
-          nbDisplayed = 1;
-        }
+        let nbDisplayed = Math.max(
+          Math.floor(contentWidth / (itemWidth + props.minGap)),
+          1 // Display at least 1 item even if slider width is not large enough
+        );
 
         // Calculate the actual gap between items
         let gap = props.minGap;
@@ -87,7 +87,7 @@ export default {
           gap = (contentWidth - nbDisplayed * itemWidth) / (nbDisplayed - 1);
         }
 
-        // Compute offset (translation) list and set items styles
+        // Compute offsets (translations) and set items styles
         let offset;
         const offsetUnit = itemWidth + gap;
         const offsets = [];
