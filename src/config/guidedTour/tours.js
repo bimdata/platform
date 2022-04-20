@@ -4,9 +4,13 @@ import IntroOutroPlatform from "./platform/IntroOutroPlatform.vue";
 const { t } = i18n.global;
 const imgPath = "/static/guidedTour/platform/";
 
+const TOURS_NAME = Object.freeze({
+  PLATFORM_INTRO: "PLATFORM_INTRO"
+});
+
 const tours = [
   {
-    feature: "platform",
+    name: TOURS_NAME.PLATFORM_INTRO,
     steps: [
       {
         props: {
@@ -146,4 +150,4 @@ const tours = [
     ]
   }
 ];
-export default tours;
+export { tours, TOURS_NAME };

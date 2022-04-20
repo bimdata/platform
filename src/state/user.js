@@ -1,5 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
 import UserService from "@/services/UserService.js";
+import PlatformService from "@/services/PlatformService.js";
+import { useAuth } from "@/state/auth";
 
 const state = reactive({
   isNew: false,
@@ -24,6 +26,21 @@ const loadUser = async () => {
   return user;
 };
 
+const loadGuidedTours = async () => {
+  const { accessToken } = useAuth();
+  const guidedTour = await PlatformService.loadGuidedTours(accessToken.value);
+  return guidedTour.json();
+};
+
+const completedTour = async tour => {
+  const { accessToken } = useAuth();
+  const guidedTour = await PlatformService.completedTour(
+    accessToken.value,
+    tour
+  );
+  return guidedTour.json();
+};
+
 const setIsNew = value => {
   state.isNew = value;
 };
@@ -35,6 +52,8 @@ export function useUser() {
     ...toRefs(readonlyState),
     // Methods
     loadUser,
-    setIsNew
+    setIsNew,
+    loadGuidedTours,
+    completedTour
   };
 }

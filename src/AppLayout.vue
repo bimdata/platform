@@ -1,9 +1,13 @@
 <template>
   <div class="app-layout">
-    <BIMDataGuidedTour
-      :tours="tours"
-      :elementToObserve="appLayoutViewContainer"
-    />
+    <template v-if="tourToDisplay">
+      <BIMDataGuidedTour
+        :tours="tours"
+        :tourToDisplay="tourToDisplay"
+        :elementToObserve="appLayoutViewContainer"
+        @completed-tour="completedTour($event)"
+      />
+    </template>
     <AppNotification />
     <AppHeader />
     <div
@@ -22,12 +26,14 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { contexts, useLoadingContext } from "@/composables/loading.js";
 // Components
 import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
 import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
-import tours from "./config/guidedTour/guidedTour.js";
+import { useUser } from "@/state/user.js";
+import { tours } from "./config/guidedTour/tours.js";
+import { TOURS_NAME } from "@/config/guidedTour/tours.js";
 
 export default {
   components: {
@@ -37,10 +43,26 @@ export default {
   setup() {
     const loading = useLoadingContext(contexts.viewContainer);
     const appLayoutViewContainer = ref(null);
+    const { loadGuidedTours, completedTour } = useUser();
+    const tourToDisplay = ref(null);
+
+    onMounted(async () => {
+      const guidedTours = await loadGuidedTours();
+      const platformIntro = guidedTours.find(
+        tour => tour.name === TOURS_NAME.PLATFORM_INTRO
+      );
+
+      if (!platformIntro) {
+        tourToDisplay.value = TOURS_NAME.PLATFORM_INTRO;
+      }
+    });
+
     return {
-      loading,
       tours,
-      appLayoutViewContainer
+      loading,
+      tourToDisplay,
+      appLayoutViewContainer,
+      completedTour
     };
   }
 };
