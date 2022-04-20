@@ -25,10 +25,6 @@ const loadUser = async () => {
   return user;
 };
 
-const loadGuidedTours = () => PlatformService.loadGuidedTours();
-
-const setTourCompleted = tour => PlatformService.setTourCompleted(tour);
-
 const setIsNew = value => {
   state.isNew = value;
 };
@@ -41,7 +37,7 @@ export function useUser() {
     // Methods
     loadUser,
     setIsNew,
-    loadGuidedTours,
-    setTourCompleted
+    loadGuidedTours: PlatformService.loadGuidedTours,
+    setTourCompleted: PlatformService.setTourCompleted
   };
 }
