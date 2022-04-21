@@ -2,15 +2,18 @@
   <span
     class="bcf-priority-cell flex items-center justify-center p-x-6"
     :style="{
-      color: `#${priorityColor}`
+      'background-color': `#${priorityColor}`,
+      color: adjustColor(`#${priorityColor}`, '#ffffff', 'var(--color-text)')
     }"
   >
-    {{ bcfTopic.priority || $t("BcfTopicGridItem.noPriority") }}
+    {{ bcfTopic.index }}
   </span>
 </template>
 
 <script>
 import { computed } from "vue";
+
+import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
 
 export default {
   props: {
@@ -38,10 +41,11 @@ export default {
 
     return {
       // References
+      adjustColor,
       priorityColor
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./BcfPriorityCell.scss"></style>
+<style scoped lang="scss" src="./BcfIndexCell.scss"></style>

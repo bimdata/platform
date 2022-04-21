@@ -58,7 +58,7 @@
           v-if="isDeleting"
           class="bcf-comment__header__right__delete p-x-12"
         >
-          <span> Supprimer ce commentaire ?</span>
+          <span> {{ $t("BcfComment.deleteCommentText") }} </span>
           <div class="flex items-center">
             <BIMDataButton
               fill
@@ -67,7 +67,7 @@
               @click="confirmDelete"
               class="m-r-6"
             >
-              Supprimer
+              {{ $t("BcfComment.deleteButton") }}
             </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="isDeleting = false">
               <BIMDataIcon name="close" size="xxs" fill color="primary" />

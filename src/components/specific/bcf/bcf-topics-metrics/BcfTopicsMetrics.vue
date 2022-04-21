@@ -1,58 +1,63 @@
 <template>
   <div class="bcf-topics-metrics">
-    <div
-      class="bcf-topics-metrics__loading flex items-center justify-center"
-      v-if="loading"
-    >
-      <BIMDataSpinner />
-    </div>
-    <div
-      class="flex items-center justify-center"
-      v-else-if="bcfTopics.length === 0"
-    >
-      <EmptyBcfStats class="m-r-42" />
-      <p>{{ $t("BcfTopicsMetrics.emptyText") }}</p>
-    </div>
-
-    <div v-else class="bcf-topics-metrics__content flex justify-around">
-      <Graph :barsData="barsData" :size="size">
-        <div class="bcf-topics-metrics__content__total flex items-center">
-          <strong>{{ bcfTopics.length }}</strong>
-          <span>{{ $t("BcfTopicsMetrics.issues") }}</span>
-        </div>
-      </Graph>
+    <div class="bcf-topics-metrics__content flex justify-around items-center">
+      <Graph
+        :barsData="barsData"
+        :placeholder="true"
+        :graphDrawTime="2.5"
+      ></Graph>
       <div
         class="bcf-topics-metrics__content__legend flex items-start justify-center m-l-12"
       >
-        <div
-          v-for="barData in barsData"
-          :key="barData"
-          class="flex items-center"
+        <strong>
+          {{ $t(`BcfTopicsMetrics.extension.${extensionType}Title`) }}
+        </strong>
+        <BIMDataPaginatedList
+          :list="barsData"
+          :perPage="6"
+          :first="false"
+          :last="false"
+          :numberDataElements="false"
+          :backgroundColor="'transparent'"
         >
-          <div
-            :style="{
-              width: '10px',
-              height: '10px',
-              'border-radius': '50px',
-              'background-color': barData.color
-            }"
-          ></div>
-          <strong class="m-x-6">{{ barData.percentage }} %</strong>
-          <span>
-            {{ barData.label && $t("BcfTopicsMetrics.priority") }}
-            {{ barData.label || $t("BcfTopicsMetrics.notDefined") }}
-          </span>
-        </div>
+          <template #element="{ element: barData }">
+            <div
+              :style="{
+                width: '10px',
+                height: '10px',
+                'border-radius': '50px',
+                border: `3px solid ${barData.color}`
+              }"
+            ></div>
+            <strong class="m-x-6">{{ barData.percentage.toFixed(0) }} %</strong>
+            <span>
+              {{
+                barData.label &&
+                $t(`BcfTopicsMetrics.extension.${extensionType}`)
+              }}
+              {{
+                barData.label ||
+                $t(`BcfTopicsMetrics.extension.${extensionType}NotDefined`)
+              }}
+              <span>({{ barData.total }})</span>
+            </span>
+          </template>
+        </BIMDataPaginatedList>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 
-import EmptyBcfStats from "./EmptyBcfStats.vue";
 import Graph from "../../../generic/graph/Graph.vue";
+
+const typeFieldMap = {
+  Priority: "priority",
+  Status: "topicStatus"
+};
+
 export default {
   data() {
     return {
@@ -64,42 +69,50 @@ export default {
       type: Array,
       required: true
     },
-    priorities: {
-      type: Object,
-      required: true
+    extensionType: {
+      type: String
     },
-    loading: {
-      type: Boolean
+    availableExtensions: {
+      type: Array,
+      required: true
     }
   },
 
   components: {
-    EmptyBcfStats,
     Graph
   },
   setup(props) {
+    const extensionValue = ref([typeFieldMap[props.extensionType]]);
+
     const barsData = computed(() => {
       if (props.bcfTopics.length) {
         // Add empty priority to match topics without priorities
-        const shownPriorities = [...props.priorities];
-        shownPriorities.push({
-          priority: undefined
+        const shownExtensions = [...props.availableExtensions];
+
+        shownExtensions.push({
+          [extensionValue.value]: undefined
         });
 
-        return shownPriorities
-          .map(priority => {
+        return shownExtensions
+          .map(shownExtension => {
             let barData = {};
-            if (priority.color !== undefined) {
-              barData.color = `#${priority.color}`;
+            if (shownExtension.color !== undefined) {
+              barData.color = `#${shownExtension.color}`;
             } else {
               barData.color = `#D8D8D8`;
             }
+
             const topicCount = props.bcfTopics.filter(
-              bcfTopic => bcfTopic.priority === priority.priority
+              bcfTopic =>
+                bcfTopic[extensionValue.value] ===
+                shownExtension[extensionValue.value]
             ).length;
-            const calcPercentage = (topicCount * 100) / props.bcfTopics.length;
-            barData.percentage = calcPercentage.toFixed(0);
-            barData.label = priority.priority;
+
+            barData.percentage = (topicCount * 100) / props.bcfTopics.length;
+
+            barData.label = shownExtension[extensionValue.value];
+
+            barData.total = topicCount;
             return barData;
           })
           .sort((a, b) =>
@@ -108,8 +121,8 @@ export default {
       }
       return [];
     });
-
     return {
+      typeFieldMap,
       barsData
     };
   }
