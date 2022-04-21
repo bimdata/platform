@@ -176,7 +176,7 @@
             </BIMDataButton>
           </template>
         </BIMDataTooltip>
-        <BIMDataTooltip
+        <!-- <BIMDataTooltip
           :message="
             isDisplayByListActive
               ? $t('ProjectBcf.viewGridTooltip')
@@ -201,7 +201,7 @@
               <List v-else style="heiht: 18px; width: 18px" />
             </BIMDataButton>
           </template>
-        </BIMDataTooltip>
+        </BIMDataTooltip> -->
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
       </div>
     </div>
