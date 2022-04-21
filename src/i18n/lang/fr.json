@@ -86,7 +86,9 @@
     "alphabeticalAscendingOrderTooltip": "ordre alphabétique",
     "alphabeticalDescendingOrderTooltip": "ordre alphabétique inverse",
     "ascendingDateTooltip": "date croissante",
-    "descendingDateTooltip": "date décroissante"
+    "descendingDateTooltip": "date décroissante",
+    "viewGridTooltip": "vue grille",
+    "viewListTooltip": "vue liste"
   },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
@@ -178,12 +180,14 @@
     "endDatePlaceholder": "Date de fin",
     "endDateExample": "(Ex: 28/05/2022)",
     "assignedToLabel": "Assigné à",
+    "creatorsLabel": "Créé par",
     "tagsLabel": "Tags",
     "resetButton": "Réinitialiser",
     "searchButton": "Rechercher",
     "noPriority": "Aucune priorité",
     "undefinedStatus": "Non défini",
-    "undefinedUser": "Non défini"
+    "undefinedUser": "Non défini",
+    "undefinedCreator": "Non défini"
   },
   "BcfSettings": {
     "goBackButton": "Retour",

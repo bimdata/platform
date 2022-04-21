@@ -94,7 +94,7 @@
         <BIMDataSelect
           width="100%"
           :multi="true"
-          label="creator"
+          :label="$t('BcfFilters.creatorsLabel')"
           :options="creatorOptions"
           v-model="creators"
           optionKey="value"

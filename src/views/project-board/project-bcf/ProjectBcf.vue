@@ -177,7 +177,11 @@
           </template>
         </BIMDataTooltip>
         <BIMDataTooltip
-          :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
+          :message="
+            isDisplayByListActive
+              ? $t('ProjectBcf.viewGridTooltip')
+              : $t('ProjectBcf.viewListTooltip')
+          "
           className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
           <template #content>
