@@ -63,6 +63,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
+import mapLimit from "async/mapLimit";
 
 // Components
 import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
@@ -101,19 +102,17 @@ export default {
           subscriptions.value = await loadOrganizationSubscriptions(
             selectedOrga.value
           );
+          // When a cloud is deleted, the subscription history stays
+          // We don't show custom subscriptions
 
-          let allPayments = await Promise.all(
-            subscriptions.value
-              // When a cloud is deleted, the subscription history stays
-              .filter(sub => sub.cloud && !sub.is_custom)
-              .map(sub => {
-                return loadSubscriptionPayments(
-                  selectedOrga.value,
-                  sub.cloud,
-                  sub
-                );
-              })
-          );
+          const validSubscriptions = subscriptions.value.filter(sub => sub.cloud && !sub.is_custom)
+          const allPayments = mapLimit(validSubscriptions, 10, async sub => {
+            return loadSubscriptionPayments(
+              selectedOrga.value,
+              sub.cloud,
+              sub
+            );
+          })
 
           const tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
