@@ -27,7 +27,10 @@
       </BIMDataSearch>
     </div>
     <div class="visa-add-validator__people-list">
-      <VisaValidatorUsers :userList="peopleList" />
+      <VisaValidatorUsers
+        :userList="peopleList"
+        @update-people="updatedSelection = $event"
+      />
     </div>
     <div class="visa-add-validator__action">
       <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
@@ -61,30 +64,29 @@ export default {
   setup(props, { emit }) {
     const filter = ref("");
     const peopleList = ref([]);
+    const updatedSelection = ref(null);
 
     const peopleListCounter = computed(
       () => peopleList.value.filter(({ isSelected }) => isSelected).length
     );
 
-    watch(
-      filter,
-      () => {
-        peopleList.value = props.userList
-          .map(people => ({
-            ...people,
-            isFindable:
-              filter.value === ""
-                ? true
-                : people.searchContent.includes(filter.value.toLowerCase())
-          }))
-          .filter(({ isFindable }) => isFindable)
-          .sort((a, b) => {
-            if (!a.hasAccess) return 1;
-            if (!b.hasAccess) return -1;
-          });
-      },
-      { immediate: true }
-    );
+    const getUserListUpdated = () => {
+      peopleList.value = (updatedSelection.value || props.userList)
+        .map(people => ({
+          ...people,
+          isFindable:
+            filter.value === ""
+              ? true
+              : people.searchContent.includes(filter.value.toLowerCase())
+        }))
+        .filter(({ isFindable }) => isFindable)
+        .sort((a, b) => {
+          if (!a.hasAccess) return 1;
+          if (!b.hasAccess) return -1;
+        });
+    };
+
+    watch(filter, () => getUserListUpdated(), { immediate: true });
 
     const onClick = () => {
       emit("validator-list", peopleList.value);
@@ -95,6 +97,7 @@ export default {
       // references
       peopleList,
       peopleListCounter,
+      updatedSelection,
       filter,
       // methods
       onClick

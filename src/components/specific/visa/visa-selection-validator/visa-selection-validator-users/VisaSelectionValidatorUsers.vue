@@ -64,11 +64,27 @@ export default {
       required: true
     }
   },
-  emits: [],
-  setup() {
+  emits: ["update-people"],
+  setup(props, { emit }) {
     const currentPeopleId = ref(null);
     const isWarningHover = ref(false);
-    const toggle = (people, checked) => (people.isSelected = checked);
+    const toggle = (people, checked) => {
+      people.isSelected = checked;
+      emit("update-people", updateList(people, checked));
+    };
+
+    const updateList = (people, checked) =>
+      props.userList.map(user => {
+        if (user.id === people.id) {
+          return {
+            ...user,
+            isSelected: checked
+          };
+        }
+        return {
+          ...user
+        };
+      });
 
     const handleCurrentPerson = peopleId => {
       if (peopleId) {
