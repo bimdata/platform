@@ -56,7 +56,9 @@
     "alphabeticalAscendingOrderTooltip": "alphabetical order",
     "alphabeticalDescendingOrderTooltip": "reverse alphabetical order",
     "ascendingDateTooltip": "ascending date",
-    "descendingDateTooltip": "descending date"
+    "descendingDateTooltip": "descending date",
+    "viewGridTooltip": "grid view",
+    "viewListTooltip": "list view"
   },
   "ProjectOverview": {
       "openFileUploadButtonText": "Add a model",
@@ -88,20 +90,6 @@
       "logoutButtonText": "Log Out",
       "subscriptionPlatform": "Platform subscription"
   },
-
-  "BcfComments": {
-    "commentButton": "Post a comment",
-    "commentLabel": "Post a comment",
-    "commentText": "Comment",
-    "cancelButton": "Cancel",
-    "publishButton": "Publish",
-    "commentsText": "Comments"
-  },
-  "BcfComment": {
-    "deleteCommentText": "Delete this comment ?",
-    "deleteButton": "Delete"
-  },
-
   "BcfComments": {
     "commentButton": "Post a comment",
     "commentLabel": "Post a comment",
@@ -124,12 +112,14 @@
     "endDatePlaceholder": "End date",
     "endDateExample": "(Ex: 28/05/2022)",
     "assignedToLabel": "Assigned to",
+    "creatorsLabel": "Created by",
     "tagsLabel": "Tags",
     "resetButton": "Reset",
     "searchButton": "Search",
     "noPriority": "No priority",
     "undefinedStatus": "Undefined",
-    "undefinedUser": "Undefined"
+    "undefinedUser": "Undefined",
+    "undefinedCreator": "Undefined"
   },
   "BcfSettings": {
     "goBackButton": "Back",

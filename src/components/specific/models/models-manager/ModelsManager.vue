@@ -54,6 +54,7 @@
       <transition name="fade" mode="out-in">
         <keep-alive>
           <component
+            :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
             :models="currentTab.models"

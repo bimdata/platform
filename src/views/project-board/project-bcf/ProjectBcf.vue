@@ -186,7 +186,11 @@
         </BIMDataTooltip>
         <BIMDataTooltip
           :disabled="bcfTopics.length === 0"
-          :message="isDisplayByListActive ? 'vue grid' : 'vue list'"
+          :message="
+            isDisplayByListActive
+              ? $t('ProjectBcf.viewGridTooltip')
+              : $t('ProjectBcf.viewListTooltip')
+          "
         >
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
