@@ -10,9 +10,9 @@
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
   "dependencies": {
-    "@bimdata/design-system": "1.2.0",
+    "@bimdata/design-system": "1.3.1-rc.1",
     "@bimdata/typescript-fetch-api-client": "7.4.2",
-    "@bimdata/viewer": "^1.9.0-rc.85",
+    "@bimdata/viewer": "^1.9.0-rc.92",
     "async": "^3.2.3",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.7.1",

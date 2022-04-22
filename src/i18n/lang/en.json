@@ -48,13 +48,17 @@
     "exportButtonText": "Export",
     "createBcfButtonText": "Create a BCF",
     "createBcfTitle": "Report a problem",
-    "searchInputPlaceholder": "Search",
+    "showStatisticsTooltip": "Show statistics",
+    "hideStatisticsTooltip": "Hide statistics",
+    "searchInputPlaceholder": "Search by index #, name, creator or tag",
     "ascendingIndexTooltip": "ascending index",
     "descendingIndexTooltip": "descending index",
     "alphabeticalAscendingOrderTooltip": "alphabetical order",
     "alphabeticalDescendingOrderTooltip": "reverse alphabetical order",
     "ascendingDateTooltip": "ascending date",
-    "descendingDateTooltip": "descending date"
+    "descendingDateTooltip": "descending date",
+    "viewGridTooltip": "grid view",
+    "viewListTooltip": "list view"
   },
   "ProjectOverview": {
       "openFileUploadButtonText": "Add a model",
@@ -86,17 +90,36 @@
       "logoutButtonText": "Log Out",
       "subscriptionPlatform": "Platform subscription"
   },
+  "BcfComments": {
+    "commentButton": "Post a comment",
+    "commentLabel": "Post a comment",
+    "commentText": "Comment",
+    "cancelButton": "Cancel",
+    "publishButton": "Publish",
+    "commentsText": "Comments"
+  },
+  "BcfComment": {
+    "deleteCommentText": "Delete this comment ?",
+    "deleteButton": "Delete"
+  },
   "BcfFilters": {
     "filtersButton": "Filters",
+    "filtersTitle": "Filters",
     "priorityLabel": "Priority",
     "statusLabel": "Status",
     "startDatePlaceholder": "Start date",
     "startDateExample": "(Ex: 28/04/2022)",
     "endDatePlaceholder": "End date",
     "endDateExample": "(Ex: 28/05/2022)",
+    "assignedToLabel": "Assigned to",
+    "creatorsLabel": "Created by",
     "tagsLabel": "Tags",
     "resetButton": "Reset",
-    "searchButton": "Search"
+    "searchButton": "Search",
+    "noPriority": "No priority",
+    "undefinedStatus": "Undefined",
+    "undefinedUser": "Undefined",
+    "undefinedCreator": "Undefined"
   },
   "BcfSettings": {
     "goBackButton": "Back",
@@ -134,6 +157,10 @@
       "Stage": "Stage list"
     }
   },
+  "Extension": {
+    "deleteExtensionText": "Remove this setting",
+    "deleteButton": "Delete"
+  },
   "BcfTopicCreationCard": {
     "text": "Create a new BCF topic",
     "createBcfSideTitle": "Report a problem"
@@ -151,6 +178,7 @@
     "headers": {
       "index": "#",
       "priority": "Priority",
+      "status": "Status",
       "title": "Title",
       "creator": "Created by",
       "date": "Date",
@@ -184,23 +212,32 @@
     "priority": "Priority:",
     "priorityNotDefined": "Not defined",
     "tags": "Tags:",
-    "noTags": "No tags",
-    "commentButton": "Post a comment"
+    "noTags": "No tags"
   },
   "BcfTopicsMetrics": {
     "emptyText": "Add BCF Topics to start to have some stats here.",
     "issues": "issues",
-    "priority": "Priority",
-    "notDefined": "No priority"
+    "extension": {
+      "Priority": "Priority",
+      "PriorityNotDefined": "No priority",
+      "PriorityTitle": "Priorities",
+      "Status": "Status",
+      "StatusNotDefined": "No status",
+      "StatusTitle": "Status"
+    }
   },
   "CreateBcfTopic": {
-    "dragDropImageText": "Drag and drop an image, or Browse",
+    "dragDropImageText": "Please select a file",
+    "addPictureButton": "Add a picture",
+    "titlePlaceholder": "Title *",
+    "titleErrorMessage": "Missing title",
     "typeLabel": "Type",
     "priorityLabel": "Priority",
     "statusLabel": "Status",
     "stageLabel": "Stage",
     "assignedToLabel": "Assigned to",
     "dueDateLabel": "Due date",
+    "dateErrorMessage": "Date format or incorrect date",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
     "tagsLabel": "Tags",
@@ -208,8 +245,10 @@
   },
   "EditBcfTopic": {
     "goBackButton": "Back",
-    "dragDropImageText": "Drag and drop an image, or Browse",
+    "dragDropImageText": "Please select a file",
+    "addPictureButton": "Add a picture",
     "titlePlaceholder": "Title*",
+    "titleErrorMessage": "Missing title",
     "typeLabel": "Type",
     "priorityLabel": "Priority",
     "statusLabel": "Status",

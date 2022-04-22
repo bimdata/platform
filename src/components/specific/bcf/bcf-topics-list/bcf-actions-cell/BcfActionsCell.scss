@@ -4,13 +4,13 @@
   }
   &__side-panel {
     position: fixed;
-    top: 62px;
+    top: 0;
     right: 0;
     width: 400px;
     height: 100%;
     padding: var(--spacing-unit);
     box-shadow: var(--box-shadow);
     background-color: var(--color-white);
-    z-index: 99;
+    z-index: 999;
   }
 }

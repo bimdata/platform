@@ -22,6 +22,17 @@
     .bimdata-tabs__container__tab:hover {
       background-color: rgba(47, 55, 74, 0.05);
     }
+
+    .beta-badge {
+      height: 18px;
+      margin-left: 6px;
+      padding: 2px 7px;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: bold;
+      background-color: var(--color-secondary);
+      color: var(--color-primary);
+    }
   }
 
   &__body {

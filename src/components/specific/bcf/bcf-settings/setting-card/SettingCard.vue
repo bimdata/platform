@@ -40,6 +40,7 @@
       <transition name="list">
         <div v-if="showAddExtension" class="m-b-12">
           <BIMDataInput
+            ref="input"
             :placeholder="$t(`SettingCard.input.${extensionType}`)"
             v-model="newExtensionName"
             @keyup.enter.stop="addExtension"
@@ -72,13 +73,23 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import { useToggle } from "@/composables/toggle";
 import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
 
 import Extension from "./Extension.vue";
+
+const typeFieldMap = {
+  Stage: "stage",
+  Priority: "priority",
+  Label: "label",
+  Type: "topicType",
+  Status: "topicStatus"
+};
+
+const typesWithColor = ["Status", "Priority"];
 export default {
   components: {
     Extension
@@ -97,6 +108,11 @@ export default {
     const { isOpen: showAddExtension, toggle: toggleAddExtension } =
       useToggle();
 
+    const input = ref(null);
+    watch(showAddExtension, () =>
+      setTimeout(() => showAddExtension.value && input.value.focus(), 100)
+    );
+
     const closeAddExtension = () => {
       newExtensionName.value = "";
       showAddExtension.value = false;
@@ -105,20 +121,34 @@ export default {
     const { currentProject } = useProjects();
     const { createExtension } = useBcf();
     const newExtensionName = ref("");
+    const extensionValue = ref([typeFieldMap[props.extensionType]]);
     const addExtension = async () => {
-      await createExtension(currentProject.value, props.extensionType, {
-        priority: newExtensionName.value,
-        color: getRandomHexColor()
-      });
-      newExtensionName.value = "";
-      showAddExtension.value = false;
+      if (typesWithColor.includes(props.extensionType)) {
+        const data = {
+          [extensionValue.value]: newExtensionName.value,
+          color: getRandomHexColor()
+        };
+        await createExtension(currentProject.value, props.extensionType, data);
+        newExtensionName.value = "";
+        showAddExtension.value = false;
+      } else {
+        const data = {
+          [extensionValue.value]: newExtensionName.value
+        };
+        await createExtension(currentProject.value, props.extensionType, data);
+        newExtensionName.value = "";
+        showAddExtension.value = false;
+      }
     };
 
     return {
+      input,
       isOpen,
       toggle,
       showAddExtension,
       newExtensionName,
+      typeFieldMap,
+      typesWithColor,
       // methods
       close,
       closeAddExtension,
