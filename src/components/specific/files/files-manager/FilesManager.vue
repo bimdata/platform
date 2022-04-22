@@ -104,6 +104,7 @@
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
+            @open-versioning-manager="openVersioningManager"
           />
         </div>
 
@@ -128,6 +129,11 @@
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
               @reach-file="backToParent"
+            />
+            <VersioningMain
+              v-if="showVersioningManager"
+              :document="fileToManage"
+              @close="closeVersioningManager"
             />
           </div>
         </transition>
@@ -173,6 +179,7 @@ import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
+import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
 
 export default {
   components: {
@@ -184,7 +191,8 @@ export default {
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,
-    VisaMain
+    VisaMain,
+    VersioningMain
   },
   props: {
     spaceSubInfo: {
@@ -315,6 +323,7 @@ export default {
     };
 
     const showSidePanel = ref(false);
+    const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
     const folderToManage = ref(null);
@@ -324,6 +333,7 @@ export default {
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
+      showVersioningManager.value = false;
       showVisaManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
@@ -356,6 +366,7 @@ export default {
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
+      showVersioningManager.value = false;
       showAccessManager.value = false;
       showSidePanel.value = true;
     };
@@ -364,6 +375,24 @@ export default {
       showSidePanel.value = false;
       setTimeout(() => {
         showVisaManager.value = false;
+        fileToManage.value = null;
+      }, 100);
+    };
+
+    const openVersioningManager = event => {
+      if (event.fileName) {
+        fileToManage.value = event;
+        showVersioningManager.value = true;
+        showAccessManager.value = false;
+        showVisaManager.value = false;
+        showSidePanel.value = true;
+      }
+    };
+
+    const closeVersioningManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showVersioningManager.value = false;
         fileToManage.value = null;
       }, 100);
     };
@@ -408,6 +437,7 @@ export default {
       createdVisas,
       visasLoading,
       visasCounter,
+      showVersioningManager,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -422,6 +452,8 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
+      openVersioningManager,
+      closeVersioningManager,
       fetchVisas
     };
   }

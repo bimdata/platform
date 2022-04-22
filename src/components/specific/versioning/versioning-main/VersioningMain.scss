@@ -1,0 +1,28 @@
+.versioning-main {
+  padding: var(--spacing-unit);
+  
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-unit);
+  
+      &__left-side {
+        display: flex;
+        flex-grow: 1;
+        margin: auto 0;
+
+        span {
+          margin: auto 0 auto calc(var(--spacing-unit) * 1.4);
+          color: var(--color-primary);
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

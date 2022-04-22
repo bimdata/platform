@@ -1,0 +1,109 @@
+.versioning-list {
+  position: relative;
+
+  &__line {
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    &__outer-circle {
+      position: relative;
+      border: 2px solid var(--color-silver);
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &__inner-circle {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+      }
+    }
+
+    &__down-line {
+      position: absolute;
+      top: 100%;
+      left: 43.5%;
+      width: 2px;
+      height: 140px;
+      background-color: var(--color-silver);
+    }
+  }
+
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
+    margin-left: calc(var(--spacing-unit) * 3);
+
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+  
+      &__left-side {
+        display: flex;
+        span {
+          margin: auto;
+          font-weight: bold;
+          font-size: calc(var(--spacing-unit) * 1.2);
+          color: var(--color-primary);
+        }
+      }
+
+      &__right-side {
+        display: flex;
+        gap: var(--spacing-unit);
+
+        &__btn-dl, &__btn-show {
+          border-radius: 3px;
+          background-color: var(--color-silver-light);
+        }
+      }
+    }
+
+    &__file {
+      display: flex;
+      align-items: center;
+      background-color: var(--color-silver-light);
+      border-radius: 3px;
+      height: 40px;
+
+      img {
+        margin-left: var(--spacing-unit);
+      }
+
+      &__name {
+        margin-left: var(--spacing-unit);
+        color: var(--color-primary);
+      }
+    }
+
+    &__user {
+      &__info {
+        margin-top: calc(var(--spacing-unit) / 2);
+        display: flex;
+        &__identity {
+          display: flex;
+          width: 65%;
+          &__name {
+            display: flex;
+            align-items: center;
+            margin-left: var(--spacing-unit);
+            color: var(--color-primary);
+            font-weight: bold;
+          }
+        }
+      }
+      &__date {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

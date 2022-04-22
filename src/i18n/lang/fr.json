@@ -369,7 +369,8 @@
     "addVersionButtonText": "Ajouter une version",
     "manageAccessButtonText": "Gérer les accès",
     "deleteButtonText": "Supprimer",
-    "VisaButtonText": "Demande de validation"
+    "VisaButtonText": "Demande de validation",
+    "VersioningButtonText": "Ajouter une version"
   },
   "FileNameCell": {
     "inputErrorMessage": "Nom de fichier invalide",
@@ -927,6 +928,13 @@
     "selectionValidator": {
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
     }
+  },
+  "Versioning": {
+    "title": "Historique de versions",
+    "addVersion": "Ajouter une version",
+    "currentVersion": "Version actuelle",
+    "addedBy": "Ajouté par :",
+    "titleDate": "Le"
   },
   "Error": "Erreur",
   "Success": "Succès",
