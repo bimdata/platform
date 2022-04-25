@@ -2,7 +2,7 @@
   <div
     ref="visaCommentPost"
     class="visa-comment-post"
-    v-click-input-away="toggleCloseActions"
+    v-click-away:mousedown="toggleCloseActions"
   >
     <div class="visa-comment-post__header">
       <div class="visa-comment-post__header__left-side">
