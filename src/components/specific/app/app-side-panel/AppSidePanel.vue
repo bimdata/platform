@@ -1,14 +1,20 @@
 <template>
   <teleport :to="`#app-side-panel-container--${side}`">
     <transition :name="`slide-fade-${side}`">
-      <div class="app-side-panel" v-show="showSidePanel">
-        <div class="app-side-panel__header">
-          <span class="app-side-panel__header__title">
-            <slot name="title">{{ title }}</slot>
-          </span>
-          <BIMDataButton ghost rounded icon @click="closeSidePanel">
-            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
-          </BIMDataButton>
+      <div
+        v-show="showSidePanel"
+        class="app-side-panel"
+        :style="`--header-height: ${header ? '44px' : '0'}`"
+      >
+        <div v-if="header" class="app-side-panel__header">
+          <slot name="header">
+            <span class="app-side-panel__header__title">
+              <slot name="title">{{ title }}</slot>
+            </span>
+            <BIMDataButton ghost rounded icon @click="closeSidePanel">
+              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+            </BIMDataButton>
+          </slot>
         </div>
         <div class="app-side-panel__content">
           <slot></slot>
@@ -28,6 +34,10 @@ export default {
       type: String,
       default: "right",
       validator: value => ["right", "left"].includes(value)
+    },
+    header: {
+      type: Boolean,
+      default: true
     },
     title: {
       type: String,
