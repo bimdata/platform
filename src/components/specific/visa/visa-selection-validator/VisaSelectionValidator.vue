@@ -79,7 +79,6 @@ export default {
               ? true
               : people.searchContent.includes(filter.value.toLowerCase())
         }))
-        .filter(({ isFindable }) => isFindable)
         .sort((a, b) => {
           if (!a.hasAccess) return 1;
           if (!b.hasAccess) return -1;
