@@ -2,7 +2,7 @@
   <div
     ref="visaCommentPost"
     class="visa-comment-post"
-    v-click-away="toggleCloseActions"
+    v-click-input-away="toggleCloseActions"
   >
     <div class="visa-comment-post__header">
       <div class="visa-comment-post__header__left-side">
@@ -105,6 +105,7 @@ export default {
             content: commentContent.value
           }
         );
+        emit("reload-comments");
       }
       isEditing.value = false;
     };
