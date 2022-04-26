@@ -6,10 +6,7 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 class ModelService {
   async fetchModels(project) {
     try {
-      return await apiClient.modelApi.getModels(
-        project.cloud.id,
-        project.id
-      );
+      return await apiClient.modelApi.getModels(project.cloud.id, project.id);
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)
@@ -82,9 +79,17 @@ class ModelService {
       return await Promise.all(
         models.map(model => {
           if (isPlanModel(model)) {
-            return apiClient.modelApi.deleteModelWithoutDoc(project.cloud.id, model.id, project.id);
+            return apiClient.modelApi.deleteModelWithoutDoc(
+              project.cloud.id,
+              model.id,
+              project.id
+            );
           } else {
-            return apiClient.modelApi.deleteModel(project.cloud.id, model.id, project.id);
+            return apiClient.modelApi.deleteModel(
+              project.cloud.id,
+              model.id,
+              project.id
+            );
           }
         })
       );
@@ -261,14 +266,10 @@ class ModelService {
 
   async mergeModels(project, models, name) {
     try {
-      return await apiClient.modelApi.mergeIfcs(
-        project.cloud.id,
-        project.id,
-        {
-          ifcIds: models.map(model => model.id),
-          exportName: name
-        }
-      );
+      return await apiClient.modelApi.mergeIfcs(project.cloud.id, project.id, {
+        ifcIds: models.map(model => model.id),
+        exportName: name
+      });
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_MERGE_ERROR, error);
     }
