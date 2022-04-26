@@ -78,13 +78,17 @@
     "exportButtonText": "Exporter",
     "createBcfButtonText": "Créer un BCF",
     "createBcfTitle": "Signaler un problème",
-    "searchInputPlaceholder": "Rechercher",
+    "showStatisticsTooltip": "Afficher les statistiques",
+    "hideStatisticsTooltip": "Masquer les statistiques",
+    "searchInputPlaceholder": "Recherche par numéro d'index, nom, créateur ou tag",
     "ascendingIndexTooltip": "index ascendant",
     "descendingIndexTooltip": "index descendant",
     "alphabeticalAscendingOrderTooltip": "ordre alphabétique",
     "alphabeticalDescendingOrderTooltip": "ordre alphabétique inverse",
     "ascendingDateTooltip": "date croissante",
-    "descendingDateTooltip": "date décroissante"
+    "descendingDateTooltip": "date décroissante",
+    "viewGridTooltip": "vue grille",
+    "viewListTooltip": "vue liste"
   },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
@@ -153,17 +157,37 @@
   "BreadcrumbProjectSelector": {
     "placeholder": "< Aucun projet >"
   },
+
+  "BcfComments": {
+    "commentButton": "Poster un commentaire",
+    "commentLabel": "Poster un commentaire",
+    "commentText": "Commentaire",
+    "cancelButton": "Annuler",
+    "publishButton": "Publier",
+    "commentsText": "commentaires"
+  },
+  "BcfComment": {
+    "deleteCommentText": "Supprimer ce commentaire ?",
+    "deleteButton": "Supprimer"
+  },
   "BcfFilters": {
     "filtersButton": "Filtres",
+    "filtersTitle": "Filtres",
     "priorityLabel": "Priorité",
     "statusLabel": "Statut",
     "startDatePlaceholder": "Date de début",
     "startDateExample": "(Ex: 28/04/2022)",
     "endDatePlaceholder": "Date de fin",
     "endDateExample": "(Ex: 28/05/2022)",
+    "assignedToLabel": "Assigné à",
+    "creatorsLabel": "Créé par",
     "tagsLabel": "Tags",
     "resetButton": "Réinitialiser",
-    "searchButton": "Rechercher"
+    "searchButton": "Rechercher",
+    "noPriority": "Aucune priorité",
+    "undefinedStatus": "Non défini",
+    "undefinedUser": "Non défini",
+    "undefinedCreator": "Non défini"
   },
   "BcfSettings": {
     "goBackButton": "Retour",
@@ -196,6 +220,10 @@
       "Stage": "Liste des phases"
     }
   },
+  "Extension": {
+    "deleteExtensionText": "Supprimmer ce paramètre",
+    "deleteButton": "Supprimer"
+  },
   "BcfTopicCreationCard": {
     "text": "Créer un nouveau topic BCF",
     "createBcfSideTitle": "Signaler un problème"
@@ -213,6 +241,7 @@
     "headers": {
       "index": "#",
       "priority": "Priorité",
+      "status": "Statut",
       "title": "Titre",
       "creator": "Crée par",
       "date": "Date",
@@ -254,17 +283,27 @@
   "BcfTopicsMetrics": {
     "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
     "issues": "problèmes",
-    "priority": "Priorité",
-    "notDefined": "Aucune priorité"
+    "extension": {
+      "Priority": "Priorité",
+      "PriorityNotDefined": "Aucune priorité",
+      "PriorityTitle": "Priorités",
+      "Status": "Statut",
+      "StatusNotDefined": "Aucun statut",
+      "StatusTitle": "Statuts"
+    }
   },
   "CreateBcfTopic": {
-    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "dragDropImageText": "Veuillez sélectionner un fichier",
+    "addPictureButton": "Ajouter une image",
+    "titlePlaceholder": "Titre *",
+    "titleErrorMessage": "Titre manquant",
     "typeLabel": "Type",
     "priorityLabel": "Priorité",
     "statusLabel": "Statut",
     "stageLabel": "Phase",
     "assignedToLabel": "Assigné à",
     "dueDateLabel": "Date d'échéance (JJ/MM/AAAA)",
+    "dateErrorMessage": "Format de date ou date incorrecte",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
     "tagsLabel": "Tags",
@@ -272,8 +311,10 @@
   },
   "EditBcfTopic": {
     "goBackButton": "Retour",
-    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "dragDropImageText": "Veuillez sélectionner un fichier",
+    "addPictureButton": "Ajouter une image",
     "titlePlaceholder": "Titre*",
+    "titleErrorMessage": "Titre manquant",
     "typeLabel": "Type",
     "priorityLabel": "Priorité",
     "statusLabel": "Statut",

@@ -24,10 +24,10 @@ const documentUpdatePayload = document =>
 class FileService {
   async fetchFileStructure(project) {
     try {
-      return await apiClient.collaborationApi.getProjectDMSTree({
-        cloudPk: project.cloud.id,
-        id: project.id
-      });
+      return await apiClient.collaborationApi.getProjectDMSTree(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.FILE_STRUCTURE_FETCH_ERROR, error)
@@ -38,11 +38,11 @@ class FileService {
 
   async createFolder(project, folder) {
     try {
-      return await apiClient.collaborationApi.createFolder({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        data: folder
-      });
+      return await apiClient.collaborationApi.createFolder(
+        project.cloud.id,
+        project.id,
+        folder
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.FOLDER_CREATE_ERROR, error);
     }
@@ -52,12 +52,12 @@ class FileService {
     try {
       return await Promise.all(
         folders.map(folder =>
-          apiClient.collaborationApi.updateFolder({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            id: folder.id,
-            data: folderUpdatePayload(folder)
-          })
+          apiClient.collaborationApi.updateFolder(
+            project.cloud.id,
+            folder.id,
+            project.id,
+            folderUpdatePayload(folder)
+          )
         )
       );
     } catch (error) {
@@ -69,11 +69,11 @@ class FileService {
     try {
       return await Promise.all(
         folders.map(folder =>
-          apiClient.collaborationApi.deleteFolder({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            id: folder.id
-          })
+          apiClient.collaborationApi.deleteFolder(
+            project.cloud.id,
+            folder.id,
+            project.id
+          )
         )
       );
     } catch (error) {
@@ -85,12 +85,12 @@ class FileService {
     try {
       return await Promise.all(
         documents.map(document =>
-          apiClient.collaborationApi.updateDocument({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            id: document.id,
-            data: documentUpdatePayload(document)
-          })
+          apiClient.collaborationApi.updateDocument(
+            project.cloud.id,
+            document.id,
+            project.id,
+            documentUpdatePayload(document)
+          )
         )
       );
     } catch (error) {
@@ -102,11 +102,11 @@ class FileService {
     try {
       return await Promise.all(
         documents.map(document =>
-          apiClient.collaborationApi.deleteDocument({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            id: document.id
-          })
+          apiClient.collaborationApi.deleteDocument(
+            project.cloud.id,
+            document.id,
+            project.id
+          )
         )
       );
     } catch (error) {

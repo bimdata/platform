@@ -166,6 +166,7 @@ import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { isFolder } from "@/utils/file-structure.js";
+import { VISA_STATUS } from "@/config/visa.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -388,7 +389,10 @@ export default {
     };
 
     const visasCounter = computed(
-      () => toValidateVisas.value.length + createdVisas.value.length
+      () =>
+        toValidateVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE)
+          .length +
+        createdVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE).length
     );
 
     onMounted(() => fetchVisas());

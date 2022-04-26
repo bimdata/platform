@@ -30,23 +30,20 @@
         width: 120px;
         height: 120px;
       }
+      &__status,
+      &__date {
+        position: absolute;
+      }
       &__status {
         border-radius: 3px;
-        position: absolute;
         left: 6px;
         top: 6px;
-        &.closed {
-          background-color: var(--color-high);
-          color: var(--color-white);
-        }
-        &.opened {
-          background-color: var(--color-success);
-          color: var(--color-white);
-        }
-        &.resolved {
-          background-color: var(--color-granite-light);
-          color: var(--color-white);
-        }
+      }
+      &__date {
+        right: 0;
+        bottom: 0;
+        background-color: var(--color-white);
+        font-size: 11px;
       }
     }
   }

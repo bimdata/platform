@@ -14,7 +14,14 @@
           :tabs="tabs"
           :selected="currentTab.id"
           @tab-click="changeView($event.id)"
-        />
+        >
+          <template #tab="{ tab }">
+            <span>
+              {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
+            </span>
+            <span v-if="tab.id === 'bcf'" class="beta-badge">BETA</span>
+          </template>
+        </BIMDataTabs>
       </template>
       <template #right>
         <div class="flex items-center">
@@ -43,8 +50,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount, ref } from "vue";
-import { useI18n } from "vue-i18n";
+import { onBeforeMount, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
@@ -93,17 +99,11 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const { t } = useI18n();
     const { currentSpace, spaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
-    const tabs = computed(() =>
-      tabsDef.map(tab => ({
-        ...tab,
-        label: t(`ProjectBoard.tabs.${tab.id}`)
-      }))
-    );
+    const tabs = ref(tabsDef);
 
     const currentTab = ref(tabsDef[0]);
     const currentView = ref(PROJECT_VIEWS[DEFAULT_PROJECT_VIEW]);

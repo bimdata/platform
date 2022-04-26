@@ -54,6 +54,7 @@
       <transition name="fade" mode="out-in">
         <keep-alive>
           <component
+            :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
             :models="currentTab.models"
@@ -91,6 +92,13 @@ const tabsDef = [
   },
   {
     id: "tab2",
+    label: "DXF",
+    icon: "/static/dwg-file.svg",
+    modelTypes: [MODEL_TYPE.DXF],
+    component: "DWGManager"
+  },
+  {
+    id: "tab3",
     label: "PDF",
     icon: "/static/pdf-file.svg",
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],

@@ -22,7 +22,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _)"
+          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -47,7 +47,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _)"
+          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
       - name: Deploy on staging
         run: |
           docker run \
@@ -64,7 +64,7 @@ jobs:
       - name: Define platform url
         id: platform
         run: |
-          echo "::set-output name=url::https://platform-dev-$(echo ${GITHUB_HEAD_REF##*/} | tr ' ._' -).bimdata.io"
+          echo "::set-output name=url::https://platform-dev-$(echo ${GITHUB_HEAD_REF##*/} | tr ' ._' - | tr '[:upper:]' '[:lower:]').bimdata.io"
       - name: Edit PR title with ${{ steps.platform.outputs.url }}
         uses: ./.github/actions/pr-title-update
         with:
