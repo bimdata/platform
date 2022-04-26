@@ -594,6 +594,7 @@
     "tabs": {
       "ifc": "IFC",
       "dwg": "DWG",
+      "upload": "Upload",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives",
