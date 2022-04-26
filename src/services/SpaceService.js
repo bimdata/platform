@@ -15,7 +15,7 @@ class SpaceService {
 
   async fetchSpaceByID(id) {
     try {
-      return await apiClient.collaborationApi.getCloud({ id });
+      return await apiClient.collaborationApi.getCloud(id);
     } catch (error) {
       ErrorService.handleError(error);
       return null;
@@ -24,9 +24,9 @@ class SpaceService {
 
   async fetchSpaceSize(space) {
     try {
-      return await apiClient.collaborationApi.getCloudSize({
-        id: space.id
-      });
+      return await apiClient.collaborationApi.getCloudSize(
+        space.id
+      );
     } catch (error) {
       ErrorService.handleError(error);
       return {};
@@ -35,9 +35,9 @@ class SpaceService {
 
   async fetchSpaceUsers(space) {
     try {
-      return await apiClient.collaborationApi.getCloudUsers({
-        cloudPk: space.id
-      });
+      return await apiClient.collaborationApi.getCloudUsers(
+        space.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.USERS_FETCH_ERROR, error)
@@ -48,9 +48,9 @@ class SpaceService {
 
   async fetchSpaceInvitations(space) {
     try {
-      return await apiClient.collaborationApi.getCloudInvitations({
-        cloudPk: space.id
-      });
+      return await apiClient.collaborationApi.getCloudInvitations(
+        space.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.INVITATIONS_FETCH_ERROR, error)
@@ -61,9 +61,9 @@ class SpaceService {
 
   async createSpace(space) {
     try {
-      return await apiClient.collaborationApi.createCloud({
-        data: space
-      });
+      return await apiClient.collaborationApi.createCloud(
+        space
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.SPACE_CREATE_ERROR, error);
     }
@@ -71,12 +71,12 @@ class SpaceService {
 
   async updateSpace(space) {
     try {
-      return await apiClient.collaborationApi.updateCloud({
-        id: space.id,
-        data: {
+      return await apiClient.collaborationApi.updateCloud(
+        space.id,
+        {
           name: space.name
         }
-      });
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.SPACE_UPDATE_ERROR, error);
     }
@@ -105,9 +105,9 @@ class SpaceService {
 
   async deleteSpace(space) {
     try {
-      return await apiClient.collaborationApi.deleteCloud({
-        id: space.id
-      });
+      return await apiClient.collaborationApi.deleteCloud(
+        space.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.SPACE_DELETE_ERROR, error);
     }
@@ -115,13 +115,13 @@ class SpaceService {
 
   async sendSpaceInvitation(space, invitation) {
     try {
-      return await apiClient.collaborationApi.inviteCloudUser({
-        cloudPk: space.id,
-        data: {
+      return await apiClient.collaborationApi.inviteCloudUser(
+        space.id,
+        {
           email: invitation.email,
           redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
         }
-      });
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
     }
@@ -129,10 +129,10 @@ class SpaceService {
 
   async cancelSpaceInvitation(space, invitation) {
     try {
-      return await apiClient.collaborationApi.cancelCloudUserInvitation({
-        cloudPk: space.id,
-        id: invitation.id
-      });
+      return await apiClient.collaborationApi.cancelCloudUserInvitation(
+        space.id,
+        invitation.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.INVITATION_CANCEL_ERROR, error);
     }
@@ -142,11 +142,11 @@ class SpaceService {
     try {
       // TODO: API model should be updated to return
       // user data instead of role value.
-      await apiClient.collaborationApi.updateCloudUser({
-        cloudPk: space.id,
-        id: user.id,
-        data: user
-      });
+      await apiClient.collaborationApi.updateCloudUser(
+        space.id,
+        user.id,
+        user
+      );
       return {
         ...user,
         role: undefined
@@ -158,10 +158,10 @@ class SpaceService {
 
   async deleteSpaceUser(space, user) {
     try {
-      return await apiClient.collaborationApi.deleteCloudUser({
-        cloudPk: space.id,
-        id: user.id
-      });
+      return await apiClient.collaborationApi.deleteCloudUser(
+        space.id,
+        user.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
     }

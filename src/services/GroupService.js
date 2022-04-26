@@ -4,10 +4,10 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
 class GroupService {
   async fetchProjectGroups(project) {
     try {
-      return await apiClient.collaborationApi.getManageGroups({
-        cloudPk: project.cloud.id,
-        projectPk: project.id
-      });
+      return await apiClient.collaborationApi.getManageGroups(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.GROUPS_FETCH_ERROR, error)
@@ -18,10 +18,10 @@ class GroupService {
 
   async fetchUserGroups(project) {
     try {
-      return await apiClient.collaborationApi.getGroups({
-        cloudPk: project.cloud.id,
-        projectPk: project.id
-      });
+      return await apiClient.collaborationApi.getGroups(
+        project.cloud.id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.GROUPS_FETCH_ERROR, error)
@@ -32,11 +32,11 @@ class GroupService {
 
   async fetchGroupByID(project, id) {
     try {
-      return await apiClient.collaborationApi.getManageGroup({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id
-      });
+      return await apiClient.collaborationApi.getManageGroup(
+        project.cloud.id,
+        id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(error);
       return null;
@@ -45,11 +45,11 @@ class GroupService {
 
   async createGroup(project, group) {
     try {
-      return await apiClient.collaborationApi.createManageGroup({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        data: group
-      });
+      return await apiClient.collaborationApi.createManageGroup(
+        project.cloud.id,
+        project.id,
+        group
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.GROUP_CREATE_ERROR, error);
     }
@@ -57,12 +57,12 @@ class GroupService {
 
   async updateGroup(project, group) {
     try {
-      return await apiClient.collaborationApi.updateManageGroup({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id: group.id,
-        data: group
-      });
+      return await apiClient.collaborationApi.updateManageGroup(
+        project.cloud.id,
+        group.id,
+        project.id,
+        group
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.GROUP_UPDATE_ERROR, error);
     }
@@ -70,11 +70,11 @@ class GroupService {
 
   async deleteGroup(project, group) {
     try {
-      return await apiClient.collaborationApi.deleteManageGroup({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id: group.id
-      });
+      return await apiClient.collaborationApi.deleteManageGroup(
+        project.cloud.id,
+        group.id,
+        project.id
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.GROUP_DELETE_ERROR, error);
     }
@@ -84,14 +84,14 @@ class GroupService {
     try {
       return await Promise.all(
         users.map(user =>
-          apiClient.collaborationApi.addGroupMember({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            groupPk: group.id,
-            data: {
+          apiClient.collaborationApi.addGroupMember(
+            project.cloud.id,
+            group.id,
+            project.id,
+            {
               userprojectId: user.id
             }
-          })
+          )
         )
       );
     } catch (error) {
@@ -103,12 +103,12 @@ class GroupService {
     try {
       await Promise.all(
         users.map(user =>
-          apiClient.collaborationApi.deleteGroupMember({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            groupPk: group.id,
-            id: user.id
-          })
+          apiClient.collaborationApi.deleteGroupMember(
+            project.cloud.id,
+            group.id,
+            user.id,
+            project.id
+          )
         )
       );
       return users;
@@ -119,15 +119,15 @@ class GroupService {
 
   async updateGroupPermission(project, folder, group, permission) {
     try {
-      return await apiClient.collaborationApi.updateGroupFolder({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        folderPk: folder.id,
-        id: group.id,
-        data: {
+      return await apiClient.collaborationApi.updateGroupFolder(
+        project.cloud.id,
+        folder.id,
+        group.id,
+        project.id,
+        {
           permission
         }
-      });
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.GROUP_UPDATE_ERROR, error);
     }

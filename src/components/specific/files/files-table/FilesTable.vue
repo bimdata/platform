@@ -16,11 +16,16 @@
           alignItems: 'center'
         }"
       >
-        <BIMDataButton ghost rounded icon style="margin: 5px 14px">
+        <BIMDataButton
+          ghost
+          rounded
+          icon
+          style="margin: 5px 14px"
+          @click="$emit('back-parent-folder', folder)"
+        >
           <BIMDataIcon
             name="arrow"
             size="xxs"
-            @click="$emit('back-parent-folder', folder)"
             style="cursor: pointer"
           />
         </BIMDataButton>
