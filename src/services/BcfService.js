@@ -33,17 +33,7 @@ class BcfService {
 
   async createFullTopic(project, topic) {
     try {
-      await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            ...apiClient.authHeader
-          },
-          body: JSON.stringify(topic)
-        }
-      );
+      return await apiClient.bcfApi.createFullTopic(project.id, topic);
     } catch (error) {
       console.log(error);
     }
@@ -51,16 +41,10 @@ class BcfService {
 
   async updateFullTopic(project, topic, data) {
     try {
-      return await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic/${topic.guid}`,
-        {
-          method: "PATCH",
-          headers: {
-            "content-type": "application/json",
-            ...apiClient.authHeader
-          },
-          body: JSON.stringify(data)
-        }
+      return await apiClient.bcfApi.updateFullTopic(
+        topic.guid,
+        project.id,
+        data
       );
     } catch (error) {
       console.log(error);
@@ -113,15 +97,7 @@ class BcfService {
 
   async exportBcf(project) {
     try {
-      return await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/export`,
-        {
-          method: "GET",
-          headers: {
-            ...apiClient.authHeader
-          }
-        }
-      );
+      return await apiClient.bcfApi.downloadBcfExport(project.id);
     } catch (error) {
       console.log(error);
     }
