@@ -15,9 +15,7 @@ class ProjectService {
 
   async fetchSpaceProjects(space) {
     try {
-      return await apiClient.collaborationApi.getProjects(
-        space.id
-      );
+      return await apiClient.collaborationApi.getProjects(space.id);
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error)
@@ -28,10 +26,7 @@ class ProjectService {
 
   async fetchProjectByID(space, id) {
     try {
-      return await apiClient.collaborationApi.getProject(
-        space.id,
-        id
-      );
+      return await apiClient.collaborationApi.getProject(space.id, id);
     } catch (error) {
       ErrorService.handleError(error);
       return null;
@@ -68,10 +63,7 @@ class ProjectService {
 
   async createProject(space, project) {
     try {
-      return await apiClient.collaborationApi.createProject(
-        space.id,
-        project
-      );
+      return await apiClient.collaborationApi.createProject(space.id, project);
     } catch (error) {
       throw new RuntimeError(ERRORS.PROJECT_CREATE_ERROR, error);
     }
@@ -132,15 +124,14 @@ class ProjectService {
     try {
       // TODO: API model should be updated to return
       // user data instead of role value.
-      await apiClient.collaborationApi.updateProjectUser(
+      const res = await apiClient.collaborationApi.updateProjectUser(
         project.cloud.id,
         user.id,
         project.id,
-        user
+        { role: user.role }
       );
       return {
-        ...user,
-        role: undefined
+        role: res.role
       };
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
