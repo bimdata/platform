@@ -47,9 +47,7 @@ class SubscriptionService {
   }
 
   async fetchSpaceSubInfo(space) {
-    const subInfo = await apiClient.collaborationApi.getCloudSize({
-      id: space.id
-    });
+    const subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
 
     // Derive used size from remaining size
     const usedSizePercent = 100 - subInfo.remainingSmartDataSizePercent;

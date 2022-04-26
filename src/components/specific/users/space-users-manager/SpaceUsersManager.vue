@@ -125,12 +125,10 @@ export default {
       { immediate: true }
     );
 
-    const list = computed(() =>
-      currentTab.value === "admins" ? admins.value : users.value
-    );
-
     const { filteredList: displayedUsers, searchText } = useListFilter(
-      list,
+      computed(() =>
+        currentTab.value === "admins" ? admins.value : users.value
+      ),
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 

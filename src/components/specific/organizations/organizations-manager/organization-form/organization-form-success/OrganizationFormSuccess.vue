@@ -4,9 +4,6 @@
     <div class="organization-form-success__title">
       {{ $t("OrganizationForm.successTitle") }}
     </div>
-    <div class="organization-form-success__message">
-      {{ $t("OrganizationForm.successMessage") }}
-    </div>
     <BIMDataButton
       width="120px"
       color="primary"
