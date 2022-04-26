@@ -192,6 +192,7 @@
   "BcfSettings": {
     "goBackButton": "Retour",
     "title": "Paramètres BCF",
+    "text": "Créez, renseignez et listez les paramètres BCF que vous souhaitez avoir sur ce projet",
     "validateButton": "Valider les paramètres BCF"
   },
   "SettingCard": {
@@ -593,6 +594,7 @@
     "tabs": {
       "ifc": "IFC",
       "dwg": "DWG",
+      "upload": "Upload",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives",

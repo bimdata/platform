@@ -31,7 +31,7 @@ function mapProjects(projects) {
 function mapUsers(users) {
   const result = users.map(user => ({
     ...user,
-    isSelf: user.userId === currentUser.value.id
+    isSelf: (user.userId || user.id) === currentUser.value.id
   }));
   result.sort((a, b) =>
     `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1
