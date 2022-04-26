@@ -47,6 +47,8 @@
   
       &__left-side {
         display: flex;
+        align-items: center;
+        gap: var(--spacing-unit);
         span {
           margin: auto;
           font-weight: bold;
@@ -59,7 +61,7 @@
         display: flex;
         gap: var(--spacing-unit);
 
-        &__btn-dl, &__btn-show {
+        &__btn-dl, &__btn-show, &__btn-get-head {
           border-radius: 3px;
           background-color: var(--color-silver-light);
         }

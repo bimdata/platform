@@ -36,7 +36,7 @@
         </BIMDataButton>
       </div>
       <div class="versioning-main__content__version">
-        <VersioningList :document="document" />
+        <VersioningList :project="project" :document="document" />
       </div>
     </div>
   </div>
@@ -48,6 +48,10 @@ import VersioningList from "@/components/specific/versioning/versioning-list/Ver
 export default {
   components: { VersioningList },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     document: {
       type: Object,
       required: true

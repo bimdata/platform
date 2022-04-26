@@ -11,17 +11,41 @@
       <div class="versioning-list__content__header">
         <div class="versioning-list__content__header__left-side">
           <span> {{ $t("Versioning.currentVersion") }} </span>
+          <BIMDataIcon name="visa" color="success" size="xs" fill />
         </div>
         <div class="versioning-list__content__header__right-side">
+          <div
+            class="versioning-list__content__header__right-side__btn-get-head"
+          >
+            <BIMDataButton ghost rounded icon width="30px" height="30px">
+              <BIMDataIcon name="project" color="granite" size="xs" fill />
+            </BIMDataButton>
+          </div>
           <div class="versioning-list__content__header__right-side__btn-dl">
             <BIMDataButton ghost rounded icon width="30px" height="30px">
               <BIMDataIcon name="download" color="granite" size="xs" fill />
             </BIMDataButton>
           </div>
           <div class="versioning-list__content__header__right-side__btn-show">
-            <BIMDataButton ghost rounded icon width="30px" height="30px">
-              <BIMDataIcon name="show" color="granite" size="xs" fill />
-            </BIMDataButton>
+            <AppLink
+              v-if="isViewable(document)"
+              :to="{
+                name: routeNames.modelViewer,
+                params: {
+                  spaceID: project.cloud.id,
+                  projectID: project.id,
+                  modelIDs: document.modelId
+                },
+                query: {
+                  window: windowType(document)
+                }
+              }"
+              target="_blank"
+            >
+              <BIMDataButton ghost rounded icon width="30px" height="30px">
+                <BIMDataIcon name="show" color="granite" size="xs" fill />
+              </BIMDataButton>
+            </AppLink>
           </div>
         </div>
       </div>
@@ -64,11 +88,19 @@
 
 <script>
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import routeNames from "@/router/route-names.js";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+
 import { fullName } from "@/utils/users";
+import { isViewable, windowType } from "@/utils/models.js";
 
 export default {
-  components: { UserAvatar },
+  components: { UserAvatar, AppLink },
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     document: {
       type: Object,
       required: true
@@ -78,7 +110,12 @@ export default {
   setup() {
     return {
       console,
-      fullName
+      // references
+      fullName,
+      routeNames,
+      // methods
+      isViewable,
+      windowType
     };
   }
 };

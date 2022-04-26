@@ -132,6 +132,7 @@
             />
             <VersioningMain
               v-if="showVersioningManager"
+              :project="project"
               :document="fileToManage"
               @close="closeVersioningManager"
             />
