@@ -93,7 +93,7 @@ const tabsDef = [
   {
     id: "tab2",
     label: "DXF",
-    icon: "/static/dwg-file.svg",
+    icon: "/static/dxf-file.svg",
     modelTypes: [MODEL_TYPE.DXF],
     component: "DWGManager"
   },
