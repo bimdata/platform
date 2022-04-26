@@ -192,6 +192,7 @@
   "BcfSettings": {
     "goBackButton": "Retour",
     "title": "Paramètres BCF",
+    "text": "Créez, renseignez et listez les paramètres BCF que vous souhaitez avoir sur ce projet",
     "validateButton": "Valider les paramètres BCF"
   },
   "SettingCard": {
