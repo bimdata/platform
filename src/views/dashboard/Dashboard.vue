@@ -1,8 +1,8 @@
 <template>
   <div data-test="dashboard" class="view dashboard">
     <div class="dashboard__head">
-      <DashboardWelcomeTile />
-      <AppLink :to="{ name: routeNames.userSpaces }">
+      <DashboardWelcomeTile data-guide="welcome-title" />
+      <AppLink :to="{ name: routeNames.userSpaces }" data-guide="btn-spaces">
         <DashboardButtonTile data-test="btn-spaces" color="primary">
           <template #title>
             {{ $t("Dashboard.spacesTileTitle") }}
@@ -17,7 +17,10 @@
           </template>
         </DashboardButtonTile>
       </AppLink>
-      <AppLink :to="{ name: routeNames.userProjects }">
+      <AppLink
+        :to="{ name: routeNames.userProjects }"
+        data-guide="btn-projects"
+      >
         <DashboardButtonTile data-test="btn-projects" color="secondary">
           <template #title>
             {{ $t("Dashboard.projectsTileTitle") }}
@@ -35,6 +38,7 @@
       <AppLink
         v-if="isSubscriptionEnabled"
         :to="{ name: routeNames.userSubscriptions }"
+        data-guide="btn-subscriptions"
       >
         <DashboardButtonTile data-test="btn-subscriptions">
           <template #title>
@@ -79,6 +83,7 @@ import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
+
 // Components
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile.vue";

@@ -1,5 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
 import UserService from "@/services/UserService.js";
+import PlatformService from "@/services/PlatformService.js";
 
 const state = reactive({
   isNew: false,
@@ -35,6 +36,8 @@ export function useUser() {
     ...toRefs(readonlyState),
     // Methods
     loadUser,
-    setIsNew
+    setIsNew,
+    loadGuidedTours: PlatformService.loadGuidedTours,
+    setTourCompleted: PlatformService.setTourCompleted
   };
 }
