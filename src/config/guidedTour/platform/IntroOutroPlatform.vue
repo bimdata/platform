@@ -34,6 +34,7 @@ export default {
   position: absolute;
   gap: 12px;
   &__content {
+    margin: 0 calc(var(--spacing-unit) / 2);
     text-align: center;
   }
   &__title {

@@ -514,51 +514,51 @@
     "platform": {
       "intro": {
         "title": "Bienvenue",
-        "content": "Explorons ensemble les fonctionnalités !"
+        "content": "Explorons ensemble la plateforme BIMData"
       },
       "actionButtons": {
-        "title": "Raccourcis",
-        "content": "Accédez à l’ensemble de vos espaces, projets et abonnements directement depuis les raccourcis"
+        "title": "Tableau de bord",
+        "content": "Accédez à l’ensemble de vos espaces, projets et abonnements directement depuis ce tableau de bord"
       },
       "firstSpace": {
-        "title": "Dashboard",
-        "content": "Accédez à vos espaces et projets récents depuis le dashboard"
+        "title": "Vos espaces",
+        "content": "Accédez à vos espaces récents directement depuis ce raccourcis"
       },
       "firstProject": {
-        "title": "Dashboard",
-        "content": "Accédez à vos espaces et projets récents depuis le dashboard"
+        "title": "Vos projets",
+        "content": "Accédez à vos projets récents directement depuis ce raccourcis"
       },
       "previewIfc": {
         "title": "Aperçu",
-        "content": "Naviguez parmis les aperçus de vos modèles et renseignez leur position"
+        "content": "Naviguez facilement parmis les aperçus des modèles de votre projet"
       },    
       "usersManager": {
         "title": "Collaboration",
-        "content": "Invitez vos collaborateurs aux projets"
+        "content": "Invitez vos premiers collaborateurs à votre projet"
       },
       "modelsManager": {
         "title": "Modèles",
-        "content": "Téléversez vos modèles (IFC, DWG, PDF...) pour commencer à bimer"
+        "content": "Télécharger et gérer les modèles de votre projet (IFC, DWG, PDF...)"
       },
       "gedButton": {
-        "title": "Modèles",
-        "content": "Téléversez vos modèles (IFC, DWG, PDF...) pour commencer à bimer"
+        "title": "GED",
+        "content": "Accédez à la gestion documentaire de votre projet depuis l’onglet “GED”"
       },
       "fileTree": {
-        "title": "Vos dossiers",
-        "content": "Créez et téléversez vos dossiers et fichiers pour faciliter la gestion de projets"
+        "title": "Arborescence",
+        "content": "Créez vos dossiers et télécharger vos fichiers directement depuis la GED"
       },
       "groupManager": {
         "title": "Gestion des droits",
-        "content": "Gérez vos dossiers, les droits d’accès et plus encore"
+        "content": "Créez des groupes utilisateurs pour gérer leurs droits d’accès"
       },
       "changeSpace": {
-        "title": "Gestion des droits",
-        "content": "Gérez vos dossiers, les droits d’accès et plus encore"
+        "title": "Fil d’ariane",
+        "content": "Accédez rapidement à votre espace depuis le fil d’ariane"
       },
       "outro": {
         "title": "Bravo !",
-        "content": "Bravo ! Vous êtes arrivé au bout de ce tutoriel ! Maintenant, il ne vous reste plus qu’à lancer votre premier projet"
+        "content": "Maintenant, il ne vous reste plus qu’à vous lancer dans votre premier projet."
       }
     }
   },

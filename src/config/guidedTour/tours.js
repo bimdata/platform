@@ -27,8 +27,8 @@ const tours = [
           title: t("GuidedTour.platform.actionButtons.title"),
           content: t("GuidedTour.platform.actionButtons.content"),
           img: imgPath + "actionButtons.gif",
-          imgPosition: "96% 50%", // horizontal vertical
-          imgSize: "200%"
+          imgPosition: "-20% 50%", // horizontal vertical
+          imgSize: "116%"
         }
       },
       {
@@ -62,8 +62,8 @@ const tours = [
           title: t("GuidedTour.platform.previewIfc.title"),
           content: t("GuidedTour.platform.previewIfc.content"),
           img: imgPath + "modelsOverview.gif",
-          imgPosition: "72% 50%",
-          imgSize: "233%"
+          imgPosition: "114% 103%",
+          imgSize: "83%"
         }
       },
       {
