@@ -27,14 +27,17 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { contexts, useLoadingContext } from "@/composables/loading.js";
-// Components
-import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
-import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import { useUser } from "@/state/user.js";
 import { tours } from "./config/guidedTour/tours.js";
 import { TOURS_NAME } from "@/config/guidedTour/tours.js";
+import { contexts, useLoadingContext } from "@/composables/loading.js";
+import routeNames from "@/router/route-names.js";
+
+// Components
+import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
+import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
 
 export default {
   components: {
@@ -42,21 +45,27 @@ export default {
     AppNotification
   },
   setup() {
+    const router = useRouter();
     const loading = useLoadingContext(contexts.viewContainer);
     const appLayoutViewContainer = ref(null);
     const { loadGuidedTours, setTourCompleted } = useUser();
     const tourToDisplay = ref(null);
 
-    onMounted(async () => {
-      const guidedTours = await loadGuidedTours();
-      const platformIntro = guidedTours.find(
-        tour => tour.name === TOURS_NAME.PLATFORM_INTRO
-      );
+    watch(
+      router.currentRoute,
+      async () => {
+        const currentRoute = router.currentRoute.value.name;
+        const guidedTours = await loadGuidedTours();
+        const platformIntro = guidedTours.find(
+          tour => tour.name === TOURS_NAME.PLATFORM_INTRO
+        );
 
-      if (!platformIntro) {
-        tourToDisplay.value = TOURS_NAME.PLATFORM_INTRO;
-      }
-    });
+        if (!platformIntro && currentRoute === routeNames.dashboard) {
+          tourToDisplay.value = TOURS_NAME.PLATFORM_INTRO;
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       tours,
