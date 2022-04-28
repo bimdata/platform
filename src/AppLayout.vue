@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { isEmpty } from "lodash";
 import { useUser } from "@/state/user.js";
 import { tours } from "./config/guidedTour/tours.js";
 import { TOURS_NAME } from "@/config/guidedTour/tours.js";
@@ -48,24 +49,28 @@ export default {
     const router = useRouter();
     const loading = useLoadingContext(contexts.viewContainer);
     const appLayoutViewContainer = ref(null);
-    const { loadGuidedTours, setTourCompleted } = useUser();
+    const { loadGuidedTours, setTourCompleted, completedTours } = useUser();
     const tourToDisplay = ref(null);
 
-    watch(
-      router.currentRoute,
-      async () => {
-        const currentRoute = router.currentRoute.value.name;
-        const guidedTours = await loadGuidedTours();
-        const platformIntro = guidedTours.find(
-          tour => tour.name === TOURS_NAME.PLATFORM_INTRO
-        );
+    const toursHandler = () => {
+      const currentRoute = router.currentRoute.value.name;
+      const platformIntro = completedTours.value.find(
+        tour => tour.name === TOURS_NAME.PLATFORM_INTRO
+      );
 
-        if (!platformIntro && currentRoute === routeNames.dashboard) {
-          tourToDisplay.value = TOURS_NAME.PLATFORM_INTRO;
-        }
-      },
-      { immediate: true }
-    );
+      if (!platformIntro && currentRoute === routeNames.dashboard) {
+        tourToDisplay.value = TOURS_NAME.PLATFORM_INTRO;
+      }
+    };
+
+    watch(router.currentRoute, () => toursHandler());
+
+    onMounted(async () => {
+      const tours = await loadGuidedTours();
+      if (isEmpty(tours)) {
+        toursHandler();
+      }
+    });
 
     return {
       tours,

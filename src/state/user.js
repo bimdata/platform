@@ -6,7 +6,8 @@ const state = reactive({
   isNew: false,
   user: null,
   spaceRoles: {},
-  projectRoles: {}
+  projectRoles: {},
+  completedTours: []
 });
 
 const loadUser = async () => {
@@ -25,6 +26,18 @@ const loadUser = async () => {
   return user;
 };
 
+const loadGuidedTours = async () => {
+  const tours = await PlatformService.loadGuidedTours();
+  state.completedTours = tours;
+
+  return tours;
+};
+
+const setTourCompleted = async tour => {
+  await PlatformService.setTourCompleted(tour);
+  await loadGuidedTours();
+};
+
 const setIsNew = value => {
   state.isNew = value;
 };
@@ -37,7 +50,7 @@ export function useUser() {
     // Methods
     loadUser,
     setIsNew,
-    loadGuidedTours: PlatformService.loadGuidedTours,
-    setTourCompleted: PlatformService.setTourCompleted
+    loadGuidedTours,
+    setTourCompleted
   };
 }
