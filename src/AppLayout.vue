@@ -2,6 +2,7 @@
   <div class="app-layout">
     <template v-if="tourToDisplay">
       <BIMDataGuidedTour
+        :locale="$i18n.locale"
         :tours="tours"
         :tourToDisplay="tourToDisplay"
         :elementToObserve="appLayoutViewContainer"
