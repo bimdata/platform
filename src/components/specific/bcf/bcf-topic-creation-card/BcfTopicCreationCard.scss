@@ -1,6 +1,7 @@
 .create-bcf-topic {
   &:deep() {
     .bimdata-card__content {
+      width: 336px;
       min-height: 290px;
       display: flex;
       flex-direction: column;

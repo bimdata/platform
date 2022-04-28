@@ -9,6 +9,7 @@
     >
       <SpaceCard
         v-for="space in displayedSpaces"
+        data-guide="dashboard-space"
         :key="space.id"
         :space="space"
         :actionMenu="false"
