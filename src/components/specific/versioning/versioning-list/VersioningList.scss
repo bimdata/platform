@@ -26,9 +26,9 @@
     &__down-line {
       position: absolute;
       top: 100%;
-      left: 43.5%;
+      left: 43.35%;
       width: 2px;
-      height: 140px;
+      height: 165px;
       background-color: var(--color-silver);
     }
   }
@@ -48,7 +48,7 @@
       &__left-side {
         display: flex;
         align-items: center;
-        gap: var(--spacing-unit);
+        gap: calc(var(--spacing-unit) / 2);
         span {
           margin: auto;
           font-weight: bold;
@@ -59,9 +59,9 @@
 
       &__right-side {
         display: flex;
-        gap: var(--spacing-unit);
-
+        justify-content: flex-end;
         &__btn-dl, &__btn-show, &__btn-get-head {
+          margin-left: var(--spacing-unit);
           border-radius: 3px;
           background-color: var(--color-silver-light);
         }

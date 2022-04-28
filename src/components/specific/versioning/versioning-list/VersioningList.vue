@@ -3,15 +3,24 @@
     {{ console.log("document", document) }}
     <div class="versioning-list__line">
       <div class="versioning-list__line__outer-circle">
-        <div class="versioning-list__line__outer-circle__inner-circle"></div>
+        <template v-if="isFirst">
+          <div class="versioning-list__line__outer-circle__inner-circle"></div>
+        </template>
       </div>
-      <div class="versioning-list__line__down-line" />
+      <template v-if="!isLast">
+        <div class="versioning-list__line__down-line" />
+      </template>
     </div>
     <div class="versioning-list__content">
       <div class="versioning-list__content__header">
         <div class="versioning-list__content__header__left-side">
-          <span> {{ $t("Versioning.currentVersion") }} </span>
-          <BIMDataIcon name="visa" color="success" size="xs" fill />
+          <template v-if="isFirst">
+            <span> {{ $t("Versioning.currentVersion") }} </span>
+          </template>
+          <template v-else>
+            <span> {{ $t("Versioning.previousVersion") }} </span>
+          </template>
+          <BIMDataIcon name="visa" color="success" size="s" fill />
         </div>
         <div class="versioning-list__content__header__right-side">
           <div
@@ -33,27 +42,28 @@
               <BIMDataIcon name="download" color="granite" size="xs" fill />
             </BIMDataButton>
           </div>
-          <div class="versioning-list__content__header__right-side__btn-show">
-            <AppLink
-              v-if="isViewable(document)"
-              :to="{
-                name: routeNames.modelViewer,
-                params: {
-                  spaceID: project.cloud.id,
-                  projectID: project.id,
-                  modelIDs: document.modelId
-                },
-                query: {
-                  window: windowType(document)
-                }
-              }"
-              target="_blank"
-            >
-              <BIMDataButton ghost rounded icon width="30px" height="30px">
-                <BIMDataIcon name="show" color="granite" size="xs" fill />
-              </BIMDataButton>
-            </AppLink>
-          </div>
+          <template v-if="isViewable(document)">
+            <div class="versioning-list__content__header__right-side__btn-show">
+              <AppLink
+                :to="{
+                  name: routeNames.modelViewer,
+                  params: {
+                    spaceID: project.cloud.id,
+                    projectID: project.id,
+                    modelIDs: document.modelId
+                  },
+                  query: {
+                    window: windowType(document)
+                  }
+                }"
+                target="_blank"
+              >
+                <BIMDataButton ghost rounded icon width="30px" height="30px">
+                  <BIMDataIcon name="show" color="granite" size="xs" fill />
+                </BIMDataButton>
+              </AppLink>
+            </div>
+          </template>
         </div>
       </div>
       <div class="versioning-list__content__file">
@@ -111,6 +121,14 @@ export default {
     },
     document: {
       type: Object,
+      required: true
+    },
+    isFirst: {
+      type: Boolean,
+      required: true
+    },
+    isLast: {
+      type: Boolean,
       required: true
     }
   },

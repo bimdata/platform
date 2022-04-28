@@ -987,6 +987,7 @@
     "title": "Historique de versions",
     "addVersion": "Ajouter une version",
     "currentVersion": "Version actuelle",
+    "previousVersion": "Version précédente",
     "addedBy": "Ajouté par :",
     "titleDate": "Le"
   },

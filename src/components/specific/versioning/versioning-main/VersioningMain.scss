@@ -1,8 +1,10 @@
 .versioning-main {
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
   padding: var(--spacing-unit);
   
   &__content {
-    height: 100%;
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing-unit) * 2);
@@ -23,6 +25,12 @@
           font-weight: bold;
         }
       }
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--spacing-unit) * 2.5);
     }
   }
 }

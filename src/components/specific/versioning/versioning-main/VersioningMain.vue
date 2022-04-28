@@ -35,8 +35,20 @@
           {{ $t("Versioning.addVersion") }}
         </BIMDataButton>
       </div>
-      <div class="versioning-main__content__version">
-        <VersioningList :project="project" :document="document" />
+      <div class="versioning-main__content__list">
+        <template
+          v-for="(doc, index) of [document, document, document, document]"
+          :key="index"
+        >
+          <VersioningList
+            :project="project"
+            :document="doc"
+            :isFirst="index === 0"
+            :isLast="
+              index + 1 === [document, document, document, document].length
+            "
+          />
+        </template>
       </div>
     </div>
   </div>
