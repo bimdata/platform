@@ -22,7 +22,14 @@
             </BIMDataButton>
           </div>
           <div class="versioning-list__content__header__right-side__btn-dl">
-            <BIMDataButton ghost rounded icon width="30px" height="30px">
+            <BIMDataButton
+              ghost
+              rounded
+              icon
+              width="30px"
+              height="30px"
+              @click="download(project, [document])"
+            >
               <BIMDataIcon name="download" color="granite" size="xs" fill />
             </BIMDataButton>
           </div>
@@ -88,11 +95,12 @@
 
 <script>
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import routeNames from "@/router/route-names.js";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-
-import { fullName } from "@/utils/users";
 import { isViewable, windowType } from "@/utils/models.js";
+import routeNames from "@/router/route-names.js";
+import { useFiles } from "@/state/files.js";
+import { fullName } from "@/utils/users";
+
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
   components: { UserAvatar, AppLink },
@@ -108,12 +116,14 @@ export default {
   },
   emits: [],
   setup() {
+    const { downloadFiles } = useFiles();
     return {
       console,
       // references
       fullName,
       routeNames,
       // methods
+      download: downloadFiles,
       isViewable,
       windowType
     };
