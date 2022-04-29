@@ -6,6 +6,7 @@
       </template>
       <template #center>
         <BIMDataSearch
+          data-guide="project-input-search"
           data-test="input-search"
           class="user-projects__header__search"
           width="300px"
@@ -40,6 +41,7 @@
     <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
       <transition-group name="grid">
         <ProjectCard
+          data-guide="project-card"
           v-for="project in projects"
           :key="project.id"
           :project="project"

@@ -18,7 +18,11 @@
       </AppLink>
     </template>
     <template #content>
-      <ModelsCardModelPreview :models="models" @model-changed="onModelChange" />
+      <ModelsCardModelPreview
+        data-guide="preview-ifc"
+        :models="models"
+        @model-changed="onModelChange"
+      />
     </template>
   </BIMDataCard>
 </template>
