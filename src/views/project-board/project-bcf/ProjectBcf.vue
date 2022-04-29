@@ -323,16 +323,6 @@ import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 import { useModels } from "@/state/models.js";
 // Components
-import {
-  BcfFilters,
-  BcfSettings,
-  BcfStatistics,
-  BcfTopicCard,
-  BcfTopicCreate,
-  BcfTopicCreationCard,
-  BcfTopicForm,
-  BcfTopicOverview
-} from "@bimdata/bcf-components";
 import BcfStatisticsEmptyImage from "@/components/images/BcfStatisticsEmptyImage.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
@@ -342,15 +332,7 @@ export default {
   components: {
     AppSlotContent,
     AppSidePanel,
-    BcfFilters,
-    BcfSettings,
-    BcfStatistics,
     BcfStatisticsEmptyImage,
-    BcfTopicCard,
-    BcfTopicCreate,
-    BcfTopicCreationCard,
-    BcfTopicForm,
-    BcfTopicOverview,
     FileUploadButton
   },
   setup() {
