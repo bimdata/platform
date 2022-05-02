@@ -42,6 +42,7 @@ const ERRORS = Object.freeze({
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
   GROUP_DELETE_ERROR: "groupDeleteError",
+  TAGS_FETCH_ERROR: "tagsFetchError",
   VISA_CREATE_ERROR: "visaCreateError",
   VISA_CREATE_VALIDATION_ERROR: "visaCreateValidationError",
   VISA_FETCH_ERROR: "visaFetchError",

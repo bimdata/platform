@@ -1,0 +1,42 @@
+.tag-list {
+  display: flex;
+  gap: var(--spacing-unit);
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--color-silver-light);
+    padding: 0 calc(var(--spacing-unit) / 1.5) 0 var(--spacing-unit);
+    border-radius: 3px;
+
+    span {
+      margin: auto 0;
+      color: var(--color-primary);
+    }
+    &__action {
+      display: flex;
+
+      &__color-selector {
+        margin: auto;
+        border-left: 1px solid var(--color-silver);
+        position: relative;
+
+        div:first-child {
+          margin-left: calc(var(--spacing-unit) / 1.5);
+
+          width: 20px;
+          height: 20px;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+        div:nth-child(2) {
+          position: absolute;
+          top: 26px;
+          right: 20px;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}

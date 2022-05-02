@@ -87,7 +87,17 @@
         >
           {{ $t("FileActionsCell.VisaButtonText") }}
         </BIMDataButton>
-
+        <BIMDataButton
+          v-if="
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('open-tag-manager')"
+        >
+          {{ $t("FileActionsCell.addTagsButtonText") }}
+        </BIMDataButton>
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
@@ -138,7 +148,8 @@ export default {
     "download",
     "manage-access",
     "open-visa-manager",
-    "update"
+    "update",
+    "open-tag-manager"
   ],
   setup(props, { emit }) {
     const {

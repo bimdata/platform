@@ -107,6 +107,7 @@
             @manage-access="openAccessManager($event)"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
+            @open-tag-manager="openTagManager"
           />
         </div>
 
@@ -131,6 +132,12 @@
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
               @reach-file="backToParent"
+            />
+            <TagMain
+              v-if="showTagManager"
+              :project="project"
+              :document="fileToManage"
+              @close="closeTagManager"
             />
           </div>
         </transition>
@@ -165,6 +172,7 @@ import { useAppNotification } from "@/components/specific/app/app-notification/a
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
+import { useTag } from "@/state/tag.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { VISA_STATUS } from "@/config/visa.js";
 // Components
@@ -177,6 +185,7 @@ import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
+import TagMain from "@/components/specific/tag/tag-main/TagMain.vue";
 
 export default {
   components: {
@@ -188,7 +197,8 @@ export default {
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,
-    VisaMain
+    VisaMain,
+    TagMain
   },
   props: {
     spaceSubInfo: {
@@ -224,6 +234,7 @@ export default {
       downloadFiles: download
     } = useFiles();
     const { createModel } = useModels();
+    const { fetchAllTags } = useTag();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -232,6 +243,7 @@ export default {
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
     const visasLoading = ref(false);
+    const allTags = ref([]);
 
     watch(
       () => props.fileStructure,
@@ -321,6 +333,7 @@ export default {
     const showSidePanel = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
+    const showTagManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
 
@@ -329,6 +342,7 @@ export default {
       folderToManage.value = folder;
       showAccessManager.value = true;
       showVisaManager.value = false;
+      showTagManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
@@ -361,6 +375,7 @@ export default {
       }
       showVisaManager.value = true;
       showAccessManager.value = false;
+      showTagManager.value = false;
       showSidePanel.value = true;
     };
 
@@ -368,6 +383,24 @@ export default {
       showSidePanel.value = false;
       setTimeout(() => {
         showVisaManager.value = false;
+        fileToManage.value = null;
+      }, 100);
+    };
+
+    const openTagManager = event => {
+      if (event.fileName) {
+        fileToManage.value = event;
+        showTagManager.value = true;
+        showAccessManager.value = false;
+        showVisaManager.value = false;
+        showSidePanel.value = true;
+      }
+    };
+
+    const closeTagManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showTagManager.value = false;
         fileToManage.value = null;
       }, 100);
     };
@@ -395,7 +428,12 @@ export default {
         createdVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE).length
     );
 
-    onMounted(() => fetchVisas());
+    const fetchTags = async () => {
+      const tags = await fetchAllTags(props.project);
+      allTags.value = tags;
+    };
+
+    onMounted(() => fetchVisas(), fetchTags());
 
     return {
       // References
@@ -415,6 +453,8 @@ export default {
       createdVisas,
       visasLoading,
       visasCounter,
+      showTagManager,
+      allTags,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -429,7 +469,9 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
-      fetchVisas
+      fetchVisas,
+      openTagManager,
+      closeTagManager
     };
   }
 };
