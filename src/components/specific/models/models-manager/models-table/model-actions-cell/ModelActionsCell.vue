@@ -46,8 +46,9 @@
         <BIMDataIcon name="download" size="m" />
       </BIMDataButton>
     </template>
+
     <BIMDataButton
-      :disabled="model.document?.userPermission < 100"
+      :disabled="!project.isAdmin && model.document?.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded
