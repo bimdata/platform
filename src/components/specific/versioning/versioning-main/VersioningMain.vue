@@ -18,35 +18,30 @@
           </BIMDataButton>
         </div>
       </div>
+
       <div class="versioning-main__content__add-version">
-        <BIMDataButton
-          color="primary"
-          fill
-          radius
+        <FileUploadButton
+          :disabled="
+            (!project.isAdmin && currentFolder.userPermission < 100) ||
+            spaceSubInfo.remainingTotalSize <= 0
+          "
           width="100%"
-          @click="console.log('clicked')"
-        >
-          <BIMDataIcon
-            name="close"
-            size="xxxs"
-            :rotate="45"
-            margin="1px 12px 0 0"
-          />
-          {{ $t("Versioning.addVersion") }}
-        </BIMDataButton>
+          icon="close"
+          iconSize="xxxs"
+          :iconRotate="45"
+          :textButton="$t('Versioning.AddVersion')"
+          @upload="addVersion"
+        />
       </div>
       <div class="versioning-main__content__list">
-        <template
-          v-for="(doc, index) of [document, document, document, document]"
-          :key="index"
-        >
+        <template v-for="(doc, index) of allDocVersions" :key="index">
           <VersioningList
             :project="project"
             :document="doc"
+            :headDocument="headDocument"
             :isFirst="index === 0"
-            :isLast="
-              index + 1 === [document, document, document, document].length
-            "
+            :isLast="index + 1 === allDocVersions.length"
+            @current-head="currentHead = $event"
           />
         </template>
       </div>
@@ -55,23 +50,77 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
+import { isEmpty } from "lodash";
 import VersioningList from "@/components/specific/versioning/versioning-list/VersioningList.vue";
+import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
+
+import { useUpload } from "@/composables/upload.js";
+
+import { useFiles } from "@/state/files.js";
 
 export default {
-  components: { VersioningList },
+  components: { VersioningList, FileUploadButton },
   props: {
     project: {
       type: Object,
       required: true
     },
-    document: {
+    currentFolder: {
+      type: Object,
+      required: true
+    },
+    spaceSubInfo: {
+      type: Object,
+      required: true
+    },
+    headDocument: {
       type: Object,
       required: true
     }
   },
-  emits: ["close"],
+  emits: ["close", "create-model"],
 
-  setup() {}
+  setup(props) {
+    const { projectFileUploader } = useUpload();
+    const { fetchAllPrevDocVersions } = useFiles();
+
+    const allDocVersions = ref([]);
+    const currentHead = ref(props.headDocument);
+
+    const addVersion = async fileToUpload => {
+      if (fileToUpload) {
+        const handlers = {
+          onUploadStart: () => {},
+          onUploadComplete: ({ response }) => (currentHead.value = response)
+        };
+        const uploader = projectFileUploader(props.project, handlers);
+        uploader.upload(fileToUpload[0], null, currentHead.value.id);
+      }
+    };
+
+    watch(
+      currentHead,
+      async () => {
+        const prevDocVersions = await fetchAllPrevDocVersions(
+          props.project,
+          currentHead.value
+        );
+        if (!isEmpty(prevDocVersions)) {
+          allDocVersions.value = [currentHead.value].concat(prevDocVersions);
+        }
+      },
+      { immediate: true }
+    );
+
+    return {
+      //variable
+      allDocVersions,
+      currentHead,
+      //metthods
+      addVersion
+    };
+  }
 };
 </script>
 

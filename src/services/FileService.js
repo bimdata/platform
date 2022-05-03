@@ -145,6 +145,31 @@ class FileService {
     }
     return url;
   }
+
+  async fetchAllPrevDocVersions(project, document) {
+    try {
+      return await apiClient.collaborationApi.getDocumentHistories(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_FETCH_ERROR, error);
+    }
+  }
+
+  async makeHeadVersion(project, headDocument, document) {
+    try {
+      return await apiClient.collaborationApi.makeHeadVersionDocumentHistory(
+        project.cloud.id,
+        headDocument.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_MAKE_HEAD_ERROR, error);
+    }
+  }
 }
 
 const service = new FileService();

@@ -136,7 +136,9 @@
             <VersioningMain
               v-if="showVersioningManager"
               :project="project"
-              :document="fileToManage"
+              :headDocument="fileToManage"
+              :currentFolder="currentFolder"
+              :spaceSubInfo="spaceSubInfo"
               @close="closeVersioningManager"
             />
           </div>

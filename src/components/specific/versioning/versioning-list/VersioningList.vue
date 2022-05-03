@@ -1,6 +1,5 @@
 <template>
   <div class="versioning-list">
-    {{ console.log("document", document) }}
     <div class="versioning-list__line">
       <div class="versioning-list__line__outer-circle">
         <template v-if="isFirst">
@@ -20,16 +19,25 @@
           <template v-else>
             <span> {{ $t("Versioning.previousVersion") }} </span>
           </template>
-          <BIMDataIcon name="visa" color="success" size="s" fill />
+          <!-- <BIMDataIcon name="visa" color="success" size="s" fill /> -->
         </div>
         <div class="versioning-list__content__header__right-side">
-          <div
-            class="versioning-list__content__header__right-side__btn-get-head"
-          >
-            <BIMDataButton ghost rounded icon width="30px" height="30px">
-              <BIMDataIcon name="project" color="granite" size="xs" fill />
-            </BIMDataButton>
-          </div>
+          <template v-if="!isFirst">
+            <div
+              class="versioning-list__content__header__right-side__btn-get-head"
+            >
+              <BIMDataButton
+                ghost
+                rounded
+                icon
+                width="30px"
+                height="30px"
+                @click="swapHeadDoc"
+              >
+                <BIMDataIcon name="project" color="granite" size="xs" fill />
+              </BIMDataButton>
+            </div>
+          </template>
           <div class="versioning-list__content__header__right-side__btn-dl">
             <BIMDataButton
               ghost
@@ -89,7 +97,11 @@
             />
             <BIMDataTextbox
               class="versioning-list__content__user__info__identity__name"
-              :text="fullName(document.createdBy) || document.createdBy.email"
+              :text="
+                (document.createdBy &&
+                  (fullName(document.createdBy) || document.createdBy.email)) ||
+                ''
+              "
               width="60%"
             />
           </div>
@@ -123,6 +135,10 @@ export default {
       type: Object,
       required: true
     },
+    headDocument: {
+      type: Object,
+      required: true
+    },
     isFirst: {
       type: Boolean,
       required: true
@@ -132,16 +148,27 @@ export default {
       required: true
     }
   },
-  emits: [],
-  setup() {
-    const { downloadFiles } = useFiles();
+  emits: ["current-head"],
+  setup(props, { emit }) {
+    const { downloadFiles, makeHeadVersion } = useFiles();
+
+    const swapHeadDoc = async () => {
+      const newHeadVersion = await makeHeadVersion(
+        props.project,
+        props.headDocument,
+        props.document
+      );
+      emit("current-head", newHeadVersion);
+    };
+
     return {
-      console,
       // references
       fullName,
       routeNames,
       // methods
+      makeHeadVersion,
       download: downloadFiles,
+      swapHeadDoc,
       isViewable,
       windowType
     };

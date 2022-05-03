@@ -989,7 +989,9 @@
     "currentVersion": "Version actuelle",
     "previousVersion": "Version précédente",
     "addedBy": "Ajouté par :",
-    "titleDate": "Le"
+    "titleDate": "Le",
+    "AddVersion": "Ajouter une nouvelle version"
+
   },
   "Error": "Erreur",
   "Success": "Succès",
@@ -1028,6 +1030,8 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "fileVersionsFetchError": "Impossible de récupérer les versions de ce document",
+    "fileVersionsMakeHeadError": "Échec lors du passage du document en version actuelle",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
