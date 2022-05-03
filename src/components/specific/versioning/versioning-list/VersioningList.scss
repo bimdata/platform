@@ -51,7 +51,7 @@
         gap: calc(var(--spacing-unit) / 2);
         span {
           margin: auto;
-          font-weight: bold;
+          font-weight: 500;
           font-size: calc(var(--spacing-unit) * 1.2);
           color: var(--color-primary);
         }
@@ -80,12 +80,16 @@
       }
 
       &__name {
+        //  font-size: calc(var(--spacing-unit) / 1.2);
         margin-left: var(--spacing-unit);
         color: var(--color-primary);
       }
     }
 
     &__user {
+      &__title {
+        font-size: calc(var(--spacing-unit) / 1.2);
+      }
       &__info {
         margin-top: calc(var(--spacing-unit) / 2);
         display: flex;
@@ -97,14 +101,15 @@
             align-items: center;
             margin-left: var(--spacing-unit);
             color: var(--color-primary);
-            font-weight: bold;
+            font-weight: 500;
           }
         }
       }
       &__date {
-        margin-left: auto;
         display: flex;
+        margin-left: auto;
         align-items: center;
+        color: var(--color-granite-light);
       }
     }
   }
