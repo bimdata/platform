@@ -42,7 +42,7 @@
       </div>
       <div class="tag-main__content__tag-list">
         <template v-for="(tag, index) of tagList" :key="index">
-          <TagList :tag="tag" @update-tag="updatedTagList = $event" />
+          <TagList v-if="tag.isFindable" :tag="tag" @tag-updater="tagUpdater" />
         </template>
       </div>
     </div>
@@ -67,18 +67,56 @@ export default {
     },
     allTags: {
       type: Array,
-      default: () => ["tag1", "tag2", "tag3"]
+      default: () => [
+        {
+          id: 1,
+          name: "tag1",
+          color: "red"
+        },
+        {
+          id: 2,
+          name: "tag2",
+          color: "red"
+        },
+        {
+          id: 3,
+          name: "tag3",
+          color: "red"
+        }
+      ]
     }
   },
   emits: ["close"],
   setup(props) {
     const filter = ref("");
     const tagList = ref([]);
-    const updatedTagList = ref(null);
+    const updatedTagList = ref(props.allTags);
 
     const getTagListUpdated = () => {
-      tagList.value = (updatedTagList.value || props.allTags).sort();
+      tagList.value = updatedTagList.value.map(tag => {
+        return {
+          ...tag,
+          isFindable:
+            filter.value === ""
+              ? true
+              : tag.name.includes(filter.value.toLowerCase())
+        };
+      });
     };
+
+    const tagUpdater = tagToUpdate =>
+      updatedTagList.value.map(tag => {
+        if (tag.id === tagToUpdate.id) {
+          return {
+            ...tag,
+            name: tagToUpdate.name,
+            color: tagToUpdate.color,
+            isSelected: tagToUpdate.checked
+          };
+        } else {
+          return { ...tag };
+        }
+      });
 
     watch(filter, () => getTagListUpdated(), { immediate: true });
 
@@ -86,7 +124,8 @@ export default {
       filter,
       tagList,
       //method
-      updatedTagList
+      updatedTagList,
+      tagUpdater
     };
   }
 };

@@ -1,14 +1,16 @@
 <template>
   <div class="tag-list">
-    <BIMDataCheckbox :disabled="false" v-model="checked" />
+    <BIMDataCheckbox
+      :modelValue="tag.isSelected"
+      @update:modelValue="toggle(tag, $event)"
+    />
     <div class="tag-list__info">
-      {{ console.log("tags", tags) }}
-      <span>{{ tag }}</span>
+      <span>{{ tag.name }}</span>
       <div class="tag-list__info__action">
-        <BIMDataButton color="primary" icon margin="12px">
+        <BIMDataButton color="high" icon margin="12px">
           <BIMDataIcon name="edit" size="xxs" />
         </BIMDataButton>
-        <BIMDataButton fillColor color="high" icon margin="12px">
+        <BIMDataButton fillColor color="primary" icon margin="12px">
           <BIMDataIcon name="delete" size="xxs" />
         </BIMDataButton>
         <div class="tag-list__info__action__color-selector">
@@ -40,10 +42,15 @@ export default {
       required: true
     }
   },
-  emits: ["close"],
-  setup() {
+  emits: ["close", "tag-updater"],
+  setup(_, { emit }) {
     const color = ref("c0c0c0");
     const displayColorSelector = ref(false);
+    const toggle = (tag, checked) => {
+      tag.isSelected = checked;
+      console.log("tag in toggle", tag);
+      emit("tag-updater", tag);
+    };
 
     const updateColorSelector = choosenColor => {
       console.log("update color", choosenColor);
@@ -55,7 +62,8 @@ export default {
       displayColorSelector,
       console,
       // methods
-      updateColorSelector
+      updateColorSelector,
+      toggle
     };
   }
 };
