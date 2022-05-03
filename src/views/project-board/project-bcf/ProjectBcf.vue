@@ -83,6 +83,7 @@
             :bcfTopics="bcfTopics"
             :extensions="extensions"
             :detailedExtensions="detailedExtensions"
+            @bcf-topic-created="reloadBcfTopics"
           />
         </template>
         <template v-else-if="showBcfTopicOverview && currentBcfTopic">
@@ -94,6 +95,7 @@
             :detailedExtensions="detailedExtensions"
             @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
             @view-bcf-topic="openBcfTopicViewer(currentBcfTopic)"
+            @bcf-topic-deleted="reloadBcfTopics"
             @close="closeSidePanel"
           />
         </template>
@@ -102,6 +104,7 @@
             :project="project"
             :bcfTopic="currentBcfTopic"
             :extensions="extensions"
+            @bcf-topic-updated="reloadBcfTopics"
           />
         </template>
       </transition>
@@ -111,6 +114,9 @@
       <BcfSettings
         :project="project"
         :detailedExtensions="detailedExtensions"
+        @extension-created="reloadExtensions"
+        @extension-updated="reloadExtensions"
+        @extension-deleted="reloadExtensions"
         @close="closeBcfSettings"
       />
     </div>
@@ -496,6 +502,15 @@ export default {
       toggle: toggleMetrics
     } = useToggle();
 
+    const reloadBcfTopics = () => {
+      loadBcfTopics(currentProject.value);
+    };
+
+    const reloadExtensions = () => {
+      loadExtensions(currentProject.value);
+      loadDetailedExtensions(currentProject.value);
+    };
+
     return {
       // References
       activeButton,
@@ -530,6 +545,8 @@ export default {
       openBcfTopicForm,
       openBcfTopicOverview,
       openBcfTopicViewer,
+      reloadBcfTopics,
+      reloadExtensions,
       sortByDate,
       sortByIndex,
       sortByName,
