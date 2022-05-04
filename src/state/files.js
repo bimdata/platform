@@ -97,6 +97,10 @@ const deleteFiles = async (project, files) => {
   return files;
 };
 
+const getDocument = async (project, document) => {
+  return FileService.getDocument(project, document);
+};
+
 export function useFiles() {
   const readOnlyState = readonly(state);
   return {
@@ -110,6 +114,7 @@ export function useFiles() {
     updateFiles,
     moveFiles,
     downloadFiles,
-    deleteFiles
+    deleteFiles,
+    getDocument
   };
 }
