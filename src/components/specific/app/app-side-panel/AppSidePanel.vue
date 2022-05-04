@@ -4,7 +4,7 @@
       <div
         v-show="showSidePanel"
         class="app-side-panel"
-        :style="`--header-height: ${header ? '44px' : '0'}`"
+        :style="`--header-height: ${header ? '44px' : '0px'}`"
       >
         <div v-if="header" class="app-side-panel__header">
           <slot name="header">

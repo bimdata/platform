@@ -82,7 +82,6 @@
             :project="project"
             :bcfTopics="bcfTopics"
             :extensions="extensions"
-            :detailedExtensions="detailedExtensions"
             @bcf-topic-created="reloadBcfTopics"
           />
         </template>
@@ -96,6 +95,9 @@
             @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
             @view-bcf-topic="openBcfTopicViewer(currentBcfTopic)"
             @bcf-topic-deleted="reloadBcfTopics"
+            @comment-created="loadBcfTopicComments(project, currentBcfTopic)"
+            @comment-updated="loadBcfTopicComments(project, currentBcfTopic)"
+            @comment-deleted="loadBcfTopicComments(project, currentBcfTopic)"
             @close="closeSidePanel"
           />
         </template>
@@ -352,6 +354,7 @@ export default {
       loadBcfTopics,
       loadExtensions,
       loadDetailedExtensions,
+      loadBcfTopicComments,
       importBcf,
       exportBcf
     } = useBcf();
@@ -446,6 +449,7 @@ export default {
       showBcfTopicCreate.value = false;
       showBcfTopicOverview.value = true;
       showBcfTopicForm.value = false;
+      loadBcfTopicComments(currentProject.value, topic);
       openSidePanel();
     };
 
@@ -523,6 +527,7 @@ export default {
       isSortByDateActive,
       isSortByIndexActive,
       isSortByNameActive,
+      loadBcfTopicComments,
       loading,
       models: projectModels,
       project: currentProject,
