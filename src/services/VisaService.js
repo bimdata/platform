@@ -49,7 +49,7 @@ class VisaService {
     try {
       return await apiClient.collaborationApi.getVisa(
         project.cloud.id,
-        visa.document.id,
+        visa.documentId,
         visa.id,
         project.id
       );

@@ -21,7 +21,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ tr '[:upper:]' '[:lower:]')"
+          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
       - name: Delete app deployment
         run: |
           docker run \

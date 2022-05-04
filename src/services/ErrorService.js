@@ -37,6 +37,7 @@ const ERRORS = Object.freeze({
   FILE_DOWNLOAD_ERROR: "fileDownloadError",
   FILE_DELETE_ERROR: "fileDeleteError",
   FOLDER_CREATE_ERROR: "folderCreateError",
+  FILE_FETCH_ERROR: "fileFetchError",
   DOCUMENT_UPLOAD_ERROR: "documentUploadError",
   GROUPS_FETCH_ERROR: "groupsFetchError",
   GROUP_CREATE_ERROR: "groupCreateError",

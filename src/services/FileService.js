@@ -81,6 +81,18 @@ class FileService {
     }
   }
 
+  async getDocument(project, document) {
+    try {
+      return await apiClient.collaborationApi.getDocument(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_FETCH_ERROR, error);
+    }
+  }
+
   async updateDocuments(project, documents) {
     try {
       return await Promise.all(
