@@ -141,8 +141,7 @@
             icon
             @click="toggleMetrics"
           >
-            <Graph
-              style="heiht: 18px; width: 18px"
+            <PieGraphIcon
               :activeColor="
                 !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
               "
@@ -176,11 +175,10 @@
             icon
             @click="sortByIndex"
           >
-            <IndexAscending
-              v-if="isSortByIndexActive"
-              style="heiht: 18px; width: 18px"
+            <BIMDataIcon
+              :name="isSortByIndexActive ? 'indexAscending' : 'indexDescending'"
+              size="s"
             />
-            <IndexDescending v-else style="heiht: 18px; width: 18px" />
           </BIMDataButton>
         </BIMDataTooltip>
 
@@ -201,11 +199,14 @@
             icon
             @click="sortByName"
           >
-            <AlphabeticalAscending
-              v-if="isSortByNameActive"
-              style="heiht: 18px; width: 18px"
+            <BIMDataIcon
+              :name="
+                isSortByNameActive
+                  ? 'alphabeticalAscending'
+                  : 'alphabeticalDescending'
+              "
+              size="s"
             />
-            <AlphabeticalDescending v-else style="heiht: 18px; width: 18px" />
           </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataTooltip
@@ -225,11 +226,10 @@
             icon
             @click="sortByDate"
           >
-            <DateAscending
-              v-if="isSortByDateActive"
-              style="heiht: 18px; width: 18px"
+            <BIMDataIcon
+              :name="isSortByDateActive ? 'dateAscending' : 'dateDescending'"
+              size="s"
             />
-            <DateDescending v-else style="heiht: 18px; width: 18px" />
           </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataTooltip
@@ -248,11 +248,10 @@
             icon
             @click="toggleDisplayBcfTopics"
           >
-            <Grid
-              v-if="isDisplayByListActive"
-              style="heiht: 18px; width: 18px"
+            <BIMDataIcon
+              :name="isDisplayByListActive ? 'grid' : 'list'"
+              size="s"
             />
-            <List v-else style="heiht: 18px; width: 18px" />
           </BIMDataButton>
         </BIMDataTooltip>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
