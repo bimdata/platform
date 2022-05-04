@@ -1032,6 +1032,7 @@
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
     "tagsFetchError": "Impossible de récupérer les tags",
+    "tagsCreateError": "Erreur lors de la création du tag",
     "visaCreateError": "Erreur lors de la création du visa",
     "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
     "visaFetchError": "Impossible de récupérer le visa",

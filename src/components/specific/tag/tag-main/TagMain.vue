@@ -20,7 +20,14 @@
       </div>
       <div class="tag-main__content__list-add">
         <span>{{ $t("Tag.list") }}</span>
-        <BIMDataButton color="primary" radius ghost icon margin="12px">
+        <BIMDataButton
+          color="primary"
+          radius
+          ghost
+          icon
+          margin="12px"
+          @click="showAddTagInput = true"
+        >
           <BIMDataIcon
             name="close"
             size="xxxs"
@@ -30,6 +37,22 @@
           <span>{{ $t("Tag.addTag") }}</span>
         </BIMDataButton>
       </div>
+      <template v-if="showAddTagInput">
+        <BIMDataInput
+          ref="input"
+          placeholder="ajouter un nouveau tag"
+          v-model="newTagName"
+          @keyup.enter.stop="addNewTag"
+        />
+        <div class="tag-main__content__list-add__input-btn">
+          <BIMDataButton ghost radius class="m-r-6" @click="toggleAddTagInput"
+            >close</BIMDataButton
+          >
+          <BIMDataButton color="primary" fill radius @click="addNewTag">{{
+            $t("SettingCard.validateButton")
+          }}</BIMDataButton>
+        </div>
+      </template>
       <div class="tag-main__content__search-bar">
         <BIMDataSearch
           v-model="filter"
@@ -41,8 +64,12 @@
         />
       </div>
       <div class="tag-main__content__tag-list">
-        <template v-for="(tag, index) of tagList" :key="index">
-          <TagList v-if="tag.isFindable" :tag="tag" @tag-updater="tagUpdater" />
+        <template v-for="(tag, index) of updatedTagList" :key="index">
+          <TagList
+            v-if="tag.isFindable"
+            :tag="tag"
+            @tag-updater="tagToUpdate = $event"
+          />
         </template>
       </div>
     </div>
@@ -51,7 +78,10 @@
 
 <script>
 import { ref, watch } from "vue";
+import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
 import TagList from "@/components/specific/tag/tag-list/TagList.vue";
+import { useToggle } from "@/composables/toggle";
+import { useTag } from "@/state/tag.js";
 
 export default {
   components: { TagList },
@@ -86,14 +116,34 @@ export default {
       ]
     }
   },
-  emits: ["close"],
-  setup(props) {
+  emits: ["close", "fetch-tags"],
+  setup(props, { emit }) {
     const filter = ref("");
-    const tagList = ref([]);
-    const updatedTagList = ref(props.allTags);
+    const updatedTagList = ref(null);
+    const tagToUpdate = ref(null);
+    const input = ref(null);
+    const newTagName = ref("");
 
-    const getTagListUpdated = () => {
-      tagList.value = updatedTagList.value.map(tag => {
+    const { createTag } = useTag();
+    const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
+
+    watch(showAddTagInput, () =>
+      setTimeout(() => showAddTagInput.value && input.value.focus(), 100)
+    );
+
+    const addNewTag = async () => {
+      if (newTagName.value) {
+        await createTag(props.project, {
+          name: newTagName.value,
+          color: getRandomHexColor()
+        });
+        toggleAddTagInput();
+        emit("fetch-tags");
+      }
+    };
+
+    const getTagListUpdated = (list = updatedTagList.value) => {
+      updatedTagList.value = list.map(tag => {
         return {
           ...tag,
           isFindable:
@@ -104,28 +154,40 @@ export default {
       });
     };
 
-    const tagUpdater = tagToUpdate =>
+    watch(tagToUpdate, () => {
       updatedTagList.value.map(tag => {
-        if (tag.id === tagToUpdate.id) {
+        if (tag.id === tagToUpdate.value.id) {
           return {
-            ...tag,
-            name: tagToUpdate.name,
-            color: tagToUpdate.color,
-            isSelected: tagToUpdate.checked
+            ...tagToUpdate.value
           };
         } else {
-          return { ...tag };
+          return {
+            ...tag
+          };
         }
       });
+    });
 
-    watch(filter, () => getTagListUpdated(), { immediate: true });
+    watch(filter, () => getTagListUpdated());
+    watch(
+      () => props.allTags,
+      async () => await getTagListUpdated(props.allTags),
+      {
+        immediate: true
+      }
+    );
 
     return {
+      //references
       filter,
-      tagList,
-      //method
+      input,
       updatedTagList,
-      tagUpdater
+      tagToUpdate,
+      showAddTagInput,
+      toggleAddTagInput,
+      newTagName,
+      //methods
+      addNewTag
     };
   }
 };

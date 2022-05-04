@@ -12,6 +12,18 @@ class TagService {
       throw new RuntimeError(ERRORS.TAGS_FETCH_ERROR, error);
     }
   }
+
+  async createTag(project, data) {
+    try {
+      return await apiClient.collaborationApi.createTag(
+        project.cloud.id,
+        project.id,
+        data
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.TAGS_CREATE_ERROR, error);
+    }
+  }
 }
 
 const service = new TagService();

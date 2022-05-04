@@ -137,7 +137,9 @@
               v-if="showTagManager"
               :project="project"
               :document="fileToManage"
+              :allTags="allTags"
               @close="closeTagManager"
+              @fetch-tags="fetchTags"
             />
           </div>
         </transition>
@@ -429,8 +431,7 @@ export default {
     );
 
     const fetchTags = async () => {
-      const tags = await fetchAllTags(props.project);
-      allTags.value = tags;
+      allTags.value = await fetchAllTags(props.project);
     };
 
     onMounted(() => fetchVisas(), fetchTags());
@@ -471,7 +472,8 @@ export default {
       openVisaManager,
       fetchVisas,
       openTagManager,
-      closeTagManager
+      closeTagManager,
+      fetchTags
     };
   }
 };

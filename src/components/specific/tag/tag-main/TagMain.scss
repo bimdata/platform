@@ -43,6 +43,11 @@
           margin-right: var(--spacing-unit);
         }
       }
+
+      &__input-btn {
+        display: flex;
+        justify-content: flex-end;
+      }
     }
 
     &__search-bar {
