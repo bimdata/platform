@@ -3,9 +3,7 @@
     <BIMDataTextarea
       ref="textarea"
       v-model="textAreaContent"
-      :placeholder="
-        $t(`Visa.comments.${mainComment ? 'replyComment' : 'postComment'}`)
-      "
+      :placeholder="$t('Visa.comments.postComment')"
       name="comment"
       width="100%"
       :resizable="false"
@@ -37,12 +35,6 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  props: {
-    mainComment: {
-      type: Object,
-      default: () => null
-    }
-  },
   emits: ["post-comment", "close-comments-input"],
   setup(props, { emit }) {
     const textarea = ref(null);
@@ -50,11 +42,9 @@ export default {
 
     const pushComment = async () => {
       if (textAreaContent.value) {
-        const data = {
-          content: textAreaContent.value,
-          replyToCommentId: props.mainComment && props.mainComment.id
-        };
-        emit("post-comment", data);
+        emit("post-comment", {
+          content: textAreaContent.value
+        });
       }
     };
 

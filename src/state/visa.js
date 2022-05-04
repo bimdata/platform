@@ -1,3 +1,4 @@
+import async from "async";
 import VisaService from "@/services/VisaService";
 import { useFiles } from "@/state/files.js";
 
@@ -56,14 +57,16 @@ const fetchCreatedVisas = async project => {
 
   const visas = await VisaService.fetchCreatedVisas(project);
 
-  return await Promise.all(
-    visas
-      .map(async visa => ({
-        ...visa,
-        document: await getDocument(project, { id: visa.documentId })
-      }))
-      .sort((a, b) => (a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1))
+  const visasWithDoc = await Promise.all(
+    visas.map(async visa => ({
+      ...visa,
+      document: await getDocument(project, { id: visa.documentId })
+    }))
   );
+
+  return await async.sortBy(visasWithDoc, (file, callback) => {
+    callback(null, file.createdAt.getTime() * -1);
+  });
 };
 
 const fetchToValidateVisas = async project => {
@@ -71,14 +74,16 @@ const fetchToValidateVisas = async project => {
 
   const visas = await VisaService.fetchToValidateVisas(project);
 
-  return await Promise.all(
-    visas
-      .map(async visa => ({
-        ...visa,
-        document: await getDocument(project, { id: visa.documentId })
-      }))
-      .sort((a, b) => (a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1))
+  const visasWithDoc = await Promise.all(
+    visas.map(async visa => ({
+      ...visa,
+      document: await getDocument(project, { id: visa.documentId })
+    }))
   );
+
+  return await async.sortBy(visasWithDoc, (file, callback) => {
+    callback(null, file.createdAt.getTime() * -1);
+  });
 };
 
 const updateVisa = async (project, document, visa, data) => {
