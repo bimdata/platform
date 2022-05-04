@@ -289,11 +289,16 @@
           <BIMDataSpinner />
         </div>
 
-        <!--
-        <div v-else-if="isDisplayByListActive" class="project-bcf__content__list">
-          <BcfTopicsTable :bcfTopics="displayedBcfTopics" />
+        <div
+          v-else-if="isDisplayByListActive"
+          class="project-bcf__content__list"
+        >
+          <BcfTopicsTable
+            :bcfTopics="displayedBcfTopics"
+            :detailedExtensions="detailedExtensions"
+            @open-bcf-topic="openBcfTopicOverview($event)"
+          />
         </div>
-        -->
 
         <div v-else class="project-bcf__content__grid">
           <transition-group name="grid">
