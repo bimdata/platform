@@ -38,6 +38,7 @@ const ERRORS = Object.freeze({
   FILE_DELETE_ERROR: "fileDeleteError",
   FILE_VERSIONS_FETCH_ERROR: "fileVersionsFetchError",
   FILE_VERSIONS_MAKE_HEAD_ERROR: "fileVersionsMakeHeadError",
+  FILE_VERSIONS_DELETE_ERROR: "fileVersionDelete",
   FOLDER_CREATE_ERROR: "folderCreateError",
   DOCUMENT_UPLOAD_ERROR: "documentUploadError",
   GROUPS_FETCH_ERROR: "groupsFetchError",

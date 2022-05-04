@@ -990,8 +990,15 @@
     "previousVersion": "Version précédente",
     "addedBy": "Ajouté par :",
     "titleDate": "Le",
-    "AddVersion": "Ajouter une nouvelle version"
-
+    "AddVersion": "Ajouter une nouvelle version",
+    "loading": {
+      "message": "Chargement en cours.",
+      "subMessage": "Ce processus peut prendre quelques instants."
+    },
+    "delete": "Supprimer",
+    "getToHead": "Passer en version actuelle",
+    "download": "Télécharger",
+    "show": "Voir"
   },
   "Error": "Erreur",
   "Success": "Succès",
@@ -1032,6 +1039,7 @@
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
     "fileVersionsFetchError": "Impossible de récupérer les versions de ce document",
     "fileVersionsMakeHeadError": "Échec lors du passage du document en version actuelle",
+    "fileVersionDelete": "Échec lors de la suppression du document",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",

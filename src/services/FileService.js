@@ -170,6 +170,19 @@ class FileService {
       throw new RuntimeError(ERRORS.FILE_VERSIONS_MAKE_HEAD_ERROR, error);
     }
   }
+
+  async deleteDocVersion(project, headDocument, document) {
+    try {
+      return await apiClient.collaborationApi.deleteDocumentHistory(
+        project.cloud.id,
+        headDocument.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
+    }
+  }
 }
 
 const service = new FileService();

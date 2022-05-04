@@ -28,7 +28,7 @@
       top: 100%;
       left: 43.35%;
       width: 2px;
-      height: 165px;
+      height: 168px;
       background-color: var(--color-silver);
     }
   }
@@ -52,7 +52,7 @@
         span {
           margin: auto;
           font-weight: 500;
-          font-size: calc(var(--spacing-unit) * 1.2);
+          font-size: var(--font-size);
           color: var(--color-primary);
         }
       }
@@ -60,7 +60,7 @@
       &__right-side {
         display: flex;
         justify-content: flex-end;
-        &__btn-dl, &__btn-show, &__btn-get-head {
+        &__btn-dl, &__btn-show, &__btn-get-head, &__btn-delete {
           margin-left: var(--spacing-unit);
           border-radius: 3px;
           background-color: var(--color-silver-light);
@@ -80,7 +80,7 @@
       }
 
       &__name {
-        //  font-size: calc(var(--spacing-unit) / 1.2);
+        font-weight: 500;
         margin-left: var(--spacing-unit);
         color: var(--color-primary);
       }
@@ -88,14 +88,15 @@
 
     &__user {
       &__title {
-        font-size: calc(var(--spacing-unit) / 1.2);
+        font-size: var(--font-size);
+        font-weight: 500;
       }
       &__info {
         margin-top: calc(var(--spacing-unit) / 2);
         display: flex;
         &__identity {
           display: flex;
-          width: 65%;
+          width: 60%;
           &__name {
             display: flex;
             align-items: center;
@@ -110,6 +111,8 @@
         margin-left: auto;
         align-items: center;
         color: var(--color-granite-light);
+        font-size: var(--font-size);
+        font-weight: 500;
       }
     }
   }

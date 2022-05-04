@@ -139,6 +139,8 @@
               :headDocument="fileToManage"
               :currentFolder="currentFolder"
               :spaceSubInfo="spaceSubInfo"
+              @model-created="$emit('model-created')"
+              @file-uploaded="$emit('file-uploaded')"
               @close="closeVersioningManager"
             />
           </div>
