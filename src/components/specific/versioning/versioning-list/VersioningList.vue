@@ -2,7 +2,7 @@
   <div class="versioning-list">
     <div class="versioning-list__line">
       <div class="versioning-list__line__outer-circle">
-        <template v-if="isFirst">
+        <template v-if="isHead">
           <div class="versioning-list__line__outer-circle__inner-circle"></div>
         </template>
       </div>
@@ -13,15 +13,21 @@
     <div class="versioning-list__content">
       <div class="versioning-list__content__header">
         <div class="versioning-list__content__header__left-side">
-          <template v-if="isFirst">
+          <template v-if="isHead">
             <span> {{ $t("Versioning.currentVersion") }} </span>
           </template>
           <template v-else>
             <span> {{ $t("Versioning.previousVersion") }} </span>
           </template>
-          <!-- <BIMDataIcon name="visa" color="success" size="s" fill /> -->
+          <template v-if="!isEmpty(document.visa)">
+            <BIMDataIcon
+              name="visa"
+              :color="hasOneVisaClosed ? 'success' : 'warning'"
+              size="s"
+              fill
+            />
+          </template>
         </div>
-        {{ console.log("document", document) }}
         <div class="versioning-list__content__header__right-side">
           <template v-if="project.isAdmin">
             <div
@@ -34,14 +40,19 @@
                   icon
                   width="30px"
                   height="30px"
-                  @click=""
+                  @click="
+                    $emit('on-delete', {
+                      ...document,
+                      isHead
+                    })
+                  "
                 >
                   <BIMDataIcon name="delete" color="granite" size="xs" fill />
                 </BIMDataButton>
               </BIMDataTooltip>
             </div>
           </template>
-          <template v-if="!isFirst">
+          <template v-if="!isHead">
             <div
               class="versioning-list__content__header__right-side__btn-get-head"
             >
@@ -114,7 +125,7 @@
                   icon
                   width="30px"
                   height="30px"
-                  @click="convertAndShow"
+                  @click="convertToModelAndShow"
                 >
                   <BIMDataIcon name="show" color="granite" size="xs" fill />
                 </BIMDataButton>
@@ -165,16 +176,17 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useRouter } from "vue-router";
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import { isViewable, isPDF, windowType } from "@/utils/models.js";
+import { isEmpty } from "lodash";
 import routeNames from "@/router/route-names.js";
 import { useModels } from "@/state/models.js";
-
 import { useFiles } from "@/state/files.js";
+import { isViewable, isPDF, windowType } from "@/utils/models.js";
+import { fullName } from "@/utils/users.js";
+import { VISA_STATUS } from "@/config/visa.js";
 
-import { fullName } from "@/utils/users";
-
+import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
@@ -192,7 +204,7 @@ export default {
       type: Object,
       required: true
     },
-    isFirst: {
+    isHead: {
       type: Boolean,
       required: true
     },
@@ -201,11 +213,15 @@ export default {
       required: true
     }
   },
-  emits: ["current-head", "model-created"],
+  emits: ["current-head", "model-created", "on-delete"],
   setup(props, { emit }) {
-    const { downloadFiles, makeHeadVersion, deleteDocVersion } = useFiles();
+    const { downloadFiles, makeHeadVersion } = useFiles();
     const { createModel } = useModels();
     const router = useRouter();
+
+    const hasOneVisaClosed = computed(() =>
+      props.document.visa.some(v => v.status === VISA_STATUS.CLOSE)
+    );
 
     const swapHeadDoc = async () => {
       const newHeadVersion = await makeHeadVersion(
@@ -216,11 +232,7 @@ export default {
       emit("current-head", newHeadVersion);
     };
 
-    const deleteVersion = async () => {
-      // await deleteDocVersion(props.project, props.headDocument, props.document);
-    };
-
-    const convertAndShow = async () => {
+    const convertToModelAndShow = async () => {
       const model = await createModel(props.project, props.document);
       const route = router.resolve({
         name: routeNames.modelViewer,
@@ -241,15 +253,16 @@ export default {
       // references
       fullName,
       routeNames,
+      hasOneVisaClosed,
       // methods
-      makeHeadVersion,
       download: downloadFiles,
-      convertAndShow,
-      isPDF,
+      convertToModelAndShow,
+      makeHeadVersion,
       swapHeadDoc,
       isViewable,
       windowType,
-      console
+      isEmpty,
+      isPDF
     };
   }
 };

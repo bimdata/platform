@@ -1,3 +1,5 @@
+import { isObject } from "lodash";
+
 function snakeToCamel(str) {
   return str
     .split("")
@@ -12,7 +14,7 @@ function toCamelCaseFields(obj) {
   return Object.entries(obj).reduce(
     (res, [key, value]) => ({
       ...res,
-      [snakeToCamel(key)]: value
+      [snakeToCamel(key)]: isObject(value) ? toCamelCaseFields(value) : value
     }),
     {}
   );

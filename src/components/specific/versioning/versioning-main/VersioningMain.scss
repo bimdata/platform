@@ -3,6 +3,13 @@
   overflow: auto;
   overflow-x: hidden;
   padding: var(--spacing-unit);
+
+  &__safe-zone {
+    z-index: 2;
+    position: absolute;
+    top: 2.5%;
+    left: 3.5%;
+  }
   
   &__content {
     display: flex;
@@ -27,10 +34,37 @@
       }
     }
 
+    &__empty-area {
+      display: flex;
+      
+      &__info {
+        margin: 115px auto auto auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: calc(var(--spacing-unit) * 2);
+
+        img {
+          width: 35%
+        }
+
+        span {
+          width: 70%;
+          font-size: var(--font-size);
+          text-align: center;
+        }
+      }
+    }
+    
+
     &__list {
       display: flex;
       flex-direction: column;
       gap: calc(var(--spacing-unit) * 2.5);
     }
+  }
+  
+  .safeZone {
+    filter: blur(4px); 
   }
 }

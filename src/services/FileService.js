@@ -81,6 +81,18 @@ class FileService {
     }
   }
 
+  async getDocument(project, document) {
+    try {
+      return await apiClient.collaborationApi.getDocument(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_FETCH_ERROR, error);
+    }
+  }
+
   async updateDocuments(project, documents) {
     try {
       return await Promise.all(
@@ -102,7 +114,7 @@ class FileService {
     try {
       return await Promise.all(
         documents.map(document =>
-          apiClient.collaborationApi.deleteDocument(
+          apiClient.collaborationApi.deleteAllDocumentHistory(
             project.cloud.id,
             document.id,
             project.id
@@ -111,6 +123,33 @@ class FileService {
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.FILE_DELETE_ERROR, error);
+    }
+  }
+
+  async deletePrevDocVersion(project, headDocument, document) {
+    try {
+      return await apiClient.collaborationApi.deleteDocumentHistory(
+        project.cloud.id,
+        headDocument.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
+    }
+  }
+
+  async deleteHeadDocVersion(project, document) {
+    console.log("document", document);
+
+    try {
+      return await apiClient.collaborationApi.deleteDocument(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
     }
   }
 
@@ -168,19 +207,6 @@ class FileService {
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.FILE_VERSIONS_MAKE_HEAD_ERROR, error);
-    }
-  }
-
-  async deleteDocVersion(project, headDocument, document) {
-    try {
-      return await apiClient.collaborationApi.deleteDocumentHistory(
-        project.cloud.id,
-        headDocument.id,
-        document.id,
-        project.id
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
     }
   }
 }

@@ -998,7 +998,15 @@
     "delete": "Supprimer",
     "getToHead": "Passer en version actuelle",
     "download": "Télécharger",
-    "show": "Voir"
+    "show": "Voir",
+    "safeZone": {
+      "delete": {
+        "content": "Êtes-vous sûr de vouloir supprimer cette version ?",
+        "action": "Oui, supprimer cette version",
+        "keepView": "Annuler"
+      }
+    },
+    "emptyArea": "Vous n’avez actuellement pas d’historique de version pour ce fichier."
   },
   "Error": "Erreur",
   "Success": "Succès",
@@ -1040,6 +1048,7 @@
     "fileVersionsFetchError": "Impossible de récupérer les versions de ce document",
     "fileVersionsMakeHeadError": "Échec lors du passage du document en version actuelle",
     "fileVersionDelete": "Échec lors de la suppression du document",
+    "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
