@@ -15,7 +15,7 @@ const app = createApp(App)
   .use(i18n)
   .use(router)
   .use(BIMDataDesignSystem())
-  .use(BIMDataBcfComponents({ apiClient, i18n }));
+  .use(BIMDataBcfComponents({ apiClient, i18nPlugin: i18n }));
 
 // Register global components
 for (const [name, component] of Object.entries(globalComponents)) {
