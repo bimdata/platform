@@ -875,7 +875,12 @@
     "title": "Gestion des tags",
     "list": "Liste des tags",
     "addTag": "ajouter un tag",
-    "search": "Rechercher"
+    "addNewTag": "Ajouter un nouveau tag",
+    "search": "Rechercher",
+    "validate": "Valider",
+    "cancel": "Annuler",
+    "deleteTag": "Supprimer ce tag",
+    "deleteTagButton": "Supprimer"
   },
   "UserCard": {
     "self": "vous"
@@ -1034,6 +1039,8 @@
     "groupDeleteError": "Échec de la suppression du groupe",
     "tagsFetchError": "Impossible de récupérer les tags",
     "tagsCreateError": "Erreur lors de la création du tag",
+    "tagsUpdateError": "Erreur lors de la modification du tag",
+    "tagsDeleteError": "Erreur lors de la suppression du tag",
     "visaCreateError": "Erreur lors de la création du visa",
     "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
     "visaFetchError": "Impossible de récupérer le visa",

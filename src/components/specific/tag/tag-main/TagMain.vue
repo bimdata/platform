@@ -40,16 +40,20 @@
       <template v-if="showAddTagInput">
         <BIMDataInput
           ref="input"
-          placeholder="ajouter un nouveau tag"
+          :placeholder="$t('Tag.addNewTag')"
           v-model="newTagName"
           @keyup.enter.stop="addNewTag"
         />
         <div class="tag-main__content__list-add__input-btn">
-          <BIMDataButton ghost radius class="m-r-6" @click="toggleAddTagInput"
-            >close</BIMDataButton
+          <BIMDataButton
+            ghost
+            radius
+            class="m-r-6"
+            @click="toggleAddTagInput"
+            >{{ $t("Tag.cancel") }}</BIMDataButton
           >
           <BIMDataButton color="primary" fill radius @click="addNewTag">{{
-            $t("SettingCard.validateButton")
+            $t("Tag.validate")
           }}</BIMDataButton>
         </div>
       </template>
@@ -67,8 +71,10 @@
         <template v-for="(tag, index) of updatedTagList" :key="index">
           <TagList
             v-if="tag.isFindable"
+            :project="project"
             :tag="tag"
             @tag-updater="tagToUpdate = $event"
+            @fetch-tags="$emit('fetch-tags')"
           />
         </template>
       </div>
@@ -137,6 +143,7 @@ export default {
           name: newTagName.value,
           color: getRandomHexColor()
         });
+        newTagName.value = "";
         toggleAddTagInput();
         emit("fetch-tags");
       }

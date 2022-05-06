@@ -1,40 +1,69 @@
 .tag-list {
   display: flex;
+  height: 37px;
   gap: var(--spacing-unit);
+  position: relative;
 
-  &__info {
+  &__safe-zone {
+    z-index: 1;
+    position: absolute;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    width: 383px;
+    height: 37px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    background-color: var(--color-silver-light);
-    padding: 0 calc(var(--spacing-unit) / 1.5) 0 var(--spacing-unit);
-    border-radius: 3px;
+    padding: var(--spacing-unit);
 
     span {
-      margin: auto 0;
-      color: var(--color-primary);
+      text-align: center;
+      font-size: var(--font-size);
+      line-height: var(--spacing-unit);
     }
+
     &__action {
       display: flex;
+      align-items: center;
+    }
+  }
 
-      &__color-selector {
-        margin: auto;
-        border-left: 1px solid var(--color-silver);
-        position: relative;
+  &__content {
+    display: flex;
+    width: 100%;
 
-        div:first-child {
-          margin-left: calc(var(--spacing-unit) / 1.5);
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--color-silver-light);
+      margin: 0 calc(var(--spacing-unit) / 1.5) 0 var(--spacing-unit);
+      padding: var(--spacing-unit);
+      border-radius: 3px;
+      width: 100%;
 
-          width: 20px;
-          height: 20px;
-          border-radius: 3px;
-          cursor: pointer;
-        }
-        div:nth-child(2) {
-          position: absolute;
-          top: 26px;
-          right: 20px;
-          z-index: 1;
+      span {
+        margin: auto 0;
+        color: var(--color-primary);
+      }
+      &__action {
+        display: flex;
+        align-items: center;
+  
+        &__color-selector {
+          margin: auto auto auto calc(var(--spacing-unit) / 1.5);
+          position: relative;
+  
+          div:first-child {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            cursor: pointer;
+          }
+          div:nth-child(2) {
+            position: absolute;
+            top: 26px;
+            right: 20px;
+            z-index: 1;
+          }
         }
       }
     }

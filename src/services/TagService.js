@@ -24,6 +24,31 @@ class TagService {
       throw new RuntimeError(ERRORS.TAGS_CREATE_ERROR, error);
     }
   }
+
+  async updateTag(project, tag, data) {
+    try {
+      return await apiClient.collaborationApi.updateTag(
+        project.cloud.id,
+        tag.id,
+        project.id,
+        data
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.TAGS_UPDATE_ERROR, error);
+    }
+  }
+
+  async deleteTag(project, tag) {
+    try {
+      return await apiClient.collaborationApi.deleteTag(
+        project.cloud.id,
+        tag.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.TAGS_DELETE_ERROR, error);
+    }
+  }
 }
 
 const service = new TagService();
