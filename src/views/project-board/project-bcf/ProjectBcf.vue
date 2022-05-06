@@ -262,7 +262,7 @@
       <transition name="fade">
         <div v-show="!showMetrics" class="project-bcf__content__stats">
           <div class="project-bcf__content__stats__title">
-            Total : {{ bcfTopics.length }} issues BCF
+            {{ $t("ProjectBcf.metricsTitle") }}
           </div>
           <template v-if="bcfTopics.length > 0">
             <BcfStatistics
@@ -278,7 +278,7 @@
           </template>
           <template v-else>
             <BcfStatisticsEmptyImage />
-            <p>{{ $t("BcfTopicsMetrics.emptyText") }}</p>
+            <p>{{ $t("ProjectBcf.metricsEmptyText") }}</p>
           </template>
         </div>
       </transition>

@@ -88,7 +88,9 @@
     "ascendingDateTooltip": "date croissante",
     "descendingDateTooltip": "date décroissante",
     "viewGridTooltip": "vue grille",
-    "viewListTooltip": "vue liste"
+    "viewListTooltip": "vue liste",
+    "metricsTitle": "Total: {count} issues BCF",
+    "metricsEmptyText": "Ajoutez des issues pour voir les statistiques associées ici."
   },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
