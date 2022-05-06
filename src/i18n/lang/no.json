@@ -219,8 +219,7 @@
         "renameButtonText": "Endre navn",
         "archiveButtonText": "Arkiv",
         "deleteButtonText": "Slett",
-        "unarchiveButtonText": "Fjern fra arkivet",
-        "removeButtonText": ""
+        "unarchiveButtonText": "Fjern fra arkivet"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Ingen plasseringsdata tilgjengelig",

@@ -219,8 +219,7 @@
         "renameButtonText": "Cambiar el nombre",
         "archiveButtonText": "Archivar",
         "deleteButtonText": "Suprimir",
-        "unarchiveButtonText": "Desarchivar",
-        "removeButtonText": "Marcar como documento"
+        "unarchiveButtonText": "Desarchivar"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Datos de seguimiento no disponibles",
