@@ -59,11 +59,13 @@ function isIFC(file) {
 }
 
 function isPDF(file) {
-  return fileExtension(file) === ".pdf";
+  return fileExtension(file) === MODEL_EXTENSIONS.PDF;
 }
 
 function isSmartFile(file) {
-  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+  return Object.entries(MODEL_EXTENSIONS).forEach(
+    extension => extension[1] === fileExtension(file.fileName).toLowerCase()
+  );
 }
 
 function isViewable(file) {

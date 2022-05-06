@@ -46,7 +46,7 @@
           @upload="addVersion"
         />
       </div>
-      <template v-if="!hasPrevVersions">
+      <template v-if="hasPrevVersions === false">
         <div class="versioning-main__content__empty-area">
           <div class="versioning-main__content__empty-area__info">
             <img src="/static/versioning/versioning-empty-history.svg" />
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 import { isEmpty } from "lodash";
 
 import VersioningList from "@/components/specific/versioning/versioning-list/VersioningList.vue";
@@ -164,19 +164,22 @@ export default {
     };
 
     const allDocVersions = ref(null);
+    const hasPrevVersions = ref(undefined);
 
     const getAllDocVersions = async () => {
       const prevDocVersions = await fetchAllPrevDocVersions(
         props.project,
         currentHead.value
       );
-      allDocVersions.value = [currentHead.value].concat(prevDocVersions);
+
+      if (isEmpty(prevDocVersions)) {
+        hasPrevVersions.value = false;
+      } else {
+        allDocVersions.value = [currentHead.value].concat(prevDocVersions);
+        hasPrevVersions.value = true;
+      }
       emit("file-uploaded", currentHead.value);
     };
-
-    const hasPrevVersions = computed(
-      () => allDocVersions.value && allDocVersions.value.length > 1
-    );
 
     watch(currentHead, async () => await getAllDocVersions(), {
       immediate: true
@@ -194,8 +197,7 @@ export default {
       addVersion,
       onSafeZone,
       onDelete,
-      isEmpty,
-      console
+      isEmpty
     };
   }
 };
