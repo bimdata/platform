@@ -1,17 +1,4 @@
 {
-    "Dashboard": {
-        "spacesButtonTitle": "Spazi attivi",
-        "spacesButtonText": "Vedi gli spazi",
-        "projectsButtonTitle": "Progetti attivi",
-        "projectsButtonText": "Vedi i progetti",
-        "spacesTileTitle": "Spazi attivi",
-        "spacesTileBottomText": "Vedi gli spazi",
-        "projectsTileTitle": "Progetti attivi",
-        "projectsTileBottomText": "Vedi i progetti",
-        "subscriptionsTileTitle": "Fatturazione",
-        "subscriptionsTileText": "Qui trovi tutte le tue fatture e i tuoi ultimi dati di pagamento.",
-        "subscriptionsTileBottomText": "Gestisci gli abbonamenti"
-    },
     "GroupBoard": {
         "searchInputPlaceholder": "Cerca tra i membri"
     },
@@ -101,7 +88,8 @@
         "addVersionButtonText": "Aggiungi versione",
         "manageAccessButtonText": "Gestisci l'accesso",
         "deleteButtonText": "Cancella",
-        "VisaButtonText": "Richiesta di convalida"
+        "VisaButtonText": "Richiesta di convalida",
+        "createModelButtonText": "Definire come modello"
     },
     "FileNameCell": {
         "inputErrorMessage": "Nome file non valido",
@@ -120,7 +108,12 @@
     },
     "FilesManager": {
         "title": "File del progetto",
-        "searchInputPlaceholder": "Cerca"
+        "searchInputPlaceholder": "Cerca",
+        "createModelNotification": "Modello creato correttamente",
+        "uploadDisableMessage": {
+            "permission": "Non hai i diritti richiesti",
+            "size": "Non hai più spazio di salvataggio sufficiente"
+        }
     },
     "FilesManagerOnboarding": {
         "text": "Carica il tuo primo file",
@@ -153,8 +146,6 @@
     },
     "FolderAccessManager": {
         "title": "Gestisci i diritti di accesso",
-        "groupsButtonText": "Gestisci i gruppi",
-        "nameHeader": "Nome",
         "rightsHeader": "Diritti",
         "membersHeader": "Membri",
         "searchInputPlaceholder": "Cerca gruppo",
@@ -177,9 +168,6 @@
             "moveHere": "Sposta qui"
         },
         "emptyFolderPlaceholder": "Cartella vuota"
-    },
-    "GroupAccessSelector": {
-        "defaultGroupName": "Tutto"
     },
     "GroupCardActionMenu": {
         "renameButtonText": "Rinomina",
@@ -205,11 +193,7 @@
         "submitButtonText": "Crea"
     },
     "GroupMemberSelectionCard": {
-        "text": "Aggiungi un membro",
-        "title": "Gestisci i membri",
-        "selectorLabel": "Membri del gruppo",
-        "cancelButtonText": "Annulla",
-        "submitButtonText": "Convalida"
+        "text": "Aggiungi un membro"
     },
     "InvitationCard": {
         "pendingMessage": "Invitato - In attesa.",
@@ -235,10 +219,8 @@
         "renameButtonText": "Rinomina",
         "archiveButtonText": "Archivia",
         "deleteButtonText": "Cancella",
-        "unarchiveButtonText": "Estrai"
-    },
-    "ModelLastUpdateCell": {
-        "at": "in"
+        "unarchiveButtonText": "Estrai",
+        "removeButtonText": "Segnare come documento"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Nessun dato di localizzazione disponibile",
@@ -280,7 +262,9 @@
             "split": "Dividi/Esporta",
             "merge": "Unisci",
             "archive": "Archivia",
-            "dwg": "DWG"
+            "dwg": "DWG",
+            "metaBuildings": "Meta Buildings",
+            "upload": "Upload"
         }
     },
     "ModelsMergeModal": {
@@ -483,13 +467,24 @@
         "visaFetchAllCommentsError": "Impossibile recuperare i commenti",
         "visaCreateCommentsError": "Impossibile pubblicare questo commento",
         "visaUpdateCommentError": "Impossibile modificare questo commento",
-        "visaDeleteCommentError": "Impossibile eliminare questo commento"
+        "visaDeleteCommentError": "Impossibile eliminare questo commento",
+        "modelCreateError": "Errore nella creazione del modello",
+        "fileFetchError": ""
     },
     "ProjectStatusBadge": {
         "new": "NUOVO",
         "active": "ATTIVO",
         "inactive": "INATTIVO",
         "paused": "IN PAUSA"
+    },
+    "Dashboard": {
+        "spacesTileTitle": "Spazi attivi",
+        "spacesTileBottomText": "Vedi gli spazi",
+        "projectsTileTitle": "Progetti attivi",
+        "projectsTileBottomText": "Vedi i progetti",
+        "subscriptionsTileTitle": "Fatturazione",
+        "subscriptionsTileText": "Qui trovi tutte le tue fatture e i tuoi ultimi dati di pagamento.",
+        "subscriptionsTileBottomText": "Gestisci gli abbonamenti"
     },
     "Payment": {
         "titlePlatform": "Passa alla piattaforma pro",
@@ -565,14 +560,6 @@
         "storage": "Archiviazione attiva",
         "including": "inclusi {quantity} GB di DataPack"
     },
-    "FreePlanCard": {
-        "title": "GRATIS",
-        "price": "0 €",
-        "bullet2": "1 spazio gratuito",
-        "bullet3": "6 utenti",
-        "buttonText": "Crea uno spazio gratuito",
-        "note": "Per sempre"
-    },
     "GroupMemberInvitation": {
         "name": "Invito in sospeso"
     },
@@ -581,7 +568,6 @@
     },
     "InvoicesTable": {
         "title": "Fatture",
-        "tablePlaceholder": "Caricamento delle fatture",
         "emptyTableText": "Le tue fatture verranno visualizzate qui quando hai abbonamenti attivi.",
         "subscribeButton": "Passa alla nostra Platform Pro",
         "headers": {
@@ -654,11 +640,9 @@
         "note": "estendi 1 GB per {price} / mese"
     },
     "ProPlanForm": {
-        "title": "Prezzo",
         "priceUnit": "/ mese",
         "successTitle": "Congratulazioni! Ti sei iscritto alla Piattaforma Pro.",
         "successMessage": "Il tuo pagamento è stato completato. Ora puoi goderti il tuo abbonamento professionale.",
-        "successButtonText": "Home",
         "titleNet": "Subtotale",
         "titleTax": "IVA 20%",
         "titleTotal": "Prezzo",
@@ -685,9 +669,6 @@
         "selectedSpace": "Spazio selezionato:"
     },
     "SpaceSizeInfo": {
-        "used": "usato",
-        "from": "su un totale di",
-        "included": "incluso",
         "subscribeDatapackButton": "Aggiorna l'archiviazione",
         "subscribePlatformButton": "Passa alla piattaforma pro",
         "usage": "{used} usato su {total}"
@@ -751,7 +732,8 @@
                 "getBack": "Indietro",
                 "validator": "Revisore",
                 "accept": "Accetta"
-            }
+            },
+            "errorValidator": "Necessario aggiungere almeno 1 validante"
         },
         "safeZone": {
             "add": {
@@ -821,6 +803,248 @@
         },
         "selectionValidator": {
             "warning": "Questo utente non dispone dell'autorizzazione per accedere al file."
+        },
+        "noVisa": "Nessun VISA creato"
+    },
+    "ProjectBcf": {
+        "importButtonText": "Importa",
+        "exportButtonText": "Esporta",
+        "createBcfButtonText": "Crea un BCF",
+        "createBcfTitle": "Segnala un problema",
+        "showStatisticsTooltip": "Mostra statistiche",
+        "hideStatisticsTooltip": "Nascondi statistiche",
+        "searchInputPlaceholder": "Cerca per numero di indice, nome, autore o etichetta",
+        "ascendingIndexTooltip": "indice ascendente",
+        "descendingIndexTooltip": "indice discendente",
+        "alphabeticalAscendingOrderTooltip": "ordine alfabetico",
+        "alphabeticalDescendingOrderTooltip": "ordine alfabetico inverso",
+        "ascendingDateTooltip": "data crescente",
+        "descendingDateTooltip": "data decrescente",
+        "viewGridTooltip": "visualizza griglia",
+        "viewListTooltip": "visualizza elenco"
+    },
+    "BcfComments": {
+        "commentButton": "Pubblica un commento",
+        "commentLabel": "Pubblica un commento",
+        "commentText": "Commento",
+        "cancelButton": "Annulla",
+        "publishButton": "Pubblica",
+        "commentsText": "commenti"
+    },
+    "BcfComment": {
+        "deleteCommentText": "Eliminare questo commento?",
+        "deleteButton": "Elimina"
+    },
+    "BcfFilters": {
+        "filtersButton": "Filtri",
+        "filtersTitle": "Filtri",
+        "priorityLabel": "Priorità",
+        "statusLabel": "Stato",
+        "startDatePlaceholder": "Data di inizio",
+        "startDateExample": "(Ad es. 28/04/2022)",
+        "endDatePlaceholder": "Data di fine",
+        "endDateExample": "(Ad es. 28/05/2022)",
+        "assignedToLabel": "Assegnato a",
+        "creatorsLabel": "Creato da",
+        "tagsLabel": "Etichette",
+        "resetButton": "Ripristina",
+        "searchButton": "Cerca",
+        "noPriority": "Nessuna priorità",
+        "undefinedStatus": "Non definito",
+        "undefinedUser": "Non definito",
+        "undefinedCreator": "Non definito"
+    },
+    "BcfSettings": {
+        "goBackButton": "Indietro",
+        "title": "Parametri BCF",
+        "validateButton": "Conferma i parametri BCF",
+        "text": "Creare, notificare e elencare i parametri BCF che si desidera avere su questo progetto"
+    },
+    "SettingCard": {
+        "addButton": "aggiungi un elemento",
+        "cancelButton": "Annulla",
+        "validateButton": "Conferma",
+        "title": {
+            "Priority": "Priorità",
+            "Label": "Etichette",
+            "Status": "Stati",
+            "Type": "Tipi",
+            "Stage": "Fasi"
+        },
+        "input": {
+            "Priority": "Aggiungi una nuova priorità",
+            "Label": "Aggiungi una nuova etichetta",
+            "Status": "Aggiungi un nuovo stato",
+            "Type": "Aggiungi un nuovo tipo",
+            "Stage": "Aggiungi una nuova fase"
+        },
+        "text": {
+            "Priority": "Elenco delle priorità",
+            "Label": "Elenco delle etichette",
+            "Status": "Elenco degli stati",
+            "Type": "Elenco dei tipi",
+            "Stage": "Elenco delle fasi"
+        }
+    },
+    "Extension": {
+        "deleteExtensionText": "Elimina questo parametro",
+        "deleteButton": "Elimina"
+    },
+    "BcfTopicCreationCard": {
+        "text": "Crea un nuovo topic BCF",
+        "createBcfSideTitle": "Segnala un problema"
+    },
+    "BcfTopicGridItem": {
+        "priority": "Priorità:",
+        "assignedTo": "Assegnato a:",
+        "noPriority": "Nessuno",
+        "notSpecified": "Non definito",
+        "elements": "Elementi",
+        "noElements": "0 elementi",
+        "see": "Visualizza"
+    },
+    "BcfTopicsList": {
+        "headers": {
+            "index": "#",
+            "priority": "Priorità",
+            "status": "Stato",
+            "title": "Titolo",
+            "creator": "Creato da",
+            "date": "Data",
+            "actions": "Azioni"
+        }
+    },
+    "BcfActionsCell": {
+        "seeButton": "Visualizza"
+    },
+    "ModalDeleteTopic": {
+        "deleteText": "Stai per eliminare {name}",
+        "deleteBcfButton": "Elimina questo BCF",
+        "keepBcfButton": "Conserva questo BCF"
+    },
+    "OpenTopicIssue": {
+        "openViewer": "Apri nel visualizzatore",
+        "openViewerNoModels": "Non esistono modelli pronti per la visualizzazione",
+        "elements": "Elementi",
+        "noElements": "0 elementi",
+        "type": "Tipo:",
+        "noTypeSpecified": "Nessun tipo specificato",
+        "description": "Descrizione:",
+        "noDescriptionProvided": "Nessuna descrizione inserita",
+        "assignedTo": "Assegnato a:",
+        "notAssigned": "Non assegnato",
+        "dueDate": "Scadenza:",
+        "noDueDate": "Nessuna data di scadenza",
+        "informations": "Informazioni",
+        "status": "Stato:",
+        "noStatusSpecified": "Nessuno stato specificato",
+        "stage": "Fase:",
+        "noStageProvided": "Nessuna fase inserita",
+        "priority": "Priorità:",
+        "priorityNotDefined": "Non definita",
+        "tags": "Etichette:",
+        "noTags": "Nessuna etichetta",
+        "commentButton": "Pubblica un commento"
+    },
+    "BcfTopicsMetrics": {
+        "emptyText": "Aggiungi delle domande per vedere le statistiche associate qui.",
+        "issues": "problemi",
+        "extension": {
+            "Priority": "Priorità",
+            "PriorityNotDefined": "Nessuna priorità",
+            "PriorityTitle": "Priorità",
+            "Status": "Stato",
+            "StatusNotDefined": "Nessuno stato",
+            "StatusTitle": "Stati"
+        }
+    },
+    "CreateBcfTopic": {
+        "dragDropImageText": "Seleziona un file",
+        "addPictureButton": "Aggiungi un'immagine",
+        "titlePlaceholder": "Titolo*",
+        "titleErrorMessage": "Titolo assente",
+        "typeLabel": "Tipo",
+        "priorityLabel": "Priorità",
+        "statusLabel": "Stato",
+        "stageLabel": "Fase",
+        "assignedToLabel": "Assegnato a",
+        "dueDateLabel": "Data di scadenza (GG/MM/AAAA)",
+        "dateErrorMessage": "Formato della data o data errati",
+        "dateExample": "(Ad es. 28/04/2022)",
+        "descriptionLabel": "Descrizione",
+        "tagsLabel": "Etichette",
+        "validateButton": "Conferma"
+    },
+    "EditBcfTopic": {
+        "goBackButton": "Indietro",
+        "dragDropImageText": "Selezionare un file",
+        "addPictureButton": "Aggiungere un'immagine",
+        "titlePlaceholder": "Titolo*",
+        "titleErrorMessage": "Titolo mancante",
+        "typeLabel": "Tipo",
+        "priorityLabel": "Priorità",
+        "statusLabel": "Stato",
+        "stageLabel": "Fase",
+        "assignedToLabel": "Assegnato a",
+        "descriptionLabel": "Descrizione",
+        "tagsPlaceholder": "Tags",
+        "editButton": "Modificare questo BCF"
+    },
+    "EditBcfTopicModal": {
+        "modalText": "State per abbandonare la modifica di {name} ma ci sono modifiche non salvate.",
+        "cancelButton": "Annullare le modifiche",
+        "continueButton": "Continuare le modifiche"
+    },
+    "GuidedTour": {
+        "platform": {
+            "intro": {
+                "title": "Benvenuti",
+                "content": "Esploriamo insieme la piattaforma BIMData"
+            },
+            "actionButtons": {
+                "title": "Cruscotto",
+                "content": "Accedi a tutti i tuoi spazi, progetti e abbonamenti direttamente da questo cruscotto"
+            },
+            "firstSpace": {
+                "title": "I tuoi spazi",
+                "content": "Accedi ai tuoi spazi recenti direttamente da questa scorciatoia"
+            },
+            "firstProject": {
+                "title": "I tuoi progetti",
+                "content": "Accedi ai tuoi progetti recenti direttamente da questa scorciatoia"
+            },
+            "previewIfc": {
+                "title": "Anteprima",
+                "content": "Naviga con facilità tra le anteprime dei modelli del tuo progetto"
+            },
+            "usersManager": {
+                "title": "Collaborazione",
+                "content": "Invita i tuoi primi collaboratori al tuo progetto"
+            },
+            "modelsManager": {
+                "title": "Modelli",
+                "content": "Scarica e gestisci i modelli del tuo progetto (IFC, DWG, PDF...)"
+            },
+            "gedButton": {
+                "title": "GED",
+                "content": "Accedi alla gestione documentale del tuo progetto dal tab \"GED\""
+            },
+            "fileTree": {
+                "title": "Visualizzazione ad albero",
+                "content": "Crea le tue cartelle e scarica i tuoi file direttamente dalla GED"
+            },
+            "groupManager": {
+                "title": "Gestione dei diritti",
+                "content": "Crea dei gruppi di utenti per gestire i diritti di accesso"
+            },
+            "changeSpace": {
+                "title": "Segnalibro",
+                "content": "Accedi rapidamente al tuo spazio tramite un segnalibro"
+            },
+            "outro": {
+                "title": "Bene!",
+                "content": "Ora, non ti resta che lanciare il tuo primo progetto"
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="visa-comments">
-    <template v-if="!isCommenting">
+    <template v-if="!isCommenting && isVisaOpen">
       <BIMDataButton
         class="visa-comments__comment-button"
         color="primary"
@@ -38,13 +38,14 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import VisaCommentPost from "./visa-comment-post/VisaCommentPost.vue";
 import VisaCommentsInput from "./visa-comments-input/VisaCommentsInput.vue";
 
-import { useVisa } from "@/state/visa";
-import { useUser } from "@/state/user";
-import { fullName } from "@/utils/users";
+import { useVisa } from "@/state/visa.js";
+import { useUser } from "@/state/user.js";
+import { fullName } from "@/utils/users.js";
+import { VISA_STATUS } from "@/config/visa.js";
 
 export default {
   components: { VisaCommentPost, VisaCommentsInput },
@@ -75,6 +76,8 @@ export default {
     const commentList = ref([]);
 
     const { id: currentUserId } = user.value;
+
+    const isVisaOpen = computed(() => props.visa.status === VISA_STATUS.OPEN);
 
     const formatComments = comments => {
       return comments
@@ -107,6 +110,7 @@ export default {
       // references
       isCommenting,
       commentList,
+      isVisaOpen,
       // methods
       reloadComments,
       postComment,

@@ -18,7 +18,9 @@ const datetimeFormats = {
   en: defaultFormats,
   es: defaultFormats,
   fr: defaultFormats,
-  it: defaultFormats
+  it: defaultFormats,
+  nl: defaultFormats,
+  no: defaultFormats
 };
 
 export default datetimeFormats;
