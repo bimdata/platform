@@ -11,7 +11,9 @@
       </template>
     </template>
 
-    <template v-else-if="model.type === MODEL_TYPE.DWG">
+    <template
+      v-else-if="model.type === MODEL_TYPE.DWG || model.type === MODEL_TYPE.DXF"
+    >
       <ViewerButton
         :disabled="!isModelReady"
         :project="project"
