@@ -27,11 +27,7 @@ const loadBcfTopics = async project => {
   let topicsWithViewpoints = [];
 
   topicsWithViewpoints = await mapLimit(topics, 10, async topic => {
-    topic.viewpoints = await BcfService.fetchTopicViewpoints(
-      project,
-      topic,
-      "url"
-    );
+    topic.viewpoints = await BcfService.fetchTopicViewpoints(project, topic);
     return topic;
   });
 
@@ -60,10 +56,10 @@ const loadDetailedExtensions = async project => {
 };
 
 const importBcf = async (project, file) => {
-  const bcf = await BcfService.importBcf(project, file);
+  const res = await BcfService.importBcf(project, file);
   await loadBcfTopics(project);
   await loadDetailedExtensions(project);
-  return bcf;
+  return res;
 };
 
 const exportBcf = project => {

@@ -1,3 +1,4 @@
+import { downloadBlobAs } from "@/utils/download.js";
 import apiClient from "./api-client.js";
 
 class BcfService {
@@ -67,7 +68,8 @@ class BcfService {
 
   async exportBcf(project) {
     try {
-      return await apiClient.bcfApi.downloadBcfExport(project.id);
+      const response = await apiClient.bcfApi.downloadBcfExport(project.id);
+      downloadBlobAs(`${project.name}.bcf`, response);
     } catch (error) {
       console.log(error);
     }
