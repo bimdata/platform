@@ -875,6 +875,8 @@
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",
-    "datapackUpdateError": "Erreur lors de la mise à jour du datapack"
+    "datapackUpdateError": "Erreur lors de la mise à jour du datapack",
+    "bcfImportError": "Une erreur s'est produite lors de l'import",
+    "bcfExportError": "L'export a échoué..."
   }
 }

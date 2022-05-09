@@ -1,5 +1,6 @@
 import { downloadBlobAs } from "@/utils/download.js";
 import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError } from "./ErrorService.js";
 
 class BcfService {
   async fetchProjectTopics(project) {
@@ -62,7 +63,7 @@ class BcfService {
         }
       );
     } catch (error) {
-      console.log(error);
+      throw new RuntimeError(ERRORS.BCF_IMPORT_ERROR, error);
     }
   }
 
@@ -71,7 +72,7 @@ class BcfService {
       const response = await apiClient.bcfApi.downloadBcfExport(project.id);
       downloadBlobAs(`${project.name}.bcf`, response);
     } catch (error) {
-      console.log(error);
+      throw new RuntimeError(ERRORS.BCF_IMPORT_ERROR, error);
     }
   }
 }
