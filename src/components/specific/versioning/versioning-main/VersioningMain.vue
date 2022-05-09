@@ -60,7 +60,7 @@
             <VersioningList
               :project="project"
               :document="doc"
-              :headDocument="headDocument"
+              :headDocument="currentHead"
               :isHead="index === 0"
               :isLast="index + 1 === allDocVersions.length"
               @current-head="currentHead = $event"
