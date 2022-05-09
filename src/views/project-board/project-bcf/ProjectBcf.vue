@@ -7,9 +7,9 @@
         outline
         radius
         icon
-        @click="openBcfSettings"
+        @click="openSettings"
       >
-        <BIMDataIcon name="settings" size="xxs" color="default" />
+        <BIMDataIcon name="settings" size="xxs" />
       </BIMDataButton>
       <FileUploadButton
         class="m-r-12"
@@ -22,13 +22,7 @@
         <BIMDataIcon name="import" size="xs" margin="0 6px 0 0" />
         {{ $t("ProjectBcf.importButtonText") }}
       </FileUploadButton>
-      <BIMDataButton
-        class="m-r-12"
-        color="default"
-        fill
-        radius
-        @click="exportBcfTopics"
-      >
+      <BIMDataButton class="m-r-12" fill radius @click="exportBcfTopics">
         <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" />
         {{ $t("ProjectBcf.exportButtonText") }}
       </BIMDataButton>
@@ -95,9 +89,9 @@
             @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
             @view-bcf-topic="openBcfTopicViewer(currentBcfTopic)"
             @bcf-topic-deleted="reloadBcfTopics"
-            @comment-created="loadBcfTopicComments(project, currentBcfTopic)"
-            @comment-updated="loadBcfTopicComments(project, currentBcfTopic)"
-            @comment-deleted="loadBcfTopicComments(project, currentBcfTopic)"
+            @comment-created="reloadComments(currentBcfTopic)"
+            @comment-updated="reloadComments(currentBcfTopic)"
+            @comment-deleted="reloadComments(currentBcfTopic)"
             @close="closeSidePanel"
           />
         </template>
@@ -112,14 +106,14 @@
       </transition>
     </AppSidePanel>
 
-    <div class="project-bcf__settings" v-show="showBcfSettings">
+    <div class="project-bcf__settings" v-show="showSettings">
       <BcfSettings
         :project="project"
         :detailedExtensions="detailedExtensions"
         @extension-created="reloadExtensions"
         @extension-updated="reloadExtensions"
         @extension-deleted="reloadExtensions"
-        @close="closeBcfSettings"
+        @close="closeSettings"
       />
     </div>
 
@@ -169,7 +163,6 @@
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
             :class="{ active: activeButton === 'indexSort' }"
-            color="default"
             fill
             square
             icon
@@ -193,7 +186,6 @@
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
             :class="{ active: activeButton === 'nameSort' }"
-            color="default"
             fill
             square
             icon
@@ -220,7 +212,6 @@
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
             :class="{ active: activeButton === 'dateSort' }"
-            color="default"
             fill
             square
             icon
@@ -235,23 +226,19 @@
         <BIMDataTooltip
           :disabled="bcfTopics.length === 0"
           :message="
-            isDisplayByListActive
+            isListView
               ? $t('ProjectBcf.viewGridTooltip')
               : $t('ProjectBcf.viewListTooltip')
           "
         >
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
-            color="default"
             fill
             square
             icon
-            @click="toggleDisplayBcfTopics"
+            @click="isListView = !isListView"
           >
-            <BIMDataIcon
-              :name="isDisplayByListActive ? 'grid' : 'list'"
-              size="s"
-            />
+            <BIMDataIcon :name="isListView ? 'grid' : 'list'" size="s" />
           </BIMDataButton>
         </BIMDataTooltip>
         <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
@@ -262,7 +249,7 @@
       <transition name="fade">
         <div v-show="!showMetrics" class="project-bcf__content__stats">
           <div class="project-bcf__content__stats__title">
-            {{ $t("ProjectBcf.metricsTitle") }}
+            {{ $t("ProjectBcf.metricsTitle", { count: bcfTopics.length }) }}
           </div>
           <template v-if="bcfTopics.length > 0">
             <BcfStatistics
@@ -288,10 +275,7 @@
           <BIMDataSpinner />
         </div>
 
-        <div
-          v-else-if="isDisplayByListActive"
-          class="project-bcf__content__list"
-        >
+        <div v-else-if="isListView" class="project-bcf__content__list">
           <BcfTopicsTable
             :bcfTopics="displayedBcfTopics"
             :detailedExtensions="detailedExtensions"
@@ -328,7 +312,7 @@ import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-si
 import useFilter from "./composables/filter.js";
 import useSearch from "./composables/search.js";
 import useSort from "./composables/sort.js";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
 import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
 import { useBcf } from "@/state/bcf.js";
@@ -364,6 +348,7 @@ export default {
     } = useBcf();
 
     const loading = ref(false);
+    const isListView = ref(false);
 
     watch(
       currentProject,
@@ -379,6 +364,18 @@ export default {
       },
       { immediate: true }
     );
+
+    const {
+      isOpen: showMetrics,
+      close: closeMetrics,
+      toggle: toggleMetrics
+    } = useToggle();
+
+    const {
+      isOpen: showSettings,
+      close: closeSettings,
+      open: openSettings
+    } = useToggle();
 
     const { onFiltersSubmit, filteredTopics } = useFilter(bcfTopics);
     const { searchText, searchedTopics: displayedBcfTopics } =
@@ -443,8 +440,11 @@ export default {
         modelIDs = topic.ifcs;
       } else {
         const ifcs = projectModels.value
-          .filter(model => model.type === MODEL_TYPE.IFC)
-          .filter(model => model.status === MODEL_STATUS.COMPLETED)
+          .filter(
+            model =>
+              model.type === MODEL_TYPE.IFC &&
+              model.status === MODEL_STATUS.COMPLETED
+          )
           .sort((a, b) =>
             a.createdAt.getTime() > b.createdAt.getTime() ? 1 : -1
           );
@@ -465,23 +465,6 @@ export default {
       });
     };
 
-    const {
-      isOpen: showBcfSettings,
-      close: closeBcfSettings,
-      open: openBcfSettings
-    } = useToggle();
-
-    const isDisplayByListActive = ref(false);
-    const toggleDisplayBcfTopics = () => {
-      isDisplayByListActive.value = !isDisplayByListActive.value;
-    };
-
-    const {
-      isOpen: showMetrics,
-      close: closeMetrics,
-      toggle: toggleMetrics
-    } = useToggle();
-
     const reloadBcfTopics = () => {
       loadBcfTopics(currentProject.value);
     };
@@ -489,6 +472,10 @@ export default {
     const reloadExtensions = () => {
       loadExtensions(currentProject.value);
       loadDetailedExtensions(currentProject.value);
+    };
+
+    const reloadComments = topic => {
+      loadBcfTopicComments(currentProject.value, topic);
     };
 
     return {
@@ -499,39 +486,38 @@ export default {
       detailedExtensions,
       displayedBcfTopics,
       extensions,
-      isDisplayByListActive,
+      isListView,
       isSortByDateActive,
       isSortByIndexActive,
       isSortByNameActive,
-      loadBcfTopicComments,
       loading,
       models: projectModels,
       project: currentProject,
       searchText,
-      showBcfSettings,
       showBcfTopicCreate,
       showBcfTopicForm,
       showBcfTopicOverview,
       showMetrics,
+      showSettings,
       users: projectUsers,
       // Methods
-      closeBcfSettings,
       closeMetrics,
       closeSidePanel,
+      closeSettings,
       exportBcfTopics,
       importBcfTopics,
       onFiltersSubmit,
-      openBcfSettings,
       openBcfTopicCreate,
       openBcfTopicForm,
       openBcfTopicOverview,
       openBcfTopicViewer,
+      openSettings,
       reloadBcfTopics,
+      reloadComments,
       reloadExtensions,
       sortByDate,
       sortByIndex,
       sortByName,
-      toggleDisplayBcfTopics,
       toggleMetrics
     };
   }
