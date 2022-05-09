@@ -140,8 +140,6 @@ class FileService {
   }
 
   async deleteHeadDocVersion(project, document) {
-    console.log("document", document);
-
     try {
       return await apiClient.collaborationApi.deleteDocument(
         project.cloud.id,

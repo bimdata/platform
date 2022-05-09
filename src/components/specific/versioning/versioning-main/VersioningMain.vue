@@ -147,7 +147,7 @@ export default {
         safeZoneAction.value = async () => {
           await deletePrevDocVersion(
             props.project,
-            props.headDocument,
+            currentHead.value,
             document
           );
           await getAllDocVersions();
