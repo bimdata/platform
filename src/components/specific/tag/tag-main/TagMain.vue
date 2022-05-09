@@ -4,7 +4,7 @@
       <div class="tag-main__content__header">
         <div class="tag-main__content__header__left-side">
           <BIMDataIcon
-            name="cursor"
+            name="tag"
             fill
             color="primary"
             size="s"

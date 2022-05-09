@@ -1,5 +1,7 @@
 <template>
   <div class="tag-list">
+    {{ console.log("tag", tag) }}
+
     <template v-if="isSafeZone">
       <div class="tag-list__safe-zone">
         <span>{{ $t("Tag.deleteTag") }}</span>
@@ -39,37 +41,58 @@
             v-model="tagName"
             @keyup.enter.stop="onSubmitTagName"
             ref="input"
-            style="margin: 0px"
+            margin="-12px 0px 0px 0px"
           />
         </template>
         <div class="tag-list__content__info__action">
           <template v-if="!editTagName">
-            <BIMDataButton ghost rounded icon @click="editTagName = true">
-              <BIMDataIcon name="edit" size="xxs" fill color="default" />
-            </BIMDataButton>
+            <BIMDataIcon
+              name="edit"
+              size="xxs"
+              fill
+              color="default"
+              margin="0 12px 0 0"
+              @click="editTagName = true"
+            />
           </template>
           <template v-else>
-            <BIMDataButton ghost rounded icon @click="onCancelSubmitTagName">
-              <BIMDataIcon name="close" size="xxs" fill color="default" />
-            </BIMDataButton>
-          </template>
-          <BIMDataButton ghost rounded icon @click="isSafeZone = true">
-            <BIMDataIcon name="delete" size="xxs" fill color="high" />
-          </BIMDataButton>
-          <div class="tag-list__content__info__action__color-selector">
-            <div
-              :style="{
-                'background-color': `#${color}`
-              }"
-              @click="displayColorSelector = true"
-            ></div>
-            <BIMDataColorSelector
-              v-if="displayColorSelector"
-              v-click-away="() => (displayColorSelector = false)"
-              :modelValue="color"
-              @update:modelValue="updateColorSelector($event)"
+            <BIMDataIcon
+              name="close"
+              size="xxs"
+              fill
+              color="default"
+              margin="0 12px 0 0"
+              @click="onCancelSubmitTagName"
             />
-          </div>
+          </template>
+          <BIMDataIcon
+            name="delete"
+            size="xxs"
+            fill
+            color="high"
+            margin="0 12px 0 0"
+            @click="isSafeZone = true"
+          />
+
+          <div
+            class="tag-list__content__info__action__color"
+            :style="{
+              'background-color': `#${tagColor}`
+            }"
+            @click="displayColorSelector = true"
+          ></div>
+          <template v-if="displayColorSelector">
+            <ColorSelector
+              class="tag-list__content__info__action__color-selector"
+              :modelValue="tagColor"
+              @update:modelValue="onSubmitTagColor"
+              v-click-away="
+                () => {
+                  displayColorSelector = false;
+                }
+              "
+            />
+          </template>
         </div>
       </div>
     </div>
@@ -80,7 +103,10 @@
 import { ref, watch } from "vue";
 import { useTag } from "@/state/tag.js";
 
+import ColorSelector from "@/components/generic/color-selector/ColorSelector.vue";
+
 export default {
+  components: { ColorSelector },
   props: {
     project: {
       type: Object,
@@ -128,15 +154,22 @@ export default {
       isSafeZone.value = false;
     };
 
-    const displayColorSelector = ref(false);
     const toggle = (tag, checked) => {
       tag.isSelected = checked;
       emit("tag-updater", tag);
     };
 
-    const updateColorSelector = choosenColor => {
-      console.log("update color", choosenColor);
-      color.value = choosenColor;
+    const tagColor = ref(props.tag.color);
+    const displayColorSelector = ref(false);
+
+    const onSubmitTagColor = async colorValue => {
+      if (colorValue !== props.tag.color) {
+        await updateTag(props.project, props.tag, {
+          color: colorValue
+        });
+        tagColor.value = colorValue;
+        emit("fetch-tags");
+      }
     };
 
     return {
@@ -144,13 +177,14 @@ export default {
       color,
       input,
       tagName,
-      displayColorSelector,
+      tagColor,
       editTagName,
       isSafeZone,
       console,
       // methods
-      updateColorSelector,
+      onSubmitTagColor,
       onCancelSubmitTagName,
+      displayColorSelector,
       onSubmitTagName,
       onDeleteTag,
       toggle
