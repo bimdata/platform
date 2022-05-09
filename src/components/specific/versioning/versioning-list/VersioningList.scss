@@ -26,9 +26,10 @@
     &__down-line {
       position: absolute;
       top: 100%;
-      left: 43.35%;
+      left: 50%;
+      transform: translate(-50%);
       width: 2px;
-      height: 168px;
+      height: 167px;
       background-color: var(--color-silver);
     }
   }
