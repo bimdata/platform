@@ -1,8 +1,12 @@
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { privateApiClient } from "./api-client.js";
 import { ERRORS, RuntimeError } from "./ErrorService.js";
 
 class OrganizationService {
   async fetchUserOrganizations() {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return [];
+    }
     try {
       return await privateApiClient.get("/organization");
     } catch (error) {
@@ -11,6 +15,9 @@ class OrganizationService {
   }
 
   async fetchOrganizationSpaces(organization) {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return [];
+    }
     try {
       return await privateApiClient.get(
         `/organization/${organization.id}/cloud`
