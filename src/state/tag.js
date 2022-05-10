@@ -16,12 +16,22 @@ const deleteTag = async (project, tag) => {
   return await TagService.deleteTag(project, tag);
 };
 
+const addDocumentTag = async (project, document, tag) => {
+  return await TagService.addDocumentTag(project, document, tag);
+};
+
+const deleteDocumentTag = async (project, document, tag) => {
+  return await TagService.deleteDocumentTag(project, document, tag);
+};
+
 export function useTag() {
   return {
     // Methods
     fetchAllTags,
     updateTag,
     createTag,
-    deleteTag
+    deleteTag,
+    addDocumentTag,
+    deleteDocumentTag
   };
 }

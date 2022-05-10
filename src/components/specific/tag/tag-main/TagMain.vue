@@ -68,10 +68,11 @@
         />
       </div>
       <div class="tag-main__content__tag-list">
-        <template v-for="(tag, index) of updatedTagList" :key="index">
+        <template v-for="tag of updatedTagList" :key="tag.id">
           <TagList
             v-if="tag.isFindable"
             :project="project"
+            :document="document"
             :tag="tag"
             @tag-updater="tagToUpdate = $event"
             @fetch-tags="$emit('fetch-tags')"
@@ -83,11 +84,12 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
 import TagList from "@/components/specific/tag/tag-list/TagList.vue";
 import { useToggle } from "@/composables/toggle";
 import { useTag } from "@/state/tag.js";
+import { useFiles } from "@/state/files.js";
 
 export default {
   components: { TagList },
@@ -103,34 +105,21 @@ export default {
     },
     allTags: {
       type: Array,
-      default: () => [
-        {
-          id: 1,
-          name: "tag1",
-          color: "red"
-        },
-        {
-          id: 2,
-          name: "tag2",
-          color: "red"
-        },
-        {
-          id: 3,
-          name: "tag3",
-          color: "red"
-        }
-      ]
+      default: () => []
     }
   },
   emits: ["close", "fetch-tags"],
   setup(props, { emit }) {
     const filter = ref("");
+    const documentTag = ref(null);
     const updatedTagList = ref(null);
     const tagToUpdate = ref(null);
     const input = ref(null);
     const newTagName = ref("");
 
     const { createTag } = useTag();
+    const { getDocument } = useFiles();
+
     const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
 
     watch(showAddTagInput, () =>
@@ -156,12 +145,14 @@ export default {
           isFindable:
             filter.value === ""
               ? true
-              : tag.name.includes(filter.value.toLowerCase())
+              : tag.name.includes(filter.value.toLowerCase()),
+          isSelected:
+            documentTag.value && documentTag.value.some(t => t.id === tag.id)
         };
       });
     };
 
-    watch(tagToUpdate, () => {
+    watch(tagToUpdate, async () => {
       updatedTagList.value.map(tag => {
         if (tag.id === tagToUpdate.value.id) {
           return {
@@ -178,11 +169,17 @@ export default {
     watch(filter, () => getTagListUpdated());
     watch(
       () => props.allTags,
-      async () => await getTagListUpdated(props.allTags),
-      {
-        immediate: true
+      async () => {
+        await getTagListUpdated(props.allTags);
       }
     );
+
+    onMounted(async () => {
+      documentTag.value = (
+        await getDocument(props.project, props.document)
+      ).tags;
+      await getTagListUpdated(props.allTags);
+    });
 
     return {
       //references
@@ -193,6 +190,7 @@ export default {
       showAddTagInput,
       toggleAddTagInput,
       newTagName,
+      documentTag,
       //methods
       addNewTag
     };

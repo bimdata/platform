@@ -1041,6 +1041,8 @@
     "tagsCreateError": "Erreur lors de la création du tag",
     "tagsUpdateError": "Erreur lors de la modification du tag",
     "tagsDeleteError": "Erreur lors de la suppression du tag",
+    "tagsAddDocumentError": "Erreur lors de l'association du tag au document",
+    "tagsDeleteDocumentError": "Erreur lors de la dissociation du tag au document",
     "visaCreateError": "Erreur lors de la création du visa",
     "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
     "visaFetchError": "Impossible de récupérer le visa",

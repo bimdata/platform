@@ -1,7 +1,5 @@
 <template>
   <div class="tag-list">
-    {{ console.log("tag", tag) }}
-
     <template v-if="isSafeZone">
       <div class="tag-list__safe-zone">
         <span>{{ $t("Tag.deleteTag") }}</span>
@@ -112,6 +110,10 @@ export default {
       type: Object,
       required: true
     },
+    document: {
+      type: Object,
+      required: true
+    },
     tag: {
       type: Object,
       required: true
@@ -119,10 +121,8 @@ export default {
   },
   emits: ["close", "tag-updater", "fetch-tags"],
   setup(props, { emit }) {
-    const { updateTag, deleteTag } = useTag();
-
-    const color = ref("c0c0c0");
-
+    const { updateTag, deleteTag, addDocumentTag, deleteDocumentTag } =
+      useTag();
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);
     const input = ref(null);
@@ -154,7 +154,16 @@ export default {
       isSafeZone.value = false;
     };
 
-    const toggle = (tag, checked) => {
+    const toggle = async (tag, checked) => {
+      if (checked) {
+        await addDocumentTag(props.project, props.document, {
+          id: tag.id,
+          name: tag.name,
+          color: tag.color
+        });
+      } else {
+        await deleteDocumentTag(props.project, props.document, tag);
+      }
       tag.isSelected = checked;
       emit("tag-updater", tag);
     };
@@ -174,13 +183,11 @@ export default {
 
     return {
       // references
-      color,
       input,
       tagName,
       tagColor,
       editTagName,
       isSafeZone,
-      console,
       // methods
       onSubmitTagColor,
       onCancelSubmitTagName,
