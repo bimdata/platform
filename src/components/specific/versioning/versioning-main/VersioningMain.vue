@@ -57,7 +57,7 @@
       <template v-else>
         <div class="versioning-main__content__list">
           <template v-for="(doc, index) of allDocVersions" :key="index">
-            <VersioningList
+            <VersioningDoc
               :project="project"
               :document="doc"
               :headDocument="currentHead"
@@ -78,7 +78,7 @@
 import { ref, watch } from "vue";
 import { isEmpty } from "lodash";
 
-import VersioningList from "@/components/specific/versioning/versioning-list/VersioningList.vue";
+import VersioningDoc from "@/components/specific/versioning/versioning-doc/VersioningDoc.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
 import VersioningSafeZone from "@/components/specific/versioning/versioning-safe-zone/VersioningSafeZone.vue";
 
@@ -87,7 +87,7 @@ import { toCamelCaseFields } from "@/utils/misc";
 import { useFiles } from "@/state/files.js";
 
 export default {
-  components: { VersioningList, VersioningSafeZone, FileUploadButton },
+  components: { VersioningDoc, VersioningSafeZone, FileUploadButton },
   props: {
     project: {
       type: Object,

@@ -1,18 +1,18 @@
 <template>
-  <div class="versioning-list">
-    <div class="versioning-list__line">
-      <div class="versioning-list__line__outer-circle">
+  <div class="versioning-doc">
+    <div class="versioning-doc__line">
+      <div class="versioning-doc__line__outer-circle">
         <template v-if="isHead">
-          <div class="versioning-list__line__outer-circle__inner-circle"></div>
+          <div class="versioning-doc__line__outer-circle__inner-circle"></div>
         </template>
       </div>
       <template v-if="!isLast">
-        <div class="versioning-list__line__down-line" />
+        <div class="versioning-doc__line__down-line" />
       </template>
     </div>
-    <div class="versioning-list__content">
-      <div class="versioning-list__content__header">
-        <div class="versioning-list__content__header__left-side">
+    <div class="versioning-doc__content">
+      <div class="versioning-doc__content__header">
+        <div class="versioning-doc__content__header__left-side">
           <template v-if="isHead">
             <span> {{ $t("Versioning.currentVersion") }} </span>
           </template>
@@ -28,10 +28,10 @@
             />
           </template>
         </div>
-        <div class="versioning-list__content__header__right-side">
+        <div class="versioning-doc__content__header__right-side">
           <template v-if="project.isAdmin">
             <div
-              class="versioning-list__content__header__right-side__btn-delete"
+              class="versioning-doc__content__header__right-side__btn-delete"
             >
               <BIMDataTooltip position="left" :text="$t('Versioning.delete')">
                 <BIMDataButton
@@ -54,7 +54,7 @@
           </template>
           <template v-if="!isHead">
             <div
-              class="versioning-list__content__header__right-side__btn-get-head"
+              class="versioning-doc__content__header__right-side__btn-get-head"
             >
               <BIMDataTooltip
                 position="left"
@@ -78,7 +78,7 @@
               </BIMDataTooltip>
             </div>
           </template>
-          <div class="versioning-list__content__header__right-side__btn-dl">
+          <div class="versioning-doc__content__header__right-side__btn-dl">
             <BIMDataTooltip position="left" :text="$t('Versioning.download')">
               <BIMDataButton
                 ghost
@@ -93,7 +93,7 @@
             </BIMDataTooltip>
           </div>
           <template v-if="isViewable(document)">
-            <div class="versioning-list__content__header__right-side__btn-show">
+            <div class="versioning-doc__content__header__right-side__btn-show">
               <BIMDataTooltip position="left" :text="$t('Versioning.show')">
                 <AppLink
                   :to="{
@@ -117,7 +117,7 @@
             </div>
           </template>
           <template v-else-if="isPDF(document.fileName)">
-            <div class="versioning-list__content__header__right-side__btn-show">
+            <div class="versioning-doc__content__header__right-side__btn-show">
               <BIMDataTooltip position="left" :text="$t('Versioning.show')">
                 <BIMDataButton
                   ghost
@@ -134,20 +134,20 @@
           </template>
         </div>
       </div>
-      <div class="versioning-list__content__file">
+      <div class="versioning-doc__content__file">
         <BIMDataFileIcon :fileName="document.fileName" :size="20" />
         <BIMDataTextbox
-          class="versioning-list__content__file__name"
+          class="versioning-doc__content__file__name"
           :text="document.name"
           width="calc(100% - 20px - 12px * 3)"
         />
       </div>
-      <div class="versioning-list__content__user">
-        <div class="versioning-list__content__user__title">
+      <div class="versioning-doc__content__user">
+        <div class="versioning-doc__content__user__title">
           {{ $t("Versioning.addedBy") }}
         </div>
-        <div class="versioning-list__content__user__info">
-          <div class="versioning-list__content__user__info__identity">
+        <div class="versioning-doc__content__user__info">
+          <div class="versioning-doc__content__user__info__identity">
             <UserAvatar
               :user="document.createdBy || {}"
               size="20"
@@ -156,7 +156,7 @@
               style="box-shadow: var(--box-shadow)"
             />
             <BIMDataTextbox
-              class="versioning-list__content__user__info__identity__name"
+              class="versioning-doc__content__user__info__identity__name"
               :text="
                 (document.createdBy &&
                   (fullName(document.createdBy) || document.createdBy.email)) ||
@@ -165,7 +165,7 @@
               width="60%"
             />
           </div>
-          <div class="versioning-list__content__user__date">
+          <div class="versioning-doc__content__user__date">
             {{ $t("Versioning.titleDate") }}
             {{ $d(document.createdAt, "long") }}
           </div>
@@ -268,4 +268,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./VersioningList.scss"></style>
+<style scoped lang="scss" src="./VersioningDoc.scss"></style>
