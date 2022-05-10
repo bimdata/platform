@@ -133,7 +133,7 @@
               @close="closeVisaManager"
               @reach-file="backToParent"
             />
-            <TagMain
+            <TagsMain
               v-if="showTagManager"
               :project="project"
               :document="fileToManage"
@@ -187,7 +187,7 @@ import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
-import TagMain from "@/components/specific/tag/tag-main/TagMain.vue";
+import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
 
 export default {
   components: {
@@ -200,7 +200,7 @@ export default {
     FilesDeleteModal,
     FilesManagerOnboarding,
     VisaMain,
-    TagMain
+    TagsMain
   },
   props: {
     spaceSubInfo: {

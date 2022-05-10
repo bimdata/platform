@@ -1,9 +1,9 @@
 <template>
-  <div class="tag-list">
+  <div class="tags-item">
     <template v-if="isSafeZone">
-      <div class="tag-list__safe-zone">
+      <div class="tags-item__safe-zone">
         <span>{{ $t("Tag.deleteTag") }}</span>
-        <div class="tag-list__safe-zone__action">
+        <div class="tags-item__safe-zone__action">
           <BIMDataButton
             color="high"
             fill
@@ -25,12 +25,12 @@
         </div>
       </div>
     </template>
-    <div class="tag-list__content">
+    <div class="tags-item__content">
       <BIMDataCheckbox
         :modelValue="tag.isSelected"
         @update:modelValue="toggle(tag, $event)"
       />
-      <div class="tag-list__content__info">
+      <div class="tags-item__content__info">
         <template v-if="!editTagName">
           <span>{{ tagName }}</span>
         </template>
@@ -42,7 +42,7 @@
             margin="-12px 0px 0px 0px"
           />
         </template>
-        <div class="tag-list__content__info__action">
+        <div class="tags-item__content__info__action">
           <template v-if="!editTagName">
             <BIMDataIcon
               name="edit"
@@ -73,7 +73,7 @@
           />
 
           <div
-            class="tag-list__content__info__action__color"
+            class="tags-item__content__info__action__color"
             :style="{
               'background-color': `#${tagColor}`
             }"
@@ -81,7 +81,7 @@
           ></div>
           <template v-if="displayColorSelector">
             <ColorSelector
-              class="tag-list__content__info__action__color-selector"
+              class="tags-item__content__info__action__color-selector"
               :modelValue="tagColor"
               @update:modelValue="onSubmitTagColor"
               v-click-away="
@@ -200,4 +200,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./TagList.scss"></style>
+<style scoped lang="scss" src="./TagsItem.scss"></style>

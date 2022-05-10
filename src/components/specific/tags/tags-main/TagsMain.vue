@@ -1,8 +1,8 @@
 <template>
-  <div class="tag-main">
-    <div class="tag-main__content">
-      <div class="tag-main__content__header">
-        <div class="tag-main__content__header__left-side">
+  <div class="tags-main">
+    <div class="tags-main__content">
+      <div class="tags-main__content__header">
+        <div class="tags-main__content__header__left-side">
           <BIMDataIcon
             name="tag"
             fill
@@ -12,13 +12,13 @@
           />
           <span>{{ $t("Tag.title") }}</span>
         </div>
-        <div class="tag-main__content__header__right-side">
+        <div class="tags-main__content__header__right-side">
           <BIMDataButton ghost rounded icon @click="$emit('close')">
             <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
           </BIMDataButton>
         </div>
       </div>
-      <div class="tag-main__content__list-add">
+      <div class="tags-main__content__list-add">
         <span>{{ $t("Tag.list") }}</span>
         <BIMDataButton
           color="primary"
@@ -44,7 +44,7 @@
           v-model="newTagName"
           @keyup.enter.stop="addNewTag"
         />
-        <div class="tag-main__content__list-add__input-btn">
+        <div class="tags-main__content__list-add__input-btn">
           <BIMDataButton
             ghost
             radius
@@ -57,7 +57,7 @@
           }}</BIMDataButton>
         </div>
       </template>
-      <div class="tag-main__content__search-bar">
+      <div class="tags-main__content__search-bar">
         <BIMDataSearch
           v-model="filter"
           :placeholder="$t('Tag.search')"
@@ -67,9 +67,9 @@
           height="calc(var(--spacing-unit) * 2.5)"
         />
       </div>
-      <div class="tag-main__content__tag-list">
+      <div class="tags-main__content__tag-list">
         <template v-for="tag of updatedTagList" :key="tag.id">
-          <TagList
+          <TagsItem
             v-if="tag.isFindable"
             :project="project"
             :document="document"
@@ -86,13 +86,13 @@
 <script>
 import { ref, watch, onMounted } from "vue";
 import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
-import TagList from "@/components/specific/tag/tag-list/TagList.vue";
+import TagsItem from "@/components/specific/tags/tags-item/TagsItem.vue";
 import { useToggle } from "@/composables/toggle";
-import { useTag } from "@/state/tag.js";
 import { useFiles } from "@/state/files.js";
+import { useTag } from "@/state/tag.js";
 
 export default {
-  components: { TagList },
+  components: { TagsItem },
 
   props: {
     project: {
@@ -111,7 +111,7 @@ export default {
   emits: ["close", "fetch-tags"],
   setup(props, { emit }) {
     const filter = ref("");
-    const documentTag = ref(null);
+    const tagsDocument = ref(null);
     const updatedTagList = ref(null);
     const tagToUpdate = ref(null);
     const input = ref(null);
@@ -147,26 +147,26 @@ export default {
               ? true
               : tag.name.includes(filter.value.toLowerCase()),
           isSelected:
-            documentTag.value && documentTag.value.some(t => t.id === tag.id)
+            tagsDocument.value && tagsDocument.value.some(t => t.id === tag.id)
         };
       });
     };
 
     watch(tagToUpdate, async () => {
-      updatedTagList.value.map(tag => {
-        if (tag.id === tagToUpdate.value.id) {
-          return {
-            ...tagToUpdate.value
-          };
-        } else {
-          return {
-            ...tag
-          };
-        }
-      });
+      updatedTagList.value.map(tag =>
+        tag.id === tagToUpdate.value.id
+          ? {
+              ...tagToUpdate.value
+            }
+          : {
+              ...tag
+            }
+      );
+      tagsDocument.value = (
+        await getDocument(props.project, props.document)
+      ).tags;
     });
 
-    watch(filter, () => getTagListUpdated());
     watch(
       () => props.allTags,
       async () => {
@@ -175,7 +175,7 @@ export default {
     );
 
     onMounted(async () => {
-      documentTag.value = (
+      tagsDocument.value = (
         await getDocument(props.project, props.document)
       ).tags;
       await getTagListUpdated(props.allTags);
@@ -190,7 +190,7 @@ export default {
       showAddTagInput,
       toggleAddTagInput,
       newTagName,
-      documentTag,
+      tagsDocument,
       //methods
       addNewTag
     };
@@ -198,4 +198,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./TagMain.scss"></style>
+<style scoped lang="scss" src="./TagsMain.scss"></style>
