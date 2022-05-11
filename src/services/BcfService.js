@@ -25,6 +25,7 @@ class BcfService {
         `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic/${bcfTopic.guid}`,
         {
           method: "PATCH",
+          credentials: "include",
           headers: {
             "content-type": "application/json",
             ...apiClient.authHeader
@@ -90,6 +91,7 @@ class BcfService {
         `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "content-type": "application/json",
             ...apiClient.authHeader
@@ -155,6 +157,7 @@ class BcfService {
         `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/import`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             ...apiClient.authHeader
           },
@@ -171,6 +174,7 @@ class BcfService {
         `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/export`,
         {
           method: "GET",
+          credentials: "include",
           headers: {
             ...apiClient.authHeader
           }
