@@ -62,7 +62,7 @@
               color="granite-light"
               margin="0 6px 0 0"
             />
-            {{ $t("EditBcfTopic.goBackButton") }}
+            {{ $t("ProjectBcf.goBackButton") }}
           </BIMDataButton>
           <span class="text-center" style="width: calc(100% - 70px)">
             <BIMDataTextbox :text="currentBcfTopic.title" />
