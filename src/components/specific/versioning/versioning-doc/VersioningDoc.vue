@@ -19,7 +19,7 @@
           <template v-else>
             <span> {{ $t("Versioning.previousVersion") }} </span>
           </template>
-          <template v-if="!isEmpty(document.visa)">
+          <template v-if="!isEmpty(document.visas)">
             <BIMDataIcon
               name="visa"
               :color="hasOneVisaClosed ? 'success' : 'warning'"
@@ -40,12 +40,7 @@
                   icon
                   width="30px"
                   height="30px"
-                  @click="
-                    $emit('on-delete', {
-                      ...document,
-                      isHead
-                    })
-                  "
+                  @click="$emit('on-delete', document)"
                 >
                   <BIMDataIcon name="delete" color="granite" size="xs" fill />
                 </BIMDataButton>
@@ -177,14 +172,15 @@
 
 <script>
 import { computed } from "vue";
-import { useRouter } from "vue-router";
 import { isEmpty } from "lodash";
-import routeNames from "@/router/route-names.js";
-import { useModels } from "@/state/models.js";
-import { useFiles } from "@/state/files.js";
-import { isViewable, isPDF, windowType } from "@/utils/models.js";
+import { useRouter } from "vue-router";
+
 import { fullName } from "@/utils/users.js";
+import { useFiles } from "@/state/files.js";
+import { useModels } from "@/state/models.js";
 import { VISA_STATUS } from "@/config/visa.js";
+import routeNames from "@/router/route-names.js";
+import { isViewable, isPDF, windowType } from "@/utils/models.js";
 
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
@@ -213,14 +209,14 @@ export default {
       required: true
     }
   },
-  emits: ["current-head", "model-created", "on-delete"],
+  emits: ["model-created", "on-delete", "get-all-doc-versions"],
   setup(props, { emit }) {
     const { downloadFiles, makeHeadVersion } = useFiles();
     const { createModel } = useModels();
     const router = useRouter();
 
     const hasOneVisaClosed = computed(() =>
-      props.document.visa.some(v => v.status === VISA_STATUS.CLOSE)
+      props.document.visas.some(v => v.status === VISA_STATUS.CLOSE)
     );
 
     const swapHeadDoc = async () => {
@@ -229,7 +225,7 @@ export default {
         props.headDocument,
         props.document
       );
-      emit("current-head", newHeadVersion);
+      emit("get-all-doc-versions", newHeadVersion);
     };
 
     const convertToModelAndShow = async () => {
@@ -257,7 +253,6 @@ export default {
       // methods
       download: downloadFiles,
       convertToModelAndShow,
-      makeHeadVersion,
       swapHeadDoc,
       isViewable,
       windowType,

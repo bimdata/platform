@@ -60,12 +60,12 @@
             <VersioningDoc
               :project="project"
               :document="doc"
-              :headDocument="currentHead"
+              :headDocument="allDocVersions[0]"
               :isHead="index === 0"
               :isLast="index + 1 === allDocVersions.length"
               @current-head="currentHead = $event"
               @on-delete="onDelete"
-              @model-created="$emit('model-created')"
+              @get-all-doc-versions="getAllDocVersions"
             />
           </template>
         </div>
@@ -75,21 +75,24 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
-import { isEmpty } from "lodash";
+import { ref, onMounted, computed } from "vue";
+
+import { useFiles } from "@/state/files.js";
+import { toCamelCaseFields } from "@/utils/misc";
+import { useUpload } from "@/composables/upload.js";
 
 import VersioningDoc from "@/components/specific/versioning/versioning-doc/VersioningDoc.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
 import VersioningSafeZone from "@/components/specific/versioning/versioning-safe-zone/VersioningSafeZone.vue";
 
-import { useUpload } from "@/composables/upload.js";
-import { toCamelCaseFields } from "@/utils/misc";
-import { useFiles } from "@/state/files.js";
-
 export default {
   components: { VersioningDoc, VersioningSafeZone, FileUploadButton },
   props: {
     project: {
+      type: Object,
+      required: true
+    },
+    document: {
       type: Object,
       required: true
     },
@@ -100,59 +103,42 @@ export default {
     spaceSubInfo: {
       type: Object,
       required: true
-    },
-    headDocument: {
-      type: Object,
-      required: true
     }
   },
   emits: ["close", "model-created", "file-uploaded"],
 
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
-    const {
-      fetchAllPrevDocVersions,
-      deletePrevDocVersion,
-      deleteHeadDocVersion
-    } = useFiles();
+    const { getDocumentVersions, deleteDocVersion } = useFiles();
 
-    const currentHead = ref(props.headDocument);
     const loading = ref(false);
 
     const addVersion = async fileToUpload => {
       if (fileToUpload) {
         const handlers = {
           onUploadStart: () => (loading.value = true),
-          onUploadComplete: ({ response }) => {
-            currentHead.value = toCamelCaseFields(response);
+          onUploadComplete: async ({ response: newHeadVersion }) => {
+            await getAllDocVersions(toCamelCaseFields(newHeadVersion));
             loading.value = false;
           }
         };
         const uploader = projectFileUploader(props.project, handlers);
-        uploader.upload(fileToUpload[0], null, currentHead.value.id);
+        uploader.upload(fileToUpload[0], null, allDocVersions.value[0].id);
       }
     };
 
     const safeZoneAction = ref(null);
     const isSafeZone = ref(false);
 
-    const onDelete = document => {
+    const onDelete = async document => {
       isSafeZone.value = true;
-      if (document.isHead) {
-        safeZoneAction.value = async () => {
-          await deleteHeadDocVersion(props.project, document);
-          currentHead.value = allDocVersions.value[1];
-        };
-      } else {
-        safeZoneAction.value = async () => {
-          await deletePrevDocVersion(
-            props.project,
-            currentHead.value,
-            document
-          );
-          await getAllDocVersions();
-        };
-      }
+      safeZoneAction.value = async () => {
+        await deleteDocVersion(props.project, document);
+        const documentHistory = allDocVersions.value.find(
+          version => version.id !== document.id
+        );
+        await getAllDocVersions(documentHistory);
+      };
     };
 
     const onSafeZone = async isActionConfirmed => {
@@ -164,40 +150,36 @@ export default {
     };
 
     const allDocVersions = ref(null);
-    const hasPrevVersions = ref(undefined);
 
-    const getAllDocVersions = async () => {
-      const prevDocVersions = await fetchAllPrevDocVersions(
+    const getAllDocVersions = async currentDocument => {
+      allDocVersions.value = await getDocumentVersions(
         props.project,
-        currentHead.value
+        currentDocument
       );
-
-      if (isEmpty(prevDocVersions)) {
-        hasPrevVersions.value = false;
-      } else {
-        allDocVersions.value = [currentHead.value].concat(prevDocVersions);
-        hasPrevVersions.value = true;
-      }
-      emit("file-uploaded", currentHead.value);
+      emit("file-uploaded", allDocVersions.value[0]);
     };
 
-    watch(currentHead, async () => await getAllDocVersions(), {
-      immediate: true
+    const hasPrevVersions = computed(() => {
+      if (!allDocVersions.value) {
+        return undefined;
+      } else {
+        return allDocVersions.value.length > 1 ? true : false;
+      }
     });
+
+    onMounted(async () => await getAllDocVersions(props.document));
 
     return {
       // references
       loading,
       isSafeZone,
-      currentHead,
       allDocVersions,
       hasPrevVersions,
-      // methods
       getAllDocVersions,
+      // methods
       addVersion,
       onSafeZone,
-      onDelete,
-      isEmpty
+      onDelete
     };
   }
 };

@@ -136,7 +136,7 @@
             <VersioningMain
               v-if="showVersioningManager"
               :project="project"
-              :headDocument="fileToManage"
+              :document="fileToManage"
               :currentFolder="currentFolder"
               :spaceSubInfo="spaceSubInfo"
               @model-created="$emit('model-created')"

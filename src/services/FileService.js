@@ -126,20 +126,7 @@ class FileService {
     }
   }
 
-  async deletePrevDocVersion(project, headDocument, document) {
-    try {
-      return await apiClient.collaborationApi.deleteDocumentHistory(
-        project.cloud.id,
-        headDocument.id,
-        document.id,
-        project.id
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
-    }
-  }
-
-  async deleteHeadDocVersion(project, document) {
+  async deleteDocVersion(project, document) {
     try {
       return await apiClient.collaborationApi.deleteDocument(
         project.cloud.id,
@@ -183,7 +170,7 @@ class FileService {
     return url;
   }
 
-  async fetchAllPrevDocVersions(project, document) {
+  async getDocumentVersions(project, document) {
     try {
       return await apiClient.collaborationApi.getDocumentHistories(
         project.cloud.id,

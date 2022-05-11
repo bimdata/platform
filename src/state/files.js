@@ -97,16 +97,12 @@ const deleteFiles = async (project, files) => {
   return files;
 };
 
-const deletePrevDocVersion = async (project, headDocument, document) => {
-  return FileService.deletePrevDocVersion(project, headDocument, document);
+const deleteDocVersion = async (project, document) => {
+  return FileService.deleteDocVersion(project, document);
 };
 
-const deleteHeadDocVersion = async (project, document) => {
-  return FileService.deleteHeadDocVersion(project, document);
-};
-
-const fetchAllPrevDocVersions = async (project, document) => {
-  return FileService.fetchAllPrevDocVersions(project, document);
+const getDocumentVersions = async (project, document) => {
+  return FileService.getDocumentVersions(project, document);
 };
 
 const makeHeadVersion = async (project, headDocument, document) => {
@@ -127,9 +123,8 @@ export function useFiles() {
     moveFiles,
     downloadFiles,
     deleteFiles,
-    deletePrevDocVersion,
-    deleteHeadDocVersion,
-    fetchAllPrevDocVersions,
+    deleteDocVersion,
+    getDocumentVersions,
     makeHeadVersion
   };
 }
