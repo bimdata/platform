@@ -12,7 +12,7 @@
 
 <script>
 import { computed } from "vue";
-import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
+import { adjustColor } from "@/components/generic/color-selector/colors.js";
 
 export default {
   props: {

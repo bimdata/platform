@@ -94,7 +94,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { adjustBorderColor } from "../adjustColor.js";
+import { adjustBorderColor } from "@/components/generic/color-selector/colors.js";
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";
 

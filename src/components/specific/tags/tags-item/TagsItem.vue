@@ -1,5 +1,13 @@
 <template>
-  <div class="tags-item">
+  <div
+    class="tags-item"
+    v-click-away="
+      () => {
+        editTagName = false;
+        isSafeZone = false;
+      }
+    "
+  >
     <template v-if="isSafeZone">
       <div class="tags-item__safe-zone">
         <span>{{ $t("Tag.deleteTag") }}</span>
@@ -32,7 +40,7 @@
       />
       <div class="tags-item__content__info">
         <template v-if="!editTagName">
-          <span>{{ tagName }}</span>
+          <BIMDataTextbox :text="tagName" width="250px" />
         </template>
         <template v-else>
           <BIMDataInput
@@ -75,7 +83,8 @@
           <div
             class="tags-item__content__info__action__color"
             :style="{
-              'background-color': `#${tagColor}`
+              'background-color': `#${tagColor}`,
+              'border-color': adjustBorderColor(`${tagColor}`, -50)
             }"
             @click="displayColorSelector = true"
           ></div>
@@ -99,7 +108,9 @@
 
 <script>
 import { ref, watch } from "vue";
+
 import { useTag } from "@/state/tag.js";
+import { adjustBorderColor } from "@/components/generic/color-selector/colors.js";
 
 import ColorSelector from "@/components/generic/color-selector/ColorSelector.vue";
 
@@ -190,6 +201,7 @@ export default {
       isSafeZone,
       // methods
       onSubmitTagColor,
+      adjustBorderColor,
       onCancelSubmitTagName,
       displayColorSelector,
       onSubmitTagName,

@@ -44,6 +44,13 @@
         margin: auto 0;
         color: var(--color-primary);
       }
+
+      &:deep {
+        .bimdata-input {
+          width: 250px;
+        }
+      }
+
       &__action {
         display: flex;
         align-items: center;

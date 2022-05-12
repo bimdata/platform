@@ -112,7 +112,7 @@
 
 <script>
 import { computed } from "vue";
-import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
+import { adjustColor } from "@/components/generic/color-selector/colors.js";
 
 import { useBcf } from "@/state/bcf.js";
 import { useProjects } from "@/state/projects.js";

@@ -139,17 +139,20 @@ export default {
     };
 
     const getTagListUpdated = (list = updatedTagList.value) => {
-      updatedTagList.value = list.map(tag => {
-        return {
-          ...tag,
-          isFindable:
-            filter.value === ""
-              ? true
-              : tag.name.includes(filter.value.toLowerCase()),
-          isSelected:
-            tagsDocument.value && tagsDocument.value.some(t => t.id === tag.id)
-        };
-      });
+      updatedTagList.value = list
+        .map(tag => {
+          return {
+            ...tag,
+            isFindable:
+              filter.value === ""
+                ? true
+                : tag.name.includes(filter.value.toLowerCase()),
+            isSelected:
+              tagsDocument.value &&
+              tagsDocument.value.some(t => t.id === tag.id)
+          };
+        })
+        .sort((a, b) => (a.id > b.id ? 1 : -1));
     };
 
     watch(tagToUpdate, async () => {
