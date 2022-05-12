@@ -63,8 +63,8 @@ function isPDF(file) {
 }
 
 function isSmartFile(file) {
-  return Object.entries(MODEL_EXTENSIONS).forEach(
-    extension => extension[1] === fileExtension(file.fileName).toLowerCase()
+  return Object.values(MODEL_EXTENSIONS).includes(
+    fileExtension(file.fileName).toLowerCase()
   );
 }
 

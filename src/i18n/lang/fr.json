@@ -385,6 +385,7 @@
   "FilesDeleteModal": {
     "title": "Suppression de fichiers",
     "message": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
+    "messageVersion":"Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants et l'historique de versions associé :",
     "cancelButtonText": "Annuler",
     "deleteButtonText": "Supprimer"
   },

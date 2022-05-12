@@ -10,7 +10,11 @@
     </template>
     <template #body>
       <div class="files-delete-modal__message">
-        <div>{{ $t("FilesDeleteModal.message") }}</div>
+        <div>
+          {{
+            $t(`FilesDeleteModal.${hasVersions ? "messageVersion" : "message"}`)
+          }}
+        </div>
         <ul class="files-delete-modal__message__list">
           <li
             class="files-delete-modal__message__list__item"
@@ -34,6 +38,7 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useFiles } from "@/state/files";
 // Components
 import GenericModal from "@/components/generic/generic-modal/GenericModal";
@@ -56,6 +61,10 @@ export default {
   setup(props, { emit }) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
 
+    const hasVersions = computed(() =>
+      props.files.some(file => file.versions.length > 1)
+    );
+
     const submit = () => {
       deleteFiles(props.project, props.files);
       softUpdateFileStructure("delete", props.files);
@@ -63,7 +72,8 @@ export default {
     };
 
     return {
-      submit
+      submit,
+      hasVersions
     };
   }
 };
