@@ -62,6 +62,7 @@ function createFileUploader(
       request.open(method, url);
       request.setRequestHeader("Authorization", `Bearer ${accessToken}`);
       request.responseType = "json";
+      request.withCredentials = true;
 
       this.request = request;
       this.request.send(data);

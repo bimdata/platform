@@ -1,7 +1,8 @@
 import { makeBIMDataApiClient } from "@bimdata/typescript-fetch-api-client";
 
 const apiClient = makeBIMDataApiClient({
-  apiUrl: process.env.VUE_APP_API_BASE_URL
+  apiUrl: process.env.VUE_APP_API_BASE_URL,
+  credentials: "include"
 });
 
 /**
@@ -20,6 +21,7 @@ const privateApiFetch = async ({ method = "GET", path, body, json = true }) => {
     `${process.env.VUE_APP_API_BASE_URL}/private${path}`,
     {
       method,
+      credentials: "include",
       headers: {
         ...apiClient.authHeader,
         ...(json ? { "Content-Type": "application/json;charset=UTF-8" } : {})
