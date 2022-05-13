@@ -192,6 +192,7 @@
   "BcfSettings": {
     "goBackButton": "Retour",
     "title": "Paramètres BCF",
+    "text": "Créez, renseignez et listez les paramètres BCF que vous souhaitez avoir sur ce projet",
     "validateButton": "Valider les paramètres BCF"
   },
   "SettingCard": {
@@ -510,6 +511,58 @@
       "readWrite": "Lecture / Écriture"
     }
   },
+  "GuidedTour": {
+    "platform": {
+      "intro": {
+        "title": "Bienvenue",
+        "content": "Explorons ensemble la plateforme BIMData"
+      },
+      "actionButtons": {
+        "title": "Tableau de bord",
+        "content": "Accédez à l’ensemble de vos espaces, projets et abonnements directement depuis ce tableau de bord"
+      },
+      "firstSpace": {
+        "title": "Vos espaces",
+        "content": "Accédez à vos espaces récents directement depuis ce raccourcis"
+      },
+      "firstProject": {
+        "title": "Vos projets",
+        "content": "Accédez à vos projets récents directement depuis ce raccourcis"
+      },
+      "previewIfc": {
+        "title": "Aperçu",
+        "content": "Naviguez facilement parmis les aperçus des modèles de votre projet"
+      },    
+      "usersManager": {
+        "title": "Collaboration",
+        "content": "Invitez vos premiers collaborateurs à votre projet"
+      },
+      "modelsManager": {
+        "title": "Modèles",
+        "content": "Télécharger et gérer les modèles de votre projet (IFC, DWG, PDF...)"
+      },
+      "gedButton": {
+        "title": "GED",
+        "content": "Accédez à la gestion documentaire de votre projet depuis l’onglet “GED”"
+      },
+      "fileTree": {
+        "title": "Arborescence",
+        "content": "Créez vos dossiers et télécharger vos fichiers directement depuis la GED"
+      },
+      "groupManager": {
+        "title": "Gestion des droits",
+        "content": "Créez des groupes utilisateurs pour gérer leurs droits d’accès"
+      },
+      "changeSpace": {
+        "title": "Fil d’ariane",
+        "content": "Accédez rapidement à votre espace depuis le fil d’ariane"
+      },
+      "outro": {
+        "title": "Bravo !",
+        "content": "Maintenant, il ne vous reste plus qu’à vous lancer dans votre premier projet"
+      }
+    }
+  },
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
     "resendLinkText": "Renvoyer l'invitation ?",
@@ -552,7 +605,7 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
-    "removeButtonText": "Marquer comme document",
+    "removeButtonText": "Retirer des modèles",
     "deleteButtonText": "Supprimer"
   },
   "ModelLocation": {
@@ -593,6 +646,7 @@
     "tabs": {
       "ifc": "IFC",
       "dwg": "DWG",
+      "upload": "Upload",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives",
@@ -965,6 +1019,7 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",

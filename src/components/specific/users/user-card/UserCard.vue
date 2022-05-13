@@ -30,8 +30,13 @@
           <UserAvatar :user="user" size="42" color="silver-light" />
           <div class="user-card__content__info">
             <div class="user-card__content__info__name">
-              {{ fullName }}
-              {{ user.isSelf ? `(${$t("UserCard.self")})` : "" }}
+              <BIMDataTextbox
+                width="auto"
+                maxWidth="220px"
+                :text="
+                  fullName + (user.isSelf ? ` (${$t('UserCard.self')})` : '')
+                "
+              />
               <UserRoleBadge :role="role" />
             </div>
             <div class="user-card__content__info__email">
@@ -51,13 +56,13 @@
 
 <script>
 import { computed, provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "@/composables/toggle.js";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge";
-import UserCardActionMenu from "./user-card-action-menu/UserCardActionMenu";
-import UserCardDeleteGuard from "./user-card-delete-guard/UserCardDeleteGuard";
-import UserCardUpdateForm from "./user-card-update-form/UserCardUpdateForm";
+import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
+import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge.vue";
+import UserCardActionMenu from "./user-card-action-menu/UserCardActionMenu.vue";
+import UserCardDeleteGuard from "./user-card-delete-guard/UserCardDeleteGuard.vue";
+import UserCardUpdateForm from "./user-card-update-form/UserCardUpdateForm.vue";
 
 export default {
   components: {

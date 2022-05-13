@@ -59,30 +59,26 @@ export default {
 
     const loading = inject("loading", false);
 
-    const role = ref(
-      props.project ? props.user.projectRole : props.user.cloudRole
-    );
+    const role = ref(props.project ? props.user.role : props.user.cloudRole);
 
     const submit = async () => {
       try {
+        close();
         loading.value = true;
         if (props.project) {
           await updateProjectUser(props.project, {
             ...props.user,
-            projectRole: role.value,
             role: role.value
           });
         } else if (props.space) {
           await updateSpaceUser(props.space, {
             ...props.user,
-            cloudRole: role.value,
-            role: role.value
+            cloudRole: role.value
           });
         }
       } finally {
         loading.value = false;
       }
-      close();
     };
 
     const close = () => {

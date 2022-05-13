@@ -41,7 +41,7 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { leaveProject, softDeleteProject } = useProjects();
+    const { leaveProject } = useProjects();
 
     const loading = inject("loading", false);
 
@@ -49,7 +49,6 @@ export default {
       try {
         loading.value = true;
         await leaveProject(props.project);
-        softDeleteProject(props.project);
         emit("success");
       } finally {
         loading.value = false;

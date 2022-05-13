@@ -25,9 +25,10 @@
 
     <transition name="fade">
       <FileUploader
-        isModelUploader
         class="project-overview__block--upload"
         v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
+        isModelUploader
+        autoclose
         :project="project"
         :allowedFileTypes="allowedExtensions"
         @file-uploaded="reloadData"
@@ -49,6 +50,7 @@
     <div class="project-overview__block--users">
       <AppLoading name="project-users">
         <ProjectUsersManager
+          data-guide="users-manager"
           :project="project"
           :users="users"
           :invitations="invitations"
@@ -58,7 +60,11 @@
 
     <div class="project-overview__block--models">
       <AppLoading name="project-models">
-        <ModelsManager :project="project" :models="models" />
+        <ModelsManager
+          data-guide="models-manager"
+          :project="project"
+          :models="models"
+        />
       </AppLoading>
     </div>
   </div>

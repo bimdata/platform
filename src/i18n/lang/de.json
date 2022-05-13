@@ -1,17 +1,4 @@
 {
-    "Dashboard": {
-        "spacesButtonTitle": "Bereiche",
-        "spacesButtonText": "Meine Bereiche",
-        "projectsButtonTitle": "Projekte",
-        "projectsButtonText": "Meine Projekte",
-        "spacesTileTitle": "Bereiche",
-        "spacesTileBottomText": "Meine Bereiche",
-        "projectsTileTitle": "Projekte",
-        "projectsTileBottomText": "Meine Projekte",
-        "subscriptionsTileTitle": "Abonnements",
-        "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
-        "subscriptionsTileBottomText": "Meine Abonnements verwalten"
-    },
     "GroupBoard": {
         "searchInputPlaceholder": "Mitglied suchen"
     },
@@ -101,7 +88,8 @@
         "addVersionButtonText": "Version hinzufügen",
         "manageAccessButtonText": "Zugang verwalten",
         "deleteButtonText": "Löschen",
-        "VisaButtonText": "Bestätigungsantrag"
+        "VisaButtonText": "Bestätigungsantrag",
+        "createModelButtonText": "Als Vorlage festlegen"
     },
     "FileNameCell": {
         "inputErrorMessage": "Ungültiger Dateiname",
@@ -120,7 +108,12 @@
     },
     "FilesManager": {
         "title": "Projektdokumente",
-        "searchInputPlaceholder": "Suchen"
+        "searchInputPlaceholder": "Suchen",
+        "createModelNotification": "Vorlage erfolgreich erstellt",
+        "uploadDisableMessage": {
+            "permission": "Sie verfügen nicht über die erforderlichen Rechte",
+            "size": "Sie verfügen nicht mehr über genügend Speicherplatz."
+        }
     },
     "FilesManagerOnboarding": {
         "text": "Erste Datei hochladen",
@@ -153,8 +146,6 @@
     },
     "FolderAccessManager": {
         "title": "Zugang verwalten",
-        "groupsButtonText": "Gruppenverwaltung",
-        "nameHeader": "Name",
         "rightsHeader": "Rechte",
         "membersHeader": "Mitglieder",
         "searchInputPlaceholder": "Eine Gruppe suchen",
@@ -177,9 +168,6 @@
             "moveHere": "Hierher verschieben"
         },
         "emptyFolderPlaceholder": "Leerer Ordner"
-    },
-    "GroupAccessSelector": {
-        "defaultGroupName": "Alle"
     },
     "GroupCardActionMenu": {
         "renameButtonText": "Umbenennen",
@@ -205,11 +193,7 @@
         "submitButtonText": "Erstellen"
     },
     "GroupMemberSelectionCard": {
-        "text": "Nutzer hinzufügen",
-        "title": "Mitgliederverwaltung",
-        "selectorLabel": "Gruppenmitglieder",
-        "cancelButtonText": "Abbrechen",
-        "submitButtonText": "Bestätigen"
+        "text": "Nutzer hinzufügen"
     },
     "InvitationCard": {
         "pendingMessage": "Eingeladen - keine Antwort.",
@@ -236,9 +220,6 @@
         "archiveButtonText": "Archivieren",
         "deleteButtonText": "Löschen",
         "unarchiveButtonText": "Dearchivieren"
-    },
-    "ModelLastUpdateCell": {
-        "at": "in"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
@@ -280,7 +261,9 @@
             "split": "Aufteilen / exportieren",
             "merge": "Zusammenführen",
             "archive": "Archiv",
-            "dwg": "DWG"
+            "dwg": "DWG",
+            "metaBuildings": "Meta Buildings",
+            "upload": "Hochladen"
         }
     },
     "ModelsMergeModal": {
@@ -483,13 +466,24 @@
         "visaFetchAllCommentsError": "Die Kommentare können nicht aufgerufen werden",
         "visaCreateCommentsError": "Dieser Kommentar kann nicht veröffentlicht werden",
         "visaUpdateCommentError": "Dieser Kommentar kann nicht bearbeitet werden",
-        "visaDeleteCommentError": "Dieser Kommentar kann nicht gelöscht werden"
+        "visaDeleteCommentError": "Dieser Kommentar kann nicht gelöscht werden",
+        "modelCreateError": "Fehler beim Erstellen der Vorlage",
+        "fileFetchError": ""
     },
     "ProjectStatusBadge": {
         "new": "NEU",
         "active": "AKTIV",
         "inactive": "NICHT AKTIV",
         "paused": "PAUSE"
+    },
+    "Dashboard": {
+        "spacesTileTitle": "Bereiche",
+        "spacesTileBottomText": "Meine Bereiche",
+        "projectsTileTitle": "Projekte",
+        "projectsTileBottomText": "Meine Projekte",
+        "subscriptionsTileTitle": "Abonnements",
+        "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
+        "subscriptionsTileBottomText": "Meine Abonnements verwalten"
     },
     "Payment": {
         "titlePlatform": "Zur professionellen Plattform wechseln",
@@ -565,14 +559,6 @@
         "storage": "Zusammenfassung der aktiven GB",
         "including": "wovon {quantity} GB DataPack"
     },
-    "FreePlanCard": {
-        "title": "FREE",
-        "price": "0 €",
-        "bullet2": "1 kostenloser Raum",
-        "bullet3": "6 Nutzer",
-        "buttonText": "Einen kostenlosen Raum erstellen",
-        "note": "für immer"
-    },
     "GroupMemberInvitation": {
         "name": "Einladung in Bearbeitung"
     },
@@ -581,7 +567,6 @@
     },
     "InvoicesTable": {
         "title": "Rechnungen",
-        "tablePlaceholder": "Rechnungen werden geladen ...",
         "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, werden die Rechnungen hier angezeigt.",
         "subscribeButton": "Zu unserer Pro-Plattform",
         "headers": {
@@ -654,11 +639,9 @@
         "note": "erweiterbar für {price} / GB / Monat"
     },
     "ProPlanForm": {
-        "title": "Preis",
         "priceUnit": "/ Monat",
         "successTitle": "Glückwünsch! Sie haben ein Pro-Abonnement abonniert!",
         "successMessage": "Ihre Zahlung wurde abgeschlossen. Sie können Ihr professionelles Abonnement jetzt nutzen.",
-        "successButtonText": "Startseite",
         "titleNet": "Zwischensumme",
         "titleTax": "MwSt 20%",
         "titleTotal": "Preis",
@@ -685,9 +668,6 @@
         "selectedSpace": "Ausgewählter Raum:"
     },
     "SpaceSizeInfo": {
-        "used": "verwendet",
-        "from": "auf",
-        "included": "inklusive",
         "subscribeDatapackButton": "Ein DataPack kaufen",
         "subscribePlatformButton": "Zur Pro-Plattform wechseln",
         "usage": "{used} verwendet auf {total}"
@@ -751,7 +731,8 @@
                 "getBack": "Zurück",
                 "validator": "Bestätigend",
                 "accept": "Akzeptieren"
-            }
+            },
+            "errorValidator": "Sie müssen mindestens 1 gültigen Eintrag hinzufügen."
         },
         "safeZone": {
             "add": {
@@ -821,6 +802,248 @@
         },
         "selectionValidator": {
             "warning": "Dieser Nutzer hat keine Zugangsrechte zum Ordner."
+        },
+        "noVisa": "Es wurde noch kein VISA erstellt."
+    },
+    "ProjectBcf": {
+        "importButtonText": "Importieren",
+        "exportButtonText": "Exportieren",
+        "createBcfButtonText": "Ein BCF erstellen",
+        "createBcfTitle": "Ein Problem melden",
+        "showStatisticsTooltip": "Die Statistiken anzeigen",
+        "hideStatisticsTooltip": "Die Statistiken ausblenden",
+        "searchInputPlaceholder": "Nach Indexnummer, Name, Ersteller oder Etikett suchen",
+        "ascendingIndexTooltip": "aufsteigender Index",
+        "descendingIndexTooltip": "absteigender Index",
+        "alphabeticalAscendingOrderTooltip": "alphabetische Reihenfolge",
+        "alphabeticalDescendingOrderTooltip": "umgekehrte alphabetische Reihenfolge",
+        "ascendingDateTooltip": "aufsteigendes Datum",
+        "descendingDateTooltip": "absteigendes Datum",
+        "viewGridTooltip": "Rasteransicht",
+        "viewListTooltip": "Listenansicht"
+    },
+    "BcfComments": {
+        "commentButton": "Ein Kommentar verfassen",
+        "commentLabel": "Ein Kommentar verfassen",
+        "commentText": "Kommentar",
+        "cancelButton": "Abbrechen",
+        "publishButton": "Veröffentlichen",
+        "commentsText": "Kommentare"
+    },
+    "BcfComment": {
+        "deleteCommentText": "Diesen Kommentar löschen?",
+        "deleteButton": "Löschen"
+    },
+    "BcfFilters": {
+        "filtersButton": "Filter",
+        "filtersTitle": "Filter",
+        "priorityLabel": "Priorität",
+        "statusLabel": "Status",
+        "startDatePlaceholder": "Anfangsdatum",
+        "startDateExample": "(Z. B.: 28.04.2022)",
+        "endDatePlaceholder": "Enddatum",
+        "endDateExample": "(Z. B.: 28.05.2022)",
+        "assignedToLabel": "Zugewiesen an",
+        "creatorsLabel": "Erstellt von",
+        "tagsLabel": "Tags",
+        "resetButton": "Zurücksetzen",
+        "searchButton": "Suchen",
+        "noPriority": "Keine Priorität",
+        "undefinedStatus": "Nicht definiert",
+        "undefinedUser": "Nicht definiert",
+        "undefinedCreator": "Nicht definiert"
+    },
+    "BcfSettings": {
+        "goBackButton": "Zurück",
+        "title": "BCF-Parameter",
+        "validateButton": "Die BCF-Parameter anerkennen",
+        "text": "Erstellen, füllen und listen Sie die BCF-Einstellungen auf, die Sie für dieses Projekt haben möchten."
+    },
+    "SettingCard": {
+        "addButton": "ein Element hinzufügen",
+        "cancelButton": "Abbrechen",
+        "validateButton": "Bestätigen",
+        "title": {
+            "Priority": "Prioritäten",
+            "Label": "Tags",
+            "Status": "Status",
+            "Type": "Typen",
+            "Stage": "Phasen"
+        },
+        "input": {
+            "Priority": "Eine neue Priorität hinzufügen",
+            "Label": "Ein neues Etikett hinzufügen",
+            "Status": "Einen neuen Status hinzufügen",
+            "Type": "Einen neuen Typ hinzufügen",
+            "Stage": "Eine neue Phase hinzufügen"
+        },
+        "text": {
+            "Priority": "Liste der Prioritäten",
+            "Label": "Liste von Tags",
+            "Status": "Liste der Status",
+            "Type": "Liste der Typen",
+            "Stage": "Liste der Phasen"
+        }
+    },
+    "Extension": {
+        "deleteExtensionText": "Diesen Parameter löschen",
+        "deleteButton": "Löschen"
+    },
+    "BcfTopicCreationCard": {
+        "text": "Ein neues BCF-Thema erstellen",
+        "createBcfSideTitle": "Ein Problem melden"
+    },
+    "BcfTopicGridItem": {
+        "priority": "Priorität:",
+        "assignedTo": "Zugewiesen an :",
+        "noPriority": "Keine",
+        "notSpecified": "Nicht definiert",
+        "elements": "Elemente",
+        "noElements": "0 Elemente",
+        "see": "Anzeigen"
+    },
+    "BcfTopicsList": {
+        "headers": {
+            "index": "#",
+            "priority": "Priorität",
+            "status": "Status",
+            "title": "Titel",
+            "creator": "Erstellt durch",
+            "date": "Datum",
+            "actions": "Aktionen"
+        }
+    },
+    "BcfActionsCell": {
+        "seeButton": "Anzeigen"
+    },
+    "ModalDeleteTopic": {
+        "deleteText": "Sie löschen jetzt {Name}",
+        "deleteBcfButton": "Dieses BCF löschen",
+        "keepBcfButton": "Dieses BCF beibehalten"
+    },
+    "OpenTopicIssue": {
+        "openViewer": "Im Viewer öffnen",
+        "openViewerNoModels": "Es sind keine Vorlagen zur Ansicht bereit",
+        "elements": "Elemente",
+        "noElements": "0 Element",
+        "type": "Typ:",
+        "noTypeSpecified": "Kein Typ angegeben",
+        "description": "Beschreibung:",
+        "noDescriptionProvided": "Keine Beschreibung angegeben",
+        "assignedTo": "Zugeteilt an:",
+        "notAssigned": "Nicht zugewiesen",
+        "dueDate": "Fälligkeitsdatum:",
+        "noDueDate": "Kein Fälligkeitsdatum",
+        "informations": "Informationen",
+        "status": "Status:",
+        "noStatusSpecified": "Kein Status angegeben",
+        "stage": "Phase:",
+        "noStageProvided": "Keine Phase angegeben",
+        "priority": "Priorität:",
+        "priorityNotDefined": "Nicht definiert",
+        "tags": "Tags:",
+        "noTags": "Keine Tags",
+        "commentButton": "Ein Kommentar veröffentlichen"
+    },
+    "BcfTopicsMetrics": {
+        "emptyText": "Fügen Sie Fragen hinzu, um zugehörige Statistiken hier anzuzeigen.",
+        "issues": "Probleme",
+        "extension": {
+            "Priority": "Priorität",
+            "PriorityNotDefined": "Keine Priorität",
+            "PriorityTitle": "Prioritäten",
+            "Status": "Status",
+            "StatusNotDefined": "Kein Status",
+            "StatusTitle": "Status"
+        }
+    },
+    "CreateBcfTopic": {
+        "dragDropImageText": "Bitte wählen Sie eine Datei aus",
+        "addPictureButton": "Ein Bild hinzufügen",
+        "titlePlaceholder": "Titel *",
+        "titleErrorMessage": "Fehlender Titel",
+        "typeLabel": "Typ",
+        "priorityLabel": "Priorität",
+        "statusLabel": "Status",
+        "stageLabel": "Phase",
+        "assignedToLabel": "Zugewiesen an",
+        "dueDateLabel": "Fälligkeitsdatum (TT.MM.JJJJ)",
+        "dateErrorMessage": "Datumsformat oder falsches Datum",
+        "dateExample": "(Z. B.: 28.04.2022)",
+        "descriptionLabel": "Beschreibung",
+        "tagsLabel": "Tags",
+        "validateButton": "Bestätigen"
+    },
+    "EditBcfTopic": {
+        "goBackButton": "Zurück",
+        "dragDropImageText": "Bitte wählen Sie eine Datei aus.",
+        "addPictureButton": "Fügen Sie ein Bild hinzu.",
+        "titlePlaceholder": "Titel*",
+        "titleErrorMessage": "Titel fehlt",
+        "typeLabel": "Typ",
+        "priorityLabel": "Priorität",
+        "statusLabel": "Status",
+        "stageLabel": "Phase",
+        "assignedToLabel": "Zugewiesen an",
+        "descriptionLabel": "Beschreibung",
+        "tagsPlaceholder": "Tags",
+        "editButton": "Diesen BCF bearbeiten"
+    },
+    "EditBcfTopicModal": {
+        "modalText": "Sie sind dabei, die Bearbeitung der Ausgabe {Name} zu beenden, aber es gibt noch ungespeicherte Änderungen.",
+        "cancelButton": "Änderungen verwerfen",
+        "continueButton": "Änderungen fortsetzen"
+    },
+    "GuidedTour": {
+        "platform": {
+            "intro": {
+                "title": "Willkommen",
+                "content": "Lassen Sie uns gemeinsam die BIMData-Plattform erkunden."
+            },
+            "actionButtons": {
+                "title": "Dashboard",
+                "content": "Greifen Sie direkt von diesem Dashboard auf alle Ihre Räume, Projekte und Abonnements zu."
+            },
+            "firstSpace": {
+                "title": "Ihre Räume",
+                "content": "Greifen Sie direkt von diesem Shortcut aus auf Ihre zuletzt verwendeten Räume zu."
+            },
+            "firstProject": {
+                "title": "Ihre Projekte",
+                "content": "Greifen Sie direkt von diesem Shortcut auf Ihre letzten Projekte zu."
+            },
+            "previewIfc": {
+                "title": "Vorschau",
+                "content": "Navigieren Sie einfach durch die Vorschauen der Vorlagen Ihres Projekts."
+            },
+            "usersManager": {
+                "title": "Zusammenarbeit",
+                "content": "Laden Sie Ihre ersten Mitarbeiter zu Ihrem Projekt ein."
+            },
+            "modelsManager": {
+                "title": "Vorlagen",
+                "content": "Laden Sie die Vorlagen Ihres Projekts herunter und verwalten Sie sie (IFC, DWG, PDF...)."
+            },
+            "gedButton": {
+                "title": "DV",
+                "content": "Greifen Sie über den Reiter \"DV\" auf die Dokumentenverwaltung Ihres Projekts zu."
+            },
+            "fileTree": {
+                "title": "Baumstruktur",
+                "content": "Erstellen Sie Ihre Ordner und laden Sie Ihre Dateien direkt aus der DV hoch."
+            },
+            "groupManager": {
+                "title": "Verwaltung von Rechten",
+                "content": "Erstellen Sie Benutzergruppen, um deren Zugriffsrechte zu verwalten."
+            },
+            "changeSpace": {
+                "title": "Ariadnefaden",
+                "content": "Greifen Sie über den Ariadnefaden schnell auf Ihren Raum zu."
+            },
+            "outro": {
+                "title": "Bravo!",
+                "content": "Jetzt müssen Sie nur noch Ihr erstes Projekt starten"
+            }
         }
     }
 }

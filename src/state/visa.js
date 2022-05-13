@@ -1,4 +1,6 @@
-import VisaService from "@/services/VisaService";
+import async from "async";
+import VisaService from "@/services/VisaService.js";
+import FileService from "@/services/FileService.js";
 
 const createVisa = async (project, document, visa) => {
   return VisaService.createVisa(project, document, visa);
@@ -13,7 +15,15 @@ const deleteValidation = async (project, document, visa, validationId) => {
 };
 
 const fetchVisa = async (project, visa) => {
-  return VisaService.fetchVisa(project, visa);
+  const [visaInfo, document] = await Promise.all([
+    VisaService.fetchVisa(project, visa),
+    FileService.getDocument(project, { id: visa.documentId })
+  ]);
+
+  return {
+    ...visaInfo,
+    document
+  };
 };
 
 const acceptValidation = async (project, document, visa, validationId) => {
@@ -41,13 +51,27 @@ const resumeVisa = async (visaId, baseInfo) => {
 };
 
 const fetchCreatedVisas = async project => {
-  return (await VisaService.fetchCreatedVisas(project)).sort((a, b) =>
+  const visas = await VisaService.fetchCreatedVisas(project);
+
+  const visasWithDoc = await async.mapLimit(visas, 20, async visa => ({
+    ...visa,
+    document: await FileService.getDocument(project, { id: visa.documentId })
+  }));
+
+  return visasWithDoc.sort((a, b) =>
     a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
   );
 };
 
 const fetchToValidateVisas = async project => {
-  return (await VisaService.fetchToValidateVisas(project)).sort((a, b) =>
+  const visas = await VisaService.fetchToValidateVisas(project);
+
+  const visasWithDoc = await async.mapLimit(visas, 20, async visa => ({
+    ...visa,
+    document: await FileService.getDocument(project, { id: visa.documentId })
+  }));
+
+  return visasWithDoc.sort((a, b) =>
     a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
   );
 };

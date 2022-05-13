@@ -6,10 +6,7 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 class ModelService {
   async fetchModels(project) {
     try {
-      return await apiClient.modelApi.getModels({
-        cloudPk: project.cloud.id,
-        projectPk: project.id
-      });
+      return await apiClient.modelApi.getModels(project.cloud.id, project.id);
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)
@@ -20,11 +17,11 @@ class ModelService {
 
   async fetchModelByID(project, id) {
     try {
-      return await apiClient.modelApi.getModel({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        id
-      });
+      return await apiClient.modelApi.getModel(
+        project.cloud.id,
+        id,
+        project.id
+      );
     } catch (error) {
       ErrorService.handleError(error);
       return null;
@@ -33,13 +30,13 @@ class ModelService {
 
   async createModel(project, file) {
     try {
-      return await apiClient.modelApi.createModel({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        data: {
+      return await apiClient.modelApi.createModel(
+        project.cloud.id,
+        project.id,
+        {
           documentId: file.id
         }
-      });
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_CREATE_ERROR, error);
     }
@@ -49,12 +46,12 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model =>
-          apiClient.modelApi.updateModel({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            id: model.id,
-            data: model
-          })
+          apiClient.modelApi.updateModel(
+            project.cloud.id,
+            model.id,
+            project.id,
+            model
+          )
         )
       );
     } catch (error) {
@@ -81,15 +78,18 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model => {
-          const params = {
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            id: model.id
-          };
           if (isPlanModel(model)) {
-            return apiClient.modelApi.deleteModelWithoutDoc(params);
+            return apiClient.modelApi.deleteModelWithoutDoc(
+              project.cloud.id,
+              model.id,
+              project.id
+            );
           } else {
-            return apiClient.modelApi.deleteModel(params);
+            return apiClient.modelApi.deleteModel(
+              project.cloud.id,
+              model.id,
+              project.id
+            );
           }
         })
       );
@@ -99,12 +99,14 @@ class ModelService {
   }
 
   fetchModelElements(project, model, params = {}) {
-    return apiClient.modelApi.getElements({
-      cloudPk: project.cloud.id,
-      projectPk: project.id,
-      modelPk: model.id,
-      ...params
-    });
+    return apiClient.modelApi.getElements(
+      project.cloud.id,
+      model.id,
+      project.id,
+      params.classification,
+      params.classificationNotation,
+      params.type
+    );
   }
 
   fetchModelElementsByType(project, model, type) {
@@ -113,12 +115,12 @@ class ModelService {
 
   async createModelElements(project, model, elements) {
     try {
-      return await apiClient.modelApi.createElement({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        modelPk: model.id,
-        data: elements
-      });
+      return await apiClient.modelApi.createElement(
+        project.cloud.id,
+        model.id,
+        project.id,
+        elements
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
     }
@@ -126,12 +128,12 @@ class ModelService {
 
   async updateModelElements(project, model, elements) {
     try {
-      return await apiClient.modelApi.bulkUpdateElements({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        modelPk: model.id,
-        data: elements
-      });
+      return await apiClient.modelApi.bulkUpdateElements(
+        project.cloud.id,
+        model.id,
+        project.id,
+        elements
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
     }
@@ -141,12 +143,12 @@ class ModelService {
     try {
       return await Promise.all(
         elements.map(element =>
-          apiClient.modelApi.deleteElement({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            modelPk: model.id,
-            uuid: element.uuid
-          })
+          apiClient.modelApi.deleteElement(
+            project.cloud.id,
+            model.id,
+            project.id,
+            element.uuid
+          )
         )
       );
     } catch (error) {
@@ -162,14 +164,14 @@ class ModelService {
       }));
       return await Promise.all(
         properties.map(property =>
-          apiClient.modelApi.createElementPropertySetProperty({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            modelPk: model.id,
-            elementUuid: element.uuid,
-            propertysetPk: pset.id,
-            data: property
-          })
+          apiClient.modelApi.createElementPropertySetProperty(
+            project.cloud.id,
+            element.uuid,
+            model.id,
+            project.id,
+            pset.id,
+            property
+          )
         )
       );
     } catch (error) {
@@ -187,24 +189,24 @@ class ModelService {
       return await Promise.all(
         properties.map(property => {
           if (property.id) {
-            return apiClient.modelApi.updateElementPropertySetProperty({
-              cloudPk: project.cloud.id,
-              projectPk: project.id,
-              modelPk: model.id,
-              elementUuid: element.uuid,
-              propertysetPk: pset.id,
-              id: property.id,
-              data: property
-            });
+            return apiClient.modelApi.updateElementPropertySetProperty(
+              project.cloud.id,
+              element.uuid,
+              property.id,
+              model.id,
+              project.id,
+              pset.id,
+              property
+            );
           } else {
-            return apiClient.modelApi.createElementPropertySetProperty({
-              cloudPk: project.cloud.id,
-              projectPk: project.id,
-              modelPk: model.id,
-              elementUuid: element.uuid,
-              propertysetPk: pset.id,
-              data: property
-            });
+            return apiClient.modelApi.createElementPropertySetProperty(
+              project.cloud.id,
+              element.uuid,
+              model.id,
+              project.id,
+              pset.id,
+              property
+            );
           }
         })
       );
@@ -217,14 +219,14 @@ class ModelService {
     try {
       return await Promise.all(
         props.map(property =>
-          apiClient.modelApi.removeElementPropertySetProperty({
-            cloudPk: project.cloud.id,
-            projectPk: project.id,
-            modelPk: model.id,
-            elementUuid: element.uuid,
-            propertysetPk: pset.id,
-            id: property.id
-          })
+          apiClient.modelApi.removeElementPropertySetProperty(
+            project.cloud.id,
+            element.uuid,
+            property.id,
+            model.id,
+            project.id,
+            pset.id
+          )
         )
       );
     } catch (error) {
@@ -264,13 +266,9 @@ class ModelService {
 
   async mergeModels(project, models, name) {
     try {
-      return await apiClient.modelApi.mergeIfcs({
-        cloudPk: project.cloud.id,
-        projectPk: project.id,
-        data: {
-          ifcIds: models.map(model => model.id),
-          exportName: name
-        }
+      return await apiClient.modelApi.mergeIfcs(project.cloud.id, project.id, {
+        ifcIds: models.map(model => model.id),
+        exportName: name
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_MERGE_ERROR, error);

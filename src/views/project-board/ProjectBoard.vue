@@ -3,10 +3,11 @@
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
-        <AppBreadcrumb />
+        <AppBreadcrumb data-guide="btn-change-space" />
       </template>
       <template #center>
         <BIMDataTabs
+          data-guide="project-tabs"
           width="300px"
           height="32px"
           tabSize="100px"

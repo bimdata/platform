@@ -4,6 +4,7 @@
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions">
           <FolderCreationButton
+            data-guide="btn-new-folder"
             :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
             width="194px"
@@ -11,6 +12,7 @@
             :folder="currentFolder"
           />
           <BIMDataTooltip
+            data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="
@@ -69,6 +71,7 @@
           </BIMDataTooltip>
         </div>
         <FileTree
+          data-guide="file-tree"
           class="files-manager__tree"
           :project="project"
           :fileStructure="fileStructure"
@@ -163,6 +166,7 @@ import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { isFolder } from "@/utils/file-structure.js";
+import { VISA_STATUS } from "@/config/visa.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -385,7 +389,10 @@ export default {
     };
 
     const visasCounter = computed(
-      () => toValidateVisas.value.length + createdVisas.value.length
+      () =>
+        toValidateVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE)
+          .length +
+        createdVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE).length
     );
 
     onMounted(() => fetchVisas());
