@@ -1,0 +1,12 @@
+.file-tags-cell {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  &__tag {
+    span {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  }
+}

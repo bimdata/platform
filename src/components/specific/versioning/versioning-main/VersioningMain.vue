@@ -56,7 +56,7 @@
       </template>
       <template v-else>
         <div class="versioning-main__content__list">
-          <template v-for="(doc, index) of allDocVersions" :key="index">
+          <template v-for="(doc, index) of allDocVersions" :key="doc.id">
             <VersioningDoc
               :project="project"
               :document="doc"
