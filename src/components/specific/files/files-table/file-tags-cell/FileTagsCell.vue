@@ -1,6 +1,7 @@
 <template>
   <div class="file-tags-cell">
-    <!-- TODO -->
+    {{ console.log("file", file) }}
+    <template v-for="tag in file.tags">{{ tag.name }}</template>
   </div>
 </template>
 
@@ -11,6 +12,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  setup() {
+    return {
+      console
+    };
   }
 };
 </script>

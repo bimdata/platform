@@ -77,6 +77,7 @@ class SpaceService {
         `${apiClient.config.basePath}/cloud/${space.id}`,
         {
           method: "PATCH",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             ...apiClient.authHeader

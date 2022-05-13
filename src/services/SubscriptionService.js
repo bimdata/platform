@@ -1,8 +1,12 @@
+import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { apiClient, privateApiClient } from "./api-client.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class SubscriptionService {
   async fetchOrganizationSubscriptions(organization) {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return [];
+    }
     try {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/platform-subscription`
@@ -16,6 +20,9 @@ class SubscriptionService {
   }
 
   async fetchSpaceSubscriptions(space) {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return [];
+    }
     try {
       return await privateApiClient.get(
         `/payment/organization/${space.organization.id}/cloud/${space.id}/subscription`
@@ -27,6 +34,9 @@ class SubscriptionService {
   }
 
   async fetchSubscriptionPayments(organization, space, subscription) {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return [];
+    }
     try {
       return await privateApiClient.get(
         `/payment/organization/${organization.id}/cloud/${space.id}/subscription/${subscription.subscription_id}/payment`
@@ -38,6 +48,9 @@ class SubscriptionService {
   }
 
   async fetchFreeSpaces() {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return [];
+    }
     try {
       return await privateApiClient.get(`/payment/free-cloud`);
     } catch (error) {
@@ -47,6 +60,10 @@ class SubscriptionService {
   }
 
   async fetchSpaceSubInfo(space) {
+    if (!IS_SUBSCRIPTION_ENABLED) {
+      return {};
+    }
+
     const subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
 
     // Derive used size from remaining size

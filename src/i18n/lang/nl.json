@@ -219,8 +219,7 @@
         "renameButtonText": "Hernoemen",
         "archiveButtonText": "Archiveren",
         "deleteButtonText": "Verwijderen",
-        "unarchiveButtonText": "Uit archief halen",
-        "removeButtonText": ""
+        "unarchiveButtonText": "Uit archief halen"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Geen locatiegegevens beschikbaar",

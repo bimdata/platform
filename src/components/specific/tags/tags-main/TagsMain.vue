@@ -176,6 +176,7 @@ export default {
         await getTagListUpdated(props.allTags);
       }
     );
+    watch(filter, async () => getTagListUpdated());
 
     onMounted(async () => {
       tagsDocument.value = (
