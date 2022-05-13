@@ -3,7 +3,6 @@
     <template v-if="tourToDisplay">
       <BIMDataGuidedTour
         :locale="$i18n.locale"
-        :tours="tours"
         :tourToDisplay="tourToDisplay"
         :elementToObserve="appLayoutViewContainer"
         @set-completed-tour="setTourCompleted($event)"
