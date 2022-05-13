@@ -155,21 +155,23 @@
         <BIMDataTooltip
           :disabled="bcfTopics.length === 0"
           :message="
-            isSortByIndexActive
+            sortOrderIndex === 'asc'
               ? $t('ProjectBcf.ascendingIndexTooltip')
               : $t('ProjectBcf.descendingIndexTooltip')
           "
         >
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
-            :class="{ active: activeButton === 'indexSort' }"
+            :class="{ active: sortedBy === 'index' }"
             fill
             square
             icon
             @click="sortByIndex"
           >
             <BIMDataIcon
-              :name="isSortByIndexActive ? 'indexAscending' : 'indexDescending'"
+              :name="
+                sortOrderIndex === 'asc' ? 'indexAscending' : 'indexDescending'
+              "
               size="s"
             />
           </BIMDataButton>
@@ -178,22 +180,22 @@
         <BIMDataTooltip
           :disabled="bcfTopics.length === 0"
           :message="
-            isSortByNameActive
+            sortOrderTitle === 'asc'
               ? $t('ProjectBcf.alphabeticalAscendingOrderTooltip')
               : $t('ProjectBcf.alphabeticalDescendingOrderTooltip')
           "
         >
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
-            :class="{ active: activeButton === 'nameSort' }"
+            :class="{ active: sortedBy === 'title' }"
             fill
             square
             icon
-            @click="sortByName"
+            @click="sortByTitle"
           >
             <BIMDataIcon
               :name="
-                isSortByNameActive
+                sortOrderTitle === 'asc'
                   ? 'alphabeticalAscending'
                   : 'alphabeticalDescending'
               "
@@ -204,21 +206,23 @@
         <BIMDataTooltip
           :disabled="bcfTopics.length === 0"
           :message="
-            isSortByDateActive
+            sortOrderDate === 'asc'
               ? $t('ProjectBcf.ascendingDateTooltip')
               : $t('ProjectBcf.descendingDateTooltip')
           "
         >
           <BIMDataButton
             :disabled="bcfTopics.length === 0"
-            :class="{ active: activeButton === 'dateSort' }"
+            :class="{ active: sortedBy === 'date' }"
             fill
             square
             icon
             @click="sortByDate"
           >
             <BIMDataIcon
-              :name="isSortByDateActive ? 'dateAscending' : 'dateDescending'"
+              :name="
+                sortOrderDate === 'asc' ? 'dateAscending' : 'dateDescending'
+              "
               size="s"
             />
           </BIMDataButton>
@@ -306,12 +310,10 @@
 </template>
 
 <script>
+import { useBcfSearch, useBcfSort } from "@bimdata/bcf-components";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
-import useFilter from "./composables/filter.js";
-import useSearch from "./composables/search.js";
-import useSort from "./composables/sort.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
@@ -350,12 +352,25 @@ export default {
     const loading = ref(false);
     const isListView = ref(false);
 
+    const filteredTopics = ref([]);
+    const { searchText, filteredTopics: displayedBcfTopics } =
+      useBcfSearch(filteredTopics);
+    const {
+      sortedBy,
+      sortByTitle,
+      sortByIndex,
+      sortByDate,
+      sortOrderIndex,
+      sortOrderTitle,
+      sortOrderDate
+    } = useBcfSort(displayedBcfTopics);
+
     watch(
       currentProject,
       async project => {
         try {
           loading.value = true;
-          await loadBcfTopics(project);
+          filteredTopics.value = await loadBcfTopics(project);
           await loadExtensions(project);
           await loadDetailedExtensions(project);
         } finally {
@@ -377,18 +392,9 @@ export default {
       open: openSettings
     } = useToggle();
 
-    const { onFiltersSubmit, filteredTopics } = useFilter(bcfTopics);
-    const { searchText, searchedTopics: displayedBcfTopics } =
-      useSearch(filteredTopics);
-    const {
-      sortByName,
-      sortByIndex,
-      sortByDate,
-      activeButton,
-      isSortByNameActive,
-      isSortByIndexActive,
-      isSortByDateActive
-    } = useSort(displayedBcfTopics);
+    const onFiltersSubmit = list => {
+      filteredTopics.value = list;
+    };
 
     const importBcfTopics = async files => {
       try {
@@ -480,16 +486,12 @@ export default {
 
     return {
       // References
-      activeButton,
       bcfTopics,
       currentBcfTopic,
       detailedExtensions,
       displayedBcfTopics,
       extensions,
       isListView,
-      isSortByDateActive,
-      isSortByIndexActive,
-      isSortByNameActive,
       loading,
       models: projectModels,
       project: currentProject,
@@ -499,6 +501,10 @@ export default {
       showBcfTopicOverview,
       showMetrics,
       showSettings,
+      sortedBy,
+      sortOrderDate,
+      sortOrderIndex,
+      sortOrderTitle,
       users: projectUsers,
       // Methods
       closeMetrics,
@@ -517,7 +523,7 @@ export default {
       reloadExtensions,
       sortByDate,
       sortByIndex,
-      sortByName,
+      sortByTitle,
       toggleMetrics
     };
   }
