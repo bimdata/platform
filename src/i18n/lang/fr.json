@@ -607,7 +607,7 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
-    "removeButtonText": "Marquer comme document",
+    "removeButtonText": "Retirer des modèles",
     "deleteButtonText": "Supprimer"
   },
   "ModelLocation": {

@@ -1,0 +1,1049 @@
+{
+    "GroupBoard": {
+        "searchInputPlaceholder": "Leden zoeken"
+    },
+    "OidcCallbackError": {
+        "message": "Er heeft zich een fout voorgedaan bij de authenticatie",
+        "tryAgainButtonText": "Probeer het opnieuw"
+    },
+    "ProjectBoard": {
+        "tabs": {
+            "overview": "Project",
+            "files": "Bestanden",
+            "bcf": "BCF"
+        }
+    },
+    "ProjectGroups": {
+        "searchInputPlaceholder": "Groepen zoeken"
+    },
+    "SpaceBoard": {
+        "searchInputPlaceholder": "Projecten zoeken"
+    },
+    "UserProjects": {
+        "searchInputPlaceholder": "Projecten zoeken"
+    },
+    "UserSpaces": {
+        "searchInputPlaceholder": "Ruimtes zoeken",
+        "createButtonText": "Maak een ruimte aan",
+        "organizationsButtonText": "Factureringsaccounts"
+    },
+    "ProjectFiles": {
+        "groupsButtonText": "Groepen beheren"
+    },
+    "ProjectOverview": {
+        "openFileUploadButtonText": "Voeg een model toe",
+        "closeFileUploadButtonText": "Sluiten",
+        "forbiddenUploadNotification": {
+            "title": "Uploadfout",
+            "message": "Kies een modelbestand: {extensions}"
+        }
+    },
+    "BreadcrumbSelector": {
+        "inputPlaceholder": "Zoeken"
+    },
+    "GenericTable": {
+        "pagination": "{start} - {end} van {total}"
+    },
+    "GoBackButton": {
+        "text": "Terug"
+    },
+    "LanguageSelector": {
+        "title": "Kies een taal"
+    },
+    "AppHeaderMenu": {
+        "entrySettings": "Accountinstellingen",
+        "entryConnect": "BIMData Connect",
+        "entryDocumentation": "Documentatie",
+        "entryMarketplace": "Marktplaats",
+        "entryOldPlatform": "Platform V1",
+        "entryLanguage": "Kies een taal",
+        "logoutButtonText": "Uitloggen",
+        "subscriptionPlatform": "Platformabonnement"
+    },
+    "BreadcrumbGroupSelector": {
+        "text": "Groepen"
+    },
+    "BreadcrumbProjectSelector": {
+        "placeholder": "<Geen project>"
+    },
+    "DashboardInfoTile": {
+        "title": "Veiligheid"
+    },
+    "DashboardProjectList": {
+        "title": "Recente projecten"
+    },
+    "DashboardSpaceList": {
+        "title": "Recente ruimtes"
+    },
+    "DashboardWelcomeTile": {
+        "title": "Dashboard",
+        "message": "Hoi {name}, het is goed je weer te zien!"
+    },
+    "FileActionsCell": {
+        "openViewerButtonText": "In viewer openen",
+        "addTagsButtonText": "Labels toevoegen",
+        "validationRequestButtonText": "Validatie verzoek",
+        "renameButtonText": "Hernoemen",
+        "downloadButtonText": "Downloaden",
+        "addVersionButtonText": "Versie toevoegen",
+        "manageAccessButtonText": "Toegang beheren",
+        "deleteButtonText": "Verwijderen",
+        "VisaButtonText": "Validatieverzoek",
+        "createModelButtonText": ""
+    },
+    "FileNameCell": {
+        "inputErrorMessage": "Ongeldige bestandsnaam",
+        "submitButtonText": "Valideren"
+    },
+    "FilesActionBar": {
+        "deleteButtonText": "Verwijderen",
+        "moveButtonText": "Verplaatsen naar",
+        "downloadButtonText": "Downloaden"
+    },
+    "FilesDeleteModal": {
+        "title": "Bestanden verwijderen",
+        "message": "Deze actie zal permanent de volgende bestanden/mappen verwijderen:",
+        "cancelButtonText": "Annuleren",
+        "deleteButtonText": "Verwijderen"
+    },
+    "FilesManager": {
+        "title": "Projectbestanden",
+        "searchInputPlaceholder": "Zoeken",
+        "createModelNotification": "",
+        "uploadDisableMessage": {
+            "permission": "",
+            "size": ""
+        }
+    },
+    "FilesManagerOnboarding": {
+        "text": "Upload uw eerste bestand",
+        "uploadFileButtonText": "Upload een bestand",
+        "createFolderButtonText": "Maak een map aan"
+    },
+    "FilesTable": {
+        "emptyTablePlaceholder": "Lege map",
+        "folder": "Map",
+        "headers": {
+            "name": "Naam",
+            "type": "Type",
+            "creator": "Aangemaakt door",
+            "tags": "Labels",
+            "lastupdate": "Laatst gewijzigd",
+            "size": "Grootte"
+        }
+    },
+    "FileUploadButton": {
+        "addFileButtonText": "Upload een bestand"
+    },
+    "FileUploadCard": {
+        "cancelMessage": "Geannuleerd",
+        "errorMessage": "Upload mislukt"
+    },
+    "FileUploader": {
+        "uploadAreaText": "Sleep en zet neer om uw projectactiva op te slaan",
+        "separatorText": "of",
+        "uploadButtonText": "Selecteer een modelbestand"
+    },
+    "FolderAccessManager": {
+        "title": "Toegangsrechten beheren",
+        "rightsHeader": "Rechten",
+        "membersHeader": "Leden",
+        "searchInputPlaceholder": "Groep zoeken",
+        "groupHeader": "Groep"
+    },
+    "FolderCreationButton": {
+        "buttonText": "Nieuwe map"
+    },
+    "FolderCreationForm": {
+        "creationFormTitle": "Map aanmaken",
+        "nameInputPlaceholder": "Naam map",
+        "nameInputErrorMessage": "Ongeldige naam map",
+        "cancelButtonText": "Annuleren",
+        "submitButtonText": "Verzenden"
+    },
+    "FolderSelector": {
+        "selectedFolder": "Geselecteerde map",
+        "submitButtonText": {
+            "moveTo": "Valideren",
+            "moveHere": "Hiernaar verplaatsen"
+        },
+        "emptyFolderPlaceholder": "Lege map"
+    },
+    "GroupCardActionMenu": {
+        "renameButtonText": "Hernoemen",
+        "changeColorButtonText": "Kleur veranderen",
+        "deleteButtonText": "Verwijderen"
+    },
+    "GroupCardDeleteGuard": {
+        "title": "Groep verwijderen",
+        "message": "U staat op het punt om (definitief) de groep {name} te verwijderen, weet u het zeker?",
+        "deleteButtonText": "Verwijderen"
+    },
+    "GroupCardUpdateForm": {
+        "title": "Groep hernoemen",
+        "inputPlaceholder": "Naam",
+        "inputErrorMessage": "Ongeldige groepsnaam",
+        "submitButtonText": "Hernoemen"
+    },
+    "GroupCreationCard": {
+        "text": "Maak een groep aan",
+        "title": "Nieuwe groep",
+        "inputPlaceholder": "Naam",
+        "inputErrorMessage": "Ongeldige groepsnaam",
+        "submitButtonText": "Aanmaken"
+    },
+    "GroupMemberSelectionCard": {
+        "text": "Voeg een lid toe"
+    },
+    "InvitationCard": {
+        "pendingMessage": "Uitgenodigd - in afwachting",
+        "resendLinkText": "Uitnodiging opnieuw versturen?",
+        "resendSuccessNotifText": "Uitnodiging opnieuw verzonden",
+        "cancelSuccessNotifText": "Uitnodiging geannuleerd"
+    },
+    "InvitationForm": {
+        "emailInputPlaceholder": "E-mailadres",
+        "emailInputErrorMessage": "Ongeldig e-mailadres",
+        "roleInputLabel": "Rol",
+        "roles": {
+            "admin": "Beheerder",
+            "user": "Gebruiker",
+            "guest": "Gast"
+        },
+        "cancelButtonText": "Annuleren",
+        "submitButtonText": "Uitnodiging versturen",
+        "successNotifText": "Uitnodiging verzonden"
+    },
+    "ModelActionsCell": {
+        "addTagsButtonText": "Labels toevoegen",
+        "renameButtonText": "Hernoemen",
+        "archiveButtonText": "Archiveren",
+        "deleteButtonText": "Verwijderen",
+        "unarchiveButtonText": "Uit archief halen"
+    },
+    "ModelLocation": {
+        "emptyLocationMessage": "Geen locatiegegevens beschikbaar",
+        "addLocationButtonText": "Invullen"
+    },
+    "ModelLocationForm": {
+        "addressInputPlaceholder": "Voer het adres in",
+        "checkButtonText": "Controleren",
+        "submitButtonText": "Valideren",
+        "cancelButtonText": "Veranderen"
+    },
+    "ModelNameCell": {
+        "inputErrorMessage": "Ongeldige modelnaam",
+        "submitButtonText": "Valideren"
+    },
+    "ModelsActionBar": {
+        "deleteButtonText": "Verwijderen",
+        "archiveButtonText": "Archiveren",
+        "unarchiveButtonText": "Uit archief halen",
+        "downloadButtonText": "Downloaden",
+        "mergeButtonText": "Samenvoegen"
+    },
+    "ModelsCard": {
+        "openButtonText": "Openen"
+    },
+    "ModelsCardModelPreview": {
+        "emptyPreviewPlaceholder": "Geen voorvertoning beschikbaar"
+    },
+    "ModelsDeleteModal": {
+        "title": "Waarschuwing!",
+        "message": "Deze actie zal permanent de volgende modellen verwijderen:",
+        "cancelButtonText": "Annuleren",
+        "deleteButtonText": "Verwijderen"
+    },
+    "ModelsManager": {
+        "title": "Modellen project",
+        "tabs": {
+            "ifc": "IFC",
+            "split": "Splitsen / exporteren",
+            "merge": "Samenvoegen",
+            "archive": "Archieven",
+            "dwg": "DWG",
+            "metaBuildings": "",
+            "upload": ""
+        }
+    },
+    "ModelsMergeModal": {
+        "title": "Selectie samenvoegen",
+        "inputPlaceholder": "Naam van uw samenvoeging",
+        "inputErrorMessage": "U moet een naam aan dit bestand geven",
+        "submitButtonText": "Exporteren"
+    },
+    "ModelsOverview": {
+        "title": "Overzicht projectmodellen"
+    },
+    "ModelsOverviewOnboarding": {
+        "text": "Upload uw eerste model",
+        "uploadButtonText": "Model uploaden"
+    },
+    "ModelsTable": {
+        "emptyTablePlaceholder": "Geen model",
+        "headers": {
+            "id": "ID",
+            "name": "Naam",
+            "version": "Versie",
+            "creator": "Maker",
+            "lastupdate": "Laatst gewijzigd",
+            "status": "Status"
+        }
+    },
+    "ProjectCardActionMenu": {
+        "renameButtonText": "Hernoemen",
+        "deleteButtonText": "Verwijderen",
+        "leaveButtonText": "Verlaten"
+    },
+    "ProjectCardDeleteGuard": {
+        "title": "Project verwijderen",
+        "message": "Weet u zeker dat u dit project (permanent) wilt verwijderen?",
+        "deleteButtonText": "Verwijderen"
+    },
+    "ProjectCardUpdateForm": {
+        "title": "Project hernoemen",
+        "inputPlaceholder": "Naam",
+        "inputErrorMessage": "Ongeldige projectnaam",
+        "renameButtonText": "Hernoemen"
+    },
+    "ProjectCreationCard": {
+        "title": "Nieuw project",
+        "text": "Maak een nieuw project aan",
+        "inputPlaceholder": "Naam",
+        "inputErrorMessage": "U moet een naam aan het project geven!",
+        "createButtonText": "Aanmaken"
+    },
+    "ProjectUsersManager": {
+        "title": "Gebruikers project",
+        "searchInputPlaceholder": "Gebruiker zoeken"
+    },
+    "SpaceCard": {
+        "projects": "PROJECTEN",
+        "free": "Gratis"
+    },
+    "SpaceCardActionMenu": {
+        "renameButtonText": "Hernoemen",
+        "removeImageButtonText": "Afbeelding verwijderen",
+        "deleteButtonText": "Verwijderen"
+    },
+    "SpaceCardDeleteGuard": {
+        "title": "Ruimte verwijderen",
+        "message": "Weet u het zeker?",
+        "deleteButtonText": "Verwijderen"
+    },
+    "SpaceCardImageButton": {
+        "buttonText": "Afbeelding uploaden"
+    },
+    "SpaceCardUpdateForm": {
+        "title": "Ruimte hernoemen",
+        "inputPlaceholder": "Naam",
+        "inputErrorMessage": "Ongeldige naam ruimte.",
+        "submitButtonText": "Hernoemen"
+    },
+    "SpaceCreationCard": {
+        "title": "Nieuwe ruimte",
+        "inputPlaceholder": "Naam",
+        "inputErrorMessage": "U moet een naam aan de ruimte geven!",
+        "createButtonText": "Aanmaken"
+    },
+    "SpaceUsersManager": {
+        "title": "Beheerders ruimte beheren",
+        "tabs": {
+            "admins": "Beheerders",
+            "users": "Gebruikers"
+        },
+        "searchInputPlaceholder": "Gebruiker zoeken",
+        "addUserButtonText": "Nieuwe beheerder toevoegen"
+    },
+    "UserCard": {
+        "self": "u"
+    },
+    "UserCardDeleteGuard": {
+        "message": {
+            "space": "{name} uit deze ruimte verwijderen?",
+            "project": "{name} uit dit project verwijderen?"
+        },
+        "submitButtonText": "Verwijderen"
+    },
+    "UserCardUpdateForm": {
+        "submitButtonText": "Valideren"
+    },
+    "UserRoleBadge": {
+        "admin": "Beheerder",
+        "user": "Gebruiker",
+        "guest": "Gast"
+    },
+    "UsersManagerOnboarding": {
+        "text": "Nodig uw eerste samenwerker uit",
+        "inviteButtonText": "Uitnodigen"
+    },
+    "PageNotFound": {
+        "title": "Pagina niet gevonden",
+        "text": {
+            "line1": "Oeps! De pagina waar u naar zoekt bestaat niet.",
+            "line2": "Ga terug naar de startpagina."
+        },
+        "homeButtonText": "Startpagina"
+    },
+    "FolderPermissionSelector": {
+        "label": "Alle",
+        "options": {
+            "accessDenied": "Toegang geweigerd",
+            "readOnly": "Alleen lezen",
+            "readWrite": "Lezen / schrijven"
+        }
+    },
+    "GroupMembersSelector": {
+        "title": "Groepsleden beheren",
+        "searchInputPlaceholder": "Zoeken"
+    },
+    "GroupPermissionSelector": {
+        "options": {
+            "accessDenied": "Toegang geweigerd",
+            "readOnly": "Alleen lezen",
+            "readWrite": "Lezen / schrijven"
+        }
+    },
+    "Error": "Fout",
+    "Success": "Succes",
+    "Errors": {
+        "spacesFetchError": "Ophalen van ruimtes mislukt",
+        "spaceCreateError": "Aanmaken van ruimte mislukt",
+        "spaceUpdateError": "Bijwerken van ruimte mislukt",
+        "spaceDeleteError": "Verwijderen van ruimte mislukt",
+        "spaceImageUpdateError": "Bijwerken van afbeelding ruimte mislukt",
+        "spaceImageDeleteError": "Verwijderen van afbeelding ruimte mislukt",
+        "projectsFetchError": "Ophalen van projecten mislukt",
+        "projectCreateError": "Aanmaken van project mislukt",
+        "projectUpdateError": "Bijwerken van project mislukt",
+        "projectDeleteError": "Verwijderen van project mislukt",
+        "invitationsFetchError": "Ophalen van uitnodigingen mislukt",
+        "invitationSendError": "Verzenden van uitnodiging mislukt",
+        "invitationResendError": "Opnieuw verzenden van uitnodiging mislukt",
+        "invitationCancelError": "Annuleren van uitnodiging mislukt",
+        "usersFetchError": "Ophalen van gebruikers mislukt",
+        "userUpdateError": "Bijwerken van gebruiker mislukt",
+        "userDeleteError": "Verwijderen van gebruiker mislukt",
+        "modelsFetchError": "Ophalen van modellen mislukt",
+        "modelUploadError": "Uploaden van model mislukt",
+        "modelUpdateError": "Bijwerken van model mislukt",
+        "modelDownloadError": "Downloaden van model mislukt",
+        "modelMergeError": "Samenvoegen van modellen mislukt",
+        "modelDeleteError": "Verwijderen van model mislukt",
+        "fileStructureFetchError": "Ophalen van bestandstructuur mislukt",
+        "fileUpdateError": "Bijwerken van bestanden mislukt",
+        "fileDownloadError": "Downloaden van bestanden mislukt",
+        "fileDeleteError": "Verwijderen van bestanden mislukt",
+        "folderCreateError": "Aanmaken van map mislukt",
+        "documentUploadError": "Uploaden van document mislukt",
+        "groupsFetchError": "Ophalen van groepen mislukt",
+        "groupCreateError": "Aanmaken van groep mislukt",
+        "groupUpdateError": "Bijwerken van groep mislukt",
+        "groupDeleteError": "Verwijderen van groep mislukt",
+        "organizationsFetchError": "Kan factureringsaccounts niet ophalen",
+        "organizationCreateError": "Kan factureringsaccounts niet creëren",
+        "organizationUpdateError": "Kan factureringsaccounts niet bijwerken",
+        "organizationDeleteError": "Kan factureringsaccounts niet verwijderen",
+        "userLeaveError": "U kunt het project niet verlaten omdat u de laatste beheerder bent",
+        "subscriptionsFetchError": "Kan abonnementen niet ophalen",
+        "platformSubscribeError": "Kan het platformabonnement niet initialiseren",
+        "datapackSubscribeError": "Kan datapack-abonnement niet creëren",
+        "datapackUpdateError": "Kan datapack-abonnement niet bijwerken",
+        "projectFetchFileError": "Niet mogelijk om dit document op te halen",
+        "visaCreateError": "Fout tijdens het aanmaken van visa",
+        "visaCreateValidationError": "Fout tijdens het toevoegen van een validator",
+        "visaFetchError": "Niet mogelijk om de goedkeuring van het document op te halen",
+        "visaAcceptError": "Fout tijdens het verzenden van uw reactie",
+        "visaDenyError": "Fout tijdens het verzenden van uw reactie",
+        "visaCloseError": "Fout tijdens het sluiten van de goedkeuring van het document",
+        "visaResumeError": "Fout tijdens het opnieuw openen van de goedkeuring van het document",
+        "visaFetchCreatedError": "Niet mogelijk om de goedkeuringen van het document te herstellen",
+        "visaFetchValidatorError": "Niet mogelijk om de goedkeuringen van het document te herstellen",
+        "visaDeleteValidationError": "Niet mogelijk om deze validator te verwijderen",
+        "visaDeleteError": "Niet mogelijk om de goedkeuring van dit document te sluiten",
+        "visaUpdateError": "Niet mogelijk om de goedkeuring van dit document bij te werken",
+        "visaRefreshError": "Niet mogelijk om uw reactie bij te werken",
+        "visaFetchAllCommentsError": "Niet mogelijk om de reacties op te halen",
+        "visaCreateCommentsError": "Niet mogelijk om deze reactie te plaatsen",
+        "visaUpdateCommentError": "Niet mogelijk om deze reactie te bewerken",
+        "visaDeleteCommentError": "Niet mogelijk om deze reactie te verwijderen",
+        "modelCreateError": "",
+        "fileFetchError": ""
+    },
+    "ProjectStatusBadge": {
+        "new": "NIEUW",
+        "active": "ACTIEF",
+        "inactive": "NIET ACTIEF",
+        "paused": "GEPAUZEERD"
+    },
+    "Dashboard": {
+        "spacesTileTitle": "Actieve ruimtes",
+        "spacesTileBottomText": "Ruimtes bekijken",
+        "projectsTileTitle": "Actieve projecten",
+        "projectsTileBottomText": "Projecten bekeken",
+        "subscriptionsTileTitle": "Facturering en facturen",
+        "subscriptionsTileText": "Vind hier al je rekeningen en de laatste betalingsinformatie.",
+        "subscriptionsTileBottomText": "Abonnementen beheren"
+    },
+    "Payment": {
+        "titlePlatform": "Upgraden naar pro-platform",
+        "titleDatapack": "DataPack toevoegen"
+    },
+    "Subscribe": {
+        "title": "Je abonnement kiezen",
+        "text": "Je mag slechts een enkele gratis ruimte hebben in jouw factureringsaccounts. Als deze ruimte al bestaat, upgrade dan naar het professionele abonnement voor extra functies."
+    },
+    "SubscriptionDatapack": {
+        "title": "DataPack beheren",
+        "successNotification": "Je hebt nu {size} opslag in ruimte {spaceName}"
+    },
+    "SubscriptionFree": {
+        "title": "Gratis abonnement afsluiten",
+        "text": "Je staat op het punt om je gratis ruimte aan te maken. Je gratis ruimte bevat: {size}, 6 gebruikers.",
+        "spaceCreatedNotification": "Je hebt zojuist de ruimte {spaceName} aangemaakt op het factureringsaccount van {organizationName}"
+    },
+    "SubscriptionPro": {
+        "subscribeTitle": "Abonneer op professioneel abonnement",
+        "upgradeTitle": "Upgrade naar pro-platform",
+        "text": "Je staat op het punt om je te abonneren op je pro-abonnement. Dit bevat {size} opslag, onbeperkte projecten met onbeperkte gebruikers.",
+        "spaceCreatedNotification": "Je hebt zojuist de ruimte {spaceName} aangemaakt op het factureringsaccount van {organizationName}",
+        "spaceUpgradedNotification": "Gefeliciteerd! U heeft zojuist uw ruimte {spaceName} geüpgraded naar een pro-abonnement."
+    },
+    "UserSubscriptions": {
+        "title": "Platformabonnement",
+        "text": "Zoek door je factureringsaccounts om abonnementen en facturen te beheren voor je platformruimtes.",
+        "list": "Mijn factureringsaccounts:"
+    },
+    "BillingActionsCell": {
+        "updateButtonText": "Betaalkaart bijwerken",
+        "datapackButtonText": "Datapacks bijwerken",
+        "cancelButtonText": "Dit abonnement annuleren"
+    },
+    "BillingsTable": {
+        "title": "Rekeningdetails",
+        "nextPayment": "op",
+        "professionalPlan": "Professioneel",
+        "withDatapack": "met Datapack",
+        "cancelSubscriptionButton": "Abonnement opzeggen",
+        "updateCreditCardButton": "Creditcard bijwerken",
+        "emptyTableText": "Oh nee. Er is hier geen abonnement actief. Je hebt waarschijnlijk onze Pro-versie nog nooit geprobeerd..",
+        "subscribeButton": "Upgrade naar ons Pro-platform",
+        "headers": {
+            "space": "Ruimte",
+            "nextpayment": "Volgende betaling",
+            "subscriptionplan": "Abonnementtype",
+            "status": "Status",
+            "amount": "Bedrag"
+        },
+        "status": {
+            "active": "Actief",
+            "deleted": "Verwijderd",
+            "paused": "Gepauzeerd",
+            "custom": "Beheerd door BIMData.io"
+        }
+    },
+    "DatapackForm": {
+        "baseNote": "Opslag",
+        "baseText": "Inbegrepen bij pro-abonnement",
+        "datapackNote": "Extra opslag",
+        "priceUnit": "/ GB / maand incl. belasting",
+        "totalUnit": "/ maand incl. belasting",
+        "actualStorage": "Huidige opslag",
+        "newStorage": "Nieuwe opslag",
+        "submitButtonText": "Valideer",
+        "cancelButtonText": "Annuleer"
+    },
+    "DatapackInfo": {
+        "title": "Huidig abonnement",
+        "datapacks": "Actieve DataPacks",
+        "storage": "Actieve opslag",
+        "including": "Inclusief {quantity} GB van DataPack"
+    },
+    "GroupMemberInvitation": {
+        "name": "Openstaande uitnodiging"
+    },
+    "InvoiceActionsCell": {
+        "downloadButton": "Factuur downloaden"
+    },
+    "InvoicesTable": {
+        "title": "Facturen",
+        "emptyTableText": "Je facturen verschijnen hier als je actieve abonnementen hebt.",
+        "subscribeButton": "Upgrade naar ons Pro-platform",
+        "headers": {
+            "amount": "Bedrag",
+            "status": "Status",
+            "space": "Ruimte",
+            "date": "Datum"
+        }
+    },
+    "InvoiceStatusCell": {
+        "completed": "Voltooid",
+        "pending": "Openstaand"
+    },
+    "OrganizationCard": {
+        "spaces": "{number} ruimtes"
+    },
+    "OrganizationDeleteGuard": {
+        "title": "Factureringsaccount verwijderen",
+        "submitButtonText": "Verwijderen"
+    },
+    "OrganizationForm": {
+        "createTitle": "Factureringsaccount aanmaken",
+        "updateTitle": "Factureringsaccount bijwerken",
+        "infoSectionTitle": "Basisinformatie",
+        "nameInputPlaceholder": "Naam",
+        "nameInputErrorMessage": "Ongeldige naam",
+        "logoInputLabel": "Logo uploaden",
+        "logoInputMessage": "Logo moet in JP(E)G/PNG. Maximale bestandsgrootte is 1MB.",
+        "submitButtonText": "Valideeer",
+        "successTitle": "Gefeliciteerd, je factureringsaccount is zojuist aangemaakt",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "explanationText": "Een factureringsaccount is de entiteit die jouw facturering verzamelt op BIMData.io",
+        "createButtonText": "Nieuw factureringsaccount toevoegen",
+        "searchInputPlaceholder": "Account zoeken"
+    },
+    "OrganizationsManager": {
+        "title": "Factureringsaccounts beheren",
+        "backButtonText": "Terug"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} projecten"
+    },
+    "OrganizationSpacesImport": {
+        "spaceListTitle": "Ruimtes zoeken om te importeren",
+        "spaceListPlaceholder": "Geen ruimte om te importeren...",
+        "submitButtonText": "Ruimtes importeren",
+        "successTitle": "Ruimtes succesvol geïmporteerd",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "importButtonText": "Ruimte importeren",
+        "addButtonText": "Nieuwe ruimte toevoegen",
+        "searchInputPlaceholder": "Zoek",
+        "spaceListTitle": "Accountruimtes",
+        "spaceListPlaceholder": "Er is geen ruimte gekoppeld aan dit factureringsaccount."
+    },
+    "ProjectCardLeaveGuard": {
+        "title": "Project verlaten",
+        "message": "Weet je zeker dat je dit project wil verlaten?",
+        "leaveButtonText": "Valideer"
+    },
+    "ProPlanCard": {
+        "title": "PROFESSIONEEL",
+        "priceUnit": "/ Ruimte / maand",
+        "bullet2": "Onbeperkte projecten",
+        "bullet3": "Onbeperkte gebruikers",
+        "buttonText": "Kies professioneel",
+        "note": "1 GB uitbreiden voor {price} / maand"
+    },
+    "ProPlanForm": {
+        "priceUnit": "/ maand",
+        "successTitle": "Gefeliciteerd! Je hebt je zojuist geabonneerd op het Pro-platform.",
+        "successMessage": "Je betaling is voltooid. Je kunt nu genieten van je professionele abonnement.",
+        "titleNet": "Prijs exclusief btw",
+        "titleTax": "Belastingen",
+        "titleTotal": "Prijs",
+        "noteTotal": "Inclusief btw"
+    },
+    "ProPlanInfo": {
+        "title": "Jouw abonnement",
+        "subTitle": "Professioneel abonnement",
+        "priceUnit": "/ maand (excl. belasting)",
+        "bulletsHead": "Het abonnement omvat",
+        "bullet1": "{size} opslag",
+        "bullet2": "BIMData-platform",
+        "bullet3": "3D Viewer",
+        "bullet4": "2D Viewer",
+        "bullet5": "Onbeperkte projecten",
+        "bullet6": "Onbeperkte gebruikers",
+        "bullet7": "Onbeperkte reacties (BCF)",
+        "bullet8": "IFC Samenvoeging / split",
+        "bullet9": "IFC-editie",
+        "bullet10": "Ondersteuning"
+    },
+    "SpaceSelected": {
+        "selectedOrga": "Factureringsaccount:",
+        "selectedSpace": "Geselecteerde ruimte:"
+    },
+    "SpaceSizeInfo": {
+        "subscribeDatapackButton": "Opslag upgraden",
+        "subscribePlatformButton": "Upgrade naar pro-abonnement",
+        "usage": "{gebruikt} gebruikt van {totaal}"
+    },
+    "SpaceSizePreview": {
+        "title": "Opslag",
+        "actualStorage": "Huidige opslag",
+        "newStorage": "Nieuwe opslag",
+        "newStorageText": "Door het professionele abonnement aan te schaffen profiteert u van {grootte} opslagruimte. U kunt direct vanuit uw ruimte extra opslagruimte kopen."
+    },
+    "SubscribeCard": {
+        "title": "Creëer uw nieuwe ruimte",
+        "text": "Wilt u optimaal profiteren van het platform? Maak gebruik van {grootte} voor uw projecten en een onbeperkt aantal gebruikers door te upgraden naar een professioneel abonnement.",
+        "button": "Creëer een nieuwe ruimte"
+    },
+    "FreePlanInfo": {
+        "title": "GRATIS",
+        "price": "€ 0",
+        "bullet2": "1 Gratis ruimte",
+        "bullet3": "6 Gebruikers",
+        "buttonText": "Creëer een gratis ruimte",
+        "note": "Voor altijd"
+    },
+    "FreePlanRedirect": {
+        "title": "Toegang tot Gratis ruimte",
+        "text": "U heeft uw gratis ruimte al aangemaakt.",
+        "buttonText": "Ga naar mijn gratis ruimte"
+    },
+    "SubscriptionStatusBanner": {
+        "activate": "Deze gratis ruimte heeft zijn limiet bereikt. Ga verder met een professioneel abonnement om de volledige functionaliteit van BIMData te ontgrendelen.",
+        "reactivate": "Deze ruimte is momenteel niet gekoppeld aan een abonnement. Upgrade naar een professioneel abonnement om alle functionaliteiten van BIMData te ontgrendelen."
+    },
+    "OrganizationSelector": {
+        "title": "Factureringsaccount",
+        "radioLabelSelect": "Selecteer een factureringsaccount",
+        "radioLabelCreate": "Creëer een factureringsaccount",
+        "inputPlaceholder": "Naam van het account",
+        "submitButtonText": "Valideren",
+        "successMessage": "Gefeliciteerd. Uw factureringsaccount werd zojuist aangemaakt"
+    },
+    "SpaceCreator": {
+        "title": "Creëer een ruimte",
+        "text": "Uw ruimte groepeert uw verschillende BIM-projecten.",
+        "inputPlaceholder": "Naam van ruimte",
+        "billingAccountLabel": "Factureringsaccount:",
+        "billingAccountButton": "Wijzigen",
+        "submitButtonText": "Doorgaan naar betalen"
+    },
+    "Visa": {
+        "button": "Goedkeuringen",
+        "add": {
+            "title": "Validatieverzoek",
+            "validator": "Aan het valideren",
+            "toValidate": "Te valideren voor",
+            "errorDate": "Datum is ongeldig",
+            "exempleDate": "(Bijvoorbeeld: 31/05/2022)",
+            "description": "Beschrijving",
+            "cancel": "Annuleren",
+            "validate": "Valideren",
+            "validatorView": {
+                "getBack": "Ga terug",
+                "validator": "Valideren",
+                "accept": "Accepteren"
+            },
+            "errorValidator": ""
+        },
+        "safeZone": {
+            "add": {
+                "content": "Weet u zeker dat u deze pagina wilt verlaten? Er kan niet-geverifieerde informatie zijn.",
+                "action": "Ja, verlaat deze pagina",
+                "keepView": "Annuleren. Blijf hier"
+            },
+            "delete": {
+                "content": "Weet u zeker dat u de goedkeuring van dit document wilt verwijderen?",
+                "action": "Ja, verwijder de goedkeuring van dit document",
+                "keepView": "Annuleren"
+            },
+            "close": {
+                "content": "Weet u zeker dat u de goedkeuring van dit document wilt sluiten?",
+                "action": "Ja, sluit de goedkeuring van dit document",
+                "keepView": "Annuleren"
+            },
+            "deleteComment": {
+                "content": "Weet u zeker dat u deze reactie wilt verwijderen?",
+                "action": "Ja, verwijder de reactie",
+                "keepView": "Annuleren"
+            }
+        },
+        "summary": {
+            "title": {
+                "open": "Verzoek is in behandeling",
+                "closed": "Verzoek gesloten"
+            },
+            "appliedBy": "Validatieverzoek door",
+            "validate": "Valideren",
+            "deny": "Weigeren",
+            "delete": "Verwijderen",
+            "close": "Sluiten",
+            "comment": "Reageer",
+            "term": "Vervaldatum",
+            "validator": "Verifieerders",
+            "deletedUser": "Gebruiker verwijderd",
+            "validatorList": {
+                "accept": "Gevalideerd",
+                "deny": "Geweigerd",
+                "commented": "Becommentarieerd",
+                "pending": "In afwachting van",
+                "getRidOfValidator": "Validator verwijderen",
+                "refresh": "Verificatie opnieuw initialiseren"
+            }
+        },
+        "comments": {
+            "comment": "Reactie",
+            "commentary": "Toelichting",
+            "postComment": "Plaats een reactie",
+            "replyComment": "Reageer op een reactie",
+            "publish": "Publiceren",
+            "cancel": "Annuleren",
+            "reply": "Reageren",
+            "actions": {
+                "edit": "Bewerken",
+                "delete": "Verwijderen",
+                "confirmDelete": "Deze reactie verwijderen?"
+            }
+        },
+        "list": {
+            "title": "Verzoek is in behandeling",
+            "toValidateVisas": "Mijn validaties",
+            "createdVisas": "Mijn verzoeken",
+            "emptyValidation": "Geen validatie in behandeling",
+            "emptyDemand": "Geen verzoek in behandeling"
+        },
+        "selectionValidator": {
+            "warning": "Deze gebruiker heeft geen toegang tot het bestand."
+        },
+        "noVisa": ""
+    },
+    "ProjectBcf": {
+        "importButtonText": "",
+        "exportButtonText": "",
+        "createBcfButtonText": "",
+        "createBcfTitle": "",
+        "showStatisticsTooltip": "",
+        "hideStatisticsTooltip": "",
+        "searchInputPlaceholder": "",
+        "ascendingIndexTooltip": "",
+        "descendingIndexTooltip": "",
+        "alphabeticalAscendingOrderTooltip": "",
+        "alphabeticalDescendingOrderTooltip": "",
+        "ascendingDateTooltip": "",
+        "descendingDateTooltip": "",
+        "viewGridTooltip": "",
+        "viewListTooltip": ""
+    },
+    "BcfComments": {
+        "commentButton": "",
+        "commentLabel": "",
+        "commentText": "",
+        "cancelButton": "",
+        "publishButton": "",
+        "commentsText": ""
+    },
+    "BcfComment": {
+        "deleteCommentText": "",
+        "deleteButton": ""
+    },
+    "BcfFilters": {
+        "filtersButton": "",
+        "filtersTitle": "",
+        "priorityLabel": "",
+        "statusLabel": "",
+        "startDatePlaceholder": "",
+        "startDateExample": "",
+        "endDatePlaceholder": "",
+        "endDateExample": "",
+        "assignedToLabel": "",
+        "creatorsLabel": "",
+        "tagsLabel": "",
+        "resetButton": "",
+        "searchButton": "",
+        "noPriority": "",
+        "undefinedStatus": "",
+        "undefinedUser": "",
+        "undefinedCreator": ""
+    },
+    "BcfSettings": {
+        "goBackButton": "",
+        "title": "",
+        "validateButton": "",
+        "text": ""
+    },
+    "SettingCard": {
+        "addButton": "",
+        "cancelButton": "",
+        "validateButton": "",
+        "title": {
+            "Priority": "",
+            "Label": "",
+            "Status": "",
+            "Type": "",
+            "Stage": ""
+        },
+        "input": {
+            "Priority": "",
+            "Label": "",
+            "Status": "",
+            "Type": "",
+            "Stage": ""
+        },
+        "text": {
+            "Priority": "",
+            "Label": "",
+            "Status": "",
+            "Type": "",
+            "Stage": ""
+        }
+    },
+    "Extension": {
+        "deleteExtensionText": "",
+        "deleteButton": ""
+    },
+    "BcfTopicCreationCard": {
+        "text": "",
+        "createBcfSideTitle": ""
+    },
+    "BcfTopicGridItem": {
+        "priority": "",
+        "assignedTo": "",
+        "noPriority": "",
+        "notSpecified": "",
+        "elements": "",
+        "noElements": "",
+        "see": ""
+    },
+    "BcfTopicsList": {
+        "headers": {
+            "index": "",
+            "priority": "",
+            "status": "",
+            "title": "",
+            "creator": "",
+            "date": "",
+            "actions": ""
+        }
+    },
+    "BcfActionsCell": {
+        "seeButton": ""
+    },
+    "ModalDeleteTopic": {
+        "deleteText": "",
+        "deleteBcfButton": "",
+        "keepBcfButton": ""
+    },
+    "OpenTopicIssue": {
+        "openViewer": "",
+        "openViewerNoModels": "",
+        "elements": "",
+        "noElements": "",
+        "type": "",
+        "noTypeSpecified": "",
+        "description": "",
+        "noDescriptionProvided": "",
+        "assignedTo": "",
+        "notAssigned": "",
+        "dueDate": "",
+        "noDueDate": "",
+        "informations": "",
+        "status": "",
+        "noStatusSpecified": "",
+        "stage": "",
+        "noStageProvided": "",
+        "priority": "",
+        "priorityNotDefined": "",
+        "tags": "",
+        "noTags": "",
+        "commentButton": ""
+    },
+    "BcfTopicsMetrics": {
+        "emptyText": "",
+        "issues": "",
+        "extension": {
+            "Priority": "",
+            "PriorityNotDefined": "",
+            "PriorityTitle": "",
+            "Status": "",
+            "StatusNotDefined": "",
+            "StatusTitle": ""
+        }
+    },
+    "CreateBcfTopic": {
+        "dragDropImageText": "",
+        "addPictureButton": "",
+        "titlePlaceholder": "",
+        "titleErrorMessage": "",
+        "typeLabel": "",
+        "priorityLabel": "",
+        "statusLabel": "",
+        "stageLabel": "",
+        "assignedToLabel": "",
+        "dueDateLabel": "",
+        "dateErrorMessage": "",
+        "dateExample": "",
+        "descriptionLabel": "",
+        "tagsLabel": "",
+        "validateButton": ""
+    },
+    "EditBcfTopic": {
+        "goBackButton": "",
+        "dragDropImageText": "",
+        "addPictureButton": "",
+        "titlePlaceholder": "",
+        "titleErrorMessage": "",
+        "typeLabel": "",
+        "priorityLabel": "",
+        "statusLabel": "",
+        "stageLabel": "",
+        "assignedToLabel": "",
+        "descriptionLabel": "",
+        "tagsPlaceholder": "",
+        "editButton": ""
+    },
+    "EditBcfTopicModal": {
+        "modalText": "",
+        "cancelButton": "",
+        "continueButton": ""
+    },
+    "GuidedTour": {
+        "platform": {
+            "intro": {
+                "title": "",
+                "content": ""
+            },
+            "actionButtons": {
+                "title": "",
+                "content": ""
+            },
+            "firstSpace": {
+                "title": "",
+                "content": ""
+            },
+            "firstProject": {
+                "title": "",
+                "content": ""
+            },
+            "previewIfc": {
+                "title": "",
+                "content": ""
+            },
+            "usersManager": {
+                "title": "",
+                "content": ""
+            },
+            "modelsManager": {
+                "title": "",
+                "content": ""
+            },
+            "gedButton": {
+                "title": "",
+                "content": ""
+            },
+            "fileTree": {
+                "title": "",
+                "content": ""
+            },
+            "groupManager": {
+                "title": "",
+                "content": ""
+            },
+            "changeSpace": {
+                "title": "",
+                "content": ""
+            },
+            "outro": {
+                "title": "",
+                "content": ""
+            }
+        }
+    }
+}

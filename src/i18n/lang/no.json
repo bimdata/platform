@@ -1,0 +1,1049 @@
+{
+    "GroupBoard": {
+        "searchInputPlaceholder": "Søk opp medlemmer"
+    },
+    "OidcCallbackError": {
+        "message": "En feil oppsto under autentiseringen...",
+        "tryAgainButtonText": "Prøv igjen"
+    },
+    "ProjectBoard": {
+        "tabs": {
+            "overview": "Prosjekt",
+            "files": "Filer",
+            "bcf": "BCF"
+        }
+    },
+    "ProjectGroups": {
+        "searchInputPlaceholder": "Søk etter grupper"
+    },
+    "SpaceBoard": {
+        "searchInputPlaceholder": "Søk etter prosjekter"
+    },
+    "UserProjects": {
+        "searchInputPlaceholder": "Søk etter prosjekter"
+    },
+    "UserSpaces": {
+        "searchInputPlaceholder": "Søk etter rom",
+        "createButtonText": "Lag et rom",
+        "organizationsButtonText": "Faktureringskontoer"
+    },
+    "ProjectFiles": {
+        "groupsButtonText": "Administrer grupper"
+    },
+    "ProjectOverview": {
+        "openFileUploadButtonText": "Legg til en modell",
+        "closeFileUploadButtonText": "Lukk",
+        "forbiddenUploadNotification": {
+            "title": "Last opp feil",
+            "message": "Vennligst velg en modellfil: {utvidelser}"
+        }
+    },
+    "BreadcrumbSelector": {
+        "inputPlaceholder": "Søk"
+    },
+    "GenericTable": {
+        "pagination": "{start} - {slutt} av {total}"
+    },
+    "GoBackButton": {
+        "text": "Tilbake"
+    },
+    "LanguageSelector": {
+        "title": "Velg et språk"
+    },
+    "AppHeaderMenu": {
+        "entrySettings": "Kontoinstillinger",
+        "entryConnect": "BIMData Connect",
+        "entryDocumentation": "Dokumentasjon",
+        "entryMarketplace": "Markedsplass",
+        "entryOldPlatform": "Plattform V1",
+        "entryLanguage": "Velg et språk",
+        "logoutButtonText": "Logg ut",
+        "subscriptionPlatform": "Plattformabonnement"
+    },
+    "BreadcrumbGroupSelector": {
+        "text": "Grupper"
+    },
+    "BreadcrumbProjectSelector": {
+        "placeholder": "< Ingen prosjekt >"
+    },
+    "DashboardInfoTile": {
+        "title": "Sikkerhet"
+    },
+    "DashboardProjectList": {
+        "title": "Nylige prosjekter"
+    },
+    "DashboardSpaceList": {
+        "title": "Nylige rom"
+    },
+    "DashboardWelcomeTile": {
+        "title": "Dashbord",
+        "message": "Hei, {navn}, fint å se deg igjen!"
+    },
+    "FileActionsCell": {
+        "openViewerButtonText": "Åpne i fremviser",
+        "addTagsButtonText": "Legg til tags",
+        "validationRequestButtonText": "Valideringsforespørsel",
+        "renameButtonText": "Endre navn",
+        "downloadButtonText": "Last ned",
+        "addVersionButtonText": "Legg til versjon",
+        "manageAccessButtonText": "Administrer tilgang",
+        "deleteButtonText": "Slett",
+        "VisaButtonText": "Verifiseringsforespørsel",
+        "createModelButtonText": ""
+    },
+    "FileNameCell": {
+        "inputErrorMessage": "Ugyldig filnavn",
+        "submitButtonText": "Validere"
+    },
+    "FilesActionBar": {
+        "deleteButtonText": "Slett",
+        "moveButtonText": "Flytt til",
+        "downloadButtonText": "Last ned"
+    },
+    "FilesDeleteModal": {
+        "title": "Slett filer",
+        "message": "Denne handlingen vil permanent slette følgende filer/mapper:",
+        "cancelButtonText": "Avbryt",
+        "deleteButtonText": "Slett"
+    },
+    "FilesManager": {
+        "title": "Prosjektfiler",
+        "searchInputPlaceholder": "Søk",
+        "createModelNotification": "",
+        "uploadDisableMessage": {
+            "permission": "",
+            "size": ""
+        }
+    },
+    "FilesManagerOnboarding": {
+        "text": "Last opp din første fil",
+        "uploadFileButtonText": "Last opp en fil",
+        "createFolderButtonText": "Opprett en mappe"
+    },
+    "FilesTable": {
+        "emptyTablePlaceholder": "Tom mappe",
+        "folder": "Mappe",
+        "headers": {
+            "name": "Navn",
+            "type": "Type",
+            "creator": "Laget av",
+            "tags": "Tags",
+            "lastupdate": "Sist modifisert",
+            "size": "Størrelse"
+        }
+    },
+    "FileUploadButton": {
+        "addFileButtonText": "Last opp en fil"
+    },
+    "FileUploadCard": {
+        "cancelMessage": "Avbrutt",
+        "errorMessage": "Opplasting feilet"
+    },
+    "FileUploader": {
+        "uploadAreaText": "Dra og slipp for å lagre dine prosjektmidler",
+        "separatorText": "eller",
+        "uploadButtonText": "Velg en modellfil"
+    },
+    "FolderAccessManager": {
+        "title": "Administrer adgangsrettigheter",
+        "rightsHeader": "Rettigheter",
+        "membersHeader": "Medlemmer",
+        "searchInputPlaceholder": "Søk etter gruppe",
+        "groupHeader": "Gruppe"
+    },
+    "FolderCreationButton": {
+        "buttonText": "Ny mappe"
+    },
+    "FolderCreationForm": {
+        "creationFormTitle": "Opprett mappe",
+        "nameInputPlaceholder": "Mappenavn",
+        "nameInputErrorMessage": "Ugyldig mappenavn",
+        "cancelButtonText": "Avbryt",
+        "submitButtonText": "Send inn"
+    },
+    "FolderSelector": {
+        "selectedFolder": "Valgt mappe",
+        "submitButtonText": {
+            "moveTo": "Valider",
+            "moveHere": "Flytt her"
+        },
+        "emptyFolderPlaceholder": "Tom mappe"
+    },
+    "GroupCardActionMenu": {
+        "renameButtonText": "Endre navn",
+        "changeColorButtonText": "Endre farge",
+        "deleteButtonText": "Slett"
+    },
+    "GroupCardDeleteGuard": {
+        "title": "Slett gruppe",
+        "message": "Du er i ferd med å (virkelig) slette gruppe{navn}, er du sikker?",
+        "deleteButtonText": "Slett"
+    },
+    "GroupCardUpdateForm": {
+        "title": "Endre gruppenavn",
+        "inputPlaceholder": "Navn",
+        "inputErrorMessage": "Ugyldig gruppenavn",
+        "submitButtonText": "Endre navn"
+    },
+    "GroupCreationCard": {
+        "text": "Opprett en gruppe",
+        "title": "Ny gruppe",
+        "inputPlaceholder": "Navn",
+        "inputErrorMessage": "Ugyldig gruppenavn",
+        "submitButtonText": "Opprett"
+    },
+    "GroupMemberSelectionCard": {
+        "text": "Legg til et medlem"
+    },
+    "InvitationCard": {
+        "pendingMessage": "Invitert - Venter.",
+        "resendLinkText": "Sende invitasjon en gang til?",
+        "resendSuccessNotifText": "Invitasjon sendt på nytt",
+        "cancelSuccessNotifText": "Invitasjon kansellert"
+    },
+    "InvitationForm": {
+        "emailInputPlaceholder": "E-postadresse",
+        "emailInputErrorMessage": "Ugyldig e-post",
+        "roleInputLabel": "Rolle",
+        "roles": {
+            "admin": "Administrator",
+            "user": "Bruker",
+            "guest": "Gjest"
+        },
+        "cancelButtonText": "Avbryt",
+        "submitButtonText": "Send invitasjon",
+        "successNotifText": "Invitasjon sendt"
+    },
+    "ModelActionsCell": {
+        "addTagsButtonText": "Legg til tags",
+        "renameButtonText": "Endre navn",
+        "archiveButtonText": "Arkiv",
+        "deleteButtonText": "Slett",
+        "unarchiveButtonText": "Fjern fra arkivet"
+    },
+    "ModelLocation": {
+        "emptyLocationMessage": "Ingen plasseringsdata tilgjengelig",
+        "addLocationButtonText": "Fyll ut"
+    },
+    "ModelLocationForm": {
+        "addressInputPlaceholder": "Skriv inn adresse",
+        "checkButtonText": "Sjekk",
+        "submitButtonText": "Valider",
+        "cancelButtonText": "Endre"
+    },
+    "ModelNameCell": {
+        "inputErrorMessage": "Ugyldig modellnavn",
+        "submitButtonText": "Valider"
+    },
+    "ModelsActionBar": {
+        "deleteButtonText": "Slett",
+        "archiveButtonText": "Arkiv",
+        "unarchiveButtonText": "Avarkiver",
+        "downloadButtonText": "Last ned",
+        "mergeButtonText": "Slå sammen"
+    },
+    "ModelsCard": {
+        "openButtonText": "Åpne"
+    },
+    "ModelsCardModelPreview": {
+        "emptyPreviewPlaceholder": "Ingen forhåndsvisning tilgjengelig"
+    },
+    "ModelsDeleteModal": {
+        "title": "Advarsel!",
+        "message": "Denne handlingen vil permanent slette følgende modeller:",
+        "cancelButtonText": "Kanseller",
+        "deleteButtonText": "Slett"
+    },
+    "ModelsManager": {
+        "title": "Prosjektmodeller",
+        "tabs": {
+            "ifc": "IFC",
+            "split": "Splitt/Eksporter",
+            "merge": "Slå sammen",
+            "archive": "Arkiver",
+            "dwg": "DWG",
+            "metaBuildings": "",
+            "upload": ""
+        }
+    },
+    "ModelsMergeModal": {
+        "title": "Slå sammen utvalg",
+        "inputPlaceholder": "Navn på sammenslåingen",
+        "inputErrorMessage": "Du må gi filen et navn",
+        "submitButtonText": "Eksporter"
+    },
+    "ModelsOverview": {
+        "title": "Oversikt over prosjektmodeller"
+    },
+    "ModelsOverviewOnboarding": {
+        "text": "Last opp den første modellen din",
+        "uploadButtonText": "Last opp modell"
+    },
+    "ModelsTable": {
+        "emptyTablePlaceholder": "Ingen modell",
+        "headers": {
+            "id": "ID",
+            "name": "Navn",
+            "version": "Versjon",
+            "creator": "Opprettet av",
+            "lastupdate": "Sist endret",
+            "status": "Status"
+        }
+    },
+    "ProjectCardActionMenu": {
+        "renameButtonText": "Endre navn",
+        "deleteButtonText": "Slett",
+        "leaveButtonText": "Forlat"
+    },
+    "ProjectCardDeleteGuard": {
+        "title": "Slett prosjekt",
+        "message": "Er du sikker på at du vil slette dette prosjektet (for godt)?",
+        "deleteButtonText": "Slett"
+    },
+    "ProjectCardUpdateForm": {
+        "title": "Endre prosjektnavn",
+        "inputPlaceholder": "Navn",
+        "inputErrorMessage": "Ugyldig prosjektnavn.",
+        "renameButtonText": "Endre navn"
+    },
+    "ProjectCreationCard": {
+        "title": "Nytt prosjekt",
+        "text": "Opprett et nytt prosjekt",
+        "inputPlaceholder": "Navn",
+        "inputErrorMessage": "Du må gi prosjektet et navn!",
+        "createButtonText": "Opprett"
+    },
+    "ProjectUsersManager": {
+        "title": "Prosjektbrukere",
+        "searchInputPlaceholder": "Søk etter bruker"
+    },
+    "SpaceCard": {
+        "projects": "PROSJEKTER",
+        "free": "Gratis"
+    },
+    "SpaceCardActionMenu": {
+        "renameButtonText": "Endre navn",
+        "removeImageButtonText": "Fjern bilde",
+        "deleteButtonText": "Slett"
+    },
+    "SpaceCardDeleteGuard": {
+        "title": "Slett område",
+        "message": "Er du sikker?",
+        "deleteButtonText": "Slett"
+    },
+    "SpaceCardImageButton": {
+        "buttonText": "Last opp bilde"
+    },
+    "SpaceCardUpdateForm": {
+        "title": "Endre områdenavn",
+        "inputPlaceholder": "Navn",
+        "inputErrorMessage": "Ugyldig områdenavn.",
+        "submitButtonText": "Endre navn"
+    },
+    "SpaceCreationCard": {
+        "title": "Nytt område",
+        "inputPlaceholder": "Navn",
+        "inputErrorMessage": "Du må gi området et navn!",
+        "createButtonText": "Opprett"
+    },
+    "SpaceUsersManager": {
+        "title": "Administrer områdeadministratorer",
+        "tabs": {
+            "admins": "Administratorer",
+            "users": "Brukere"
+        },
+        "searchInputPlaceholder": "Søk etter bruker",
+        "addUserButtonText": "Legg til ny administrator"
+    },
+    "UserCard": {
+        "self": "deg"
+    },
+    "UserCardDeleteGuard": {
+        "message": {
+            "space": "Fjern {name} fra dette området?",
+            "project": "Fjern {name} fra dette prosjektet?"
+        },
+        "submitButtonText": "Fjern"
+    },
+    "UserCardUpdateForm": {
+        "submitButtonText": "Valider"
+    },
+    "UserRoleBadge": {
+        "admin": "Administrator",
+        "user": "Bruker",
+        "guest": "Gjest"
+    },
+    "UsersManagerOnboarding": {
+        "text": "Inviter den første samarbeidspartneren din",
+        "inviteButtonText": "Inviter"
+    },
+    "PageNotFound": {
+        "title": "Side ikke funnet",
+        "text": {
+            "line1": "Oi! Siden du leter etter eksisterer ikke.",
+            "line2": "Vennligst gå til hjem."
+        },
+        "homeButtonText": "Hjem"
+    },
+    "FolderPermissionSelector": {
+        "label": "Alle",
+        "options": {
+            "accessDenied": "Ingen tilgang",
+            "readOnly": "Skrivebeskyttet",
+            "readWrite": "Lese-/skrivetilgang"
+        }
+    },
+    "GroupMembersSelector": {
+        "title": "Administrer gruppemedlemmer",
+        "searchInputPlaceholder": "Søk"
+    },
+    "GroupPermissionSelector": {
+        "options": {
+            "accessDenied": "Ingen tilgang",
+            "readOnly": "Skrivebeskyttet",
+            "readWrite": "Lese-/skrivetilgang"
+        }
+    },
+    "Error": "Feil",
+    "Success": "Vellykket",
+    "Errors": {
+        "spacesFetchError": "Kunne ikke hente frem områder",
+        "spaceCreateError": "Kunne ikke opprette område",
+        "spaceUpdateError": "Kunne ikke oppdatere område",
+        "spaceDeleteError": "Kunne ikke slette område",
+        "spaceImageUpdateError": "Kunne ikke oppdatere områdebilde",
+        "spaceImageDeleteError": "Kunne ikke slette områdebilde",
+        "projectsFetchError": "Kunne ikke hente frem prosjekter",
+        "projectCreateError": "Kunne ikke opprette prosjekt",
+        "projectUpdateError": "Kunne ikke oppdatere prosjekt",
+        "projectDeleteError": "Kunne ikke slette prosjekt",
+        "invitationsFetchError": "Kunne ikke hente frem invitasjoner",
+        "invitationSendError": "Kunne ikke sende invitasjon",
+        "invitationResendError": "Kunne ikke sende invitasjon på nytt",
+        "invitationCancelError": "Kunne ikke kansellere invitasjon",
+        "usersFetchError": "Kunne ikke hente frem brukere",
+        "userUpdateError": "Kunne ikke oppdatere bruker",
+        "userDeleteError": "Kunne ikke slette bruker",
+        "modelsFetchError": "Kunne ikke hente frem modeller",
+        "modelUploadError": "Kunne ikke laste opp modell",
+        "modelUpdateError": "Kunne ikke oppdatere modell",
+        "modelDownloadError": "Kunne ikke laste ned modell",
+        "modelMergeError": "Kunne ikke slå sammen modeller",
+        "modelDeleteError": "Kunne ikke slette modell",
+        "fileStructureFetchError": "Kunne ikke hente frem filstruktur",
+        "fileUpdateError": "Kunne ikke oppdatere filer",
+        "fileDownloadError": "Kunne ikke laste ned filer",
+        "fileDeleteError": "Kunne ikke slette filer",
+        "folderCreateError": "Kunne ikke opprette mappe",
+        "documentUploadError": "Kunne ikke laste opp dokument",
+        "groupsFetchError": "Kunne ikke hente frem grupper",
+        "groupCreateError": "Kunne ikke opprette gruppe",
+        "groupUpdateError": "Kunne ikke oppdatere gruppe",
+        "groupDeleteError": "Kunne ikke slette gruppe",
+        "organizationsFetchError": "Kan ikke hente faktureringskontoer",
+        "organizationCreateError": "Kan ikke opprette faktureringskontoer",
+        "organizationUpdateError": "Kan ikke oppdatere faktureringskontoer",
+        "organizationDeleteError": "Kan ikke slette faktureringskontoer",
+        "userLeaveError": "Du kan ikke forlate prosjektet siden du er den siste administratoren",
+        "subscriptionsFetchError": "Kunne ikke hente abonnementer",
+        "platformSubscribeError": "Kan ikke initialisere plattformabonnement",
+        "datapackSubscribeError": "Kunne ikke opprette datapakke-abonnement",
+        "datapackUpdateError": "Kunne ikke oppdatere datapakke-abonnement",
+        "projectFetchFileError": "Umulig å hente dette dokumentet",
+        "visaCreateError": "Feil under opprettelse av visum",
+        "visaCreateValidationError": "Feil i å legge til en verifiserer",
+        "visaFetchError": "Umulig å hente dokumentgodkjenningen",
+        "visaAcceptError": "Feil under innsending av svaret ditt",
+        "visaDenyError": "Feil under innsending av svaret ditt",
+        "visaCloseError": "Feil ved lukking av dokumentgodkjenningen",
+        "visaResumeError": "Feil ved gjenåpning av dokumentgodkjenningen",
+        "visaFetchCreatedError": "Umulig å gjenopprette dokumentgodkjenningene",
+        "visaFetchValidatorError": "Umulig å gjenopprette dokumentgodkjenningene",
+        "visaDeleteValidationError": "Umulig å fjerne denne verifisereren",
+        "visaDeleteError": "Umulig å lukke denne dokumentgodkjenningen",
+        "visaUpdateError": "Umulig å oppdatere denne dokumentgodkjenningen",
+        "visaRefreshError": "Umulig å oppdatere svaret ditt",
+        "visaFetchAllCommentsError": "Umulig å hente kommentarene",
+        "visaCreateCommentsError": "Umulig å legge inn denne kommentaren",
+        "visaUpdateCommentError": "Umulig å redigere denne kommentaren",
+        "visaDeleteCommentError": "Umulig å fjerne denne kommentaren",
+        "modelCreateError": "",
+        "fileFetchError": ""
+    },
+    "ProjectStatusBadge": {
+        "new": "NY",
+        "active": "AKTIV",
+        "inactive": "INAKTIV",
+        "paused": "SATT PÅ PAUSE"
+    },
+    "Dashboard": {
+        "spacesTileTitle": "Aktive områder",
+        "spacesTileBottomText": "Vis områder",
+        "projectsTileTitle": "Aktive prosjekter",
+        "projectsTileBottomText": "Se prosjekter",
+        "subscriptionsTileTitle": "Fakturahåndtering",
+        "subscriptionsTileText": "Finn alle dine fakturaer og informasjon om dine siste betalinger her.",
+        "subscriptionsTileBottomText": "Administrer abonnementer"
+    },
+    "Payment": {
+        "titlePlatform": "Oppgrader til Pro Platform",
+        "titleDatapack": "Legg til datapakke"
+    },
+    "Subscribe": {
+        "title": "Velg din plan",
+        "text": "Du har kun tillatelse til å ha ett enkelt gratisområde blant fakturakontoene dine. Dersom dette  området allerede eksisterer, oppgrader til det profesjonelle abonnementet for flere funksjoner."
+    },
+    "SubscriptionDatapack": {
+        "title": "Administrer datapakke",
+        "successNotification": "Du har nå {size} lagring i området {spaceName}"
+    },
+    "SubscriptionFree": {
+        "title": "Opprett gratis plan",
+        "text": "Du er i ferd med å opprettet gratisområdet ditt. Gratisområdet ditt inkluderer: {size}, 6 brukere.",
+        "spaceCreatedNotification": "Du har nå opprettet området {spaceName} med fakturakonto {organizationName}"
+    },
+    "SubscriptionPro": {
+        "subscribeTitle": "Abonner på Plan for Profesjonelle",
+        "upgradeTitle": "Oppgrader til pro-plattform",
+        "text": "Du er i ferd med å abonnere på pro-planen. Dette inkluderer: {size} lagringsplass, ubegrenset antall prosjekter med ubegrenset antall brukere.",
+        "spaceCreatedNotification": "Du har nå opprettet området {spaceName} med fakturakonto {organizationName}",
+        "spaceUpgradedNotification": "Gratulerer! Du har nettopp oppgradert området ditt {spaceName} til proffplan."
+    },
+    "UserSubscriptions": {
+        "title": "Plattformabonnement",
+        "text": "Let gjennom faktureringskontoene dine for å administrere abonnementer og fakturaer for dine plattformområder.",
+        "list": "Mine faktureringskontoer:"
+    },
+    "BillingActionsCell": {
+        "updateButtonText": "Endre betalingskortet",
+        "datapackButtonText": "Administrer datapakker",
+        "cancelButtonText": "Kanseller dette abonnementet"
+    },
+    "BillingsTable": {
+        "title": "Fakturadetaljer",
+        "nextPayment": "på",
+        "professionalPlan": "Profesjonell",
+        "withDatapack": "med Datapakke",
+        "cancelSubscriptionButton": "Kanseller abonnement",
+        "updateCreditCardButton": "Oppdater kredittkort",
+        "emptyTableText": "Huff da. Det er ingen aktiv plan her. Du har antageligvis aldri testet ut pro-versjonen vår før ...",
+        "subscribeButton": "Oppgrader til vår Pro Platform",
+        "headers": {
+            "space": "Område",
+            "nextpayment": "Neste betaling",
+            "subscriptionplan": "Abonnementsplan",
+            "status": "Status",
+            "amount": "Mengde"
+        },
+        "status": {
+            "active": "Aktiv",
+            "deleted": "Slettet",
+            "paused": "Satt på pause",
+            "custom": "Administrert av BIMData.io"
+        }
+    },
+    "DatapackForm": {
+        "baseNote": "Lagring",
+        "baseText": "Inkludert med pro-plan",
+        "datapackNote": "Ekstra lagringsplass",
+        "priceUnit": "/GB/måned inkl. skatt",
+        "totalUnit": "/måned inkl. skatt",
+        "actualStorage": "Faktisk lagringsplass",
+        "newStorage": "Ny lagringsplass",
+        "submitButtonText": "Valider",
+        "cancelButtonText": "Avbryt"
+    },
+    "DatapackInfo": {
+        "title": "Faktisk abonnement",
+        "datapacks": "Aktive datapakker",
+        "storage": "Aktiv lagringsplass",
+        "including": "inkludert datapakke med {quantity} GB"
+    },
+    "GroupMemberInvitation": {
+        "name": "Ventende invitasjon"
+    },
+    "InvoiceActionsCell": {
+        "downloadButton": "Last ned faktura"
+    },
+    "InvoicesTable": {
+        "title": "Fakturaer",
+        "emptyTableText": "Fakturaene dine vil vises her når du har aktive abonnementer.",
+        "subscribeButton": "Oppgrader til vår Pro-Plattform",
+        "headers": {
+            "amount": "Mengde",
+            "status": "Status",
+            "space": "Område",
+            "date": "Dato"
+        }
+    },
+    "InvoiceStatusCell": {
+        "completed": "Fullført",
+        "pending": "Ventende"
+    },
+    "OrganizationCard": {
+        "spaces": "{number} områder"
+    },
+    "OrganizationDeleteGuard": {
+        "title": "Slett faktureringskonto",
+        "submitButtonText": "Slett"
+    },
+    "OrganizationForm": {
+        "createTitle": "Opprett en faktureringskonto",
+        "updateTitle": "Oppdater faktureringskonto",
+        "infoSectionTitle": "Grunnleggende informasjon",
+        "nameInputPlaceholder": "Navn",
+        "nameInputErrorMessage": "Ugyldig navn",
+        "logoInputLabel": "Last opp logo",
+        "logoInputMessage": "Logoen skal være i JP(E)G-/PNG-format. Filen kan ikke være større enn 1 MB.",
+        "submitButtonText": "Valider",
+        "successTitle": "Gratulerer, din faktureringskonto er nå opprettet",
+        "successButtonText": "OK"
+    },
+    "OrganizationsList": {
+        "explanationText": "En faktureringskonto er enheten som samler din fakturering hos BIMData.io",
+        "createButtonText": "Legg til ny faktureringskonto",
+        "searchInputPlaceholder": "Søk etter en konto"
+    },
+    "OrganizationsManager": {
+        "title": "Administrer faktureringskontoer",
+        "backButtonText": "Tilbake"
+    },
+    "OrganizationSpaceCard": {
+        "projects": "{number} prosjekter"
+    },
+    "OrganizationSpacesImport": {
+        "spaceListTitle": "Velg områder å importere",
+        "spaceListPlaceholder": "Ingen områder å importere ...",
+        "submitButtonText": "Importer områder",
+        "successTitle": "Områder er nå importert",
+        "successButtonText": "OK"
+    },
+    "OrganizationSpacesList": {
+        "importButtonText": "Importer område",
+        "addButtonText": "Legg til nytt område",
+        "searchInputPlaceholder": "Søk",
+        "spaceListTitle": "Kontoområder",
+        "spaceListPlaceholder": "Intet område er knyttet til denne faktureringskontoen."
+    },
+    "ProjectCardLeaveGuard": {
+        "title": "Forlat prosjekt",
+        "message": "Er du sikker på at du ønsker å forlate dette prosjektet?",
+        "leaveButtonText": "Valider"
+    },
+    "ProPlanCard": {
+        "title": "PROFESJONELL",
+        "priceUnit": "/Område/måned",
+        "bullet2": "Ubegrenset antall prosjekter",
+        "bullet3": "Ubegrenset antall brukere",
+        "buttonText": "Velg profesjonell",
+        "note": "utvid med 1 GB for {price}/måned"
+    },
+    "ProPlanForm": {
+        "priceUnit": "/måned",
+        "successTitle": "Gratulerer! Du abonnerer nå på Pro Platform.",
+        "successMessage": "Betalingen din er fullført. Du kan nå benytte deg av ditt profesjonelle abonnement.",
+        "titleNet": "Pris ekskl. mva.",
+        "titleTax": "Mva.",
+        "titleTotal": "Totalkostnad",
+        "noteTotal": "Inkl. mva."
+    },
+    "ProPlanInfo": {
+        "title": "Ditt abonnement",
+        "subTitle": "Profesjonell plan",
+        "priceUnit": "/måned (eks. skatt)",
+        "bulletsHead": "Abonnementet inkluderer",
+        "bullet1": "{size} lagringsplass",
+        "bullet2": "BIMData Plattform",
+        "bullet3": "3D-visning",
+        "bullet4": "2D-visning",
+        "bullet5": "Ubegrenset antall prosjekter",
+        "bullet6": "Ubegrenset antall brukere",
+        "bullet7": "Ubegrenset antall kommentarer (BCF)",
+        "bullet8": "IFC Fusjon/Fisjon",
+        "bullet9": "IFC-utgave",
+        "bullet10": "Brukerstøtte"
+    },
+    "SpaceSelected": {
+        "selectedOrga": "Faktureringskonto:",
+        "selectedSpace": "Valgt område:"
+    },
+    "SpaceSizeInfo": {
+        "subscribeDatapackButton": "Oppgrader lagringsplass",
+        "subscribePlatformButton": "Oppgrader til pro-abonnement",
+        "usage": "{used} benyttet av {total}"
+    },
+    "SpaceSizePreview": {
+        "title": "Lagringsplass",
+        "actualStorage": "Faktisk lagringsplass",
+        "newStorage": "Ny lagringsplass",
+        "newStorageText": "Ved å kjøpe det profesjonelle abonnementet, drar du nytte av {size} lagringsplass. Du kan kjøpe ekstra lagringsplass direkte fra området ditt."
+    },
+    "SubscribeCard": {
+        "title": "Opprett ditt nye område",
+        "text": "Vil du dra full nytte av plattformen? Benytt deg av {size} for prosjektene dine og ubegrenset antall brukere, ved å oppgradere til et profesjonelt abonnement.",
+        "button": "Opprett nytt område"
+    },
+    "FreePlanInfo": {
+        "title": "Gratis",
+        "price": "0 EUR",
+        "bullet2": "Ett gratis område",
+        "bullet3": "Seks brukere",
+        "buttonText": "Opprett gratis område",
+        "note": "For alltid"
+    },
+    "FreePlanRedirect": {
+        "title": "Åpne gratis område",
+        "text": "Du har allerede opprettet et gratis område.",
+        "buttonText": "Ta meg til mitt gratis område"
+    },
+    "SubscriptionStatusBanner": {
+        "activate": "Dette gratisområdet har nådd kapasitetsgrensene. Fortsett til et profesjonelt abonnement for å fjerne blokkeringen BIMData har lagt på full funksjonalitet.",
+        "reactivate": "Dette området er for øyeblikket ikke koblet noe abonnement. For å fjerne blokkeringen BIMData har lagt på fulle funksjonalitet, kan du oppgradere til et profesjonelt abonnement."
+    },
+    "OrganizationSelector": {
+        "title": "Faktureringskonto",
+        "radioLabelSelect": "Velg en faktureringskonto",
+        "radioLabelCreate": "Opprett en faktureringskonto",
+        "inputPlaceholder": "Kontonavn",
+        "submitButtonText": "Verifiser",
+        "successMessage": "Gratulerer. Faktureringskonto er nettopp opprettet."
+    },
+    "SpaceCreator": {
+        "title": "Opprett et område",
+        "text": "Områdett ditt grupperer de forskjellige BIM-prosjektene.",
+        "inputPlaceholder": "Områdenavn",
+        "billingAccountLabel": "Faktureringskonto:",
+        "billingAccountButton": "Endre",
+        "submitButtonText": "Fortsett til betaling"
+    },
+    "Visa": {
+        "button": "Godkjenninger",
+        "add": {
+            "title": "Verifiseringsforespørsel",
+            "validator": "Verifisering",
+            "toValidate": "Må verifiseres før",
+            "errorDate": "Ugyldig dato",
+            "exempleDate": "(F.eks.: 31/05/2022)",
+            "description": "Beskrivelse",
+            "cancel": "Avbryt",
+            "validate": "Verifiser",
+            "validatorView": {
+                "getBack": "Gå tilbake",
+                "validator": "Verifiser",
+                "accept": "Aksepter"
+            },
+            "errorValidator": ""
+        },
+        "safeZone": {
+            "add": {
+                "content": "Er du sikker på at du vil forlate denne siden? Den kan ha ubekreftet informasjon.",
+                "action": "Ja, forlat denne siden",
+                "keepView": "Avbryt, forbli på siden"
+            },
+            "delete": {
+                "content": "Er du sikker på at du vil fjerne denne dokumentgodkjenningen?",
+                "action": "Ja, fjern denne dokumentgodkjenningen",
+                "keepView": "Avbryt"
+            },
+            "close": {
+                "content": "Er du sikker på at du vil avslutte denne dokumentgodkjenningen?",
+                "action": "Ja, avslutt dokumentgodkjenningen",
+                "keepView": "Avbryt"
+            },
+            "deleteComment": {
+                "content": "Er du sikker på at du vil fjerne denne kommentaren?",
+                "action": "Ja, fjern kommentaren",
+                "keepView": "Avbryt"
+            }
+        },
+        "summary": {
+            "title": {
+                "open": "Forespørselen behandles",
+                "closed": "Forespørselen er avsluttet"
+            },
+            "appliedBy": "Forespørselverifisering av",
+            "validate": "Verifiser",
+            "deny": "Avslå",
+            "delete": "Fjern",
+            "close": "Steng",
+            "comment": "Kommenter",
+            "term": "Frist",
+            "validator": "Verifiserere",
+            "deletedUser": "Brukeren er fjernet",
+            "validatorList": {
+                "accept": "Verifisert",
+                "deny": "Avslått",
+                "commented": "Kommentert",
+                "pending": "Avventer",
+                "getRidOfValidator": "Fjern verifiserer",
+                "refresh": "Reinitialiser verifisering"
+            }
+        },
+        "comments": {
+            "comment": "Kommenter",
+            "commentary": "Kommentar",
+            "postComment": "Legg ut kommentar",
+            "replyComment": "Svar på kommentar",
+            "publish": "Publiser",
+            "cancel": "Avbryt",
+            "reply": "Svar",
+            "actions": {
+                "edit": "Rediger",
+                "delete": "Fjern",
+                "confirmDelete": "Fjerne denne kommentaren?"
+            }
+        },
+        "list": {
+            "title": "Forespørselen behandles",
+            "toValidateVisas": "Mine verifiseringer",
+            "createdVisas": "Mine forespørsler",
+            "emptyValidation": "Ingen verifisering er under behandling",
+            "emptyDemand": "Ingen forespørsel er under behandling"
+        },
+        "selectionValidator": {
+            "warning": "Brukeren kan ikke åpne denne filen."
+        },
+        "noVisa": ""
+    },
+    "ProjectBcf": {
+        "importButtonText": "",
+        "exportButtonText": "",
+        "createBcfButtonText": "",
+        "createBcfTitle": "",
+        "showStatisticsTooltip": "",
+        "hideStatisticsTooltip": "",
+        "searchInputPlaceholder": "",
+        "ascendingIndexTooltip": "",
+        "descendingIndexTooltip": "",
+        "alphabeticalAscendingOrderTooltip": "",
+        "alphabeticalDescendingOrderTooltip": "",
+        "ascendingDateTooltip": "",
+        "descendingDateTooltip": "",
+        "viewGridTooltip": "",
+        "viewListTooltip": ""
+    },
+    "BcfComments": {
+        "commentButton": "",
+        "commentLabel": "",
+        "commentText": "",
+        "cancelButton": "",
+        "publishButton": "",
+        "commentsText": ""
+    },
+    "BcfComment": {
+        "deleteCommentText": "",
+        "deleteButton": ""
+    },
+    "BcfFilters": {
+        "filtersButton": "",
+        "filtersTitle": "",
+        "priorityLabel": "",
+        "statusLabel": "",
+        "startDatePlaceholder": "",
+        "startDateExample": "",
+        "endDatePlaceholder": "",
+        "endDateExample": "",
+        "assignedToLabel": "",
+        "creatorsLabel": "",
+        "tagsLabel": "",
+        "resetButton": "",
+        "searchButton": "",
+        "noPriority": "",
+        "undefinedStatus": "",
+        "undefinedUser": "",
+        "undefinedCreator": ""
+    },
+    "BcfSettings": {
+        "goBackButton": "",
+        "title": "",
+        "validateButton": "",
+        "text": ""
+    },
+    "SettingCard": {
+        "addButton": "",
+        "cancelButton": "",
+        "validateButton": "",
+        "title": {
+            "Priority": "",
+            "Label": "",
+            "Status": "",
+            "Type": "",
+            "Stage": ""
+        },
+        "input": {
+            "Priority": "",
+            "Label": "",
+            "Status": "",
+            "Type": "",
+            "Stage": ""
+        },
+        "text": {
+            "Priority": "",
+            "Label": "",
+            "Status": "",
+            "Type": "",
+            "Stage": ""
+        }
+    },
+    "Extension": {
+        "deleteExtensionText": "",
+        "deleteButton": ""
+    },
+    "BcfTopicCreationCard": {
+        "text": "",
+        "createBcfSideTitle": ""
+    },
+    "BcfTopicGridItem": {
+        "priority": "",
+        "assignedTo": "",
+        "noPriority": "",
+        "notSpecified": "",
+        "elements": "",
+        "noElements": "",
+        "see": ""
+    },
+    "BcfTopicsList": {
+        "headers": {
+            "index": "",
+            "priority": "",
+            "status": "",
+            "title": "",
+            "creator": "",
+            "date": "",
+            "actions": ""
+        }
+    },
+    "BcfActionsCell": {
+        "seeButton": ""
+    },
+    "ModalDeleteTopic": {
+        "deleteText": "",
+        "deleteBcfButton": "",
+        "keepBcfButton": ""
+    },
+    "OpenTopicIssue": {
+        "openViewer": "",
+        "openViewerNoModels": "",
+        "elements": "",
+        "noElements": "",
+        "type": "",
+        "noTypeSpecified": "",
+        "description": "",
+        "noDescriptionProvided": "",
+        "assignedTo": "",
+        "notAssigned": "",
+        "dueDate": "",
+        "noDueDate": "",
+        "informations": "",
+        "status": "",
+        "noStatusSpecified": "",
+        "stage": "",
+        "noStageProvided": "",
+        "priority": "",
+        "priorityNotDefined": "",
+        "tags": "",
+        "noTags": "",
+        "commentButton": ""
+    },
+    "BcfTopicsMetrics": {
+        "emptyText": "",
+        "issues": "",
+        "extension": {
+            "Priority": "",
+            "PriorityNotDefined": "",
+            "PriorityTitle": "",
+            "Status": "",
+            "StatusNotDefined": "",
+            "StatusTitle": ""
+        }
+    },
+    "CreateBcfTopic": {
+        "dragDropImageText": "",
+        "addPictureButton": "",
+        "titlePlaceholder": "",
+        "titleErrorMessage": "",
+        "typeLabel": "",
+        "priorityLabel": "",
+        "statusLabel": "",
+        "stageLabel": "",
+        "assignedToLabel": "",
+        "dueDateLabel": "",
+        "dateErrorMessage": "",
+        "dateExample": "",
+        "descriptionLabel": "",
+        "tagsLabel": "",
+        "validateButton": ""
+    },
+    "EditBcfTopic": {
+        "goBackButton": "",
+        "dragDropImageText": "",
+        "addPictureButton": "",
+        "titlePlaceholder": "",
+        "titleErrorMessage": "",
+        "typeLabel": "",
+        "priorityLabel": "",
+        "statusLabel": "",
+        "stageLabel": "",
+        "assignedToLabel": "",
+        "descriptionLabel": "",
+        "tagsPlaceholder": "",
+        "editButton": ""
+    },
+    "EditBcfTopicModal": {
+        "modalText": "",
+        "cancelButton": "",
+        "continueButton": ""
+    },
+    "GuidedTour": {
+        "platform": {
+            "intro": {
+                "title": "",
+                "content": ""
+            },
+            "actionButtons": {
+                "title": "",
+                "content": ""
+            },
+            "firstSpace": {
+                "title": "",
+                "content": ""
+            },
+            "firstProject": {
+                "title": "",
+                "content": ""
+            },
+            "previewIfc": {
+                "title": "",
+                "content": ""
+            },
+            "usersManager": {
+                "title": "",
+                "content": ""
+            },
+            "modelsManager": {
+                "title": "",
+                "content": ""
+            },
+            "gedButton": {
+                "title": "",
+                "content": ""
+            },
+            "fileTree": {
+                "title": "",
+                "content": ""
+            },
+            "groupManager": {
+                "title": "",
+                "content": ""
+            },
+            "changeSpace": {
+                "title": "",
+                "content": ""
+            },
+            "outro": {
+                "title": "",
+                "content": ""
+            }
+        }
+    }
+}

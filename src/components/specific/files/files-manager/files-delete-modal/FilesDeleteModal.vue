@@ -41,7 +41,7 @@
 import { computed } from "vue";
 import { useFiles } from "@/state/files";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal";
+import GenericModal from "@/components/generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {

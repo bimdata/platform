@@ -5,6 +5,8 @@ import en from "./lang/en.json";
 import es from "./lang/es.json";
 import fr from "./lang/fr.json";
 import it from "./lang/it.json";
+import nl from "./lang/nl.json";
+import no from "./lang/no.json";
 
 const i18n = createI18n({
   // Disable legacy mode and use composition API instead
@@ -24,7 +26,9 @@ const i18n = createI18n({
     en,
     es,
     fr,
-    it
+    it,
+    nl,
+    no
   }
 });
 
