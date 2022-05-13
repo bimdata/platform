@@ -102,7 +102,6 @@
                       window: windowType(document)
                     }
                   }"
-                  target="_blank"
                 >
                   <BIMDataButton ghost rounded icon width="30px" height="30px">
                     <BIMDataIcon name="show" color="granite" size="xs" fill />
@@ -230,7 +229,7 @@ export default {
 
     const convertToModelAndShow = async () => {
       const model = await createModel(props.project, props.document);
-      const route = router.resolve({
+      router.push({
         name: routeNames.modelViewer,
         params: {
           spaceID: props.project.cloud.id,
@@ -241,7 +240,6 @@ export default {
           window: windowType(model.document)
         }
       });
-      window.open(route.href, "_blank");
       emit("model-created", model);
     };
 
