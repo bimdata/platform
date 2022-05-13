@@ -1,13 +1,13 @@
 <template>
   <div class="app-layout">
     <template v-if="tourToDisplay">
-      <BIMDataGuidedTour
+      <!-- <BIMDataGuidedTour
         :locale="$i18n.locale"
         :tours="tours"
         :tourToDisplay="tourToDisplay"
         :elementToObserve="appLayoutViewContainer"
         @set-completed-tour="setTourCompleted($event)"
-      />
+      /> -->
     </template>
     <AppNotification />
     <AppHeader />
