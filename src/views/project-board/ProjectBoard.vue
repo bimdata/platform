@@ -80,10 +80,10 @@ const tabsDef = [
   },
   {
     id: "files"
+  },
+  {
+    id: "bcf"
   }
-  // {
-  //   id: "bcf"
-  // }
 ];
 
 export default {
