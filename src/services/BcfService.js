@@ -56,6 +56,7 @@ class BcfService {
         `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/import`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             ...apiClient.authHeader
           },

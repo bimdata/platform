@@ -219,8 +219,7 @@
         "renameButtonText": "Rinomina",
         "archiveButtonText": "Archivia",
         "deleteButtonText": "Cancella",
-        "unarchiveButtonText": "Estrai",
-        "removeButtonText": "Segnare come documento"
+        "unarchiveButtonText": "Estrai"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Nessun dato di localizzazione disponibile",

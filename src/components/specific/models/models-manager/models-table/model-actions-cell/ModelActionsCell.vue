@@ -21,6 +21,16 @@
       />
     </template>
 
+    <template v-else-if="model.type === MODEL_TYPE.DXF">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DXF"
+        text="2D"
+      />
+    </template>
+
     <template
       v-else-if="
         model.type === MODEL_TYPE.PDF || model.type === MODEL_TYPE.META_BUILDING

@@ -220,7 +220,7 @@
         "archiveButtonText": "Archive",
         "deleteButtonText": "Delete",
         "unarchiveButtonText": "Unarchive",
-        "removeButtonText": "Mark as document"
+        "removeButtonText": "Remove from models"
     },
     "ModelLocation": {
         "emptyLocationMessage": "No location data available",
