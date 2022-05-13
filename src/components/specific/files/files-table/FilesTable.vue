@@ -4,7 +4,7 @@
     :columns="columns"
     :rows="files"
     rowKey="id"
-    :rowHeight="44"
+    :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
