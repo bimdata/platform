@@ -35,6 +35,17 @@
       height: 22px;
     }
 
+    .beta-badge {
+      height: 18px;
+      // margin-left: 6px;
+      padding: 2px 7px;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: bold;
+      background-color: var(--color-secondary);
+      color: var(--color-primary);
+    }
+
     &__count {
       min-width: 18px;
       height: 18px;
