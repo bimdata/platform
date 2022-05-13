@@ -6,7 +6,11 @@
           class="bcf-topic__header__infos__index flex items-center justify-center"
           :style="{
             'background-color': `#${priorityColor}`,
-            color: adjustColor(`#${priorityColor}`, '#ffffff', '#2f374a')
+            color: adjustColor(
+              `#${priorityColor}`,
+              '#ffffff',
+              'var(--color-text)'
+            )
           }"
         >
           {{ bcfTopic.index }}
@@ -20,12 +24,19 @@
           class="bcf-topic__header__img__status flex p-6"
           :style="{
             'background-color': `#${statusColor}`,
-            color: adjustColor(`#${statusColor}`, '#ffffff', '#2f374a')
+            color: adjustColor(
+              `#${statusColor}`,
+              '#ffffff',
+              'var(--color-text)'
+            )
           }"
           v-if="bcfTopic.topicStatus"
         >
           <BIMDataIcon name="information" fill color="default" />
           <span class="m-l-6">{{ bcfTopic.topicStatus }}</span>
+        </div>
+        <div class="bcf-topic__header__img__date p-6">
+          {{ $d(bcfTopic.creationDate, "short") }}
         </div>
         <img
           v-if="viewpointWithSnapshot.length > 0"
@@ -85,13 +96,13 @@
     </div>
     <transition name="slide-fade-left">
       <div
-        v-show="showSidePanel"
+        v-if="showSidePanel"
         key="bcf-topic-side-panel"
         class="bcf-topic__side-panel"
       >
         <OpenTopicIssue
           :bcfTopic="bcfTopic"
-          @close="showSidePanel = false"
+          @close="$emit('hidePanel')"
           :detailedExtensions="detailedExtensions"
         />
       </div>
@@ -100,7 +111,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { adjustColor } from "@/components/specific/bcf/bcf-settings/adjustColor.js";
 
 import { useBcf } from "@/state/bcf.js";
@@ -127,9 +138,14 @@ export default {
     detailedExtensions: {
       type: Object,
       required: true
+    },
+    showSidePanel: {
+      type: Boolean,
+      default: false
     }
   },
-  setup(props) {
+  emits: ["showPanel", "hidePanel"],
+  setup(props, { emit }) {
     const { currentProject } = useProjects();
     const { loadTopicComments } = useBcf();
 
@@ -160,12 +176,11 @@ export default {
           return statusDetail.color;
         }
       }
-      return "";
+      return "D8D8D8";
     });
 
-    const showSidePanel = ref(false);
     const openBcfTopic = async () => {
-      showSidePanel.value = true;
+      emit("showPanel");
       if (!props.bcfTopic.comments) {
         await loadTopicComments(currentProject.value, props.bcfTopic);
       }
@@ -189,7 +204,6 @@ export default {
       priorityColor,
       statusColor,
       topicElements,
-      showSidePanel,
       openBcfTopic
     };
   }

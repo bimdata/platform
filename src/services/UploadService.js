@@ -90,7 +90,7 @@ class UploadService {
       onUploadError,
       onUploadComplete: async e => {
         const document = e.response;
-        if (isConvertible(document) && !isModel()) {
+        if (isConvertible(document) && !isModel(document)) {
           await ModelService.createModel(project, document);
         }
         onUploadComplete(e);

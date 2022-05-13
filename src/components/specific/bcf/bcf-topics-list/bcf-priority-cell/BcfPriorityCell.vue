@@ -1,9 +1,11 @@
 <template>
   <span
     class="bcf-priority-cell flex items-center justify-center p-x-6"
-    :class="`bcf-priority-cell--${priorityValue}`"
+    :style="{
+      color: `#${priorityColor}`
+    }"
   >
-    {{ bcfTopic.priority }}
+    {{ bcfTopic.priority || $t("BcfTopicGridItem.noPriority") }}
   </span>
 </template>
 
@@ -15,19 +17,28 @@ export default {
     bcfTopic: {
       type: Object,
       required: true
+    },
+    detailedExtensions: {
+      type: Object,
+      required: true
     }
   },
   setup(props) {
-    const priorityValue = computed(() => {
+    const priorityColor = computed(() => {
       if (props.bcfTopic.priority) {
-        return props.bcfTopic.priority.toLowerCase();
+        const priorityDetail = props.detailedExtensions.priorities.find(
+          priority => priority.priority === props.bcfTopic.priority
+        );
+        if (priorityDetail && priorityDetail.color) {
+          return priorityDetail.color;
+        }
       }
-      return "";
+      return "D8D8D8";
     });
 
     return {
       // References
-      priorityValue
+      priorityColor
     };
   }
 };

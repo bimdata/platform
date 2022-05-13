@@ -12,6 +12,7 @@ const AVAILABLE_PLUGINS = Object.freeze({
 
 const WINDOWS = Object.freeze({
   DWG: "dwg",
+  DXF: "dxf",
   PLAN: "plan",
   V2D: "2d",
   V3D: "3d"
@@ -21,21 +22,21 @@ const DEFAULT_WINDOW = WINDOWS.V3D;
 
 const PLUGINS_CONFIG = {
   header: {
-    warnings: false,
+    warnings: false
   },
   measure3d: true,
   split: true,
   "structure-properties": {
     merge: true,
     export: true,
-    editProperties: true,
+    editProperties: true
   },
   structure: {
     merge: true,
-    export: true,
+    export: true
   },
   properties: {
-    editProperties: true,
+    editProperties: true
   },
   "viewer2d-background": true,
   dwg: false,

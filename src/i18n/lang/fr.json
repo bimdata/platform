@@ -78,13 +78,17 @@
     "exportButtonText": "Exporter",
     "createBcfButtonText": "Créer un BCF",
     "createBcfTitle": "Signaler un problème",
-    "searchInputPlaceholder": "Rechercher",
+    "showStatisticsTooltip": "Afficher les statistiques",
+    "hideStatisticsTooltip": "Masquer les statistiques",
+    "searchInputPlaceholder": "Recherche par numéro d'index, nom, créateur ou tag",
     "ascendingIndexTooltip": "index ascendant",
     "descendingIndexTooltip": "index descendant",
     "alphabeticalAscendingOrderTooltip": "ordre alphabétique",
     "alphabeticalDescendingOrderTooltip": "ordre alphabétique inverse",
     "ascendingDateTooltip": "date croissante",
-    "descendingDateTooltip": "date décroissante"
+    "descendingDateTooltip": "date décroissante",
+    "viewGridTooltip": "vue grille",
+    "viewListTooltip": "vue liste"
   },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
@@ -153,21 +157,42 @@
   "BreadcrumbProjectSelector": {
     "placeholder": "< Aucun projet >"
   },
+
+  "BcfComments": {
+    "commentButton": "Poster un commentaire",
+    "commentLabel": "Poster un commentaire",
+    "commentText": "Commentaire",
+    "cancelButton": "Annuler",
+    "publishButton": "Publier",
+    "commentsText": "commentaires"
+  },
+  "BcfComment": {
+    "deleteCommentText": "Supprimer ce commentaire ?",
+    "deleteButton": "Supprimer"
+  },
   "BcfFilters": {
     "filtersButton": "Filtres",
+    "filtersTitle": "Filtres",
     "priorityLabel": "Priorité",
     "statusLabel": "Statut",
     "startDatePlaceholder": "Date de début",
     "startDateExample": "(Ex: 28/04/2022)",
     "endDatePlaceholder": "Date de fin",
     "endDateExample": "(Ex: 28/05/2022)",
+    "assignedToLabel": "Assigné à",
+    "creatorsLabel": "Créé par",
     "tagsLabel": "Tags",
     "resetButton": "Réinitialiser",
-    "searchButton": "Rechercher"
+    "searchButton": "Rechercher",
+    "noPriority": "Aucune priorité",
+    "undefinedStatus": "Non défini",
+    "undefinedUser": "Non défini",
+    "undefinedCreator": "Non défini"
   },
   "BcfSettings": {
     "goBackButton": "Retour",
     "title": "Paramètres BCF",
+    "text": "Créez, renseignez et listez les paramètres BCF que vous souhaitez avoir sur ce projet",
     "validateButton": "Valider les paramètres BCF"
   },
   "SettingCard": {
@@ -196,6 +221,10 @@
       "Stage": "Liste des phases"
     }
   },
+  "Extension": {
+    "deleteExtensionText": "Supprimmer ce paramètre",
+    "deleteButton": "Supprimer"
+  },
   "BcfTopicCreationCard": {
     "text": "Créer un nouveau topic BCF",
     "createBcfSideTitle": "Signaler un problème"
@@ -213,6 +242,7 @@
     "headers": {
       "index": "#",
       "priority": "Priorité",
+      "status": "Statut",
       "title": "Titre",
       "creator": "Crée par",
       "date": "Date",
@@ -254,17 +284,27 @@
   "BcfTopicsMetrics": {
     "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
     "issues": "problèmes",
-    "priority": "Priorité",
-    "notDefined": "Aucune priorité"
+    "extension": {
+      "Priority": "Priorité",
+      "PriorityNotDefined": "Aucune priorité",
+      "PriorityTitle": "Priorités",
+      "Status": "Statut",
+      "StatusNotDefined": "Aucun statut",
+      "StatusTitle": "Statuts"
+    }
   },
   "CreateBcfTopic": {
-    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "dragDropImageText": "Veuillez sélectionner un fichier",
+    "addPictureButton": "Ajouter une image",
+    "titlePlaceholder": "Titre *",
+    "titleErrorMessage": "Titre manquant",
     "typeLabel": "Type",
     "priorityLabel": "Priorité",
     "statusLabel": "Statut",
     "stageLabel": "Phase",
     "assignedToLabel": "Assigné à",
     "dueDateLabel": "Date d'échéance (JJ/MM/AAAA)",
+    "dateErrorMessage": "Format de date ou date incorrecte",
     "dateExample": "(Ex: 28/04/2022)",
     "descriptionLabel": "Description",
     "tagsLabel": "Tags",
@@ -272,8 +312,10 @@
   },
   "EditBcfTopic": {
     "goBackButton": "Retour",
-    "dragDropImageText": "Faites glisser et déposez une image, ou Parcourir",
+    "dragDropImageText": "Veuillez sélectionner un fichier",
+    "addPictureButton": "Ajouter une image",
     "titlePlaceholder": "Titre*",
+    "titleErrorMessage": "Titre manquant",
     "typeLabel": "Type",
     "priorityLabel": "Priorité",
     "statusLabel": "Statut",
@@ -469,6 +511,58 @@
       "readWrite": "Lecture / Écriture"
     }
   },
+  "GuidedTour": {
+    "platform": {
+      "intro": {
+        "title": "Bienvenue",
+        "content": "Explorons ensemble la plateforme BIMData"
+      },
+      "actionButtons": {
+        "title": "Tableau de bord",
+        "content": "Accédez à l’ensemble de vos espaces, projets et abonnements directement depuis ce tableau de bord"
+      },
+      "firstSpace": {
+        "title": "Vos espaces",
+        "content": "Accédez à vos espaces récents directement depuis ce raccourcis"
+      },
+      "firstProject": {
+        "title": "Vos projets",
+        "content": "Accédez à vos projets récents directement depuis ce raccourcis"
+      },
+      "previewIfc": {
+        "title": "Aperçu",
+        "content": "Naviguez facilement parmis les aperçus des modèles de votre projet"
+      },    
+      "usersManager": {
+        "title": "Collaboration",
+        "content": "Invitez vos premiers collaborateurs à votre projet"
+      },
+      "modelsManager": {
+        "title": "Modèles",
+        "content": "Télécharger et gérer les modèles de votre projet (IFC, DWG, PDF...)"
+      },
+      "gedButton": {
+        "title": "GED",
+        "content": "Accédez à la gestion documentaire de votre projet depuis l’onglet “GED”"
+      },
+      "fileTree": {
+        "title": "Arborescence",
+        "content": "Créez vos dossiers et télécharger vos fichiers directement depuis la GED"
+      },
+      "groupManager": {
+        "title": "Gestion des droits",
+        "content": "Créez des groupes utilisateurs pour gérer leurs droits d’accès"
+      },
+      "changeSpace": {
+        "title": "Fil d’ariane",
+        "content": "Accédez rapidement à votre espace depuis le fil d’ariane"
+      },
+      "outro": {
+        "title": "Bravo !",
+        "content": "Maintenant, il ne vous reste plus qu’à vous lancer dans votre premier projet"
+      }
+    }
+  },
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
     "resendLinkText": "Renvoyer l'invitation ?",
@@ -511,7 +605,7 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
-    "removeButtonText": "Marquer comme document",
+    "removeButtonText": "Retirer des modèles",
     "deleteButtonText": "Supprimer"
   },
   "ModelLocation": {
@@ -552,6 +646,7 @@
     "tabs": {
       "ifc": "IFC",
       "dwg": "DWG",
+      "upload": "Upload",
       "split": "Split / Export",
       "merge": "Merge",
       "archive": "Archives",
@@ -924,6 +1019,7 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",

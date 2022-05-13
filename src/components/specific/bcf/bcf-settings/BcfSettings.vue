@@ -9,9 +9,9 @@
           size="xxs"
           margin="0 6px 0 0"
         />
-        <span> {{ $t("BcfSettings.goBackButton") }}</span>
+        <span>{{ $t("BcfSettings.goBackButton") }}</span>
       </BIMDataButton>
-      <span> {{ $t("BcfSettings.title") }}</span>
+      <span>{{ $t("BcfSettings.title") }}</span>
       <BIMDataIcon
         name="close"
         fill
@@ -23,8 +23,7 @@
     <div class="bcf-settings__content flex justify-between p-b-18">
       <div class="bcf-settings__content__settings p-18">
         <p class="m-b-24 p-x-48 text-center color-granite">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          {{ $t("BcfSettings.text") }}
         </p>
         <SettingCard
           extensionType="Priority"

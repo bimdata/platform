@@ -1,13 +1,11 @@
 <template>
   <div class="project-card-action-menu" v-click-away="resetMenu">
-    <transition name="fade" mode="out-in">
-      <template v-if="loading">
-        <div class="project-card-action-menu__loader">
-          <BIMDataSpinner />
-        </div>
-      </template>
+    <div class="project-card-action-menu__loader" v-show="loading">
+      <BIMDataSpinner />
+    </div>
 
-      <template v-else-if="showUpdateForm">
+    <transition name="fade" mode="out-in">
+      <template v-if="showUpdateForm">
         <ProjectCardUpdateForm
           :project="project"
           @close="closeUpdateForm"

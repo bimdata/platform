@@ -54,37 +54,37 @@
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M6.9375 17.1323V12.6323H7.9375V17.1323H6.9375Z"
-      fill="#F8C62C"
+      class="fill-secondary"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M5.72393 18.0419L2.54195 14.8599L3.24906 14.1528L6.43104 17.3348L5.72393 18.0419Z"
-      fill="#F8C62C"
+      class="fill-secondary"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M5.46582 19.615H0.96582L0.96582 18.615H5.46582V19.615Z"
-      fill="#F8C62C"
+      class="fill-secondary"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M46.5972 10.507L47.7619 6.16033L48.7278 6.41915L47.5631 10.7658L46.5972 10.507Z"
-      fill="#2F374A"
+      class="fill-primary"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M45.1895 11.0715L42.9395 7.17435L43.8056 6.67435L46.0556 10.5715L45.1895 11.0715Z"
-      fill="#2F374A"
+      class="fill-primary"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M44.5331 12.5242L40.1864 11.3595L40.4452 10.3936L44.7919 11.5582L44.5331 12.5242Z"
-      fill="#2F374A"
+      class="fill-primary"
     />
   </svg>
 </template>

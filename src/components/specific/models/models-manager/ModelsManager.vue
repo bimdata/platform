@@ -14,6 +14,9 @@
           <span class="models-manager__tab__text">
             {{ tab.label }}
           </span>
+          <span v-if="tab.id === 'dwg' || tab.id === 'dxf'" class="beta-badge">
+            BETA
+          </span>
           <span class="models-manager__tab__count" v-if="tab.models.length > 0">
             {{ tab.models.length }}
           </span>
@@ -54,6 +57,7 @@
       <transition name="fade" mode="out-in">
         <keep-alive>
           <component
+            :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
             :models="currentTab.models"
@@ -76,21 +80,28 @@ import PDFManager from "./pdf-manager/PDFManager.vue";
 
 const tabsDef = [
   {
-    id: "tab0",
+    id: "ifc",
     label: "IFC",
     icon: "/static/ifc-file.svg",
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
-  // {
-  //   id: "tab1",
-  //   label: "DWG",
-  //   icon: "/static/dwg-file.svg",
-  //   modelTypes: [MODEL_TYPE.DWG],
-  //   component: "DWGManager"
-  // },
   {
-    id: "tab2",
+    id: "dwg",
+    label: "DWG",
+    icon: "/static/dwg-file.svg",
+    modelTypes: [MODEL_TYPE.DWG],
+    component: "DWGManager"
+  },
+  {
+    id: "dxf",
+    label: "DXF",
+    icon: "/static/dxf-file.svg",
+    modelTypes: [MODEL_TYPE.DXF],
+    component: "DWGManager"
+  },
+  {
+    id: "pdf",
     label: "PDF",
     icon: "/static/pdf-file.svg",
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],

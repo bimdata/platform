@@ -21,6 +21,16 @@
       />
     </template>
 
+    <template v-else-if="model.type === MODEL_TYPE.DXF">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DXF"
+        text="2D"
+      />
+    </template>
+
     <template
       v-else-if="
         model.type === MODEL_TYPE.PDF || model.type === MODEL_TYPE.META_BUILDING
@@ -46,8 +56,9 @@
         <BIMDataIcon name="download" size="m" />
       </BIMDataButton>
     </template>
+
     <BIMDataButton
-      :disabled="model.document?.userPermission < 100"
+      :disabled="!project.isAdmin && model.document?.userPermission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded

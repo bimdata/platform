@@ -66,6 +66,10 @@ export default {
       type: Boolean,
       default: false
     },
+    autoclose: {
+      type: Boolean,
+      default: false
+    },
     project: {
       type: Object,
       required: true
@@ -134,6 +138,9 @@ export default {
       setTimeout(() => {
         const index = fileUploads.value.findIndex(f => f.key === key);
         fileUploads.value.splice(index, 1);
+        if (props.autoclose && fileUploads.value.length === 0) {
+          setTimeout(() => close(), 800);
+        }
       }, delay);
     };
 

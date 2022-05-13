@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import { useModels } from "@/state/models";
+import { useModels } from "@/state/models.js";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal";
+import GenericModal from "@/components/generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {

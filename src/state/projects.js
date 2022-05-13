@@ -75,6 +75,17 @@ const deleteProject = async project => {
   return project;
 };
 
+const leaveProject = async project => {
+  await ProjectService.leaveProject(project);
+
+  const { loadUser } = useUser();
+  await loadUser();
+  await loadUserProjects();
+  await loadSpaceProjects({ id: project.cloud.id });
+
+  return project;
+};
+
 const sendProjectInvitation = async (project, invitation, options = {}) => {
   const newInvitation = await ProjectService.sendProjectInvitation(
     project,
@@ -106,10 +117,6 @@ const deleteProjectUser = async (project, user) => {
   await ProjectService.deleteProjectUser(project, user);
   state.projectUsers = state.projectUsers.filter(u => u.id !== user.id);
   return user;
-};
-
-const leaveProject = async project => {
-  await ProjectService.leaveProject(project);
 };
 
 const fetchFolderProjectUsers = async (project, folder) => {
@@ -147,11 +154,11 @@ export function useProjects() {
     createProject,
     updateProject,
     deleteProject,
+    leaveProject,
     sendProjectInvitation,
     cancelProjectInvitation,
     updateProjectUser,
     deleteProjectUser,
-    leaveProject,
     fetchFolderProjectUsers,
     getUserProjectList
   };
