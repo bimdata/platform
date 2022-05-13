@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@bimdata/design-system": "1.4.0-rc.10",
-    "@bimdata/typescript-fetch-api-client": "8.3.8",
+    "@bimdata/typescript-fetch-api-client": "8.3.10",
     "@bimdata/viewer": "^1.9.0-rc.98",
     "async": "^3.2.3",
     "lodash": "^4.17.21",
