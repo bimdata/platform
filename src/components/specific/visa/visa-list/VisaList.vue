@@ -65,7 +65,7 @@
               :text="visa.document.name"
             />
             <div class="visa-list__content__visa__desc__info">
-              <span>{{ $d(visa.deadline, "short") }} </span>
+              <span>{{ $d(visa.deadline, "short") }}</span>
               -
               <BIMDataTextbox
                 :text="

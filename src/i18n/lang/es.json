@@ -723,7 +723,6 @@
             "validator": "Confirmando",
             "toValidate": "Confirmar antes de",
             "errorDate": "Fecha inválida",
-            "exempleDate": "(Por ej.: 31/05/2022)",
             "description": "Descripción",
             "cancel": "Anular",
             "validate": "Confirmar",

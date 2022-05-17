@@ -902,7 +902,7 @@
       "toValidate": "A valider avant",
       "errorDate": "Date invalide",
       "errorValidator": "Vous devez ajouter au moins 1 validant",
-      "exempleDate": "(Ex: 31/05/2022)",
+      "exempleDate": "format: jj/mm/aaaa",
       "description": "Description",
       "cancel": "Annuler",
       "validate": "Valider",
