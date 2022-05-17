@@ -77,9 +77,9 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 
-import { useFiles } from "@/state/files.js";
 import { toCamelCaseFields } from "@/utils/misc";
 import { useUpload } from "@/composables/upload.js";
+import FileService from "@/services/FileService.js";
 
 import VersioningDoc from "@/components/specific/versioning/versioning-doc/VersioningDoc.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -109,7 +109,6 @@ export default {
 
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
-    const { getDocumentVersions, deleteDocVersion } = useFiles();
 
     const loading = ref(false);
 
@@ -133,7 +132,7 @@ export default {
     const onDelete = async document => {
       isSafeZone.value = true;
       safeZoneAction.value = async () => {
-        await deleteDocVersion(props.project, document);
+        await FileService.deleteDocVersion(props.project, document);
         const documentHistory = allDocVersions.value.find(
           version => version.id !== document.id
         );
@@ -152,7 +151,7 @@ export default {
     const allDocVersions = ref(null);
 
     const getAllDocVersions = async currentDocument => {
-      allDocVersions.value = await getDocumentVersions(
+      allDocVersions.value = await FileService.getDocumentVersions(
         props.project,
         currentDocument
       );

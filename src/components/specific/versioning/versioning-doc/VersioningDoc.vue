@@ -179,6 +179,8 @@ import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { VISA_STATUS } from "@/config/visa.js";
 import routeNames from "@/router/route-names.js";
+import FileService from "@/services/FileService.js";
+
 import { isViewable, isPDF, windowType } from "@/utils/models.js";
 
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
@@ -210,7 +212,7 @@ export default {
   },
   emits: ["model-created", "on-delete", "get-all-doc-versions"],
   setup(props, { emit }) {
-    const { downloadFiles, makeHeadVersion } = useFiles();
+    const { downloadFiles } = useFiles();
     const { createModel } = useModels();
     const router = useRouter();
 
@@ -219,7 +221,7 @@ export default {
     );
 
     const swapHeadDoc = async () => {
-      const newHeadVersion = await makeHeadVersion(
+      const newHeadVersion = await FileService.makeHeadVersion(
         props.project,
         props.headDocument,
         props.document

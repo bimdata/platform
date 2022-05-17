@@ -97,18 +97,6 @@ const deleteFiles = async (project, files) => {
   return files;
 };
 
-const deleteDocVersion = async (project, document) => {
-  return FileService.deleteDocVersion(project, document);
-};
-
-const getDocumentVersions = async (project, document) => {
-  return FileService.getDocumentVersions(project, document);
-};
-
-const makeHeadVersion = async (project, headDocument, document) => {
-  return FileService.makeHeadVersion(project, headDocument, document);
-};
-
 export function useFiles() {
   const readOnlyState = readonly(state);
   return {
@@ -122,9 +110,6 @@ export function useFiles() {
     updateFiles,
     moveFiles,
     downloadFiles,
-    deleteFiles,
-    deleteDocVersion,
-    getDocumentVersions,
-    makeHeadVersion
+    deleteFiles
   };
 }
