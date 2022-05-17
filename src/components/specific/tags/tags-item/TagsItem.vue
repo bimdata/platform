@@ -109,7 +109,7 @@
 <script>
 import { ref, watch } from "vue";
 
-import { useTag } from "@/state/tag.js";
+import TagService from "@/services/TagService";
 import { adjustBorderColor } from "@/components/generic/color-selector/colors.js";
 
 import ColorSelector from "@/components/generic/color-selector/ColorSelector.vue";
@@ -132,8 +132,6 @@ export default {
   },
   emits: ["close", "tag-updater", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
-    const { updateTag, deleteTag, addDocumentTag, deleteDocumentTag } =
-      useTag();
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);
     const input = ref(null);
@@ -144,7 +142,7 @@ export default {
 
     const onSubmitTagName = async () => {
       if (tagName.value && tagName.value !== props.tag.name) {
-        await updateTag(props.project, props.tag, {
+        await TagService.updateTag(props.project, props.tag, {
           name: tagName.value
         });
         editTagName.value = false;
@@ -161,7 +159,7 @@ export default {
     const isSafeZone = ref(false);
 
     const onDeleteTag = async () => {
-      await deleteTag(props.project, props.tag);
+      await TagService.deleteTag(props.project, props.tag);
       emit("fetch-tags");
       emit("file-updated");
       isSafeZone.value = false;
@@ -169,13 +167,13 @@ export default {
 
     const toggle = async (tag, checked) => {
       if (checked) {
-        await addDocumentTag(props.project, props.document, {
+        await TagService.addDocumentTag(props.project, props.document, {
           id: tag.id,
           name: tag.name,
           color: tag.color
         });
       } else {
-        await deleteDocumentTag(props.project, props.document, tag);
+        await TagService.deleteDocumentTag(props.project, props.document, tag);
       }
       tag.isSelected = checked;
       emit("tag-updater", tag);
@@ -186,7 +184,7 @@ export default {
 
     const onSubmitTagColor = async colorValue => {
       if (colorValue !== props.tag.color) {
-        await updateTag(props.project, props.tag, {
+        await TagService.updateTag(props.project, props.tag, {
           color: colorValue
         });
         tagColor.value = colorValue;

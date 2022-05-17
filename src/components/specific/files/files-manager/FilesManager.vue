@@ -173,9 +173,9 @@ import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useFiles } from "@/state/files.js";
+import TagService from "@/services/TagService";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
-import { useTag } from "@/state/tag.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { VISA_STATUS } from "@/config/visa.js";
 // Components
@@ -238,7 +238,6 @@ export default {
       downloadFiles: download
     } = useFiles();
     const { createModel } = useModels();
-    const { fetchAllTags } = useTag();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -433,7 +432,7 @@ export default {
     );
 
     const fetchTags = async () => {
-      allTags.value = await fetchAllTags(props.project);
+      allTags.value = await TagService.fetchAllTags(props.project);
     };
 
     onMounted(() => fetchVisas(), fetchTags());

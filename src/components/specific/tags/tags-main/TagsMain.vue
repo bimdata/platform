@@ -89,8 +89,8 @@ import { ref, watch, onMounted } from "vue";
 import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
 import TagsItem from "@/components/specific/tags/tags-item/TagsItem.vue";
 import { useToggle } from "@/composables/toggle";
+import TagService from "@/services/TagService";
 import { useFiles } from "@/state/files.js";
-import { useTag } from "@/state/tag.js";
 
 export default {
   components: { TagsItem },
@@ -118,7 +118,6 @@ export default {
     const input = ref(null);
     const newTagName = ref("");
 
-    const { createTag } = useTag();
     const { getDocument } = useFiles();
 
     const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
@@ -129,7 +128,7 @@ export default {
 
     const addNewTag = async () => {
       if (newTagName.value) {
-        await createTag(props.project, {
+        await TagService.createTag(props.project, {
           name: newTagName.value,
           color: getRandomHexColor()
         });
