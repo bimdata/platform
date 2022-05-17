@@ -1,6 +1,7 @@
 import mapLimit from "async/mapLimit";
 import { reactive, shallowReadonly, toRefs } from "vue";
 import BcfService from "@/services/BcfService.js";
+import { useProjects } from "@/state/projects.js";
 
 const state = reactive({
   bcfTopics: [],
@@ -39,6 +40,12 @@ const loadBcfTopics = async project => {
 const loadBcfTopicComments = async (project, topic) => {
   const comments = await BcfService.fetchTopicComments(project, topic);
   comments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
+
+  const { projectUsers } = useProjects();
+  comments.forEach(c => {
+    c.user = projectUsers.value.find(u => u.email === c.author);
+  });
+
   topic.comments = comments;
   return comments;
 };

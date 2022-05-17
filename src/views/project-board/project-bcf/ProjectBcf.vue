@@ -72,18 +72,21 @@
 
       <transition name="fade" mode="out-in">
         <template v-if="showBcfTopicCreate">
-          <BcfTopicCreate
+          <BcfTopicForm
             :project="project"
             :bcfTopics="bcfTopics"
             :extensions="extensions"
-            @bcf-topic-created="reloadBcfTopics"
+            @bcf-topic-created="
+              () => {
+                reloadBcfTopics();
+                closeSidePanel();
+              }
+            "
           />
         </template>
         <template v-else-if="showBcfTopicOverview && currentBcfTopic">
           <BcfTopicOverview
             :project="project"
-            :models="models"
-            :users="users"
             :bcfTopic="currentBcfTopic"
             :detailedExtensions="detailedExtensions"
             @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
@@ -98,6 +101,7 @@
         <template v-else-if="showBcfTopicForm && currentBcfTopic">
           <BcfTopicForm
             :project="project"
+            :bcfTopics="bcfTopics"
             :bcfTopic="currentBcfTopic"
             :extensions="extensions"
             @bcf-topic-updated="reloadBcfTopics"
@@ -333,7 +337,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const { currentProject, projectUsers } = useProjects();
+    const { currentProject } = useProjects();
     const { projectModels } = useModels();
     const {
       bcfTopics,
@@ -491,7 +495,6 @@ export default {
       isSortByIndexActive,
       isSortByNameActive,
       loading,
-      models: projectModels,
       project: currentProject,
       searchText,
       showBcfTopicCreate,
@@ -499,7 +502,6 @@ export default {
       showBcfTopicOverview,
       showMetrics,
       showSettings,
-      users: projectUsers,
       // Methods
       closeMetrics,
       closeSidePanel,
