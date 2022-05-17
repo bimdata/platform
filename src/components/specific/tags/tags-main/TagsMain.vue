@@ -76,6 +76,7 @@
             :tag="tag"
             @tag-updater="tagToUpdate = $event"
             @fetch-tags="$emit('fetch-tags')"
+            @file-updated="$emit('file-updated')"
           />
         </template>
       </div>
@@ -108,7 +109,7 @@ export default {
       default: () => []
     }
   },
-  emits: ["close", "fetch-tags"],
+  emits: ["close", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
     const filter = ref("");
     const tagsDocument = ref(null);
@@ -134,6 +135,7 @@ export default {
         });
         newTagName.value = "";
         toggleAddTagInput();
+        emit("file-updated");
         emit("fetch-tags");
       }
     };
@@ -168,6 +170,7 @@ export default {
       tagsDocument.value = (
         await getDocument(props.project, props.document)
       ).tags;
+      emit("file-updated");
     });
 
     watch(
@@ -179,9 +182,7 @@ export default {
     watch(filter, async () => getTagListUpdated());
 
     onMounted(async () => {
-      tagsDocument.value = (
-        await getDocument(props.project, props.document)
-      ).tags;
+      tagsDocument.value = props.document.tags || [];
       await getTagListUpdated(props.allTags);
     });
 

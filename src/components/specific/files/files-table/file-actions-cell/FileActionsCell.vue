@@ -88,9 +88,7 @@
           {{ $t("FileActionsCell.VisaButtonText") }}
         </BIMDataButton>
         <BIMDataButton
-          v-if="
-            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
-          "
+          v-if="project.isAdmin || file.userPermission === 100"
           class="file-actions-cell__menu__btn"
           ghost
           squared

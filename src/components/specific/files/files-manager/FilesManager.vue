@@ -140,6 +140,7 @@
               :allTags="allTags"
               @close="closeTagManager"
               @fetch-tags="fetchTags"
+              @file-updated="$emit('file-updated')"
             />
           </div>
         </transition>
@@ -222,6 +223,7 @@ export default {
   },
   emits: [
     "file-uploaded",
+    "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
     "model-created"

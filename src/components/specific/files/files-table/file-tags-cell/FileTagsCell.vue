@@ -1,21 +1,26 @@
 <template>
   <div class="file-tags-cell">
-    {{ console.log("file", file) }}
-    <template v-for="tag in file.tags" :key="tag.id">
-      <div class="file-tags-cell__tag">
-        <span
-          :style="{
-            color: `#${tag.color}`,
-            border: `1px solid #${tag.color}`
-          }"
-          >{{ tag.name }}</span
-        >
+    <template v-for="tag in tagsToDisplay" :key="tag.id">
+      <div
+        class="file-tags-cell__tag"
+        :style="{
+          color: `#${tag.color}`,
+          border: `1px solid #${tag.color}`
+        }"
+      >
+        <BIMDataTextbox
+          class="file-tags-cell__tag__text"
+          :text="tag.name"
+          maxWidth="58px"
+        />
       </div>
     </template>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
   props: {
     file: {
@@ -23,12 +28,18 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const tagsToDisplay = computed(() => {
+      return props.file.tags;
+    });
     return {
+      tagsToDisplay,
       console
     };
   }
 };
+// soit 3 tags en dessous x pxl
+// soit 2 tags dont 1 qui est au dessus de x pxl
 </script>
 
 <style scoped lang="scss" src="./FileTagsCell.scss"></style>

@@ -130,7 +130,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "tag-updater", "fetch-tags"],
+  emits: ["close", "tag-updater", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
     const { updateTag, deleteTag, addDocumentTag, deleteDocumentTag } =
       useTag();
@@ -149,6 +149,7 @@ export default {
         });
         editTagName.value = false;
         emit("fetch-tags");
+        emit("file-updated");
       }
     };
 
@@ -162,6 +163,7 @@ export default {
     const onDeleteTag = async () => {
       await deleteTag(props.project, props.tag);
       emit("fetch-tags");
+      emit("file-updated");
       isSafeZone.value = false;
     };
 
@@ -189,6 +191,7 @@ export default {
         });
         tagColor.value = colorValue;
         emit("fetch-tags");
+        emit("file-updated");
       }
     };
 
