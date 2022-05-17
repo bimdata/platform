@@ -723,7 +723,6 @@
             "validator": "Verifisering",
             "toValidate": "Må verifiseres før",
             "errorDate": "Ugyldig dato",
-            "exempleDate": "(F.eks.: 31/05/2022)",
             "description": "Beskrivelse",
             "cancel": "Avbryt",
             "validate": "Verifiser",

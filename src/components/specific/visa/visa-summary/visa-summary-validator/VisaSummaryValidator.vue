@@ -8,10 +8,15 @@
         color="silver-light"
         style="box-shadow: var(--box-shadow)"
       />
-      <BIMDataTextbox
-        class="visa-summary-validator__left-side__name"
-        :text="user.fullName || user.validator.email"
-      />
+      <div class="visa-summary-validator__left-side__info">
+        <BIMDataTextbox
+          class="visa-summary-validator__left-side__info__name"
+          :text="user.fullName || user.validator.email"
+        />
+        <template v-if="hasVoted(user)">
+          <span>{{ $d(user.updatedAt, "short") }}</span>
+        </template>
+      </div>
     </div>
     <div class="visa-summary-validator__right-side">
       <template
@@ -98,6 +103,8 @@ export default {
     const currentPeopleId = ref(null);
     const isWarningHover = ref(false);
 
+    const hasVoted = user => user.status !== VALIDATION_STATUS.PENDING;
+
     const validationStatus = user => {
       const { hasCommented, status } = user;
 
@@ -144,7 +151,8 @@ export default {
       // methods
       hoveringValidator,
       validationStatus,
-      iconStatus
+      iconStatus,
+      hasVoted
     };
   }
 };

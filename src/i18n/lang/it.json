@@ -723,7 +723,6 @@
             "validator": "Revisore",
             "toValidate": "Da convalidare entro il",
             "errorDate": "Data non valida",
-            "exempleDate": "(ad es. 31/05/2022)",
             "description": "Descrizione",
             "cancel": "Annulla",
             "validate": "Convalida",
