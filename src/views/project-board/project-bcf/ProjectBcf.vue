@@ -71,11 +71,14 @@
       </template>
 
       <transition name="fade" mode="out-in">
-        <template v-if="showBcfTopicCreate">
+        <template v-if="showBcfTopicCreate || showBcfTopicForm">
           <BcfTopicForm
+            :imageMode="true"
             :project="project"
             :bcfTopics="bcfTopics"
+            :bcfTopic="currentBcfTopic"
             :extensions="extensions"
+            @bcf-topic-updated="reloadBcfTopics"
             @bcf-topic-created="
               () => {
                 reloadBcfTopics();
@@ -96,15 +99,6 @@
             @comment-updated="reloadComments(currentBcfTopic)"
             @comment-deleted="reloadComments(currentBcfTopic)"
             @close="closeSidePanel"
-          />
-        </template>
-        <template v-else-if="showBcfTopicForm && currentBcfTopic">
-          <BcfTopicForm
-            :project="project"
-            :bcfTopics="bcfTopics"
-            :bcfTopic="currentBcfTopic"
-            :extensions="extensions"
-            @bcf-topic-updated="reloadBcfTopics"
           />
         </template>
       </transition>
