@@ -291,7 +291,6 @@
             <BcfTopicCard
               v-for="topic in displayedBcfTopics"
               :key="topic.guid"
-              :project="project"
               :bcfTopic="topic"
               :detailedExtensions="detailedExtensions"
               @open-bcf-topic="openBcfTopicOverview(topic)"

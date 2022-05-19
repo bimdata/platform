@@ -10,7 +10,7 @@
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "1.1.0-rc.3",
+    "@bimdata/bcf-components": "1.1.0-rc.6",
     "@bimdata/design-system": "1.4.0-rc.11",
     "@bimdata/typescript-fetch-api-client": "8.3.9",
     "@bimdata/viewer": "^1.9.0-rc.108",
