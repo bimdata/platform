@@ -724,7 +724,7 @@
             "validator": "Validating",
             "toValidate": "To be validated before",
             "errorDate": "Date invalid",
-            "exempleDate": "(Ex: 31/05/2022)",
+            "exempleDate": "format: dd/mm/yyyy",
             "description": "Description",
             "cancel": "Cancel",
             "validate": "Validate",

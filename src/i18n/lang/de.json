@@ -723,7 +723,6 @@
             "validator": "Bestätigend",
             "toValidate": "Zu bestätigen vor",
             "errorDate": "ungültiges Datum",
-            "exempleDate": "(z.B. 31.05.2022)",
             "description": "Beschreibung",
             "cancel": "Abbrechen",
             "validate": "Bestätigen",
