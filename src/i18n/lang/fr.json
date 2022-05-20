@@ -91,6 +91,8 @@
     "viewListTooltip": "vue liste",
     "metricsTitle": "Total: {count} issues BCF",
     "metricsEmptyText": "Ajoutez des issues pour voir les statistiques associées ici.",
+    "noSearchResultsTitle": "Pas de résultats",
+    "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
     "goBackButton": "Retour"
   },
   "ProjectFiles": {
@@ -362,7 +364,7 @@
       "previewIfc": {
         "title": "Aperçu",
         "content": "Naviguez facilement parmis les aperçus des modèles de votre projet"
-      },    
+      },
       "usersManager": {
         "title": "Collaboration",
         "content": "Invitez vos premiers collaborateurs à votre projet"
