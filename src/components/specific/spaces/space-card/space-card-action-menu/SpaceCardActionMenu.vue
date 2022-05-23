@@ -17,14 +17,12 @@
 
     <transition name="fade">
       <div class="space-card-action-menu__container" v-show="showMenu">
-        <transition name="fade" mode="out-in">
-          <template v-if="loading">
-            <div class="space-card-action-menu__container__loader">
-              <BIMDataSpinner />
-            </div>
-          </template>
+        <div class="space-card-action-menu__container__loader" v-show="loading">
+          <BIMDataSpinner />
+        </div>
 
-          <template v-else-if="showUpdateForm">
+        <transition name="fade" mode="out-in">
+          <template v-if="showUpdateForm">
             <SpaceCardUpdateForm
               data-test="update-form"
               :space="space"
