@@ -43,7 +43,6 @@
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
-      @remove-model="removeModel($event)"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
     />
@@ -85,11 +84,7 @@ export default {
     }
   },
   setup(props) {
-    const {
-      deleteModels,
-      downloadModels: download,
-      updateModels
-    } = useModels();
+    const { downloadModels: download, updateModels } = useModels();
 
     const currentTab = ref({});
     const selectTab = tab => (currentTab.value = tab);
@@ -128,10 +123,6 @@ export default {
       );
     };
 
-    const removeModel = async model => {
-      await deleteModels(props.project, [model]);
-    };
-
     const modelsToDelete = ref([]);
     const showDeleteModal = ref(false);
     const openDeleteModal = models => {
@@ -159,7 +150,6 @@ export default {
       downloadModels,
       closeDeleteModal,
       openDeleteModal,
-      removeModel,
       selectTab,
       setSelection,
       unarchiveModels

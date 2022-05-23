@@ -35,16 +35,28 @@
             {{ $t("FileActionsCell.openViewerButtonText") }}
           </BIMDataButton>
         </AppLink>
-        <BIMDataButton
-          v-if="!isFolder(file) && isConvertible(file)"
-          :disabled="isModel(file)"
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('create-model')"
-        >
-          {{ $t("FileActionsCell.createModelButtonText") }}
-        </BIMDataButton>
+        <template v-if="!isFolder(file) && isConvertible(file)">
+          <template v-if="!isModel(file)">
+            <BIMDataButton
+              class="file-actions-cell__menu__btn"
+              ghost
+              squared
+              @click="onClick('create-model')"
+            >
+              {{ $t("FileActionsCell.createModelButtonText") }}
+            </BIMDataButton>
+          </template>
+          <template v-else>
+            <BIMDataButton
+              class="file-actions-cell__menu__btn"
+              ghost
+              squared
+              @click="onClick('remove-model')"
+            >
+              {{ $t("FileActionsCell.removeModelButtonText") }}
+            </BIMDataButton>
+          </template>
+        </template>
 
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
@@ -149,9 +161,10 @@ export default {
     "delete",
     "download",
     "manage-access",
+    "open-versioning-manager",
     "open-visa-manager",
-    "update",
-    "open-versioning-manager"
+    "remove-model",
+    "update"
   ],
   setup(props, { emit }) {
     const {

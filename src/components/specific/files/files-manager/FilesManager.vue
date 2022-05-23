@@ -105,6 +105,7 @@
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
+            @remove-model="removeModel"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
             @open-versioning-manager="openVersioningManager"
@@ -235,7 +236,7 @@ export default {
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
-    const { createModel } = useModels();
+    const { createModel, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -309,6 +310,12 @@ export default {
         title: t("Success"),
         message: t("FilesManager.createModelNotification")
       });
+    };
+
+    const removeModel = async file => {
+      await deleteModels(props.project, [
+        { id: file.modelId, type: file.modelType }
+      ]);
     };
 
     const filesToDelete = ref([]);
@@ -453,6 +460,7 @@ export default {
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
+      removeModel,
       downloadFiles,
       moveFiles,
       openAccessManager,
