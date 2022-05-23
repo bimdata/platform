@@ -73,7 +73,6 @@
       <transition name="fade" mode="out-in">
         <template v-if="showBcfTopicCreate || showBcfTopicForm">
           <BcfTopicForm
-            :imageMode="true"
             :project="project"
             :bcfTopics="bcfTopics"
             :bcfTopic="currentBcfTopic"
@@ -89,6 +88,7 @@
         </template>
         <template v-else-if="showBcfTopicOverview && currentBcfTopic">
           <BcfTopicOverview
+            :uiConfig="{ closeButton: true }"
             :project="project"
             :bcfTopic="currentBcfTopic"
             :detailedExtensions="detailedExtensions"
