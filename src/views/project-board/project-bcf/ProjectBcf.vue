@@ -64,7 +64,7 @@
             />
             {{ $t("ProjectBcf.goBackButton") }}
           </BIMDataButton>
-          <span class="text-center" style="width: calc(100% - 70px)">
+          <span class="text-center" style="width: 250px">
             <BIMDataTextbox :text="currentBcfTopic.title" />
           </span>
         </div>
@@ -249,7 +249,10 @@
           <div class="project-bcf__content__stats__title">
             {{ $t("ProjectBcf.metricsTitle", { count: bcfTopics.length }) }}
           </div>
-          <template v-if="bcfTopics.length > 0">
+          <template v-if="bcfTopics.length && displayedBcfTopics.length === 0">
+            <BcfStatisticsEmptyImage class="no-stats" />
+          </template>
+          <template v-else-if="bcfTopics.length > 0">
             <BcfStatistics
               :bcfTopics="displayedBcfTopics"
               extensionType="Status"
@@ -288,6 +291,18 @@
               :key="-1"
               @create-bcf-topic="openBcfTopicCreate"
             />
+            <div
+              v-else-if="bcfTopics.length && displayedBcfTopics.length === 0"
+              class="flex items-center"
+            >
+              <BIMDataCard class="no-search-results text-center p-30">
+                <template #content>
+                  <NoSearchResultsImage />
+                  <h3>{{ $t("ProjectBcf.noSearchResultsTitle") }}</h3>
+                  <p>{{ $t("ProjectBcf.noSearchResultsText") }}</p>
+                </template>
+              </BIMDataCard>
+            </div>
             <BcfTopicCard
               v-for="topic in displayedBcfTopics"
               :key="topic.guid"
@@ -317,6 +332,7 @@ import { useProjects } from "@/state/projects.js";
 import { useModels } from "@/state/models.js";
 // Components
 import BcfStatisticsEmptyImage from "@/components/images/BcfStatisticsEmptyImage.vue";
+import NoSearchResultsImage from "@/components/images/NoSearchResultsImage.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -326,6 +342,7 @@ export default {
     AppSlotContent,
     AppSidePanel,
     BcfStatisticsEmptyImage,
+    NoSearchResultsImage,
     FileUploadButton
   },
   setup() {
