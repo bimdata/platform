@@ -37,8 +37,7 @@ const UPLOADABLE_EXTENSIONS = Object.freeze([
   ".dwg",
   ".dxf",
   ".ifc",
-  ".ifczip",
-  ".pdf"
+  ".ifczip"
 ]);
 
 /**
