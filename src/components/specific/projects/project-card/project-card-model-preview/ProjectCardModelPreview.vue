@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 export default {
   props: {
@@ -57,9 +57,12 @@ export default {
       }
     };
 
+    const relevantModels = computed(() => props.models.filter(model => !model.archived));
+
     const images = ref([]);
     const image = ref({});
     const index = ref(0);
+
 
     const previousImage = () => {
       // Can't go below 0
@@ -73,15 +76,14 @@ export default {
     watch(index, (newIndex, oldIndex) => {
       if (newIndex !== oldIndex) {
         image.value = images.value[newIndex] || {};
-        emit("preview-changed", props.models[newIndex]);
+        emit("preview-changed", relevantModels.value[newIndex]);
       }
     });
 
     watch(
-      () => props.models,
+      () => relevantModels,
       () => {
-        images.value = props.models
-          .filter(model => !model.archived)
+        images.value = relevantModels.value
           .map((model, i) => ({
             index: i + 1,
             name: model.name,
