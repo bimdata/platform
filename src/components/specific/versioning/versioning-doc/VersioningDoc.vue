@@ -22,7 +22,7 @@
           <template v-if="!isEmpty(document.visas)">
             <BIMDataIcon
               name="visa"
-              :color="hasOneVisaClosed ? 'success' : 'warning'"
+              :color="hasOneVisaClosed ? 'success' : 'granite'"
               size="s"
               fill
             />
