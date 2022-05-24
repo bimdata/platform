@@ -13,7 +13,7 @@
     "@bimdata/bcf-components": "1.1.0-rc.8",
     "@bimdata/design-system": "1.4.0-rc.11",
     "@bimdata/typescript-fetch-api-client": "8.3.9",
-    "@bimdata/viewer": "^1.9.0-rc.112",
+    "@bimdata/viewer": "^1.9.0-rc.113",
     "async": "^3.2.3",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.8.2",
