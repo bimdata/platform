@@ -45,7 +45,7 @@
         color: var(--color-primary);
       }
 
-      &:deep {
+      &:deep() {
         .bimdata-input {
           width: 250px;
         }
@@ -72,8 +72,7 @@
 
         &__color-selector {
           position: absolute;
-          top: 37px;
-          right: -12px;
+          right: calc(var(--spacing-unit) * -1);
           z-index: 1;
         }
       }

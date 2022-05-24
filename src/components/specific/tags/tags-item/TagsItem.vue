@@ -38,7 +38,7 @@
         :modelValue="tag.isSelected"
         @update:modelValue="toggle(tag, $event)"
       />
-      <div class="tags-item__content__info">
+      <div ref="tagContent" class="tags-item__content__info">
         <template v-if="!editTagName">
           <BIMDataTextbox :text="tagName" width="250px" />
         </template>
@@ -86,19 +86,23 @@
               'background-color': `#${tagColor}`,
               'border-color': adjustBorderColor(`${tagColor}`, -50)
             }"
-            @click="displayColorSelector = true"
+            @click="onColorSelector"
           ></div>
           <template v-if="displayColorSelector">
-            <ColorSelector
+            <div
+              ref="colorSelector"
               class="tags-item__content__info__action__color-selector"
-              :modelValue="tagColor"
-              @update:modelValue="onSubmitTagColor"
-              v-click-away="
-                () => {
-                  displayColorSelector = false;
-                }
-              "
-            />
+            >
+              <ColorSelector
+                :modelValue="tagColor"
+                @update:modelValue="onSubmitTagColor"
+                v-click-away="
+                  () => {
+                    displayColorSelector = false;
+                  }
+                "
+              />
+            </div>
           </template>
         </div>
       </div>
@@ -107,7 +111,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 
 import TagService from "@/services/TagService";
 import { adjustBorderColor } from "@/components/generic/color-selector/colors.js";
@@ -125,6 +129,10 @@ export default {
       type: Object,
       required: true
     },
+    tagsMain: {
+      type: Object,
+      required: true
+    },
     tag: {
       type: Object,
       required: true
@@ -134,6 +142,7 @@ export default {
   setup(props, { emit }) {
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);
+    const tagContent = ref(null);
     const input = ref(null);
 
     watch(editTagName, () =>
@@ -193,19 +202,44 @@ export default {
       }
     };
 
+    const onColorSelector = () => {
+      displayColorSelector.value = true;
+      nextTick(() => colorPanelPosition());
+    };
+
+    const colorSelector = ref(null);
+
+    const colorPanelPosition = () => {
+      const { height: tagHeight } = tagContent.value.getBoundingClientRect();
+
+      colorSelector.value.style.top = tagHeight + "px";
+
+      const { height: heightTagsMain, y: yTagsMain } =
+        props.tagsMain.getBoundingClientRect();
+      const { height: heightColorPanel, y: yColorPanel } =
+        colorSelector.value.getBoundingClientRect();
+
+      if (yColorPanel - yTagsMain + heightColorPanel > heightTagsMain) {
+        colorSelector.value.style.top = "-" + heightColorPanel + "px";
+      }
+    };
+
     return {
       // references
       input,
       tagName,
       tagColor,
-      editTagName,
+      tagContent,
       isSafeZone,
-      // methods
-      onSubmitTagColor,
-      adjustBorderColor,
-      onCancelSubmitTagName,
+      editTagName,
+      colorSelector,
       displayColorSelector,
+      // methods
+      onCancelSubmitTagName,
+      adjustBorderColor,
+      onSubmitTagColor,
       onSubmitTagName,
+      onColorSelector,
       onDeleteTag,
       toggle
     };

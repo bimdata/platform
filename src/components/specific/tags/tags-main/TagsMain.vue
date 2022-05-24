@@ -1,5 +1,5 @@
 <template>
-  <div class="tags-main">
+  <div ref="tagsMain" class="tags-main">
     <div class="tags-main__content">
       <div class="tags-main__content__header">
         <div class="tags-main__content__header__left-side">
@@ -73,6 +73,7 @@
             v-if="tag.isFindable"
             :project="project"
             :document="document"
+            :tagsMain="tagsMain"
             :tag="tag"
             @tag-updater="tagToUpdate = $event"
             @fetch-tags="$emit('fetch-tags')"
@@ -111,20 +112,20 @@ export default {
   },
   emits: ["close", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
-    const filter = ref("");
     const tagsDocument = ref(null);
-    const updatedTagList = ref(null);
-    const tagToUpdate = ref(null);
-    const input = ref(null);
-    const newTagName = ref("");
+    const tagsMain = ref(null);
 
     const { getDocument } = useFiles();
 
     const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
 
+    const input = ref(null);
+
     watch(showAddTagInput, () =>
       setTimeout(() => showAddTagInput.value && input.value.focus(), 100)
     );
+
+    const newTagName = ref("");
 
     const addNewTag = async () => {
       if (newTagName.value) {
@@ -138,6 +139,9 @@ export default {
         emit("fetch-tags");
       }
     };
+
+    const updatedTagList = ref(null);
+    const filter = ref("");
 
     const getTagListUpdated = (list = updatedTagList.value) => {
       updatedTagList.value = list
@@ -155,6 +159,8 @@ export default {
         })
         .sort((a, b) => (a.id > b.id ? 1 : -1));
     };
+
+    const tagToUpdate = ref(null);
 
     watch(tagToUpdate, async () => {
       updatedTagList.value.map(tag =>
@@ -186,16 +192,17 @@ export default {
     });
 
     return {
-      //references
-      filter,
+      // references
       input,
-      updatedTagList,
-      tagToUpdate,
-      showAddTagInput,
-      toggleAddTagInput,
+      filter,
+      tagsMain,
       newTagName,
+      tagToUpdate,
       tagsDocument,
-      //methods
+      updatedTagList,
+      showAddTagInput,
+      // methods
+      toggleAddTagInput,
       addNewTag
     };
   }
