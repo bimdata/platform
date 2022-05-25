@@ -1,71 +1,96 @@
 .project-bcf {
   &__settings {
     position: fixed;
+    z-index: 999;
     top: 0;
     right: 0;
-    background-color: white;
-    height: 100%;
     width: 500px;
-    z-index: 999;
+    height: 100%;
+    background-color: var(--color-white);
   }
+
   &__actions {
-    & > .flex {
+    display: flex;
+    justify-content: space-between;
+
+    &--start,
+    &--end {
       position: relative;
-      &:first-child {
-        width: 50%;
-      }
-      .bimdata-tooltip:deep() {
-        // @TODO adapt BIMDataTooltip for Vue 3
-        .bimdata-tooltip__text {
-          top: 36px !important;
-          left: 35%;
-        }
-      }
-      .bimdata-btn:enabled {
-        color: var(--color-primary);
-      }
-      .bimdata-btn:disabled {
-        background-color: var(--color-white);
-        color: var(--color-silver-dark);
-      }
+      display: flex;
+      gap: var(--spacing-unit);
     }
-    .active:enabled {
-      position: relative;
+
+    &--start {
+      width: 50%;
+    }
+
+    .bimdata-btn:disabled {
+      background-color: var(--color-white);
+      color: var(--color-silver-dark);
+    }
+    .bimdata-btn.active {
       background-color: var(--color-secondary);
     }
   }
 
   &__content {
-    &__metrics {
-      width: 22%;
-      height: 100%;
-      min-width: 360px;
-      overflow: auto;
+    display: flex;
+    gap: calc(var(--spacing-unit) * 2);
+    padding-top: calc(var(--spacing-unit) * 2);
+
+    &__stats {
       position: sticky;
-      top: 0%;
-      p {
+      top: 0;
+      min-width: 360px;
+      width: 22%;
+      height: 500px;
+      overflow: auto;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 2);
+
+      &__title {
+        text-align: center;
         font-size: 18px;
+        font-weight: bold;
       }
     }
+
+    &__loader,
+    &__list,
+    &__grid {
+      flex: 1;
+    }
+
+    &__loader {
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .bimdata-spinner {
+        transform: scale(2);
+      }
+    }
+
+    .no-stats {
+      height: 382px;
+    }
+
     &__grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, 336px);
       justify-content: space-between;
-      grid-template-rows: 307px;
-      gap: 1%;
+      column-gap: 1%;
       row-gap: 24px;
-      flex: 1;
-    }
-    &__list {
-      flex: 1;
-    }
-    &__empty {
-      width: 22%;
-      height: 307px;
-      background-color: var(--color-white);
-      box-shadow: var(--box-shadow);
-      & > .flex {
-        flex-direction: column;
+      .no-search-results {
+        .bimdata-card__content {
+          h3 {
+            color: var(--color-primary);
+          }
+        }
       }
     }
   }

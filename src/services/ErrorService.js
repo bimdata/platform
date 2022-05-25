@@ -66,25 +66,15 @@ const ERRORS = Object.freeze({
   SUBSCRIPTIONS_FETCH_ERROR: "subscriptionsFetchError",
   PLATFORM_SUBSCRIBE_ERROR: "platformSubscribeError",
   DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",
-  DATAPACK_UPDATE_ERROR: "datapackUpdateError"
+  DATAPACK_UPDATE_ERROR: "datapackUpdateError",
+  BCF_IMPORT_ERROR: "bcfImportError",
+  BCF_EXPORT_ERROR: "bcfExportError"
 });
 
 class RuntimeError {
   constructor(id, error) {
     this.id = id;
     this.error = error;
-  }
-}
-
-class HttpClientError extends RuntimeError {
-  constructor(id, error) {
-    super(id, error);
-  }
-}
-
-class HttpServerError extends RuntimeError {
-  constructor(id, error) {
-    super(id, error);
   }
 }
 
@@ -112,12 +102,6 @@ class ErrorService {
 
 const service = new ErrorService();
 
-export {
-  ERRORS,
-  RuntimeError,
-  HttpClientError,
-  HttpServerError,
-  service as ErrorService
-};
+export { ERRORS, RuntimeError, service as ErrorService };
 
 export default service;
