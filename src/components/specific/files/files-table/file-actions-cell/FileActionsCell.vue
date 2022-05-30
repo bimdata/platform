@@ -89,6 +89,18 @@
         </BIMDataButton>
 
         <BIMDataButton
+          v-if="
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('open-versioning-manager')"
+        >
+          {{ $t("FileActionsCell.VersioningButtonText") }}
+        </BIMDataButton>
+
+        <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
@@ -138,7 +150,8 @@ export default {
     "download",
     "manage-access",
     "open-visa-manager",
-    "update"
+    "update",
+    "open-versioning-manager"
   ],
   setup(props, { emit }) {
     const {

@@ -58,8 +58,14 @@ function isIFC(file) {
   return isModel(file) && file.modelType === MODEL_TYPE.IFC;
 }
 
+function isPDF(file) {
+  return fileExtension(file) === MODEL_EXTENSIONS.PDF;
+}
+
 function isSmartFile(file) {
-  return MODEL_EXTENSIONS.includes(fileExtension(file.fileName).toLowerCase());
+  return Object.values(MODEL_EXTENSIONS).includes(
+    fileExtension(file.fileName).toLowerCase()
+  );
 }
 
 function isViewable(file) {
@@ -86,6 +92,7 @@ function windowType(file) {
 export {
   isConvertible,
   isIFC,
+  isPDF,
   isModel,
   isPlanModel,
   isSmartFile,

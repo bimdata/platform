@@ -53,14 +53,22 @@
           color="primary"
         />
         <BIMDataFileIcon v-else :fileName="file.fileName" :size="20" />
-        <BIMDataTextbox :text="file.name" />
+        <BIMDataTextbox :text="file.name" width="auto" maxWidth="70%" />
+        <BIMDataIcon
+          v-if="hasHistory"
+          name="versioning"
+          margin="0px 0px 0px 4px"
+          size="xxs"
+          fill
+          color="primary"
+        />
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useFiles } from "@/state/files.js";
 import { isFolder } from "@/utils/file-structure.js";
 
@@ -88,6 +96,8 @@ export default {
     const nameInput = ref(null);
     const fileName = ref("");
     const hasError = ref(false);
+
+    const hasHistory = computed(() => props.file.history?.length > 1);
 
     const renameFile = async () => {
       if (fileName.value) {
@@ -148,6 +158,7 @@ export default {
       showUpdateForm,
       // Methods
       closeUpdateForm,
+      hasHistory,
       isFolder,
       openUpdateForm,
       renameFile
