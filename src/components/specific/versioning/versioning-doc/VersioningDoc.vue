@@ -210,7 +210,7 @@ export default {
       required: true
     }
   },
-  emits: ["model-created", "on-delete", "get-all-doc-versions"],
+  emits: ["on-delete", "get-all-doc-versions"],
   setup(props, { emit }) {
     const { downloadFiles } = useFiles();
     const { createModel } = useModels();
@@ -242,7 +242,6 @@ export default {
           window: windowType(model.document)
         }
       });
-      emit("model-created", model);
     };
 
     return {
