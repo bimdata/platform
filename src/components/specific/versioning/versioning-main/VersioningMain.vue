@@ -63,7 +63,6 @@
               :headDocument="allDocVersions[0]"
               :isHead="index === 0"
               :isLast="index + 1 === allDocVersions.length"
-              @current-head="currentHead = $event"
               @on-delete="onDelete"
               @get-all-doc-versions="getAllDocVersions"
             />
@@ -105,7 +104,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "model-created", "file-uploaded"],
+  emits: ["file-uploaded", "close"],
 
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
@@ -126,26 +125,24 @@ export default {
       }
     };
 
-    const safeZoneAction = ref(null);
+    const docToDelete = ref(null);
     const isSafeZone = ref(false);
 
     const onDelete = async document => {
       isSafeZone.value = true;
-      safeZoneAction.value = async () => {
-        await FileService.deleteDocVersion(props.project, document);
-        const documentHistory = allDocVersions.value.find(
-          version => version.id !== document.id
-        );
-        await getAllDocVersions(documentHistory);
-      };
+      docToDelete.value = document;
     };
 
     const onSafeZone = async isActionConfirmed => {
       if (isActionConfirmed) {
-        await safeZoneAction.value();
+        await FileService.deleteDocVersion(props.project, docToDelete.value);
+        const documentHistory = allDocVersions.value.find(
+          version => version.id !== docToDelete.value.id
+        );
+        await getAllDocVersions(documentHistory);
       }
       isSafeZone.value = false;
-      safeZoneAction.value = null;
+      docToDelete.value = null;
     };
 
     const allDocVersions = ref(null);
