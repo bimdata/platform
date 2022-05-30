@@ -6,12 +6,13 @@
           v-if="tab.displayed"
           class="models-manager__tab"
           :class="{ selected: tab.id === currentTab.id }"
+          :style="{ width: isLG ? 'auto' : '' }"
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
             <img :src="tab.icon" />
           </span>
-          <span class="models-manager__tab__text">
+          <span v-if="!isMD" class="models-manager__tab__text">
             {{ tab.label }}
           </span>
           <span v-if="tab.id === 'dwg' || tab.id === 'dxf'" class="beta-badge">
@@ -70,6 +71,7 @@
 
 <script>
 import { ref, watch } from "vue";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE } from "@/config/models.js";
 import { segregateByType } from "@/utils/models.js";
@@ -163,7 +165,9 @@ export default {
       // Methods
       closeMenu,
       selectTab,
-      toggleMenu
+      toggleMenu,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

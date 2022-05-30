@@ -11,13 +11,14 @@
           data-guide="project-tabs"
           width="300px"
           height="32px"
-          tabSize="100px"
+          :tabSize="isMD ? '64px' : '100px'"
           :tabs="tabs"
           :selected="currentTab.id"
           @tab-click="changeView($event.id)"
         >
           <template #tab="{ tab }">
-            <span>
+            <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
+            <span v-else>
               {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
             </span>
             <span v-if="tab.id === 'bcf'" class="beta-badge">BETA</span>
@@ -76,13 +77,16 @@ const PROJECT_VIEWS = {
 
 const tabsDef = [
   {
-    id: "overview"
+    id: "overview",
+    icon: "ifcFile"
   },
   {
-    id: "files"
+    id: "files",
+    icon: "folder"
   },
   {
-    id: "bcf"
+    id: "bcf",
+    icon: "bcf"
   }
 ];
 
