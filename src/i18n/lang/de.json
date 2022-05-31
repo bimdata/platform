@@ -219,8 +219,7 @@
         "renameButtonText": "Umbenennen",
         "archiveButtonText": "Archivieren",
         "deleteButtonText": "Löschen",
-        "unarchiveButtonText": "Dearchivieren",
-        "removeButtonText": "Als Vorlage markieren"
+        "unarchiveButtonText": "Dearchivieren"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
@@ -724,7 +723,6 @@
             "validator": "Bestätigend",
             "toValidate": "Zu bestätigen vor",
             "errorDate": "ungültiges Datum",
-            "exempleDate": "(z.B. 31.05.2022)",
             "description": "Beschreibung",
             "cancel": "Abbrechen",
             "validate": "Bestätigen",

@@ -91,6 +91,8 @@
     "viewListTooltip": "vue liste",
     "metricsTitle": "Total: {count} issues BCF",
     "metricsEmptyText": "Ajoutez des issues pour voir les statistiques associées ici.",
+    "noSearchResultsTitle": "Pas de résultats",
+    "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
     "goBackButton": "Retour"
   },
   "ProjectFiles": {
@@ -193,6 +195,7 @@
   "FileActionsCell": {
     "openViewerButtonText": "Voir",
     "createModelButtonText": "Définir comme modèle",
+    "removeModelButtonText": "Retirer des modèles",
     "addTagsButtonText": "Ajouter des tags",
     "validationRequestButtonText": "Demande de validation",
     "renameButtonText": "Renommer",
@@ -200,7 +203,8 @@
     "addVersionButtonText": "Ajouter une version",
     "manageAccessButtonText": "Gérer les accès",
     "deleteButtonText": "Supprimer",
-    "VisaButtonText": "Demande de validation"
+    "VisaButtonText": "Demande de validation",
+    "VersioningButtonText": "Ajouter une version"
   },
   "FileNameCell": {
     "inputErrorMessage": "Nom de fichier invalide",
@@ -214,6 +218,7 @@
   "FilesDeleteModal": {
     "title": "Suppression de fichiers",
     "message": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
+    "messageVersion":"Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants et l'historique de versions associé :",
     "cancelButtonText": "Annuler",
     "deleteButtonText": "Supprimer"
   },
@@ -362,7 +367,7 @@
       "previewIfc": {
         "title": "Aperçu",
         "content": "Naviguez facilement parmis les aperçus des modèles de votre projet"
-      },    
+      },
       "usersManager": {
         "title": "Collaboration",
         "content": "Invitez vos premiers collaborateurs à votre projet"
@@ -435,7 +440,6 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
-    "removeButtonText": "Marquer comme document",
     "deleteButtonText": "Supprimer"
   },
   "ModelLocation": {
@@ -732,7 +736,7 @@
       "toValidate": "A valider avant",
       "errorDate": "Date invalide",
       "errorValidator": "Vous devez ajouter au moins 1 validant",
-      "exempleDate": "(Ex: 31/05/2022)",
+      "exempleDate": "format: jj/mm/aaaa",
       "description": "Description",
       "cancel": "Annuler",
       "validate": "Valider",
@@ -812,6 +816,31 @@
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
     }
   },
+  "Versioning": {
+    "title": "Historique de versions",
+    "addVersion": "Ajouter une version",
+    "currentVersion": "Version actuelle",
+    "previousVersion": "Version précédente",
+    "addedBy": "Ajouté par :",
+    "titleDate": "Le",
+    "AddVersion": "Ajouter une nouvelle version",
+    "loading": {
+      "message": "Chargement en cours.",
+      "subMessage": "Ce processus peut prendre quelques instants."
+    },
+    "delete": "Supprimer",
+    "getToHead": "Passer en version actuelle",
+    "download": "Télécharger",
+    "show": "Voir",
+    "safeZone": {
+      "delete": {
+        "content": "Êtes-vous sûr de vouloir supprimer cette version ?",
+        "action": "Oui, supprimer cette version",
+        "keepView": "Annuler"
+      }
+    },
+    "emptyArea": "Vous n’avez actuellement pas d’historique de version pour ce fichier."
+  },
   "Error": "Erreur",
   "Success": "Succès",
   "Errors": {
@@ -834,6 +863,7 @@
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
+    "userAlreadyExistsError": "Cet utilisateur est déjà membre de l'espace / projet",
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
@@ -849,6 +879,9 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "fileVersionsFetchError": "Impossible de récupérer les versions de ce document",
+    "fileVersionsMakeHeadError": "Échec lors du passage du document en version actuelle",
+    "fileVersionDelete": "Échec lors de la suppression du document",
     "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",

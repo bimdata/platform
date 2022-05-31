@@ -219,8 +219,7 @@
         "renameButtonText": "Endre navn",
         "archiveButtonText": "Arkiv",
         "deleteButtonText": "Slett",
-        "unarchiveButtonText": "Fjern fra arkivet",
-        "removeButtonText": ""
+        "unarchiveButtonText": "Fjern fra arkivet"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Ingen plasseringsdata tilgjengelig",
@@ -724,7 +723,6 @@
             "validator": "Verifisering",
             "toValidate": "Må verifiseres før",
             "errorDate": "Ugyldig dato",
-            "exempleDate": "(F.eks.: 31/05/2022)",
             "description": "Beskrivelse",
             "cancel": "Avbryt",
             "validate": "Verifiser",

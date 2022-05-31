@@ -21,6 +21,16 @@
       />
     </template>
 
+    <template v-else-if="model.type === MODEL_TYPE.DXF">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DXF"
+        text="2D"
+      />
+    </template>
+
     <template
       v-else-if="
         model.type === MODEL_TYPE.PDF || model.type === MODEL_TYPE.META_BUILDING
@@ -83,27 +93,15 @@
             {{ $t("ModelActionsCell.archiveButtonText") }}
           </template>
         </BIMDataButton>
-        <template v-if="model.type === MODEL_TYPE.PDF">
-          <BIMDataButton
-            class="model-actions-cell__menu__btn"
-            ghost
-            squared
-            @click="onClick('remove-model')"
-          >
-            {{ $t("ModelActionsCell.removeButtonText") }}
-          </BIMDataButton>
-        </template>
-        <template v-else>
-          <BIMDataButton
-            class="model-actions-cell__menu__btn"
-            color="high"
-            ghost
-            squared
-            @click="onClick('delete')"
-          >
-            {{ $t("ModelActionsCell.deleteButtonText") }}
-          </BIMDataButton>
-        </template>
+        <BIMDataButton
+          class="model-actions-cell__menu__btn"
+          color="high"
+          ghost
+          squared
+          @click="onClick('delete')"
+        >
+          {{ $t("ModelActionsCell.deleteButtonText") }}
+        </BIMDataButton>
       </div>
     </transition>
   </div>
@@ -131,7 +129,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "remove-model", "update"],
+  emits: ["archive", "delete", "download", "update"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,

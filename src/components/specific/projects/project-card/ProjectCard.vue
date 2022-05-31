@@ -63,7 +63,8 @@ import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
-import { useModels } from "@/state/models.js";
+import ModelService from "@/services/ModelService.js";
+
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard.vue";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
@@ -97,7 +98,6 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-    const { loadProjectModels } = useModels();
 
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
@@ -113,7 +113,7 @@ export default {
     watch(
       () => props.project,
       async () => {
-        models.value = await loadProjectModels(props.project);
+        models.value = await ModelService.fetchModels(props.project);
       },
       { immediate: true }
     );

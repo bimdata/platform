@@ -219,8 +219,7 @@
         "renameButtonText": "Hernoemen",
         "archiveButtonText": "Archiveren",
         "deleteButtonText": "Verwijderen",
-        "unarchiveButtonText": "Uit archief halen",
-        "removeButtonText": ""
+        "unarchiveButtonText": "Uit archief halen"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Geen locatiegegevens beschikbaar",
@@ -724,7 +723,6 @@
             "validator": "Aan het valideren",
             "toValidate": "Te valideren voor",
             "errorDate": "Datum is ongeldig",
-            "exempleDate": "(Bijvoorbeeld: 31/05/2022)",
             "description": "Beschrijving",
             "cancel": "Annuleren",
             "validate": "Valideren",

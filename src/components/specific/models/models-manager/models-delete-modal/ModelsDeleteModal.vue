@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import { useModels } from "@/state/models";
+import { useModels } from "@/state/models.js";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal";
+import GenericModal from "@/components/generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {
@@ -56,7 +56,7 @@ export default {
     const { deleteModels, softDeleteModels } = useModels();
 
     const submit = () => {
-      deleteModels(props.project, props.models);
+      deleteModels(props.project, props.models, { hard: true });
       softDeleteModels(props.models);
       emit("close");
     };

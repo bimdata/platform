@@ -64,26 +64,32 @@
             />
             {{ $t("ProjectBcf.goBackButton") }}
           </BIMDataButton>
-          <span class="text-center" style="width: calc(100% - 70px)">
+          <span class="text-center" style="width: 250px">
             <BIMDataTextbox :text="currentBcfTopic.title" />
           </span>
         </div>
       </template>
 
       <transition name="fade" mode="out-in">
-        <template v-if="showBcfTopicCreate">
-          <BcfTopicCreate
+        <template v-if="showBcfTopicCreate || showBcfTopicForm">
+          <BcfTopicForm
             :project="project"
             :bcfTopics="bcfTopics"
+            :bcfTopic="currentBcfTopic"
             :extensions="extensions"
-            @bcf-topic-created="reloadBcfTopics"
+            @bcf-topic-updated="reloadBcfTopics"
+            @bcf-topic-created="
+              () => {
+                reloadBcfTopics();
+                closeSidePanel();
+              }
+            "
           />
         </template>
         <template v-else-if="showBcfTopicOverview && currentBcfTopic">
           <BcfTopicOverview
+            :uiConfig="{ closeButton: true }"
             :project="project"
-            :models="models"
-            :users="users"
             :bcfTopic="currentBcfTopic"
             :detailedExtensions="detailedExtensions"
             @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
@@ -93,14 +99,6 @@
             @comment-updated="reloadComments(currentBcfTopic)"
             @comment-deleted="reloadComments(currentBcfTopic)"
             @close="closeSidePanel"
-          />
-        </template>
-        <template v-else-if="showBcfTopicForm && currentBcfTopic">
-          <BcfTopicForm
-            :project="project"
-            :bcfTopic="currentBcfTopic"
-            :extensions="extensions"
-            @bcf-topic-updated="reloadBcfTopics"
           />
         </template>
       </transition>
@@ -255,7 +253,10 @@
           <div class="project-bcf__content__stats__title">
             {{ $t("ProjectBcf.metricsTitle", { count: bcfTopics.length }) }}
           </div>
-          <template v-if="bcfTopics.length > 0">
+          <template v-if="bcfTopics.length && displayedBcfTopics.length === 0">
+            <BcfStatisticsEmptyImage class="no-stats" />
+          </template>
+          <template v-else-if="bcfTopics.length > 0">
             <BcfStatistics
               :bcfTopics="displayedBcfTopics"
               extensionType="Status"
@@ -294,10 +295,21 @@
               :key="-1"
               @create-bcf-topic="openBcfTopicCreate"
             />
+            <div
+              v-else-if="bcfTopics.length && displayedBcfTopics.length === 0"
+              class="flex items-center"
+            >
+              <BIMDataCard class="no-search-results text-center p-30">
+                <template #content>
+                  <NoSearchResultsImage />
+                  <h3>{{ $t("ProjectBcf.noSearchResultsTitle") }}</h3>
+                  <p>{{ $t("ProjectBcf.noSearchResultsText") }}</p>
+                </template>
+              </BIMDataCard>
+            </div>
             <BcfTopicCard
               v-for="topic in displayedBcfTopics"
               :key="topic.guid"
-              :project="project"
               :bcfTopic="topic"
               :detailedExtensions="detailedExtensions"
               @open-bcf-topic="openBcfTopicOverview(topic)"
@@ -322,6 +334,7 @@ import { useProjects } from "@/state/projects.js";
 import { useModels } from "@/state/models.js";
 // Components
 import BcfStatisticsEmptyImage from "@/components/images/BcfStatisticsEmptyImage.vue";
+import NoSearchResultsImage from "@/components/images/NoSearchResultsImage.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -331,11 +344,12 @@ export default {
     AppSlotContent,
     AppSidePanel,
     BcfStatisticsEmptyImage,
+    NoSearchResultsImage,
     FileUploadButton
   },
   setup() {
     const router = useRouter();
-    const { currentProject, projectUsers } = useProjects();
+    const { currentProject } = useProjects();
     const { projectModels } = useModels();
     const {
       bcfTopics,
@@ -505,7 +519,6 @@ export default {
       sortOrderDate,
       sortOrderIndex,
       sortOrderTitle,
-      users: projectUsers,
       // Methods
       closeMetrics,
       closeSidePanel,

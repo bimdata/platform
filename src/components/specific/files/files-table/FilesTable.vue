@@ -23,11 +23,7 @@
           style="margin: 5px 14px"
           @click="$emit('back-parent-folder', folder)"
         >
-          <BIMDataIcon
-            name="arrow"
-            size="xxs"
-            style="cursor: pointer"
-          />
+          <BIMDataIcon name="arrow" size="xxs" style="cursor: pointer" />
         </BIMDataButton>
         <FilesManagerBreadcrumb
           :file="folder"
@@ -80,7 +76,9 @@
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         @open-visa-manager="$emit('open-visa-manager', $event)"
+        @remove-model="$emit('remove-model', $event)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -138,7 +136,9 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "open-versioning-manager",
     "open-visa-manager",
+    "remove-model",
     "selection-changed"
   ],
   setup(props, { emit }) {

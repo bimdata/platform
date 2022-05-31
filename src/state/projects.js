@@ -2,7 +2,7 @@ import { reactive, readonly, toRefs } from "vue";
 import ProjectService from "@/services/ProjectService.js";
 import { mapProjects, mapUsers } from "@/state/mappers.js";
 import { useUser } from "@/state/user.js";
-import { fullName } from "@/utils/users";
+import { fullName } from "@/utils/users.js";
 
 const state = reactive({
   userProjects: [],
