@@ -195,6 +195,7 @@
   "FileActionsCell": {
     "openViewerButtonText": "Voir",
     "createModelButtonText": "Définir comme modèle",
+    "removeModelButtonText": "Retirer des modèles",
     "addTagsButtonText": "Ajouter des tags",
     "validationRequestButtonText": "Demande de validation",
     "renameButtonText": "Renommer",
@@ -439,7 +440,6 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
-    "removeButtonText": "Retirer des modèles",
     "deleteButtonText": "Supprimer"
   },
   "ModelLocation": {
@@ -863,6 +863,7 @@
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
+    "userAlreadyExistsError": "Cet utilisateur est déjà membre de l'espace / projet",
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
