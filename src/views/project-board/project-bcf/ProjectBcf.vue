@@ -38,72 +38,6 @@
       </BIMDataButton>
     </AppSlotContent>
 
-    <AppSidePanel
-      :header="!showBcfTopicOverview"
-      :title="
-        showBcfTopicCreate
-          ? $t('ProjectBcf.createBcfTitle')
-          : showBcfTopicForm
-          ? currentBcfTopic.title
-          : ''
-      "
-    >
-      <template #title v-if="showBcfTopicForm && currentBcfTopic">
-        <div class="flex items-center">
-          <BIMDataButton
-            ghost
-            radius
-            @click="openBcfTopicOverview(currentBcfTopic)"
-          >
-            <BIMDataIcon
-              name="arrow"
-              size="xxs"
-              fill
-              color="granite-light"
-              margin="0 6px 0 0"
-            />
-            {{ $t("ProjectBcf.goBackButton") }}
-          </BIMDataButton>
-          <span class="text-center" style="width: 250px">
-            <BIMDataTextbox :text="currentBcfTopic.title" />
-          </span>
-        </div>
-      </template>
-
-      <transition name="fade" mode="out-in">
-        <template v-if="showBcfTopicCreate || showBcfTopicForm">
-          <BcfTopicForm
-            :project="project"
-            :bcfTopics="bcfTopics"
-            :bcfTopic="currentBcfTopic"
-            :extensions="extensions"
-            @bcf-topic-updated="reloadBcfTopics"
-            @bcf-topic-created="
-              () => {
-                reloadBcfTopics();
-                closeSidePanel();
-              }
-            "
-          />
-        </template>
-        <template v-else-if="showBcfTopicOverview && currentBcfTopic">
-          <BcfTopicOverview
-            :uiConfig="{ closeButton: true }"
-            :project="project"
-            :bcfTopic="currentBcfTopic"
-            :detailedExtensions="detailedExtensions"
-            @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
-            @view-bcf-topic="openBcfTopicViewer(currentBcfTopic)"
-            @bcf-topic-deleted="reloadBcfTopics"
-            @comment-created="reloadComments(currentBcfTopic)"
-            @comment-updated="reloadComments(currentBcfTopic)"
-            @comment-deleted="reloadComments(currentBcfTopic)"
-            @close="closeSidePanel"
-          />
-        </template>
-      </transition>
-    </AppSidePanel>
-
     <div class="project-bcf__settings" v-show="showSettings">
       <BcfSettings
         :project="project"
@@ -243,9 +177,78 @@
             <BIMDataIcon :name="isListView ? 'grid' : 'list'" size="s" />
           </BIMDataButton>
         </BIMDataTooltip>
-        <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
+        <BcfFilters
+          :bcfTopics="bcfTopics"
+          @submit="applyFilters($event.filters)"
+        />
       </div>
     </div>
+
+    <AppSidePanel
+      :header="!showBcfTopicOverview"
+      :title="
+        showBcfTopicCreate
+          ? $t('ProjectBcf.createBcfTitle')
+          : showBcfTopicForm
+          ? currentBcfTopic.title
+          : ''
+      "
+    >
+      <template #title v-if="showBcfTopicForm && currentBcfTopic">
+        <div class="flex items-center">
+          <BIMDataButton
+            ghost
+            radius
+            @click="openBcfTopicOverview(currentBcfTopic)"
+          >
+            <BIMDataIcon
+              name="arrow"
+              size="xxs"
+              fill
+              color="granite-light"
+              margin="0 6px 0 0"
+            />
+            {{ $t("ProjectBcf.goBackButton") }}
+          </BIMDataButton>
+          <span class="text-center" style="width: 250px">
+            <BIMDataTextbox :text="currentBcfTopic.title" />
+          </span>
+        </div>
+      </template>
+
+      <transition name="fade" mode="out-in">
+        <template v-if="showBcfTopicCreate || showBcfTopicForm">
+          <BcfTopicForm
+            :project="project"
+            :bcfTopics="bcfTopics"
+            :bcfTopic="currentBcfTopic"
+            :extensions="extensions"
+            @bcf-topic-updated="reloadBcfTopics"
+            @bcf-topic-created="
+              () => {
+                reloadBcfTopics();
+                closeSidePanel();
+              }
+            "
+          />
+        </template>
+        <template v-else-if="showBcfTopicOverview && currentBcfTopic">
+          <BcfTopicOverview
+            :uiConfig="{ closeButton: true }"
+            :project="project"
+            :bcfTopic="currentBcfTopic"
+            :detailedExtensions="detailedExtensions"
+            @edit-bcf-topic="openBcfTopicForm(currentBcfTopic)"
+            @view-bcf-topic="openBcfTopicViewer(currentBcfTopic)"
+            @bcf-topic-deleted="reloadBcfTopics"
+            @comment-created="reloadComments(currentBcfTopic)"
+            @comment-updated="reloadComments(currentBcfTopic)"
+            @comment-deleted="reloadComments(currentBcfTopic)"
+            @close="closeSidePanel"
+          />
+        </template>
+      </transition>
+    </AppSidePanel>
 
     <div class="project-bcf__content">
       <transition name="fade">
@@ -322,7 +325,11 @@
 </template>
 
 <script>
-import { useBcfSearch, useBcfSort } from "@bimdata/bcf-components";
+import {
+  useBcfFilter,
+  useBcfSearch,
+  useBcfSort
+} from "@bimdata/bcf-components";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
@@ -363,10 +370,37 @@ export default {
       exportBcf
     } = useBcf();
 
+    const reloadBcfTopics = () => {
+      loadBcfTopics(currentProject.value);
+    };
+
+    const reloadExtensions = () => {
+      loadExtensions(currentProject.value);
+      loadDetailedExtensions(currentProject.value);
+    };
+
+    const reloadComments = topic => {
+      loadBcfTopicComments(currentProject.value, topic);
+    };
+
     const loading = ref(false);
     const isListView = ref(false);
 
-    const filteredTopics = ref([]);
+    watch(
+      currentProject,
+      async () => {
+        try {
+          loading.value = true;
+          reloadBcfTopics();
+          reloadExtensions();
+        } finally {
+          loading.value = false;
+        }
+      },
+      { immediate: true }
+    );
+
+    const { filteredTopics, apply: applyFilters } = useBcfFilter(bcfTopics);
     const { searchText, filteredTopics: displayedBcfTopics } =
       useBcfSearch(filteredTopics);
     const {
@@ -379,21 +413,6 @@ export default {
       sortOrderDate
     } = useBcfSort(displayedBcfTopics);
 
-    watch(
-      currentProject,
-      async project => {
-        try {
-          loading.value = true;
-          filteredTopics.value = await loadBcfTopics(project);
-          await loadExtensions(project);
-          await loadDetailedExtensions(project);
-        } finally {
-          loading.value = false;
-        }
-      },
-      { immediate: true }
-    );
-
     const {
       isOpen: showMetrics,
       close: closeMetrics,
@@ -405,10 +424,6 @@ export default {
       close: closeSettings,
       open: openSettings
     } = useToggle();
-
-    const onFiltersSubmit = list => {
-      filteredTopics.value = list;
-    };
 
     const importBcfTopics = async files => {
       try {
@@ -485,19 +500,6 @@ export default {
       });
     };
 
-    const reloadBcfTopics = () => {
-      loadBcfTopics(currentProject.value);
-    };
-
-    const reloadExtensions = () => {
-      loadExtensions(currentProject.value);
-      loadDetailedExtensions(currentProject.value);
-    };
-
-    const reloadComments = topic => {
-      loadBcfTopicComments(currentProject.value, topic);
-    };
-
     return {
       // References
       bcfTopics,
@@ -520,12 +522,12 @@ export default {
       sortOrderIndex,
       sortOrderTitle,
       // Methods
+      applyFilters,
       closeMetrics,
       closeSidePanel,
       closeSettings,
       exportBcfTopics,
       importBcfTopics,
-      onFiltersSubmit,
       openBcfTopicCreate,
       openBcfTopicForm,
       openBcfTopicOverview,
