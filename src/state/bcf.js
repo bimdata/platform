@@ -25,16 +25,20 @@ const state = reactive({
 const loadBcfTopics = async project => {
   const topics = await BcfService.fetchProjectTopics(project);
 
-  let topicsWithViewpoints = [];
+  let mappedTopics = [];
 
-  topicsWithViewpoints = await mapLimit(topics, 10, async topic => {
+  const { projectUsers } = useProjects();
+  mappedTopics = await mapLimit(topics, 10, async topic => {
+    topic.creator = projectUsers.value.find(
+      u => u.email === topic.creationAuthor
+    );
     topic.viewpoints = await BcfService.fetchTopicViewpoints(project, topic);
     return topic;
   });
 
-  state.bcfTopics = topicsWithViewpoints;
+  state.bcfTopics = mappedTopics;
 
-  return topicsWithViewpoints;
+  return mappedTopics;
 };
 
 const loadBcfTopicComments = async (project, topic) => {

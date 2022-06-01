@@ -285,6 +285,8 @@
 
         <div v-else-if="isListView" class="project-bcf__content__list">
           <BcfTopicsTable
+            :paginated="true"
+            :perPage="14"
             :bcfTopics="displayedBcfTopics"
             :detailedExtensions="detailedExtensions"
             @open-bcf-topic="openBcfTopicOverview($event)"
