@@ -7,7 +7,7 @@
       @mouseleave="isOver = false"
     >
       <template v-for="(tag, index) in file.tags.slice(0, 9)" :key="tag.id">
-        <template v-if="file.tags.length > 8 && index === 8">
+        <template v-if="file.tags.length > 9 && index === 8">
           <div class="file-tags-cell-pills__ellipsis-box">
             <BIMDataIcon
               class="file-tags-cell-pills__ellipsis-box__icon"
