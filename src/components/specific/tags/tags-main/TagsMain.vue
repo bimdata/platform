@@ -112,12 +112,11 @@ export default {
   },
   emits: ["close", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
+    const { getDocument } = useFiles();
+    const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
+
     const tagsDocument = ref(null);
     const tagsMain = ref(null);
-
-    const { getDocument } = useFiles();
-
-    const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
 
     const input = ref(null);
 
@@ -152,9 +151,7 @@ export default {
               filter.value === ""
                 ? true
                 : tag.name.includes(filter.value.toLowerCase()),
-            isSelected:
-              tagsDocument.value &&
-              tagsDocument.value.some(t => t.id === tag.id)
+            isSelected: tagsDocument?.value.some(t => t.id === tag.id)
           };
         })
         .sort((a, b) => (a.id > b.id ? 1 : -1));

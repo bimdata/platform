@@ -1,19 +1,19 @@
 .tags-item {
   display: flex;
+  position: relative;
   height: 37px;
   gap: var(--spacing-unit);
-  position: relative;
 
   &__safe-zone {
-    z-index: 1;
-    position: absolute;
-    background-color: var(--color-white);
-    box-shadow: var(--box-shadow);
-    width: 383px;
-    height: 37px;
     display: flex;
+    position: absolute;
     justify-content: space-between;
     padding: var(--spacing-unit);
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+    z-index: 1;
+    width: 383px;
+    height: 37px;
 
     span {
       text-align: center;

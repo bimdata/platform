@@ -1,8 +1,8 @@
 .tags-main {
-  padding: var(--spacing-unit);
   height: 100%;
   overflow: auto;
   overflow-x: hidden;
+  padding: var(--spacing-unit);
 
   &__content {
     height: 100%;
@@ -16,8 +16,8 @@
       gap: var(--spacing-unit);
   
       &__left-side {
-        display: flex;
         flex-grow: 1;
+        display: flex;
         margin: auto 0;
   
         span {
@@ -32,7 +32,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
 
       span:first-child {
         color: var(--color-primary);
@@ -69,6 +68,4 @@
       padding-bottom: var(--spacing-unit);
     }
   }
-
-
 }

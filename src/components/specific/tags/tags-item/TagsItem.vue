@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { nextTick, ref, watch } from "vue";
+import { ref, watch, nextTick } from "vue";
 
 import TagService from "@/services/TagService";
 import { adjustBorderColor } from "@/components/generic/color-selector/colors.js";
@@ -138,7 +138,7 @@ export default {
       required: true
     }
   },
-  emits: ["close", "tag-updater", "fetch-tags", "file-updated"],
+  emits: ["tag-updater", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);

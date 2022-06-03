@@ -1,5 +1,6 @@
 <template>
   <GenericTable
+    ref="filesTable"
     class="files-table"
     :columns="columns"
     :rows="files"
@@ -60,7 +61,7 @@
       {{ createdBy ? `${createdBy.firstname} ${createdBy.lastname[0]}.` : "?" }}
     </template>
     <template #cell-tags="{ row: file }">
-      <FileTagsCell :file="file" />
+      <FileTagsCell :file="file" :filesTable="filesTable" />
     </template>
     <template #cell-lastupdate="{ row: file }">
       {{ $d(file.updatedAt, "long") }}
@@ -142,6 +143,7 @@ export default {
   setup(props, { emit }) {
     const { locale, t } = useI18n();
 
+    const filesTable = ref(null);
     const columns = ref([]);
     watch(
       () => locale.value,
@@ -194,6 +196,7 @@ export default {
     return {
       // References
       columns,
+      filesTable,
       fileUploads,
       nameEditMode,
       // Methods
