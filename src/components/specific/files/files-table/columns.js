@@ -14,7 +14,7 @@ export default [
   },
   {
     id: "tags",
-    width: "150px",
+    width: "120px",
     align: "center"
   },
   {
