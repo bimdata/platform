@@ -135,7 +135,7 @@ export default {
       required: true
     }
   },
-  emits: ["tag-updater", "fetch-tags", "file-updated"],
+  emits: ["tag-to-update", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);
@@ -182,7 +182,7 @@ export default {
         await TagService.deleteDocumentTag(props.project, props.document, tag);
       }
       tag.isSelected = checked;
-      emit("tag-updater", tag);
+      emit("tag-to-update", tag);
     };
 
     const tagColor = ref(props.tag.color);

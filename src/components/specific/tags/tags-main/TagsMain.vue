@@ -75,7 +75,7 @@
             :document="document"
             :tagsMain="tagsMain"
             :tag="tag"
-            @tag-updater="tagToUpdate = $event"
+            @tag-to-update="tagToUpdate = $event"
             @fetch-tags="$emit('fetch-tags')"
             @file-updated="$emit('file-updated')"
           />
