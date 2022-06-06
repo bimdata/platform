@@ -1,5 +1,5 @@
 <template>
-  <template v-if="isOverflowing">
+  <template v-if="isPillsMod">
     <div
       ref="cellPills"
       class="file-tags-cell-pills"
@@ -89,37 +89,33 @@ export default {
     },
     filesTable: {
       type: Object
-    },
-    fileTagsCell: {
-      type: Object
     }
   },
   setup(props) {
     const cellWidth = ref(0);
     const maxCellHeight = 43; // stand for two lines of tags
-    const isOverflowing = ref(false);
+    const isPillsMod = ref(false);
 
     const onResize = entries => {
       entries.forEach(entry => {
         cellWidth.value = entry.contentRect.width;
         const height = entry.target.scrollHeight;
-        isOverflowing.value = height > maxCellHeight;
+        isPillsMod.value = height > maxCellHeight;
       });
     };
 
-    watch(isOverflowing, () => {
-      if (isOverflowing.value) {
+    watch(isPillsMod, () => {
+      if (isPillsMod.value) {
         cellObserver.disconnect();
-      } else {
-        nextTick(() => cellObserver.observe(cell.value));
       }
     });
 
     watch(
       () => props.file.tags,
       () => {
-        if (isOverflowing.value) {
-          isOverflowing.value = false;
+        if (isPillsMod.value) {
+          isPillsMod.value = false;
+          nextTick(() => cellObserver.observe(cell.value));
         }
       }
     );
@@ -168,7 +164,7 @@ export default {
       cellPills,
       cellWidth,
       maxCellHeight,
-      isOverflowing,
+      isPillsMod,
       // methods
       onHover
     };
