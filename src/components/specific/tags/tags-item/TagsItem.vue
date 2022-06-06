@@ -84,7 +84,7 @@
             class="tags-item__content__info__action__color"
             :style="{
               'background-color': `#${tagColor}`,
-              'border-color': adjustBorderColor(`${tagColor}`, -50)
+              'border-color': getBorderColor(`${tagColor}`, -50)
             }"
             @click="onColorSelector"
           ></div>
@@ -93,7 +93,7 @@
               ref="colorSelector"
               class="tags-item__content__info__action__color-selector"
             >
-              <ColorSelector
+              <BIMDataColorSelector
                 :modelValue="tagColor"
                 @update:modelValue="onSubmitTagColor"
                 v-click-away="
@@ -114,12 +114,9 @@
 import { ref, watch, nextTick } from "vue";
 
 import TagService from "@/services/TagService";
-import { adjustBorderColor } from "@/components/generic/color-selector/colors.js";
-
-import ColorSelector from "@/components/generic/color-selector/ColorSelector.vue";
+import { getBorderColor } from "@/utils/colors.js";
 
 export default {
-  components: { ColorSelector },
   props: {
     project: {
       type: Object,
@@ -236,7 +233,7 @@ export default {
       displayColorSelector,
       // methods
       onCancelSubmitTagName,
-      adjustBorderColor,
+      getBorderColor,
       onSubmitTagColor,
       onSubmitTagName,
       onColorSelector,

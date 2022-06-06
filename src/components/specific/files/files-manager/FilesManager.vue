@@ -391,9 +391,9 @@ export default {
       }, 100);
     };
 
-    const openVisaManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openVisaManager = file => {
+      if (file.fileName) {
+        fileToManage.value = file;
       } else {
         fileToManage.value = { id: null };
       }
@@ -412,9 +412,9 @@ export default {
       }, 100);
     };
 
-    const openTagManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openTagManager = file => {
+      if (file.fileName) {
+        fileToManage.value = file;
         showSidePanel.value = true;
         showTagManager.value = true;
       }
@@ -427,9 +427,9 @@ export default {
       }, 100);
     };
 
-    const openVersioningManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openVersioningManager = file => {
+      if (file.fileName) {
+        fileToManage.value = file;
         showVersioningManager.value = true;
         showAccessManager.value = false;
         showVisaManager.value = false;
@@ -472,7 +472,10 @@ export default {
       allTags.value = await TagService.fetchAllTags(props.project);
     };
 
-    onMounted(() => fetchVisas(), fetchTags());
+    onMounted(() => {
+      fetchVisas();
+      fetchTags();
+    });
 
     return {
       // References

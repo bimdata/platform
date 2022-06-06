@@ -87,7 +87,7 @@
 
 <script>
 import { ref, watch, onMounted } from "vue";
-import { getRandomHexColor } from "@/components/generic/color-selector/colors.js";
+import { getRandomHexColor } from "@/utils/colors.js";
 import TagsItem from "@/components/specific/tags/tags-item/TagsItem.vue";
 import { useToggle } from "@/composables/toggle";
 import TagService from "@/services/TagService";
