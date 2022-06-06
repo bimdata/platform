@@ -105,9 +105,11 @@
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
+            @remove-model="removeModel"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
+            @open-versioning-manager="openVersioningManager"
           />
         </div>
 
@@ -141,6 +143,15 @@
               @close="closeTagManager"
               @fetch-tags="fetchTags"
               @file-updated="$emit('file-updated')"
+            />
+            <VersioningMain
+              v-if="showVersioningManager"
+              :project="project"
+              :document="fileToManage"
+              :currentFolder="currentFolder"
+              :spaceSubInfo="spaceSubInfo"
+              @file-uploaded="$emit('file-uploaded')"
+              @close="closeVersioningManager"
             />
           </div>
         </transition>
@@ -189,6 +200,7 @@ import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
 import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
+import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
 
 export default {
   components: {
@@ -201,7 +213,8 @@ export default {
     FilesDeleteModal,
     FilesManagerOnboarding,
     VisaMain,
-    TagsMain
+    TagsMain,
+    VersioningMain
   },
   props: {
     spaceSubInfo: {
@@ -237,7 +250,7 @@ export default {
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
-    const { createModel } = useModels();
+    const { createModel, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -314,6 +327,12 @@ export default {
       });
     };
 
+    const removeModel = async file => {
+      await deleteModels(props.project, [
+        { id: file.modelId, type: file.modelType }
+      ]);
+    };
+
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
     const openDeleteModal = models => {
@@ -334,6 +353,7 @@ export default {
     };
 
     const showSidePanel = ref(false);
+    const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
@@ -344,6 +364,7 @@ export default {
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
+      showVersioningManager.value = false;
       showVisaManager.value = false;
       showTagManager.value = false;
       showSidePanel.value = true;
@@ -377,6 +398,7 @@ export default {
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
+      showVersioningManager.value = false;
       showAccessManager.value = false;
       showTagManager.value = false;
       showSidePanel.value = true;
@@ -393,10 +415,8 @@ export default {
     const openTagManager = event => {
       if (event.fileName) {
         fileToManage.value = event;
-        showTagManager.value = true;
-        showAccessManager.value = false;
-        showVisaManager.value = false;
         showSidePanel.value = true;
+        showTagManager.value = true;
       }
     };
 
@@ -404,6 +424,23 @@ export default {
       showSidePanel.value = false;
       setTimeout(() => {
         showTagManager.value = false;
+      }, 100);
+    };
+
+    const openVersioningManager = event => {
+      if (event.fileName) {
+        fileToManage.value = event;
+        showVersioningManager.value = true;
+        showAccessManager.value = false;
+        showVisaManager.value = false;
+        showSidePanel.value = true;
+      }
+    };
+
+    const closeVersioningManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showVersioningManager.value = false;
         fileToManage.value = null;
       }, 100);
     };
@@ -457,10 +494,12 @@ export default {
       visasCounter,
       showTagManager,
       allTags,
+      showVersioningManager,
       // Methods
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
+      removeModel,
       downloadFiles,
       moveFiles,
       openAccessManager,
@@ -474,7 +513,9 @@ export default {
       fetchVisas,
       openTagManager,
       closeTagManager,
-      fetchTags
+      fetchTags,
+      openVersioningManager,
+      closeVersioningManager
     };
   }
 };

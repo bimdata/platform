@@ -89,7 +89,8 @@
         "manageAccessButtonText": "Manage access",
         "deleteButtonText": "Delete",
         "VisaButtonText": "Validation request",
-        "createModelButtonText": "Define as model"
+        "createModelButtonText": "Define as model",
+        "removeModelButtonText": "Remove from models"
     },
     "FileNameCell": {
         "inputErrorMessage": "Invalid file name",
@@ -219,8 +220,7 @@
         "renameButtonText": "Rename",
         "archiveButtonText": "Archive",
         "deleteButtonText": "Delete",
-        "unarchiveButtonText": "Unarchive",
-        "removeButtonText": "Remove from models"
+        "unarchiveButtonText": "Unarchive"
     },
     "ModelLocation": {
         "emptyLocationMessage": "No location data available",

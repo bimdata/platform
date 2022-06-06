@@ -35,16 +35,28 @@
             {{ $t("FileActionsCell.openViewerButtonText") }}
           </BIMDataButton>
         </AppLink>
-        <BIMDataButton
-          v-if="!isFolder(file) && isConvertible(file)"
-          :disabled="isModel(file)"
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('create-model')"
-        >
-          {{ $t("FileActionsCell.createModelButtonText") }}
-        </BIMDataButton>
+        <template v-if="!isFolder(file) && isConvertible(file)">
+          <template v-if="!isModel(file)">
+            <BIMDataButton
+              class="file-actions-cell__menu__btn"
+              ghost
+              squared
+              @click="onClick('create-model')"
+            >
+              {{ $t("FileActionsCell.createModelButtonText") }}
+            </BIMDataButton>
+          </template>
+          <template v-else>
+            <BIMDataButton
+              class="file-actions-cell__menu__btn"
+              ghost
+              squared
+              @click="onClick('remove-model')"
+            >
+              {{ $t("FileActionsCell.removeModelButtonText") }}
+            </BIMDataButton>
+          </template>
+        </template>
 
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
@@ -97,6 +109,18 @@
           {{ $t("FileActionsCell.addTagsButtonText") }}
         </BIMDataButton>
         <BIMDataButton
+          v-if="
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('open-versioning-manager')"
+        >
+          {{ $t("FileActionsCell.VersioningButtonText") }}
+        </BIMDataButton>
+
+        <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
@@ -145,9 +169,11 @@ export default {
     "delete",
     "download",
     "manage-access",
+    "open-versioning-manager",
     "open-visa-manager",
     "update",
-    "open-tag-manager"
+    "open-tag-manager",
+    "remove-model"
   ],
   setup(props, { emit }) {
     const {

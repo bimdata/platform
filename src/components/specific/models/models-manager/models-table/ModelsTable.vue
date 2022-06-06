@@ -36,7 +36,6 @@
         @archive="$emit('archive', $event)"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
-        @remove-model="$emit('remove-model', $event)"
         @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
       />
@@ -71,14 +70,7 @@ export default {
       required: true
     }
   },
-  emits: [
-    "archive",
-    "delete",
-    "download",
-    "remove-model",
-    "selection-changed",
-    "unarchive"
-  ],
+  emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
     const { t } = useI18n();
 

@@ -56,7 +56,7 @@ export default {
     const { deleteModels, softDeleteModels } = useModels();
 
     const submit = () => {
-      deleteModels(props.project, props.models);
+      deleteModels(props.project, props.models, { hard: true });
       softDeleteModels(props.models);
       emit("close");
     };

@@ -63,7 +63,6 @@ import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
-import { useModels } from "@/state/models.js";
 import ModelService from "@/services/ModelService.js";
 
 // Components

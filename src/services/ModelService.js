@@ -74,11 +74,11 @@ class ModelService {
     }
   }
 
-  async deleteModels(project, models) {
+  async deleteModels(project, models, { hard } = {}) {
     try {
       return await Promise.all(
         models.map(model => {
-          if (isPlanModel(model)) {
+          if (isPlanModel(model) && !hard) {
             return apiClient.modelApi.deleteModelWithoutDoc(
               project.cloud.id,
               model.id,

@@ -77,8 +77,10 @@
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         @open-visa-manager="$emit('open-visa-manager', $event)"
         @open-tag-manager="$emit('open-tag-manager', $event)"
+        @remove-model="$emit('remove-model', $event)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -136,9 +138,11 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "open-versioning-manager",
     "open-visa-manager",
     "selection-changed",
-    "open-tag-manager"
+    "open-tag-manager",
+    "remove-model"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();

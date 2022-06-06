@@ -19,16 +19,16 @@ const MODEL_TYPE = Object.freeze({
 /**
  * List of all possible model file extensions.
  */
-const MODEL_EXTENSIONS = Object.freeze([
-  ".dwg",
-  ".dxf",
-  ".ifc",
-  ".ifczip",
-  ".jpeg",
-  ".jpg",
-  ".pdf",
-  ".png"
-]);
+const MODEL_EXTENSIONS = Object.freeze({
+  DWG: ".dwg",
+  DXF: ".dxf",
+  IFC: ".ifc",
+  IFCZIP: ".ifczip",
+  JPEG: ".jpeg",
+  JPG: ".jpg",
+  PDF: ".pdf",
+  PNG: ".png"
+});
 
 /**
  * List of file extensions that can be directly uploaded as models.
@@ -37,8 +37,7 @@ const UPLOADABLE_EXTENSIONS = Object.freeze([
   ".dwg",
   ".dxf",
   ".ifc",
-  ".ifczip",
-  ".pdf"
+  ".ifczip"
 ]);
 
 /**

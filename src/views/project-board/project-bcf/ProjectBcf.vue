@@ -38,6 +38,152 @@
       </BIMDataButton>
     </AppSlotContent>
 
+    <div class="project-bcf__settings" v-show="showSettings">
+      <BcfSettings
+        :project="project"
+        :detailedExtensions="detailedExtensions"
+        @extension-created="reloadExtensions"
+        @extension-updated="reloadExtensions"
+        @extension-deleted="reloadExtensions"
+        @close="closeSettings"
+      />
+    </div>
+
+    <div class="project-bcf__actions">
+      <div class="project-bcf__actions--start">
+        <BIMDataTooltip
+          maxWidth="100px"
+          :message="
+            showMetrics
+              ? $t('ProjectBcf.showStatisticsTooltip')
+              : $t('ProjectBcf.hideStatisticsTooltip')
+          "
+        >
+          <BIMDataButton
+            :class="{ active: !showMetrics }"
+            color="default"
+            fill
+            square
+            icon
+            @click="toggleMetrics"
+          >
+            <PieGraphIcon
+              :activeColor="
+                !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
+              "
+            />
+          </BIMDataButton>
+        </BIMDataTooltip>
+        <BIMDataSearch
+          width="calc(50% - 32px - var(--spacing-unit))"
+          color="secondary"
+          radius
+          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
+          v-model="searchText"
+        >
+        </BIMDataSearch>
+      </div>
+      <div class="project-bcf__actions--end">
+        <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
+          :message="
+            sortOrderIndex === 'asc'
+              ? $t('ProjectBcf.ascendingIndexTooltip')
+              : $t('ProjectBcf.descendingIndexTooltip')
+          "
+        >
+          <BIMDataButton
+            :disabled="bcfTopics.length === 0"
+            :class="{ active: sortedBy === 'index' }"
+            fill
+            square
+            icon
+            @click="sortByIndex"
+          >
+            <BIMDataIcon
+              :name="
+                sortOrderIndex === 'asc' ? 'indexAscending' : 'indexDescending'
+              "
+              size="s"
+            />
+          </BIMDataButton>
+        </BIMDataTooltip>
+
+        <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
+          :message="
+            sortOrderTitle === 'asc'
+              ? $t('ProjectBcf.alphabeticalAscendingOrderTooltip')
+              : $t('ProjectBcf.alphabeticalDescendingOrderTooltip')
+          "
+        >
+          <BIMDataButton
+            :disabled="bcfTopics.length === 0"
+            :class="{ active: sortedBy === 'title' }"
+            fill
+            square
+            icon
+            @click="sortByTitle"
+          >
+            <BIMDataIcon
+              :name="
+                sortOrderTitle === 'asc'
+                  ? 'alphabeticalAscending'
+                  : 'alphabeticalDescending'
+              "
+              size="s"
+            />
+          </BIMDataButton>
+        </BIMDataTooltip>
+        <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
+          :message="
+            sortOrderDate === 'asc'
+              ? $t('ProjectBcf.ascendingDateTooltip')
+              : $t('ProjectBcf.descendingDateTooltip')
+          "
+        >
+          <BIMDataButton
+            :disabled="bcfTopics.length === 0"
+            :class="{ active: sortedBy === 'date' }"
+            fill
+            square
+            icon
+            @click="sortByDate"
+          >
+            <BIMDataIcon
+              :name="
+                sortOrderDate === 'asc' ? 'dateAscending' : 'dateDescending'
+              "
+              size="s"
+            />
+          </BIMDataButton>
+        </BIMDataTooltip>
+        <BIMDataTooltip
+          :disabled="bcfTopics.length === 0"
+          :message="
+            isListView
+              ? $t('ProjectBcf.viewGridTooltip')
+              : $t('ProjectBcf.viewListTooltip')
+          "
+        >
+          <BIMDataButton
+            :disabled="bcfTopics.length === 0"
+            fill
+            square
+            icon
+            @click="isListView = !isListView"
+          >
+            <BIMDataIcon :name="isListView ? 'grid' : 'list'" size="s" />
+          </BIMDataButton>
+        </BIMDataTooltip>
+        <BcfFilters
+          :bcfTopics="bcfTopics"
+          @submit="applyFilters($event.filters)"
+        />
+      </div>
+    </div>
+
     <AppSidePanel
       :header="!showBcfTopicOverview"
       :title="
@@ -104,145 +250,6 @@
       </transition>
     </AppSidePanel>
 
-    <div class="project-bcf__settings" v-show="showSettings">
-      <BcfSettings
-        :project="project"
-        :detailedExtensions="detailedExtensions"
-        @extension-created="reloadExtensions"
-        @extension-updated="reloadExtensions"
-        @extension-deleted="reloadExtensions"
-        @close="closeSettings"
-      />
-    </div>
-
-    <div class="project-bcf__actions">
-      <div class="project-bcf__actions--start">
-        <BIMDataTooltip
-          maxWidth="100px"
-          :message="
-            showMetrics
-              ? $t('ProjectBcf.showStatisticsTooltip')
-              : $t('ProjectBcf.hideStatisticsTooltip')
-          "
-        >
-          <BIMDataButton
-            :class="{ active: !showMetrics }"
-            color="default"
-            fill
-            square
-            icon
-            @click="toggleMetrics"
-          >
-            <PieGraphIcon
-              :activeColor="
-                !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
-              "
-            />
-          </BIMDataButton>
-        </BIMDataTooltip>
-        <BIMDataSearch
-          width="calc(50% - 32px - var(--spacing-unit))"
-          color="secondary"
-          radius
-          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
-          v-model="searchText"
-        >
-        </BIMDataSearch>
-      </div>
-      <div class="project-bcf__actions--end">
-        <BIMDataTooltip
-          :disabled="bcfTopics.length === 0"
-          :message="
-            isSortByIndexActive
-              ? $t('ProjectBcf.ascendingIndexTooltip')
-              : $t('ProjectBcf.descendingIndexTooltip')
-          "
-        >
-          <BIMDataButton
-            :disabled="bcfTopics.length === 0"
-            :class="{ active: activeButton === 'indexSort' }"
-            fill
-            square
-            icon
-            @click="sortByIndex"
-          >
-            <BIMDataIcon
-              :name="isSortByIndexActive ? 'indexAscending' : 'indexDescending'"
-              size="s"
-            />
-          </BIMDataButton>
-        </BIMDataTooltip>
-
-        <BIMDataTooltip
-          :disabled="bcfTopics.length === 0"
-          :message="
-            isSortByNameActive
-              ? $t('ProjectBcf.alphabeticalAscendingOrderTooltip')
-              : $t('ProjectBcf.alphabeticalDescendingOrderTooltip')
-          "
-        >
-          <BIMDataButton
-            :disabled="bcfTopics.length === 0"
-            :class="{ active: activeButton === 'nameSort' }"
-            fill
-            square
-            icon
-            @click="sortByName"
-          >
-            <BIMDataIcon
-              :name="
-                isSortByNameActive
-                  ? 'alphabeticalAscending'
-                  : 'alphabeticalDescending'
-              "
-              size="s"
-            />
-          </BIMDataButton>
-        </BIMDataTooltip>
-        <BIMDataTooltip
-          :disabled="bcfTopics.length === 0"
-          :message="
-            isSortByDateActive
-              ? $t('ProjectBcf.ascendingDateTooltip')
-              : $t('ProjectBcf.descendingDateTooltip')
-          "
-        >
-          <BIMDataButton
-            :disabled="bcfTopics.length === 0"
-            :class="{ active: activeButton === 'dateSort' }"
-            fill
-            square
-            icon
-            @click="sortByDate"
-          >
-            <BIMDataIcon
-              :name="isSortByDateActive ? 'dateAscending' : 'dateDescending'"
-              size="s"
-            />
-          </BIMDataButton>
-        </BIMDataTooltip>
-        <BIMDataTooltip
-          :disabled="bcfTopics.length === 0"
-          :message="
-            isListView
-              ? $t('ProjectBcf.viewGridTooltip')
-              : $t('ProjectBcf.viewListTooltip')
-          "
-        >
-          <BIMDataButton
-            :disabled="bcfTopics.length === 0"
-            fill
-            square
-            icon
-            @click="isListView = !isListView"
-          >
-            <BIMDataIcon :name="isListView ? 'grid' : 'list'" size="s" />
-          </BIMDataButton>
-        </BIMDataTooltip>
-        <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
-      </div>
-    </div>
-
     <div class="project-bcf__content">
       <transition name="fade">
         <div v-show="!showMetrics" class="project-bcf__content__stats">
@@ -278,6 +285,8 @@
 
         <div v-else-if="isListView" class="project-bcf__content__list">
           <BcfTopicsTable
+            :paginated="true"
+            :perPage="14"
             :bcfTopics="displayedBcfTopics"
             :detailedExtensions="detailedExtensions"
             @open-bcf-topic="openBcfTopicOverview($event)"
@@ -318,12 +327,14 @@
 </template>
 
 <script>
+import {
+  useBcfFilter,
+  useBcfSearch,
+  useBcfSort
+} from "@bimdata/bcf-components";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
-import useFilter from "./composables/filter.js";
-import useSearch from "./composables/search.js";
-import useSort from "./composables/sort.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
@@ -361,23 +372,48 @@ export default {
       exportBcf
     } = useBcf();
 
+    const reloadBcfTopics = () => {
+      loadBcfTopics(currentProject.value);
+    };
+
+    const reloadExtensions = () => {
+      loadExtensions(currentProject.value);
+      loadDetailedExtensions(currentProject.value);
+    };
+
+    const reloadComments = topic => {
+      loadBcfTopicComments(currentProject.value, topic);
+    };
+
     const loading = ref(false);
     const isListView = ref(false);
 
     watch(
       currentProject,
-      async project => {
+      async () => {
         try {
           loading.value = true;
-          await loadBcfTopics(project);
-          await loadExtensions(project);
-          await loadDetailedExtensions(project);
+          reloadBcfTopics();
+          reloadExtensions();
         } finally {
           loading.value = false;
         }
       },
       { immediate: true }
     );
+
+    const { filteredTopics, apply: applyFilters } = useBcfFilter(bcfTopics);
+    const { searchText, filteredTopics: displayedBcfTopics } =
+      useBcfSearch(filteredTopics);
+    const {
+      sortedBy,
+      sortByTitle,
+      sortByIndex,
+      sortByDate,
+      sortOrderIndex,
+      sortOrderTitle,
+      sortOrderDate
+    } = useBcfSort(displayedBcfTopics);
 
     const {
       isOpen: showMetrics,
@@ -390,19 +426,6 @@ export default {
       close: closeSettings,
       open: openSettings
     } = useToggle();
-
-    const { onFiltersSubmit, filteredTopics } = useFilter(bcfTopics);
-    const { searchText, searchedTopics: displayedBcfTopics } =
-      useSearch(filteredTopics);
-    const {
-      sortByName,
-      sortByIndex,
-      sortByDate,
-      activeButton,
-      isSortByNameActive,
-      isSortByIndexActive,
-      isSortByDateActive
-    } = useSort(displayedBcfTopics);
 
     const importBcfTopics = async files => {
       try {
@@ -479,32 +502,16 @@ export default {
       });
     };
 
-    const reloadBcfTopics = () => {
-      loadBcfTopics(currentProject.value);
-    };
-
-    const reloadExtensions = () => {
-      loadExtensions(currentProject.value);
-      loadDetailedExtensions(currentProject.value);
-    };
-
-    const reloadComments = topic => {
-      loadBcfTopicComments(currentProject.value, topic);
-    };
-
     return {
       // References
-      activeButton,
       bcfTopics,
       currentBcfTopic,
       detailedExtensions,
       displayedBcfTopics,
       extensions,
       isListView,
-      isSortByDateActive,
-      isSortByIndexActive,
-      isSortByNameActive,
       loading,
+      models: projectModels,
       project: currentProject,
       searchText,
       showBcfTopicCreate,
@@ -512,13 +519,17 @@ export default {
       showBcfTopicOverview,
       showMetrics,
       showSettings,
+      sortedBy,
+      sortOrderDate,
+      sortOrderIndex,
+      sortOrderTitle,
       // Methods
+      applyFilters,
       closeMetrics,
       closeSidePanel,
       closeSettings,
       exportBcfTopics,
       importBcfTopics,
-      onFiltersSubmit,
       openBcfTopicCreate,
       openBcfTopicForm,
       openBcfTopicOverview,
@@ -529,7 +540,7 @@ export default {
       reloadExtensions,
       sortByDate,
       sortByIndex,
-      sortByName,
+      sortByTitle,
       toggleMetrics
     };
   }

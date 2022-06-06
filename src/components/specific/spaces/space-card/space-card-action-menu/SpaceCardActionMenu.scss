@@ -21,10 +21,14 @@
     box-shadow: var(--box-shadow);
 
     &__loader {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: calc(100% - var(--spacing-unit));
       display: flex;
       justify-content: center;
       align-items: center;
-      height: calc(#{$card-menu-height} - var(--spacing-unit));
+      background-color: var(--color-white);
     }
 
     &__menu {
