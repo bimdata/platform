@@ -1,5 +1,6 @@
 <template>
   <GenericTable
+    ref="filesTable"
     class="files-table"
     :columns="columns"
     :rows="files"
@@ -70,6 +71,7 @@
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
+        :filesTable="filesTable"
         :project="project"
         :file="file"
         @create-model="$emit('create-model', $event)"
@@ -144,6 +146,8 @@ export default {
   setup(props, { emit }) {
     const { locale, t } = useI18n();
 
+    const filesTable = ref(null);
+
     const columns = ref([]);
     watch(
       () => locale.value,
@@ -196,6 +200,7 @@ export default {
     return {
       // References
       columns,
+      filesTable,
       fileUploads,
       nameEditMode,
       // Methods
