@@ -4,16 +4,16 @@
       class="folder-creation-button__btn"
       :width="width"
       :height="height"
-      color="primary"
+      :color="color"
       fill
       radius
       :disabled="disabled"
       @click="toggle"
     >
-      <BIMDataIcon name="addFolder" size="xs" />
-      <span v-if="!noText" style="margin-left: 6px">
+      <slot>
+        <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
         {{ $t("FolderCreationButton.buttonText") }}
-      </span>
+      </slot>
     </BIMDataButton>
 
     <transition name="fade">
@@ -47,6 +47,10 @@ export default {
       type: String,
       default: "32px"
     },
+    color: {
+      type: String,
+      default: "primary"
+    },
     project: {
       type: Object,
       required: true
@@ -56,10 +60,6 @@ export default {
       required: true
     },
     disabled: {
-      type: Boolean,
-      default: false
-    },
-    noText: {
       type: Boolean,
       default: false
     }

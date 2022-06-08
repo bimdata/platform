@@ -10,10 +10,8 @@
     @click="selectFile"
   >
     <slot>
-      <BIMDataIcon :name="icon" :rotate="iconRotate" :size="iconSize" />
-      <span v-if="!noText" style="margin-left: 6px">
-        {{ textButton || $t("FileUploadButton.addFileButtonText") }}
-      </span>
+      <BIMDataIcon name="addFile" size="xs" margin="0 6px 0 0" />
+      {{ $t("FileUploadButton.addFileButtonText") }}
     </slot>
     <input
       hidden
@@ -39,6 +37,10 @@ export default {
       type: String,
       default: "32px"
     },
+    color: {
+      type: String,
+      default: "primary"
+    },
     multiple: {
       type: Boolean,
       default: false
@@ -48,29 +50,6 @@ export default {
       default: () => []
     },
     disabled: {
-      type: Boolean,
-      default: false
-    },
-    color: {
-      type: String,
-      default: "primary"
-    },
-    textButton: {
-      type: String
-    },
-    icon: {
-      type: String,
-      default: "addFile"
-    },
-    iconRotate: {
-      type: Number,
-      default: 0
-    },
-    iconSize: {
-      type: String,
-      default: "xs"
-    },
-    noText: {
       type: Boolean,
       default: false
     }

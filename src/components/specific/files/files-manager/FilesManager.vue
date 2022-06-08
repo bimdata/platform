@@ -8,10 +8,14 @@
             :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
             width="100%"
-            :noText="isLG"
             :project="project"
             :folder="currentFolder"
-          />
+          >
+            <BIMDataIcon name="addFolder" size="xs" />
+            <span v-if="!isLG" style="margin-left: 6px">
+              {{ $t("FolderCreationButton.buttonText") }}
+            </span>
+          </FolderCreationButton>
           <BIMDataTooltip
             data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
@@ -34,10 +38,14 @@
                 spaceSubInfo.remainingTotalSize <= 0
               "
               width="100%"
-              :noText="isLG"
               multiple
               @upload="uploadFiles"
-            />
+            >
+              <BIMDataIcon name="addFile" size="xs" />
+              <span v-if="!isLG" style="margin-left: 6px">
+                {{ $t("FileUploadButton.addFileButtonText") }}
+              </span>
+            </FileUploadButton>
           </BIMDataTooltip>
         </div>
         <div class="files-manager__actions end">
