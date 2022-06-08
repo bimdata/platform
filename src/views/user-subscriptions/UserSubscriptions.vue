@@ -6,7 +6,7 @@
       </template>
     </ViewHeader>
     <div class="user-subscriptions__header">
-      <div class="user-subscriptions__header__left">
+      <div class="user-subscriptions__header__start">
         <h1>
           {{ $t("UserSubscriptions.title") }}
         </h1>
@@ -48,7 +48,7 @@
           </BIMDataDropdownList>
         </div>
       </div>
-      <div class="user-subscriptions__header__right">
+      <div class="user-subscriptions__header__end">
         <SubscribeCard />
       </div>
     </div>
@@ -60,11 +60,10 @@
 </template>
 
 <script>
+import mapLimit from "async/mapLimit";
 import { onMounted, ref, watch } from "vue";
 import { useOrganizations } from "@/state/organizations.js";
 import { useSubscriptions } from "@/state/subscriptions.js";
-import mapLimit from "async/mapLimit";
-
 // Components
 import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
@@ -105,14 +104,12 @@ export default {
           // When a cloud is deleted, the subscription history stays
           // We don't show custom subscriptions
 
-          const validSubscriptions = subscriptions.value.filter(sub => sub.cloud && !sub.is_custom)
+          const validSubscriptions = subscriptions.value.filter(
+            sub => sub.cloud && !sub.is_custom
+          );
           const allPayments = mapLimit(validSubscriptions, 10, async sub => {
-            return loadSubscriptionPayments(
-              selectedOrga.value,
-              sub.cloud,
-              sub
-            );
-          })
+            return loadSubscriptionPayments(selectedOrga.value, sub.cloud, sub);
+          });
 
           const tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
