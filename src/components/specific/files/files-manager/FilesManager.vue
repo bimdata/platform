@@ -5,7 +5,7 @@
         <div class="files-manager__actions">
           <FolderCreationButton
             data-guide="btn-new-folder"
-            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
+            :disabled="!hasAdminPerm(project, currentFolder)"
             class="files-manager__actions__btn-new-folder"
             width="194px"
             :project="project"
@@ -16,21 +16,20 @@
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="
-              (project.isAdmin || currentFolder.userPermission === 100) &&
-              spaceSubInfo.remainingTotalSize > 0
+              hasAdminPerm(project, currentFolder) && !isFullTotal(spaceSubInfo)
             "
             :text="
               $t(
                 `FilesManager.uploadDisableMessage.${
-                  spaceSubInfo.remainingTotalSize <= 0 ? 'size' : 'permission'
+                  isFullTotal(spaceSubInfo) ? 'size' : 'permission'
                 }`
               )
             "
           >
             <FileUploadButton
               :disabled="
-                (!project.isAdmin && currentFolder.userPermission < 100) ||
-                spaceSubInfo.remainingTotalSize <= 0
+                !hasAdminPerm(project, currentFolder) ||
+                isFullTotal(spaceSubInfo)
               "
               width="194px"
               multiple
@@ -176,7 +175,8 @@ import { useAppNotification } from "@/components/specific/app/app-notification/a
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
-import { isFolder } from "@/utils/file-structure.js";
+import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
+import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
@@ -473,7 +473,9 @@ export default {
       openVisaManager,
       openVersioningManager,
       closeVersioningManager,
-      fetchVisas
+      fetchVisas,
+      hasAdminPerm,
+      isFullTotal
     };
   }
 };
