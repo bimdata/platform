@@ -10,8 +10,10 @@
       :disabled="disabled"
       @click="toggle"
     >
-      <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("FolderCreationButton.buttonText") }}</span>
+      <BIMDataIcon name="addFolder" size="xs" />
+      <span v-if="!noText" style="margin-left: 6px">
+        {{ $t("FolderCreationButton.buttonText") }}
+      </span>
     </BIMDataButton>
 
     <transition name="fade">
@@ -54,6 +56,10 @@ export default {
       required: true
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    noText: {
       type: Boolean,
       default: false
     }

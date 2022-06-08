@@ -86,8 +86,9 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
 import columnsDef from "./columns.js";
@@ -142,19 +143,21 @@ export default {
     "selection-changed"
   ],
   setup(props, { emit }) {
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
+    const { isXL } = useStandardBreakpoints();
 
-    const columns = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`FilesTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+    const columns = computed(() => {
+      let filteredColumns = columnsDef;
+      if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "size", "actions"].includes(col.id)
+        );
+      }
+      return filteredColumns.map(col => ({
+        ...col,
+        label: col.label || t(`FilesTable.headers.${col.id}`)
+      }));
+    });
 
     let nameEditMode;
     watch(

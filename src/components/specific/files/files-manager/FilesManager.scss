@@ -4,6 +4,8 @@
 
   &:deep() {
     --header-height: 38px;
+    --actions-height: 32px;
+    --tree-max-width: 400px;
 
     .bimdata-card__header {
       height: var(--header-height);
@@ -20,20 +22,31 @@
       height: calc(100% - var(--header-height));
 
       display: grid;
-      grid-template-columns: 400px 1fr;
-      grid-template-rows: 32px 1fr;
+      grid-template-columns: min(25%, var(--tree-max-width)) 1fr;
+      grid-template-rows: var(--actions-height) 1fr;
       gap: var(--spacing-unit);
       grid-template-areas:
-        "actions actions"
-        "tree    files";
+        "actions-start actions-end"
+        "tree          files";
 
       .files-manager__actions {
-        grid-area: actions;
+        &.start {
+          grid-area: actions-start;
+        }
+
+        &.end {
+          grid-area: actions-end;
+        }
+
         display: flex;
         gap: var(--spacing-unit);
 
         &__btn-new-folder {
           z-index: 2;
+          width: 48%;
+        }
+        &__btn-new-file {
+          width: 48%;
         }
 
         &__input-search {
@@ -54,6 +67,7 @@
             display: flex;
             align-items: center;
             gap: var(--spacing-unit);
+
             &__counter {
               display: flex;
               justify-content: center;

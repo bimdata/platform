@@ -2,12 +2,13 @@
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #content>
       <template v-if="fileStructure.children.length > 0">
-        <div class="files-manager__actions">
+        <div class="files-manager__actions start">
           <FolderCreationButton
             data-guide="btn-new-folder"
             :disabled="!project.isAdmin && currentFolder.userPermission < 100"
             class="files-manager__actions__btn-new-folder"
-            width="194px"
+            width="100%"
+            :noText="isLG"
             :project="project"
             :folder="currentFolder"
           />
@@ -32,11 +33,14 @@
                 (!project.isAdmin && currentFolder.userPermission < 100) ||
                 spaceSubInfo.remainingTotalSize <= 0
               "
-              width="194px"
+              width="100%"
+              :noText="isLG"
               multiple
               @upload="uploadFiles"
             />
           </BIMDataTooltip>
+        </div>
+        <div class="files-manager__actions end">
           <BIMDataSearch
             class="files-manager__actions__input-search"
             width="400px"
@@ -70,6 +74,7 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
+
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -78,6 +83,7 @@
           :selectedFile="currentFolder"
           @file-selected="onFileSelected"
         />
+
         <div class="files-manager__files">
           <transition name="fade">
             <FilesActionBar
@@ -172,6 +178,7 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
@@ -473,7 +480,9 @@ export default {
       openVisaManager,
       openVersioningManager,
       closeVersioningManager,
-      fetchVisas
+      fetchVisas,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };
