@@ -9,7 +9,7 @@
           data-guide="project-input-search"
           data-test="input-search"
           class="user-projects__header__search"
-          :width="isLG ? '150px' : isXL ? '225px' : '300px'"
+          :width="isSM ? '150px' : '300px'"
           :placeholder="isSM ? '' : $t('UserProjects.searchInputPlaceholder')"
           v-model="searchText"
           clear
@@ -29,7 +29,12 @@
       </template>
     </ViewHeader>
 
-    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+    <BIMDataResponsiveGrid
+      itemWidth="320px"
+      rowGap="36px"
+      columnGap="36px"
+      :style="{ justifyContent: isMD ? 'center' : '' }"
+    >
       <transition-group name="grid">
         <ProjectCard
           data-guide="project-card"
