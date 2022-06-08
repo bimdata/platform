@@ -38,15 +38,17 @@
         }
       }"
     >
-      <BIMDataButton color="secondary" fill radius :icon="isLG">
-        <template v-if="isLG">
+      <BIMDataButton color="secondary" fill radius :icon="isXL">
+        <template v-if="isXL">
           <BIMDataIcon name="plus" size="xs" />
         </template>
-        <template v-else-if="spaceSubInfo.isPlatformPro">
-          {{ $t("SpaceSizeInfo.subscribeDatapackButton") }}
-        </template>
         <template v-else>
-          {{ $t("SpaceSizeInfo.subscribePlatformButton") }}
+          <template v-if="spaceSubInfo.isPlatformPro">
+            {{ $t("SpaceSizeInfo.subscribeDatapackButton") }}
+          </template>
+          <template v-else>
+            {{ $t("SpaceSizeInfo.subscribePlatformButton") }}
+          </template>
         </template>
       </BIMDataButton>
     </AppLink>

@@ -51,7 +51,7 @@
         <div class="files-manager__actions end">
           <BIMDataSearch
             class="files-manager__actions__input-search"
-            width="400px"
+            :width="isMD ? '200px' : isLG ? '300px' : '400px'"
             :placeholder="$t('FilesManager.searchInputPlaceholder')"
             v-model="searchText"
             clear

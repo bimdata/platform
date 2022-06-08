@@ -3,7 +3,7 @@
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
-        <GoBackButton v-if="isLG" />
+        <GoBackButton v-if="isMidXL" />
         <AppBreadcrumb v-else data-guide="btn-change-space" />
       </template>
       <template #center>
@@ -52,7 +52,10 @@
 <script>
 import { onBeforeMount, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
+import {
+  useCustomBreakpoints,
+  useStandardBreakpoints
+} from "@/composables/responsive.js";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
@@ -108,6 +111,10 @@ export default {
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
+    const { isMidXL } = useCustomBreakpoints({
+      isMidXL: ({ width }) => width <= 1132 - 0.02
+    });
+
     const tabs = ref(tabsDef);
 
     const currentTab = ref(tabsDef[0]);
@@ -141,7 +148,8 @@ export default {
       // Methods
       changeView,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
+      isMidXL
     };
   }
 };

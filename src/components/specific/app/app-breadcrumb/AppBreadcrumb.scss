@@ -11,10 +11,10 @@
   }
 }
 
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(xl) {
   .app-breadcrumb:deep() {
     .breadcrumb-separator {
-      margin: 0 calc(var(--spacing-unit) / 2);
+      margin: 0 calc(var(--spacing-unit) / 3);
     }
   }
 }
