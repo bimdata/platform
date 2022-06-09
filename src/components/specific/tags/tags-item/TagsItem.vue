@@ -35,6 +35,7 @@
     </template>
     <div class="tags-item__content">
       <BIMDataCheckbox
+        :disabled="!isCheckboxClickable"
         :modelValue="tag.isSelected"
         @update:modelValue="toggle(tag, $event)"
       />
@@ -171,7 +172,10 @@ export default {
       isSafeZone.value = false;
     };
 
+    const isCheckboxClickable = ref(true);
+
     const toggle = async (tag, checked) => {
+      isCheckboxClickable.value = false;
       if (checked) {
         await TagService.addDocumentTag(props.project, props.document, {
           id: tag.id,
@@ -183,6 +187,7 @@ export default {
       }
       tag.isSelected = checked;
       emit("tag-to-update", tag);
+      isCheckboxClickable.value = true;
     };
 
     const tagColor = ref(props.tag.color);
@@ -230,6 +235,7 @@ export default {
       isSafeZone,
       editTagName,
       colorSelector,
+      isCheckboxClickable,
       displayColorSelector,
       // methods
       onCancelSubmitTagName,

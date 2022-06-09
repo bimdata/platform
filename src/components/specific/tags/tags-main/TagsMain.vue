@@ -26,13 +26,12 @@
           ghost
           icon
           margin="12px"
-          @click="showAddTagInput = true"
+          @click="toggleAddTagInput"
         >
           <BIMDataIcon
-            name="close"
+            name="plus"
             size="xxxs"
             margin="0 calc(var(--spacing-unit) / 2) 0 var(--spacing-unit)"
-            :rotate="45"
           />
           <span>{{ $t("Tag.addTag") }}</span>
         </BIMDataButton>
@@ -41,6 +40,7 @@
         <BIMDataInput
           ref="input"
           :placeholder="$t('Tag.addNewTag')"
+          margin="0"
           v-model="newTagName"
           @keyup.enter.stop="addNewTag"
         />
@@ -160,19 +160,22 @@ export default {
     const tagToUpdate = ref(null);
 
     watch(tagToUpdate, async () => {
-      updatedTagList.value.map(tag =>
-        tag.id === tagToUpdate.value.id
-          ? {
-              ...tagToUpdate.value
-            }
-          : {
-              ...tag
-            }
-      );
-      tagsDocument.value = (
-        await getDocument(props.project, props.document)
-      ).tags;
-      emit("file-updated");
+      if (tagToUpdate.value) {
+        updatedTagList.value.map(tag =>
+          tag.id === tagToUpdate.value.id
+            ? {
+                ...tagToUpdate.value
+              }
+            : {
+                ...tag
+              }
+        );
+        tagsDocument.value = (
+          await getDocument(props.project, props.document)
+        ).tags;
+        emit("file-updated");
+        tagToUpdate.value = null;
+      }
     });
 
     watch(

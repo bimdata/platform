@@ -23,7 +23,7 @@
             class="file-tags-cell-pills__pill"
             :style="{
               backgroundColor: `#${tag.color}40`,
-              border: `2px solid #${tag.color}`
+              border: `1px solid #${tag.color}`
             }"
           ></div>
         </template>
