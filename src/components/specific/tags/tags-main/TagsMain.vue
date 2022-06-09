@@ -160,22 +160,21 @@ export default {
     const tagToUpdate = ref(null);
 
     watch(tagToUpdate, async () => {
-      if (tagToUpdate.value) {
-        updatedTagList.value.map(tag =>
-          tag.id === tagToUpdate.value.id
-            ? {
-                ...tagToUpdate.value
-              }
-            : {
-                ...tag
-              }
-        );
-        tagsDocument.value = (
-          await getDocument(props.project, props.document)
-        ).tags;
-        emit("file-updated");
-        tagToUpdate.value = null;
-      }
+      if (!tagToUpdate.value) return;
+      updatedTagList.value.map(tag =>
+        tag.id === tagToUpdate.value.id
+          ? {
+              ...tagToUpdate.value
+            }
+          : {
+              ...tag
+            }
+      );
+      tagsDocument.value = (
+        await getDocument(props.project, props.document)
+      ).tags;
+      emit("file-updated");
+      tagToUpdate.value = null;
     });
 
     watch(
