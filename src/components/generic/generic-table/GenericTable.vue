@@ -73,12 +73,12 @@
       </table>
       <div
         class="generic-table__container__placeholder"
-        v-if="rows.length === 0 && placeholder"
+        v-if="rows.length === 0"
         :style="{
-          height: `calc(100% - ${rowHeight}px)`
+          height: `calc(100% - ${placeholder ? rowHeight : 0}px)`
         }"
       >
-        <p>{{ placeholder }}</p>
+        <slot name="placeholder">{{ placeholder }}</slot>
       </div>
     </div>
     <div

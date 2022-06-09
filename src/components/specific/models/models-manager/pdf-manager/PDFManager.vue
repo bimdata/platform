@@ -1,5 +1,9 @@
 <template>
-  <ModelsManagerWrapper :project="project" :tabs="tabs" />
+  <ModelsManagerWrapper
+    :project="project"
+    :tabs="tabs"
+    :modelType="MODEL_TYPE.PDF"
+  />
 </template>
 
 <script>
@@ -48,6 +52,7 @@ export default {
     );
 
     return {
+      MODEL_TYPE,
       tabs
     };
   }

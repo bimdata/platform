@@ -7,7 +7,6 @@
     :perPage="7"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
-    :placeholder="$t('ModelsTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: model }">
       <ModelNameCell
@@ -40,6 +39,25 @@
         @update="nameEditMode[model.id] = true"
       />
     </template>
+    <template #placeholder>
+      <template v-if="modelType === MODEL_TYPE.PDF">
+        <div class="models-table__pdf-placeholder">
+          <div class="models-table__pdf-placeholder__circle">
+            <BIMDataFileIcon
+              class="models-table__pdf-placeholder__circle__file-icon"
+              fileName=".pdf"
+              :size="20"
+            />
+          </div>
+          <div class="models-table__pdf-placeholder__content">
+            {{ $t("ModelsTable.emptyTablePlaceholder.textPdf") }}
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        {{ $t("ModelsTable.emptyTablePlaceholder.text") }}
+      </template>
+    </template>
   </GenericTable>
 </template>
 
@@ -47,6 +65,7 @@
 import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
+import { MODEL_TYPE } from "@/config/models.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
@@ -68,6 +87,10 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    modelType: {
+      type: String,
+      required: false
     }
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
@@ -94,8 +117,11 @@ export default {
     return {
       // References
       columns,
+      MODEL_TYPE,
       nameEditMode
     };
   }
 };
 </script>
+
+<style scoped lang="scss" src="./ModelsTable.scss"></style>

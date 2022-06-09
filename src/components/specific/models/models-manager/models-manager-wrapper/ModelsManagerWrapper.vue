@@ -40,6 +40,7 @@
       class="models-manager-wrapper__table"
       :project="project"
       :models="displayedModels"
+      :modelType="modelType"
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
@@ -81,6 +82,10 @@ export default {
       type: Array,
       required: true,
       validator: value => value.length > 0
+    },
+    modelType: {
+      type: String,
+      required: false
     }
   },
   setup(props) {

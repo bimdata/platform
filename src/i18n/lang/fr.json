@@ -501,7 +501,11 @@
     "uploadButtonText": "Téléversement"
   },
   "ModelsTable": {
-    "emptyTablePlaceholder": "Aucun modèle",
+    
+    "emptyTablePlaceholder": {
+      "text": "Aucun modèle",
+      "textPdf": "Depuis le menu “fichier” dans la GED, cliquez sur “Définir comme modèle” pour afficher vos plans pdf dans votre projet."
+    },
     "headers": {
       "id": "ID",
       "name": "Nom",
