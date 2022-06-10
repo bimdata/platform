@@ -7,16 +7,18 @@
           <span>You currently have 300 Mb of BIMData space.</span>
         </div>
         <div class="files-paiement-modal__box__body">
-          <div class="files-paiement-modal__box__body__content">
-            <img src="/static/paiementModal/upgrade.png" />
-            <div class="files-paiement-modal__box__body__content__text">
-              <span>Upgrade your space</span>
-              <span>Upgrade to Bimdata Pro to get the most space</span>
+          <AppLink :to="{ name: routeNames.subscriptionPro }">
+            <div class="files-paiement-modal__box__body__content">
+              <img src="/static/paiementModal/upgrade.png" />
+              <div class="files-paiement-modal__box__body__content__text">
+                <span>Upgrade your space</span>
+                <span>Upgrade to Bimdata Pro to get the most space</span>
+              </div>
+              <span class="files-paiement-modal__box__body__content__data"
+                >10 GB</span
+              >
             </div>
-            <span class="files-paiement-modal__box__body__content__data"
-              >10 GB</span
-            >
-          </div>
+          </AppLink>
           <div class="files-paiement-modal__box__body__separator"></div>
           <div class="files-paiement-modal__box__body__content">
             <img src="/static/paiementModal/referal.png" />
@@ -51,12 +53,18 @@
 
 <script>
 import {} from "vue";
+import routeNames from "@/router/route-names.js";
+
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
-  props: {},
-  emits: [],
+  components: {
+    AppLink
+  },
   setup() {
-    return {};
+    return {
+      routeNames
+    };
   }
 };
 </script>
