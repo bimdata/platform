@@ -76,7 +76,10 @@ export default {
         const containerRect = container.value.getBoundingClientRect();
         const viewportRect = viewport.value.getBoundingClientRect();
         let offset = Math.abs(
-          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
+          Math.ceil(
+            nbSlices *
+              (1 - (event.clientX - containerRect.x) / containerRect.width)
+          )
         );
         offset = Math.min(offset, nbSlices);
         translation.value = (offset - 1) * viewportRect.width;
@@ -113,8 +116,10 @@ export default {
             name: model.name,
             url: model.viewer360File
           }));
-        image.value = images.value.length > 0 ? images.value[0] : {};
+
         index.value = 0;
+        image.value = images.value.length > 0 ? images.value[0] : {};
+        emit("model-changed", props.models[index.value]);
       },
       { immediate: true }
     );

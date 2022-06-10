@@ -5,13 +5,13 @@
       ripple
       rounded
       icon
-      @click="toggleMenu"
+      @click="() => (isOpen ? closeMenu() : openMenu())"
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="file-actions-cell__menu" v-show="showMenu">
+      <div class="file-actions-cell__menu" ref="menu" v-show="isOpen">
         <AppLink
           v-if="isViewable(file)"
           class="file-actions-cell__menu__btn"
@@ -35,16 +35,28 @@
             {{ $t("FileActionsCell.openViewerButtonText") }}
           </BIMDataButton>
         </AppLink>
-        <BIMDataButton
-          v-if="!isFolder(file) && isConvertible(file)"
-          :disabled="isModel(file)"
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('create-model')"
-        >
-          {{ $t("FileActionsCell.createModelButtonText") }}
-        </BIMDataButton>
+        <template v-if="!isFolder(file) && isConvertible(file)">
+          <template v-if="!isModel(file)">
+            <BIMDataButton
+              class="file-actions-cell__menu__btn"
+              ghost
+              squared
+              @click="onClick('create-model')"
+            >
+              {{ $t("FileActionsCell.createModelButtonText") }}
+            </BIMDataButton>
+          </template>
+          <template v-else>
+            <BIMDataButton
+              class="file-actions-cell__menu__btn"
+              ghost
+              squared
+              @click="onClick('remove-model')"
+            >
+              {{ $t("FileActionsCell.removeModelButtonText") }}
+            </BIMDataButton>
+          </template>
+        </template>
 
         <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
@@ -89,6 +101,18 @@
         </BIMDataButton>
 
         <BIMDataButton
+          v-if="
+            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+          "
+          class="file-actions-cell__menu__btn"
+          ghost
+          squared
+          @click="onClick('open-versioning-manager')"
+        >
+          {{ $t("FileActionsCell.VersioningButtonText") }}
+        </BIMDataButton>
+
+        <BIMDataButton
           :disabled="!project.isAdmin && file.userPermission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
@@ -104,7 +128,7 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle.js";
+import { nextTick, ref } from "vue";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
 import {
@@ -123,6 +147,10 @@ export default {
     AppLink
   },
   props: {
+    filesTable: {
+      type: Object,
+      required: true
+    },
     project: {
       type: Object,
       required: true
@@ -137,15 +165,34 @@ export default {
     "delete",
     "download",
     "manage-access",
+    "open-versioning-manager",
     "open-visa-manager",
+    "remove-model",
     "update"
   ],
   setup(props, { emit }) {
-    const {
-      isOpen: showMenu,
-      close: closeMenu,
-      toggle: toggleMenu
-    } = useToggle();
+    const menu = ref(null);
+    const isOpen = ref(false);
+
+    const openMenu = () => {
+      isOpen.value = true;
+      nextTick(() => {
+        const { y: Y, height: H } =
+          props.filesTable.$el.getBoundingClientRect();
+        const { y, height: h } = menu.value.getBoundingClientRect();
+
+        if (y + h > Y + H) {
+          menu.value.style.top = `-${h}px`;
+        }
+      });
+    };
+
+    const closeMenu = () => {
+      isOpen.value = false;
+      nextTick(() => {
+        menu.value.style.top = "30px";
+      });
+    };
 
     const onClick = event => {
       closeMenu();
@@ -154,8 +201,9 @@ export default {
 
     return {
       // References
+      menu,
       routeNames,
-      showMenu,
+      isOpen,
       // Methods
       closeMenu,
       isConvertible,
@@ -165,7 +213,7 @@ export default {
       isIFC,
       isSmartFile,
       onClick,
-      toggleMenu,
+      openMenu,
       windowType
     };
   }

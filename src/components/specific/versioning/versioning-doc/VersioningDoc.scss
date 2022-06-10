@@ -1,0 +1,120 @@
+.versioning-doc {
+  position: relative;
+
+  &__line {
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    &__outer-circle {
+      position: relative;
+      border: 2px solid var(--color-silver);
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &__inner-circle {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+      }
+    }
+
+    &__down-line {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%);
+      width: 2px;
+      height: 167px;
+      background-color: var(--color-silver);
+    }
+  }
+
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
+    margin-left: calc(var(--spacing-unit) * 3);
+
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+  
+      &__left-side {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--spacing-unit) / 2);
+        span {
+          margin: auto;
+          font-weight: 500;
+          font-size: var(--font-size);
+          color: var(--color-primary);
+        }
+      }
+
+      &__right-side {
+        display: flex;
+        justify-content: flex-end;
+        &__btn-dl, &__btn-show, &__btn-get-head, &__btn-delete {
+          margin-left: var(--spacing-unit);
+          border-radius: 3px;
+          background-color: var(--color-silver-light);
+        }
+      }
+    }
+
+    &__file {
+      display: flex;
+      align-items: center;
+      background-color: var(--color-silver-light);
+      border-radius: 3px;
+      height: 40px;
+
+      img {
+        margin-left: var(--spacing-unit);
+      }
+
+      &__name {
+        font-weight: 500;
+        margin-left: var(--spacing-unit);
+        color: var(--color-primary);
+      }
+    }
+
+    &__user {
+      &__title {
+        font-size: var(--font-size);
+        font-weight: 500;
+      }
+      &__info {
+        margin-top: calc(var(--spacing-unit) / 2);
+        display: flex;
+        &__identity {
+          display: flex;
+          width: 60%;
+          &__name {
+            display: flex;
+            align-items: center;
+            margin-left: var(--spacing-unit);
+            color: var(--color-primary);
+            font-weight: 500;
+          }
+        }
+      }
+      &__date {
+        display: flex;
+        margin-left: auto;
+        align-items: center;
+        color: var(--color-granite-light);
+        font-size: var(--font-size);
+        font-weight: 500;
+      }
+    }
+  }
+}

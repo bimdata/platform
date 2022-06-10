@@ -7,7 +7,7 @@
         :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
-        :disabled="spaceSubInfo.remainingSmartDataSize <= 0"
+        :disabled="isFull(spaceSubInfo)"
         @click="toggleFileUploader"
       >
         <BIMDataIcon
@@ -26,7 +26,7 @@
     <transition name="fade">
       <FileUploader
         class="project-overview__block--upload"
-        v-show="showFileUploader && spaceSubInfo.remainingSmartDataSize > 0"
+        v-show="showFileUploader && !isFull(spaceSubInfo)"
         isModelUploader
         autoclose
         :project="project"
@@ -81,6 +81,7 @@ import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
+import { isFull } from "@/utils/spaces.js";
 // Components
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
@@ -107,7 +108,9 @@ export default {
     const { pushNotification } = useAppNotification();
 
     const ifcs = computed(() =>
-      projectModels.value.filter(model => model.type === MODEL_TYPE.IFC)
+      projectModels.value.filter(
+        model => model.type === MODEL_TYPE.IFC && !model.archived
+      )
     );
 
     const {
@@ -137,9 +140,9 @@ export default {
 
     return {
       // References
+      allowedExtensions: UPLOADABLE_EXTENSIONS,
       ifcs,
       invitations: projectInvitations,
-      allowedExtensions: UPLOADABLE_EXTENSIONS,
       models: projectModels,
       project: currentProject,
       showFileUploader,
@@ -147,6 +150,7 @@ export default {
       users: projectUsers,
       // Methods
       closeFileUploader,
+      isFull,
       notifyForbiddenUpload,
       openFileUploader,
       reloadData,

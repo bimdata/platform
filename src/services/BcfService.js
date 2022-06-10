@@ -1,4 +1,6 @@
+import { downloadBlobAs } from "@/utils/download.js";
 import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError } from "./ErrorService.js";
 
 class BcfService {
   async fetchProjectTopics(project) {
@@ -8,31 +10,22 @@ class BcfService {
       console.log(error);
     }
   }
-  async fetchTopicViewpoints(project, topic, imgFormat = null) {
+
+  async fetchTopicViewpoints(project, topic, imgFormat = "url") {
     try {
       return await apiClient.bcfApi.getTopicViewpoints(
         project.id,
         topic.guid,
-        imgFormat ? "url" : null
+        imgFormat
       );
     } catch (error) {
       console.log(error);
     }
   }
-  async updateProjectTopics(project, bcfTopic, data) {
+
+  async fetchTopicComments(project, topic) {
     try {
-      return await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic/${bcfTopic.guid}`,
-        {
-          method: "PATCH",
-          credentials: "include",
-          headers: {
-            "content-type": "application/json",
-            ...apiClient.authHeader
-          },
-          body: JSON.stringify(data)
-        }
-      );
+      return await apiClient.bcfApi.getComments(project.id, topic.guid);
     } catch (error) {
       console.log(error);
     }
@@ -45,104 +38,10 @@ class BcfService {
       console.log(error);
     }
   }
+
   async fetchDetailedExtensions(project) {
     try {
       return await apiClient.bcfApi.getDetailedExtensions(project.id);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createExtension(project, extensionType, data) {
-    try {
-      return await apiClient.bcfApi["createExtension" + extensionType](
-        project.id,
-        data
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async deleteExtension(project, extensionType, priority) {
-    try {
-      return await apiClient.bcfApi["deleteExtension" + extensionType](
-        priority.id,
-        project.id
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async updateExtension(project, extensionType, extensionId, data) {
-    try {
-      return await apiClient.bcfApi["updateExtension" + extensionType](
-        extensionId,
-        project.id,
-        data
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createFullTopic(project, topic) {
-    try {
-      await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/full-topic`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "content-type": "application/json",
-            ...apiClient.authHeader
-          },
-          body: JSON.stringify(topic)
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createTopic(project, topic) {
-    try {
-      return await apiClient.bcfApi.createTopic(
-        project.id,
-        topic
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async deleteTopic(project, topic) {
-    try {
-      return await apiClient.bcfApi.deleteTopic(
-        topic.guid,
-        project.id
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createViewpoint(project, topic, data) {
-    try {
-      return await apiClient.bcfApi.createViewpoint(
-        project.id,
-        topic.guid,
-        data
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async deleteViewpoint(project, topic, viewpoint) {
-    try {
-      return await apiClient.bcfApi.deleteViewpoint(
-        viewpoint.guid,
-        project.id,
-        topic.guid
-      );
     } catch (error) {
       console.log(error);
     }
@@ -165,69 +64,16 @@ class BcfService {
         }
       );
     } catch (error) {
-      console.log(error);
-    }
-  }
-  async exportBcf(project) {
-    try {
-      return await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/export`,
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            ...apiClient.authHeader
-          }
-        }
-      );
-    } catch (error) {
-      console.log(error);
+      throw new RuntimeError(ERRORS.BCF_IMPORT_ERROR, error);
     }
   }
 
-  // comments
-  async fetchAllComments(project, topic) {
+  async exportBcf(project) {
     try {
-      return await apiClient.bcfApi.getComments(
-        project.id,
-        topic.guid
-      );
+      const response = await apiClient.bcfApi.downloadBcfExport(project.id);
+      downloadBlobAs(`${project.name}.bcf`, response);
     } catch (error) {
-      console.log(error);
-    }
-  }
-  async createComment(project, topic, data) {
-    try {
-      return await apiClient.bcfApi.createComment(
-        project.id,
-        topic.guid,
-        data
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async deleteComment(project, topic, comment) {
-    try {
-      return await apiClient.bcfApi.deleteComment(
-        comment.guid,
-        project.id,
-        topic.guid
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async updateComment(project, topic, comment, data) {
-    try {
-      return await apiClient.bcfApi.updateComment(
-        comment.guid,
-        project.id,
-        topic.guid,
-        data
-      );
-    } catch (error) {
-      console.log(error);
+      throw new RuntimeError(ERRORS.BCF_IMPORT_ERROR, error);
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <router-link class="app-link" :to="to">
+  <router-link class="app-link" :to="to" :target="target">
     <slot></slot>
   </router-link>
 </template>
@@ -10,6 +10,10 @@ export default {
     to: {
       type: [String, Object],
       required: true
+    },
+    target: {
+      type: String,
+      default: () => ""
     }
   }
 };

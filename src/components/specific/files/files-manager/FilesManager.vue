@@ -5,7 +5,7 @@
         <div class="files-manager__actions">
           <FolderCreationButton
             data-guide="btn-new-folder"
-            :disabled="!project.isAdmin && currentFolder.userPermission < 100"
+            :disabled="!hasAdminPerm(project, currentFolder)"
             class="files-manager__actions__btn-new-folder"
             width="194px"
             :project="project"
@@ -16,21 +16,20 @@
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="
-              (project.isAdmin || currentFolder.userPermission === 100) &&
-              spaceSubInfo.remainingTotalSize > 0
+              hasAdminPerm(project, currentFolder) && !isFullTotal(spaceSubInfo)
             "
             :text="
               $t(
                 `FilesManager.uploadDisableMessage.${
-                  spaceSubInfo.remainingTotalSize <= 0 ? 'size' : 'permission'
+                  isFullTotal(spaceSubInfo) ? 'size' : 'permission'
                 }`
               )
             "
           >
             <FileUploadButton
               :disabled="
-                (!project.isAdmin && currentFolder.userPermission < 100) ||
-                spaceSubInfo.remainingTotalSize <= 0
+                !hasAdminPerm(project, currentFolder) ||
+                isFullTotal(spaceSubInfo)
               "
               width="194px"
               multiple
@@ -105,8 +104,10 @@
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager($event)"
+            @remove-model="removeModel"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
+            @open-versioning-manager="openVersioningManager"
           />
         </div>
 
@@ -131,6 +132,15 @@
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
               @reach-file="backToParent"
+            />
+            <VersioningMain
+              v-if="showVersioningManager"
+              :project="project"
+              :document="fileToManage"
+              :currentFolder="currentFolder"
+              :spaceSubInfo="spaceSubInfo"
+              @file-uploaded="$emit('file-uploaded')"
+              @close="closeVersioningManager"
             />
           </div>
         </transition>
@@ -165,7 +175,8 @@ import { useAppNotification } from "@/components/specific/app/app-notification/a
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
-import { isFolder } from "@/utils/file-structure.js";
+import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
+import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
@@ -177,6 +188,7 @@ import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
+import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
 
 export default {
   components: {
@@ -188,7 +200,8 @@ export default {
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,
-    VisaMain
+    VisaMain,
+    VersioningMain
   },
   props: {
     spaceSubInfo: {
@@ -223,7 +236,7 @@ export default {
       moveFiles: move,
       downloadFiles: download
     } = useFiles();
-    const { createModel } = useModels();
+    const { createModel, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -299,6 +312,12 @@ export default {
       });
     };
 
+    const removeModel = async file => {
+      await deleteModels(props.project, [
+        { id: file.modelId, type: file.modelType }
+      ]);
+    };
+
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
     const openDeleteModal = models => {
@@ -319,6 +338,7 @@ export default {
     };
 
     const showSidePanel = ref(false);
+    const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
     const folderToManage = ref(null);
@@ -328,6 +348,7 @@ export default {
     const openAccessManager = folder => {
       folderToManage.value = folder;
       showAccessManager.value = true;
+      showVersioningManager.value = false;
       showVisaManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
@@ -360,6 +381,7 @@ export default {
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
+      showVersioningManager.value = false;
       showAccessManager.value = false;
       showSidePanel.value = true;
     };
@@ -368,6 +390,24 @@ export default {
       showSidePanel.value = false;
       setTimeout(() => {
         showVisaManager.value = false;
+        fileToManage.value = null;
+      }, 100);
+    };
+
+    const openVersioningManager = event => {
+      if (event.fileName) {
+        fileToManage.value = event;
+        showVersioningManager.value = true;
+        showAccessManager.value = false;
+        showVisaManager.value = false;
+        showSidePanel.value = true;
+      }
+    };
+
+    const closeVersioningManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showVersioningManager.value = false;
         fileToManage.value = null;
       }, 100);
     };
@@ -415,10 +455,12 @@ export default {
       createdVisas,
       visasLoading,
       visasCounter,
+      showVersioningManager,
       // Methods
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
+      removeModel,
       downloadFiles,
       moveFiles,
       openAccessManager,
@@ -429,7 +471,11 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
-      fetchVisas
+      openVersioningManager,
+      closeVersioningManager,
+      fetchVisas,
+      hasAdminPerm,
+      isFullTotal
     };
   }
 };
