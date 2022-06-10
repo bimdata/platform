@@ -39,7 +39,7 @@
         @update="nameEditMode[model.id] = true"
       />
     </template>
-    <template #placeholder>
+    <template #placeholderSlot>
       <template v-if="modelType === MODEL_TYPE.PDF">
         <div class="models-table__pdf-placeholder">
           <div class="models-table__pdf-placeholder__circle">
