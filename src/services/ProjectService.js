@@ -104,7 +104,11 @@ class ProjectService {
         }
       );
     } catch (error) {
-      throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
+      if (error.status === 400 && (await error.json()).already_exists) {
+        throw new RuntimeError(ERRORS.USER_ALREADY_EXISTS_ERROR, error);
+      } else {
+        throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
+      }
     }
   }
 

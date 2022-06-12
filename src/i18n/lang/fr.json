@@ -88,7 +88,12 @@
     "ascendingDateTooltip": "date croissante",
     "descendingDateTooltip": "date décroissante",
     "viewGridTooltip": "vue grille",
-    "viewListTooltip": "vue liste"
+    "viewListTooltip": "vue liste",
+    "metricsTitle": "Total: {count} issues BCF",
+    "metricsEmptyText": "Ajoutez des issues pour voir les statistiques associées ici.",
+    "noSearchResultsTitle": "Pas de résultats",
+    "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
+    "goBackButton": "Retour"
   },
   "ProjectFiles": {
     "groupsButtonText": "Gestion des groupes"
@@ -157,179 +162,6 @@
   "BreadcrumbProjectSelector": {
     "placeholder": "< Aucun projet >"
   },
-
-  "BcfComments": {
-    "commentButton": "Poster un commentaire",
-    "commentLabel": "Poster un commentaire",
-    "commentText": "Commentaire",
-    "cancelButton": "Annuler",
-    "publishButton": "Publier",
-    "commentsText": "commentaires"
-  },
-  "BcfComment": {
-    "deleteCommentText": "Supprimer ce commentaire ?",
-    "deleteButton": "Supprimer"
-  },
-  "BcfFilters": {
-    "filtersButton": "Filtres",
-    "filtersTitle": "Filtres",
-    "priorityLabel": "Priorité",
-    "statusLabel": "Statut",
-    "startDatePlaceholder": "Date de début",
-    "startDateExample": "(Ex: 28/04/2022)",
-    "endDatePlaceholder": "Date de fin",
-    "endDateExample": "(Ex: 28/05/2022)",
-    "assignedToLabel": "Assigné à",
-    "creatorsLabel": "Créé par",
-    "tagsLabel": "Tags",
-    "resetButton": "Réinitialiser",
-    "searchButton": "Rechercher",
-    "noPriority": "Aucune priorité",
-    "undefinedStatus": "Non défini",
-    "undefinedUser": "Non défini",
-    "undefinedCreator": "Non défini"
-  },
-  "BcfSettings": {
-    "goBackButton": "Retour",
-    "title": "Paramètres BCF",
-    "text": "Créez, renseignez et listez les paramètres BCF que vous souhaitez avoir sur ce projet",
-    "validateButton": "Valider les paramètres BCF"
-  },
-  "SettingCard": {
-    "addButton": "ajouter un élément",
-    "cancelButton": "Annuler",
-    "validateButton": "Valider",
-    "title": {
-      "Priority": "Priorités",
-      "Label": "Tags",
-      "Status": "Statuts",
-      "Type": "Types",
-      "Stage": "Phases"
-    },
-    "input": {
-      "Priority": "Ajouter une nouvelle priorité",
-      "Label": "Ajouter un nouveau label",
-      "Status": "Ajouter un nouveau statut",
-      "Type": "Ajouter un nouveau type",
-      "Stage": "Ajouter une nouvelle phase"
-    },
-    "text": {
-      "Priority": "Liste des priorités",
-      "Label": "Liste des tags",
-      "Status": "Liste des statuts",
-      "Type": "Liste des types",
-      "Stage": "Liste des phases"
-    }
-  },
-  "Extension": {
-    "deleteExtensionText": "Supprimmer ce paramètre",
-    "deleteButton": "Supprimer"
-  },
-  "BcfTopicCreationCard": {
-    "text": "Créer un nouveau topic BCF",
-    "createBcfSideTitle": "Signaler un problème"
-  },
-  "BcfTopicGridItem": {
-    "priority": "Priorité : ",
-    "assignedTo": "Assigné à : ",
-    "noPriority": "Aucune",
-    "notSpecified": "Non défini",
-    "elements": "Élements",
-    "noElements": "0 Élement",
-    "see": "Voir"
-  },
-  "BcfTopicsList": {
-    "headers": {
-      "index": "#",
-      "priority": "Priorité",
-      "status": "Statut",
-      "title": "Titre",
-      "creator": "Crée par",
-      "date": "Date",
-      "actions": "Actions"
-    }
-  },
-  "BcfActionsCell": {
-    "seeButton": "Voir"
-  },
-  "ModalDeleteTopic": {
-    "deleteText": "Vous êtes sur le point de supprimer {name}",
-    "deleteBcfButton": "Supprimer ce BCF",
-    "keepBcfButton": "Conserver ce BCF"
-  },
-  "OpenTopicIssue": {
-    "openViewer": "Ouvrir dans le viewer",
-    "openViewerNoModels": "Il n'y a aucun modèle prêt pour une visualisation",
-    "elements": "Élements",
-    "noElements": "0 Élement",
-    "type": "Type :",
-    "noTypeSpecified": "Pas de type spécifié",
-    "description": "Description :",
-    "noDescriptionProvided": "Pas de description renseignée",
-    "assignedTo": "Assigné à :",
-    "notAssigned": "Non assigné",
-    "dueDate": "Échéance :",
-    "noDueDate": "Pas de date d'échéance",
-    "informations": "Informations",
-    "status": "Statut :",
-    "noStatusSpecified": "Pas de statut spécifié",
-    "stage": "Phase :",
-    "noStageProvided": "Pas de phase renseignée",
-    "priority": "Priorité :",
-    "priorityNotDefined": "Non défini",
-    "tags": "Tags :",
-    "noTags": "Pas de tags",
-    "commentButton": "Poster un commentaire"
-  },
-  "BcfTopicsMetrics": {
-    "emptyText": "Ajoutez des questions pour voir les statistiques associées ici.",
-    "issues": "problèmes",
-    "extension": {
-      "Priority": "Priorité",
-      "PriorityNotDefined": "Aucune priorité",
-      "PriorityTitle": "Priorités",
-      "Status": "Statut",
-      "StatusNotDefined": "Aucun statut",
-      "StatusTitle": "Statuts"
-    }
-  },
-  "CreateBcfTopic": {
-    "dragDropImageText": "Veuillez sélectionner un fichier",
-    "addPictureButton": "Ajouter une image",
-    "titlePlaceholder": "Titre *",
-    "titleErrorMessage": "Titre manquant",
-    "typeLabel": "Type",
-    "priorityLabel": "Priorité",
-    "statusLabel": "Statut",
-    "stageLabel": "Phase",
-    "assignedToLabel": "Assigné à",
-    "dueDateLabel": "Date d'échéance (JJ/MM/AAAA)",
-    "dateErrorMessage": "Format de date ou date incorrecte",
-    "dateExample": "(Ex: 28/04/2022)",
-    "descriptionLabel": "Description",
-    "tagsLabel": "Tags",
-    "validateButton": "Valider"
-  },
-  "EditBcfTopic": {
-    "goBackButton": "Retour",
-    "dragDropImageText": "Veuillez sélectionner un fichier",
-    "addPictureButton": "Ajouter une image",
-    "titlePlaceholder": "Titre*",
-    "titleErrorMessage": "Titre manquant",
-    "typeLabel": "Type",
-    "priorityLabel": "Priorité",
-    "statusLabel": "Statut",
-    "stageLabel": "Phase",
-    "assignedToLabel": "Assigné à",
-    "descriptionLabel": "Description",
-    "tagsPlaceholder": "Tags",
-    "editButton": "Modifier ce BCF"
-  },
-  "EditBcfTopicModal": {
-    "modalText": "Vous êtes sur le point de quitter l'édition de l'issue {name} mais il y'a des modifications non enregistrées.",
-    "cancelButton": "Annuler les modifications",
-    "continueButton": "Continuer les modifications"
-  },
   "DashboardInfoTile": {
     "title": "Securité"
   },
@@ -363,6 +195,7 @@
   "FileActionsCell": {
     "openViewerButtonText": "Voir",
     "createModelButtonText": "Définir comme modèle",
+    "removeModelButtonText": "Retirer des modèles",
     "addTagsButtonText": "Ajouter des tags",
     "validationRequestButtonText": "Demande de validation",
     "renameButtonText": "Renommer",
@@ -370,7 +203,8 @@
     "addVersionButtonText": "Ajouter une version",
     "manageAccessButtonText": "Gérer les accès",
     "deleteButtonText": "Supprimer",
-    "VisaButtonText": "Demande de validation"
+    "VisaButtonText": "Demande de validation",
+    "VersioningButtonText": "Ajouter une version"
   },
   "FileNameCell": {
     "inputErrorMessage": "Nom de fichier invalide",
@@ -384,6 +218,7 @@
   "FilesDeleteModal": {
     "title": "Suppression de fichiers",
     "message": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
+    "messageVersion":"Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants et l'historique de versions associé :",
     "cancelButtonText": "Annuler",
     "deleteButtonText": "Supprimer"
   },
@@ -532,7 +367,7 @@
       "previewIfc": {
         "title": "Aperçu",
         "content": "Naviguez facilement parmis les aperçus des modèles de votre projet"
-      },    
+      },
       "usersManager": {
         "title": "Collaboration",
         "content": "Invitez vos premiers collaborateurs à votre projet"
@@ -605,7 +440,6 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "unarchiveButtonText": "Désarchiver",
-    "removeButtonText": "Retirer des modèles",
     "deleteButtonText": "Supprimer"
   },
   "ModelLocation": {
@@ -902,7 +736,7 @@
       "toValidate": "A valider avant",
       "errorDate": "Date invalide",
       "errorValidator": "Vous devez ajouter au moins 1 validant",
-      "exempleDate": "(Ex: 31/05/2022)",
+      "exempleDate": "format: jj/mm/aaaa",
       "description": "Description",
       "cancel": "Annuler",
       "validate": "Valider",
@@ -982,6 +816,31 @@
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
     }
   },
+  "Versioning": {
+    "title": "Historique de versions",
+    "addVersion": "Ajouter une version",
+    "currentVersion": "Version actuelle",
+    "previousVersion": "Version précédente",
+    "addedBy": "Ajouté par :",
+    "titleDate": "Le",
+    "AddVersion": "Ajouter une nouvelle version",
+    "loading": {
+      "message": "Chargement en cours.",
+      "subMessage": "Ce processus peut prendre quelques instants."
+    },
+    "delete": "Supprimer",
+    "getToHead": "Passer en version actuelle",
+    "download": "Télécharger",
+    "show": "Voir",
+    "safeZone": {
+      "delete": {
+        "content": "Êtes-vous sûr de vouloir supprimer cette version ?",
+        "action": "Oui, supprimer cette version",
+        "keepView": "Annuler"
+      }
+    },
+    "emptyArea": "Vous n’avez actuellement pas d’historique de version pour ce fichier."
+  },
   "Error": "Erreur",
   "Success": "Succès",
   "Errors": {
@@ -1004,6 +863,7 @@
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
+    "userAlreadyExistsError": "Cet utilisateur est déjà membre de l'espace / projet",
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",
@@ -1019,6 +879,9 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "fileVersionsFetchError": "Impossible de récupérer les versions de ce document",
+    "fileVersionsMakeHeadError": "Échec lors du passage du document en version actuelle",
+    "fileVersionDelete": "Échec lors de la suppression du document",
     "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversmeent du fichier",
@@ -1046,6 +909,8 @@
     "subscriptionsFetchError": "Impossible de récupérer la liste des souscriptions",
     "platformSubscribeError": "Erreur lors de la création du lien de souscription",
     "datapackSubscribeError": "Échec de la souscription à un nouveau datapack",
-    "datapackUpdateError": "Erreur lors de la mise à jour du datapack"
+    "datapackUpdateError": "Erreur lors de la mise à jour du datapack",
+    "bcfImportError": "Une erreur s'est produite lors de l'import",
+    "bcfExportError": "L'export a échoué..."
   }
 }

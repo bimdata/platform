@@ -3,7 +3,7 @@
   justify-content: space-between;
   margin: 4% auto;
   border-radius: 3px;
-  height: 40px;
+  height: 50px;
   background-color: var(--color-silver-light);
 
   &__left-side {
@@ -12,9 +12,19 @@
     margin-left: var(--spacing-unit);
     width: 45%;
 
-    &__name {
+    &__info {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
       margin-left: var(--spacing-unit);
-      font-weight: bold;
+
+      &__name {
+        font-weight: bold;
+      }
+
+      span {
+        font-size: 10px;
+      }
     }
   }
 

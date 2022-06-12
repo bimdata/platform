@@ -21,6 +21,7 @@ const ERRORS = Object.freeze({
   INVITATION_SEND_ERROR: "invitationSendError",
   INVITATION_RESEND_ERROR: "invitationResendError",
   INVITATION_CANCEL_ERROR: "invitationCancelError",
+  USER_ALREADY_EXISTS_ERROR: "userAlreadyExistsError",
   USERS_FETCH_ERROR: "usersFetchError",
   USER_UPDATE_ERROR: "userUpdateError",
   USER_DELETE_ERROR: "userDeleteError",
@@ -36,6 +37,9 @@ const ERRORS = Object.freeze({
   FILE_UPDATE_ERROR: "fileUpdateError",
   FILE_DOWNLOAD_ERROR: "fileDownloadError",
   FILE_DELETE_ERROR: "fileDeleteError",
+  FILE_VERSIONS_FETCH_ERROR: "fileVersionsFetchError",
+  FILE_VERSIONS_MAKE_HEAD_ERROR: "fileVersionsMakeHeadError",
+  FILE_VERSIONS_DELETE_ERROR: "fileVersionDelete",
   FOLDER_CREATE_ERROR: "folderCreateError",
   FILE_FETCH_ERROR: "fileFetchError",
   DOCUMENT_UPLOAD_ERROR: "documentUploadError",
@@ -63,25 +67,15 @@ const ERRORS = Object.freeze({
   SUBSCRIPTIONS_FETCH_ERROR: "subscriptionsFetchError",
   PLATFORM_SUBSCRIBE_ERROR: "platformSubscribeError",
   DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",
-  DATAPACK_UPDATE_ERROR: "datapackUpdateError"
+  DATAPACK_UPDATE_ERROR: "datapackUpdateError",
+  BCF_IMPORT_ERROR: "bcfImportError",
+  BCF_EXPORT_ERROR: "bcfExportError"
 });
 
 class RuntimeError {
   constructor(id, error) {
     this.id = id;
     this.error = error;
-  }
-}
-
-class HttpClientError extends RuntimeError {
-  constructor(id, error) {
-    super(id, error);
-  }
-}
-
-class HttpServerError extends RuntimeError {
-  constructor(id, error) {
-    super(id, error);
   }
 }
 
@@ -109,12 +103,6 @@ class ErrorService {
 
 const service = new ErrorService();
 
-export {
-  ERRORS,
-  RuntimeError,
-  HttpClientError,
-  HttpServerError,
-  service as ErrorService
-};
+export { ERRORS, RuntimeError, service as ErrorService };
 
 export default service;
