@@ -61,9 +61,9 @@ export default {
   setup(props, { emit }) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
 
-    const hasVersions = computed(() =>
-      props.files.some(file => file.history.length > 1)
-    );
+    const hasVersions = computed(() => {
+      props.files.some(file => file.history?.length > 1)
+    });
 
     const submit = () => {
       deleteFiles(props.project, props.files);
