@@ -71,6 +71,7 @@
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
+        :filesTable="filesTable"
         :project="project"
         :file="file"
         @create-model="$emit('create-model', $event)"
