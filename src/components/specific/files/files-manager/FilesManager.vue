@@ -1,5 +1,4 @@
 <template>
-  <FilesPaiementModal />
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #content>
       <template v-if="fileStructure.children.length > 0">
@@ -16,24 +15,14 @@
             data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
-            :disabled="
-              hasAdminPerm(project, currentFolder) && !isFullTotal(spaceSubInfo)
-            "
-            :text="
-              $t(
-                `FilesManager.uploadDisableMessage.${
-                  isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-                }`
-              )
-            "
+            :disabled="hasAdminPerm(project, currentFolder)"
+            :text="$t(`FilesManager.uploadDisableMessage.permission`)"
           >
             <FileUploadButton
-              :disabled="
-                !hasAdminPerm(project, currentFolder) ||
-                isFullTotal(spaceSubInfo)
-              "
+              :disabled="!hasAdminPerm(project, currentFolder)"
               width="194px"
               multiple
+              :isSpaceFull="isFullTotal(spaceSubInfo)"
               @upload="uploadFiles"
             />
           </BIMDataTooltip>
@@ -190,7 +179,6 @@ import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
 import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
-import FilesPaiementModal from "./files-paiement-modal/FilesPaiementModal.vue";
 
 export default {
   components: {
@@ -203,8 +191,7 @@ export default {
     FilesDeleteModal,
     FilesManagerOnboarding,
     VisaMain,
-    VersioningMain,
-    FilesPaiementModal
+    VersioningMain
   },
   props: {
     spaceSubInfo: {
