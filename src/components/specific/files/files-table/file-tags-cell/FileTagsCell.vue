@@ -130,6 +130,8 @@ export default {
     const cellPills = ref(null);
 
     const tagListPosition = () => {
+      if (!props.filesTable) return;
+
       const { height: cellPillsHeight } =
         cellPills.value.getBoundingClientRect();
 
