@@ -81,7 +81,7 @@ export default {
     },
     isSpaceFull: {
       type: Boolean,
-      required: true
+      default: true
     }
   },
   emits: ["upload"],

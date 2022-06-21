@@ -7,8 +7,7 @@
         :color="showFileUploader ? 'granite' : 'primary'"
         fill
         radius
-        :disabled="isFull(spaceSubInfo)"
-        @click="toggleFileUploader"
+        @click="onClickUploader"
       >
         <BIMDataIcon
           :name="showFileUploader ? 'close' : 'plus'"
@@ -26,7 +25,7 @@
     <transition name="fade">
       <FileUploader
         class="project-overview__block--upload"
-        v-show="showFileUploader && !isFull(spaceSubInfo)"
+        v-show="showFileUploader"
         isModelUploader
         autoclose
         :project="project"
@@ -74,6 +73,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { usePaiementModal } from "@/components/specific/files/files-manager/files-paiement-modal/paiement-modal.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
@@ -101,6 +101,7 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const { openPaiementModal } = usePaiementModal();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
@@ -138,6 +139,14 @@ export default {
       });
     };
 
+    const onClickUploader = () => {
+      if (isFull(spaceSubInfo)) {
+        openPaiementModal();
+        return;
+      }
+      toggleFileUploader();
+    };
+
     return {
       // References
       allowedExtensions: UPLOADABLE_EXTENSIONS,
@@ -150,11 +159,11 @@ export default {
       users: projectUsers,
       // Methods
       closeFileUploader,
-      isFull,
       notifyForbiddenUpload,
       openFileUploader,
       reloadData,
-      toggleFileUploader
+      toggleFileUploader,
+      onClickUploader
     };
   }
 };
