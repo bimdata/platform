@@ -58,7 +58,7 @@
     </template>
 
     <BIMDataButton
-      :disabled="!project.isAdmin && model.document?.userPermission < 100"
+      :disabled="!project.isAdmin && model.document?.user_permission < 100"
       class="model-actions-cell__btn"
       ripple
       rounded

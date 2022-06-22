@@ -26,7 +26,7 @@
             </AppLink>
           </template>
           <template #cell-nextpayment="{ row: sub }">
-            <div v-if="!sub.is_custom" >
+            <div v-if="!sub.is_custom">
               {{ $d(sub.next_bill_date, "short") }}
             </div>
           </template>
@@ -45,7 +45,7 @@
             </span>
           </template>
           <template #cell-amount="{ row: sub }">
-            <div v-if="!sub.is_custom" >
+            <div v-if="!sub.is_custom">
               {{
                 +sub.unit_price +
                 sub.data_packs
@@ -56,7 +56,10 @@
             </div>
           </template>
           <template #cell-actions="{ row: sub }">
-            <BillingActionsCell v-if="sub.status === 'active' && !sub.is_custom" :billing="sub" />
+            <BillingActionsCell
+              v-if="sub.status === 'active' && !sub.is_custom"
+              :billing="sub"
+            />
           </template>
         </GenericTable>
       </template>

@@ -116,10 +116,10 @@ export default {
       () => props.users,
       () => {
         admins.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLE.ADMIN
+          user => user.cloud_role === SPACE_ROLE.ADMIN
         );
         users.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLE.USER
+          user => user.cloud_role === SPACE_ROLE.USER
         );
       },
       { immediate: true }

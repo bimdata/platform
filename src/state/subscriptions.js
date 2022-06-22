@@ -138,7 +138,8 @@ const waitForUpdatedSpaceSize = async (space, size, expectedSize) => {
   let newSize = size;
   while (newSize === size && newSize !== expectedSize) {
     // Fetch space size from API
-    newSize = (await SpaceService.fetchSpaceSize(space)).smartDataSizeAvailable;
+    newSize = (await SpaceService.fetchSpaceSize(space))
+      .smart_data_size_available;
 
     if (newSize !== size || newSize === expectedSize) break; // Exit loop if space size is updated
     await delay(500); // else wait 500 ms before next check

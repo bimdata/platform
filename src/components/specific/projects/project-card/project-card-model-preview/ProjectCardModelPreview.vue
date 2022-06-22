@@ -88,7 +88,7 @@ export default {
           .map((model, i) => ({
             index: i + 1,
             name: model.name,
-            url: model.viewer360File
+            url: model.viewer_360_file
           }));
         image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;

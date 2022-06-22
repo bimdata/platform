@@ -96,7 +96,7 @@
                     params: {
                       spaceID: project.cloud.id,
                       projectID: project.id,
-                      modelIDs: document.modelId
+                      modelIDs: document.model_id
                     },
                     query: {
                       window: windowType(document)
@@ -110,7 +110,7 @@
               </BIMDataTooltip>
             </div>
           </template>
-          <template v-else-if="isPDF(document.fileName)">
+          <template v-else-if="isPDF(document.file_name)">
             <div class="versioning-doc__content__header__right-side__btn-show">
               <BIMDataTooltip position="left" :text="$t('Versioning.show')">
                 <BIMDataButton
@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="versioning-doc__content__file">
-        <BIMDataFileIcon :fileName="document.fileName" :size="20" />
+        <BIMDataFileIcon :fileName="document.file_name" :size="20" />
         <BIMDataTextbox
           class="versioning-doc__content__file__name"
           :text="document.name"
@@ -143,7 +143,7 @@
         <div class="versioning-doc__content__user__info">
           <div class="versioning-doc__content__user__info__identity">
             <UserAvatar
-              :user="document.createdBy || {}"
+              :user="document.created_by || {}"
               size="20"
               initialsSize="14"
               color="silver-light"
@@ -152,8 +152,9 @@
             <BIMDataTextbox
               class="versioning-doc__content__user__info__identity__name"
               :text="
-                (document.createdBy &&
-                  (fullName(document.createdBy) || document.createdBy.email)) ||
+                (document.created_by &&
+                  (fullName(document.created_by) ||
+                    document.created_by.email)) ||
                 ''
               "
               width="60%"
@@ -161,7 +162,7 @@
           </div>
           <div class="versioning-doc__content__user__date">
             {{ $t("Versioning.titleDate") }}
-            {{ $d(document.createdAt, "long") }}
+            {{ $d(document.created_at, "long") }}
           </div>
         </div>
       </div>
@@ -236,7 +237,7 @@ export default {
         params: {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
-          modelIDs: model.document.modelId
+          modelIDs: model.document.model_id
         },
         query: {
           window: windowType(model.document)

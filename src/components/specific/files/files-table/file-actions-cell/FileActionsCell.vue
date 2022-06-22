@@ -20,7 +20,7 @@
             params: {
               spaceID: project.cloud.id,
               projectID: project.id,
-              modelIDs: file.modelId
+              modelIDs: file.model_id
             },
             query: {
               window: windowType(file)
@@ -59,7 +59,7 @@
         </template>
 
         <BIMDataButton
-          :disabled="!project.isAdmin && file.userPermission < 100"
+          :disabled="!project.isAdmin && file.user_permission < 100"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -69,7 +69,7 @@
         </BIMDataButton>
 
         <BIMDataButton
-          :disabled="!project.isAdmin && file.userPermission < 100"
+          :disabled="!project.isAdmin && file.user_permission < 100"
           class="file-actions-cell__menu__btn"
           ghost
           squared
@@ -90,7 +90,7 @@
 
         <BIMDataButton
           v-if="
-            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+            !isFolder(file) && (project.isAdmin || file.user_permission === 100)
           "
           class="file-actions-cell__menu__btn"
           ghost
@@ -102,7 +102,7 @@
 
         <BIMDataButton
           v-if="
-            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+            !isFolder(file) && (project.isAdmin || file.user_permission === 100)
           "
           class="file-actions-cell__menu__btn"
           ghost
@@ -113,7 +113,7 @@
         </BIMDataButton>
 
         <BIMDataButton
-          :disabled="!project.isAdmin && file.userPermission < 100"
+          :disabled="!project.isAdmin && file.user_permission < 100"
           class="file-actions-cell__menu__btn"
           color="high"
           ghost
