@@ -44,6 +44,8 @@ const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
+const Invitation = () =>
+  import(/* webpackChunkName: "invitation" */ "@/views/invitation/Invitation.vue");
 /* eslint-enable */
 
 const {
@@ -59,7 +61,8 @@ const {
   modelViewer,
   projectGroups,
   groupBoard,
-  userSubscriptions
+  userSubscriptions,
+  invitation
 } = routeNames;
 
 const routes = [
@@ -89,6 +92,14 @@ const routes = [
         path: "/projects",
         name: userProjects,
         component: UserProjects,
+        meta: {
+          back: dashboard
+        }
+      },
+      {
+        path: "/invitation",
+        name: invitation,
+        component: Invitation,
         meta: {
           back: dashboard
         }

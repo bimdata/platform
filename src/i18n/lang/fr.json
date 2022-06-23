@@ -398,6 +398,9 @@
       }
     }
   },
+  "Invitation": {
+    "title": "Mes invitations"
+  },
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
     "resendLinkText": "Renvoyer l'invitation ?",
