@@ -6,19 +6,19 @@ import { useProjects } from "@/state/projects.js";
 const state = reactive({
   bcfTopics: [],
   extensions: {
-    topicType: [],
+    topic_type: [],
     priority: [],
-    topicStatus: [],
+    topic_status: [],
     stage: [],
-    userIdType: [],
-    topicLabel: []
+    user_id_type: [],
+    topic_label: []
   },
   detailedExtensions: {
-    topicTypes: [],
+    topic_types: [],
     priorities: [],
-    topicStatuses: [],
+    topic_statuses: [],
     stages: [],
-    topicLabels: []
+    topic_labels: []
   }
 });
 
@@ -30,7 +30,7 @@ const loadBcfTopics = async project => {
   const { projectUsers } = useProjects();
   mappedTopics = await mapLimit(topics, 10, async topic => {
     topic.creator = projectUsers.value.find(
-      u => u.email === topic.creationAuthor
+      u => u.email === topic.creation_author
     );
     topic.viewpoints = await BcfService.fetchTopicViewpoints(project, topic);
     return topic;
@@ -43,7 +43,7 @@ const loadBcfTopics = async project => {
 
 const loadBcfTopicComments = async (project, topic) => {
   const comments = await BcfService.fetchTopicComments(project, topic);
-  comments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
+  comments.sort((a, b) => (a.date > b.date ? -1 : 1));
 
   const { projectUsers } = useProjects();
   comments.forEach(c => {
