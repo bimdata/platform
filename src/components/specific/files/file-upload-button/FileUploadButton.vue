@@ -36,7 +36,7 @@
 
 <script>
 import { ref } from "vue";
-import { usePaiementModal } from "@/components/specific/files/files-manager/files-paiement-modal/paiement-modal.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 
 export default {
   props: {
@@ -86,12 +86,13 @@ export default {
   },
   emits: ["upload"],
   setup(props, { emit }) {
-    const { openPaiementModal } = usePaiementModal();
+    const { openModal } = useAppModal();
+
     const fileInput = ref(null);
 
     const selectFile = () => {
-      if (props.isSpaceFull) {
-        openPaiementModal();
+      if (true) {
+        openModal();
         return;
       }
       fileInput.value.click();

@@ -1,13 +1,13 @@
 <template>
-  <teleport to="#app-modal-paiement">
-    <div v-show="isOpen" class="files-paiement-modal">
-      <div class="files-paiement-modal__box" v-click-away="closePaiementModal">
+  <AppModal>
+    <div class="files-paiement-modal">
+      <div class="files-paiement-modal__box" v-click-away="closeModal">
         <BIMDataButton
           class="files-paiement-modal__box__btn-close"
           ghost
           rounded
           icon
-          @click="closePaiementModal"
+          @click="closeModal"
         >
           <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
         </BIMDataButton>
@@ -90,27 +90,30 @@
         </div>
       </div>
     </div>
-  </teleport>
+  </AppModal>
 </template>
 
 <script>
 import routeNames from "@/router/route-names.js";
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import { usePaiementModal } from "./paiement-modal.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 
 export default {
   components: {
+    AppModal,
     AppLink
   },
   emits: ["close"],
   setup() {
-    const { isOpen, closePaiementModal } = usePaiementModal();
+    const { showModal, closeModal } = useAppModal();
+
     return {
       // references
-      isOpen,
+      showModal,
       routeNames,
       // methods
-      closePaiementModal
+      closeModal
     };
   }
 };
