@@ -67,6 +67,7 @@
   &__tag {
     box-sizing: border-box;
     border-radius: 4px;
+    display: flex;
     height: 20px;
 
     &__text {
