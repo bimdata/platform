@@ -79,7 +79,7 @@ export default {
       type: String,
       default: "xs"
     },
-    isAllowedToSub: {
+    isAbleToSub: {
       type: Boolean,
       default: false
     }
@@ -91,7 +91,7 @@ export default {
     const fileInput = ref(null);
 
     const selectFile = () => {
-      if (props.isAllowedToSub) {
+      if (props.isAbleToSub) {
         openModal();
         return;
       }

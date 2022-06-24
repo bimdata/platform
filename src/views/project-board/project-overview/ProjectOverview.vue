@@ -138,10 +138,10 @@ export default {
       });
     };
 
-    const isAllowedToSub = inject("isAllowedToSub");
+    const isAbleToSub = inject("isAbleToSub");
 
     const onClickUploader = () => {
-      if (isAllowedToSub) {
+      if (isAbleToSub) {
         openModal();
         return;
       }

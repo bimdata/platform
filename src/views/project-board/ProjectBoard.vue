@@ -134,7 +134,7 @@ export default {
     });
 
     provide(
-      "isAllowedToSub",
+      "isAbleToSub",
       isFullTotal(spaceSubInfo.value) &&
         Boolean(
           userOrganizations.value.find(

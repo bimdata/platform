@@ -31,7 +31,7 @@
               :disabled="!project.isAdmin && isFullTotal(spaceSubInfo)"
               width="194px"
               multiple
-              :isAllowedToSub="isAllowedToSub"
+              :isAbleToSub="isAbleToSub"
               @upload="uploadFiles"
             />
           </BIMDataTooltip>
@@ -456,7 +456,7 @@ export default {
       visasLoading,
       visasCounter,
       showVersioningManager,
-      isAllowedToSub: inject("isAllowedToSub"),
+      isAbleToSub: inject("isAbleToSub"),
       // Methods
       closeAccessManager,
       closeDeleteModal,
