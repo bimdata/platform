@@ -177,7 +177,6 @@ import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
-
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -476,8 +475,7 @@ export default {
       closeVersioningManager,
       fetchVisas,
       hasAdminPerm,
-      isFullTotal,
-      console
+      isFullTotal
     };
   }
 };
