@@ -9,7 +9,6 @@
         @set-completed-tour="setTourCompleted($event)"
       /> -->
     </template>
-    <FilesPaiementModal />
     <AppNotification />
     <AppHeader />
     <div
@@ -39,14 +38,12 @@ import routeNames from "@/router/route-names.js";
 
 // Components
 import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
-import FilesPaiementModal from "@/components/specific/files/files-manager/files-paiement-modal/FilesPaiementModal.vue";
 import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
 
 export default {
   components: {
     AppHeader,
-    AppNotification,
-    FilesPaiementModal
+    AppNotification
   },
   setup() {
     const router = useRouter();

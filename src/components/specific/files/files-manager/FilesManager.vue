@@ -15,14 +15,23 @@
             data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
-            :disabled="hasAdminPerm(project, currentFolder)"
-            :text="$t(`FilesManager.uploadDisableMessage.permission`)"
+            :disabled="
+              project.isAdmin ||
+              (!project.isAdmin && !isFullTotal(spaceSubInfo))
+            "
+            :text="
+              $t(
+                `FilesManager.uploadDisableMessage.${
+                  isFullTotal(spaceSubInfo) ? 'size' : 'permission'
+                }`
+              )
+            "
           >
             <FileUploadButton
-              :disabled="!hasAdminPerm(project, currentFolder)"
+              :disabled="!project.isAdmin && isFullTotal(spaceSubInfo)"
               width="194px"
               multiple
-              :isSpaceFull="isFullTotal(spaceSubInfo)"
+              :isAllowedToSub="isAllowedToSub"
               @upload="uploadFiles"
             />
           </BIMDataTooltip>
@@ -158,7 +167,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
@@ -168,6 +177,7 @@ import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
+
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -446,6 +456,7 @@ export default {
       visasLoading,
       visasCounter,
       showVersioningManager,
+      isAllowedToSub: inject("isAllowedToSub"),
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -465,7 +476,8 @@ export default {
       closeVersioningManager,
       fetchVisas,
       hasAdminPerm,
-      isFullTotal
+      isFullTotal,
+      console
     };
   }
 };

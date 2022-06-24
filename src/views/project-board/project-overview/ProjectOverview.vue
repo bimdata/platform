@@ -70,10 +70,10 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { usePaiementModal } from "@/components/specific/files/files-manager/files-paiement-modal/paiement-modal.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
@@ -81,7 +81,6 @@ import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
-import { isFull } from "@/utils/spaces.js";
 // Components
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
@@ -101,10 +100,10 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const { openPaiementModal } = usePaiementModal();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
+    const { openModal } = useAppModal();
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useAppNotification();
 
@@ -139,9 +138,11 @@ export default {
       });
     };
 
+    const isAllowedToSub = inject("isAllowedToSub");
+
     const onClickUploader = () => {
-      if (isFull(spaceSubInfo)) {
-        openPaiementModal();
+      if (isAllowedToSub) {
+        openModal();
         return;
       }
       toggleFileUploader();

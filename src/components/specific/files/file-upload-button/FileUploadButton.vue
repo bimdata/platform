@@ -79,9 +79,9 @@ export default {
       type: String,
       default: "xs"
     },
-    isSpaceFull: {
+    isAllowedToSub: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   emits: ["upload"],
@@ -91,7 +91,7 @@ export default {
     const fileInput = ref(null);
 
     const selectFile = () => {
-      if (true) {
+      if (props.isAllowedToSub) {
         openModal();
         return;
       }
