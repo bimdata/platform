@@ -21,7 +21,7 @@
             "
             :text="
               $t(
-                `FilesManager.uploadDisableMessage.${
+                `SubscriptionModal.uploadDisableMessage.${
                   isFullTotal(spaceSubInfo) ? 'size' : 'permission'
                 }`
               )

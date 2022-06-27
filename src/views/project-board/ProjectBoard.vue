@@ -135,7 +135,8 @@ export default {
 
     provide(
       "isAbleToSub",
-      isFullTotal(spaceSubInfo.value) &&
+      currentSpace.value.isFree &&
+        isFullTotal(spaceSubInfo.value) &&
         Boolean(
           userOrganizations.value.find(
             orga => orga.id === currentSpace.value.organization.id

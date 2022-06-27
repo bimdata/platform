@@ -225,11 +225,7 @@
   "FilesManager": {
     "title": "Documents du projet",
     "searchInputPlaceholder": "Rechercher",
-    "createModelNotification": "Modèle créé avec succès",
-    "uploadDisableMessage": {
-      "permission": "Vous n'avez pas les droits requis",
-      "size": "Vous ne disposez plus d'assez d'espace de stockage"
-    }
+    "createModelNotification": "Modèle créé avec succès"
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
@@ -700,6 +696,12 @@
     "title": "Créez votre nouvel espace",
     "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
     "button": "Souscrire à un abonnement"
+  },
+  "SubscriptionModal": {
+    "uploadDisableMessage": {
+      "permission": "Vous n'avez pas les droits requis",
+      "size": "Vous ne disposez plus d'assez d'espace de stockage"
+    }
   },
   "SubscriptionStatusBanner": {
     "activate": "Cet espace gratuit a atteint ses limites, passez à l'abonnement professionnel pour débloquer toutes les fonctionnalités de BIMData.",

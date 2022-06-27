@@ -1,25 +1,40 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
-      <BIMDataButton
-        data-test="btn-toggle-upload"
-        width="120px"
-        :color="showFileUploader ? 'granite' : 'primary'"
-        fill
-        radius
-        @click="onClickUploader"
+      <BIMDataTooltip
+        color="high"
+        :disabled="
+          project.isAdmin || (!project.isAdmin && !isFullTotal(spaceSubInfo))
+        "
+        :text="
+          $t(
+            `SubscriptionModal.uploadDisableMessage.${
+              isFullTotal(spaceSubInfo) ? 'size' : 'permission'
+            }`
+          )
+        "
       >
-        <BIMDataIcon
-          :name="showFileUploader ? 'close' : 'plus'"
-          size="xxxs"
-          margin="0 6px 0 0"
-        />
-        <span>{{
-          showFileUploader
-            ? $t("ProjectOverview.closeFileUploadButtonText")
-            : $t("ProjectOverview.openFileUploadButtonText")
-        }}</span>
-      </BIMDataButton>
+        <BIMDataButton
+          :disabled="!project.isAdmin && isFullTotal(spaceSubInfo)"
+          data-test="btn-toggle-upload"
+          width="120px"
+          :color="showFileUploader ? 'granite' : 'primary'"
+          fill
+          radius
+          @click="onClickUploader"
+        >
+          <BIMDataIcon
+            :name="showFileUploader ? 'close' : 'plus'"
+            size="xxxs"
+            margin="0 6px 0 0"
+          />
+          <span>{{
+            showFileUploader
+              ? $t("ProjectOverview.closeFileUploadButtonText")
+              : $t("ProjectOverview.openFileUploadButtonText")
+          }}</span>
+        </BIMDataButton>
+      </BIMDataTooltip>
     </AppSlotContent>
 
     <transition name="fade">
@@ -79,6 +94,7 @@ import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
+import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
 // Components
@@ -164,7 +180,8 @@ export default {
       openFileUploader,
       reloadData,
       toggleFileUploader,
-      onClickUploader
+      onClickUploader,
+      isFullTotal
     };
   }
 };
