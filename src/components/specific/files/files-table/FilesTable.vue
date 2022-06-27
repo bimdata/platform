@@ -1,5 +1,6 @@
 <template>
   <GenericTable
+    ref="filesTable"
     class="files-table"
     :columns="columns"
     :rows="files"
@@ -70,6 +71,7 @@
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
+        :filesTable="filesTable"
         :project="project"
         :file="file"
         @create-model="$emit('create-model', $event)"
@@ -146,6 +148,8 @@ export default {
     const { t } = useI18n();
     const { isXL } = useStandardBreakpoints();
 
+    const filesTable = ref(null);
+
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isXL.value) {
@@ -199,6 +203,7 @@ export default {
     return {
       // References
       columns,
+      filesTable,
       fileUploads,
       nameEditMode,
       // Methods

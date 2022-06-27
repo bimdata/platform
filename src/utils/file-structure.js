@@ -281,8 +281,12 @@ function segregate(files) {
   };
 }
 
-function isFolder(file) { 
+function isFolder(file) {
   return file.nature === FILE_TYPE.FOLDER;
+}
+
+function hasAdminPerm(project, file) {
+  return project.isAdmin || file.userPermission === 100;
 }
 
 
@@ -290,5 +294,6 @@ export {
   FileStructureHandler,
   getDescendants,
   segregate,
-  isFolder
+  isFolder,
+  hasAdminPerm
 };

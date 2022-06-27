@@ -5,13 +5,13 @@
       ripple
       rounded
       icon
-      @click="toggleMenu"
+      @click="() => (isOpen ? closeMenu() : openMenu())"
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="file-actions-cell__menu" v-show="showMenu">
+      <div class="file-actions-cell__menu" ref="menu" v-show="isOpen">
         <AppLink
           v-if="isViewable(file)"
           class="file-actions-cell__menu__btn"
@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle.js";
+import { nextTick, ref } from "vue";
 import routeNames from "@/router/route-names.js";
 import { isFolder } from "@/utils/file-structure.js";
 import {
@@ -147,6 +147,10 @@ export default {
     AppLink
   },
   props: {
+    filesTable: {
+      type: Object,
+      required: true
+    },
     project: {
       type: Object,
       required: true
@@ -167,11 +171,28 @@ export default {
     "update"
   ],
   setup(props, { emit }) {
-    const {
-      isOpen: showMenu,
-      close: closeMenu,
-      toggle: toggleMenu
-    } = useToggle();
+    const menu = ref(null);
+    const isOpen = ref(false);
+
+    const openMenu = () => {
+      isOpen.value = true;
+      nextTick(() => {
+        const { y: Y, height: H } =
+          props.filesTable.$el.getBoundingClientRect();
+        const { y, height: h } = menu.value.getBoundingClientRect();
+
+        if (y + h > Y + H) {
+          menu.value.style.top = `-${h}px`;
+        }
+      });
+    };
+
+    const closeMenu = () => {
+      isOpen.value = false;
+      nextTick(() => {
+        menu.value.style.top = "30px";
+      });
+    };
 
     const onClick = event => {
       closeMenu();
@@ -180,8 +201,9 @@ export default {
 
     return {
       // References
+      menu,
       routeNames,
-      showMenu,
+      isOpen,
       // Methods
       closeMenu,
       isConvertible,
@@ -191,7 +213,7 @@ export default {
       isIFC,
       isSmartFile,
       onClick,
-      toggleMenu,
+      openMenu,
       windowType
     };
   }
