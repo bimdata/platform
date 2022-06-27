@@ -35,14 +35,14 @@
       justify-content: center;
       gap: calc(var(--spacing-unit) * 3);
 
-      &__left,
+      &__start,
       &__center,
-      &__right {
+      &__end {
         box-shadow: var(--box-shadow);
         background-color: var(--color-white);
       }
 
-      &__left {
+      &__start {
         width: 400px;
       }
 
@@ -50,8 +50,40 @@
         width: 600px;
       }
 
-      &__right {
+      &__end {
         width: 400px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xl) {
+  .subscription-pro {
+    &__content {
+      &__body {
+        min-height: unset;
+        display: grid;
+        grid-template-rows: 240px 240px 780px;
+        grid-template-areas:
+          "start"
+          "end"
+          "center"
+        ;
+
+        &__start {
+          grid-area: start;
+          width: 100%;
+        }
+  
+        &__center {
+          grid-area: center;
+          width: 100%;
+        }
+  
+        &__end {
+          grid-area: end;
+          width: 100%;
+        }
       }
     }
   }

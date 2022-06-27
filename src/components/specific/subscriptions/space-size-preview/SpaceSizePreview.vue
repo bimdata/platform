@@ -1,5 +1,5 @@
 <template>
-  <div class="space-size-preview">
+  <div class="space-size-preview" :class="`space-size-preview--${layout}`">
     <div class="space-size-preview__title">
       <h1>{{ $t("SpaceSizePreview.title") }}</h1>
     </div>
@@ -24,9 +24,6 @@
           </span>
         </template>
       </ProgressBar>
-      <!-- <BIMDataText color="color-granite-light">
-        {{ $t("SpaceSizePreview.actualStorageText") }}
-      </BIMDataText> -->
     </div>
     <div class="space-size-preview__new-size">
       <ProgressBar width="100%" :progress="newUsedSizePercent">
@@ -68,6 +65,11 @@ export default {
     ProgressBar
   },
   props: {
+    layout: {
+      type: String,
+      default: "vertical",
+      validator: value => ["horizontal", "vertical"].includes(value)
+    },
     spaceSubInfo: {
       type: Object,
       required: true
