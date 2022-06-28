@@ -33,6 +33,7 @@
           ref="tagList"
           class="file-tags-cell-pills__over"
           width="150px"
+          style="top: -9px"
         >
           <template #content>
             <div class="file-tags-cell-pills__over__list">
@@ -80,6 +81,8 @@
 
 <script>
 import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+
+import { dropdownPositioner } from "@/utils/positioner.js";
 
 export default {
   props: {
@@ -129,33 +132,17 @@ export default {
     const tagList = ref(null);
     const cellPills = ref(null);
 
-    const tagListPosition = () => {
-      if (!props.filesTable) return;
-
-      const { height: cellPillsHeight } =
-        cellPills.value.getBoundingClientRect();
-
-      const { height: heightFilesTable, y: yFilesTable } =
-        props.filesTable.$el.getBoundingClientRect();
-
-      const { height: heightTagList, y: yTagList } =
-        tagList.value.$el.getBoundingClientRect();
-
-      if (yTagList - yFilesTable + heightTagList > heightFilesTable) {
-        tagList.value.$el.style.top =
-          tagList.value.$el.style.top -
-          heightTagList +
-          cellPillsHeight +
-          9 +
-          "px";
-      }
-    };
-
-    const isOver = ref(null);
+    const isOver = ref(false);
 
     const onHover = () => {
       isOver.value = true;
-      nextTick(() => tagListPosition());
+      nextTick(() => {
+        tagList.value.$el.style.top = dropdownPositioner(
+          props.filesTable.$el,
+          tagList.value.$el,
+          9
+        );
+      });
     };
 
     return {

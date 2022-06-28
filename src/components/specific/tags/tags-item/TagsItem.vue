@@ -116,6 +116,7 @@ import { ref, watch, nextTick } from "vue";
 
 import TagService from "@/services/TagService";
 import { getBorderColor } from "@/utils/colors.js";
+import { dropdownPositioner } from "@/utils/positioner.js";
 
 export default {
   props: {
@@ -206,25 +207,15 @@ export default {
 
     const onColorSelector = () => {
       displayColorSelector.value = true;
-      nextTick(() => colorPanelPosition());
+      nextTick(() => {
+        colorSelector.value.style.top = dropdownPositioner(
+          props.tagsMain,
+          colorSelector.value
+        );
+      });
     };
 
     const colorSelector = ref(null);
-
-    const colorPanelPosition = () => {
-      const { height: tagHeight } = tagContent.value.getBoundingClientRect();
-
-      colorSelector.value.style.top = tagHeight + "px";
-
-      const { height: heightTagsMain, y: yTagsMain } =
-        props.tagsMain.getBoundingClientRect();
-      const { height: heightColorPanel, y: yColorPanel } =
-        colorSelector.value.getBoundingClientRect();
-
-      if (yColorPanel - yTagsMain + heightColorPanel > heightTagsMain) {
-        colorSelector.value.style.top = "-" + heightColorPanel + "px";
-      }
-    };
 
     return {
       // references
