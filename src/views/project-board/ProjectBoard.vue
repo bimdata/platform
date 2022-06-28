@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { onBeforeMount, ref, provide } from "vue";
+import { onBeforeMount, ref, provide, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
@@ -133,15 +133,20 @@ export default {
       changeView(viewKey);
     });
 
+    console.log("spaceSubInfo.value", spaceSubInfo.value);
+
     provide(
       "isAbleToSub",
-      currentSpace.value.isFree &&
-        isFullTotal(spaceSubInfo.value) &&
-        Boolean(
-          userOrganizations.value.find(
-            orga => orga.id === currentSpace.value.organization.id
+      computed(
+        () =>
+          currentSpace.value.isFree &&
+          isFullTotal(spaceSubInfo.value) &&
+          Boolean(
+            userOrganizations.value.find(
+              orga => orga.id === currentSpace.value.organization.id
+            )
           )
-        )
+      )
     );
 
     return {

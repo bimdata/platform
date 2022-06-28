@@ -157,7 +157,7 @@ export default {
     const isAbleToSub = inject("isAbleToSub");
 
     const onClickUploader = () => {
-      if (isAbleToSub) {
+      if (isAbleToSub.value) {
         openModal();
         return;
       }
