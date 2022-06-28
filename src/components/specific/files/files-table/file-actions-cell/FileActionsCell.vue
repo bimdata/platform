@@ -158,8 +158,7 @@ export default {
   },
   props: {
     filesTable: {
-      type: Object,
-      required: true
+      type: Object
     },
     project: {
       type: Object,
@@ -187,15 +186,17 @@ export default {
 
     const openMenu = () => {
       isOpen.value = true;
-      nextTick(() => {
-        const { y: Y, height: H } =
-          props.filesTable.$el.getBoundingClientRect();
-        const { y, height: h } = menu.value.getBoundingClientRect();
+      if (props.filesTable) {
+        nextTick(() => {
+          const { y: Y, height: H } =
+            props.filesTable.$el.getBoundingClientRect();
+          const { y, height: h } = menu.value.getBoundingClientRect();
 
-        if (y + h > Y + H) {
-          menu.value.style.top = `-${h}px`;
-        }
-      });
+          if (y + h > Y + H) {
+            menu.value.style.top = `-${h}px`;
+          }
+        });
+      }
     };
 
     const closeMenu = () => {
