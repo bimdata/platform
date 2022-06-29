@@ -717,7 +717,7 @@
     },
     "uploadDisableMessage": {
       "permission": "Vous n'avez pas les droits requis",
-      "size": "Vous ne disposez plus d'assez d'espace de stockage"
+      "size": "Vous ne disposez plus assez d'espace de stockage"
     }
   },
   "SubscriptionStatusBanner": {
