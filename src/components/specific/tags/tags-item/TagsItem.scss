@@ -1,0 +1,81 @@
+.tags-item {
+  display: flex;
+  position: relative;
+  height: 37px;
+  gap: var(--spacing-unit);
+
+  &__safe-zone {
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    padding: var(--spacing-unit);
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+    z-index: 1;
+    width: 383px;
+    height: 37px;
+
+    span {
+      text-align: center;
+      font-size: var(--font-size);
+      line-height: var(--spacing-unit);
+    }
+
+    &__action {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--color-silver-light);
+      margin-left: var(--spacing-unit);
+      padding: var(--spacing-unit);
+      border-radius: 3px;
+      width: 100%;
+
+      span {
+        margin: auto 0;
+        color: var(--color-primary);
+      }
+
+      &:deep() {
+        .bimdata-input {
+          width: 250px;
+        }
+        .bimdata-textbox {
+          height: 18px;
+        }
+      }
+
+      &__action {
+        display: flex;
+        align-items: center;
+
+        svg {
+          cursor: pointer;
+        }
+
+        &__color {
+          width: 19px;
+          height: 19px;
+          border-radius: 3px;
+          border: 1px solid var(--color-silver);
+          cursor: pointer;
+        }
+
+        &__color-selector {
+          position: absolute;
+          right: calc(var(--spacing-unit) * -1);
+          z-index: 1;
+        }
+      }
+    }
+  }
+}

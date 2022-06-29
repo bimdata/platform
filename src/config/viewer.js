@@ -40,7 +40,10 @@ const PLUGINS_CONFIG = {
   },
   "viewer2d-background": true,
   plan: true,
-  buildingMaker: true
+  buildingMaker: true,
+  viewer3d: {
+    enableDynamicLOD: true,
+  },
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };

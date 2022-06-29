@@ -5,16 +5,16 @@
   &:deep() {
     --header-height: 38px;
 
-    .bimdata-card__header {
+    > .bimdata-card__header {
       height: var(--header-height);
     }
 
-    .bimdata-card__submenu {
+    > .bimdata-card__submenu {
       height: var(--submenu-height);
       z-index: 5;
     }
 
-    .bimdata-card__content {
+    > .bimdata-card__content {
       position: relative;
       z-index: 0;
       height: calc(100% - var(--header-height));
@@ -26,81 +26,80 @@
       grid-template-areas:
         "actions actions"
         "tree    files";
+    }
+  }
 
-      .files-manager__actions {
-        grid-area: actions;
-        display: flex;
-        gap: var(--spacing-unit);
+  &__files {
+    grid-area: files;
+    position: relative;
 
-        &__btn-new-folder {
-          z-index: 2;
-        }
+    &__action-bar {
+      position: absolute;
+      z-index: 2;
+      margin-top: 4px;
+      margin-left: 48px;
+    }
+  }
 
-        &__input-search {
-          font-size: 1rem;
-          background-color: var(--color-silver-light);
-          color: var(--color-primary);
-          &.focus {
-            background-color: var(--color-white);
-          }
-        }
+  &__side-panel {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100%;
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+  }
 
-        &__visa-tooltip {
-          margin-left: auto;
-        }
+  &__onboarding {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 
-        &__visa {
-          &__content {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-unit);
-            &__counter {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 15px;
-              height: 15px;
-              border-radius: 15%;
-              background-color: var(--color-high);
-            }
-          }
-        }
+  &__actions {
+    grid-area: actions;
+    display: flex;
+    gap: var(--spacing-unit);
 
-      }
+    &__btn-new-folder {
+      z-index: 2;
+    }
 
-      .files-manager__tree {
-        grid-area: tree;
-        box-shadow: var(--box-shadow);
-      }
-
-      .files-manager__files {
-        grid-area: files;
-        position: relative;
-
-        &__action-bar {
-          position: absolute;
-          z-index: 2;
-          margin-top: 4px;
-          margin-left: 48px;
-        }
-      }
-
-      .files-manager__side-panel {
-        position: absolute;
-        z-index: 5;
-        top: 0;
-        right: 0;
-        width: 420px;
-        height: 100%;
-        box-shadow: var(--box-shadow);
+    &__input-search {
+      font-size: 1rem;
+      background-color: var(--color-silver-light);
+      color: var(--color-primary);
+      &.focus {
         background-color: var(--color-white);
       }
+    }
 
-      .files-manager__onboarding {
-        position: absolute;
-        width: 100%;
-        height: 100%;
+    &__visa-tooltip {
+      margin-left: auto;
+    }
+
+    &__visa {
+      &__content {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-unit);
+        &__counter {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 15px;
+          height: 15px;
+          border-radius: 15%;
+          background-color: var(--color-high);
+        }
       }
     }
+  }
+
+  &__tree {
+    grid-area: tree;
+    box-shadow: var(--box-shadow);
   }
 }
