@@ -705,6 +705,17 @@
     "activate": "Cet espace gratuit a atteint ses limites, passez à l'abonnement professionnel pour débloquer toutes les fonctionnalités de BIMData.",
     "reactivate": "Cet espace n'est actuellement relié à aucun abonnement. Pour débloquer toutes les fonctionnalités de BIMData, passez à l'abonnement professionnel"
   },
+  "Tag": {
+    "title": "Gestion des tags",
+    "list": "Liste des tags",
+    "addTag": "ajouter un tag",
+    "addNewTag": "Ajouter un nouveau tag",
+    "search": "Rechercher",
+    "validate": "Valider",
+    "cancel": "Annuler",
+    "deleteTag": "Supprimer ce tag",
+    "deleteTagButton": "Supprimer"
+  },
   "UserCard": {
     "self": "vous"
   },
@@ -889,6 +900,12 @@
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
+    "tagsFetchError": "Impossible de récupérer les tags",
+    "tagsCreateError": "Erreur lors de la création du tag",
+    "tagsUpdateError": "Erreur lors de la modification du tag",
+    "tagsDeleteError": "Erreur lors de la suppression du tag",
+    "tagsAddDocumentError": "Erreur lors de l'association du tag au document",
+    "tagsDeleteDocumentError": "Erreur lors de la dissociation du tag au document",
     "visaCreateError": "Erreur lors de la création du visa",
     "visaCreateValidationError": "Erreur lors de l'ajout d'un validateur",
     "visaFetchError": "Impossible de récupérer le visa",
