@@ -1,0 +1,12 @@
+.invitation {
+  display: flex;
+  align-items: center;
+  
+  &__back-btn {
+    flex: 1;
+  }
+
+  &__content {
+    flex: 1;
+  }
+}
