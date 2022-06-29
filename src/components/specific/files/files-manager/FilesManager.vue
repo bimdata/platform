@@ -16,8 +16,8 @@
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="
-              isPartOfTheOrga(userOrganizations, project.cloud.organization) ||
-              (!project.isAdmin && !isFullTotal(spaceSubInfo))
+              currentSpace.isUserOrga ||
+              (!currentSpace.isAdmin && !isFullTotal(spaceSubInfo))
             "
             :text="
               $t(
@@ -43,10 +43,7 @@
             <template v-else>
               <FileUploadButton
                 :disabled="
-                  !isPartOfTheOrga(
-                    userOrganizations,
-                    project.cloud.organization
-                  ) && isFullTotal(spaceSubInfo)
+                  !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
                 "
                 width="194px"
                 multiple
@@ -196,8 +193,8 @@ import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
-import { useOrganizations } from "@/state/organizations";
-import { isPartOfTheOrga } from "@/utils/subscription.js";
+import { useSpaces } from "@/state/spaces.js";
+
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -250,7 +247,7 @@ export default {
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
-    const { userOrganizations } = useOrganizations();
+    const { currentSpace } = useSpaces();
     const { openModal } = useAppModal();
 
     const {
@@ -479,7 +476,7 @@ export default {
       visasCounter,
       showVersioningManager,
       isAbleToSub: inject("isAbleToSub"),
-      userOrganizations,
+      currentSpace,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -500,8 +497,7 @@ export default {
       fetchVisas,
       hasAdminPerm,
       isFullTotal,
-      openModal,
-      isPartOfTheOrga
+      openModal
     };
   }
 };

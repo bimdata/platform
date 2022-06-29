@@ -698,6 +698,23 @@
     "button": "Souscrire à un abonnement"
   },
   "SubscriptionModal": {
+    "title": "Obtenez plus d'espace",
+    "subtitle": "Vous avez actuellement une capacité de 300mb de stockage ",
+    "10gbSize": "10 GB",
+    "100mbSize": "+ 100 MB",
+    "soon": "SOON",
+    "upgrade": {
+      "title": "Augmentez votre espace",
+      "subtitle": "Souscrivez à BIMData Pro pour obtenir plus d'espace"
+    },
+    "referal": {
+      "title": "Invitez un amis à utiliser BIMData",
+      "subtitle": "Partagez votre ferveur pour BIMData auprès de vos proches"
+    },
+    "linkedin": {
+      "title": "Connectez votre compte LinkedIn",
+      "subtitle": "Partagez vos dossiers avec vos collègues à un clin d'oeil"
+    },
     "uploadDisableMessage": {
       "permission": "Vous n'avez pas les droits requis",
       "size": "Vous ne disposez plus d'assez d'espace de stockage"

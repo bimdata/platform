@@ -55,11 +55,9 @@ import { onBeforeMount, ref, provide, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import { useOrganizations } from "@/state/organizations";
 import { useProjects } from "@/state/projects.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
-import { isPartOfTheOrga } from "@/utils/subscription.js";
 
 // Components
 import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
@@ -108,7 +106,6 @@ export default {
   setup() {
     const route = useRoute();
     const { currentSpace, spaceSubInfo } = useSpaces();
-    const { userOrganizations } = useOrganizations();
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
@@ -134,18 +131,13 @@ export default {
       changeView(viewKey);
     });
 
-    console.log("spaceSubInfo.value", spaceSubInfo.value);
-
     provide(
       "isAbleToSub",
       computed(
         () =>
           currentSpace.value.isFree &&
-          isFullTotal(spaceSubInfo.value) &&
-          isPartOfTheOrga(
-            userOrganizations.value,
-            currentSpace.value.organization
-          )
+          currentSpace.value.isUserOrga &&
+          isFullTotal(spaceSubInfo.value)
       )
     );
 

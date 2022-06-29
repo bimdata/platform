@@ -1,8 +1,8 @@
 <template>
   <div class="subscription-modal" v-click-away="closeModal">
     <div class="subscription-modal__header">
-      <span>Get More Space</span>
-      <span>You currently have 300 Mb of BIMData space.</span>
+      <span>{{ $t("SubscriptionModal.title") }}</span>
+      <span>{{ $t("SubscriptionModal.subtitle") }}</span>
     </div>
     <div class="subscription-modal__body">
       <AppLink :to="{ name: routeNames.subscriptionPro }">
@@ -10,21 +10,23 @@
           <div class="subscription-modal__body__offer__content">
             <img src="/static/subscriptionModal/upgrade.png" />
             <div class="subscription-modal__body__offer__content__text">
-              <span>Upgrade your space</span>
-              <span>Upgrade to Bimdata Pro to get the most space</span>
+              <span>{{ $t("SubscriptionModal.upgrade.title") }}</span>
+              <span>{{ $t("SubscriptionModal.upgrade.subtitle") }}</span>
             </div>
-            <span class="subscription-modal__body__offer__content__data"
-              >10 GB</span
-            >
+            <span class="subscription-modal__body__offer__content__data">{{
+              $t("SubscriptionModal.10gbSize")
+            }}</span>
           </div>
         </div>
       </AppLink>
       <div class="subscription-modal__body__separator"></div>
       <div class="subscription-modal__body__offer">
         <div class="subscription-modal__body__offer__banner">
-          <span class="subscription-modal__body__offer__banner__text"
-            >SOON</span
-          >
+          <div>
+            <span class="subscription-modal__body__offer__banner__text">{{
+              $t("SubscriptionModal.soon")
+            }}</span>
+          </div>
         </div>
         <div
           class="subscription-modal__body__offer__content"
@@ -32,20 +34,20 @@
         >
           <img src="/static/subscriptionModal/referal.png" />
           <div class="subscription-modal__body__offer__content__text">
-            <span>Refer a friend to BIMData</span>
-            <span>Spread the love to your friends, family, and coworkers</span>
+            <span>{{ $t("SubscriptionModal.referal.title") }}</span>
+            <span>{{ $t("SubscriptionModal.referal.subtitle") }}</span>
           </div>
           <div class="subscription-modal__body__offer__content__data">
-            <span>+100 MB</span>
+            <span>{{ $t("SubscriptionModal.100mbSize") }}</span>
           </div>
         </div>
       </div>
       <div class="subscription-modal__body__separator"></div>
       <div class="subscription-modal__body__offer">
         <div class="subscription-modal__body__offer__banner">
-          <span class="subscription-modal__body__offer__banner__text"
-            >SOON</span
-          >
+          <span class="subscription-modal__body__offer__banner__text">{{
+            $t("SubscriptionModal.soon")
+          }}</span>
         </div>
         <div
           class="subscription-modal__body__offer__content"
@@ -53,11 +55,11 @@
         >
           <img src="/static/subscriptionModal/linkedin.png" />
           <div class="subscription-modal__body__offer__content__text">
-            <span>Connect your Linkedin account</span>
-            <span>Share folders with your friends and coworkers in a snap</span>
+            <span>{{ $t("SubscriptionModal.linkedin.title") }}</span>
+            <span>{{ $t("SubscriptionModal.linkedin.subtitle") }}</span>
           </div>
           <div class="subscription-modal__body__offer__content__data">
-            <span>+100 MB</span>
+            <span>{{ $t("SubscriptionModal.100mbSize") }}</span>
           </div>
         </div>
       </div>

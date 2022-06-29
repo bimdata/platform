@@ -23,14 +23,13 @@ export default async function dataGuard() {
     // 1) Load current user data
     await loadUser();
 
-    // 2) Load organizations, spaces and projects of the current user
-    await Promise.all([
-      loadUserOrganizations(),
-      loadUserSpaces(),
-      loadUserProjects()
-    ]);
+    // 2) Load organizations of the current user
+    await loadUserOrganizations();
 
-    // 3) Load lists of orga spaces and space subs (non-blocking)
+    // 3) Load spaces and projects of the current user
+    await Promise.all([loadUserSpaces(), loadUserProjects()]);
+
+    // 4) Load lists of orga spaces and space subs (non-blocking)
     load("spaces-subscriptions", [
       loadAllOrganizationsSpaces() // 3.1) load orga spaces
         .then(() => loadAllSpacesSubscriptions()) // 3.2) load space subs
