@@ -36,7 +36,6 @@
 
 <script>
 import { ref } from "vue";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 
 export default {
   props: {
@@ -78,23 +77,13 @@ export default {
     iconSize: {
       type: String,
       default: "xs"
-    },
-    isAbleToSub: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ["upload"],
   setup(props, { emit }) {
-    const { openModal } = useAppModal();
-
     const fileInput = ref(null);
 
     const selectFile = () => {
-      if (props.isAbleToSub) {
-        openModal();
-        return;
-      }
       fileInput.value.click();
     };
 

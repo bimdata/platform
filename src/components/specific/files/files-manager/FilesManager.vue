@@ -16,7 +16,7 @@
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="
-              project.isAdmin ||
+              isPartOfTheOrga(userOrganizations, project.cloud.organization) ||
               (!project.isAdmin && !isFullTotal(spaceSubInfo))
             "
             :text="
@@ -27,13 +27,31 @@
               )
             "
           >
-            <FileUploadButton
-              :disabled="!project.isAdmin && isFullTotal(spaceSubInfo)"
-              width="194px"
-              multiple
-              :isAbleToSub="isAbleToSub"
-              @upload="uploadFiles"
-            />
+            <template v-if="isAbleToSub">
+              <BIMDataButton
+                color="primary"
+                width="194px"
+                height="32px"
+                fill
+                radius
+                @click="openModal"
+              >
+                <BIMDataIcon name="addFile" size="xs" margin="0 6px 0 0" />
+                <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
+              </BIMDataButton>
+            </template>
+            <template v-else>
+              <FileUploadButton
+                :disabled="
+                  !isPartOfTheOrga(
+                    userOrganizations,
+                    project.cloud.organization
+                  ) && isFullTotal(spaceSubInfo)
+                "
+                width="194px"
+                multiple
+                @upload="uploadFiles"
+            /></template>
           </BIMDataTooltip>
           <BIMDataSearch
             class="files-manager__actions__input-search"
@@ -171,12 +189,15 @@ import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
+import { useOrganizations } from "@/state/organizations";
+import { isPartOfTheOrga } from "@/utils/subscription.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -229,6 +250,8 @@ export default {
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
+    const { userOrganizations } = useOrganizations();
+    const { openModal } = useAppModal();
 
     const {
       fileStructureHandler: handler,
@@ -456,6 +479,7 @@ export default {
       visasCounter,
       showVersioningManager,
       isAbleToSub: inject("isAbleToSub"),
+      userOrganizations,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -475,7 +499,9 @@ export default {
       closeVersioningManager,
       fetchVisas,
       hasAdminPerm,
-      isFullTotal
+      isFullTotal,
+      openModal,
+      isPartOfTheOrga
     };
   }
 };

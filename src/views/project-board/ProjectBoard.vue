@@ -59,6 +59,7 @@ import { useOrganizations } from "@/state/organizations";
 import { useProjects } from "@/state/projects.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
+import { isPartOfTheOrga } from "@/utils/subscription.js";
 
 // Components
 import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
@@ -141,10 +142,9 @@ export default {
         () =>
           currentSpace.value.isFree &&
           isFullTotal(spaceSubInfo.value) &&
-          Boolean(
-            userOrganizations.value.find(
-              orga => orga.id === currentSpace.value.organization.id
-            )
+          isPartOfTheOrga(
+            userOrganizations.value,
+            currentSpace.value.organization
           )
       )
     );

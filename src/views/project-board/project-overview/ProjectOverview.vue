@@ -3,8 +3,10 @@
     <AppSlotContent name="project-board-action">
       <BIMDataTooltip
         color="high"
+        position="left"
         :disabled="
-          project.isAdmin || (!project.isAdmin && !isFullTotal(spaceSubInfo))
+          isPartOfTheOrga(userOrganizations, currentSpace.organization) ||
+          (!project.isAdmin && !isFullTotal(spaceSubInfo))
         "
         :text="
           $t(
@@ -15,7 +17,10 @@
         "
       >
         <BIMDataButton
-          :disabled="!project.isAdmin && isFullTotal(spaceSubInfo)"
+          :disabled="
+            !isPartOfTheOrga(userOrganizations, currentSpace.organization) &&
+            isFullTotal(spaceSubInfo)
+          "
           data-test="btn-toggle-upload"
           width="120px"
           :color="showFileUploader ? 'granite' : 'primary'"
@@ -89,8 +94,10 @@ import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+import { isPartOfTheOrga } from "@/utils/subscription.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
+import { useOrganizations } from "@/state/organizations";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
@@ -119,6 +126,7 @@ export default {
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
+    const { userOrganizations } = useOrganizations();
     const { openModal } = useAppModal();
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useAppNotification();
@@ -174,6 +182,9 @@ export default {
       showFileUploader,
       spaceSubInfo,
       users: projectUsers,
+      isAbleToSub,
+      currentSpace,
+      userOrganizations,
       // Methods
       closeFileUploader,
       notifyForbiddenUpload,
@@ -181,6 +192,7 @@ export default {
       reloadData,
       toggleFileUploader,
       onClickUploader,
+      isPartOfTheOrga,
       isFullTotal
     };
   }
