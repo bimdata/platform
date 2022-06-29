@@ -40,9 +40,12 @@
       />
     </template>
     <template #placeholderSlot>
-      <template v-if="modelType === MODEL_TYPE.PDF">
+      <template v-if="modelType === MODEL_TYPE.PDF && !allModelsCounter">
         <div class="models-table__pdf-placeholder">
-          <div class="models-table__pdf-placeholder__circle">
+          <div
+            class="models-table__pdf-placeholder__circle"
+            :style="`background: ${background}`"
+          >
             <BIMDataFileIcon
               class="models-table__pdf-placeholder__circle__file-icon"
               fileName=".pdf"
@@ -88,6 +91,10 @@ export default {
       type: Array,
       required: true
     },
+    allModelsCounter: {
+      type: Number,
+      required: true
+    },
     modelType: {
       type: String,
       required: false
@@ -95,7 +102,7 @@ export default {
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
-    const { t } = useI18n();
+    const { locale, t } = useI18n();
 
     const columns = computed(() => {
       return columnsDef.map(col => ({
@@ -114,9 +121,18 @@ export default {
       { immediate: true }
     );
 
+    const background = computed(
+      () =>
+        `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${
+          ["fr", "en", "de", "es", "it"].find(lang => lang === locale.value) ||
+          "en"
+        }.gif") no-repeat 11% 143% / 79%`
+    );
+
     return {
       // References
       columns,
+      background,
       MODEL_TYPE,
       nameEditMode
     };

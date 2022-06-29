@@ -40,6 +40,7 @@
       class="models-manager-wrapper__table"
       :project="project"
       :models="displayedModels"
+      :allModelsCounter="allModelsCounter"
       :modelType="modelType"
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
@@ -109,6 +110,14 @@ export default {
       displayedModels.value = currentTab.value.models;
     });
 
+    const allModelsCounter = ref(0);
+    watchEffect(() => {
+      allModelsCounter.value = props.tabs.reduce(
+        (a, b) => a + b.models.length,
+        0
+      );
+    });
+
     const selection = ref([]);
     const setSelection = models => {
       selection.value = models;
@@ -150,6 +159,7 @@ export default {
       modelsToDelete,
       selection,
       showDeleteModal,
+      allModelsCounter,
       // Methods
       archiveModels,
       downloadModels,
