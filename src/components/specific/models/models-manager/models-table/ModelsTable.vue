@@ -69,6 +69,7 @@ import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { MODEL_TYPE } from "@/config/models.js";
+import { MAIN_LANGUAGES, DEFAULT_LANGUAGE } from "@/config/i18n.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
@@ -124,8 +125,8 @@ export default {
     const background = computed(
       () =>
         `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${
-          ["fr", "en", "de", "es", "it"].find(lang => lang === locale.value) ||
-          "en"
+          Object.values(MAIN_LANGUAGES).find(lang => lang === locale.value) ||
+          DEFAULT_LANGUAGE.EN
         }.gif") no-repeat 11% 143% / 79%`
     );
 
