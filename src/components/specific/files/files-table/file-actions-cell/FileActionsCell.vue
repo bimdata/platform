@@ -174,18 +174,17 @@ export default {
     const isOpen = ref(false);
 
     const openMenu = () => {
+      if (!props.filesTable) return;
       isOpen.value = true;
-      if (props.filesTable) {
-        nextTick(() => {
-          const { y: Y, height: H } =
-            props.filesTable.$el.getBoundingClientRect();
-          const { y, height: h } = menu.value.getBoundingClientRect();
+      nextTick(() => {
+        const { y: Y, height: H } =
+          props.filesTable.$el.getBoundingClientRect();
+        const { y, height: h } = menu.value.getBoundingClientRect();
 
-          if (y + h > Y + H) {
-            menu.value.style.top = `-${h}px`;
-          }
-        });
-      }
+        if (y + h > Y + H) {
+          menu.value.style.top = `-${h}px`;
+        }
+      });
     };
 
     const closeMenu = () => {
