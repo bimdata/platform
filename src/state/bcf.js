@@ -24,6 +24,7 @@ const state = reactive({
 
 const loadBcfTopics = async project => {
   const topics = await BcfService.fetchProjectTopics(project);
+  topics.sort((a, b) => b.index - a.index);
 
   let mappedTopics = [];
 
