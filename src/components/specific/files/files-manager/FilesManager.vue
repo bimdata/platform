@@ -15,10 +15,7 @@
             data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
-            :disabled="
-              currentSpace.isUserOrga ||
-              (!currentSpace.isAdmin && !isFullTotal(spaceSubInfo))
-            "
+            :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
             :text="
               $t(
                 `SubscriptionModal.uploadDisableMessage.${

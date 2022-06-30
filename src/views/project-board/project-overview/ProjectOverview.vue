@@ -2,12 +2,10 @@
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
       <BIMDataTooltip
+        class="project-overview__tooltip-upload"
         color="high"
         position="left"
-        :disabled="
-          currentSpace.isUserOrga ||
-          (!currentSpace.isAdmin && !isFullTotal(spaceSubInfo))
-        "
+        :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
         :text="
           $t(
             `SubscriptionModal.uploadDisableMessage.${

@@ -64,7 +64,16 @@ class SubscriptionService {
       return {};
     }
 
-    const subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
+    let subInfo;
+
+    try {
+      subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.SPACE_FETCH_ERROR, error)
+      );
+      return {};
+    }
 
     // Derive used size from remaining size
     const usedSizePercent = 100 - subInfo.remainingSmartDataSizePercent;
