@@ -6,7 +6,4 @@ const MAIN_LANGUAGES = Object.freeze({
   ES: "es"
 });
 
-const DEFAULT_LANGUAGE = Object.freeze({
-  EN: "en"
-});
-export { MAIN_LANGUAGES, DEFAULT_LANGUAGE };
+export { MAIN_LANGUAGES };

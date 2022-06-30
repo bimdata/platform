@@ -103,7 +103,7 @@ export default {
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
-    const { locale, t } = useI18n();
+    const { locale, t, fallbackLocale } = useI18n();
 
     const columns = computed(() => {
       return columnsDef.map(col => ({
@@ -121,12 +121,12 @@ export default {
       },
       { immediate: true }
     );
-
+    console.log("fallbackLocale", fallbackLocale);
     const background = computed(
       () =>
         `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${
           Object.values(MAIN_LANGUAGES).find(lang => lang === locale.value) ||
-          DEFAULT_LANGUAGE.EN
+          fallbackLocale.value
         }.gif") no-repeat 11% 143% / 79%`
     );
 
