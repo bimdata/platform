@@ -69,7 +69,6 @@ import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { MODEL_TYPE } from "@/config/models.js";
-import { MAIN_LANGUAGES, DEFAULT_LANGUAGE } from "@/config/i18n.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
@@ -103,7 +102,7 @@ export default {
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
-    const { locale, t, fallbackLocale } = useI18n();
+    const { fallbackLocale, locale, t } = useI18n();
 
     const columns = computed(() => {
       return columnsDef.map(col => ({
@@ -121,11 +120,10 @@ export default {
       },
       { immediate: true }
     );
-    console.log("fallbackLocale", fallbackLocale);
     const background = computed(
       () =>
         `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${
-          Object.values(MAIN_LANGUAGES).find(lang => lang === locale.value) ||
+          ["fr", "de", "it", "es", "en"].find(lang => lang === locale.value) ||
           fallbackLocale.value
         }.gif") no-repeat 11% 143% / 79%`
     );
