@@ -56,35 +56,3 @@
     }
   }
 }
-
-@include media-breakpoint-down(xl) {
-  .subscription-pro {
-    &__content {
-      &__body {
-        min-height: unset;
-        display: grid;
-        grid-template-rows: 240px 240px 780px;
-        grid-template-areas:
-          "start"
-          "end"
-          "center"
-        ;
-
-        &__start {
-          grid-area: start;
-          width: 100%;
-        }
-  
-        &__center {
-          grid-area: center;
-          width: 100%;
-        }
-  
-        &__end {
-          grid-area: end;
-          width: 100%;
-        }
-      }
-    }
-  }
-}

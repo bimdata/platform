@@ -43,15 +43,14 @@
           class="subscription-pro__content__body"
           v-show="space"
         >
-          <div class="subscription-pro__content__body__start">
-            <ProPlanInfo :layout="isXL ? 'horizontal' : 'vertical'" />
+          <div class="subscription-pro__content__body__start" v-show="!isLG">
+            <ProPlanInfo />
           </div>
           <div class="subscription-pro__content__body__center">
             <ProPlanForm :space="space" @space-created="onSpaceCreated" />
           </div>
-          <div class="subscription-pro__content__body__end">
+          <div class="subscription-pro__content__body__end" v-show="!isXL">
             <SpaceSizePreview
-              :layout="isXL ? 'horizontal' : 'vertical'"
               :spaceSubInfo="spaceSubInfo"
               :newSizeAvailable="newSizeAvailable"
             />
