@@ -35,14 +35,14 @@
         "closeFileUploadButtonText": "Lukk",
         "forbiddenUploadNotification": {
             "title": "Last opp feil",
-            "message": "Vennligst velg en modellfil: {utvidelser}"
+            "message": "Vennligst velg en modellfil: {extensions}"
         }
     },
     "BreadcrumbSelector": {
         "inputPlaceholder": "Søk"
     },
     "GenericTable": {
-        "pagination": "{start} - {slutt} av {total}"
+        "pagination": "{start} - {end} av {total}"
     },
     "GoBackButton": {
         "text": "Tilbake"
@@ -77,7 +77,7 @@
     },
     "DashboardWelcomeTile": {
         "title": "Dashbord",
-        "message": "Hei, {navn}, fint å se deg igjen!"
+        "message": "Hei, {name}, fint å se deg igjen!"
     },
     "FileActionsCell": {
         "openViewerButtonText": "Åpne i fremviser",
@@ -179,7 +179,7 @@
     },
     "GroupCardDeleteGuard": {
         "title": "Slett gruppe",
-        "message": "Du er i ferd med å (virkelig) slette gruppe{navn}, er du sikker?",
+        "message": "Du er i ferd med å (virkelig) slette gruppe {name}, er du sikker?",
         "deleteButtonText": "Slett"
     },
     "GroupCardUpdateForm": {

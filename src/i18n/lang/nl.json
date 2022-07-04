@@ -679,17 +679,17 @@
     "SpaceSizeInfo": {
         "subscribeDatapackButton": "Opslag upgraden",
         "subscribePlatformButton": "Upgrade naar pro-abonnement",
-        "usage": "{gebruikt} gebruikt van {totaal}"
+        "usage": "{used} gebruikt van {total}"
     },
     "SpaceSizePreview": {
         "title": "Opslag",
         "actualStorage": "Huidige opslag",
         "newStorage": "Nieuwe opslag",
-        "newStorageText": "Door het professionele abonnement aan te schaffen profiteert u van {grootte} opslagruimte. U kunt direct vanuit uw ruimte extra opslagruimte kopen."
+        "newStorageText": "Door het professionele abonnement aan te schaffen profiteert u van {size} opslagruimte. U kunt direct vanuit uw ruimte extra opslagruimte kopen."
     },
     "SubscribeCard": {
         "title": "Creëer uw nieuwe ruimte",
-        "text": "Wilt u optimaal profiteren van het platform? Maak gebruik van {grootte} voor uw projecten en een onbeperkt aantal gebruikers door te upgraden naar een professioneel abonnement.",
+        "text": "Wilt u optimaal profiteren van het platform? Maak gebruik van {size} voor uw projecten en een onbeperkt aantal gebruikers door te upgraden naar een professioneel abonnement.",
         "button": "Creëer een nieuwe ruimte"
     },
     "FreePlanInfo": {
