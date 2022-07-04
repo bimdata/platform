@@ -24,8 +24,6 @@ jobs:
         run: |
           echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
       - name: Build and push
-        env:
-          BRANCH_NAME: ${{ steps.branch.outputs.name }}
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -33,8 +31,8 @@ jobs:
           push: true
           pull: true
           tags: |
-            docker-registry.bimdata.io/bimdata/${{ env.app }}_${BRANCH_NAME}:${{ github.sha }}
-            docker-registry.bimdata.io/bimdata/${{ env.app }}_${BRANCH_NAME}:staging
+            docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:${{ github.sha }}
+            docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:staging
 
   deploy:
     runs-on: self-hosted
