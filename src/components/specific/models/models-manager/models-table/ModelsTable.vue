@@ -18,7 +18,7 @@
       />
     </template>
     <template #cell-version="{ row: { version } }">
-      {{ version ? version : "-" }}
+      {{ version ?? "-" }}
     </template>
     <template #cell-creator="{ row: { creator } }">
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
@@ -74,13 +74,19 @@ export default {
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
     const { t } = useI18n();
-    const { isLG } = useStandardBreakpoints();
+    const { isLG, isXL } = useStandardBreakpoints();
 
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isLG.value) {
         filteredColumns = filteredColumns.filter(col =>
           ["name", "status", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "creator", "lastupdate", "status", "actions"].includes(
+            col.id
+          )
         );
       }
       return filteredColumns.map(col => ({

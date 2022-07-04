@@ -14,12 +14,12 @@ export default [
   },
   {
     id: "creator",
-    width: "200px",
+    width: "160px",
     align: "center"
   },
   {
     id: "lastupdate",
-    width: "180px",
+    width: "160px",
     align: "center"
   },
   {
