@@ -668,8 +668,7 @@
         "selectedSpace": "Valgt område:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Oppgrader lagringsplass",
-        "subscribePlatformButton": "Oppgrader til pro-abonnement",
+        "subscribePlatformButton": "Oppgrader",
         "usage": "{used} benyttet av {total}"
     },
     "SpaceSizePreview": {

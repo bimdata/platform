@@ -50,7 +50,7 @@
               radius
               :icon="isLG"
             >
-              <BIMDataIcon name="plus" :size="isMD ? 'xxs' : 'xxxs'" />
+              <BIMDataIcon name="plus" size="xxxs" />
               <span v-if="!isLG" style="margin-left: 6px">
                 {{ $t("UserSpaces.createButtonText") }}
               </span>

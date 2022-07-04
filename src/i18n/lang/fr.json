@@ -678,8 +678,7 @@
   },
   "SpaceSizeInfo": {
     "usage": "{used} utilisé sur {total}",
-    "subscribeDatapackButton": "Acheter un DataPack",
-    "subscribePlatformButton": "Passer à la platform pro"
+    "subscribePlatformButton": "Upgrade"
   },
   "SpaceSizePreview": {
     "title": "Stockage",
