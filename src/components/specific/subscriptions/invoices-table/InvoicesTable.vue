@@ -36,7 +36,7 @@
           </template>
           <template #cell-amount="{ row: payment }">
             {{ payment.amount }}
-            <span> {{ payment.currency === "EUR" ? "€" : "£" }} </span>
+            {{ payment.currency === "EUR" ? "€" : "£" }}
           </template>
           <template #cell-actions="{ row: payment }">
             <InvoiceActionsCell :invoice="payment" />
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import routeNames from "@/router/route-names.js";
 import columnsDef from "./columns.js";
@@ -90,22 +90,16 @@ export default {
     }
   },
   setup(props) {
-    const { locale, t } = useI18n();
-    const columns = ref([]);
+    const { t } = useI18n();
+
+    const columns = computed(() => {
+      return columnsDef.map(col => ({
+        ...col,
+        label: col.label || t(`InvoicesTable.headers.${col.id}`)
+      }));
+    });
 
     const subscriptionsMap = ref({});
-
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`InvoicesTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
-
     watch(
       () => props.subscriptions,
       subscriptions => {

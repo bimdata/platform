@@ -50,6 +50,18 @@
   }
 }
 
+@include media-breakpoint-down(xxl) {
+  .user-subscriptions {
+    &__content {
+      .billings-table,
+      .invoices-table {
+        flex: unset;
+        width: 100%;
+      }
+    }
+  }
+}
+
 @include media-breakpoint-down(xl) {
   .user-subscriptions {
     &__header {

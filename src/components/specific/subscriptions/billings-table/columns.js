@@ -3,16 +3,23 @@ export default [
     id: "space"
   },
   {
-    id: "nextpayment"
+    id: "nextpayment",
+    width: "120px",
+    align: "center"
   },
   {
-    id: "subscriptionplan"
+    id: "subscriptionplan",
+    width: "160px"
   },
   {
-    id: "status"
+    id: "status",
+    width: "120px",
+    align: "center"
   },
   {
-    id: "amount"
+    id: "amount",
+    width: "80px",
+    align: "center"
   },
   {
     id: "actions",
