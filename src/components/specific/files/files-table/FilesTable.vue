@@ -146,15 +146,19 @@ export default {
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const { isXL } = useStandardBreakpoints();
+    const { isLG, isXL } = useStandardBreakpoints();
 
     const filesTable = ref(null);
 
     const columns = computed(() => {
       let filteredColumns = columnsDef;
-      if (isXL.value) {
+      if (isLG.value) {
         filteredColumns = filteredColumns.filter(col =>
           ["name", "size", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "lastupdate", "size", "actions"].includes(col.id)
         );
       }
       return filteredColumns.map(col => ({
@@ -210,7 +214,9 @@ export default {
       cleanUpload,
       formatBytes,
       isFolder,
-      onUploadCompleted
+      onUploadCompleted,
+      // Responsive breakpoints
+      isXL
     };
   }
 };
