@@ -20,7 +20,7 @@
         </div>
         <div class="organization-space-card__info__data">
           <span class="organization-space-card__info__data--date">
-            {{ $d(space.created_at || space.createdAt, "short") }}
+            {{ $d(space.created_at, "short") }}
           </span>
         </div>
       </div>

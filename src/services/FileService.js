@@ -4,8 +4,8 @@ import { segregate } from "@/utils/file-structure.js";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
-const FOLDER_UPDATABLE_FIELDS = ["name", "parentId", "defaultPermission"];
-const DOCUMENT_UPDATABLE_FIELDS = ["name", "parentId"];
+const FOLDER_UPDATABLE_FIELDS = ["name", "parent_id", "default_permission"];
+const DOCUMENT_UPDATABLE_FIELDS = ["name", "parent_id"];
 
 function createPayload(object, allowedFields) {
   const payload = {};
@@ -145,7 +145,7 @@ class FileService {
         return;
       }
       if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
-        downloadName = files[0].fileName;
+        downloadName = files[0].file_name;
         downloadUrl = files[0].file;
       } else {
         downloadName = project.name;

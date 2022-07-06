@@ -97,7 +97,7 @@ export default {
       () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
     );
     const role = computed(() =>
-      props.project ? props.user.role : props.user.cloudRole
+      props.project ? props.user.role : props.user.cloud_role
     );
 
     const loading = ref(false);

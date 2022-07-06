@@ -23,7 +23,7 @@
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>
     <template #cell-lastupdate="{ row: model }">
-      {{ $d(model.updatedAt, "long") }}
+      {{ $d(model.updated_at, "long") }}
     </template>
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />

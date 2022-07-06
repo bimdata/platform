@@ -150,7 +150,7 @@
         <div class="visa-summary__shell__file">
           <div class="visa-summary__shell__file__content">
             <BIMDataFileIcon
-              :fileName="formatedVisa.document.fileName"
+              :fileName="formatedVisa.document.file_name"
               :size="20"
             />
             <BIMDataTextbox
@@ -169,7 +169,7 @@
               @click="
                 $emit('reach-file', {
                   ...formatedVisa.document,
-                  nature: formatedVisa.document.modelId ? 'Model' : 'Document'
+                  nature: formatedVisa.document.model_id ? 'Model' : 'Document'
                 })
               "
             >
@@ -298,15 +298,15 @@ export default {
       validations: visa.validations
         .map(validation => ({
           ...validation,
-          userId: validation.validator ? validation.validator.userId : 0,
+          userId: validation.validator ? validation.validator.user_id : 0,
           fullName: validation.validator
             ? fullName(validation.validator)
             : t("Visa.summary.deletedUser"),
           isSelf: validation.validator
-            ? validation.validator.userId === currentUserId
+            ? validation.validator.user_id === currentUserId
             : false,
-          hasAccess: visa.validationsInError.length
-            ? !visa.validationsInError.some(
+          hasAccess: visa.validations_in_error.length
+            ? !visa.validations_in_error.some(
                 validationInErrorId => validationInErrorId === validation.id
               )
             : true
@@ -320,7 +320,7 @@ export default {
 
     const fetchDocumentUsers = async visa => {
       const users = await getUserProjectList(props.project, {
-        id: visa.document.parentId
+        id: visa.document.parent_id
       });
       return users.map(user => {
         return {
@@ -336,12 +336,12 @@ export default {
     };
 
     onMounted(async () => {
-      if (props.visa.creator.userId === currentUserId) {
+      if (props.visa.creator.user_id === currentUserId) {
         isAuthor.value = true;
       }
       if (!isAuthor.value) {
         validationUserId.value = props.visa.validations.find(
-          ({ validator }) => validator.userId === currentUserId
+          ({ validator }) => validator.user_id === currentUserId
         ).id;
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;
