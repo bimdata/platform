@@ -89,7 +89,7 @@ class GroupService {
             group.id,
             project.id,
             {
-              userprojectId: user.id
+              userproject_id: user.id
             }
           )
         )

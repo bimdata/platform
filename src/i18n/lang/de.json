@@ -89,7 +89,9 @@
         "manageAccessButtonText": "Zugang verwalten",
         "deleteButtonText": "Löschen",
         "VisaButtonText": "Bestätigungsantrag",
-        "createModelButtonText": "Als Vorlage festlegen"
+        "createModelButtonText": "Als Vorlage festlegen",
+        "VersioningButtonText": "Eine Version hinzufügen",
+        "removeModelButtonText": "Modelle entfernen"
     },
     "FileNameCell": {
         "inputErrorMessage": "Ungültiger Dateiname",
@@ -104,7 +106,8 @@
         "title": "Dateien löschen",
         "message": "Sie sind dabei, folgende Dateien/Ordner endgültig zu löschen:",
         "cancelButtonText": "Abbrechen",
-        "deleteButtonText": "Löschen"
+        "deleteButtonText": "Löschen",
+        "messageVersion": "Sie sind im Begriff, die folgenden Dateien/Ordner und den zugehörigen Versionsverlauf dauerhaft zu löschen:"
     },
     "FilesManager": {
         "title": "Projektdokumente",
@@ -468,7 +471,13 @@
         "visaUpdateCommentError": "Dieser Kommentar kann nicht bearbeitet werden",
         "visaDeleteCommentError": "Dieser Kommentar kann nicht gelöscht werden",
         "modelCreateError": "Fehler beim Erstellen der Vorlage",
-        "fileFetchError": ""
+        "fileFetchError": "Fehler beim Abrufen dieses Ordners/dieser Datei",
+        "bcfImportError": "Beim Importieren ist ein Fehler aufgetreten",
+        "bcfExportError": "Export ist fehlgeschlagen ...",
+        "fileVersionsFetchError": "Die Versionen dieses Dokuments können nicht abgerufen werden",
+        "fileVersionsMakeHeadError": "Fehler beim Ändern des Dokuments in die aktuelle Version",
+        "fileVersionDelete": "Fehler beim Löschen des Dokuments",
+        "userAlreadyExistsError": "Dieser Benutzer ist bereits Mitglied des Raums/Projekts"
     },
     "ProjectStatusBadge": {
         "new": "NEU",
@@ -723,6 +732,7 @@
             "validator": "Bestätigend",
             "toValidate": "Zu bestätigen vor",
             "errorDate": "ungültiges Datum",
+            "exempleDate": "(z.B. 31.05.2022)",
             "description": "Beschreibung",
             "cancel": "Abbrechen",
             "validate": "Bestätigen",
@@ -819,7 +829,12 @@
         "ascendingDateTooltip": "aufsteigendes Datum",
         "descendingDateTooltip": "absteigendes Datum",
         "viewGridTooltip": "Rasteransicht",
-        "viewListTooltip": "Listenansicht"
+        "viewListTooltip": "Listenansicht",
+        "metricsTitle": "Insgesamt: {count} BCF-Issues",
+        "metricsEmptyText": "Fügen Sie Issues hinzu, um die zugehörigen Statistiken hier anzuzeigen.",
+        "noSearchResultsTitle": "Keine Ergebnisse",
+        "noSearchResultsText": "Ihre Suche ergab keine Ergebnisse, bitte überprüfen Sie Ihre Filter oder Schlüsselwörter.",
+        "goBackButton": "Zurück"
     },
     "GuidedTour": {
         "platform": {
@@ -872,5 +887,30 @@
                 "content": "Jetzt müssen Sie nur noch Ihr erstes Projekt starten"
             }
         }
+    },
+    "Versioning": {
+        "title": "Versionsverlauf",
+        "addVersion": "Eine Version hinzufügen",
+        "currentVersion": "Aktuelle Version",
+        "previousVersion": "Vorherige Version",
+        "addedBy": "Hinzugefügt von:",
+        "titleDate": "Der",
+        "AddVersion": "Eine neue Version hinzufügen",
+        "loading": {
+            "message": "Wird geladen.",
+            "subMessage": "Dieser Vorgang kann einige Augenblicke dauern."
+        },
+        "delete": "Löschen",
+        "getToHead": "Zur aktuellen Version wechseln",
+        "download": "Herunterladen",
+        "show": "Anzeigen",
+        "safeZone": {
+            "delete": {
+                "content": "Sind Sie sicher, dass Sie diese Version löschen wollen?",
+                "action": "Ja, diese Version löschen.",
+                "keepView": "Abbrechen"
+            }
+        },
+        "emptyArea": "Sie haben derzeit keinen Versionsverlauf für diese Datei."
     }
 }

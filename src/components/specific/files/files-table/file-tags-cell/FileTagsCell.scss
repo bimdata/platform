@@ -1,0 +1,78 @@
+.file-tags-cell-pills {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-wrap: wrap;
+  height: 36px;
+  width: 100%;
+  gap: 3px;
+
+  &__pill {
+    border-radius: 4px;
+    height: 10px;
+    width: 25px;
+  }
+
+  &__ellipsis-box {
+    position: relative;
+    height: 10px;
+    width: 25px;
+
+    &__icon {
+      position: absolute;
+      right: -6px;
+      top: -13px;
+    }
+  }
+
+  &__over {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    top: -9px;
+
+    &__list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: auto 12px;
+      width: 150px;
+      gap: 3px;
+
+      &__tag {
+        box-sizing: border-box;
+        border-radius: 4px;
+        height: 20px;
+
+        &__text {
+          padding: 2px 5px;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}
+
+.file-tags-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  gap: 3px;
+
+  &__tag {
+    box-sizing: border-box;
+    border-radius: 4px;
+    display: flex;
+    height: 20px;
+
+    &__text {
+      padding: 2px 5px;
+      font-size: 10px;
+    }
+  }
+}

@@ -99,7 +99,7 @@ export default {
   },
   setup(props) {
     const { filteredList: displayedUsers, searchText } = useListFilter(
-      computed(() => props.users.filter(user => user.userId)),
+      computed(() => props.users.filter(user => user.user_id)),
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 

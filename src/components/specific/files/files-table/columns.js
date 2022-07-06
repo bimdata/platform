@@ -12,10 +12,11 @@ export default [
     width: "200px",
     align: "center"
   },
-  // {
-  //   id: "tags",
-  //   width: "100px"
-  // },
+  {
+    id: "tags",
+    width: "120px",
+    align: "center"
+  },
   {
     id: "lastupdate",
     width: "180px",

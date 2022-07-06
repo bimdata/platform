@@ -68,7 +68,7 @@ export default {
     const submit = async () => {
       if (name.value) {
         await createFolder(props.project, {
-          parentId: props.folder.id,
+          parent_id: props.folder.id,
           name: name.value
         });
         reset();

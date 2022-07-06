@@ -35,8 +35,8 @@
       <div class="versioning-main__content__add-version">
         <FileUploadButton
           :disabled="
-            (!project.isAdmin && currentFolder.userPermission < 100) ||
-            spaceSubInfo.remainingTotalSize <= 0
+            (!project.isAdmin && currentFolder.user_permission < 100) ||
+            spaceSubInfo.remaining_total_size <= 0
           "
           width="100%"
           icon="close"
@@ -75,8 +75,6 @@
 
 <script>
 import { ref, onMounted, computed } from "vue";
-
-import { toCamelCaseFields } from "@/utils/misc";
 import { useUpload } from "@/composables/upload.js";
 import FileService from "@/services/FileService.js";
 
@@ -116,7 +114,7 @@ export default {
         const handlers = {
           onUploadStart: () => (loading.value = true),
           onUploadComplete: async ({ response: newHeadVersion }) => {
-            await getAllDocVersions(toCamelCaseFields(newHeadVersion));
+            await getAllDocVersions(newHeadVersion);
             loading.value = false;
           }
         };

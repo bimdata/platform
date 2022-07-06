@@ -1,15 +1,15 @@
 <template>
   <div
     class="user-avatar"
-    :class="`user-avatar--${user.profilePicture ? 'silver-light' : color}`"
+    :class="`user-avatar--${user.profile_picture ? 'silver-light' : color}`"
     :style="{
       width: `${size}px`,
       height: `${size}px`,
       fontSize: `${initialsSize ? initialsSize : +size * 0.382}px`
     }"
   >
-    <template v-if="user.profilePicture">
-      <img :src="user.profilePicture" />
+    <template v-if="user.profile_picture">
+      <img :src="user.profile_picture" />
     </template>
     <template v-else-if="initials">
       {{ initials }}

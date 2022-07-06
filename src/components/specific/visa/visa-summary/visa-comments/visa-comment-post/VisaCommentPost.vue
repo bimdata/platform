@@ -20,7 +20,7 @@
         />
         <span class="visa-comment-post__header__left-side__separator">•</span>
         <span class="visa-comment-post__header__left-side__date">{{
-          $d(comment.createdAt, "long")
+          $d(comment.created_at, "long")
         }}</span>
       </div>
       <div class="visa-comment-post__header__right-side">

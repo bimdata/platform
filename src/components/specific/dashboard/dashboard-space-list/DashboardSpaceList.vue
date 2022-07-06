@@ -44,7 +44,7 @@ export default {
       if (props.spaces) {
         displayedSpaces.value = props.spaces
           .slice()
-          .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+          .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1))
           .slice(0, 10);
       }
     });
