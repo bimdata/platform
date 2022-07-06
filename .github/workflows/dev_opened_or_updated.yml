@@ -49,6 +49,8 @@ jobs:
         run: |
           echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
       - name: Deploy on staging
+        env:
+          BRANCH_NAME: ${{ steps.branch.outputs.name }}
         run: |
           docker run \
             --pull always \
@@ -59,7 +61,7 @@ jobs:
               -u deploy \
               -i inventories/staging \
               --tags platform_dev \
-              --extra-vars "branch_name=${{ steps.branch.outputs.name }} ansible_ssh_private_key_file=./files/deploy_rsa" \
+              --extra-vars "branch_name=${BRANCH_NAME} ansible_ssh_private_key_file=./files/deploy_rsa" \
               deploy.yml
       - name: Define platform url
         id: platform

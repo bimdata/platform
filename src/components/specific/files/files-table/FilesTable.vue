@@ -5,7 +5,7 @@
     :columns="columns"
     :rows="files"
     rowKey="id"
-    :rowHeight="44"
+    :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
@@ -63,7 +63,7 @@
       }}
     </template>
     <template #cell-tags="{ row: file }">
-      <FileTagsCell :file="file" />
+      <FileTagsCell :file="file" :filesTable="filesTable" />
     </template>
     <template #cell-lastupdate="{ row: file }">
       {{ $d(file.updated_at, "long") }}
@@ -82,6 +82,7 @@
         @manage-access="$emit('manage-access', $event)"
         @open-versioning-manager="$emit('open-versioning-manager', $event)"
         @open-visa-manager="$emit('open-visa-manager', $event)"
+        @open-tag-manager="$emit('open-tag-manager', $event)"
         @remove-model="$emit('remove-model', $event)"
         @update="nameEditMode[file.id] = true"
       />
@@ -142,14 +143,14 @@ export default {
     "manage-access",
     "open-versioning-manager",
     "open-visa-manager",
-    "remove-model",
-    "selection-changed"
+    "selection-changed",
+    "open-tag-manager",
+    "remove-model"
   ],
   setup(props, { emit }) {
     const { locale, t } = useI18n();
 
     const filesTable = ref(null);
-
     const columns = ref([]);
     watch(
       () => locale.value,
