@@ -5,7 +5,14 @@
       <span>{{ $t("SubscriptionModal.subtitle") }}</span>
     </div>
     <div class="subscription-modal__body">
-      <AppLink :to="{ name: routeNames.subscriptionPro }">
+      <AppLink
+        :to="{
+          name: routeNames.subscriptionPro,
+          query: {
+            space: currentSpace.id
+          }
+        }"
+      >
         <div class="subscription-modal__body__offer">
           <div class="subscription-modal__body__offer__content">
             <img src="/static/subscriptionModal/upgrade.png" />
@@ -71,6 +78,7 @@
 import routeNames from "@/router/route-names.js";
 import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+import { useSpaces } from "@/state/spaces.js";
 
 export default {
   components: {
@@ -78,11 +86,13 @@ export default {
   },
   setup() {
     const { showModal, closeModal } = useAppModal();
+    const { currentSpace } = useSpaces();
 
     return {
       // references
       showModal,
       routeNames,
+      currentSpace,
       // methods
       closeModal
     };

@@ -47,7 +47,7 @@
       </transition>
     </div>
   </div>
-  <AppModal><SubscriptionModal /></AppModal>
+  <AppModal v-if="isSubscriptionEnabled"><SubscriptionModal /></AppModal>
 </template>
 
 <script>
