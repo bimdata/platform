@@ -59,7 +59,7 @@ export default {
 
     const loading = inject("loading", false);
 
-    const role = ref(props.project ? props.user.role : props.user.cloudRole);
+    const role = ref(props.project ? props.user.role : props.user.cloud_role);
 
     const submit = async () => {
       try {
@@ -73,7 +73,7 @@ export default {
         } else if (props.space) {
           await updateSpaceUser(props.space, {
             ...props.user,
-            cloudRole: role.value
+            cloud_role: role.value
           });
         }
       } finally {

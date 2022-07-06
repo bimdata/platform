@@ -14,7 +14,7 @@
           :text="user.fullName || user.validator.email"
         />
         <template v-if="hasVoted(user)">
-          <span>{{ $d(user.updatedAt, "short") }}</span>
+          <span>{{ $d(user.updated_at, "short") }}</span>
         </template>
       </div>
     </div>

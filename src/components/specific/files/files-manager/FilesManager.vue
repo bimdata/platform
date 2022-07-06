@@ -107,6 +107,7 @@
             @remove-model="removeModel"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
+            @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
           />
         </div>
@@ -132,6 +133,15 @@
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
               @reach-file="backToParent"
+            />
+            <TagsMain
+              v-if="showTagManager"
+              :project="project"
+              :document="fileToManage"
+              :allTags="allTags"
+              @close="closeTagManager"
+              @fetch-tags="fetchTags"
+              @file-updated="$emit('file-updated')"
             />
             <VersioningMain
               v-if="showVersioningManager"
@@ -173,6 +183,7 @@ import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useFiles } from "@/state/files.js";
+import TagService from "@/services/TagService";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
@@ -188,6 +199,7 @@ import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
+import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
 import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
 
 export default {
@@ -201,6 +213,7 @@ export default {
     FilesDeleteModal,
     FilesManagerOnboarding,
     VisaMain,
+    TagsMain,
     VersioningMain
   },
   props: {
@@ -223,6 +236,7 @@ export default {
   },
   emits: [
     "file-uploaded",
+    "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
     "model-created"
@@ -245,6 +259,7 @@ export default {
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
     const visasLoading = ref(false);
+    const allTags = ref([]);
 
     watch(
       () => props.fileStructure,
@@ -314,7 +329,7 @@ export default {
 
     const removeModel = async file => {
       await deleteModels(props.project, [
-        { id: file.modelId, type: file.modelType }
+        { id: file.model_id, type: file.model_type }
       ]);
     };
 
@@ -341,6 +356,7 @@ export default {
     const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
+    const showTagManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
 
@@ -350,6 +366,7 @@ export default {
       showAccessManager.value = true;
       showVersioningManager.value = false;
       showVisaManager.value = false;
+      showTagManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
@@ -374,15 +391,16 @@ export default {
       }, 100);
     };
 
-    const openVisaManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openVisaManager = file => {
+      if (file.file_name) {
+        fileToManage.value = file;
       } else {
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
       showVersioningManager.value = false;
       showAccessManager.value = false;
+      showTagManager.value = false;
       showSidePanel.value = true;
     };
 
@@ -394,9 +412,24 @@ export default {
       }, 100);
     };
 
-    const openVersioningManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openTagManager = file => {
+      if (file.file_name) {
+        fileToManage.value = file;
+        showSidePanel.value = true;
+        showTagManager.value = true;
+      }
+    };
+
+    const closeTagManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showTagManager.value = false;
+      }, 100);
+    };
+
+    const openVersioningManager = file => {
+      if (file.file_name) {
+        fileToManage.value = file;
         showVersioningManager.value = true;
         showAccessManager.value = false;
         showVisaManager.value = false;
@@ -435,7 +468,14 @@ export default {
         createdVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE).length
     );
 
-    onMounted(() => fetchVisas());
+    const fetchTags = async () => {
+      allTags.value = await TagService.fetchAllTags(props.project);
+    };
+
+    onMounted(() => {
+      fetchVisas();
+      fetchTags();
+    });
 
     return {
       // References
@@ -455,6 +495,8 @@ export default {
       createdVisas,
       visasLoading,
       visasCounter,
+      showTagManager,
+      allTags,
       showVersioningManager,
       // Methods
       closeAccessManager,
@@ -471,9 +513,12 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
+      fetchVisas,
+      openTagManager,
+      closeTagManager,
+      fetchTags,
       openVersioningManager,
       closeVersioningManager,
-      fetchVisas,
       hasAdminPerm,
       isFullTotal
     };

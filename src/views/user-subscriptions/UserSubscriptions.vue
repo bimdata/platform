@@ -102,17 +102,18 @@ export default {
           subscriptions.value = await loadOrganizationSubscriptions(
             selectedOrga.value
           );
+
           // When a cloud is deleted, the subscription history stays
           // We don't show custom subscriptions
-
-          const validSubscriptions = subscriptions.value.filter(sub => sub.cloud && !sub.is_custom)
-          const allPayments = mapLimit(validSubscriptions, 10, async sub => {
-            return loadSubscriptionPayments(
-              selectedOrga.value,
-              sub.cloud,
-              sub
-            );
-          })
+          const validSubscriptions = subscriptions.value.filter(
+            sub => sub.cloud && !sub.is_custom
+          );
+          const allPayments = await mapLimit(
+            validSubscriptions,
+            10,
+            async sub =>
+              await loadSubscriptionPayments(selectedOrga.value, sub.cloud, sub)
+          );
 
           const tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
@@ -124,11 +125,10 @@ export default {
                 // Do not show future payments in the invoices table
                 new Date(payment.payout_date).getTime() < tomorrow.getTime()
             )
-            .sort((a, b) =>
-              new Date(a.payout_date).getTime() >
-              new Date(b.payout_date).getTime()
-                ? -1
-                : 1
+            .sort(
+              (a, b) =>
+                new Date(b.payout_date).getTime() -
+                new Date(a.payout_date).getTime()
             );
         },
         { immediate: true }

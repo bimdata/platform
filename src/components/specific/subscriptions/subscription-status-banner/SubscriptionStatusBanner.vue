@@ -65,7 +65,7 @@ export default {
          */
         // const alreadyExisted =
         //   space.isFree &&
-        //   new Date(space.createdAt).getTime() <
+        //   new Date(space.created_at).getTime() <
         //     SUBSCRIPTION_START_DATE.getTime();
         // if (alreadyExisted) {
         //   visible.value = true;

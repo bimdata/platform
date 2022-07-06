@@ -263,7 +263,7 @@
             <BcfStatistics
               :bcfTopics="displayedBcfTopics"
               extensionType="Status"
-              :availableExtensions="detailedExtensions.topicStatuses"
+              :availableExtensions="detailedExtensions.topic_statuses"
             />
             <BcfStatistics
               :bcfTopics="displayedBcfTopics"
@@ -483,7 +483,7 @@ export default {
               model.status === MODEL_STATUS.COMPLETED
           )
           .sort((a, b) =>
-            a.createdAt.getTime() > b.createdAt.getTime() ? 1 : -1
+            a.created_at.getTime() > b.created_at.getTime() ? 1 : -1
           );
         if (ifcs.length > 0) {
           modelIDs.push(ifcs[0].id);
