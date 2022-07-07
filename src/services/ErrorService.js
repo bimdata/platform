@@ -12,6 +12,8 @@ const ERRORS = Object.freeze({
   SPACE_DELETE_ERROR: "spaceDeleteError",
   SPACE_IMAGE_UPDATE_ERROR: "spaceImageUpdateError",
   SPACE_IMAGE_DELETE_ERROR: "spaceImageDeleteError",
+  SPACE_GET_CLOUD_SIZE_ERROR: "spaceGetCloudSizeError",
+  SPACE_FETCH_ERROR: "spaceFetchError",
   PROJECTS_FETCH_ERROR: "projectsFetchError",
   PROJECT_CREATE_ERROR: "projectCreateError",
   PROJECT_UPDATE_ERROR: "projectUpdateError",

@@ -56,6 +56,14 @@ function createFileUploader(
         onUploadCancel(e);
         this.request = null;
       });
+      request.addEventListener("readystatechange", e => {
+        if (request.readyState === XMLHttpRequest.DONE) {
+          if (request.status >= 400) {
+            onUploadError(e);
+            this.request = null;
+          }
+        }
+      });
 
       request.open(method, url);
       request.setRequestHeader("Authorization", `Bearer ${accessToken}`);

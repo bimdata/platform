@@ -47,24 +47,28 @@
       </transition>
     </div>
   </div>
+  <AppModal v-if="isSubscriptionEnabled"><SubscriptionModal /></AppModal>
 </template>
 
 <script>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, provide, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
+import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
 
 // Components
 import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
 import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
 import ProjectOverview from "./project-overview/ProjectOverview.vue";
 import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import SubscriptionModal from "@/components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
 const DEFAULT_PROJECT_VIEW = "overview";
@@ -89,12 +93,14 @@ const tabsDef = [
 export default {
   components: {
     AppSlot,
+    AppModal,
     ViewHeader,
     AppBreadcrumb,
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
     SpaceSizeInfo,
+    SubscriptionModal,
     SubscriptionStatusBanner
   },
   setup() {
@@ -124,6 +130,16 @@ export default {
       // Restore current project view for this project.
       changeView(viewKey);
     });
+
+    provide(
+      "isAbleToSub",
+      computed(
+        () =>
+          currentSpace.value.isFree &&
+          currentSpace.value.isUserOrga &&
+          isFullTotal(spaceSubInfo.value)
+      )
+    );
 
     return {
       // References

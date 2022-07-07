@@ -225,11 +225,7 @@
   "FilesManager": {
     "title": "Documents du projet",
     "searchInputPlaceholder": "Rechercher",
-    "createModelNotification": "Modèle créé avec succès",
-    "uploadDisableMessage": {
-      "permission": "Vous n'avez pas les droits requis",
-      "size": "Vous ne disposez plus d'assez d'espace de stockage"
-    }
+    "createModelNotification": "Modèle créé avec succès"
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
@@ -705,6 +701,29 @@
     "text": "Envie de profiter pleinement de la plateforme ? Profitez de {size} pour vos projets et d'utilisateurs illimités en passant à l'abonnement professionnel.",
     "button": "Souscrire à un abonnement"
   },
+  "SubscriptionModal": {
+    "title": "Obtenez plus d'espace",
+    "subtitle": "Vous avez actuellement une capacité de 300mb de stockage ",
+    "10gbSize": "10 GB",
+    "100mbSize": "+ 100 MB",
+    "soon": "SOON",
+    "upgrade": {
+      "title": "Passer à la plateforme pro",
+      "subtitle": "Souscrivez à BIMData Pro pour obtenir plus d'espace."
+    },
+    "referal": {
+      "title": "Rejoins notre programme de parrainage ! ",
+      "subtitle": "Partage ton code parrain pour gagner de l'espace."
+    },
+    "linkedin": {
+      "title": "Connectez votre compte LinkedIn",
+      "subtitle": "Suivre la page BIMData pour gagner de l'espace."
+    },
+    "uploadDisableMessage": {
+      "permission": "Vous n'avez pas les droits requis",
+      "size": "Vous ne disposez plus assez d'espace de stockage"
+    }
+  },
   "SubscriptionStatusBanner": {
     "activate": "Cet espace gratuit a atteint ses limites, passez à l'abonnement professionnel pour débloquer toutes les fonctionnalités de BIMData.",
     "reactivate": "Cet espace n'est actuellement relié à aucun abonnement. Pour débloquer toutes les fonctionnalités de BIMData, passez à l'abonnement professionnel"
@@ -869,6 +888,8 @@
     "spaceDeleteError": "Erreur lors de la suppression de l'espace",
     "spaceImageUpdateError": "Erreur lors du changement d'image de l'espace",
     "spaceImageDeleteError": "Erreur lors de la suppression de l'image de l'espace",
+    "spaceSizeFullError": "Votre espace de stockage est plein",
+    "spaceFetchError": "Impossible de récupérer les informations de l'espace",
     "projectsFetchError": "Impossible de récupérer la liste des projets",
     "projectCreateError": "Une erreur est survenue lors de la création du projet",
     "projectUpdateError": "Échec de la mise à jour du projet",
@@ -899,7 +920,7 @@
     "fileVersionDelete": "Échec lors de la suppression du document",
     "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "folderCreateError": "Erreur lors de la création du dossier",
-    "documentUploadError": "Erreur lors du téléversmeent du fichier",
+    "documentUploadError": "Erreur lors du téléversement du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
