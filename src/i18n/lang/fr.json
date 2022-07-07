@@ -704,16 +704,16 @@
     "100mbSize": "+ 100 MB",
     "soon": "SOON",
     "upgrade": {
-      "title": "Augmentez votre espace",
-      "subtitle": "Souscrivez à BIMData Pro pour obtenir plus d'espace"
+      "title": "Passer à la plateforme pro",
+      "subtitle": "Souscrivez à BIMData Pro pour obtenir plus d'espace."
     },
     "referal": {
-      "title": "Invitez un amis à utiliser BIMData",
-      "subtitle": "Partagez votre ferveur pour BIMData auprès de vos proches"
+      "title": "Rejoins notre programme de parrainage ! ",
+      "subtitle": "Partage ton code parrain pour gagner de l'espace."
     },
     "linkedin": {
       "title": "Connectez votre compte LinkedIn",
-      "subtitle": "Partagez vos dossiers avec vos collègues à un clin d'oeil"
+      "subtitle": "Suivre la page BIMData pour gagner de l'espace."
     },
     "uploadDisableMessage": {
       "permission": "Vous n'avez pas les droits requis",
