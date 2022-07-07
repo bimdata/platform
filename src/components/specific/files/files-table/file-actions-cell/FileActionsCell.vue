@@ -185,12 +185,6 @@ export default {
     const openMenu = () => {
       isOpen.value = true;
       nextTick(() => {
-        // const { y: Y, height: H } =
-        //   props.filesTable.$el.getBoundingClientRect();
-        // const { y, height: h } = menu.value.getBoundingClientRect();
-        // if (y + h > Y + H) {
-        //   menu.value.style.top = `-${h}px`;
-        // }
         if (props.filesTable) {
           menu.value.style.top = dropdownPositioner(
             props.filesTable.$el,
