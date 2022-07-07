@@ -9,131 +9,128 @@
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
-
-    <transition name="fade">
-      <div class="file-actions-cell__menu" ref="menu" v-show="isOpen">
-        <AppLink
-          v-if="isViewable(file)"
-          class="file-actions-cell__menu__btn"
-          :to="{
-            name: routeNames.modelViewer,
-            params: {
-              spaceID: project.cloud.id,
-              projectID: project.id,
-              modelIDs: file.modelId
-            },
-            query: {
-              window: windowType(file)
-            }
-          }"
+    <div class="file-actions-cell__menu" ref="menu" v-show="isOpen">
+      <AppLink
+        v-if="isViewable(file)"
+        class="file-actions-cell__menu__btn"
+        :to="{
+          name: routeNames.modelViewer,
+          params: {
+            spaceID: project.cloud.id,
+            projectID: project.id,
+            modelIDs: file.modelId
+          },
+          query: {
+            window: windowType(file)
+          }
+        }"
+      >
+        <BIMDataButton
+          class="file-actions-cell__menu__btn__viewer"
+          ghost
+          squared
         >
+          {{ $t("FileActionsCell.openViewerButtonText") }}
+        </BIMDataButton>
+      </AppLink>
+      <template v-if="!isFolder(file) && isConvertible(file)">
+        <template v-if="!isModel(file)">
           <BIMDataButton
-            class="file-actions-cell__menu__btn__viewer"
+            class="file-actions-cell__menu__btn"
             ghost
             squared
+            @click="onClick('create-model')"
           >
-            {{ $t("FileActionsCell.openViewerButtonText") }}
+            {{ $t("FileActionsCell.createModelButtonText") }}
           </BIMDataButton>
-        </AppLink>
-        <template v-if="!isFolder(file) && isConvertible(file)">
-          <template v-if="!isModel(file)">
-            <BIMDataButton
-              class="file-actions-cell__menu__btn"
-              ghost
-              squared
-              @click="onClick('create-model')"
-            >
-              {{ $t("FileActionsCell.createModelButtonText") }}
-            </BIMDataButton>
-          </template>
-          <template v-else>
-            <BIMDataButton
-              class="file-actions-cell__menu__btn"
-              ghost
-              squared
-              @click="onClick('remove-model')"
-            >
-              {{ $t("FileActionsCell.removeModelButtonText") }}
-            </BIMDataButton>
-          </template>
         </template>
+        <template v-else>
+          <BIMDataButton
+            class="file-actions-cell__menu__btn"
+            ghost
+            squared
+            @click="onClick('remove-model')"
+          >
+            {{ $t("FileActionsCell.removeModelButtonText") }}
+          </BIMDataButton>
+        </template>
+      </template>
 
-        <BIMDataButton
-          :disabled="!project.isAdmin && file.userPermission < 100"
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('update')"
-        >
-          {{ $t("FileActionsCell.renameButtonText") }}
-        </BIMDataButton>
+      <BIMDataButton
+        :disabled="!project.isAdmin && file.userPermission < 100"
+        class="file-actions-cell__menu__btn"
+        ghost
+        squared
+        @click="onClick('update')"
+      >
+        {{ $t("FileActionsCell.renameButtonText") }}
+      </BIMDataButton>
 
-        <BIMDataButton
-          :disabled="!project.isAdmin && file.userPermission < 100"
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('download')"
-        >
-          {{ $t("FileActionsCell.downloadButtonText") }}
-        </BIMDataButton>
+      <BIMDataButton
+        :disabled="!project.isAdmin && file.userPermission < 100"
+        class="file-actions-cell__menu__btn"
+        ghost
+        squared
+        @click="onClick('download')"
+      >
+        {{ $t("FileActionsCell.downloadButtonText") }}
+      </BIMDataButton>
 
-        <BIMDataButton
-          v-if="isFolder(file) && project.isAdmin"
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('manage-access')"
-        >
-          {{ $t("FileActionsCell.manageAccessButtonText") }}
-        </BIMDataButton>
+      <BIMDataButton
+        v-if="isFolder(file) && project.isAdmin"
+        class="file-actions-cell__menu__btn"
+        ghost
+        squared
+        @click="onClick('manage-access')"
+      >
+        {{ $t("FileActionsCell.manageAccessButtonText") }}
+      </BIMDataButton>
 
-        <BIMDataButton
-          v-if="
-            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
-          "
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('open-visa-manager')"
-        >
-          {{ $t("FileActionsCell.VisaButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton
-          v-if="
-            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
-          "
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('open-tag-manager')"
-        >
-          {{ $t("FileActionsCell.addTagsButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton
-          v-if="
-            !isFolder(file) && (project.isAdmin || file.userPermission === 100)
-          "
-          class="file-actions-cell__menu__btn"
-          ghost
-          squared
-          @click="onClick('open-versioning-manager')"
-        >
-          {{ $t("FileActionsCell.VersioningButtonText") }}
-        </BIMDataButton>
+      <BIMDataButton
+        v-if="
+          !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+        "
+        class="file-actions-cell__menu__btn"
+        ghost
+        squared
+        @click="onClick('open-visa-manager')"
+      >
+        {{ $t("FileActionsCell.VisaButtonText") }}
+      </BIMDataButton>
+      <BIMDataButton
+        v-if="
+          !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+        "
+        class="file-actions-cell__menu__btn"
+        ghost
+        squared
+        @click="onClick('open-tag-manager')"
+      >
+        {{ $t("FileActionsCell.addTagsButtonText") }}
+      </BIMDataButton>
+      <BIMDataButton
+        v-if="
+          !isFolder(file) && (project.isAdmin || file.userPermission === 100)
+        "
+        class="file-actions-cell__menu__btn"
+        ghost
+        squared
+        @click="onClick('open-versioning-manager')"
+      >
+        {{ $t("FileActionsCell.VersioningButtonText") }}
+      </BIMDataButton>
 
-        <BIMDataButton
-          :disabled="!project.isAdmin && file.userPermission < 100"
-          class="file-actions-cell__menu__btn"
-          color="high"
-          ghost
-          squared
-          @click="onClick('delete')"
-        >
-          {{ $t("FileActionsCell.deleteButtonText") }}
-        </BIMDataButton>
-      </div>
-    </transition>
+      <BIMDataButton
+        :disabled="!project.isAdmin && file.userPermission < 100"
+        class="file-actions-cell__menu__btn"
+        color="high"
+        ghost
+        squared
+        @click="onClick('delete')"
+      >
+        {{ $t("FileActionsCell.deleteButtonText") }}
+      </BIMDataButton>
+    </div>
   </div>
 </template>
 
