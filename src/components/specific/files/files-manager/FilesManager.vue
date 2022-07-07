@@ -329,7 +329,7 @@ export default {
 
     const removeModel = async file => {
       await deleteModels(props.project, [
-        { id: file.modelId, type: file.modelType }
+        { id: file.model_id, type: file.model_type }
       ]);
     };
 
@@ -392,7 +392,7 @@ export default {
     };
 
     const openVisaManager = file => {
-      if (file.fileName) {
+      if (file.file_name) {
         fileToManage.value = file;
       } else {
         fileToManage.value = { id: null };
@@ -413,7 +413,7 @@ export default {
     };
 
     const openTagManager = file => {
-      if (file.fileName) {
+      if (file.file_name) {
         fileToManage.value = file;
         showSidePanel.value = true;
         showTagManager.value = true;
@@ -428,7 +428,7 @@ export default {
     };
 
     const openVersioningManager = file => {
-      if (file.fileName) {
+      if (file.file_name) {
         fileToManage.value = file;
         showVersioningManager.value = true;
         showAccessManager.value = false;

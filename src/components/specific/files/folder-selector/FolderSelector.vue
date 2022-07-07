@@ -42,7 +42,7 @@
       >
         <span class="folder-selector__body__item__icon">
           <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
-          <BIMDataFileIcon v-else :fileName="file.fileName" :size="13" />
+          <BIMDataFileIcon v-else :fileName="file.file_name" :size="13" />
         </span>
         <BIMDataTextbox
           class="folder-selector__body__item__name"
@@ -143,7 +143,7 @@ export default {
           child =>
             !props.files.some(f => child.id === f.id) &&
             (props.project.isAdmin ||
-              child.userPermission === FILE_PERMISSION.READ_WRITE)
+              child.user_permission === FILE_PERMISSION.READ_WRITE)
         )
         .sort((a, b) => {
           if (isFolder(a) && !isFolder(b)) return -1;
@@ -155,7 +155,7 @@ export default {
 
     const isAllowedToMoveFile = computed(() => {
       const activeFolder = (selectedFolder.value || currentFolder.value).id;
-      return props.files.some(f => activeFolder === f.parentId);
+      return props.files.some(f => activeFolder === f.parent_id);
     });
 
     const set = () => {

@@ -89,7 +89,9 @@
         "manageAccessButtonText": "Toegang beheren",
         "deleteButtonText": "Verwijderen",
         "VisaButtonText": "Validatieverzoek",
-        "createModelButtonText": ""
+        "createModelButtonText": "Aanmerken als model",
+        "VersioningButtonText": "Voeg een versie toe",
+        "removeModelButtonText": "Modellen verwijderen"
     },
     "FileNameCell": {
         "inputErrorMessage": "Ongeldige bestandsnaam",
@@ -104,15 +106,16 @@
         "title": "Bestanden verwijderen",
         "message": "Deze actie zal permanent de volgende bestanden/mappen verwijderen:",
         "cancelButtonText": "Annuleren",
-        "deleteButtonText": "Verwijderen"
+        "deleteButtonText": "Verwijderen",
+        "messageVersion": "Je staat op het punt om de volgende bestanden/mappen en hun bijbehorende versiegeschiedenis permanent te verwijderen:"
     },
     "FilesManager": {
         "title": "Projectbestanden",
         "searchInputPlaceholder": "Zoeken",
-        "createModelNotification": "",
+        "createModelNotification": "Model succesvol aangemaakt",
         "uploadDisableMessage": {
-            "permission": "",
-            "size": ""
+            "permission": "Je hebt niet de rechten om dit te doen",
+            "size": "Je hebt niet genoeg opslagruimte"
         }
     },
     "FilesManagerOnboarding": {
@@ -262,8 +265,8 @@
             "merge": "Samenvoegen",
             "archive": "Archieven",
             "dwg": "DWG",
-            "metaBuildings": "",
-            "upload": ""
+            "metaBuildings": "Meta-gebouwen",
+            "upload": "Uploaden"
         }
     },
     "ModelsMergeModal": {
@@ -467,8 +470,14 @@
         "visaCreateCommentsError": "Niet mogelijk om deze reactie te plaatsen",
         "visaUpdateCommentError": "Niet mogelijk om deze reactie te bewerken",
         "visaDeleteCommentError": "Niet mogelijk om deze reactie te verwijderen",
-        "modelCreateError": "",
-        "fileFetchError": ""
+        "modelCreateError": "Fout bij aanmaken model",
+        "fileFetchError": "Fout tijdens het ophalen van deze map/dit bestand",
+        "bcfImportError": "Er is een fout opgetreden bij het importeren",
+        "bcfExportError": "Exporteren mislukt...",
+        "fileVersionsFetchError": "De versies van dit document kunnen niet worden opgehaald.",
+        "fileVersionsMakeHeadError": "Naar huidige versie gaan niet gelukt.",
+        "fileVersionDelete": "Document verwijderen mislukt",
+        "userAlreadyExistsError": "Deze gebruiker is al een lid van de ruimte/het project."
     },
     "ProjectStatusBadge": {
         "new": "NIEUW",
@@ -670,17 +679,17 @@
     "SpaceSizeInfo": {
         "subscribeDatapackButton": "Opslag upgraden",
         "subscribePlatformButton": "Upgrade naar pro-abonnement",
-        "usage": "{gebruikt} gebruikt van {totaal}"
+        "usage": "{used} gebruikt van {total}"
     },
     "SpaceSizePreview": {
         "title": "Opslag",
         "actualStorage": "Huidige opslag",
         "newStorage": "Nieuwe opslag",
-        "newStorageText": "Door het professionele abonnement aan te schaffen profiteert u van {grootte} opslagruimte. U kunt direct vanuit uw ruimte extra opslagruimte kopen."
+        "newStorageText": "Door het professionele abonnement aan te schaffen profiteert u van {size} opslagruimte. U kunt direct vanuit uw ruimte extra opslagruimte kopen."
     },
     "SubscribeCard": {
         "title": "Creëer uw nieuwe ruimte",
-        "text": "Wilt u optimaal profiteren van het platform? Maak gebruik van {grootte} voor uw projecten en een onbeperkt aantal gebruikers door te upgraden naar een professioneel abonnement.",
+        "text": "Wilt u optimaal profiteren van het platform? Maak gebruik van {size} voor uw projecten en een onbeperkt aantal gebruikers door te upgraden naar een professioneel abonnement.",
         "button": "Creëer een nieuwe ruimte"
     },
     "FreePlanInfo": {
@@ -723,6 +732,7 @@
             "validator": "Aan het valideren",
             "toValidate": "Te valideren voor",
             "errorDate": "Datum is ongeldig",
+            "exempleDate": "(Bijvoorbeeld: 31/05/2022)",
             "description": "Beschrijving",
             "cancel": "Annuleren",
             "validate": "Valideren",
@@ -731,7 +741,7 @@
                 "validator": "Valideren",
                 "accept": "Accepteren"
             },
-            "errorValidator": ""
+            "errorValidator": "Je moet in elk geval 1 bevestiger toevoegen"
         },
         "safeZone": {
             "add": {
@@ -802,75 +812,105 @@
         "selectionValidator": {
             "warning": "Deze gebruiker heeft geen toegang tot het bestand."
         },
-        "noVisa": ""
+        "noVisa": "Er is nog geen VISA aangemaakt"
     },
     "ProjectBcf": {
-        "importButtonText": "",
-        "exportButtonText": "",
-        "createBcfButtonText": "",
-        "createBcfTitle": "",
-        "showStatisticsTooltip": "",
-        "hideStatisticsTooltip": "",
-        "searchInputPlaceholder": "",
-        "ascendingIndexTooltip": "",
-        "descendingIndexTooltip": "",
-        "alphabeticalAscendingOrderTooltip": "",
-        "alphabeticalDescendingOrderTooltip": "",
-        "ascendingDateTooltip": "",
-        "descendingDateTooltip": "",
-        "viewGridTooltip": "",
-        "viewListTooltip": ""
+        "importButtonText": "Importeren",
+        "exportButtonText": "Exporteren",
+        "createBcfButtonText": "Creëer een BCF",
+        "createBcfTitle": "Probleem melden",
+        "showStatisticsTooltip": "Statistieken weergeven",
+        "hideStatisticsTooltip": "Statistieken verbergen",
+        "searchInputPlaceholder": "Zoeken op indexnummer, naam, maker of tag",
+        "ascendingIndexTooltip": "oplopende index",
+        "descendingIndexTooltip": "aflopende index",
+        "alphabeticalAscendingOrderTooltip": "alfabetische volgorde",
+        "alphabeticalDescendingOrderTooltip": "omgekeerde alfabetische volgorde",
+        "ascendingDateTooltip": "datums oplopend",
+        "descendingDateTooltip": "datums aflopend",
+        "viewGridTooltip": "rasterweergave",
+        "viewListTooltip": "lijstweergave",
+        "metricsTitle": "Totaal: {count} problemen BCF",
+        "metricsEmptyText": "Voeg problemen toe om hier de bijbehorende statistieken te bekijken.",
+        "noSearchResultsTitle": "Geen resultaten",
+        "noSearchResultsText": "Je zoekopdracht heeft geen resultaten opgeleverd, bekijk nog een keer je filters en zoekwoorden.",
+        "goBackButton": "Teruggaan"
     },
     "GuidedTour": {
         "platform": {
             "intro": {
-                "title": "",
-                "content": ""
+                "title": "Welkom",
+                "content": "Laten we samen het BIMData platform verkennen"
             },
             "actionButtons": {
-                "title": "",
-                "content": ""
+                "title": "Dashboard",
+                "content": "Onmiddellijke toegang tot al je ruimtes, projecten en abonnementen via dit dashboard"
             },
             "firstSpace": {
-                "title": "",
-                "content": ""
+                "title": "Jouw ruimtes",
+                "content": "Onmiddellijke toegang tot je recent gebruikte ruimtes met deze snelkoppeling"
             },
             "firstProject": {
-                "title": "",
-                "content": ""
+                "title": "Jouw projecten",
+                "content": "Onmiddellijke toegang tot je recent gebruikte projecten met deze snelkoppeling"
             },
             "previewIfc": {
-                "title": "",
-                "content": ""
+                "title": "Overzicht",
+                "content": "Eenvoudig navigeren tussen de overzichten van je projectmodellen"
             },
             "usersManager": {
-                "title": "",
-                "content": ""
+                "title": "Samenwerking",
+                "content": "Nodig je eerste contribuanten uit voor je project"
             },
             "modelsManager": {
-                "title": "",
-                "content": ""
+                "title": "Modellen",
+                "content": "Download en beheer jouw projectmodellen (ICF, DWG, PDF...)"
             },
             "gedButton": {
-                "title": "",
-                "content": ""
+                "title": "GED",
+                "content": "Toegang tot documentbeheer voor jouw project via de \"GED\"-tab"
             },
             "fileTree": {
-                "title": "",
-                "content": ""
+                "title": "Boomdiagram",
+                "content": "Creëer jouw mappen en download jouw bestanden direct van de GED"
             },
             "groupManager": {
-                "title": "",
-                "content": ""
+                "title": "Rechtenbeheer",
+                "content": "Maak gebruikersgroepen aan om hun toegangsrechten te beheren"
             },
             "changeSpace": {
-                "title": "",
-                "content": ""
+                "title": "Broodkruimelspoor",
+                "content": "Verkrijg snelle toegang tot jouw ruimte via het broodkruimelspoor"
             },
             "outro": {
-                "title": "",
-                "content": ""
+                "title": "Goed gedaan!",
+                "content": "Alles wat je nu nog hoeft te doen is te beginnen met je eerste project"
             }
         }
+    },
+    "Versioning": {
+        "title": "Versiegeschiedenis",
+        "addVersion": "Voeg een versie toe",
+        "currentVersion": "Huidige versie",
+        "previousVersion": "Vorige versie",
+        "addedBy": "Toegevoegd door:",
+        "titleDate": "Op",
+        "AddVersion": "Voeg een nieuwe versie toe",
+        "loading": {
+            "message": "Laden...",
+            "subMessage": "Dit kan even duren."
+        },
+        "delete": "Verwijderen",
+        "getToHead": "Ga naar de huidige versie",
+        "download": "Downloaden",
+        "show": "Bekijken",
+        "safeZone": {
+            "delete": {
+                "content": "Weet je zeker dat je deze versie wilt verwijderen?",
+                "action": "Ja, verwijder deze versie",
+                "keepView": "Annuleren"
+            }
+        },
+        "emptyArea": "Je hebt momenteel geen versiegeschiedenis voor dit bestand."
     }
 }

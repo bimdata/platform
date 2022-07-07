@@ -176,7 +176,7 @@ export default {
 
     onMounted(async () => {
       userList.value = await getUserProjectList(props.project, {
-        id: props.document.parentId
+        id: props.document.parent_id
       });
     });
 

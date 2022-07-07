@@ -14,12 +14,9 @@
     <transition name="fade">
       <div class="invoice-actions-cell__menu" v-show="showMenu">
         <a
+          class="bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--default invoice-actions-cell__menu__btn"
           :href="invoice.receipt_url"
           target="_blank"
-          class="
-            bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--default
-            invoice-actions-cell__menu__btn
-          "
         >
           {{ $t("InvoiceActionsCell.downloadButton") }}
         </a>

@@ -12,7 +12,7 @@ function mapSpaces(spaces, freeSpaces) {
     isFree: freeSpacesIDs.includes(space.id),
     isAdmin: spaceRoles.value[space.id] === SPACE_ROLE.ADMIN
   }));
-  result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  result.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   return result;
 }
 
@@ -24,14 +24,14 @@ function mapProjects(projects) {
     isGuest: projectRoles.value[project.id] === PROJECT_ROLE.GUEST,
     projectStatus: projectStatus(project)
   }));
-  result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  result.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   return result;
 }
 
 function mapUsers(users) {
   const result = users.map(user => ({
     ...user,
-    isSelf: (user.userId || user.id) === currentUser.value.id
+    isSelf: (user.user_id || user.id) === currentUser.value.id
   }));
   result.sort((a, b) =>
     `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1

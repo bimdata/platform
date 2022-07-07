@@ -18,9 +18,9 @@ export default {
       try {
         const result = await signInCallback();
         router.push({ path: result.state ? result.state : "/" });
-      } catch(e) {
+      } catch (e) {
         console.error(e);
-        router.push('/')
+        router.push("/");
       }
     });
   }

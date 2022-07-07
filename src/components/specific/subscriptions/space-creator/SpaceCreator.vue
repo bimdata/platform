@@ -119,9 +119,9 @@ export default {
         // because they are both used elsewhere in the code.
         // Setting only one of the two would break in some cases.
         // More specifically:
-        //  - `organizationId` is needed in POST call to create a new space attached to the right orga
+        //  - `organization_id` is needed in POST call to create a new space attached to the right orga
         //  - `organization.id` is used in other methods (state/services) to access space orga
-        newSpace.organizationId = orga.value.id;
+        newSpace.organization_id = orga.value.id;
         newSpace.organization = { id: orga.value.id };
 
         if (props.type === "free") {

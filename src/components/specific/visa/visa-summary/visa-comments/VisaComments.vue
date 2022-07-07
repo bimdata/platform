@@ -81,11 +81,11 @@ export default {
 
     const formatComments = comments => {
       return comments
-        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+        .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
         .map(comment => ({
           ...comment,
           fullName: fullName(comment.author),
-          isSelf: comment.author.userId === currentUserId
+          isSelf: comment.author.user_id === currentUserId
         }));
     };
 

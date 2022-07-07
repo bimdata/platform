@@ -88,7 +88,7 @@ function createFileNode(nodeMap, file) {
     _children: (file.children || []).map(child => uuid(child)),
 
     get parent() {
-      return this.file.parentId ? nodeMap.get(`${FILE_TYPE.FOLDER}-${this.file.parentId}`) : null;
+      return this.file.parent_id ? nodeMap.get(`${FILE_TYPE.FOLDER}-${this.file.parent_id}`) : null;
     },
     get children() {
       return this._children.map(nodeId => nodeMap.get(nodeId));

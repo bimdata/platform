@@ -90,7 +90,8 @@
         "deleteButtonText": "Delete",
         "VisaButtonText": "Validation request",
         "createModelButtonText": "Define as model",
-        "removeModelButtonText": "Remove from models"
+        "VersioningButtonText": "Add a version",
+        "removeModelButtonText": "Remove models"
     },
     "FileNameCell": {
         "inputErrorMessage": "Invalid file name",
@@ -105,7 +106,8 @@
         "title": "Delete files",
         "message": "This action will permanently delete the following files/folders :",
         "cancelButtonText": "Cancel",
-        "deleteButtonText": "Delete"
+        "deleteButtonText": "Delete",
+        "messageVersion": "You are about to permanently delete the following files/folders and their associated version history:"
     },
     "FilesManager": {
         "title": "Project Files",
@@ -469,7 +471,13 @@
         "visaUpdateCommentError": "Impossible to edit this comment",
         "visaDeleteCommentError": "Impossible to remove this comment",
         "modelCreateError": "Error creating model",
-        "fileFetchError": ""
+        "fileFetchError": "Error while recovering this folder/file",
+        "bcfImportError": "An error occurred while importing",
+        "bcfExportError": "Export failed...",
+        "fileVersionsFetchError": "The versions of this document cannot be recovered.",
+        "fileVersionsMakeHeadError": "Failed to switch document to current version.",
+        "fileVersionDelete": "Failed to delete document",
+        "userAlreadyExistsError": "This user is already a member of the space/project."
     },
     "ProjectStatusBadge": {
         "new": "NEW",
@@ -724,7 +732,7 @@
             "validator": "Validating",
             "toValidate": "To be validated before",
             "errorDate": "Date invalid",
-            "exempleDate": "format: dd/mm/yyyy",
+            "exempleDate": "(Ex: 31/05/2022)",
             "description": "Description",
             "cancel": "Cancel",
             "validate": "Validate",
@@ -821,7 +829,12 @@
         "ascendingDateTooltip": "increasing date",
         "descendingDateTooltip": "decreasing date",
         "viewGridTooltip": "grid view",
-        "viewListTooltip": "list view"
+        "viewListTooltip": "list view",
+        "metricsTitle": "Total: {count} issues BCF",
+        "metricsEmptyText": "Add issues to see the associated statistics here.",
+        "noSearchResultsTitle": "No results",
+        "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
+        "goBackButton": "Return"
     },
     "GuidedTour": {
         "platform": {
@@ -874,5 +887,30 @@
                 "content": "Now, all you have left to do is get going on your first project"
             }
         }
+    },
+    "Versioning": {
+        "title": "Version history",
+        "addVersion": "Add a version",
+        "currentVersion": "Current version",
+        "previousVersion": "Previous version",
+        "addedBy": "Added by:",
+        "titleDate": "On",
+        "AddVersion": "Add a new version",
+        "loading": {
+            "message": "Loading...",
+            "subMessage": "This process may take a few moments."
+        },
+        "delete": "Delete",
+        "getToHead": "Switch to current version",
+        "download": "Download",
+        "show": "See",
+        "safeZone": {
+            "delete": {
+                "content": "Are you sure you want to delete this version?",
+                "action": "Yes, delete this version",
+                "keepView": "Cancel"
+            }
+        },
+        "emptyArea": "You currently have no version history for this file."
     }
 }

@@ -44,7 +44,7 @@
         <BIMDataIcon
           v-if="isFolder(file)"
           :name="
-            !project.isAdmin && file.userPermission < 100
+            !project.isAdmin && file.user_permission < 100
               ? 'readonlyFolder'
               : 'folder'
           "
@@ -52,7 +52,7 @@
           fill
           color="primary"
         />
-        <BIMDataFileIcon v-else :fileName="file.fileName" :size="20" />
+        <BIMDataFileIcon v-else :fileName="file.file_name" :size="20" />
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="70%" />
         <BIMDataIcon
           v-if="hasHistory"

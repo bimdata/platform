@@ -183,6 +183,8 @@ export default {
     const isOpen = ref(false);
 
     const openMenu = () => {
+      if (!props.filesTable) return;
+
       isOpen.value = true;
       nextTick(() => {
         if (props.filesTable) {

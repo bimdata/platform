@@ -92,7 +92,7 @@ export default {
     const onSuccess = async ({ size }) => {
       await waitForUpdatedSpaceSize(
         currentSpace.value,
-        spaceSubInfo.value.smartDataSizeAvailable
+        spaceSubInfo.value.smart_data_size_available
       );
 
       pushNotification(

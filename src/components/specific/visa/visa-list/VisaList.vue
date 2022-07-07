@@ -132,13 +132,13 @@ export default {
     };
 
     const isVisaUnderError = visa =>
-      visa.status !== VISA_STATUS.CLOSE && visa.validationsInError.length;
+      visa.status !== VISA_STATUS.CLOSE && visa.validations_in_error.length;
 
     const iconStatus = visa => {
-      const { status, validationsInError } = visa;
+      const { status, validations_in_error } = visa;
       if (status === VISA_STATUS.CLOSE) {
         return "validatedFile";
-      } else if (validationsInError.length) {
+      } else if (validations_in_error.length) {
         return "deniedFile";
       } else {
         return "inProgressFile";

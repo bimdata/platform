@@ -57,7 +57,7 @@ class TagService {
         document.id,
         project.id,
         {
-          tagId: tag.id
+          tag_id: tag.id
         }
       );
     } catch (error) {
