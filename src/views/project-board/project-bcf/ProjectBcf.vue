@@ -387,6 +387,7 @@ export default {
 
     const loading = ref(false);
     const isListView = ref(false);
+    const currentBcfTopic = ref(null);
 
     watch(
       currentProject,
@@ -397,6 +398,18 @@ export default {
           reloadExtensions();
         } finally {
           loading.value = false;
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      bcfTopics,
+      topics => {
+        if (currentBcfTopic.value) {
+          currentBcfTopic.value = topics.find(
+            t => t.guid === currentBcfTopic.value.guid
+          );
         }
       },
       { immediate: true }
@@ -441,7 +454,6 @@ export default {
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const currentBcfTopic = ref(null);
     const showBcfTopicCreate = ref(false);
     const showBcfTopicOverview = ref(false);
     const showBcfTopicForm = ref(false);
