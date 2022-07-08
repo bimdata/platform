@@ -17,8 +17,8 @@ const tours = [
           title: t("GuidedTour.platform.intro.title"),
           content: t("GuidedTour.platform.intro.content"),
           img: imgPath + "intro.png"
-        },
-        layout: IntroOutroPlatform
+        }
+        // layout: IntroOutroPlatform
       },
       {
         name: "actionButtons",
