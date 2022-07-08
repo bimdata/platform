@@ -28,34 +28,32 @@
           ></div>
         </template>
       </template>
-      <template v-if="isOver">
-        <BIMDataCard
-          ref="tagList"
-          class="file-tags-cell-pills__over"
-          width="150px"
-          style="top: -9px"
-        >
-          <template #content>
-            <div class="file-tags-cell-pills__over__list">
-              <template v-for="tag in file.tags" :key="tag.id">
-                <div
-                  class="file-tags-cell-pills__over__list__tag"
-                  :style="{
-                    color: `#${tag.color}`,
-                    border: `1px solid #${tag.color}`
-                  }"
-                >
-                  <BIMDataTextbox
-                    class="file-tags-cell-pills__over__list__tag__text"
-                    :text="tag.name"
-                    maxWidth="150px"
-                  />
-                </div>
-              </template>
-            </div>
-          </template>
-        </BIMDataCard>
-      </template>
+      <BIMDataCard
+        v-show="isOver"
+        ref="tagList"
+        class="file-tags-cell-pills__over"
+        width="150px"
+      >
+        <template #content>
+          <div class="file-tags-cell-pills__over__list">
+            <template v-for="tag in file.tags" :key="tag.id">
+              <div
+                class="file-tags-cell-pills__over__list__tag"
+                :style="{
+                  color: `#${tag.color}`,
+                  border: `1px solid #${tag.color}`
+                }"
+              >
+                <BIMDataTextbox
+                  class="file-tags-cell-pills__over__list__tag__text"
+                  :text="tag.name"
+                  maxWidth="150px"
+                />
+              </div>
+            </template>
+          </div>
+        </template>
+      </BIMDataCard>
     </div>
   </template>
   <template v-else>
