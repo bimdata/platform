@@ -286,7 +286,7 @@ function isFolder(file) {
 }
 
 function hasAdminPerm(project, file) {
-  return project.isAdmin || file.userPermission === 100;
+  return project.isAdmin || file.user_permission === 100;
 }
 
 
