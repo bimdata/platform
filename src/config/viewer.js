@@ -42,8 +42,9 @@ const PLUGINS_CONFIG = {
   plan: true,
   buildingMaker: true,
   viewer3d: {
-    enableDynamicLOD: true,
+    enableDynamicLOD: true
   },
+  bcfManager: true
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };
