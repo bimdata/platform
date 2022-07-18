@@ -9,8 +9,8 @@
         <div v-if="isXXL">
           {{
             `${
-              Math.round((100 * spaceSubInfo.smartDataSize) / GB) / 100
-            } / ${formatBytes(spaceSubInfo.smartDataSizeAvailable)}`
+              Math.round((100 * spaceSubInfo.smart_data_size) / GB) / 100
+            } / ${formatBytes(spaceSubInfo.smart_data_size_available)}`
           }}
         </div>
         <div v-else>
