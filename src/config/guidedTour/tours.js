@@ -16,9 +16,10 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.intro.title"),
           content: t("GuidedTour.platform.intro.content"),
-          img: imgPath + "intro.png"
+          img: imgPath + "intro.png",
+          imgPosition: "-20% 50%",
+          imgSize: "116%"
         }
-        // layout: IntroOutroPlatform
       },
       {
         name: "actionButtons",
