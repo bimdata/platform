@@ -69,7 +69,10 @@
           <DashboardProjectList :projects="projects" isCarousel />
         </div>
         <div class="dashboard__body__right">
-          <SubscribeCard v-if="isSubscriptionEnabled" layout="vertical" />
+          <SubscribeCard
+            v-if="isSubscriptionEnabled"
+            :layout="isXL ? 'horizontal' : 'vertical'"
+          />
         </div>
       </template>
     </div>
@@ -78,7 +81,7 @@
 
 <script>
 import { computed } from "vue";
-
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
@@ -115,7 +118,9 @@ export default {
       projects: userProjects,
       routeNames,
       spaces: userSpaces,
-      isSubscribeHorizontal
+      isSubscribeHorizontal,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

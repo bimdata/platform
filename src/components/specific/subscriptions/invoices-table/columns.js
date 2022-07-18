@@ -3,13 +3,19 @@ export default [
     id: "space"
   },
   {
-    id: "date"
+    id: "date",
+    width: "120px",
+    align: "center"
   },
   {
-    id: "status"
+    id: "status",
+    width: "120px",
+    align: "center"
   },
   {
-    id: "amount"
+    id: "amount",
+    width: "80px",
+    align: "center"
   },
   {
     id: "actions",

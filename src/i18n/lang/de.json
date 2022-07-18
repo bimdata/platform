@@ -677,8 +677,7 @@
         "selectedSpace": "Ausgewählter Raum:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Ein DataPack kaufen",
-        "subscribePlatformButton": "Zur Pro-Plattform wechseln",
+        "subscribePlatformButton": "Verbessern",
         "usage": "{used} verwendet auf {total}"
     },
     "SpaceSizePreview": {

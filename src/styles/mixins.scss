@@ -25,3 +25,34 @@
     }
   }
 }
+
+/**
+ * The code below is extracted from Bootstrap breakpoints mixins.
+ * Doc: https://getbootstrap.com/docs/5.0/layout/breakpoints/
+ * Src: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_breakpoints.scss
+ */
+
+// Breakpoints map
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+// Media of at most the maximum breakpoint width.
+// No query for the largest breakpoint.
+// Makes the @content apply to the given breakpoint and narrower.
+@mixin media-breakpoint-down($name) {
+  $max: map-get($breakpoints, $name);
+  $max: if($max and $max > 0, $max - 0.02, null);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}

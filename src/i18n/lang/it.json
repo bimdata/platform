@@ -677,8 +677,7 @@
         "selectedSpace": "Spazio selezionato:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Aggiorna l'archiviazione",
-        "subscribePlatformButton": "Passa alla piattaforma pro",
+        "subscribePlatformButton": "Aggiorna",
         "usage": "{used} usato su {total}"
     },
     "SpaceSizePreview": {

@@ -24,3 +24,30 @@
     }
   }
 }
+
+.space-size-preview--horizontal {
+  padding: calc(var(--spacing-unit) * 2);
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas:
+    "title actual"
+    "image new"
+  ;
+  gap: var(--spacing-unit);
+
+  .space-size-preview__title {
+    grid-area: title;
+    justify-self: center;
+  }
+  .space-size-preview__image {
+    grid-area: image;
+    justify-self: center;
+    margin: var(--spacing-unit);
+  }
+  .space-size-preview__actual-size {
+    grid-area: actual;
+  }
+  .space-size-preview__new-size {
+    grid-area: new;
+  }
+}

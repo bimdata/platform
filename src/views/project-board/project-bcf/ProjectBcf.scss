@@ -1,11 +1,12 @@
 .project-bcf {
   &__settings {
     position: fixed;
-    z-index: 999;
+    z-index: 200;
     top: 0;
     right: 0;
-    width: 500px;
+    width: 400px;
     height: 100%;
+    box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: var(--color-white);
   }
 
@@ -21,7 +22,7 @@
     }
 
     &--start {
-      width: 50%;
+      width: 400px;
     }
 
     .bimdata-btn:disabled {
@@ -41,8 +42,7 @@
     &__stats {
       position: sticky;
       top: 0;
-      min-width: 360px;
-      width: 22%;
+      width: 400px;
       height: 500px;
       overflow: auto;
 
@@ -85,12 +85,39 @@
       justify-content: space-between;
       column-gap: 1%;
       row-gap: 24px;
+
       .no-search-results {
         .bimdata-card__content {
           h3 {
             color: var(--color-primary);
           }
         }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xl) {
+  .project-bcf {
+    &__content {
+      &__grid {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .project-bcf {
+    &__actions {
+      &--start {
+        width: 342px;
+      }
+    }
+
+    &__content {
+      &__stats {
+        width: 342px;
       }
     }
   }

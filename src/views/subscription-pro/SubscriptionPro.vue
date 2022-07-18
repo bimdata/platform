@@ -6,13 +6,12 @@
       </template>
       <template #center>
         <h1 class="subscription-pro__title">
-          {{
-            $t(
-              `SubscriptionPro.${
-                currentSpace ? "upgradeTitle" : "subscribeTitle"
-              }`
-            )
-          }}
+          <template v-if="currentSpace">
+            {{ $t("SubscriptionPro.upgradeTitle") }}
+          </template>
+          <template v-else>
+            {{ $t("SubscriptionPro.subscribeTitle") }}
+          </template>
         </h1>
       </template>
     </ViewHeader>
@@ -44,13 +43,13 @@
           class="subscription-pro__content__body"
           v-show="space"
         >
-          <div class="subscription-pro__content__body__left">
+          <div class="subscription-pro__content__body__start" v-show="!isLG">
             <ProPlanInfo />
           </div>
           <div class="subscription-pro__content__body__center">
             <ProPlanForm :space="space" @space-created="onSpaceCreated" />
           </div>
-          <div class="subscription-pro__content__body__right">
+          <div class="subscription-pro__content__body__end" v-show="!isXL">
             <SpaceSizePreview
               :spaceSubInfo="spaceSubInfo"
               :newSizeAvailable="newSizeAvailable"
@@ -67,6 +66,7 @@ import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useOrganizations } from "@/state/organizations.js";
@@ -170,7 +170,9 @@ export default {
       // Methods
       formatBytes,
       onSpaceCreated,
-      onSpacePreCreated
+      onSpacePreCreated,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

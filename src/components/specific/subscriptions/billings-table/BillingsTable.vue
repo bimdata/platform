@@ -52,7 +52,7 @@
                   .map(d => +d.unit_price * d.quantity)
                   .reduce((a, b) => a + b, 0)
               }}
-              <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
+              {{ sub.currency === "EUR" ? "€" : "£" }}
             </div>
           </template>
           <template #cell-actions="{ row: sub }">
@@ -82,8 +82,9 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import routeNames from "@/router/route-names.js";
 import columnsDef from "./columns.js";
 // Components
@@ -104,19 +105,23 @@ export default {
     }
   },
   setup() {
-    const { locale, t } = useI18n();
-    const columns = ref([]);
+    const { t } = useI18n();
+    const { isLG } = useStandardBreakpoints();
 
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`BillingsTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+    const columns = computed(() => {
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["space", "nextpayment", "status", "amount", "actions"].includes(
+            col.id
+          )
+        );
+      }
+      return filteredColumns.map(col => ({
+        ...col,
+        label: col.label || t(`BillingsTable.headers.${col.id}`)
+      }));
+    });
 
     return {
       // References

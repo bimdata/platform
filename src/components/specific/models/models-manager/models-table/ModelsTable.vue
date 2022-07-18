@@ -17,7 +17,7 @@
       />
     </template>
     <template #cell-version="{ row: { version } }">
-      {{ version ? version : "-" }}
+      {{ version ?? "-" }}
     </template>
     <template #cell-creator="{ row: { creator } }">
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
@@ -67,6 +67,7 @@
 <script>
 import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import columnsDef from "./columns.js";
 import { MODEL_TYPE } from "@/config/models.js";
 // Components
@@ -102,10 +103,23 @@ export default {
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
-    const { fallbackLocale, locale, t } = useI18n();
+    const { locale, fallbackLocale, t } = useI18n();
+    const { isLG, isXL } = useStandardBreakpoints();
 
     const columns = computed(() => {
-      return columnsDef.map(col => ({
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "status", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "creator", "lastupdate", "status", "actions"].includes(
+            col.id
+          )
+        );
+      }
+      return filteredColumns.map(col => ({
         ...col,
         label: col.label || t(`ModelsTable.headers.${col.id}`)
       }));

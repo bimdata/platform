@@ -10,18 +10,8 @@
     @click="selectFile"
   >
     <slot>
-      <BIMDataIcon
-        :name="icon"
-        :rotate="iconRotate"
-        :size="iconSize"
-        margin="0 6px 0 0"
-      />
-      <template v-if="textButton">
-        <span>{{ textButton }}</span>
-      </template>
-      <template v-else>
-        <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
-      </template>
+      <BIMDataIcon name="addFile" size="xs" margin="0 6px 0 0" />
+      {{ $t("FileUploadButton.addFileButtonText") }}
     </slot>
     <input
       hidden
@@ -47,6 +37,10 @@ export default {
       type: String,
       default: "32px"
     },
+    color: {
+      type: String,
+      default: "primary"
+    },
     multiple: {
       type: Boolean,
       default: false
@@ -58,25 +52,6 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    color: {
-      type: String,
-      default: "primary"
-    },
-    textButton: {
-      type: String
-    },
-    icon: {
-      type: String,
-      default: "addFile"
-    },
-    iconRotate: {
-      type: Number,
-      default: 0
-    },
-    iconSize: {
-      type: String,
-      default: "xs"
     }
   },
   emits: ["upload"],

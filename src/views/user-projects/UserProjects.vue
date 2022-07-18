@@ -9,22 +9,13 @@
           data-guide="project-input-search"
           data-test="input-search"
           class="user-projects__header__search"
-          width="300px"
-          :placeholder="$t('UserProjects.searchInputPlaceholder')"
+          :width="isSM ? '150px' : '300px'"
+          :placeholder="isSM ? '' : $t('UserProjects.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
       </template>
       <template #right>
-        <!-- <BIMDataButton
-          data-test="btn-filter"
-          class="user-projects__header__btn-filter"
-          fill
-          squared
-          icon
-        >
-          <BIMDataIcon name="filter" size="s" />
-        </BIMDataButton> -->
         <BIMDataButton
           data-test="btn-sort"
           class="user-projects__header__btn-sort"
@@ -38,7 +29,12 @@
       </template>
     </ViewHeader>
 
-    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+    <BIMDataResponsiveGrid
+      itemWidth="320px"
+      rowGap="36px"
+      columnGap="36px"
+      :style="{ justifyContent: isMD ? 'center' : '' }"
+    >
       <transition-group name="grid">
         <ProjectCard
           data-guide="project-card"
@@ -54,6 +50,7 @@
 <script>
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useProjects } from "@/state/projects.js";
 // Components
 import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
@@ -84,7 +81,9 @@ export default {
       projects: displayedProjects,
       searchText,
       // Methods
-      sortProjects
+      sortProjects,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

@@ -677,8 +677,7 @@
         "selectedSpace": "Geselecteerde ruimte:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Opslag upgraden",
-        "subscribePlatformButton": "Upgrade naar pro-abonnement",
+        "subscribePlatformButton": "Upgrade",
         "usage": "{used} gebruikt van {total}"
     },
     "SpaceSizePreview": {
