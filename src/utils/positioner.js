@@ -6,5 +6,5 @@ export function dropdownPositioner(elRef, elToPos, yOffset = 0) {
     return `-${h + yOffset}px`;
   }
 
-  return getComputedStyle(elToPos).getPropertyValue("top") || "0px";
+  return getComputedStyle(elToPos).getPropertyValue("top");
 }
