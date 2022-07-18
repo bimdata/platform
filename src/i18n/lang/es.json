@@ -89,7 +89,9 @@
         "manageAccessButtonText": "Gestionar los accesos",
         "deleteButtonText": "Suprimir",
         "VisaButtonText": "Solicitud de aprobación",
-        "createModelButtonText": "Definir como modelo"
+        "createModelButtonText": "Definir como modelo",
+        "VersioningButtonText": "Añadir una versión",
+        "removeModelButtonText": "Eliminar modelos"
     },
     "FileNameCell": {
         "inputErrorMessage": "Nombre de archivo inválido",
@@ -104,7 +106,8 @@
         "title": "Eliminación de archivos",
         "message": "Está apunto de suprimir definitivamente los archivos/carpetas siguientes:",
         "cancelButtonText": "Cancelar",
-        "deleteButtonText": "Suprimir"
+        "deleteButtonText": "Suprimir",
+        "messageVersion": "Está a punto de eliminar permanentemente los siguientes archivos/carpetas y el historial de versiones asociado:"
     },
     "FilesManager": {
         "title": "Documentos del proyecto",
@@ -468,7 +471,13 @@
         "visaUpdateCommentError": "Imposible modificar este comentario",
         "visaDeleteCommentError": "Imposible eliminar este comentario",
         "modelCreateError": "Error al crear el modelo",
-        "fileFetchError": ""
+        "fileFetchError": "Error al recuperar esta carpeta/archivo",
+        "bcfImportError": "Se ha producido un error durante la importación",
+        "bcfExportError": "La exportación falló...",
+        "fileVersionsFetchError": "No se pueden recuperar versiones de este documento",
+        "fileVersionsMakeHeadError": "Error al cambiar el documento a la versión actual",
+        "fileVersionDelete": "No se ha podido eliminar el documento",
+        "userAlreadyExistsError": "Este usuario ya es miembro del espacio/proyecto"
     },
     "ProjectStatusBadge": {
         "new": "NUEVO",
@@ -722,6 +731,7 @@
             "validator": "Confirmando",
             "toValidate": "Confirmar antes de",
             "errorDate": "Fecha inválida",
+            "exempleDate": "(Por ej.: 31/05/2022)",
             "description": "Descripción",
             "cancel": "Anular",
             "validate": "Confirmar",
@@ -818,7 +828,12 @@
         "ascendingDateTooltip": "fecha creciente",
         "descendingDateTooltip": "fecha decreciente",
         "viewGridTooltip": "vista de cuadrícula",
-        "viewListTooltip": "vista de lista"
+        "viewListTooltip": "vista de lista",
+        "metricsTitle": "Total: {count} emisiones BCF",
+        "metricsEmptyText": "Añade temas para ver las estadísticas asociadas aquí.",
+        "noSearchResultsTitle": "No hay resultados",
+        "noSearchResultsText": "Su búsqueda no ha dado resultados, por favor, compruebe sus filtros o palabras clave.",
+        "goBackButton": "Volver"
     },
     "GuidedTour": {
         "platform": {
@@ -871,5 +886,30 @@
                 "content": "Ahora sólo tienes que empezar tu primer proyecto"
             }
         }
+    },
+    "Versioning": {
+        "title": "Historia de la versión",
+        "addVersion": "Añadir una versión",
+        "currentVersion": "Versión actual",
+        "previousVersion": "Versión anterior",
+        "addedBy": "Añadido por:",
+        "titleDate": "El",
+        "AddVersion": "Añadir una nueva versión",
+        "loading": {
+            "message": "Cargando en progreso.",
+            "subMessage": "Este proceso puede durar unos instantes."
+        },
+        "delete": "Eliminar",
+        "getToHead": "Cambiar a la versión actual",
+        "download": "Descargar",
+        "show": "Ver",
+        "safeZone": {
+            "delete": {
+                "content": "¿Está seguro de que quiere eliminar esta versión?",
+                "action": "Sí, elimine esta versión",
+                "keepView": "Anular"
+            }
+        },
+        "emptyArea": "Actualmente no tiene un historial de versiones para este archivo."
     }
 }

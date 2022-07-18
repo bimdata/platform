@@ -64,12 +64,21 @@ class SubscriptionService {
       return {};
     }
 
-    const subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
+    let subInfo;
+
+    try {
+      subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.SPACE_FETCH_ERROR, error)
+      );
+      return {};
+    }
 
     // Derive used size from remaining size
-    const usedSizePercent = 100 - subInfo.remainingSmartDataSizePercent;
+    const usedSizePercent = 100 - subInfo.remaining_smart_data_size_percent;
     // Check whether space is managed by a platform subscription
-    const isPlatformSubscription = subInfo.managedBy === "BIMDATA_PLATFORM";
+    const isPlatformSubscription = subInfo.managed_by === "BIMDATA_PLATFORM";
     const isCustomSubscription = subInfo.is_custom;
 
     let isOrganizationMember = false;

@@ -1,34 +1,48 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
-      <BIMDataButton
-        data-test="btn-toggle-upload"
-        :width="isLG ? undefined : '120px'"
-        :color="showFileUploader ? 'granite' : 'primary'"
-        fill
-        radius
-        :icon="isLG"
-        :disabled="isFull(spaceSubInfo)"
-        @click="toggleFileUploader"
+      <BIMDataTooltip
+        class="project-overview__tooltip-upload"
+        color="high"
+        position="left"
+        :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
+        :text="
+          $t(
+            `SubscriptionModal.uploadDisableMessage.${
+              isFullTotal(spaceSubInfo) ? 'size' : 'permission'
+            }`
+          )
+        "
       >
-        <BIMDataIcon
-          :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
-          :size="isLG ? 'xxs' : 'xxxs'"
-        />
-        <span v-if="!isLG" style="margin-left: 6px">
-          {{
-            showFileUploader
-              ? $t("ProjectOverview.closeFileUploadButtonText")
-              : $t("ProjectOverview.openFileUploadButtonText")
-          }}
-        </span>
-      </BIMDataButton>
+        <BIMDataButton
+          data-test="btn-toggle-upload"
+          :width="isLG ? undefined : '120px'"
+          :color="showFileUploader ? 'granite' : 'primary'"
+          fill
+          radius
+          :icon="isLG"
+          :disabled="!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)"
+          @click="() => (isAbleToSub ? openModal() : toggleFileUploader())"
+        >
+          <BIMDataIcon
+            :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
+            :size="isLG ? 'xxs' : 'xxxs'"
+          />
+          <span v-if="!isLG" style="margin-left: 6px">
+            {{
+              showFileUploader
+                ? $t("ProjectOverview.closeFileUploadButtonText")
+                : $t("ProjectOverview.openFileUploadButtonText")
+            }}
+          </span>
+        </BIMDataButton>
+      </BIMDataTooltip>
     </AppSlotContent>
 
     <transition name="fade">
       <FileUploader
         class="project-overview__block--upload"
-        v-show="showFileUploader && !isFull(spaceSubInfo)"
+        v-show="showFileUploader"
         isModelUploader
         autoclose
         :project="project"
@@ -73,8 +87,9 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useToggle } from "@/composables/toggle.js";
@@ -82,9 +97,9 @@ import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
 import { useModels } from "@/state/models.js";
 import { useProjects } from "@/state/projects.js";
+import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
 import { debounce } from "@/utils/async.js";
-import { isFull } from "@/utils/spaces.js";
 // Components
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
@@ -107,6 +122,7 @@ export default {
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
+    const { openModal } = useAppModal();
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useAppNotification();
 
@@ -141,21 +157,26 @@ export default {
       });
     };
 
+    const isAbleToSub = inject("isAbleToSub");
+
     return {
       // References
       allowedExtensions: UPLOADABLE_EXTENSIONS,
       ifcs,
       invitations: projectInvitations,
+      isAbleToSub,
       models: projectModels,
       project: currentProject,
       showFileUploader,
       spaceSubInfo,
       users: projectUsers,
+      currentSpace,
       // Methods
       closeFileUploader,
-      isFull,
+      isFullTotal,
       notifyForbiddenUpload,
       openFileUploader,
+      openModal,
       reloadData,
       toggleFileUploader,
       // Responsive breakpoints

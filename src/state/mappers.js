@@ -2,17 +2,22 @@ import { PROJECT_ROLE } from "@/config/projects.js";
 import { SPACE_ROLE } from "@/config/spaces.js";
 import { useUser } from "@/state/user.js";
 import { projectStatus } from "@/utils/projects.js";
+import { useOrganizations } from "@/state/organizations.js";
 
 const { user: currentUser, spaceRoles, projectRoles } = useUser();
+const { userOrganizations } = useOrganizations();
 
 function mapSpaces(spaces, freeSpaces) {
   const freeSpacesIDs = freeSpaces.map(s => s.id);
   const result = spaces.map(space => ({
     ...space,
     isFree: freeSpacesIDs.includes(space.id),
-    isAdmin: spaceRoles.value[space.id] === SPACE_ROLE.ADMIN
+    isAdmin: spaceRoles.value[space.id] === SPACE_ROLE.ADMIN,
+    isUserOrga: Boolean(
+      userOrganizations.value.find(orga => orga.id === space.organization.id)
+    )
   }));
-  result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  result.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   return result;
 }
 
@@ -24,14 +29,14 @@ function mapProjects(projects) {
     isGuest: projectRoles.value[project.id] === PROJECT_ROLE.GUEST,
     projectStatus: projectStatus(project)
   }));
-  result.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  result.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   return result;
 }
 
 function mapUsers(users) {
   const result = users.map(user => ({
     ...user,
-    isSelf: (user.userId || user.id) === currentUser.value.id
+    isSelf: (user.user_id || user.id) === currentUser.value.id
   }));
   result.sort((a, b) =>
     `${a.firstname}${a.lastname}` < `${b.firstname}${b.lastname}` ? -1 : 1

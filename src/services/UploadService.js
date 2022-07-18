@@ -57,7 +57,14 @@ class UploadService {
         onUploadComplete,
         onUploadError: event => {
           ErrorService.handleError(
-            new RuntimeError(ERRORS.DOCUMENT_UPLOAD_ERROR, event)
+            new RuntimeError(
+              ERRORS[
+                event.srcElement.status === 402
+                  ? "SPACE_SIZE_FULL_ERROR"
+                  : "DOCUMENT_UPLOAD_ERROR"
+              ],
+              event
+            )
           );
           onUploadError(event);
         }

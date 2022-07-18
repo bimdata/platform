@@ -16,8 +16,8 @@
         <div v-else>
           {{
             $t("SpaceSizeInfo.usage", {
-              used: formatBytes(spaceSubInfo.smartDataSize),
-              total: formatBytes(spaceSubInfo.smartDataSizeAvailable)
+              used: formatBytes(spaceSubInfo.smart_data_size),
+              total: formatBytes(spaceSubInfo.smart_data_size_available)
             })
           }}
         </div>

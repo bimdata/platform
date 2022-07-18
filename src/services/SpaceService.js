@@ -105,7 +105,7 @@ class SpaceService {
     try {
       return await apiClient.collaborationApi.inviteCloudUser(space.id, {
         email: invitation.email,
-        redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
+        redirect_uri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
       });
     } catch (error) {
       if (error.status === 400 && (await error.json()).already_exists) {

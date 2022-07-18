@@ -1,5 +1,3 @@
-import { toCamelCaseFields } from "./misc.js";
-
 /**
  * @param {Object} param0
  * @param {Object} param1
@@ -46,7 +44,7 @@ function createFileUploader(
           bytesUploaded: e.loaded,
           bytesTotal: e.total,
           percentage: (e.loaded / e.total) * 100,
-          response: toCamelCaseFields(request.response)
+          response: request.response
         });
         this.request = null;
       });
@@ -57,6 +55,14 @@ function createFileUploader(
       request.upload.addEventListener("abort", e => {
         onUploadCancel(e);
         this.request = null;
+      });
+      request.addEventListener("readystatechange", e => {
+        if (request.readyState === XMLHttpRequest.DONE) {
+          if (request.status >= 400) {
+            onUploadError(e);
+            this.request = null;
+          }
+        }
       });
 
       request.open(method, url);

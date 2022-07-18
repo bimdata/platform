@@ -1,0 +1,28 @@
+.models-table {
+  
+  &__pdf-placeholder {
+    width: 300px;
+    height: 277px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__circle {
+      width: 186px;
+      height: 186px;
+      border-radius: 50%;
+      position: relative;
+      &__file-icon {
+        position: absolute; 
+        top: 152px;
+        right: 26px;
+      }
+    } 
+  
+    &__content {
+      font-weight: normal;
+      text-align: center;
+    }
+  }
+}

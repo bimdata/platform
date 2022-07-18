@@ -7,7 +7,6 @@
     :perPage="7"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
-    :placeholder="$t('ModelsTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: model }">
       <ModelNameCell
@@ -24,7 +23,7 @@
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>
     <template #cell-lastupdate="{ row: model }">
-      {{ $d(model.updatedAt, "long") }}
+      {{ $d(model.updated_at, "long") }}
     </template>
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />
@@ -40,6 +39,28 @@
         @update="nameEditMode[model.id] = true"
       />
     </template>
+    <template #placeholderSlot>
+      <template v-if="modelType === MODEL_TYPE.PDF && !allModelsCounter">
+        <div class="models-table__pdf-placeholder">
+          <div
+            class="models-table__pdf-placeholder__circle"
+            :style="`background: ${background}`"
+          >
+            <BIMDataFileIcon
+              class="models-table__pdf-placeholder__circle__file-icon"
+              fileName=".pdf"
+              :size="20"
+            />
+          </div>
+          <div class="models-table__pdf-placeholder__content">
+            {{ $t("ModelsTable.emptyTablePlaceholder.textPdf") }}
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        {{ $t("ModelsTable.emptyTablePlaceholder.text") }}
+      </template>
+    </template>
   </GenericTable>
 </template>
 
@@ -48,6 +69,7 @@ import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "@/composables/responsive.js";
 import columnsDef from "./columns.js";
+import { MODEL_TYPE } from "@/config/models.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
@@ -69,11 +91,19 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    allModelsCounter: {
+      type: Number,
+      required: true
+    },
+    modelType: {
+      type: String,
+      required: false
     }
   },
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
-    const { t } = useI18n();
+    const { locale, fallbackLocale, t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();
 
     const columns = computed(() => {
@@ -104,12 +134,23 @@ export default {
       },
       { immediate: true }
     );
+    const background = computed(
+      () =>
+        `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${
+          ["fr", "de", "it", "es", "en"].find(lang => lang === locale.value) ||
+          fallbackLocale.value
+        }.gif") no-repeat 11% 143% / 79%`
+    );
 
     return {
       // References
       columns,
+      background,
+      MODEL_TYPE,
       nameEditMode
     };
   }
 };
 </script>
+
+<style scoped lang="scss" src="./ModelsTable.scss"></style>

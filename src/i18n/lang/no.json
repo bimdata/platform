@@ -35,14 +35,14 @@
         "closeFileUploadButtonText": "Lukk",
         "forbiddenUploadNotification": {
             "title": "Last opp feil",
-            "message": "Vennligst velg en modellfil: {utvidelser}"
+            "message": "Vennligst velg en modellfil: {extensions}"
         }
     },
     "BreadcrumbSelector": {
         "inputPlaceholder": "Søk"
     },
     "GenericTable": {
-        "pagination": "{start} - {slutt} av {total}"
+        "pagination": "{start} - {end} av {total}"
     },
     "GoBackButton": {
         "text": "Tilbake"
@@ -77,7 +77,7 @@
     },
     "DashboardWelcomeTile": {
         "title": "Dashbord",
-        "message": "Hei, {navn}, fint å se deg igjen!"
+        "message": "Hei, {name}, fint å se deg igjen!"
     },
     "FileActionsCell": {
         "openViewerButtonText": "Åpne i fremviser",
@@ -89,7 +89,9 @@
         "manageAccessButtonText": "Administrer tilgang",
         "deleteButtonText": "Slett",
         "VisaButtonText": "Verifiseringsforespørsel",
-        "createModelButtonText": ""
+        "createModelButtonText": "Definer som modell",
+        "VersioningButtonText": "Legg til versjon",
+        "removeModelButtonText": "Fjern modeller"
     },
     "FileNameCell": {
         "inputErrorMessage": "Ugyldig filnavn",
@@ -104,15 +106,16 @@
         "title": "Slett filer",
         "message": "Denne handlingen vil permanent slette følgende filer/mapper:",
         "cancelButtonText": "Avbryt",
-        "deleteButtonText": "Slett"
+        "deleteButtonText": "Slett",
+        "messageVersion": "Du sletter nå følgende filer/mapper og all tilhørende versjonshistorikk permanent:"
     },
     "FilesManager": {
         "title": "Prosjektfiler",
         "searchInputPlaceholder": "Søk",
-        "createModelNotification": "",
+        "createModelNotification": "Modell opprettet",
         "uploadDisableMessage": {
-            "permission": "",
-            "size": ""
+            "permission": "Du har ikke tilgang til å gjøre dette",
+            "size": "Du har ikke nok lagringsplass"
         }
     },
     "FilesManagerOnboarding": {
@@ -176,7 +179,7 @@
     },
     "GroupCardDeleteGuard": {
         "title": "Slett gruppe",
-        "message": "Du er i ferd med å (virkelig) slette gruppe{navn}, er du sikker?",
+        "message": "Du er i ferd med å (virkelig) slette gruppe {name}, er du sikker?",
         "deleteButtonText": "Slett"
     },
     "GroupCardUpdateForm": {
@@ -262,8 +265,8 @@
             "merge": "Slå sammen",
             "archive": "Arkiver",
             "dwg": "DWG",
-            "metaBuildings": "",
-            "upload": ""
+            "metaBuildings": "Meta-bygninger",
+            "upload": "Last opp"
         }
     },
     "ModelsMergeModal": {
@@ -467,8 +470,14 @@
         "visaCreateCommentsError": "Umulig å legge inn denne kommentaren",
         "visaUpdateCommentError": "Umulig å redigere denne kommentaren",
         "visaDeleteCommentError": "Umulig å fjerne denne kommentaren",
-        "modelCreateError": "",
-        "fileFetchError": ""
+        "modelCreateError": "Problem ved opprettelse av modell",
+        "fileFetchError": "Feil ved gjenoppretting av mappe/fil",
+        "bcfImportError": "Det oppstod en feil ved importering",
+        "bcfExportError": "Eksportering feilet...",
+        "fileVersionsFetchError": "Denne versjonen av dokumentet kan ikke gjenopprettes.",
+        "fileVersionsMakeHeadError": "Bytte av dokument til nåværende versjon feilet.",
+        "fileVersionDelete": "Sletting av dokumentet feilet",
+        "userAlreadyExistsError": "Brukeren er allerede medlem av dette området/prosjektet."
     },
     "ProjectStatusBadge": {
         "new": "NY",
@@ -722,6 +731,7 @@
             "validator": "Verifisering",
             "toValidate": "Må verifiseres før",
             "errorDate": "Ugyldig dato",
+            "exempleDate": "(F.eks.: 31/05/2022)",
             "description": "Beskrivelse",
             "cancel": "Avbryt",
             "validate": "Verifiser",
@@ -730,7 +740,7 @@
                 "validator": "Verifiser",
                 "accept": "Aksepter"
             },
-            "errorValidator": ""
+            "errorValidator": "Du må legge til minst én bekreftelse"
         },
         "safeZone": {
             "add": {
@@ -801,75 +811,105 @@
         "selectionValidator": {
             "warning": "Brukeren kan ikke åpne denne filen."
         },
-        "noVisa": ""
+        "noVisa": "Et visum har ikke blitt opprettet enda"
     },
     "ProjectBcf": {
-        "importButtonText": "",
-        "exportButtonText": "",
-        "createBcfButtonText": "",
-        "createBcfTitle": "",
-        "showStatisticsTooltip": "",
-        "hideStatisticsTooltip": "",
-        "searchInputPlaceholder": "",
-        "ascendingIndexTooltip": "",
-        "descendingIndexTooltip": "",
-        "alphabeticalAscendingOrderTooltip": "",
-        "alphabeticalDescendingOrderTooltip": "",
-        "ascendingDateTooltip": "",
-        "descendingDateTooltip": "",
-        "viewGridTooltip": "",
-        "viewListTooltip": ""
+        "importButtonText": "Importer",
+        "exportButtonText": "Eksporter",
+        "createBcfButtonText": "Opprett en BCF",
+        "createBcfTitle": "Rapporter et problem",
+        "showStatisticsTooltip": "Vis statistikk",
+        "hideStatisticsTooltip": "Skjul statistikk",
+        "searchInputPlaceholder": "Søk etter indeksnummer, navn, skaper eller tagg",
+        "ascendingIndexTooltip": "stigende indeks",
+        "descendingIndexTooltip": "synkende indeks",
+        "alphabeticalAscendingOrderTooltip": "alfabetisk rekkefølge",
+        "alphabeticalDescendingOrderTooltip": "motsatt alfabetisk rekkefølge",
+        "ascendingDateTooltip": "økende dato",
+        "descendingDateTooltip": "synkende dato",
+        "viewGridTooltip": "rutevisning",
+        "viewListTooltip": "listevisning",
+        "metricsTitle": "Totalt: {count} problemer BCF",
+        "metricsEmptyText": "Legg til problemer for å se assosiert statistikk her.",
+        "noSearchResultsTitle": "Ingen resultater",
+        "noSearchResultsText": "Søket ditt ga ingen resultater, vennligst sjekk filter eller nøkkelord",
+        "goBackButton": "Tilbake"
     },
     "GuidedTour": {
         "platform": {
             "intro": {
-                "title": "",
-                "content": ""
+                "title": "Velkommen",
+                "content": "La oss utforske BIMData plattformen sammen"
             },
             "actionButtons": {
-                "title": "",
-                "content": ""
+                "title": "Dashbord",
+                "content": "Tilgang til alle dine områder, prosjekter og abonnomenter direkte fra dette dashbordet"
             },
             "firstSpace": {
-                "title": "",
-                "content": ""
+                "title": "Dine områder",
+                "content": "Få tilgang til dine områder direkte gjennom denne snarveien"
             },
             "firstProject": {
-                "title": "",
-                "content": ""
+                "title": "Dine prosjekter",
+                "content": "Få tilgang til dine siste prosjekter direkte gjennom denne snarveien"
             },
             "previewIfc": {
-                "title": "",
-                "content": ""
+                "title": "Oversikt",
+                "content": "Naviger enkelt mellom din oversikt over prosjektmodeller"
             },
             "usersManager": {
-                "title": "",
-                "content": ""
+                "title": "Samarbeid",
+                "content": "Inviter dine første bidragsytere til ditt prosjekt"
             },
             "modelsManager": {
-                "title": "",
-                "content": ""
+                "title": "Modeller",
+                "content": "Last ned og administrer dine prosjektmodeller (ICF, DWG, PDF...)"
             },
             "gedButton": {
-                "title": "",
-                "content": ""
+                "title": "GED",
+                "content": "Få tilgang til dokumentadministrasjon for ditt prosjekt via \"GED\"-fanen"
             },
             "fileTree": {
-                "title": "",
-                "content": ""
+                "title": "Trediagram",
+                "content": "Opprett dine mapper og last ned filene dine direkte fra GED"
             },
             "groupManager": {
-                "title": "",
-                "content": ""
+                "title": "Rettighetsadministrering",
+                "content": "Opprett brukergruper for å administrere deres tilganger"
             },
             "changeSpace": {
-                "title": "",
-                "content": ""
+                "title": "Brødsmulespor",
+                "content": "Få rask tilgang til dine områder via brødsmulesporet"
             },
             "outro": {
-                "title": "",
-                "content": ""
+                "title": "Godt jobbet!",
+                "content": "Nå gjenstår det bare å begynne på ditt første prosjekt"
             }
         }
+    },
+    "Versioning": {
+        "title": "Versjonshistorikk",
+        "addVersion": "Legg til en versjon",
+        "currentVersion": "Nåværende versjon",
+        "previousVersion": "Tidligere versjon",
+        "addedBy": "Lagt til av:",
+        "titleDate": "På",
+        "AddVersion": "Legg til ny versjon",
+        "loading": {
+            "message": "Laster...",
+            "subMessage": "Denne prosessen kan ta en liten stund."
+        },
+        "delete": "Slett",
+        "getToHead": "Bytt til nåværende versjon",
+        "download": "Last ned",
+        "show": "Se",
+        "safeZone": {
+            "delete": {
+                "content": "Er du sikker på at du ønsker å slette denne versjonen?",
+                "action": "Ja, slett denne versjonen",
+                "keepView": "Avbryt"
+            }
+        },
+        "emptyArea": "Du har for øyeblikket ingen versjonshistorikk for denne filen."
     }
 }

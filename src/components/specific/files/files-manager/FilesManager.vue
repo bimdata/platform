@@ -5,11 +5,11 @@
         <div class="files-manager__actions start">
           <FolderCreationButton
             data-guide="btn-new-folder"
-            :disabled="!hasAdminPerm(project, currentFolder)"
             class="files-manager__actions__btn-new-folder"
             width="100%"
             :project="project"
             :folder="currentFolder"
+            :disabled="!hasAdminPerm(project, currentFolder)"
           >
             <BIMDataIcon name="addFolder" size="xs" />
             <span v-if="!isLG" style="margin-left: 6px">
@@ -20,31 +20,45 @@
             data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
-            :disabled="
-              hasAdminPerm(project, currentFolder) && !isFullTotal(spaceSubInfo)
-            "
+            :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
             :text="
               $t(
-                `FilesManager.uploadDisableMessage.${
+                `SubscriptionModal.uploadDisableMessage.${
                   isFullTotal(spaceSubInfo) ? 'size' : 'permission'
                 }`
               )
             "
           >
-            <FileUploadButton
-              :disabled="
-                !hasAdminPerm(project, currentFolder) ||
-                isFullTotal(spaceSubInfo)
-              "
-              width="100%"
-              multiple
-              @upload="uploadFiles"
-            >
-              <BIMDataIcon name="addFile" size="xs" />
-              <span v-if="!isLG" style="margin-left: 6px">
-                {{ $t("FileUploadButton.addFileButtonText") }}
-              </span>
-            </FileUploadButton>
+            <template v-if="isAbleToSub">
+              <BIMDataButton
+                width="100%"
+                height="32px"
+                color="primary"
+                fill
+                radius
+                @click="openModal"
+              >
+                <BIMDataIcon name="addFile" size="xs" />
+                <span v-if="!isLG" style="margin-left: 6px">
+                  {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
+              </BIMDataButton>
+            </template>
+            <template v-else>
+              <FileUploadButton
+                :disabled="
+                  !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
+                "
+                width="100%"
+                multiple
+                @upload="uploadFiles"
+              >
+                <BIMDataIcon name="addFile" size="xs" />
+                <span v-if="!isLG" style="margin-left: 6px">
+                  {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
+              </FileUploadButton>
+            </template>
           </BIMDataTooltip>
         </div>
         <div class="files-manager__actions end">
@@ -121,6 +135,7 @@
             @remove-model="removeModel"
             @selection-changed="setSelection"
             @open-visa-manager="openVisaManager"
+            @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
           />
         </div>
@@ -146,6 +161,15 @@
               @fetch-visas="fetchVisas"
               @close="closeVisaManager"
               @reach-file="backToParent"
+            />
+            <TagsMain
+              v-if="showTagManager"
+              :project="project"
+              :document="fileToManage"
+              :allTags="allTags"
+              @close="closeTagManager"
+              @fetch-tags="fetchTags"
+              @file-updated="$emit('file-updated')"
             />
             <VersioningMain
               v-if="showVersioningManager"
@@ -182,17 +206,20 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 import { useFiles } from "@/state/files.js";
+import TagService from "@/services/TagService";
 import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
+import { useSpaces } from "@/state/spaces.js";
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -203,6 +230,7 @@ import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
+import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
 import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
 
 export default {
@@ -216,6 +244,7 @@ export default {
     FilesDeleteModal,
     FilesManagerOnboarding,
     VisaMain,
+    TagsMain,
     VersioningMain
   },
   props: {
@@ -238,6 +267,7 @@ export default {
   },
   emits: [
     "file-uploaded",
+    "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
     "model-created"
@@ -245,6 +275,8 @@ export default {
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
+    const { currentSpace } = useSpaces();
+    const { openModal } = useAppModal();
 
     const {
       fileStructureHandler: handler,
@@ -260,6 +292,7 @@ export default {
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
     const visasLoading = ref(false);
+    const allTags = ref([]);
 
     watch(
       () => props.fileStructure,
@@ -329,7 +362,7 @@ export default {
 
     const removeModel = async file => {
       await deleteModels(props.project, [
-        { id: file.modelId, type: file.modelType }
+        { id: file.model_id, type: file.model_type }
       ]);
     };
 
@@ -356,6 +389,7 @@ export default {
     const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
+    const showTagManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
 
@@ -365,6 +399,7 @@ export default {
       showAccessManager.value = true;
       showVersioningManager.value = false;
       showVisaManager.value = false;
+      showTagManager.value = false;
       showSidePanel.value = true;
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
@@ -389,15 +424,16 @@ export default {
       }, 100);
     };
 
-    const openVisaManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openVisaManager = file => {
+      if (file.file_name) {
+        fileToManage.value = file;
       } else {
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
       showVersioningManager.value = false;
       showAccessManager.value = false;
+      showTagManager.value = false;
       showSidePanel.value = true;
     };
 
@@ -409,9 +445,24 @@ export default {
       }, 100);
     };
 
-    const openVersioningManager = event => {
-      if (event.fileName) {
-        fileToManage.value = event;
+    const openTagManager = file => {
+      if (file.file_name) {
+        fileToManage.value = file;
+        showSidePanel.value = true;
+        showTagManager.value = true;
+      }
+    };
+
+    const closeTagManager = () => {
+      showSidePanel.value = false;
+      setTimeout(() => {
+        showTagManager.value = false;
+      }, 100);
+    };
+
+    const openVersioningManager = file => {
+      if (file.file_name) {
+        fileToManage.value = file;
         showVersioningManager.value = true;
         showAccessManager.value = false;
         showVisaManager.value = false;
@@ -450,7 +501,14 @@ export default {
         createdVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE).length
     );
 
-    onMounted(() => fetchVisas());
+    const fetchTags = async () => {
+      allTags.value = await TagService.fetchAllTags(props.project);
+    };
+
+    onMounted(() => {
+      fetchVisas();
+      fetchTags();
+    });
 
     return {
       // References
@@ -470,7 +528,11 @@ export default {
       createdVisas,
       visasLoading,
       visasCounter,
+      showTagManager,
+      allTags,
       showVersioningManager,
+      isAbleToSub: inject("isAbleToSub"),
+      currentSpace,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -486,11 +548,15 @@ export default {
       backToParent,
       closeVisaManager,
       openVisaManager,
+      fetchVisas,
+      openTagManager,
+      closeTagManager,
+      fetchTags,
       openVersioningManager,
       closeVersioningManager,
-      fetchVisas,
       hasAdminPerm,
       isFullTotal,
+      openModal,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

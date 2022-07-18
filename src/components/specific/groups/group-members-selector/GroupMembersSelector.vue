@@ -74,7 +74,7 @@ export default {
       return props.users
         .filter(u => !memberIDs.includes(u.id))
         .map(x => {
-          const fullname = x.userId
+          const fullname = x.user_id
             ? `${x.firstname} ${x.lastname}`
             : t("GroupMemberInvitation.name");
           return { ...x, fullname };

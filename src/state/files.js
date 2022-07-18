@@ -61,7 +61,7 @@ const updateFiles = async (project, files) => {
 };
 
 const moveFiles = async (project, files, dest) => {
-  let newFiles = files.map(file => ({ ...file, parentId: dest.id }));
+  let newFiles = files.map(file => ({ ...file, parent_id: dest.id }));
 
   const { folders, documents } = segregate(newFiles);
   newFiles = (
@@ -97,6 +97,10 @@ const deleteFiles = async (project, files) => {
   return files;
 };
 
+const getDocument = async (project, document) => {
+  return await FileService.getDocument(project, document);
+};
+
 export function useFiles() {
   const readOnlyState = readonly(state);
   return {
@@ -110,6 +114,7 @@ export function useFiles() {
     updateFiles,
     moveFiles,
     downloadFiles,
+    getDocument,
     deleteFiles
   };
 }

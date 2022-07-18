@@ -36,6 +36,7 @@
           :fileStructure="fileStructure"
           :groups="groups"
           @file-uploaded="reloadData"
+          @file-updated="reloadData"
           @folder-permission-updated="reloadData"
           @group-permission-updated="reloadData"
           @model-created="reloadData"
