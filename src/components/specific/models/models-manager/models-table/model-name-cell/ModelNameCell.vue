@@ -53,8 +53,9 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE } from "@/config/models.js";
-import { useModels } from "@/state/models.js";
+import { MODEL_TYPE } from "../../../../../../config/models.js";
+import { useModels } from "../../../../../../state/models.js";
+import { debounce } from "../../../../../../utils/async.js";
 
 export default {
   props: {
@@ -81,7 +82,7 @@ export default {
     const modelName = ref("");
     const hasError = ref(false);
 
-    const renameModel = async () => {
+    const renameModel = debounce(async () => {
       if (modelName.value) {
         try {
           loading.value = true;
@@ -95,7 +96,7 @@ export default {
         hasError.value = true;
         nameInput.value.focus();
       }
-    };
+    }, 500);
 
     const showUpdateForm = ref(false);
     const openUpdateForm = () => {

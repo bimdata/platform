@@ -65,7 +65,8 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { useProjects } from "@/state/projects";
+import { useProjects } from "../../../../state/projects.js";
+import { debounce } from "../../../../utils/async.js";
 
 export default {
   props: {
@@ -79,10 +80,10 @@ export default {
 
     const loading = ref(false);
     const nameInput = ref(null);
-
     const newProject = reactive({ name: "" });
     const hasError = ref(false);
-    const submit = async () => {
+
+    const submit = debounce(async () => {
       if (newProject.name) {
         try {
           loading.value = true;
@@ -95,7 +96,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const showCreationForm = ref(false);
     const openCreationForm = () => {

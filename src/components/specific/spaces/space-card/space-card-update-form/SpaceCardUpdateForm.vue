@@ -38,7 +38,8 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useSpaces } from "@/state/spaces";
+import { useSpaces } from "../../../../../state/spaces.js";
+import { debounce } from "../../../../../utils/async.js";
 
 export default {
   props: {
@@ -57,7 +58,7 @@ export default {
     const spaceName = ref(props.space.name);
     const hasError = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (spaceName.value) {
         try {
           loading.value = true;
@@ -70,7 +71,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       hasError.value = false;

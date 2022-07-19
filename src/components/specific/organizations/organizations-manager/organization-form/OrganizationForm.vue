@@ -65,7 +65,8 @@
 
 <script>
 import { computed, inject, ref, watch } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
+import { useOrganizations } from "../../../../../state/organizations.js";
+import { debounce } from "../../../../../utils/async.js";
 // Components
 import OrganizationFormSuccess from "./organization-form-success/OrganizationFormSuccess.vue";
 
@@ -110,7 +111,7 @@ export default {
       { immediate: true }
     );
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       hasInvalidName.value = false;
       if (!orgaName.value) {
         hasInvalidName.value = true;
@@ -135,7 +136,7 @@ export default {
       } finally {
         localState.loading = false;
       }
-    };
+    }, 500);
 
     return {
       // References

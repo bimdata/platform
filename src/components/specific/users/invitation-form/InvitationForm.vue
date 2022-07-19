@@ -46,10 +46,11 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { PROJECT_ROLE } from "@/config/projects.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useAppNotification } from "../../app/app-notification/app-notification.js";
+import { PROJECT_ROLE } from "../../../../config/projects.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { debounce } from "../../../../utils/async.js";
 
 const roleList = [
   { id: "admin", value: PROJECT_ROLE.ADMIN },
@@ -101,7 +102,7 @@ export default {
       hasError.value = false;
     };
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (email.value) {
         if (props.project) {
           await sendProjectInvitation(props.project, {
@@ -124,7 +125,7 @@ export default {
         emailInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       reset();

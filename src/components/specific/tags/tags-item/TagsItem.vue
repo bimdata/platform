@@ -113,10 +113,10 @@
 
 <script>
 import { ref, watch, nextTick } from "vue";
-
-import TagService from "@/services/TagService";
-import { getBorderColor } from "@/utils/colors.js";
-import { dropdownPositioner } from "@/utils/positioner.js";
+import TagService from "../../../../services/TagService.js";
+import { debounce } from "../../../../utils/async.js";
+import { getBorderColor } from "../../../../utils/colors.js";
+import { dropdownPositioner } from "../../../../utils/positioner.js";
 
 export default {
   props: {
@@ -148,7 +148,7 @@ export default {
       setTimeout(() => editTagName.value && input.value.focus(), 50)
     );
 
-    const onSubmitTagName = async () => {
+    const onSubmitTagName = debounce(async () => {
       if (tagName.value && tagName.value !== props.tag.name) {
         await TagService.updateTag(props.project, props.tag, {
           name: tagName.value
@@ -157,7 +157,7 @@ export default {
         emit("fetch-tags");
         emit("file-updated");
       }
-    };
+    }, 500);
 
     const onCancelSubmitTagName = () => {
       tagName.value = props.tag.name;
