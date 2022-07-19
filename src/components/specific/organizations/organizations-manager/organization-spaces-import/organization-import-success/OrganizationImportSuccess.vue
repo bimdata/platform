@@ -4,9 +4,6 @@
     <div class="organization-import-success__title">
       {{ $t("OrganizationSpacesImport.successTitle") }}
     </div>
-    <div class="organization-import-success__message">
-      {{ $t("OrganizationSpacesImport.successMessage") }}
-    </div>
     <BIMDataButton
       width="120px"
       color="primary"
