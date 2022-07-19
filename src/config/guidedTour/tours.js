@@ -1,5 +1,4 @@
 import i18n from "../../i18n/index.js";
-import IntroOutroPlatform from "./platform/IntroOutroPlatform.vue";
 
 const { t } = i18n.global;
 const imgPath = "/static/guidedTour/platform/";
@@ -94,6 +93,8 @@ const tours = [
         clickable: true,
         target: "project-tabs",
         targetDetail: "> ul > li:nth-child(2)",
+        yOffset: -65,
+        xOffset: -43,
         props: {
           title: t("GuidedTour.platform.gedButton.title"),
           content: t("GuidedTour.platform.gedButton.content"),
@@ -116,6 +117,8 @@ const tours = [
       {
         name: "groupManager",
         target: "btn-manage-groups",
+        yOffset: -65,
+        xOffset: 11,
         props: {
           title: t("GuidedTour.platform.groupManager.title"),
           content: t("GuidedTour.platform.groupManager.content"),
@@ -130,6 +133,8 @@ const tours = [
         spotlightOffset: false,
         target: "btn-change-space",
         targetDetail: "> .breadcrumb-selector > div > div",
+        yOffset: -72,
+        xOffset: 7,
         props: {
           title: t("GuidedTour.platform.changeSpace.title"),
           content: t("GuidedTour.platform.changeSpace.content"),
@@ -144,9 +149,10 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.outro.title"),
           content: t("GuidedTour.platform.outro.content"),
-          img: imgPath + "outro.png"
-        },
-        layout: IntroOutroPlatform
+          img: imgPath + "outro.png",
+          imgPosition: "2% 50%",
+          imgSize: "93%"
+        }
       }
     ]
   }
