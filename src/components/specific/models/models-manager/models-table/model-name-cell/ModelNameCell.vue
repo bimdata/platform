@@ -36,15 +36,21 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <img v-if="model.type === MODEL_TYPE.IFC" src="/static/ifc-logo.svg" />
-        <img v-if="model.type === MODEL_TYPE.DWG" src="/static/dwg-file.svg" />
-        <img v-if="model.type === MODEL_TYPE.DXF" src="/static/dxf-file.svg" />
-        <img v-if="model.type === MODEL_TYPE.PDF" src="/static/pdf-file.svg" />
-        <BIMDataIcon
-          v-if="model.type === MODEL_TYPE.META_BUILDING"
-          name="building"
-          size="s"
-        />
+        <template v-if="model.type === MODEL_TYPE.IFC">
+          <img src="/static/ifc-logo.svg" />
+        </template>
+        <template v-if="model.type === MODEL_TYPE.DWG">
+          <BIMDataIcon name="fileDwgPolychrome" size="m" />
+        </template>
+        <template v-if="model.type === MODEL_TYPE.DXF">
+          <img src="/static/dxf-file.svg" />
+        </template>
+        <template v-if="model.type === MODEL_TYPE.PDF">
+          <BIMDataIcon name="filePdfPolychrome" size="m" />
+        </template>
+        <template v-if="model.type === MODEL_TYPE.META_BUILDING">
+          <BIMDataIcon name="building" size="s" />
+        </template>
         <BIMDataTextbox :text="model.name" />
       </div>
     </transition>

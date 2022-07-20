@@ -10,14 +10,13 @@
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
-            <img :src="tab.icon" />
+            <img v-if="tab.img" :src="tab.img" />
+            <BIMDataIcon v-else size="m" :name="tab.icon" />
           </span>
           <span v-if="!isMD" class="models-manager__tab__text">
             {{ tab.label }}
           </span>
-          <span v-if="tab.id === 'dwg' || tab.id === 'dxf'" class="beta-badge">
-            BETA
-          </span>
+          <span v-if="tab.beta" class="beta-badge">BETA</span>
           <span class="models-manager__tab__count" v-if="tab.models.length > 0">
             {{ tab.models.length }}
           </span>
@@ -84,28 +83,30 @@ const tabsDef = [
   {
     id: "ifc",
     label: "IFC",
-    icon: "/static/ifc-file.svg",
+    icon: "fileIfcPolychrome",
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
   {
     id: "dwg",
     label: "DWG",
-    icon: "/static/dwg-file.svg",
+    icon: "fileDwgPolychrome",
     modelTypes: [MODEL_TYPE.DWG],
-    component: "DWGManager"
+    component: "DWGManager",
+    beta: true
   },
   {
     id: "dxf",
     label: "DXF",
-    icon: "/static/dxf-file.svg",
+    img: "/static/dxf-file.svg",
     modelTypes: [MODEL_TYPE.DXF],
-    component: "DWGManager"
+    component: "DWGManager",
+    beta: true
   },
   {
     id: "pdf",
     label: "PDF",
-    icon: "/static/pdf-file.svg",
+    icon: "filePdfPolychrome",
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
   }
