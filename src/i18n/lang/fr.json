@@ -725,7 +725,7 @@
   },
   "SubscriptionStatusBanner": {
     "activate": "Cet espace gratuit a atteint ses limites, passez à l'abonnement professionnel pour débloquer toutes les fonctionnalités de BIMData.",
-    "reactivate": "Cet espace n'est actuellement relié à aucun abonnement. Pour débloquer toutes les fonctionnalités de BIMData, passez à l'abonnement professionnel"
+    "reactivate": "Cet espace n'est actuellement relié à aucun abonnement. Pour débloquer toutes les fonctionnalités de BIMData, passez à l'abonnement professionnel."
   },
   "Tag": {
     "title": "Gestion des tags",

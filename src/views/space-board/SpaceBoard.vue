@@ -1,6 +1,8 @@
 <template>
   <div data-test="space-board" class="view space-board">
-    <SubscriptionStatusBanner class="space-board__banner" :space="space" />
+    <AppLoading name="spaces-subscriptions" :loader="false">
+      <SubscriptionStatusBanner class="space-board__banner" :space="space" />
+    </AppLoading>
     <ViewHeader class="space-board__header">
       <template #left>
         <GoBackButton v-if="isMD" />
