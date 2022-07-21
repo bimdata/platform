@@ -134,7 +134,6 @@ const tours = [
       {
         name: "changeSpace",
         clickable: true,
-
         target: "btn-change-space",
         targetDetail: isMidXL.value ? "" : "> .breadcrumb-selector > div > div",
         yOffset: isMidXL.value ? -65 : -72,
