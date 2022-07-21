@@ -69,9 +69,10 @@
 
 <script>
 import { ref } from "vue";
-import colors from "@/config/group-colors";
-import { useGroups } from "@/state/groups";
-import { getRandomElement } from "@/utils/random";
+import colors from "../../../../config/group-colors.js";
+import { useGroups } from "../../../../state/groups.js";
+import { debounce } from "../../../../utils/async.js";
+import { getRandomElement } from "../../../../utils/random.js";
 
 export default {
   props: {
@@ -84,12 +85,11 @@ export default {
     const { createGroup } = useGroups();
 
     const loading = ref(false);
-
     const nameInput = ref(null);
     const groupName = ref("");
     const hasError = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (groupName.value) {
         try {
           loading.value = true;
@@ -105,7 +105,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const showCreationForm = ref(false);
     const openCreationForm = () => {

@@ -91,8 +91,9 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
 import columnsDef from "./columns.js";
@@ -148,20 +149,27 @@ export default {
     "remove-model"
   ],
   setup(props, { emit }) {
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
+    const { isLG, isXL } = useStandardBreakpoints();
 
     const filesTable = ref(null);
-    const columns = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`FilesTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+
+    const columns = computed(() => {
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "size", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "lastupdate", "size", "actions"].includes(col.id)
+        );
+      }
+      return filteredColumns.map(col => ({
+        ...col,
+        label: col.label || t(`FilesTable.headers.${col.id}`)
+      }));
+    });
 
     let nameEditMode;
     watch(
@@ -210,7 +218,9 @@ export default {
       cleanUpload,
       formatBytes,
       isFolder,
-      onUploadCompleted
+      onUploadCompleted,
+      // Responsive breakpoints
+      isXL
     };
   }
 };

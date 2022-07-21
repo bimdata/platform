@@ -1,40 +1,37 @@
 <template>
   <div class="project-bcf">
     <AppSlotContent name="project-board-action">
-      <BIMDataButton
-        class="m-r-12"
-        color="primary"
-        outline
-        radius
-        icon
-        @click="openSettings"
-      >
+      <BIMDataButton color="primary" outline radius icon @click="openSettings">
         <BIMDataIcon name="settings" size="xxs" />
       </BIMDataButton>
       <FileUploadButton
-        class="m-r-12"
-        width="auto"
         color="default"
         multiple
         :accept="['.bcf']"
         @upload="importBcfTopics"
       >
-        <BIMDataIcon name="import" size="xs" margin="0 6px 0 0" />
-        {{ $t("ProjectBcf.importButtonText") }}
+        <BIMDataIcon name="import" size="xs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("ProjectBcf.importButtonText") }}
+        </span>
       </FileUploadButton>
-      <BIMDataButton class="m-r-12" fill radius @click="exportBcfTopics">
-        <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" />
-        {{ $t("ProjectBcf.exportButtonText") }}
+      <BIMDataButton fill radius :icon="isXL" @click="exportBcfTopics">
+        <BIMDataIcon name="export" size="xs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("ProjectBcf.exportButtonText") }}
+        </span>
       </BIMDataButton>
       <BIMDataButton
-        width="130px"
         color="primary"
         fill
         radius
+        :icon="isXL"
         @click="openBcfTopicCreate"
       >
-        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-        <span>{{ $t("ProjectBcf.createBcfButtonText") }}</span>
+        <BIMDataIcon name="plus" size="xxxs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("ProjectBcf.createBcfButtonText") }}
+        </span>
       </BIMDataButton>
     </AppSlotContent>
 
@@ -75,13 +72,12 @@
           </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataSearch
-          width="calc(50% - 32px - var(--spacing-unit))"
+          width="calc(100% - 32px - var(--spacing-unit))"
           color="secondary"
           radius
           :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
           v-model="searchText"
-        >
-        </BIMDataSearch>
+        />
       </div>
       <div class="project-bcf__actions--end">
         <BIMDataTooltip
@@ -285,6 +281,7 @@
 
         <div v-else-if="isListView" class="project-bcf__content__list">
           <BcfTopicsTable
+            :columns="isXL ? ['index', 'title', 'actions'] : undefined"
             :paginated="true"
             :perPage="14"
             :bcfTopics="displayedBcfTopics"
@@ -334,19 +331,21 @@ import {
 } from "@bimdata/bcf-components";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
-import { useToggle } from "@/composables/toggle.js";
-import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
-import routeNames from "@/router/route-names.js";
-import { useBcf } from "@/state/bcf.js";
-import { useProjects } from "@/state/projects.js";
-import { useModels } from "@/state/models.js";
+import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
+import { useStandardBreakpoints } from "../../../composables/responsive.js";
+import { useToggle } from "../../../composables/toggle.js";
+import { MODEL_STATUS } from "../../../config/models.js";
+import { DEFAULT_WINDOW, WINDOW_MODELS } from "../../../config/viewer.js";
+import routeNames from "../../../router/route-names.js";
+import { useBcf } from "../../../state/bcf.js";
+import { useProjects } from "../../../state/projects.js";
+import { useModels } from "../../../state/models.js";
 // Components
-import BcfStatisticsEmptyImage from "@/components/images/BcfStatisticsEmptyImage.vue";
-import NoSearchResultsImage from "@/components/images/NoSearchResultsImage.vue";
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
+import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
+import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
+import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+import AppSidePanel from "../../../components/specific/app/app-side-panel/AppSidePanel.vue";
+import FileUploadButton from "../../../components/specific/files/file-upload-button/FileUploadButton.vue";
 
 export default {
   components: {
@@ -387,6 +386,7 @@ export default {
 
     const loading = ref(false);
     const isListView = ref(false);
+    const currentBcfTopic = ref(null);
 
     watch(
       currentProject,
@@ -397,6 +397,18 @@ export default {
           reloadExtensions();
         } finally {
           loading.value = false;
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      bcfTopics,
+      topics => {
+        if (currentBcfTopic.value) {
+          currentBcfTopic.value = topics.find(
+            t => t.guid === currentBcfTopic.value.guid
+          );
         }
       },
       { immediate: true }
@@ -441,7 +453,6 @@ export default {
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const currentBcfTopic = ref(null);
     const showBcfTopicCreate = ref(false);
     const showBcfTopicOverview = ref(false);
     const showBcfTopicForm = ref(false);
@@ -472,23 +483,27 @@ export default {
     };
 
     const openBcfTopicViewer = topic => {
+      let window = topic.viewpoints[0]?.authoring_tool_id ?? DEFAULT_WINDOW;
       let modelIDs = [];
-      if (topic.ifcs?.length) {
-        modelIDs = topic.ifcs;
+
+      if (topic.models?.length > 0) {
+        modelIDs = topic.models;
       } else {
-        const ifcs = projectModels.value
+        // If no models are specified on the topic
+        // get the last created model of proper type
+        // with respect to the target window
+        const models = projectModels.value
           .filter(
-            model =>
-              model.type === MODEL_TYPE.IFC &&
-              model.status === MODEL_STATUS.COMPLETED
+            m =>
+              m.status === MODEL_STATUS.COMPLETED &&
+              WINDOW_MODELS[window].includes(m.type)
           )
-          .sort((a, b) =>
-            a.created_at.getTime() > b.created_at.getTime() ? 1 : -1
-          );
-        if (ifcs.length > 0) {
-          modelIDs.push(ifcs[0].id);
+          .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+        if (models.length > 0) {
+          modelIDs.push(models[0].id);
         }
       }
+
       router.push({
         name: routeNames.modelViewer,
         params: {
@@ -497,6 +512,7 @@ export default {
           modelIDs: modelIDs.join(",")
         },
         query: {
+          window,
           topicGuid: topic.guid
         }
       });
@@ -541,7 +557,9 @@ export default {
       sortByDate,
       sortByIndex,
       sortByTitle,
-      toggleMetrics
+      toggleMetrics,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

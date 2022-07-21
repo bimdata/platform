@@ -110,7 +110,7 @@
               </BIMDataTooltip>
             </div>
           </template>
-          <template v-else-if="isPDF(document.file_name)">
+          <template v-else-if="isPDF(document)">
             <div class="versioning-doc__content__header__right-side__btn-show">
               <BIMDataTooltip position="left" :text="$t('Versioning.show')">
                 <BIMDataButton

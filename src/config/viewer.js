@@ -1,3 +1,7 @@
+import { MODEL_TYPE } from "./models.js";
+
+const { DWG, DXF, IFC, JPEG, JPG, META_BUILDING, PDF, PNG } = MODEL_TYPE;
+
 const AVAILABLE_PLUGINS = Object.freeze({
   backgroundColor:
     "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
@@ -16,6 +20,18 @@ const WINDOWS = Object.freeze({
   PLAN: "plan",
   V2D: "2d",
   V3D: "3d"
+});
+
+/**
+ * Define the type of models that can opened
+ * in each viewer window
+ */
+const WINDOW_MODELS = Object.freeze({
+  [WINDOWS.DWG]: [DWG],
+  [WINDOWS.DXF]: [DXF],
+  [WINDOWS.PLAN]: [JPEG, JPG, META_BUILDING, PDF, PNG],
+  [WINDOWS.V2D]: [IFC],
+  [WINDOWS.V3D]: [IFC]
 });
 
 const DEFAULT_WINDOW = WINDOWS.V3D;
@@ -42,8 +58,15 @@ const PLUGINS_CONFIG = {
   plan: true,
   buildingMaker: true,
   viewer3d: {
-    enableDynamicLOD: true,
+    enableDynamicLOD: true
   },
+  bcfManager: true
 };
 
-export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };
+export {
+  AVAILABLE_PLUGINS,
+  DEFAULT_WINDOW,
+  PLUGINS_CONFIG,
+  WINDOW_MODELS,
+  WINDOWS
+};

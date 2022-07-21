@@ -2,15 +2,20 @@
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #content>
       <template v-if="fileStructure.children.length > 0">
-        <div class="files-manager__actions">
+        <div class="files-manager__actions start">
           <FolderCreationButton
             data-guide="btn-new-folder"
-            :disabled="!hasAdminPerm(project, currentFolder)"
             class="files-manager__actions__btn-new-folder"
-            width="194px"
+            width="100%"
             :project="project"
             :folder="currentFolder"
-          />
+            :disabled="!hasAdminPerm(project, currentFolder)"
+          >
+            <BIMDataIcon name="addFolder" size="xs" />
+            <span v-if="!isLG" style="margin-left: 6px">
+              {{ $t("FolderCreationButton.buttonText") }}
+            </span>
+          </FolderCreationButton>
           <BIMDataTooltip
             data-guide="btn-upload-file"
             class="files-manager__actions__btn-new-file"
@@ -26,15 +31,17 @@
           >
             <template v-if="isAbleToSub">
               <BIMDataButton
-                color="primary"
-                width="194px"
+                width="100%"
                 height="32px"
+                color="primary"
                 fill
                 radius
                 @click="openModal"
               >
-                <BIMDataIcon name="addFile" size="xs" margin="0 6px 0 0" />
-                <span>{{ $t("FileUploadButton.addFileButtonText") }}</span>
+                <BIMDataIcon name="addFile" size="xs" />
+                <span v-if="!isLG" style="margin-left: 6px">
+                  {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
               </BIMDataButton>
             </template>
             <template v-else>
@@ -42,14 +49,22 @@
                 :disabled="
                   !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
                 "
-                width="194px"
+                width="100%"
                 multiple
                 @upload="uploadFiles"
-            /></template>
+              >
+                <BIMDataIcon name="addFile" size="xs" />
+                <span v-if="!isLG" style="margin-left: 6px">
+                  {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
+              </FileUploadButton>
+            </template>
           </BIMDataTooltip>
+        </div>
+        <div class="files-manager__actions end">
           <BIMDataSearch
             class="files-manager__actions__input-search"
-            width="400px"
+            :width="isMD ? '200px' : isLG ? '300px' : '400px'"
             :placeholder="$t('FilesManager.searchInputPlaceholder')"
             v-model="searchText"
             clear
@@ -80,6 +95,7 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
+
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -88,6 +104,7 @@
           :selectedFile="currentFolder"
           @file-selected="onFileSelected"
         />
+
         <div class="files-manager__files">
           <transition name="fade">
             <FilesActionBar
@@ -192,6 +209,7 @@
 import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "@/composables/list-filter.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 import { useFiles } from "@/state/files.js";
@@ -538,7 +556,9 @@ export default {
       closeVersioningManager,
       hasAdminPerm,
       isFullTotal,
-      openModal
+      openModal,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

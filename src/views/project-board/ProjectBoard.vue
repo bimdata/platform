@@ -3,20 +3,22 @@
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
-        <AppBreadcrumb data-guide="btn-change-space" />
+        <GoBackButton v-if="isMidXL" />
+        <AppBreadcrumb v-else data-guide="btn-change-space" />
       </template>
       <template #center>
         <BIMDataTabs
           data-guide="project-tabs"
           width="300px"
           height="32px"
-          tabSize="100px"
+          :tabSize="isMD ? '64px' : '100px'"
           :tabs="tabs"
           :selected="currentTab.id"
           @tab-click="changeView($event.id)"
         >
           <template #tab="{ tab }">
-            <span>
+            <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
+            <span v-else>
               {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
             </span>
             <span v-if="tab.id === 'bcf'" class="beta-badge">BETA</span>
@@ -24,12 +26,10 @@
         </BIMDataTabs>
       </template>
       <template #right>
-        <div class="flex items-center">
+        <div class="project-board__header__actions">
           <SpaceSizeInfo
             v-if="
-              isSubscriptionEnabled &&
-              space.isAdmin &&
-              currentView !== 'ProjectBcf'
+              isSubscriptionEnabled && space.isAdmin && currentTab.id !== 'bcf'
             "
             :space="space"
             :spaceSubInfo="spaceSubInfo"
@@ -47,23 +47,29 @@
       </transition>
     </div>
   </div>
-  <AppModal v-if="isSubscriptionEnabled"><SubscriptionModal /></AppModal>
+  <AppModal v-if="isSubscriptionEnabled">
+    <SubscriptionModal />
+  </AppModal>
 </template>
 
 <script>
 import { onBeforeMount, ref, provide, computed } from "vue";
 import { useRoute } from "vue-router";
+import {
+  useCustomBreakpoints,
+  useStandardBreakpoints
+} from "@/composables/responsive.js";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
-
 // Components
-import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
-import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
+import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
 import ProjectOverview from "./project-overview/ProjectOverview.vue";
@@ -80,34 +86,42 @@ const PROJECT_VIEWS = {
 
 const tabsDef = [
   {
-    id: "overview"
+    id: "overview",
+    icon: "ifcFile"
   },
   {
-    id: "files"
+    id: "files",
+    icon: "folder"
   },
   {
-    id: "bcf"
+    id: "bcf",
+    icon: "bcf"
   }
 ];
 
 export default {
   components: {
-    AppSlot,
-    AppModal,
-    ViewHeader,
     AppBreadcrumb,
+    AppModal,
+    AppSlot,
+    GoBackButton,
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
     SpaceSizeInfo,
     SubscriptionModal,
-    SubscriptionStatusBanner
+    SubscriptionStatusBanner,
+    ViewHeader
   },
   setup() {
     const route = useRoute();
     const { currentSpace, spaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { projectView } = useSession();
+
+    const { isMidXL } = useCustomBreakpoints({
+      isMidXL: ({ width }) => width <= 1132 - 0.02
+    });
 
     const tabs = ref(tabsDef);
 
@@ -150,7 +164,10 @@ export default {
       space: currentSpace,
       spaceSubInfo,
       // Methods
-      changeView
+      changeView,
+      // Responsive breakpoints
+      ...useStandardBreakpoints(),
+      isMidXL
     };
   }
 };

@@ -87,11 +87,13 @@
 
 <script>
 import { ref, watch, onMounted } from "vue";
-import { getRandomHexColor } from "@/utils/colors.js";
-import TagsItem from "@/components/specific/tags/tags-item/TagsItem.vue";
-import { useToggle } from "@/composables/toggle";
-import TagService from "@/services/TagService";
-import { useFiles } from "@/state/files.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import TagService from "../../../../services/TagService.js";
+import { useFiles } from "../../../../state/files.js";
+import { debounce } from "../../../../utils/async.js";
+import { getRandomHexColor } from "../../../../utils/colors.js";
+// Components
+import TagsItem from "../tags-item/TagsItem.vue";
 
 export default {
   components: { TagsItem },
@@ -126,7 +128,7 @@ export default {
 
     const newTagName = ref("");
 
-    const addNewTag = async () => {
+    const addNewTag = debounce(async () => {
       if (newTagName.value) {
         await TagService.createTag(props.project, {
           name: newTagName.value,
@@ -137,7 +139,7 @@ export default {
         emit("file-updated");
         emit("fetch-tags");
       }
-    };
+    }, 500);
 
     const updatedTagList = ref(null);
     const filter = ref("");

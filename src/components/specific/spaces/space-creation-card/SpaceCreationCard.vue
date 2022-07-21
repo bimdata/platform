@@ -54,7 +54,8 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { useSpaces } from "@/state/spaces";
+import { useSpaces } from "../../../../state/spaces.js";
+import { debounce } from "../../../../utils/async.js";
 
 export default {
   emits: ["close"],
@@ -66,7 +67,7 @@ export default {
     const newSpace = reactive({ name: "" });
     const hasError = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (newSpace.name) {
         try {
           loading.value = true;
@@ -79,7 +80,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       newSpace.name = "";

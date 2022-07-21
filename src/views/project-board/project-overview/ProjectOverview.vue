@@ -15,24 +15,26 @@
         "
       >
         <BIMDataButton
-          :disabled="!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)"
           data-test="btn-toggle-upload"
-          width="120px"
+          :width="isLG ? undefined : '120px'"
           :color="showFileUploader ? 'granite' : 'primary'"
           fill
           radius
-          @click="onClickUploader"
+          :icon="isLG"
+          :disabled="!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)"
+          @click="() => (isAbleToSub ? openModal() : toggleFileUploader())"
         >
           <BIMDataIcon
-            :name="showFileUploader ? 'close' : 'plus'"
-            size="xxxs"
-            margin="0 6px 0 0"
+            :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
+            :size="isLG ? 'xxs' : 'xxxs'"
           />
-          <span>{{
-            showFileUploader
-              ? $t("ProjectOverview.closeFileUploadButtonText")
-              : $t("ProjectOverview.openFileUploadButtonText")
-          }}</span>
+          <span v-if="!isLG" style="margin-left: 6px">
+            {{
+              showFileUploader
+                ? $t("ProjectOverview.closeFileUploadButtonText")
+                : $t("ProjectOverview.openFileUploadButtonText")
+            }}
+          </span>
         </BIMDataButton>
       </BIMDataTooltip>
     </AppSlotContent>
@@ -87,8 +89,9 @@
 <script>
 import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
 import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
 import { useFiles } from "@/state/files.js";
@@ -156,34 +159,28 @@ export default {
 
     const isAbleToSub = inject("isAbleToSub");
 
-    const onClickUploader = () => {
-      if (isAbleToSub.value) {
-        openModal();
-        return;
-      }
-      toggleFileUploader();
-    };
-
     return {
       // References
       allowedExtensions: UPLOADABLE_EXTENSIONS,
       ifcs,
       invitations: projectInvitations,
+      isAbleToSub,
       models: projectModels,
       project: currentProject,
       showFileUploader,
       spaceSubInfo,
       users: projectUsers,
-      isAbleToSub,
       currentSpace,
       // Methods
       closeFileUploader,
+      isFullTotal,
       notifyForbiddenUpload,
       openFileUploader,
+      openModal,
       reloadData,
       toggleFileUploader,
-      onClickUploader,
-      isFullTotal
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

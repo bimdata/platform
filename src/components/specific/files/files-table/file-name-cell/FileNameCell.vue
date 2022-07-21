@@ -69,8 +69,9 @@
 
 <script>
 import { ref, watch, computed } from "vue";
-import { useFiles } from "@/state/files.js";
-import { isFolder } from "@/utils/file-structure.js";
+import { useFiles } from "../../../../../state/files.js";
+import { debounce } from "../../../../../utils/async.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
 
 export default {
   props: {
@@ -99,7 +100,7 @@ export default {
 
     const hasHistory = computed(() => props.file.history?.length > 1);
 
-    const renameFile = async () => {
+    const renameFile = debounce(async () => {
       if (fileName.value) {
         try {
           loading.value = true;
@@ -118,7 +119,7 @@ export default {
         hasError.value = true;
         nameInput.value.focus();
       }
-    };
+    }, 500);
 
     const showUpdateForm = ref(false);
     const openUpdateForm = () => {

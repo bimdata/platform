@@ -1,5 +1,5 @@
 <template>
-  <div class="space-size-preview">
+  <div class="space-size-preview" :class="`space-size-preview--${layout}`">
     <div class="space-size-preview__title">
       <h1>{{ $t("SpaceSizePreview.title") }}</h1>
     </div>
@@ -65,6 +65,11 @@ export default {
     ProgressBar
   },
   props: {
+    layout: {
+      type: String,
+      default: "vertical",
+      validator: value => ["horizontal", "vertical"].includes(value)
+    },
     spaceSubInfo: {
       type: Object,
       required: true

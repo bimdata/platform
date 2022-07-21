@@ -136,7 +136,7 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Upload a file"
+        "addFileButtonText": "Add file"
     },
     "FileUploadCard": {
         "cancelMessage": "Canceled",
@@ -677,8 +677,7 @@
         "selectedSpace": "Selected space:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Upgrade storage",
-        "subscribePlatformButton": "Upgrade to pro subscription",
+        "subscribePlatformButton": "Upgrade",
         "usage": "{used} used out of {total}"
     },
     "SpaceSizePreview": {

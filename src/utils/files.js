@@ -4,7 +4,7 @@ function fileExtension(fileName) {
   return parts.length > 1 && extension ? `.${extension}` : "";
 }
 
-function formatBytes(bytes, decimals = 2) {
+function formatBytes(bytes, decimals = 0) {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const { floor, log, pow } = Math;
 
@@ -12,8 +12,8 @@ function formatBytes(bytes, decimals = 2) {
 
   if (!b || Number.isNaN(b)) return "0 Bytes";
 
-  const d = decimals < 0 ? 0 : decimals;
   const i = b < 1 ? 0 : floor(log(b) / log(1024));
+  const d = decimals < 0 || i === 0 ? 0 : decimals;
 
   return (b / pow(1024, i)).toFixed(d) + " " + sizes[i];
 }

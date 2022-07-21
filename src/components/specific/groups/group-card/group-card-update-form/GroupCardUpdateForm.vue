@@ -38,7 +38,8 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useGroups } from "@/state/groups";
+import { useGroups } from "../../../../../state/groups.js";
+import { debounce } from "../../../../../utils/async.js";
 
 export default {
   props: {
@@ -61,7 +62,7 @@ export default {
     const groupName = ref(props.group.name);
     const hasError = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (groupName.value) {
         try {
           loading.value = true;
@@ -77,7 +78,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       hasError.value = false;

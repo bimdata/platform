@@ -27,8 +27,9 @@
 
 <script>
 import { inject, ref } from "vue";
-import colors from "@/config/group-colors";
-import { useGroups } from "@/state/groups";
+import colors from "../../../../../config/group-colors.js";
+import { useGroups } from "../../../../../state/groups.js";
+import { debounce } from "../../../../../utils/async.js";
 
 export default {
   props: {
@@ -49,7 +50,7 @@ export default {
 
     const groupColor = ref(props.group.color);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (groupColor.value !== props.group.color) {
         try {
           loading.value = true;
@@ -64,7 +65,7 @@ export default {
       } else {
         emit("close");
       }
-    };
+    }, 500);
 
     return {
       // References

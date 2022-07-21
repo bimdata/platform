@@ -1,13 +1,13 @@
 <template>
   <div class="group-card-action-menu" v-click-away="resetMenu">
-    <transition name="fade" mode="out-in">
-      <template v-if="loading">
-        <div class="group-card-action-menu__loader">
-          <BIMDataSpinner />
-        </div>
-      </template>
+    <transition name="fade">
+      <div v-if="loading" class="group-card-action-menu__loader">
+        <BIMDataSpinner />
+      </div>
+    </transition>
 
-      <template v-else-if="showUpdateForm">
+    <transition name="fade" mode="out-in">
+      <template v-if="showUpdateForm">
         <GroupCardUpdateForm
           :project="project"
           :group="group"

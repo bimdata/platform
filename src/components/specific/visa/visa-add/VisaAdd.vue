@@ -89,13 +89,14 @@
 
 <script>
 import { ref, watch, onMounted, computed } from "vue";
-
-import VisaSafeZone from "@/components/specific/visa/visa-safe-zone/VisaSafeZone";
-import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
-import { formatDate } from "@/utils/date";
-import { useVisa } from "@/state/visa";
-import { useProjects } from "@/state/projects";
-import { isDateValid } from "@/utils/visas";
+import { useProjects } from "../../../../state/projects.js";
+import { useVisa } from "../../../../state/visa.js";
+import { debounce } from "../../../../utils/async.js";
+import { formatDate } from "../../../../utils/date.js";
+import { isDateValid } from "../../../../utils/visas.js";
+// Components
+import VisaSafeZone from "../visa-safe-zone/VisaSafeZone.vue";
+import VisaSelectionValidator from "../visa-selection-validator/VisaSelectionValidator.vue";
 
 export default {
   components: {
@@ -149,7 +150,7 @@ export default {
           .length
     );
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       const dateValid = isDateValid(dateInput.value);
 
       if (dateValid && validatorListCounter.value) {
@@ -172,7 +173,7 @@ export default {
         hasDateError.value = !dateValid;
         hasNoValidator.value = !validatorListCounter.value;
       }
-    };
+    }, 500);
 
     onMounted(async () => {
       userList.value = await getUserProjectList(props.project, {

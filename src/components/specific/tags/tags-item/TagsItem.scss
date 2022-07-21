@@ -72,6 +72,7 @@
 
         &__color-selector {
           position: absolute;
+          top: 0px;
           right: calc(var(--spacing-unit) * -1);
           z-index: 1;
         }

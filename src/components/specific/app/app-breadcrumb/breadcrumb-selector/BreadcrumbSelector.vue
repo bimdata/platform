@@ -3,6 +3,7 @@
     <div class="breadcrumb-selector__header">
       <BIMDataTextbox
         class="breadcrumb-selector__header__text"
+        :maxWidth="isLG ? '80px' : '120px'"
         :text="header"
         @click="$emit('header-clicked')"
       />
@@ -44,6 +45,7 @@
 
 <script>
 import { computed } from "vue";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useToggle } from "@/composables/toggle";
 import { useListFilter } from "@/composables/list-filter";
 
@@ -88,7 +90,9 @@ export default {
       // Methods
       close,
       selectItem,
-      toggle
+      toggle,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

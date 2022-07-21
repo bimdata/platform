@@ -38,7 +38,8 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useProjects } from "@/state/projects";
+import { useProjects } from "../../../../../state/projects.js";
+import { debounce } from "../../../../../utils/async.js";
 
 export default {
   props: {
@@ -57,7 +58,7 @@ export default {
     const projectName = ref(props.project.name);
     const hasError = ref(false);
 
-    const renameProject = async () => {
+    const renameProject = debounce(async () => {
       if (projectName.value) {
         try {
           loading.value = true;
@@ -73,7 +74,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       hasError.value = false;

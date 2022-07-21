@@ -38,21 +38,39 @@
   }
 }
 
-@media only screen and (max-width: 1400px) {
+@include media-breakpoint-down(xxl) {
   .dashboard {
+    --tile-height: 200px;
+
     &__head {
       grid-template-columns: repeat(2, minmax(var(--tile-width), 1fr));
     }
   }
 }
 
-@media only screen and (max-width: 992px) {
+@include media-breakpoint-down(xl) {
+  .dashboard {
+    &__body {
+      flex-direction: column-reverse;
+
+      &__right {
+        padding: var(--spacing-unit) 0;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
   .dashboard {
     &__head {
       grid-template-columns: 1fr;
 
       &:deep() {
         .dashboard-info-tile {
+          height: var(--tile-height);
+        }
+
+        .app-link > .dashboard-button-tile {
           height: var(--tile-height);
         }
       }

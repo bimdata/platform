@@ -14,13 +14,16 @@
           v-if="project.isAdmin"
           data-guide="btn-manage-groups"
           data-test="btn-manage-groups"
-          width="120px"
+          :width="isLG ? undefined : '120px'"
           color="primary"
           fill
           radius
+          :icon="isLG"
         >
-          <BIMDataIcon name="group" size="s" margin="0 6px 0 0" />
-          <span>{{ $t("ProjectFiles.groupsButtonText") }}</span>
+          <BIMDataIcon name="group" size="s" />
+          <span v-if="!isLG" style="margin-left: 6px">
+            {{ $t("ProjectFiles.groupsButtonText") }}
+          </span>
         </BIMDataButton>
       </AppLink>
     </AppSlotContent>
@@ -44,6 +47,7 @@
 </template>
 
 <script>
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import routeNames from "@/router/route-names.js";
 import { useFiles } from "@/state/files.js";
 import { useGroups } from "@/state/groups.js";
@@ -87,7 +91,9 @@ export default {
       routeNames,
       spaceSubInfo,
       // Methods
-      reloadData
+      reloadData,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

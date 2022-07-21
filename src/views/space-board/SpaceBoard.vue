@@ -1,30 +1,34 @@
 <template>
   <div data-test="space-board" class="view space-board">
-    <SubscriptionStatusBanner class="space-board__banner" :space="space" />
+    <AppLoading name="spaces-subscriptions" :loader="false">
+      <SubscriptionStatusBanner class="space-board__banner" :space="space" />
+    </AppLoading>
     <ViewHeader class="space-board__header">
       <template #left>
-        <AppBreadcrumb />
+        <GoBackButton v-if="isMD" />
+        <AppBreadcrumb v-else />
       </template>
       <template #center>
         <BIMDataSearch
           data-test="input-search"
           class="space-board__header__search"
-          width="300px"
-          :placeholder="$t('SpaceBoard.searchInputPlaceholder')"
+          :width="isLG ? '150px' : isXL ? '225px' : '300px'"
+          :placeholder="isSM ? '' : $t('SpaceBoard.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
       </template>
       <template #right>
-        <div class="flex items-center">
+        <div class="space-board__header__actions">
           <SpaceSizeInfo
             v-if="isSubscriptionEnabled && space.isAdmin"
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
           <BIMDataButton
+            v-if="!isLG"
             data-test="btn-sort"
-            class="space-board__header__btn-sort m-r-12"
+            class="space-board__header__btn"
             fill
             squared
             icon
@@ -35,7 +39,7 @@
           <BIMDataButton
             data-test="btn-users"
             v-if="space.isAdmin"
-            class="space-board__header__btn-users"
+            class="space-board__header__btn"
             fill
             squared
             icon
@@ -48,21 +52,22 @@
     </ViewHeader>
 
     <AppSidePanel :title="$t('SpaceUsersManager.title')">
-      <app-loading name="space-users">
+      <AppLoading name="space-users">
         <SpaceUsersManager
           :space="space"
           :users="users"
           :invitations="invitations"
         />
-      </app-loading>
+      </AppLoading>
     </AppSidePanel>
 
-    <app-loading name="space-projects">
+    <AppLoading name="space-projects">
       <BIMDataResponsiveGrid
         class="space-board__body"
         itemWidth="320px"
         rowGap="36px"
         columnGap="36px"
+        :style="{ justifyContent: isMD ? 'center' : '' }"
       >
         <transition-group name="grid">
           <ProjectCreationCard
@@ -79,19 +84,21 @@
           />
         </transition-group>
       </BIMDataResponsiveGrid>
-    </app-loading>
+    </AppLoading>
   </div>
 </template>
 
 <script>
+import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useListFilter } from "@/composables/list-filter.js";
 import { useListSort } from "@/composables/list-sort.js";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import { useProjects } from "@/state/projects.js";
 import { useSpaces } from "@/state/spaces.js";
 // Components
 import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
@@ -106,6 +113,7 @@ export default {
     AppBreadcrumb,
     AppLoading,
     AppSidePanel,
+    GoBackButton,
     ProjectCard,
     ProjectCreationCard,
     SpaceSizeInfo,
@@ -140,7 +148,9 @@ export default {
       users: spaceUsers,
       // Methods
       openUsersManager: openSidePanel,
-      sortProjects
+      sortProjects,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

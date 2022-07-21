@@ -9,7 +9,7 @@ export default [
   },
   {
     id: "creator",
-    width: "200px",
+    width: "160px",
     align: "center"
   },
   {
@@ -19,7 +19,7 @@ export default [
   },
   {
     id: "lastupdate",
-    width: "180px",
+    width: "160px",
     align: "center"
   },
   {

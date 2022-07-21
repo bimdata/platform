@@ -40,6 +40,7 @@
 <script>
 import { onMounted, ref } from "vue";
 import { useFiles } from "@/state/files";
+import { debounce } from "@/utils/async.js";
 
 export default {
   props: {
@@ -65,7 +66,7 @@ export default {
       hasError.value = false;
     };
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (name.value) {
         await createFolder(props.project, {
           parent_id: props.folder.id,
@@ -77,7 +78,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       reset();

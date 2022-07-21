@@ -60,11 +60,12 @@
 
 <script>
 import { ref, reactive, onMounted } from "vue";
-import { useSpaces } from "@/state/spaces.js";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+import { useAppModal } from "../../app/app-modal/app-modal.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { debounce } from "../../../../utils/async.js";
 // Components
-import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
-import OrganizationSelector from "@/components/specific/subscriptions/organization-selector/OrganizationSelector.vue";
+import AppModal from "../../app/app-modal/AppModal.vue";
+import OrganizationSelector from "../organization-selector/OrganizationSelector.vue";
 
 export default {
   components: {
@@ -110,7 +111,7 @@ export default {
       closeModal();
     };
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       try {
         newSpaceLoading.value = true;
 
@@ -133,7 +134,7 @@ export default {
       } finally {
         newSpaceLoading.value = false;
       }
-    };
+    }, 500);
 
     onMounted(() => {
       setTimeout(() => spaceNameInput.value.focus(), 200);
