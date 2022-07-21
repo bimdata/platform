@@ -6,6 +6,7 @@
         :tours="tours"
         :tourToDisplay="tourToDisplay"
         :elementToObserve="appLayoutViewContainer"
+        @set-completed-tour="setTourCompleted($event)"
       />
     </template>
     <AppNotification />

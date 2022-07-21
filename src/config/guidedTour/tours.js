@@ -1,10 +1,15 @@
 import i18n from "../../i18n/index.js";
+import { useCustomBreakpoints } from "@/composables/responsive.js";
 
 const { t } = i18n.global;
 const imgPath = "/static/guidedTour/platform/";
 
 const TOURS_NAME = Object.freeze({
   PLATFORM_INTRO: "PLATFORM_INTRO"
+});
+
+const { isMidXL } = useCustomBreakpoints({
+  isMidXL: ({ width }) => width <= 1132 - 0.02
 });
 
 const tours = [
@@ -94,7 +99,7 @@ const tours = [
         target: "project-tabs",
         targetDetail: "> ul > li:nth-child(2)",
         yOffset: -65,
-        xOffset: -43,
+        xOffset: -33,
         props: {
           title: t("GuidedTour.platform.gedButton.title"),
           content: t("GuidedTour.platform.gedButton.content"),
@@ -118,7 +123,6 @@ const tours = [
         name: "groupManager",
         target: "btn-manage-groups",
         yOffset: -65,
-        xOffset: 11,
         props: {
           title: t("GuidedTour.platform.groupManager.title"),
           content: t("GuidedTour.platform.groupManager.content"),
@@ -130,11 +134,11 @@ const tours = [
       {
         name: "changeSpace",
         clickable: true,
-        spotlightOffset: false,
+
         target: "btn-change-space",
-        targetDetail: "> .breadcrumb-selector > div > div",
-        yOffset: -72,
-        xOffset: 7,
+        targetDetail: isMidXL.value ? "" : "> .breadcrumb-selector > div > div",
+        yOffset: isMidXL.value ? -65 : -72,
+        xOffset: isMidXL.value ? -12 : 17,
         props: {
           title: t("GuidedTour.platform.changeSpace.title"),
           content: t("GuidedTour.platform.changeSpace.content"),
