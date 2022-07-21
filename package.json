@@ -10,11 +10,11 @@
     "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "2.0.0-rc.8",
+    "@bimdata/bcf-components": "2.0.0-rc.10",
     "@bimdata/design-system": "1.4.0-rc.28",
-    "@bimdata/guided-tour-components": "0.0.2",
+    "@bimdata/guided-tour-components": "1.0.0",
     "@bimdata/typescript-fetch-api-client": "9.0.1",
-    "@bimdata/viewer": "^1.9.0-rc.134",
+    "@bimdata/viewer": "^1.9.0-rc.136",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.9.2",

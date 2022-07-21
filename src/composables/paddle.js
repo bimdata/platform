@@ -27,7 +27,7 @@ const loadCheckout = (containerID, link, locale, { onLoad, onSuccess }) => {
     frameTarget: containerID,
     frameInitialHeight: 416,
     frameStyle:
-      "width:100%; min-width:312px; background-color: transparent; border: none;",
+      "width:100%; min-width:312px; height: 660px; background-color: transparent; border: none;",
 
     loadCallback: onLoad,
     successCallback: onSuccess
