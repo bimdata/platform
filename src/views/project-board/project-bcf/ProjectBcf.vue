@@ -216,9 +216,9 @@
         <template v-if="showBcfTopicCreate || showBcfTopicForm">
           <BcfTopicForm
             :project="project"
+            :extensions="extensions"
             :bcfTopics="bcfTopics"
             :bcfTopic="currentBcfTopic"
-            :extensions="extensions"
             @bcf-topic-updated="reloadBcfTopics"
             @bcf-topic-created="
               () => {
@@ -284,8 +284,8 @@
             :columns="isXL ? ['index', 'title', 'actions'] : undefined"
             :paginated="true"
             :perPage="14"
-            :bcfTopics="displayedBcfTopics"
             :detailedExtensions="detailedExtensions"
+            :bcfTopics="displayedBcfTopics"
             @open-bcf-topic="openBcfTopicOverview($event)"
           />
         </div>
@@ -312,8 +312,8 @@
             <BcfTopicCard
               v-for="topic in displayedBcfTopics"
               :key="topic.guid"
-              :bcfTopic="topic"
               :detailedExtensions="detailedExtensions"
+              :bcfTopic="topic"
               @open-bcf-topic="openBcfTopicOverview(topic)"
             />
           </transition-group>
@@ -371,30 +371,31 @@ export default {
       exportBcf
     } = useBcf();
 
-    const reloadBcfTopics = () => {
-      loadBcfTopics(currentProject.value);
-    };
+    const loading = ref(false);
+    const isListView = ref(false);
+    const currentBcfTopic = ref(null);
 
     const reloadExtensions = () => {
       loadExtensions(currentProject.value);
       loadDetailedExtensions(currentProject.value);
     };
 
+    const reloadBcfTopics = () => {
+      loadBcfTopics(currentProject.value);
+    };
+
     const reloadComments = topic => {
       loadBcfTopicComments(currentProject.value, topic);
     };
-
-    const loading = ref(false);
-    const isListView = ref(false);
-    const currentBcfTopic = ref(null);
 
     watch(
       currentProject,
       async () => {
         try {
           loading.value = true;
-          reloadBcfTopics();
+          currentBcfTopic.value = null;
           reloadExtensions();
+          reloadBcfTopics();
         } finally {
           loading.value = false;
         }
