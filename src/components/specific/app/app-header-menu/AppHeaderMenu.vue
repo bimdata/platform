@@ -41,15 +41,11 @@
             </div>
           </div>
           <div class="separator"></div>
-          <a
-            class="external-link"
-            :href="bimdataConnectProfileUrl"
-            target="blank"
-          >
+          <AppLink :to="{ name: routeNames.profileSettings }">
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entrySettings") }}
             </BIMDataButton>
-          </a>
+          </AppLink>
           <a class="external-link" :href="documentationUrl" target="blank">
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryDocumentation") }}
@@ -107,9 +103,11 @@ import { fullName } from "@/utils/users";
 // Components
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
+import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
   components: {
+    AppLink,
     LanguageSelector,
     UserAvatar
   },
