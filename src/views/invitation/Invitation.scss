@@ -1,12 +1,29 @@
 .invitation {
   display: flex;
-  align-items: center;
+  height: 100%;
   
   &__back-btn {
     flex: 1;
   }
 
   &__content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+
+    span {
+      padding-top: calc(var(--spacing-unit) / 2);
+    }
+
+    iframe {
+      height: 100%;
+      width: 100%;
+      border: none;
+    }
+  }
+
+  &__empty-div {
     flex: 1;
   }
 }

@@ -5,7 +5,9 @@
     </div>
     <div class="invitation__content">
       <span>{{ $t("Invitation.title") }}</span>
+      <iframe src="http://localhost:8000/embed_invitation/"></iframe>
     </div>
+    <div class="invitation__empty-div"></div>
   </div>
 </template>
 
@@ -20,9 +22,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-
     return {
-      // methods
       getBack: () => router.back()
     };
   }
