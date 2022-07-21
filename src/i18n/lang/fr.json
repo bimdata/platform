@@ -27,6 +27,9 @@
     "titlePlatform": "Passer à la platforme professionnelle",
     "titleDatapack": "Ajout d'un DataPack"
   },
+  "ProfileSettings": {
+    "title": "Paramètres du profil"
+  },
   "ProjectBoard": {
     "tabs": {
       "overview": "Projet",

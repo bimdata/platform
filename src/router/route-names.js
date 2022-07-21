@@ -12,6 +12,7 @@ const routeNames = Object.freeze({
   projectGroups: "project-groups",
   groupBoard: "group-board",
   modelViewer: "model-viewer",
+  profileSettings: "profile-settings",
   // Subscription routes
   userSubscriptions: "user-subscriptions",
   subscribe: "subscribe",

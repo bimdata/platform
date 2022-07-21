@@ -44,6 +44,8 @@ const UserProjects = () =>
   import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
 const UserSpaces = () =>
   import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
+  const ProfileSettings = () =>
+  import(/* webpackChunkName: "profile-settings" */ "@/views/profile-settings/ProfileSettings.vue");
 /* eslint-enable */
 
 const {
@@ -59,7 +61,8 @@ const {
   modelViewer,
   projectGroups,
   groupBoard,
-  userSubscriptions
+  userSubscriptions,
+  profileSettings
 } = routeNames;
 
 const routes = [
@@ -76,6 +79,14 @@ const routes = [
         path: "",
         name: dashboard,
         component: Dashboard
+      },
+      {
+        path: "/profile-settings",
+        name: profileSettings,
+        component: ProfileSettings,
+        meta: {
+          back: dashboard
+        }
       },
       {
         path: "/spaces",

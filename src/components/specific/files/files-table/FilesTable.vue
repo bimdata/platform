@@ -49,8 +49,9 @@
       <FileNameCell
         :project="project"
         :file="file"
-        @file-clicked="$emit('file-clicked', $event)"
         :editMode="nameEditMode[file.id]"
+        @file-clicked="$emit('file-clicked', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         @close="nameEditMode[file.id] = false"
       />
     </template>
