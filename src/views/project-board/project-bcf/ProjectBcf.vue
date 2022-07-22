@@ -325,6 +325,7 @@
 
 <script>
 import {
+  config as bcfConfig,
   useBcfFilter,
   useBcfSearch,
   useBcfSort
@@ -346,6 +347,8 @@ import NoSearchResultsImage from "../../../components/images/NoSearchResultsImag
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "../../../components/specific/app/app-side-panel/AppSidePanel.vue";
 import FileUploadButton from "../../../components/specific/files/file-upload-button/FileUploadButton.vue";
+
+const { VIEWPOINT_CONFIG } = bcfConfig;
 
 export default {
   components: {
@@ -484,7 +487,8 @@ export default {
     };
 
     const openBcfTopicViewer = topic => {
-      let window = topic.viewpoints[0]?.authoring_tool_id ?? DEFAULT_WINDOW;
+      const type = topic.viewpoints[0]?.authoring_tool_id;
+      let window = VIEWPOINT_CONFIG[type]?.window ?? DEFAULT_WINDOW;
       let modelIDs = [];
 
       if (topic.models?.length > 0) {
