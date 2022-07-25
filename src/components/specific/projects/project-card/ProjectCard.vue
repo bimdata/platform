@@ -9,7 +9,7 @@
       <AppLink
         data-guide="dashboard-project"
         :data-guide-click="
-          project.isAdmin && displayedModels.length > 0
+          isSpaceAdmin(project.cloud) && displayedModels.length > 0
             ? 'dashboard-project'
             : ''
         "
@@ -64,6 +64,7 @@ import { useToggle } from "@/composables/toggle.js";
 import { MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
 import ModelService from "@/services/ModelService.js";
+import { isSpaceAdmin } from "@/utils/spaces.js";
 
 // Components
 import FlippableCard from "@/components/generic/flippable-card/FlippableCard.vue";
@@ -147,7 +148,8 @@ export default {
       closeMenu,
       goToModelViewer,
       onPreviewChange,
-      openMenu
+      openMenu,
+      isSpaceAdmin
     };
   }
 };
