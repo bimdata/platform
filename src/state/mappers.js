@@ -1,10 +1,10 @@
 import { PROJECT_ROLE } from "@/config/projects.js";
-import { SPACE_ROLE } from "@/config/spaces.js";
 import { useUser } from "@/state/user.js";
 import { projectStatus } from "@/utils/projects.js";
 import { useOrganizations } from "@/state/organizations.js";
+import { isSpaceAdmin } from "@/utils/spaces";
 
-const { user: currentUser, spaceRoles, projectRoles } = useUser();
+const { user: currentUser, projectRoles } = useUser();
 const { userOrganizations } = useOrganizations();
 
 function mapSpaces(spaces, freeSpaces) {
@@ -12,7 +12,7 @@ function mapSpaces(spaces, freeSpaces) {
   const result = spaces.map(space => ({
     ...space,
     isFree: freeSpacesIDs.includes(space.id),
-    isAdmin: spaceRoles.value[space.id] === SPACE_ROLE.ADMIN,
+    isAdmin: isSpaceAdmin(space),
     isUserOrga: Boolean(
       userOrganizations.value.find(orga => orga.id === space.organization.id)
     )

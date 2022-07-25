@@ -1,3 +1,8 @@
+import { SPACE_ROLE } from "@/config/spaces.js";
+import { useUser } from "@/state/user.js";
+
+const { spaceRoles } = useUser();
+
 function isFull(spaceSubInfo) {
   return (
     spaceSubInfo.remaining_smart_data_size != null &&
@@ -12,4 +17,8 @@ function isFullTotal(spaceSubInfo) {
   );
 }
 
-export { isFull, isFullTotal };
+function isSpaceAdmin(space) {
+  return spaceRoles.value[space.id] === SPACE_ROLE.ADMIN;
+}
+
+export { isFull, isFullTotal, isSpaceAdmin };
