@@ -1,8 +1,12 @@
 import i18n from "../../i18n/index.js";
+import { useSession } from "@/composables/session.js";
+import { DEFAULT_PROJECT_VIEW } from "@/config/projects.js";
 import { useCustomBreakpoints } from "@/composables/responsive.js";
 
 const { t } = i18n.global;
 const imgPath = "/static/guidedTour/platform/";
+
+const { projectView } = useSession();
 
 const TOURS_NAME = Object.freeze({
   PLATFORM_INTRO: "PLATFORM_INTRO"
@@ -58,6 +62,11 @@ const tours = [
           img: imgPath + "firstProject.gif",
           imgPosition: "49% 50%",
           imgSize: "77%"
+        },
+        actions: {
+          projectTab: projectId => {
+            projectView.set(projectId, DEFAULT_PROJECT_VIEW);
+          }
         }
       },
       {

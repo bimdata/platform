@@ -12,7 +12,7 @@
   "dependencies": {
     "@bimdata/bcf-components": "2.0.0-rc.14",
     "@bimdata/design-system": "1.4.0-rc.28",
-    "@bimdata/guided-tour-components": "1.0.2",
+    "@bimdata/guided-tour-components": "../guided-tour-components",
     "@bimdata/typescript-fetch-api-client": "9.0.1",
     "@bimdata/viewer": "^1.9.0-rc.138",
     "async": "^3.2.4",

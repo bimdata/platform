@@ -8,6 +8,7 @@
     <template #front-face>
       <AppLink
         data-guide="dashboard-project"
+        :data-guide-projectid="project.id"
         :data-guide-click="
           isSpaceAdmin(project.cloud) && displayedModels.length > 0
             ? 'dashboard-project'
