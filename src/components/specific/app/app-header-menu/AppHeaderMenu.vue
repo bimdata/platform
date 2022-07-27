@@ -41,11 +41,15 @@
             </div>
           </div>
           <div class="separator"></div>
-          <AppLink :to="{ name: routeNames.profileSettings }">
-            <BIMDataButton width="100%" height="40px" ghost squared>
-              {{ $t("AppHeaderMenu.entrySettings") }}
-            </BIMDataButton>
-          </AppLink>
+          <BIMDataButton
+            width="100%"
+            height="40px"
+            ghost
+            squared
+            @click="router.push({ name: routeNames.profileSettings })"
+          >
+            {{ $t("AppHeaderMenu.entrySettings") }}
+          </BIMDataButton>
           <a class="external-link" :href="documentationUrl" target="blank">
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryDocumentation") }}
@@ -96,6 +100,7 @@ import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useToggle } from "@/composables/toggle.js";
 import { useAuth } from "@/state/auth.js";
+import { useRouter } from "vue-router";
 import { useSpaces } from "@/state/spaces.js";
 import { useUser } from "@/state/user.js";
 import { fullName } from "@/utils/users";
@@ -103,11 +108,9 @@ import { fullName } from "@/utils/users";
 // Components
 import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
 
 export default {
   components: {
-    AppLink,
     LanguageSelector,
     UserAvatar
   },
@@ -140,6 +143,7 @@ export default {
       // Methods
       closeLanguageSelector,
       openLanguageSelector,
+      router: useRouter(),
       fullName,
       signOut
     };
