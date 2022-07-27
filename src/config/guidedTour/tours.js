@@ -64,7 +64,7 @@ const tours = [
           imgSize: "77%"
         },
         actions: {
-          projectTab: projectId => {
+          projectViewSetter: projectId => {
             projectView.set(projectId, DEFAULT_PROJECT_VIEW);
           }
         }
@@ -106,9 +106,7 @@ const tours = [
         name: "gedButton",
         clickable: true,
         target: "project-tabs",
-        targetDetail: "> ul > li:nth-child(2)",
-        yOffset: -65,
-        xOffset: -33,
+        targetDetail: "> ul > li:nth-child(2) > span",
         props: {
           title: t("GuidedTour.platform.gedButton.title"),
           content: t("GuidedTour.platform.gedButton.content"),
@@ -131,7 +129,6 @@ const tours = [
       {
         name: "groupManager",
         target: "btn-manage-groups",
-        yOffset: -65,
         props: {
           title: t("GuidedTour.platform.groupManager.title"),
           content: t("GuidedTour.platform.groupManager.content"),
@@ -145,8 +142,6 @@ const tours = [
         clickable: true,
         target: "btn-change-space",
         targetDetail: isMidXL.value ? "" : "> .breadcrumb-selector > div > div",
-        yOffset: isMidXL.value ? -65 : -72,
-        xOffset: isMidXL.value ? -12 : 17,
         props: {
           title: t("GuidedTour.platform.changeSpace.title"),
           content: t("GuidedTour.platform.changeSpace.content"),
