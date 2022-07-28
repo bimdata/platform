@@ -1,5 +1,5 @@
 <template>
-  <div data-test="model-viewer" class="view model-viewer">
+  <div data-test-id="view-model-viewer" class="view model-viewer">
     <app-slot-content name="app-header-action">
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />

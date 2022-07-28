@@ -1,5 +1,5 @@
 <template>
-  <div data-test="space-board" class="view space-board">
+  <div data-test-id="view-space-board" class="view space-board">
     <AppLoading name="spaces-subscriptions" :loader="false">
       <SubscriptionStatusBanner class="space-board__banner" :space="space" />
     </AppLoading>
@@ -10,7 +10,6 @@
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="space-board__header__search"
           :width="isLG ? '150px' : isXL ? '225px' : '300px'"
           :placeholder="isSM ? '' : $t('SpaceBoard.searchInputPlaceholder')"
@@ -27,7 +26,6 @@
           />
           <BIMDataButton
             v-if="!isLG"
-            data-test="btn-sort"
             class="space-board__header__btn"
             fill
             squared
@@ -37,7 +35,7 @@
             <BIMDataIcon name="alphabeticalSort" size="s" />
           </BIMDataButton>
           <BIMDataButton
-            data-test="btn-users"
+            data-test-id="btn-users"
             v-if="space.isAdmin"
             class="space-board__header__btn"
             fill
@@ -71,13 +69,13 @@
       >
         <transition-group name="grid">
           <ProjectCreationCard
-            data-test="creation-card"
+            data-test-id="creation-card"
             v-if="space.isAdmin"
             :key="-1"
             :space="space"
           />
           <ProjectCard
-            data-test="project-card"
+            data-test-id="project-card"
             v-for="project in projects"
             :key="project.id"
             :project="project"

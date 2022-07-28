@@ -1,7 +1,7 @@
 <template>
   <div class="user-card-action-menu" v-click-away="closeMenu">
     <BIMDataButton
-      data-test="btn-toggle-menu"
+      data-test-id="btn-toggle-menu"
       class="user-card-action-menu__btn"
       color="default"
       ripple
@@ -18,7 +18,7 @@
     <transition name="fade">
       <div class="user-card-action-menu__container" v-show="showMenu">
         <BIMDataButton
-          data-test="btn-open-update"
+          data-test-id="btn-open-update"
           ghost
           rounded
           icon
@@ -27,7 +27,7 @@
           <BIMDataIcon name="edit" size="xxs" />
         </BIMDataButton>
         <BIMDataButton
-          data-test="btn-open-delete"
+          data-test-id="btn-open-delete"
           ghost
           rounded
           icon

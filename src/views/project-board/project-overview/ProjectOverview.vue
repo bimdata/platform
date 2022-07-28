@@ -15,7 +15,7 @@
         "
       >
         <BIMDataButton
-          data-test="btn-toggle-upload"
+          data-test-id="btn-toggle-upload"
           :width="isLG ? undefined : '120px'"
           :color="showFileUploader ? 'granite' : 'primary'"
           fill

@@ -1,5 +1,5 @@
 <template>
-  <div data-test="project-board" class="view project-board">
+  <div data-test-id="view-project-board" class="view project-board">
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
