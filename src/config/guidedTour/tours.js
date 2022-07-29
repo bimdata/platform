@@ -63,10 +63,13 @@ const tours = [
           imgPosition: "49% 50%",
           imgSize: "77%"
         },
-        actions: {
-          projectViewSetter: projectId => {
-            projectView.set(projectId, DEFAULT_PROJECT_VIEW);
-          }
+        action: () => {
+          const projects = document.querySelectorAll(
+            "[data-guide=dashboard-project]"
+          );
+          const projectId = Array.from(projects).find(p => p.dataset.guideClick)
+            .dataset.guideParam;
+          projectView.set(parseInt(projectId, 10), DEFAULT_PROJECT_VIEW);
         }
       },
       {
