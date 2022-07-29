@@ -7,22 +7,38 @@
     margin-bottom: auto;
   }
 
-  &__content {
+  &__container {
     flex: 2;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-unit);
     max-width: 400px;
 
-    iframe {
-      height: 100%;
-      width: 100%;
-      border: none;
-    }
 
     span {
       margin-top: calc(var(--spacing-unit) / 2);
     }
+
+    &__content {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+
+      :nth-child(1) {
+        position: absolute;
+        margin-top: 100px;
+      }
+
+      iframe {
+        z-index: 1;
+        height: 100%;
+        width: 100%;
+        border: none;
+      }
+    }
+
+
   }
 
   &__ghost-element {

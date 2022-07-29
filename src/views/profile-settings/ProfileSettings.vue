@@ -3,9 +3,12 @@
     <div class="profile-settings__back-btn">
       <GoBackButton />
     </div>
-    <div class="profile-settings__content">
+    <div class="profile-settings__container">
       <span>{{ $t("ProfileSettings.title") }}</span>
-      <iframe src="http://localhost:8000/embed_profile/" />
+      <div class="profile-settings__container__content">
+        <BIMDataSpinner></BIMDataSpinner>
+        <iframe src="http://localhost:8000/embed_profile/" />
+      </div>
     </div>
     <div class="profile-settings__ghost-element" />
   </div>
