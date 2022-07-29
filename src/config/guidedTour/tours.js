@@ -1,8 +1,12 @@
 import i18n from "../../i18n/index.js";
+import { useSession } from "@/composables/session.js";
+import { DEFAULT_PROJECT_VIEW } from "@/config/projects.js";
 import { useCustomBreakpoints } from "@/composables/responsive.js";
 
 const { t } = i18n.global;
 const imgPath = "/static/guidedTour/platform/";
+
+const { projectView } = useSession();
 
 const TOURS_NAME = Object.freeze({
   PLATFORM_INTRO: "PLATFORM_INTRO"
@@ -58,6 +62,14 @@ const tours = [
           img: imgPath + "firstProject.gif",
           imgPosition: "49% 50%",
           imgSize: "77%"
+        },
+        action: () => {
+          const projects = document.querySelectorAll(
+            "[data-guide=dashboard-project]"
+          );
+          const projectId = Array.from(projects).find(p => p.dataset.guideClick)
+            .dataset.guideParam;
+          projectView.set(parseInt(projectId, 10), DEFAULT_PROJECT_VIEW);
         }
       },
       {
@@ -97,9 +109,7 @@ const tours = [
         name: "gedButton",
         clickable: true,
         target: "project-tabs",
-        targetDetail: "> ul > li:nth-child(2)",
-        yOffset: -65,
-        xOffset: -33,
+        targetDetail: "> ul > li:nth-child(2) > span",
         props: {
           title: t("GuidedTour.platform.gedButton.title"),
           content: t("GuidedTour.platform.gedButton.content"),
@@ -122,7 +132,6 @@ const tours = [
       {
         name: "groupManager",
         target: "btn-manage-groups",
-        yOffset: -65,
         props: {
           title: t("GuidedTour.platform.groupManager.title"),
           content: t("GuidedTour.platform.groupManager.content"),
@@ -136,8 +145,6 @@ const tours = [
         clickable: true,
         target: "btn-change-space",
         targetDetail: isMidXL.value ? "" : "> .breadcrumb-selector > div > div",
-        yOffset: isMidXL.value ? -65 : -72,
-        xOffset: isMidXL.value ? -12 : 17,
         props: {
           title: t("GuidedTour.platform.changeSpace.title"),
           content: t("GuidedTour.platform.changeSpace.content"),
