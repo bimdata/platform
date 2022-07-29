@@ -5,7 +5,7 @@
         class="project-overview__tooltip-upload"
         color="high"
         position="left"
-        :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
+        :disabled="space.isUserOrga || !isFullTotal(spaceSubInfo)"
         :text="
           $t(
             `SubscriptionModal.uploadDisableMessage.${
@@ -89,24 +89,24 @@
 <script>
 import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useToggle } from "@/composables/toggle.js";
-import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "@/config/models.js";
-import { useFiles } from "@/state/files.js";
-import { useModels } from "@/state/models.js";
-import { useProjects } from "@/state/projects.js";
-import { isFullTotal } from "@/utils/spaces.js";
-import { useSpaces } from "@/state/spaces.js";
-import { debounce } from "@/utils/async.js";
+import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
+import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
+import { useStandardBreakpoints } from "../../../composables/responsive.js";
+import { useToggle } from "../../../composables/toggle.js";
+import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "../../../config/models.js";
+import { useFiles } from "../../../state/files.js";
+import { useModels } from "../../../state/models.js";
+import { useProjects } from "../../../state/projects.js";
+import { isFullTotal } from "../../../utils/spaces.js";
+import { useSpaces } from "../../../state/spaces.js";
+import { debounce } from "../../../utils/async.js";
 // Components
-import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import FileUploader from "@/components/specific/files/file-uploader/FileUploader.vue";
-import ModelsManager from "@/components/specific/models/models-manager/ModelsManager.vue";
-import ModelsOverview from "@/components/specific/models/models-overview/ModelsOverview.vue";
-import ProjectUsersManager from "@/components/specific/users/project-users-manager/ProjectUsersManager.vue";
+import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
+import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+import FileUploader from "../../../components/specific/files/file-uploader/FileUploader.vue";
+import ModelsManager from "../../../components/specific/models/models-manager/ModelsManager.vue";
+import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
+import ProjectUsersManager from "../../../components/specific/users/project-users-manager/ProjectUsersManager.vue";
 
 export default {
   components: {
@@ -173,9 +173,9 @@ export default {
       models: projectModels,
       project: currentProject,
       showFileUploader,
+      space: currentSpace,
       spaceSubInfo,
       users: projectUsers,
-      currentSpace,
       // Methods
       closeFileUploader,
       isFullTotal,

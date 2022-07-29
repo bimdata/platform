@@ -1,9 +1,9 @@
 <template>
   <div data-test-id="view-model-viewer" class="view model-viewer">
-    <app-slot-content name="app-header-action">
+    <AppSlotContent name="app-header-action">
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />
-    </app-slot-content>
+    </AppSlotContent>
 
     <div id="viewer"></div>
 
@@ -23,12 +23,12 @@ import {
   AVAILABLE_PLUGINS,
   DEFAULT_WINDOW,
   PLUGINS_CONFIG
-} from "@/config/viewer.js";
-import { useAuth } from "@/state/auth.js";
-import { useSpaces } from "@/state/spaces.js";
+} from "../../config/viewer.js";
+import { useAuth } from "../../state/auth.js";
+import { useSpaces } from "../../state/spaces.js";
 // Components
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 
 export default {
   components: {

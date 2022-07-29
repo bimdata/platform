@@ -1,6 +1,6 @@
 <template>
   <BIMDataButton
-    data-test-id="btn-back"
+    data-test-id="go-back-button"
     class="go-back-button"
     ghost
     radius
@@ -20,18 +20,18 @@
 
 <script>
 import { useRoute, useRouter } from "vue-router";
-import { useSession } from "@/composables/session.js";
+import { useSession } from "../../../../composables/session.js";
 
 export default {
   setup() {
     const router = useRouter();
-    const route = useRoute();
     const { previousView } = useSession();
 
-    const { back, backRoutes, backDefault } = route.meta;
-    const prev = previousView.get();
-
     const goBack = () => {
+      const route = useRoute();
+      const prev = previousView.get();
+      const { back, backRoutes, backDefault } = route.meta;
+
       let target;
 
       if (back) {

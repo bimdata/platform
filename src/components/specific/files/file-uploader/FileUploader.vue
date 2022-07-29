@@ -37,6 +37,7 @@
         </span>
       </div>
       <FileUploadButton
+        data-test-id="btn-upload-model"
         class="file-uploader__upload-area__btn-upload"
         width="150px"
         multiple
@@ -51,10 +52,10 @@
 
 <script>
 import { ref } from "vue";
-import { fileExtension, generateFileKey } from "@/utils/files.js";
+import { fileExtension, generateFileKey } from "../../../../utils/files.js";
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+import FileUploadButton from "../file-upload-button/FileUploadButton.vue";
+import FileUploadCard from "../file-upload-card/FileUploadCard.vue";
 
 export default {
   components: {
