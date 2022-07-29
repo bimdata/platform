@@ -15,7 +15,11 @@ Cypress.Commands.add("login", (email, password) => {
   });
 });
 
-Cypress.Commands.add("getHook", names => {
-  const selector = names.split(".").map(name => `[data-test-id=${name}]`).join(" ");
+Cypress.Commands.add("getHook", path => {
+  const selector = path.split(".").map(name => `[data-test-id=${name}]`).join(" ");
   return cy.get(selector);
+});
+
+Cypress.Commands.add("getParam", path => {
+  return cy.getHook(path).its("dataset.testParam");
 });

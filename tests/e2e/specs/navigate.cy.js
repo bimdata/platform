@@ -6,9 +6,9 @@ describe("Navigation Test", () => {
   });
 
   it("Should navigate to user spaces", () => {
-    cy.get("[data-test=btn-spaces]").click();
-    // cy.get("[data-test~=space-card]").click();
-    cy.get(".app-link[href^=\"/spaces\"]").click();
+    cy.getHook("btn-spaces").click().wait(200);
+    cy.getHook("space-card").click().wait(200);
+    // cy.getParam("project-card").should(value => console.log("test param: ", value));
   });
 
 });
