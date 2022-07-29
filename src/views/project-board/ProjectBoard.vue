@@ -61,6 +61,8 @@ import {
 } from "@/composables/responsive.js";
 import { useSession } from "@/composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import { DEFAULT_PROJECT_VIEW } from "@/config/projects.js";
+
 import { useProjects } from "@/state/projects.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { useSpaces } from "@/state/spaces.js";
@@ -77,7 +79,6 @@ import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/S
 import SubscriptionModal from "@/components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
-const DEFAULT_PROJECT_VIEW = "overview";
 const PROJECT_VIEWS = {
   overview: "ProjectOverview",
   files: "ProjectFiles",

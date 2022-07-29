@@ -10,4 +10,11 @@ const PROJECT_ROLE = Object.freeze({
   GUEST: 25
 });
 
-export { statusLimitNew, statusLimitActive, PROJECT_ROLE };
+const DEFAULT_PROJECT_VIEW = "overview";
+
+export {
+  statusLimitNew,
+  statusLimitActive,
+  PROJECT_ROLE,
+  DEFAULT_PROJECT_VIEW
+};
