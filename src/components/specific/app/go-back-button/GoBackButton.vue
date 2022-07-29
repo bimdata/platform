@@ -25,13 +25,13 @@ import { useSession } from "../../../../composables/session.js";
 export default {
   setup() {
     const router = useRouter();
+    const route = useRoute();
     const { previousView } = useSession();
 
-    const goBack = () => {
-      const route = useRoute();
-      const prev = previousView.get();
-      const { back, backRoutes, backDefault } = route.meta;
+    const { back, backRoutes, backDefault } = route.meta;
+    const prev = previousView.get();
 
+    const goBack = () => {
       let target;
 
       if (back) {
