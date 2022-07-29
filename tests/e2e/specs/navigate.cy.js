@@ -1,3 +1,5 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
+
 describe("Navigation Test", () => {
 
   beforeEach(() => {
@@ -8,7 +10,16 @@ describe("Navigation Test", () => {
   it("Should navigate to user spaces", () => {
     cy.getHook("btn-spaces").click().wait(200);
     cy.getHook("space-card").click().wait(200);
-    // cy.getParam("project-card").should(value => console.log("test param: ", value));
+    cy.getHook("project-card").click().wait(500);
+
+    cy.getHook("btn-open-viewer").click().wait(10000);
+    cy.getHook("go-back-button").click().wait(500);
+
+    cy.getHook("project-tab-files").click().wait(200);
+
+    cy.getHook("project-tab-bcf").click().wait(200);
+
+    cy.getHook("project-tab-overview").click();
   });
 
 });

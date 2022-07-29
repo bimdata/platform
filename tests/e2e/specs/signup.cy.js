@@ -11,7 +11,10 @@ describe("Signup Test", () => {
     cy.get("input[name=password2]").type(Cypress.env("USER_PASSWORD"));
     cy.get("input[type=submit]").click();
 
-    // Assert
+    cy.url().should("contain", Cypress.env("IAM_BASE_URL"));
+
+    cy.get("input[type=submit][value=Yes]").click();
+
     cy.url().should("contain", Cypress.config("baseUrl"));
   });
 
