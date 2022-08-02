@@ -220,12 +220,7 @@
             :bcfTopics="bcfTopics"
             :bcfTopic="currentBcfTopic"
             @bcf-topic-updated="reloadBcfTopics"
-            @bcf-topic-created="
-              () => {
-                reloadBcfTopics();
-                closeSidePanel();
-              }
-            "
+            @bcf-topic-created="reloadBcfTopics(), closeSidePanel()"
           />
         </template>
         <template v-else-if="showBcfTopicOverview && currentBcfTopic">
@@ -326,6 +321,7 @@
 <script>
 import {
   getViewpointConfig,
+  getViewpointModels,
   useBcfFilter,
   useBcfSearch,
   useBcfSort
@@ -376,17 +372,19 @@ export default {
     const isListView = ref(false);
     const currentBcfTopic = ref(null);
 
-    const reloadExtensions = () => {
-      loadExtensions(currentProject.value);
-      loadDetailedExtensions(currentProject.value);
+    const reloadExtensions = async () => {
+      await Promise.all([
+        loadExtensions(currentProject.value),
+        loadDetailedExtensions(currentProject.value)
+      ]);
     };
 
-    const reloadBcfTopics = () => {
-      loadBcfTopics(currentProject.value);
+    const reloadBcfTopics = async () => {
+      await loadBcfTopics(currentProject.value);
     };
 
-    const reloadComments = topic => {
-      loadBcfTopicComments(currentProject.value, topic);
+    const reloadComments = async topic => {
+      await loadBcfTopicComments(currentProject.value, topic);
     };
 
     watch(
@@ -395,8 +393,8 @@ export default {
         try {
           loading.value = true;
           currentBcfTopic.value = null;
-          reloadExtensions();
-          reloadBcfTopics();
+          await reloadExtensions();
+          await reloadBcfTopics();
         } finally {
           loading.value = false;
         }
@@ -485,14 +483,12 @@ export default {
     };
 
     const openBcfTopicViewer = topic => {
-      let window =
-        getViewpointConfig(topic.viewpoints[0] ?? {})?.window ?? DEFAULT_WINDOW;
-      let modelIDs = [];
+      let viewpoint = topic.viewpoints[0] ?? {};
+      let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
+      let modelIDs = getViewpointModels(viewpoint);
 
-      if (topic.models?.length > 0) {
-        modelIDs = topic.models;
-      } else {
-        // If no models are specified on the topic
+      if (modelIDs.length === 0) {
+        // If no models are specified on the viewpoint
         // get the last created model of proper type
         // with respect to the target window
         const models = projectModels.value
