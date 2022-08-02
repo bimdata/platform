@@ -326,7 +326,7 @@ import {
   useBcfSearch,
   useBcfSort
 } from "@bimdata/bcf-components";
-import { ref, watch } from "vue";
+import { onActivated, onDeactivated, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
@@ -413,6 +413,14 @@ export default {
       },
       { immediate: true }
     );
+
+    onActivated(() => {
+      currentBcfTopic.value = null;
+    });
+    onDeactivated(() => {
+      currentBcfTopic.value = null;
+      closeSidePanel();
+    });
 
     const { filteredTopics, apply: applyFilters } = useBcfFilter(bcfTopics);
     const { searchText, filteredTopics: displayedBcfTopics } =
