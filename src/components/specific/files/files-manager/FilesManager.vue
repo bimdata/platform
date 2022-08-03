@@ -3,6 +3,20 @@
     <template #content>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
+          <template v-if="menuItems.length > 0">
+            <BIMDataDropdownMenu
+              class="files-manager__actions__dropdown"
+              width="20%"
+              height="32px"
+              :menuItems="menuItems"
+            >
+              <template #header>
+                <BIMDataIcon name="burgerMenu" fill color="primary" />
+                <div class="ghost-element" />
+                <BIMDataIcon name="deploy" fill size="xxs" color="primary" />
+              </template>
+            </BIMDataDropdownMenu>
+          </template>
           <FolderCreationButton
             data-guide="btn-new-folder"
             class="files-manager__actions__btn-new-folder"
@@ -220,6 +234,9 @@ import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { VISA_STATUS } from "@/config/visa.js";
 import { useSpaces } from "@/state/spaces.js";
+import { useProjects } from "@/state/projects.js";
+import FileService from "@/services/FileService.js";
+
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -277,6 +294,7 @@ export default {
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
     const { openModal } = useAppModal();
+    const { fetchProjectFolderTreeSerializers } = useProjects();
 
     const {
       fileStructureHandler: handler,
@@ -505,9 +523,39 @@ export default {
       allTags.value = await TagService.fetchAllTags(props.project);
     };
 
+    const projectsTree = ref([]);
+
+    const fetchProjectsTree = async () => {
+      projectsTree.value = await fetchProjectFolderTreeSerializers(
+        props.project
+      );
+    };
+
+    const menuItems = computed(() => {
+      let items = [
+        // { name: t("FilesManager.fileImport") },
+        // { name: t("FilesManager.gedDownload") }
+      ];
+
+      if (props.project.isAdmin && projectsTree.value.length > 0) {
+        items.unshift({
+          name: t("FilesManager.structureImport"),
+          children: projectsTree.value.map(p => ({
+            ...p,
+            action: () => {
+              FileService.createFileStructure(props.project, p.folders);
+              emit("file-updated");
+            }
+          }))
+        });
+      }
+      return items;
+    });
+
     onMounted(() => {
       fetchVisas();
       fetchTags();
+      fetchProjectsTree();
     });
 
     return {
@@ -533,6 +581,7 @@ export default {
       showVersioningManager,
       isAbleToSub: inject("isAbleToSub"),
       currentSpace,
+      projectsTree,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -558,7 +607,8 @@ export default {
       isFullTotal,
       openModal,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
+      menuItems
     };
   }
 };

@@ -225,7 +225,10 @@
   "FilesManager": {
     "title": "Documents du projet",
     "searchInputPlaceholder": "Rechercher",
-    "createModelNotification": "Modèle créé avec succès"
+    "createModelNotification": "Modèle créé avec succès",
+    "structureImport": "Importer une structure GED",
+    "fileImport": "Importer un dossier",
+    "gedDownload": "Télécharger la GED"
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
@@ -894,6 +897,7 @@
     "projectUpdateError": "Échec de la mise à jour du projet",
     "projectDeleteError": "Échec de la suppression du projet",
     "projectFetchFileError": "Impossible de récupérer ce document",
+    "projectFolderTreeFetchError": "Impossible de récupérer la liste des projets",
     "invitationsFetchError": "Impossible de récupérer la liste des invitations",
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
@@ -911,6 +915,7 @@
     "modelMergeError": "Échec de la fusion des modèles",
     "modelDeleteError": "Erreur lors de la suppression du modèle",
     "fileStructureFetchError": "Impossible de récupérer la structure de fichier",
+    "fileStructureCreateError": "Impossble de créer la structure de fichier",
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
