@@ -20,6 +20,7 @@ const ERRORS = Object.freeze({
   PROJECT_DELETE_ERROR: "projectDeleteError",
   PROJECT_FETCH_FILE_ERROR: "projectFetchFileError",
   PROJECT_FOLDER_TREE_FETCH_ERROR: "projectFolderTreeFetchError",
+  DOCUMENT_CREATE_ERROR: "documentCreateError",
   INVITATIONS_FETCH_ERROR: "invitationsFetchError",
   INVITATION_SEND_ERROR: "invitationSendError",
   INVITATION_RESEND_ERROR: "invitationResendError",

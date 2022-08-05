@@ -31,4 +31,45 @@ function projectStatus(project) {
   }
 }
 
-export { projectStatus };
+function createTreeFromPaths(folder, paths) {
+  const root = paths[0]?.[0];
+  if (!root) return;
+
+  const tree = {
+    name: root,
+    parent_id: folder.parent_id,
+    default_permission: 1,
+    children: []
+  };
+
+  const shiftedPaths = paths
+    .map(path => {
+      const newPath = Array.from(path);
+      newPath.shift();
+      return newPath;
+    })
+    .filter(path => path.length > 0);
+
+  shiftedPaths.forEach(path =>
+    path.reduce((parentFolder, currentFolderName) => {
+      let currentFolder = parentFolder.children.find(
+        child => child.name === currentFolderName
+      );
+
+      if (!currentFolder) {
+        currentFolder = {
+          name: currentFolderName,
+          default_permission: 1,
+          children: []
+        };
+        parentFolder.children.push(currentFolder);
+      }
+
+      return currentFolder;
+    }, tree)
+  );
+
+  return tree;
+}
+
+export { projectStatus, createTreeFromPaths };
