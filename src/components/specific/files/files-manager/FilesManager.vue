@@ -237,8 +237,12 @@ import { VISA_STATUS } from "@/config/visa.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
 import FileService from "@/services/FileService.js";
-import UploadService from "@/services/UploadService.js";
-import { createTreeFromPaths } from "@/utils/projects.js";
+import {
+  getPaths,
+  getFilesInfos,
+  createTreeFromPaths,
+  uploadFilesFromDMSTree
+} from "@/utils/projects.js";
 
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
@@ -370,66 +374,16 @@ export default {
     const uploadFiles = async files => {
       if (isFolderUpload.value) {
         // doc paths form + doc limitation same nest
-        const paths = Array.from(
-          new Set(
-            files.map(file =>
-              JSON.stringify(file.webkitRelativePath.split("/").slice(0, -1))
-            )
-          ),
-          JSON.parse
-        ).sort((a, b) => a.length - b.length);
 
-        const filesInfo = files.map(file => ({
-          name: file.name,
-          path: file.webkitRelativePath.split("/").slice(0, -1),
-          upload: async parentId => {
-            await UploadService.createDocument(props.project, {
-              parent_id: parentId,
-              file
-            });
-          }
-        }));
-
-        const createFileStructureMethod = async treeParam => {
-          return FileService.createFileStructure(props.project, [treeParam]);
-        };
+        const paths = getPaths(files);
+        const filesInfos = getFilesInfos(props.project, files);
 
         const tree = createTreeFromPaths(currentFolder, paths);
+        const DMSTree = await FileService.createFileStructure(props.project, [
+          tree
+        ]);
 
-        const DMSTree = await createFileStructureMethod(tree);
-
-        const uploadFilesFromDMSTree = filesInfo => {
-          filesInfo.forEach(async file => {
-            const filePath = Array.from(file.path);
-
-            filePath.shift();
-            let parentFolderID = null;
-            try {
-              const parentFolder = filePath.reduce(
-                (parentFolder, currentFolderName) => {
-                  return (
-                    parentFolder.children.find(
-                      child => child.name === currentFolderName
-                    ) ?? parentFolder
-                  );
-                },
-                DMSTree[0]
-              );
-              parentFolderID = parentFolder.id;
-            } catch (error) {
-              console.warn("current file has not find a parent folder");
-            }
-            if (parentFolderID === null) return;
-
-            try {
-              await file.upload(parentFolderID);
-            } catch (error) {
-              console.warn(error, "internal error");
-            }
-          });
-        };
-
-        uploadFilesFromDMSTree(filesInfo);
+        uploadFilesFromDMSTree(DMSTree, filesInfos);
       } else {
         filesToUpload.value = files;
         setTimeout(() => (filesToUpload.value = []), 100);
