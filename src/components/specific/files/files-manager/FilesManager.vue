@@ -373,8 +373,6 @@ export default {
     const filesToUpload = ref([]);
     const uploadFiles = async files => {
       if (isFolderUpload.value) {
-        // doc paths form + doc limitation same nest
-
         const paths = getPaths(files);
         const filesInfos = getFilesInfos(props.project, files);
 
