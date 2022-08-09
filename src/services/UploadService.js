@@ -105,24 +105,6 @@ class UploadService {
       }
     });
   }
-
-  async createDocument(project, body) {
-    try {
-      const data = new FormData();
-      data.append("name", body.file.name);
-      data.append("file", body.file);
-
-      if (body.parent_id) data.append("parent_id", body.parent_id);
-
-      return await apiClient.collaborationApi.createDocument(
-        project.cloud.id,
-        project.id,
-        data
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.DOCUMENT_CREATE_ERROR, error);
-    }
-  }
 }
 
 const service = new UploadService();
