@@ -1,4 +1,5 @@
 import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
+import { FILE_TYPE } from "@/config/files.js";
 
 // Project statuses
 const NEW = "new";
@@ -31,4 +32,20 @@ function projectStatus(project) {
   }
 }
 
-export { projectStatus };
+function treeIdGenerator(folders) {
+  if (folders.length === 0) return;
+  let idGenerator = 1;
+
+  const mapping = folders => {
+    return folders.map(folder => ({
+      ...folder,
+      id: idGenerator++,
+      type: FILE_TYPE.FOLDER,
+      children: folder.children?.length > 0 ? mapping(folder.children) : []
+    }));
+  };
+
+  return mapping(folders);
+}
+
+export { projectStatus, treeIdGenerator };

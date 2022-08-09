@@ -247,6 +247,11 @@
       "size": "Taille"
     }
   },
+  "FileTreePreview": {
+    "title": "Importer la structure GED depuis",
+    "cancel": "Annuler",
+    "validate": "Valider"
+  },
   "FileUploadButton": {
     "addFileButtonText": "Charger un fichier"
   },

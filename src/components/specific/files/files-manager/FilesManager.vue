@@ -50,7 +50,12 @@
                 color="primary"
                 fill
                 radius
-                @click="openModal"
+                @click="
+                  {
+                    openModal();
+                    $emit('switch-sub-modal', true);
+                  }
+                "
               >
                 <BIMDataIcon name="addFile" size="xs" />
                 <span v-if="!isLG" style="margin-left: 6px">
@@ -109,7 +114,6 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
-
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -217,6 +221,9 @@
       </template>
     </template>
   </BIMDataCard>
+  <AppModal v-if="projectToUpload">
+    <FileTreePreviewModal :projectToUpload="projectToUpload" />
+  </AppModal>
 </template>
 
 <script>
@@ -236,6 +243,7 @@ import { VISA_STATUS } from "@/config/visa.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
 import FileService from "@/services/FileService.js";
+import { treeIdGenerator } from "@/utils/projects.js";
 
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
@@ -249,6 +257,8 @@ import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
 import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
 import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
+import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
 
 export default {
   components: {
@@ -262,7 +272,9 @@ export default {
     FilesManagerOnboarding,
     VisaMain,
     TagsMain,
-    VersioningMain
+    VersioningMain,
+    AppModal,
+    FileTreePreviewModal
   },
   props: {
     spaceSubInfo: {
@@ -287,13 +299,15 @@ export default {
     "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
-    "model-created"
+    "model-created",
+    "switch-sub-modal"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
-    const { openModal } = useAppModal();
+    const { openModal, closeModal } = useAppModal();
+
     const { fetchProjectFolderTreeSerializers } = useProjects();
 
     const {
@@ -531,6 +545,8 @@ export default {
       );
     };
 
+    const projectToUpload = ref(null);
+
     const menuItems = computed(() => {
       let items = [
         // { name: t("FilesManager.fileImport") },
@@ -541,10 +557,18 @@ export default {
         items.unshift({
           name: t("FilesManager.structureImport"),
           children: projectsTree.value.map(p => ({
-            ...p,
+            name: p.name,
             action: () => {
-              FileService.createFileStructure(props.project, p.folders);
-              emit("file-updated");
+              openModal();
+              projectToUpload.value = {
+                ...p,
+                folders: treeIdGenerator(p.folders),
+                upload: () => {
+                  closeModal();
+                  FileService.createFileStructure(props.project, p.folders);
+                  emit("file-updated");
+                }
+              };
             }
           }))
         });
@@ -582,6 +606,7 @@ export default {
       isAbleToSub: inject("isAbleToSub"),
       currentSpace,
       projectsTree,
+      projectToUpload,
       // Methods
       closeAccessManager,
       closeDeleteModal,

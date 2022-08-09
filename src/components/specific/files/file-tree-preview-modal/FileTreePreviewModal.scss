@@ -1,0 +1,32 @@
+.file-tree-preview-modal {
+  width: 88%;
+  max-width: 288px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  &__content {
+    height: 400px;
+    overflow: auto;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+
+    .file-tree {
+      padding: 0 var(--spacing-unit);
+    }
+  }
+
+  &__action {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -22,7 +22,7 @@
           radius
           :icon="isLG"
           :disabled="!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)"
-          @click="() => (isAbleToSub ? openModal() : toggleFileUploader())"
+          @click="() => (isAbleToSub ? modalOpener() : toggleFileUploader())"
         >
           <BIMDataIcon
             :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
@@ -117,7 +117,8 @@ export default {
     ModelsOverview,
     ProjectUsersManager
   },
-  setup() {
+  emits: ["switch-sub-modal"],
+  setup(_, { emit }) {
     const { t } = useI18n();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
@@ -158,6 +159,10 @@ export default {
     };
 
     const isAbleToSub = inject("isAbleToSub");
+    const modalOpener = () => {
+      openModal();
+      emit("switch-sub-modal", true);
+    };
 
     return {
       // References
@@ -176,7 +181,7 @@ export default {
       isFullTotal,
       notifyForbiddenUpload,
       openFileUploader,
-      openModal,
+      modalOpener,
       reloadData,
       toggleFileUploader,
       // Responsive breakpoints
