@@ -22,7 +22,7 @@
         </div>
       </template>
       <template #element>
-        <div class="app-header-menu__container" @click.stop="() => {}">
+        <div class="app-header-menu__container">
           <div class="user-info">
             <UserAvatar class="user-avatar" :user="user" size="50" />
             <div class="user-content">
@@ -66,7 +66,7 @@
             ghost
             squared
             height="40px"
-            @click="openLanguageSelector"
+            @click.stop="openLanguageSelector"
           >
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
