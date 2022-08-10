@@ -1,13 +1,18 @@
 <template>
   <div class="file-tree-preview-modal">
+    <template v-if="loadingData">
+      <div class="file-tree-preview-modal__loader">
+        <BIMDataSpinner />
+      </div>
+    </template>
     <span class="file-tree-preview-modal__title">
       {{ $t("FileTreePreview.title") }}
       <span class="file-tree-preview-modal__title__project">
-        {{ projectToUpload.name }}</span
+        {{ projectsToUpload.name }}</span
       ></span
     >
     <div class="file-tree-preview-modal__content">
-      <template v-for="folder of projectToUpload.folders" :key="folder.id">
+      <template v-for="folder of projectsToUpload.folders" :key="folder.id">
         <FileTree
           :fileStructure="folder"
           :selectedFile="folder"
@@ -30,7 +35,7 @@
         fill
         radius
         width="45%"
-        @click="projectToUpload.upload"
+        @click="projectsToUpload.upload"
       >
         {{ $t("FileTreePreview.validate") }}
       </BIMDataButton>
@@ -47,8 +52,12 @@ export default {
     FileTree
   },
   props: {
-    projectToUpload: {
+    projectsToUpload: {
       type: Object,
+      required: true
+    },
+    loadingData: {
+      type: Boolean,
       required: true
     }
   },

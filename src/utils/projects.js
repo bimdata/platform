@@ -32,8 +32,9 @@ function projectStatus(project) {
   }
 }
 
-function treeIdGenerator(folders) {
+function treeIdGenerator(project, folders) {
   if (folders.length === 0) return;
+  // Populate folder tree with IDs permit to satisfy a requieremet from FileTree component. Front-end use only.
   let idGenerator = 1;
 
   const mapping = folders => {
@@ -45,7 +46,7 @@ function treeIdGenerator(folders) {
     }));
   };
 
-  return mapping(folders);
+  return [{ name: project.name, children: mapping(folders) }];
 }
 
 export { projectStatus, treeIdGenerator };

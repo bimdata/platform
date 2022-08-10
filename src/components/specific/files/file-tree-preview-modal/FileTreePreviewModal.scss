@@ -4,6 +4,16 @@
   margin: auto;
   display: flex;
   flex-direction: column;
+  position: relative;
+  
+  &__loader {
+    position: absolute;
+    right: -43px;
+    top: -22px;
+    height: 6%;
+    width: 6%;
+    background-color: var(--color-white);
+  }
 
   &__title {
     font-size: 20px;
