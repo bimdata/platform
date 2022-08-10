@@ -244,7 +244,6 @@ import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
 import FileService from "@/services/FileService.js";
 import { treeIdGenerator } from "@/utils/projects.js";
-
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -307,7 +306,6 @@ export default {
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
     const { openModal, closeModal } = useAppModal();
-
     const { fetchProjectFolderTreeSerializers } = useProjects();
 
     const {

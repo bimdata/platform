@@ -91,7 +91,6 @@ import { useProjects } from "@/state/projects.js";
 import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
 import { treeIdGenerator } from "@/utils/projects.js";
 import FileService from "@/services/FileService.js";
-
 // Components
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
