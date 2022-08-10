@@ -1,6 +1,9 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #content>
+      <AppModal v-if="projectToUpload">
+        <FileTreePreviewModal :projectToUpload="projectToUpload" />
+      </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
           <template v-if="menuItems.length > 0">
@@ -221,9 +224,6 @@
       </template>
     </template>
   </BIMDataCard>
-  <AppModal v-if="projectToUpload">
-    <FileTreePreviewModal :projectToUpload="projectToUpload" />
-  </AppModal>
 </template>
 
 <script>

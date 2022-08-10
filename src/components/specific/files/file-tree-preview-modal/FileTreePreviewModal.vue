@@ -8,7 +8,11 @@
     >
     <div class="file-tree-preview-modal__content">
       <template v-for="folder of projectToUpload.folders" :key="folder.id">
-        <FileTree :fileStructure="folder" :selectedFile="folder" />
+        <FileTree
+          :fileStructure="folder"
+          :selectedFile="folder"
+          :project="{}"
+        />
       </template>
     </div>
     <div class="file-tree-preview-modal__action">
