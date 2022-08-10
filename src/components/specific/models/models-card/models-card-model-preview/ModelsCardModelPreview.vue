@@ -4,24 +4,15 @@
       {{ `${image.index} / ${images.length}` }}
     </div>
 
-    <div
-      class="models-card-model-preview__container"
-      ref="container"
-      @mousemove="handleMouseMove"
-    >
-      <div
-        v-if="image && image.url"
-        class="models-card-model-preview__container__viewport"
-        ref="viewport"
-      >
-        <img
-          :src="image.url"
-          :style="{ transform: `translateX(-${translation}px)` }"
-        />
-      </div>
-      <div v-else class="models-card-model-preview__container__empty-preview">
-        {{ $t("ModelsCardModelPreview.emptyPreviewPlaceholder") }}
-      </div>
+    <BIMDataModelPreview
+      v-if="image && image.url"
+      :previewUrl="image.url"
+      :width="377"
+      :height="342"
+      backgroundColor="var(--color-silver)"
+    />
+    <div v-else class="models-card-model-preview__placeholder">
+      {{ $t("ModelsCardModelPreview.emptyPreviewPlaceholder") }}
     </div>
 
     <div class="models-card-model-preview__switcher" v-if="images.length > 0">
@@ -66,25 +57,8 @@ export default {
   },
   emits: ["model-changed"],
   setup(props, { emit }) {
-    const nbSlices = 15;
     const container = ref(null);
     const viewport = ref(null);
-
-    const translation = ref(0);
-    const handleMouseMove = event => {
-      if (container.value && viewport.value) {
-        const containerRect = container.value.getBoundingClientRect();
-        const viewportRect = viewport.value.getBoundingClientRect();
-        let offset = Math.abs(
-          Math.ceil(
-            nbSlices *
-              (1 - (event.clientX - containerRect.x) / containerRect.width)
-          )
-        );
-        offset = Math.min(offset, nbSlices);
-        translation.value = (offset - 1) * viewportRect.width;
-      }
-    };
 
     const images = ref([]);
     const image = ref({});
@@ -129,12 +103,10 @@ export default {
       container,
       image,
       images,
-      translation,
       viewport,
       // Methods
       nextImage,
-      previousImage,
-      handleMouseMove
+      previousImage
     };
   }
 };
