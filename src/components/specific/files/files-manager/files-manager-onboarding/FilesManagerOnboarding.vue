@@ -19,19 +19,21 @@
       </BIMDataButton>
       <BIMDataDropdownMenu
         class="files-manager-onboarding__actions__dropdown"
+        v-click-away="close"
         ref="dropdown"
         width="20%"
         height="32px"
         directionClass="up"
+        @click="toggle"
       >
         <template #header>
           <span> {{ $t("FilesManagerOnboarding.GEDStructureImport") }}</span>
           <BIMDataIcon
-            name="deploy"
+            :name="isOpen ? 'deploy' : 'chevron'"
             fill
             size="xxs"
             color="primary"
-            :rotate="180"
+            :rotate="isOpen ? 180 : 0"
           />
         </template>
         <template #element>
@@ -84,6 +86,7 @@
 
 <script>
 import { ref, computed } from "vue";
+import { useToggle } from "@/composables/toggle";
 
 // Components
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
@@ -114,6 +117,8 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
+    const { isOpen, toggle, close } = useToggle();
+
     let uploadCount = 0;
     const fileUploads = ref([]);
     const uploadFile = files => {
@@ -150,7 +155,10 @@ export default {
       dropdownMaxHeight,
       onboarding,
       dropdown,
+      isOpen,
       // Methods
+      toggle,
+      close,
       createFolder,
       updateUploadCount,
       uploadFile

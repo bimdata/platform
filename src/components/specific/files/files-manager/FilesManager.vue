@@ -1,5 +1,9 @@
 <template>
-  <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
+  <BIMDataCard
+    ref="fileManager"
+    class="files-manager"
+    :titleHeader="$t('FilesManager.title')"
+  >
     <template #content>
       <AppModal v-if="projectsToUpload">
         <FileTreePreviewModal
@@ -11,15 +15,24 @@
         <div class="files-manager__actions start">
           <template v-if="menuItems.length > 0">
             <BIMDataDropdownMenu
+              ref="dropdown"
               class="files-manager__actions__dropdown"
+              v-click-away="close"
               width="20%"
               height="32px"
               :menuItems="menuItems"
+              :subListMaxHeight="dropdownMaxHeight"
+              @click="toggle"
             >
               <template #header>
                 <BIMDataIcon name="burgerMenu" fill color="primary" />
                 <div class="ghost-element" />
-                <BIMDataIcon name="deploy" fill size="xxs" color="primary" />
+                <BIMDataIcon
+                  :name="isOpen ? 'deploy' : 'chevron'"
+                  fill
+                  size="xxs"
+                  color="primary"
+                />
               </template>
             </BIMDataDropdownMenu>
           </template>
@@ -248,6 +261,8 @@ import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
 import FileService from "@/services/FileService.js";
 import { treeIdGenerator } from "@/utils/projects.js";
+import { useToggle } from "@/composables/toggle";
+
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
@@ -314,6 +329,8 @@ export default {
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
     const { openModal, closeModal } = useAppModal();
+    const { isOpen, toggle, close } = useToggle();
+
     const { fetchProjectFolderTreeSerializers } = useProjects();
 
     const {
@@ -553,7 +570,7 @@ export default {
           openModal();
           projectsToUpload.value = {
             ...p,
-            folders: treeIdGenerator(props.project, p.folders),
+            folders: treeIdGenerator(p),
             upload: () => {
               FileService.createFileStructure(props.project, p.folders);
               emit("file-updated");
@@ -591,6 +608,16 @@ export default {
       fetchProjectsTree();
     });
 
+    const fileManager = ref(null);
+    const dropdown = ref(null);
+    const dropdownMaxHeight = computed(() => {
+      if (!fileManager.value || !dropdown.value) return;
+      const { y, height: H } = dropdown.value.$el.getBoundingClientRect();
+      return `${
+        fileManager.value?.$el?.getBoundingClientRect().height - H - y
+      }px`;
+    });
+
     return {
       // References
       currentFolder,
@@ -616,7 +643,13 @@ export default {
       currentSpace,
       projectsTree,
       projectsToUpload,
+      dropdownMaxHeight,
+      fileManager,
+      dropdown,
+      isOpen,
+      toggle,
       // Methods
+      close,
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,

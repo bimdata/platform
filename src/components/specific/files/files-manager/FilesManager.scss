@@ -37,6 +37,7 @@
         }
         &__dropdown {
           .bimdata-dropdown__content {
+            padding: calc(var(--font-size) / 1.3);
             box-shadow: var(--box-shadow);
             border: none;
 
