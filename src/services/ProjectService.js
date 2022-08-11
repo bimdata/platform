@@ -176,6 +176,16 @@ class ProjectService {
       throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
     }
   }
+
+  async fetchProjectFolderTreeSerializers(project) {
+    try {
+      return await apiClient.collaborationApi.getProjectFolderTreeSerializers(
+        project.cloud.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_FOLDER_TREE_FETCH_ERROR, error);
+    }
+  }
 }
 
 const service = new ProjectService();

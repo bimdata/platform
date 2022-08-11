@@ -35,11 +35,18 @@
           :project="project"
           :fileStructure="fileStructure"
           :groups="groups"
+          :loadingData="loadingData"
           @file-uploaded="reloadData"
-          @file-updated="reloadData"
+          @file-updated="
+            {
+              loadingData = true;
+              reloadData();
+            }
+          "
           @folder-permission-updated="reloadData"
           @group-permission-updated="reloadData"
           @model-created="reloadData"
+          @switch-sub-modal="$emit('switch-sub-modal', $event)"
         />
       </AppLoading>
     </div>
@@ -47,6 +54,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { useStandardBreakpoints } from "@/composables/responsive.js";
 import routeNames from "@/router/route-names.js";
 import { useFiles } from "@/state/files.js";
@@ -68,6 +76,7 @@ export default {
     AppSlotContent,
     FilesManager
   },
+  emits: ["switch-sub-modal"],
   setup() {
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
@@ -75,12 +84,14 @@ export default {
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
     const { projectGroups } = useGroups();
 
+    const loadingData = ref(false);
     const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
         loadProjectModels(currentProject.value)
       ]);
+      loadingData.value = false;
     }, 1000);
 
     return {
@@ -90,6 +101,7 @@ export default {
       project: currentProject,
       routeNames,
       spaceSubInfo,
+      loadingData,
       // Methods
       reloadData,
       // Responsive breakpoints
