@@ -132,6 +132,10 @@ export default {
     filesToUpload: {
       type: Array,
       default: () => []
+    },
+    folderToUpload: {
+      type: Array,
+      default: () => []
     }
   },
   emits: [

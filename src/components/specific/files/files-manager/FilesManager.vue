@@ -140,6 +140,7 @@
             :folder="currentFolder"
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
+            :folderToUpload="folderToUpload"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @delete="openDeleteModal([$event])"
@@ -241,7 +242,7 @@ import {
   getPaths,
   getFilesInfos,
   createTreeFromPaths,
-  uploadFilesFromDMSTree
+  matchFoldersAndFiles
 } from "@/utils/projects.js";
 
 // Components
@@ -371,17 +372,20 @@ export default {
 
     const isFolderUpload = ref(true);
     const filesToUpload = ref([]);
+    const folderToUpload = ref([]);
+
     const uploadFiles = async files => {
       if (isFolderUpload.value) {
         const paths = getPaths(files);
-        const filesInfos = getFilesInfos(props.project, files);
+        const filesInfos = getFilesInfos(files);
 
         const tree = createTreeFromPaths(currentFolder, paths);
         const DMSTree = await FileService.createFileStructure(props.project, [
           tree
         ]);
 
-        uploadFilesFromDMSTree(DMSTree, filesInfos);
+        folderToUpload.value = matchFoldersAndFiles(DMSTree, filesInfos);
+        setTimeout(() => (folderToUpload.value = []), 100);
       } else {
         filesToUpload.value = files;
         setTimeout(() => (filesToUpload.value = []), 100);
@@ -603,6 +607,7 @@ export default {
       currentSpace,
       projectsTree,
       isFolderUpload,
+      folderToUpload,
       // Methods
       closeAccessManager,
       closeDeleteModal,

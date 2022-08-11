@@ -1,5 +1,5 @@
 import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
-import UploadService from "@/services/UploadService.js";
+import { STANDARD_HIDDEN_FILES } from "@/config/files.js";
 
 // Project statuses
 const NEW = "new";
@@ -49,18 +49,13 @@ function getPaths(files) {
     JSON.parse
   ).sort((a, b) => a.length - b.length);
 }
-
-function getFilesInfos(project, files) {
-  return files.map(file => ({
-    name: file.name,
-    path: file.webkitRelativePath.split("/").slice(0, -1),
-    upload: async parentId => {
-      await UploadService.createDocument(project, {
-        parent_id: parentId,
-        file
-      });
-    }
-  }));
+function getFilesInfos(files) {
+  return files
+    .map(file => ({
+      file: file,
+      path: file.webkitRelativePath.split("/").slice(0, -1)
+    }))
+    .filter(file => !STANDARD_HIDDEN_FILES.includes(file.file.name));
 }
 
 /**
@@ -114,34 +109,24 @@ function createTreeFromPaths(folder, paths) {
   return tree;
 }
 
-function uploadFilesFromDMSTree(DMSTree, filesInfos) {
-  filesInfos.forEach(async file => {
+function matchFoldersAndFiles(DMSTree, filesInfos) {
+  return filesInfos.map(file => {
     const filePath = Array.from(file.path);
 
     filePath.shift();
     let parentFolderID = null;
-    try {
-      const parentFolder = filePath.reduce(
-        (parentFolder, currentFolderName) => {
-          return (
-            parentFolder.children.find(
-              child => child.name === currentFolderName
-            ) ?? parentFolder
-          );
-        },
-        DMSTree[0]
+    const parentFolder = filePath.reduce((parentFolder, currentFolderName) => {
+      return (
+        parentFolder.children.find(child => child.name === currentFolderName) ??
+        parentFolder
       );
-      parentFolderID = parentFolder.id;
-    } catch (error) {
-      console.warn("current file has not find a parent folder");
-    }
-    if (parentFolderID === null) return;
+    }, DMSTree[0]);
+    parentFolderID = parentFolder.id;
 
-    try {
-      await file.upload(parentFolderID);
-    } catch (error) {
-      console.warn(error, "internal error");
-    }
+    return {
+      ...file,
+      parentFolderID
+    };
   });
 }
 
@@ -150,5 +135,5 @@ export {
   getPaths,
   getFilesInfos,
   createTreeFromPaths,
-  uploadFilesFromDMSTree
+  matchFoldersAndFiles
 };
