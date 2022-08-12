@@ -25,8 +25,7 @@
               @click="toggle"
             >
               <template #header>
-                <BIMDataIcon name="burgerMenu" fill color="primary" />
-                <div class="ghost-element" />
+                <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
                 <BIMDataIcon
                   :name="isOpen ? 'deploy' : 'chevron'"
                   fill
