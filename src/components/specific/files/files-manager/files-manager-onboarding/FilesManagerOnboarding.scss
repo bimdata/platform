@@ -25,6 +25,7 @@
       &:deep() {
         .bimdata-dropdown__content {
           box-shadow: var(--box-shadow);
+          border: none;
         }
 
         .submenu {
