@@ -61,6 +61,7 @@
           size="xxs"
           fill
           color="primary"
+          @click="$emit('open-versioning-manager', file)"
         />
       </div>
     </transition>
@@ -88,7 +89,7 @@ export default {
       default: false
     }
   },
-  emits: ["close", "file-clicked", "success"],
+  emits: ["close", "file-clicked", "success", "open-versioning-manager"],
   setup(props, { emit }) {
     const { updateFiles } = useFiles();
 

@@ -139,13 +139,16 @@ export default {
       docToDelete.value = document;
     };
 
-    const onSafeZone = async isActionConfirmed => {
+    const onSafeZone = isActionConfirmed => {
       if (isActionConfirmed) {
-        await FileService.deleteDocVersion(props.project, docToDelete.value);
-        const documentHistory = allDocVersions.value.find(
-          version => version.id !== docToDelete.value.id
+        FileService.deleteDocVersion(props.project, docToDelete.value);
+        // const documentHistory = allDocVersions.value.find(
+        //   version => version.id !== docToDelete.value.id
+        // );
+        allDocVersions.value = allDocVersions.value.filter(
+          doc => doc.id !== docToDelete.value.id
         );
-        await getAllDocVersions(documentHistory);
+        // await getAllDocVersions(documentHistory);
       }
       isSafeZone.value = false;
       docToDelete.value = null;
