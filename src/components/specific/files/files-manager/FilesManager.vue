@@ -385,7 +385,6 @@ export default {
         ]);
 
         folderToUpload.value = matchFoldersAndFiles(DMSTree, filesInfos);
-        setTimeout(() => (folderToUpload.value = []), 100);
       } else {
         filesToUpload.value = files;
         setTimeout(() => (filesToUpload.value = []), 100);

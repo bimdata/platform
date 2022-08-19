@@ -44,6 +44,18 @@
           @upload-failed="cleanUpload(file.key, 12000)"
         />
       </transition-group>
+      <template v-if="folderUpload.files">
+        <transition-group name="list">
+          <FolderUploadCard
+            condensed
+            key="1"
+            :project="project"
+            :folder="folderUpload"
+            @upload-completed="$emit('file-uploaded')"
+            @emptying-folder="folderUpload = {}"
+          />
+        </transition-group>
+      </template>
     </template>
     <template #cell-name="{ row: file }">
       <FileNameCell
@@ -100,6 +112,8 @@ import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+import FolderUploadCard from "@/components/specific/files/folder-upload-card/FolderUploadCard.vue";
+
 import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "./file-name-cell/FileNameCell.vue";
@@ -114,6 +128,7 @@ export default {
     FileTagsCell,
     FileTypeCell,
     FileUploadCard,
+    FolderUploadCard,
     FilesManagerBreadcrumb
   },
   props: {
@@ -134,8 +149,7 @@ export default {
       default: () => []
     },
     folderToUpload: {
-      type: Array,
-      default: () => []
+      type: Object
     }
   },
   emits: [
@@ -155,6 +169,12 @@ export default {
   setup(props, { emit }) {
     const { t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();
+
+    const folderUpload = ref({});
+    watch(
+      () => props.folderToUpload,
+      () => (folderUpload.value = props.folderToUpload)
+    );
 
     const filesTable = ref(null);
 
@@ -218,6 +238,7 @@ export default {
       filesTable,
       fileUploads,
       nameEditMode,
+      folderUpload,
       // Methods
       cleanUpload,
       formatBytes,

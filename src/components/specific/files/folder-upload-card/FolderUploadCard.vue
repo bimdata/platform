@@ -1,11 +1,11 @@
 <template>
   <div class="folder-upload-card" :class="{ condensed, failed }">
     <div class="folder-upload-card--left">
-      <BIMDataFileIcon fileName="folder" :size="condensed ? 20 : 32" />
+      <BIMDataIcon name="folder" />
     </div>
     <div class="folder-upload-card--center folder-upload-card__info">
       <div class="folder-upload-card__info__file-name">
-        {{ file.name }}
+        {{ folder.name }}
       </div>
       <div v-show="uploading" class="folder-upload-card__info__progress-bar">
         <div
@@ -16,8 +16,9 @@
       <div class="folder-upload-card__info__upload-data">
         <template v-if="uploading">
           <span>{{
-            `${formatBytes(progress.uploaded)} of ${formatBytes(file.size)}` +
-            ` (${progress.percentage}% done)`
+            `${formatBytes(progress.folderUploaded)} of ${formatBytes(
+              folder.size
+            )}` + ` (${progress.percentage}% done)`
           }}</span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""
@@ -25,7 +26,7 @@
         </template>
         <template v-else>
           <span>
-            {{ formatBytes(file.size) }}
+            {{ formatBytes(folder.size) }}
             <span v-show="canceled" class="message">
               {{ $t("FileUploadCard.cancelMessage") }}
             </span>
@@ -54,9 +55,9 @@
 </template>
 
 <script>
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useUpload } from "@/composables/upload.js";
-import { formatBytes } from "@/utils/files.js";
+import { formatBytes, generateFileKey } from "@/utils/files.js";
 
 export default {
   props: {
@@ -64,23 +65,23 @@ export default {
       type: Object,
       required: true
     },
-    // folder: {
-    //   type: Object
-    // },
-    files: {
-      type: Object,
-      required: true
+    folder: {
+      type: Object
     },
     condensed: {
       type: Boolean,
       default: false
     }
   },
-  emits: ["upload-completed", "upload-canceled", "upload-failed"],
+  emits: [
+    "upload-completed",
+    "upload-canceled",
+    "upload-failed",
+    "emptying-folder"
+  ],
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
 
-    const totalToUpload = ref(folder);
     const uploading = ref(false);
     const canceled = ref(false);
     const failed = ref(false);
@@ -88,7 +89,8 @@ export default {
     let lastProgressTime = null;
     const progress = reactive({
       percentage: 0,
-      uploaded: 0,
+      fileUploaded: 0,
+      folderUploaded: 0,
       rate: 0
     });
 
@@ -96,25 +98,45 @@ export default {
       onUploadStart: () => {
         uploading.value = true;
       },
-      onUploadProgress: ({ bytesUploaded, bytesTotal }) => {
-        if (lastProgressTime) {
-          const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
-          const dx = bytesUploaded - progress.uploaded; // in bytes
-          progress.rate = Math.round(dx / dt);
-        }
-        progress.percentage = Math.round((100 * bytesUploaded) / bytesTotal);
-        progress.uploaded = bytesUploaded;
-        lastProgressTime = Date.now();
+      onUploadProgress: ({ bytesUploaded }) => {
+        progressCounter(bytesUploaded);
       },
-      onUploadComplete: ({ response: document, bytesUploaded, bytesTotal }) => {
-        uploading.value = false;
-        emit("upload-completed", document);
+      onUploadComplete: () => {
+        progress.fileUploaded = 0;
+
+        const index = files.value.findIndex(
+          f => f.key === currentFile.value.key
+        );
+        files.value.splice(index, 1);
+
+        if (files.value.length === 0) {
+          uploading.value = false;
+          emit("upload-completed");
+          emit("emptying-folder");
+        }
       },
       onUploadError: () => {
         uploading.value = false;
         failed.value = true;
         emit("upload-failed");
       }
+    };
+
+    const progressCounter = bytesUploaded => {
+      const currentlyUploaded = bytesUploaded - progress.fileUploaded;
+      progress.folderUploaded += currentlyUploaded;
+
+      if (lastProgressTime) {
+        const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
+        const dx = currentlyUploaded; // in bytes
+        progress.rate = Math.round(dx / dt);
+      }
+      progress.percentage = Math.round(
+        (100 * progress.folderUploaded) / props.folder.size
+      );
+
+      progress.fileUploaded = bytesUploaded;
+      lastProgressTime = Date.now();
     };
 
     const uploader = projectFileUploader(props.project, handlers);
@@ -126,11 +148,26 @@ export default {
       emit("upload-canceled");
     };
 
-    onMounted(() => {
-      files.forEach(file => {
-        uploader.upload(file, file.parentId);
-      });
-    });
+    const files = ref(
+      props.folder.files.map(file => ({
+        ...file,
+        key: generateFileKey(file.file)
+      }))
+    );
+    const currentFile = ref(null);
+
+    watch(
+      files.value,
+      async () => {
+        if (files.value.length === 0) return;
+        currentFile.value = files.value[0];
+        await uploader.upload(
+          currentFile.value.file,
+          currentFile.value.parentId
+        );
+      },
+      { immediate: true }
+    );
 
     return {
       // References
@@ -146,4 +183,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./FileUploadCard.scss"></style>
+<style scoped lang="scss" src="./FolderUploadCard.scss"></style>

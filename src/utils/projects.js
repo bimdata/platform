@@ -110,24 +110,34 @@ function createTreeFromPaths(folder, paths) {
 }
 
 function matchFoldersAndFiles(DMSTree, filesInfos) {
-  return filesInfos.map(file => {
-    const filePath = Array.from(file.path);
+  return {
+    name: DMSTree[0].name,
+    size: filesInfos.reduce((a, b) => {
+      return a + b.file?.size ?? 0;
+    }, 0),
+    files: filesInfos.map(file => {
+      const filePath = Array.from(file.path);
 
-    filePath.shift();
-    let parentFolderID = null;
-    const parentFolder = filePath.reduce((parentFolder, currentFolderName) => {
-      return (
-        parentFolder.children.find(child => child.name === currentFolderName) ??
-        parentFolder
+      filePath.shift();
+      let parentId = null;
+      const parentFolder = filePath.reduce(
+        (parentFolder, currentFolderName) => {
+          return (
+            parentFolder.children.find(
+              child => child.name === currentFolderName
+            ) ?? parentFolder
+          );
+        },
+        DMSTree[0]
       );
-    }, DMSTree[0]);
-    parentFolderID = parentFolder.id;
+      parentId = parentFolder.id;
 
-    return {
-      ...file,
-      parentFolderID
-    };
-  });
+      return {
+        ...file,
+        parentId
+      };
+    })
+  };
 }
 
 export {
