@@ -118,10 +118,10 @@ export default {
     const addVersion = async fileToUpload => {
       if (fileToUpload) {
         const handlers = {
-          onUploadStart: () => loadingHandler("download"),
+          onUploadStart: () => (loading.value = "download"),
           onUploadComplete: async ({ response: newHeadVersion }) => {
             await getAllDocVersions(newHeadVersion);
-            loadingHandler();
+            loading.value = null;
           }
         };
         const uploader = projectFileUploader(props.project, handlers);
@@ -139,10 +139,9 @@ export default {
 
     const onSafeZone = async isActionConfirmed => {
       if (isActionConfirmed) {
-        loadingHandler("delete");
+        loading.value = "delete";
         await FileService.deleteDocVersion(props.project, docToDelete.value);
-        loadingHandler();
-
+        loading.value = null;
         const documentHistory = allDocVersions.value.find(
           version => version.id !== docToDelete.value.id
         );
@@ -172,8 +171,6 @@ export default {
     });
 
     const loading = ref(null);
-
-    const loadingHandler = loadingType => (loading.value = loadingType || null);
 
     onMounted(async () => await getAllDocVersions(props.document));
 
