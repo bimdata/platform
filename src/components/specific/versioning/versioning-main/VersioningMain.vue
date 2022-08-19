@@ -9,7 +9,7 @@
     </transition>
     <template v-if="loading">
       <BIMDataLoading
-        :message="$t('Versioning.loading.message')"
+        :message="$t(`Versioning.loading.${loading}Message`)"
         :subMessage="$t('Versioning.loading.subMessage')"
       />
     </template>
@@ -115,15 +115,13 @@ export default {
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
 
-    const loading = ref(false);
-
     const addVersion = async fileToUpload => {
       if (fileToUpload) {
         const handlers = {
-          onUploadStart: () => (loading.value = true),
+          onUploadStart: () => loadingHandler("download"),
           onUploadComplete: async ({ response: newHeadVersion }) => {
             await getAllDocVersions(newHeadVersion);
-            loading.value = false;
+            loadingHandler();
           }
         };
         const uploader = projectFileUploader(props.project, handlers);
@@ -139,16 +137,17 @@ export default {
       docToDelete.value = document;
     };
 
-    const onSafeZone = isActionConfirmed => {
+    const onSafeZone = async isActionConfirmed => {
       if (isActionConfirmed) {
-        FileService.deleteDocVersion(props.project, docToDelete.value);
-        // const documentHistory = allDocVersions.value.find(
-        //   version => version.id !== docToDelete.value.id
-        // );
-        allDocVersions.value = allDocVersions.value.filter(
-          doc => doc.id !== docToDelete.value.id
+        loadingHandler("delete");
+        await FileService.deleteDocVersion(props.project, docToDelete.value);
+        loadingHandler();
+
+        const documentHistory = allDocVersions.value.find(
+          version => version.id !== docToDelete.value.id
         );
-        // await getAllDocVersions(documentHistory);
+
+        await getAllDocVersions(documentHistory);
       }
       isSafeZone.value = false;
       docToDelete.value = null;
@@ -171,6 +170,11 @@ export default {
         return allDocVersions.value.length > 1 ? true : false;
       }
     });
+
+    const loading = ref(null);
+
+    const loadingHandler = typeOfLoading =>
+      (loading.value = typeOfLoading || null);
 
     onMounted(async () => await getAllDocVersions(props.document));
 
