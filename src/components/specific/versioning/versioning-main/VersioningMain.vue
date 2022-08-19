@@ -115,6 +115,8 @@ export default {
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
 
+    const loading = ref(null);
+
     const addVersion = async fileToUpload => {
       if (fileToUpload) {
         const handlers = {
@@ -169,8 +171,6 @@ export default {
         return allDocVersions.value.length > 1 ? true : false;
       }
     });
-
-    const loading = ref(null);
 
     onMounted(async () => await getAllDocVersions(props.document));
 
