@@ -60,7 +60,8 @@ const PLUGINS_CONFIG = {
   viewer3d: {
     enableDynamicLOD: true
   },
-  bcfManager: true
+  bcfManager: true,
+  accessMarketplace: true,
 };
 
 export {
