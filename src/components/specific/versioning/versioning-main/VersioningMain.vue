@@ -173,8 +173,7 @@ export default {
 
     const loading = ref(null);
 
-    const loadingHandler = typeOfLoading =>
-      (loading.value = typeOfLoading || null);
+    const loadingHandler = loadingType => (loading.value = loadingType || null);
 
     onMounted(async () => await getAllDocVersions(props.document));
 
