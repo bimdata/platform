@@ -1,5 +1,5 @@
 <template>
-  <div class="file-tree-preview-modal">
+  <div class="file-tree-preview-modal" v-click-away="closeModal">
     <template v-if="loadingData">
       <div class="file-tree-preview-modal__loader">
         <BIMDataSpinner />

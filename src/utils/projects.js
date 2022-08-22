@@ -140,8 +140,8 @@ function matchFoldersAndFiles(DMSTree, filesInfos) {
   };
 }
 
-function treeIdGenerator(project, folders) {
-  if (folders.length === 0) return;
+function treeIdGenerator(projectToImport) {
+  if (projectToImport.folders.length === 0) return;
   // Populate folder tree with IDs permit to satisfy a requieremet from FileTree component. Front-end use only.
   let idGenerator = 1;
 
@@ -154,7 +154,9 @@ function treeIdGenerator(project, folders) {
     }));
   };
 
-  return [{ name: project.name, children: mapping(folders) }];
+  return [
+    { name: projectToImport.name, children: mapping(projectToImport.folders) }
+  ];
 }
 
 export {
