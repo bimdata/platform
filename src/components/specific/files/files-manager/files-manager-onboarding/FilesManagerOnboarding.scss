@@ -15,7 +15,10 @@
     max-width: 475px;
 
     &__dropdown {
+      border-radius: 3px;
+      height: 32px;
       span {
+        color: var(--color-primary);
         margin-right: calc(var(--spacing-unit) / 2);
       }
 
@@ -35,6 +38,10 @@
 
           ul {
             overflow: auto;
+
+            li {
+              padding-left: var(--spacing-unit);
+            }
           }
         }
       }
