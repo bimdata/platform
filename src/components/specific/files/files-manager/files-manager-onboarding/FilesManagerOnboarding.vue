@@ -1,5 +1,5 @@
 <template>
-  <div class="files-manager-onboarding">
+  <div ref="onboarding" class="files-manager-onboarding">
     <FilesManagerOnboardingImage />
     <div>
       {{ $t("FilesManagerOnboarding.text") }}
@@ -17,6 +17,38 @@
       >
         {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
       </BIMDataButton>
+      <BIMDataDropdownMenu
+        class="files-manager-onboarding__actions__dropdown"
+        ref="dropdown"
+        width="20%"
+        height="32px"
+        directionClass="up"
+      >
+        <template #header>
+          <span> {{ $t("FilesManagerOnboarding.GEDStructureImport") }}</span>
+          <BIMDataIcon
+            name="deploy"
+            fill
+            size="xxs"
+            color="primary"
+            :rotate="180"
+          />
+        </template>
+        <template #element>
+          <ul
+            class="bimdata-list"
+            :style="{ maxHeight: dropdownMaxHeight + 'px' }"
+          >
+            <li
+              v-for="project in projectsTree"
+              :key="project.name"
+              @click="project.action"
+            >
+              <BIMDataTextbox :text="project.name" />
+            </li>
+          </ul>
+        </template>
+      </BIMDataDropdownMenu>
     </div>
     <transition name="fade">
       <div
@@ -51,7 +83,8 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+
 // Components
 import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
@@ -67,6 +100,10 @@ export default {
   },
   props: {
     project: {
+      type: Object,
+      required: true
+    },
+    projectsTree: {
       type: Object,
       required: true
     },
@@ -98,10 +135,21 @@ export default {
       showFolderForm.value = true;
     };
 
+    const onboarding = ref(null);
+    const dropdown = ref(null);
+    const dropdownMaxHeight = computed(
+      () =>
+        dropdown.value?.$el?.getBoundingClientRect().y -
+        onboarding.value?.getBoundingClientRect().y
+    );
+
     return {
       // References
       fileUploads,
       showFolderForm,
+      dropdownMaxHeight,
+      onboarding,
+      dropdown,
       // Methods
       createFolder,
       updateUploadCount,

@@ -9,7 +9,7 @@
     </transition>
     <template v-if="loading">
       <BIMDataLoading
-        :message="$t('Versioning.loading.message')"
+        :message="$t(`Versioning.loading.${loading}Message`)"
         :subMessage="$t('Versioning.loading.subMessage')"
       />
     </template>
@@ -115,15 +115,15 @@ export default {
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
 
-    const loading = ref(false);
+    const loading = ref(null);
 
     const addVersion = async fileToUpload => {
       if (fileToUpload) {
         const handlers = {
-          onUploadStart: () => (loading.value = true),
+          onUploadStart: () => (loading.value = "download"),
           onUploadComplete: async ({ response: newHeadVersion }) => {
             await getAllDocVersions(newHeadVersion);
-            loading.value = false;
+            loading.value = null;
           }
         };
         const uploader = projectFileUploader(props.project, handlers);
@@ -141,10 +141,13 @@ export default {
 
     const onSafeZone = async isActionConfirmed => {
       if (isActionConfirmed) {
+        loading.value = "delete";
         await FileService.deleteDocVersion(props.project, docToDelete.value);
+        loading.value = null;
         const documentHistory = allDocVersions.value.find(
           version => version.id !== docToDelete.value.id
         );
+
         await getAllDocVersions(documentHistory);
       }
       isSafeZone.value = false;

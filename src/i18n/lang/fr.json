@@ -233,7 +233,8 @@
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
     "uploadFileButtonText": "Téléverser un fichier",
-    "createFolderButtonText": "Créer un dossier"
+    "createFolderButtonText": "Créer un dossier",
+    "GEDStructureImport": "Importer une structure GED"
   },
   "FilesTable": {
     "emptyTablePlaceholder": "Dossier vide",
@@ -246,6 +247,11 @@
       "lastupdate": "Modifié le",
       "size": "Taille"
     }
+  },
+  "FileTreePreview": {
+    "title": "Importer la structure GED depuis",
+    "cancel": "Annuler",
+    "validate": "Valider"
   },
   "FileUploadButton": {
     "addFileButtonText": "Charger un fichier"
@@ -861,7 +867,8 @@
     "titleDate": "Le",
     "AddVersion": "Ajouter une nouvelle version",
     "loading": {
-      "message": "Chargement en cours.",
+      "downloadMessage": "Chargement en cours.",
+      "deleteMessage": "Suppression en cours.",
       "subMessage": "Ce processus peut prendre quelques instants."
     },
     "delete": "Supprimer",

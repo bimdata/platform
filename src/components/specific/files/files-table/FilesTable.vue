@@ -62,6 +62,7 @@
         :project="project"
         :file="file"
         @file-clicked="$emit('file-clicked', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         :editMode="nameEditMode[file.id]"
         @close="nameEditMode[file.id] = false"
       />

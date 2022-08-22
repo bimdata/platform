@@ -1,6 +1,12 @@
 <template>
   <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
     <template #content>
+      <AppModal v-if="projectsToUpload">
+        <FileTreePreviewModal
+          :projectsToUpload="projectsToUpload"
+          :loadingData="loadingData"
+        />
+      </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
           <template v-if="menuItems.length > 0">
@@ -50,7 +56,12 @@
                 color="primary"
                 fill
                 radius
-                @click="openModal"
+                @click="
+                  {
+                    openModal();
+                    $emit('switch-sub-modal', true);
+                  }
+                "
               >
                 <BIMDataIcon name="addFile" size="xs" />
                 <span v-if="!isLG" style="margin-left: 6px">
@@ -110,7 +121,6 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
-
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -214,6 +224,7 @@
           class="files-manager__onboarding"
           :project="project"
           :rootFolder="fileStructure"
+          :projectsTree="projectsTree"
           @file-uploaded="$emit('file-uploaded')"
         />
       </template>
@@ -241,6 +252,7 @@ import FileService from "@/services/FileService.js";
 import {
   getPaths,
   getFilesInfos,
+  treeIdGenerator,
   createTreeFromPaths,
   matchFoldersAndFiles
 } from "@/utils/projects.js";
@@ -257,6 +269,8 @@ import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
 import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
 import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
+import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
+import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
 
 export default {
   components: {
@@ -270,7 +284,9 @@ export default {
     FilesManagerOnboarding,
     VisaMain,
     TagsMain,
-    VersioningMain
+    VersioningMain,
+    AppModal,
+    FileTreePreviewModal
   },
   props: {
     spaceSubInfo: {
@@ -288,6 +304,10 @@ export default {
     groups: {
       type: Array,
       required: true
+    },
+    loadingData: {
+      type: Boolean,
+      required: true
     }
   },
   emits: [
@@ -295,13 +315,14 @@ export default {
     "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
-    "model-created"
+    "model-created",
+    "switch-sub-modal"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
-    const { openModal } = useAppModal();
+    const { openModal, closeModal } = useAppModal();
     const { fetchProjectFolderTreeSerializers } = useProjects();
 
     const {
@@ -547,29 +568,42 @@ export default {
     };
 
     const projectsTree = ref([]);
-
     const fetchProjectsTree = async () => {
-      projectsTree.value = await fetchProjectFolderTreeSerializers(
-        props.project
-      );
-    };
-
-    const menuItems = computed(() => {
-      let items = [
-        // { name: t("FilesManager.fileImport") },
-        // { name: t("FilesManager.gedDownload") }
-      ];
-
-      if (props.project.isAdmin && projectsTree.value.length > 0) {
-        items.unshift({
-          name: t("FilesManager.structureImport"),
-          children: projectsTree.value.map(p => ({
+      projectsTree.value = (
+        await fetchProjectFolderTreeSerializers(props.project)
+      ).map(p => ({
+        name: p.name,
+        action: () => {
+          openModal();
+          projectsToUpload.value = {
             ...p,
-            action: () => {
+            folders: treeIdGenerator(props.project, p.folders),
+            upload: () => {
               FileService.createFileStructure(props.project, p.folders);
               emit("file-updated");
             }
-          }))
+          };
+        }
+      }));
+    };
+
+    watch(
+      () => props.loadingData,
+      () => {
+        if (!props.loadingData) {
+          closeModal();
+        }
+      }
+    );
+
+    const projectsToUpload = ref(null);
+    const menuItems = computed(() => {
+      let items = [];
+
+      if (props.project.isAdmin && projectsTree.value.length > 0) {
+        items.push({
+          name: t("FilesManager.structureImport"),
+          children: projectsTree.value
         });
       }
       return items;
@@ -607,6 +641,7 @@ export default {
       projectsTree,
       isFolderUpload,
       folderToUpload,
+      projectsToUpload,
       // Methods
       closeAccessManager,
       closeDeleteModal,
