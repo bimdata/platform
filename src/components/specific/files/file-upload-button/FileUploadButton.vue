@@ -17,7 +17,6 @@
       hidden
       ref="fileInput"
       type="file"
-      :webkitdirectory="isFolderUpload"
       :multiple="multiple"
       :accept="accept.join(',')"
       @change="uploadFile"
@@ -51,10 +50,6 @@ export default {
       default: () => []
     },
     disabled: {
-      type: Boolean,
-      default: false
-    },
-    isFolderUpload: {
       type: Boolean,
       default: false
     }

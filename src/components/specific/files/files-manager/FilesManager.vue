@@ -86,7 +86,6 @@
                 :disabled="
                   !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
                 "
-                :isFolderUpload="isFolderUpload"
                 width="100%"
                 multiple
                 @upload="uploadFiles"
@@ -406,7 +405,7 @@ export default {
       selection.value = models;
     };
 
-    const isFolderUpload = ref(true);
+    const isFolderUpload = ref(false);
     const filesToUpload = ref([]);
     const folderToUpload = ref([]);
 
@@ -421,6 +420,7 @@ export default {
         ]);
 
         folderToUpload.value = matchFoldersAndFiles(DMSTree, filesInfos);
+        isFolderUpload.value = false;
       } else {
         filesToUpload.value = files;
         setTimeout(() => (filesToUpload.value = []), 100);
@@ -613,7 +613,7 @@ export default {
 
     const projectsToUpload = ref(null);
     const menuItems = computed(() => {
-      let items = [];
+      const items = [];
 
       if (props.project.isAdmin && projectsTree.value.length > 0) {
         items.push({
@@ -621,6 +621,33 @@ export default {
           children: projectsTree.value
         });
       }
+      if (props.project.isAdmin) {
+        items.push({
+          name: t("FilesManager.folderImport"),
+          action: () => {
+            {
+              const f = document.createElement("input");
+              f.webkitdirectory = true;
+              f.hidden = true;
+              f.type = "file";
+
+              f.addEventListener("change", event => {
+                const files = Array.from(event.target.files);
+                if (files.length > 0) {
+                  uploadFiles(files);
+                }
+              });
+
+              document
+                .getElementsByClassName("files-manager")[0]
+                .appendChild(f);
+              isFolderUpload.value = true;
+              f.click();
+            }
+          }
+        });
+      }
+
       return items;
     });
 
