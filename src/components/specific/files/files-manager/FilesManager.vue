@@ -335,7 +335,8 @@ export default {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
-      downloadFiles: download
+      downloadFiles: download,
+      projectFileStructure
     } = useFiles();
     const { createModel, deleteModels } = useModels();
 
@@ -598,6 +599,16 @@ export default {
           children: projectsTree.value
         });
       }
+
+      if (props.project.isAdmin) {
+        items.push({
+          name: t("FilesManager.gedDownload"),
+          action: async () => {
+            await downloadFiles([projectFileStructure.value]);
+          }
+        });
+      }
+
       return items;
     });
 
