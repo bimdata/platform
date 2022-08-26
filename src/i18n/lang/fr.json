@@ -28,7 +28,11 @@
     "titleDatapack": "Ajout d'un DataPack"
   },
   "ProfileSettings": {
-    "title": "Paramètres du profil"
+    "title": "Paramètres du profil",
+    "loading": {
+      "message": "Suppression en cours.",
+      "subMessage": "Ce processus peut prendre quelques instants, veuillez ne pas quitter la page."
+    }
   },
   "ProjectBoard": {
     "tabs": {

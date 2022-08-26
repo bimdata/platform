@@ -28,6 +28,7 @@
       :nth-child(1) {
         position: absolute;
         margin-top: 100px;
+        transform: scale(2);
       }
 
       iframe {
@@ -37,8 +38,6 @@
         border: none;
       }
     }
-
-
   }
 
   &__ghost-element {
