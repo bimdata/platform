@@ -406,12 +406,13 @@ export default {
       selection.value = models;
     };
 
-    const isFolderUpload = ref(false);
     const filesToUpload = ref([]);
     const folderToUpload = ref([]);
 
     const uploadFiles = async files => {
-      if (isFolderUpload.value) {
+      const isFolderUpload = Boolean(files[0].webkitRelativePath);
+
+      if (isFolderUpload) {
         const paths = getPaths(files);
         const filesInfos = getFilesInfos(files);
 
@@ -421,7 +422,6 @@ export default {
         ]);
 
         folderToUpload.value = matchFoldersAndFiles(DMSTree, filesInfos);
-        isFolderUpload.value = false;
       } else {
         filesToUpload.value = files;
         setTimeout(() => (filesToUpload.value = []), 100);
@@ -629,7 +629,6 @@ export default {
             fileUploadInput("folder", event => {
               const files = Array.from(event.target.files);
               if (files.length > 0) {
-                isFolderUpload.value = true;
                 uploadFiles(files);
               }
             });
@@ -679,7 +678,6 @@ export default {
       isAbleToSub: inject("isAbleToSub"),
       currentSpace,
       projectsTree,
-      isFolderUpload,
       folderToUpload,
       projectsToUpload,
       dropdownMaxHeight,

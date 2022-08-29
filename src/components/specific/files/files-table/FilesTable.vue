@@ -43,19 +43,16 @@
           @upload-canceled="cleanUpload(file.key, 6000)"
           @upload-failed="cleanUpload(file.key, 12000)"
         />
-      </transition-group>
-      <template v-if="folderUpload.files">
-        <transition-group name="list">
+        <template v-if="folderUpload.files">
           <FolderUploadCard
             condensed
-            key="1"
             :project="project"
             :folder="folderUpload"
             @upload-completed="$emit('file-uploaded')"
             @emptying-folder="folderUpload = {}"
           />
-        </transition-group>
-      </template>
+        </template>
+      </transition-group>
     </template>
     <template #cell-name="{ row: file }">
       <FileNameCell
