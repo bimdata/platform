@@ -161,7 +161,6 @@
             :folder="currentFolder"
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
-            :folderToUpload="folderToUpload"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @delete="openDeleteModal([$event])"
@@ -406,8 +405,7 @@ export default {
       selection.value = models;
     };
 
-    const filesToUpload = ref([]);
-    const folderToUpload = ref([]);
+    const filesToUpload = ref({});
 
     const uploadFiles = async files => {
       const isFolderUpload = Boolean(files[0].webkitRelativePath);
@@ -421,11 +419,17 @@ export default {
           tree
         ]);
 
-        folderToUpload.value = matchFoldersAndFiles(DMSTree, filesInfos);
+        filesToUpload.value = {
+          ...matchFoldersAndFiles(DMSTree, filesInfos),
+          type: "folder"
+        };
       } else {
-        filesToUpload.value = files;
-        setTimeout(() => (filesToUpload.value = []), 100);
+        filesToUpload.value = {
+          ...files,
+          type: "document"
+        };
       }
+      setTimeout(() => (filesToUpload.value = {}), 100);
     };
 
     const createModelFromFile = async file => {
@@ -678,7 +682,6 @@ export default {
       isAbleToSub: inject("isAbleToSub"),
       currentSpace,
       projectsTree,
-      folderToUpload,
       projectsToUpload,
       dropdownMaxHeight,
       fileManager,

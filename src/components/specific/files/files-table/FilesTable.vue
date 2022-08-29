@@ -32,22 +32,24 @@
         />
       </div>
       <transition-group name="list">
-        <FileUploadCard
-          v-for="file of fileUploads"
-          :key="file.key"
-          condensed
-          :project="project"
-          :folder="folder"
-          :file="file"
-          @upload-completed="onUploadCompleted(file.key, $event)"
-          @upload-canceled="cleanUpload(file.key, 6000)"
-          @upload-failed="cleanUpload(file.key, 12000)"
-        />
-        <template v-if="folderUpload.files">
+        <template v-if="fileUploads.type && fileUploads.type === 'document'">
+          <FileUploadCard
+            v-for="file of fileUploads.files"
+            :key="file.key"
+            condensed
+            :project="project"
+            :folder="folder"
+            :file="file"
+            @upload-completed="onUploadCompleted(file.key, $event)"
+            @upload-canceled="cleanUpload(file.key, 6000)"
+            @upload-failed="cleanUpload(file.key, 12000)"
+          />
+        </template>
+        <template v-if="fileUploads.type && fileUploads.type === 'folder'">
           <FolderUploadCard
             condensed
             :project="project"
-            :folder="folderUpload"
+            :folder="fileUploads"
             @upload-completed="$emit('file-uploaded')"
             @emptying-folder="folderUpload = {}"
           />
@@ -143,10 +145,6 @@ export default {
       required: true
     },
     filesToUpload: {
-      type: Array,
-      default: () => []
-    },
-    folderToUpload: {
       type: Object
     }
   },
@@ -205,17 +203,18 @@ export default {
       { immediate: true }
     );
 
-    const fileUploads = ref([]);
+    const fileUploads = ref({});
     watch(
       () => props.filesToUpload,
       () => {
-        fileUploads.value = fileUploads.value.concat(
-          props.filesToUpload.map(file =>
+        if (!props.filesToUpload.type) return;
+        fileUploads.value = {
+          ...props.filesToUpload,
+          files: Array.from(props.filesToUpload.files).map(file =>
             Object.assign(file, { key: generateFileKey(file) })
           )
-        );
-      },
-      { immediate: true }
+        };
+      }
     );
 
     const onUploadCompleted = (key, file) => {

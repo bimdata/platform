@@ -57,7 +57,7 @@
 <script>
 import { reactive, ref, watch } from "vue";
 import { useUpload } from "@/composables/upload.js";
-import { formatBytes, generateFileKey } from "@/utils/files.js";
+import { formatBytes } from "@/utils/files.js";
 
 export default {
   props: {
@@ -66,7 +66,8 @@ export default {
       required: true
     },
     folder: {
-      type: Object
+      type: Object,
+      default: () => {}
     },
     condensed: {
       type: Boolean,
@@ -148,12 +149,7 @@ export default {
       emit("upload-canceled");
     };
 
-    const files = ref(
-      props.folder.files.map(file => ({
-        ...file,
-        key: generateFileKey(file.file)
-      }))
-    );
+    const files = ref(props.folder.files);
     const currentFile = ref(null);
 
     watch(
