@@ -51,7 +51,6 @@
             :project="project"
             :folder="fileUploads"
             @upload-completed="$emit('file-uploaded')"
-            @emptying-folder="folderUpload = {}"
           />
         </template>
       </transition-group>
@@ -166,12 +165,6 @@ export default {
     const { t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();
 
-    const folderUpload = ref({});
-    watch(
-      () => props.folderToUpload,
-      () => (folderUpload.value = props.folderToUpload)
-    );
-
     const filesTable = ref(null);
 
     const columns = computed(() => {
@@ -208,6 +201,7 @@ export default {
       () => props.filesToUpload,
       () => {
         if (!props.filesToUpload.type) return;
+        console.log("props.filesToUpload", props.filesToUpload);
         fileUploads.value = {
           ...props.filesToUpload,
           files: Array.from(props.filesToUpload.files).map(file =>
@@ -224,8 +218,8 @@ export default {
 
     const cleanUpload = (key, delay = 100) => {
       setTimeout(() => {
-        const index = fileUploads.value.findIndex(f => f.key === key);
-        fileUploads.value.splice(index, 1);
+        const index = fileUploads.value.files.findIndex(f => f.key === key);
+        fileUploads.value.files.splice(index, 1);
       }, delay);
     };
 
@@ -235,7 +229,6 @@ export default {
       filesTable,
       fileUploads,
       nameEditMode,
-      folderUpload,
       // Methods
       cleanUpload,
       formatBytes,

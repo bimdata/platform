@@ -425,7 +425,7 @@ export default {
         };
       } else {
         filesToUpload.value = {
-          ...files,
+          files,
           type: "document"
         };
       }
