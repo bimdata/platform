@@ -82,4 +82,28 @@ function createFileUploader(
   return fileUploader;
 }
 
-export { createFileUploader };
+function fileUploadInput(type, onChange, attrs = {}) {
+  const input = document.createElement("input");
+
+  input.type = "file";
+  input.hidden = true;
+  input.webkitdirectory = type === "folder";
+
+  let attrsList = Object.keys(attrs);
+
+  if (attrsList.includes("accept")) {
+    input.accept = attrs.accept.join(",");
+    attrsList = attrsList.filter(attr => attr !== "accept");
+  }
+
+  attrsList.forEach(prop => {
+    input[prop] = attrs[prop];
+  });
+
+  input.addEventListener("change", onChange);
+
+  document.body.appendChild(input);
+  input.click();
+}
+
+export { createFileUploader, fileUploadInput };

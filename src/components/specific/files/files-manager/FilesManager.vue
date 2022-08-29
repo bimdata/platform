@@ -256,6 +256,7 @@ import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
+import { fileUploadInput } from "@/utils/upload.js";
 import { VISA_STATUS } from "@/config/visa.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
@@ -625,29 +626,16 @@ export default {
         items.push({
           name: t("FilesManager.folderImport"),
           action: () => {
-            {
-              const f = document.createElement("input");
-              f.webkitdirectory = true;
-              f.hidden = true;
-              f.type = "file";
-
-              f.addEventListener("change", event => {
-                const files = Array.from(event.target.files);
-                if (files.length > 0) {
-                  uploadFiles(files);
-                }
-              });
-
-              document
-                .getElementsByClassName("files-manager")[0]
-                .appendChild(f);
-              isFolderUpload.value = true;
-              f.click();
-            }
+            fileUploadInput("folder", event => {
+              const files = Array.from(event.target.files);
+              if (files.length > 0) {
+                isFolderUpload.value = true;
+                uploadFiles(files);
+              }
+            });
           }
         });
       }
-
       return items;
     });
 
