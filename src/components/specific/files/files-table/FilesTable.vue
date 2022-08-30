@@ -55,6 +55,7 @@
             :project="project"
             :folder="fileUploads"
             @upload-completed="$emit('file-uploaded')"
+            @emptying-files="fileUploads = {}"
           />
         </template>
       </transition-group>

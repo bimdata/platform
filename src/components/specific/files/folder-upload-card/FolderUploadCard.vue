@@ -78,7 +78,7 @@ export default {
     "upload-completed",
     "upload-canceled",
     "upload-failed",
-    "emptying-folder"
+    "emptying-files"
   ],
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
@@ -125,7 +125,7 @@ export default {
           if (files.value.length === 0) {
             uploading.value = false;
             emit("upload-completed");
-            emit("emptying-folder");
+            emit("emptying-files");
           }
         }
       },
