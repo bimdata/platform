@@ -1,3 +1,8 @@
+.delete-loader {
+  // this property aims to place delete loader over the AppHeaderMenu component
+  z-index: 101;
+}
+
 .profile-settings {
   display: flex;
   height: 100%;

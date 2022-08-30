@@ -1,9 +1,13 @@
 <template>
-  <template v-if="deleteLoader"
-    ><BIMDataLoading
-      :message="$t('ProfileSettings.loading.message')"
-      :subMessage="$t('ProfileSettings.loading.subMessage')"
-  /></template>
+  <template v-if="deleteLoader">
+    <teleport to="body">
+      <BIMDataLoading
+        class="delete-loader"
+        :message="$t('ProfileSettings.loading.message')"
+        :subMessage="$t('ProfileSettings.loading.subMessage')"
+      />
+    </teleport>
+  </template>
   <div v-show="!deleteLoader" class="profile-settings">
     <div class="profile-settings__back-btn">
       <GoBackButton />
