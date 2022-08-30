@@ -49,7 +49,7 @@ function getPaths(files) {
     JSON.parse
   ).sort((a, b) => a.length - b.length);
 }
-function getFilesInfos(files) {
+function getDocsInfos(files) {
   return files
     .map(file => ({
       file: file,
@@ -109,35 +109,25 @@ function createTreeFromPaths(folder, paths) {
   return tree;
 }
 
-function matchFoldersAndFiles(DMSTree, filesInfos) {
-  return {
-    name: DMSTree[0].name,
-    size: filesInfos.reduce((a, b) => {
-      return a + b.file?.size ?? 0;
-    }, 0),
-    files: filesInfos.map(file => {
-      const filePath = Array.from(file.path);
+function matchFoldersAndDocs(DMSTree, docsInfos) {
+  return docsInfos.map(doc => {
+    const docPath = Array.from(doc.path);
 
-      filePath.shift();
-      let parentId = null;
-      const parentFolder = filePath.reduce(
-        (parentFolder, currentFolderName) => {
-          return (
-            parentFolder.children.find(
-              child => child.name === currentFolderName
-            ) ?? parentFolder
-          );
-        },
-        DMSTree[0]
+    docPath.shift();
+    let parentId = null;
+    const parentFolder = docPath.reduce((parentFolder, currentFolderName) => {
+      return (
+        parentFolder.children.find(child => child.name === currentFolderName) ??
+        parentFolder
       );
-      parentId = parentFolder.id;
+    }, DMSTree[0]);
+    parentId = parentFolder.id;
 
-      return {
-        ...file,
-        parentId
-      };
-    })
-  };
+    return {
+      ...doc,
+      parentId
+    };
+  });
 }
 
 function treeIdGenerator(projectToImport) {
@@ -162,8 +152,8 @@ function treeIdGenerator(projectToImport) {
 export {
   projectStatus,
   getPaths,
-  getFilesInfos,
+  getDocsInfos,
   createTreeFromPaths,
-  matchFoldersAndFiles,
+  matchFoldersAndDocs,
   treeIdGenerator
 };

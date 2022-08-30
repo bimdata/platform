@@ -257,16 +257,17 @@ import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
 import { fileUploadInput } from "@/utils/upload.js";
 import { VISA_STATUS } from "@/config/visa.js";
+import { FILE_TYPE } from "@/config/files.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
 import FileService from "@/services/FileService.js";
 import { useToggle } from "@/composables/toggle";
 import {
   getPaths,
-  getFilesInfos,
+  getDocsInfos,
   treeIdGenerator,
   createTreeFromPaths,
-  matchFoldersAndFiles
+  matchFoldersAndDocs
 } from "@/utils/projects.js";
 
 // Components
@@ -412,7 +413,7 @@ export default {
 
       if (isFolderUpload) {
         const paths = getPaths(files);
-        const filesInfos = getFilesInfos(files);
+        const filesInfos = getDocsInfos(files);
 
         const tree = createTreeFromPaths(currentFolder, paths);
         const DMSTree = await FileService.createFileStructure(props.project, [
@@ -420,13 +421,15 @@ export default {
         ]);
 
         filesToUpload.value = {
-          ...matchFoldersAndFiles(DMSTree, filesInfos),
-          type: "folder"
+          type: FILE_TYPE.FOLDER,
+          folderName: DMSTree[0].name,
+          size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
+          files: matchFoldersAndDocs(DMSTree, filesInfos)
         };
       } else {
         filesToUpload.value = {
-          files,
-          type: "document"
+          type: FILE_TYPE.DOCUMENT,
+          files
         };
       }
       setTimeout(() => (filesToUpload.value = {}), 100);

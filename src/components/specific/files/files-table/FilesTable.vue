@@ -32,7 +32,9 @@
         />
       </div>
       <transition-group name="list">
-        <template v-if="fileUploads.type && fileUploads.type === 'document'">
+        <template
+          v-if="fileUploads.type && fileUploads.type === FILE_TYPE.DOCUMENT"
+        >
           <FileUploadCard
             v-for="file of fileUploads.files"
             :key="file.key"
@@ -45,7 +47,9 @@
             @upload-failed="cleanUpload(file.key, 12000)"
           />
         </template>
-        <template v-if="fileUploads.type && fileUploads.type === 'folder'">
+        <template
+          v-if="fileUploads.type && fileUploads.type === FILE_TYPE.FOLDER"
+        >
           <FolderUploadCard
             condensed
             :project="project"
@@ -107,6 +111,8 @@ import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
+import { FILE_TYPE } from "@/config/files.js";
+
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
@@ -201,13 +207,11 @@ export default {
       () => props.filesToUpload,
       () => {
         if (!props.filesToUpload.type) return;
-        console.log("props.filesToUpload", props.filesToUpload);
-        fileUploads.value = {
-          ...props.filesToUpload,
+        fileUploads.value = Object.assign(props.filesToUpload, {
           files: Array.from(props.filesToUpload.files).map(file =>
             Object.assign(file, { key: generateFileKey(file) })
           )
-        };
+        });
       }
     );
 
@@ -229,6 +233,7 @@ export default {
       filesTable,
       fileUploads,
       nameEditMode,
+      FILE_TYPE,
       // Methods
       cleanUpload,
       formatBytes,

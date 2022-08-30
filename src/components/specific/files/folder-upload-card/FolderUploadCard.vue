@@ -5,7 +5,7 @@
     </div>
     <div class="folder-upload-card--center folder-upload-card__info">
       <div class="folder-upload-card__info__file-name">
-        {{ folder.name }}
+        {{ folder.folderName }}
       </div>
       <div v-show="uploading" class="folder-upload-card__info__progress-bar">
         <div
