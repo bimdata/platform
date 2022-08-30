@@ -99,7 +99,7 @@ export default {
       onUploadStart: () => {
         uploading.value = true;
       },
-      onUploadProgress: ({ bytesUploaded }) => {
+      onUploadProgress: ({ bytesUploaded, bytesTotal }) => {
         const currentlyUploaded = bytesUploaded - progress.fileUploaded;
         progress.folderUploaded += currentlyUploaded;
 
@@ -114,19 +114,19 @@ export default {
 
         progress.fileUploaded = bytesUploaded;
         lastProgressTime = Date.now();
-      },
-      onUploadComplete: () => {
-        progress.fileUploaded = 0;
 
-        const index = files.value.findIndex(
-          f => f.key === currentFile.value.key
-        );
-        files.value.splice(index, 1);
+        if (bytesUploaded >= bytesTotal) {
+          progress.fileUploaded = 0;
 
-        if (files.value.length === 0) {
-          uploading.value = false;
-          emit("upload-completed");
-          emit("emptying-folder");
+          const index = files.value.findIndex(
+            f => f.key === currentFile.value.key
+          );
+          files.value.splice(index, 1);
+          if (files.value.length === 0) {
+            uploading.value = false;
+            emit("upload-completed");
+            emit("emptying-folder");
+          }
         }
       },
       onUploadError: () => {
