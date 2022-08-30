@@ -100,7 +100,20 @@ export default {
         uploading.value = true;
       },
       onUploadProgress: ({ bytesUploaded }) => {
-        progressCounter(bytesUploaded);
+        const currentlyUploaded = bytesUploaded - progress.fileUploaded;
+        progress.folderUploaded += currentlyUploaded;
+
+        if (lastProgressTime) {
+          const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
+          const dx = currentlyUploaded; // in bytes
+          progress.rate = Math.round(dx / dt);
+        }
+        progress.percentage = Math.round(
+          (100 * progress.folderUploaded) / props.folder.size
+        );
+
+        progress.fileUploaded = bytesUploaded;
+        lastProgressTime = Date.now();
       },
       onUploadComplete: () => {
         progress.fileUploaded = 0;
@@ -121,23 +134,6 @@ export default {
         failed.value = true;
         emit("upload-failed");
       }
-    };
-
-    const progressCounter = bytesUploaded => {
-      const currentlyUploaded = bytesUploaded - progress.fileUploaded;
-      progress.folderUploaded += currentlyUploaded;
-
-      if (lastProgressTime) {
-        const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
-        const dx = currentlyUploaded; // in bytes
-        progress.rate = Math.round(dx / dt);
-      }
-      progress.percentage = Math.round(
-        (100 * progress.folderUploaded) / props.folder.size
-      );
-
-      progress.fileUploaded = bytesUploaded;
-      lastProgressTime = Date.now();
     };
 
     const uploader = projectFileUploader(props.project, handlers);
