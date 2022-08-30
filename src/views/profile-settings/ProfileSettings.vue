@@ -36,7 +36,7 @@ export default {
     const { signOut } = useAuth();
 
     const iframe = ref(null);
-    const deleteLoader = ref(false);
+    const deleteLoader = ref(true);
     const displayIframe = ref(true);
 
     onMounted(() => {
