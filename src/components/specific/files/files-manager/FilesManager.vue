@@ -268,7 +268,7 @@ import {
   treeIdGenerator,
   createTreeFromPaths,
   matchFoldersAndDocs
-} from "@/utils/projects.js";
+} from "@/utils/files.js";
 
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";

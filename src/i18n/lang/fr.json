@@ -227,7 +227,7 @@
     "searchInputPlaceholder": "Rechercher",
     "createModelNotification": "Modèle créé avec succès",
     "structureImport": "Importer une structure GED",
-    "folderImport": "Import un dossier",
+    "folderImport": "Importer un dossier",
     "gedDownload": "Télécharger la GED"
   },
   "FilesManagerOnboarding": {
