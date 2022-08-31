@@ -1,7 +1,7 @@
 <template>
   <div
-    data-test-id="project-creation-card"
     class="project-creation-card"
+    data-test-id="project-creation-card"
     v-click-away="closeCreationForm"
   >
     <transition name="fade" mode="out-in">

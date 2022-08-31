@@ -3,6 +3,7 @@
     <AppLoading name="spaces-subscriptions" :loader="false">
       <SubscriptionStatusBanner class="space-board__banner" :space="space" />
     </AppLoading>
+
     <ViewHeader class="space-board__header">
       <template #left>
         <GoBackButton v-if="isMD" />
@@ -68,14 +69,8 @@
         :style="{ justifyContent: isMD ? 'center' : '' }"
       >
         <transition-group name="grid">
-          <ProjectCreationCard
-            data-test-id="creation-card"
-            v-if="space.isAdmin"
-            :key="-1"
-            :space="space"
-          />
+          <ProjectCreationCard v-if="space.isAdmin" :key="-1" :space="space" />
           <ProjectCard
-            data-test-id="project-card"
             v-for="project in projects"
             :key="project.id"
             :project="project"

@@ -55,6 +55,7 @@
       </transition>
     </div>
   </div>
+
   <AppModal v-if="isSubscriptionEnabled && isSubscriptionModal">
     <SubscriptionModal @switch-sub-modal="isSubscriptionModal = $event" />
   </AppModal>

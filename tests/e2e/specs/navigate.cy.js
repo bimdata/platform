@@ -7,7 +7,7 @@ describe("Navigation Test", () => {
     cy.visit("/");
   });
 
-  it("Should navigate to user spaces", () => {
+  it("Should navigate throw platform views", () => {
     cy.getHook("btn-spaces").click().wait(200);
     cy.getHook("space-card").click().wait(200);
     cy.getHook("project-card").click().wait(500);
