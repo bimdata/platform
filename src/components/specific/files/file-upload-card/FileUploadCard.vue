@@ -1,7 +1,12 @@
 <template>
   <div class="file-upload-card" :class="{ condensed, failed }">
     <div class="file-upload-card--left">
-      <BIMDataFileIcon :fileName="file.name" :size="condensed ? 20 : 32" />
+      <template v-if="file.type === FILE_TYPE.FOLDER">
+        <BIMDataIcon name="folder" size="s" />
+      </template>
+      <template v-else>
+        <BIMDataFileIcon :fileName="file.name" :size="condensed ? 20 : 32" />
+      </template>
     </div>
     <div class="file-upload-card--center file-upload-card__info">
       <div class="file-upload-card__info__file-name">
@@ -55,8 +60,9 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { useUpload } from "@/composables/upload.js";
-import { formatBytes } from "@/utils/files.js";
+import { useUpload } from "../../../../composables/upload.js";
+import { FILE_TYPE } from "../../../../config/files.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   props: {
@@ -100,14 +106,18 @@ export default {
         uploading.value = true;
       },
       onUploadProgress: ({ bytesUploaded, bytesTotal }) => {
-        if (lastProgressTime) {
-          const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
-          const dx = bytesUploaded - progress.uploaded; // in bytes
-          progress.rate = Math.round(dx / dt);
+        if (props.file.type === FILE_TYPE.FOLDER) {
+          // TODO: handle folder case
+        } else {
+          if (lastProgressTime) {
+            const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
+            const dx = bytesUploaded - progress.uploaded; // in bytes
+            progress.rate = Math.round(dx / dt);
+          }
+          progress.percentage = Math.round((100 * bytesUploaded) / bytesTotal);
+          progress.uploaded = bytesUploaded;
+          lastProgressTime = Date.now();
         }
-        progress.percentage = Math.round((100 * bytesUploaded) / bytesTotal);
-        progress.uploaded = bytesUploaded;
-        lastProgressTime = Date.now();
       },
       onUploadComplete: ({ response: document }) => {
         uploading.value = false;
@@ -135,13 +145,18 @@ export default {
     };
 
     onMounted(() => {
-      uploader.upload(props.file, props.folder ? props.folder.id : null);
+      if (props.file.type === FILE_TYPE.FOLDER) {
+        // TODO: handle folder
+      } else {
+        uploader.upload(props.file, props.folder ? props.folder.id : null);
+      }
     });
 
     return {
       // References
       canceled,
       failed,
+      FILE_TYPE,
       progress,
       uploading,
       // Methods

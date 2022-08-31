@@ -420,17 +420,26 @@ export default {
           tree
         ]);
 
-        filesToUpload.value = {
-          type: FILE_TYPE.FOLDER,
-          folderName: DMSTree[0].name,
-          size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
-          files: matchFoldersAndDocs(DMSTree, filesInfos)
-        };
+        // filesToUpload.value = {
+        //   type: FILE_TYPE.FOLDER,
+        //   folderName: DMSTree[0].name,
+        //   size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
+        //   files: matchFoldersAndDocs(DMSTree, filesInfos)
+        // };
+        filesToUpload.value = [
+          {
+            type: FILE_TYPE.FOLDER,
+            name: DMSTree[0].name,
+            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, filesInfos)
+          }
+        ];
       } else {
-        filesToUpload.value = {
-          type: FILE_TYPE.DOCUMENT,
-          files
-        };
+        // filesToUpload.value = {
+        //   type: FILE_TYPE.DOCUMENT,
+        //   files
+        // };
+        filesToUpload.value = files;
       }
       setTimeout(() => (filesToUpload.value = {}), 100);
     };
