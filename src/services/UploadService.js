@@ -78,7 +78,7 @@ class UploadService {
       if (parentId) data.append("parent_id", parentId);
       if (successorOf) data.append("successor_of", successorOf);
 
-      uploader.upload(data);
+      return uploader.upload(data);
     };
 
     const cancel = () => {

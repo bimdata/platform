@@ -13,6 +13,8 @@ function createFileUploader(
     onUploadCancel = () => {}
   }
 ) {
+  let lastUploadId = 0;
+
   const fileUploader = {
     request: null,
     upload(data) {
@@ -23,10 +25,12 @@ function createFileUploader(
         return;
       }
 
+      const uploadId = lastUploadId++;
       const request = new XMLHttpRequest();
 
       request.upload.addEventListener("loadstart", e => {
         onUploadStart({
+          id: uploadId,
           bytesUploaded: e.loaded,
           bytesTotal: e.total,
           percentage: (e.loaded / e.total) * 100
@@ -34,6 +38,7 @@ function createFileUploader(
       });
       request.upload.addEventListener("progress", e => {
         onUploadProgress({
+          id: uploadId,
           bytesUploaded: e.loaded,
           bytesTotal: e.total,
           percentage: (e.loaded / e.total) * 100
@@ -41,6 +46,7 @@ function createFileUploader(
       });
       request.addEventListener("load", e => {
         onUploadComplete({
+          id: uploadId,
           bytesUploaded: e.loaded,
           bytesTotal: e.total,
           percentage: (e.loaded / e.total) * 100,
@@ -72,7 +78,8 @@ function createFileUploader(
 
       this.request = request;
       this.request.send(data);
-      return this.request;
+
+      return { id: uploadId, request };
     },
     cancel() {
       if (this.request) this.request.abort();

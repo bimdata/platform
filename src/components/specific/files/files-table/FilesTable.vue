@@ -43,32 +43,6 @@
           @upload-canceled="cleanUpload(file.key, 6000)"
           @upload-failed="cleanUpload(file.key, 12000)"
         />
-        <!-- <template
-          v-if="fileUploads.type && fileUploads.type === FILE_TYPE.DOCUMENT"
-        >
-          <FileUploadCard
-            v-for="file of fileUploads.files"
-            :key="file.key"
-            condensed
-            :project="project"
-            :folder="folder"
-            :file="file"
-            @upload-completed="onUploadCompleted(file.key, $event)"
-            @upload-canceled="cleanUpload(file.key, 6000)"
-            @upload-failed="cleanUpload(file.key, 12000)"
-          />
-        </template>
-        <template
-          v-if="fileUploads.type && fileUploads.type === FILE_TYPE.FOLDER"
-        >
-          <FolderUploadCard
-            condensed
-            :project="project"
-            :folder="fileUploads"
-            @upload-completed="$emit('file-uploaded')"
-            @emptying-files="fileUploads = {}"
-          />
-        </template> -->
       </transition-group>
     </template>
     <template #cell-name="{ row: file }">
@@ -129,7 +103,6 @@ import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
-// import FolderUploadCard from "@/components/specific/files/folder-upload-card/FolderUploadCard.vue";
 
 import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
@@ -145,7 +118,6 @@ export default {
     FileTagsCell,
     FileTypeCell,
     FileUploadCard,
-    // FolderUploadCard,
     FilesManagerBreadcrumb
   },
   props: {
@@ -162,7 +134,7 @@ export default {
       required: true
     },
     filesToUpload: {
-      type: Object
+      type: Array
     }
   },
   emits: [
@@ -233,8 +205,8 @@ export default {
 
     const cleanUpload = (key, delay = 100) => {
       setTimeout(() => {
-        const index = fileUploads.value.files.findIndex(f => f.key === key);
-        fileUploads.value.files.splice(index, 1);
+        const index = fileUploads.value.findIndex(f => f.key === key);
+        fileUploads.value.splice(index, 1);
       }, delay);
     };
 

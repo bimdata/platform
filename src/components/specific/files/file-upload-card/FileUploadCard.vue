@@ -21,8 +21,11 @@
       <div class="file-upload-card__info__upload-data">
         <template v-if="uploading">
           <span>{{
-            `${formatBytes(progress.uploaded)} of ${formatBytes(file.size)}` +
-            ` (${progress.percentage}% done)`
+            `${formatBytes(
+              file.type === FILE_TYPE.FOLDER
+                ? progress.folderUploaded
+                : progress.uploaded
+            )} of ${formatBytes(file.size)}` + ` (${progress.percentage}% done)`
           }}</span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""
@@ -59,10 +62,10 @@
 </template>
 
 <script>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
+import { formatBytes } from "../../../../utils/files.js";
 import { useUpload } from "../../../../composables/upload.js";
 import { FILE_TYPE } from "../../../../config/files.js";
-import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   props: {
@@ -90,6 +93,7 @@ export default {
   setup(props, { emit }) {
     const { projectFileUploader, projectModelUploader } = useUpload();
 
+    const simultaneousUploadLimit = 3;
     const uploading = ref(false);
     const canceled = ref(false);
     const failed = ref(false);
@@ -98,16 +102,40 @@ export default {
     const progress = reactive({
       percentage: 0,
       uploaded: 0,
+      fileUploaded: {},
+      folderUploaded: 0,
+      onGoingUploadCounter: 0,
       rate: 0
     });
 
     const handlers = {
       onUploadStart: () => {
         uploading.value = true;
+        progress.onGoingUploadCounter++;
       },
-      onUploadProgress: ({ bytesUploaded, bytesTotal }) => {
+      onUploadProgress: ({ bytesUploaded, bytesTotal, id }) => {
         if (props.file.type === FILE_TYPE.FOLDER) {
-          // TODO: handle folder case
+          const currentlyUploaded = bytesUploaded - progress.fileUploaded[id];
+          progress.folderUploaded += currentlyUploaded;
+
+          if (lastProgressTime) {
+            const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
+            const dx = currentlyUploaded; // in bytes
+            progress.rate = Math.round(dx / dt);
+          }
+          progress.percentage = Math.round(
+            (100 * progress.folderUploaded) / props.file.size
+          );
+
+          progress.fileUploaded[id] = bytesUploaded;
+          lastProgressTime = Date.now();
+
+          if (
+            bytesUploaded >= bytesTotal &&
+            progress.onGoingUploadCounter < simultaneousUploadLimit
+          ) {
+            files.value.shift();
+          }
         } else {
           if (lastProgressTime) {
             const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
@@ -120,8 +148,19 @@ export default {
         }
       },
       onUploadComplete: ({ response: document }) => {
-        uploading.value = false;
-        emit("upload-completed", document);
+        progress.onGoingUploadCounter--;
+
+        if (progress.onGoingUploadCounter === 0) {
+          uploading.value = false;
+          emit("upload-completed", document);
+        }
+
+        if (
+          props.file.type === FILE_TYPE.FOLDER &&
+          progress.onGoingUploadCounter < simultaneousUploadLimit
+        ) {
+          files.value.shift();
+        }
       },
       onUploadError: () => {
         uploading.value = false;
@@ -144,13 +183,31 @@ export default {
       emit("upload-canceled");
     };
 
-    onMounted(() => {
-      if (props.file.type === FILE_TYPE.FOLDER) {
-        // TODO: handle folder
-      } else {
-        uploader.upload(props.file, props.folder ? props.folder.id : null);
-      }
-    });
+    const files = ref(
+      props.file.files?.map((file, index) =>
+        Object.assign(file, { id: index })
+      ) || undefined
+    );
+
+    if (props.file.type === FILE_TYPE.FOLDER) {
+      watch(
+        files.value,
+        () => {
+          if (files.value.length === 0) return;
+          const { id } = uploader.upload(
+            files.value[0].file,
+            files.value[0].parentId,
+            null
+          );
+          progress.fileUploaded[id] = 0;
+        },
+        { immediate: true }
+      );
+    } else {
+      onMounted(() =>
+        uploader.upload(props.file, props.folder ? props.folder.id : null)
+      );
+    }
 
     return {
       // References
