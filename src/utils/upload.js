@@ -107,7 +107,10 @@ function fileUploadInput(type, onChange, attrs = {}) {
     input[prop] = attrs[prop];
   });
 
-  input.addEventListener("change", onChange);
+  input.addEventListener("change", event => {
+    onChange(event);
+    input.remove();
+  });
 
   document.body.appendChild(input);
   input.click();
