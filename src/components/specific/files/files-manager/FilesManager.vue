@@ -637,6 +637,7 @@ export default {
             action: () => {
               fileUploadInput("folder", event => {
                 const files = Array.from(event.target.files);
+                uploadFiles(files);
                 if (files.length > 0) {
                   uploadFiles(files);
                 }
@@ -649,7 +650,6 @@ export default {
           }
         );
       }
-
       return items;
     });
 
