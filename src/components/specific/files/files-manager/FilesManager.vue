@@ -343,7 +343,8 @@ export default {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
-      downloadFiles: download
+      downloadFiles: download,
+      projectFileStructure
     } = useFiles();
     const { createModel, deleteModels } = useModels();
 
@@ -628,18 +629,26 @@ export default {
           children: projectsTree.value
         });
       }
+
       if (props.project.isAdmin) {
-        items.push({
-          name: t("FilesManager.folderImport"),
-          action: () => {
-            fileUploadInput("folder", event => {
-              const files = Array.from(event.target.files);
-              if (files.length > 0) {
+        items.push(
+          {
+            name: t("FilesManager.folderImport"),
+            action: () => {
+              fileUploadInput("folder", event => {
+                const files = Array.from(event.target.files);
                 uploadFiles(files);
-              }
-            });
+                if (files.length > 0) {
+                  uploadFiles(files);
+                }
+              });
+            }
+          },
+          {
+            name: t("FilesManager.gedDownload"),
+            action: () => downloadFiles([projectFileStructure.value])
           }
-        });
+        );
       }
       return items;
     });
