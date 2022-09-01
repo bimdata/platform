@@ -30,7 +30,7 @@
     "@vue/compiler-sfc": "^3.2.37",
     "@vue/test-utils": "^2.0.2",
     "@vue/vue3-jest": "^27.0.0",
-    "cypress": "^10.3.1",
+    "cypress": "^10.7.0",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",

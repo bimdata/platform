@@ -15,11 +15,31 @@ Cypress.Commands.add("login", (email, password) => {
   });
 });
 
-Cypress.Commands.add("getHook", (path) => {
-  const selector = path.split(".").map(name => `[data-test-id=${name}]`).join(" ");
-  return cy.get(selector);
-});
+Cypress.Commands.add(
+  "hook", 
+  path => cy.get(path.split(".").map(name => `[data-test-id=${name}]`).join(" "))
+);
+Cypress.Commands.add(
+  "findHook",
+  { prevSubject: true },
+  (subject, id) => subject.find(`[data-test-id=${id}]`)
+);
+Cypress.Commands.add(
+  "withParam",
+  { prevSubject: true },
+  (subject, param) => subject.filter(`[data-test-param=${param}]`)
+);
+Cypress.Commands.add(
+  "param",
+  { prevSubject: true },
+  subject => subject.data("testParam")
+);
 
-Cypress.Commands.add("getParam", path => {
-  return cy.getHook(path).invoke("data", "testParam");
-});
+Cypress.Commands.add(
+  "getSpaceCard",
+  name => cy.contains("[data-test-id=space-card]", name)
+);
+Cypress.Commands.add(
+  "getProjectCard",
+  name => cy.contains("[data-test-id=project-card]", name)
+);
