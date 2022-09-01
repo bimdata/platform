@@ -21,7 +21,7 @@
           fill
           radius
           :icon="isLG"
-          :disabled="!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)"
+          :disabled="!space.isUserOrga && isFullTotal(spaceSubInfo)"
           @click="() => (isAbleToSub ? modalOpener() : toggleFileUploader())"
         >
           <BIMDataIcon
