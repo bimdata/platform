@@ -645,9 +645,7 @@ export default {
           },
           {
             name: t("FilesManager.gedDownload"),
-            action: async () => {
-              await downloadFiles([projectFileStructure.value]);
-            }
+            action: () => downloadFiles([projectFileStructure.value])
           }
         );
       }
