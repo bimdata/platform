@@ -104,14 +104,14 @@ export default {
       uploaded: 0,
       fileUploaded: {},
       folderUploaded: 0,
-      onGoingUploadCounter: 0,
+      onGoingUploadsCounter: 0,
       rate: 0
     });
 
     const handlers = {
       onUploadStart: () => {
         uploading.value = true;
-        progress.onGoingUploadCounter++;
+        progress.onGoingUploadsCounter++;
       },
       onUploadProgress: ({ bytesUploaded, bytesTotal, id }) => {
         if (props.file.type === FILE_TYPE.FOLDER) {
@@ -132,7 +132,7 @@ export default {
 
           if (
             bytesUploaded >= bytesTotal &&
-            progress.onGoingUploadCounter < simultaneousUploadLimit
+            progress.onGoingUploadsCounter < simultaneousUploadLimit
           ) {
             files.value.shift();
           }
@@ -148,16 +148,16 @@ export default {
         }
       },
       onUploadComplete: ({ response: document }) => {
-        progress.onGoingUploadCounter--;
+        progress.onGoingUploadsCounter--;
 
-        if (progress.onGoingUploadCounter === 0) {
+        if (progress.onGoingUploadsCounter === 0) {
           uploading.value = false;
           emit("upload-completed", document);
         }
 
         if (
           props.file.type === FILE_TYPE.FOLDER &&
-          progress.onGoingUploadCounter < simultaneousUploadLimit
+          progress.onGoingUploadsCounter < simultaneousUploadLimit
         ) {
           files.value.shift();
         }
