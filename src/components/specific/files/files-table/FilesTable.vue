@@ -97,10 +97,13 @@ import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
+import { FILE_TYPE } from "@/config/files.js";
+
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+
 import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "./file-name-cell/FileNameCell.vue";
@@ -131,8 +134,7 @@ export default {
       required: true
     },
     filesToUpload: {
-      type: Array,
-      default: () => []
+      type: Array
     }
   },
   emits: [
@@ -193,8 +195,7 @@ export default {
             Object.assign(file, { key: generateFileKey(file) })
           )
         );
-      },
-      { immediate: true }
+      }
     );
 
     const onUploadCompleted = (key, file) => {
@@ -215,6 +216,7 @@ export default {
       filesTable,
       fileUploads,
       nameEditMode,
+      FILE_TYPE,
       // Methods
       cleanUpload,
       formatBytes,

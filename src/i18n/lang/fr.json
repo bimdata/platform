@@ -227,7 +227,7 @@
     "searchInputPlaceholder": "Rechercher",
     "createModelNotification": "Modèle créé avec succès",
     "structureImport": "Importer une structure GED",
-    "fileImport": "Importer un dossier",
+    "folderImport": "Importer un dossier",
     "gedDownload": "Télécharger la GED"
   },
   "FilesManagerOnboarding": {
@@ -905,6 +905,7 @@
     "projectDeleteError": "Échec de la suppression du projet",
     "projectFetchFileError": "Impossible de récupérer ce document",
     "projectFolderTreeFetchError": "Impossible de récupérer la liste des projets",
+    "documentCreateError": "Impossible de télécharger ce document",
     "invitationsFetchError": "Impossible de récupérer la liste des invitations",
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",

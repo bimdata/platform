@@ -255,12 +255,20 @@ import { useModels } from "@/state/models.js";
 import { useVisa } from "@/state/visa.js";
 import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
 import { isFullTotal } from "@/utils/spaces.js";
+import { fileUploadInput } from "@/utils/upload.js";
 import { VISA_STATUS } from "@/config/visa.js";
+import { FILE_TYPE } from "@/config/files.js";
 import { useSpaces } from "@/state/spaces.js";
 import { useProjects } from "@/state/projects.js";
 import FileService from "@/services/FileService.js";
-import { treeIdGenerator } from "@/utils/projects.js";
 import { useToggle } from "@/composables/toggle";
+import {
+  getPaths,
+  getDocsInfos,
+  treeIdGenerator,
+  createTreeFromPaths,
+  matchFoldersAndDocs
+} from "@/utils/files.js";
 
 // Components
 import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
@@ -400,8 +408,30 @@ export default {
     };
 
     const filesToUpload = ref([]);
-    const uploadFiles = files => {
-      filesToUpload.value = files;
+
+    const uploadFiles = async files => {
+      const isFolderUpload = Boolean(files[0].webkitRelativePath);
+
+      if (isFolderUpload) {
+        const paths = getPaths(files);
+        const filesInfos = getDocsInfos(files);
+
+        const tree = createTreeFromPaths(currentFolder, paths);
+        const DMSTree = await FileService.createFileStructure(props.project, [
+          tree
+        ]);
+
+        filesToUpload.value = [
+          {
+            type: FILE_TYPE.FOLDER,
+            name: DMSTree[0].name,
+            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, filesInfos)
+          }
+        ];
+      } else {
+        filesToUpload.value = files;
+      }
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
@@ -591,7 +621,7 @@ export default {
 
     const projectsToUpload = ref(null);
     const menuItems = computed(() => {
-      let items = [];
+      const items = [];
 
       if (props.project.isAdmin && projectsTree.value.length > 0) {
         items.push({
@@ -601,12 +631,25 @@ export default {
       }
 
       if (props.project.isAdmin) {
-        items.push({
-          name: t("FilesManager.gedDownload"),
-          action: async () => {
-            await downloadFiles([projectFileStructure.value]);
+        items.push(
+          {
+            name: t("FilesManager.folderImport"),
+            action: () => {
+              fileUploadInput("folder", event => {
+                const files = Array.from(event.target.files);
+                if (files.length > 0) {
+                  uploadFiles(files);
+                }
+              });
+            }
+          },
+          {
+            name: t("FilesManager.gedDownload"),
+            action: async () => {
+              await downloadFiles([projectFileStructure.value]);
+            }
           }
-        });
+        );
       }
 
       return items;
