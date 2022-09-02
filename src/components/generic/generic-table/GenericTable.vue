@@ -78,7 +78,9 @@
           height: `calc(100% - ${placeholder ? rowHeight : 0}px)`
         }"
       >
-        <slot name="placeholderSlot">{{ placeholder }}</slot>
+        <slot name="placeholder">
+          {{ placeholder }}
+        </slot>
       </div>
     </div>
     <div
