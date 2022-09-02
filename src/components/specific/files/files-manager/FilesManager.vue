@@ -3,6 +3,8 @@
     ref="fileManager"
     class="files-manager"
     :titleHeader="$t('FilesManager.title')"
+    @dragover.prevent="() => {}"
+    @drop.prevent="event => uploadFiles(event)"
   >
     <template #content>
       <AppModal v-if="projectsToUpload">
@@ -92,13 +94,9 @@
                 color="primary"
                 width="100%"
                 @click="
-                  fileUploadInput(
-                    'file',
-                    event => uploadFiles(event.target.files),
-                    {
-                      multiple: true
-                    }
-                  )
+                  fileUploadInput('file', event => uploadFiles(event), {
+                    multiple: true
+                  })
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
@@ -418,8 +416,15 @@ export default {
 
     const filesToUpload = ref([]);
 
-    const uploadFiles = async files => {
-      files = Array.from(files);
+    const uploadFiles = async event => {
+      let files = null;
+      if (event.dataTransfer) {
+        // Files from drag & drop
+        files = Array.from(event.dataTransfer.files);
+      } else {
+        // Files from input
+        files = Array.from(event.target.files);
+      }
 
       const isFolderUpload = Boolean(files[0].webkitRelativePath);
 
@@ -646,9 +651,7 @@ export default {
           {
             name: t("FilesManager.folderImport"),
             action: () => {
-              fileUploadInput("folder", event =>
-                uploadFiles(event.target.files)
-              );
+              fileUploadInput("folder", event => uploadFiles(event));
             }
           },
           {
