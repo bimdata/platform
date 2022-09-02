@@ -99,7 +99,7 @@ export default {
         files = Array.from(event.dataTransfer.files);
       } else {
         // Files from input
-        files = event;
+        files = Array.from(event.target.files);
       }
       const forbiddenUploads = [];
       files = files.filter(file => {
