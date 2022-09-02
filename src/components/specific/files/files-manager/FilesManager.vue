@@ -92,9 +92,13 @@
                 color="primary"
                 width="100%"
                 @click="
-                  fileUploadInput('file', event => uploadFiles(event), {
-                    multiple: true
-                  })
+                  fileUploadInput(
+                    'file',
+                    event => uploadFiles(event.target.files),
+                    {
+                      multiple: true
+                    }
+                  )
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
@@ -414,9 +418,8 @@ export default {
 
     const filesToUpload = ref([]);
 
-    const uploadFiles = async event => {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
+    const uploadFiles = async files => {
+      files = Array.from(files);
 
       const isFolderUpload = Boolean(files[0].webkitRelativePath);
 
@@ -643,7 +646,9 @@ export default {
           {
             name: t("FilesManager.folderImport"),
             action: () => {
-              fileUploadInput("folder", event => uploadFiles(event));
+              fileUploadInput("folder", event =>
+                uploadFiles(event.target.files)
+              );
             }
           },
           {

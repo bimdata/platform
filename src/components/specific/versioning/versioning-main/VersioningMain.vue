@@ -43,7 +43,9 @@
           icon
           color="primary"
           width="100%"
-          @click="fileUploadInput('file', event => addVersion(event))"
+          @click="
+            fileUploadInput('file', event => addVersion(event.target.files))
+          "
         >
           <BIMDataIcon
             name="close"
@@ -121,10 +123,7 @@ export default {
 
     const loading = ref(null);
 
-    const addVersion = async event => {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
-
+    const addVersion = async files => {
       const handlers = {
         onUploadStart: () => (loading.value = "download"),
         onUploadComplete: async ({ response: newHeadVersion }) => {

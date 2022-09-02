@@ -10,10 +10,14 @@
         :icon="isXL"
         color="default"
         @click="
-          fileUploadInput('file', event => importBcfTopics(event), {
-            accept: ['.bcf'],
-            multiple: true
-          })
+          fileUploadInput(
+            'file',
+            event => importBcfTopics(event.target.files),
+            {
+              accept: ['.bcf'],
+              multiple: true
+            }
+          )
         "
       >
         <BIMDataIcon name="import" size="xs" />
@@ -453,10 +457,7 @@ export default {
       open: openSettings
     } = useToggle();
 
-    const importBcfTopics = async event => {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
-
+    const importBcfTopics = async files => {
       try {
         loading.value = true;
         await importBcf(currentProject.value, files[0]);

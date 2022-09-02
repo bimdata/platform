@@ -11,7 +11,7 @@
         color="primary"
         width="120px"
         @click="
-          fileUploadInput('file', event => uploadFile(event), {
+          fileUploadInput('file', event => uploadFile(event.target.files), {
             multiple: true
           })
         "
@@ -130,12 +130,9 @@ export default {
 
     let uploadCount = 0;
     const fileUploads = ref([]);
-    const uploadFile = event => {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
-
+    const uploadFile = files => {
       uploadCount = 0;
-      fileUploads.value = files;
+      fileUploads.value = Array.from(files);
     };
 
     const updateUploadCount = () => {

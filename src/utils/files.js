@@ -74,7 +74,7 @@ function createTreeFromPaths(folder, paths) {
     children: []
   };
 
-  const shiftedPaths = paths
+  const pathWithoutRoot = paths
     .map(path => {
       const newPath = Array.from(path);
       newPath.shift();
@@ -82,7 +82,7 @@ function createTreeFromPaths(folder, paths) {
     })
     .filter(path => path.length > 0);
 
-  shiftedPaths.forEach(path =>
+  pathWithoutRoot.forEach(path =>
     path.reduce((parentFolder, currentFolderName) => {
       let currentFolder = parentFolder.children.find(
         child => child.name === currentFolderName
