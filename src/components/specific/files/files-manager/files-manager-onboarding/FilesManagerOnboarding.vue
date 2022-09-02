@@ -5,9 +5,19 @@
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <FileUploadButton width="120px" multiple @upload="uploadFile">
+      <BIMDataButton
+        fill
+        radius
+        color="primary"
+        width="120px"
+        @click="
+          fileUploadInput('file', event => uploadFile(event.target.files), {
+            multiple: true
+          })
+        "
+      >
         {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
-      </FileUploadButton>
+      </BIMDataButton>
       <BIMDataButton
         width="120px"
         color="primary"
@@ -86,18 +96,17 @@
 
 <script>
 import { ref, computed } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
-import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
+import FileUploadCard from "../../../../../components/specific/files/file-upload-card/FileUploadCard.vue";
+import FolderCreationForm from "../../../../../components/specific/files/folder-creation-form/FolderCreationForm.vue";
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
 
 export default {
   components: {
     FilesManagerOnboardingImage,
-    FileUploadButton,
     FileUploadCard,
     FolderCreationForm
   },
@@ -123,7 +132,7 @@ export default {
     const fileUploads = ref([]);
     const uploadFile = files => {
       uploadCount = 0;
-      fileUploads.value = files;
+      fileUploads.value = Array.from(files);
     };
 
     const updateUploadCount = () => {
@@ -161,7 +170,8 @@ export default {
       close,
       createFolder,
       updateUploadCount,
-      uploadFile
+      uploadFile,
+      fileUploadInput
     };
   }
 };

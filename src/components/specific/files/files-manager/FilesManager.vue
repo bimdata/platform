@@ -82,19 +82,30 @@
               </BIMDataButton>
             </template>
             <template v-else>
-              <FileUploadButton
+              <BIMDataButton
                 :disabled="
                   !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
                 "
+                fill
+                radius
+                icon
+                color="primary"
                 width="100%"
-                multiple
-                @upload="uploadFiles"
+                @click="
+                  fileUploadInput(
+                    'file',
+                    event => uploadFiles(event.target.files),
+                    {
+                      multiple: true
+                    }
+                  )
+                "
               >
                 <BIMDataIcon name="addFile" size="xs" />
                 <span v-if="!isLG" style="margin-left: 6px">
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
-              </FileUploadButton>
+              </BIMDataButton>
             </template>
           </BIMDataTooltip>
         </div>
@@ -245,42 +256,48 @@
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
-import { useListFilter } from "@/composables/list-filter.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
-import { useFiles } from "@/state/files.js";
-import TagService from "@/services/TagService";
-import { useModels } from "@/state/models.js";
-import { useVisa } from "@/state/visa.js";
-import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
-import { isFullTotal } from "@/utils/spaces.js";
-import { VISA_STATUS } from "@/config/visa.js";
-import { useSpaces } from "@/state/spaces.js";
-import { useProjects } from "@/state/projects.js";
-import FileService from "@/services/FileService.js";
-import { treeIdGenerator } from "@/utils/projects.js";
-import { useToggle } from "@/composables/toggle";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useAppNotification } from "../../../../components/specific/app/app-notification/app-notification.js";
+import { useAppModal } from "../../../../components/specific/app/app-modal/app-modal.js";
+import { useFiles } from "../../../../state/files.js";
+import TagService from "../../../../services/TagService";
+import { useModels } from "../../../../state/models.js";
+import { useVisa } from "../../../../state/visa.js";
+import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
+import { isFullTotal } from "../../../../utils/spaces.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
+import { VISA_STATUS } from "../../../../config/visa.js";
+import { FILE_TYPE } from "../../../../config/files.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { useProjects } from "../../../../state/projects.js";
+import FileService from "../../../../services/FileService.js";
+import { useToggle } from "../../../../composables/toggle";
+import {
+  getPaths,
+  getDocsInfos,
+  treeIdGenerator,
+  createTreeFromPaths,
+  matchFoldersAndDocs
+} from "../../../../utils/files.js";
 
 // Components
-import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
-import FilesTable from "@/components/specific/files/files-table/FilesTable.vue";
-import FolderAccessManager from "@/components/specific/files/folder-access-manager/FolderAccessManager.vue";
-import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton.vue";
-import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
+import FileTree from "../../../../components/specific/files/file-tree/FileTree.vue";
+import FilesTable from "../../../../components/specific/files/files-table/FilesTable.vue";
+import FolderAccessManager from "../../../../components/specific/files/folder-access-manager/FolderAccessManager.vue";
+import FolderCreationButton from "../../../../components/specific/files/folder-creation-button/FolderCreationButton.vue";
+import VisaMain from "../../../../components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
-import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
-import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
+import TagsMain from "../../../../components/specific/tags/tags-main/TagsMain.vue";
+import VersioningMain from "../../../../components/specific/versioning/versioning-main/VersioningMain.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
-import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
+import AppModal from "../../../../components/specific/app/app-modal/AppModal.vue";
 
 export default {
   components: {
     FileTree,
-    FileUploadButton,
     FilesTable,
     FolderAccessManager,
     FolderCreationButton,
@@ -335,7 +352,8 @@ export default {
     const {
       fileStructureHandler: handler,
       moveFiles: move,
-      downloadFiles: download
+      downloadFiles: download,
+      projectFileStructure
     } = useFiles();
     const { createModel, deleteModels } = useModels();
 
@@ -399,8 +417,32 @@ export default {
     };
 
     const filesToUpload = ref([]);
-    const uploadFiles = files => {
-      filesToUpload.value = files;
+
+    const uploadFiles = async files => {
+      files = Array.from(files);
+
+      const isFolderUpload = Boolean(files[0].webkitRelativePath);
+
+      if (isFolderUpload) {
+        const paths = getPaths(files);
+        const filesInfos = getDocsInfos(files);
+
+        const tree = createTreeFromPaths(currentFolder, paths);
+        const DMSTree = await FileService.createFileStructure(props.project, [
+          tree
+        ]);
+
+        filesToUpload.value = [
+          {
+            type: FILE_TYPE.FOLDER,
+            name: DMSTree[0].name,
+            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, filesInfos)
+          }
+        ];
+      } else {
+        filesToUpload.value = files;
+      }
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
@@ -590,13 +632,30 @@ export default {
 
     const projectsToUpload = ref(null);
     const menuItems = computed(() => {
-      let items = [];
+      const items = [];
 
       if (props.project.isAdmin && projectsTree.value.length > 0) {
         items.push({
           name: t("FilesManager.structureImport"),
           children: projectsTree.value
         });
+      }
+
+      if (props.project.isAdmin) {
+        items.push(
+          {
+            name: t("FilesManager.folderImport"),
+            action: () => {
+              fileUploadInput("folder", event =>
+                uploadFiles(event.target.files)
+              );
+            }
+          },
+          {
+            name: t("FilesManager.gedDownload"),
+            action: () => downloadFiles([projectFileStructure.value])
+          }
+        );
       }
       return items;
     });
@@ -672,6 +731,7 @@ export default {
       hasAdminPerm,
       isFullTotal,
       openModal,
+      fileUploadInput,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       menuItems
