@@ -93,16 +93,13 @@ export default {
     const fileUploads = ref([]);
 
     const uploadFiles = event => {
-      const targetFiles = Array.from(event.target.files);
-      if (targetFiles.length === 0) return;
-
       let files = null;
-      if (targetFiles.dataTransfer) {
+      if (event.dataTransfer) {
         // Files from drag & drop
-        files = Array.from(targetFiles.dataTransfer.files);
+        files = Array.from(event.dataTransfer.files);
       } else {
         // Files from input
-        files = targetFiles;
+        files = event;
       }
       const forbiddenUploads = [];
       files = files.filter(file => {
