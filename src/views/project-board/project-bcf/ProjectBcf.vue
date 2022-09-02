@@ -4,17 +4,23 @@
       <BIMDataButton color="primary" outline radius icon @click="openSettings">
         <BIMDataIcon name="settings" size="xxs" />
       </BIMDataButton>
-      <FileUploadButton
+      <BIMDataButton
+        fill
+        radius
+        :icon="isXL"
         color="default"
-        multiple
-        :accept="['.bcf']"
-        @upload="importBcfTopics"
+        @click="
+          fileUploadInput('file', event => importBcfTopics(event), {
+            accept: ['.bcf'],
+            multiple: true
+          })
+        "
       >
         <BIMDataIcon name="import" size="xs" />
         <span v-if="!isXL" style="margin-left: 6px">
           {{ $t("ProjectBcf.importButtonText") }}
         </span>
-      </FileUploadButton>
+      </BIMDataButton>
       <BIMDataButton fill radius :icon="isXL" @click="exportBcfTopics">
         <BIMDataIcon name="export" size="xs" />
         <span v-if="!isXL" style="margin-left: 6px">
@@ -337,20 +343,20 @@ import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
 import { useProjects } from "../../../state/projects.js";
 import { useModels } from "../../../state/models.js";
+import { fileUploadInput } from "../../../utils/upload.js";
+
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "../../../components/specific/app/app-side-panel/AppSidePanel.vue";
-import FileUploadButton from "../../../components/specific/files/file-upload-button/FileUploadButton.vue";
 
 export default {
   components: {
     AppSlotContent,
     AppSidePanel,
     BcfStatisticsEmptyImage,
-    NoSearchResultsImage,
-    FileUploadButton
+    NoSearchResultsImage
   },
   setup() {
     const router = useRouter();
@@ -447,7 +453,10 @@ export default {
       open: openSettings
     } = useToggle();
 
-    const importBcfTopics = async files => {
+    const importBcfTopics = async event => {
+      const files = Array.from(event.target.files);
+      if (files.length === 0) return;
+
       try {
         loading.value = true;
         await importBcf(currentProject.value, files[0]);
@@ -565,6 +574,7 @@ export default {
       sortByIndex,
       sortByTitle,
       toggleMetrics,
+      fileUploadInput,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

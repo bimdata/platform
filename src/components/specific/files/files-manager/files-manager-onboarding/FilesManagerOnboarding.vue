@@ -5,9 +5,19 @@
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <FileUploadButton width="120px" multiple @upload="uploadFile">
+      <BIMDataButton
+        fill
+        radius
+        color="primary"
+        width="120px"
+        @click="
+          fileUploadInput('file', event => uploadFile(event), {
+            multiple: true
+          })
+        "
+      >
         {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
-      </FileUploadButton>
+      </BIMDataButton>
       <BIMDataButton
         width="120px"
         color="primary"
@@ -86,18 +96,17 @@
 
 <script>
 import { ref, computed } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
-import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
+import FileUploadCard from "../../../../components/specific/files/file-upload-card/FileUploadCard";
+import FolderCreationForm from "../../../../components/specific/files/folder-creation-form/FolderCreationForm";
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
 
 export default {
   components: {
     FilesManagerOnboardingImage,
-    FileUploadButton,
     FileUploadCard,
     FolderCreationForm
   },
@@ -121,7 +130,10 @@ export default {
 
     let uploadCount = 0;
     const fileUploads = ref([]);
-    const uploadFile = files => {
+    const uploadFile = event => {
+      const files = Array.from(event.target.files);
+      if (files.length === 0) return;
+
       uploadCount = 0;
       fileUploads.value = files;
     };
@@ -161,7 +173,8 @@ export default {
       close,
       createFolder,
       updateUploadCount,
-      uploadFile
+      uploadFile,
+      fileUploadInput
     };
   }
 };

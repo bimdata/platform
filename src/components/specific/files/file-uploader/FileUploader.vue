@@ -36,29 +36,34 @@
           {{ $t("FileUploader.separatorText") }}
         </span>
       </div>
-      <FileUploadButton
+      <BIMDataButton
         class="file-uploader__upload-area__btn-upload"
-        width="150px"
-        multiple
-        :accept="allowedFileTypes"
-        @upload="uploadFiles"
+        fill
+        radius
+        color="primary"
+        @click="
+          fileUploadInput('file', event => uploadFiles(event), {
+            accept: allowedFileTypes,
+            multiple: true
+          })
+        "
       >
         {{ $t("FileUploader.uploadButtonText") }}
-      </FileUploadButton>
+      </BIMDataButton>
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import { fileExtension, generateFileKey } from "@/utils/files.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
+import { fileExtension, generateFileKey } from "../../../../utils/files.js";
+
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+import FileUploadCard from "../../../../components/specific/files/file-upload-card/FileUploadCard.vue";
 
 export default {
   components: {
-    FileUploadButton,
     FileUploadCard
   },
   props: {
@@ -88,13 +93,16 @@ export default {
     const fileUploads = ref([]);
 
     const uploadFiles = event => {
+      const targetFiles = Array.from(event.target.files);
+      if (targetFiles.length === 0) return;
+
       let files = null;
-      if (event.dataTransfer) {
+      if (targetFiles.dataTransfer) {
         // Files from drag & drop
-        files = Array.from(event.dataTransfer.files);
+        files = Array.from(targetFiles.dataTransfer.files);
       } else {
         // Files from input
-        files = event;
+        files = targetFiles;
       }
       const forbiddenUploads = [];
       files = files.filter(file => {
@@ -156,7 +164,8 @@ export default {
       cleanUpload,
       close,
       onUploadCompleted,
-      uploadFiles
+      uploadFiles,
+      fileUploadInput
     };
   }
 };
