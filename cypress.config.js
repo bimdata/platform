@@ -6,6 +6,7 @@ module.exports = defineConfig({
   screenshotsFolder: "tests/e2e/screenshots",
   videosFolder: "tests/e2e/videos",
   e2e: {
+    experimentalSessionAndOrigin: true,
     baseUrl: "https://platform.bimdata.test",
     specPattern: [
       // Execute "signup tests" first in order to create test users
@@ -13,6 +14,7 @@ module.exports = defineConfig({
       "tests/e2e/specs/*.cy.{js,jsx,ts,tsx}"
     ],
     supportFile: "tests/e2e/support/index.js",
-    experimentalSessionAndOrigin: true
+    downloadsFolder: "tests/e2e/downloads",
+    fixturesFolder: "tests/e2e/fixtures"
   }
 });

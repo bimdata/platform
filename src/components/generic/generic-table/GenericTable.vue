@@ -45,7 +45,6 @@
             :key="`body-row-${rowKey ? row[rowKey] : i}`"
           >
             <tr
-              v-if="row"
               v-show="displayedRows.includes(i)"
               :style="{ height: `${rowHeight}px` }"
             >
@@ -92,7 +91,7 @@
         ghost
         rounded
         icon
-        :disabled="pageStartIndex === 1"
+        :disabled="pageIndexStart === 1"
         @click="pageIndex--"
       >
         <BIMDataIcon name="chevron" size="s" :rotate="180" />
@@ -100,8 +99,8 @@
       <span class="generic-table__page-nav__text">
         {{
           $t("GenericTable.pagination", {
-            start: pageStartIndex,
-            end: pageEndIndex,
+            start: pageIndexStart,
+            end: pageIndexEnd,
             total: rows.length
           })
         }}
@@ -110,7 +109,7 @@
         ghost
         rounded
         icon
-        :disabled="pageEndIndex === rows.length"
+        :disabled="pageIndexEnd === rows.length"
         @click="pageIndex++"
       >
         <BIMDataIcon name="chevron" size="s" />
@@ -244,8 +243,8 @@ export default {
 
     const displayedRows = ref([]);
     const pageIndex = ref(0);
-    const pageStartIndex = ref(1);
-    const pageEndIndex = ref(props.perPage);
+    const pageIndexStart = ref(1);
+    const pageIndexEnd = ref(props.perPage);
 
     // Reset selection when rows array change.
     watch(
@@ -277,8 +276,8 @@ export default {
           const end = start + props.perPage;
 
           displayedRows.value = rowIndexes.slice(start, end);
-          pageStartIndex.value = start + 1;
-          pageEndIndex.value = Math.min(end, props.rows.length);
+          pageIndexStart.value = start + 1;
+          pageIndexEnd.value = Math.min(end, props.rows.length);
         } else {
           displayedRows.value = rowIndexes;
         }
@@ -289,9 +288,9 @@ export default {
     return {
       // Refrences
       displayedRows,
-      pageEndIndex,
       pageIndex,
-      pageStartIndex,
+      pageIndexEnd,
+      pageIndexStart,
       selection,
       // Methods
       toggleFullSelection,

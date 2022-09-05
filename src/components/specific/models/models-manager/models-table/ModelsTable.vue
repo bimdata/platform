@@ -1,6 +1,7 @@
 <template>
   <GenericTable
     class="models-table"
+    data-test-id="models-table"
     :columns="columns"
     :rows="models"
     :paginated="true"
