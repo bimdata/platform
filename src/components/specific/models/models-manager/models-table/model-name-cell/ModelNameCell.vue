@@ -9,6 +9,7 @@
         <BIMDataInput
           ref="nameInput"
           class="model-name-cell__update-form__input"
+          data-test-id="model-name-input"
           v-model="modelName"
           @keyup.esc.stop="closeUpdateForm"
           @keyup.enter.stop="renameModel"
@@ -17,6 +18,7 @@
         />
         <BIMDataButton
           class="model-name-cell__update-form__btn-submit"
+          data-test-id="btn-submit-update"
           color="primary"
           fill
           radius
@@ -26,6 +28,7 @@
         </BIMDataButton>
         <BIMDataButton
           class="model-name-cell__update-form__btn-close"
+          data-test-id="btn-close-update"
           ghost
           rounded
           icon
