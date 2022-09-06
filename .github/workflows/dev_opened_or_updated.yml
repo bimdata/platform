@@ -42,13 +42,12 @@ jobs:
           repository: bimdata/bimdata-test
           ref: master
           token: ${{ secrets.REPOS_TOKEN }}
-          path: bimdata-test
       - name: Define branch_name var
         id: branch
         run: |
           echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
       - name: Run e2e tests
-        uses: ./bimdata-test/end-to-end/
+        uses: ./end-to-end/
         with:
           docker_tag: staging
           docker_platform_image: docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:staging
