@@ -103,7 +103,7 @@ export default {
       percentage: 0,
       fileUploaded: 0,
       folderUploaded: 0,
-      onGoingUploads: {},
+      onGoingUploads: new Map(),
       rate: 0
     });
 
@@ -114,7 +114,7 @@ export default {
       onUploadProgress: ({ bytesUploaded, bytesTotal, id }) => {
         if (props.file.type === FILE_TYPE.FOLDER) {
           const currentlyUploaded =
-            bytesUploaded - progress.onGoingUploads[id].uploaded;
+            bytesUploaded - progress.onGoingUploads.get(id).uploaded;
           progress.folderUploaded += currentlyUploaded;
 
           if (lastProgressTime) {
@@ -127,13 +127,12 @@ export default {
           );
           progress.percentage = rawPercentage > 100 ? 100 : rawPercentage;
 
-          progress.onGoingUploads[id].uploaded = bytesUploaded;
+          progress.onGoingUploads.set(id, { uploaded: bytesUploaded });
           lastProgressTime = Date.now();
 
           if (
             bytesUploaded >= bytesTotal &&
-            Object.keys(progress.onGoingUploads).length <
-              simultaneousUploadLimit
+            progress.onGoingUploads.size < simultaneousUploadLimit
           ) {
             files.value.shift();
           }
@@ -149,16 +148,16 @@ export default {
         }
       },
       onUploadComplete: ({ response: document, id }) => {
-        delete progress.onGoingUploads[id];
+        progress.onGoingUploads.delete(id);
 
-        if (Object.keys(progress.onGoingUploads).length === 0) {
+        if (progress.onGoingUploads.size === 0) {
           uploading.value = false;
           emit("upload-completed", document);
         }
 
         if (
           props.file.type === FILE_TYPE.FOLDER &&
-          Object.keys(progress.onGoingUploads).length < simultaneousUploadLimit
+          progress.onGoingUploads.size < simultaneousUploadLimit
         ) {
           files.value.shift();
         }
@@ -178,9 +177,7 @@ export default {
     }
 
     const cancelUpload = () => {
-      Object.values(progress.onGoingUploads).forEach(upload =>
-        upload.uploader.cancel()
-      );
+      progress.onGoingUploads.forEach(upload => upload.uploader.cancel());
       uploading.value = false;
       canceled.value = true;
       files.value = [];
@@ -208,7 +205,7 @@ export default {
             files.value[0].parentId,
             null
           );
-          progress.onGoingUploads[id] = { uploader, uploaded: 0 };
+          progress.onGoingUploads.set(id, { uploader, uploaded: 0 });
         },
         { immediate: true }
       );
@@ -218,7 +215,7 @@ export default {
           props.file,
           props.folder ? props.folder.id : null
         );
-        progress.onGoingUploads[id] = { uploader };
+        progress.onGoingUploads.set(id, { uploader });
       });
     }
 
