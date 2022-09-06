@@ -8,7 +8,7 @@
       />
     </teleport>
   </template>
-  <div v-show="!deleteLoader" class="profile-settings">
+  <div class="profile-settings">
     <div class="profile-settings__back-btn">
       <GoBackButton />
     </div>
@@ -40,7 +40,7 @@ export default {
     const { signOut } = useAuth();
 
     const iframe = ref(null);
-    const deleteLoader = ref(true);
+    const deleteLoader = ref(false);
     const displayIframe = ref(true);
 
     onMounted(() => {
@@ -53,7 +53,7 @@ export default {
           case "account delete start":
             setTimeout(() => {
               deleteLoader.value = true;
-              iframe.value.onload = async () => await signOut();
+              iframe.value.onload = async () => signOut();
             }, 500);
         }
       });
