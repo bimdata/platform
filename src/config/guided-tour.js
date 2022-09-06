@@ -1,19 +1,20 @@
+import { useCustomBreakpoints } from "../../composables/responsive.js";
+import { useSession } from "../../composables/session.js";
+import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
 import i18n from "../../i18n/index.js";
-import { useSession } from "@/composables/session.js";
-import { DEFAULT_PROJECT_VIEW } from "@/config/projects.js";
-import { useCustomBreakpoints } from "@/composables/responsive.js";
 
 const { t } = i18n.global;
-const imgPath = "/static/guidedTour/platform/";
-
 const { projectView } = useSession();
-
-const TOURS_NAME = Object.freeze({
-  PLATFORM_INTRO: "PLATFORM_INTRO"
-});
-
 const { isMidXL } = useCustomBreakpoints({
   isMidXL: ({ width }) => width <= 1132 - 0.02
+});
+
+const GUIDED_TOUR_ENABLED = process.env.VUE_APP_SUBSCRIPTION_ENABLED;
+const IS_GUIDED_TOUR_ENABLED = GUIDED_TOUR_ENABLED === "true";
+
+const IMG_PATH = "/static/guidedTour/platform/";
+const TOURS_NAME = Object.freeze({
+  PLATFORM_INTRO: "PLATFORM_INTRO"
 });
 
 const tours = [
@@ -24,7 +25,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.intro.title"),
           content: t("GuidedTour.platform.intro.content"),
-          img: imgPath + "intro.png",
+          img: IMG_PATH + "intro.png",
           imgPosition: "-20% 50%",
           imgSize: "116%"
         }
@@ -35,7 +36,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.actionButtons.title"),
           content: t("GuidedTour.platform.actionButtons.content"),
-          img: imgPath + "actionButtons.gif",
+          img: IMG_PATH + "actionButtons.gif",
           imgPosition: "-20% 50%", // horizontal vertical
           imgSize: "116%"
         }
@@ -46,7 +47,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.firstSpace.title"),
           content: t("GuidedTour.platform.firstSpace.content"),
-          img: imgPath + "firstSpace.gif",
+          img: IMG_PATH + "firstSpace.gif",
           imgPosition: "-13% 48%",
           imgSize: "150%"
         }
@@ -59,7 +60,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.firstProject.title"),
           content: t("GuidedTour.platform.firstProject.content"),
-          img: imgPath + "firstProject.gif",
+          img: IMG_PATH + "firstProject.gif",
           imgPosition: "49% 50%",
           imgSize: "77%"
         },
@@ -78,7 +79,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.previewIfc.title"),
           content: t("GuidedTour.platform.previewIfc.content"),
-          img: imgPath + "modelsOverview.gif",
+          img: IMG_PATH + "modelsOverview.gif",
           imgPosition: "114% 103%",
           imgSize: "83%"
         }
@@ -89,7 +90,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.usersManager.title"),
           content: t("GuidedTour.platform.usersManager.content"),
-          img: imgPath + "usersManager.gif",
+          img: IMG_PATH + "usersManager.gif",
           imgPosition: "126% 108%",
           imgSize: "98%"
         }
@@ -100,7 +101,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.modelsManager.title"),
           content: t("GuidedTour.platform.modelsManager.content"),
-          img: imgPath + "modelsManager.gif",
+          img: IMG_PATH + "modelsManager.gif",
           imgPosition: "74% 38%",
           imgSize: "105%"
         }
@@ -113,7 +114,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.gedButton.title"),
           content: t("GuidedTour.platform.gedButton.content"),
-          img: imgPath + "gedButton.gif",
+          img: IMG_PATH + "gedButton.gif",
           imgPosition: "-5% 54%",
           imgSize: "300%"
         }
@@ -124,7 +125,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.fileTree.title"),
           content: t("GuidedTour.platform.fileTree.content"),
-          img: imgPath + "fileTree.gif",
+          img: IMG_PATH + "fileTree.gif",
           imgPosition: "-16% 62%",
           imgSize: "167%"
         }
@@ -135,7 +136,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.groupManager.title"),
           content: t("GuidedTour.platform.groupManager.content"),
-          img: imgPath + "groupManager.gif",
+          img: IMG_PATH + "groupManager.gif",
           imgPosition: "45% -18%",
           imgSize: "96%"
         }
@@ -148,7 +149,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.changeSpace.title"),
           content: t("GuidedTour.platform.changeSpace.content"),
-          img: imgPath + "changeSpace.gif",
+          img: IMG_PATH + "changeSpace.gif",
           imgPosition: "-10% 77%",
           imgSize: "210%"
         }
@@ -159,7 +160,7 @@ const tours = [
         props: {
           title: t("GuidedTour.platform.outro.title"),
           content: t("GuidedTour.platform.outro.content"),
-          img: imgPath + "outro.png",
+          img: IMG_PATH + "outro.png",
           imgPosition: "2% 50%",
           imgSize: "93%"
         }
@@ -167,4 +168,5 @@ const tours = [
     ]
   }
 ];
-export { tours, TOURS_NAME };
+
+export { IS_GUIDED_TOUR_ENABLED, TOURS_NAME, tours };

@@ -1,6 +1,6 @@
 import { reactive, readonly, toRefs } from "vue";
-import UserService from "@/services/UserService.js";
-import PlatformService from "@/services/PlatformService.js";
+import PlatformService from "../services/PlatformService.js";
+import UserService from "../services/UserService.js";
 
 const state = reactive({
   isNew: false,
