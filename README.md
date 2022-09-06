@@ -19,7 +19,8 @@ In order for the platform to work properly it should be able to interact with it
 The [platform-back](https://github.com/bimdata/platform-back) repository host the source code of the service.
 
 The backend is a python app built with [Django REST framework](https://www.django-rest-framework.org/).<br/>
-You should refer to the README to set it up on your development environment before moving to the application setup.
+You should refer to its [README](https://github.com/bimdata/platform-back) to set it up on your development
+environment before moving to the application setup.
 
 ### Application setup
 
@@ -62,7 +63,12 @@ $ npm run dev
 
 This project comes with a set of end-to-end tests built with [Cypress](https://www.cypress.io/).
 
-Before you can run the tests you need to set Cypress environment variables.
+Before you can run the tests on your machine you need to have a working test environment.
+
+Head up to the **Run Locally** section of the [bimdata-test README](https://github.com/bimdata/bimdata-test#run-locally)
+and follow the instructions to setup your test environment.
+
+Then set Cypress environment variables.
 To do so copy the example env file:
 
 ```
@@ -71,13 +77,11 @@ $ cp cyress.env.example cypress.env.json
 
 Then open it and set variables values as appropriate.
 
-Once you have setup Cypress env vars run the tests using the following command:
+Finally start and open Cypress using the following command:
 
 ```
 $ npm run test:e2e
 ```
-
-This command will start the platform locally on port `3030` and open Cypress.
 
 ## Build
 
