@@ -44,7 +44,10 @@
             :disabled="!hasAdminPerm(project, currentFolder)"
           >
             <BIMDataIcon name="addFolder" size="xs" />
-            <span v-if="!isXXL" style="margin-left: 6px">
+            <span
+              v-if="project.isAdmin ? !isXXL : !isXL"
+              style="margin-left: 6px"
+            >
               {{ $t("FolderCreationButton.buttonText") }}
             </span>
           </FolderCreationButton>
@@ -76,7 +79,10 @@
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isXXL" style="margin-left: 6px">
+                <span
+                  v-if="project.isAdmin ? !isXXL : !isXL"
+                  style="margin-left: 6px"
+                >
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
               </BIMDataButton>
@@ -102,7 +108,10 @@
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isXXL" style="margin-left: 6px">
+                <span
+                  v-if="project.isAdmin ? !isXXL : !isXL"
+                  style="margin-left: 6px"
+                >
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
               </BIMDataButton>
@@ -734,7 +743,8 @@ export default {
       fileUploadInput,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
-      menuItems
+      menuItems,
+      console
     };
   }
 };
