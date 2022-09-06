@@ -16,7 +16,7 @@
         <div
           class="progress-level"
           :style="{
-            width: `${progress.percentage > 100 ? 100 : progress.percentage}%`
+            width: `${progress.percentage}%`
           }"
         />
       </div>
@@ -24,11 +24,8 @@
         <template v-if="uploading">
           <span>{{
             `${formatBytes(
-              file.type === FILE_TYPE.FOLDER
-                ? progress.folderUploaded
-                : progress.uploaded
-            )} of ${formatBytes(file.size)}` +
-            ` (${progress.percentage > 100 ? 100 : progress.percentage}% done)`
+              progress.folderUploaded || progress.fileUploaded
+            )} of ${formatBytes(file.size)}` + ` (${progress.percentage}% done)`
           }}</span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""
@@ -104,8 +101,9 @@ export default {
     let lastProgressTime = null;
     const progress = reactive({
       percentage: 0,
+      fileUploaded: 0,
       folderUploaded: 0,
-      onGoingUploads: [],
+      onGoingUploads: {},
       rate: 0
     });
 
@@ -114,10 +112,9 @@ export default {
         uploading.value = true;
       },
       onUploadProgress: ({ bytesUploaded, bytesTotal, id }) => {
-        const file = progress.onGoingUploads.find(upload => upload.id === id);
-
         if (props.file.type === FILE_TYPE.FOLDER) {
-          const currentlyUploaded = bytesUploaded - file.uploaded;
+          const currentlyUploaded =
+            bytesUploaded - progress.onGoingUploads[id].uploaded;
           progress.folderUploaded += currentlyUploaded;
 
           if (lastProgressTime) {
@@ -125,43 +122,43 @@ export default {
             const dx = currentlyUploaded; // in bytes
             progress.rate = Math.round(dx / dt);
           }
-          progress.percentage = Math.round(
+          const rawPercentage = Math.round(
             (100 * progress.folderUploaded) / props.file.size
           );
+          progress.percentage = rawPercentage > 100 ? 100 : rawPercentage;
 
-          file.uploaded = bytesUploaded;
+          progress.onGoingUploads[id].uploaded = bytesUploaded;
           lastProgressTime = Date.now();
 
           if (
             bytesUploaded >= bytesTotal &&
-            progress.onGoingUploads.length < simultaneousUploadLimit
+            Object.keys(progress.onGoingUploads).length <
+              simultaneousUploadLimit
           ) {
             files.value.shift();
           }
         } else {
           if (lastProgressTime) {
             const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
-            const dx = bytesUploaded - file.uploaded; // in bytes
+            const dx = bytesUploaded - progress.fileUploaded; // in bytes
             progress.rate = Math.round(dx / dt);
           }
           progress.percentage = Math.round((100 * bytesUploaded) / bytesTotal);
-          progress.uploaded = bytesUploaded;
+          progress.fileUploaded = bytesUploaded;
           lastProgressTime = Date.now();
         }
       },
       onUploadComplete: ({ response: document, id }) => {
-        progress.onGoingUploads = progress.onGoingUploads.filter(
-          upload => upload.id != id
-        );
+        delete progress.onGoingUploads[id];
 
-        if (progress.onGoingUploads.length === 0) {
+        if (Object.keys(progress.onGoingUploads).length === 0) {
           uploading.value = false;
           emit("upload-completed", document);
         }
 
         if (
           props.file.type === FILE_TYPE.FOLDER &&
-          progress.onGoingUploads.length < simultaneousUploadLimit
+          Object.keys(progress.onGoingUploads).length < simultaneousUploadLimit
         ) {
           files.value.shift();
         }
@@ -181,7 +178,9 @@ export default {
     }
 
     const cancelUpload = () => {
-      progress.onGoingUploads.forEach(upload => upload.uploader.cancel());
+      Object.values(progress.onGoingUploads).forEach(upload =>
+        upload.uploader.cancel()
+      );
       uploading.value = false;
       canceled.value = true;
       files.value = [];
@@ -209,7 +208,7 @@ export default {
             files.value[0].parentId,
             null
           );
-          progress.onGoingUploads.push({ id, uploader, uploaded: 0 });
+          progress.onGoingUploads[id] = { uploader, uploaded: 0 };
         },
         { immediate: true }
       );
@@ -219,7 +218,7 @@ export default {
           props.file,
           props.folder ? props.folder.id : null
         );
-        progress.onGoingUploads.push({ id, uploader, uploaded: 0 });
+        progress.onGoingUploads[id] = { uploader };
       });
     }
 

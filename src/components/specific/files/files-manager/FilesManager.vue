@@ -44,7 +44,7 @@
             :disabled="!hasAdminPerm(project, currentFolder)"
           >
             <BIMDataIcon name="addFolder" size="xs" />
-            <span v-if="!isLG" style="margin-left: 6px">
+            <span v-if="!isXXL" style="margin-left: 6px">
               {{ $t("FolderCreationButton.buttonText") }}
             </span>
           </FolderCreationButton>
@@ -76,7 +76,7 @@
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isLG" style="margin-left: 6px">
+                <span v-if="!isXXL" style="margin-left: 6px">
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
               </BIMDataButton>
@@ -102,7 +102,7 @@
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isLG" style="margin-left: 6px">
+                <span v-if="!isXXL" style="margin-left: 6px">
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
               </BIMDataButton>
@@ -272,7 +272,7 @@ import { FILE_TYPE } from "../../../../config/files.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useProjects } from "../../../../state/projects.js";
 import FileService from "../../../../services/FileService.js";
-import { useToggle } from "../../../../composables/toggle";
+import { useToggle } from "../../../../composables/toggle.js";
 import {
   getPaths,
   getDocsInfos,
