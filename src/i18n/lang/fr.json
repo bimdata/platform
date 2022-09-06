@@ -254,7 +254,8 @@
     "validate": "Valider"
   },
   "FileUploadButton": {
-    "addFileButtonText": "Charger un fichier"
+    "addFileButtonText": "Charger un fichier",
+    "shortAddFileButtonText": "Fichier"
   },
   "FileUploadCard": {
     "cancelMessage": "Annulé",
@@ -273,7 +274,8 @@
     "membersHeader": "Membres"
   },
   "FolderCreationButton": {
-    "buttonText": "Nouveau dossier"
+    "buttonText": "Nouveau dossier",
+    "shortButtonText": "Dossier"
   },
   "FolderCreationForm": {
     "creationFormTitle": "Créer un dossier",
