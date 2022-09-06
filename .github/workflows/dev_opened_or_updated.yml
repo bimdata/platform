@@ -46,6 +46,7 @@ jobs:
         id: branch
         run: |
           echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
+      - run: echo ${{ steps.branch.outputs.name }}
       - name: Run e2e tests
         uses: ./end-to-end/
         with:
