@@ -22,13 +22,17 @@
       </div>
       <div class="file-upload-card__info__upload-data">
         <template v-if="uploading">
-          <span>{{
-            `${formatBytes(
-              progress.folderUploaded || progress.fileUploaded
-            )} ${$t("FileUploadCard.of")}
-            ${formatBytes(file.size)}` +
-            ` (${progress.percentage}% ${$t("FileUploadCard.done")})`
-          }}</span>
+          <span>
+            {{
+              $t("FileUploadCard.upload", {
+                uploaded: formatBytes(
+                  progress.folderUploaded || progress.fileUploaded
+                ),
+                total: formatBytes(file.size),
+                percentage: progress.percentage
+              })
+            }}
+          </span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""
           }}</span>

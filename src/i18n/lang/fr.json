@@ -260,8 +260,8 @@
   "FileUploadCard": {
     "cancelMessage": "Annulé",
     "errorMessage": "Le téléversement a échoué",
-    "of": "sur",
-    "done": "téléversé"
+    "upload": "{uploaded} sur {total} ({percentage}% téléversé)"
+
   },
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
