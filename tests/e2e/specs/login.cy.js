@@ -14,7 +14,7 @@ describe("Login / Logout features", () => {
     cy.hook("btn-logout").click();
 
     // Assert logout success
-    cy.url().should("contain", Cypress.env("LOGIN_BASE_URL"));
+    cy.url().should("contain", Cypress.env("AUTH_BASE_URL"));
   });
 
 });

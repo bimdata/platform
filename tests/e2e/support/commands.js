@@ -3,17 +3,61 @@
 // https://docs.cypress.io/api/cypress-api/custom-commands
 // ***********************************************
 
-Cypress.Commands.add("login", (email, password) => {
-  cy.session([email, password], () => {
-    cy.visit("/");
+Cypress.Commands.add(
+  "createUser",
+  (firstname, lastname) => {
+    cy.task("generate-logins").then(
+      ({ email, password }) => {
+        cy.visit("/");
 
-    cy.get("input[name=email]").type(email);
-    cy.get("input[name=password]").type(password);
-    cy.get("input[type=submit]").click();
+        cy.get("a[href^=\"/signup\"]").click();
+        cy.get("input[name=email]").type(email);
+        cy.get("input[name=first_name]").type(firstname);
+        cy.get("input[name=last_name]").type(lastname);
+        cy.get("input[name=password1]").type(password);
+        cy.get("input[name=password2]").type(password);
+        cy.get("input[type=submit]").click();
 
-    cy.url().should("contain", Cypress.config("baseUrl"));
-  });
-});
+        cy.url().should("contain", Cypress.env("IAM_BASE_URL"));
+        cy.get("input[type=submit][value=Yes]").click();
+
+        return cy.url().should("contain", Cypress.config("baseUrl"))
+          .then(() => ({
+            firstname,
+            lastname,
+            email,
+            password
+          })
+        );
+      }
+    );
+  }
+);
+
+Cypress.Commands.add(
+  "deleteUser",
+  (email, password) => {
+    cy.visit(`${Cypress.env("AUTH_BASE_URL")}/profile/delete/`);
+
+    cy.get("input#id_password").type(password);
+    cy.get("button[type=submit]").click();
+  }
+);
+
+Cypress.Commands.add(
+  "login",
+  (email, password) => {
+    cy.session([email, password], () => {
+      cy.visit("/");
+
+      cy.get("input[name=email]").type(email);
+      cy.get("input[name=password]").type(password);
+      cy.get("input[type=submit]").click();
+
+      cy.url().should("contain", Cypress.config("baseUrl"));
+    });
+  }
+);
 
 Cypress.Commands.add(
   "hook", 
