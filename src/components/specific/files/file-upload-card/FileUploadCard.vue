@@ -25,7 +25,9 @@
           <span>{{
             `${formatBytes(
               progress.folderUploaded || progress.fileUploaded
-            )} of ${formatBytes(file.size)}` + ` (${progress.percentage}% done)`
+            )} ${$t("FileUploadCard.of")}
+            ${formatBytes(file.size)}` +
+            ` (${progress.percentage}% ${$t("FileUploadCard.done")})`
           }}</span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""
@@ -122,12 +124,15 @@ export default {
             const dx = currentlyUploaded; // in bytes
             progress.rate = Math.round(dx / dt);
           }
-          const rawPercentage = Math.round(
-            (100 * progress.folderUploaded) / props.file.size
+          progress.percentage = Math.min(
+            Math.round((100 * progress.folderUploaded) / props.file.size),
+            100
           );
-          progress.percentage = rawPercentage > 100 ? 100 : rawPercentage;
 
-          progress.onGoingUploads.set(id, { uploaded: bytesUploaded });
+          progress.onGoingUploads.set(id, {
+            ...progress.onGoingUploads.get(id),
+            uploaded: bytesUploaded
+          });
           lastProgressTime = Date.now();
 
           if (
