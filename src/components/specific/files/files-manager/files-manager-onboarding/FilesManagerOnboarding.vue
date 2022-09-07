@@ -27,7 +27,7 @@
       >
         {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
       </BIMDataButton>
-      <BIMDataDropdownMenu
+      <!-- <BIMDataDropdownMenu
         class="files-manager-onboarding__actions__dropdown"
         v-click-away="close"
         ref="dropdown"
@@ -60,7 +60,7 @@
             </li>
           </ul>
         </template>
-      </BIMDataDropdownMenu>
+      </BIMDataDropdownMenu> -->
     </div>
     <transition name="fade">
       <div

@@ -13,7 +13,7 @@
       </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
-          <template v-if="menuItems.length > 0">
+          <!-- <template v-if="menuItems.length > 0">
             <BIMDataDropdownMenu
               ref="dropdown"
               class="files-manager__actions__dropdown"
@@ -28,13 +28,13 @@
                 <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
                 <BIMDataIcon
                   :name="isOpen ? 'deploy' : 'chevron'"
-                  fill
                   size="xxs"
+                  fill
                   color="primary"
                 />
               </template>
             </BIMDataDropdownMenu>
-          </template>
+          </template> -->
           <FolderCreationButton
             data-guide="btn-new-folder"
             class="files-manager__actions__btn-new-folder"
@@ -757,10 +757,9 @@ export default {
       fileManager,
       dropdown,
       isOpen,
-      toggle,
-      isXXXL,
-      isMidXL,
+      menuItems,
       // Methods
+      toggle,
       close,
       closeAccessManager,
       closeDeleteModal,
@@ -788,7 +787,8 @@ export default {
       fileUploadInput,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
-      menuItems
+      isMidXL,
+      isXXXL
     };
   }
 };
