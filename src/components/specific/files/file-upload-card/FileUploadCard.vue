@@ -168,9 +168,16 @@ export default {
         }
       },
       onUploadError: () => {
+        progress.onGoingUploads.forEach(upload => upload.uploader.cancel());
         uploading.value = false;
         failed.value = true;
-        emit("upload-failed");
+        files.value = [];
+
+        if (props.file.type === FILE_TYPE.FOLDER) {
+          emit("upload-completed");
+        } else {
+          emit("upload-failed");
+        }
       }
     };
 
