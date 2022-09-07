@@ -15,18 +15,24 @@
       <div v-show="uploading" class="file-upload-card__info__progress-bar">
         <div
           class="progress-level"
-          :style="{ width: `${progress.percentage}%` }"
+          :style="{
+            width: `${progress.percentage}%`
+          }"
         />
       </div>
       <div class="file-upload-card__info__upload-data">
         <template v-if="uploading">
-          <span>{{
-            `${formatBytes(
-              file.type === FILE_TYPE.FOLDER
-                ? progress.folderUploaded
-                : progress.uploaded
-            )} of ${formatBytes(file.size)}` + ` (${progress.percentage}% done)`
-          }}</span>
+          <span>
+            {{
+              $t("FileUploadCard.upload", {
+                uploaded: formatBytes(
+                  progress.folderUploaded || progress.fileUploaded
+                ),
+                total: formatBytes(file.size),
+                percentage: progress.percentage
+              })
+            }}
+          </span>
           <span>{{
             progress.rate ? `${formatBytes(progress.rate)}/s` : ""
           }}</span>
@@ -101,21 +107,20 @@ export default {
     let lastProgressTime = null;
     const progress = reactive({
       percentage: 0,
-      uploaded: 0,
-      fileUploaded: {},
+      fileUploaded: 0,
       folderUploaded: 0,
-      onGoingUploadsCounter: 0,
+      onGoingUploads: new Map(),
       rate: 0
     });
 
     const handlers = {
       onUploadStart: () => {
         uploading.value = true;
-        progress.onGoingUploadsCounter++;
       },
       onUploadProgress: ({ bytesUploaded, bytesTotal, id }) => {
         if (props.file.type === FILE_TYPE.FOLDER) {
-          const currentlyUploaded = bytesUploaded - progress.fileUploaded[id];
+          const currentlyUploaded =
+            bytesUploaded - progress.onGoingUploads.get(id).uploaded;
           progress.folderUploaded += currentlyUploaded;
 
           if (lastProgressTime) {
@@ -123,49 +128,60 @@ export default {
             const dx = currentlyUploaded; // in bytes
             progress.rate = Math.round(dx / dt);
           }
-          progress.percentage = Math.round(
-            (100 * progress.folderUploaded) / props.file.size
+          progress.percentage = Math.min(
+            Math.round((100 * progress.folderUploaded) / props.file.size),
+            100
           );
 
-          progress.fileUploaded[id] = bytesUploaded;
+          progress.onGoingUploads.set(id, {
+            ...progress.onGoingUploads.get(id),
+            uploaded: bytesUploaded
+          });
           lastProgressTime = Date.now();
 
           if (
             bytesUploaded >= bytesTotal &&
-            progress.onGoingUploadsCounter < simultaneousUploadLimit
+            progress.onGoingUploads.size < simultaneousUploadLimit
           ) {
             files.value.shift();
           }
         } else {
           if (lastProgressTime) {
             const dt = (Date.now() - lastProgressTime) / 1000; // in seconds
-            const dx = bytesUploaded - progress.uploaded; // in bytes
+            const dx = bytesUploaded - progress.fileUploaded; // in bytes
             progress.rate = Math.round(dx / dt);
           }
           progress.percentage = Math.round((100 * bytesUploaded) / bytesTotal);
-          progress.uploaded = bytesUploaded;
+          progress.fileUploaded = bytesUploaded;
           lastProgressTime = Date.now();
         }
       },
-      onUploadComplete: ({ response: document }) => {
-        progress.onGoingUploadsCounter--;
+      onUploadComplete: ({ response: document, id }) => {
+        progress.onGoingUploads.delete(id);
 
-        if (progress.onGoingUploadsCounter === 0) {
+        if (progress.onGoingUploads.size === 0) {
           uploading.value = false;
           emit("upload-completed", document);
         }
 
         if (
           props.file.type === FILE_TYPE.FOLDER &&
-          progress.onGoingUploadsCounter < simultaneousUploadLimit
+          progress.onGoingUploads.size < simultaneousUploadLimit
         ) {
           files.value.shift();
         }
       },
       onUploadError: () => {
+        progress.onGoingUploads.forEach(upload => upload.uploader.cancel());
         uploading.value = false;
         failed.value = true;
-        emit("upload-failed");
+        files.value = [];
+
+        if (props.file.type === FILE_TYPE.FOLDER) {
+          emit("upload-completed");
+        } else {
+          emit("upload-failed");
+        }
       }
     };
 
@@ -177,10 +193,16 @@ export default {
     }
 
     const cancelUpload = () => {
-      uploader.cancel();
+      progress.onGoingUploads.forEach(upload => upload.uploader.cancel());
       uploading.value = false;
       canceled.value = true;
-      emit("upload-canceled");
+      files.value = [];
+
+      if (props.file.type === FILE_TYPE.FOLDER) {
+        emit("upload-completed");
+      } else {
+        emit("upload-canceled");
+      }
     };
 
     const files = ref(
@@ -199,14 +221,18 @@ export default {
             files.value[0].parentId,
             null
           );
-          progress.fileUploaded[id] = 0;
+          progress.onGoingUploads.set(id, { uploader, uploaded: 0 });
         },
         { immediate: true }
       );
     } else {
-      onMounted(() =>
-        uploader.upload(props.file, props.folder ? props.folder.id : null)
-      );
+      onMounted(() => {
+        const { id } = uploader.upload(
+          props.file,
+          props.folder ? props.folder.id : null
+        );
+        progress.onGoingUploads.set(id, { uploader });
+      });
     }
 
     return {
