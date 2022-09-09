@@ -23,7 +23,8 @@
 
   .status-cell {
     &--active,
-    &--deleted {
+    &--deleted,
+    &--past_due {
       font-weight: bold;
       text-transform: capitalize;
     }
@@ -31,9 +32,11 @@
     &--active {
       color: var(--color-success);
     }
-
     &--deleted {
       color: var(--color-high);
+    }
+    &--past_due {
+      color: var(--color-warning);
     }
   }
 }

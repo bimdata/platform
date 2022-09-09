@@ -57,8 +57,8 @@
           </template>
           <template #cell-actions="{ row: sub }">
             <BillingActionsCell
-              v-if="sub.status === 'active' && !sub.is_custom"
-              :billing="sub"
+              v-if="sub.status !== SUB_STATUS.DELETED && !sub.is_custom"
+              :subscription="sub"
             />
           </template>
         </GenericTable>
@@ -84,12 +84,13 @@
 <script>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import routeNames from "@/router/route-names.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { SUB_STATUS } from "../../../../config/subscription.js";
+import routeNames from "../../../../router/route-names.js";
 import columnsDef from "./columns.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import GenericTable from "../../../generic/generic-table/GenericTable.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import BillingActionsCell from "./billing-actions-cell/BillingActionsCell.vue";
 
 export default {
@@ -126,7 +127,8 @@ export default {
     return {
       // References
       columns,
-      routeNames
+      routeNames,
+      SUB_STATUS
     };
   }
 };

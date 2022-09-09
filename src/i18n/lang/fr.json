@@ -152,6 +152,7 @@
     "status": {
       "active": "Actif",
       "deleted": "Supprimé",
+      "past_due": "Suspendu",
       "paused": "En pause",
       "custom": "Géré par BIMData.io"
     }
