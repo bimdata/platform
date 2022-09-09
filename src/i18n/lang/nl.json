@@ -568,8 +568,8 @@
         "storage": "Actieve opslag",
         "including": "Inclusief {quantity} GB van DataPack"
     },
-    "GroupMemberInvitation": {
-        "name": "Openstaande uitnodiging"
+    "GroupMemberCard": {
+        "pending": "Openstaande uitnodiging"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Factuur downloaden"

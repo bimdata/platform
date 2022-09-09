@@ -341,8 +341,8 @@
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
   },
-  "GroupMemberInvitation": {
-    "name": "Invitation en cours"
+  "GroupMemberCard": {
+    "pending": "Invitation en cours"
   },
   "GroupMembersSelector": {
     "title": "Gestion des membres du groupe",

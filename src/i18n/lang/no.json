@@ -568,8 +568,8 @@
         "storage": "Aktiv lagringsplass",
         "including": "inkludert datapakke med {quantity} GB"
     },
-    "GroupMemberInvitation": {
-        "name": "Ventende invitasjon"
+    "GroupMemberCard": {
+        "pending": "Ventende invitasjon"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Last ned faktura"
