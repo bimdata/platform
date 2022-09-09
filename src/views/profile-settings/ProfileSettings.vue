@@ -51,10 +51,10 @@ export default {
             await signOut();
             break;
           case "account delete start":
-            setTimeout(() => {
-              deleteLoader.value = true;
-              iframe.value.onload = async () => signOut();
-            }, 500);
+            setTimeout(() => (deleteLoader.value = true), 500);
+            break;
+          case "account delete successful":
+            signOut();
         }
       });
     });
