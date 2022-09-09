@@ -54,7 +54,7 @@ Cypress.Commands.add(
       cy.get("input[name=password]").type(password);
       cy.get("input[type=submit]").click();
 
-      cy.url().should("contain", Cypress.config("baseUrl"));
+      cy.url().should("contain", Cypress.env("APP_BASE_URL"));
     });
   }
 );
@@ -65,7 +65,7 @@ Cypress.Commands.add(
     cy.hook("btn-toggle-app-menu").click();
     cy.hook("btn-logout").click();
 
-    cy.url().should("contain", Cypress.env("LOGIN_URL"));
+    cy.url().should("contain", `${Cypress.env("AUTH_BASE_URL")}/accounts/login`);
   }
 );
 

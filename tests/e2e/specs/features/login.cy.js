@@ -9,13 +9,13 @@ describe("Login / Logout features", () => {
       cy.get("input[type=submit]").click();
   
       // Assert login success
-      cy.url().should("contain", Cypress.config("baseUrl"));
+      cy.url().should("contain", Cypress.env("APP_BASE_URL"));
   
       cy.hook("btn-toggle-app-menu").click();
       cy.hook("btn-logout").click();
   
       // Assert logout success
-      cy.url().should("contain", Cypress.env("LOGIN_URL"));
+      cy.url().should("contain", `${Cypress.env("AUTH_BASE_URL")}/accounts/login`);
     });
   });
 

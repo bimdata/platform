@@ -11,7 +11,7 @@ You need:
 - Vue 3.x
 - [see platform-back for backend requirements](https://github.com/bimdata/platform-back)
 
-## Install & Run
+## Install & Run :arrow_down: :runner:
 
 ### Backend setup
 
@@ -59,23 +59,27 @@ $ npm run dev
 
 - **(5)** Have a coffee and start coding... :coffee: `</>`
 
-## Test
+## Tests :passport_control: :heavy_check_mark:
 
 This project comes with a set of end-to-end tests built with [Cypress](https://www.cypress.io/).
 
-Before you can run the tests on your machine you need to have a working test environment.
-
-Head up to the **Run Locally** section of the [bimdata-test README](https://github.com/bimdata/bimdata-test#run-locally)
-and follow the instructions to setup your test environment.
-
-Then set Cypress environment variables.
+Before you can run the tests you need to have a working test environment.
 To do so copy the example env file:
 
 ```
 $ cp cyress.env.example cypress.env.json
 ```
 
-Then open it and set variables values as appropriate.
+Then open it and set variables values as appropriate:
+ - **APP_BASE_URL**: will be used by Cypress as [baseUrl](https://docs.cypress.io/guides/references/configuration#e2e)
+ - **AUTH_BASE_URL**: authentication server
+ - **IAM_BASE_URL**: identity server
+
+Start the platform locally (only needed if your **APP_BASE_URL** point to `localhost`):
+
+```
+npm run dev
+```
 
 Finally start and open Cypress using the following command:
 
@@ -83,7 +87,14 @@ Finally start and open Cypress using the following command:
 $ npm run test:e2e
 ```
 
-## Build
+#### :point_up: Important Note
+
+In order for the tests to work properly you **must** run the [setup tests](./tests/e2e/specs/setup/setup.cy.js) first.
+This will create random test users that will be used in all other tests.
+
+Once your tests are completed you can run the [teardown tests](./tests/e2e/specs/teardown/teardown.cy.js) to delete tests users.
+
+## Build :package:
 
 The platform can be built for production like environment using the following command:
 
@@ -93,7 +104,7 @@ $ npm run build
 
 This will create a `dist/` directory that contain the bundled application ready to be deployed.
 
-## Documentation
+## Documentation :closed_book:
 
 A work in progress documentation is available [here](https://github.com/bimdata/platform-next/wiki).
 
