@@ -1,24 +1,9 @@
 describe("Project features", () => {
 
-  let user = {};
-
-  before(() => {
-    cy.createUser("John", "Doe").then(u => {
-      cy.wait(20000).then(() => Object.assign(user, u));
-    });
-  });
-
   beforeEach(() => {
-    // cy.login(Cypress.env("USER_EMAIL"), Cypress.env("USER_PASSWORD"));
-    // cy.get("@user").then(({ email, password }) => cy.login(email, password));
-    cy.login(user.email, user.password);
-    // cy.visit("/spaces/1");
+    cy.task("get-user", "user0").then(user => cy.login(user));
     cy.visit("/spaces");
     cy.hook("space-card").first().click();
-  });
-
-  after(() => {
-    cy.deleteUser(user.email, user.password);
   });
 
   it("Should create project", () => {

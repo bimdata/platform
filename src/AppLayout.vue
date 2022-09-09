@@ -36,7 +36,7 @@ import {
   IS_GUIDED_TOUR_ENABLED,
   TOURS_NAME,
   tours
-} from "./config/guided-tours.js";
+} from "./config/guided-tour.js";
 import routeNames from "./router/route-names.js";
 import { useUser } from "./state/user.js";
 

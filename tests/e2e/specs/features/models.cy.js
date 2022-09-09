@@ -3,8 +3,10 @@ describe("Models features", () => {
   beforeEach(() => {
     cy.fixture("ifc-model.ifc").as("ifcModel");
 
-    cy.login(Cypress.env("USER_EMAIL"), Cypress.env("USER_PASSWORD"));
-    cy.visit("/spaces/1/projects/1");
+    cy.task("get-user", "user0").then(user => cy.login(user));
+    cy.visit("/spaces");
+    cy.hook("space-card").first().click();
+    cy.hook("project-card").first().click();
     cy.hook("project-tab-overview").click();
   });
 
