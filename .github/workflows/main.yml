@@ -67,25 +67,6 @@ jobs:
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }}
 
-  # test:
-  #   runs-on: [self-hosted, testendtoend]
-  #   needs: build-and-push
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         repository: bimdata/bimdata-test
-  #         ref: master
-  #         token: ${{ secrets.REPOS_TOKEN }}
-  #         path: bimdata-test
-  #     - name: Run e2e tests
-  #       uses: ./bimdata-test/end-to-end/
-  #       with:
-  #         docker_tag: staging
-  #         docker_platform_image: docker-registry.bimdata.io/bimdata/${{ env.app }}:staging
-  #         ref: develop
-  #         github_token: ${{ secrets.REPOS_TOKEN }}
-  #         vault_passwd: ${{ secrets.VAULT_PASSWD }}
-
   deploy:
     runs-on: self-hosted
     needs: build-and-push
