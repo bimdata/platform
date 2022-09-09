@@ -13,7 +13,14 @@ module.exports = defineConfig({
   // This is necessary to handle signup/login scenarios with redirection
   chromeWebSecurity: false,
 
+  downloadsFolder: "tests/e2e/downloads",
+  fixturesFolder: "tests/e2e/fixtures",
+  screenshotsFolder: "tests/e2e/screenshots",
+  videosFolder: "tests/e2e/videos",
+
   e2e: {
+    experimentalSessionAndOrigin: true,
+    supportFile: "tests/e2e/support/index.js",
     specPattern: [
       // Execute "setup tests" first in order to create test users
       "tests/e2e/specs/setup/*.cy.{js,jsx,ts,tsx}",
@@ -22,12 +29,6 @@ module.exports = defineConfig({
       // Finally, execute "teardown tests" to delete users
       "tests/e2e/specs/teardown/*.cy.{js,jsx,ts,tsx}"
     ],
-    supportFile: "tests/e2e/support/index.js",
-    downloadsFolder: "tests/e2e/downloads",
-    fixturesFolder: "tests/e2e/fixtures",
-    screenshotsFolder: "tests/e2e/screenshots",
-    videosFolder: "tests/e2e/videos",
-    experimentalSessionAndOrigin: true,
 
     baseUrl,
 
