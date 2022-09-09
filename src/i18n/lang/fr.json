@@ -254,11 +254,14 @@
     "validate": "Valider"
   },
   "FileUploadButton": {
-    "addFileButtonText": "Charger un fichier"
+    "addFileButtonText": "Charger un fichier",
+    "shortAddFileButtonText": "Fichier"
   },
   "FileUploadCard": {
     "cancelMessage": "Annulé",
-    "errorMessage": "Le téléversement a échoué"
+    "errorMessage": "Le téléversement a échoué",
+    "upload": "{uploaded} sur {total} ({percentage}% téléversé)"
+
   },
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
@@ -273,7 +276,8 @@
     "membersHeader": "Membres"
   },
   "FolderCreationButton": {
-    "buttonText": "Nouveau dossier"
+    "buttonText": "Nouveau dossier",
+    "shortButtonText": "Dossier"
   },
   "FolderCreationForm": {
     "creationFormTitle": "Créer un dossier",
