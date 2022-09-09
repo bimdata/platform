@@ -28,9 +28,10 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useAppNotification } from "../../app/app-notification/app-notification.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { wait } from "../../../../utils/async.js";
 
 export default {
   props: {
@@ -50,8 +51,18 @@ export default {
   setup(props) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
-    const { sendSpaceInvitation, cancelSpaceInvitation } = useSpaces();
-    const { sendProjectInvitation, cancelProjectInvitation } = useProjects();
+    const {
+      sendSpaceInvitation,
+      cancelSpaceInvitation,
+      loadSpaceUsers,
+      loadSpaceInvitations
+    } = useSpaces();
+    const {
+      sendProjectInvitation,
+      cancelProjectInvitation,
+      loadProjectUsers,
+      loadProjectInvitations
+    } = useProjects();
 
     const resendInvitation = async () => {
       if (props.project) {
@@ -63,11 +74,21 @@ export default {
           resend: true
         });
       }
+
       pushNotification({
         type: "success",
         title: t("Success"),
         message: t("InvitationCard.resendSuccessNotifText")
       });
+
+      await wait(2000);
+      if (props.project) {
+        loadProjectUsers(props.project);
+        loadProjectInvitations(props.project);
+      } else if (props.space) {
+        loadSpaceUsers(props.space);
+        loadSpaceInvitations(props.space);
+      }
     };
 
     const cancelInvitation = async () => {
