@@ -8,7 +8,7 @@
       />
     </teleport>
   </template>
-  <div class="profile-settings">
+  <div class="profile-settings" v-show="!deleteLoader">
     <div class="profile-settings__back-btn">
       <GoBackButton />
     </div>
