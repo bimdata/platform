@@ -82,24 +82,24 @@
 </template>
 
 <script>
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
-import { useListFilter } from "@/composables/list-filter.js";
-import { useListSort } from "@/composables/list-sort.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
+import { useListFilter } from "../../composables/list-filter.js";
+import { useListSort } from "../../composables/list-sort.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
+import { useProjects } from "../../state/projects.js";
+import { useSpaces } from "../../state/spaces.js";
 // Components
-import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
-import ProjectCreationCard from "@/components/specific/projects/project-creation-card/ProjectCreationCard.vue";
-import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
-import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
-import SpaceUsersManager from "@/components/specific/users/space-users-manager/SpaceUsersManager.vue";
+import AppLoading from "../../components/specific/app/app-loading/AppLoading.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppSidePanel from "../../components/specific/app/app-side-panel/AppSidePanel.vue";
+import ProjectCard from "../../components/specific/projects/project-card/ProjectCard.vue";
+import ProjectCreationCard from "../../components/specific/projects/project-creation-card/ProjectCreationCard.vue";
+import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
+import SpaceUsersManager from "../../components/specific/users/space-users-manager/SpaceUsersManager.vue";
 
 export default {
   components: {

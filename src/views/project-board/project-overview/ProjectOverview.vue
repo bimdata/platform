@@ -97,9 +97,9 @@ import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "../../../config/models.js";
 import { useFiles } from "../../../state/files.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
-import { isFullTotal } from "../../../utils/spaces.js";
 import { useSpaces } from "../../../state/spaces.js";
 import { debounce } from "../../../utils/async.js";
+import { isFullTotal } from "../../../utils/spaces.js";
 // Components
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";

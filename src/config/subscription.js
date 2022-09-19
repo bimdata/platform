@@ -17,6 +17,14 @@ const PRO_PLAN_STORAGE = process.env.VUE_APP_PRO_PLAN_STORAGE;
 const IS_SUBSCRIPTION_ENABLED = SUBSCRIPTION_ENABLED === "true";
 const IS_PADDLE_SANDBOX = PADDLE_SANDBOX === "true";
 
+const SUB_STATUS = Object.freeze({
+  ACTIVE: "active",
+  DELETED: "deleted",
+  PAST_DUE: "past_due",
+  PAUSED: "paused",
+  TRIALING: "trialing"
+});
+
 export {
   SUBSCRIPTION_START_DATE,
   IS_SUBSCRIPTION_ENABLED,
@@ -25,5 +33,6 @@ export {
   PRO_PLAN_ID,
   DATAPACK_PLAN_ID,
   FREE_PLAN_STORAGE,
-  PRO_PLAN_STORAGE
+  PRO_PLAN_STORAGE,
+  SUB_STATUS
 };

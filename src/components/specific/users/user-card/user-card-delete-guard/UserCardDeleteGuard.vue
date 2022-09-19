@@ -34,8 +34,8 @@
 
 <script>
 import { inject } from "vue";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
+import { useProjects } from "../../../../../state/projects.js";
+import { useSpaces } from "../../../../../state/spaces.js";
 
 export default {
   props: {

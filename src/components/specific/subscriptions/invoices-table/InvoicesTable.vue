@@ -8,23 +8,23 @@
       <template #content>
         <GenericTable
           :columns="columns"
-          :rows="payments"
+          :rows="displayedPayments"
           :paginated="true"
           :perPage="7"
         >
           <template #cell-space="{ row: payment }">
             <AppLink
-              v-if="subscriptionsMap[payment.subscription_id].cloud"
+              v-if="payment.subscription.cloud"
               :to="{
                 name: routeNames.spaceBoard,
                 params: {
-                  spaceID: subscriptionsMap[payment.subscription_id].cloud.id
+                  spaceID: payment.subscription.cloud.id
                 }
               }"
             >
               <BIMDataTextbox
                 maxWidth="300px"
-                :text="subscriptionsMap[payment.subscription_id].cloud.name"
+                :text="payment.subscription.cloud.name"
               />
             </AppLink>
           </template>
@@ -39,7 +39,7 @@
             {{ payment.currency === "EUR" ? "€" : "£" }}
           </template>
           <template #cell-actions="{ row: payment }">
-            <InvoiceActionsCell :invoice="payment" />
+            <InvoiceActionsCell :payment="payment" />
           </template>
         </GenericTable>
       </template>
@@ -62,13 +62,13 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../../../router/route-names.js";
 import columnsDef from "./columns.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import GenericTable from "../../../generic/generic-table/GenericTable.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import InvoiceActionsCell from "./invoice-actions-cell/InvoiceActionsCell.vue";
 import InvoiceStatusCell from "./invoice-status-cell/InvoiceStatusCell.vue";
 
@@ -99,23 +99,22 @@ export default {
       }));
     });
 
-    const subscriptionsMap = ref({});
-    watch(
-      () => props.subscriptions,
-      subscriptions => {
-        subscriptionsMap.value = subscriptions.reduce((acc, sub) => {
-          acc[sub.subscription_id] = sub;
-          return acc;
-        }, {});
-      },
-      { immediate: true }
-    );
+    const displayedPayments = computed(() => {
+      const subscriptionsMap = props.subscriptions.reduce(
+        (map, sub) => ({ ...map, [sub.subscription_id]: sub }),
+        {}
+      );
+      return props.payments.map(payment => ({
+        ...payment,
+        subscription: subscriptionsMap[payment.subscription_id]
+      }));
+    });
 
     return {
       // References
       columns,
-      routeNames,
-      subscriptionsMap
+      displayedPayments,
+      routeNames
     };
   }
 };
