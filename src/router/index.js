@@ -27,24 +27,14 @@ import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
 import sessionGuard from "./guards/session.js";
 
 // Lazy loaded view components
-/* eslint-disable */
-const Dashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard.vue");
-const GroupBoard = () =>
-  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
-const ModelViewer = () =>
-  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer.vue");
-const ProjectBoard = () =>
-  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard.vue");
-const ProjectGroups = () =>
-  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups.vue");
-const SpaceBoard = () =>
-  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
-const UserProjects = () =>
-  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
-const UserSpaces = () =>
-  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
-/* eslint-enable */
+const Dashboard = () => import("@/views/dashboard/Dashboard.vue");
+const GroupBoard = () => import("@/views/group-board/GroupBoard.vue");
+const ModelViewer = () => import("@/views/model-viewer/ModelViewer.vue");
+const ProjectBoard = () => import("@/views/project-board/ProjectBoard.vue");
+const ProjectGroups = () => import("@/views/project-groups/ProjectGroups.vue");
+const SpaceBoard = () => import("@/views/space-board/SpaceBoard.vue");
+const UserProjects = () => import("@/views/user-projects/UserProjects.vue");
+const UserSpaces = () => import("@/views/user-spaces/UserSpaces.vue");
 
 const {
   root,

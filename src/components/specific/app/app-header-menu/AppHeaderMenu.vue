@@ -130,9 +130,9 @@ export default {
     } = useToggle();
 
     const bimdataConnectProfileUrl =
-      process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
-    const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
-    const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
+      import.meta.env.VITE_URL_BIMDATACONNECT + "/profile/";
+    const documentationUrl = import.meta.env.VITE_URL_DOCUMENTATION;
+    const marketPlaceUrl = import.meta.env.VITE_URL_MARKETPLACE;
 
     return {
       // References

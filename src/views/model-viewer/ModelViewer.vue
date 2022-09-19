@@ -42,7 +42,7 @@ export default {
     const { currentSpace } = useSpaces();
     const loading = ref(false);
 
-    const apiUrl = process.env.VUE_APP_API_BASE_URL;
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs = route.params.modelIDs.split(",").map(id => +id);
@@ -105,11 +105,8 @@ export default {
       });
 
       await Promise.all(
-        // Webpack annotation is needed to prevent Webpack from using its own
-        // import function instead of standard JS import function.
-        // (see: https://stackoverflow.com/a/56998596/8298197)
         pluginUrls.map(url =>
-          import(/* webpackIgnore: true */ url)
+          import(url)
             .then(pluginModule =>
               bimdataViewer.registerPlugin(pluginModule.default)
             )
