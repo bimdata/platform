@@ -1,7 +1,7 @@
 import i18n from "../../i18n/index.js";
-import { useSession } from "@/composables/session.js";
-import { DEFAULT_PROJECT_VIEW } from "@/config/projects.js";
-import { useCustomBreakpoints } from "@/composables/responsive.js";
+import { useCustomBreakpoints } from "../../composables/responsive.js";
+import { useSession } from "../../composables/session.js";
+import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
 
 const { t } = i18n.global;
 const imgPath = "/static/guidedTour/platform/";

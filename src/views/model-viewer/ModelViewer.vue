@@ -23,12 +23,12 @@ import {
   AVAILABLE_PLUGINS,
   DEFAULT_WINDOW,
   PLUGINS_CONFIG
-} from "@/config/viewer.js";
-import { useAuth } from "@/state/auth.js";
-import { useSpaces } from "@/state/spaces.js";
+} from "../../config/viewer.js";
+import { useAuth } from "../../state/auth.js";
+import { useSpaces } from "../../state/spaces.js";
 // Components
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 
 export default {
   components: {

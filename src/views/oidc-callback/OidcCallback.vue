@@ -7,7 +7,7 @@
 <script>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuth } from "@/state/auth.js";
+import { useAuth } from "../../state/auth.js";
 
 export default {
   setup() {

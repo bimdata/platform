@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import { DEFAULT_WINDOW } from "@/config/viewer.js";
-import routeNames from "@/router/route-names.js";
+import { DEFAULT_WINDOW } from "../../../../../../config/viewer.js";
+import routeNames from "../../../../../../router/route-names.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../../../app/app-link/AppLink.vue";
 
 export default {
   components: {

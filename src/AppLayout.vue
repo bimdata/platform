@@ -30,15 +30,15 @@
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { isEmpty } from "lodash";
-import { useUser } from "@/state/user.js";
+import { useUser } from "./state/user.js";
 import { tours } from "./config/guidedTour/tours.js";
-import { TOURS_NAME } from "@/config/guidedTour/tours.js";
-import { contexts, useLoadingContext } from "@/composables/loading.js";
-import routeNames from "@/router/route-names.js";
+import { TOURS_NAME } from "./config/guidedTour/tours.js";
+import { contexts, useLoadingContext } from "./composables/loading.js";
+import routeNames from "./router/route-names.js";
 
 // Components
-import AppHeader from "@/components/specific/app/app-header/AppHeader.vue";
-import AppNotification from "@/components/specific/app/app-notification/AppNotification.vue";
+import AppHeader from "./components/specific/app/app-header/AppHeader.vue";
+import AppNotification from "./components/specific/app/app-notification/AppNotification.vue";
 
 export default {
   components: {

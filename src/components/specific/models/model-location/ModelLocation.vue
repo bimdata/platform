@@ -61,11 +61,14 @@
 
 <script>
 import { onActivated, provide, ref, watch } from "vue";
-import { useModels } from "@/state/models.js";
-import { DMS2DD, getCoordinatesFromAddress } from "@/utils/location.js";
+import { useModels } from "../../../../state/models.js";
+import {
+  DMS2DD,
+  getCoordinatesFromAddress
+} from "../../../../utils/location.js";
 // Components
-import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper.vue";
-import ModelLocationForm from "@/components/specific/models/model-location-form/ModelLocationForm.vue";
+import MapboxWrapper from "../../../generic/mapbox-wrapper/MapboxWrapper.vue";
+import ModelLocationForm from "../model-location-form/ModelLocationForm.vue";
 
 export default {
   components: {

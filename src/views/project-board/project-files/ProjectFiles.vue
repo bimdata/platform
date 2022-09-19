@@ -55,19 +55,19 @@
 
 <script>
 import { ref } from "vue";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import routeNames from "@/router/route-names.js";
-import { useFiles } from "@/state/files.js";
-import { useGroups } from "@/state/groups.js";
-import { useModels } from "@/state/models.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
-import { debounce } from "@/utils/async.js";
+import { useStandardBreakpoints } from "../../../composables/responsive.js";
+import routeNames from "../../../router/route-names.js";
+import { useFiles } from "../../../state/files.js";
+import { useGroups } from "../../../state/groups.js";
+import { useModels } from "../../../state/models.js";
+import { useProjects } from "../../../state/projects.js";
+import { useSpaces } from "../../../state/spaces.js";
+import { debounce } from "../../../utils/async.js";
 // Components
-import AppLoading from "@/components/specific/app/app-loading/AppLoading.vue";
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import FilesManager from "@/components/specific/files/files-manager/FilesManager.vue";
+import AppLink from "../../../components/specific/app/app-link/AppLink.vue";
+import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
+import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+import FilesManager from "../../../components/specific/files/files-manager/FilesManager.vue";
 
 export default {
   components: {

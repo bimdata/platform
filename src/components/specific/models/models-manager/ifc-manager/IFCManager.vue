@@ -4,7 +4,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { segregateBySource } from "@/utils/models.js";
+import { segregateBySource } from "../../../../../utils/models.js";
 // Components
 import ModelsManagerWrapper from "../models-manager-wrapper/ModelsManagerWrapper.vue";
 

@@ -81,12 +81,12 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
-import { useSpaces } from "@/state/spaces";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { useSpaces } from "../../../../../state/spaces.js";
 // Components
-import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard";
-import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton";
-import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm";
+import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
+import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
+import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.vue";
 
 export default {
   components: {

@@ -13,11 +13,11 @@ import userSubscriptionsGuard from "./guards/views/user-subscriptions.js";
 
 // Lazy loaded view components
 /* eslint-disable */
-const Subscribe = () => import("@/views/subscribe/Subscribe.vue");
-const SubscriptionDatapack = () => import("@/views/subscription-datapack/SubscriptionDatapack.vue");
-const SubscriptionFree = () => import("@/views/subscription-free/SubscriptionFree.vue");
-const SubscriptionPro = () => import("@/views/subscription-pro/SubscriptionPro.vue");
-const UserSubscriptions = () => import("@/views/user-subscriptions/UserSubscriptions.vue");
+const Subscribe = () => import("../views/subscribe/Subscribe.vue");
+const SubscriptionDatapack = () => import("../views/subscription-datapack/SubscriptionDatapack.vue");
+const SubscriptionFree = () => import("../views/subscription-free/SubscriptionFree.vue");
+const SubscriptionPro = () => import("../views/subscription-pro/SubscriptionPro.vue");
+const UserSubscriptions = () => import("../views/user-subscriptions/UserSubscriptions.vue");
 /* eslint-enable */
 
 const {

@@ -60,13 +60,13 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle.js";
-import routeNames from "@/router/route-names.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import routeNames from "../../../../router/route-names.js";
 // Components
-import FlippableCard from "@/components/generic/flippable-card/FlippableCard.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
+import FlippableCard from "../../../generic/flippable-card/FlippableCard.vue";
 import GroupCardActionMenu from "./group-card-action-menu/GroupCardActionMenu.vue";
+import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
 
 export default {
   components: {

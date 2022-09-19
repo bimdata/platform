@@ -1,5 +1,5 @@
-import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
-import { projectStatus } from "@/utils/projects.js";
+import { statusLimitNew, statusLimitActive } from "../../../src/config/projects.js";
+import { projectStatus } from "../../../src/utils/projects.js";
 
 describe("Projects Utils - project status", () => {
   let today;

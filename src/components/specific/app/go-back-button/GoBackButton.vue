@@ -20,7 +20,7 @@
 
 <script>
 import { useRoute, useRouter } from "vue-router";
-import { useSession } from "@/composables/session.js";
+import { useSession } from "../../../../composables/session.js";
 
 export default {
   setup() {

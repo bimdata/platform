@@ -1,6 +1,7 @@
-import { FILE_TYPE } from "@/config/files.js";
-import { download } from "@/utils/download.js";
-import { segregate } from "@/utils/file-structure.js";
+import { FILE_TYPE } from "../config/files.js";
+import { download } from "../utils/download.js";
+import { segregate } from "../utils/file-structure.js";
+
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 

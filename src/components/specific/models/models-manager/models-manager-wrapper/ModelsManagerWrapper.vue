@@ -62,7 +62,7 @@
 
 <script>
 import { ref, watch, watchEffect } from "vue";
-import { useModels } from "@/state/models.js";
+import { useModels } from "../../../../../state/models.js";
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";

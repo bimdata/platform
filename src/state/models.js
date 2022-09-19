@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
-import ModelService from "@/services/ModelService.js";
-import { useFiles } from "@/state/files.js";
+import ModelService from "../services/ModelService.js";
+
+import { useFiles } from "./files.js";
 
 const state = reactive({
   projectModels: []

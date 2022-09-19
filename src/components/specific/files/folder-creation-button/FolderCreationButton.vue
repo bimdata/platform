@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../composables/toggle.js";
 // Components
-import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
+import FolderCreationForm from "../folder-creation-form/FolderCreationForm.vue";
 
 export default {
   components: {

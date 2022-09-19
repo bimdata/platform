@@ -29,9 +29,9 @@
 
 <script>
 import { ref, watch } from "vue";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../../../router/route-names.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview.vue";
 
 export default {

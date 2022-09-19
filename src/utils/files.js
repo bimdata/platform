@@ -1,4 +1,4 @@
-import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "@/config/files.js";
+import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "../config/files.js";
 
 function fileExtension(fileName) {
   const parts = fileName.split(".");

@@ -43,19 +43,19 @@
 
 <script>
 import { computed } from "vue";
-import { useListFilter } from "@/composables/list-filter.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
-import { useGroups } from "@/state/groups.js";
-import { useProjects } from "@/state/projects.js";
+import { useListFilter } from "../../composables/list-filter.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
+import { useGroups } from "../../state/groups.js";
+import { useProjects } from "../../state/projects.js";
 // Components
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
-import GroupMemberCard from "@/components/specific/groups/group-member-card/GroupMemberCard.vue";
-import GroupMemberSelectionCard from "@/components/specific/groups/group-member-selection-card/GroupMemberSelectionCard.vue";
-import GroupMembersSelector from "@/components/specific/groups/group-members-selector/GroupMembersSelector.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppSidePanel from "../../components/specific/app/app-side-panel/AppSidePanel.vue";
+import GroupMemberCard from "../../components/specific/groups/group-member-card/GroupMemberCard.vue";
+import GroupMemberSelectionCard from "../../components/specific/groups/group-member-selection-card/GroupMemberSelectionCard.vue";
+import GroupMembersSelector from "../../components/specific/groups/group-members-selector/GroupMembersSelector.vue";
 
 export default {
   components: {

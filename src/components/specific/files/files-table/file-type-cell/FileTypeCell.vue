@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { isFolder } from "@/utils/file-structure.js";
-import { fileExtension } from "@/utils/files.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { fileExtension } from "../../../../../utils/files.js";
 
 export default {
   props: {

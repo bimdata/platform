@@ -55,10 +55,11 @@
 
 <script>
 import { ref, watch } from "vue";
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import { useVisa } from "../../../../../../state/visa.js";
 
+// Components
+import UserAvatar from "../../../../users/user-avatar/UserAvatar.vue";
 import VisaCommentPostActions from "./visa-comment-post-actions/VisaCommentPostActions.vue";
-import { useVisa } from "@/state/visa";
 
 export default {
   components: {

@@ -36,10 +36,10 @@
 
 <script>
 import { computed } from "vue";
-import routeNames from "@/router/route-names.js";
-import { useProjects } from "@/state/projects.js";
+import routeNames from "../../../../router/route-names.js";
+import { useProjects } from "../../../../state/projects.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu.vue";
 import SpaceCardImage from "./space-card-image/SpaceCardImage.vue";
 

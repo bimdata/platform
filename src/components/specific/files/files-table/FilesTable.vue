@@ -94,17 +94,16 @@
 <script>
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { isFolder } from "@/utils/file-structure.js";
-import { formatBytes, generateFileKey } from "@/utils/files.js";
-import { FILE_TYPE } from "@/config/files.js";
-
 import columnsDef from "./columns.js";
-// Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { FILE_TYPE } from "../../../../config/files.js";
+import { isFolder } from "../../../../utils/file-structure.js";
+import { formatBytes, generateFileKey } from "../../../../utils/files.js";
 
-import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
+// Components
+import GenericTable from "../../../generic/generic-table/GenericTable.vue";
+import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
+import FileUploadCard from "../file-upload-card/FileUploadCard.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "./file-name-cell/FileNameCell.vue";
 import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
@@ -115,10 +114,10 @@ export default {
     GenericTable,
     FileActionsCell,
     FileNameCell,
+    FilesManagerBreadcrumb,
     FileTagsCell,
     FileTypeCell,
-    FileUploadCard,
-    FilesManagerBreadcrumb
+    FileUploadCard
   },
   props: {
     project: {

@@ -1,5 +1,5 @@
-import { MODEL_SOURCE, MODEL_TYPE } from "@/config/models.js";
-import { segregateBySource, segregateByType } from "@/utils/models.js";
+import { MODEL_SOURCE, MODEL_TYPE } from "../../../src/config/models.js";
+import { segregateBySource, segregateByType } from "../../../src/utils/models.js";
 
 describe("Models Utils", () => {
 

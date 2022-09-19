@@ -8,8 +8,8 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE } from "@/config/models.js";
-import { segregateBySource } from "@/utils/models.js";
+import { MODEL_TYPE } from "../../../../../config/models.js";
+import { segregateBySource } from "../../../../../utils/models.js";
 // Components
 import ModelsManagerWrapper from "../models-manager-wrapper/ModelsManagerWrapper.vue";
 

@@ -67,11 +67,11 @@
 <script>
 import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
+import { useStandardBreakpoints } from "../../../../../composables/responsive.js";
 import columnsDef from "./columns.js";
-import { MODEL_TYPE } from "@/config/models.js";
+import { MODEL_TYPE } from "../../../../../config/models.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import GenericTable from "../../../../generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";

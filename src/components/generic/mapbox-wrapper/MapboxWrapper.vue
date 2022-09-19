@@ -6,7 +6,7 @@
 
 <script>
 import { onMounted, watchEffect } from "vue";
-import { useMapbox } from "@/composables/mapbox";
+import { useMapbox } from "../../../composables/mapbox.js";
 
 export default {
   props: {

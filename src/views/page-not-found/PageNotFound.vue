@@ -34,7 +34,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../router/route-names.js";
 // Components
 import PageNotFoundImage from "./PageNotFoundImage.vue";
 

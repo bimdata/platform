@@ -44,7 +44,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useToggle } from "@/composables/toggle.js";
+import { useToggle } from "../../../../../../../composables/toggle.js";
 
 export default {
   components: {},

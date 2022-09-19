@@ -1,4 +1,5 @@
-import { downloadBlobAs } from "@/utils/download.js";
+import { downloadBlobAs } from "../utils/download.js";
+
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError } from "./ErrorService.js";
 

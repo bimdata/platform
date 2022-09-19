@@ -1,4 +1,4 @@
-import { fileExtension, formatBytes } from "@/utils/files.js";
+import { fileExtension, formatBytes } from "../../../src/utils/files.js";
 
 describe("File Utils - file extension", () => {
   it("Should return file extension", () => {

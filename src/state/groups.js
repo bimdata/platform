@@ -1,5 +1,5 @@
 import { reactive, readonly, toRefs } from "vue";
-import GroupService from "@/services/GroupService.js";
+import GroupService from "../services/GroupService.js";
 
 const state = reactive({
   projectGroups: [],

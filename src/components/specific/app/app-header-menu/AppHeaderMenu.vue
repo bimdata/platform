@@ -101,16 +101,16 @@
 </template>
 
 <script>
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { useToggle } from "@/composables/toggle.js";
-import { useAuth } from "@/state/auth.js";
-import { useSpaces } from "@/state/spaces.js";
-import { useUser } from "@/state/user.js";
-import { fullName } from "@/utils/users";
+import { useToggle } from "../../../../composables/toggle.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../../../../config/subscription.js";
+import routeNames from "../../../../router/route-names.js";
+import { useAuth } from "../../../../state/auth.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { useUser } from "../../../../state/user.js";
+import { fullName } from "../../../../utils/users";
 
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {

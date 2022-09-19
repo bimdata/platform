@@ -54,7 +54,8 @@
 
 <script>
 import { ref } from "vue";
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+// Components
+import UserAvatar from "../../../users/user-avatar/UserAvatar.vue";
 
 export default {
   components: {

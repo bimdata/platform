@@ -83,8 +83,8 @@
 <script>
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { fullName } from "@/utils/users";
-import { VISA_STATUS } from "@/config/visa";
+import { VISA_STATUS } from "../../../../config/visa.js";
+import { fullName } from "../../../../utils/users.js";
 
 // This variable is shared between all componant instances.
 let lastUsedTabIndex = 0;
