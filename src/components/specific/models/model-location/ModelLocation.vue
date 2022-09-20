@@ -23,7 +23,7 @@
 
       <template v-else-if="longitude && latitude">
         <div class="model-location__map">
-          <MapboxWrapper :longitude="longitude" :latitude="latitude" />
+          <MaplibreWrapper :longitude="longitude" :latitude="latitude" />
           <BIMDataButton
             v-if="project.isAdmin"
             class="model-location__map__edit-btn"
@@ -67,12 +67,12 @@ import {
   getCoordinatesFromAddress
 } from "../../../../utils/location.js";
 // Components
-import MapboxWrapper from "../../../generic/mapbox-wrapper/MapboxWrapper.vue";
+import MaplibreWrapper from "../../../generic/maplibre-wrapper/MaplibreWrapper.vue";
 import ModelLocationForm from "../model-location-form/ModelLocationForm.vue";
 
 export default {
   components: {
-    MapboxWrapper,
+    MaplibreWrapper,
     ModelLocationForm
   },
   props: {

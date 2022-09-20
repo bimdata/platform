@@ -18,7 +18,7 @@
     "@bimdata/viewer": "^1.9.0-rc.151",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
-    "mapbox-gl": "^2.10.0",
+    "maplibre-gl": "^2.4.0",
     "oidc-client": "^1.11.5",
     "seedrandom": "^3.0.5",
     "vue": "^3.2.38",

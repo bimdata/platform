@@ -1,6 +1,6 @@
 <template>
   <div class="model-location-form">
-    <MapboxWrapper :longitude="inputLongitude" :latitude="inputLatitude" />
+    <MaplibreWrapper :longitude="inputLongitude" :latitude="inputLatitude" />
     <div class="model-location-form__form-control">
       <AddressInput
         class="model-location-form__form-control__input"
@@ -47,12 +47,12 @@ import {
 } from "../../../../utils/location.js";
 // Components
 import AddressInput from "../../../generic/address-input/AddressInput.vue";
-import MapboxWrapper from "../../../generic/mapbox-wrapper/MapboxWrapper.vue";
+import MaplibreWrapper from "../../../generic/maplibre-wrapper/MaplibreWrapper.vue";
 
 export default {
   components: {
     AddressInput,
-    MapboxWrapper
+    MaplibreWrapper
   },
   props: {
     project: {

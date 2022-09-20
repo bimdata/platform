@@ -1,18 +1,18 @@
 <template>
-  <div class="mapbox-wrapper" :id="containerID">
+  <div class="maplibre-wrapper" :id="containerID">
     <!-- Mapbox will be displayed here -->
   </div>
 </template>
 
 <script>
 import { onMounted, watchEffect } from "vue";
-import { useMapbox } from "../../../composables/mapbox.js";
+import { useMaplibre } from "../../../composables/maplibre.js";
 
 export default {
   props: {
     containerID: {
       type: String,
-      default: "mapbox-container"
+      default: "maplibre-container"
     },
     longitude: {
       type: Number,
@@ -24,7 +24,7 @@ export default {
     }
   },
   setup(props) {
-    const { loadMap } = useMapbox(props.containerID);
+    const { loadMap } = useMaplibre(props.containerID);
 
     onMounted(() => {
       watchEffect(() => {
@@ -35,4 +35,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./MapboxWrapper.scss"></style>
+<style scoped lang="scss" src="./MaplibreWrapper.scss"></style>
