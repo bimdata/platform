@@ -1,8 +1,12 @@
 import { defineConfig } from "vite";
+import env from "vite-plugin-environment";
 import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    env("all", { prefix: "VUE_APP_", defineOn: "import.meta.env" }),
+    vue()
+  ],
   css: {
     preprocessorOptions: {
       scss: {

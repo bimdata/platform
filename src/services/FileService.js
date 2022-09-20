@@ -177,7 +177,7 @@ class FileService {
     const { folders, documents } = segregate(files);
     let url = "";
     if (folders.length > 0 || documents.length > 0) {
-      url += `${import.meta.env.VITE_ARCHIVE_BASE_URL}/cloud/${
+      url += `${import.meta.env.VUE_APP_ARCHIVE_BASE_URL}/cloud/${
         project.cloud.id
       }/project/${project.id}?`;
       url += `accessToken=${accessToken}&`;

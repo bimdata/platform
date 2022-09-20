@@ -3,13 +3,13 @@
  * See: https://github.com/IdentityModel/oidc-client-js/wiki#configuration
  */
 
-const APP_BASE_URL = import.meta.env.VITE_BASE_URL;
-const AUTHORITY = `${import.meta.env.VITE_IAM_BASE_URL}/auth/realms/bimdata`;
+const APP_BASE_URL = import.meta.env.VUE_APP_BASE_URL;
+const AUTHORITY = `${import.meta.env.VUE_APP_IAM_BASE_URL}/auth/realms/bimdata`;
 const OIDC_ENDPOINT = `${AUTHORITY}/protocol/openid-connect`;
 
-const CLIENT_ID = import.meta.env.VITE_OIDC_CLIENT_ID;
+const CLIENT_ID = import.meta.env.VUE_APP_OIDC_CLIENT_ID;
 const AUTHORIZED_IDENTITY_PROVIDERS = import.meta.env
-  .VITE_AUTHORIZED_IDENTITY_PROVIDERS;
+  .VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
 
 const config = {
   // Auth request config

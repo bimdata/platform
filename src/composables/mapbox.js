@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl";
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+mapboxgl.accessToken = import.meta.env.VUE_APP_MAPBOX_TOKEN;
 
 export function useMapbox(containerID) {
   const loadMap = (longitude, latitude) => {
