@@ -57,6 +57,7 @@
         <BIMDataIcon
           v-if="hasHistory"
           name="versioning"
+          margin="0px 0px 0px 4px"
           size="xxs"
           fill
           color="primary"
@@ -111,6 +112,7 @@ export default {
             }
           ]);
           closeUpdateForm();
+          emit("success");
         } finally {
           loading.value = false;
         }
