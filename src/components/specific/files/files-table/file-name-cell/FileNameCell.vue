@@ -88,7 +88,7 @@ export default {
       default: false
     }
   },
-  emits: ["close", "file-clicked", "open-versioning-manager"],
+  emits: ["close", "file-clicked", "success", "open-versioning-manager"],
   setup(props, { emit }) {
     const { updateFiles } = useFiles();
 

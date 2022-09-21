@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
+import InvitationForm from "../../invitation-form/InvitationForm.vue";
 import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
 
 export default {

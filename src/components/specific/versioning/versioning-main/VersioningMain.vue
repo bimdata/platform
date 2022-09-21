@@ -9,7 +9,7 @@
     </transition>
     <template v-if="loading">
       <BIMDataLoading
-        :message="$t('Versioning.loading.message')"
+        :message="$t(`Versioning.loading.${loading}Message`)"
         :subMessage="$t('Versioning.loading.subMessage')"
       />
     </template>
@@ -33,13 +33,19 @@
       </div>
 
       <div class="versioning-main__content__add-version">
-        <FileUploadButton
+        <BIMDataButton
           :disabled="
             (!project.isAdmin && currentFolder.user_permission < 100) ||
             spaceSubInfo.remaining_total_size <= 0
           "
+          fill
+          radius
+          icon
+          color="primary"
           width="100%"
-          @upload="addVersion"
+          @click="
+            fileUploadInput('file', event => addVersion(event.target.files))
+          "
         >
           <BIMDataIcon
             name="close"
@@ -48,7 +54,7 @@
             margin="0 6px 0 0"
           />
           {{ $t("Versioning.AddVersion") }}
-        </FileUploadButton>
+        </BIMDataButton>
       </div>
       <template v-if="hasPrevVersions === false">
         <div class="versioning-main__content__empty-area">
@@ -79,16 +85,16 @@
 
 <script>
 import { ref, onMounted, computed } from "vue";
-import { useUpload } from "@/composables/upload.js";
-import FileService from "@/services/FileService.js";
+import { useUpload } from "../../../../composables/upload.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
+import FileService from "../../../../services/FileService.js";
+
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
-import VersioningDoc from "@/components/specific/versioning/versioning-doc/VersioningDoc.vue";
-import VersioningSafeZone from "@/components/specific/versioning/versioning-safe-zone/VersioningSafeZone.vue";
+import VersioningDoc from "../../../../components/specific/versioning/versioning-doc/VersioningDoc.vue";
+import VersioningSafeZone from "../../../../components/specific/versioning/versioning-safe-zone/VersioningSafeZone.vue";
 
 export default {
   components: {
-    FileUploadButton,
     VersioningDoc,
     VersioningSafeZone
   },
@@ -115,20 +121,18 @@ export default {
   setup(props, { emit }) {
     const { projectFileUploader } = useUpload();
 
-    const loading = ref(false);
+    const loading = ref(null);
 
-    const addVersion = async fileToUpload => {
-      if (fileToUpload) {
-        const handlers = {
-          onUploadStart: () => (loading.value = true),
-          onUploadComplete: async ({ response: newHeadVersion }) => {
-            await getAllDocVersions(newHeadVersion);
-            loading.value = false;
-          }
-        };
-        const uploader = projectFileUploader(props.project, handlers);
-        uploader.upload(fileToUpload[0], null, allDocVersions.value[0].id);
-      }
+    const addVersion = async files => {
+      const handlers = {
+        onUploadStart: () => (loading.value = "download"),
+        onUploadComplete: async ({ response: newHeadVersion }) => {
+          await getAllDocVersions(newHeadVersion);
+          loading.value = null;
+        }
+      };
+      const uploader = projectFileUploader(props.project, handlers);
+      uploader.upload(files[0], null, allDocVersions.value[0].id);
     };
 
     const docToDelete = ref(null);
@@ -141,10 +145,13 @@ export default {
 
     const onSafeZone = async isActionConfirmed => {
       if (isActionConfirmed) {
+        loading.value = "delete";
         await FileService.deleteDocVersion(props.project, docToDelete.value);
+        loading.value = null;
         const documentHistory = allDocVersions.value.find(
           version => version.id !== docToDelete.value.id
         );
+
         await getAllDocVersions(documentHistory);
       }
       isSafeZone.value = false;
@@ -179,6 +186,7 @@ export default {
       hasPrevVersions,
       getAllDocVersions,
       // methods
+      fileUploadInput,
       addVersion,
       onSafeZone,
       onDelete

@@ -55,7 +55,12 @@
               {{ $t("AppHeaderMenu.entryDocumentation") }}
             </BIMDataButton>
           </a>
-          <a class="external-link" :href="marketPlaceUrl" target="blank">
+          <a
+            v-if="marketPlaceUrl"
+            class="external-link"
+            :href="marketPlaceUrl"
+            target="blank"
+          >
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryMarketplace") }}
             </BIMDataButton>

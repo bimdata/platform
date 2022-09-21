@@ -42,13 +42,16 @@
     <div class="project-board__body">
       <transition name="fade" mode="out-in">
         <keep-alive>
-          <component :is="currentView" />
+          <component
+            :is="currentView"
+            @switch-sub-modal="isSubscriptionModal = $event"
+          />
         </keep-alive>
       </transition>
     </div>
   </div>
-  <AppModal v-if="isSubscriptionEnabled">
-    <SubscriptionModal />
+  <AppModal v-if="isSubscriptionEnabled && isSubscriptionModal">
+    <SubscriptionModal @switch-sub-modal="isSubscriptionModal = $event" />
   </AppModal>
 </template>
 
@@ -156,6 +159,8 @@ export default {
       )
     );
 
+    const isSubscriptionModal = ref(false);
+
     return {
       // References
       currentTab,
@@ -164,6 +169,7 @@ export default {
       tabs,
       space: currentSpace,
       spaceSubInfo,
+      isSubscriptionModal,
       // Methods
       changeView,
       // Responsive breakpoints

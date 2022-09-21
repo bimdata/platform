@@ -31,7 +31,38 @@
 
       .files-manager__actions {
         &.start {
+          display: flex;
+          align-items: center;
           grid-area: actions-start;
+        }
+        &__dropdown {
+          .bimdata-dropdown__content {
+            padding: 7px 8px 7px 6px;
+            box-shadow: var(--box-shadow);
+            border: none;
+
+            .ghost-element {
+              width: calc(var(--spacing-unit) / 5);
+            }
+          }
+          .bimdata-textbox {
+            padding: 0;
+          }
+
+          .bimdata-dropdown__elements {
+            &__menu-items {
+              &__item {
+                font-size: calc(var(--font-size) / 1.1);
+                padding-left: var(--spacing-unit);
+                color: var(--color-primary);
+              }
+            }
+          }
+
+          .submenu--down {
+            z-index: 3;
+            width: 470%;
+          }
         }
 
         &.end {
@@ -47,6 +78,9 @@
         }
         &__btn-new-file {
           width: 48%;
+          button {
+            padding: 0 var(--spacing-unit);
+          }
         }
 
         &__input-search {

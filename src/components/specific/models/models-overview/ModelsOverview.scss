@@ -1,5 +1,6 @@
 .models-overview {
   @include block-card($padding: calc(var(--spacing-unit) * 2));
+  overflow: visible;
 
   &.bimdata-card {
     &:deep() > .bimdata-card__content {

@@ -1,5 +1,5 @@
 <template>
-  <div class="subscription-modal" v-click-away="closeModal">
+  <div class="subscription-modal" v-click-away="modalCloser">
     <div class="subscription-modal__header">
       <span>{{ $t("SubscriptionModal.title") }}</span>
       <span>{{ $t("SubscriptionModal.subtitle") }}</span>
@@ -84,17 +84,22 @@ export default {
   components: {
     AppLink
   },
-  setup() {
-    const { showModal, closeModal } = useAppModal();
+  emits: ["switch-sub-modal"],
+  setup(_, { emit }) {
+    const { closeModal } = useAppModal();
     const { currentSpace } = useSpaces();
+
+    const modalCloser = () => {
+      closeModal();
+      emit("switch-sub-modal", false);
+    };
 
     return {
       // references
-      showModal,
       routeNames,
       currentSpace,
       // methods
-      closeModal
+      modalCloser
     };
   }
 };

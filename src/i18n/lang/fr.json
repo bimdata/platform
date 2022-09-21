@@ -159,6 +159,7 @@
     "status": {
       "active": "Actif",
       "deleted": "Supprimé",
+      "past_due": "Suspendu",
       "paused": "En pause",
       "custom": "Géré par BIMData.io"
     }
@@ -232,12 +233,16 @@
   "FilesManager": {
     "title": "Documents du projet",
     "searchInputPlaceholder": "Rechercher",
-    "createModelNotification": "Modèle créé avec succès"
+    "createModelNotification": "Modèle créé avec succès",
+    "structureImport": "Importer une structure GED",
+    "folderImport": "Importer un dossier",
+    "gedDownload": "Télécharger la GED"
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
     "uploadFileButtonText": "Téléverser un fichier",
-    "createFolderButtonText": "Créer un dossier"
+    "createFolderButtonText": "Créer un dossier",
+    "GEDStructureImport": "Importer une structure GED"
   },
   "FilesTable": {
     "emptyTablePlaceholder": "Dossier vide",
@@ -251,12 +256,20 @@
       "size": "Taille"
     }
   },
+  "FileTreePreview": {
+    "title": "Importer la structure GED depuis",
+    "cancel": "Annuler",
+    "validate": "Valider"
+  },
   "FileUploadButton": {
-    "addFileButtonText": "Charger un fichier"
+    "addFileButtonText": "Charger un fichier",
+    "shortAddFileButtonText": "Fichier"
   },
   "FileUploadCard": {
     "cancelMessage": "Annulé",
-    "errorMessage": "Le téléversement a échoué"
+    "errorMessage": "Le téléversement a échoué",
+    "upload": "{uploaded} sur {total} ({percentage}% téléversé)"
+
   },
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
@@ -271,7 +284,8 @@
     "membersHeader": "Membres"
   },
   "FolderCreationButton": {
-    "buttonText": "Nouveau dossier"
+    "buttonText": "Nouveau dossier",
+    "shortButtonText": "Dossier"
   },
   "FolderCreationForm": {
     "creationFormTitle": "Créer un dossier",
@@ -335,8 +349,8 @@
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
   },
-  "GroupMemberInvitation": {
-    "name": "Invitation en cours"
+  "GroupMemberCard": {
+    "pending": "Invitation en cours"
   },
   "GroupMembersSelector": {
     "title": "Gestion des membres du groupe",
@@ -865,7 +879,8 @@
     "titleDate": "Le",
     "AddVersion": "Ajouter une nouvelle version",
     "loading": {
-      "message": "Chargement en cours.",
+      "downloadMessage": "Chargement en cours.",
+      "deleteMessage": "Suppression en cours.",
       "subMessage": "Ce processus peut prendre quelques instants."
     },
     "delete": "Supprimer",
@@ -901,6 +916,8 @@
     "projectUpdateError": "Échec de la mise à jour du projet",
     "projectDeleteError": "Échec de la suppression du projet",
     "projectFetchFileError": "Impossible de récupérer ce document",
+    "projectFolderTreeFetchError": "Impossible de récupérer la liste des projets",
+    "documentCreateError": "Impossible de télécharger ce document",
     "invitationsFetchError": "Impossible de récupérer la liste des invitations",
     "invitationSendError": "L'invitation n'a pas pu être envoyée",
     "invitationResendError": "Echec du renvoi de l'invitation",
@@ -918,6 +935,7 @@
     "modelMergeError": "Échec de la fusion des modèles",
     "modelDeleteError": "Erreur lors de la suppression du modèle",
     "fileStructureFetchError": "Impossible de récupérer la structure de fichier",
+    "fileStructureCreateError": "Impossble de créer la structure de fichier",
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",

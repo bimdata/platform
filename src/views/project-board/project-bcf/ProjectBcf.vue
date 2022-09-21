@@ -4,17 +4,27 @@
       <BIMDataButton color="primary" outline radius icon @click="openSettings">
         <BIMDataIcon name="settings" size="xxs" />
       </BIMDataButton>
-      <FileUploadButton
+      <BIMDataButton
+        fill
+        radius
+        :icon="isXL"
         color="default"
-        multiple
-        :accept="['.bcf']"
-        @upload="importBcfTopics"
+        @click="
+          fileUploadInput(
+            'file',
+            event => importBcfTopics(event.target.files),
+            {
+              accept: ['.bcf'],
+              multiple: true
+            }
+          )
+        "
       >
         <BIMDataIcon name="import" size="xs" />
         <span v-if="!isXL" style="margin-left: 6px">
           {{ $t("ProjectBcf.importButtonText") }}
         </span>
-      </FileUploadButton>
+      </BIMDataButton>
       <BIMDataButton fill radius :icon="isXL" @click="exportBcfTopics">
         <BIMDataIcon name="export" size="xs" />
         <span v-if="!isXL" style="margin-left: 6px">
@@ -220,12 +230,7 @@
             :bcfTopics="bcfTopics"
             :bcfTopic="currentBcfTopic"
             @bcf-topic-updated="reloadBcfTopics"
-            @bcf-topic-created="
-              () => {
-                reloadBcfTopics();
-                closeSidePanel();
-              }
-            "
+            @bcf-topic-created="reloadBcfTopics(), closeSidePanel()"
           />
         </template>
         <template v-else-if="showBcfTopicOverview && currentBcfTopic">
@@ -325,12 +330,13 @@
 
 <script>
 import {
-  config as bcfConfig,
+  getViewpointConfig,
+  getViewpointModels,
   useBcfFilter,
   useBcfSearch,
   useBcfSort
 } from "@bimdata/bcf-components";
-import { ref, watch } from "vue";
+import { onActivated, onDeactivated, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
@@ -341,22 +347,20 @@ import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
 import { useProjects } from "../../../state/projects.js";
 import { useModels } from "../../../state/models.js";
+import { fileUploadInput } from "../../../utils/upload.js";
+
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "../../../components/specific/app/app-side-panel/AppSidePanel.vue";
-import FileUploadButton from "../../../components/specific/files/file-upload-button/FileUploadButton.vue";
-
-const { VIEWPOINT_CONFIG } = bcfConfig;
 
 export default {
   components: {
     AppSlotContent,
     AppSidePanel,
     BcfStatisticsEmptyImage,
-    NoSearchResultsImage,
-    FileUploadButton
+    NoSearchResultsImage
   },
   setup() {
     const router = useRouter();
@@ -378,17 +382,19 @@ export default {
     const isListView = ref(false);
     const currentBcfTopic = ref(null);
 
-    const reloadExtensions = () => {
-      loadExtensions(currentProject.value);
-      loadDetailedExtensions(currentProject.value);
+    const reloadExtensions = async () => {
+      await Promise.all([
+        loadExtensions(currentProject.value),
+        loadDetailedExtensions(currentProject.value)
+      ]);
     };
 
-    const reloadBcfTopics = () => {
-      loadBcfTopics(currentProject.value);
+    const reloadBcfTopics = async () => {
+      await loadBcfTopics(currentProject.value);
     };
 
-    const reloadComments = topic => {
-      loadBcfTopicComments(currentProject.value, topic);
+    const reloadComments = async topic => {
+      await loadBcfTopicComments(currentProject.value, topic);
     };
 
     watch(
@@ -397,8 +403,8 @@ export default {
         try {
           loading.value = true;
           currentBcfTopic.value = null;
-          reloadExtensions();
-          reloadBcfTopics();
+          await reloadExtensions();
+          await reloadBcfTopics();
         } finally {
           loading.value = false;
         }
@@ -417,6 +423,14 @@ export default {
       },
       { immediate: true }
     );
+
+    onActivated(() => {
+      currentBcfTopic.value = null;
+    });
+    onDeactivated(() => {
+      currentBcfTopic.value = null;
+      closeSidePanel();
+    });
 
     const { filteredTopics, apply: applyFilters } = useBcfFilter(bcfTopics);
     const { searchText, filteredTopics: displayedBcfTopics } =
@@ -487,14 +501,12 @@ export default {
     };
 
     const openBcfTopicViewer = topic => {
-      const type = topic.viewpoints[0]?.authoring_tool_id;
-      let window = VIEWPOINT_CONFIG[type]?.window ?? DEFAULT_WINDOW;
-      let modelIDs = [];
+      let viewpoint = topic.viewpoints[0] ?? {};
+      let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
+      let modelIDs = getViewpointModels(viewpoint);
 
-      if (topic.models?.length > 0) {
-        modelIDs = topic.models;
-      } else {
-        // If no models are specified on the topic
+      if (modelIDs.length === 0) {
+        // If no models are specified on the viewpoint
         // get the last created model of proper type
         // with respect to the target window
         const models = projectModels.value
@@ -563,6 +575,7 @@ export default {
       sortByIndex,
       sortByTitle,
       toggleMetrics,
+      fileUploadInput,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

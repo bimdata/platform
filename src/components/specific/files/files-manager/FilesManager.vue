@@ -1,8 +1,40 @@
 <template>
-  <BIMDataCard class="files-manager" :titleHeader="$t('FilesManager.title')">
+  <BIMDataCard
+    ref="fileManager"
+    class="files-manager"
+    :titleHeader="$t('FilesManager.title')"
+  >
     <template #content>
+      <AppModal v-if="projectsToUpload">
+        <FileTreePreviewModal
+          :projectsToUpload="projectsToUpload"
+          :loadingData="loadingData"
+        />
+      </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
+          <template v-if="menuItems.length > 0">
+            <BIMDataDropdownMenu
+              ref="dropdown"
+              class="files-manager__actions__dropdown"
+              v-click-away="close"
+              width="20%"
+              height="32px"
+              :menuItems="menuItems"
+              :subListMaxHeight="dropdownMaxHeight"
+              @click="toggle"
+            >
+              <template #header>
+                <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
+                <BIMDataIcon
+                  :name="isOpen ? 'deploy' : 'chevron'"
+                  size="xxs"
+                  fill
+                  color="primary"
+                />
+              </template>
+            </BIMDataDropdownMenu>
+          </template>
           <FolderCreationButton
             data-guide="btn-new-folder"
             class="files-manager__actions__btn-new-folder"
@@ -12,8 +44,22 @@
             :disabled="!hasAdminPerm(project, currentFolder)"
           >
             <BIMDataIcon name="addFolder" size="xs" />
-            <span v-if="!isLG" style="margin-left: 6px">
+            <span
+              v-if="
+                (project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)
+              "
+              style="margin-left: 6px"
+            >
               {{ $t("FolderCreationButton.buttonText") }}
+            </span>
+            <span
+              v-else-if="
+                (project.isAdmin && !isXL && isXXXL) ||
+                (!project.isAdmin && !isMD && isMidXL)
+              "
+              style="margin-left: 6px"
+            >
+              {{ $t("FolderCreationButton.shortButtonText") }}
             </span>
           </FolderCreationButton>
           <BIMDataTooltip
@@ -36,28 +82,74 @@
                 color="primary"
                 fill
                 radius
-                @click="openModal"
+                @click="
+                  {
+                    openModal();
+                    $emit('switch-sub-modal', true);
+                  }
+                "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isLG" style="margin-left: 6px">
+                <span
+                  v-if="
+                    (project.isAdmin && !isXXXL) ||
+                    (!project.isAdmin && !isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
                   {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
+                <span
+                  v-else-if="
+                    (project.isAdmin && !isXL && isXXXL) ||
+                    (!project.isAdmin && !isMD && isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
+                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
                 </span>
               </BIMDataButton>
             </template>
             <template v-else>
-              <FileUploadButton
+              <BIMDataButton
                 :disabled="
                   !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
                 "
+                fill
+                radius
+                icon
+                color="primary"
                 width="100%"
-                multiple
-                @upload="uploadFiles"
+                @click="
+                  fileUploadInput(
+                    'file',
+                    event => uploadFiles(event.target.files),
+                    {
+                      multiple: true
+                    }
+                  )
+                "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isLG" style="margin-left: 6px">
+                <span
+                  v-if="
+                    (project.isAdmin && !isXXXL) ||
+                    (!project.isAdmin && !isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
-              </FileUploadButton>
+                <span
+                  v-else-if="
+                    (project.isAdmin && !isXL && isXXXL) ||
+                    (!project.isAdmin && !isMD && isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
+                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
+                </span>
+              </BIMDataButton>
             </template>
           </BIMDataTooltip>
         </div>
@@ -95,7 +187,6 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
-
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -198,6 +289,7 @@
           class="files-manager__onboarding"
           :project="project"
           :rootFolder="fileStructure"
+          :projectsTree="projectsTree"
           @file-uploaded="$emit('file-uploaded')"
         />
       </template>
@@ -208,35 +300,51 @@
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
-import { useListFilter } from "@/composables/list-filter.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
-import { useFiles } from "@/state/files.js";
-import TagService from "@/services/TagService";
-import { useModels } from "@/state/models.js";
-import { useVisa } from "@/state/visa.js";
-import { hasAdminPerm, isFolder } from "@/utils/file-structure.js";
-import { isFullTotal } from "@/utils/spaces.js";
-import { VISA_STATUS } from "@/config/visa.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import {
+  useStandardBreakpoints,
+  useCustomBreakpoints
+} from "../../../../composables/responsive.js";
+import { useAppNotification } from "../../../../components/specific/app/app-notification/app-notification.js";
+import { useAppModal } from "../../../../components/specific/app/app-modal/app-modal.js";
+import { useFiles } from "../../../../state/files.js";
+import TagService from "../../../../services/TagService";
+import { useModels } from "../../../../state/models.js";
+import { useVisa } from "../../../../state/visa.js";
+import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
+import { isFullTotal } from "../../../../utils/spaces.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
+import { VISA_STATUS } from "../../../../config/visa.js";
+import { FILE_TYPE } from "../../../../config/files.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { useProjects } from "../../../../state/projects.js";
+import FileService from "../../../../services/FileService.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import {
+  getPaths,
+  getDocsInfos,
+  treeIdGenerator,
+  createTreeFromPaths,
+  matchFoldersAndDocs
+} from "../../../../utils/files.js";
+
 // Components
-import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton.vue";
-import FilesTable from "@/components/specific/files/files-table/FilesTable.vue";
-import FolderAccessManager from "@/components/specific/files/folder-access-manager/FolderAccessManager.vue";
-import FolderCreationButton from "@/components/specific/files/folder-creation-button/FolderCreationButton.vue";
-import VisaMain from "@/components/specific/visa/visa-main/VisaMain.vue";
+import FileTree from "../../../../components/specific/files/file-tree/FileTree.vue";
+import FilesTable from "../../../../components/specific/files/files-table/FilesTable.vue";
+import FolderAccessManager from "../../../../components/specific/files/folder-access-manager/FolderAccessManager.vue";
+import FolderCreationButton from "../../../../components/specific/files/folder-creation-button/FolderCreationButton.vue";
+import VisaMain from "../../../../components/specific/visa/visa-main/VisaMain.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
-import TagsMain from "@/components/specific/tags/tags-main/TagsMain.vue";
-import VersioningMain from "@/components/specific/versioning/versioning-main/VersioningMain.vue";
+import TagsMain from "../../../../components/specific/tags/tags-main/TagsMain.vue";
+import VersioningMain from "../../../../components/specific/versioning/versioning-main/VersioningMain.vue";
+import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
+import AppModal from "../../../../components/specific/app/app-modal/AppModal.vue";
 
 export default {
   components: {
     FileTree,
-    FileUploadButton,
     FilesTable,
     FolderAccessManager,
     FolderCreationButton,
@@ -245,7 +353,9 @@ export default {
     FilesManagerOnboarding,
     VisaMain,
     TagsMain,
-    VersioningMain
+    VersioningMain,
+    AppModal,
+    FileTreePreviewModal
   },
   props: {
     spaceSubInfo: {
@@ -263,6 +373,10 @@ export default {
     groups: {
       type: Array,
       required: true
+    },
+    loadingData: {
+      type: Boolean,
+      required: true
     }
   },
   emits: [
@@ -270,18 +384,28 @@ export default {
     "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
-    "model-created"
+    "model-created",
+    "switch-sub-modal"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
-    const { openModal } = useAppModal();
+    const { openModal, closeModal } = useAppModal();
+    const { isOpen, toggle, close } = useToggle();
+
+    const { fetchProjectFolderTreeSerializers } = useProjects();
+
+    const { isXXXL, isMidXL } = useCustomBreakpoints({
+      isXXXL: ({ width }) => width <= 1521 - 0.02,
+      isMidXL: ({ width }) => width <= 1277 - 0.02
+    });
 
     const {
       fileStructureHandler: handler,
       moveFiles: move,
-      downloadFiles: download
+      downloadFiles: download,
+      projectFileStructure
     } = useFiles();
     const { createModel, deleteModels } = useModels();
 
@@ -345,8 +469,32 @@ export default {
     };
 
     const filesToUpload = ref([]);
-    const uploadFiles = files => {
-      filesToUpload.value = files;
+
+    const uploadFiles = async files => {
+      files = Array.from(files);
+
+      const isFolderUpload = Boolean(files[0].webkitRelativePath);
+
+      if (isFolderUpload) {
+        const paths = getPaths(files);
+        const filesInfos = getDocsInfos(files);
+
+        const tree = createTreeFromPaths(currentFolder, paths);
+        const DMSTree = await FileService.createFileStructure(props.project, [
+          tree
+        ]);
+
+        filesToUpload.value = [
+          {
+            type: FILE_TYPE.FOLDER,
+            name: DMSTree[0].name,
+            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, filesInfos)
+          }
+        ];
+      } else {
+        filesToUpload.value = files;
+      }
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
@@ -505,9 +653,79 @@ export default {
       allTags.value = await TagService.fetchAllTags(props.project);
     };
 
+    const projectsTree = ref([]);
+    const fetchProjectsTree = async () => {
+      projectsTree.value = (
+        await fetchProjectFolderTreeSerializers(props.project)
+      ).map(p => ({
+        name: p.name,
+        action: () => {
+          openModal();
+          projectsToUpload.value = {
+            ...p,
+            folders: treeIdGenerator(p),
+            upload: () => {
+              FileService.createFileStructure(props.project, p.folders);
+              emit("file-updated");
+            }
+          };
+        }
+      }));
+    };
+
+    watch(
+      () => props.loadingData,
+      () => {
+        if (!props.loadingData) {
+          closeModal();
+        }
+      }
+    );
+
+    const projectsToUpload = ref(null);
+    const menuItems = computed(() => {
+      const items = [];
+
+      if (props.project.isAdmin && projectsTree.value.length > 0) {
+        items.push({
+          name: t("FilesManager.structureImport"),
+          children: projectsTree.value
+        });
+      }
+
+      if (props.project.isAdmin) {
+        items.push(
+          {
+            name: t("FilesManager.folderImport"),
+            action: () => {
+              fileUploadInput("folder", event =>
+                uploadFiles(event.target.files)
+              );
+            }
+          },
+          {
+            name: t("FilesManager.gedDownload"),
+            action: () => downloadFiles([projectFileStructure.value])
+          }
+        );
+      }
+      return items;
+    });
+
     onMounted(() => {
       fetchVisas();
       fetchTags();
+      fetchProjectsTree();
+    });
+
+    const fileManager = ref(null);
+    const dropdown = ref(null);
+    const dropdownMaxHeight = computed(() => {
+      if (!fileManager.value || !dropdown.value) return;
+      const { y, height: H } = dropdown.value.$el.getBoundingClientRect();
+      return `${
+        fileManager.value?.$el?.getBoundingClientRect().height - H - y
+      }px`;
     });
 
     return {
@@ -533,7 +751,16 @@ export default {
       showVersioningManager,
       isAbleToSub: inject("isAbleToSub"),
       currentSpace,
+      projectsTree,
+      projectsToUpload,
+      dropdownMaxHeight,
+      fileManager,
+      dropdown,
+      isOpen,
+      menuItems,
       // Methods
+      toggle,
+      close,
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
@@ -557,8 +784,11 @@ export default {
       hasAdminPerm,
       isFullTotal,
       openModal,
+      fileUploadInput,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
+      isMidXL,
+      isXXXL
     };
   }
 };

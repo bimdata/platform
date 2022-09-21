@@ -1,8 +1,6 @@
 @import "../ProjectCard.vars.scss";
 
 .project-card-model-preview {
-  @include noselect;
-
   position: relative;
   height: 100%;
   background-color: $card-background;
@@ -16,17 +14,5 @@
     width: 100px;
     margin: 0 calc((100% - 100px) / 2);
     margin-top: 16px;
-  }
-
-  &__viewport {
-    width: $card-content-height;
-    height: 100%;
-    margin: auto;
-    overflow: hidden;
-
-    img {
-      width: auto;
-      height: 100%;
-    }
   }
 }

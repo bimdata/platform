@@ -15,33 +15,17 @@
     font-size: 14px;
   }
 
-  &__container {
+  &__placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     height: $card-content-height;
-
-    &__viewport {
-      width: $card-content-height;
-      height: 100%;
-      margin: auto;
-      overflow: hidden;
-
-      img {
-        width: auto;
-        height: 100%;
-      }
-    }
-
-    &__empty-preview {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      padding: calc(var(--spacing-unit) * 2);
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--color-granite-light);
-    }
+    padding: calc(var(--spacing-unit) * 2);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-granite-light);
   }
 
   &__switcher {

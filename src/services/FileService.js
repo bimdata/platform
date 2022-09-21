@@ -36,6 +36,21 @@ class FileService {
     }
   }
 
+  async createFileStructure(project, body) {
+    try {
+      return await apiClient.collaborationApi.createDMSTree(
+        project.cloud.id,
+        project.id,
+        body
+      );
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
+      );
+      return {};
+    }
+  }
+
   async createFolder(project, folder) {
     try {
       return await apiClient.collaborationApi.createFolder(
