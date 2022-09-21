@@ -3,8 +3,6 @@
     ref="fileManager"
     class="files-manager"
     :titleHeader="$t('FilesManager.title')"
-    @dragover.prevent="() => {}"
-    @drop.prevent="event => uploadFiles(event)"
   >
     <template #content>
       <AppModal v-if="projectsToUpload">
@@ -226,6 +224,8 @@
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
+            @dragover.prevent="() => {}"
+            @drop.prevent="event => uploadFiles(event)"
           />
         </div>
 
