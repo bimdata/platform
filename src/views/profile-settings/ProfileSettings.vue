@@ -17,7 +17,7 @@
       <div class="profile-settings__container__content">
         <BIMDataSpinner />
         <template v-if="displayIframe">
-          <iframe ref="iframe" :src="apiBaseUrl + '/embed_profile/'" />
+          <iframe ref="iframe" :src="bimDataConnectUrl + '/embed_profile/'" />
         </template>
       </div>
     </div>
@@ -64,7 +64,7 @@ export default {
       iframe,
       deleteLoader,
       displayIframe,
-      apiBaseUrl: process.env.VUE_APP_API_BASE_URL,
+      bimDataConnectUrl: process.env.VUE_APP_URL_BIMDATACONNECT,
       // Methods
       getBack: () => router.back()
     };
