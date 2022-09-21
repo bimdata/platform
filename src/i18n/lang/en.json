@@ -568,8 +568,8 @@
         "storage": "Active storage",
         "including": "including {quantity} GB of DataPack"
     },
-    "GroupMemberInvitation": {
-        "name": "Pending invitation"
+    "GroupMemberCard": {
+        "pending": "Pending invitation"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Download invoice"

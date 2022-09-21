@@ -21,7 +21,7 @@
         <InvitationForm
           :space="space"
           @close="closeInvitationForm"
-          @success="closeInvitationForm"
+          @success="onInvitationSuccess"
         />
       </template>
 
@@ -66,6 +66,7 @@ import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import { SPACE_ROLE } from "../../../../config/spaces.js";
+import { useSpaces } from "../../../../state/spaces.js";
 import { wait } from "../../../../utils/async.js";
 // Components
 import InvitationCard from "../invitation-card/InvitationCard.vue";
@@ -96,6 +97,7 @@ export default {
   },
   setup(props) {
     const { locale, t } = useI18n();
+    const { loadSpaceUsers, loadSpaceInvitations } = useSpaces();
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
@@ -152,6 +154,13 @@ export default {
       close: closeInvitationForm
     } = useToggle();
 
+    const onInvitationSuccess = async () => {
+      closeInvitationForm();
+      await wait(2000);
+      loadSpaceUsers(props.space);
+      loadSpaceInvitations(props.space);
+    };
+
     return {
       // Refrences
       currentTab,
@@ -162,6 +171,7 @@ export default {
       tabs,
       // Methods
       closeInvitationForm,
+      onInvitationSuccess,
       openInvitationForm,
       selectTab
     };

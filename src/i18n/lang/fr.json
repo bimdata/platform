@@ -152,6 +152,7 @@
     "status": {
       "active": "Actif",
       "deleted": "Supprimé",
+      "past_due": "Suspendu",
       "paused": "En pause",
       "custom": "Géré par BIMData.io"
     }
@@ -254,11 +255,14 @@
     "validate": "Valider"
   },
   "FileUploadButton": {
-    "addFileButtonText": "Charger un fichier"
+    "addFileButtonText": "Charger un fichier",
+    "shortAddFileButtonText": "Fichier"
   },
   "FileUploadCard": {
     "cancelMessage": "Annulé",
-    "errorMessage": "Le téléversement a échoué"
+    "errorMessage": "Le téléversement a échoué",
+    "upload": "{uploaded} sur {total} ({percentage}% téléversé)"
+
   },
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
@@ -273,7 +277,8 @@
     "membersHeader": "Membres"
   },
   "FolderCreationButton": {
-    "buttonText": "Nouveau dossier"
+    "buttonText": "Nouveau dossier",
+    "shortButtonText": "Dossier"
   },
   "FolderCreationForm": {
     "creationFormTitle": "Créer un dossier",
@@ -337,8 +342,8 @@
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
   },
-  "GroupMemberInvitation": {
-    "name": "Invitation en cours"
+  "GroupMemberCard": {
+    "pending": "Invitation en cours"
   },
   "GroupMembersSelector": {
     "title": "Gestion des membres du groupe",

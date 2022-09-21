@@ -26,9 +26,9 @@
 <script>
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
-import { useGroups } from "@/state/groups.js";
+import { useGroups } from "../../../../state/groups.js";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
 
 export default {
   components: {
@@ -53,10 +53,10 @@ export default {
     const { setCurrentGroup, removeGroupMembers } = useGroups();
 
     const fullName = computed(() => {
-      if (props.user.userId) {
+      if (props.user.user_id) {
         return `${props.user.firstname || ""} ${props.user.lastname || ""}`;
       }
-      return t("GroupMemberInvitation.name");
+      return t("GroupMemberCard.pending");
     });
 
     const remove = async () => {

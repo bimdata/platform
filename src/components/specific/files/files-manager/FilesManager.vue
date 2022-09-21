@@ -15,7 +15,7 @@
       </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
-          <template v-if="menuItems.length > 0">
+          <!-- <template v-if="menuItems.length > 0">
             <BIMDataDropdownMenu
               ref="dropdown"
               class="files-manager__actions__dropdown"
@@ -30,13 +30,13 @@
                 <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
                 <BIMDataIcon
                   :name="isOpen ? 'deploy' : 'chevron'"
-                  fill
                   size="xxs"
+                  fill
                   color="primary"
                 />
               </template>
             </BIMDataDropdownMenu>
-          </template>
+          </template> -->
           <FolderCreationButton
             data-guide="btn-new-folder"
             class="files-manager__actions__btn-new-folder"
@@ -46,8 +46,22 @@
             :disabled="!hasAdminPerm(project, currentFolder)"
           >
             <BIMDataIcon name="addFolder" size="xs" />
-            <span v-if="!isLG" style="margin-left: 6px">
+            <span
+              v-if="
+                (project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)
+              "
+              style="margin-left: 6px"
+            >
               {{ $t("FolderCreationButton.buttonText") }}
+            </span>
+            <span
+              v-else-if="
+                (project.isAdmin && !isXL && isXXXL) ||
+                (!project.isAdmin && !isMD && isMidXL)
+              "
+              style="margin-left: 6px"
+            >
+              {{ $t("FolderCreationButton.shortButtonText") }}
             </span>
           </FolderCreationButton>
           <BIMDataTooltip
@@ -78,8 +92,23 @@
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isLG" style="margin-left: 6px">
+                <span
+                  v-if="
+                    (project.isAdmin && !isXXXL) ||
+                    (!project.isAdmin && !isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
                   {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
+                <span
+                  v-else-if="
+                    (project.isAdmin && !isXL && isXXXL) ||
+                    (!project.isAdmin && !isMD && isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
+                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
                 </span>
               </BIMDataButton>
             </template>
@@ -100,8 +129,23 @@
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
-                <span v-if="!isLG" style="margin-left: 6px">
+                <span
+                  v-if="
+                    (project.isAdmin && !isXXXL) ||
+                    (!project.isAdmin && !isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
                   {{ $t("FileUploadButton.addFileButtonText") }}
+                </span>
+                <span
+                  v-else-if="
+                    (project.isAdmin && !isXL && isXXXL) ||
+                    (!project.isAdmin && !isMD && isMidXL)
+                  "
+                  style="margin-left: 6px"
+                >
+                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
                 </span>
               </BIMDataButton>
             </template>
@@ -255,7 +299,10 @@
 import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
-import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import {
+  useStandardBreakpoints,
+  useCustomBreakpoints
+} from "../../../../composables/responsive.js";
 import { useAppNotification } from "../../../../components/specific/app/app-notification/app-notification.js";
 import { useAppModal } from "../../../../components/specific/app/app-modal/app-modal.js";
 import { useFiles } from "../../../../state/files.js";
@@ -270,7 +317,7 @@ import { FILE_TYPE } from "../../../../config/files.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useProjects } from "../../../../state/projects.js";
 import FileService from "../../../../services/FileService.js";
-import { useToggle } from "../../../../composables/toggle";
+import { useToggle } from "../../../../composables/toggle.js";
 import {
   getPaths,
   getDocsInfos,
@@ -346,6 +393,11 @@ export default {
     const { isOpen, toggle, close } = useToggle();
 
     const { fetchProjectFolderTreeSerializers } = useProjects();
+
+    const { isXXXL, isMidXL } = useCustomBreakpoints({
+      isXXXL: ({ width }) => width <= 1521 - 0.02,
+      isMidXL: ({ width }) => width <= 1277 - 0.02
+    });
 
     const {
       fileStructureHandler: handler,
@@ -708,8 +760,9 @@ export default {
       fileManager,
       dropdown,
       isOpen,
-      toggle,
+      menuItems,
       // Methods
+      toggle,
       close,
       closeAccessManager,
       closeDeleteModal,
@@ -737,7 +790,8 @@ export default {
       fileUploadInput,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
-      menuItems
+      isMidXL,
+      isXXXL
     };
   }
 };

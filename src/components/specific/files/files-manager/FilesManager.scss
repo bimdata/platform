@@ -78,6 +78,9 @@
         }
         &__btn-new-file {
           width: 48%;
+          button {
+            padding: 0 var(--spacing-unit);
+          }
         }
 
         &__input-search {

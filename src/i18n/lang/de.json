@@ -568,8 +568,8 @@
         "storage": "Zusammenfassung der aktiven GB",
         "including": "wovon {quantity} GB DataPack"
     },
-    "GroupMemberInvitation": {
-        "name": "Einladung in Bearbeitung"
+    "GroupMemberCard": {
+        "pending": "Einladung in Bearbeitung"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Die Rechnung herunterladen"
