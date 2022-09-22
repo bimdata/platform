@@ -13,7 +13,7 @@
       </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
-          <!-- <template v-if="menuItems.length > 0">
+          <template v-if="menuItems.length > 0">
             <BIMDataDropdownMenu
               ref="dropdown"
               class="files-manager__actions__dropdown"
@@ -34,7 +34,7 @@
                 />
               </template>
             </BIMDataDropdownMenu>
-          </template> -->
+          </template>
           <FolderCreationButton
             data-guide="btn-new-folder"
             class="files-manager__actions__btn-new-folder"
@@ -297,6 +297,7 @@
 
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
+import async from "async";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
@@ -320,10 +321,12 @@ import FileService from "../../../../services/FileService.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import {
   getPaths,
-  getDocsInfos,
+  handleInputFiles,
   treeIdGenerator,
   createTreeFromPaths,
-  matchFoldersAndDocs
+  matchFoldersAndDocs,
+  handleDragAndDropFiles,
+  getFileFormat
 } from "../../../../utils/files.js";
 
 // Components
@@ -470,20 +473,34 @@ export default {
 
     const uploadFiles = async event => {
       let files = null;
+      let isFolderUpload = null;
+      let isDragAndDrop = false;
       if (event.dataTransfer) {
         // Files from drag & drop
-        files = Array.from(event.dataTransfer.files);
+        isDragAndDrop = true;
+
+        files = Array.from(event.dataTransfer.items);
+        isFolderUpload = files[0].webkitGetAsEntry().isDirectory;
+
+        if (!isFolderUpload) {
+          files = await async.map(
+            files.map(file => file.webkitGetAsEntry()),
+            getFileFormat
+          );
+        }
       } else {
-        // Files from input
         files = Array.from(event.target.files);
+        isFolderUpload = Boolean(files[0].webkitRelativePath);
       }
 
-      const isFolderUpload = Boolean(files[0].webkitRelativePath);
-
       if (isFolderUpload) {
-        const paths = getPaths(files);
-        const filesInfos = getDocsInfos(files);
+        if (isDragAndDrop) {
+          files = await handleDragAndDropFiles(files);
+        } else {
+          files = handleInputFiles(files);
+        }
 
+        const paths = getPaths(files);
         const tree = createTreeFromPaths(currentFolder, paths);
         const DMSTree = await FileService.createFileStructure(props.project, [
           tree
@@ -493,13 +510,14 @@ export default {
           {
             type: FILE_TYPE.FOLDER,
             name: DMSTree[0].name,
-            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs(DMSTree, filesInfos)
+            size: files.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, files)
           }
         ];
       } else {
         filesToUpload.value = files;
       }
+      isDragAndDrop = false;
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
