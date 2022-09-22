@@ -113,15 +113,15 @@
         "title": "Documentos del proyecto",
         "searchInputPlaceholder": "Buscar",
         "createModelNotification": "Modelo creado con éxito",
-        "uploadDisableMessage": {
-            "permission": "No tiene los derechos necesarios",
-            "size": "Ya no tiene suficiente espacio de almacenamiento"
-        }
+        "structureImport": "Importar una estructura EDM",
+        "gedDownload": "Descargar el EDM",
+        "folderImport": "Importar una carpeta"
     },
     "FilesManagerOnboarding": {
         "text": "Suba su primer archivo",
         "uploadFileButtonText": "Suba un archivo",
-        "createFolderButtonText": "Crear una carpeta"
+        "createFolderButtonText": "Crear una carpeta",
+        "GEDStructureImport": "Importar una estructura EDM"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Carpeta vacía",
@@ -136,11 +136,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Cargar un archivo"
+        "addFileButtonText": "Cargar un archivo",
+        "shortAddFileButtonText": "Archivo"
     },
     "FileUploadCard": {
         "cancelMessage": "Cancelado",
-        "errorMessage": "La subida ha fracasado"
+        "errorMessage": "La subida ha fracasado",
+        "upload": "{uploaded} de {total} ({percentage}% subido)"
     },
     "FileUploader": {
         "uploadAreaText": "Haga Clic/Deslizar sus archivos aquí",
@@ -155,7 +157,8 @@
         "groupHeader": "Grupo"
     },
     "FolderCreationButton": {
-        "buttonText": "Carpeta nueva"
+        "buttonText": "Carpeta nueva",
+        "shortButtonText": "Carpeta"
     },
     "FolderCreationForm": {
         "creationFormTitle": "Crear un archivo",
@@ -283,7 +286,6 @@
         "uploadButtonText": "Transferencia"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "Sin modelos",
         "headers": {
             "id": "ID",
             "name": "Nombre",
@@ -291,6 +293,10 @@
             "creator": "Creado por",
             "lastupdate": "Modificado el",
             "status": "Estatus"
+        },
+        "emptyTablePlaceholder": {
+            "text": "Sin modelo",
+            "textPdf": "Desde el menú \"archivo\" en el EDM, haga clic en \"Definir como modelo\" para mostrar sus planos en pdf en su proyecto."
         }
     },
     "ProjectCardActionMenu": {
@@ -477,7 +483,18 @@
         "fileVersionsFetchError": "No se pueden recuperar versiones de este documento",
         "fileVersionsMakeHeadError": "Error al cambiar el documento a la versión actual",
         "fileVersionDelete": "No se ha podido eliminar el documento",
-        "userAlreadyExistsError": "Este usuario ya es miembro del espacio/proyecto"
+        "userAlreadyExistsError": "Este usuario ya es miembro del espacio/proyecto",
+        "tagsFetchError": "No se pueden recuperar las etiquetas",
+        "tagsCreateError": "Error al crear la etiqueta",
+        "tagsUpdateError": "Error al modificar la etiqueta",
+        "tagsDeleteError": "Error al eliminar la etiqueta",
+        "tagsAddDocumentError": "Error al asociar la etiqueta al documento",
+        "tagsDeleteDocumentError": "Error al desasociar la etiqueta del documento",
+        "spaceSizeFullError": "Tu espacio de almacenamiento está lleno",
+        "spaceFetchError": "No se puede recuperar la información del espacio",
+        "projectFolderTreeFetchError": "No se puede recuperar la lista de proyectos",
+        "fileStructureCreateError": "No se puede crear la estructura del archivo",
+        "documentCreateError": "No se puede descargar este documento"
     },
     "ProjectStatusBadge": {
         "new": "NUEVO",
@@ -548,7 +565,8 @@
             "active": "Activo",
             "deleted": "Borrado",
             "paused": "En pausa",
-            "custom": "Gestionado por BIMData.io"
+            "custom": "Gestionado por BIMData.io",
+            "past_due": "Suspendido"
         }
     },
     "DatapackForm": {
@@ -567,9 +585,6 @@
         "datapacks": "Resumen del DataPack activo",
         "storage": "Resumen de GB activos",
         "including": "de los cuales {quantity} GB corresponden al DataPack"
-    },
-    "GroupMemberCard": {
-        "pending": "Invitación en curso"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Descargar factura"
@@ -677,7 +692,7 @@
         "selectedSpace": "Espacio seleccionado:"
     },
     "SpaceSizeInfo": {
-        "subscribePlatformButton": "Mejora",
+        "subscribePlatformButton": "Pasar a la plataforma pro",
         "usage": "{used} utilizado en {total}"
     },
     "SpaceSizePreview": {
@@ -896,8 +911,9 @@
         "titleDate": "El",
         "AddVersion": "Añadir una nueva versión",
         "loading": {
-            "message": "Cargando en progreso.",
-            "subMessage": "Este proceso puede durar unos instantes."
+            "subMessage": "Este proceso puede durar unos instantes.",
+            "downloadMessage": "Cargando.",
+            "deleteMessage": "Eliminación en curso."
         },
         "delete": "Eliminar",
         "getToHead": "Cambiar a la versión actual",
@@ -911,5 +927,47 @@
             }
         },
         "emptyArea": "Actualmente no tiene un historial de versiones para este archivo."
+    },
+    "Tag": {
+        "title": "Gestión de etiquetas",
+        "list": "Listado de etiquetas",
+        "addTag": "Añadir una etiqueta",
+        "addNewTag": "Añadir una etiqueta nueva",
+        "search": "Buscar",
+        "validate": "Validar",
+        "cancel": "Anular",
+        "deleteTag": "Eliminar esta etiqueta",
+        "deleteTagButton": "Eliminar"
+    },
+    "SubscriptionModal": {
+        "title": "Consigue más espacio",
+        "subtitle": "Actualmente tienes una capacidad de almacenamiento de 300 MB.",
+        "10gbSize": "10 GB",
+        "100mbSize": "+ 100 MB",
+        "soon": "SOON",
+        "upgrade": {
+            "title": "Cambiar a la plataforma profesional",
+            "subtitle": "Suscríbase a BIMData Pro para obtener más espacio."
+        },
+        "referal": {
+            "title": "¡Únete a nuestro programa de referidos!",
+            "subtitle": "Comparta su código de referencia para ahorrar espacio."
+        },
+        "linkedin": {
+            "title": "Vincula tu cuenta de LinkedIn",
+            "subtitle": "Siga la página de BIMData para ahorrar espacio."
+        },
+        "uploadDisableMessage": {
+            "permission": "No tienes los derechos requeridos",
+            "size": "No hay suficiente espacio de almacenamiento disponible"
+        }
+    },
+    "FileTreePreview": {
+        "title": "Importar la estructura EDM desde",
+        "cancel": "Eliminar",
+        "validate": "Validar"
+    },
+    "GroupMemberCard": {
+        "pending": "Invitación en curso"
     }
 }
