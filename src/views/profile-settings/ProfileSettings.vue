@@ -13,7 +13,7 @@
       <GoBackButton />
     </div>
     <div class="profile-settings__container">
-      <span>{{ $t("ProfileSettings.title") }}</span>
+      <span class="m-t-6">{{ $t("ProfileSettings.title") }}</span>
       <div class="profile-settings__container__content">
         <BIMDataSpinner />
         <template v-if="displayIframe">

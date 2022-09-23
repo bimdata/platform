@@ -19,11 +19,6 @@
     gap: var(--spacing-unit);
     max-width: 400px;
 
-
-    span {
-      margin-top: calc(var(--spacing-unit) / 2);
-    }
-
     &__content {
       height: 100%;
       display: flex;
