@@ -474,12 +474,10 @@ export default {
     const uploadFiles = async event => {
       let files = null;
       let isFolderUpload = null;
-      let isDragAndDrop = false;
-      if (event.dataTransfer) {
-        // Files from drag & drop
-        isDragAndDrop = true;
+      const dragAndDropFiles = event.dataTransfer;
 
-        files = Array.from(event.dataTransfer.items);
+      if (dragAndDropFiles) {
+        files = Array.from(dragAndDropFiles.items);
         isFolderUpload = files[0].webkitGetAsEntry().isDirectory;
 
         if (!isFolderUpload) {
@@ -494,7 +492,7 @@ export default {
       }
 
       if (isFolderUpload) {
-        if (isDragAndDrop) {
+        if (dragAndDropFiles) {
           files = await handleDragAndDropFiles(files);
         } else {
           files = handleInputFiles(files);
@@ -517,7 +515,6 @@ export default {
       } else {
         filesToUpload.value = files;
       }
-      isDragAndDrop = false;
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 

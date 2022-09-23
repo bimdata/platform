@@ -162,8 +162,9 @@ async function handleDragAndDropFiles(files) {
     }
   }
 
-  await Promise.all(
-    Array.from(files).map(file => traverseFileTree(file.webkitGetAsEntry()))
+  await async.map(
+    Array.from(files).map(file => file.webkitGetAsEntry()),
+    traverseFileTree
   );
 
   return async.map(
