@@ -41,15 +41,28 @@
             </div>
           </div>
           <div class="separator"></div>
-          <BIMDataButton
-            width="100%"
-            height="40px"
-            ghost
-            squared
-            @click="router.push({ name: routeNames.profileSettings })"
-          >
-            {{ $t("AppHeaderMenu.entrySettings") }}
-          </BIMDataButton>
+          <template v-if="userIframeProfile">
+            <BIMDataButton
+              width="100%"
+              height="40px"
+              ghost
+              squared
+              @click="router.push({ name: routeNames.profileSettings })"
+            >
+              {{ $t("AppHeaderMenu.entrySettings") }}
+            </BIMDataButton>
+          </template>
+          <template v-else>
+            <a
+              class="external-link"
+              :href="bimdataConnectProfileUrl"
+              target="blank"
+            >
+              <BIMDataButton width="100%" height="40px" ghost squared>
+                {{ $t("AppHeaderMenu.entrySettings") }}
+              </BIMDataButton>
+            </a>
+          </template>
           <a class="external-link" :href="documentationUrl" target="blank">
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryDocumentation") }}
@@ -134,7 +147,7 @@ export default {
       process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
     const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
     const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
-
+    const userIframeProfile = process.env.VUE_APP_USER_IFRAME_PROFILE;
     return {
       // References
       bimdataConnectProfileUrl,
@@ -145,6 +158,7 @@ export default {
       showLanguageSelector,
       space: currentSpace,
       user,
+      userIframeProfile,
       // Methods
       closeLanguageSelector,
       openLanguageSelector,

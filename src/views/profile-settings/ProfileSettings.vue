@@ -51,7 +51,10 @@ export default {
             await signOut();
             break;
           case "account delete start":
-            setTimeout(() => (deleteLoader.value = true), 500);
+            deleteLoader.value = true;
+            break;
+          case "account delete error":
+            deleteLoader.value = false;
             break;
           case "account delete successful":
             signOut();
