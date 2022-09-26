@@ -1,5 +1,5 @@
 import async from "async";
-import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "@/config/files.js";
+import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "../config/files.js";
 
 function fileExtension(fileName) {
   const parts = fileName.split(".");
@@ -145,7 +145,7 @@ async function getFileFormat(fileEntry) {
   return new Promise((resolve, reject) => fileEntry.file(resolve, reject));
 }
 
-async function handleDragAndDropFiles(files) {
+async function handleDragAndDropFile(dirEntry) {
   let fileList = [];
 
   async function traverseFileTree(fileEntry) {
@@ -162,10 +162,7 @@ async function handleDragAndDropFiles(files) {
     }
   }
 
-  await async.map(
-    Array.from(files).map(file => file.webkitGetAsEntry()),
-    traverseFileTree
-  );
+  await traverseFileTree(dirEntry);
 
   return async.map(
     Array.from(fileList).filter(
@@ -187,6 +184,6 @@ export {
   createTreeFromPaths,
   matchFoldersAndDocs,
   treeIdGenerator,
-  handleDragAndDropFiles,
+  handleDragAndDropFile,
   getFileFormat
 };

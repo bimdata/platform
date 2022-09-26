@@ -325,7 +325,7 @@ import {
   treeIdGenerator,
   createTreeFromPaths,
   matchFoldersAndDocs,
-  handleDragAndDropFiles,
+  handleDragAndDropFile,
   getFileFormat
 } from "../../../../utils/files.js";
 
@@ -472,33 +472,36 @@ export default {
     const filesToUpload = ref([]);
 
     const uploadFiles = async event => {
-      let files = null;
-      let isFolderUpload = null;
-      const dragAndDropFiles = event.dataTransfer;
+      let foldersUpload = [];
 
-      if (dragAndDropFiles) {
-        files = Array.from(dragAndDropFiles.items);
-        isFolderUpload = files[0].webkitGetAsEntry().isDirectory;
+      if (event.dataTransfer) {
+        // let docsUpload = [];
+        await async.map(Array.from(event.dataTransfer.items), async file => {
+          const fileEntry = file.webkitGetAsEntry();
 
-        if (!isFolderUpload) {
-          files = await async.map(
-            files.map(file => file.webkitGetAsEntry()),
-            getFileFormat
-          );
-        }
+          if (fileEntry.isDirectory) {
+            foldersUpload.push(await handleDragAndDropFile(fileEntry));
+          } else {
+            // docsUpload.push(await getFileFormat(fileEntry));
+            filesToUpload.value.push(await getFileFormat(fileEntry));
+          }
+        });
+
+        filesToUpload.value = Array.from(filesToUpload.value);
+
+        // filesToUpload.value = docsUpload;
       } else {
-        files = Array.from(event.target.files);
-        isFolderUpload = Boolean(files[0].webkitRelativePath);
+        const fileList = Array.from(event.target.files);
+
+        if (fileList[0].webkitRelativePath) {
+          foldersUpload = [handleInputFiles(fileList)];
+        } else {
+          filesToUpload.value = fileList;
+        }
       }
 
-      if (isFolderUpload) {
-        if (dragAndDropFiles) {
-          files = await handleDragAndDropFiles(files);
-        } else {
-          files = handleInputFiles(files);
-        }
-
-        const paths = getPaths(files);
+      async.map(foldersUpload, async folder => {
+        const paths = getPaths(folder);
         const tree = createTreeFromPaths(currentFolder, paths);
         const DMSTree = await FileService.createFileStructure(props.project, [
           tree
@@ -508,13 +511,12 @@ export default {
           {
             type: FILE_TYPE.FOLDER,
             name: DMSTree[0].name,
-            size: files.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs(DMSTree, files)
+            size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, folder)
           }
         ];
-      } else {
-        filesToUpload.value = files;
-      }
+      });
+
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
