@@ -1,5 +1,5 @@
 <template>
-  <div class="view group-board">
+  <div data-test-id="view-group-board" class="view group-board">
     <ViewHeader class="group-board__header">
       <template #left>
         <GoBackButton v-if="isLG" />
@@ -7,7 +7,6 @@
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="group-board__header__search"
           :width="isSM ? '150px' : '300px'"
           :placeholder="isSM ? '' : $t('GroupBoard.searchInputPlaceholder')"

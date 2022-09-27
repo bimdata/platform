@@ -1,12 +1,12 @@
 <template>
   <BIMDataCard
-    data-test="space-creation-card"
+    data-test-id="space-creation-card"
     class="space-creation-card"
     :submenuText="$t('SpaceCreationCard.title')"
   >
     <template #right>
       <BIMDataButton
-        data-test="btn-close-create"
+        data-test-id="btn-close-create"
         ghost
         rounded
         icon
@@ -28,7 +28,7 @@
           <div class="creation-form">
             <BIMDataInput
               ref="nameInput"
-              data-test="input-create-name"
+              data-test-id="input-create-name"
               :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
               v-model="newSpace.name"
               :error="hasError"
@@ -37,7 +37,7 @@
               @keyup.enter.stop="submit"
             />
             <BIMDataButton
-              data-test="btn-submit-create"
+              data-test-id="btn-submit-create"
               fill
               radius
               color="primary"

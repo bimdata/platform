@@ -1,6 +1,6 @@
 name: Platform-next
 
-on: 
+on:
   push:
   repository_dispatch:
     types: [semantic-release]
@@ -9,8 +9,9 @@ env:
   app: platform
 
 jobs:
-  test:
+  viewer-update:
     runs-on: self-hosted
+    if: github.event.client_payload.ref
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -18,15 +19,12 @@ jobs:
           node-version: "16"
       - name: Wait for npm package
         id: viewer-install
-        if: github.event.client_payload.ref
         timeout-minutes: 2
         run: |
           while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save; do
             sleep 5
           done
           GITDIFF=$(git diff -- package-lock.json) && echo "::set-output name=gitdiff::$GITDIFF"
-      - run: npm ci
-      #- run: npm run test:e2e
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
         uses: EndBug/add-and-commit@v7
@@ -36,7 +34,7 @@ jobs:
 
   build-and-push:
     runs-on: self-hosted
-    needs: test
+    needs: viewer-update
     if: contains('
       refs/heads/develop
       refs/heads/release

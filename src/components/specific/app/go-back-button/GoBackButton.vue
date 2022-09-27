@@ -1,6 +1,6 @@
 <template>
   <BIMDataButton
-    data-test="btn-back"
+    data-test-id="go-back-button"
     class="go-back-button"
     ghost
     radius
@@ -20,7 +20,7 @@
 
 <script>
 import { useRoute, useRouter } from "vue-router";
-import { useSession } from "@/composables/session.js";
+import { useSession } from "../../../../composables/session.js";
 
 export default {
   setup() {

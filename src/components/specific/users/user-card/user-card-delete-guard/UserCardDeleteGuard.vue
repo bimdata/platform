@@ -8,7 +8,7 @@
       }}
     </span>
     <BIMDataButton
-      data-test="btn-submit-delete"
+      data-test-id="btn-submit-delete"
       class="user-card-delete-guard__btn-submit"
       width="80px"
       color="high"
@@ -19,7 +19,7 @@
       {{ $t("UserCardDeleteGuard.submitButtonText") }}
     </BIMDataButton>
     <BIMDataButton
-      data-test="btn-close-delete"
+      data-test-id="btn-close-delete"
       class="user-card-delete-guard__btn-close"
       color="default"
       ghost

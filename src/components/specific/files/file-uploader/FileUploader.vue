@@ -37,6 +37,7 @@
         </span>
       </div>
       <BIMDataButton
+        data-test-id="btn-upload-model"
         class="file-uploader__upload-area__btn-upload"
         fill
         radius
