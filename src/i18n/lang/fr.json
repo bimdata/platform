@@ -251,9 +251,6 @@
     "ModelsCard": {
         "openButtonText": "Ouvrir"
     },
-    "ModelsCardModelPreview": {
-        "emptyPreviewPlaceholder": "Aucune prévisualisation"
-    },
     "ModelsDeleteModal": {
         "title": "Attention !",
         "message": "Cette action est irresversible. Cela supprimera :",

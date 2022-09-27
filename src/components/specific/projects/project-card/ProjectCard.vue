@@ -62,7 +62,6 @@
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "@/composables/toggle.js";
-import { MODEL_TYPE } from "@/config/models.js";
 import routeNames from "@/router/route-names.js";
 import ModelService from "@/services/ModelService.js";
 import { isSpaceAdmin } from "@/utils/spaces.js";
@@ -105,12 +104,9 @@ export default {
 
     const currentModel = ref(null);
     const models = ref([]);
-    const displayedModels = computed(() => {
-      // Only show non archived IFC previews
-      return models.value.filter(
-        model => model.type === MODEL_TYPE.IFC && !model.archived
-      );
-    });
+    const displayedModels = computed(() =>
+      models.value.filter(model => !model.archived)
+    );
 
     watch(
       () => props.project,
