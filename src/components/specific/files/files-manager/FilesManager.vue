@@ -475,21 +475,17 @@ export default {
       let foldersUpload = [];
 
       if (event.dataTransfer) {
-        // let docsUpload = [];
+        let docsUpload = [];
         await async.map(Array.from(event.dataTransfer.items), async file => {
           const fileEntry = file.webkitGetAsEntry();
 
           if (fileEntry.isDirectory) {
             foldersUpload.push(await handleDragAndDropFile(fileEntry));
           } else {
-            // docsUpload.push(await getFileFormat(fileEntry));
-            filesToUpload.value.push(await getFileFormat(fileEntry));
+            docsUpload.push(await getFileFormat(fileEntry));
           }
         });
-
-        filesToUpload.value = Array.from(filesToUpload.value);
-
-        // filesToUpload.value = docsUpload;
+        filesToUpload.value = docsUpload;
       } else {
         const fileList = Array.from(event.target.files);
 
