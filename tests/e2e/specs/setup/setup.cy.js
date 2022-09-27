@@ -11,11 +11,6 @@ describe("E2E Tests Setup", () => {
     cy.createUser({ key: "user2", firstname: "David", lastname: "Hume" });
   });
 
-  // it("Wait a moment for accounts creation", () => {
-  //   // eslint-disable-next-line cypress/no-unnecessary-waiting
-  //   cy.wait(20000);
-  // });
-
   it("Should login & logout successfully", () => {
     cy.task("get-user", "user0").then(({ email, password }) => {
       cy.visit("/");
