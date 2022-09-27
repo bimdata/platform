@@ -74,7 +74,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   "hook", 
-  path => cy.get(path.split(".").map(name => `[data-test-id=${name}]`).join(" "))
+  (path, options) => cy.get(path.split(".").map(name => `[data-test-id=${name}]`).join(" "), options)
 );
 Cypress.Commands.add(
   "findHook",

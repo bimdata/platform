@@ -22,7 +22,7 @@ describe("E2E Tests Setup", () => {
       // Assert login success
       cy.url().should("contain", Cypress.env("APP_BASE_URL"));
   
-      cy.hook("btn-toggle-app-menu").click({ timeout: 60000 });
+      cy.hook("btn-toggle-app-menu", { timeout: 60000 }).click();
       cy.hook("btn-logout").click();
   
       // Assert logout success
