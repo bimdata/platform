@@ -113,15 +113,15 @@
         "title": "Project Files",
         "searchInputPlaceholder": "Search",
         "createModelNotification": "Model successfully created",
-        "uploadDisableMessage": {
-            "permission": "You don't have permission to do this",
-            "size": "You don't have enough storage space"
-        }
+        "structureImport": "Import a GED structure",
+        "gedDownload": "Download the GED",
+        "folderImport": "Import a folder"
     },
     "FilesManagerOnboarding": {
         "text": "Upload your first file",
         "uploadFileButtonText": "Upload a file",
-        "createFolderButtonText": "Create a folder"
+        "createFolderButtonText": "Create a folder",
+        "GEDStructureImport": "Import a GED structure"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Empty folder",
@@ -136,11 +136,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Add file"
+        "addFileButtonText": "Upload a file",
+        "shortAddFileButtonText": "File"
     },
     "FileUploadCard": {
         "cancelMessage": "Canceled",
-        "errorMessage": "Upload failed"
+        "errorMessage": "Upload failed",
+        "upload": "{uploaded} to {total} ({percentage}% uploaded)"
     },
     "FileUploader": {
         "uploadAreaText": "Drag and drop to store your project assets",
@@ -155,7 +157,8 @@
         "groupHeader": "Group"
     },
     "FolderCreationButton": {
-        "buttonText": "New folder"
+        "buttonText": "New folder",
+        "shortButtonText": "Folder"
     },
     "FolderCreationForm": {
         "creationFormTitle": "Create folder",
@@ -283,7 +286,6 @@
         "uploadButtonText": "Upload Model"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "No model",
         "headers": {
             "id": "ID",
             "name": "Name",
@@ -291,6 +293,10 @@
             "creator": "Creator",
             "lastupdate": "Last modified",
             "status": "Status"
+        },
+        "emptyTablePlaceholder": {
+            "text": "No template",
+            "textPdf": "From the \"File\" menu in GED, click on \"Set as template\" to display your pdf drawings in your project."
         }
     },
     "ProjectCardActionMenu": {
@@ -477,7 +483,18 @@
         "fileVersionsFetchError": "The versions of this document cannot be recovered.",
         "fileVersionsMakeHeadError": "Failed to switch document to current version.",
         "fileVersionDelete": "Failed to delete document",
-        "userAlreadyExistsError": "This user is already a member of the space/project."
+        "userAlreadyExistsError": "This user is already a member of the space/project.",
+        "tagsFetchError": "Impossible to recover tags",
+        "tagsCreateError": "Error while creating the tag",
+        "tagsUpdateError": "Error while modifying the tag",
+        "tagsDeleteError": "Error when deleting the tag",
+        "tagsAddDocumentError": "Error when associating the tag to the document",
+        "tagsDeleteDocumentError": "Error when dissociating the tag from the document",
+        "spaceSizeFullError": "Your storage space is full",
+        "spaceFetchError": "Unable to retrieve information from the space",
+        "projectFolderTreeFetchError": "Unable to retrieve project list",
+        "fileStructureCreateError": "Unable to create the file structure",
+        "documentCreateError": "Unable to upload this document"
     },
     "ProjectStatusBadge": {
         "new": "NEW",
@@ -548,7 +565,8 @@
             "active": "Active",
             "deleted": "Deleted",
             "paused": "Paused",
-            "custom": "Managed by BIMData.io"
+            "custom": "Managed by BIMData.io",
+            "past_due": "Suspended"
         }
     },
     "DatapackForm": {
@@ -567,9 +585,6 @@
         "datapacks": "Active DataPacks",
         "storage": "Active storage",
         "including": "including {quantity} GB of DataPack"
-    },
-    "GroupMemberCard": {
-        "pending": "Pending invitation"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Download invoice"
@@ -677,7 +692,7 @@
         "selectedSpace": "Selected space:"
     },
     "SpaceSizeInfo": {
-        "subscribePlatformButton": "Upgrade",
+        "subscribePlatformButton": "Upgrade to pro subscription",
         "usage": "{used} used out of {total}"
     },
     "SpaceSizePreview": {
@@ -896,8 +911,9 @@
         "titleDate": "On",
         "AddVersion": "Add a new version",
         "loading": {
-            "message": "Loading...",
-            "subMessage": "This process may take a few moments."
+            "subMessage": "This process may take a few moments.",
+            "downloadMessage": "Loading in progress.",
+            "deleteMessage": "Deleting in progress."
         },
         "delete": "Delete",
         "getToHead": "Switch to current version",
@@ -911,5 +927,47 @@
             }
         },
         "emptyArea": "You currently have no version history for this file."
+    },
+    "Tag": {
+        "title": "Tags management",
+        "list": "List of tags",
+        "addTag": "add a tag",
+        "addNewTag": "Add a new tag",
+        "search": "Search",
+        "validate": "Validate",
+        "cancel": "Cancel",
+        "deleteTag": "Delete this tag",
+        "deleteTagButton": "Delete"
+    },
+    "SubscriptionModal": {
+        "title": "Get more space",
+        "subtitle": "You currently have 300mb of storage capacity",
+        "10gbSize": "10 GB",
+        "100mbSize": "+ 100 MB",
+        "soon": "SOON",
+        "upgrade": {
+            "title": "Upgrade to the pro platform",
+            "subtitle": "Subscribe to BIMData Pro to get more space."
+        },
+        "referal": {
+            "title": "Join our referral program!",
+            "subtitle": "Share your referral code to earn space."
+        },
+        "linkedin": {
+            "title": "Connect your LinkedIn account",
+            "subtitle": "Follow the BIMData page to earn space."
+        },
+        "uploadDisableMessage": {
+            "permission": "You don't have the required rights",
+            "size": "You don't have enough storage space"
+        }
+    },
+    "FileTreePreview": {
+        "title": "Import GED structure from",
+        "cancel": "Cancel",
+        "validate": "Validate"
+    },
+    "GroupMemberCard": {
+        "pending": "Invitation in progress"
     }
 }
