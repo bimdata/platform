@@ -7,14 +7,14 @@
     "lint": "eslint --fix",
     "build": "vue-cli-service build --modern",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "start-server-and-test 'npm run dev -- --port 3030' 3030 'cypress open'"
+    "test:e2e": "cypress open"
   },
   "dependencies": {
     "@bimdata/bcf-components": "2.0.1-rc.1",
     "@bimdata/design-system": "1.4.0-rc.39",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.0.6",
-    "@bimdata/viewer": "^1.9.0-rc.154",
+    "@bimdata/viewer": "^1.9.0-rc.162",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
     "maplibre-gl": "^2.4.0",
@@ -30,7 +30,7 @@
     "@vue/compiler-sfc": "^3.2.38",
     "@vue/test-utils": "^2.0.2",
     "@vue/vue3-jest": "^27.0.0",
-    "cypress": "^10.3.1",
+    "cypress": "^10.7.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
@@ -38,7 +38,6 @@
     "eslint-plugin-vue": "^9.4.0",
     "prettier": "^2.7.1",
     "sass": "^1.54.8",
-    "sass-loader": "^13.0.2",
-    "start-server-and-test": "^1.14.0"
+    "sass-loader": "^13.0.2"
   }
 }

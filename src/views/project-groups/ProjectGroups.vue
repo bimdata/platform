@@ -1,12 +1,11 @@
 <template>
-  <div class="view project-groups">
+  <div data-test-id="view-project-groups" class="view project-groups">
     <ViewHeader class="project-groups__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="project-groups__header__search"
           :width="isSM ? '150px' : '300px'"
           :placeholder="isSM ? '' : $t('ProjectGroups.searchInputPlaceholder')"

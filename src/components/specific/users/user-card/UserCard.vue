@@ -1,5 +1,5 @@
 <template>
-  <div data-test="user-card" class="user-card" v-click-away="resetCard">
+  <div data-test-id="user-card" class="user-card" v-click-away="resetCard">
     <transition name="fade" mode="out-in">
       <template v-if="loading">
         <div class="user-card__loader">

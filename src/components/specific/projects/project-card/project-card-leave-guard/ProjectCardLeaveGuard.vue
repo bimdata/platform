@@ -3,7 +3,7 @@
     <div class="project-card-leave-guard__title">
       {{ $t("ProjectCardLeaveGuard.title") }}
       <BIMDataButton
-        data-test="btn-close-leave"
+        data-test-id="btn-close-leave"
         ghost
         rounded
         icon
@@ -16,7 +16,7 @@
       {{ $t("ProjectCardLeaveGuard.message") }}
     </div>
     <BIMDataButton
-      data-test="btn-submit-leave"
+      data-test-id="btn-submit-leave"
       class="project-card-leave-guard__submit-btn"
       color="high"
       fill

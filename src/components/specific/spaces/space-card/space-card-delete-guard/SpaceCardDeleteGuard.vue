@@ -3,7 +3,7 @@
     <div class="space-card-delete-guard__title">
       <span>{{ $t("SpaceCardDeleteGuard.title") }}</span>
       <BIMDataButton
-        data-test="btn-close-delete"
+        data-test-id="btn-close-delete"
         ghost
         rounded
         icon
@@ -16,7 +16,7 @@
       {{ $t("SpaceCardDeleteGuard.message") }}
     </div>
     <BIMDataButton
-      data-test="btn-submit-delete"
+      data-test-id="btn-submit-delete"
       class="space-card-delete-guard__btn-submit"
       color="high"
       fill

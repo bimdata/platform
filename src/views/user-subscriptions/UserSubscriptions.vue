@@ -1,5 +1,5 @@
 <template>
-  <div class="user-subscriptions">
+  <div data-test-id="view-user-subscriptions" class="user-subscriptions">
     <ViewHeader>
       <template #left>
         <GoBackButton />

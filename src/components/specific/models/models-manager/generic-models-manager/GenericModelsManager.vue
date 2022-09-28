@@ -1,5 +1,5 @@
 <template>
-  <div class="models-manager-wrapper">
+  <div class="generic-models-manager">
     <BIMDataTabs
       width="100%"
       height="38px"
@@ -9,11 +9,11 @@
       @tab-click="selectTab"
     >
       <template #tab="{ tab }">
-        <span class="models-manager-wrapper__tab-label">
+        <span class="generic-models-manager__tab-label">
           {{ $t(`ModelsManager.tabs.${tab.label}`) }}
         </span>
         <span
-          class="models-manager-wrapper__tab-count"
+          class="generic-models-manager__tab-count"
           v-if="tab.models.length > 0"
         >
           {{ tab.models.length }}
@@ -21,11 +21,11 @@
       </template>
     </BIMDataTabs>
 
-    <div class="models-manager-wrapper__separator"></div>
+    <div class="generic-models-manager__separator"></div>
 
     <transition name="fade">
       <ModelsActionBar
-        class="models-manager-wrapper__action-bar"
+        class="generic-models-manager__action-bar"
         v-show="selection.length > 0"
         :project="project"
         :models="selection"
@@ -37,17 +37,19 @@
     </transition>
 
     <ModelsTable
-      class="models-manager-wrapper__table"
+      class="generic-models-manager__table"
       :project="project"
       :models="displayedModels"
-      :allModelsCounter="allModelsCounter"
-      :modelType="modelType"
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
-    />
+    >
+      <template #placeholder>
+        <slot name="tablePlaceholder"></slot>
+      </template>
+    </ModelsTable>
 
     <transition name="fade">
       <ModelsDeleteModal
@@ -62,7 +64,7 @@
 
 <script>
 import { ref, watch, watchEffect } from "vue";
-import { useModels } from "@/state/models.js";
+import { useModels } from "../../../../../state/models.js";
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
@@ -83,10 +85,6 @@ export default {
       type: Array,
       required: true,
       validator: value => value.length > 0
-    },
-    modelType: {
-      type: String,
-      required: false
     }
   },
   setup(props) {
@@ -108,14 +106,6 @@ export default {
     const displayedModels = ref([]);
     watchEffect(() => {
       displayedModels.value = currentTab.value.models;
-    });
-
-    const allModelsCounter = ref(0);
-    watchEffect(() => {
-      allModelsCounter.value = props.tabs.reduce(
-        (a, b) => a + b.models.length,
-        0
-      );
     });
 
     const selection = ref([]);
@@ -159,7 +149,6 @@ export default {
       modelsToDelete,
       selection,
       showDeleteModal,
-      allModelsCounter,
       // Methods
       archiveModels,
       downloadModels,
@@ -173,4 +162,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ModelsManagerWrapper.scss"></style>
+<style scoped lang="scss" src="./GenericModelsManager.scss"></style>
