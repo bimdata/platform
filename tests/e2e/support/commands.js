@@ -32,16 +32,9 @@ Cypress.Commands.add(
     cy.task("get-user", key).then(
       user => {
         cy.login(user);
-        cy.origin(
-          Cypress.env("AUTH_BASE_URL"),
-          { args: { user } },
-          ({ user }) => {
-            cy.visit("/profile/delete/");
-    
-            cy.get("input#id_password").type(user.password);
-            cy.get("button[type=submit]").click();
-          }
-        );
+        cy.visit(`${Cypress.env("AUTH_BASE_URL")}/profile/delete/`);
+        cy.get("input#id_password").type(user.password);
+        cy.get("button[type=submit]").click();
       }
     );
   }

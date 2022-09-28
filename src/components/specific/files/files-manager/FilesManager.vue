@@ -305,21 +305,19 @@ import {
   useStandardBreakpoints,
   useCustomBreakpoints
 } from "../../../../composables/responsive.js";
-import { useAppNotification } from "../../../../components/specific/app/app-notification/app-notification.js";
-import { useAppModal } from "../../../../components/specific/app/app-modal/app-modal.js";
-import { useFiles } from "../../../../state/files.js";
+import { useAppModal } from "../../app/app-modal/app-modal.js";
+import { useAppNotification } from "../../app/app-notification/app-notification.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { FILE_TYPE } from "../../../../config/files.js";
+import { VISA_STATUS } from "../../../../config/visa.js";
+import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
+import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
-import { isFullTotal } from "../../../../utils/spaces.js";
-import { fileUploadInput } from "../../../../utils/upload.js";
-import { VISA_STATUS } from "../../../../config/visa.js";
-import { FILE_TYPE } from "../../../../config/files.js";
-import { useSpaces } from "../../../../state/spaces.js";
-import { useProjects } from "../../../../state/projects.js";
-import FileService from "../../../../services/FileService.js";
-import { useToggle } from "../../../../composables/toggle.js";
 import {
   getPaths,
   getDocsInfos,
@@ -327,35 +325,37 @@ import {
   createTreeFromPaths,
   matchFoldersAndDocs
 } from "../../../../utils/files.js";
+import { isFullTotal } from "../../../../utils/spaces.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
-import FileTree from "../../../../components/specific/files/file-tree/FileTree.vue";
-import FilesTable from "../../../../components/specific/files/files-table/FilesTable.vue";
-import FolderAccessManager from "../../../../components/specific/files/folder-access-manager/FolderAccessManager.vue";
-import FolderCreationButton from "../../../../components/specific/files/folder-creation-button/FolderCreationButton.vue";
-import VisaMain from "../../../../components/specific/visa/visa-main/VisaMain.vue";
+import AppModal from "../../app/app-modal/AppModal.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
-import TagsMain from "../../../../components/specific/tags/tags-main/TagsMain.vue";
-import VersioningMain from "../../../../components/specific/versioning/versioning-main/VersioningMain.vue";
+import FilesTable from "../files-table/FilesTable.vue";
+import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
-import AppModal from "../../../../components/specific/app/app-modal/AppModal.vue";
+import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
+import FolderCreationButton from "../folder-creation-button/FolderCreationButton.vue";
+import TagsMain from "../../tags/tags-main/TagsMain.vue";
+import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
+import VisaMain from "../../visa/visa-main/VisaMain.vue";
 
 export default {
   components: {
-    FileTree,
-    FilesTable,
-    FolderAccessManager,
-    FolderCreationButton,
+    AppModal,
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,
-    VisaMain,
+    FilesTable,
+    FileTree,
+    FileTreePreviewModal,
+    FolderAccessManager,
+    FolderCreationButton,
     TagsMain,
     VersioningMain,
-    AppModal,
-    FileTreePreviewModal
+    VisaMain
   },
   props: {
     spaceSubInfo: {

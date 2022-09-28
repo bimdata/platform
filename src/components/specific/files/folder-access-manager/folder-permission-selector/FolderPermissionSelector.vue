@@ -28,8 +28,8 @@
 
 <script>
 import { ref, watch } from "vue";
-import { FILE_PERMISSION } from "@/config/files.js";
-import { useFiles } from "@/state/files.js";
+import { FILE_PERMISSION } from "../../../../../config/files.js";
+import { useFiles } from "../../../../../state/files.js";
 
 const permissionList = [
   { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },

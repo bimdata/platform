@@ -39,9 +39,9 @@
 
 <script>
 import { ref } from "vue";
-import { usePaddle } from "@/composables/paddle.js";
-import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
-import { formatBytes } from "@/utils/files.js";
+import { usePaddle } from "../../../../composables/paddle.js";
+import { PRO_PLAN_STORAGE } from "../../../../config/subscription.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   props: {

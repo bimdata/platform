@@ -38,7 +38,7 @@
 
 <script>
 import { computed, provide, reactive, watch } from "vue";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
+import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 // Components
 import OrganizationDeleteGuard from "./organization-delete-guard/OrganizationDeleteGuard.vue";
 import OrganizationForm from "./organization-form/OrganizationForm.vue";

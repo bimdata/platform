@@ -100,9 +100,9 @@ import { useToggle } from "../../../../../composables/toggle.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
-import FileUploadCard from "../../../../../components/specific/files/file-upload-card/FileUploadCard.vue";
-import FolderCreationForm from "../../../../../components/specific/files/folder-creation-form/FolderCreationForm.vue";
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
+import FileUploadCard from "../../file-upload-card/FileUploadCard.vue";
+import FolderCreationForm from "../../folder-creation-form/FolderCreationForm.vue";
 
 export default {
   components: {

@@ -6,9 +6,9 @@
 
 <script>
 import { provide, ref, watch } from "vue";
-import { getDescendants } from "@/utils/file-structure";
+import { getDescendants } from "../../../../utils/file-structure.js";
 // Components
-import FileTreeNode from "./file-tree-node/FileTreeNode";
+import FileTreeNode from "./file-tree-node/FileTreeNode.vue";
 
 export default {
   components: {

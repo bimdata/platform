@@ -9,7 +9,7 @@ const { isMidXL } = useCustomBreakpoints({
   isMidXL: ({ width }) => width <= 1132 - 0.02
 });
 
-const GUIDED_TOUR_ENABLED = process.env.VUE_APP_GUIDED_TOUR_ENABLED;
+const GUIDED_TOUR_ENABLED = import.meta.env.VUE_APP_GUIDED_TOUR_ENABLED;
 const IS_GUIDED_TOUR_ENABLED = GUIDED_TOUR_ENABLED === "true";
 
 const IMG_PATH = "/static/guidedTour/platform/";

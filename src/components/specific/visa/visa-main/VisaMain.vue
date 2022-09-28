@@ -30,17 +30,18 @@
 
 <script>
 import { ref } from "vue";
+import { useVisa } from "../../../../state/visa.js";
 
-import { useVisa } from "@/state/visa";
-import VisaAdd from "@/components/specific/visa/visa-add/VisaAdd";
-import VisaSummary from "@/components/specific/visa/visa-summary/VisaSummary";
-import VisaList from "../visa-list/VisaList";
+// Components
+import VisaAdd from "../visa-add/VisaAdd.vue";
+import VisaList from "../visa-list/VisaList.vue";
+import VisaSummary from "../visa-summary/VisaSummary.vue";
 
 export default {
   components: {
     VisaAdd,
-    VisaSummary,
-    VisaList
+    VisaList,
+    VisaSummary
   },
   props: {
     project: {

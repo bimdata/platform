@@ -1,5 +1,5 @@
-import routeNames from "@/router/route-names.js";
-import GroupService from "@/services/GroupService.js";
+import routeNames from "../../../router/route-names.js";
+import GroupService from "../../../services/GroupService.js";
 
 export default async function groupBoardGuard(route) {
   const group = await GroupService.fetchGroupByID(

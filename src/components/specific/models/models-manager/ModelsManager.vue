@@ -70,10 +70,10 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useToggle } from "@/composables/toggle.js";
-import { MODEL_TYPE } from "@/config/models.js";
-import { segregateByType } from "@/utils/models.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { MODEL_TYPE } from "../../../../config/models.js";
+import { segregateByType } from "../../../../utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";

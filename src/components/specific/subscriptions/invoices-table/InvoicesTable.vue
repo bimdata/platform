@@ -64,18 +64,18 @@
 <script>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import routeNames from "../../../../router/route-names.js";
 import columnsDef from "./columns.js";
+import routeNames from "../../../../router/route-names.js";
 // Components
-import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import AppLink from "../../app/app-link/AppLink.vue";
+import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import InvoiceActionsCell from "./invoice-actions-cell/InvoiceActionsCell.vue";
 import InvoiceStatusCell from "./invoice-status-cell/InvoiceStatusCell.vue";
 
 export default {
   components: {
-    GenericTable,
     AppLink,
+    GenericTable,
     InvoiceActionsCell,
     InvoiceStatusCell
   },

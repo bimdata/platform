@@ -69,11 +69,11 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard";
-import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm";
-import ProjectCardLeaveGuard from "../project-card-leave-guard/ProjectCardLeaveGuard";
+import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard.vue";
+import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm.vue";
+import ProjectCardLeaveGuard from "../project-card-leave-guard/ProjectCardLeaveGuard.vue";
 
 export default {
   components: {

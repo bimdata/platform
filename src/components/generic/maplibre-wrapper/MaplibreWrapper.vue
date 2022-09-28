@@ -6,7 +6,7 @@
 
 <script>
 import { onMounted, watchEffect } from "vue";
-import { useMaplibre } from "@/composables/maplibre";
+import { useMaplibre } from "../../../composables/maplibre.js";
 
 export default {
   props: {

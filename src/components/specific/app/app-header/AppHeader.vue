@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../../../router/route-names.js";
 // Components
-import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import AppHeaderMenu from "@/components/specific/app/app-header-menu/AppHeaderMenu.vue";
+import AppSlot from "../app-slot/AppSlot.vue";
+import AppLink from "../app-link/AppLink.vue";
+import AppHeaderMenu from "../app-header-menu/AppHeaderMenu.vue";
 
 export default {
   components: {

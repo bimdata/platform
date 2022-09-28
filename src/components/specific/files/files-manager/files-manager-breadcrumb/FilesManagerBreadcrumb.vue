@@ -27,7 +27,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useFiles } from "@/state/files.js";
+import { useFiles } from "../../../../../state/files.js";
 
 export default {
   props: {

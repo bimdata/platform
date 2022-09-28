@@ -55,13 +55,13 @@
 </template>
 
 <script>
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import SIZE_UNIT from "@/config/size-unit.js";
-import routeNames from "@/router/route-names.js";
-import { formatBytes } from "@/utils/files.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import SIZE_UNIT from "../../../../config/size-unit.js";
+import routeNames from "../../../../router/route-names.js";
+import { formatBytes } from "../../../../utils/files.js";
 // Components
-import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
+import ProgressBar from "../../../generic/progress-bar/ProgressBar.vue";
 
 export default {
   components: {

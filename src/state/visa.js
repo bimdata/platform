@@ -1,6 +1,6 @@
 import async from "async";
-import VisaService from "@/services/VisaService.js";
-import FileService from "@/services/FileService.js";
+import FileService from "../services/FileService.js";
+import VisaService from "../services/VisaService.js";
 
 const createVisa = async (project, document, visa) => {
   return VisaService.createVisa(project, document, visa);

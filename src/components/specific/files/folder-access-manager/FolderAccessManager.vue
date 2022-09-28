@@ -52,10 +52,10 @@
 
 <script>
 import { computed } from "vue";
-import { useListFilter } from "@/composables/list-filter";
+import { useListFilter } from "../../../../composables/list-filter.js";
 // Components
-import FolderPermissionSelector from "./folder-permission-selector/FolderPermissionSelector";
-import GroupPermissionSelector from "./group-permission-selector/GroupPermissionSelector";
+import FolderPermissionSelector from "./folder-permission-selector/FolderPermissionSelector.vue";
+import GroupPermissionSelector from "./group-permission-selector/GroupPermissionSelector.vue";
 
 export default {
   components: {
