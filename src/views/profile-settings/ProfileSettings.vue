@@ -24,10 +24,10 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuth } from "@/state/auth.js";
+import { useAuth } from "../../state/auth.js";
 import { useAppGlobalLoader } from "../../components/specific/app/app-global-loader/app-global-loader.js";
 
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import AppGlobalLoader from "../../components/specific/app/app-global-loader/AppGlobalLoader.vue";
 
 export default {
