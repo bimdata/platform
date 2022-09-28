@@ -1,0 +1,12 @@
+/**
+ * Layout of the global loader containers.
+ * Containers can be found in <body> (see `public/index.html`).
+ */
+
+#app-global-loader-container {
+  position: fixed;
+  z-index: 200;
+  width: 100%;
+  right: 0;
+  top: 0;
+}

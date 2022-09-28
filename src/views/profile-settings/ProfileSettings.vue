@@ -1,14 +1,10 @@
 <template>
-  <template v-if="deleteLoader">
-    <teleport to="body">
-      <BIMDataLoading
-        class="delete-loader"
-        :message="$t('ProfileSettings.loading.message')"
-        :subMessage="$t('ProfileSettings.loading.subMessage')"
-      />
-    </teleport>
-  </template>
-  <div class="profile-settings" v-show="!deleteLoader">
+  <AppGlobalLoader
+    :message="$t('ProfileSettings.loading.message')"
+    :subMessage="$t('ProfileSettings.loading.subMessage')"
+  />
+
+  <div class="profile-settings" v-show="!showGlobalLoader">
     <div class="profile-settings__back-btn">
       <GoBackButton />
     </div>
@@ -29,15 +25,21 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "@/state/auth.js";
+import { useAppGlobalLoader } from "../../components/specific/app/app-global-loader/app-global-loader.js";
 
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import AppGlobalLoader from "../../components/specific/app/app-global-loader/AppGlobalLoader.vue";
+
 export default {
   components: {
-    GoBackButton
+    GoBackButton,
+    AppGlobalLoader
   },
   setup() {
     const router = useRouter();
     const { signOut } = useAuth();
+    const { openGlobalLoader, closeGlobalLoader, showGlobalLoader } =
+      useAppGlobalLoader();
 
     const iframe = ref(null);
     const deleteLoader = ref(false);
@@ -51,10 +53,10 @@ export default {
             await signOut();
             break;
           case "account delete start":
-            deleteLoader.value = true;
+            openGlobalLoader();
             break;
           case "account delete error":
-            deleteLoader.value = false;
+            closeGlobalLoader();
             break;
           case "account delete successful":
             signOut();
@@ -67,6 +69,7 @@ export default {
       iframe,
       deleteLoader,
       displayIframe,
+      showGlobalLoader,
       bimDataConnectUrl: process.env.VUE_APP_URL_BIMDATACONNECT,
       // Methods
       getBack: () => router.back()
