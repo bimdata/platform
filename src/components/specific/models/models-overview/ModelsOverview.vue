@@ -10,7 +10,11 @@
           :models="models"
           @model-changed="onModelChange"
         />
-        <ModelLocation :project="project" :model="displayedModel" />
+        <ModelLocation
+          v-if="!isLG"
+          :project="project"
+          :model="displayedModel"
+        />
       </template>
       <template v-else>
         <ModelsOverviewOnboarding
@@ -23,9 +27,10 @@
 
 <script>
 import { ref, watch } from "vue";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 // Components
-import ModelLocation from "@/components/specific/models/model-location/ModelLocation.vue";
-import ModelsCard from "@/components/specific/models/models-card/ModelsCard.vue";
+import ModelLocation from "../model-location/ModelLocation.vue";
+import ModelsCard from "../models-card/ModelsCard.vue";
 import ModelsOverviewOnboarding from "./models-overview-onboarding/ModelsOverviewOnboarding.vue";
 
 export default {
@@ -66,7 +71,9 @@ export default {
       // References
       displayedModel,
       // Methods
-      onModelChange
+      onModelChange,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

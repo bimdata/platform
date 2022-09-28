@@ -10,4 +10,4 @@ function debounce(callback, ms) {
   };
 }
 
-export { delay, debounce };
+export { delay, delay as wait, debounce };

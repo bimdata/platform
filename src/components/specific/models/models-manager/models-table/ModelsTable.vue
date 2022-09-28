@@ -1,13 +1,13 @@
 <template>
   <GenericTable
     class="models-table"
+    data-test-id="models-table"
     :columns="columns"
     :rows="models"
     :paginated="true"
     :perPage="7"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
-    :placeholder="$t('ModelsTable.emptyTablePlaceholder')"
   >
     <template #cell-name="{ row: model }">
       <ModelNameCell
@@ -18,13 +18,13 @@
       />
     </template>
     <template #cell-version="{ row: { version } }">
-      {{ version ? version : "-" }}
+      {{ version ?? "-" }}
     </template>
     <template #cell-creator="{ row: { creator } }">
       {{ creator ? `${creator.firstname} ${creator.lastname[0]}.` : "?" }}
     </template>
     <template #cell-lastupdate="{ row: model }">
-      {{ $d(model.updatedAt, "long") }}
+      {{ $d(model.updated_at, "long") }}
     </template>
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />
@@ -40,6 +40,12 @@
         @update="nameEditMode[model.id] = true"
       />
     </template>
+
+    <template #placeholder>
+      <slot name="placeholder">
+        {{ $t("ModelsTable.emptyTablePlaceholder.text") }}
+      </slot>
+    </template>
   </GenericTable>
 </template>
 
@@ -47,8 +53,9 @@
 import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
+import { useStandardBreakpoints } from "../../../../../composables/responsive.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
+import GenericTable from "../../../../generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
@@ -73,9 +80,22 @@ export default {
   emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
   setup(props) {
     const { t } = useI18n();
+    const { isLG, isXL } = useStandardBreakpoints();
 
     const columns = computed(() => {
-      return columnsDef.map(col => ({
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "status", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "creator", "lastupdate", "status", "actions"].includes(
+            col.id
+          )
+        );
+      }
+      return filteredColumns.map(col => ({
         ...col,
         label: col.label || t(`ModelsTable.headers.${col.id}`)
       }));

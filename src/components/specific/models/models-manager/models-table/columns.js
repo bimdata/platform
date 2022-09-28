@@ -14,22 +14,22 @@ export default [
   },
   {
     id: "creator",
-    width: "200px",
+    width: "160px",
     align: "center"
   },
   {
     id: "lastupdate",
-    width: "180px",
+    width: "160px",
     align: "center"
   },
   {
     id: "status",
-    width: "100px",
+    width: "80px",
     align: "center"
   },
   {
     id: "actions",
     label: " ",
-    width: "250px"
+    width: "200px"
   }
 ];

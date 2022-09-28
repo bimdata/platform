@@ -5,7 +5,18 @@
     </div>
     <div class="invitation__content">
       <span>{{ $t("Invitation.title") }}</span>
-      <iframe src="http://localhost:8000/embed_invitation/"></iframe>
+      <div class="invitation__content__header">
+        <span>{{ $t("Invitation.invitCounter") }}</span>
+        <BIMDataButton
+          class="generic-modal__content__btn-close"
+          ghost
+          rounded
+          icon
+          @click="$emit('close')"
+        >
+          <BIMDataIcon name="close" size="xxs" />
+        </BIMDataButton>
+      </div>
     </div>
     <div class="invitation__empty-div"></div>
   </div>
@@ -22,6 +33,26 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const data = [
+      {
+        project: "test-dwg",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "A"
+      },
+      {
+        project: "new project",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "D"
+      },
+      {
+        project: "project2",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "W"
+      }
+    ];
     return {
       getBack: () => router.back()
     };

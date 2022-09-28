@@ -1,13 +1,23 @@
 .group-card-action-menu {
+  position: relative;
   height: 100%;
   background-color: var(--color-white);
 
   &__loader {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    transform: scale(2);
+    background-color: var(--color-white);
+
+    .bimdata-spinner {
+      transform: scale(2);
+    }
   }
 
   &__menu {

@@ -1,9 +1,9 @@
 <template>
-  <div data-test="model-viewer" class="view model-viewer">
-    <app-slot-content name="app-header-action">
+  <div data-test-id="view-model-viewer" class="view model-viewer">
+    <AppSlotContent name="app-header-action">
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />
-    </app-slot-content>
+    </AppSlotContent>
 
     <div id="viewer"></div>
 
@@ -23,12 +23,12 @@ import {
   AVAILABLE_PLUGINS,
   DEFAULT_WINDOW,
   PLUGINS_CONFIG
-} from "@/config/viewer.js";
-import { useAuth } from "@/state/auth.js";
-import { useSpaces } from "@/state/spaces.js";
+} from "../../config/viewer.js";
+import { useAuth } from "../../state/auth.js";
+import { useSpaces } from "../../state/spaces.js";
 // Components
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 
 export default {
   components: {
@@ -53,8 +53,8 @@ export default {
     const pluginsConfig = cloneDeep(PLUGINS_CONFIG);
     merge(pluginsConfig, {
       bcf: {
-        topicGuid,
-      },
+        topicGuid
+      }
     });
     // Extract space specific plugins config
     // and merges it into initial config
@@ -78,9 +78,9 @@ export default {
       .filter(Boolean); // keep only existing plugins
 
     // Extract space specific plugins urls from marketplace
-    const appPlugins = currentSpace.value.marketplaceApps
-      .filter(app => app.viewerPluginsUrls && app.viewerPluginsUrls.length)
-      .map(app => app.viewerPluginsUrls)
+    const appPlugins = currentSpace.value.marketplace_apps
+      .filter(app => app.viewer_plugins_urls && app.viewer_plugins_urls.length)
+      .map(app => app.viewer_plugins_urls)
       .reduce((set, urls) => {
         urls.forEach(url => set.add(url));
         return set;
@@ -101,7 +101,7 @@ export default {
           modelIds: modelIDs
         },
         plugins: pluginsConfig,
-        locale: locale.value,
+        locale: locale.value
       });
 
       await Promise.all(

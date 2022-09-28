@@ -113,15 +113,15 @@
         "title": "Projectbestanden",
         "searchInputPlaceholder": "Zoeken",
         "createModelNotification": "Model succesvol aangemaakt",
-        "uploadDisableMessage": {
-            "permission": "Je hebt niet de rechten om dit te doen",
-            "size": "Je hebt niet genoeg opslagruimte"
-        }
+        "structureImport": "",
+        "gedDownload": "",
+        "folderImport": ""
     },
     "FilesManagerOnboarding": {
         "text": "Upload uw eerste bestand",
         "uploadFileButtonText": "Upload een bestand",
-        "createFolderButtonText": "Maak een map aan"
+        "createFolderButtonText": "Maak een map aan",
+        "GEDStructureImport": ""
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Lege map",
@@ -136,11 +136,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Upload een bestand"
+        "addFileButtonText": "Upload een bestand",
+        "shortAddFileButtonText": ""
     },
     "FileUploadCard": {
         "cancelMessage": "Geannuleerd",
-        "errorMessage": "Upload mislukt"
+        "errorMessage": "Upload mislukt",
+        "upload": ""
     },
     "FileUploader": {
         "uploadAreaText": "Sleep en zet neer om uw projectactiva op te slaan",
@@ -155,7 +157,8 @@
         "groupHeader": "Groep"
     },
     "FolderCreationButton": {
-        "buttonText": "Nieuwe map"
+        "buttonText": "Nieuwe map",
+        "shortButtonText": ""
     },
     "FolderCreationForm": {
         "creationFormTitle": "Map aanmaken",
@@ -283,7 +286,6 @@
         "uploadButtonText": "Model uploaden"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "Geen model",
         "headers": {
             "id": "ID",
             "name": "Naam",
@@ -291,6 +293,10 @@
             "creator": "Maker",
             "lastupdate": "Laatst gewijzigd",
             "status": "Status"
+        },
+        "emptyTablePlaceholder": {
+            "text": "",
+            "textPdf": ""
         }
     },
     "ProjectCardActionMenu": {
@@ -477,7 +483,18 @@
         "fileVersionsFetchError": "De versies van dit document kunnen niet worden opgehaald.",
         "fileVersionsMakeHeadError": "Naar huidige versie gaan niet gelukt.",
         "fileVersionDelete": "Document verwijderen mislukt",
-        "userAlreadyExistsError": "Deze gebruiker is al een lid van de ruimte/het project."
+        "userAlreadyExistsError": "Deze gebruiker is al een lid van de ruimte/het project.",
+        "tagsFetchError": "",
+        "tagsCreateError": "",
+        "tagsUpdateError": "",
+        "tagsDeleteError": "",
+        "tagsAddDocumentError": "",
+        "tagsDeleteDocumentError": "",
+        "spaceSizeFullError": "",
+        "spaceFetchError": "",
+        "projectFolderTreeFetchError": "",
+        "fileStructureCreateError": "",
+        "documentCreateError": ""
     },
     "ProjectStatusBadge": {
         "new": "NIEUW",
@@ -548,7 +565,8 @@
             "active": "Actief",
             "deleted": "Verwijderd",
             "paused": "Gepauzeerd",
-            "custom": "Beheerd door BIMData.io"
+            "custom": "Beheerd door BIMData.io",
+            "past_due": ""
         }
     },
     "DatapackForm": {
@@ -567,9 +585,6 @@
         "datapacks": "Actieve DataPacks",
         "storage": "Actieve opslag",
         "including": "Inclusief {quantity} GB van DataPack"
-    },
-    "GroupMemberInvitation": {
-        "name": "Openstaande uitnodiging"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Factuur downloaden"
@@ -677,7 +692,6 @@
         "selectedSpace": "Geselecteerde ruimte:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Opslag upgraden",
         "subscribePlatformButton": "Upgrade naar pro-abonnement",
         "usage": "{gebruikt} gebruikt van {totaal}"
     },
@@ -897,8 +911,9 @@
         "titleDate": "Op",
         "AddVersion": "Voeg een nieuwe versie toe",
         "loading": {
-            "message": "Laden...",
-            "subMessage": "Dit kan even duren."
+            "subMessage": "Dit kan even duren.",
+            "downloadMessage": "",
+            "deleteMessage": ""
         },
         "delete": "Verwijderen",
         "getToHead": "Ga naar de huidige versie",
@@ -912,5 +927,47 @@
             }
         },
         "emptyArea": "Je hebt momenteel geen versiegeschiedenis voor dit bestand."
+    },
+    "Tag": {
+        "title": "",
+        "list": "",
+        "addTag": "",
+        "addNewTag": "",
+        "search": "",
+        "validate": "",
+        "cancel": "",
+        "deleteTag": "",
+        "deleteTagButton": ""
+    },
+    "SubscriptionModal": {
+        "title": "",
+        "subtitle": "",
+        "10gbSize": "",
+        "100mbSize": "",
+        "soon": "",
+        "upgrade": {
+            "title": "",
+            "subtitle": ""
+        },
+        "referal": {
+            "title": "",
+            "subtitle": ""
+        },
+        "linkedin": {
+            "title": "",
+            "subtitle": ""
+        },
+        "uploadDisableMessage": {
+            "permission": "",
+            "size": ""
+        }
+    },
+    "FileTreePreview": {
+        "title": "",
+        "cancel": "",
+        "validate": ""
+    },
+    "GroupMemberCard": {
+        "pending": ""
     }
 }

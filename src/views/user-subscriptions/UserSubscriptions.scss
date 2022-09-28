@@ -5,7 +5,7 @@
     justify-content: space-between;
     gap: calc(var(--spacing-unit) * 6);
 
-    &__left {
+    &__start {
       max-width: 450px;
 
       h1 {
@@ -31,7 +31,7 @@
       }
     }
 
-    &__right {
+    &__end {
       flex-grow: 1;
     }
   }
@@ -46,6 +46,26 @@
     .billings-table,
     .invoices-table {
       flex: 1;
+    }
+  }
+}
+
+@include media-breakpoint-down(xxl) {
+  .user-subscriptions {
+    &__content {
+      .billings-table,
+      .invoices-table {
+        flex: unset;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xl) {
+  .user-subscriptions {
+    &__header {
+      flex-direction: column;
     }
   }
 }

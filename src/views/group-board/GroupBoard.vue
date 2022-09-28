@@ -1,15 +1,15 @@
 <template>
-  <div class="view group-board">
+  <div data-test-id="view-group-board" class="view group-board">
     <ViewHeader class="group-board__header">
       <template #left>
-        <AppBreadcrumb />
+        <GoBackButton v-if="isLG" />
+        <AppBreadcrumb v-else />
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="group-board__header__search"
-          width="300px"
-          :placeholder="$t('GroupBoard.searchInputPlaceholder')"
+          :width="isSM ? '150px' : '300px'"
+          :placeholder="isSM ? '' : $t('GroupBoard.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
@@ -20,7 +20,12 @@
       <GroupMembersSelector :project="project" :group="group" :users="users" />
     </AppSidePanel>
 
-    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+    <BIMDataResponsiveGrid
+      itemWidth="320px"
+      rowGap="36px"
+      columnGap="36px"
+      :style="{ justifyContent: isMD ? 'center' : '' }"
+    >
       <transition-group name="grid">
         <GroupMemberSelectionCard :key="-1" @click="openMembersSelector" />
         <GroupMemberCard
@@ -38,10 +43,12 @@
 <script>
 import { computed } from "vue";
 import { useListFilter } from "@/composables/list-filter.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
 import { useGroups } from "@/state/groups.js";
 import { useProjects } from "@/state/projects.js";
 // Components
+import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
 import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
@@ -53,6 +60,7 @@ export default {
   components: {
     AppBreadcrumb,
     AppSidePanel,
+    GoBackButton,
     GroupMemberCard,
     GroupMemberSelectionCard,
     GroupMembersSelector,
@@ -76,7 +84,9 @@ export default {
       searchText,
       users: projectUsers,
       // Methods
-      openMembersSelector: openSidePanel
+      openMembersSelector: openSidePanel,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

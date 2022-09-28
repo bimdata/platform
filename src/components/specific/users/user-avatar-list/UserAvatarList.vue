@@ -27,7 +27,7 @@
 <script>
 import { computed } from "vue";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import UserAvatar from "../user-avatar/UserAvatar.vue";
 
 export default {
   components: {

@@ -61,7 +61,7 @@ const updateFiles = async (project, files) => {
 };
 
 const moveFiles = async (project, files, dest) => {
-  let newFiles = files.map(file => ({ ...file, parentId: dest.id }));
+  let newFiles = files.map(file => ({ ...file, parent_id: dest.id }));
 
   const { folders, documents } = segregate(newFiles);
   newFiles = (

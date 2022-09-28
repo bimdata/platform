@@ -1,22 +1,26 @@
 <template>
-  <div class="view project-groups">
+  <div data-test-id="view-project-groups" class="view project-groups">
     <ViewHeader class="project-groups__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="project-groups__header__search"
-          width="300px"
-          :placeholder="$t('ProjectGroups.searchInputPlaceholder')"
+          :width="isSM ? '150px' : '300px'"
+          :placeholder="isSM ? '' : $t('ProjectGroups.searchInputPlaceholder')"
           v-model="searchText"
           clear
         />
       </template>
     </ViewHeader>
 
-    <BIMDataResponsiveGrid itemWidth="320px" rowGap="36px" columnGap="36px">
+    <BIMDataResponsiveGrid
+      itemWidth="320px"
+      rowGap="36px"
+      columnGap="36px"
+      :style="{ justifyContent: isMD ? 'center' : '' }"
+    >
       <transition-group name="grid">
         <GroupCreationCard
           v-if="project.isAdmin"
@@ -36,6 +40,7 @@
 
 <script>
 import { useListFilter } from "@/composables/list-filter.js";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { useGroups } from "@/state/groups.js";
 import { useProjects } from "@/state/projects.js";
 // Components
@@ -64,7 +69,9 @@ export default {
       // References
       groups: displayedGroups,
       project: currentProject,
-      searchText
+      searchText,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div data-test="oidc-callback-error" class="view oidc-callback-error">
+  <div data-test-id="view-oidc-callback-error" class="view oidc-callback-error">
     <h1>{{ $t("OidcCallbackError.message") }}</h1>
     <BIMDataButton fill radius color="primary" @click="goToRoot">
       {{ $t("OidcCallbackError.tryAgainButtonText") }}

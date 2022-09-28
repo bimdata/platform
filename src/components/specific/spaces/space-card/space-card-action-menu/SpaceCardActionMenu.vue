@@ -5,7 +5,7 @@
     v-click-away="closeMenu"
   >
     <BIMDataButton
-      data-test="btn-toggle-menu"
+      data-test-id="btn-toggle-menu"
       class="space-card-action-menu__btn"
       ripple
       rounded
@@ -24,7 +24,6 @@
         <transition name="fade" mode="out-in">
           <template v-if="showUpdateForm">
             <SpaceCardUpdateForm
-              data-test="update-form"
               :space="space"
               @close="closeUpdateForm"
               @success="closeMenu"
@@ -32,17 +31,13 @@
           </template>
 
           <template v-else-if="showDeleteGuard">
-            <SpaceCardDeleteGuard
-              data-test="delete-guard"
-              :space="space"
-              @close="closeDeleteGuard"
-            />
+            <SpaceCardDeleteGuard :space="space" @close="closeDeleteGuard" />
           </template>
 
           <template v-else>
             <div class="space-card-action-menu__container__menu">
               <BIMDataButton
-                data-test="btn-open-update"
+                data-test-id="btn-open-update"
                 ghost
                 squared
                 @click="openUpdateForm"
@@ -50,12 +45,12 @@
                 {{ $t("SpaceCardActionMenu.renameButtonText") }}
               </BIMDataButton>
               <SpaceCardImageButton
-                data-test="btn-update-image"
+                data-test-id="btn-update-image"
                 :space="space"
                 @upload-completed="closeMenu"
               />
               <BIMDataButton
-                data-test="btn-delete-image"
+                data-test-id="btn-delete-image"
                 ghost
                 squared
                 @click="removeImage"
@@ -63,7 +58,7 @@
                 {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
               </BIMDataButton>
               <BIMDataButton
-                data-test="btn-open-delete"
+                data-test-id="btn-open-delete"
                 color="high"
                 ghost
                 squared

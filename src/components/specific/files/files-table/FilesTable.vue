@@ -2,6 +2,7 @@
   <GenericTable
     ref="filesTable"
     class="files-table"
+    data-test-id="files-table"
     :columns="columns"
     :rows="files"
     rowKey="id"
@@ -13,7 +14,7 @@
     <template #sub-header>
       <div
         :style="{
-          display: folder.parentId ? 'flex' : 'none',
+          display: folder.parent_id ? 'flex' : 'none',
           alignItems: 'center'
         }"
       >
@@ -50,6 +51,7 @@
         :project="project"
         :file="file"
         @file-clicked="$emit('file-clicked', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         :editMode="nameEditMode[file.id]"
         @close="nameEditMode[file.id] = false"
       />
@@ -57,14 +59,16 @@
     <template #cell-type="{ row: file }">
       <FileTypeCell :file="file" />
     </template>
-    <template #cell-creator="{ row: { createdBy } }">
-      {{ createdBy ? `${createdBy.firstname} ${createdBy.lastname[0]}.` : "?" }}
+    <template #cell-creator="{ row: { created_by } }">
+      {{
+        created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?"
+      }}
     </template>
     <template #cell-tags="{ row: file }">
       <FileTagsCell :file="file" :filesTable="filesTable" />
     </template>
     <template #cell-lastupdate="{ row: file }">
-      {{ $d(file.updatedAt, "long") }}
+      {{ $d(file.updated_at, "long") }}
     </template>
     <template #cell-size="{ row: file }">
       {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
@@ -89,14 +93,18 @@
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { isFolder } from "@/utils/file-structure.js";
 import { formatBytes, generateFileKey } from "@/utils/files.js";
+import { FILE_TYPE } from "@/config/files.js";
+
 import columnsDef from "./columns.js";
 // Components
 import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
 import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
+
 import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "./file-name-cell/FileNameCell.vue";
@@ -127,8 +135,7 @@ export default {
       required: true
     },
     filesToUpload: {
-      type: Array,
-      default: () => []
+      type: Array
     }
   },
   emits: [
@@ -146,20 +153,27 @@ export default {
     "remove-model"
   ],
   setup(props, { emit }) {
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
+    const { isLG, isXL } = useStandardBreakpoints();
 
     const filesTable = ref(null);
-    const columns = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`FilesTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+
+    const columns = computed(() => {
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "size", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "lastupdate", "size", "actions"].includes(col.id)
+        );
+      }
+      return filteredColumns.map(col => ({
+        ...col,
+        label: col.label || t(`FilesTable.headers.${col.id}`)
+      }));
+    });
 
     let nameEditMode;
     watch(
@@ -182,8 +196,7 @@ export default {
             Object.assign(file, { key: generateFileKey(file) })
           )
         );
-      },
-      { immediate: true }
+      }
     );
 
     const onUploadCompleted = (key, file) => {
@@ -204,11 +217,14 @@ export default {
       filesTable,
       fileUploads,
       nameEditMode,
+      FILE_TYPE,
       // Methods
       cleanUpload,
       formatBytes,
       isFolder,
-      onUploadCompleted
+      onUploadCompleted,
+      // Responsive breakpoints
+      isXL
     };
   }
 };

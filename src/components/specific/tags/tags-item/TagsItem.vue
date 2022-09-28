@@ -113,9 +113,10 @@
 
 <script>
 import { ref, watch, nextTick } from "vue";
-
-import TagService from "@/services/TagService";
-import { getBorderColor } from "@/utils/colors.js";
+import TagService from "../../../../services/TagService.js";
+import { debounce } from "../../../../utils/async.js";
+import { getBorderColor } from "../../../../utils/colors.js";
+import { dropdownPositioner } from "../../../../utils/positioner.js";
 
 export default {
   props: {
@@ -147,7 +148,7 @@ export default {
       setTimeout(() => editTagName.value && input.value.focus(), 50)
     );
 
-    const onSubmitTagName = async () => {
+    const onSubmitTagName = debounce(async () => {
       if (tagName.value && tagName.value !== props.tag.name) {
         await TagService.updateTag(props.project, props.tag, {
           name: tagName.value
@@ -156,7 +157,7 @@ export default {
         emit("fetch-tags");
         emit("file-updated");
       }
-    };
+    }, 500);
 
     const onCancelSubmitTagName = () => {
       tagName.value = props.tag.name;
@@ -206,25 +207,15 @@ export default {
 
     const onColorSelector = () => {
       displayColorSelector.value = true;
-      nextTick(() => colorPanelPosition());
+      nextTick(() => {
+        colorSelector.value.style.top = dropdownPositioner(
+          props.tagsMain,
+          colorSelector.value
+        );
+      });
     };
 
     const colorSelector = ref(null);
-
-    const colorPanelPosition = () => {
-      const { height: tagHeight } = tagContent.value.getBoundingClientRect();
-
-      colorSelector.value.style.top = tagHeight + "px";
-
-      const { height: heightTagsMain, y: yTagsMain } =
-        props.tagsMain.getBoundingClientRect();
-      const { height: heightColorPanel, y: yColorPanel } =
-        colorSelector.value.getBoundingClientRect();
-
-      if (yColorPanel - yTagsMain + heightColorPanel > heightTagsMain) {
-        colorSelector.value.style.top = "-" + heightColorPanel + "px";
-      }
-    };
 
     return {
       // references

@@ -17,11 +17,11 @@
 
 <script>
 import { ref, watch } from "vue";
-import { SUBSCRIPTION_START_DATE } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
+import { SUBSCRIPTION_START_DATE } from "../../../../config/subscription.js";
+import routeNames from "../../../../router/route-names.js";
+import { useSubscriptions } from "../../../../state/subscriptions.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 
 export default {
   components: {
@@ -65,7 +65,7 @@ export default {
          */
         // const alreadyExisted =
         //   space.isFree &&
-        //   new Date(space.createdAt).getTime() <
+        //   new Date(space.created_at).getTime() <
         //     SUBSCRIPTION_START_DATE.getTime();
         // if (alreadyExisted) {
         //   visible.value = true;

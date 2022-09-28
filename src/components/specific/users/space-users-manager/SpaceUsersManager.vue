@@ -21,7 +21,7 @@
         <InvitationForm
           :space="space"
           @close="closeInvitationForm"
-          @success="closeInvitationForm"
+          @success="onInvitationSuccess"
         />
       </template>
 
@@ -63,13 +63,15 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useListFilter } from "@/composables/list-filter.js";
-import { useToggle } from "@/composables/toggle.js";
-import { SPACE_ROLE } from "@/config/spaces.js";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { SPACE_ROLE } from "../../../../config/spaces.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { wait } from "../../../../utils/async.js";
 // Components
-import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard.vue";
-import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm.vue";
-import UserCard from "@/components/specific/users/user-card/UserCard.vue";
+import InvitationCard from "../invitation-card/InvitationCard.vue";
+import InvitationForm from "../invitation-form/InvitationForm.vue";
+import UserCard from "../user-card/UserCard.vue";
 
 const tabsDef = [{ id: "admins" }, { id: "users" }];
 
@@ -95,6 +97,7 @@ export default {
   },
   setup(props) {
     const { locale, t } = useI18n();
+    const { loadSpaceUsers, loadSpaceInvitations } = useSpaces();
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
@@ -116,19 +119,30 @@ export default {
       () => props.users,
       () => {
         admins.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLE.ADMIN
+          user => user.cloud_role === SPACE_ROLE.ADMIN
         );
         users.value = props.users.filter(
-          user => user.cloudRole === SPACE_ROLE.USER
+          user => user.cloud_role === SPACE_ROLE.USER
         );
       },
       { immediate: true }
     );
 
+    // This watcher is used to create a smoother transition
+    // when switching between admins/users lists.
+    const list = ref([]);
+    watch(
+      [currentTab, admins, users],
+      async ([tab]) => {
+        list.value = [];
+        await wait(250);
+        list.value = tab === "admins" ? admins.value : users.value;
+      },
+      { immediate: true }
+    );
+
     const { filteredList: displayedUsers, searchText } = useListFilter(
-      computed(() =>
-        currentTab.value === "admins" ? admins.value : users.value
-      ),
+      list,
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
@@ -140,6 +154,13 @@ export default {
       close: closeInvitationForm
     } = useToggle();
 
+    const onInvitationSuccess = async () => {
+      closeInvitationForm();
+      await wait(2000);
+      loadSpaceUsers(props.space);
+      loadSpaceInvitations(props.space);
+    };
+
     return {
       // Refrences
       currentTab,
@@ -150,6 +171,7 @@ export default {
       tabs,
       // Methods
       closeInvitationForm,
+      onInvitationSuccess,
       openInvitationForm,
       selectTab
     };

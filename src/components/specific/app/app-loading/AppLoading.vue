@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
     <template v-if="loading">
-      <AppLoader />
+      <AppLoader v-if="loader" />
     </template>
     <template v-else>
       <slot></slot>
@@ -21,6 +21,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    loader: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props) {

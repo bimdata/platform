@@ -113,15 +113,15 @@
         "title": "Projektdokumente",
         "searchInputPlaceholder": "Suchen",
         "createModelNotification": "Vorlage erfolgreich erstellt",
-        "uploadDisableMessage": {
-            "permission": "Sie verfügen nicht über die erforderlichen Rechte",
-            "size": "Sie verfügen nicht mehr über genügend Speicherplatz."
-        }
+        "structureImport": "Eine GED-Struktur importieren",
+        "gedDownload": "EDM herunterladen",
+        "folderImport": "Einen Ordner importieren"
     },
     "FilesManagerOnboarding": {
         "text": "Erste Datei hochladen",
         "uploadFileButtonText": "Datei hochladen",
-        "createFolderButtonText": "Ordner erstellen"
+        "createFolderButtonText": "Ordner erstellen",
+        "GEDStructureImport": "Eine GED-Struktur importieren"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Leerer Ordner",
@@ -136,11 +136,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Datei laden"
+        "addFileButtonText": "Datei laden",
+        "shortAddFileButtonText": "Datei"
     },
     "FileUploadCard": {
         "cancelMessage": "Abgebrochen",
-        "errorMessage": "Hochladen nicht erfolgreich"
+        "errorMessage": "Hochladen nicht erfolgreich",
+        "upload": "uploaded} von {total} ({percentage} % hochgeladen)"
     },
     "FileUploader": {
         "uploadAreaText": "Dateien hier herklicken/herziehen",
@@ -155,7 +157,8 @@
         "groupHeader": "Gruppe"
     },
     "FolderCreationButton": {
-        "buttonText": "Neuer Ordner"
+        "buttonText": "Neuer Ordner",
+        "shortButtonText": "Dossier"
     },
     "FolderCreationForm": {
         "creationFormTitle": "Ordner erstellen",
@@ -283,7 +286,6 @@
         "uploadButtonText": "Hochladen"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "Kein Modell",
         "headers": {
             "id": "ID",
             "name": "Name",
@@ -291,6 +293,10 @@
             "creator": "Erstellt von",
             "lastupdate": "Geändert am",
             "status": "Status"
+        },
+        "emptyTablePlaceholder": {
+            "text": "Keine Vorlage",
+            "textPdf": "Vom Menü \"Datei\" im EDM aus klicken Sie auf \"Als Vorlage festlegen\", um Ihre pdf-Zeichnungen in Ihrem Projekt anzuzeigen."
         }
     },
     "ProjectCardActionMenu": {
@@ -477,7 +483,18 @@
         "fileVersionsFetchError": "Die Versionen dieses Dokuments können nicht abgerufen werden",
         "fileVersionsMakeHeadError": "Fehler beim Ändern des Dokuments in die aktuelle Version",
         "fileVersionDelete": "Fehler beim Löschen des Dokuments",
-        "userAlreadyExistsError": "Dieser Benutzer ist bereits Mitglied des Raums/Projekts"
+        "userAlreadyExistsError": "Dieser Benutzer ist bereits Mitglied des Raums/Projekts",
+        "tagsFetchError": "Tags können nicht abgerufen werden",
+        "tagsCreateError": "Fehler bei der Erstellung des Tags",
+        "tagsUpdateError": "Fehler beim Bearbeiten des Tags",
+        "tagsDeleteError": "Fehler beim Löschen des Tags",
+        "tagsAddDocumentError": "Fehler beim Zuordnen des Tags zum Dokument",
+        "tagsDeleteDocumentError": "Fehler beim Entkoppeln des Tags vom Dokument",
+        "spaceSizeFullError": "Ihr Speicherplatz ist voll",
+        "spaceFetchError": "Abrufen von Rauminformationen nicht möglich",
+        "projectFolderTreeFetchError": "Die Projektliste kann nicht abgerufen werden",
+        "fileStructureCreateError": "Unmöglich, die Dateistruktur zu erstellen",
+        "documentCreateError": "Dieses Dokument kann nicht heruntergeladen werden"
     },
     "ProjectStatusBadge": {
         "new": "NEU",
@@ -548,7 +565,8 @@
             "active": "Aktiv",
             "deleted": "Gelöscht",
             "paused": "Pausiert",
-            "custom": "Verwaltet durch BIMData.io"
+            "custom": "Verwaltet durch BIMData.io",
+            "past_due": "Aufgehängt"
         }
     },
     "DatapackForm": {
@@ -567,9 +585,6 @@
         "datapacks": "Zusammenfassung des aktiven DataPacks",
         "storage": "Zusammenfassung der aktiven GB",
         "including": "wovon {quantity} GB DataPack"
-    },
-    "GroupMemberInvitation": {
-        "name": "Einladung in Bearbeitung"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Die Rechnung herunterladen"
@@ -677,7 +692,6 @@
         "selectedSpace": "Ausgewählter Raum:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Ein DataPack kaufen",
         "subscribePlatformButton": "Zur Pro-Plattform wechseln",
         "usage": "{used} verwendet auf {total}"
     },
@@ -897,8 +911,9 @@
         "titleDate": "Der",
         "AddVersion": "Eine neue Version hinzufügen",
         "loading": {
-            "message": "Wird geladen.",
-            "subMessage": "Dieser Vorgang kann einige Augenblicke dauern."
+            "subMessage": "Dieser Vorgang kann einige Augenblicke dauern.",
+            "downloadMessage": "Ladevorgang läuft.",
+            "deleteMessage": "Löschung läuft."
         },
         "delete": "Löschen",
         "getToHead": "Zur aktuellen Version wechseln",
@@ -912,5 +927,47 @@
             }
         },
         "emptyArea": "Sie haben derzeit keinen Versionsverlauf für diese Datei."
+    },
+    "Tag": {
+        "title": "Tags verwalten",
+        "list": "Liste der Tags",
+        "addTag": "einen Tag hinzufügen",
+        "addNewTag": "Ein neues Tag hinzufügen",
+        "search": "Suche",
+        "validate": "Bestätigen",
+        "cancel": "Abbrechen",
+        "deleteTag": "Diesen Tag löschen",
+        "deleteTagButton": "Löschen"
+    },
+    "SubscriptionModal": {
+        "title": "Erhalten Sie mehr Platz",
+        "subtitle": "Sie haben derzeit eine Speicherkapazität von 300mb",
+        "10gbSize": "10 GB",
+        "100mbSize": "+ 100 MB",
+        "soon": "SOON",
+        "upgrade": {
+            "title": "Zur Pro-Plattform wechseln",
+            "subtitle": "Melden Sie sich für BIMData Pro an, um mehr Platz zu erhalten."
+        },
+        "referal": {
+            "title": "Nimm an unserem Empfehlungsprogramm teil!",
+            "subtitle": "Teile deinen Sponsorcode, um Platz zu gewinnen."
+        },
+        "linkedin": {
+            "title": "Verbinden Sie Ihr LinkedIn-Konto",
+            "subtitle": "Folgen Sie der BIMData-Seite, um Platz zu sparen."
+        },
+        "uploadDisableMessage": {
+            "permission": "Sie haben nicht die erforderlichen Rechte",
+            "size": "Sie haben nicht mehr genug Speicherplatz"
+        }
+    },
+    "FileTreePreview": {
+        "title": "Importieren der GED-Struktur aus",
+        "cancel": "Abbrechen",
+        "validate": "Bestätigen"
+    },
+    "GroupMemberCard": {
+        "pending": "Einladung in Arbeit"
     }
 }

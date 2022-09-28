@@ -2,14 +2,14 @@
   <div class="app-header-menu">
     <BIMDataDropdownMenu width="0">
       <template #header>
-        <div class="app-header-menu__btn">
+        <div data-test-id="btn-toggle-app-menu" class="app-header-menu__btn">
           <UserAvatar
             class="app-header-menu__btn__avatar"
             :user="user"
             size="34"
           />
           <BIMDataTextbox
-            data-test="user-name"
+            data-test-id="user-name"
             class="app-header-menu__btn__fullname"
             :tooltip="false"
             :text="fullName(user)"
@@ -55,7 +55,12 @@
               {{ $t("AppHeaderMenu.entryDocumentation") }}
             </BIMDataButton>
           </a>
-          <a class="external-link" :href="marketPlaceUrl" target="blank">
+          <a
+            v-if="marketPlaceUrl"
+            class="external-link"
+            :href="marketPlaceUrl"
+            target="blank"
+          >
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryMarketplace") }}
             </BIMDataButton>
@@ -72,7 +77,7 @@
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
           <BIMDataButton
-            data-test="btn-logout"
+            data-test-id="btn-logout"
             class="btn-logout"
             color="primary"
             fill
@@ -96,16 +101,16 @@
 </template>
 
 <script>
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { useToggle } from "@/composables/toggle.js";
-import { useAuth } from "@/state/auth.js";
-import { useSpaces } from "@/state/spaces.js";
-import { useUser } from "@/state/user.js";
-import { fullName } from "@/utils/users";
+import { IS_SUBSCRIPTION_ENABLED } from "../../../../config/subscription.js";
+import routeNames from "../../../../router/route-names.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { useAuth } from "../../../../state/auth.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { useUser } from "../../../../state/user.js";
+import { fullName } from "../../../../utils/users.js";
 
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
+import UserAvatar from "../../../specific/users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
@@ -124,8 +129,7 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
-    const bimdataConnectProfileUrl =
-      process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
+    const bimdataConnectProfileUrl = `${process.env.VUE_APP_URL_BIMDATACONNECT}/profile/`;
     const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
     const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
 

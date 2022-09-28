@@ -1,5 +1,5 @@
 <template>
-  <div class="space-size-preview">
+  <div class="space-size-preview" :class="`space-size-preview--${layout}`">
     <div class="space-size-preview__title">
       <h1>{{ $t("SpaceSizePreview.title") }}</h1>
     </div>
@@ -15,18 +15,15 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceSubInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smart_data_size) }}
           </span>
         </template>
         <template #text-below-right>
           <span>
-            {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
+            {{ formatBytes(spaceSubInfo.smart_data_size_available) }}
           </span>
         </template>
       </ProgressBar>
-      <!-- <BIMDataText color="color-granite-light">
-        {{ $t("SpaceSizePreview.actualStorageText") }}
-      </BIMDataText> -->
     </div>
     <div class="space-size-preview__new-size">
       <ProgressBar width="100%" :progress="newUsedSizePercent">
@@ -37,7 +34,7 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceSubInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smart_data_size) }}
           </span>
         </template>
         <template #text-below-right>
@@ -68,6 +65,11 @@ export default {
     ProgressBar
   },
   props: {
+    layout: {
+      type: String,
+      default: "vertical",
+      validator: value => ["horizontal", "vertical"].includes(value)
+    },
     spaceSubInfo: {
       type: Object,
       required: true
@@ -81,7 +83,8 @@ export default {
     const newUsedSizePercent = computed(() => {
       return Math.round(
         props.spaceSubInfo.usedSizePercent *
-          (props.spaceSubInfo.smartDataSizeAvailable / props.newSizeAvailable)
+          (props.spaceSubInfo.smart_data_size_available /
+            props.newSizeAvailable)
       );
     });
 

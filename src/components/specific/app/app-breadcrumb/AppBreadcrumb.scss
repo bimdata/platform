@@ -6,7 +6,15 @@
   .breadcrumb-separator {
     width: 0;
     height: calc(100% - var(--spacing-unit));
-    margin: 0 var(--spacing-unit);
     border: 0.5px solid var(--color-primary);
+    margin: 0 var(--spacing-unit);
+  }
+}
+
+@include media-breakpoint-down(xl) {
+  .app-breadcrumb:deep() {
+    .breadcrumb-separator {
+      margin: 0 calc(var(--spacing-unit) / 3);
+    }
   }
 }

@@ -1,51 +1,62 @@
 <template>
-  <div class="flex">
-    <ProgressBar class="m-r-12" :progress="spaceSubInfo.usedSizePercent">
+  <div class="space-size-info flex">
+    <ProgressBar
+      class="m-r-12"
+      :width="isLG ? '80px' : isXXL ? '115px' : '230px'"
+      :progress="spaceSubInfo.usedSizePercent"
+    >
       <template #text-below-left>
-        <div>
+        <div v-if="isXXL">
+          {{
+            `${
+              Math.round((100 * spaceSubInfo.smart_data_size) / GB) / 100
+            } / ${formatBytes(spaceSubInfo.smart_data_size_available)}`
+          }}
+        </div>
+        <div v-else>
           {{
             $t("SpaceSizeInfo.usage", {
-              used: formatBytes(spaceSubInfo.smartDataSize),
-              total: formatBytes(spaceSubInfo.smartDataSizeAvailable)
+              used: formatBytes(spaceSubInfo.smart_data_size),
+              total: formatBytes(spaceSubInfo.smart_data_size_available)
             })
           }}
         </div>
       </template>
     </ProgressBar>
-    <div
+    <AppLink
       v-if="
         spaceSubInfo.isPlatformSubscription &&
         spaceSubInfo.isOrganizationMember &&
         !spaceSubInfo.isCustomSubscription
       "
+      :to="{
+        name: spaceSubInfo.isPlatformPro
+          ? routeNames.subscriptionDatapack
+          : routeNames.subscriptionPro,
+        query: {
+          space: space.id
+        }
+      }"
     >
-      <AppLink
-        :to="{
-          name: spaceSubInfo.isPlatformPro
-            ? routeNames.subscriptionDatapack
-            : routeNames.subscriptionPro,
-          query: {
-            space: space.id
-          }
-        }"
-      >
-        <BIMDataButton class="m-r-18" color="secondary" fill radius>
-          {{
-            $t(
-              `SpaceSizeInfo.${
-                spaceSubInfo.isPlatformPro
-                  ? "subscribeDatapackButton"
-                  : "subscribePlatformButton"
-              }`
-            )
-          }}
-        </BIMDataButton>
-      </AppLink>
-    </div>
+      <BIMDataButton color="secondary" fill radius :icon="isXL">
+        <template v-if="isXL">
+          <BIMDataIcon name="plus" size="xxxs" />
+        </template>
+        <template v-else-if="spaceSubInfo.isPlatformPro">
+          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+          DataPack
+        </template>
+        <template v-else>
+          {{ $t("SpaceSizeInfo.subscribePlatformButton") }}
+        </template>
+      </BIMDataButton>
+    </AppLink>
   </div>
 </template>
 
 <script>
+import { useStandardBreakpoints } from "@/composables/responsive.js";
+import SIZE_UNIT from "@/config/size-unit.js";
 import routeNames from "@/router/route-names.js";
 import { formatBytes } from "@/utils/files.js";
 // Components
@@ -69,9 +80,13 @@ export default {
   },
   setup() {
     return {
+      // References
+      GB: SIZE_UNIT.GB,
+      routeNames,
       // Methods
       formatBytes,
-      routeNames
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

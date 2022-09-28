@@ -1,9 +1,13 @@
 <template>
-  <div data-test="dashboard" class="view dashboard">
+  <div data-test-id="view-dashboard" class="view dashboard">
     <div class="dashboard__head">
       <DashboardWelcomeTile data-guide="welcome-title" />
-      <AppLink :to="{ name: routeNames.userSpaces }" data-guide="btn-spaces">
-        <DashboardButtonTile data-test="btn-spaces" color="primary">
+      <AppLink
+        data-test-id="btn-spaces"
+        data-guide="btn-spaces"
+        :to="{ name: routeNames.userSpaces }"
+      >
+        <DashboardButtonTile color="primary">
           <template #title>
             {{ $t("Dashboard.spacesTileTitle") }}
           </template>
@@ -18,10 +22,11 @@
         </DashboardButtonTile>
       </AppLink>
       <AppLink
-        :to="{ name: routeNames.userProjects }"
+        data-test-id="btn-projects"
         data-guide="btn-projects"
+        :to="{ name: routeNames.userProjects }"
       >
-        <DashboardButtonTile data-test="btn-projects" color="secondary">
+        <DashboardButtonTile color="secondary">
           <template #title>
             {{ $t("Dashboard.projectsTileTitle") }}
           </template>
@@ -37,10 +42,11 @@
       </AppLink>
       <AppLink
         v-if="isSubscriptionEnabled"
-        :to="{ name: routeNames.userSubscriptions }"
+        data-test-id="btn-subscriptions"
         data-guide="btn-subscriptions"
+        :to="{ name: routeNames.userSubscriptions }"
       >
-        <DashboardButtonTile data-test="btn-subscriptions">
+        <DashboardButtonTile>
           <template #title>
             {{ $t("Dashboard.subscriptionsTileTitle") }}
           </template>
@@ -69,7 +75,10 @@
           <DashboardProjectList :projects="projects" isCarousel />
         </div>
         <div class="dashboard__body__right">
-          <SubscribeCard v-if="isSubscriptionEnabled" layout="vertical" />
+          <SubscribeCard
+            v-if="isSubscriptionEnabled"
+            :layout="isXL ? 'horizontal' : 'vertical'"
+          />
         </div>
       </template>
     </div>
@@ -78,7 +87,7 @@
 
 <script>
 import { computed } from "vue";
-
+import { useStandardBreakpoints } from "@/composables/responsive.js";
 import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
 import routeNames from "@/router/route-names.js";
 import { useProjects } from "@/state/projects.js";
@@ -115,7 +124,9 @@ export default {
       projects: userProjects,
       routeNames,
       spaces: userSpaces,
-      isSubscribeHorizontal
+      isSubscribeHorizontal,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

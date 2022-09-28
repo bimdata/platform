@@ -57,7 +57,14 @@ class UploadService {
         onUploadComplete,
         onUploadError: event => {
           ErrorService.handleError(
-            new RuntimeError(ERRORS.DOCUMENT_UPLOAD_ERROR, event)
+            new RuntimeError(
+              ERRORS[
+                event.srcElement.status === 402
+                  ? "SPACE_SIZE_FULL_ERROR"
+                  : "DOCUMENT_UPLOAD_ERROR"
+              ],
+              event
+            )
           );
           onUploadError(event);
         }
@@ -71,7 +78,7 @@ class UploadService {
       if (parentId) data.append("parent_id", parentId);
       if (successorOf) data.append("successor_of", successorOf);
 
-      uploader.upload(data);
+      return uploader.upload(data);
     };
 
     const cancel = () => {

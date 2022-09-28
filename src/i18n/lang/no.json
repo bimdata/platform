@@ -113,15 +113,15 @@
         "title": "Prosjektfiler",
         "searchInputPlaceholder": "Søk",
         "createModelNotification": "Modell opprettet",
-        "uploadDisableMessage": {
-            "permission": "Du har ikke tilgang til å gjøre dette",
-            "size": "Du har ikke nok lagringsplass"
-        }
+        "structureImport": "",
+        "gedDownload": "",
+        "folderImport": ""
     },
     "FilesManagerOnboarding": {
         "text": "Last opp din første fil",
         "uploadFileButtonText": "Last opp en fil",
-        "createFolderButtonText": "Opprett en mappe"
+        "createFolderButtonText": "Opprett en mappe",
+        "GEDStructureImport": ""
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Tom mappe",
@@ -136,11 +136,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Last opp en fil"
+        "addFileButtonText": "Last opp en fil",
+        "shortAddFileButtonText": ""
     },
     "FileUploadCard": {
         "cancelMessage": "Avbrutt",
-        "errorMessage": "Opplasting feilet"
+        "errorMessage": "Opplasting feilet",
+        "upload": ""
     },
     "FileUploader": {
         "uploadAreaText": "Dra og slipp for å lagre dine prosjektmidler",
@@ -155,7 +157,8 @@
         "groupHeader": "Gruppe"
     },
     "FolderCreationButton": {
-        "buttonText": "Ny mappe"
+        "buttonText": "Ny mappe",
+        "shortButtonText": ""
     },
     "FolderCreationForm": {
         "creationFormTitle": "Opprett mappe",
@@ -283,7 +286,6 @@
         "uploadButtonText": "Last opp modell"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "Ingen modell",
         "headers": {
             "id": "ID",
             "name": "Navn",
@@ -291,6 +293,10 @@
             "creator": "Opprettet av",
             "lastupdate": "Sist endret",
             "status": "Status"
+        },
+        "emptyTablePlaceholder": {
+            "text": "",
+            "textPdf": ""
         }
     },
     "ProjectCardActionMenu": {
@@ -477,7 +483,18 @@
         "fileVersionsFetchError": "Denne versjonen av dokumentet kan ikke gjenopprettes.",
         "fileVersionsMakeHeadError": "Bytte av dokument til nåværende versjon feilet.",
         "fileVersionDelete": "Sletting av dokumentet feilet",
-        "userAlreadyExistsError": "Brukeren er allerede medlem av dette området/prosjektet."
+        "userAlreadyExistsError": "Brukeren er allerede medlem av dette området/prosjektet.",
+        "tagsFetchError": "",
+        "tagsCreateError": "",
+        "tagsUpdateError": "",
+        "tagsDeleteError": "",
+        "tagsAddDocumentError": "",
+        "tagsDeleteDocumentError": "",
+        "spaceSizeFullError": "",
+        "spaceFetchError": "",
+        "projectFolderTreeFetchError": "",
+        "fileStructureCreateError": "",
+        "documentCreateError": ""
     },
     "ProjectStatusBadge": {
         "new": "NY",
@@ -548,7 +565,8 @@
             "active": "Aktiv",
             "deleted": "Slettet",
             "paused": "Satt på pause",
-            "custom": "Administrert av BIMData.io"
+            "custom": "Administrert av BIMData.io",
+            "past_due": ""
         }
     },
     "DatapackForm": {
@@ -567,9 +585,6 @@
         "datapacks": "Aktive datapakker",
         "storage": "Aktiv lagringsplass",
         "including": "inkludert datapakke med {quantity} GB"
-    },
-    "GroupMemberInvitation": {
-        "name": "Ventende invitasjon"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Last ned faktura"
@@ -677,7 +692,6 @@
         "selectedSpace": "Valgt område:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Oppgrader lagringsplass",
         "subscribePlatformButton": "Oppgrader til pro-abonnement",
         "usage": "{used} benyttet av {total}"
     },
@@ -897,8 +911,9 @@
         "titleDate": "På",
         "AddVersion": "Legg til ny versjon",
         "loading": {
-            "message": "Laster...",
-            "subMessage": "Denne prosessen kan ta en liten stund."
+            "subMessage": "Denne prosessen kan ta en liten stund.",
+            "downloadMessage": "",
+            "deleteMessage": ""
         },
         "delete": "Slett",
         "getToHead": "Bytt til nåværende versjon",
@@ -912,5 +927,47 @@
             }
         },
         "emptyArea": "Du har for øyeblikket ingen versjonshistorikk for denne filen."
+    },
+    "Tag": {
+        "title": "",
+        "list": "",
+        "addTag": "",
+        "addNewTag": "",
+        "search": "",
+        "validate": "",
+        "cancel": "",
+        "deleteTag": "",
+        "deleteTagButton": ""
+    },
+    "SubscriptionModal": {
+        "title": "",
+        "subtitle": "",
+        "10gbSize": "",
+        "100mbSize": "",
+        "soon": "",
+        "upgrade": {
+            "title": "",
+            "subtitle": ""
+        },
+        "referal": {
+            "title": "",
+            "subtitle": ""
+        },
+        "linkedin": {
+            "title": "",
+            "subtitle": ""
+        },
+        "uploadDisableMessage": {
+            "permission": "",
+            "size": ""
+        }
+    },
+    "FileTreePreview": {
+        "title": "",
+        "cancel": "",
+        "validate": ""
+    },
+    "GroupMemberCard": {
+        "pending": ""
     }
 }

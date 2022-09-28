@@ -100,7 +100,7 @@ class ProjectService {
         {
           email: invitation.email,
           role: invitation.role,
-          redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
+          redirect_uri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
         }
       );
     } catch (error) {
@@ -174,6 +174,16 @@ class ProjectService {
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
+    }
+  }
+
+  async fetchProjectFolderTreeSerializers(project) {
+    try {
+      return await apiClient.collaborationApi.getProjectFolderTreeSerializers(
+        project.cloud.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_FOLDER_TREE_FETCH_ERROR, error);
     }
   }
 }
