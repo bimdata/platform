@@ -37,6 +37,7 @@
         @download="$emit('download', $event)"
         @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
+        @edit="$emit('edit', $event)"
       />
     </template>
     <template #placeholderSlot>
@@ -101,7 +102,14 @@ export default {
       required: false
     }
   },
-  emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
+  emits: [
+    "archive",
+    "delete",
+    "download",
+    "selection-changed",
+    "unarchive",
+    "edit"
+  ],
   setup(props) {
     const { locale, fallbackLocale, t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();

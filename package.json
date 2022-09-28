@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@bimdata/bcf-components": "2.0.1-rc.1",
+    "@bimdata/building-maker": "file:../building-maker",
     "@bimdata/design-system": "1.4.0-rc.39",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.0.6",

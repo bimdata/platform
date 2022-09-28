@@ -12,10 +12,12 @@ import ProPlanInfoHeadingImage from "@/components/images/ProPlanInfoHeadingImage
 import SpaceSizePreviewImage from "@/components/images/SpaceSizePreviewImage.vue";
 import StorageImage from "@/components/images/StorageImage.vue";
 import SubscribeCardImage from "@/components/images/SubscribeCardImage.vue";
+import BuildingMaker from "@bimdata/building-maker";
 
 export default {
   // Images
   BillingsTableEmptyImage,
+  BuildingMaker,
   BulletMarkImage,
   FreePlanRedirectImage,
   PieGraphIcon,
