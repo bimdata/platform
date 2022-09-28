@@ -1,6 +1,6 @@
-import { useModels } from "@/state/models.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useModels } from "../../../state/models.js";
+import { useProjects } from "../../../state/projects.js";
+import { useSpaces } from "../../../state/spaces.js";
 
 const spaces = useSpaces();
 const projects = useProjects();

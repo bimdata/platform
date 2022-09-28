@@ -45,9 +45,9 @@
 
 <script>
 import { computed } from "vue";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useToggle } from "@/composables/toggle";
-import { useListFilter } from "@/composables/list-filter";
+import { useListFilter } from "../../../../../composables/list-filter.js";
+import { useStandardBreakpoints } from "../../../../../composables/responsive.js";
+import { useToggle } from "../../../../../composables/toggle.js";
 
 export default {
   props: {

@@ -1,7 +1,8 @@
 import mapLimit from "async/mapLimit";
 import { reactive, shallowReadonly, toRefs } from "vue";
-import BcfService from "@/services/BcfService.js";
-import { useProjects } from "@/state/projects.js";
+import BcfService from "../services/BcfService.js";
+
+import { useProjects } from "./projects.js";
 
 const state = reactive({
   bcfTopics: [],

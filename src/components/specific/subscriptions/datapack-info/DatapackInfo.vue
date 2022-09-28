@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { formatBytes } from "@/utils/files.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   props: {

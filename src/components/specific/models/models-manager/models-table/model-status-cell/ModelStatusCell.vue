@@ -7,8 +7,8 @@
 
 <script>
 import { onUnmounted, ref, watch } from "vue";
-import { MODEL_STATUS } from "@/config/models.js";
-import { useModels } from "@/state/models.js";
+import { MODEL_STATUS } from "../../../../../../config/models.js";
+import { useModels } from "../../../../../../state/models.js";
 
 export default {
   props: {

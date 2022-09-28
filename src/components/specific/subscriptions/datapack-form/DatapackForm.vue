@@ -121,13 +121,13 @@
 <script>
 import { computed, inject, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { usePaddle } from "@/composables/paddle.js";
-import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
-import SIZE_UNIT from "@/config/size-unit.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
-import { formatBytes } from "@/utils/files.js";
+import { usePaddle } from "../../../../composables/paddle.js";
+import { PRO_PLAN_STORAGE } from "../../../../config/subscription.js";
+import SIZE_UNIT from "../../../../config/size-unit.js";
+import { useSubscriptions } from "../../../../state/subscriptions.js";
+import { formatBytes } from "../../../../utils/files.js";
 // Components
-import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
+import ProgressBar from "../../../generic/progress-bar/ProgressBar.vue";
 
 export default {
   components: {

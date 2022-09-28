@@ -31,10 +31,10 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-import { FILE_PERMISSION } from "@/config/files.js";
-import { useGroups } from "@/state/groups.js";
+import { FILE_PERMISSION } from "../../../../../config/files.js";
+import { useGroups } from "../../../../../state/groups.js";
 // Components
-import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList.vue";
+import UserAvatarList from "../../../users/user-avatar-list/UserAvatarList.vue";
 
 const permissionList = [
   { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },

@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-js_original_path="/usr/share/nginx/html/js-original"
-js_path="/usr/share/nginx/html/js"
+js_original_path="/usr/share/nginx/html/assets-original"
+js_path="/usr/share/nginx/html/assets"
 
 # Associative var_name => placeholder_value
 declare -A vars_to_placeholders=(

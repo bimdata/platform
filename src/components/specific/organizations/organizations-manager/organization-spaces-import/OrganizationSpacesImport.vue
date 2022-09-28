@@ -58,9 +58,9 @@
 
 <script>
 import { computed, inject, ref } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
+import { useOrganizations } from "../../../../../state/organizations.js";
 // Components
-import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
+import SpaceCardImage from "../../../spaces/space-card/space-card-image/SpaceCardImage.vue";
 import OrganizationImportSuccess from "./organization-import-success/OrganizationImportSuccess.vue";
 
 export default {

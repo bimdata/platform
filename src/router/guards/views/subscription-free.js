@@ -1,6 +1,6 @@
-import routeNames from "@/router/route-names.js";
-import SubscriptionService from "@/services/SubscriptionService.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
+import routeNames from "../../../router/route-names.js";
+import SubscriptionService from "../../../services/SubscriptionService.js";
+import { useSubscriptions } from "../../../state/subscriptions.js";
 
 const { setCurrentOrga } = useSubscriptions();
 

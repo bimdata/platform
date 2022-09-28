@@ -1,4 +1,4 @@
-import { useToggle } from "@/composables/toggle.js";
+import { useToggle } from "../../../../composables/toggle.js";
 
 const { isOpen, open, close } = useToggle();
 

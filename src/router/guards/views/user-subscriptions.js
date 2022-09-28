@@ -1,4 +1,4 @@
-import { useSubscriptions } from "@/state/subscriptions.js";
+import { useSubscriptions } from "../../../state/subscriptions.js";
 
 const { setCurrentOrga } = useSubscriptions();
 

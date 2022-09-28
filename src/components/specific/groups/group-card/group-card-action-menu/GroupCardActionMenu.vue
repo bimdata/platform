@@ -79,11 +79,11 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import GroupCardColorPicker from "../group-card-color-picker/GroupCardColorPicker";
-import GroupCardDeleteGuard from "../group-card-delete-guard/GroupCardDeleteGuard";
-import GroupCardUpdateForm from "../group-card-update-form/GroupCardUpdateForm";
+import GroupCardColorPicker from "../group-card-color-picker/GroupCardColorPicker.vue";
+import GroupCardDeleteGuard from "../group-card-delete-guard/GroupCardDeleteGuard.vue";
+import GroupCardUpdateForm from "../group-card-update-form/GroupCardUpdateForm.vue";
 
 export default {
   components: {

@@ -1,6 +1,7 @@
-import { FILE_TYPE } from "@/config/files.js";
-import { download } from "@/utils/download.js";
-import { segregate } from "@/utils/file-structure.js";
+import { FILE_TYPE } from "../config/files.js";
+import { download } from "../utils/download.js";
+import { segregate } from "../utils/file-structure.js";
+
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
@@ -176,7 +177,9 @@ class FileService {
     const { folders, documents } = segregate(files);
     let url = "";
     if (folders.length > 0 || documents.length > 0) {
-      url += `${process.env.VUE_APP_ARCHIVE_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}?`;
+      url += `${import.meta.env.VUE_APP_ARCHIVE_BASE_URL}/cloud/${
+        project.cloud.id
+      }/project/${project.id}?`;
       url += `accessToken=${accessToken}&`;
       url += folders.map(f => `folderId[]=${f.id}`).join("&");
       url += folders.length > 0 && documents.length > 0 ? "&" : "";
