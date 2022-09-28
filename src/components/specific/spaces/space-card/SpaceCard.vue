@@ -1,9 +1,10 @@
 <template>
-  <AppLink :to="{ name: routeNames.spaceBoard, params: { spaceID: space.id } }">
-    <BIMDataCard
-      :data-test="`space-card space-card-${space.id}`"
-      class="space-card"
-    >
+  <AppLink
+    data-test-id="space-card"
+    :data-test-param="space.id"
+    :to="{ name: routeNames.spaceBoard, params: { spaceID: space.id } }"
+  >
+    <BIMDataCard class="space-card">
       <template #right>
         <SpaceCardActionMenu
           v-if="actionMenu && space.isAdmin"

@@ -1,9 +1,9 @@
 <template>
-  <div data-test="model-viewer" class="view model-viewer">
-    <app-slot-content name="app-header-action">
+  <div data-test-id="view-model-viewer" class="view model-viewer">
+    <AppSlotContent name="app-header-action">
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />
-    </app-slot-content>
+    </AppSlotContent>
 
     <div id="viewer"></div>
 
@@ -106,7 +106,7 @@ export default {
 
       await Promise.all(
         pluginUrls.map(url =>
-          import(url)
+          import(/* @vite-ignore */ url)
             .then(pluginModule =>
               bimdataViewer.registerPlugin(pluginModule.default)
             )

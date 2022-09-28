@@ -12,8 +12,8 @@
       >
         <BIMDataButton
           v-if="project.isAdmin"
+          data-test-id="btn-manage-groups"
           data-guide="btn-manage-groups"
-          data-test="btn-manage-groups"
           :width="isLG ? undefined : '120px'"
           color="primary"
           fill

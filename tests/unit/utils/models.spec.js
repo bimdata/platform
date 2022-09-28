@@ -54,13 +54,13 @@ describe("Models Utils", () => {
     const result = segregateByType(models);
 
     // Assert
-    expect(result.dwg).toEqual([
+    expect(result[MODEL_TYPE.DWG]).toEqual([
       models[0], models[2], models[6]
     ]);
-    expect(result.ifc).toEqual([
+    expect(result[MODEL_TYPE.IFC]).toEqual([
       models[1], models[4], models[5]
     ]);
-    expect(result.pdf).toEqual([
+    expect(result[MODEL_TYPE.PDF]).toEqual([
       models[3]
     ]);
   });

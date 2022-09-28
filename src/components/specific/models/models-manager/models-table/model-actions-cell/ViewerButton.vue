@@ -1,5 +1,7 @@
 <template>
   <AppLink
+    data-test-id="btn-open-viewer"
+    :data-test-param="window"
     :to="{
       name: routeNames.modelViewer,
       params: {

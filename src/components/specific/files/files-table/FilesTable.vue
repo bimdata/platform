@@ -2,6 +2,7 @@
   <GenericTable
     ref="filesTable"
     class="files-table"
+    data-test-id="files-table"
     :columns="columns"
     :rows="files"
     rowKey="id"

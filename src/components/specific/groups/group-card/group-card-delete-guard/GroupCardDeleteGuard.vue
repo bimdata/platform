@@ -3,7 +3,7 @@
     <div class="group-card-delete-guard__title">
       {{ $t("GroupCardDeleteGuard.title") }}
       <BIMDataButton
-        data-test="btn-close-delete"
+        data-test-id="btn-close-delete"
         ghost
         rounded
         icon
@@ -16,7 +16,7 @@
       {{ $t("GroupCardDeleteGuard.message", { name: group.name }) }}
     </div>
     <BIMDataButton
-      data-test="btn-submit-delete"
+      data-test-id="btn-submit-delete"
       class="group-card-delete-guard__btn-submit"
       color="high"
       fill

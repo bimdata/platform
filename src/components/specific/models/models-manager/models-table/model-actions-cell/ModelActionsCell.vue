@@ -48,6 +48,7 @@
     <template v-if="model.document">
       <BIMDataButton
         class="model-actions-cell__btn"
+        data-test-id="btn-download-model"
         ripple
         rounded
         icon
@@ -58,8 +59,9 @@
     </template>
 
     <BIMDataButton
-      :disabled="!project.isAdmin && model.document?.user_permission < 100"
       class="model-actions-cell__btn"
+      data-test-id="btn-toggle-menu"
+      :disabled="!project.isAdmin && model.document?.user_permission < 100"
       ripple
       rounded
       icon
@@ -73,6 +75,7 @@
         <template v-if="model.document">
           <BIMDataButton
             class="model-actions-cell__menu__btn"
+            data-test-id="btn-update-model"
             ghost
             squared
             @click="onClick('update')"
@@ -82,6 +85,7 @@
         </template>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
+          data-test-id="btn-archive-model"
           ghost
           squared
           @click="onClick(model.archived ? 'unarchive' : 'archive')"
@@ -95,6 +99,7 @@
         </BIMDataButton>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
+          data-test-id="btn-delete-model"
           color="high"
           ghost
           squared

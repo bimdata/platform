@@ -1,18 +1,18 @@
 <template>
-  <ModelsManagerWrapper :project="project" :tabs="tabs" />
+  <GenericModelsManager :project="project" :tabs="tabs" />
 </template>
 
 <script>
 import { ref, watch } from "vue";
 import { segregateBySource } from "../../../../../utils/models.js";
 // Components
-import ModelsManagerWrapper from "../models-manager-wrapper/ModelsManagerWrapper.vue";
+import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
 
 const tabsDef = [{ id: "upload" }, { id: "split" }, { id: "archive" }];
 
 export default {
   components: {
-    ModelsManagerWrapper
+    GenericModelsManager
   },
   props: {
     project: {

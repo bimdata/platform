@@ -1,5 +1,5 @@
 <template>
-  <div class="view page-not-found">
+  <div data-test-id="view-page-not-found" class="view page-not-found">
     <div class="page-not-found__left">
       <div class="page-not-found__404">
         <h1>404</h1>

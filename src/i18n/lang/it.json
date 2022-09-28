@@ -113,15 +113,15 @@
         "title": "File del progetto",
         "searchInputPlaceholder": "Cerca",
         "createModelNotification": "Modello creato correttamente",
-        "uploadDisableMessage": {
-            "permission": "Non hai i diritti richiesti",
-            "size": "Non hai più spazio di salvataggio sufficiente"
-        }
+        "structureImport": "Importare una struttura GED",
+        "gedDownload": "Scaricare la GED",
+        "folderImport": "Importare una cartella"
     },
     "FilesManagerOnboarding": {
         "text": "Carica il tuo primo file",
         "uploadFileButtonText": "Carica un file",
-        "createFolderButtonText": "Crea una cartella"
+        "createFolderButtonText": "Crea una cartella",
+        "GEDStructureImport": "Importare una struttura GED"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Cartella vuota",
@@ -136,11 +136,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Carica un file"
+        "addFileButtonText": "Carica un file",
+        "shortAddFileButtonText": "File"
     },
     "FileUploadCard": {
         "cancelMessage": "Annullato",
-        "errorMessage": "Caricamento non riuscito"
+        "errorMessage": "Caricamento non riuscito",
+        "upload": "{uploaded} su {total} ({percentage}% caricato)"
     },
     "FileUploader": {
         "uploadAreaText": "Trascina e rilascia per archiviare le risorse del progetto",
@@ -155,7 +157,8 @@
         "groupHeader": "Gruppo"
     },
     "FolderCreationButton": {
-        "buttonText": "Nuova cartella"
+        "buttonText": "Nuova cartella",
+        "shortButtonText": "Cartella"
     },
     "FolderCreationForm": {
         "creationFormTitle": "Crea una cartella",
@@ -283,7 +286,6 @@
         "uploadButtonText": "Carica modello"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "Nessun modello",
         "headers": {
             "id": "ID",
             "name": "Nome",
@@ -291,6 +293,10 @@
             "creator": "Autore",
             "lastupdate": "Ultima modifica",
             "status": "Status"
+        },
+        "emptyTablePlaceholder": {
+            "text": "Nessun modello",
+            "textPdf": "Dal menù “file” della GED, cliccare su “Definire come modello” per mostrare le vostre mappe in pdf nel vostro progetto."
         }
     },
     "ProjectCardActionMenu": {
@@ -477,7 +483,18 @@
         "fileVersionsFetchError": "Impossibile recuperare le versioni di questo documento",
         "fileVersionsMakeHeadError": "Aggiornamento del documento alla versione attuale non riuscito",
         "fileVersionDelete": "Eliminazione del documento non riuscita",
-        "userAlreadyExistsError": "Questo utente è già un membro dello spazio/progetto"
+        "userAlreadyExistsError": "Questo utente è già un membro dello spazio/progetto",
+        "tagsFetchError": "Impossibile recuperare i tag",
+        "tagsCreateError": "Errore nella creazione del tag",
+        "tagsUpdateError": "Errore nella modifica del tag",
+        "tagsDeleteError": "Errore nella cancellazione del tag",
+        "tagsAddDocumentError": "Errore nell'associazione del tag al documento",
+        "tagsDeleteDocumentError": "Errore nella dissociazione del tag dal documento",
+        "spaceSizeFullError": "Il vostro spazio di salvataggio è pieno",
+        "spaceFetchError": "Impossibile recuperare le informazioni dello spazio",
+        "projectFolderTreeFetchError": "Impossibile recuperare la lista dei progetti",
+        "fileStructureCreateError": "Impossibile creare la struttura del documento",
+        "documentCreateError": "Impossibile scaricare il documento"
     },
     "ProjectStatusBadge": {
         "new": "NUOVO",
@@ -548,7 +565,8 @@
             "active": "Attivo",
             "deleted": "Eliminato",
             "paused": "In pausa",
-            "custom": "Gestito da BIMData.io"
+            "custom": "Gestito da BIMData.io",
+            "past_due": "Sospeso"
         }
     },
     "DatapackForm": {
@@ -567,9 +585,6 @@
         "datapacks": "Datapack attivi",
         "storage": "Archiviazione attiva",
         "including": "inclusi {quantity} GB di DataPack"
-    },
-    "GroupMemberCard": {
-        "pending": "Invito in sospeso"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Scarica la fattura"
@@ -677,7 +692,7 @@
         "selectedSpace": "Spazio selezionato:"
     },
     "SpaceSizeInfo": {
-        "subscribePlatformButton": "Aggiorna",
+        "subscribePlatformButton": "Passa alla piattaforma pro",
         "usage": "{used} usato su {total}"
     },
     "SpaceSizePreview": {
@@ -896,8 +911,9 @@
         "titleDate": "Il",
         "AddVersion": "Aggiungi una nuova versione",
         "loading": {
-            "message": "Caricamento in corso.",
-            "subMessage": "Questo processo potrebbe richiedere qualche istante."
+            "subMessage": "Questo processo potrebbe richiedere qualche istante.",
+            "downloadMessage": "Caricamento in corso.",
+            "deleteMessage": "Cancellazione in corso."
         },
         "delete": "Elimina",
         "getToHead": "Aggiorna alla versione attuale",
@@ -911,5 +927,47 @@
             }
         },
         "emptyArea": "Al momento non è presente nessuna cronologia delle versioni per questo file."
+    },
+    "Tag": {
+        "title": "Gestione dei tag",
+        "list": "Lista dei tag",
+        "addTag": "aggiungere un tag",
+        "addNewTag": "Aggiungere un nuovo tag",
+        "search": "Cercare",
+        "validate": "Validare",
+        "cancel": "Annullare",
+        "deleteTag": "Cancellare questo tag",
+        "deleteTagButton": "Cancellare"
+    },
+    "SubscriptionModal": {
+        "title": "Ottenere più spazio",
+        "subtitle": "Attualmente avete una capacità di salvataggio di 300 MB",
+        "10gbSize": "10 GB",
+        "100mbSize": "+ 100 MB",
+        "soon": "PRESTO",
+        "upgrade": {
+            "title": "Passare alla piattaforma pro",
+            "subtitle": "Iscriversi a BIMData Pro per ottenere più spazio."
+        },
+        "referal": {
+            "title": "Entra nel nostro programma di sostegno!",
+            "subtitle": "Condividi il tuo codice sostenitore per guadagnare spazio."
+        },
+        "linkedin": {
+            "title": "Collegate il vostro account Linkedin",
+            "subtitle": "Seguire la pagina BIMData per guadagnare spazio."
+        },
+        "uploadDisableMessage": {
+            "permission": "Non avete i diritti richiesti.",
+            "size": "Non avete più spazio sufficiente di salvataggio a disposizione."
+        }
+    },
+    "FileTreePreview": {
+        "title": "Importare la struttura GED da",
+        "cancel": "Annullare",
+        "validate": "Validare"
+    },
+    "GroupMemberCard": {
+        "pending": "Invito in corso"
     }
 }

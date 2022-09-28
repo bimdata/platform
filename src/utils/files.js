@@ -33,7 +33,6 @@ function generateFileKey(file) {
  * @param {Array} files an array of string representing breadcrumb for each file
  * @returns {Array} an array of array filled by string representing nested folders
  */
-
 function getPaths(files) {
   return Array.from(
     new Set(
@@ -44,6 +43,7 @@ function getPaths(files) {
     JSON.parse
   ).sort((a, b) => a.length - b.length);
 }
+
 function getDocsInfos(files) {
   return files
     .map(file => ({
@@ -62,7 +62,6 @@ function getDocsInfos(files) {
  * since folders in paths array are not identified by IDs (unicity), if two
  * folders have the same name at the same level of nestings, they will merge.
  */
-
 function createTreeFromPaths(folder, paths) {
   const root = paths[0]?.[0];
   if (!root) return;

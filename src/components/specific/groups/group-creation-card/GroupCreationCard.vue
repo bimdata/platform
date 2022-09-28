@@ -1,6 +1,6 @@
 <template>
   <div
-    data-test="group-creation-card"
+    data-test-id="group-creation-card"
     class="group-creation-card"
     v-click-away="closeCreationForm"
   >
@@ -16,7 +16,7 @@
           <div class="group-creation-card__form__title">
             {{ $t("GroupCreationCard.title") }}
             <BIMDataButton
-              data-test="btn-close-create"
+              data-test-id="btn-close-create"
               ghost
               rounded
               icon
@@ -27,7 +27,7 @@
           </div>
           <BIMDataInput
             ref="nameInput"
-            data-test="input-create-name"
+            data-test-id="input-create-name"
             class="group-creation-card__form__input"
             :placeholder="$t('GroupCreationCard.inputPlaceholder')"
             v-model="groupName"
@@ -37,7 +37,7 @@
             @keyup.enter.stop="submit"
           />
           <BIMDataButton
-            data-test="btn-submit-create"
+            data-test-id="btn-submit-create"
             class="group-creation-card__form__btn-submit"
             fill
             radius
@@ -51,7 +51,7 @@
 
       <template v-else>
         <div
-          data-test="btn-open-create"
+          data-test-id="btn-open-create"
           class="group-creation-card__btn-open"
           @click="openCreationForm"
         >

@@ -1,6 +1,6 @@
 <template>
   <BIMDataButton
-    data-test="btn-back"
+    data-test-id="go-back-button"
     class="go-back-button"
     ghost
     radius

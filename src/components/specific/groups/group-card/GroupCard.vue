@@ -1,7 +1,8 @@
 <template>
   <FlippableCard
-    data-test="group-card"
     class="group-card"
+    data-test-id="group-card"
+    :data-test-param="group.id"
     :flipped="showMenu"
     v-click-away="closeMenu"
   >

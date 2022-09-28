@@ -2,14 +2,14 @@
   <div class="app-header-menu">
     <BIMDataDropdownMenu width="0">
       <template #header>
-        <div class="app-header-menu__btn">
+        <div data-test-id="btn-toggle-app-menu" class="app-header-menu__btn">
           <UserAvatar
             class="app-header-menu__btn__avatar"
             :user="user"
             size="34"
           />
           <BIMDataTextbox
-            data-test="user-name"
+            data-test-id="user-name"
             class="app-header-menu__btn__fullname"
             :tooltip="false"
             :text="fullName(user)"
@@ -77,7 +77,7 @@
             <span class="lang-badge">{{ $i18n.locale }}</span>
           </BIMDataButton>
           <BIMDataButton
-            data-test="btn-logout"
+            data-test-id="btn-logout"
             class="btn-logout"
             color="primary"
             fill
