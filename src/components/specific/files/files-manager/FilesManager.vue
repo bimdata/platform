@@ -477,7 +477,7 @@ export default {
       if (event.dataTransfer) {
         // Files from drag & drop
         let docsUpload = [];
-        await async.map(Array.from(event.dataTransfer.items), async file => {
+        await async.each(Array.from(event.dataTransfer.items), async file => {
           const fileEntry = file.webkitGetAsEntry();
 
           if (fileEntry.isDirectory) {
@@ -498,7 +498,7 @@ export default {
         }
       }
 
-      async.map(foldersUpload, async folder => {
+      async.each(foldersUpload, async folder => {
         const paths = getPaths(folder);
         const tree = createTreeFromPaths(currentFolder, paths);
         const DMSTree = await FileService.createFileStructure(props.project, [
