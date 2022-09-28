@@ -205,7 +205,11 @@
       "title": "Mes invitations",
       "invitCounter": "Invitations en cours -",
       "acceptAll": "Tout accepter",
-      "invitedBy": "Vous avez été invité par {sender} pour rejoindre le projet {project} dans l'espace {cloud}"
+      "invitedBy": "Vous avez été invité par {sender} pour rejoindre le projet {project} dans l'espace {cloud}",
+      "invitAccepted": "Invitation acceptée",
+      "invitDenied": "Invitation refusée",
+      "invitPending": "Invitation en cours",
+      "goToProject": "Accéder au projet"
 
     },
     "InvitationCard": {

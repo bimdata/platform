@@ -34,6 +34,53 @@
         border-left: 2px solid var(--color-secondary);
         box-shadow: var(--box-shadow);
         height: 70px;
+
+
+        &__text {
+          display: flex;
+          flex-direction: column;
+          width: 60%;
+          margin-left: var(--spacing-unit);
+
+          span {
+            padding: 0;
+          }
+
+          &__invited-by {
+            font-size: 0.9rem;
+          }
+
+          &__invited-status-D {
+            font-size: 0.8rem;
+            color: var(--color-high);
+          }
+
+          &__invited-status-A {
+            font-size: 0.8rem;
+            color: var(--color-success);
+          }
+
+          &__invited-status-W {
+            font-size: 0.8rem;
+          }
+        }
+
+        &__button {
+          margin-left: auto;
+
+          &__pending {
+            display: flex;
+            gap: 15px;
+            
+            &__deny {
+              box-shadow: var(--box-shadow);
+            }
+
+            &__accept {
+              box-shadow: var(--box-shadow);
+            }
+          }
+        }
       }
     }
 

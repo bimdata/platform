@@ -1,5 +1,6 @@
 <template>
   <div class="invitation">
+    {{ console.log("$i18n.locale", $i18n.locale) }}
     <div class="invitation__back-btn">
       <GoBackButton />
     </div>
@@ -21,15 +22,57 @@
         >
           <UserAvatar :user="invit.sender" size="50" />
           <div class="invitation__content__list__invit__text">
-            <span>
+            <span class="invitation__content__list__invit__text__invited-by">
               {{
                 $t("Invitation.invitedBy", {
-                  sender: `${invit.sender.firstname} ${invit.sender.lastname}`,
+                  sender: fullName(invit.sender),
                   project: invit.project,
                   cloud: invit.cloud
                 })
-              }}</span
+              }}
+            </span>
+            <span
+              :class="`invitation__content__list__invit__text__invited-status-${invit.status}`"
             >
+              <template v-if="invit.status === 'A'">
+                {{ $t("Invitation.invitAccepted") }}
+              </template>
+              <template v-else-if="invit.status === 'D'">
+                {{ $t("Invitation.invitDenied") }}
+              </template>
+              <template v-else-if="invit.status === 'W'">
+                {{ $t("Invitation.invitPending") }}
+              </template>
+
+              ({{ $d(invit.date, "long") }})
+            </span>
+          </div>
+          <div class="invitation__content__list__invit__button">
+            <template v-if="invit.status === 'A'">
+              <BIMDataButton color="primary" fill radius>
+                {{ $t("Invitation.goToProject") }}
+              </BIMDataButton>
+            </template>
+            <template v-if="invit.status === 'W'">
+              <div class="invitation__content__list__invit__button__pending">
+                <BIMDataButton
+                  class="invitation__content__list__invit__button__pending__deny"
+                  radius
+                  icon
+                >
+                  <BIMDataIcon name="close" fill color="high" />
+                </BIMDataButton>
+                <BIMDataButton
+                  class="invitation__content__list__invit__button__pending__accept"
+                  radius
+                  icon
+                >
+                  <BIMDataIcon name="validate" fill color="success" />
+                </BIMDataButton>
+              </div>
+
+              <div></div>
+            </template>
           </div>
         </div>
       </div>
@@ -40,6 +83,7 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { fullName } from "../../utils/users.js";
 
 import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
 import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
@@ -84,8 +128,12 @@ export default {
       }
     ];
     return {
+      // references
       invitList,
-      getBack: () => router.back()
+      // methods
+      fullName,
+      getBack: () => router.back(),
+      console
     };
   }
 };
