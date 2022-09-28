@@ -1,5 +1,5 @@
 <template>
-  <div data-test="user-spaces" class="view user-spaces">
+  <div data-test-id="view-user-spaces" class="view user-spaces">
     <ViewHeader class="user-spaces__header">
       <template #left>
         <AppBreadcrumb />

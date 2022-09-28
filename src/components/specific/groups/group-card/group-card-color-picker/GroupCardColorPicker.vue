@@ -12,7 +12,7 @@
     </div>
     <div class="group-card-color-picker__side">
       <BIMDataButton
-        data-test="btn-close-colors"
+        data-test-id="btn-close-color"
         class="group-card-color-picker__side__btn-close"
         ghost
         rounded

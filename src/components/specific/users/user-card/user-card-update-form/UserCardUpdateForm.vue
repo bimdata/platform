@@ -8,7 +8,7 @@
       <BIMDataRadio name="role" text="Admin" :value="100" v-model="role" />
     </span>
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="user-card-update-form__btn-submit"
       width="80px"
       color="primary"
@@ -19,7 +19,7 @@
       {{ $t("UserCardUpdateForm.submitButtonText") }}
     </BIMDataButton>
     <BIMDataButton
-      data-test="btn-close-update"
+      data-test-id="btn-close-update"
       class="user-card-update-form__btn-close"
       color="default"
       ghost

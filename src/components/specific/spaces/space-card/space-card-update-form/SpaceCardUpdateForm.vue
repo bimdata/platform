@@ -3,7 +3,7 @@
     <div class="space-card-update-form__title">
       <span>{{ $t("SpaceCardUpdateForm.title") }}</span>
       <BIMDataButton
-        data-test="btn-close-update"
+        data-test-id="btn-close-update"
         ghost
         rounded
         icon
@@ -14,7 +14,7 @@
     </div>
     <BIMDataInput
       ref="nameInput"
-      data-test="input-update-name"
+      data-test-id="input-update-name"
       class="space-card-update-form__input"
       :placeholder="$t('SpaceCardUpdateForm.inputPlaceholder')"
       v-model="spaceName"
@@ -24,7 +24,7 @@
       @keyup.enter.prevent.stop="submit"
     />
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="space-card-update-form__btn-submit"
       fill
       radius

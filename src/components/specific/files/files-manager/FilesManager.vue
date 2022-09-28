@@ -475,6 +475,7 @@ export default {
       let foldersUpload = [];
 
       if (event.dataTransfer) {
+        // Files from drag & drop
         let docsUpload = [];
         await async.map(Array.from(event.dataTransfer.items), async file => {
           const fileEntry = file.webkitGetAsEntry();
@@ -487,6 +488,7 @@ export default {
         });
         filesToUpload.value = docsUpload;
       } else {
+        // Files from input
         const fileList = Array.from(event.target.files);
 
         if (fileList[0].webkitRelativePath) {

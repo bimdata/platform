@@ -2,6 +2,8 @@
   <BIMDataCard class="models-card">
     <template #left>
       <AppLink
+        data-test-id="btn-open-viewer"
+        :data-test-param="model.id"
         :to="{
           name: routeNames.modelViewer,
           params: {

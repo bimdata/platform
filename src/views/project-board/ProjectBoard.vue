@@ -1,5 +1,5 @@
 <template>
-  <div data-test="project-board" class="view project-board">
+  <div data-test-id="view-project-board" class="view project-board">
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
@@ -17,11 +17,16 @@
           @tab-click="changeView($event.id)"
         >
           <template #tab="{ tab }">
-            <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
-            <span v-else>
-              {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
+            <span
+              :data-test-id="`project-tab-${tab.id}`"
+              class="flex item-center"
+            >
+              <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
+              <span v-else>
+                {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
+              </span>
+              <span v-if="tab.beta" class="beta-badge">BETA</span>
             </span>
-            <span v-if="tab.id === 'bcf'" class="beta-badge">BETA</span>
           </template>
         </BIMDataTabs>
       </template>
@@ -50,6 +55,7 @@
       </transition>
     </div>
   </div>
+
   <AppModal v-if="isSubscriptionEnabled && isSubscriptionModal">
     <SubscriptionModal @switch-sub-modal="isSubscriptionModal = $event" />
   </AppModal>
@@ -99,7 +105,8 @@ const tabsDef = [
   },
   {
     id: "bcf",
-    icon: "bcf"
+    icon: "bcf",
+    beta: true
   }
 ];
 
