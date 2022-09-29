@@ -101,16 +101,16 @@
 </template>
 
 <script>
+import { useToggle } from "../../../../composables/toggle.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../../../config/subscription.js";
 import routeNames from "../../../../router/route-names.js";
-import { useToggle } from "../../../../composables/toggle.js";
 import { useAuth } from "../../../../state/auth.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useUser } from "../../../../state/user.js";
-import { fullName } from "../../../../utils/users.js";
+import { fullName } from "../../../../utils/users";
 
 // Components
-import UserAvatar from "../../../specific/users/user-avatar/UserAvatar.vue";
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
@@ -129,9 +129,10 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
-    const bimdataConnectProfileUrl = `${process.env.VUE_APP_URL_BIMDATACONNECT}/profile/`;
-    const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
-    const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
+    const bimdataConnectProfileUrl =
+      import.meta.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
+    const documentationUrl = import.meta.env.VUE_APP_URL_DOCUMENTATION;
+    const marketPlaceUrl = import.meta.env.VUE_APP_URL_MARKETPLACE;
 
     return {
       // References

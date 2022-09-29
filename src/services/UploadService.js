@@ -1,5 +1,6 @@
-import { isConvertible, isModel } from "@/utils/models.js";
-import { createFileUploader } from "@/utils/upload.js";
+import { isConvertible, isModel } from "../utils/models.js";
+import { createFileUploader } from "../utils/upload.js";
+
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 import ModelService from "./ModelService.js";
@@ -12,7 +13,7 @@ class UploadService {
     const uploader = createFileUploader(
       {
         method: "PATCH",
-        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
+        url: `${import.meta.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
         accessToken: apiClient.accessToken
       },
       {
@@ -48,7 +49,9 @@ class UploadService {
     const uploader = createFileUploader(
       {
         method: "POST",
-        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
+        url: `${import.meta.env.VUE_APP_API_BASE_URL}/cloud/${
+          project.cloud.id
+        }/project/${project.id}/document`,
         accessToken: apiClient.accessToken
       },
       {

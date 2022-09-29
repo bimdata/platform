@@ -38,9 +38,9 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { FREE_PLAN_STORAGE } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { formatBytes } from "@/utils/files.js";
+import { FREE_PLAN_STORAGE } from "../../../../../config/subscription.js";
+import routeNames from "../../../../../router/route-names.js";
+import { formatBytes } from "../../../../../utils/files.js";
 
 export default {
   setup() {

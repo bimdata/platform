@@ -32,7 +32,7 @@
 
 <script>
 import { computed } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
+import { useOrganizations } from "../../../../../../state/organizations.js";
 // Components
 import OrganizationCardActionMenu from "./organization-card-action-menu/OrganizationCardActionMenu.vue";
 

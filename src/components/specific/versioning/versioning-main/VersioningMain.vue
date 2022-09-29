@@ -86,12 +86,12 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useUpload } from "../../../../composables/upload.js";
-import { fileUploadInput } from "../../../../utils/upload.js";
 import FileService from "../../../../services/FileService.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
-import VersioningDoc from "../../../../components/specific/versioning/versioning-doc/VersioningDoc.vue";
-import VersioningSafeZone from "../../../../components/specific/versioning/versioning-safe-zone/VersioningSafeZone.vue";
+import VersioningDoc from "../versioning-doc/VersioningDoc.vue";
+import VersioningSafeZone from "../versioning-safe-zone/VersioningSafeZone.vue";
 
 export default {
   components: {

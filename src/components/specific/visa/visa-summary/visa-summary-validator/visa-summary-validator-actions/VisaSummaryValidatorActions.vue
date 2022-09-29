@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle.js";
+import { useToggle } from "../../../../../../composables/toggle.js";
 
 export default {
   props: {

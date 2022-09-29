@@ -57,11 +57,11 @@
 
 <script>
 import { ref } from "vue";
-import { fileUploadInput } from "../../../../utils/upload.js";
 import { fileExtension, generateFileKey } from "../../../../utils/files.js";
+import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
-import FileUploadCard from "../../../../components/specific/files/file-upload-card/FileUploadCard.vue";
+import FileUploadCard from "../file-upload-card/FileUploadCard.vue";
 
 export default {
   components: {

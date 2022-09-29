@@ -3,7 +3,7 @@ import apiClient from "./api-client.js";
 class PlatformService {
   loginCallback(accessToken) {
     return fetch(
-      `${process.env.VUE_APP_BACKEND_BASE_URL}/create_or_update_user/`,
+      `${import.meta.env.VUE_APP_BACKEND_BASE_URL}/create_or_update_user/`,
       {
         method: "POST",
         headers: {
@@ -16,7 +16,7 @@ class PlatformService {
 
   async loadGuidedTours() {
     const res = await fetch(
-      `${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
+      `${import.meta.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
       {
         method: "GET",
         headers: {
@@ -31,7 +31,7 @@ class PlatformService {
 
   async setTourCompleted(tour) {
     const res = await fetch(
-      `${process.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
+      `${import.meta.env.VUE_APP_BACKEND_BASE_URL}/guidedtour/`,
       {
         method: "POST",
         headers: {

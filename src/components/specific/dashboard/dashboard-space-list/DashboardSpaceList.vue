@@ -21,7 +21,7 @@
 <script>
 import { ref, watchEffect } from "vue";
 // Components
-import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard.vue";
+import SpaceCard from "../../spaces/space-card/SpaceCard.vue";
 
 export default {
   components: {

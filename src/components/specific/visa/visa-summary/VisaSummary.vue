@@ -216,29 +216,26 @@
 <script>
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { VALIDATION_STATUS } from "@/config/visa";
-import { VISA_STATUS } from "@/config/visa";
+import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useUser } from "../../../../state/user.js";
+import { useVisa } from "../../../../state/visa.js";
+import { formatDate } from "../../../../utils/date.js";
+import { fullName } from "../../../../utils/users.js";
+import { isDateValid } from "../../../../utils/visas.js";
 
-import { formatDate } from "@/utils/date";
-
-import VisaSummaryValidator from "./visa-summary-validator/VisaSummaryValidator";
-import VisaComments from "./visa-comments/VisaComments";
-import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
-import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
-
-import { useVisa } from "@/state/visa";
-import { useUser } from "@/state/user";
-import { useProjects } from "@/state/projects";
-
-import { fullName } from "@/utils/users";
-import { isDateValid } from "@/utils/visas";
+// Components
+import VisaComments from "./visa-comments/VisaComments.vue";
+import VisaSafeZone from "../visa-safe-zone/VisaSafeZone.vue";
+import VisaSelectionValidator from "../visa-selection-validator/VisaSelectionValidator.vue";
+import VisaSummaryValidator from "./visa-summary-validator/VisaSummaryValidator.vue";
 
 export default {
   components: {
-    VisaSummaryValidator,
+    VisaComments,
     VisaSafeZone,
     VisaSelectionValidator,
-    VisaComments
+    VisaSummaryValidator
   },
   props: {
     project: {

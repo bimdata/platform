@@ -39,8 +39,8 @@
 
 <script>
 import { onMounted, ref } from "vue";
-import { useFiles } from "@/state/files";
-import { debounce } from "@/utils/async.js";
+import { useFiles } from "../../../../state/files.js";
+import { debounce } from "../../../../utils/async.js";
 
 export default {
   props: {

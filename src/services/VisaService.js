@@ -1,5 +1,5 @@
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError } from "./ErrorService.js";
 
 class VisaService {
   async createVisa(project, document, visa) {

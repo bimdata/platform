@@ -44,8 +44,9 @@
 </template>
 
 <script>
-import FileTree from "@/components/specific/files/file-tree/FileTree.vue";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
+import { useAppModal } from "../../app/app-modal/app-modal.js";
+// Components
+import FileTree from "../file-tree/FileTree.vue";
 
 export default {
   components: {

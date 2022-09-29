@@ -77,13 +77,17 @@
 
 <script>
 import { ref } from "vue";
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import { VALIDATION_STATUS } from "../../../../../config/visa.js";
+
+// Components
+import UserAvatar from "../../../users/user-avatar/UserAvatar.vue";
 import VisaSummaryValidatorActions from "./visa-summary-validator-actions/VisaSummaryValidatorActions.vue";
 
-import { VALIDATION_STATUS } from "@/config/visa";
-
 export default {
-  components: { UserAvatar, VisaSummaryValidatorActions },
+  components: {
+    UserAvatar,
+    VisaSummaryValidatorActions
+  },
   props: {
     userList: {
       type: Object,

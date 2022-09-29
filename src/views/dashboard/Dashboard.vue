@@ -87,19 +87,19 @@
 
 <script>
 import { computed } from "vue";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
+import routeNames from "../../router/route-names.js";
+import { useProjects } from "../../state/projects.js";
+import { useSpaces } from "../../state/spaces.js";
 
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import DashboardButtonTile from "@/components/specific/dashboard/dashboard-button-tile/DashboardButtonTile.vue";
-import DashboardProjectList from "@/components/specific/dashboard/dashboard-project-list/DashboardProjectList.vue";
-import DashboardSpaceList from "@/components/specific/dashboard/dashboard-space-list/DashboardSpaceList.vue";
-import DashboardWelcomeTile from "@/components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
-import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
+import AppLink from "../../components/specific/app/app-link/AppLink.vue";
+import DashboardButtonTile from "../../components/specific/dashboard/dashboard-button-tile/DashboardButtonTile.vue";
+import DashboardProjectList from "../../components/specific/dashboard/dashboard-project-list/DashboardProjectList.vue";
+import DashboardSpaceList from "../../components/specific/dashboard/dashboard-space-list/DashboardSpaceList.vue";
+import DashboardWelcomeTile from "../../components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
+import SubscribeCard from "../../components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
 export default {
   components: {

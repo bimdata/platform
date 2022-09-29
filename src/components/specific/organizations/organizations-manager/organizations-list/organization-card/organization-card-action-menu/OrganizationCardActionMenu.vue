@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../../../composables/toggle.js";
 
 export default {
   emits: ["delete", "update"],

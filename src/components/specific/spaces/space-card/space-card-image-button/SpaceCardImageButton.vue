@@ -11,9 +11,9 @@
 
 <script>
 import { inject } from "vue";
-import { useUpload } from "@/composables/upload.js";
-import { useOrganizations } from "@/state/organizations.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useUpload } from "../../../../../composables/upload.js";
+import { useOrganizations } from "../../../../../state/organizations.js";
+import { useSpaces } from "../../../../../state/spaces.js";
 
 export default {
   props: {

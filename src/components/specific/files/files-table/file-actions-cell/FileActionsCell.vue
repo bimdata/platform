@@ -136,8 +136,8 @@
 
 <script>
 import { nextTick, ref } from "vue";
-import routeNames from "@/router/route-names.js";
-import { isFolder } from "@/utils/file-structure.js";
+import routeNames from "../../../../../router/route-names.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
 import {
   isConvertible,
   isIFC,
@@ -145,11 +145,11 @@ import {
   isSmartFile,
   isViewable,
   windowType
-} from "@/utils/models.js";
+} from "../../../../../utils/models.js";
+import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../../app/app-link/AppLink.vue";
 
-import { dropdownPositioner } from "@/utils/positioner.js";
 export default {
   components: {
     AppLink

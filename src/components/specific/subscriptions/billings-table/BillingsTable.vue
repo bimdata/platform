@@ -84,13 +84,13 @@
 <script>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import columnsDef from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { SUB_STATUS } from "../../../../config/subscription.js";
 import routeNames from "../../../../router/route-names.js";
-import columnsDef from "./columns.js";
 // Components
-import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import AppLink from "../../app/app-link/AppLink.vue";
+import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import BillingActionsCell from "./billing-actions-cell/BillingActionsCell.vue";
 
 export default {

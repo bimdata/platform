@@ -40,11 +40,14 @@
 
 <script>
 import { inject, ref, watch } from "vue";
-import { useModels } from "@/state/models.js";
-import { DD2DMS, getCoordinatesFromAddress } from "@/utils/location.js";
+import { useModels } from "../../../../state/models.js";
+import {
+  DD2DMS,
+  getCoordinatesFromAddress
+} from "../../../../utils/location.js";
 // Components
-import AddressInput from "@/components/generic/address-input/AddressInput.vue";
-import MaplibreWrapper from "@/components/generic/maplibre-wrapper/MaplibreWrapper.vue";
+import AddressInput from "../../../generic/address-input/AddressInput.vue";
+import MaplibreWrapper from "../../../generic/maplibre-wrapper/MaplibreWrapper.vue";
 
 export default {
   components: {

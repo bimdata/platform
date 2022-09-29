@@ -1,6 +1,6 @@
 <script>
 import { h, ref, watch } from "vue";
-import { FILE_TYPE } from "@/config/files.js";
+import { FILE_TYPE } from "../../../../../config/files.js";
 
 import FileTreeNodeTemplate from "./FileTreeNodeTemplate.vue";
 
