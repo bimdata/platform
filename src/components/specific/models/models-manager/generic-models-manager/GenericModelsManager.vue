@@ -20,37 +20,6 @@
         </span>
       </template>
     </BIMDataTabs>
-    <BIMDataButton
-      class="models-manager-wrapper__building-maker-btn"
-      width="100px"
-      v-if="modelType === MODEL_TYPE.PDF"
-      color="primary"
-      outline
-      radius
-      icon
-      @click="openBM"
-    >
-      <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
-      <span> {{ $t("ModelsManager.buildingMaker.create") }} </span>
-    </BIMDataButton>
-
-    <transition name="slide-fade-right">
-      <div v-if="isBMOpen" class="models-manager-wrapper__building-maker">
-        <div class="models-manager-wrapper__building-maker__header">
-          <BIMDataButton ghost rounded icon @click="closeBM">
-            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
-          </BIMDataButton>
-        </div>
-        <div class="models-manager-wrapper__building-maker__content">
-          <BuildingMaker
-            :apiClient="apiClient"
-            :space="project.cloud"
-            :project="project"
-            :model="currentModel"
-          />
-        </div>
-      </div>
-    </transition>
 
     <div class="generic-models-manager__separator"></div>
 
@@ -76,7 +45,7 @@
       @download="downloadModels([$event])"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
-      @edit="editModel($event)"
+      @edit="$emit('edit', $event)"
     >
       <template #placeholder>
         <slot name="tablePlaceholder"></slot>
@@ -96,10 +65,7 @@
 
 <script>
 import { ref, watch, watchEffect } from "vue";
-import apiClient from "../../../../../services/api-client.js";
-import { MODEL_TYPE } from "../../../../../config/models.js";
 import { useModels } from "../../../../../state/models.js";
-import { useToggle } from "../../../../../composables/toggle";
 
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
@@ -123,12 +89,15 @@ export default {
       validator: value => value.length > 0
     }
   },
-  setup(props) {
+  emits: ["edit", "get-current-tab"],
+  setup(props, { emit }) {
     const { downloadModels: download, updateModels } = useModels();
-    const { isOpen: isBMOpen, close: closeBM, open: openBM } = useToggle();
 
     const currentTab = ref({});
-    const selectTab = tab => (currentTab.value = tab);
+    const selectTab = tab => {
+      currentTab.value = tab;
+      emit("get-current-tab", tab);
+    };
 
     watch(
       () => props.tabs,
@@ -164,14 +133,6 @@ export default {
       );
     };
 
-    const currentModel = ref(null);
-
-    const editModel = async model => {
-      currentModel.value = model;
-      openBM();
-      setTimeout(() => (currentModel.value = null), 100);
-    };
-
     const modelsToDelete = ref([]);
     const showDeleteModal = ref(false);
     const openDeleteModal = models => {
@@ -194,21 +155,14 @@ export default {
       modelsToDelete,
       selection,
       showDeleteModal,
-      MODEL_TYPE,
-      apiClient,
-      currentModel,
-      isBMOpen,
       // Methods
-      openBM,
-      closeBM,
       archiveModels,
       downloadModels,
       closeDeleteModal,
       openDeleteModal,
       selectTab,
       setSelection,
-      unarchiveModels,
-      editModel
+      unarchiveModels
     };
   }
 };
