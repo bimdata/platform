@@ -27,7 +27,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE } from "@/config/models.js";
+import { MODEL_TYPE } from "../../../../../config/models.js";
 
 export default {
   props: {
