@@ -75,10 +75,11 @@
 </template>
 
 <script>
-import routeNames from "@/router/route-names.js";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import { useAppModal } from "@/components/specific/app/app-modal/app-modal.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useAppModal } from "../../app/app-modal/app-modal.js";
+import routeNames from "../../../../router/route-names.js";
+import { useSpaces } from "../../../../state/spaces.js";
+// Components
+import AppLink from "../../app/app-link/AppLink.vue";
 
 export default {
   components: {

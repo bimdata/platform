@@ -1,5 +1,5 @@
-import { MODEL_SOURCE, MODEL_TYPE } from "@/config/models.js";
-import { segregateBySource, segregateByType } from "@/utils/models.js";
+import { MODEL_SOURCE, MODEL_TYPE } from "../../../src/config/models.js";
+import { segregateBySource, segregateByType } from "../../../src/utils/models.js";
 
 describe("Models Utils", () => {
 
@@ -54,13 +54,13 @@ describe("Models Utils", () => {
     const result = segregateByType(models);
 
     // Assert
-    expect(result.dwg).toEqual([
+    expect(result[MODEL_TYPE.DWG]).toEqual([
       models[0], models[2], models[6]
     ]);
-    expect(result.ifc).toEqual([
+    expect(result[MODEL_TYPE.IFC]).toEqual([
       models[1], models[4], models[5]
     ]);
-    expect(result.pdf).toEqual([
+    expect(result[MODEL_TYPE.PDF]).toEqual([
       models[3]
     ]);
   });

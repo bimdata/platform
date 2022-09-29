@@ -61,7 +61,7 @@ const PLUGINS_CONFIG = {
     enableDynamicLOD: true
   },
   bcfManager: true,
-  accessMarketplace: true,
+  accessMarketplace: true
 };
 
 export {

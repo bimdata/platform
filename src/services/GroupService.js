@@ -1,5 +1,5 @@
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError, ErrorService } from "./ErrorService";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 class GroupService {
   async fetchProjectGroups(project) {

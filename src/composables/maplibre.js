@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 
-const MAP_TILER_TOKEN = process.env.VUE_APP_MAPTILER_TOKEN;
+const MAP_TILER_TOKEN = import.meta.env.VUE_APP_MAPTILER_TOKEN;
 
 export function useMaplibre(containerID) {
   const loadMap = (longitude, latitude) => {
@@ -13,13 +13,13 @@ export function useMaplibre(containerID) {
       try {
         const map = new maplibregl.Map({
           container: containerID,
-          style: "https://api.maptiler.com/maps/streets/style.json?key=" + MAP_TILER_TOKEN,
+          style: `https://api.maptiler.com/maps/streets/style.json?key=${MAP_TILER_TOKEN}`,
           center: [longitude, latitude],
           zoom: 15.5,
           pitch: 45,
           bearing: -17.6,
           attributionControl: false,
-          antialias: true,
+          antialias: true
         });
 
         map.on("load", () => {

@@ -40,7 +40,7 @@
 
 <script>
 import { ref, watch, watchEffect } from "vue";
-import { getAdressesFromSearchText } from "@/utils/location";
+import { getAdressesFromSearchText } from "../../../utils/location.js";
 
 export default {
   props: {

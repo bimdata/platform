@@ -1,5 +1,5 @@
-import { SPACE_ROLE } from "@/config/spaces.js";
-import { useUser } from "@/state/user.js";
+import { SPACE_ROLE } from "../config/spaces.js";
+import { useUser } from "../state/user.js";
 
 const { spaceRoles } = useUser();
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="view page-not-found">
+  <div data-test-id="view-page-not-found" class="view page-not-found">
     <div class="page-not-found__left">
       <div class="page-not-found__404">
         <h1>404</h1>
@@ -34,7 +34,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../router/route-names.js";
 // Components
 import PageNotFoundImage from "./PageNotFoundImage.vue";
 

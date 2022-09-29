@@ -1,5 +1,5 @@
 <template>
-  <div data-test="user-projects" class="view user-projects">
+  <div data-test-id="view-user-projects" class="view user-projects">
     <ViewHeader class="user-projects__header">
       <template #left>
         <AppBreadcrumb />
@@ -7,7 +7,6 @@
       <template #center>
         <BIMDataSearch
           data-guide="project-input-search"
-          data-test="input-search"
           class="user-projects__header__search"
           :width="isSM ? '150px' : '300px'"
           :placeholder="isSM ? '' : $t('UserProjects.searchInputPlaceholder')"
@@ -17,7 +16,6 @@
       </template>
       <template #right>
         <BIMDataButton
-          data-test="btn-sort"
           class="user-projects__header__btn-sort"
           fill
           squared
@@ -48,14 +46,14 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter.js";
-import { useListSort } from "@/composables/list-sort.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useProjects } from "@/state/projects.js";
+import { useListFilter } from "../../composables/list-filter.js";
+import { useListSort } from "../../composables/list-sort.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { useProjects } from "../../state/projects.js";
 // Components
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import ProjectCard from "../../components/specific/projects/project-card/ProjectCard.vue";
 
 export default {
   components: {

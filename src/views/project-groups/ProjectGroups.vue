@@ -1,12 +1,11 @@
 <template>
-  <div class="view project-groups">
+  <div data-test-id="view-project-groups" class="view project-groups">
     <ViewHeader class="project-groups__header">
       <template #left>
         <AppBreadcrumb />
       </template>
       <template #center>
         <BIMDataSearch
-          data-test="input-search"
           class="project-groups__header__search"
           :width="isSM ? '150px' : '300px'"
           :placeholder="isSM ? '' : $t('ProjectGroups.searchInputPlaceholder')"
@@ -40,22 +39,22 @@
 </template>
 
 <script>
-import { useListFilter } from "@/composables/list-filter.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { useGroups } from "@/state/groups.js";
-import { useProjects } from "@/state/projects.js";
+import { useListFilter } from "../../composables/list-filter.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { useGroups } from "../../state/groups.js";
+import { useProjects } from "../../state/projects.js";
 // Components
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import GroupCard from "@/components/specific/groups/group-card/GroupCard.vue";
-import GroupCreationCard from "@/components/specific/groups/group-creation-card/GroupCreationCard.vue";
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import GroupCard from "../../components/specific/groups/group-card/GroupCard.vue";
+import GroupCreationCard from "../../components/specific/groups/group-creation-card/GroupCreationCard.vue";
 
 export default {
   components: {
-    ViewHeader,
     AppBreadcrumb,
     GroupCard,
-    GroupCreationCard
+    GroupCreationCard,
+    ViewHeader
   },
   setup() {
     const { currentProject } = useProjects();

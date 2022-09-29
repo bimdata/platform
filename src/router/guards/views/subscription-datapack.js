@@ -1,5 +1,5 @@
-import routeNames from "@/router/route-names.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
+import routeNames from "../../../router/route-names.js";
+import { useSubscriptions } from "../../../state/subscriptions.js";
 
 const { setCurrentSpace } = useSubscriptions();
 

@@ -5,7 +5,7 @@
         class="project-overview__tooltip-upload"
         color="high"
         position="left"
-        :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
+        :disabled="space.isUserOrga || !isFullTotal(spaceSubInfo)"
         :text="
           $t(
             `SubscriptionModal.uploadDisableMessage.${
@@ -15,13 +15,13 @@
         "
       >
         <BIMDataButton
-          data-test="btn-toggle-upload"
+          data-test-id="btn-toggle-upload"
           :width="isLG ? undefined : '120px'"
           :color="showFileUploader ? 'granite' : 'primary'"
           fill
           radius
           :icon="isLG"
-          :disabled="!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)"
+          :disabled="!space.isUserOrga && isFullTotal(spaceSubInfo)"
           @click="() => (isAbleToSub ? modalOpener() : toggleFileUploader())"
         >
           <BIMDataIcon
@@ -171,9 +171,9 @@ export default {
       models: projectModels,
       project: currentProject,
       showFileUploader,
+      space: currentSpace,
       spaceSubInfo,
       users: projectUsers,
-      currentSpace,
       // Methods
       closeFileUploader,
       isFullTotal,

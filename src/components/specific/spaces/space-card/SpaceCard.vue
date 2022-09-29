@@ -1,9 +1,10 @@
 <template>
-  <AppLink :to="{ name: routeNames.spaceBoard, params: { spaceID: space.id } }">
-    <BIMDataCard
-      :data-test="`space-card space-card-${space.id}`"
-      class="space-card"
-    >
+  <AppLink
+    data-test-id="space-card"
+    :data-test-param="space.id"
+    :to="{ name: routeNames.spaceBoard, params: { spaceID: space.id } }"
+  >
+    <BIMDataCard class="space-card">
       <template #right>
         <SpaceCardActionMenu
           v-if="actionMenu && space.isAdmin"
@@ -36,10 +37,10 @@
 
 <script>
 import { computed } from "vue";
-import routeNames from "@/router/route-names.js";
-import { useProjects } from "@/state/projects.js";
+import routeNames from "../../../../router/route-names.js";
+import { useProjects } from "../../../../state/projects.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu.vue";
 import SpaceCardImage from "./space-card-image/SpaceCardImage.vue";
 

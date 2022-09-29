@@ -1,5 +1,5 @@
 <template>
-  <div data-test="project-board" class="view project-board">
+  <div data-test-id="view-project-board" class="view project-board">
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
@@ -17,11 +17,16 @@
           @tab-click="changeView($event.id)"
         >
           <template #tab="{ tab }">
-            <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
-            <span v-else>
-              {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
+            <span
+              :data-test-id="`project-tab-${tab.id}`"
+              class="flex item-center"
+            >
+              <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
+              <span v-else>
+                {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
+              </span>
+              <span v-if="tab.beta" class="beta-badge">BETA</span>
             </span>
-            <span v-if="tab.id === 'bcf'" class="beta-badge">BETA</span>
           </template>
         </BIMDataTabs>
       </template>
@@ -50,6 +55,7 @@
       </transition>
     </div>
   </div>
+
   <AppModal v-if="isSubscriptionEnabled && isSubscriptionModal">
     <SubscriptionModal @switch-sub-modal="isSubscriptionModal = $event" />
   </AppModal>
@@ -61,26 +67,27 @@ import { useRoute } from "vue-router";
 import {
   useCustomBreakpoints,
   useStandardBreakpoints
-} from "@/composables/responsive.js";
-import { useSession } from "@/composables/session.js";
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import { DEFAULT_PROJECT_VIEW } from "@/config/projects.js";
+} from "../../composables/responsive.js";
+import { useSession } from "../../composables/session.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
+import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
+import { useProjects } from "../../state/projects.js";
+import { isFullTotal } from "../../utils/spaces.js";
+import { useSpaces } from "../../state/spaces.js";
 
-import { useProjects } from "@/state/projects.js";
-import { isFullTotal } from "@/utils/spaces.js";
-import { useSpaces } from "@/state/spaces.js";
 // Components
-import AppBreadcrumb from "@/components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import AppModal from "@/components/specific/app/app-modal/AppModal.vue";
-import AppSlot from "@/components/specific/app/app-slot/AppSlot.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppModal from "../../components/specific/app/app-modal/AppModal.vue";
+import AppSlot from "../../components/specific/app/app-slot/AppSlot.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import SubscriptionModal from "../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
+import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
+
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
 import ProjectFiles from "./project-files/ProjectFiles.vue";
 import ProjectOverview from "./project-overview/ProjectOverview.vue";
-import SpaceSizeInfo from "@/components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
-import SubscriptionModal from "@/components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
-import SubscriptionStatusBanner from "@/components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
 const PROJECT_VIEWS = {
   overview: "ProjectOverview",
@@ -99,7 +106,8 @@ const tabsDef = [
   },
   {
     id: "bcf",
-    icon: "bcf"
+    icon: "bcf",
+    beta: true
   }
 ];
 

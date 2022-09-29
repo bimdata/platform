@@ -39,9 +39,9 @@
 
 <script>
 import { computed } from "vue";
-import { useFiles } from "@/state/files";
+import { useFiles } from "../../../../../state/files.js";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal.vue";
+import GenericModal from "../../../../generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {
@@ -50,11 +50,11 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true,
+      required: true
     },
     files: {
       type: Array,
-      required: true,
+      required: true
     }
   },
   emits: ["close"],

@@ -65,21 +65,21 @@
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { useStandardBreakpoints } from "@/composables/responsive.js";
-import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { useOrganizations } from "@/state/organizations.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
-import { formatBytes } from "@/utils/files.js";
+import { useAppNotification } from "../../components/specific/app/app-notification/app-notification.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { PRO_PLAN_STORAGE } from "../../config/subscription.js";
+import routeNames from "../../router/route-names.js";
+import { useOrganizations } from "../../state/organizations.js";
+import { useSubscriptions } from "../../state/subscriptions.js";
+import { formatBytes } from "../../utils/files.js";
 // Components
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import ProPlanForm from "@/components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
-import ProPlanInfo from "@/components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";
-import SpaceCreator from "@/components/specific/subscriptions/space-creator/SpaceCreator.vue";
-import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
-import SpaceSizePreview from "@/components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import ProPlanForm from "../../components/specific/subscriptions/pro-plan-form/ProPlanForm.vue";
+import ProPlanInfo from "../../components/specific/subscriptions/pro-plan-info/ProPlanInfo.vue";
+import SpaceCreator from "../../components/specific/subscriptions/space-creator/SpaceCreator.vue";
+import SpaceSelected from "../../components/specific/subscriptions/space-selected/SpaceSelected.vue";
+import SpaceSizePreview from "../../components/specific/subscriptions/space-size-preview/SpaceSizePreview.vue";
 
 export default {
   components: {

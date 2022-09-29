@@ -1,4 +1,5 @@
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../config/subscription.js";
+
 import { apiClient, privateApiClient } from "./api-client.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 

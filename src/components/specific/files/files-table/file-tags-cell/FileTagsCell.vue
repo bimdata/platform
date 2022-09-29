@@ -78,9 +78,8 @@
 </template>
 
 <script>
-import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
-
-import { dropdownPositioner } from "@/utils/positioner.js";
+import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
+import { dropdownPositioner } from "../../../../../utils/positioner.js";
 
 export default {
   props: {

@@ -1,5 +1,5 @@
-import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
-import { projectStatus } from "@/utils/projects.js";
+import { statusLimitNew, statusLimitActive } from "../../../src/config/projects.js";
+import { projectStatus } from "../../../src/utils/projects.js";
 
 describe("Projects Utils - project status", () => {
   let today;
@@ -12,8 +12,8 @@ describe("Projects Utils - project status", () => {
     const updateDate = new Date();
     createDate.setDate(today.getDate() - 1);
     const project = {
-      createdAt: createDate,
-      updatedAt: updateDate
+      created_at: createDate,
+      updated_at: updateDate
     };
 
     // Act
@@ -30,8 +30,8 @@ describe("Projects Utils - project status", () => {
     createDate.setDate(today.getDate() - statusLimitNew - 1);
     updateDate.setDate(today.getDate() - statusLimitActive + 1);
     const project = {
-      createdAt: createDate,
-      updatedAt: updateDate
+      created_at: createDate,
+      updated_at: updateDate
     };
 
     // Act
@@ -48,8 +48,8 @@ describe("Projects Utils - project status", () => {
     createDate.setDate(today.getDate() - statusLimitNew - 1);
     updateDate.setDate(today.getDate() - statusLimitActive - 1);
     const project = {
-      createdAt: createDate,
-      updatedAt: updateDate
+      created_at: createDate,
+      updated_at: updateDate
     };
 
     // Act

@@ -38,7 +38,7 @@
 
 <script>
 import { inject, ref, watch } from "vue";
-import { getDescendants } from "@/utils/file-structure";
+import { getDescendants } from "../../../../../utils/file-structure.js";
 
 export default {
   props: {

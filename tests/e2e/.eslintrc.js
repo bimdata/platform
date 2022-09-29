@@ -4,6 +4,6 @@ module.exports = {
     "plugin:cypress/recommended"
   ],
   rules: {
-    "cypress/require-data-selectors": "error"
+    "cypress/require-data-selectors": "off"
   }
 };
