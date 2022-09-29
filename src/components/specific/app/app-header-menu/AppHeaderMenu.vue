@@ -147,7 +147,7 @@ export default {
       import.meta.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
     const documentationUrl = import.meta.env.VUE_APP_URL_DOCUMENTATION;
     const marketPlaceUrl = import.meta.env.VUE_APP_URL_MARKETPLACE;
-    const userIframeProfile = process.env.VUE_APP_USER_IFRAME_PROFILE;
+    const userIframeProfile = import.meta.env.VUE_APP_USER_IFRAME_PROFILE;
 
     return {
       // References
