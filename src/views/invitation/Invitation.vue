@@ -1,6 +1,5 @@
 <template>
   <div class="invitation">
-    {{ console.log("$i18n.locale", $i18n.locale) }}
     <div class="invitation__back-btn">
       <GoBackButton />
     </div>
@@ -20,7 +19,7 @@
           v-for="invit in invitList"
           :key="invit.project"
         >
-          <UserAvatar :user="invit.sender" size="50" />
+          <UserAvatar :user="invit.sender" size="40" />
           <div class="invitation__content__list__invit__text">
             <span class="invitation__content__list__invit__text__invited-by">
               {{
@@ -57,14 +56,14 @@
               <div class="invitation__content__list__invit__button__pending">
                 <BIMDataButton
                   class="invitation__content__list__invit__button__pending__deny"
-                  radius
+                  ghost
                   icon
                 >
                   <BIMDataIcon name="close" fill color="high" />
                 </BIMDataButton>
                 <BIMDataButton
                   class="invitation__content__list__invit__button__pending__accept"
-                  radius
+                  ghost
                   icon
                 >
                   <BIMDataIcon name="validate" fill color="success" />
@@ -132,8 +131,7 @@ export default {
       invitList,
       // methods
       fullName,
-      getBack: () => router.back(),
-      console
+      getBack: () => router.back()
     };
   }
 };

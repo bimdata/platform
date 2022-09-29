@@ -50,18 +50,17 @@
             font-size: 0.9rem;
           }
 
-          &__invited-status-D {
+          &__invited-status-D, &__invited-status-A, &__invited-status-W {
             font-size: 0.8rem;
+            font-style: italic;
+          }
+
+          &__invited-status-D {
             color: var(--color-high);
           }
 
           &__invited-status-A {
-            font-size: 0.8rem;
             color: var(--color-success);
-          }
-
-          &__invited-status-W {
-            font-size: 0.8rem;
           }
         }
 
@@ -83,8 +82,6 @@
         }
       }
     }
-
-
   }
 
   &__empty-div {
