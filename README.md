@@ -1,7 +1,7 @@
 # BIMData Platform, next generation
 
 This repository host the BIMData Platform project.
-The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.org/).
+The Platform is a Vue 3.x application bundled with [Vite](https://vitejs.dev/).
 
 ## Pre-requisites
 
@@ -11,7 +11,7 @@ You need:
 - Vue 3.x
 - [see platform-back for backend requirements](https://github.com/bimdata/platform-back)
 
-## Install & Run
+## Install & Run :arrow_down: :runner:
 
 ### Backend setup
 
@@ -19,7 +19,8 @@ In order for the platform to work properly it should be able to interact with it
 The [platform-back](https://github.com/bimdata/platform-back) repository host the source code of the service.
 
 The backend is a python app built with [Django REST framework](https://www.django-rest-framework.org/).<br/>
-You should refer to the README to set it up on your development environment before moving to the application setup.
+You should refer to its [README](https://github.com/bimdata/platform-back) to set it up on your development
+environment before moving to the application setup.
 
 ### Application setup
 
@@ -58,28 +59,42 @@ $ npm run dev
 
 - **(5)** Have a coffee and start coding... :coffee: `</>`
 
-## Test
+## Tests :passport_control: :heavy_check_mark:
 
 This project comes with a set of end-to-end tests built with [Cypress](https://www.cypress.io/).
 
-Before you can run the tests you need to set Cypress environment variables.
+Before you can run the tests you need to have a working test environment.
 To do so copy the example env file:
 
 ```
 $ cp cyress.env.example cypress.env.json
 ```
 
-Then open it and set variables values as appropriate.
+Then open it and set variables values as appropriate:
+ - **APP_BASE_URL**: will be used by Cypress as [baseUrl](https://docs.cypress.io/guides/references/configuration#e2e)
+ - **AUTH_BASE_URL**: authentication server
+ - **IAM_BASE_URL**: identity server
 
-Once you have setup Cypress env vars run the tests using the following command:
+Start the platform locally (only needed if your **APP_BASE_URL** point to `localhost`):
+
+```
+npm run dev
+```
+
+Finally start and open Cypress using the following command:
 
 ```
 $ npm run test:e2e
 ```
 
-This command will start the platform locally on port `3030` and open Cypress.
+#### :point_up: Important Note
 
-## Build
+In order for the tests to work properly you **must** run the [setup tests](./tests/e2e/specs/setup/setup.cy.js) first.
+This will create random test users that will be used in all other tests.
+
+Once your tests are completed you can run the [teardown tests](./tests/e2e/specs/teardown/teardown.cy.js) to delete tests users.
+
+## Build :package:
 
 The platform can be built for production like environment using the following command:
 
@@ -89,7 +104,7 @@ $ npm run build
 
 This will create a `dist/` directory that contain the bundled application ready to be deployed.
 
-## Documentation
+## Documentation :closed_book:
 
 A work in progress documentation is available [here](https://github.com/bimdata/platform-next/wiki).
 

@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { delay } from "@/utils/async.js";
+import { delay } from "../../../../utils/async.js";
 
 const DEFAULT_TIMEOUT = 5000;
 const EMPTY_NOTIFICATION = {

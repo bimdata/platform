@@ -33,7 +33,7 @@
 
 <script>
 import { computed, inject } from "vue";
-import { useListFilter } from "@/composables/list-filter.js";
+import { useListFilter } from "../../../../../composables/list-filter.js";
 // Components
 import OrganizationCard from "./organization-card/OrganizationCard.vue";
 

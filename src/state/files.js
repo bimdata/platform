@@ -1,8 +1,9 @@
 import { reactive, readonly, toRefs } from "vue";
-import FileService from "@/services/FileService.js";
-import { useAuth } from "@/state/auth.js";
-import { useModels } from "@/state/models.js";
-import { FileStructureHandler, segregate } from "@/utils/file-structure.js";
+import FileService from "../services/FileService.js";
+import { FileStructureHandler, segregate } from "../utils/file-structure.js";
+
+import { useAuth } from "./auth.js";
+import { useModels } from "./models.js";
 
 const state = reactive({
   projectFileStructure: {}

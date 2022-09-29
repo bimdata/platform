@@ -1,6 +1,7 @@
 <template>
   <GenericModal
     class="models-delete-modal"
+    data-test-id="models-delete-modal"
     contentWidth="450px"
     @close="$emit('close')"
   >
@@ -22,10 +23,23 @@
       </div>
     </template>
     <template #footer>
-      <BIMDataButton ghost radius width="120px" @click="$emit('close')">
+      <BIMDataButton
+        data-test-id="btn-close"
+        ghost
+        radius
+        width="120px"
+        @click="$emit('close')"
+      >
         {{ $t("ModelsDeleteModal.cancelButtonText") }}
       </BIMDataButton>
-      <BIMDataButton color="high" fill radius width="120px" @click="submit">
+      <BIMDataButton
+        data-test-id="btn-submit"
+        color="high"
+        fill
+        radius
+        width="120px"
+        @click="submit"
+      >
         {{ $t("ModelsDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
@@ -33,9 +47,9 @@
 </template>
 
 <script>
-import { useModels } from "@/state/models.js";
+import { useModels } from "../../../../../state/models.js";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal.vue";
+import GenericModal from "../../../../generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {

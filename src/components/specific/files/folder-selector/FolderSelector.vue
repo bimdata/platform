@@ -105,9 +105,9 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-import { FILE_PERMISSION } from "@/config/files.js";
-import { useFiles } from "@/state/files.js";
-import { isFolder } from "@/utils/file-structure.js";
+import { FILE_PERMISSION } from "../../../../config/files.js";
+import { useFiles } from "../../../../state/files.js";
+import { isFolder } from "../../../../utils/file-structure.js";
 
 export default {
   props: {

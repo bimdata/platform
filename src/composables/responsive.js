@@ -1,6 +1,6 @@
 import { throttle } from "lodash";
 import { ref } from "vue";
-import { BREAKPOINTS } from "@/config/responsive.js";
+import { BREAKPOINTS } from "../config/responsive.js";
 
 const store = [];
 

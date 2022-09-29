@@ -1,4 +1,4 @@
-import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
+import { statusLimitNew, statusLimitActive } from "../config/projects.js";
 
 // Project statuses
 const NEW = "new";

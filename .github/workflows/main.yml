@@ -1,6 +1,6 @@
 name: Platform-next
 
-on: 
+on:
   push:
   repository_dispatch:
     types: [semantic-release]
@@ -9,7 +9,7 @@ env:
   app: platform
 
 jobs:
-  test:
+  viewer-update:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
@@ -25,8 +25,6 @@ jobs:
             sleep 5
           done
           GITDIFF=$(git diff -- package-lock.json) && echo "::set-output name=gitdiff::$GITDIFF"
-      - run: npm ci
-      #- run: npm run test:e2e
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
         uses: EndBug/add-and-commit@v7
@@ -36,7 +34,7 @@ jobs:
 
   build-and-push:
     runs-on: self-hosted
-    needs: test
+    needs: viewer-update
     if: contains('
       refs/heads/develop
       refs/heads/release
@@ -68,6 +66,28 @@ jobs:
           tags: |
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.tag.outputs.tag }}
+
+  e2e-tests:
+    runs-on: [self-hosted, testendtoend]
+    needs: build-and-push
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: bimdata/bimdata-test
+          ref: master
+          token: ${{ secrets.REPOS_TOKEN }}
+      - id: tag
+        name: Get docker tag
+        uses: bimdata/actions/get-docker-tag@v1
+        with:
+          branch: ${{ github.ref }}
+      - name: Run e2e tests
+        uses: ./end-to-end/
+        with:
+          docker_tag: ${{ steps.tag.outputs.tag }}
+          ref: ${{ github.ref }}
+          github_token: ${{ secrets.REPOS_TOKEN }}
+          vault_passwd: ${{ secrets.VAULT_PASSWD }}
 
   deploy:
     runs-on: self-hosted

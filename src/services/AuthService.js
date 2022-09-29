@@ -1,5 +1,5 @@
 import { User, UserManager, WebStorageStateStore } from "oidc-client";
-import OIDC_CONFIG from "@/config/oidc-config";
+import OIDC_CONFIG from "../config/oidc-config.js";
 
 const userManager = new UserManager({
   ...OIDC_CONFIG,

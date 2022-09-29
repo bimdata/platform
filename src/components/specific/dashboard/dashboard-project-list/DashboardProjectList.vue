@@ -20,7 +20,7 @@
 <script>
 import { ref, watchEffect } from "vue";
 // Components
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard.vue";
+import ProjectCard from "../../projects/project-card/ProjectCard.vue";
 
 export default {
   components: {

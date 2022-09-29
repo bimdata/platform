@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { FILE_TYPE } from "@/config/files.js";
+import { FILE_TYPE } from "../config/files.js";
 
 /**
  * Compute a file UUID.
@@ -217,7 +217,7 @@ class FileStructureHandler {
    */
 
   createFile(file) {
-    validate(file, ['parentId']);
+    validate(file, ['parent_id']);
     const nodeId = uuid(file);
     const node = createFileNode(this.nodeMap, file);
     this.nodeMap.set(nodeId, node);

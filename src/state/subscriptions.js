@@ -1,11 +1,12 @@
 import { reactive, readonly, toRefs } from "vue";
-import OrganizationService from "@/services/OrganizationService.js";
-import SpaceService from "@/services/SpaceService.js";
-import SubscriptionService from "@/services/SubscriptionService.js";
-import { useOrganizations } from "@/state/organizations.js";
-import { useSpaces } from "@/state/spaces.js";
-import { useUser } from "@/state/user.js";
-import { delay } from "@/utils/async.js";
+import OrganizationService from "../services/OrganizationService.js";
+import SpaceService from "../services/SpaceService.js";
+import SubscriptionService from "../services/SubscriptionService.js";
+import { delay } from "../utils/async.js";
+
+import { useOrganizations } from "./organizations.js";
+import { useSpaces } from "./spaces.js";
+import { useUser } from "./user.js";
 
 const state = reactive({
   currentOrga: null,

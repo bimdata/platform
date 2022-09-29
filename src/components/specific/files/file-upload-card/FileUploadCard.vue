@@ -69,9 +69,9 @@
 
 <script>
 import { onMounted, reactive, ref, watch } from "vue";
-import { formatBytes } from "../../../../utils/files.js";
 import { useUpload } from "../../../../composables/upload.js";
 import { FILE_TYPE } from "../../../../config/files.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   props: {

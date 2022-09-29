@@ -59,9 +59,9 @@
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { usePaddle } from "@/composables/paddle.js";
-import routeNames from "@/router/route-names.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
+import { usePaddle } from "../../../../composables/paddle.js";
+import routeNames from "../../../../router/route-names.js";
+import { useSubscriptions } from "../../../../state/subscriptions.js";
 
 export default {
   props: {

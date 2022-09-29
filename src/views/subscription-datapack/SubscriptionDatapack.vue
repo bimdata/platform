@@ -38,17 +38,17 @@
 import { provide, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { useOrganizations } from "@/state/organizations.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
-import routeNames from "@/router/route-names.js";
-import { formatBytes } from "@/utils/files.js";
+import { useAppNotification } from "../../components/specific/app/app-notification/app-notification.js";
+import { useOrganizations } from "../../state/organizations.js";
+import { useSubscriptions } from "../../state/subscriptions.js";
+import routeNames from "../../router/route-names.js";
+import { formatBytes } from "../../utils/files.js";
 // Components
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import DatapackForm from "@/components/specific/subscriptions/datapack-form/DatapackForm.vue";
-import DatapackInfo from "@/components/specific/subscriptions/datapack-info/DatapackInfo.vue";
-import SpaceSelected from "@/components/specific/subscriptions/space-selected/SpaceSelected.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import DatapackForm from "../../components/specific/subscriptions/datapack-form/DatapackForm.vue";
+import DatapackInfo from "../../components/specific/subscriptions/datapack-info/DatapackInfo.vue";
+import SpaceSelected from "../../components/specific/subscriptions/space-selected/SpaceSelected.vue";
 
 export default {
   components: {

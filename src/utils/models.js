@@ -3,8 +3,8 @@ import {
   MODEL_EXTENSIONS,
   MODEL_TYPE,
   MODEL_SOURCE
-} from "@/config/models.js";
-import { WINDOWS } from "@/config/viewer.js";
+} from "../config/models.js";
+import { WINDOWS } from "../config/viewer.js";
 import { fileExtension } from "./files.js";
 
 function segregateBySource(models) {

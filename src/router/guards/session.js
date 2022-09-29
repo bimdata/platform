@@ -1,4 +1,4 @@
-import { useSession } from "@/composables/session.js";
+import { useSession } from "../../composables/session.js";
 
 const { currentView, previousView } = useSession();
 

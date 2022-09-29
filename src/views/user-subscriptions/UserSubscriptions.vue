@@ -1,5 +1,5 @@
 <template>
-  <div class="user-subscriptions">
+  <div data-test-id="view-user-subscriptions" class="user-subscriptions">
     <ViewHeader>
       <template #left>
         <GoBackButton />
@@ -62,14 +62,14 @@
 <script>
 import mapLimit from "async/mapLimit";
 import { onMounted, ref, watch } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
+import { useOrganizations } from "../../state/organizations.js";
+import { useSubscriptions } from "../../state/subscriptions.js";
 // Components
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import BillingsTable from "@/components/specific/subscriptions/billings-table/BillingsTable.vue";
-import InvoicesTable from "@/components/specific/subscriptions/invoices-table/InvoicesTable.vue";
-import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import BillingsTable from "../../components/specific/subscriptions/billings-table/BillingsTable.vue";
+import InvoicesTable from "../../components/specific/subscriptions/invoices-table/InvoicesTable.vue";
+import SubscribeCard from "../../components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
 export default {
   components: {

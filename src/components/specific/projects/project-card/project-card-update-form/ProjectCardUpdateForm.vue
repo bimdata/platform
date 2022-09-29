@@ -3,7 +3,7 @@
     <div class="project-card-update-form__title">
       {{ $t("ProjectCardUpdateForm.title") }}
       <BIMDataButton
-        data-test="btn-close-update"
+        data-test-id="btn-close-update"
         ghost
         rounded
         icon
@@ -14,7 +14,7 @@
     </div>
     <BIMDataInput
       ref="nameInput"
-      data-test="input-update-name"
+      data-test-id="input-update-name"
       class="project-card-update-form__input"
       :placeholder="$t('ProjectCardUpdateForm.inputPlaceholder')"
       v-model="projectName"
@@ -24,7 +24,7 @@
       @keyup.enter.stop="renameProject"
     />
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="project-card-update-form__submit-btn"
       color="primary"
       fill

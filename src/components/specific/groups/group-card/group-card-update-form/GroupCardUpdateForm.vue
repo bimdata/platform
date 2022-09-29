@@ -3,7 +3,7 @@
     <div class="group-card-update-form__title">
       {{ $t("GroupCardUpdateForm.title") }}
       <BIMDataButton
-        data-test="btn-close-update"
+        data-test-id="btn-close-update"
         ghost
         rounded
         icon
@@ -14,7 +14,7 @@
     </div>
     <BIMDataInput
       ref="nameInput"
-      data-test="input-update-name"
+      data-test-id="input-update-name"
       class="group-card-update-form__input"
       :placeholder="$t('GroupCardUpdateForm.inputPlaceholder')"
       v-model="groupName"
@@ -24,7 +24,7 @@
       @keyup.enter.stop="submit"
     />
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="group-card-update-form__btn-submit"
       color="primary"
       fill
