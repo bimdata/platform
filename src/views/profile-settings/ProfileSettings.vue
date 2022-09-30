@@ -13,10 +13,7 @@
       <div class="profile-settings__container__content">
         <BIMDataSpinner />
         <template v-if="displayIframe">
-          <iframe
-            ref="iframe"
-            :src="'http://localhost:8000' + '/embed_profile/'"
-          />
+          <iframe ref="iframe" :src="bimDataConnectUrl + '/embed_profile/'" />
         </template>
       </div>
     </div>
