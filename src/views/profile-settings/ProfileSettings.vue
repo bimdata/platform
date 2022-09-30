@@ -13,7 +13,10 @@
       <div class="profile-settings__container__content">
         <BIMDataSpinner />
         <template v-if="displayIframe">
-          <iframe ref="iframe" :src="bimDataConnectUrl + '/embed_profile/'" />
+          <iframe
+            ref="iframe"
+            :src="'http://localhost:8000' + '/embed_profile/'"
+          />
         </template>
       </div>
     </div>
@@ -22,7 +25,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "../../state/auth.js";
 import { useAppGlobalLoader } from "../../components/specific/app/app-global-loader/app-global-loader.js";
@@ -62,6 +65,12 @@ export default {
             signOut();
         }
       });
+    });
+
+    watch(iframe, () => {
+      console.log("iframe try1", iframe.value.contentWindow.location);
+      console.log("iframe try2", iframe.value.referrer);
+      console.log("iframe try3", iframe.value.baseURI);
     });
 
     return {
