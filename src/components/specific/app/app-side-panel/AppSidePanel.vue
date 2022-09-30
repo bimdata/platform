@@ -9,7 +9,7 @@
         <div v-if="header" class="app-side-panel__header">
           <slot name="header">
             <span class="app-side-panel__header__title">
-              <slot name="title">{{ title }}</slot>
+              {{ title }}
             </span>
             <BIMDataButton ghost rounded icon @click="closeSidePanel">
               <BIMDataIcon name="close" size="xxs" fill color="granite-light" />

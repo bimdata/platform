@@ -11,7 +11,7 @@
     "test:e2e": "cypress open"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "2.0.1-rc.1",
+    "@bimdata/bcf-components": "3.0.0-rc.4",
     "@bimdata/design-system": "1.4.0-rc.42",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.1.0",
