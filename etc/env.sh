@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-js_original_path="/usr/share/nginx/html/js-original"
-js_path="/usr/share/nginx/html/js"
+js_original_path="/usr/share/nginx/html/assets-original"
+js_path="/usr/share/nginx/html/assets"
 
 # Associative var_name => placeholder_value
 declare -A vars_to_placeholders=(
@@ -29,6 +29,7 @@ declare -A vars_to_placeholders=(
   [VUE_APP_DATAPACK_PLAN_ID]="ENV_TOKEN_DATAPACK_PLAN_ID"
   [VUE_APP_PROJECT_STATUS_LIMIT_NEW]="ENV_TOKEN_PROJECT_STATUS_LIMIT_NEW"
   [VUE_APP_PROJECT_STATUS_LIMIT_ACTIVE]="ENV_TOKEN_PROJECT_STATUS_LIMIT_ACTIVE"
+  [VUE_APP_USER_IFRAME_PROFILE]="ENV_TOKEN_USER_IFRAME_PROFILE"
 )
 
 # Copy the original JS

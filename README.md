@@ -1,7 +1,7 @@
 # BIMData Platform, next generation
 
 This repository host the BIMData Platform project.
-The Platform is a Vue 3.x application created with [Vue CLI](https://cli.vuejs.org/).
+The Platform is a Vue 3.x application bundled with [Vite](https://vitejs.dev/).
 
 ## Pre-requisites
 

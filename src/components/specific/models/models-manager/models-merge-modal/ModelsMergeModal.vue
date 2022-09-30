@@ -29,9 +29,9 @@
 
 <script>
 import { onMounted, ref } from "vue";
-import { useModels } from "@/state/models";
+import { useModels } from "../../../../../state/models.js";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal";
+import GenericModal from "../../../../generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {

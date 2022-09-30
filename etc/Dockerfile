@@ -10,7 +10,7 @@ COPY . /opt/
 
 ENV NODE_ENV production
 
-# Don't forget to update env.bash script too
+# Don't forget to update env.sh script too
 ARG VUE_APP_BASE_URL=ENV_TOKEN_BASE_URL \
     VUE_APP_IAM_BASE_URL=ENV_TOKEN_IAM_BASE_URL \
     VUE_APP_API_BASE_URL=ENV_TOKEN_API_BASE_URL \
@@ -32,12 +32,13 @@ ARG VUE_APP_BASE_URL=ENV_TOKEN_BASE_URL \
     VUE_APP_PRO_PLAN_STORAGE=ENV_TOKEN_PRO_PLAN_STORAGE \
     VUE_APP_DATAPACK_PLAN_ID=ENV_TOKEN_DATAPACK_PLAN_ID \
     VUE_APP_PROJECT_STATUS_LIMIT_NEW=ENV_TOKEN_PROJECT_STATUS_LIMIT_NEW \
-    VUE_APP_PROJECT_STATUS_LIMIT_ACTIVE=ENV_TOKEN_PROJECT_STATUS_LIMIT_ACTIVE
+    VUE_APP_PROJECT_STATUS_LIMIT_ACTIVE=ENV_TOKEN_PROJECT_STATUS_LIMIT_ACTIVE \
+    VUE_APP_USER_IFRAME_PROFILE=ENV_TOKEN_USER_IFRAME_PROFILE
 
 RUN npm run build
 
 # Move JS files with templated env variables in another folder to be able to replace tokens at runtime
-RUN mv /opt/dist/js /opt/dist/js-original
+RUN mv /opt/dist/assets /opt/dist/assets-original
 
 FROM nginx:stable
 RUN rm /etc/nginx/conf.d/default.conf

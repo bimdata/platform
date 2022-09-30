@@ -1,10 +1,11 @@
 import { reactive, readonly, toRefs } from "vue";
-import SpaceService from "@/services/SpaceService.js";
-import SubscriptionService from "@/services/SubscriptionService.js";
-import { mapSpaces, mapUsers } from "@/state/mappers.js";
-import { useOrganizations } from "@/state/organizations.js";
-import { useProjects } from "@/state/projects.js";
-import { useUser } from "@/state/user.js";
+import SpaceService from "../services/SpaceService.js";
+import SubscriptionService from "../services/SubscriptionService.js";
+
+import { mapSpaces, mapUsers } from "./mappers.js";
+import { useOrganizations } from "./organizations.js";
+import { useProjects } from "./projects.js";
+import { useUser } from "./user.js";
 
 const state = reactive({
   userSpaces: [],

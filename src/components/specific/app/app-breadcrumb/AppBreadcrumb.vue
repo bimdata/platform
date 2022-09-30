@@ -10,12 +10,12 @@
 
 <script>
 import { useRoute } from "vue-router";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../../../router/route-names.js";
 // Components
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton";
-import BreadcrumbGroupSelector from "./breadcrumb-group-selector/BreadcrumbGroupSelector";
-import BreadcrumbProjectSelector from "./breadcrumb-project-selector/BreadcrumbProjectSelector";
-import BreadcrumbSpaceSelector from "./breadcrumb-space-selector/BreadcrumbSpaceSelector";
+import GoBackButton from "../go-back-button/GoBackButton.vue";
+import BreadcrumbGroupSelector from "./breadcrumb-group-selector/BreadcrumbGroupSelector.vue";
+import BreadcrumbProjectSelector from "./breadcrumb-project-selector/BreadcrumbProjectSelector.vue";
+import BreadcrumbSpaceSelector from "./breadcrumb-space-selector/BreadcrumbSpaceSelector.vue";
 
 const BREADCRUMB_COMPONENTS = {
   [routeNames.spaceBoard]: "BreadcrumbSpaceSelector",

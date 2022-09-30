@@ -23,7 +23,7 @@
 
 <script>
 import { inject } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
+import { useOrganizations } from "../../../../../state/organizations.js";
 
 export default {
   setup() {

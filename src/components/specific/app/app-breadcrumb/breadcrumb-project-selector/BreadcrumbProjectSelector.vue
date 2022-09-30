@@ -22,9 +22,9 @@
 <script>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import routeNames from "@/router/route-names.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import routeNames from "../../../../../router/route-names.js";
+import { useProjects } from "../../../../../state/projects.js";
+import { useSpaces } from "../../../../../state/spaces.js";
 // Components
 import BreadcrumbSelector from "../breadcrumb-selector/BreadcrumbSelector.vue";
 

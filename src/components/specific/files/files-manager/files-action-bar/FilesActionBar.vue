@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import FolderSelector from "@/components/specific/files/folder-selector/FolderSelector";
+import FolderSelector from "../../folder-selector/FolderSelector.vue";
 
 export default {
   components: {

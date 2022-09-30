@@ -30,7 +30,7 @@
 
 <script>
 import { inject } from "vue";
-import { useGroups } from "@/state/groups";
+import { useGroups } from "../../../../../state/groups.js";
 
 export default {
   props: {

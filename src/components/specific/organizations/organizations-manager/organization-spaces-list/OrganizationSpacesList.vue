@@ -53,12 +53,12 @@
 
 <script>
 import { computed, inject } from "vue";
-import { useListFilter } from "@/composables/list-filter.js";
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { useOrganizations } from "@/state/organizations.js";
+import { useListFilter } from "../../../../../composables/list-filter.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../../../../../config/subscription.js";
+import routeNames from "../../../../../router/route-names.js";
+import { useOrganizations } from "../../../../../state/organizations.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../../app/app-link/AppLink.vue";
 import OrganizationSpaceCard from "./organization-space-card/OrganizationSpaceCard.vue";
 
 export default {

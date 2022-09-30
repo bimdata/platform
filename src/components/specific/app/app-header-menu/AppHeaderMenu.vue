@@ -22,7 +22,7 @@
         </div>
       </template>
       <template #element>
-        <div class="app-header-menu__container" @click.stop="() => {}">
+        <div class="app-header-menu__container">
           <div class="user-info">
             <UserAvatar class="user-avatar" :user="user" size="50" />
             <div class="user-content">
@@ -41,15 +41,28 @@
             </div>
           </div>
           <div class="separator"></div>
-          <a
-            class="external-link"
-            :href="bimdataConnectProfileUrl"
-            target="blank"
-          >
-            <BIMDataButton width="100%" height="40px" ghost squared>
+          <template v-if="userIframeProfile">
+            <BIMDataButton
+              width="100%"
+              height="40px"
+              ghost
+              squared
+              @click="router.push({ name: routeNames.profileSettings })"
+            >
               {{ $t("AppHeaderMenu.entrySettings") }}
             </BIMDataButton>
-          </a>
+          </template>
+          <template v-else>
+            <a
+              class="external-link"
+              :href="bimdataConnectProfileUrl"
+              target="blank"
+            >
+              <BIMDataButton width="100%" height="40px" ghost squared>
+                {{ $t("AppHeaderMenu.entrySettings") }}
+              </BIMDataButton>
+            </a>
+          </template>
           <a class="external-link" :href="documentationUrl" target="blank">
             <BIMDataButton width="100%" height="40px" ghost squared>
               {{ $t("AppHeaderMenu.entryDocumentation") }}
@@ -71,7 +84,7 @@
             ghost
             squared
             height="40px"
-            @click="openLanguageSelector"
+            @click.stop="openLanguageSelector"
           >
             <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
             <span class="lang-badge">{{ $i18n.locale }}</span>
@@ -101,16 +114,17 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { useToggle } from "../../../../composables/toggle.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../../../config/subscription.js";
 import routeNames from "../../../../router/route-names.js";
-import { useToggle } from "../../../../composables/toggle.js";
 import { useAuth } from "../../../../state/auth.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useUser } from "../../../../state/user.js";
-import { fullName } from "../../../../utils/users.js";
+import { fullName } from "../../../../utils/users";
 
 // Components
-import UserAvatar from "../../../specific/users/user-avatar/UserAvatar.vue";
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
 import LanguageSelector from "./language-selector/LanguageSelector.vue";
 
 export default {
@@ -129,9 +143,11 @@ export default {
       close: closeLanguageSelector
     } = useToggle();
 
-    const bimdataConnectProfileUrl = `${process.env.VUE_APP_URL_BIMDATACONNECT}/profile/`;
-    const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
-    const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
+    const bimdataConnectProfileUrl =
+      import.meta.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
+    const documentationUrl = import.meta.env.VUE_APP_URL_DOCUMENTATION;
+    const marketPlaceUrl = import.meta.env.VUE_APP_URL_MARKETPLACE;
+    const userIframeProfile = import.meta.env.VUE_APP_USER_IFRAME_PROFILE;
 
     return {
       // References
@@ -143,9 +159,11 @@ export default {
       showLanguageSelector,
       space: currentSpace,
       user,
+      userIframeProfile,
       // Methods
       closeLanguageSelector,
       openLanguageSelector,
+      router: useRouter(),
       fullName,
       signOut
     };

@@ -1,4 +1,4 @@
-import { useAuth } from "@/state/auth.js";
+import { useAuth } from "../../state/auth.js";
 
 const { isAuthenticated, authenticate } = useAuth();
 

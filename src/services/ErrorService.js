@@ -1,5 +1,5 @@
-import i18n from "@/i18n/index.js";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useAppNotification } from "../components/specific/app/app-notification/app-notification.js";
+import i18n from "../i18n/index.js";
 
 const ERRORS = Object.freeze({
   ORGANIZATIONS_FETCH_ERROR: "organizationsFetchError",

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { contexts, useLoadingContext } from "@/composables/loading.js";
-import { IS_SUBSCRIPTION_ENABLED } from "@/config/subscription.js";
+import { contexts, useLoadingContext } from "../composables/loading.js";
+import { IS_SUBSCRIPTION_ENABLED } from "../config/subscription.js";
 import routeNames from "./route-names.js";
 import legacyRoutes from "./legacy.js";
 import subscriptionRoutes from "./subscription.js";
@@ -8,6 +8,7 @@ import subscriptionRoutes from "./subscription.js";
 // Guards
 import authGuard from "./guards/auth.js";
 import dataGuard from "./guards/data.js";
+import sessionGuard from "./guards/session.js";
 import groupBoardGuard from "./guards/views/group-board.js";
 import projectBoardGuard from "./guards/views/project-board.js";
 import spaceBoardGuard from "./guards/views/space-board.js";
@@ -20,33 +21,23 @@ import projectGroupsResolver from "./resolvers/views/project-groups.js";
 import spaceBoardResolver from "./resolvers/views/space-board.js";
 
 // Route components
-import AppLayout from "@/AppLayout.vue";
-import OidcCallback from "@/views/oidc-callback/OidcCallback.vue";
-import OidcCallbackError from "@/views/oidc-callback-error/OidcCallbackError.vue";
-import PageNotFound from "@/views/page-not-found/PageNotFound.vue";
-import sessionGuard from "./guards/session.js";
+import AppLayout from "../AppLayout.vue";
+import OidcCallback from "../views/oidc-callback/OidcCallback.vue";
+import OidcCallbackError from "../views/oidc-callback-error/OidcCallbackError.vue";
+import PageNotFound from "../views/page-not-found/PageNotFound.vue";
 
 // Lazy loaded view components
-/* eslint-disable */
-const Dashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/Dashboard.vue");
-const GroupBoard = () =>
-  import(/* webpackChunkName: "group-board" */ "@/views/group-board/GroupBoard.vue");
-const ModelViewer = () =>
-  import(/* webpackChunkName: "model-viewer" */ "@/views/model-viewer/ModelViewer.vue");
-const ProjectBoard = () =>
-  import(/* webpackChunkName: "project-board" */ "@/views/project-board/ProjectBoard.vue");
-const ProjectGroups = () =>
-  import(/* webpackChunkName: "project-groups" */ "@/views/project-groups/ProjectGroups.vue");
-const SpaceBoard = () =>
-  import(/* webpackChunkName: "space-board" */ "@/views/space-board/SpaceBoard.vue");
-const UserProjects = () =>
-  import(/* webpackChunkName: "user-projects" */ "@/views/user-projects/UserProjects.vue");
-const UserSpaces = () =>
-  import(/* webpackChunkName: "user-spaces" */ "@/views/user-spaces/UserSpaces.vue");
-const Invitation = () =>
-  import(/* webpackChunkName: "invitation" */ "@/views/invitation/Invitation.vue");
-/* eslint-enable */
+const Dashboard = () => import("../views/dashboard/Dashboard.vue");
+const GroupBoard = () => import("../views/group-board/GroupBoard.vue");
+const ModelViewer = () => import("../views/model-viewer/ModelViewer.vue");
+const ProjectBoard = () => import("../views/project-board/ProjectBoard.vue");
+const ProjectGroups = () => import("../views/project-groups/ProjectGroups.vue");
+const SpaceBoard = () => import("../views/space-board/SpaceBoard.vue");
+const UserProjects = () => import("../views/user-projects/UserProjects.vue");
+const UserSpaces = () => import("../views/user-spaces/UserSpaces.vue");
+const ProfileSettings = () =>
+  import("../views/profile-settings/ProfileSettings.vue");
+const Invitation = () => import("../views/invitation/Invitation.vue");
 
 const {
   root,
@@ -62,6 +53,7 @@ const {
   projectGroups,
   groupBoard,
   userSubscriptions,
+  profileSettings,
   invitation
 } = routeNames;
 
@@ -79,6 +71,14 @@ const routes = [
         path: "",
         name: dashboard,
         component: Dashboard
+      },
+      {
+        path: "/profile-settings",
+        name: profileSettings,
+        component: ProfileSettings,
+        meta: {
+          back: dashboard
+        }
       },
       {
         path: "/spaces",
@@ -185,7 +185,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
 

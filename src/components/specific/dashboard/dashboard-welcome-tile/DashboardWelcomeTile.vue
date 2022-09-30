@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { useUser } from "@/state/user";
+import { useUser } from "../../../../state/user.js";
 // Components
 import DashboardWelcomeTileImage from "./DashboardWelcomeTileImage.vue";
 

@@ -67,13 +67,14 @@ import { MODEL_TYPE } from "../../../../config/models.js";
 import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
 import { isSpaceAdmin } from "../../../../utils/spaces.js";
+
 // Components
-import FlippableCard from "../../../generic/flippable-card/FlippableCard.vue";
 import AppLink from "../../app/app-link/AppLink.vue";
-import ProjectStatusBadge from "../project-status-badge/ProjectStatusBadge.vue";
+import FlippableCard from "../../../generic/flippable-card/FlippableCard.vue";
 import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar.vue";
 import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu.vue";
 import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview.vue";
+import ProjectStatusBadge from "../project-status-badge/ProjectStatusBadge.vue";
 
 export default {
   components: {

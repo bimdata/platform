@@ -9,7 +9,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../router/route-names.js";
 
 export default {
   setup() {

@@ -171,24 +171,26 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import { isEmpty } from "lodash";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { VISA_STATUS } from "../../../../config/visa.js";
+import routeNames from "../../../../router/route-names.js";
+import FileService from "../../../../services/FileService.js";
+import { useFiles } from "../../../../state/files.js";
+import { useModels } from "../../../../state/models.js";
+import { isViewable, isPDF, windowType } from "../../../../utils/models.js";
+import { fullName } from "../../../../utils/users.js";
 
-import { fullName } from "@/utils/users.js";
-import { useFiles } from "@/state/files.js";
-import { useModels } from "@/state/models.js";
-import { VISA_STATUS } from "@/config/visa.js";
-import routeNames from "@/router/route-names.js";
-import FileService from "@/services/FileService.js";
-
-import { isViewable, isPDF, windowType } from "@/utils/models.js";
-
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+// Components
+import AppLink from "../../app/app-link/AppLink.vue";
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
 
 export default {
-  components: { UserAvatar, AppLink },
+  components: {
+    AppLink,
+    UserAvatar
+  },
   props: {
     project: {
       type: Object,

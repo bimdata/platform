@@ -1,4 +1,4 @@
-import { formatToDateObject, regexDate } from "./date";
+import { formatToDateObject, regexDate } from "./date.js";
 
 const isDateValid = date => {
   const dateToCompare = formatToDateObject(date);

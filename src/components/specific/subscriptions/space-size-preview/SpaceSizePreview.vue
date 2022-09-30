@@ -56,9 +56,9 @@
 
 <script>
 import { computed } from "vue";
-import { formatBytes } from "@/utils/files.js";
+import { formatBytes } from "../../../../utils/files.js";
 // Components
-import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
+import ProgressBar from "../../../generic/progress-bar/ProgressBar.vue";
 
 export default {
   components: {
