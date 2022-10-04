@@ -45,6 +45,8 @@
               :space="project.cloud"
               :project="project"
               :model="currentModel"
+              @metaBuilding-created="loadProjectModels(project)"
+              @metaBuilding-deleted="loadProjectModels(project)"
             />
           </div>
         </div>
@@ -58,6 +60,7 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { MODEL_TYPE } from "../../../../../config/models.js";
 import { useToggle } from "../../../../../composables/toggle";
+import { useModels } from "../../../../../state/models.js";
 import apiClient from "../../../../../services/api-client.js";
 import { segregateBySource } from "../../../../../utils/models.js";
 // Components
@@ -133,6 +136,7 @@ export default {
       openBM,
       closeBM,
       editModel,
+      loadProjectModels: useModels().loadProjectModels,
       console
     };
   }
