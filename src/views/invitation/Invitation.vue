@@ -6,7 +6,7 @@
     <div class="invitation__content">
       <span>{{ $t("Invitation.title") }}</span>
       <div class="invitation__content__header">
-        <span>{{
+        <span class="invitation__content__header__counter">{{
           $t("Invitation.invitCounter") + ` ${invitList.length}`
         }}</span>
         <BIMDataButton color="primary" fill radius>
@@ -21,15 +21,36 @@
         >
           <UserAvatar :user="invit.sender" size="40" />
           <div class="invitation__content__list__invit__text">
-            <span class="invitation__content__list__invit__text__invited-by">
-              {{
-                $t("Invitation.invitedBy", {
-                  sender: fullName(invit.sender),
-                  project: invit.project,
-                  cloud: invit.cloud
-                })
-              }}
-            </span>
+            <i18n-t
+              class="invitation__content__list__invit__text__invited-by"
+              keypath="Invitation.invitedBy"
+              tag="span"
+            >
+              <template v-slot:sender>
+                <BIMDataTextbox
+                  class="invitation__content__list__invit__text__invited-by__highlight"
+                  maxWidth="40%"
+                  width="auto"
+                  :text="fullName(invit.sender)"
+                />
+              </template>
+              <template v-slot:project>
+                <BIMDataTextbox
+                  class="invitation__content__list__invit__text__invited-by__highlight"
+                  maxWidth="40%"
+                  width="auto"
+                  :text="invit.project"
+                />
+              </template>
+              <template v-slot:cloud>
+                <BIMDataTextbox
+                  class="invitation__content__list__invit__text__invited-by__highlight"
+                  maxWidth="40%"
+                  width="auto"
+                  :text="invit.cloud"
+                />
+              </template>
+            </i18n-t>
             <span
               :class="`invitation__content__list__invit__text__invited-status-${invit.status}`"
             >
@@ -56,17 +77,21 @@
               <div class="invitation__content__list__invit__button__pending">
                 <BIMDataButton
                   class="invitation__content__list__invit__button__pending__deny"
+                  width="40px"
+                  height="40px"
                   ghost
                   icon
                 >
-                  <BIMDataIcon name="close" fill color="high" />
+                  <BIMDataIcon name="close" fill color="high" size="m" />
                 </BIMDataButton>
                 <BIMDataButton
                   class="invitation__content__list__invit__button__pending__accept"
+                  width="40px"
+                  height="40px"
                   ghost
                   icon
                 >
-                  <BIMDataIcon name="validate" fill color="success" />
+                  <BIMDataIcon name="validate" fill color="success" size="m" />
                 </BIMDataButton>
               </div>
 
@@ -84,7 +109,7 @@
 import { useRouter } from "vue-router";
 import { fullName } from "../../utils/users.js";
 
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
 
 export default {
@@ -101,8 +126,8 @@ export default {
         date: new Date(),
         status: "A",
         sender: {
-          firstname: "Hugo",
-          lastname: "Duroux"
+          firstname: "Jean-Claude",
+          lastname: "Convenant"
         }
       },
       {
@@ -123,6 +148,66 @@ export default {
         sender: {
           firstname: "Jaja",
           lastname: "Bravas"
+        }
+      },
+      {
+        project: "project3",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "A",
+        sender: {
+          firstname: "Jojo",
+          lastname: "Bravo"
+        }
+      },
+      {
+        project: "project3 rhone alpes 69 france 2022",
+        cloud: "new viewer lyon crayon part dieur ",
+        date: new Date(),
+        status: "A",
+        sender: {
+          firstname: "paul dimitri brendan pedro silvere",
+          lastname: "Bravo moro vilalta camilli remeur letellier"
+        }
+      },
+      {
+        project: "project3",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "A",
+        sender: {
+          firstname: "Jojo",
+          lastname: "Bravo"
+        }
+      },
+      {
+        project: "project3",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "A",
+        sender: {
+          firstname: "Jojo",
+          lastname: "Bravo"
+        }
+      },
+      {
+        project: "project3",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "A",
+        sender: {
+          firstname: "Jojo",
+          lastname: "Bravo"
+        }
+      },
+      {
+        project: "project3",
+        cloud: "new viewer",
+        date: new Date(),
+        status: "A",
+        sender: {
+          firstname: "Jojo",
+          lastname: "Bravo"
         }
       }
     ];
