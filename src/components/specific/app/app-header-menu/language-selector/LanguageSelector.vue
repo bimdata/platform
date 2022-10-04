@@ -1,7 +1,7 @@
 <template>
   <div class="language-selector">
     <div class="language-selector__title">
-      <span>{{ $t("LanguageSelector.title") }}</span>
+      <span class="m-l-6">{{ $t("LanguageSelector.title") }}</span>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
         <BIMDataIcon name="close" size="xxxs" />
       </BIMDataButton>

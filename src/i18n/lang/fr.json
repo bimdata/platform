@@ -27,6 +27,13 @@
         "createButtonText": "Créer un espace",
         "organizationsButtonText": "Comptes de facturation"
     },
+    "ProfileSettings": {
+      "title": "Paramètres du profil",
+      "loading": {
+        "message": "Suppression en cours.",
+        "subMessage": "Ce processus peut prendre quelques instants, veuillez ne pas quitter la page."
+      }
+    },
     "ProjectFiles": {
         "groupsButtonText": "Gestion des groupes"
     },

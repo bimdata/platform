@@ -5,7 +5,7 @@ import BcfService from "../services/BcfService.js";
 import { useProjects } from "./projects.js";
 
 const state = reactive({
-  bcfTopics: [],
+  topics: [],
   extensions: {
     topic_type: [],
     priority: [],
@@ -38,7 +38,7 @@ const loadBcfTopics = async project => {
     return topic;
   });
 
-  state.bcfTopics = mappedTopics;
+  state.topics = mappedTopics;
 
   return mappedTopics;
 };
