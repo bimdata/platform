@@ -18,39 +18,39 @@
         </div>
       </div>
     </template>
-  </GenericModelsManager>
-  <template v-if="currentTab && currentTab.id === 'metaBuildings'">
-    <BIMDataButton
-      class="pdf-manager__building-maker-btn"
-      width="100px"
-      color="primary"
-      outline
-      radius
-      icon
-      @click="openBM"
-    >
-      <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
-      <span> {{ $t("ModelsManager.buildingMaker.create") }} </span>
-    </BIMDataButton>
+    <template #content v-if="currentTab && currentTab.id === 'metaBuildings'">
+      <BIMDataButton
+        class="pdf-manager__building-maker-btn"
+        width="100px"
+        color="primary"
+        outline
+        radius
+        icon
+        @click="openBM"
+      >
+        <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
+        <span> {{ $t("ModelsManager.buildingMaker.create") }} </span>
+      </BIMDataButton>
 
-    <!-- <transition name="slide-fade-right"> -->
-    <div v-if="isBMOpen" class="pdf-manager__building-maker">
-      <div class="pdf-manager__building-maker__header">
-        <BIMDataButton ghost rounded icon @click="closeBM">
-          <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
-        </BIMDataButton>
-      </div>
-      <div class="pdf-manager__building-maker__content">
-        <BuildingMaker
-          :apiClient="apiClient"
-          :space="project.cloud"
-          :project="project"
-          :model="currentModel"
-        />
-      </div>
-    </div>
-    <!-- </transition> -->
-  </template>
+      <transition name="slide-fade-right">
+        <div v-if="isBMOpen" class="pdf-manager__building-maker">
+          <div class="pdf-manager__building-maker__header">
+            <BIMDataButton ghost rounded icon @click="closeBM">
+              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+            </BIMDataButton>
+          </div>
+          <div class="pdf-manager__building-maker__content">
+            <BuildingMaker
+              :apiClient="apiClient"
+              :space="project.cloud"
+              :project="project"
+              :model="currentModel"
+            />
+          </div>
+        </div>
+      </transition>
+    </template>
+  </GenericModelsManager>
 </template>
 
 <script>

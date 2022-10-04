@@ -60,6 +60,8 @@
         @close="closeDeleteModal"
       />
     </transition>
+
+    <slot name="content"></slot>
   </div>
 </template>
 

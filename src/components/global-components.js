@@ -1,5 +1,4 @@
 // Image components
-import BuildingMaker from "@bimdata/building-maker";
 import BillingsTableEmptyImage from "./images/BillingsTableEmptyImage.vue";
 import BulletMarkImage from "./images/BulletMarkImage.vue";
 import FreePlanRedirectImage from "./images/FreePlanRedirectImage.vue";
@@ -17,7 +16,6 @@ import SubscribeCardImage from "./images/SubscribeCardImage.vue";
 export default {
   // Images
   BillingsTableEmptyImage,
-  BuildingMaker,
   BulletMarkImage,
   FreePlanRedirectImage,
   PieGraphIcon,
