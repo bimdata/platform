@@ -23,8 +23,9 @@ export default {
   height: 100%;
   width: fit-content;
   margin: auto;
+  display: flex;
+  align-items: center;
   img {
-    height: 100%;
     max-width: 100%;
     max-height: calc(100vh - 72px);
     background-color: var(--color-silver-light);
