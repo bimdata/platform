@@ -1,8 +1,12 @@
 <template>
   <teleport to="#app-modal-container">
     <transition name="fade">
-      <div class="app-modal__overlay" v-show="showModal">
-        <div class="app-modal__box">
+      <div
+        class="app-modal__overlay"
+        :class="{ 'app-modal__large': isModalLarge }"
+        v-show="showModal"
+      >
+        <div class="app-modal__box" :style="{ backgroundColor: bgColor }">
           <BIMDataButton
             class="app-modal__box__btn-close"
             ghost
@@ -10,7 +14,7 @@
             icon
             @click="closeModal"
           >
-            <BIMDataIcon name="close" size="xs" fill color="granite-light" />
+            <BIMDataIcon name="close" size="xxs" fill :color="iconColor" />
           </BIMDataButton>
           <slot></slot>
         </div>
@@ -23,6 +27,20 @@
 import { useAppModal } from "./app-modal.js";
 
 export default {
+  props: {
+    bgColor: {
+      type: String,
+      default: "var(--color-white)"
+    },
+    iconColor: {
+      type: String,
+      default: "granite-light"
+    },
+    isModalLarge: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const { showModal, closeModal } = useAppModal();
 

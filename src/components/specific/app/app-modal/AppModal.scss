@@ -9,17 +9,27 @@
     align-items: center;
   }
 
+  &__large {
+    background-color: rgba(47, 55, 74, 0.95);
+    .app-modal__box {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   &__box {
     position: relative;
     min-width: 400px;
     min-height: 400px;
     padding: calc(var(--spacing-unit) * 3);
-    background-color: var(--color-white);
 
     &__btn-close {
       position: absolute;
       top: calc(var(--spacing-unit) / 2);
       right: calc(var(--spacing-unit) / 2);
+      &:hover {
+        background-color: rgba(216, 216, 216, 0.1);
+      }
     }
   }
 }
