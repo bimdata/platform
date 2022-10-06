@@ -2,8 +2,8 @@
   <GenericModelsManager
     :project="project"
     :tabs="tabs"
-    @edit="editModel"
-    @get-current-tab="currentTab = $event"
+    @edit-metaBuilding="editBM"
+    @tab-changed="currentTab = $event"
   >
     <template #tablePlaceholder v-if="models.length === 0">
       <div class="pdf-manager__placeholder">
@@ -34,11 +34,15 @@
 
       <transition name="slide-fade-right">
         <div v-if="isBMOpen" class="pdf-manager__building-maker">
-          <div class="pdf-manager__building-maker__header">
-            <BIMDataButton ghost rounded icon @click="closeBM">
-              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
-            </BIMDataButton>
-          </div>
+          <BIMDataButton
+            class="pdf-manager__building-maker__close"
+            ghost
+            rounded
+            icon
+            @click="closeBM"
+          >
+            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+          </BIMDataButton>
           <div class="pdf-manager__building-maker__content">
             <BuildingMaker
               :apiClient="apiClient"
@@ -91,7 +95,7 @@ export default {
 
     const currentModel = ref(null);
 
-    const editModel = async model => {
+    const editBM = model => {
       currentModel.value = model;
       openBM();
       setTimeout(() => (currentModel.value = null), 100);
@@ -135,7 +139,7 @@ export default {
       // Methods
       openBM,
       closeBM,
-      editModel,
+      editBM,
       loadProjectModels: useModels().loadProjectModels,
       console
     };

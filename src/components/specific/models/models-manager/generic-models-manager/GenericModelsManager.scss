@@ -21,34 +21,6 @@
     color: var(--color-white);
   }
 
-  &__building-maker-btn {
-    position: absolute;
-    top: 3px;
-    right: var(--spacing-unit);
-  }
-
-  &__building-maker { 
-    position: fixed;
-    top: 0%;
-    right: 0%;
-    z-index: 1000;
-    width: 400px;
-    height: 100vh;
-    padding: var(--spacing-unit);
-    box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1);
-    background-color: var(--color-white);
-
-    &__header {
-      display: flex;
-      justify-content: flex-end;
-      height: 32px;
-    }
-
-    &__content {
-      height: calc(100% - 32px);
-    }
-  }
-
   &__separator {
     width: 100%;
     height: 1px;

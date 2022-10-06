@@ -38,7 +38,7 @@
         @download="$emit('download', $event)"
         @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
-        @edit="$emit('edit', $event)"
+        @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
       />
     </template>
 
@@ -84,7 +84,7 @@ export default {
     "download",
     "selection-changed",
     "unarchive",
-    "edit"
+    "edit-metaBuilding"
   ],
   setup(props) {
     const { t } = useI18n();

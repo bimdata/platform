@@ -45,7 +45,7 @@
       @download="downloadModels([$event])"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
-      @edit="$emit('edit', $event)"
+      @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
     >
       <template #placeholder>
         <slot name="tablePlaceholder"></slot>
@@ -91,14 +91,14 @@ export default {
       validator: value => value.length > 0
     }
   },
-  emits: ["edit", "get-current-tab"],
+  emits: ["edit-metaBuilding", "tab-changed"],
   setup(props, { emit }) {
     const { downloadModels: download, updateModels } = useModels();
 
     const currentTab = ref({});
     const selectTab = tab => {
       currentTab.value = tab;
-      emit("get-current-tab", tab);
+      emit("tab-changed", tab);
     };
 
     watch(

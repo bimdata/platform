@@ -102,7 +102,7 @@
             class="model-actions-cell__menu__btn"
             ghost
             squared
-            @click="onClick('edit')"
+            @click="onClick('edit-metaBuilding')"
           >
             {{ $t("ModelActionsCell.editButtontext") }}
           </BIMDataButton>
@@ -144,7 +144,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "update", "edit"],
+  emits: ["archive", "delete", "download", "update", "edit-metaBuilding"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,

@@ -39,15 +39,14 @@
     z-index: 1000;
     width: 400px;
     height: 100vh;
-    padding: var(--spacing-unit);
     box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: var(--color-white);
 
-    &__header {
-      display: flex;
-      justify-content: flex-end;
-      height: 32px;
-      margin-bottom: var(--spacing-unit);
+    &__close {
+      position: absolute;
+      z-index: 1001;
+      right: var(--spacing-unit);
+      top: calc(var(--spacing-unit) / 2);
     }
 
     &__content {
