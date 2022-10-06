@@ -14,7 +14,7 @@
     "@bimdata/bcf-components": "2.0.1-rc.1",
     "@bimdata/design-system": "1.4.0-rc.42",
     "@bimdata/guided-tour-components": "1.0.3",
-    "@bimdata/typescript-fetch-api-client": "9.1.0",
+    "@bimdata/typescript-fetch-api-client": "9.2.1",
     "@bimdata/viewer": "^1.9.0-rc.163",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
