@@ -5,7 +5,9 @@
       <GoBackButton />
     </div>
     <div class="invitation__content">
-      <span>{{ $t("Invitation.title") }}</span>
+      <span class="invitation__content__title">{{
+        $t("Invitation.title")
+      }}</span>
       <template v-if="invitationList">
         <div class="invitation__content__header">
           <span class="invitation__content__header__counter">{{
@@ -58,13 +60,21 @@
               <span
                 :class="`invitation__content__list__invit__text__invited-status-${invit.status}`"
               >
-                <template v-if="invit.status === 'A'">
+                <template
+                  v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
+                >
                   {{ $t("Invitation.invitAccepted") }}
                 </template>
-                <template v-else-if="invit.status === 'D'">
+                <template
+                  v-else-if="invit.status === INVITATION_VALIDATION_STATUS.DENY"
+                >
                   {{ $t("Invitation.invitDenied") }}
                 </template>
-                <template v-else-if="invit.status === 'P'">
+                <template
+                  v-else-if="
+                    invit.status === INVITATION_VALIDATION_STATUS.PENDING
+                  "
+                >
                   {{ $t("Invitation.invitPending") }}
                 </template>
 
@@ -72,7 +82,9 @@
               </span>
             </div>
             <div class="invitation__content__list__invit__button">
-              <template v-if="invit.status === 'A'">
+              <template
+                v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
+              >
                 <BIMDataButton color="primary" fill radius onClick="">
                   <template v-if="invit.project_name">
                     {{ $t("Invitation.goToProject") }}
@@ -82,21 +94,26 @@
                   </template>
                 </BIMDataButton>
               </template>
-              <template v-if="invit.status === 'P'">
+              <template
+                v-if="invit.status === INVITATION_VALIDATION_STATUS.PENDING"
+              >
                 <div class="invitation__content__list__invit__button__pending">
                   <BIMDataButton
                     class="invitation__content__list__invit__button__pending__deny"
-                    width="40px"
-                    height="40px"
+                    width="35px"
+                    height="35px"
+                    radius
                     ghost
                     icon
+                    @click="onDenyInvitation(invit)"
                   >
-                    <BIMDataIcon name="close" fill color="high" size="m" />
+                    <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
                   <BIMDataButton
                     class="invitation__content__list__invit__button__pending__accept"
-                    width="40px"
-                    height="40px"
+                    width="35px"
+                    height="35px"
+                    radius
                     ghost
                     icon
                     @click="onAcceptInvitation(invit)"
@@ -105,7 +122,7 @@
                       name="validate"
                       fill
                       color="success"
-                      size="m"
+                      size="s"
                     />
                   </BIMDataButton>
                 </div>
@@ -124,6 +141,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { fullName } from "../../utils/users.js";
+import { INVITATION_VALIDATION_STATUS } from "../../config/invitation.js";
 import InvitationViewService from "../../services/InvitationViewService.js";
 
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
@@ -147,14 +165,21 @@ export default {
       await fetchInvitation();
     };
 
+    const onDenyInvitation = async invitation => {
+      await InvitationViewService.denyInvitation(invitation);
+      await fetchInvitation();
+    };
+
     onMounted(async () => fetchInvitation());
 
     return {
       // references
       invitationList,
+      INVITATION_VALIDATION_STATUS,
       // methods
       fullName,
       onAcceptInvitation,
+      onDenyInvitation,
       getBack: () => router.back(),
       console
     };

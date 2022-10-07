@@ -1,0 +1,7 @@
+const INVITATION_VALIDATION_STATUS = Object.freeze({
+  PENDING: "P",
+  ACCEPT: "A",
+  DENY: "D"
+});
+
+export { INVITATION_VALIDATION_STATUS };

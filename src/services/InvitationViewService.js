@@ -11,6 +11,9 @@ class InvitationViewService {
   }
 
   async acceptInvitation(invitation) {
+    console.log("invitation", invitation);
+    console.log("invitation.id", invitation.id);
+
     try {
       return await apiClient.collaborationApi.acceptUserInvitation(
         invitation.id

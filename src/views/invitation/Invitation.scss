@@ -13,13 +13,15 @@
     flex-direction: column;
     max-width: 800px;
 
-    span {
+    &__title {
       padding-top: calc(var(--spacing-unit) / 1.5);
+      padding-left: calc(var(--spacing-unit) / 2);
     }
 
     &__header {
       display: flex;
       justify-content: space-between;
+      padding-left: calc(var(--spacing-unit) / 2);
 
       &__counter {
         color: var(--color-granite-light);
