@@ -1,5 +1,4 @@
 <template>
-  {{ console.log("invitationList", invitationList) }}
   <div class="invitation">
     <div class="invitation__back-btn">
       <GoBackButton />
@@ -8,15 +7,24 @@
       <span class="invitation__content__title">{{
         $t("Invitation.title")
       }}</span>
-      <template v-if="invitationList">
-        <div class="invitation__content__header">
-          <span class="invitation__content__header__counter">{{
-            $t("Invitation.invitCounter") + ` ${invitationList.length}`
-          }}</span>
-          <BIMDataButton color="primary" fill radius>
-            {{ $t("Invitation.acceptAll") }}
-          </BIMDataButton>
+
+      <div class="invitation__content__header">
+        <div class="invitation__content__header__counter">
+          <span>
+            {{ $t("Invitation.invitCounter") + ` ${invitationList.length}` }}
+          </span>
         </div>
+        <BIMDataButton
+          :disabled="invitationListPending.length < 1"
+          color="primary"
+          fill
+          radius
+          @click="acceptAllInvitation"
+        >
+          {{ $t("Invitation.acceptAll") }}
+        </BIMDataButton>
+      </div>
+      <template v-if="invitationList.length > 0">
         <div class="invitation__content__list">
           <div
             class="invitation__content__list__invit"
@@ -105,7 +113,7 @@
                     radius
                     ghost
                     icon
-                    @click="onDenyInvitation(invit)"
+                    @click="onDenyInvitation(invit).then(fetchInvitations)"
                   >
                     <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
@@ -116,7 +124,7 @@
                     radius
                     ghost
                     icon
-                    @click="onAcceptInvitation(invit)"
+                    @click="onAcceptInvitation(invit).then(fetchInvitations)"
                   >
                     <BIMDataIcon
                       name="validate"
@@ -126,7 +134,6 @@
                     />
                   </BIMDataButton>
                 </div>
-                <div></div>
               </template>
             </div>
           </div>
@@ -140,6 +147,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import async from "async";
 import { fullName } from "../../utils/users.js";
 import { INVITATION_VALIDATION_STATUS } from "../../config/invitation.js";
 import InvitationViewService from "../../services/InvitationViewService.js";
@@ -155,29 +163,43 @@ export default {
   setup() {
     const router = useRouter();
 
-    const invitationList = ref(null);
-    const fetchInvitation = async () => {
+    const invitationList = ref([]);
+    const invitationListPending = ref([]);
+    const fetchInvitations = async () => {
       invitationList.value = await InvitationViewService.fetchInvitations();
+      invitationListPending.value = invitationList.value.filter(
+        invit => invit.status === INVITATION_VALIDATION_STATUS.PENDING
+      );
     };
 
     const onAcceptInvitation = async invitation => {
       await InvitationViewService.acceptInvitation(invitation);
-      await fetchInvitation();
     };
 
     const onDenyInvitation = async invitation => {
       await InvitationViewService.denyInvitation(invitation);
-      await fetchInvitation();
     };
 
-    onMounted(async () => fetchInvitation());
+    const acceptAllInvitation = async () => {
+      await async.eachLimit(
+        invitationListPending.value,
+        20,
+        onAcceptInvitation
+      );
+      await fetchInvitations();
+    };
+
+    onMounted(async () => fetchInvitations());
 
     return {
       // references
       invitationList,
+      invitationListPending,
       INVITATION_VALIDATION_STATUS,
       // methods
       fullName,
+      fetchInvitations,
+      acceptAllInvitation,
       onAcceptInvitation,
       onDenyInvitation,
       getBack: () => router.back(),

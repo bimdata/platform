@@ -20,10 +20,12 @@
 
     &__header {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       padding-left: calc(var(--spacing-unit) / 2);
 
       &__counter {
+        display: flex;
         color: var(--color-granite-light);
       }
     }
