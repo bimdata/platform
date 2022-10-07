@@ -302,12 +302,7 @@
         </div>
       </transition>
     </div>
-    <AppModal
-      bgColor="transparent"
-      iconColor="white"
-      :isModalLarge="true"
-      v-click-away="closeModal"
-    >
+    <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
       <SnapshotModal :topicSnapshot="topicSnapshot" />
     </AppModal>
   </div>
