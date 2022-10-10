@@ -706,7 +706,7 @@ export default {
     const menuItems = computed(() => {
       const items = [];
 
-      if (props.project.isAdmin && projectsTree.value.length > 0) {
+      if (props.project.isAdmin) {
         items.push({
           name: t("FilesManager.structureImport"),
           children: projectsTree.value
