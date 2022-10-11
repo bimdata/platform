@@ -31,7 +31,7 @@
         <BIMDataDropdownMenu
           class="files-manager-onboarding__actions__dropdown"
           :class="{
-            ['files-manager-onboarding__actions__dropdown--no-project']:
+            'files-manager-onboarding__actions__dropdown--no-project':
               projectsTree?.length === 0
           }"
           v-click-away="close"
