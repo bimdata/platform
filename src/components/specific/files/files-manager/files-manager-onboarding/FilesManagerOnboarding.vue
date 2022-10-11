@@ -176,8 +176,7 @@ export default {
       createFolder,
       updateUploadCount,
       uploadFile,
-      fileUploadInput,
-      console
+      fileUploadInput
     };
   }
 };
