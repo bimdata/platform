@@ -37,10 +37,17 @@
     top: 0%;
     right: 0%;
     z-index: 1000;
-    width: 400px;
+    width: 423px;
     height: 100vh;
     box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: var(--color-white);
+
+    &:deep(.bimdata-file-manager) {
+      .file-card__content__header__btn-menu .bimdata-checkbox {
+        top: 6px;
+        right: 6px;
+      }
+    }
 
     &__close {
       position: absolute;

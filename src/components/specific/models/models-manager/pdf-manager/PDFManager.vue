@@ -50,6 +50,7 @@
               :project="project"
               :model="currentModel"
               @metaBuilding-created="loadProjectModels(project)"
+              @metaBuilding-updated="loadProjectModels(project)"
               @metaBuilding-deleted="loadProjectModels(project)"
             />
           </div>
