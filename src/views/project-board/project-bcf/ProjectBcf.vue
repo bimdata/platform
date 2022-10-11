@@ -200,6 +200,7 @@
             :topic="selectedTopic"
             @edit-topic="openTopicUpdate(selectedTopic)"
             @view-topic="openTopicViewer(selectedTopic)"
+            @view-topic-viewpoint="topicViewpoint"
             @topic-deleted="reloadBcfTopics(), closeSidePanel()"
             @comment-created="reloadComments(selectedTopic)"
             @comment-updated="reloadComments(selectedTopic)"
@@ -301,6 +302,9 @@
         </div>
       </transition>
     </div>
+    <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
+      <SnapshotModal :topicSnapshot="topicSnapshot" />
+    </AppModal>
   </div>
 </template>
 
@@ -324,19 +328,24 @@ import { useBcf } from "../../../state/bcf.js";
 import { useProjects } from "../../../state/projects.js";
 import { useModels } from "../../../state/models.js";
 import { fileUploadInput } from "../../../utils/upload.js";
+import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
 
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
 import AppSidePanel from "../../../components/specific/app/app-side-panel/AppSidePanel.vue";
+import AppModal from "../../../components/specific/app/app-modal/AppModal.vue";
+import SnapshotModal from "../snapshot-modal/SnapshotModal.vue";
 
 export default {
   components: {
     AppSlotContent,
     AppSidePanel,
     BcfStatisticsEmptyImage,
-    NoSearchResultsImage
+    NoSearchResultsImage,
+    AppModal,
+    SnapshotModal
   },
   setup() {
     const router = useRouter();
@@ -482,6 +491,13 @@ export default {
       openSidePanel();
     };
 
+    const { openModal } = useAppModal();
+    const topicSnapshot = ref();
+    const topicViewpoint = topic => {
+      openModal();
+      topicSnapshot.value = topic.snapshot.snapshot_data;
+    };
+
     const openTopicViewer = topic => {
       let viewpoint = topic.viewpoints[0] ?? {};
       let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
@@ -519,6 +535,7 @@ export default {
 
     return {
       // References
+      topicSnapshot,
       detailedExtensions,
       displayedTopics,
       extensions,
@@ -538,6 +555,7 @@ export default {
       sortOrderIndex,
       sortOrderTitle,
       topics,
+      topicViewpoint,
       // Methods
       applyFilters,
       closeMetrics,
