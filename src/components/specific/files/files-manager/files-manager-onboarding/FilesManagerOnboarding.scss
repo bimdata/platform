@@ -12,13 +12,19 @@
     flex-wrap: wrap;
     gap: var(--spacing-unit);
     width: 30%;
-    max-width: 475px;
+    max-width: 300px;
 
     &__dropdown {
       border-radius: 3px;
       height: 32px;
+      color: var(--color-primary);
+
+      &--no-project {
+        color: var(--color-silver-dark);
+        pointer-events: none;
+      }
+
       span {
-        color: var(--color-primary);
         margin-right: calc(var(--spacing-unit) / 2);
       }
 
@@ -33,7 +39,6 @@
           left: -2px;
           font-size: calc(var(--font-size) / 1.1);
           padding-bottom: var(--spacing-unit);
-          color: var(--color-primary);
           border: none;
 
           ul {

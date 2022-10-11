@@ -27,40 +27,45 @@
       >
         {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
       </BIMDataButton>
-      <!-- <BIMDataDropdownMenu
-        class="files-manager-onboarding__actions__dropdown"
-        v-click-away="close"
-        ref="dropdown"
-        width="20%"
-        height="32px"
-        directionClass="up"
-        @click="toggle"
-      >
-        <template #header>
-          <span> {{ $t("FilesManagerOnboarding.GEDStructureImport") }}</span>
-          <BIMDataIcon
-            :name="isOpen ? 'deploy' : 'chevron'"
-            fill
-            size="xxs"
-            color="primary"
-            :rotate="isOpen ? 180 : 0"
-          />
-        </template>
-        <template #element>
-          <ul
-            class="bimdata-list"
-            :style="{ maxHeight: dropdownMaxHeight + 'px' }"
-          >
-            <li
-              v-for="project in projectsTree"
-              :key="project.name"
-              @click="project.action"
+      <template v-if="project.isAdmin">
+        <BIMDataDropdownMenu
+          class="files-manager-onboarding__actions__dropdown"
+          :class="{
+            ['files-manager-onboarding__actions__dropdown--no-project']:
+              projectsTree?.length === 0
+          }"
+          v-click-away="close"
+          ref="dropdown"
+          width="20%"
+          height="32px"
+          directionClass="up"
+          @click="toggle"
+        >
+          <template #header>
+            <span> {{ $t("FilesManagerOnboarding.GEDStructureImport") }}</span>
+            <BIMDataIcon
+              :name="isOpen ? 'deploy' : 'chevron'"
+              fill
+              size="xxs"
+              :rotate="isOpen ? 180 : 0"
+            />
+          </template>
+          <template #element>
+            <ul
+              class="bimdata-list"
+              :style="{ maxHeight: dropdownMaxHeight + 'px' }"
             >
-              <BIMDataTextbox :text="project.name" />
-            </li>
-          </ul>
-        </template>
-      </BIMDataDropdownMenu> -->
+              <li
+                v-for="project in projectsTree"
+                :key="project.name"
+                @click="project.action"
+              >
+                <BIMDataTextbox :text="project.name" />
+              </li>
+            </ul>
+          </template>
+        </BIMDataDropdownMenu>
+      </template>
     </div>
     <transition name="fade">
       <div
@@ -171,7 +176,8 @@ export default {
       createFolder,
       updateUploadCount,
       uploadFile,
-      fileUploadInput
+      fileUploadInput,
+      console
     };
   }
 };
