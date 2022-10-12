@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { defineConfig } from "vite";
 import env from "vite-plugin-environment";
 import vue from "@vitejs/plugin-vue";
@@ -20,7 +21,9 @@ export default defineConfig(({ mode }) => {
     }
   };
   if (mode !== "production") {
-    config.plugins.push(env("all", { prefix: "VUE_APP_", defineOn: "process.env" }));
+    config.plugins.push(
+      env("all", { prefix: "VUE_APP_", defineOn: "process.env" })
+    );
   }
   return config;
 });
