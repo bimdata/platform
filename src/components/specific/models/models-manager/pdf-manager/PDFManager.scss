@@ -44,6 +44,8 @@
 
     &:deep(.bimdata-file-manager) {
       .file-card__content__header__btn-menu .bimdata-checkbox {
+        // both properties below are a temporary workaround, 
+        // since the given class is not applied thus the style neither
         top: 6px;
         right: 6px;
       }
