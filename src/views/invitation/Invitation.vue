@@ -1,4 +1,5 @@
 <template>
+  {{ console.log("invitationList", invitationList) }}
   <div class="invitation">
     <div class="invitation__back-btn">
       <GoBackButton />
