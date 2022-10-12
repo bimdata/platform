@@ -100,7 +100,7 @@ class ProjectService {
         {
           email: invitation.email,
           role: invitation.role,
-          redirect_uri: `${import.meta.env.VUE_APP_BASE_URL}/spaces/${
+          redirect_uri: `${process.env.VUE_APP_BASE_URL}/spaces/${
             project.cloud.id
           }/projects/${project.id}`
         }

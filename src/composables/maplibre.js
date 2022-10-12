@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 
-const MAP_TILER_TOKEN = import.meta.env.VUE_APP_MAPTILER_TOKEN;
+const MAP_TILER_TOKEN = process.env.VUE_APP_MAPTILER_TOKEN;
 
 export function useMaplibre(containerID) {
   const loadMap = (longitude, latitude) => {

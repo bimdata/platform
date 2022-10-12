@@ -13,7 +13,7 @@ class UploadService {
     const uploader = createFileUploader(
       {
         method: "PATCH",
-        url: `${import.meta.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
+        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${space.id}`,
         accessToken: apiClient.accessToken
       },
       {
@@ -49,7 +49,7 @@ class UploadService {
     const uploader = createFileUploader(
       {
         method: "POST",
-        url: `${import.meta.env.VUE_APP_API_BASE_URL}/cloud/${
+        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${
           project.cloud.id
         }/project/${project.id}/document`,
         accessToken: apiClient.accessToken

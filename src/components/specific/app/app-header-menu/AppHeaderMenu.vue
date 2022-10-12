@@ -130,7 +130,7 @@ import LanguageSelector from "./language-selector/LanguageSelector.vue";
 export default {
   components: {
     LanguageSelector,
-    UserAvatar
+    UserAvatar,
   },
   setup() {
     const { signOut } = useAuth();
@@ -140,14 +140,14 @@ export default {
     const {
       isOpen: showLanguageSelector,
       open: openLanguageSelector,
-      close: closeLanguageSelector
+      close: closeLanguageSelector,
     } = useToggle();
 
     const bimdataConnectProfileUrl =
-      import.meta.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
-    const documentationUrl = import.meta.env.VUE_APP_URL_DOCUMENTATION;
-    const marketPlaceUrl = import.meta.env.VUE_APP_URL_MARKETPLACE;
-    const userIframeProfile = import.meta.env.VUE_APP_USER_IFRAME_PROFILE;
+      process.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
+    const documentationUrl = process.env.VUE_APP_URL_DOCUMENTATION;
+    const marketPlaceUrl = process.env.VUE_APP_URL_MARKETPLACE;
+    const userIframeProfile = process.env.VUE_APP_USER_IFRAME_PROFILE;
 
     return {
       // References
@@ -165,9 +165,9 @@ export default {
       openLanguageSelector,
       router: useRouter(),
       fullName,
-      signOut
+      signOut,
     };
-  }
+  },
 };
 </script>
 
