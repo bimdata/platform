@@ -246,7 +246,8 @@
         "renameButtonText": "Renommer",
         "archiveButtonText": "Archiver",
         "deleteButtonText": "Supprimer",
-        "unarchiveButtonText": "Désarchiver"
+        "unarchiveButtonText": "Désarchiver",
+        "editButtontext": "Editer"
     },
     "ModelLocation": {
         "emptyLocationMessage": "Aucune données de localisation disponible",
@@ -291,6 +292,9 @@
             "dwg": "DWG",
             "metaBuildings": "Meta Buildings",
             "upload": "Upload"
+        },
+        "buildingMaker": {
+            "create": "Créer"
         }
     },
     "ModelsMergeModal": {

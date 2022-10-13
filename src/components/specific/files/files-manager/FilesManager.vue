@@ -121,13 +121,9 @@
                 color="primary"
                 width="100%"
                 @click="
-                  fileUploadInput(
-                    'file',
-                    event => uploadFiles(event.target.files),
-                    {
-                      multiple: true
-                    }
-                  )
+                  fileUploadInput('file', event => uploadFiles(event), {
+                    multiple: true
+                  })
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
@@ -228,6 +224,8 @@
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
+            @dragover.prevent="() => {}"
+            @drop.prevent="event => uploadFiles(event)"
           />
         </div>
 
@@ -299,6 +297,7 @@
 
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
+import async from "async";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
@@ -320,10 +319,12 @@ import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
 import {
   getPaths,
-  getDocsInfos,
+  handleInputFiles,
   treeIdGenerator,
   createTreeFromPaths,
-  matchFoldersAndDocs
+  matchFoldersAndDocs,
+  handleDragAndDropFile,
+  getFileFormat
 } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
@@ -470,15 +471,35 @@ export default {
 
     const filesToUpload = ref([]);
 
-    const uploadFiles = async files => {
-      files = Array.from(files);
+    const uploadFiles = async event => {
+      let foldersUpload = [];
 
-      const isFolderUpload = Boolean(files[0].webkitRelativePath);
+      if (event.dataTransfer) {
+        // Files from drag & drop
+        let docsUpload = [];
+        await async.each(Array.from(event.dataTransfer.items), async file => {
+          const fileEntry = file.webkitGetAsEntry();
 
-      if (isFolderUpload) {
-        const paths = getPaths(files);
-        const filesInfos = getDocsInfos(files);
+          if (fileEntry.isDirectory) {
+            foldersUpload.push(await handleDragAndDropFile(fileEntry));
+          } else {
+            docsUpload.push(await getFileFormat(fileEntry));
+          }
+        });
+        filesToUpload.value = docsUpload;
+      } else {
+        // Files from input
+        const fileList = Array.from(event.target.files);
 
+        if (fileList[0].webkitRelativePath) {
+          foldersUpload = [handleInputFiles(fileList)];
+        } else {
+          filesToUpload.value = fileList;
+        }
+      }
+
+      async.each(foldersUpload, async folder => {
+        const paths = getPaths(folder);
         const tree = createTreeFromPaths(currentFolder, paths);
         const DMSTree = await FileService.createFileStructure(props.project, [
           tree
@@ -488,13 +509,12 @@ export default {
           {
             type: FILE_TYPE.FOLDER,
             name: DMSTree[0].name,
-            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs(DMSTree, filesInfos)
+            size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, folder)
           }
         ];
-      } else {
-        filesToUpload.value = files;
-      }
+      });
+
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
@@ -686,7 +706,7 @@ export default {
     const menuItems = computed(() => {
       const items = [];
 
-      if (props.project.isAdmin && projectsTree.value.length > 0) {
+      if (props.project.isAdmin) {
         items.push({
           name: t("FilesManager.structureImport"),
           children: projectsTree.value
@@ -698,9 +718,7 @@ export default {
           {
             name: t("FilesManager.folderImport"),
             action: () => {
-              fileUploadInput("folder", event =>
-                uploadFiles(event.target.files)
-              );
+              fileUploadInput("folder", event => uploadFiles(event));
             }
           },
           {
