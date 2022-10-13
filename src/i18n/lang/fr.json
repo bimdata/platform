@@ -217,10 +217,10 @@
       "invitAccepted": "Invitation acceptée",
       "invitDenied": "Invitation refusée",
       "invitPending": "Invitation en cours",
-      "goToProject": "Accéder au projet",
-      "goToSpace": "Accéder à l'espace"
-
-
+      "goToProjectLong": "Accéder au projet",
+      "goToProjectShort": "Projet",
+      "goToSpaceLong": "Accéder à l'espace",
+      "goToSpaceShort": "Espace"
     },
     "InvitationCard": {
         "pendingMessage": "Invité - Sans réponse.",

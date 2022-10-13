@@ -1,5 +1,4 @@
 <template>
-  {{ console.log("invitationList", invitationList) }}
   <div class="invitation">
     <div class="invitation__back-btn">
       <GoBackButton />
@@ -12,12 +11,15 @@
       <div class="invitation__content__header">
         <div class="invitation__content__header__counter">
           <span>
-            {{ $t("Invitation.invitCounter") + ` ${invitationList.length}` }}
+            {{
+              $t("Invitation.invitCounter") + ` ${invitationListPending.length}`
+            }}
           </span>
         </div>
         <BIMDataButton
           :disabled="invitationListPending.length < 1"
           color="primary"
+          width="130px"
           fill
           radius
           @click="acceptAllInvitation"
@@ -87,21 +89,41 @@
                   {{ $t("Invitation.invitPending") }}
                 </template>
 
-                <!-- ({{ $d(invit.date, "long") }}) -->
+                ({{ $d(invit.created_at, "longMonth") }})
               </span>
             </div>
             <div class="invitation__content__list__invit__button">
               <template
                 v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
               >
-                <BIMDataButton color="primary" fill radius onClick="">
-                  <template v-if="invit.project_name">
-                    {{ $t("Invitation.goToProject") }}
-                  </template>
-                  <template v-else>
-                    {{ $t("Invitation.goToSpace") }}
-                  </template>
-                </BIMDataButton>
+                <AppLink
+                  :to="{
+                    name: invit.project_id
+                      ? routeNames.projectBoard
+                      : routeNames.spaceBoard,
+                    params: {
+                      spaceID: invit.cloud_id,
+                      projectID: invit.project_id
+                    }
+                  }"
+                >
+                  <BIMDataButton
+                    color="primary"
+                    :width="isMD ? 'inherit' : '130px'"
+                    fill
+                    radius
+                    onClick="r"
+                  >
+                    <template v-if="invit.project_name">
+                      {{
+                        $t(`Invitation.goToProject${isMD ? "Short" : "Long"}`)
+                      }}
+                    </template>
+                    <template v-else>
+                      {{ $t(`Invitation.goToSpace${isMD ? "Short" : "Long"}`) }}
+                    </template>
+                  </BIMDataButton>
+                </AppLink>
               </template>
               <template
                 v-if="invit.status === INVITATION_VALIDATION_STATUS.PENDING"
@@ -152,14 +174,18 @@ import async from "async";
 import { fullName } from "../../utils/users.js";
 import { INVITATION_VALIDATION_STATUS } from "../../config/invitation.js";
 import InvitationViewService from "../../services/InvitationViewService.js";
+import routeNames from "../../router/route-names.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
 
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
+import AppLink from "../../components/specific/app/app-link/AppLink.vue";
 
 export default {
   components: {
     GoBackButton,
-    UserAvatar
+    UserAvatar,
+    AppLink
   },
   setup() {
     const router = useRouter();
@@ -194,6 +220,7 @@ export default {
 
     return {
       // references
+      routeNames,
       invitationList,
       invitationListPending,
       INVITATION_VALIDATION_STATUS,
@@ -204,7 +231,8 @@ export default {
       onAcceptInvitation,
       onDenyInvitation,
       getBack: () => router.back(),
-      console
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

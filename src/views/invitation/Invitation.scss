@@ -7,11 +7,12 @@
   }
 
   &__content {
-    flex: 2;
+    flex: 5;
     display: flex;
     gap: 30px;
     flex-direction: column;
     max-width: 800px;
+    min-width: 50%;
 
     &__title {
       padding-top: calc(var(--spacing-unit) / 1.5);
@@ -43,6 +44,7 @@
         padding: 0 calc(var(--spacing-unit) / 0.9);
         border-left: 2px solid var(--color-secondary);
         box-shadow: var(--box-shadow);
+        min-width: 80%;
 
 
         &__text {
@@ -78,6 +80,10 @@
 
           &__invited-status-A {
             color: var(--color-success);
+          }
+
+          &__invited-status-P {
+            color: var(--color-granite-light);
           }
         }
 

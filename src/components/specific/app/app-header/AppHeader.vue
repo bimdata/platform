@@ -6,9 +6,6 @@
     <app-slot name="app-header-action" />
     <AppLink :to="{ name: routeNames.invitation }" style="margin-left: auto">
       <BIMDataButton class="app-header__invitation" ghost icon>
-        <template v-if="true">
-          <div class="app-header__invitation__notif"><div></div></div>
-        </template>
         <BIMDataIcon name="invitation" size="m" />
       </BIMDataButton>
     </AppLink>
