@@ -78,7 +78,7 @@ import { useSpaces } from "../../state/spaces.js";
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppModal from "../../components/specific/app/app-modal/AppModal.vue";
-import AppSlot from "../../components/specific/app/app-slot/AppSlot.vue";
+import AppSlot from "../../components/specific/app/app-slot/AppSlot.js";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
