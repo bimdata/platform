@@ -71,20 +71,14 @@
               <span
                 :class="`invitation__content__list__invit__text__invitation-status--${invit.status}`"
               >
-                <template
-                  v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
-                >
+                <template v-if="invit.status === INVITATION_STATUS.ACCEPTED">
                   {{ $t("Invitation.invitAccepted") }}
                 </template>
-                <template
-                  v-else-if="invit.status === INVITATION_VALIDATION_STATUS.DENY"
-                >
+                <template v-else-if="invit.status === INVITATION_STATUS.DENIED">
                   {{ $t("Invitation.invitDenied") }}
                 </template>
                 <template
-                  v-else-if="
-                    invit.status === INVITATION_VALIDATION_STATUS.PENDING
-                  "
+                  v-else-if="invit.status === INVITATION_STATUS.PENDING"
                 >
                   {{ $t("Invitation.invitPending") }}
                 </template>
@@ -93,9 +87,7 @@
               </span>
             </div>
             <div class="invitation__content__list__invit__button">
-              <template
-                v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
-              >
+              <template v-if="invit.status === INVITATION_STATUS.ACCEPTED">
                 <AppLink
                   :to="
                     invit.project_id
@@ -131,9 +123,7 @@
                   </BIMDataButton>
                 </AppLink>
               </template>
-              <template
-                v-if="invit.status === INVITATION_VALIDATION_STATUS.PENDING"
-              >
+              <template v-if="invit.status === INVITATION_STATUS.PENDING">
                 <div class="invitation__content__list__invit__button__pending">
                   <BIMDataButton
                     class="invitation__content__list__invit__button__pending--deny"
@@ -155,12 +145,17 @@
                     icon
                     @click="onAcceptInvitation(invit).then(fetchInvitations)"
                   >
-                    <BIMDataIcon
-                      name="validate"
-                      fill
-                      color="success"
-                      size="s"
-                    />
+                    <template v-if="isLoading">
+                      <BIMDataSpinner />
+                    </template>
+                    <template v-else>
+                      <BIMDataIcon
+                        name="validate"
+                        fill
+                        color="success"
+                        size="s"
+                      />
+                    </template>
                   </BIMDataButton>
                 </div>
               </template>
@@ -180,7 +175,7 @@ import async from "async";
 import { fullName } from "../../utils/users.js";
 import routeNames from "../../router/route-names.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
-import { INVITATION_VALIDATION_STATUS } from "../../config/invitation.js";
+import { INVITATION_STATUS } from "../../config/invitation.js";
 import InvitationViewService from "../../services/InvitationViewService.js";
 
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
@@ -196,18 +191,24 @@ export default {
   setup() {
     const router = useRouter();
 
+    const isLoading = ref(false);
+
     const invitationList = ref([]);
     const invitationListPending = ref([]);
 
     const fetchInvitations = async () => {
       invitationList.value = await InvitationViewService.fetchInvitations();
       invitationListPending.value = invitationList.value.filter(
-        invit => invit.status === INVITATION_VALIDATION_STATUS.PENDING
+        invit => invit.status === INVITATION_STATUS.PENDING
       );
     };
 
     const onAcceptInvitation = async invitation => {
+      isLoading.value = true;
       await InvitationViewService.acceptInvitation(invitation);
+      setTimeout(() => {
+        isLoading.value = false;
+      }, 200);
     };
 
     const onDenyInvitation = async invitation => {
@@ -223,14 +224,15 @@ export default {
       await fetchInvitations();
     };
 
-    onMounted(async () => fetchInvitations());
+    onMounted(() => fetchInvitations());
 
     return {
       // references
+      isLoading,
       routeNames,
       invitationList,
+      INVITATION_STATUS,
       invitationListPending,
-      INVITATION_VALIDATION_STATUS,
       // methods
       fullName,
       onDenyInvitation,

@@ -5,7 +5,7 @@
     </AppLink>
     <app-slot name="app-header-action" />
     <AppLink :to="{ name: routeNames.invitation }" style="margin-left: auto">
-      <BIMDataButton class="app-header__invitation" ghost icon>
+      <BIMDataButton class="app-header__invitation" radius ghost icon>
         <BIMDataIcon name="invitation" size="m" />
       </BIMDataButton>
     </AppLink>
