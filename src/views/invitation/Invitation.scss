@@ -69,21 +69,23 @@
             }
           }
 
-          &__invited-status-D, &__invited-status-A, &__invited-status-P {
-            font-size: 0.8rem;
-            font-style: italic;
-          }
+          &__invitation-status {
+            &--D, &--A, &--P {
+              font-size: 0.8rem;
+              font-style: italic;
+            } 
 
-          &__invited-status-D {
-            color: var(--color-high);
-          }
+            &--D {
+              color: var(--color-high);
+            }
 
-          &__invited-status-A {
-            color: var(--color-success);
-          }
+            &--A {
+              color: var(--color-success);
+            }
 
-          &__invited-status-P {
-            color: var(--color-granite-light);
+            &--P {
+              color: var(--color-granite-light);
+            }
           }
         }
 
@@ -94,11 +96,11 @@
             display: flex;
             gap: 15px;
 
-            &__deny {
+            &--deny {
               box-shadow: var(--box-shadow);
             }
 
-            &__accept {
+            &--accept {
               box-shadow: var(--box-shadow);
             }
           }

@@ -69,7 +69,7 @@
                 </template>
               </i18n-t>
               <span
-                :class="`invitation__content__list__invit__text__invited-status-${invit.status}`"
+                :class="`invitation__content__list__invit__text__invitation-status--${invit.status}`"
               >
                 <template
                   v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
@@ -97,22 +97,28 @@
                 v-if="invit.status === INVITATION_VALIDATION_STATUS.ACCEPT"
               >
                 <AppLink
-                  :to="{
-                    name: invit.project_id
-                      ? routeNames.projectBoard
-                      : routeNames.spaceBoard,
-                    params: {
-                      spaceID: invit.cloud_id,
-                      projectID: invit.project_id
-                    }
-                  }"
+                  :to="
+                    invit.project_id
+                      ? {
+                          name: routeNames.projectBoard,
+                          params: {
+                            spaceID: invit.cloud_id,
+                            projectID: invit.project_id
+                          }
+                        }
+                      : {
+                          name: routeNames.spaceBoard,
+                          params: {
+                            spaceID: invit.cloud_id
+                          }
+                        }
+                  "
                 >
                   <BIMDataButton
                     color="primary"
                     :width="isMD ? 'inherit' : '130px'"
                     fill
                     radius
-                    onClick="r"
                   >
                     <template v-if="invit.project_name">
                       {{
@@ -130,7 +136,7 @@
               >
                 <div class="invitation__content__list__invit__button__pending">
                   <BIMDataButton
-                    class="invitation__content__list__invit__button__pending__deny"
+                    class="invitation__content__list__invit__button__pending--deny"
                     width="35px"
                     height="35px"
                     radius
@@ -141,7 +147,7 @@
                     <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
                   <BIMDataButton
-                    class="invitation__content__list__invit__button__pending__accept"
+                    class="invitation__content__list__invit__button__pending--accept"
                     width="35px"
                     height="35px"
                     radius
@@ -172,14 +178,14 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import async from "async";
 import { fullName } from "../../utils/users.js";
-import { INVITATION_VALIDATION_STATUS } from "../../config/invitation.js";
-import InvitationViewService from "../../services/InvitationViewService.js";
 import routeNames from "../../router/route-names.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { INVITATION_VALIDATION_STATUS } from "../../config/invitation.js";
+import InvitationViewService from "../../services/InvitationViewService.js";
 
-import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
-import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
+import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 
 export default {
   components: {
@@ -192,6 +198,7 @@ export default {
 
     const invitationList = ref([]);
     const invitationListPending = ref([]);
+
     const fetchInvitations = async () => {
       invitationList.value = await InvitationViewService.fetchInvitations();
       invitationListPending.value = invitationList.value.filter(
@@ -226,10 +233,10 @@ export default {
       INVITATION_VALIDATION_STATUS,
       // methods
       fullName,
-      fetchInvitations,
-      acceptAllInvitation,
-      onAcceptInvitation,
       onDenyInvitation,
+      fetchInvitations,
+      onAcceptInvitation,
+      acceptAllInvitation,
       getBack: () => router.back(),
       // Responsive breakpoints
       ...useStandardBreakpoints()
