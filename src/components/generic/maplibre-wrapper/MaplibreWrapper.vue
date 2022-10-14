@@ -1,6 +1,9 @@
 <template>
   <div class="maplibre-wrapper" :id="containerID">
     <!-- Mapbox will be displayed here -->
+    <a class="maptiler-link" href="https://www.maptiler.com/" target="_blank">
+      <img src="/static/maptiler-logo.svg" />
+    </a>
   </div>
 </template>
 
