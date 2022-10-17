@@ -133,7 +133,7 @@
                     radius
                     ghost
                     icon
-                    @click="onDenyInvitation(invit).then(fetchInvitations)"
+                    @click="onDenyInvitation(invit)"
                   >
                     <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
@@ -144,7 +144,7 @@
                     radius
                     ghost
                     icon
-                    @click="onAcceptInvitation(invit).then(fetchInvitations)"
+                    @click="onAcceptInvitation(invit)"
                   >
                     <template v-if="isLoading">
                       <BIMDataSpinner />
@@ -207,21 +207,22 @@ export default {
     const onAcceptInvitation = async invitation => {
       isLoading.value = true;
       await InvitationViewService.acceptInvitation(invitation);
-      setTimeout(() => {
-        isLoading.value = false;
-      }, 200);
+      await fetchInvitations();
+      isLoading.value = false;
     };
 
     const onDenyInvitation = async invitation => {
       await InvitationViewService.denyInvitation(invitation);
+      await fetchInvitations();
     };
 
     const acceptAllInvitation = async () => {
       await async.eachLimit(
         invitationListPending.value,
         20,
-        onAcceptInvitation
+        InvitationViewService.acceptInvitation
       );
+
       await fetchInvitations();
     };
 

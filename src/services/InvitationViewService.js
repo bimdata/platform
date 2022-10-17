@@ -22,14 +22,7 @@ class InvitationViewService {
     try {
       await apiClient.collaborationApi.acceptUserInvitation(invitation.id);
       await loadUser();
-
-      if (invitation.project_id) {
-        await loadUserProjects();
-      } else {
-        await loadUserSpaces();
-      }
-
-      return;
+      return Promise.all([loadUserSpaces, loadUserProjects]);
     } catch (error) {
       throw new RuntimeError(ERRORS.INVITATION_VIEW_ACCEPT_ERROR, error);
     }
