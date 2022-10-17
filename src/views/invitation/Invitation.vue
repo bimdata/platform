@@ -127,6 +127,7 @@
                 <div class="invitation__content__list__invit__button__pending">
                   <BIMDataButton
                     class="invitation__content__list__invit__button__pending--deny"
+                    :disabled="isLoading"
                     width="35px"
                     height="35px"
                     radius
