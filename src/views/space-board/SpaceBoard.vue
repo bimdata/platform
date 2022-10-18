@@ -50,7 +50,7 @@
       </template>
     </ViewHeader>
 
-    <AppSidePanel :title="$t('SpaceUsersManager.title')">
+    <AppSidePanelContent :title="$t('SpaceUsersManager.title')">
       <AppLoading name="space-users">
         <SpaceUsersManager
           :space="space"
@@ -58,7 +58,7 @@
           :invitations="invitations"
         />
       </AppLoading>
-    </AppSidePanel>
+    </AppSidePanelContent>
 
     <AppLoading name="space-projects">
       <BIMDataResponsiveGrid
@@ -90,11 +90,11 @@ import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 // Components
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppLoading from "../../components/specific/app/app-loading/AppLoading.vue";
+import AppSidePanelContent from "../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
-import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import AppSidePanel from "../../components/specific/app/app-side-panel/AppSidePanel.vue";
 import ProjectCard from "../../components/specific/projects/project-card/ProjectCard.vue";
 import ProjectCreationCard from "../../components/specific/projects/project-creation-card/ProjectCreationCard.vue";
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
@@ -105,7 +105,7 @@ export default {
   components: {
     AppBreadcrumb,
     AppLoading,
-    AppSidePanel,
+    AppSidePanelContent,
     GoBackButton,
     ProjectCard,
     ProjectCreationCard,

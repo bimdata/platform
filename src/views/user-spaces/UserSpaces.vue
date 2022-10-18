@@ -64,7 +64,7 @@
             color="primary"
             fill
             radius
-            @click="openCreationForm()"
+            @click="openCreationForm"
           >
             <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
             <span>{{ $t("UserSpaces.createButtonText") }}</span>
@@ -73,14 +73,14 @@
       </template>
     </ViewHeader>
 
-    <AppSidePanel
+    <AppSidePanelContent
       v-if="isSubscriptionEnabled"
       :title="$t('OrganizationsManager.title')"
     >
       <AppLoading name="spaces-subscriptions">
         <OrganizationsManager :organizations="organizations" />
       </AppLoading>
-    </AppSidePanel>
+    </AppSidePanelContent>
 
     <BIMDataResponsiveGrid
       itemWidth="215px"
@@ -114,7 +114,7 @@ import { useSpaces } from "../../state/spaces.js";
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
 import AppLoading from "../../components/specific/app/app-loading/AppLoading.vue";
-import AppSidePanel from "../../components/specific/app/app-side-panel/AppSidePanel.vue";
+import AppSidePanelContent from "../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import OrganizationsManager from "../../components/specific/organizations/organizations-manager/OrganizationsManager.vue";
 import SpaceCard from "../../components/specific/spaces/space-card/SpaceCard.vue";
@@ -125,7 +125,7 @@ export default {
     AppBreadcrumb,
     AppLink,
     AppLoading,
-    AppSidePanel,
+    AppSidePanelContent,
     OrganizationsManager,
     SpaceCard,
     SpaceCreationCard,
