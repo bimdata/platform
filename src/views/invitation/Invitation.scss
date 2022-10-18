@@ -29,6 +29,12 @@
         display: flex;
         color: var(--color-granite-light);
       }
+
+      &__spinner {
+        &:deep(.bimdata-spinner--square) {
+          border-color: var(--color-white);
+        }
+      }
     }
 
     &__list {

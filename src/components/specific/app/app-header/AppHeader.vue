@@ -6,6 +6,9 @@
     <app-slot name="app-header-action" />
     <AppLink :to="{ name: routeNames.invitation }" style="margin-left: auto">
       <BIMDataButton class="app-header__invitation" radius ghost icon>
+        <template v-if="invitationListPending.length > 0">
+          <div class="app-header__invitation__notif"><div></div></div>
+        </template>
         <BIMDataIcon name="invitation" size="m" />
       </BIMDataButton>
     </AppLink>
@@ -15,6 +18,8 @@
 
 <script>
 import routeNames from "../../../../router/route-names.js";
+import { useInvitations } from "../../../../state/invitations.js";
+
 // Components
 import AppSlot from "../app-slot/AppSlot.vue";
 import AppLink from "../app-link/AppLink.vue";
@@ -28,7 +33,8 @@ export default {
   },
   setup() {
     return {
-      routeNames
+      routeNames,
+      invitationListPending: useInvitations().invitationListPending
     };
   }
 };

@@ -18,5 +18,27 @@
     padding: calc(var(--spacing-unit) / 1.5);
     box-shadow: var(--box-shadow);
     margin-right: var(--spacing-unit);
+
+    &__notif {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--color-white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      right: 8px;
+      top: 8px;
+
+      div {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: var(--color-high);
+      }
+    }
   }
 }

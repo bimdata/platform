@@ -17,14 +17,19 @@
           </span>
         </div>
         <BIMDataButton
-          :disabled="invitationListPending.length < 1"
+          :disabled="invitationListPending.length < 1 || isLoadingAllInvit"
           color="primary"
           width="130px"
           fill
           radius
-          @click="acceptAllInvitation"
+          @click="onAcceptInvitations"
         >
-          {{ $t("Invitation.acceptAll") }}
+          <template v-if="isLoadingAllInvit">
+            <BIMDataSpinner class="invitation__content__header__spinner" />
+          </template>
+          <template v-else>
+            {{ $t("Invitation.acceptAll") }}
+          </template>
         </BIMDataButton>
       </div>
       <template v-if="invitationList.length > 0">
@@ -127,7 +132,7 @@
                 <div class="invitation__content__list__invit__button__pending">
                   <BIMDataButton
                     class="invitation__content__list__invit__button__pending--deny"
-                    :disabled="isLoading"
+                    :disabled="isLoadingSingleInvit || isLoadingAllInvit"
                     width="35px"
                     height="35px"
                     radius
@@ -138,15 +143,16 @@
                     <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
                   <BIMDataButton
+                    :disabled="isLoadingAllInvit"
                     class="invitation__content__list__invit__button__pending--accept"
                     width="35px"
                     height="35px"
                     radius
                     ghost
                     icon
-                    @click="onAcceptInvitation(invit)"
+                    @click="onAcceptInvitations(invit)"
                   >
-                    <template v-if="isLoading">
+                    <template v-if="isLoadingSingleInvit">
                       <BIMDataSpinner />
                     </template>
                     <template v-else>
@@ -170,14 +176,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import async from "async";
 import { fullName } from "../../utils/users.js";
 import routeNames from "../../router/route-names.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { INVITATION_STATUS } from "../../config/invitation.js";
-import InvitationViewService from "../../services/InvitationViewService.js";
+import { useInvitations } from "../../state/invitations.js";
 
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
 import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
@@ -191,46 +196,36 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const {
+      acceptInvitations,
+      denyInvitation,
+      invitationList,
+      invitationListPending
+    } = useInvitations();
 
-    const isLoading = ref(false);
+    const isLoadingSingleInvit = ref(false);
+    const isLoadingAllInvit = ref(false);
 
-    const invitationList = ref([]);
-    const invitationListPending = ref([]);
-
-    const fetchInvitations = async () => {
-      invitationList.value = await InvitationViewService.fetchInvitations();
-      invitationListPending.value = invitationList.value.filter(
-        invit => invit.status === INVITATION_STATUS.PENDING
-      );
-    };
-
-    const onAcceptInvitation = async invitation => {
-      isLoading.value = true;
-      await InvitationViewService.acceptInvitation(invitation);
-      await fetchInvitations();
-      isLoading.value = false;
+    const onAcceptInvitations = async invitation => {
+      if (invitation.id) {
+        isLoadingSingleInvit.value = true;
+        await acceptInvitations([invitation]);
+        isLoadingSingleInvit.value = false;
+      } else {
+        isLoadingAllInvit.value = true;
+        await acceptInvitations(invitationListPending.value);
+        isLoadingAllInvit.value = false;
+      }
     };
 
     const onDenyInvitation = async invitation => {
-      await InvitationViewService.denyInvitation(invitation);
-      await fetchInvitations();
+      await denyInvitation(invitation);
     };
-
-    const acceptAllInvitation = async () => {
-      await async.eachLimit(
-        invitationListPending.value,
-        20,
-        InvitationViewService.acceptInvitation
-      );
-
-      await fetchInvitations();
-    };
-
-    onMounted(() => fetchInvitations());
 
     return {
       // references
-      isLoading,
+      isLoadingSingleInvit,
+      isLoadingAllInvit,
       routeNames,
       invitationList,
       INVITATION_STATUS,
@@ -238,9 +233,7 @@ export default {
       // methods
       fullName,
       onDenyInvitation,
-      fetchInvitations,
-      onAcceptInvitation,
-      acceptAllInvitation,
+      onAcceptInvitations,
       getBack: () => router.back(),
       // Responsive breakpoints
       ...useStandardBreakpoints()

@@ -5,6 +5,7 @@ import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 import { useSubscriptions } from "../../state/subscriptions.js";
 import { useUser } from "../../state/user.js";
+import { useInvitations } from "../../state/invitations.js";
 
 const { isAuthenticated } = useAuth();
 const { loadUser } = useUser();
@@ -13,6 +14,7 @@ const { loadUserOrganizations, loadAllOrganizationsSpaces } =
 const { loadUserSpaces } = useSpaces();
 const { loadAllSpacesSubscriptions } = useSubscriptions();
 const { loadUserProjects } = useProjects();
+const { loadUserInvitation } = useInvitations();
 
 let isDataLoaded = false;
 
@@ -26,8 +28,12 @@ export default async function dataGuard() {
     // 2) Load organizations of the current user
     await loadUserOrganizations();
 
-    // 3) Load spaces and projects of the current user
-    await Promise.all([loadUserSpaces(), loadUserProjects()]);
+    // 3) Load spaces, projects and invitations of the current user
+    await Promise.all([
+      loadUserSpaces(),
+      loadUserProjects(),
+      loadUserInvitation()
+    ]);
 
     // 4) Load lists of orga spaces and space subs (non-blocking)
     load("spaces-subscriptions", [
