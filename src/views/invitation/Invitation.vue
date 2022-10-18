@@ -152,7 +152,12 @@
                     icon
                     @click="onAcceptInvitations(invit)"
                   >
-                    <template v-if="isLoadingSingleInvit">
+                    <template
+                      v-if="
+                        isLoadingSingleInvit &&
+                        currentInvitation.id === invit.id
+                      "
+                    >
                       <BIMDataSpinner />
                     </template>
                     <template v-else>
@@ -203,14 +208,19 @@ export default {
       invitationListPending
     } = useInvitations();
 
-    const isLoadingSingleInvit = ref(false);
+    const currentInvitation = ref(null);
     const isLoadingAllInvit = ref(false);
+    const isLoadingSingleInvit = ref(false);
 
     const onAcceptInvitations = async invitation => {
       if (invitation.id) {
+        currentInvitation.value = invitation;
         isLoadingSingleInvit.value = true;
+
         await acceptInvitations([invitation]);
+
         isLoadingSingleInvit.value = false;
+        currentInvitation.value = null;
       } else {
         isLoadingAllInvit.value = true;
         await acceptInvitations(invitationListPending.value);
@@ -228,8 +238,10 @@ export default {
       isLoadingAllInvit,
       routeNames,
       invitationList,
+      currentInvitation,
       INVITATION_STATUS,
       invitationListPending,
+
       // methods
       fullName,
       onDenyInvitation,
