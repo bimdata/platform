@@ -38,6 +38,7 @@
         @download="$emit('download', $event)"
         @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
+        @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
       />
     </template>
 
@@ -77,7 +78,14 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "selection-changed", "unarchive"],
+  emits: [
+    "archive",
+    "delete",
+    "download",
+    "selection-changed",
+    "unarchive",
+    "edit-metaBuilding"
+  ],
   setup(props) {
     const { t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();
