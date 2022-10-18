@@ -1,13 +1,7 @@
 <template>
   <div class="model-location">
     <transition name="fade" mode="out-in">
-      <template v-if="loading">
-        <div class="model-location__loader">
-          <BIMDataSpinner />
-        </div>
-      </template>
-
-      <template v-else-if="showLocationForm">
+      <template v-if="isOpenForm">
         <ModelLocationForm
           class="model-location__form"
           :project="project"
@@ -16,7 +10,7 @@
           :address="address"
           :longitude="longitude"
           :latitude="latitude"
-          @success="setLocation"
+          @location-updated="onLocationUpdated"
           @close="closeLocationForm"
         />
       </template>
@@ -56,11 +50,18 @@
         </div>
       </template>
     </transition>
+
+    <transition name="fade">
+      <div v-show="loading" class="model-location__loader">
+        <BIMDataSpinner />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { onActivated, provide, ref, watch } from "vue";
+import { useToggle } from "../../../../composables/toggle.js";
 import { useModels } from "../../../../state/models.js";
 import {
   DMS2DD,
@@ -90,13 +91,11 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const showLocationForm = ref(false);
-    const openLocationForm = () => {
-      showLocationForm.value = true;
-    };
-    const closeLocationForm = () => {
-      showLocationForm.value = false;
-    };
+    const {
+      isOpen: isOpenForm,
+      open: openLocationForm,
+      close: closeLocationForm
+    } = useToggle();
 
     const site = ref(null);
     const address = ref("");
@@ -105,7 +104,7 @@ export default {
 
     const reset = () => {
       loading.value = false;
-      showLocationForm.value = false;
+      isOpenForm.value = false;
       site.value = null;
       address.value = "";
       longitude.value = 0;
@@ -113,7 +112,6 @@ export default {
     };
 
     const setLocation = async () => {
-      reset();
       loading.value = true;
       const location = await fetchModelLocation(props.project, props.model);
       site.value = location.site;
@@ -138,6 +136,11 @@ export default {
       loading.value = false;
     };
 
+    const onLocationUpdated = async () => {
+      await setLocation();
+      closeLocationForm();
+    };
+
     watch(
       () => props.model,
       () => {
@@ -157,10 +160,11 @@ export default {
       latitude,
       loading,
       longitude,
-      showLocationForm,
+      isOpenForm,
       site,
       // Methods
       closeLocationForm,
+      onLocationUpdated,
       openLocationForm,
       setLocation
     };

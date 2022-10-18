@@ -173,7 +173,7 @@
       </div>
     </div>
 
-    <AppSidePanel :header="false">
+    <AppSidePanelContent :header="false">
       <transition name="fade" mode="out-in">
         <template v-if="showSettings">
           <BcfSettings
@@ -225,7 +225,7 @@
           />
         </template>
       </transition>
-    </AppSidePanel>
+    </AppSidePanelContent>
 
     <div class="project-bcf__content">
       <transition name="fade">
@@ -333,15 +333,15 @@ import { useAppModal } from "../../../components/specific/app/app-modal/app-moda
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
+import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
-import AppSidePanel from "../../../components/specific/app/app-side-panel/AppSidePanel.vue";
 import AppModal from "../../../components/specific/app/app-modal/AppModal.vue";
 import SnapshotModal from "../snapshot-modal/SnapshotModal.vue";
 
 export default {
   components: {
+    AppSidePanelContent,
     AppSlotContent,
-    AppSidePanel,
     BcfStatisticsEmptyImage,
     NoSearchResultsImage,
     AppModal,

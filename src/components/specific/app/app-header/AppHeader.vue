@@ -21,7 +21,7 @@ import routeNames from "../../../../router/route-names.js";
 import { useInvitations } from "../../../../state/invitations.js";
 
 // Components
-import AppSlot from "../app-slot/AppSlot.vue";
+import AppSlot from "../app-slot/AppSlot.js";
 import AppLink from "../app-link/AppLink.vue";
 import AppHeaderMenu from "../app-header-menu/AppHeaderMenu.vue";
 

@@ -129,16 +129,11 @@ class SpaceService {
 
   async updateSpaceUser(space, user) {
     try {
-      // TODO: API model should be updated to return
-      // user data instead of role value.
-      const res = await apiClient.collaborationApi.updateCloudUser(
+      return await apiClient.collaborationApi.updateCloudUser(
         space.id,
         user.id,
-        { role: user.cloudRole }
+        user
       );
-      return {
-        cloudRole: res.role
-      };
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
     }
