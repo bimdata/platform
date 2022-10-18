@@ -28,43 +28,29 @@
         {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
       </BIMDataButton>
       <template v-if="project.isAdmin">
-        <BIMDataDropdownMenu
-          class="files-manager-onboarding__actions__dropdown"
-          :class="{
-            'files-manager-onboarding__actions__dropdown--no-project':
-              projectsTree?.length === 0
-          }"
-          v-click-away="close"
-          ref="dropdown"
-          width="20%"
-          height="32px"
-          directionClass="up"
-          @click="toggle"
-        >
-          <template #header>
-            <span> {{ $t("FilesManagerOnboarding.GEDStructureImport") }}</span>
-            <BIMDataIcon
-              :name="isOpen ? 'deploy' : 'chevron'"
-              fill
-              size="xxs"
-              :rotate="isOpen ? 180 : 0"
-            />
-          </template>
-          <template #element>
-            <ul
-              class="bimdata-list"
-              :style="{ maxHeight: dropdownMaxHeight + 'px' }"
-            >
-              <li
-                v-for="project in projectsTree"
-                :key="project.name"
-                @click="project.action"
-              >
-                <BIMDataTextbox :text="project.name" />
-              </li>
-            </ul>
-          </template>
-        </BIMDataDropdownMenu>
+        <template v-if="!isGedMenuOpen">
+          <BIMDataButton
+            color="primary"
+            outline
+            radius
+            icon
+            @click="openGedMenu"
+          >
+            <BIMDataIcon name="plus" size="s" />
+          </BIMDataButton>
+        </template>
+        <template v-if="isGedMenuOpen">
+          <BIMDataDropdownMenu
+            class="files-manager-onboarding__actions__dropdown"
+            v-click-away="closeProjects && closeGedMenu"
+            ref="dropdown"
+            width="20%"
+            height="32px"
+            directionClass="none"
+            :menuItems="gedMenu"
+            :subListMaxHeight="dropdownMaxHeight + 'px'"
+          />
+        </template>
       </template>
     </div>
     <transition name="fade">
@@ -101,8 +87,20 @@
 
 <script>
 import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
+import async from "async";
+
 import { useToggle } from "../../../../../composables/toggle.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
+import FileService from "../../../../../services/FileService.js";
+import { FILE_TYPE } from "../../../../../config/files.js";
+
+import {
+  getPaths,
+  handleInputFiles,
+  createTreeFromPaths,
+  matchFoldersAndDocs
+} from "../../../../../utils//files.js";
 
 // Components
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
@@ -131,13 +129,47 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
-    const { isOpen, toggle, close } = useToggle();
+    const { t } = useI18n();
+
+    const {
+      isOpen: isProjectsOpen,
+      toggle: toggleProjects,
+      close: closeProjects
+    } = useToggle();
+
+    const {
+      isOpen: isGedMenuOpen,
+      open: openGedMenu,
+      close: closeGedMenu
+    } = useToggle();
 
     let uploadCount = 0;
     const fileUploads = ref([]);
     const uploadFile = files => {
       uploadCount = 0;
-      fileUploads.value = Array.from(files);
+
+      const fileList = Array.from(files);
+
+      if (files[0].webkitRelativePath) {
+        async.each([handleInputFiles(fileList)], async folder => {
+          const paths = getPaths(folder);
+          const tree = createTreeFromPaths(props.rootFolder, paths);
+          const DMSTree = await FileService.createFileStructure(props.project, [
+            tree
+          ]);
+
+          fileUploads.value = [
+            {
+              type: FILE_TYPE.FOLDER,
+              name: DMSTree[0].name,
+              size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
+              files: matchFoldersAndDocs(DMSTree, folder)
+            }
+          ];
+        });
+      } else {
+        fileUploads.value = fileList;
+      }
     };
 
     const updateUploadCount = () => {
@@ -162,6 +194,23 @@ export default {
         onboarding.value?.getBoundingClientRect().y
     );
 
+    const gedMenu = computed(() => {
+      if (!props.project.isAdmin) return;
+      const items = [];
+      items.push(
+        {
+          name: t("FilesManagerOnboarding.GEDStructureImport"),
+          children: props.projectsTree
+        },
+        {
+          name: t("FilesManagerOnboarding.folderImport"),
+          action: () =>
+            fileUploadInput("folder", event => uploadFile(event.target.files))
+        }
+      );
+      return items;
+    });
+
     return {
       // References
       fileUploads,
@@ -169,10 +218,14 @@ export default {
       dropdownMaxHeight,
       onboarding,
       dropdown,
-      isOpen,
+      gedMenu,
+      isProjectsOpen,
+      isGedMenuOpen,
       // Methods
-      toggle,
-      close,
+      toggleProjects,
+      closeProjects,
+      openGedMenu,
+      closeGedMenu,
       createFolder,
       updateUploadCount,
       uploadFile,

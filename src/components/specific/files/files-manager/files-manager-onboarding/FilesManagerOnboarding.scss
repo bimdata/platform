@@ -12,41 +12,23 @@
     flex-wrap: wrap;
     gap: var(--spacing-unit);
     width: 30%;
-    max-width: 300px;
+    max-width: 280px;
 
+   
     &__dropdown {
-      border-radius: 3px;
-      height: 32px;
-      color: var(--color-primary);
+      width: 103%;
 
-      &--no-project {
-        color: var(--color-silver-dark);
-        pointer-events: none;
-      }
+      &:deep(.submenu) {
+        left: -2px;
+        font-size: calc(var(--font-size) / 1.1);
+        padding-bottom: var(--spacing-unit);
+        border: none;
 
-      span {
-        margin-right: calc(var(--spacing-unit) / 2);
-      }
+        ul {
+          overflow: auto;
 
-      &:deep() {
-        .bimdata-dropdown__content {
-          box-shadow: var(--box-shadow);
-          border: none;
-        }
-
-        .submenu {
-          width: 103%;
-          left: -2px;
-          font-size: calc(var(--font-size) / 1.1);
-          padding-bottom: var(--spacing-unit);
-          border: none;
-
-          ul {
-            overflow: auto;
-
-            li {
-              padding-left: var(--spacing-unit);
-            }
+          li {
+            padding-left: var(--spacing-unit);
           }
         }
       }
