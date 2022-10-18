@@ -12,16 +12,16 @@
   },
   "dependencies": {
     "@bimdata/bcf-components": "3.0.0",
-    "@bimdata/design-system": "1.4.0-rc.45",
+    "@bimdata/design-system": "1.4.0-rc.46",
     "@bimdata/guided-tour-components": "1.0.3",
-    "@bimdata/typescript-fetch-api-client": "9.2.5",
-    "@bimdata/viewer": "^1.9.0-rc.167",
+    "@bimdata/typescript-fetch-api-client": "9.2.6",
+    "@bimdata/viewer": "^1.9.0-rc.170",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
     "maplibre-gl": "^2.4.0",
     "oidc-client": "^1.11.5",
     "seedrandom": "^3.0.5",
-    "vue": "^3.2.40",
+    "vue": "^3.2.41",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.5"
   },
@@ -37,7 +37,7 @@
     "eslint-plugin-vue": "^9.6.0",
     "prettier": "^2.7.1",
     "sass": "^1.55.0",
-    "vite": "^3.1.7",
+    "vite": "^3.1.8",
     "vite-plugin-environment": "^1.1.2"
   }
 }
