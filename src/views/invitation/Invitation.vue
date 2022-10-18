@@ -238,7 +238,6 @@ export default {
       currentInvitation,
       invitationListPending,
       isLoadingSingleInvit,
-
       // methods
       fullName,
       onDenyInvitation,
