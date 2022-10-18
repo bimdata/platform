@@ -14,7 +14,7 @@ const { loadUserOrganizations, loadAllOrganizationsSpaces } =
 const { loadUserSpaces } = useSpaces();
 const { loadAllSpacesSubscriptions } = useSubscriptions();
 const { loadUserProjects } = useProjects();
-const { loadUserInvitation } = useInvitations();
+const { loadUserInvitations } = useInvitations();
 
 let isDataLoaded = false;
 
@@ -32,7 +32,7 @@ export default async function dataGuard() {
     await Promise.all([
       loadUserSpaces(),
       loadUserProjects(),
-      loadUserInvitation()
+      loadUserInvitations()
     ]);
 
     // 4) Load lists of orga spaces and space subs (non-blocking)

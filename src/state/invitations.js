@@ -17,7 +17,7 @@ const state = reactive({
   invitationListPending: []
 });
 
-const loadUserInvitation = async () => {
+const loadUserInvitations = async () => {
   state.invitationList = await InvitationViewService.fetchInvitations().then(
     res => res.sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
   );
@@ -34,12 +34,12 @@ const acceptInvitations = async invitations => {
   );
   await loadUser();
   await Promise.all([loadUserSpaces(), loadUserProjects()]);
-  await loadUserInvitation();
+  await loadUserInvitations();
 };
 
 const denyInvitation = async invitation => {
   await InvitationViewService.denyInvitation(invitation);
-  await loadUserInvitation();
+  await loadUserInvitations();
 };
 
 export function useInvitations() {
@@ -48,7 +48,7 @@ export function useInvitations() {
     // References
     ...toRefs(readonlyState),
     // Methods
-    loadUserInvitation,
+    loadUserInvitations,
     acceptInvitations,
     denyInvitation
   };
