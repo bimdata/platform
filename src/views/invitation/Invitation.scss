@@ -33,7 +33,7 @@
 
     &__list {
       display: flex;
-      padding: calc(var(--spacing-unit) /2);
+      padding: calc(var(--spacing-unit) / 2);
       overflow: auto;
       flex-direction: column;
       gap: var(--spacing-unit);
