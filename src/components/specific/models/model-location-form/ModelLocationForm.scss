@@ -5,7 +5,7 @@
 
   &__form-control {
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     bottom: calc(var(--spacing-unit) * 3);
     left: 50%;
     transform: translateX(-50%);
