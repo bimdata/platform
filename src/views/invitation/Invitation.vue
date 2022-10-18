@@ -24,12 +24,7 @@
           radius
           @click="onAcceptInvitations"
         >
-          <template v-if="isLoadingAllInvit">
-            <BIMDataSpinner class="invitation__content__header__spinner" />
-          </template>
-          <template v-else>
-            {{ $t("Invitation.acceptAll") }}
-          </template>
+          {{ $t("Invitation.acceptAll") }}
         </BIMDataButton>
       </div>
       <template v-if="invitationList.length > 0">
@@ -143,7 +138,10 @@
                     <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
                   <BIMDataButton
-                    :disabled="isLoadingAllInvit"
+                    :disabled="
+                      isLoadingAllInvit ||
+                      (currentInvitation && currentInvitation.id !== invit.id)
+                    "
                     class="invitation__content__list__invit__button__pending--accept"
                     width="35px"
                     height="35px"
@@ -154,8 +152,9 @@
                   >
                     <template
                       v-if="
-                        isLoadingSingleInvit &&
-                        currentInvitation.id === invit.id
+                        isLoadingAllInvit ||
+                        (isLoadingSingleInvit &&
+                          currentInvitation.id === invit.id)
                       "
                     >
                       <BIMDataSpinner />
@@ -185,9 +184,9 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { fullName } from "../../utils/users.js";
 import routeNames from "../../router/route-names.js";
-import { useStandardBreakpoints } from "../../composables/responsive.js";
-import { INVITATION_STATUS } from "../../config/invitation.js";
 import { useInvitations } from "../../state/invitations.js";
+import { INVITATION_STATUS } from "../../config/invitation.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
 
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
 import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
@@ -216,9 +215,7 @@ export default {
       if (invitation.id) {
         currentInvitation.value = invitation;
         isLoadingSingleInvit.value = true;
-
         await acceptInvitations([invitation]);
-
         isLoadingSingleInvit.value = false;
         currentInvitation.value = null;
       } else {
@@ -234,13 +231,13 @@ export default {
 
     return {
       // references
-      isLoadingSingleInvit,
-      isLoadingAllInvit,
       routeNames,
       invitationList,
-      currentInvitation,
       INVITATION_STATUS,
+      isLoadingAllInvit,
+      currentInvitation,
       invitationListPending,
+      isLoadingSingleInvit,
 
       // methods
       fullName,
