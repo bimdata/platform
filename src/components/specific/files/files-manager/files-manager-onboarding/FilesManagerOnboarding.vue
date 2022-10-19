@@ -5,54 +5,58 @@
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <BIMDataButton
-        fill
-        radius
-        color="primary"
-        width="120px"
-        @click="
-          fileUploadInput('file', event => uploadFile(event.target.files), {
-            multiple: true
-          })
-        "
-      >
-        {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
-      </BIMDataButton>
-      <BIMDataButton
-        width="120px"
-        color="primary"
-        fill
-        radius
-        @click="createFolder"
-      >
-        {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
-      </BIMDataButton>
-      <template v-if="project.isAdmin">
-        <template v-if="!isGedMenuOpen">
-          <BIMDataButton
-            color="primary"
-            outline
-            radius
-            icon
-            @click="openGedMenu"
-          >
-            <BIMDataIcon name="plus" size="s" />
-          </BIMDataButton>
+      <div class="files-manager-onboarding__actions__base">
+        <BIMDataButton
+          fill
+          radius
+          color="primary"
+          width="150px"
+          @click="
+            fileUploadInput('file', event => uploadFile(event.target.files), {
+              multiple: true
+            })
+          "
+        >
+          {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
+          width="150px"
+          color="primary"
+          fill
+          radius
+          @click="createFolder"
+        >
+          {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
+        </BIMDataButton>
+      </div>
+      <div class="files-manager-onboarding__actions__advanced">
+        <template v-if="project.isAdmin">
+          <template v-if="!isGedMenuOpen">
+            <BIMDataButton
+              color="primary"
+              outline
+              radius
+              icon
+              @click="openGedMenu"
+            >
+              <BIMDataIcon name="plus" size="s" />
+            </BIMDataButton>
+          </template>
+          <template v-if="isGedMenuOpen">
+            <BIMDataDropdownMenu
+              class="files-manager-onboarding__actions__enhanced__dropdown"
+              v-click-away="closeProjects && closeGedMenu"
+              ref="dropdown"
+              width="20%"
+              height="32px"
+              :menuItems="gedMenu"
+              :subListMaxHeight="dropdownMaxHeight + 'px'"
+            />
+          </template>
         </template>
-        <template v-if="isGedMenuOpen">
-          <BIMDataDropdownMenu
-            class="files-manager-onboarding__actions__dropdown"
-            v-click-away="closeProjects && closeGedMenu"
-            ref="dropdown"
-            width="20%"
-            height="32px"
-            directionClass="none"
-            :menuItems="gedMenu"
-            :subListMaxHeight="dropdownMaxHeight + 'px'"
-          />
-        </template>
-      </template>
+      </div>
     </div>
+
     <transition name="fade">
       <div
         v-show="showFolderForm || fileUploads.length > 0"
@@ -173,6 +177,8 @@ export default {
         dropdown.value?.$el?.getBoundingClientRect().y -
         onboarding.value?.getBoundingClientRect().y
     );
+
+    const dropdwdownChildrenPosition = computed(() => {});
 
     const gedMenu = computed(() => {
       if (!props.project.isAdmin) return;
