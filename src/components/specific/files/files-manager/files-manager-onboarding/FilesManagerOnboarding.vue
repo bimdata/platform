@@ -88,19 +88,10 @@
 <script>
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import async from "async";
 
 import { useToggle } from "../../../../../composables/toggle.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 import FileService from "../../../../../services/FileService.js";
-import { FILE_TYPE } from "../../../../../config/files.js";
-
-import {
-  getPaths,
-  handleInputFiles,
-  createTreeFromPaths,
-  matchFoldersAndDocs
-} from "../../../../../utils//files.js";
 
 // Components
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
@@ -145,28 +136,17 @@ export default {
 
     let uploadCount = 0;
     const fileUploads = ref([]);
-    const uploadFile = files => {
+    const uploadFile = async files => {
       uploadCount = 0;
 
       const fileList = Array.from(files);
 
       if (files[0].webkitRelativePath) {
-        async.each([handleInputFiles(fileList)], async folder => {
-          const paths = getPaths(folder);
-          const tree = createTreeFromPaths(props.rootFolder, paths);
-          const DMSTree = await FileService.createFileStructure(props.project, [
-            tree
-          ]);
-
-          fileUploads.value = [
-            {
-              type: FILE_TYPE.FOLDER,
-              name: DMSTree[0].name,
-              size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-              files: matchFoldersAndDocs(DMSTree, folder)
-            }
-          ];
-        });
+        fileUploads.value = await FileService.createFolderStructure(
+          props.project,
+          props.rootFolder,
+          fileList
+        );
       } else {
         fileUploads.value = fileList;
       }
