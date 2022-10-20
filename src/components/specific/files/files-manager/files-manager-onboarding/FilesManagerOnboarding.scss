@@ -21,17 +21,9 @@
 
     &__enhanced {
       &__dropdown {
-        width: 300px;
-
+        margin-top: var(--spacing-unit);
         &:deep(.submenu) {
-          left: -2px;
-          font-size: calc(var(--font-size) / 1.1);
-          padding-bottom: var(--spacing-unit);
-          border: none;
-
-          &:first-child {
-            overflow: visible;
-          }
+          font-size: calc(var(--font-size) * 0.9);
         }
       }
     }

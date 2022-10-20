@@ -47,8 +47,6 @@
               class="files-manager-onboarding__actions__enhanced__dropdown"
               v-click-away="closeProjects && closeGedMenu"
               ref="dropdown"
-              width="20%"
-              height="32px"
               :menuItems="gedMenu"
               :subListMaxHeight="dropdownMaxHeight + 'px'"
             />
@@ -178,15 +176,16 @@ export default {
         onboarding.value?.getBoundingClientRect().y
     );
 
-    const dropdwdownChildrenPosition = computed(() => {});
-
     const gedMenu = computed(() => {
       if (!props.project.isAdmin) return;
       const items = [];
       items.push(
         {
           name: t("FilesManagerOnboarding.GEDStructureImport"),
-          children: props.projectsTree
+          children: {
+            position: "up",
+            list: props.projectsTree
+          }
         },
         {
           name: t("FilesManagerOnboarding.folderImport"),

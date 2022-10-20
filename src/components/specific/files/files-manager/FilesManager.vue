@@ -307,7 +307,6 @@ import {
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useToggle } from "../../../../composables/toggle.js";
-import { FILE_TYPE } from "../../../../config/files.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -317,15 +316,7 @@ import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
-import {
-  getPaths,
-  handleInputFiles,
-  treeIdGenerator,
-  createTreeFromPaths,
-  matchFoldersAndDocs,
-  handleDragAndDropFile,
-  getFileFormat
-} from "../../../../utils/files.js";
+import { treeIdGenerator, getFileFormat } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -698,7 +689,7 @@ export default {
       if (props.project.isAdmin) {
         items.push({
           name: t("FilesManager.structureImport"),
-          children: projectsTree.value
+          children: { list: projectsTree.value }
         });
       }
 
