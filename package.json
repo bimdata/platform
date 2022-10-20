@@ -11,7 +11,7 @@
     "test:e2e": "cypress open"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "3.1.0-rc.1",
+    "@bimdata/bcf-components": "3.1.0-rc.2",
     "@bimdata/building-maker": "1.3.0",
     "@bimdata/design-system": "1.4.0-rc.48",
     "@bimdata/guided-tour-components": "1.0.3",
