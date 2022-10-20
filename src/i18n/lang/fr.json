@@ -208,7 +208,7 @@
     "GroupMemberSelectionCard": {
         "text": "Ajouter un utilisateur"
     },
-    "Invitation": {
+    "Invitations": {
       "title": "Mes invitations",
       "invitCounter": "Invitations en cours -",
       "acceptAll": "Tout accepter",

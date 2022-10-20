@@ -4,7 +4,7 @@
       <PlatformLogo class="app-header__logo" />
     </AppLink>
     <app-slot name="app-header-action" />
-    <AppLink :to="{ name: routeNames.invitation }" style="margin-left: auto">
+    <AppLink :to="{ name: routeNames.invitations }" style="margin-left: auto">
       <BIMDataButton class="app-header__invitation" radius ghost icon>
         <template v-if="invitationListPending.length > 0">
           <div class="app-header__invitation__notif"><div></div></div>

@@ -37,7 +37,7 @@ const UserProjects = () => import("../views/user-projects/UserProjects.vue");
 const UserSpaces = () => import("../views/user-spaces/UserSpaces.vue");
 const ProfileSettings = () =>
   import("../views/profile-settings/ProfileSettings.vue");
-const Invitation = () => import("../views/invitation/Invitation.vue");
+const Invitations = () => import("../views/invitations/Invitations.vue");
 
 const {
   root,
@@ -54,7 +54,7 @@ const {
   groupBoard,
   userSubscriptions,
   profileSettings,
-  invitation
+  invitations
 } = routeNames;
 
 const routes = [
@@ -97,9 +97,9 @@ const routes = [
         }
       },
       {
-        path: "/invitation",
-        name: invitation,
-        component: Invitation,
+        path: "/invitations",
+        name: invitations,
+        component: Invitations,
         meta: {
           back: dashboard
         }

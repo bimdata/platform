@@ -1,18 +1,19 @@
 <template>
-  <div class="invitation">
-    <div class="invitation__back-btn">
+  <div class="invitations">
+    <div class="invitations__back-btn">
       <GoBackButton />
     </div>
-    <div class="invitation__content">
-      <span class="invitation__content__title">{{
-        $t("Invitation.title")
+    <div class="invitations__content">
+      <span class="invitations__content__title">{{
+        $t("Invitations.title")
       }}</span>
 
-      <div class="invitation__content__header">
-        <div class="invitation__content__header__counter">
+      <div class="invitations__content__header">
+        <div class="invitations__content__header__counter">
           <span>
             {{
-              $t("Invitation.invitCounter") + ` ${invitationListPending.length}`
+              $t("Invitations.invitCounter") +
+              ` ${invitationListPending.length}`
             }}
           </span>
         </div>
@@ -24,28 +25,28 @@
           radius
           @click="onAcceptInvitations"
         >
-          {{ $t("Invitation.acceptAll") }}
+          {{ $t("Invitations.acceptAll") }}
         </BIMDataButton>
       </div>
       <template v-if="invitationList.length > 0">
-        <div class="invitation__content__list">
+        <div class="invitations__content__list">
           <div
-            class="invitation__content__list__invit"
+            class="invitations__content__list__invit"
             v-for="invit in invitationList"
             :key="invit.id"
           >
             <UserAvatar :user="invit.sender" size="40" />
-            <div class="invitation__content__list__invit__text">
+            <div class="invitations__content__list__invit__text">
               <i18n-t
-                class="invitation__content__list__invit__text__invited-by"
-                :keypath="`Invitation.invitedIn${
+                class="invitations__content__list__invit__text__invited-by"
+                :keypath="`Invitations.invitedIn${
                   invit.project_name ? 'Project' : 'Space'
                 }`"
                 tag="span"
               >
                 <template v-slot:sender>
                   <BIMDataTextbox
-                    class="invitation__content__list__invit__text__invited-by__highlight"
+                    class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="45%"
                     width="auto"
                     :text="fullName(invit.sender)"
@@ -53,7 +54,7 @@
                 </template>
                 <template v-if="invit.project_name" v-slot:project>
                   <BIMDataTextbox
-                    class="invitation__content__list__invit__text__invited-by__highlight"
+                    class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="40%"
                     width="auto"
                     :text="invit.project_name"
@@ -61,7 +62,7 @@
                 </template>
                 <template v-slot:cloud>
                   <BIMDataTextbox
-                    class="invitation__content__list__invit__text__invited-by__highlight"
+                    class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="40%"
                     width="auto"
                     :text="invit.cloud_name"
@@ -69,24 +70,24 @@
                 </template>
               </i18n-t>
               <span
-                :class="`invitation__content__list__invit__text__invitation-status--${invit.status}`"
+                :class="`invitations__content__list__invit__text__invitation-status--${invit.status}`"
               >
                 <template v-if="invit.status === INVITATION_STATUS.ACCEPTED">
-                  {{ $t("Invitation.invitAccepted") }}
+                  {{ $t("Invitations.invitAccepted") }}
                 </template>
                 <template v-else-if="invit.status === INVITATION_STATUS.DENIED">
-                  {{ $t("Invitation.invitDenied") }}
+                  {{ $t("Invitations.invitDenied") }}
                 </template>
                 <template
                   v-else-if="invit.status === INVITATION_STATUS.PENDING"
                 >
-                  {{ $t("Invitation.invitPending") }}
+                  {{ $t("Invitations.invitPending") }}
                 </template>
 
                 ({{ $d(invit.created_at, "longMonth") }})
               </span>
             </div>
-            <div class="invitation__content__list__invit__button">
+            <div class="invitations__content__list__invit__button">
               <template v-if="invit.status === INVITATION_STATUS.ACCEPTED">
                 <AppLink
                   :to="
@@ -114,19 +115,21 @@
                   >
                     <template v-if="invit.project_name">
                       {{
-                        $t(`Invitation.goToProject${isMD ? "Short" : "Long"}`)
+                        $t(`Invitations.goToProject${isMD ? "Short" : "Long"}`)
                       }}
                     </template>
                     <template v-else>
-                      {{ $t(`Invitation.goToSpace${isMD ? "Short" : "Long"}`) }}
+                      {{
+                        $t(`Invitations.goToSpace${isMD ? "Short" : "Long"}`)
+                      }}
                     </template>
                   </BIMDataButton>
                 </AppLink>
               </template>
               <template v-if="invit.status === INVITATION_STATUS.PENDING">
-                <div class="invitation__content__list__invit__button__pending">
+                <div class="invitations__content__list__invit__button__pending">
                   <BIMDataButton
-                    class="invitation__content__list__invit__button__pending--deny"
+                    class="invitations__content__list__invit__button__pending--deny"
                     :disabled="isLoadingSingleInvit || isLoadingAllInvit"
                     width="35px"
                     height="35px"
@@ -142,7 +145,7 @@
                       isLoadingAllInvit ||
                       (currentInvitation && currentInvitation.id !== invit.id)
                     "
-                    class="invitation__content__list__invit__button__pending--accept"
+                    class="invitations__content__list__invit__button__pending--accept"
                     width="35px"
                     height="35px"
                     radius
@@ -175,13 +178,12 @@
         </div>
       </template>
     </div>
-    <div class="invitation__empty-div"></div>
+    <div class="invitations__empty-div"></div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { fullName } from "../../utils/users.js";
 import routeNames from "../../router/route-names.js";
 import { useInvitations } from "../../state/invitations.js";
@@ -199,7 +201,6 @@ export default {
     AppLink
   },
   setup() {
-    const router = useRouter();
     const {
       acceptInvitations,
       denyInvitation,
@@ -242,7 +243,6 @@ export default {
       fullName,
       onDenyInvitation,
       onAcceptInvitations,
-      getBack: () => router.back(),
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };
@@ -250,4 +250,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./Invitation.scss"></style>
+<style scoped lang="scss" src="./Invitations.scss"></style>
