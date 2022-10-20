@@ -77,6 +77,7 @@ jobs:
             --pull always \
             --rm \
             -e ANSIBLE_VAULT_PASSWD="${{ secrets.ANSIBLE_VAULT_PASSWD }}" \
+            -e ANSIBLE_HOST_KEY_CHECKING=False \
             docker-registry.bimdata.io/bimdata/deployment:kubernetes-latest \
             ansible-playbook \
               -u deploy \
