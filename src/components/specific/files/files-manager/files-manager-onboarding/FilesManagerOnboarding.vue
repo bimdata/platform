@@ -47,6 +47,7 @@
               class="files-manager-onboarding__actions__enhanced__dropdown"
               v-click-away="closeProjects && closeGedMenu"
               ref="dropdown"
+              :header="false"
               :menuItems="gedMenu"
               :subListMaxHeight="dropdownMaxHeight + 'px'"
             />
