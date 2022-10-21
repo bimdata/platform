@@ -44,7 +44,7 @@
           </template>
           <template v-if="isGedMenuOpen">
             <BIMDataDropdownMenu
-              class="files-manager-onboarding__actions__enhanced__dropdown"
+              class="files-manager-onboarding__actions__advanced__dropdown"
               v-click-away="closeProjects && closeGedMenu"
               ref="dropdown"
               :header="false"
