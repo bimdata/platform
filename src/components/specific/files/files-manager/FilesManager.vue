@@ -687,19 +687,10 @@ export default {
       const items = [];
 
       if (props.project.isAdmin) {
-        items.push({
-          name: t("FilesManager.structureImport"),
-          children: { list: projectsTree.value }
-        });
-      }
-
-      if (props.project.isAdmin) {
         items.push(
           {
-            name: t("FilesManager.folderImport"),
-            action: () => {
-              fileUploadInput("folder", event => uploadFiles(event));
-            }
+            name: t("FilesManager.structureImport"),
+            children: { list: projectsTree.value }
           },
           {
             name: t("FilesManager.gedDownload"),
@@ -707,6 +698,16 @@ export default {
           }
         );
       }
+
+      if (!props.project.isGuest) {
+        items.splice(1, 0, {
+          name: t("FilesManager.folderImport"),
+          action: () => {
+            fileUploadInput("folder", event => uploadFiles(event));
+          }
+        });
+      }
+
       return items;
     });
 

@@ -30,7 +30,7 @@
         </BIMDataButton>
       </div>
       <div class="files-manager-onboarding__actions__advanced">
-        <template v-if="project.isAdmin">
+        <template v-if="gedMenu.length > 0">
           <template v-if="!isGedMenuOpen">
             <BIMDataButton
               color="primary"
@@ -45,7 +45,7 @@
           <template v-if="isGedMenuOpen">
             <BIMDataDropdownMenu
               class="files-manager-onboarding__actions__advanced__dropdown"
-              v-click-away="closeProjects && closeGedMenu"
+              v-click-away="closeGedMenu"
               ref="dropdown"
               :header="false"
               :menuItems="gedMenu"
@@ -126,12 +126,6 @@ export default {
     const { t } = useI18n();
 
     const {
-      isOpen: isProjectsOpen,
-      toggle: toggleProjects,
-      close: closeProjects
-    } = useToggle();
-
-    const {
       isOpen: isGedMenuOpen,
       open: openGedMenu,
       close: closeGedMenu
@@ -178,22 +172,26 @@ export default {
     );
 
     const gedMenu = computed(() => {
-      if (!props.project.isAdmin) return;
       const items = [];
-      items.push(
-        {
+
+      if (props.project.isAdmin) {
+        items.push({
           name: t("FilesManagerOnboarding.GEDStructureImport"),
           children: {
             position: "up",
             list: props.projectsTree
           }
-        },
-        {
+        });
+      }
+
+      if (!props.project.isGuest) {
+        items.push({
           name: t("FilesManagerOnboarding.folderImport"),
           action: () =>
             fileUploadInput("folder", event => uploadFile(event.target.files))
-        }
-      );
+        });
+      }
+
       return items;
     });
 
@@ -205,11 +203,8 @@ export default {
       onboarding,
       dropdown,
       gedMenu,
-      isProjectsOpen,
       isGedMenuOpen,
       // Methods
-      toggleProjects,
-      closeProjects,
       openGedMenu,
       closeGedMenu,
       createFolder,
