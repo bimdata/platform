@@ -29,6 +29,7 @@ const stdBreakpoints = defineBreakpoints({
   isSM: ({ width }) => width <= BREAKPOINTS.SM,
   isMD: ({ width }) => width <= BREAKPOINTS.MD,
   isLG: ({ width }) => width <= BREAKPOINTS.LG,
+  isMidXL: ({ width }) => width <= BREAKPOINTS.MidXL,
   isXL: ({ width }) => width <= BREAKPOINTS.XL,
   isXXL: ({ width }) => width <= BREAKPOINTS.XXL
 });

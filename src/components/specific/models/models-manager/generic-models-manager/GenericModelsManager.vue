@@ -45,6 +45,7 @@
       @download="downloadModels([$event])"
       @selection-changed="setSelection"
       @unarchive="unarchiveModels([$event])"
+      @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
     >
       <template #placeholder>
         <slot name="tablePlaceholder"></slot>
@@ -59,12 +60,15 @@
         @close="closeDeleteModal"
       />
     </transition>
+
+    <slot name="content"></slot>
   </div>
 </template>
 
 <script>
 import { ref, watch, watchEffect } from "vue";
 import { useModels } from "../../../../../state/models.js";
+
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
@@ -87,11 +91,15 @@ export default {
       validator: value => value.length > 0
     }
   },
-  setup(props) {
+  emits: ["edit-metaBuilding", "tab-changed"],
+  setup(props, { emit }) {
     const { downloadModels: download, updateModels } = useModels();
 
     const currentTab = ref({});
-    const selectTab = tab => (currentTab.value = tab);
+    const selectTab = tab => {
+      currentTab.value = tab;
+      emit("tab-changed", tab);
+    };
 
     watch(
       () => props.tabs,

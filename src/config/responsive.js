@@ -9,6 +9,7 @@ const BREAKPOINTS = Object.freeze({
   SM: 576 - 0.02,
   MD: 768 - 0.02,
   LG: 992 - 0.02,
+  MidXL: 1132 - 0.02,
   XL: 1200 - 0.02,
   XXL: 1400 - 0.02
 });

@@ -97,6 +97,16 @@
             {{ $t("ModelActionsCell.archiveButtonText") }}
           </template>
         </BIMDataButton>
+        <template v-if="model.type === MODEL_TYPE.META_BUILDING">
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            ghost
+            squared
+            @click="onClick('edit-metaBuilding')"
+          >
+            {{ $t("ModelActionsCell.editButtontext") }}
+          </BIMDataButton>
+        </template>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
           data-test-id="btn-delete-model"
@@ -134,7 +144,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "update"],
+  emits: ["archive", "delete", "download", "update", "edit-metaBuilding"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,

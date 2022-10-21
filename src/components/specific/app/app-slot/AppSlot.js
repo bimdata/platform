@@ -1,5 +1,3 @@
-<script>
-import { h } from "vue";
 import { useAppSlot } from "./app-slot.js";
 
 export default {
@@ -12,7 +10,6 @@ export default {
   render() {
     const slot = useAppSlot(this.$props.name);
 
-    return slot.value ? h(slot.value) : [];
+    return slot.value?.() ?? [];
   }
 };
-</script>

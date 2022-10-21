@@ -1,62 +1,36 @@
 <template>
-  <teleport :to="`#app-side-panel-container--${side}`">
-    <transition :name="`slide-fade-${side}`">
-      <div
-        v-show="showSidePanel"
-        class="app-side-panel"
-        :style="`--header-height: ${header ? '44px' : '0px'}`"
-      >
-        <div v-if="header" class="app-side-panel__header">
-          <slot name="header">
-            <span class="app-side-panel__header__title">
-              {{ title }}
-            </span>
-            <BIMDataButton ghost rounded icon @click="closeSidePanel">
-              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
-            </BIMDataButton>
-          </slot>
-        </div>
-        <div class="app-side-panel__content">
-          <slot></slot>
-        </div>
+  <!-- Left Panel -->
+  <teleport to="#app-side-panel-container--left">
+    <transition name="slide-fade-left">
+      <div v-show="isOpenLeft" class="app-side-panel">
+        <AppSlot name="app-side-panel-left" />
+      </div>
+    </transition>
+  </teleport>
+
+  <!-- Right Panel -->
+  <teleport to="#app-side-panel-container--right">
+    <transition name="slide-fade-right">
+      <div v-show="isOpenRight" class="app-side-panel">
+        <AppSlot name="app-side-panel-right" />
       </div>
     </transition>
   </teleport>
 </template>
 
 <script>
-import { onBeforeRouteLeave } from "vue-router";
 import { useAppSidePanel } from "./app-side-panel.js";
+// Components
+import AppSlot from "../app-slot/AppSlot.js";
 
 export default {
-  props: {
-    side: {
-      type: String,
-      default: "right",
-      validator: value => ["right", "left"].includes(value)
-    },
-    header: {
-      type: Boolean,
-      default: true
-    },
-    title: {
-      type: String,
-      default: ""
-    }
+  components: {
+    AppSlot
   },
   setup() {
-    const { showSidePanel, closeSidePanel } = useAppSidePanel();
+    const { isOpenLeft, isOpenRight } = useAppSidePanel();
 
-    onBeforeRouteLeave(() => {
-      if (showSidePanel.value) closeSidePanel();
-    });
-
-    return {
-      // References
-      showSidePanel,
-      // Methods
-      closeSidePanel
-    };
+    return { isOpenLeft, isOpenRight };
   }
 };
 </script>
