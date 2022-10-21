@@ -91,16 +91,19 @@
             <span class="visa-summary__shell__content__deadline__title">{{
               $t("Visa.summary.term")
             }}</span>
-            <BIMDataInput
+            <BIMDataDatePicker
               v-if="isEditing"
               v-model="formatedVisa.deadline"
+              :value="formatedVisa.deadline"
+              :clearButton="true"
+              width="100%"
+              format="dd/MM/yyyy"
               :placeholder="$t('Visa.add.toValidate')"
-              :error="hasDateError"
-              :errorMessage="$t('Visa.add.errorDate')"
+              fixedPosition="bottom-right"
             >
-            </BIMDataInput>
+            </BIMDataDatePicker>
             <span v-else class="visa-summary__shell__content__deadline__date">{{
-              formatedVisa.deadline
+              $d(formatedVisa.deadline)
             }}</span>
           </div>
         </div>
@@ -220,9 +223,8 @@ import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useUser } from "../../../../state/user.js";
 import { useVisa } from "../../../../state/visa.js";
-import { formatDate } from "../../../../utils/date.js";
 import { fullName } from "../../../../utils/users.js";
-import { isDateValid } from "../../../../utils/visas.js";
+import { localeDate } from "../../../../utils/date.js";
 
 // Components
 import VisaComments from "./visa-comments/VisaComments.vue";
@@ -262,12 +264,11 @@ export default {
     } = useVisa();
     const { getUserProjectList } = useProjects();
     const { user } = useUser();
-    const { t, d } = useI18n();
+    const { t } = useI18n();
     const { id: currentUserId } = user.value;
 
     const isClosed = ref(false);
     const isEditing = ref(false);
-    const hasDateError = ref(false);
     const formatedVisa = ref(null);
     const validationUserId = ref(null);
     const isAuthor = ref(false);
@@ -282,10 +283,9 @@ export default {
     /**
      * GLOBAL
      */
-
     const formatVisa = visa => ({
       ...visa,
-      deadline: d(visa.deadline),
+      deadline: visa.deadline,
       creator: {
         ...visa.creator,
         fullName: visa.creator
@@ -516,12 +516,11 @@ export default {
     };
 
     const confirmEdit = async () => {
-      const dateValid = isDateValid(formatedVisa.value.deadline);
-      hasDateError.value = !dateValid;
+      const dateValid = formatedVisa.value.deadline;
       if (dateValid) {
         await updateVisa(props.project, props.visa.document, props.visa, {
           description: formatedVisa.value.description,
-          deadline: formatDate(formatedVisa.value.deadline)
+          deadline: localeDate(formatedVisa.value.deadline)
         });
         await reloadVisa();
         isEditing.value = false;
@@ -539,7 +538,6 @@ export default {
       isSelectingValidator,
       validatorList,
       isEditing,
-      hasDateError,
       isClosed,
       userValidationStatus,
       // methods

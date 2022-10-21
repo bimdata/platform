@@ -52,16 +52,15 @@
           </template>
         </div>
         <div class="visa-add__content__validate-date">
-          <BIMDataInput
+          <BIMDataDatePicker
             v-model="dateInput"
+            :clearButton="true"
+            width="100%"
             :placeholder="$t('Visa.add.toValidate')"
-            :error="hasDateError"
-            :errorMessage="$t('Visa.add.errorDate')"
+            :disabledDates="disabledDates(dateInput)"
+            :showEdgeDates="false"
           >
-          </BIMDataInput>
-          <div class="visa-add__content__validate-date__exemple">
-            {{ $t("Visa.add.exempleDate") }}
-          </div>
+          </BIMDataDatePicker>
         </div>
         <div class="visa-add__content__description">
           <BIMDataTextarea
@@ -92,8 +91,7 @@ import { ref, watch, onMounted, computed } from "vue";
 import { useProjects } from "../../../../state/projects.js";
 import { useVisa } from "../../../../state/visa.js";
 import { debounce } from "../../../../utils/async.js";
-import { formatDate } from "../../../../utils/date.js";
-import { isDateValid } from "../../../../utils/visas.js";
+import { localeDate } from "../../../../utils/date.js";
 // Components
 import VisaSafeZone from "../visa-safe-zone/VisaSafeZone.vue";
 import VisaSelectionValidator from "../visa-selection-validator/VisaSelectionValidator.vue";
@@ -118,10 +116,9 @@ export default {
     const { createVisa, createValidation } = useVisa();
     const { getUserProjectList } = useProjects();
 
-    const dateInput = ref("");
+    const dateInput = ref(new Date());
     const descInput = ref("");
     const isSelectingValidator = ref(false);
-    const hasDateError = ref(false);
     const hasNoValidator = ref(false);
     const isSafeZone = ref(false);
     const isClosing = ref(null);
@@ -150,15 +147,23 @@ export default {
           .length
     );
 
-    const submit = debounce(async () => {
-      const dateValid = isDateValid(dateInput.value);
+    const disabledDates = () => {
+      return {
+        customPredictor: date => {
+          const todayDate = new Date();
+          if (date < todayDate.setDate(todayDate.getDate() - 1)) {
+            return true;
+          }
+        }
+      };
+    };
 
-      if (dateValid && validatorListCounter.value) {
-        hasDateError.value = false;
+    const submit = debounce(async () => {
+      if (dateInput.value && validatorListCounter.value) {
         hasNoValidator.value = false;
 
         const visa = await createVisa(props.project, props.document, {
-          deadline: formatDate(dateInput.value),
+          deadline: localeDate(dateInput.value),
           description: descInput.value
         });
         await Promise.all(
@@ -170,7 +175,6 @@ export default {
         );
         emit("create-visa", visa);
       } else {
-        hasDateError.value = !dateValid;
         hasNoValidator.value = !validatorListCounter.value;
       }
     }, 500);
@@ -183,7 +187,7 @@ export default {
 
     return {
       // References
-      hasDateError,
+      disabledDates,
       hasNoValidator,
       dateInput,
       descInput,
