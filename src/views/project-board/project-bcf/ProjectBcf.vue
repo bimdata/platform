@@ -329,7 +329,9 @@ import { useProjects } from "../../../state/projects.js";
 import { useModels } from "../../../state/models.js";
 import { fileUploadInput } from "../../../utils/upload.js";
 import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
+import { useI18n } from "vue-i18n";
 
+import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
@@ -348,6 +350,8 @@ export default {
     SnapshotModal
   },
   setup() {
+    const { t } = useI18n();
+    const { pushNotification } = useAppNotification();
     const router = useRouter();
     const { currentProject } = useProjects();
     const { projectModels } = useModels();
@@ -434,6 +438,17 @@ export default {
       try {
         loading.value = true;
         await importBcf(currentProject.value, files[0]);
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("ProjectBcf.importBcfNotificationSuccess")
+        });
+      } catch {
+        pushNotification({
+          type: "error",
+          title: t("Error"),
+          message: t("ProjectBcf.importBcfNotificationError")
+        });
       } finally {
         loading.value = false;
       }
@@ -441,6 +456,11 @@ export default {
 
     const exportBcfTopics = async () => {
       await exportBcf(currentProject.value);
+      pushNotification({
+        type: "success",
+        title: t("Success"),
+        message: t("ProjectBcf.exportBcfNotificationSuccess")
+      });
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
