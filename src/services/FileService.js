@@ -57,7 +57,6 @@ class FileService {
       ErrorService.handleError(
         new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
       );
-      return {};
     }
   }
 
@@ -229,32 +228,34 @@ class FileService {
       currentFiles.push(handleInputFiles(files));
     }
 
-    return async.map(currentFiles, async folder => {
-      const paths = getPaths(folder);
-      const tree = createTreeFromPaths(currentFolder, paths);
+    const createdFolders = await Promise.all(
+      currentFiles.map(async folder => {
+        const paths = getPaths(folder);
+        const tree = createTreeFromPaths(currentFolder, paths);
 
-      let DMSTree;
+        try {
+          const DMSTree = await apiClient.collaborationApi.createDMSTree(
+            project.cloud.id,
+            project.id,
+            [tree]
+          );
 
-      try {
-        DMSTree = await apiClient.collaborationApi.createDMSTree(
-          project.cloud.id,
-          project.id,
-          [tree]
-        );
-      } catch (error) {
-        ErrorService.handleError(
-          new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
-        );
-        return {};
-      }
+          return {
+            type: FILE_TYPE.FOLDER,
+            name: DMSTree[0].name,
+            size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: matchFoldersAndDocs(DMSTree, folder)
+          };
+        } catch (error) {
+          ErrorService.handleError(
+            new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
+          );
+          return undefined;
+        }
+      })
+    );
 
-      return {
-        type: FILE_TYPE.FOLDER,
-        name: DMSTree[0].name,
-        size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-        files: matchFoldersAndDocs(DMSTree, folder)
-      };
-    });
+    return createdFolders.filter(Boolean);
   }
 }
 

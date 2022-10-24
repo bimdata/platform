@@ -466,19 +466,21 @@ export default {
       if (event.dataTransfer) {
         // Files from drag & drop
         let docsUpload = [];
-        await async.each(Array.from(event.dataTransfer.items), async file => {
-          const fileEntry = file.webkitGetAsEntry();
+        await Promise.all(
+          Array.from(event.dataTransfer.items).map(async file => {
+            const fileEntry = file.webkitGetAsEntry();
 
-          if (fileEntry.isDirectory) {
-            filesToUpload.value = await FileService.createFolderStructure(
-              props.project,
-              currentFolder.value,
-              fileEntry
-            );
-          } else {
-            docsUpload.push(await getFileFormat(fileEntry));
-          }
-        });
+            if (fileEntry.isDirectory) {
+              filesToUpload.value = await FileService.createFolderStructure(
+                props.project,
+                currentFolder.value,
+                fileEntry
+              );
+            } else {
+              docsUpload.push(await getFileFormat(fileEntry));
+            }
+          })
+        );
         filesToUpload.value = docsUpload;
       } else {
         // Files from input
