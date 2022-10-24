@@ -7,7 +7,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: self-hosted
+    runs-on: [self-hosted, common]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -56,7 +56,7 @@ jobs:
           vault_passwd: ${{ secrets.VAULT_PASSWD }}
 
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, common]
     needs: build-and-push
     steps:
       - name: Login to BIMData Docker Registry

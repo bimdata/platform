@@ -10,7 +10,7 @@ env:
 
 jobs:
   viewer-update:
-    runs-on: self-hosted
+    runs-on: [self-hosted, common]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -33,7 +33,7 @@ jobs:
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip ci]"
 
   build-and-push:
-    runs-on: self-hosted
+    runs-on: [self-hosted, common]
     needs: viewer-update
     if: contains('
       refs/heads/develop
@@ -90,8 +90,8 @@ jobs:
           vault_passwd: ${{ secrets.VAULT_PASSWD }}
 
   deploy:
-    runs-on: self-hosted
-    needs: build-and-push
+    runs-on: [self-hosted, common]
+    needs: e2e-tests
     steps:
       - name: Login to BIMData Docker Registry
         uses: docker/login-action@v1
