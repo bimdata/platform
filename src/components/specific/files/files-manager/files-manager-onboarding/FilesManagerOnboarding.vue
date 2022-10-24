@@ -138,7 +138,7 @@ export default {
 
       const fileList = Array.from(files);
 
-      if (files[0].webkitRelativePath) {
+      if (fileList[0].webkitRelativePath) {
         fileUploads.value = await FileService.createFolderStructure(
           props.project,
           props.rootFolder,
