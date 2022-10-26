@@ -853,9 +853,10 @@
   "ProjectBcf": {
     "importButtonText": "Importer",
     "importBcfNotificationSuccess": "Fichier BCF importé avec succès",
-    "importBcfNotificationError": "Erreur lors de l'import du fichier BCF.",
+    "importBcfNotificationError": "Erreur lors de l'import du fichier BCF",
     "exportButtonText": "Exporter",
     "exportBcfNotificationSuccess": "BCF exporté avec succès",
+    "exportBcfNotificationError": "Erreur lors de l'export du fichier BCF",
     "createBcfButtonText": "Créer un BCF",
     "createBcfTitle": "Signaler un problème",
     "showStatisticsTooltip": "Afficher les statistiques",

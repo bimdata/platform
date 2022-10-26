@@ -455,12 +455,20 @@ export default {
     };
 
     const exportBcfTopics = async () => {
-      await exportBcf(currentProject.value);
-      pushNotification({
-        type: "success",
-        title: t("Success"),
-        message: t("ProjectBcf.exportBcfNotificationSuccess")
-      });
+      try {
+        await exportBcf(currentProject.value);
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("ProjectBcf.exportBcfNotificationSuccess")
+        });
+      } catch {
+        pushNotification({
+          type: "error",
+          title: t("Error"),
+          message: t("ProjectBcf.importBcfNotificationError")
+        });
+      }
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
