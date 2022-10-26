@@ -209,6 +209,20 @@
     "GroupMemberSelectionCard": {
         "text": "Ajouter un utilisateur"
     },
+    "Invitations": {
+      "title": "Mes invitations",
+      "invitCounter": "Invitations en cours -",
+      "acceptAll": "Tout accepter",
+      "invitedInProject": "Vous avez été invité par {sender} à rejoindre le projet {project} dans l'espace {cloud}",
+      "invitedInSpace": "Vous avez été invité par {sender} à rejoindre l'espace {cloud}",
+      "invitAccepted": "Invitation acceptée",
+      "invitDenied": "Invitation refusée",
+      "invitPending": "Invitation en cours",
+      "goToProjectLong": "Accéder au projet",
+      "goToProjectShort": "Projet",
+      "goToSpaceLong": "Accéder à l'espace",
+      "goToSpaceShort": "Espace"
+    },
     "InvitationCard": {
         "pendingMessage": "Invité - Sans réponse.",
         "resendLinkText": "Renvoyer l'invitation ?",
@@ -438,6 +452,9 @@
         "invitationSendError": "L'invitation n'a pas pu être envoyée",
         "invitationResendError": "Echec du renvoi de l'invitation",
         "invitationCancelError": "L'invitation n'as pas pu être annulée",
+        "invitationViewFetchError": "Impossible de récupérer la liste des invitations",
+        "invitationViewAcceptError": "Impossible d'accepter l'invitation",
+        "invitationViewDenyError": "Impossible de refuser l'invitation",
         "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
         "userUpdateError": "Échec de la mise à jour de l'utilisateur",
         "userDeleteError": "Échec de la suppression de l'utilisateur",

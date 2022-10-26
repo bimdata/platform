@@ -37,6 +37,8 @@ const UserProjects = () => import("../views/user-projects/UserProjects.vue");
 const UserSpaces = () => import("../views/user-spaces/UserSpaces.vue");
 const ProfileSettings = () =>
   import("../views/profile-settings/ProfileSettings.vue");
+const Invitations = () => import("../views/invitations/Invitations.vue");
+
 const {
   root,
   oidcCallback,
@@ -51,7 +53,8 @@ const {
   projectGroups,
   groupBoard,
   userSubscriptions,
-  profileSettings
+  profileSettings,
+  invitations
 } = routeNames;
 
 const routes = [
@@ -89,6 +92,14 @@ const routes = [
         path: "/projects",
         name: userProjects,
         component: UserProjects,
+        meta: {
+          back: dashboard
+        }
+      },
+      {
+        path: "/invitations",
+        name: invitations,
+        component: Invitations,
         meta: {
           back: dashboard
         }
