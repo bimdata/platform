@@ -307,7 +307,6 @@ import {
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useToggle } from "../../../../composables/toggle.js";
-import { FILE_TYPE } from "../../../../config/files.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -317,15 +316,7 @@ import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
-import {
-  getPaths,
-  handleInputFiles,
-  treeIdGenerator,
-  createTreeFromPaths,
-  matchFoldersAndDocs,
-  handleDragAndDropFile,
-  getFileFormat
-} from "../../../../utils/files.js";
+import { treeIdGenerator, getFileFormat } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -472,48 +463,39 @@ export default {
     const filesToUpload = ref([]);
 
     const uploadFiles = async event => {
-      let foldersUpload = [];
-
       if (event.dataTransfer) {
         // Files from drag & drop
         let docsUpload = [];
-        await async.each(Array.from(event.dataTransfer.items), async file => {
-          const fileEntry = file.webkitGetAsEntry();
+        await Promise.all(
+          Array.from(event.dataTransfer.items).map(async file => {
+            const fileEntry = file.webkitGetAsEntry();
 
-          if (fileEntry.isDirectory) {
-            foldersUpload.push(await handleDragAndDropFile(fileEntry));
-          } else {
-            docsUpload.push(await getFileFormat(fileEntry));
-          }
-        });
+            if (fileEntry.isDirectory) {
+              filesToUpload.value = await FileService.createFolderStructure(
+                props.project,
+                currentFolder.value,
+                fileEntry
+              );
+            } else {
+              docsUpload.push(await getFileFormat(fileEntry));
+            }
+          })
+        );
         filesToUpload.value = docsUpload;
       } else {
         // Files from input
         const fileList = Array.from(event.target.files);
 
         if (fileList[0].webkitRelativePath) {
-          foldersUpload = [handleInputFiles(fileList)];
+          filesToUpload.value = await FileService.createFolderStructure(
+            props.project,
+            currentFolder.value,
+            fileList
+          );
         } else {
           filesToUpload.value = fileList;
         }
       }
-
-      async.each(foldersUpload, async folder => {
-        const paths = getPaths(folder);
-        const tree = createTreeFromPaths(currentFolder, paths);
-        const DMSTree = await FileService.createFileStructure(props.project, [
-          tree
-        ]);
-
-        filesToUpload.value = [
-          {
-            type: FILE_TYPE.FOLDER,
-            name: DMSTree[0].name,
-            size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs(DMSTree, folder)
-          }
-        ];
-      });
 
       setTimeout(() => (filesToUpload.value = []), 100);
     };
@@ -707,19 +689,10 @@ export default {
       const items = [];
 
       if (props.project.isAdmin) {
-        items.push({
-          name: t("FilesManager.structureImport"),
-          children: projectsTree.value
-        });
-      }
-
-      if (props.project.isAdmin) {
         items.push(
           {
-            name: t("FilesManager.folderImport"),
-            action: () => {
-              fileUploadInput("folder", event => uploadFiles(event));
-            }
+            name: t("FilesManager.structureImport"),
+            children: { list: projectsTree.value }
           },
           {
             name: t("FilesManager.gedDownload"),
@@ -727,6 +700,16 @@ export default {
           }
         );
       }
+
+      if (!props.project.isGuest) {
+        items.splice(1, 0, {
+          name: t("FilesManager.folderImport"),
+          action: () => {
+            fileUploadInput("folder", event => uploadFiles(event));
+          }
+        });
+      }
+
       return items;
     });
 
