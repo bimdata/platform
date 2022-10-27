@@ -83,7 +83,7 @@ function windowType(file) {
   const { model_type } = file;
   const { IFC, DWG } = MODEL_TYPE;
 
-  if (model_type === IFC) return WINDOWS.V3D;
+  if (model_type === IFC) return WINDOWS.IFC3D;
   if (model_type === DWG) return WINDOWS.DWG;
 
   return WINDOWS.PLAN;

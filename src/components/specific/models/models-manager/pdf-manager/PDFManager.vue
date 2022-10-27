@@ -1,5 +1,6 @@
 <template>
   <GenericModelsManager
+    class="pdf-manager"
     :project="project"
     :tabs="tabs"
     @edit-metaBuilding="editBM"
