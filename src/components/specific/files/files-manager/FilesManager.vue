@@ -64,6 +64,7 @@
           </FolderCreationButton>
           <BIMDataTooltip
             data-guide="btn-upload-file"
+            data-test-id="btn-upload-file"
             class="files-manager__actions__btn-new-file"
             color="high"
             :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
@@ -207,6 +208,7 @@
             />
           </transition>
           <FilesTable
+            data-test-id="files-table"
             class="files-manager__files__table"
             :project="project"
             :folder="currentFolder"
