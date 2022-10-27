@@ -13,7 +13,8 @@ const MODEL_TYPE = Object.freeze({
   META_BUILDING: "METABUILDING",
   OBJ: "OBJ",
   PDF: "PDF",
-  PNG: "PNG"
+  PNG: "PNG",
+  POINT_CLOUD: "POINT_CLOUD"
 });
 
 /**
