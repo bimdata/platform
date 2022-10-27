@@ -69,6 +69,7 @@ const PLUGINS_CONFIG = {
     export: true
   },
   tileset: true,
+  "tileset-viewer-parameters": true,
   "viewer2d-background": true,
   viewer3d: {
     enableDynamicLOD: true
