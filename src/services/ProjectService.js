@@ -100,9 +100,7 @@ class ProjectService {
         {
           email: invitation.email,
           role: invitation.role,
-          redirect_uri: `${import.meta.env.VUE_APP_BASE_URL}/spaces/${
-            project.cloud.id
-          }/projects/${project.id}`
+          redirect_uri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
         }
       );
     } catch (error) {
@@ -128,17 +126,12 @@ class ProjectService {
 
   async updateProjectUser(project, user) {
     try {
-      // TODO: API model should be updated to return
-      // user data instead of role value.
-      const res = await apiClient.collaborationApi.updateProjectUser(
+      return await apiClient.collaborationApi.updateProjectUser(
         project.cloud.id,
         user.id,
         project.id,
         { role: user.role }
       );
-      return {
-        role: res.role
-      };
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
     }

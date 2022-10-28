@@ -54,7 +54,7 @@ class BcfService {
       formData.append("name", file.name);
       formData.append("file", file);
       await fetch(
-        `${import.meta.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${
+        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${
           project.id
         }/import`,
         {

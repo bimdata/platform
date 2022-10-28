@@ -1,6 +1,10 @@
 <template>
   <div class="model-location-form">
-    <MaplibreWrapper :longitude="inputLongitude" :latitude="inputLatitude" />
+    <MaplibreWrapper
+      containerID="model-location-form"
+      :longitude="inputLongitude"
+      :latitude="inputLatitude"
+    />
     <div class="model-location-form__form-control">
       <AddressInput
         class="model-location-form__form-control__input"
@@ -79,7 +83,7 @@ export default {
       default: 0
     }
   },
-  emits: ["close", "success"],
+  emits: ["close", "location-updated"],
   setup(props, { emit }) {
     const { createModelLocation, updateModelLocation } = useModels();
 
@@ -118,7 +122,7 @@ export default {
         } else {
           await createModelLocation(props.project, props.model, location);
         }
-        emit("success");
+        emit("location-updated");
       } finally {
         submitLoading.value = false;
       }

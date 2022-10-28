@@ -1,7 +1,7 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
     <template v-if="model.type === MODEL_TYPE.IFC">
-      <template v-for="window of [WINDOWS.V2D, WINDOWS.V3D]" :key="window">
+      <template v-for="window of [WINDOWS.IFC2D, WINDOWS.IFC3D]" :key="window">
         <ViewerButton
           :disabled="!isModelReady"
           :project="project"
@@ -42,6 +42,16 @@
         :model="model"
         :window="WINDOWS.PLAN"
         text="2D"
+      />
+    </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.POINT_CLOUD">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.TILESET"
+        text="3D"
       />
     </template>
 
@@ -97,6 +107,16 @@
             {{ $t("ModelActionsCell.archiveButtonText") }}
           </template>
         </BIMDataButton>
+        <template v-if="model.type === MODEL_TYPE.META_BUILDING">
+          <BIMDataButton
+            class="model-actions-cell__menu__btn"
+            ghost
+            squared
+            @click="onClick('edit-metaBuilding')"
+          >
+            {{ $t("ModelActionsCell.editButtontext") }}
+          </BIMDataButton>
+        </template>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
           data-test-id="btn-delete-model"
@@ -134,7 +154,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "update"],
+  emits: ["archive", "delete", "download", "update", "edit-metaBuilding"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,

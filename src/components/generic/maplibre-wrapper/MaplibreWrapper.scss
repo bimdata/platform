@@ -1,11 +1,23 @@
-@import "maplibre-gl/dist/maplibre-gl.css";
-
 .maplibre-wrapper {
+  position: relative;
   width: 100%;
   height: 100%;
   filter: grayscale(0.7);
 
+  .maptiler-link {
+    position: absolute;
+    z-index: 1;
+    bottom: calc(var(--spacing-unit) / 4);
+    left: calc(var(--spacing-unit) / 2);
+    user-select: none;
+  }
+
   &:deep() {
+    .maplibregl-canvas-container {
+      width: 100%;
+      height: 100%;
+    }
+
     .maplibregl-canvas {
       outline: none;
     }

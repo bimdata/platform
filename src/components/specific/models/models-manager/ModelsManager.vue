@@ -78,6 +78,7 @@ import { segregateByType } from "../../../../utils/models.js";
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
+import PointCloudManager from "./point-cloud-manager/PointCloudManager.vue";
 
 const tabsDef = [
   {
@@ -109,6 +110,13 @@ const tabsDef = [
     icon: "filePdfPolychrome",
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
+  },
+  {
+    id: "point-cloud",
+    label: "Point Cloud",
+    icon: "filePdfPolychrome",
+    modelTypes: [MODEL_TYPE.POINT_CLOUD],
+    component: "PointCloudManager"
   }
 ];
 
@@ -116,7 +124,8 @@ export default {
   components: {
     DWGManager,
     IFCManager,
-    PDFManager
+    PDFManager,
+    PointCloudManager
   },
   props: {
     project: {

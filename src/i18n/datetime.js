@@ -10,6 +10,13 @@ const defaultFormats = {
     day: "numeric",
     hour: "numeric",
     minute: "numeric"
+  },
+  longMonth: {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric"
   }
 };
 

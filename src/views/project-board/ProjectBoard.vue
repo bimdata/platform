@@ -64,10 +64,7 @@
 <script>
 import { onBeforeMount, ref, provide, computed } from "vue";
 import { useRoute } from "vue-router";
-import {
-  useCustomBreakpoints,
-  useStandardBreakpoints
-} from "../../composables/responsive.js";
+import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useSession } from "../../composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
@@ -78,7 +75,7 @@ import { useSpaces } from "../../state/spaces.js";
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppModal from "../../components/specific/app/app-modal/AppModal.vue";
-import AppSlot from "../../components/specific/app/app-slot/AppSlot.vue";
+import AppSlot from "../../components/specific/app/app-slot/AppSlot.js";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
@@ -131,10 +128,6 @@ export default {
     const { currentProject } = useProjects();
     const { projectView } = useSession();
 
-    const { isMidXL } = useCustomBreakpoints({
-      isMidXL: ({ width }) => width <= 1132 - 0.02
-    });
-
     const tabs = ref(tabsDef);
 
     const currentTab = ref(tabsDef[0]);
@@ -181,8 +174,7 @@ export default {
       // Methods
       changeView,
       // Responsive breakpoints
-      ...useStandardBreakpoints(),
-      isMidXL
+      ...useStandardBreakpoints()
     };
   }
 };

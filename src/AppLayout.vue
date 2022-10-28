@@ -11,6 +11,7 @@
     </template>
 
     <AppNotification />
+    <AppSidePanel />
     <AppHeader />
     <div
       ref="viewContainer"
@@ -43,11 +44,13 @@ import { useUser } from "./state/user.js";
 // Components
 import AppHeader from "./components/specific/app/app-header/AppHeader.vue";
 import AppNotification from "./components/specific/app/app-notification/AppNotification.vue";
+import AppSidePanel from "./components/specific/app/app-side-panel/AppSidePanel.vue";
 
 export default {
   components: {
     AppHeader,
-    AppNotification
+    AppNotification,
+    AppSidePanel
   },
   setup() {
     const router = useRouter();

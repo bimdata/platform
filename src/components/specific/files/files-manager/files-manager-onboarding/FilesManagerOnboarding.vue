@@ -5,63 +5,57 @@
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <BIMDataButton
-        fill
-        radius
-        color="primary"
-        width="120px"
-        @click="
-          fileUploadInput('file', event => uploadFile(event.target.files), {
-            multiple: true
-          })
-        "
-      >
-        {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
-      </BIMDataButton>
-      <BIMDataButton
-        width="120px"
-        color="primary"
-        fill
-        radius
-        @click="createFolder"
-      >
-        {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
-      </BIMDataButton>
-      <!-- <BIMDataDropdownMenu
-        class="files-manager-onboarding__actions__dropdown"
-        v-click-away="close"
-        ref="dropdown"
-        width="20%"
-        height="32px"
-        directionClass="up"
-        @click="toggle"
-      >
-        <template #header>
-          <span> {{ $t("FilesManagerOnboarding.GEDStructureImport") }}</span>
-          <BIMDataIcon
-            :name="isOpen ? 'deploy' : 'chevron'"
-            fill
-            size="xxs"
-            color="primary"
-            :rotate="isOpen ? 180 : 0"
-          />
-        </template>
-        <template #element>
-          <ul
-            class="bimdata-list"
-            :style="{ maxHeight: dropdownMaxHeight + 'px' }"
-          >
-            <li
-              v-for="project in projectsTree"
-              :key="project.name"
-              @click="project.action"
+      <div class="files-manager-onboarding__actions__base">
+        <BIMDataButton
+          fill
+          radius
+          color="primary"
+          width="150px"
+          @click="
+            fileUploadInput('file', event => uploadFile(event.target.files), {
+              multiple: true
+            })
+          "
+        >
+          {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
+          width="150px"
+          color="primary"
+          fill
+          radius
+          @click="createFolder"
+        >
+          {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
+        </BIMDataButton>
+      </div>
+      <div class="files-manager-onboarding__actions__advanced">
+        <template v-if="gedMenu.length > 0">
+          <template v-if="!isGedMenuOpen">
+            <BIMDataButton
+              color="primary"
+              outline
+              radius
+              icon
+              @click="openGedMenu"
             >
-              <BIMDataTextbox :text="project.name" />
-            </li>
-          </ul>
+              <BIMDataIcon name="plus" size="s" />
+            </BIMDataButton>
+          </template>
+          <template v-if="isGedMenuOpen">
+            <BIMDataDropdownMenu
+              class="files-manager-onboarding__actions__advanced__dropdown"
+              v-click-away="closeGedMenu"
+              ref="dropdown"
+              :header="false"
+              :menuItems="gedMenu"
+              :subListMaxHeight="dropdownMaxHeight + 'px'"
+            />
+          </template>
         </template>
-      </BIMDataDropdownMenu> -->
+      </div>
     </div>
+
     <transition name="fade">
       <div
         v-show="showFolderForm || fileUploads.length > 0"
@@ -96,8 +90,11 @@
 
 <script>
 import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
+
 import { useToggle } from "../../../../../composables/toggle.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
+import FileService from "../../../../../services/FileService.js";
 
 // Components
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
@@ -126,13 +123,30 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
-    const { isOpen, toggle, close } = useToggle();
+    const { t } = useI18n();
+
+    const {
+      isOpen: isGedMenuOpen,
+      open: openGedMenu,
+      close: closeGedMenu
+    } = useToggle();
 
     let uploadCount = 0;
     const fileUploads = ref([]);
-    const uploadFile = files => {
+    const uploadFile = async files => {
       uploadCount = 0;
-      fileUploads.value = Array.from(files);
+
+      const fileList = Array.from(files);
+
+      if (fileList[0].webkitRelativePath) {
+        fileUploads.value = await FileService.createFolderStructure(
+          props.project,
+          props.rootFolder,
+          fileList
+        );
+      } else {
+        fileUploads.value = fileList;
+      }
     };
 
     const updateUploadCount = () => {
@@ -157,6 +171,30 @@ export default {
         onboarding.value?.getBoundingClientRect().y
     );
 
+    const gedMenu = computed(() => {
+      const items = [];
+
+      if (props.project.isAdmin) {
+        items.push({
+          name: t("FilesManagerOnboarding.GEDStructureImport"),
+          children: {
+            position: "up",
+            list: props.projectsTree
+          }
+        });
+      }
+
+      if (!props.project.isGuest) {
+        items.push({
+          name: t("FilesManagerOnboarding.folderImport"),
+          action: () =>
+            fileUploadInput("folder", event => uploadFile(event.target.files))
+        });
+      }
+
+      return items;
+    });
+
     return {
       // References
       fileUploads,
@@ -164,10 +202,11 @@ export default {
       dropdownMaxHeight,
       onboarding,
       dropdown,
-      isOpen,
+      gedMenu,
+      isGedMenuOpen,
       // Methods
-      toggle,
-      close,
+      openGedMenu,
+      closeGedMenu,
       createFolder,
       updateUploadCount,
       uploadFile,

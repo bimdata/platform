@@ -121,13 +121,9 @@
                 color="primary"
                 width="100%"
                 @click="
-                  fileUploadInput(
-                    'file',
-                    event => uploadFiles(event.target.files),
-                    {
-                      multiple: true
-                    }
-                  )
+                  fileUploadInput('file', event => uploadFiles(event), {
+                    multiple: true
+                  })
                 "
               >
                 <BIMDataIcon name="addFile" size="xs" />
@@ -228,6 +224,8 @@
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
+            @dragover.prevent="() => {}"
+            @drop.prevent="event => uploadFiles(event)"
           />
         </div>
 
@@ -299,6 +297,7 @@
 
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
+import async from "async";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
@@ -308,7 +307,6 @@ import {
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useToggle } from "../../../../composables/toggle.js";
-import { FILE_TYPE } from "../../../../config/files.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -318,13 +316,7 @@ import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
-import {
-  getPaths,
-  getDocsInfos,
-  treeIdGenerator,
-  createTreeFromPaths,
-  matchFoldersAndDocs
-} from "../../../../utils/files.js";
+import { treeIdGenerator, getFileFormat } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -470,31 +462,41 @@ export default {
 
     const filesToUpload = ref([]);
 
-    const uploadFiles = async files => {
-      files = Array.from(files);
+    const uploadFiles = async event => {
+      if (event.dataTransfer) {
+        // Files from drag & drop
+        let docsUpload = [];
+        await Promise.all(
+          Array.from(event.dataTransfer.items).map(async file => {
+            const fileEntry = file.webkitGetAsEntry();
 
-      const isFolderUpload = Boolean(files[0].webkitRelativePath);
-
-      if (isFolderUpload) {
-        const paths = getPaths(files);
-        const filesInfos = getDocsInfos(files);
-
-        const tree = createTreeFromPaths(currentFolder, paths);
-        const DMSTree = await FileService.createFileStructure(props.project, [
-          tree
-        ]);
-
-        filesToUpload.value = [
-          {
-            type: FILE_TYPE.FOLDER,
-            name: DMSTree[0].name,
-            size: filesInfos.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs(DMSTree, filesInfos)
-          }
-        ];
+            if (fileEntry.isDirectory) {
+              filesToUpload.value = await FileService.createFolderStructure(
+                props.project,
+                currentFolder.value,
+                fileEntry
+              );
+            } else {
+              docsUpload.push(await getFileFormat(fileEntry));
+            }
+          })
+        );
+        filesToUpload.value = docsUpload;
       } else {
-        filesToUpload.value = files;
+        // Files from input
+        const fileList = Array.from(event.target.files);
+
+        if (fileList[0].webkitRelativePath) {
+          filesToUpload.value = await FileService.createFolderStructure(
+            props.project,
+            currentFolder.value,
+            fileList
+          );
+        } else {
+          filesToUpload.value = fileList;
+        }
       }
+
       setTimeout(() => (filesToUpload.value = []), 100);
     };
 
@@ -686,22 +688,11 @@ export default {
     const menuItems = computed(() => {
       const items = [];
 
-      if (props.project.isAdmin && projectsTree.value.length > 0) {
-        items.push({
-          name: t("FilesManager.structureImport"),
-          children: projectsTree.value
-        });
-      }
-
       if (props.project.isAdmin) {
         items.push(
           {
-            name: t("FilesManager.folderImport"),
-            action: () => {
-              fileUploadInput("folder", event =>
-                uploadFiles(event.target.files)
-              );
-            }
+            name: t("FilesManager.structureImport"),
+            children: { list: projectsTree.value }
           },
           {
             name: t("FilesManager.gedDownload"),
@@ -709,6 +700,16 @@ export default {
           }
         );
       }
+
+      if (!props.project.isGuest) {
+        items.splice(1, 0, {
+          name: t("FilesManager.folderImport"),
+          action: () => {
+            fileUploadInput("folder", event => uploadFiles(event));
+          }
+        });
+      }
+
       return items;
     });
 

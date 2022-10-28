@@ -16,9 +16,9 @@
       </template>
     </ViewHeader>
 
-    <AppSidePanel side="left" :title="$t('GroupMembersSelector.title')">
+    <AppSidePanelContent side="left" :title="$t('GroupMembersSelector.title')">
       <GroupMembersSelector :project="project" :group="group" :users="users" />
-    </AppSidePanel>
+    </AppSidePanelContent>
 
     <BIMDataResponsiveGrid
       itemWidth="320px"
@@ -48,10 +48,10 @@ import { useAppSidePanel } from "../../components/specific/app/app-side-panel/ap
 import { useGroups } from "../../state/groups.js";
 import { useProjects } from "../../state/projects.js";
 // Components
+import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppSidePanelContent from "../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
-import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import AppSidePanel from "../../components/specific/app/app-side-panel/AppSidePanel.vue";
 import GroupMemberCard from "../../components/specific/groups/group-member-card/GroupMemberCard.vue";
 import GroupMemberSelectionCard from "../../components/specific/groups/group-member-selection-card/GroupMemberSelectionCard.vue";
 import GroupMembersSelector from "../../components/specific/groups/group-members-selector/GroupMembersSelector.vue";
@@ -59,7 +59,7 @@ import GroupMembersSelector from "../../components/specific/groups/group-members
 export default {
   components: {
     AppBreadcrumb,
-    AppSidePanel,
+    AppSidePanelContent,
     GoBackButton,
     GroupMemberCard,
     GroupMemberSelectionCard,
@@ -76,6 +76,10 @@ export default {
       user => `${user.firstname} ${user.lastname}`
     );
 
+    const openMembersSelector = () => {
+      openSidePanel("left");
+    };
+
     return {
       // References
       displayedMembers,
@@ -84,7 +88,7 @@ export default {
       searchText,
       users: projectUsers,
       // Methods
-      openMembersSelector: openSidePanel,
+      openMembersSelector,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

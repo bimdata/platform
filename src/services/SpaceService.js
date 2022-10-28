@@ -105,7 +105,7 @@ class SpaceService {
     try {
       return await apiClient.collaborationApi.inviteCloudUser(space.id, {
         email: invitation.email,
-        redirect_uri: `${import.meta.env.VUE_APP_BASE_URL}/spaces/${space.id}`
+        redirect_uri: `${process.env.VUE_APP_BASE_URL}/spaces/${space.id}`
       });
     } catch (error) {
       if (error.status === 400 && (await error.json()).already_exists) {
@@ -129,16 +129,11 @@ class SpaceService {
 
   async updateSpaceUser(space, user) {
     try {
-      // TODO: API model should be updated to return
-      // user data instead of role value.
-      const res = await apiClient.collaborationApi.updateCloudUser(
+      return await apiClient.collaborationApi.updateCloudUser(
         space.id,
         user.id,
-        { role: user.cloudRole }
+        user
       );
-      return {
-        cloudRole: res.role
-      };
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
     }

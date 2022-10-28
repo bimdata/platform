@@ -35,6 +35,9 @@ const ProjectGroups = () => import("../views/project-groups/ProjectGroups.vue");
 const SpaceBoard = () => import("../views/space-board/SpaceBoard.vue");
 const UserProjects = () => import("../views/user-projects/UserProjects.vue");
 const UserSpaces = () => import("../views/user-spaces/UserSpaces.vue");
+const ProfileSettings = () =>
+  import("../views/profile-settings/ProfileSettings.vue");
+const Invitations = () => import("../views/invitations/Invitations.vue");
 
 const {
   root,
@@ -49,7 +52,9 @@ const {
   modelViewer,
   projectGroups,
   groupBoard,
-  userSubscriptions
+  userSubscriptions,
+  profileSettings,
+  invitations
 } = routeNames;
 
 const routes = [
@@ -68,6 +73,14 @@ const routes = [
         component: Dashboard
       },
       {
+        path: "/profile-settings",
+        name: profileSettings,
+        component: ProfileSettings,
+        meta: {
+          back: dashboard
+        }
+      },
+      {
         path: "/spaces",
         name: userSpaces,
         component: UserSpaces,
@@ -79,6 +92,14 @@ const routes = [
         path: "/projects",
         name: userProjects,
         component: UserProjects,
+        meta: {
+          back: dashboard
+        }
+      },
+      {
+        path: "/invitations",
+        name: invitations,
+        component: Invitations,
         meta: {
           back: dashboard
         }

@@ -1,3 +1,4 @@
+import async from "async";
 import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "../config/files.js";
 
 function fileExtension(fileName) {
@@ -35,16 +36,11 @@ function generateFileKey(file) {
  */
 function getPaths(files) {
   return Array.from(
-    new Set(
-      files.map(file =>
-        JSON.stringify(file.webkitRelativePath.split("/").slice(0, -1))
-      )
-    ),
+    new Set(files.map(file => JSON.stringify(file.path))),
     JSON.parse
   ).sort((a, b) => a.length - b.length);
 }
-
-function getDocsInfos(files) {
+function handleInputFiles(files) {
   return files
     .map(file => ({
       file: file,
@@ -143,13 +139,49 @@ function treeIdGenerator(projectToImport) {
   ];
 }
 
+async function getFileFormat(fileEntry) {
+  return new Promise((resolve, reject) => fileEntry.file(resolve, reject));
+}
+
+async function handleDragAndDropFile(dirEntry) {
+  let fileList = [];
+
+  async function traverseFileTree(fileEntry) {
+    if (fileEntry.isFile) {
+      // Get file
+      return fileList.push(fileEntry);
+    } else if (fileEntry.isDirectory) {
+      // Get folder contents
+      const dirReader = fileEntry.createReader();
+      const filesEntry = await new Promise((resolve, reject) =>
+        dirReader.readEntries(resolve, reject)
+      );
+      await async.map(filesEntry, traverseFileTree);
+    }
+  }
+
+  await traverseFileTree(dirEntry);
+
+  return async.map(
+    Array.from(fileList).filter(
+      file => !STANDARD_HIDDEN_FILES.includes(file.name)
+    ),
+    async file => ({
+      file: await getFileFormat(file),
+      path: file.fullPath.split("/").slice(0, -1).filter(Boolean)
+    })
+  );
+}
+
 export {
   fileExtension,
   formatBytes,
   generateFileKey,
   getPaths,
-  getDocsInfos,
+  handleInputFiles,
   createTreeFromPaths,
   matchFoldersAndDocs,
-  treeIdGenerator
+  treeIdGenerator,
+  handleDragAndDropFile,
+  getFileFormat
 };
