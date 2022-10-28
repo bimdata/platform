@@ -3,7 +3,6 @@
     <div class="models-card-model-preview__index" v-if="images.length > 1">
       {{ `${image.index} / ${images.length}` }}
     </div>
-
     <template v-if="image && image.url">
       <BIMDataModelPreview
         :type="image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
@@ -56,7 +55,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE } from "@/config/models.js";
+import { MODEL_TYPE } from "../../../../../config/models.js";
 export default {
   props: {
     models: {
@@ -98,7 +97,7 @@ export default {
             index: i + 1,
             name: model.name,
             type: model.type,
-            url: model.viewer_360_file
+            url: model.preview_file
           }));
 
         index.value = 0;
