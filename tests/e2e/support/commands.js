@@ -94,3 +94,14 @@ Cypress.Commands.add(
   "getProjectCard",
   name => cy.contains("[data-test-id=project-card]", name)
 );
+
+Cypress.Commands.add(
+  "deleteGedDoc",
+  name => {
+    cy.hook("files-table").contains("tr", name).within(() => {
+      cy.hook("btn-actions-cell").click()
+    })
+    cy.hook("btn-delete-doc").filter(':visible').click()
+    cy.hook("btn-confirm-delete").click()
+  }
+);

@@ -10,12 +10,6 @@ describe("Documents import feature", () => {
     cy.hook("project-tab-files").click();
   });
 
-  afterEach(() => {
-    cy.hook("btn-actions-cell").eq(1).click()
-    cy.hook("btn-delete-doc").filter(':visible').click()
-    cy.hook("btn-confirm-delete").click()
-  })
-
   it("Should upload a file successfully", () => {
     cy.hook("btn-upload-file").click();
     cy.get("body > input[type=file]").selectFile('@housePlan', { force: true });
@@ -25,6 +19,7 @@ describe("Documents import feature", () => {
 
     cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
 
+    cy.deleteGedDoc("house-plan.pdf")
   })
 
   it("Should drag and drop a file successfully", () => {
@@ -34,6 +29,24 @@ describe("Documents import feature", () => {
     cy.wait('@getModels', { timeout: 10000 })
 
     cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
+
+    cy.deleteGedDoc("house-plan.pdf")
+  })
+
+  it("Should drag and drop multiple file successfully", () => {
+    cy.fixture("terminaux-plafond.dwg").as("terminauxPlafond");
+
+    cy.hook("files-table").selectFile([{ contents: '@housePlan', fileName: 'house-plan.pdf' }, '@terminauxPlafond'], { action: 'drag-drop' })
+
+    cy.intercept('**/model').as('getModels')
+    cy.wait('@getModels', { timeout: 10000 })
+
+    cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
+    cy.hook("files-table").contains("tr", "terminaux-plafond.dwg").should("have.length", 1);
+
+    cy.deleteGedDoc("house-plan.pdf")
+    cy.deleteGedDoc("terminaux-plafond.dwg")
+
   })
 
 });
