@@ -41,9 +41,6 @@
   "BreadcrumbSelector": {
     "inputPlaceholder": "Zoeken"
   },
-  "GenericTable": {
-    "pagination": "{start} - {end} van {total}"
-  },
   "GoBackButton": {
     "text": "Terug"
   },

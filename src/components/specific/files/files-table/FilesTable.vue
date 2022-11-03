@@ -1,8 +1,9 @@
 <template>
-  <GenericTable
+  <BIMDataTable
     ref="filesTable"
     class="files-table"
     data-test-id="files-table"
+    tableLayout="fixed"
     :columns="columns"
     :rows="files"
     rowKey="id"
@@ -89,7 +90,7 @@
         @update="nameEditMode[file.id] = true"
       />
     </template>
-  </GenericTable>
+  </BIMDataTable>
 </template>
 
 <script>
@@ -102,7 +103,6 @@ import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
 
 // Components
-import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
 import FileUploadCard from "../file-upload-card/FileUploadCard.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
@@ -112,7 +112,6 @@ import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 
 export default {
   components: {
-    GenericTable,
     FileActionsCell,
     FileNameCell,
     FilesManagerBreadcrumb,

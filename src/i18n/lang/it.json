@@ -41,9 +41,6 @@
   "BreadcrumbSelector": {
     "inputPlaceholder": "Cerca"
   },
-  "GenericTable": {
-    "pagination": "{start} - {end} di {total}"
-  },
   "GoBackButton": {
     "text": "Indietro"
   },
