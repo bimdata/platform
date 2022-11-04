@@ -48,14 +48,4 @@ describe("Documents import feature", () => {
     cy.deleteGedDoc("terminaux-plafond.dwg")
 
   })
-
 });
-
-// INPUT IMPORT
-// import file
-// import folder
-
-// DRAG AND DROP
-// import file
-// import folder
-// import multi file/folder

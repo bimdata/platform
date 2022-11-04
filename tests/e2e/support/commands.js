@@ -105,3 +105,22 @@ Cypress.Commands.add(
     cy.hook("btn-confirm-delete").click()
   }
 );
+
+Cypress.Commands.add(
+  "createTag",
+  name => {
+    cy.hook("btn-create-tag").click()
+    cy.get("input[name=add-tag]").type(name);
+    cy.hook("btn-validate-tag").click()
+  }
+);
+
+Cypress.Commands.add(
+  "deleteTag",
+  name => {
+    cy.hook("tag-list").contains("div[data-test-id=tags-item]", name).within(() => {
+      cy.hook("btn-delete-tag").click()
+      cy.hook("btn-confirm-delete").click()
+    })
+  }
+);

@@ -13,7 +13,13 @@
           <span>{{ $t("Tag.title") }}</span>
         </div>
         <div class="tags-main__content__header__right-side">
-          <BIMDataButton ghost rounded icon @click="$emit('close')">
+          <BIMDataButton
+            data-test-id="btn-close-tag-manager"
+            ghost
+            rounded
+            icon
+            @click="$emit('close')"
+          >
             <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
           </BIMDataButton>
         </div>
@@ -21,6 +27,7 @@
       <div class="tags-main__content__list-add">
         <span>{{ $t("Tag.list") }}</span>
         <BIMDataButton
+          data-test-id="btn-create-tag"
           color="primary"
           radius
           ghost
@@ -39,6 +46,7 @@
       <template v-if="showAddTagInput">
         <BIMDataInput
           ref="input"
+          name="add-tag"
           :placeholder="$t('Tag.addNewTag')"
           margin="0"
           v-model="newTagName"
@@ -52,9 +60,14 @@
             @click="toggleAddTagInput"
             >{{ $t("Tag.cancel") }}</BIMDataButton
           >
-          <BIMDataButton color="primary" fill radius @click="addNewTag">{{
-            $t("Tag.validate")
-          }}</BIMDataButton>
+          <BIMDataButton
+            data-test-id="btn-validate-tag"
+            color="primary"
+            fill
+            radius
+            @click="addNewTag"
+            >{{ $t("Tag.validate") }}</BIMDataButton
+          >
         </div>
       </template>
       <div class="tags-main__content__search-bar">
@@ -67,9 +80,10 @@
           height="calc(var(--spacing-unit) * 2.5)"
         />
       </div>
-      <div class="tags-main__content__tag-list">
+      <div data-test-id="tag-list" class="tags-main__content__tag-list">
         <template v-for="tag of updatedTagList" :key="tag.id">
           <TagsItem
+            data-test-id="tags-item"
             v-if="tag.isFindable"
             :project="project"
             :document="document"
