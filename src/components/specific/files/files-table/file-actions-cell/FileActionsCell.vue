@@ -114,6 +114,7 @@
         v-if="
           !isFolder(file) && (project.isAdmin || file.user_permission === 100)
         "
+        data-test-id="btn-open-versioning-manager"
         class="file-actions-cell__menu__btn"
         ghost
         squared

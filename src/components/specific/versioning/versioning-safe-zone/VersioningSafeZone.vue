@@ -6,6 +6,7 @@
     </div>
     <div class="versioning-safe-zone__action">
       <BIMDataButton
+        data-test-id="btn-confirm-delete"
         color="high"
         fill
         radius

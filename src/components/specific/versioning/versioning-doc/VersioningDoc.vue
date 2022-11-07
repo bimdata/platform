@@ -35,6 +35,7 @@
             >
               <BIMDataTooltip position="left" :text="$t('Versioning.delete')">
                 <BIMDataButton
+                  data-test-id="btn-delete-version"
                   ghost
                   rounded
                   icon
@@ -56,6 +57,7 @@
                 :text="$t('Versioning.getToHead')"
               >
                 <BIMDataButton
+                  data-test-id="btn-get-to-head"
                   ghost
                   rounded
                   icon
