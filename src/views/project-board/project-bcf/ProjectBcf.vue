@@ -255,10 +255,7 @@
       </transition>
 
       <div class="project-bcf__content__selected-topics">
-        <div
-          v-if="isListView || !loading"
-          class="selected-topics flex items-center"
-        >
+        <div v-if="!loading" class="selected-topics flex items-center">
           <div :style="{ visibility: isListView ? 'hidden' : 'visible' }">
             <BIMDataCheckbox
               :modelValue="selectedAllTopics"
@@ -295,6 +292,7 @@
               :perPage="14"
               :detailedExtensions="detailedExtensions"
               :topics="displayedTopics"
+              :selectable="true"
               @open-topic="openTopicOverview($event)"
               @selection-changed="selectTopic($event)"
             />
@@ -348,6 +346,7 @@ import {
   useBcfSort
 } from "@bimdata/bcf-components";
 import { onActivated, onDeactivated, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
@@ -356,12 +355,10 @@ import { MODEL_STATUS } from "../../../config/models.js";
 import { DEFAULT_WINDOW, WINDOW_MODELS } from "../../../config/viewer.js";
 import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
-import { useProjects } from "../../../state/projects.js";
 import { useModels } from "../../../state/models.js";
+import { useProjects } from "../../../state/projects.js";
 import { fileUploadInput } from "../../../utils/upload.js";
 import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
-import { useI18n } from "vue-i18n";
-
 import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
@@ -382,8 +379,8 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const { pushNotification } = useAppNotification();
     const router = useRouter();
+    const { pushNotification } = useAppNotification();
     const { currentProject } = useProjects();
     const { projectModels } = useModels();
     const {
