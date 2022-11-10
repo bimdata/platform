@@ -9,11 +9,15 @@
         radius
         :icon="isXL"
         color="default"
+        width="120px"
         @click="
           fileUploadInput(
             'file',
             event => importBcfTopics(event.target.files),
-            { accept: ['.bcf'], multiple: true }
+            {
+              accept: ['.bcf'],
+              multiple: true
+            }
           )
         "
       >
@@ -22,17 +26,12 @@
           {{ $t("ProjectBcf.importButtonText") }}
         </span>
       </BIMDataButton>
-      <BIMDataButton fill radius :icon="isXL" @click="exportBcfTopics">
-        <BIMDataIcon name="export" size="xs" />
-        <span v-if="!isXL" style="margin-left: 6px">
-          {{ $t("ProjectBcf.exportButtonText") }}
-        </span>
-      </BIMDataButton>
       <BIMDataButton
         color="primary"
         fill
         radius
         :icon="isXL"
+        width="120px"
         @click="openTopicCreate"
       >
         <BIMDataIcon name="plus" size="xxxs" />
@@ -255,52 +254,84 @@
         </div>
       </transition>
 
-      <transition name="fade" mode="out-in">
-        <div v-if="loading" class="project-bcf__content__loader">
-          <BIMDataSpinner />
-        </div>
-
-        <div v-else-if="isListView" class="project-bcf__content__list">
-          <BcfTopicsTable
-            :columns="isXL ? ['index', 'title', 'actions'] : undefined"
-            :paginated="true"
-            :perPage="14"
-            :detailedExtensions="detailedExtensions"
-            :topics="displayedTopics"
-            @open-topic="openTopicOverview($event)"
-          />
-        </div>
-
-        <div v-else class="project-bcf__content__grid">
-          <transition-group name="grid">
-            <BcfTopicCreationCard
-              v-if="topics.length === 0"
-              :key="-1"
-              @create-topic="openTopicCreate"
+      <div class="project-bcf__content__selected-topics">
+        <div
+          v-if="isListView || !loading"
+          class="selected-topics flex items-center"
+        >
+          <div :style="{ visibility: isListView ? 'hidden' : 'visible' }">
+            <BIMDataCheckbox
+              :modelValue="selectedAllTopics"
+              @update:modelValue="toggleFullSelection"
             />
-            <BcfTopicCard
-              v-for="topic in displayedTopics"
-              :key="topic.guid"
+          </div>
+          <span>
+            Nombre de BCF sélectionnés :
+            <strong>{{ selectedTopicToExport.length }} BCF</strong>
+          </span>
+          <BIMDataButton
+            v-if="selectedTopicToExport.length > 0 || selectedAllTopics"
+            fill
+            radius
+            :icon="isXL"
+            @click="exportBcfTopics"
+            class="m-l-18"
+          >
+            <BIMDataIcon name="export" size="xs" />
+            <span v-if="!isXL" style="margin-left: 6px">
+              {{ $t("ProjectBcf.exportButtonText") }}
+            </span>
+          </BIMDataButton>
+        </div>
+        <transition name="fade" mode="out-in">
+          <div v-if="loading" class="project-bcf__content__loader">
+            <BIMDataSpinner />
+          </div>
+
+          <div v-else-if="isListView" class="project-bcf__content__list">
+            <BcfTopicsTable
+              :columns="isXL ? ['index', 'title', 'actions'] : undefined"
+              :paginated="true"
+              :perPage="14"
               :detailedExtensions="detailedExtensions"
-              :topic="topic"
-              @open-topic="openTopicOverview(topic)"
+              :topics="displayedTopics"
+              @open-topic="openTopicOverview($event)"
+              @selection-changed="selectTopic($event)"
             />
+          </div>
 
-            <div
-              v-if="topics.length > 0 && displayedTopics.length === 0"
-              class="project-bcf__content__grid__placeholder"
-            >
-              <BIMDataCard>
-                <template #content>
-                  <NoSearchResultsImage />
-                  <h3>{{ $t("ProjectBcf.noSearchResultsTitle") }}</h3>
-                  <p>{{ $t("ProjectBcf.noSearchResultsText") }}</p>
-                </template>
-              </BIMDataCard>
-            </div>
-          </transition-group>
-        </div>
-      </transition>
+          <div v-else class="project-bcf__content__grid m-t-12">
+            <transition-group name="grid">
+              <BcfTopicCreationCard
+                v-if="topics.length === 0"
+                :key="-1"
+                @create-topic="openTopicCreate"
+              />
+              <BcfTopicCard
+                v-for="topic in displayedTopics"
+                :key="topic.guid"
+                :detailedExtensions="detailedExtensions"
+                :topic="topic"
+                @open-topic="openTopicOverview(topic)"
+                @select-topic="selectTopic(topic)"
+              />
+
+              <div
+                v-if="topics.length > 0 && displayedTopics.length === 0"
+                class="project-bcf__content__grid__placeholder"
+              >
+                <BIMDataCard>
+                  <template #content>
+                    <NoSearchResultsImage />
+                    <h3>{{ $t("ProjectBcf.noSearchResultsTitle") }}</h3>
+                    <p>{{ $t("ProjectBcf.noSearchResultsText") }}</p>
+                  </template>
+                </BIMDataCard>
+              </div>
+            </transition-group>
+          </div>
+        </transition>
+      </div>
     </div>
     <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
       <SnapshotModal :topicSnapshot="topicSnapshot" />
@@ -456,7 +487,10 @@ export default {
 
     const exportBcfTopics = async () => {
       try {
-        await exportBcf(currentProject.value);
+        await exportBcf(
+          currentProject.value,
+          selectedTopicToExport.value.join(",")
+        );
         pushNotification({
           type: "success",
           title: t("Success"),
@@ -499,6 +533,49 @@ export default {
       showTopicUpdate.value = false;
       loadBcfTopicComments(currentProject.value, topic);
       openSidePanel();
+    };
+
+    const selectedTopicToExport = ref([]);
+    const selectedAllTopics = ref(false);
+
+    const toggleFullSelection = () => {
+      selectedTopicToExport.value = [];
+      selectedAllTopics.value = !selectedAllTopics.value;
+      if (selectedAllTopics.value) {
+        topics.value.forEach(topic => {
+          topic.isSelected = true;
+          selectedTopicToExport.value.push(topic.guid);
+        });
+      } else {
+        topics.value.forEach(topic => {
+          topic.isSelected = false;
+        });
+        selectedTopicToExport.value = [];
+      }
+    };
+
+    const selectTopic = topic => {
+      if (isListView.value > 0) {
+        topic.forEach(t => {
+          t.isSelected = true;
+        });
+        selectedTopicToExport.value = topic.map(t => t.guid);
+      } else {
+        if (topic.isSelected) {
+          selectedTopicToExport.value.push(topic.guid);
+        } else {
+          const id = selectedTopicToExport.value.indexOf(topic.guid);
+          selectedTopicToExport.value.splice(id, 1);
+        }
+      }
+      if (selectedTopicToExport.value.length === 0) {
+        selectedAllTopics.value = false;
+      } else {
+        selectedAllTopics.value =
+          selectedTopicToExport.value.length === topics.value.length
+            ? true
+            : null;
+      }
     };
 
     const openTopicCreate = () => {
@@ -573,6 +650,8 @@ export default {
       project: currentProject,
       searchText,
       selectedTopic,
+      selectedTopicToExport,
+      selectedAllTopics,
       showMetrics,
       showSettings,
       showTopicCreate,
@@ -594,6 +673,8 @@ export default {
       openTopicCreate,
       openTopicUpdate,
       openTopicOverview,
+      selectTopic,
+      toggleFullSelection,
       openTopicViewer,
       reloadBcfTopics,
       reloadComments,

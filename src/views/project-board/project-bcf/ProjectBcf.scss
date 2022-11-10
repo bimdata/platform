@@ -43,15 +43,37 @@
       gap: calc(var(--spacing-unit) * 2);
 
       &__title {
+        height: 32px;
+        display: flex;
+        align-items: center;
         text-align: center;
         font-size: 18px;
         font-weight: bold;
       }
     }
 
+    &__selected-topics {
+      flex: 1;
+      .selected-topics {
+        height: 32px;
+        margin-bottom: calc(var(--spacing-unit) * 2);
+        gap: 8px;
+        ::v-deep .bimdata-checkbox__mark {
+          width: 15px;
+          height: 15px;
+          &::after {
+            top: 2px;
+            left: 4px;
+          }
+        }
+        & > span {
+          font-size: 18px;
+        }
+      }
+    }
+
     &__loader,
-    &__list,
-    &__grid {
+    &__list {
       flex: 1;
     }
 

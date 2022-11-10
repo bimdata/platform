@@ -75,8 +75,8 @@ const importBcf = async (project, file) => {
   return res;
 };
 
-const exportBcf = project => {
-  return BcfService.exportBcf(project);
+const exportBcf = (project, parameters) => {
+  return BcfService.exportBcf(project, parameters);
 };
 
 export function useBcf() {
