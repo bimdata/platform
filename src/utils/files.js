@@ -28,6 +28,16 @@ function generateFileKey(file) {
   return key;
 }
 
+function removeRootDir(paths) {
+  return paths
+    .map(path => {
+      const newPath = Array.from(path);
+      newPath.shift();
+      return newPath;
+    })
+    .filter(path => path.length > 0);
+}
+
 /**
  * Get paths for each files
  *
@@ -58,45 +68,48 @@ function handleInputFiles(files) {
  * since folders in paths array are not identified by IDs (unicity), if two
  * folders have the same name at the same level of nestings, they will merge.
  */
-function createTreeFromPaths(folder, paths) {
-  const root = paths[0]?.[0];
-  if (!root) return;
+function createFolderTree(rootFolder, paths) {
+  const pathsBySiblings = paths.reduce((globalPath, currentPath) => {
+    if (currentPath.length === 1) {
+      globalPath.push([currentPath]);
+    } else {
+      globalPath.forEach((path, index) => {
+        if (path[0][0] === currentPath[0]) globalPath[index].push(currentPath);
+      });
+    }
+    return globalPath;
+  }, []);
 
-  const tree = {
-    name: root,
-    parent_id: folder.parent_id,
-    default_permission: 1,
-    children: []
+  const treeBuilder = paths => {
+    const tree = {
+      name: paths[0][0],
+      parent_id: rootFolder.id,
+      default_permission: 1,
+      children: []
+    };
+
+    removeRootDir(paths).forEach(path =>
+      path.reduce((parentFolder, currentFolderName) => {
+        let currentFolder = parentFolder.children.find(
+          child => child.name === currentFolderName
+        );
+        if (!currentFolder) {
+          currentFolder = {
+            name: currentFolderName,
+            default_permission: 1,
+            children: []
+          };
+          parentFolder.children.push(currentFolder);
+        }
+
+        return currentFolder;
+      }, tree)
+    );
+
+    return tree;
   };
 
-  const pathWithoutRoot = paths
-    .map(path => {
-      const newPath = Array.from(path);
-      newPath.shift();
-      return newPath;
-    })
-    .filter(path => path.length > 0);
-
-  pathWithoutRoot.forEach(path =>
-    path.reduce((parentFolder, currentFolderName) => {
-      let currentFolder = parentFolder.children.find(
-        child => child.name === currentFolderName
-      );
-
-      if (!currentFolder) {
-        currentFolder = {
-          name: currentFolderName,
-          default_permission: 1,
-          children: []
-        };
-        parentFolder.children.push(currentFolder);
-      }
-
-      return currentFolder;
-    }, tree)
-  );
-
-  return tree;
+  return pathsBySiblings.map(treeBuilder);
 }
 
 function matchFoldersAndDocs(DMSTree, docsInfos) {
@@ -179,9 +192,10 @@ export {
   generateFileKey,
   getPaths,
   handleInputFiles,
-  createTreeFromPaths,
+  createFolderTree,
   matchFoldersAndDocs,
   treeIdGenerator,
   handleDragAndDropFile,
-  getFileFormat
+  getFileFormat,
+  removeRootDir
 };
