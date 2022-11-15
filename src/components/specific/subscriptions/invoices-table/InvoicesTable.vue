@@ -6,7 +6,8 @@
 
     <BIMDataCard class="invoices-table__table" v-if="payments.length > 0">
       <template #content>
-        <GenericTable
+        <BIMDataTable
+          tableLayout="fixed"
           :columns="columns"
           :rows="displayedPayments"
           :paginated="true"
@@ -41,7 +42,7 @@
           <template #cell-actions="{ row: payment }">
             <InvoiceActionsCell :payment="payment" />
           </template>
-        </GenericTable>
+        </BIMDataTable>
       </template>
     </BIMDataCard>
 
@@ -68,14 +69,12 @@ import columnsDef from "./columns.js";
 import routeNames from "../../../../router/route-names.js";
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
-import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import InvoiceActionsCell from "./invoice-actions-cell/InvoiceActionsCell.vue";
 import InvoiceStatusCell from "./invoice-status-cell/InvoiceStatusCell.vue";
 
 export default {
   components: {
     AppLink,
-    GenericTable,
     InvoiceActionsCell,
     InvoiceStatusCell
   },

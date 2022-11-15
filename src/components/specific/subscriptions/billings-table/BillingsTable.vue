@@ -6,7 +6,8 @@
 
     <BIMDataCard class="billings-table__table" v-if="subscriptions.length > 0">
       <template #content>
-        <GenericTable
+        <BIMDataTable
+          tableLayout="fixed"
           :columns="columns"
           :rows="subscriptions"
           :paginated="true"
@@ -61,7 +62,7 @@
               :subscription="sub"
             />
           </template>
-        </GenericTable>
+        </BIMDataTable>
       </template>
     </BIMDataCard>
 
@@ -90,14 +91,12 @@ import { SUB_STATUS } from "../../../../config/subscription.js";
 import routeNames from "../../../../router/route-names.js";
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
-import GenericTable from "../../../generic/generic-table/GenericTable.vue";
 import BillingActionsCell from "./billing-actions-cell/BillingActionsCell.vue";
 
 export default {
   components: {
     AppLink,
-    BillingActionsCell,
-    GenericTable
+    BillingActionsCell
   },
   props: {
     subscriptions: {

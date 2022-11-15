@@ -1,7 +1,8 @@
 <template>
-  <GenericTable
+  <BIMDataTable
     class="models-table"
     data-test-id="models-table"
+    tableLayout="fixed"
     :columns="columns"
     :rows="models"
     :paginated="true"
@@ -47,7 +48,7 @@
         {{ $t("ModelsTable.emptyTablePlaceholder.text") }}
       </slot>
     </template>
-  </GenericTable>
+  </BIMDataTable>
 </template>
 
 <script>
@@ -56,14 +57,12 @@ import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { useStandardBreakpoints } from "../../../../../composables/responsive.js";
 // Components
-import GenericTable from "../../../../generic/generic-table/GenericTable.vue";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
 
 export default {
   components: {
-    GenericTable,
     ModelActionsCell,
     ModelNameCell,
     ModelStatusCell

@@ -114,7 +114,7 @@ const tabsDef = [
   {
     id: "point-cloud",
     label: "Point Cloud",
-    icon: "filePdfPolychrome",
+    img: "/static/point-cloud-file.svg",
     modelTypes: [MODEL_TYPE.POINT_CLOUD],
     component: "PointCloudManager"
   }
