@@ -173,7 +173,7 @@
     </div>
 
     <AppSidePanelContent :header="false">
-      <transition name="fade" mode="out-in">
+      <Transition name="fade" mode="out-in">
         <template v-if="showSettings">
           <BcfSettings
             :uiConfig="{
@@ -196,14 +196,14 @@
             }"
             :project="project"
             :detailedExtensions="detailedExtensions"
-            :topic="selectedTopic"
-            @edit-topic="openTopicUpdate(selectedTopic)"
-            @view-topic="openTopicViewer(selectedTopic)"
+            :topic="currentTopic"
+            @edit-topic="openTopicUpdate(currentTopic)"
+            @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="topicViewpoint"
             @topic-deleted="reloadBcfTopics(), closeSidePanel()"
-            @comment-created="reloadComments(selectedTopic)"
-            @comment-updated="reloadComments(selectedTopic)"
-            @comment-deleted="reloadComments(selectedTopic)"
+            @comment-created="reloadComments(currentTopic)"
+            @comment-updated="reloadComments(currentTopic)"
+            @comment-deleted="reloadComments(currentTopic)"
             @close="closeSidePanel"
           />
         </template>
@@ -216,18 +216,18 @@
             :project="project"
             :extensions="extensions"
             :topics="topics"
-            :topic="selectedTopic"
+            :topic="currentTopic"
             @topic-updated="reloadBcfTopics"
             @topic-created="reloadBcfTopics(), closeSidePanel()"
-            @back="openTopicOverview(selectedTopic)"
+            @back="openTopicOverview(currentTopic)"
             @close="closeSidePanel"
           />
         </template>
-      </transition>
+      </Transition>
     </AppSidePanelContent>
 
     <div class="project-bcf__content">
-      <transition name="fade">
+      <Transition name="fade">
         <div v-show="!showMetrics" class="project-bcf__content__stats">
           <div class="project-bcf__content__stats__title">
             {{ $t("ProjectBcf.metricsTitle", { count: topics.length }) }}
@@ -252,27 +252,25 @@
             <p>{{ $t("ProjectBcf.metricsEmptyText") }}</p>
           </template>
         </div>
-      </transition>
+      </Transition>
 
       <div class="project-bcf__content__selected-topics">
         <div v-if="!loading" class="selected-topics flex items-center">
-          <div :style="{ visibility: isListView ? 'hidden' : 'visible' }">
-            <BIMDataCheckbox
-              :modelValue="selectedAllTopics"
-              @update:modelValue="toggleFullSelection"
-            />
-          </div>
+          <BIMDataCheckbox
+            :modelValue="fullSelectionRef"
+            @update:modelValue="toggleFullSelection"
+          />
           <span>
-            Nombre de BCF sélectionnés :
-            <strong>{{ selectedTopicToExport.length }} BCF</strong>
+            {{ $t("ProjectBcf.selectedTopicCount") }} :
+            <strong>{{ selectedTopics.size }} BCF</strong>
           </span>
           <BIMDataButton
-            v-if="selectedTopicToExport.length > 0 || selectedAllTopics"
+            v-if="selectedTopics.size > 0"
+            class="m-l-18"
             fill
             radius
             :icon="isXL"
             @click="exportBcfTopics"
-            class="m-l-18"
           >
             <BIMDataIcon name="export" size="xs" />
             <span v-if="!isXL" style="margin-left: 6px">
@@ -280,7 +278,8 @@
             </span>
           </BIMDataButton>
         </div>
-        <transition name="fade" mode="out-in">
+
+        <Transition name="fade" mode="out-in">
           <div v-if="loading" class="project-bcf__content__loader">
             <BIMDataSpinner />
           </div>
@@ -293,13 +292,13 @@
               :detailedExtensions="detailedExtensions"
               :topics="displayedTopics"
               :selectable="true"
+              v-model:selection="selectedTopics"
               @open-topic="openTopicOverview($event)"
-              @selection-changed="selectTopic($event)"
             />
           </div>
 
           <div v-else class="project-bcf__content__grid m-t-12">
-            <transition-group name="grid">
+            <TransitionGroup name="grid">
               <BcfTopicCreationCard
                 v-if="topics.length === 0"
                 :key="-1"
@@ -310,8 +309,10 @@
                 :key="topic.guid"
                 :detailedExtensions="detailedExtensions"
                 :topic="topic"
+                :selectable="true"
+                :selected="selectedTopics.has(topic.guid)"
+                @update:selected="toggleTopicSelection(topic)"
                 @open-topic="openTopicOverview(topic)"
-                @select-topic="selectTopic(topic)"
               />
 
               <div
@@ -326,9 +327,9 @@
                   </template>
                 </BIMDataCard>
               </div>
-            </transition-group>
+            </TransitionGroup>
           </div>
-        </transition>
+        </Transition>
       </div>
     </div>
     <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
@@ -345,7 +346,7 @@ import {
   useBcfSearch,
   useBcfSort
 } from "@bimdata/bcf-components";
-import { onActivated, onDeactivated, ref, watch } from "vue";
+import { computed, onActivated, onDeactivated, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
@@ -397,7 +398,7 @@ export default {
 
     const loading = ref(false);
     const isListView = ref(false);
-    const selectedTopic = ref(null);
+    const currentTopic = ref(null);
 
     const reloadExtensions = async () => {
       await Promise.all([
@@ -419,7 +420,7 @@ export default {
       async () => {
         try {
           loading.value = true;
-          selectedTopic.value = null;
+          currentTopic.value = null;
           await reloadExtensions();
           await reloadBcfTopics();
         } finally {
@@ -432,9 +433,9 @@ export default {
     watch(
       topics,
       () => {
-        if (selectedTopic.value) {
-          selectedTopic.value = topics.value.find(
-            t => t.guid === selectedTopic.value.guid
+        if (currentTopic.value) {
+          currentTopic.value = topics.value.find(
+            t => t.guid === currentTopic.value.guid
           );
         }
       },
@@ -442,10 +443,10 @@ export default {
     );
 
     onActivated(() => {
-      selectedTopic.value = null;
+      currentTopic.value = null;
     });
     onDeactivated(() => {
-      selectedTopic.value = null;
+      currentTopic.value = null;
       closeSidePanel();
     });
 
@@ -461,6 +462,37 @@ export default {
       sortOrderTitle,
       sortOrderDate
     } = useBcfSort(displayedTopics);
+
+    const selectedTopics = ref(new Map());
+    const fullSelectionRef = computed(() =>
+      selectedTopics.value.size < topics.value.length
+        ? selectedTopics.value.size > 0
+          ? null
+          : false
+        : true
+    );
+
+    const toggleTopicSelection = topic => {
+      const selection = selectedTopics.value;
+      if (!selection.delete(topic.guid)) {
+        selection.set(topic.guid, topic);
+      }
+      selectedTopics.value = new Map([...selection.entries()]);
+      fullSelectionRef.value =
+        selection.size < topics.value.length
+          ? selection.size > 0
+            ? null
+            : false
+          : true;
+    };
+
+    const toggleFullSelection = () => {
+      if (selectedTopics.value.size < topics.value.length) {
+        selectedTopics.value = new Map([...topics.value.map(t => [t.guid, t])]);
+      } else {
+        selectedTopics.value = new Map();
+      }
+    };
 
     const importBcfTopics = async files => {
       try {
@@ -484,10 +516,9 @@ export default {
 
     const exportBcfTopics = async () => {
       try {
-        await exportBcf(
-          currentProject.value,
-          selectedTopicToExport.value.join(",")
-        );
+        await exportBcf(currentProject.value, [
+          ...selectedTopics.value.values()
+        ]);
         pushNotification({
           type: "success",
           title: t("Success"),
@@ -523,7 +554,7 @@ export default {
     };
 
     const openTopicOverview = topic => {
-      selectedTopic.value = topic;
+      currentTopic.value = topic;
       showSettings.value = false;
       showTopicOverview.value = true;
       showTopicCreate.value = false;
@@ -532,51 +563,8 @@ export default {
       openSidePanel();
     };
 
-    const selectedTopicToExport = ref([]);
-    const selectedAllTopics = ref(false);
-
-    const toggleFullSelection = () => {
-      selectedTopicToExport.value = [];
-      selectedAllTopics.value = !selectedAllTopics.value;
-      if (selectedAllTopics.value) {
-        topics.value.forEach(topic => {
-          topic.isSelected = true;
-          selectedTopicToExport.value.push(topic.guid);
-        });
-      } else {
-        topics.value.forEach(topic => {
-          topic.isSelected = false;
-        });
-        selectedTopicToExport.value = [];
-      }
-    };
-
-    const selectTopic = topic => {
-      if (isListView.value > 0) {
-        topic.forEach(t => {
-          t.isSelected = true;
-        });
-        selectedTopicToExport.value = topic.map(t => t.guid);
-      } else {
-        if (topic.isSelected) {
-          selectedTopicToExport.value.push(topic.guid);
-        } else {
-          const id = selectedTopicToExport.value.indexOf(topic.guid);
-          selectedTopicToExport.value.splice(id, 1);
-        }
-      }
-      if (selectedTopicToExport.value.length === 0) {
-        selectedAllTopics.value = false;
-      } else {
-        selectedAllTopics.value =
-          selectedTopicToExport.value.length === topics.value.length
-            ? true
-            : null;
-      }
-    };
-
     const openTopicCreate = () => {
-      selectedTopic.value = null;
+      currentTopic.value = null;
       showSettings.value = false;
       showTopicOverview.value = false;
       showTopicCreate.value = true;
@@ -585,7 +573,7 @@ export default {
     };
 
     const openTopicUpdate = topic => {
-      selectedTopic.value = topic;
+      currentTopic.value = topic;
       showSettings.value = false;
       showTopicOverview.value = false;
       showTopicCreate.value = false;
@@ -637,18 +625,17 @@ export default {
 
     return {
       // References
-      topicSnapshot,
+      currentTopic,
       detailedExtensions,
       displayedTopics,
       extensions,
+      fullSelectionRef,
       isListView,
       loading,
       models: projectModels,
       project: currentProject,
       searchText,
-      selectedTopic,
-      selectedTopicToExport,
-      selectedAllTopics,
+      selectedTopics,
       showMetrics,
       showSettings,
       showTopicCreate,
@@ -659,19 +646,18 @@ export default {
       sortOrderIndex,
       sortOrderTitle,
       topics,
-      topicViewpoint,
+      topicSnapshot,
       // Methods
       applyFilters,
       closeMetrics,
       closeSidePanel,
       exportBcfTopics,
+      fileUploadInput,
       importBcfTopics,
       openSettings,
       openTopicCreate,
       openTopicUpdate,
       openTopicOverview,
-      selectTopic,
-      toggleFullSelection,
       openTopicViewer,
       reloadBcfTopics,
       reloadComments,
@@ -679,8 +665,10 @@ export default {
       sortByDate,
       sortByIndex,
       sortByTitle,
+      topicViewpoint,
+      toggleFullSelection,
       toggleMetrics,
-      fileUploadInput,
+      toggleTopicSelection,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

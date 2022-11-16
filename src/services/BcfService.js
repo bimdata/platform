@@ -69,12 +69,12 @@ class BcfService {
     }
   }
 
-  async exportBcf(project, parameters) {
+  async exportBcf(project, topics) {
     try {
       const response = await apiClient.bcfApi.downloadBcfExport(
         project.id,
         undefined,
-        parameters
+        topics.map(t => t.guid).join(",")
       );
       downloadBlobAs(`${project.name}.bcf`, response);
     } catch (error) {
