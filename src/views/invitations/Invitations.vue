@@ -45,11 +45,17 @@
                 tag="span"
               >
                 <template v-slot:sender>
-                  <BIMDataTextbox
+                  <BIMDataTextbox v-if="invit.sender"
                     class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="45%"
                     width="auto"
                     :text="fullName(invit.sender)"
+                  />
+                  <BIMDataTextbox v-else
+                    class="invitations__content__list__invit__text__invited-by__highlight"
+                    maxWidth="45%"
+                    width="auto"
+                    :text="invit.client_name"
                   />
                 </template>
                 <template v-if="invit.project_name" v-slot:project>
