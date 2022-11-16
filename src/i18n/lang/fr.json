@@ -244,7 +244,8 @@
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "deleteButtonText": "Supprimer",
-    "unarchiveButtonText": "Désarchiver"
+    "unarchiveButtonText": "Désarchiver",
+    "editButtontext": "Éditer"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Aucune données de localisation disponible",
@@ -316,6 +317,9 @@
     "emptyTablePlaceholder": {
       "text": "Aucun modèle",
       "textPdf": "Depuis le menu “fichier” dans la GED, cliquez sur “Définir comme modèle” pour afficher vos plans pdf dans votre projet."
+    },
+    "buildingMaker": {
+      "create": "Créer"
     }
   },
   "ProjectCardActionMenu": {
