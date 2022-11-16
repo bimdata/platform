@@ -40,7 +40,7 @@
             </template>
             <template v-else>
               <div class="invitations__content__list__invit__icon-bcg">
-                <BIMDataIcon name="folder" color="white" />
+                <BIMDataIcon name="app" color="white" />
               </div>
             </template>
             <div class="invitations__content__list__invit__text">
