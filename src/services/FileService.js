@@ -1,5 +1,3 @@
-import async from "async";
-
 import { FILE_TYPE } from "../config/files.js";
 import { download } from "../utils/download.js";
 import { segregate } from "../utils/file-structure.js";
@@ -9,7 +7,7 @@ import {
   matchFoldersAndDocs,
   createFolderTree,
   handleDragAndDropFile,
-  removeRootDir
+  removeRootFolder
 } from "../utils/files.js";
 
 import apiClient from "./api-client.js";
@@ -238,13 +236,13 @@ class FileService {
           name: paths[0][0]
         });
 
-        const tree = createFolderTree(rootFolder, removeRootDir(paths));
+        const tree = createFolderTree(rootFolder, removeRootFolder(paths));
 
-        function getSpeTreeNode(baseNode) {
+        function getRootFolderNode(baseNode) {
           if (baseNode.id === rootFolder.id) {
             return baseNode;
           } else {
-            return baseNode.children.find(getSpeTreeNode);
+            return baseNode.children?.find(getRootFolderNode);
           }
         }
 
@@ -255,13 +253,13 @@ class FileService {
             tree
           );
 
-          const rootTreeNode = getSpeTreeNode(DMSTree);
+          const rootFolderNode = getRootFolderNode(DMSTree);
 
           return {
             type: FILE_TYPE.FOLDER,
-            name: rootTreeNode.name,
+            name: rootFolderNode.name,
             size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs([rootTreeNode], folder)
+            files: matchFoldersAndDocs([rootFolderNode], folder)
           };
         } catch (error) {
           ErrorService.handleError(

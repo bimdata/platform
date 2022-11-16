@@ -28,7 +28,7 @@ function generateFileKey(file) {
   return key;
 }
 
-function removeRootDir(paths) {
+function removeRootFolder(paths) {
   return paths
     .map(path => {
       const newPath = Array.from(path);
@@ -88,7 +88,7 @@ function createFolderTree(rootFolder, paths) {
       children: []
     };
 
-    removeRootDir(paths).forEach(path =>
+    removeRootFolder(paths).forEach(path =>
       path.reduce((parentFolder, currentFolderName) => {
         let currentFolder = parentFolder.children.find(
           child => child.name === currentFolderName
@@ -197,5 +197,5 @@ export {
   treeIdGenerator,
   handleDragAndDropFile,
   getFileFormat,
-  removeRootDir
+  removeRootFolder
 };
