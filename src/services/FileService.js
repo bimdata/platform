@@ -238,11 +238,11 @@ class FileService {
 
         const tree = createFolderTree(rootFolder, removeRootFolder(paths));
 
-        function getRootFolderNode(baseNode) {
-          if (baseNode.id === rootFolder.id) {
-            return baseNode;
+        function getRootFolderNode(node) {
+          if (node.id === rootFolder.id) {
+            return node;
           } else {
-            return baseNode.children?.find(getRootFolderNode);
+            return node.children?.find(getRootFolderNode);
           }
         }
 
