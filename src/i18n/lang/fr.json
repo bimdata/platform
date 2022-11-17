@@ -878,7 +878,8 @@
     "metricsEmptyText": "Ajoutez des issues pour voir les statistiques associées ici.",
     "noSearchResultsTitle": "Pas de résultats",
     "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
-    "goBackButton": "Retour"
+    "goBackButton": "Retour",
+    "selectedTopicCount": "Nombre de BCF sélectionnés"
   },
   "GuidedTour": {
     "platform": {

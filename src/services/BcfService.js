@@ -54,9 +54,7 @@ class BcfService {
       formData.append("name", file.name);
       formData.append("file", file);
       await fetch(
-        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${
-          project.id
-        }/import`,
+        `${process.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/import`,
         {
           method: "POST",
           credentials: "include",
@@ -71,9 +69,13 @@ class BcfService {
     }
   }
 
-  async exportBcf(project) {
+  async exportBcf(project, topics) {
     try {
-      const response = await apiClient.bcfApi.downloadBcfExport(project.id);
+      const response = await apiClient.bcfApi.downloadBcfExport(
+        project.id,
+        undefined,
+        topics.map(t => t.guid).join(",")
+      );
       downloadBlobAs(`${project.name}.bcf`, response);
     } catch (error) {
       throw new RuntimeError(ERRORS.BCF_IMPORT_ERROR, error);

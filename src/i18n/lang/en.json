@@ -850,6 +850,7 @@
         "noSearchResultsTitle": "No results",
         "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
         "goBackButton": "Return",
+        "selectedTopicCount": "Number of selected topics",
         "importBcfNotificationSuccess": "BCF file successfully imported",
         "importBcfNotificationError": "Error while importing the BCF file",
         "exportBcfNotificationSuccess": "BCF successfully exported",
