@@ -68,7 +68,7 @@ const PLUGINS_CONFIG = {
     merge: true,
     export: true
   },
-  tileset: true,
+  tileset: false, // TODO: set to true when point-cloud is ready
   "tileset-viewer-parameters": true,
   "viewer2d-background": true,
   viewer3d: {
