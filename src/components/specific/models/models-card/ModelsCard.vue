@@ -10,6 +10,9 @@
             spaceID: project.cloud.id,
             projectID: project.id,
             modelIDs: model.id
+          },
+          query: {
+            window: windowType(model.document)
           }
         }"
       >
@@ -32,6 +35,7 @@
 <script>
 import { ref, watch } from "vue";
 import routeNames from "../../../../router/route-names.js";
+import { windowType } from "../../../../utils/models.js";
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
 import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview.vue";
@@ -75,7 +79,8 @@ export default {
       model: currentModel,
       routeNames,
       // Methods
-      onModelChange
+      onModelChange,
+      windowType
     };
   }
 };

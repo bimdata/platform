@@ -16,9 +16,13 @@
 
     &__preview-icon {
       position: absolute;
-      right: var(--spacing-unit);
-      bottom: 66px;
+      right: calc(var(--spacing-unit) / 2);
+      bottom: 60px;
     }
+  }
+
+  &__viewer {
+    margin: auto;
   }
 
   &__placeholder {

@@ -5,21 +5,22 @@
     </div>
     <template v-if="image && image.url">
       <BIMDataModelPreview
+        class="models-card-model-preview__viewer"
         :type="image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
         :previewUrl="image.url"
         :width="377"
         :height="342"
         backgroundColor="var(--color-silver)"
       />
-      <BIMDataFileIcon
+      <BIMDataIcon
         class="models-card-model-preview__index__preview-icon"
-        :fileName="image.name"
-        :size="28"
+        :name="getPolychromeIcon(image)"
+        size="l"
       />
     </template>
     <template v-else>
       <div class="models-card-model-preview__placeholder">
-        <BIMDataFileIcon :fileName="image.name" :size="100" />
+        <BIMDataIcon :name="getPolychromeIcon(image)" customSize="150" />
       </div>
     </template>
 
@@ -55,7 +56,12 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE } from "../../../../../config/models.js";
+import {
+  MODEL_TYPE,
+  MODEL_ICON_POLYCHROME
+} from "../../../../../config/models.js";
+import { fileExtension } from "../../../../../utils/files.js";
+
 export default {
   props: {
     models: {
@@ -88,6 +94,12 @@ export default {
       }
     });
 
+    const getPolychromeIcon = model => {
+      return MODEL_ICON_POLYCHROME[
+        fileExtension(model.name).substring(1).toUpperCase()
+      ];
+    };
+
     watch(
       () => props.models,
       () => {
@@ -116,7 +128,8 @@ export default {
       MODEL_TYPE,
       // Methods
       nextImage,
-      previousImage
+      previousImage,
+      getPolychromeIcon
     };
   }
 };

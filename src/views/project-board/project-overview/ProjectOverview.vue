@@ -128,7 +128,9 @@ export default {
     const { pushNotification } = useAppNotification();
 
     const ifcs = computed(() =>
-      projectModels.value.filter(model => !model.archived)
+      projectModels.value.filter(
+        model => !model.archived && model.type !== MODEL_TYPE.META_BUILDING
+      )
     );
 
     const {

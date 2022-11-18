@@ -73,11 +73,22 @@ const MODEL_STATUS = Object.freeze({
   ERROR: "E"
 });
 
+const MODEL_ICON_POLYCHROME = Object.freeze({
+  IFC: "fileIfcPolychrome",
+  DXF: "fileDxfPolychrome",
+  DWG: "fileDwgPolychrome",
+  JPEG: "fileJpegPolychrome",
+  PNG: "filePngPolychrome",
+  PDF: "filePdfPolychrome",
+  PLAN: "filePlanPolychrome"
+});
+
 export {
   CONVERTIBLE_EXTENSIONS,
   MODEL_EXTENSIONS,
   MODEL_SOURCE,
   MODEL_STATUS,
   MODEL_TYPE,
-  UPLOADABLE_EXTENSIONS
+  UPLOADABLE_EXTENSIONS,
+  MODEL_ICON_POLYCHROME
 };
