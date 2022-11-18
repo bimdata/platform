@@ -24,7 +24,7 @@ const WINDOWS = Object.freeze({
   IFC2D: "2d",
   IFC3D: "3d",
   PLAN: "plan",
-  TILESET: "tileset"
+  TILESET: "pointCloud"
 });
 
 /**
