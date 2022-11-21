@@ -99,7 +99,7 @@ const tabsDef = [
   {
     id: "dxf",
     label: "DXF",
-    img: "/static/dxf-file.svg",
+    icon: "fileDxfPolychrome",
     modelTypes: [MODEL_TYPE.DXF],
     component: "DWGManager",
     beta: true

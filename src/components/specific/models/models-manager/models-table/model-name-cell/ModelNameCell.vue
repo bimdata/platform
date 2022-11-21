@@ -40,13 +40,13 @@
 
       <div v-else class="model-name-cell__content">
         <template v-if="model.type === MODEL_TYPE.IFC">
-          <img src="/static/ifc-logo.svg" />
+          <BIMDataIcon name="fileIfcPolychrome" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.DWG">
           <BIMDataIcon name="fileDwgPolychrome" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.DXF">
-          <img src="/static/dxf-file.svg" />
+          <BIMDataIcon name="fileDxfPolychrome" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.PDF">
           <BIMDataIcon name="filePdfPolychrome" size="m" />
