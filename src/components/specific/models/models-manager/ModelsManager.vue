@@ -71,7 +71,10 @@
 import { ref, watch } from "vue";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { useToggle } from "../../../../composables/toggle.js";
-import { MODEL_TYPE } from "../../../../config/models.js";
+import {
+  MODEL_TYPE,
+  MODEL_ICON_POLYCHROME
+} from "../../../../config/models.js";
 import { segregateByType } from "../../../../utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
@@ -83,14 +86,14 @@ const tabsDef = [
   {
     id: "ifc",
     label: "IFC",
-    icon: "fileIfcPolychrome",
+    icon: MODEL_ICON_POLYCHROME.IFC,
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
   {
     id: "dwg",
     label: "DWG",
-    icon: "fileDwgPolychrome",
+    icon: MODEL_ICON_POLYCHROME.DWG,
     modelTypes: [MODEL_TYPE.DWG],
     component: "DWGManager",
     beta: true
@@ -98,7 +101,7 @@ const tabsDef = [
   {
     id: "dxf",
     label: "DXF",
-    icon: "fileDxfPolychrome",
+    icon: MODEL_ICON_POLYCHROME.DXF,
     modelTypes: [MODEL_TYPE.DXF],
     component: "DWGManager",
     beta: true
@@ -106,14 +109,14 @@ const tabsDef = [
   {
     id: "pdf",
     label: "PDF",
-    icon: "filePdfPolychrome",
+    icon: MODEL_ICON_POLYCHROME.PDF,
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
   },
   {
     id: "point-cloud",
     label: "Point Cloud",
-    icon: "filePointCloudPolychrome",
+    icon: MODEL_ICON_POLYCHROME.POINT_CLOUD,
     modelTypes: [MODEL_TYPE.POINT_CLOUD],
     component: "PointCloudManager"
   }

@@ -80,7 +80,8 @@ const MODEL_ICON_POLYCHROME = Object.freeze({
   JPEG: "fileJpegPolychrome",
   PNG: "filePngPolychrome",
   PDF: "filePdfPolychrome",
-  PLAN: "filePlanPolychrome"
+  PLAN: "filePlanPolychrome",
+  POINT_CLOUD: "filePointCloudPolychrome"
 });
 
 export {
