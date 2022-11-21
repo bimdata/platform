@@ -237,7 +237,9 @@
     },
     "cancelButtonText": "Annuler",
     "submitButtonText": "Inviter",
-    "successNotifText": "Invitation envoyée"
+    "successNotifText": "Invitation envoyée",
+    "successUsertoAdmin": "Utilisateur passé en administrateur"
+
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Ajouter des tags",
