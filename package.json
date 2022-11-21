@@ -13,7 +13,7 @@
   "dependencies": {
     "@bimdata/bcf-components": "3.1.0-rc.5",
     "@bimdata/building-maker": "1.4.0",
-    "@bimdata/design-system": "1.4.0-rc.64",
+    "@bimdata/design-system": "1.4.0-rc.66",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.2.8",
     "@bimdata/viewer": "1.9.0-rc.180",

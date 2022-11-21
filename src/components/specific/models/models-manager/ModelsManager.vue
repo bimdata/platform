@@ -10,8 +10,7 @@
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
-            <img v-if="tab.img" :src="tab.img" />
-            <BIMDataIcon v-else size="m" :name="tab.icon" />
+            <BIMDataIcon size="m" :name="tab.icon" />
           </span>
           <span v-if="!isMD" class="models-manager__tab__text">
             {{ tab.label }}
@@ -114,7 +113,7 @@ const tabsDef = [
   {
     id: "point-cloud",
     label: "Point Cloud",
-    img: "/static/point-cloud-file.svg",
+    icon: "filePointCloudPolychrome",
     modelTypes: [MODEL_TYPE.POINT_CLOUD],
     component: "PointCloudManager"
   }
