@@ -45,20 +45,20 @@
     </ViewHeader>
 
     <div class="project-board__body">
-      <transition name="fade" mode="out-in">
-        <keep-alive>
+      <Transition name="fade" mode="out-in">
+        <KeepAlive>
           <component
             :is="currentView"
             @switch-sub-modal="isSubscriptionModal = $event"
           />
-        </keep-alive>
-      </transition>
+        </KeepAlive>
+      </Transition>
     </div>
   </div>
 
-  <AppModal v-if="isSubscriptionEnabled && isSubscriptionModal">
+  <AppModalContent v-if="isSubscriptionEnabled && isSubscriptionModal">
     <SubscriptionModal @switch-sub-modal="isSubscriptionModal = $event" />
-  </AppModal>
+  </AppModalContent>
 </template>
 
 <script>
@@ -69,12 +69,12 @@ import { useSession } from "../../composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
 import { useProjects } from "../../state/projects.js";
-import { isFullTotal } from "../../utils/spaces.js";
 import { useSpaces } from "../../state/spaces.js";
+import { isFullTotal } from "../../utils/spaces.js";
 
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
-import AppModal from "../../components/specific/app/app-modal/AppModal.vue";
+import AppModalContent from "../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSlot from "../../components/specific/app/app-slot/AppSlot.js";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
@@ -111,7 +111,7 @@ const tabsDef = [
 export default {
   components: {
     AppBreadcrumb,
-    AppModal,
+    AppModalContent,
     AppSlot,
     GoBackButton,
     ProjectBcf,

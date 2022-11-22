@@ -5,12 +5,6 @@
     :titleHeader="$t('FilesManager.title')"
   >
     <template #content>
-      <AppModal v-if="projectsToUpload">
-        <FileTreePreviewModal
-          :projectsToUpload="projectsToUpload"
-          :loadingData="loadingData"
-        />
-      </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
           <template v-if="menuItems.length > 0">
@@ -293,13 +287,19 @@
           @file-uploaded="$emit('file-uploaded')"
         />
       </template>
+
+      <AppModalContent v-if="projectsToUpload">
+        <FileTreePreviewModal
+          :projectsToUpload="projectsToUpload"
+          :loadingData="loadingData"
+        />
+      </AppModalContent>
     </template>
   </BIMDataCard>
 </template>
 
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
-import async from "async";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
@@ -323,7 +323,7 @@ import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
-import AppModal from "../../app/app-modal/AppModal.vue";
+import AppModalContent from "../../app/app-modal/AppModalContent.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
@@ -338,7 +338,7 @@ import VisaMain from "../../visa/visa-main/VisaMain.vue";
 
 export default {
   components: {
-    AppModal,
+    AppModalContent,
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,

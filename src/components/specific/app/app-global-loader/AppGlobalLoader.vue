@@ -1,15 +1,14 @@
 <template>
-  <teleport to="#app-global-loader-container">
-    <transition name="fade" mode="out-in">
-      <template v-if="showGlobalLoader">
-        <BIMDataLoading
-          class="app-global-loader"
-          :message="message"
-          :subMessage="subMessage"
-        />
-      </template>
-    </transition>
-  </teleport>
+  <Teleport to="#app-global-loader-container">
+    <Transition name="fade">
+      <BIMDataLoading
+        v-show="showGlobalLoader"
+        class="app-global-loader"
+        :message="message"
+        :subMessage="subMessage"
+      />
+    </Transition>
+  </Teleport>
 </template>
 
 <script>
@@ -25,9 +24,9 @@ export default {
     }
   },
   setup() {
-    return {
-      showGlobalLoader: useAppGlobalLoader().showGlobalLoader
-    };
+    const { showGlobalLoader } = useAppGlobalLoader();
+
+    return { showGlobalLoader };
   }
 };
 </script>
