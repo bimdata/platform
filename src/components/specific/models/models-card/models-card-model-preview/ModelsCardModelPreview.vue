@@ -14,13 +14,13 @@
       />
       <BIMDataIcon
         class="models-card-model-preview__index__preview-icon"
-        :name="getPolychromeIcon(image)"
+        :name="MODEL_ICON[image.type]"
         size="l"
       />
     </template>
     <template v-else>
       <div class="models-card-model-preview__placeholder">
-        <BIMDataIcon :name="getPolychromeIcon(image)" customSize="150" />
+        <BIMDataIcon :name="MODEL_ICON[image.type]" customSize="150" />
       </div>
     </template>
 
@@ -90,10 +90,6 @@ export default {
       }
     });
 
-    const getPolychromeIcon = model => {
-      return MODEL_ICON[model.type];
-    };
-
     watch(
       () => props.models,
       () => {
@@ -120,10 +116,10 @@ export default {
       images,
       viewport,
       MODEL_TYPE,
+      MODEL_ICON,
       // Methods
       nextImage,
-      previousImage,
-      getPolychromeIcon
+      previousImage
     };
   }
 };
