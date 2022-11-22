@@ -56,11 +56,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import {
-  MODEL_TYPE,
-  MODEL_ICON_POLYCHROME
-} from "../../../../../config/models.js";
-import { fileExtension } from "../../../../../utils/files.js";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../../config/models.js";
 
 export default {
   props: {
@@ -95,9 +91,7 @@ export default {
     });
 
     const getPolychromeIcon = model => {
-      return MODEL_ICON_POLYCHROME[
-        fileExtension(model.name).substring(1).toUpperCase()
-      ];
+      return MODEL_ICON[model.type];
     };
 
     watch(

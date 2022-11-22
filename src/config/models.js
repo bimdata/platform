@@ -73,15 +73,16 @@ const MODEL_STATUS = Object.freeze({
   ERROR: "E"
 });
 
-const MODEL_ICON_POLYCHROME = Object.freeze({
-  IFC: "fileIfcPolychrome",
-  DXF: "fileDxfPolychrome",
-  DWG: "fileDwgPolychrome",
-  JPEG: "fileJpegPolychrome",
-  PNG: "filePngPolychrome",
-  PDF: "filePdfPolychrome",
-  PLAN: "filePlanPolychrome",
-  POINT_CLOUD: "filePointCloudPolychrome"
+const MODEL_ICON = Object.freeze({
+  [MODEL_TYPE.IFC]: "fileIfcPolychrome",
+  [MODEL_TYPE.DXF]: "fileDxfPolychrome",
+  [MODEL_TYPE.DWG]: "fileDwgPolychrome",
+  [MODEL_TYPE.JPEG]: "fileJpegPolychrome",
+  [MODEL_TYPE.JPG]: "fileJpegPolychrome",
+  [MODEL_TYPE.PNG]: "filePngPolychrome",
+  [MODEL_TYPE.PDF]: "filePdfPolychrome",
+  [MODEL_TYPE.META_BUILDING]: "filePlanPolychrome",
+  [MODEL_TYPE.POINT_CLOUD]: "filePointCloudPolychrome"
 });
 
 export {
@@ -91,5 +92,5 @@ export {
   MODEL_STATUS,
   MODEL_TYPE,
   UPLOADABLE_EXTENSIONS,
-  MODEL_ICON_POLYCHROME
+  MODEL_ICON
 };

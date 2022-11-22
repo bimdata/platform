@@ -40,16 +40,16 @@
 
       <div v-else class="model-name-cell__content">
         <template v-if="model.type === MODEL_TYPE.IFC">
-          <BIMDataIcon :name="MODEL_ICON_POLYCHROME.IFC" size="m" />
+          <BIMDataIcon :name="MODEL_ICON.IFC" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.DWG">
-          <BIMDataIcon :name="MODEL_ICON_POLYCHROME.DWG" size="m" />
+          <BIMDataIcon :name="MODEL_ICON.DWG" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.DXF">
-          <BIMDataIcon :name="MODEL_ICON_POLYCHROME.DXF" size="m" />
+          <BIMDataIcon :name="MODEL_ICON.DXF" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.PDF">
-          <BIMDataIcon :name="MODEL_ICON_POLYCHROME.PDF" size="m" />
+          <BIMDataIcon :name="MODEL_ICON.PDF" size="m" />
         </template>
         <template v-if="model.type === MODEL_TYPE.META_BUILDING">
           <BIMDataIcon name="building" size="s" />
@@ -62,10 +62,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import {
-  MODEL_TYPE,
-  MODEL_ICON_POLYCHROME
-} from "../../../../../../config/models.js";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../../../config/models.js";
 import { useModels } from "../../../../../../state/models.js";
 import { debounce } from "../../../../../../utils/async.js";
 
@@ -144,7 +141,7 @@ export default {
       loading,
       modelName,
       MODEL_TYPE,
-      MODEL_ICON_POLYCHROME,
+      MODEL_ICON,
       nameInput,
       showUpdateForm,
       // Methods
