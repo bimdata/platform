@@ -2,7 +2,12 @@
   <Teleport to="#app-modal-container">
     <Transition name="fade">
       <div class="app-modal__overlay" v-show="showModal">
-        <AppSlot name="app-modal" />
+        <template v-if="content">
+          <component :is="content.component" v-bind="content.props" />
+        </template>
+        <template v-else>
+          <AppSlot name="app-modal" />
+        </template>
       </div>
     </Transition>
   </Teleport>
@@ -18,10 +23,11 @@ export default {
     AppSlot
   },
   setup() {
-    const { showModal, closeModal } = useAppModal();
+    const { content, showModal, closeModal } = useAppModal();
 
     return {
       // References
+      content,
       showModal,
       // Methods
       closeModal

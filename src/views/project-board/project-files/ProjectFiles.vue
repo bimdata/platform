@@ -46,7 +46,6 @@
           @folder-permission-updated="reloadData"
           @group-permission-updated="reloadData"
           @model-created="reloadData"
-          @switch-sub-modal="$emit('switch-sub-modal', $event)"
         />
       </AppLoading>
     </div>
@@ -76,7 +75,6 @@ export default {
     AppSlotContent,
     FilesManager
   },
-  emits: ["switch-sub-modal"],
   setup() {
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();

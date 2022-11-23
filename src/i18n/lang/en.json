@@ -947,9 +947,7 @@
     },
     "SubscriptionModal": {
         "title": "Get more space",
-        "subtitle": "You currently have 300mb of storage capacity",
-        "10gbSize": "10 GB",
-        "100mbSize": "+ 100 MB",
+        "subtitle": "You currently have {size} of storage capacity",
         "soon": "SOON",
         "upgrade": {
             "title": "Upgrade to the pro platform",

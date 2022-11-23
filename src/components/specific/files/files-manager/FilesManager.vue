@@ -77,12 +77,7 @@
                 color="primary"
                 fill
                 radius
-                @click="
-                  {
-                    openModal();
-                    $emit('switch-sub-modal', true);
-                  }
-                "
+                @click="openSubscriptionModal"
               >
                 <BIMDataIcon name="addFile" size="xs" />
                 <span
@@ -332,6 +327,7 @@ import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
 import FolderCreationButton from "../folder-creation-button/FolderCreationButton.vue";
+import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
@@ -378,8 +374,7 @@ export default {
     "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
-    "model-created",
-    "switch-sub-modal"
+    "model-created"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -731,6 +726,10 @@ export default {
       }px`;
     });
 
+    const openSubscriptionModal = () => {
+      openModal({ component: SubscriptionModal });
+    };
+
     return {
       // References
       currentFolder,
@@ -786,8 +785,8 @@ export default {
       closeVersioningManager,
       hasAdminPerm,
       isFullTotal,
-      openModal,
       fileUploadInput,
+      openSubscriptionModal,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,

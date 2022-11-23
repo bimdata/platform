@@ -47,18 +47,11 @@
     <div class="project-board__body">
       <Transition name="fade" mode="out-in">
         <KeepAlive>
-          <component
-            :is="currentView"
-            @switch-sub-modal="isSubscriptionModal = $event"
-          />
+          <component :is="currentView" />
         </KeepAlive>
       </Transition>
     </div>
   </div>
-
-  <AppModalContent v-if="isSubscriptionEnabled && isSubscriptionModal">
-    <SubscriptionModal @switch-sub-modal="isSubscriptionModal = $event" />
-  </AppModalContent>
 </template>
 
 <script>
@@ -79,7 +72,6 @@ import AppSlot from "../../components/specific/app/app-slot/AppSlot.js";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
-import SubscriptionModal from "../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
@@ -118,7 +110,6 @@ export default {
     ProjectFiles,
     ProjectOverview,
     SpaceSizeInfo,
-    SubscriptionModal,
     SubscriptionStatusBanner,
     ViewHeader
   },

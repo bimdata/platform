@@ -1,4 +1,5 @@
 <script setup>
+import { onBeforeRouteLeave } from "vue-router";
 import { useAppModal } from "./app-modal.js";
 // Components
 import AppSlotContent from "../app-slot/AppSlotContent.vue";
@@ -14,14 +15,9 @@ defineProps({
   }
 });
 
-const emit = defineEmits(["close"]);
-
 const { closeModal } = useAppModal();
 
-const close = () => {
-  closeModal();
-  emit("close");
-};
+onBeforeRouteLeave(() => closeModal());
 </script>
 
 <template>
@@ -33,7 +29,7 @@ const close = () => {
         ghost
         rounded
         icon
-        @click="close"
+        @click="closeModal"
       >
         <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
