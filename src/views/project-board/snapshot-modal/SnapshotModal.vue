@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .snapshot-modal {
   height: 100%;
   width: fit-content;

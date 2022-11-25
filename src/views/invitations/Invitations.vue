@@ -35,7 +35,14 @@
             v-for="invit in invitationList"
             :key="invit.id"
           >
-            <UserAvatar :user="invit.sender" size="40" />
+            <template v-if="invit.sender">
+              <UserAvatar :user="invit.sender" size="40" />
+            </template>
+            <template v-else>
+              <div class="invitations__content__list__invit__icon-bcg">
+                <BIMDataIcon name="app" color="white" />
+              </div>
+            </template>
             <div class="invitations__content__list__invit__text">
               <i18n-t
                 class="invitations__content__list__invit__text__invited-by"
@@ -46,10 +53,18 @@
               >
                 <template v-slot:sender>
                   <BIMDataTextbox
+                    v-if="invit.sender"
                     class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="45%"
                     width="auto"
                     :text="fullName(invit.sender)"
+                  />
+                  <BIMDataTextbox
+                    v-else
+                    class="invitations__content__list__invit__text__invited-by__highlight"
+                    maxWidth="45%"
+                    width="auto"
+                    :text="invit.client_name"
                   />
                 </template>
                 <template v-if="invit.project_name" v-slot:project>

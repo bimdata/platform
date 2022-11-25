@@ -73,7 +73,7 @@ export default {
   setup(props, { emit }) {
     const { locale, t } = useI18n();
     const { pushNotification } = useAppNotification();
-    const { sendSpaceInvitation } = useSpaces();
+    const { sendSpaceInvitation, updateSpaceUser, spaceUsers } = useSpaces();
     const { sendProjectInvitation } = useProjects();
 
     const roleOptions = ref([]);
@@ -103,6 +103,7 @@ export default {
     };
 
     const submit = debounce(async () => {
+      let currentUser;
       if (email.value) {
         if (props.project) {
           await sendProjectInvitation(props.project, {
@@ -110,14 +111,28 @@ export default {
             role: role.value.value
           });
         } else if (props.space) {
-          await sendSpaceInvitation(props.space, {
-            email: email.value
-          });
+          currentUser = spaceUsers.value.find(
+            user => user.email === email.value
+          );
+          if (currentUser) {
+            await updateSpaceUser(props.space, {
+              ...currentUser,
+              cloud_role: 100
+            });
+          } else {
+            await sendSpaceInvitation(props.space, {
+              email: email.value
+            });
+          }
         }
         pushNotification({
           type: "success",
           title: t("Success"),
-          message: t("InvitationForm.successNotifText")
+          message: t(
+            currentUser
+              ? "InvitationForm.successUsertoAdmin"
+              : "InvitationForm.successNotifText"
+          )
         });
         reset();
         emit("success");

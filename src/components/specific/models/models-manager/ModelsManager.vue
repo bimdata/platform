@@ -109,14 +109,15 @@ const tabsDef = [
     icon: MODEL_ICON.PDF,
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
-  },
-  {
-    id: "point-cloud",
-    label: "Point Cloud",
-    icon: MODEL_ICON.POINT_CLOUD,
-    modelTypes: [MODEL_TYPE.POINT_CLOUD],
-    component: "PointCloudManager"
   }
+  // TODO: uncomment when point-cloud is ready
+  // {
+  //   id: "point-cloud",
+  //   label: "Point Cloud",
+  //   icon: MODEL_ICON.POINT_CLOUD,
+  //   modelTypes: [MODEL_TYPE.POINT_CLOUD],
+  //   component: "PointCloudManager"
+  // }
 ];
 
 export default {

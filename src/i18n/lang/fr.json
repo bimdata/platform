@@ -237,14 +237,16 @@
     },
     "cancelButtonText": "Annuler",
     "submitButtonText": "Inviter",
-    "successNotifText": "Invitation envoyée"
+    "successNotifText": "Invitation envoyée",
+    "successUsertoAdmin": "L'utilisateur a été promu administrateur"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Ajouter des tags",
     "renameButtonText": "Renommer",
     "archiveButtonText": "Archiver",
     "deleteButtonText": "Supprimer",
-    "unarchiveButtonText": "Désarchiver"
+    "unarchiveButtonText": "Désarchiver",
+    "editButtontext": "Éditer"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Aucune données de localisation disponible",
@@ -316,6 +318,9 @@
     "emptyTablePlaceholder": {
       "text": "Aucun modèle",
       "textPdf": "Depuis le menu “fichier” dans la GED, cliquez sur “Définir comme modèle” pour afficher vos plans pdf dans votre projet."
+    },
+    "buildingMaker": {
+      "create": "Créer"
     }
   },
   "ProjectCardActionMenu": {
@@ -874,7 +879,8 @@
     "metricsEmptyText": "Ajoutez des issues pour voir les statistiques associées ici.",
     "noSearchResultsTitle": "Pas de résultats",
     "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
-    "goBackButton": "Retour"
+    "goBackButton": "Retour",
+    "selectedTopicCount": "Nombre de BCF sélectionnés"
   },
   "GuidedTour": {
     "platform": {
