@@ -39,9 +39,9 @@ describe("Documents import feature", () => {
     cy.hook("files-table").selectFile([{ contents: '@housePlan', fileName: 'house-plan.pdf' }, '@terminauxPlafond'], { action: 'drag-drop' })
 
     cy.intercept('**/model').as('getModels')
-    cy.wait('@getModels')
+    cy.wait('@getModels', { timeout: 10000 });
     cy.intercept('**/model').as('getModels2')
-    cy.wait('@getModels2')
+    cy.wait('@getModels2', { timeout: 10000 })
 
     cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
     cy.hook("files-table").contains("tr", "terminaux-plafond.dwg").should("have.length", 1);
