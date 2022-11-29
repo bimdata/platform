@@ -1,5 +1,6 @@
 <template>
   <GenericModelsManager
+    class="pdf-manager"
     :project="project"
     :tabs="tabs"
     @edit-metaBuilding="editBM"
@@ -29,7 +30,7 @@
         @click="openBM"
       >
         <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
-        <span> {{ $t("ModelsManager.buildingMaker.create") }} </span>
+        <span> {{ $t("ModelsTable.buildingMaker.create") }} </span>
       </BIMDataButton>
 
       <transition name="slide-fade-right">

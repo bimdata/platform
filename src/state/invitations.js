@@ -19,7 +19,7 @@ const state = reactive({
 
 const loadUserInvitations = async () => {
   state.invitationList = await InvitationViewService.fetchInvitations().then(
-    res => res.sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
+    res => res.sort((a, b) => (a.id > b.id ? -1 : 1))
   );
   state.invitationListPending = state.invitationList.filter(
     invit => invit.status === INVITATION_STATUS.PENDING

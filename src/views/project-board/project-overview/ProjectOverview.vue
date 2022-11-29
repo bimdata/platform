@@ -57,7 +57,7 @@
       <AppLoading name="project-models">
         <ModelsOverview
           :project="project"
-          :models="ifcs"
+          :models="modelsPreview"
           @open-file-uploader="openFileUploader"
         />
       </AppLoading>
@@ -127,9 +127,9 @@ export default {
     const { loadProjectFileStructure } = useFiles();
     const { pushNotification } = useAppNotification();
 
-    const ifcs = computed(() =>
+    const modelsPreview = computed(() =>
       projectModels.value.filter(
-        model => model.type === MODEL_TYPE.IFC && !model.archived
+        model => !model.archived && model.type !== MODEL_TYPE.META_BUILDING
       )
     );
 
@@ -167,7 +167,7 @@ export default {
     return {
       // References
       allowedExtensions: UPLOADABLE_EXTENSIONS,
-      ifcs,
+      modelsPreview,
       invitations: projectInvitations,
       isAbleToSub,
       models: projectModels,

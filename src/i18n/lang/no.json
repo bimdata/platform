@@ -41,9 +41,6 @@
   "BreadcrumbSelector": {
     "inputPlaceholder": "Søk"
   },
-  "GenericTable": {
-    "pagination": "{start} - {slutt} av {total}"
-  },
   "GoBackButton": {
     "text": "Tilbake"
   },

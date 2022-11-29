@@ -13,7 +13,8 @@ const MODEL_TYPE = Object.freeze({
   META_BUILDING: "METABUILDING",
   OBJ: "OBJ",
   PDF: "PDF",
-  PNG: "PNG"
+  PNG: "PNG",
+  POINT_CLOUD: "POINT_CLOUD"
 });
 
 /**
@@ -72,11 +73,24 @@ const MODEL_STATUS = Object.freeze({
   ERROR: "E"
 });
 
+const MODEL_ICON = Object.freeze({
+  [MODEL_TYPE.IFC]: "fileIfcPolychrome",
+  [MODEL_TYPE.DXF]: "fileDxfPolychrome",
+  [MODEL_TYPE.DWG]: "fileDwgPolychrome",
+  [MODEL_TYPE.JPEG]: "fileJpegPolychrome",
+  [MODEL_TYPE.JPG]: "fileJpegPolychrome",
+  [MODEL_TYPE.PNG]: "filePngPolychrome",
+  [MODEL_TYPE.PDF]: "filePdfPolychrome",
+  [MODEL_TYPE.META_BUILDING]: "filePlanPolychrome",
+  [MODEL_TYPE.POINT_CLOUD]: "filePointCloudPolychrome"
+});
+
 export {
   CONVERTIBLE_EXTENSIONS,
   MODEL_EXTENSIONS,
   MODEL_SOURCE,
   MODEL_STATUS,
   MODEL_TYPE,
-  UPLOADABLE_EXTENSIONS
+  UPLOADABLE_EXTENSIONS,
+  MODEL_ICON
 };

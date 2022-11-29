@@ -1,6 +1,7 @@
 import { MODEL_TYPE } from "./models.js";
 
-const { DWG, DXF, IFC, JPEG, JPG, META_BUILDING, PDF, PNG } = MODEL_TYPE;
+const { DWG, DXF, IFC, JPEG, JPG, META_BUILDING, PDF, PNG, POINT_CLOUD } =
+  MODEL_TYPE;
 
 const AVAILABLE_PLUGINS = Object.freeze({
   backgroundColor:
@@ -14,33 +15,49 @@ const AVAILABLE_PLUGINS = Object.freeze({
   svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.2"
 });
 
+/**
+ * List of available viewer windows.
+ */
 const WINDOWS = Object.freeze({
   DWG: "dwg",
   DXF: "dxf",
+  IFC2D: "2d",
+  IFC3D: "3d",
   PLAN: "plan",
-  V2D: "2d",
-  V3D: "3d"
+  TILESET: "tileset"
 });
 
 /**
- * Define the type of models that can opened
- * in each viewer window
+ * Define the type of models that can be opened
+ * in each viewer window.
  */
 const WINDOW_MODELS = Object.freeze({
   [WINDOWS.DWG]: [DWG],
   [WINDOWS.DXF]: [DXF],
+  [WINDOWS.IFC2D]: [IFC],
+  [WINDOWS.IFC3D]: [IFC],
   [WINDOWS.PLAN]: [JPEG, JPG, META_BUILDING, PDF, PNG],
-  [WINDOWS.V2D]: [IFC],
-  [WINDOWS.V3D]: [IFC]
+  [WINDOWS.TILESET]: [POINT_CLOUD]
 });
 
-const DEFAULT_WINDOW = WINDOWS.V3D;
+/**
+ * Viewer window that will be opened by default
+ * if none is specified.
+ */
+const DEFAULT_WINDOW = WINDOWS.IFC3D;
 
 const PLUGINS_CONFIG = {
+  accessMarketplace: true,
+  bcfManager: true,
+  buildingMaker: true,
   header: {
     warnings: false
   },
   measure3d: true,
+  plan: true,
+  properties: {
+    editProperties: true
+  },
   split: true,
   "structure-properties": {
     merge: true,
@@ -51,17 +68,12 @@ const PLUGINS_CONFIG = {
     merge: true,
     export: true
   },
-  properties: {
-    editProperties: true
-  },
+  tileset: false, // TODO: set to true when point-cloud is ready
+  "tileset-viewer-parameters": true,
   "viewer2d-background": true,
-  plan: true,
-  buildingMaker: true,
   viewer3d: {
     enableDynamicLOD: true
-  },
-  bcfManager: true,
-  accessMarketplace: true
+  }
 };
 
 export {

@@ -1,5 +1,3 @@
-import async from "async";
-
 import { FILE_TYPE } from "../config/files.js";
 import { download } from "../utils/download.js";
 import { segregate } from "../utils/file-structure.js";
@@ -7,8 +5,9 @@ import {
   getPaths,
   handleInputFiles,
   matchFoldersAndDocs,
-  createTreeFromPaths,
-  handleDragAndDropFile
+  createFolderTree,
+  handleDragAndDropFile,
+  removeRootFolder
 } from "../utils/files.js";
 
 import apiClient from "./api-client.js";
@@ -231,20 +230,36 @@ class FileService {
     const createdFolders = await Promise.all(
       currentFiles.map(async folder => {
         const paths = getPaths(folder);
-        const tree = createTreeFromPaths(currentFolder, paths);
+
+        const rootFolder = await this.createFolder(project, {
+          parent_id: currentFolder.id,
+          name: paths[0][0]
+        });
+
+        const tree = createFolderTree(rootFolder, removeRootFolder(paths));
+
+        function getRootFolderNode(node) {
+          if (node.id === rootFolder.id) {
+            return node;
+          } else {
+            return node.children?.find(getRootFolderNode);
+          }
+        }
 
         try {
           const DMSTree = await apiClient.collaborationApi.createDMSTree(
             project.cloud.id,
             project.id,
-            [tree]
+            tree
           );
+
+          const rootFolderNode = getRootFolderNode(DMSTree);
 
           return {
             type: FILE_TYPE.FOLDER,
-            name: DMSTree[0].name,
+            name: rootFolderNode.name,
             size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs(DMSTree, folder)
+            files: matchFoldersAndDocs([rootFolderNode], folder)
           };
         } catch (error) {
           ErrorService.handleError(

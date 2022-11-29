@@ -10,8 +10,7 @@
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
-            <img v-if="tab.img" :src="tab.img" />
-            <BIMDataIcon v-else size="m" :name="tab.icon" />
+            <BIMDataIcon size="m" :name="tab.icon" />
           </span>
           <span v-if="!isMD" class="models-manager__tab__text">
             {{ tab.label }}
@@ -72,25 +71,26 @@
 import { ref, watch } from "vue";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { useToggle } from "../../../../composables/toggle.js";
-import { MODEL_TYPE } from "../../../../config/models.js";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../config/models.js";
 import { segregateByType } from "../../../../utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
+import PointCloudManager from "./point-cloud-manager/PointCloudManager.vue";
 
 const tabsDef = [
   {
     id: "ifc",
     label: "IFC",
-    icon: "fileIfcPolychrome",
+    icon: MODEL_ICON.IFC,
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
   {
     id: "dwg",
     label: "DWG",
-    icon: "fileDwgPolychrome",
+    icon: MODEL_ICON.DWG,
     modelTypes: [MODEL_TYPE.DWG],
     component: "DWGManager",
     beta: true
@@ -98,7 +98,7 @@ const tabsDef = [
   {
     id: "dxf",
     label: "DXF",
-    img: "/static/dxf-file.svg",
+    icon: MODEL_ICON.DXF,
     modelTypes: [MODEL_TYPE.DXF],
     component: "DWGManager",
     beta: true
@@ -106,17 +106,26 @@ const tabsDef = [
   {
     id: "pdf",
     label: "PDF",
-    icon: "filePdfPolychrome",
+    icon: MODEL_ICON.PDF,
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
   }
+  // TODO: uncomment when point-cloud is ready
+  // {
+  //   id: "point-cloud",
+  //   label: "Point Cloud",
+  //   icon: MODEL_ICON.POINT_CLOUD,
+  //   modelTypes: [MODEL_TYPE.POINT_CLOUD],
+  //   component: "PointCloudManager"
+  // }
 ];
 
 export default {
   components: {
     DWGManager,
     IFCManager,
-    PDFManager
+    PDFManager,
+    PointCloudManager
   },
   props: {
     project: {

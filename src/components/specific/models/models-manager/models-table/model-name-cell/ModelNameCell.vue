@@ -39,20 +39,11 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <template v-if="model.type === MODEL_TYPE.IFC">
-          <img src="/static/ifc-logo.svg" />
-        </template>
-        <template v-if="model.type === MODEL_TYPE.DWG">
-          <BIMDataIcon name="fileDwgPolychrome" size="m" />
-        </template>
-        <template v-if="model.type === MODEL_TYPE.DXF">
-          <img src="/static/dxf-file.svg" />
-        </template>
-        <template v-if="model.type === MODEL_TYPE.PDF">
-          <BIMDataIcon name="filePdfPolychrome" size="m" />
-        </template>
         <template v-if="model.type === MODEL_TYPE.META_BUILDING">
           <BIMDataIcon name="building" size="s" />
+        </template>
+        <template v-else>
+          <BIMDataIcon :name="MODEL_ICON[model.type]" size="m" />
         </template>
         <BIMDataTextbox :text="model.name" />
       </div>
@@ -62,7 +53,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE } from "../../../../../../config/models.js";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../../../config/models.js";
 import { useModels } from "../../../../../../state/models.js";
 import { debounce } from "../../../../../../utils/async.js";
 
@@ -141,6 +132,7 @@ export default {
       loading,
       modelName,
       MODEL_TYPE,
+      MODEL_ICON,
       nameInput,
       showUpdateForm,
       // Methods

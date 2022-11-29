@@ -1,7 +1,7 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
     <template v-if="model.type === MODEL_TYPE.IFC">
-      <template v-for="window of [WINDOWS.V2D, WINDOWS.V3D]" :key="window">
+      <template v-for="window of [WINDOWS.IFC2D, WINDOWS.IFC3D]" :key="window">
         <ViewerButton
           :disabled="!isModelReady"
           :project="project"
@@ -42,6 +42,16 @@
         :model="model"
         :window="WINDOWS.PLAN"
         text="2D"
+      />
+    </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.POINT_CLOUD">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.TILESET"
+        text="3D"
       />
     </template>
 
