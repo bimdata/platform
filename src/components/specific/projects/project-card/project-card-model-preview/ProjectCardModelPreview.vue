@@ -14,8 +14,8 @@
       <span>{{ `${image.index} / ${images.length}` }}</span>
       <BIMDataIcon name="chevron" size="xs" @click="nextImage" />
     </div>
-
     <BIMDataModelPreview
+      :type="!image.url || image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
       :previewUrl="image.url"
       defaultUrl="/static/default-model-preview.png"
       :width="320"
@@ -26,6 +26,7 @@
 
 <script>
 import { ref, watch } from "vue";
+import { MODEL_TYPE } from "../../../../../config/models.js";
 
 export default {
   props: {
@@ -66,7 +67,8 @@ export default {
           .filter(model => !model.archived)
           .map((model, i) => ({
             index: i + 1,
-            url: model.viewer_360_file
+            type: model.type,
+            url: model.preview_file
           }));
         image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;
@@ -80,6 +82,7 @@ export default {
       image,
       images,
       viewport,
+      MODEL_TYPE,
       // Methods
       nextImage,
       previousImage

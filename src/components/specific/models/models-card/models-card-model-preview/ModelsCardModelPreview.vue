@@ -3,17 +3,26 @@
     <div class="models-card-model-preview__index" v-if="images.length > 1">
       {{ `${image.index} / ${images.length}` }}
     </div>
-
-    <BIMDataModelPreview
-      v-if="image && image.url"
-      :previewUrl="image.url"
-      :width="377"
-      :height="342"
-      backgroundColor="var(--color-silver)"
-    />
-    <div v-else class="models-card-model-preview__placeholder">
-      {{ $t("ModelsCardModelPreview.emptyPreviewPlaceholder") }}
-    </div>
+    <template v-if="image.url">
+      <BIMDataModelPreview
+        class="models-card-model-preview__viewer"
+        :type="image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
+        :previewUrl="image.url"
+        :width="377"
+        :height="342"
+        backgroundColor="var(--color-silver)"
+      />
+      <BIMDataIcon
+        class="models-card-model-preview__index__preview-icon"
+        :name="MODEL_ICON[image.type]"
+        size="l"
+      />
+    </template>
+    <template v-else>
+      <div class="models-card-model-preview__placeholder">
+        <BIMDataIcon :name="MODEL_ICON[image.type]" customSize="150" />
+      </div>
+    </template>
 
     <div class="models-card-model-preview__switcher" v-if="images.length > 0">
       <div class="models-card-model-preview__switcher__text">
@@ -47,6 +56,7 @@
 
 <script>
 import { ref, watch } from "vue";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../../config/models.js";
 
 export default {
   props: {
@@ -88,7 +98,8 @@ export default {
           .map((model, i) => ({
             index: i + 1,
             name: model.name,
-            url: model.viewer_360_file
+            type: model.type,
+            url: model.preview_file
           }));
 
         index.value = 0;
@@ -104,6 +115,8 @@ export default {
       image,
       images,
       viewport,
+      MODEL_TYPE,
+      MODEL_ICON,
       // Methods
       nextImage,
       previousImage

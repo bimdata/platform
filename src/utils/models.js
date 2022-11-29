@@ -81,10 +81,11 @@ function isConvertible(file) {
 
 function windowType(file) {
   const { model_type } = file;
-  const { IFC, DWG } = MODEL_TYPE;
+  const { IFC, DWG, DXF } = MODEL_TYPE;
 
   if (model_type === IFC) return WINDOWS.IFC3D;
   if (model_type === DWG) return WINDOWS.DWG;
+  if (model_type === DXF) return WINDOWS.DXF;
 
   return WINDOWS.PLAN;
 }
