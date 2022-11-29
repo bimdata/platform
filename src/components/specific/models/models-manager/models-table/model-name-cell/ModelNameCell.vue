@@ -39,20 +39,11 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <template v-if="model.type === MODEL_TYPE.IFC">
-          <BIMDataIcon :name="MODEL_ICON.IFC" size="m" />
-        </template>
-        <template v-if="model.type === MODEL_TYPE.DWG">
-          <BIMDataIcon :name="MODEL_ICON.DWG" size="m" />
-        </template>
-        <template v-if="model.type === MODEL_TYPE.DXF">
-          <BIMDataIcon :name="MODEL_ICON.DXF" size="m" />
-        </template>
-        <template v-if="model.type === MODEL_TYPE.PDF">
-          <BIMDataIcon :name="MODEL_ICON.PDF" size="m" />
-        </template>
         <template v-if="model.type === MODEL_TYPE.META_BUILDING">
           <BIMDataIcon name="building" size="s" />
+        </template>
+        <template v-else>
+          <BIMDataIcon :name="MODEL_ICON[model.type]" size="m" />
         </template>
         <BIMDataTextbox :text="model.name" />
       </div>
