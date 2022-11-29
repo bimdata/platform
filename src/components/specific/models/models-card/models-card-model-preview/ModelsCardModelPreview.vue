@@ -3,7 +3,7 @@
     <div class="models-card-model-preview__index" v-if="images.length > 1">
       {{ `${image.index} / ${images.length}` }}
     </div>
-    <template v-if="image && image.url">
+    <template v-if="image.url">
       <BIMDataModelPreview
         class="models-card-model-preview__viewer"
         :type="image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
