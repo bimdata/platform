@@ -14,23 +14,23 @@ describe("Documents import feature", () => {
     cy.hook("btn-upload-file").click();
     cy.get("body > input[type=file]").selectFile('@housePlan', { force: true });
 
-    cy.intercept('**/model').as('getModels')
-    cy.wait('@getModels', { timeout: 10000 })
+    cy.intercept('**/model').as('getModels');
+    cy.wait('@getModels', { timeout: 10000 });
 
     cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
 
-    cy.deleteGedDoc("house-plan.pdf")
+    cy.deleteGedDoc("house-plan.pdf");
   })
 
   it("Should drag and drop a file successfully", () => {
-    cy.hook("files-table").selectFile({ contents: '@housePlan', fileName: 'house-plan.pdf' }, { action: 'drag-drop' })
+    cy.hook("files-table").selectFile({ contents: '@housePlan', fileName: 'house-plan.pdf' }, { action: 'drag-drop' });
 
-    cy.intercept('**/model').as('getModels')
-    cy.wait('@getModels', { timeout: 10000 })
+    cy.intercept('**/model').as('getModels');
+    cy.wait('@getModels', { timeout: 10000 });
 
     cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
 
-    cy.deleteGedDoc("house-plan.pdf")
+    cy.deleteGedDoc("house-plan.pdf");
   })
 
   it("Should drag and drop multiple file successfully", () => {
@@ -39,7 +39,9 @@ describe("Documents import feature", () => {
     cy.hook("files-table").selectFile([{ contents: '@housePlan', fileName: 'house-plan.pdf' }, '@terminauxPlafond'], { action: 'drag-drop' })
 
     cy.intercept('**/model').as('getModels')
-    cy.wait('@getModels', { timeout: 10000 })
+    cy.wait('@getModels')
+    cy.intercept('**/model').as('getModels2')
+    cy.wait('@getModels2')
 
     cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
     cy.hook("files-table").contains("tr", "terminaux-plafond.dwg").should("have.length", 1);
