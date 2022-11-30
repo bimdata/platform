@@ -9,11 +9,11 @@ jobs:
   build-and-push:
     runs-on: [self-hosted, common]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
       - name: Login to BIMData Docker Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: docker-registry.bimdata.io
           username: ${{ secrets.DOCKER_USER }}
@@ -21,9 +21,9 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
+          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: etc/Dockerfile
@@ -45,7 +45,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
+          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Run e2e tests
         uses: ./end-to-end/
         with:
@@ -60,7 +60,7 @@ jobs:
     needs: build-and-push
     steps:
       - name: Login to BIMData Docker Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: docker-registry.bimdata.io
           username: ${{ secrets.DOCKER_USER }}
@@ -68,7 +68,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "::set-output name=name::$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')"
+          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Deploy on staging
         env:
           BRANCH_NAME: ${{ steps.branch.outputs.name }}
@@ -87,7 +87,7 @@ jobs:
       - name: Define platform url
         id: platform
         run: |
-          echo "::set-output name=url::https://platform-dev-$(echo ${GITHUB_HEAD_REF##*/} | tr ' ._' - | tr '[:upper:]' '[:lower:]').bimdata.io"
+          echo "url=https://platform-dev-$(echo ${GITHUB_HEAD_REF##*/} | tr ' ._' - | tr '[:upper:]' '[:lower:]').bimdata.io" >> $GITHUB_OUTPUT
       - name: Edit PR title with ${{ steps.platform.outputs.url }}
         uses: ./.github/actions/pr-title-update
         with:
