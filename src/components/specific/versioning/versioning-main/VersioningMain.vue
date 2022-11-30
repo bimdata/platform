@@ -178,7 +178,12 @@ export default {
       }
     });
 
-    onMounted(async () => await getAllDocVersions(props.document));
+    onMounted(async () => {
+      allDocVersions.value = await FileService.getDocumentVersions(
+        props.project,
+        props.document
+      );
+    });
 
     return {
       // references

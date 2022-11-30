@@ -17,16 +17,13 @@ describe("versioning CRUD", () => {
     cy.hook("btn-open-versioning-manager").click();
 
     cy.hook("btn-add-version").click();
-    cy.get("body > input[type=file]").selectFile('@housePlan', { force: true });
+    cy.get("body > input[type=file]").selectFile("@housePlan", { force: true });
 
     cy.hook("versioning-doc").first().within(() => {
       cy.contains("house-plan.pdf");
     });
 
-    cy.intercept('**/model').as('getModels');
-    cy.wait('@getModels');
-
-    cy.hook("files-table").contains("tr", "house-plan.pdf").should("have.length", 1);
+    cy.hook("files-table").contains("tbody tr", "house-plan.pdf").should("have.length", 1);
   });
 
   it("Should add a new version and update version tree successfully", () => {
@@ -36,12 +33,10 @@ describe("versioning CRUD", () => {
     cy.hook("btn-open-versioning-manager").click();
 
     cy.hook("btn-add-version").click();
-    cy.get("body > input[type=file]").selectFile('@terminauxPlafond', { force: true });
+    cy.get("body > input[type=file]").selectFile("@terminauxPlafond", { force: true });
 
-    cy.intercept('**/model').as('getModels');
-    cy.wait('@getModels');
-    cy.intercept('**/model').as('getModels2');
-    cy.wait('@getModels2');
+    cy.intercept("**/dms-tree").as("getDmsTree");
+    cy.wait("@getDmsTree");
 
     cy.hook("versioning-doc").first().within(() => {
       cy.contains("terminaux-plafond.dwg");
@@ -49,7 +44,7 @@ describe("versioning CRUD", () => {
     cy.hook("versioning-doc").last().within(() => {
       cy.contains("19 rue Marc Antoine Petit");
     });
-    cy.hook("files-table").contains("tr", "terminaux-plafond.dwg").should("have.length", 1);
+    cy.hook("files-table").contains("tbody tr", "terminaux-plafond.dwg").should("have.length", 1);
 
   });
 
@@ -61,8 +56,8 @@ describe("versioning CRUD", () => {
       cy.hook("btn-get-to-head").click();
     });
 
-    cy.intercept('**/model').as('getModels');
-    cy.wait('@getModels');
+    cy.intercept("**/dms-tree").as("getDmsTree");
+    cy.wait("@getDmsTree");
 
     cy.hook("versioning-doc").first().within(() => {
       cy.contains("19 rue Marc Antoine Petit");
@@ -83,19 +78,19 @@ describe("versioning CRUD", () => {
     });
     cy.hook("btn-confirm-delete").click();
 
-    cy.intercept('**/model').as('getModels');
-    cy.wait('@getModels');
+    cy.intercept("**/dms-tree").as("getDmsTree");
+    cy.wait("@getDmsTree");
 
-    cy.hook("versioning-main").contains('house-plan.pdf').should('not.exist');
+    cy.hook("versioning-main").contains("house-plan.pdf").should("not.exist");
 
     cy.hook("versioning-doc").last().within(() => {
       cy.hook("btn-delete-version").click();
     });
     cy.hook("btn-confirm-delete").click();
 
-    cy.intercept('**/model').as('getModels');
-    cy.wait('@getModels');
+    cy.intercept("**/dms-tree").as("getDmsTree");
+    cy.wait("@getDmsTree");
 
-    cy.hook("versioning-main").contains('terminaux-plafond.dwg').should('not.exist');
+    cy.hook("versioning-main").contains("terminaux-plafond.dwg").should("not.exist");
   });
 });

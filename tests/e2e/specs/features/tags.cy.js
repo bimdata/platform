@@ -15,11 +15,10 @@ describe("Tags CRUD", () => {
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-tag-manager").click();
 
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.createTag(tag)))));
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.hook("tag-list").contains("div", tag).should("have.length", 1)))));
+    tagList.forEach(tag => cy.createTag(tag))
   })
 
-  it("Should update tags successfully", () => {
+  it("Should update one tag successfully", () => {
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-tag-manager").click();
 
@@ -28,8 +27,8 @@ describe("Tags CRUD", () => {
       cy.get("input[name=edit-tag-name]").type("done{enter}");
     });
 
-    cy.hook("tag-list").contains('outdated').should('not.exist');
-    cy.hook("tag-list").contains('done');
+    cy.hook("tag-list").contains("outdated").should("not.exist");
+    cy.hook("tag-list").contains("done");
 
     // revert name modification 
     cy.hook("tag-list").contains("div[data-test-id=tags-item]", "done").within(() => {
@@ -39,11 +38,11 @@ describe("Tags CRUD", () => {
 
     cy.hook("tag-list").contains("div[data-test-id=tags-item]", "outdated").within(() => {
       cy.hook("btn-edit-tag-color").click();
-      cy.intercept('**/tag/*').as('getTag');
+      cy.intercept("**/tag/*").as("getTag");
 
-      cy.get('div[class=color-selector__line__element]').not('.selected').eq(0).click();
+      cy.get("div[class=color-selector__line__element]").not(".selected").eq(0).click();
 
-      cy.wait('@getTag').its('response.statusCode').should('eq', 200);
+      cy.wait("@getTag").its("response.statusCode").should("eq", 200);
     });
   });
 
@@ -51,15 +50,13 @@ describe("Tags CRUD", () => {
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-tag-manager").click();
 
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.hook("tag-list").contains("div[data-test-id=tags-item]", tag).within(() => {
+    tagList.forEach(tag => cy.hook("tag-list").contains("div[data-test-id=tags-item]", tag).within(() => {
       cy.hook("checkbox-add-tag").click();
-    })))));
-
+    }))
 
     cy.hook("btn-close-tag-manager").click();
 
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.hook("files-table").contains(tag)))));
-
+    tagList.forEach(tag => cy.hook("files-table").contains(tag))
   });
 
   it("Should unlink tags to a document successfully", () => {
@@ -75,19 +72,18 @@ describe("Tags CRUD", () => {
 
     cy.hook("btn-close-tag-manager").click();
 
-    cy.hook("files-table").contains('outdated');
-    cy.hook("files-table").contains('priority');
+    cy.hook("files-table").contains("outdated");
+    cy.hook("files-table").contains("priority");
   })
 
   it("Should delete tags successfully", () => {
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-tag-manager").click();
 
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.deleteTag(tag)))));
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.hook("tag-list").contains(tag).should('not.exist')))));
+    tagList.forEach(tag => cy.deleteTag(tag))
 
     cy.hook("btn-close-tag-manager").click();
 
-    cy.wrap(new Promise(resolve => resolve(tagList.map(tag => cy.hook("files-table").contains(tag).should('not.exist')))));
+    tagList.forEach(tag => cy.hook("files-table").contains(tag).should("not.exist"))
   })
 });
