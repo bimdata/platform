@@ -1,3 +1,53 @@
 .document-viewer {
-  // TODO
+  width: 100%;
+  height: 100%;
+  background-color: rgba(47, 55, 74, 0.75);
+
+  &__head {
+    position: relative;
+    height: 56px;
+    padding: var(--spacing-unit);
+
+    display: flex;
+    justify-content: center;
+
+    &__actions {
+      position: absolute;
+      top: var(--spacing-unit);
+      right: var(--spacing-unit);
+      display: flex;
+      gap: var(--spacing-unit);
+
+      .bimdata-btn {
+        color: var(--color-white);
+        &:hover {
+          background-color: rgba(122, 122, 122, 0.5);
+        }
+      }
+    }
+  }
+
+  &__body {
+    height: calc(100% - 112px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 3);
+
+    .content {
+      min-width: 400px;
+      width: fit-content;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        max-height: 100%;
+        background-color: var(--color-silver-light);
+        border-radius: 10px;
+      }
+    }
+  }
 }

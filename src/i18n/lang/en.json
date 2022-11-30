@@ -994,5 +994,8 @@
         "goToProjectShort": "Project",
         "goToSpaceLong": "Access to the space",
         "goToSpaceShort": "The space"
+    },
+    "DocumentViewer": {
+        "viewerButton": "Open in viewer"
     }
 }

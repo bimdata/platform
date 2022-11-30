@@ -1000,5 +1000,8 @@
   },
   "GroupMemberCard": {
     "pending": "Invitation en cours"
+  },
+  "DocumentViewer": {
+    "viewerButton": "Ouvrir dans la visionneuse"
   }
 }

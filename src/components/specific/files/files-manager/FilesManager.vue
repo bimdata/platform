@@ -319,6 +319,7 @@ import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
 import AppModalContent from "../../app/app-modal/AppModalContent.vue";
+import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
@@ -439,6 +440,15 @@ export default {
     const onFileSelected = file => {
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
+      } else {
+        openModal({
+          component: DocumentViewer,
+          props: {
+            project: props.project,
+            folder: currentFolder.value,
+            document: file
+          }
+        });
       }
     };
 
