@@ -1,6 +1,7 @@
 <template>
   <div class="file-actions-cell" v-click-away="closeMenu">
     <BIMDataButton
+      data-test-id="btn-actions-cell"
       class="file-actions-cell__btn"
       ripple
       rounded
@@ -101,6 +102,7 @@
         v-if="
           !isFolder(file) && (project.isAdmin || file.user_permission === 100)
         "
+        data-test-id="btn-open-tag-manager"
         class="file-actions-cell__menu__btn"
         ghost
         squared
@@ -112,6 +114,7 @@
         v-if="
           !isFolder(file) && (project.isAdmin || file.user_permission === 100)
         "
+        data-test-id="btn-open-versioning-manager"
         class="file-actions-cell__menu__btn"
         ghost
         squared
@@ -122,6 +125,7 @@
 
       <BIMDataButton
         :disabled="!project.isAdmin && file.user_permission < 100"
+        data-test-id="btn-delete-doc"
         class="file-actions-cell__menu__btn"
         color="high"
         ghost

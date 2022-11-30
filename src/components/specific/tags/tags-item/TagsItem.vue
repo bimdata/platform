@@ -13,6 +13,7 @@
         <span>{{ $t("Tag.deleteTag") }}</span>
         <div class="tags-item__safe-zone__action">
           <BIMDataButton
+            data-test-id="btn-confirm-delete"
             color="high"
             fill
             radius
@@ -35,6 +36,7 @@
     </template>
     <div class="tags-item__content">
       <BIMDataCheckbox
+        data-test-id="checkbox-add-tag"
         :disabled="!isCheckboxClickable"
         :modelValue="tag.isSelected"
         @update:modelValue="toggle(tag, $event)"
@@ -46,6 +48,7 @@
         <template v-else>
           <BIMDataInput
             v-model="tagName"
+            name="edit-tag-name"
             @keyup.enter.stop="onSubmitTagName"
             ref="input"
             margin="-12px 0px 0px 0px"
@@ -54,6 +57,7 @@
         <div class="tags-item__content__info__action">
           <template v-if="!editTagName">
             <BIMDataIcon
+              data-test-id="btn-edit-tag-name"
               name="edit"
               size="xxs"
               fill
@@ -73,6 +77,7 @@
             />
           </template>
           <BIMDataIcon
+            data-test-id="btn-delete-tag"
             name="delete"
             size="xxs"
             fill
@@ -83,6 +88,7 @@
 
           <div
             class="tags-item__content__info__action__color"
+            data-test-id="btn-edit-tag-color"
             :style="{
               'background-color': `#${tagColor}`,
               'border-color': getBorderColor(`${tagColor}`, -50)

@@ -30,7 +30,14 @@
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
         {{ $t("FilesDeleteModal.cancelButtonText") }}
       </BIMDataButton>
-      <BIMDataButton color="high" fill radius width="120px" @click="submit">
+      <BIMDataButton
+        data-test-id="btn-confirm-delete"
+        color="high"
+        fill
+        radius
+        width="120px"
+        @click="submit"
+      >
         {{ $t("FilesDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>

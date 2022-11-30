@@ -1,5 +1,5 @@
 <template>
-  <div class="versioning-main">
+  <div data-test-id="versioning-main" class="versioning-main">
     <transition name="fade">
       <template v-if="isSafeZone">
         <div class="versioning-main__safe-zone">
@@ -38,6 +38,7 @@
             (!project.isAdmin && currentFolder.user_permission < 100) ||
             spaceSubInfo.remaining_total_size <= 0
           "
+          data-test-id="btn-add-version"
           fill
           radius
           icon
@@ -68,6 +69,7 @@
         <div class="versioning-main__content__list">
           <template v-for="(doc, index) of allDocVersions" :key="doc.id">
             <VersioningDoc
+              data-test-id="versioning-doc"
               :project="project"
               :document="doc"
               :headDocument="allDocVersions[0]"
@@ -176,7 +178,12 @@ export default {
       }
     });
 
-    onMounted(async () => await getAllDocVersions(props.document));
+    onMounted(async () => {
+      allDocVersions.value = await FileService.getDocumentVersions(
+        props.project,
+        props.document
+      );
+    });
 
     return {
       // references

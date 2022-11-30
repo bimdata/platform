@@ -93,3 +93,36 @@ Cypress.Commands.add(
   "getProjectCard",
   name => cy.contains("[data-test-id=project-card]", name)
 );
+
+Cypress.Commands.add(
+  "deleteGedDoc",
+  name => {
+    cy.hook("files-table").contains("tr", name).within(() => {
+      cy.hook("btn-actions-cell").click();
+    });
+    cy.hook("btn-delete-doc").filter(":visible").click();
+    cy.hook("btn-confirm-delete").click();  
+  }
+);
+
+Cypress.Commands.add(
+  "createTag",
+  name => {
+    cy.hook("btn-create-tag").click();
+    cy.get("input[name=add-tag]").type(name);
+    cy.hook("btn-validate-tag").click();
+
+    cy.hook("tag-list").contains("div", name).should("have.length", 1);
+  }
+);
+
+Cypress.Commands.add(
+  "deleteTag",
+  name => {
+    cy.hook("tag-list").contains("div[data-test-id=tags-item]", name).within(() => {
+      cy.hook("btn-delete-tag").click();
+      cy.hook("btn-confirm-delete").click();
+    });
+    cy.hook("tag-list").contains(name).should("not.exist");
+  }
+);
