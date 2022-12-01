@@ -66,6 +66,7 @@ import { useToggle } from "../../../../composables/toggle.js";
 import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
 import { isSpaceAdmin } from "../../../../utils/spaces.js";
+import { windowType } from "../../../../utils/models.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
 
 // Components
@@ -135,6 +136,9 @@ export default {
           spaceID: props.project.cloud.id,
           projectID: props.project.id,
           modelIDs: currentModel.value.id
+        },
+        query: {
+          window: windowType(currentModel.value.document)
         }
       });
     };
