@@ -35,8 +35,18 @@
     align-items: center;
     gap: calc(var(--spacing-unit) * 3);
 
-    .content {
-      min-width: 400px;
+    .bimdata-model-preview {
+      border-radius: 10px;
+    }
+
+    .pdf-container {
+      position: relative;
+      width: 500px;
+      height: 100%;
+    }
+
+    .img-container {
+      min-width: 500px;
       width: fit-content;
       height: 100%;
       display: flex;

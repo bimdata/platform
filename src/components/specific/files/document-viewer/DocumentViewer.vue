@@ -2,11 +2,15 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
+import { MODEL_TYPE } from "../../../../config/models.js";
 import routeNames from "../../../../router/route-names.js";
 import { useFiles } from "../../../../state/files.js";
+import { useModels } from "../../../../state/models.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
-import { windowType } from "../../../../utils/models";
+import { windowType } from "../../../../utils/models.js";
+
+const { DWG, DXF, IFC, PDF } = MODEL_TYPE;
 
 const props = defineProps({
   project: {
@@ -25,6 +29,7 @@ const props = defineProps({
 
 const router = useRouter();
 const { closeModal } = useAppModal();
+const { projectModels } = useModels();
 
 const documents = computed(() =>
   props.folder.children
@@ -45,9 +50,23 @@ const fileType = computed(() => {
   const doc = currentDocument.value;
   return doc.model_type ?? fileExtension(doc.file_name);
 });
-const fileUrl = computed(() => {
-  // TODO: compute file url according to file type
-  return currentDocument.value.file;
+const file = computed(() => {
+  switch (fileType.value) {
+    case IFC:
+    case ".ifc":
+    case DWG:
+    case ".dwg":
+    case DXF:
+    case ".dxf":
+      return projectModels.value.find(
+        m => m.id === currentDocument.value.model_id
+      )?.preview_file;
+    case PDF:
+    case ".pdf":
+      return { file: currentDocument.value.file };
+    default:
+      return currentDocument.value.file;
+  }
 });
 
 const openInViewer = () => {
@@ -108,9 +127,26 @@ const download = () => {
         <BIMDataIcon name="chevron" size="xs" :rotate="180" />
       </BIMDataButton>
 
-      <div class="content">
-        <img :src="fileUrl" :alt="currentDocument.name" />
-      </div>
+      <template v-if="[DWG, DXF, IFC].includes(fileType)">
+        <BIMDataModelPreview
+          :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
+          :previewUrl="file"
+          :width="500"
+          :height="500"
+        />
+      </template>
+
+      <template v-else-if="[PDF, '.pdf'].includes(fileType)">
+        <div class="pdf-container">
+          <BIMDataPDFViewer :pdf="file" />
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="img-container">
+          <img :src="file" :alt="currentDocument.name" />
+        </div>
+      </template>
 
       <BIMDataButton
         width="40px"
