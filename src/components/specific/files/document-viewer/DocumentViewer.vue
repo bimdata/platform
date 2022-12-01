@@ -69,6 +69,20 @@ const file = computed(() => {
   }
 });
 
+const onKeyUp = ({ key }) => {
+  switch (key) {
+    case "ArrowLeft":
+      if (index.value > 0) index.value--;
+      break;
+    case "ArrowRight":
+      if (index.value < documents.value.length - 1) index.value++;
+      break;
+    case "Escape":
+      closeModal();
+      break;
+  }
+};
+
 const openInViewer = () => {
   closeModal();
   const doc = currentDocument.value;
@@ -92,7 +106,7 @@ const download = () => {
 </script>
 
 <template>
-  <div class="document-viewer">
+  <div class="document-viewer" @keyup.prevent="onKeyUp">
     <div class="document-viewer__head">
       <BIMDataButton
         v-show="currentDocument.model_id"
@@ -114,7 +128,7 @@ const download = () => {
       </div>
     </div>
 
-    <div class="document-viewer__body">
+    <div class="document-viewer__body" @click.self="closeModal">
       <BIMDataButton
         width="40px"
         height="40px"
