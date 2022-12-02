@@ -1002,6 +1002,7 @@
     "pending": "Invitation en cours"
   },
   "DocumentViewer": {
-    "viewerButton": "Ouvrir dans la visionneuse"
+    "viewerButton": "Ouvrir dans la visionneuse",
+    "docPlaceholder": "Aucune prévisualisation pour ce document"
   }
 }

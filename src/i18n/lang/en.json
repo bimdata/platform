@@ -996,6 +996,7 @@
         "goToSpaceShort": "The space"
     },
     "DocumentViewer": {
-        "viewerButton": "Open in viewer"
+        "viewerButton": "Open in viewer",
+        "docPlaceholder": "No preview for this document"
     }
 }

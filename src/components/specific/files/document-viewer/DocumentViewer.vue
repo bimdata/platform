@@ -141,24 +141,32 @@ const download = () => {
         <BIMDataIcon name="chevron" size="xs" :rotate="180" />
       </BIMDataButton>
 
-      <template v-if="[DWG, DXF, IFC].includes(fileType)">
-        <BIMDataModelPreview
-          :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
-          :previewUrl="file"
-          :width="500"
-          :height="500"
-        />
-      </template>
+      <template v-if="file">
+        <template v-if="[DWG, DXF, IFC].includes(fileType)">
+          <BIMDataModelPreview
+            :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
+            :previewUrl="file"
+            :width="500"
+            :height="500"
+          />
+        </template>
 
-      <template v-else-if="[PDF, '.pdf'].includes(fileType)">
-        <div class="pdf-container">
-          <BIMDataPDFViewer :pdf="file" />
-        </div>
+        <template v-else-if="[PDF, '.pdf'].includes(fileType)">
+          <div class="pdf-container">
+            <BIMDataPDFViewer :pdf="file" />
+          </div>
+        </template>
+
+        <template v-else>
+          <div class="img-container">
+            <img :src="file" :alt="currentDocument.name" />
+          </div>
+        </template>
       </template>
 
       <template v-else>
-        <div class="img-container">
-          <img :src="file" :alt="currentDocument.name" />
+        <div class="doc-placeholder">
+          {{ $t("DocumentViewer.docPlaceholder") }}
         </div>
       </template>
 
