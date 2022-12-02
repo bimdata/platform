@@ -129,6 +129,10 @@ const download = () => {
     </div>
 
     <div class="document-viewer__body" @click.self="closeModal">
+      <div class="document-viewer__body__title">
+        <BIMDataTextbox :text="currentDocument?.name" />
+      </div>
+
       <BIMDataButton
         width="40px"
         height="40px"
