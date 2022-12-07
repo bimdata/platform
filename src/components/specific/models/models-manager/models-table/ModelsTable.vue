@@ -17,9 +17,9 @@
           condensed
           :project="project"
           :file="fileUpload"
-          @upload-completed="$emit('updateUpload', $event)"
-          @upload-canceled="$emit('updateUpload')"
-          @upload-failed="$emit('updateUpload')"
+          @upload-completed="$emit('update-upload', $event)"
+          @upload-canceled="$emit('update-upload')"
+          @upload-failed="$emit('update-upload')"
         />
       </transition>
     </template>

@@ -6,6 +6,7 @@
     :tabs="tabs"
     @edit-metaBuilding="editBM"
     @tab-changed="currentTab = $event"
+    @file-uploaded="$emit('file-uploaded')"
   >
     <template #tablePlaceholder v-if="models.length === 0">
       <div class="pdf-manager__placeholder">
@@ -93,6 +94,7 @@ export default {
       required: true
     }
   },
+  emits: ["file-uploaded"],
   setup(props) {
     const { locale, fallbackLocale } = useI18n();
     const tabs = ref(tabsDef);
