@@ -15,7 +15,7 @@ const MODEL_TYPE = Object.freeze({
   PDF: "PDF",
   PNG: "PNG",
   POINT_CLOUD: "POINT_CLOUD",
-  IMAGE: "IMAGE"
+  PHOTOS: "PHOTOS"
 });
 
 /**
@@ -88,7 +88,8 @@ const MODEL_ICON = Object.freeze({
   [MODEL_TYPE.PNG]: "filePngPolychrome",
   [MODEL_TYPE.PDF]: "filePdfPolychrome",
   [MODEL_TYPE.META_BUILDING]: "filePlanPolychrome",
-  [MODEL_TYPE.POINT_CLOUD]: "filePointCloudPolychrome"
+  [MODEL_TYPE.POINT_CLOUD]: "filePointCloudPolychrome",
+  [MODEL_TYPE.PHOTOS]: "fileImagePolychrome"
 });
 
 export {

@@ -91,12 +91,14 @@ function windowType(file) {
 }
 
 function extensionListFromType(type) {
-  const { IFC, DWG, DXF, JPEG, JPG, PNG, PDF, POINT_CLOUD } = MODEL_TYPE;
+  const { IFC, DWG, DXF, PDF, POINT_CLOUD, PHOTOS } = MODEL_TYPE;
 
   if (type === IFC) return [MODEL_EXTENSIONS.IFC];
   if (type === DWG) return [MODEL_EXTENSIONS.DWG];
   if (type === DXF) return [MODEL_EXTENSIONS.DXF];
   if (type === PDF) return [MODEL_EXTENSIONS.PDF];
+  if (type === PHOTOS)
+    return [MODEL_EXTENSIONS.PNG, MODEL_EXTENSIONS.JPG, MODEL_EXTENSIONS.JPEG];
   if (type === POINT_CLOUD)
     return [
       MODEL_EXTENSIONS.E57,
@@ -105,9 +107,6 @@ function extensionListFromType(type) {
       MODEL_EXTENSIONS.XYZ,
       MODEL_EXTENSIONS.PLY
     ];
-
-  if ((type === JPEG) | (type === JPG) | (type === PNG))
-    return [MODEL_EXTENSIONS.PNG, MODEL_EXTENSIONS.JPG, MODEL_EXTENSIONS.JPEG];
 }
 
 export {

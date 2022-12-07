@@ -59,7 +59,7 @@
             :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
-            :type="currentTab.label"
+            :type="currentTab.type"
             :models="currentTab.models"
             @file-uploaded="$emit('file-uploaded')"
           />
@@ -86,6 +86,7 @@ const tabsDef = [
     id: "ifc",
     label: "IFC",
     icon: MODEL_ICON.IFC,
+    type: MODEL_TYPE.IFC,
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
@@ -93,6 +94,7 @@ const tabsDef = [
     id: "dwg",
     label: "DWG",
     icon: MODEL_ICON.DWG,
+    type: MODEL_TYPE.DWG,
     modelTypes: [MODEL_TYPE.DWG],
     component: "DWGManager",
     beta: true
@@ -101,6 +103,7 @@ const tabsDef = [
     id: "dxf",
     label: "DXF",
     icon: MODEL_ICON.DXF,
+    type: MODEL_TYPE.DXF,
     modelTypes: [MODEL_TYPE.DXF],
     component: "DWGManager",
     beta: true
@@ -109,17 +112,27 @@ const tabsDef = [
     id: "pdf",
     label: "PDF",
     icon: MODEL_ICON.PDF,
+    type: MODEL_TYPE.PDF,
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
-  }
+  },
   // TODO: uncomment when point-cloud is ready
   // {
   //   id: "point-cloud",
   //   label: "Point Cloud",
   //   icon: MODEL_ICON.POINT_CLOUD,
+  //   type: MODEL_TYPE.POINT_CLOUD,
   //   modelTypes: [MODEL_TYPE.POINT_CLOUD],
   //   component: "PointCloudManager"
   // }
+  {
+    id: "photos",
+    label: "Photos",
+    icon: MODEL_ICON.PHOTOS,
+    type: MODEL_TYPE.PHOTOS,
+    modelTypes: [MODEL_TYPE.JPEG, MODEL_TYPE.PNG],
+    component: "DWGManager"
+  }
 ];
 
 export default {

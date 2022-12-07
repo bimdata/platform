@@ -33,7 +33,10 @@
 
     <template
       v-else-if="
-        model.type === MODEL_TYPE.PDF || model.type === MODEL_TYPE.META_BUILDING
+        model.type === MODEL_TYPE.PDF ||
+        model.type === MODEL_TYPE.META_BUILDING ||
+        model.type === MODEL_TYPE.JPEG ||
+        model.type === MODEL_TYPE.PNG
       "
     >
       <ViewerButton

@@ -21,18 +21,6 @@
       </template>
     </BIMDataTabs>
 
-    <transition v-if="fileUpload" name="fade">
-      <FileUploadCard
-        class="generic-models-manager__file-upload-card"
-        condensed
-        :project="project"
-        :file="fileUpload"
-        @upload-completed="updateUpload($event)"
-        @upload-canceled="updateUpload"
-        @upload-failed="updateUpload"
-      />
-    </transition>
-
     <BIMDataButton
       class="generic-models-manager__btn-add"
       color="primary"
@@ -71,6 +59,8 @@
       class="generic-models-manager__table"
       :project="project"
       :models="displayedModels"
+      :fileUpload="fileUpload"
+      @update-upload="updateUpload($event)"
       @archive="archiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
@@ -105,14 +95,12 @@ import { extensionListFromType } from "../../../../../utils/models.js";
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
-import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.vue";
 import ModelsTable from "../models-table/ModelsTable.vue";
 
 export default {
   components: {
     ModelsActionBar,
     ModelsDeleteModal,
-    FileUploadCard,
     ModelsTable
   },
   props: {
