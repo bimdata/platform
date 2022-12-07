@@ -12,6 +12,10 @@ const props = defineProps({
   models: {
     type: Array,
     required: true
+  },
+  type: {
+    type: String,
+    required: true
   }
 });
 
@@ -33,5 +37,5 @@ watch(
 </script>
 
 <template>
-  <GenericModelsManager :project="project" :tabs="tabs" />
+  <GenericModelsManager :project="project" :type="type" :tabs="tabs" />
 </template>

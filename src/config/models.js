@@ -14,7 +14,8 @@ const MODEL_TYPE = Object.freeze({
   OBJ: "OBJ",
   PDF: "PDF",
   PNG: "PNG",
-  POINT_CLOUD: "POINT_CLOUD"
+  POINT_CLOUD: "POINT_CLOUD",
+  IMAGE: "IMAGE"
 });
 
 /**
@@ -28,7 +29,12 @@ const MODEL_EXTENSIONS = Object.freeze({
   JPEG: ".jpeg",
   JPG: ".jpg",
   PDF: ".pdf",
-  PNG: ".png"
+  PNG: ".png",
+  E57: ".e57",
+  LAS: ".las",
+  LAZ: ".laz",
+  XYZ: ".xyz",
+  PLY: ".ply"
 });
 
 /**

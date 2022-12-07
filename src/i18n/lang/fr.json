@@ -291,7 +291,8 @@
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
       "upload": "Upload"
-    }
+    },
+    "add": "Ajouter"
   },
   "ModelsMergeModal": {
     "title": "Fusionner la sélection",

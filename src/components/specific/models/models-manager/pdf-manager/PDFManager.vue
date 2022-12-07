@@ -2,6 +2,7 @@
   <GenericModelsManager
     class="pdf-manager"
     :project="project"
+    :type="type"
     :tabs="tabs"
     @edit-metaBuilding="editBM"
     @tab-changed="currentTab = $event"
@@ -85,6 +86,10 @@ export default {
     },
     models: {
       type: Array,
+      required: true
+    },
+    type: {
+      type: String,
       required: true
     }
   },

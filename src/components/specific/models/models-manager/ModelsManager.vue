@@ -59,7 +59,9 @@
             :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
+            :type="currentTab.label"
             :models="currentTab.models"
+            @file-uploaded="$emit('file-uploaded')"
           />
         </keep-alive>
       </transition>
@@ -137,6 +139,7 @@ export default {
       required: true
     }
   },
+  emits: ["file-uploaded"],
   setup(props) {
     const {
       isOpen: showMenu,
