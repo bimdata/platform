@@ -29,11 +29,9 @@
       radius
       icon
       @click="
-        fileUploadInput(
-          'file',
-          event => (fileUpload = Array.from(event.target.files)[0]),
-          { accept: extensionListFromType(type) }
-        )
+        fileUploadInput('file', event => (fileUpload = event.target.files[0]), {
+          accept: extensionListFromType(type)
+        })
       "
     >
       <BIMDataIcon name="export" margin="0 12px" />
