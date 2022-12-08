@@ -178,7 +178,9 @@ export default {
     };
 
     const updateUpload = async file => {
-      if (!file?.model_id) await createModel(props.project, file);
+      if (!file?.model_id) {
+        await createModel(props.project, file);
+      }
       fileUpload.value = null;
       emit("file-uploaded");
     };
