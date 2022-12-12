@@ -10,6 +10,20 @@
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
   >
+    <template #sub-header>
+      <transition v-if="fileUpload" name="fade">
+        <FileUploadCard
+          class="m-b-6"
+          condensed
+          :project="project"
+          :file="fileUpload"
+          @upload-completed="$emit('update-upload', $event)"
+          @upload-canceled="$emit('update-upload')"
+          @upload-failed="$emit('update-upload')"
+        />
+      </transition>
+    </template>
+
     <template #cell-name="{ row: model }">
       <ModelNameCell
         :project="project"
@@ -60,12 +74,14 @@ import { useStandardBreakpoints } from "../../../../../composables/responsive.js
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
+import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.vue";
 
 export default {
   components: {
     ModelActionsCell,
     ModelNameCell,
-    ModelStatusCell
+    ModelStatusCell,
+    FileUploadCard
   },
   props: {
     project: {
@@ -75,6 +91,9 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    fileUpload: {
+      type: Object
     }
   },
   emits: [
@@ -83,7 +102,8 @@ export default {
     "download",
     "selection-changed",
     "unarchive",
-    "edit-metaBuilding"
+    "edit-metaBuilding",
+    "update-upload"
   ],
   setup(props) {
     const { t } = useI18n();

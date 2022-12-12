@@ -80,6 +80,7 @@
           data-guide="models-manager"
           :project="project"
           :models="models"
+          @file-uploaded="reloadData"
         />
       </AppLoading>
     </div>

@@ -12,8 +12,14 @@ const props = defineProps({
   models: {
     type: Array,
     required: true
+  },
+  type: {
+    type: String,
+    required: true
   }
 });
+
+const emit = defineEmits(["file-uploaded"]);
 
 const tabsDef = [{ id: "upload" }, { id: "archive" }];
 const tabs = ref([]);
@@ -33,5 +39,10 @@ watch(
 </script>
 
 <template>
-  <GenericModelsManager :project="project" :tabs="tabs" />
+  <GenericModelsManager
+    :project="project"
+    :type="type"
+    :tabs="tabs"
+    @file-uploaded="emit('file-uploaded')"
+  />
 </template>

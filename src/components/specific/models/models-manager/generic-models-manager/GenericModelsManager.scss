@@ -21,6 +21,16 @@
     color: var(--color-white);
   }
 
+  &__btn-add {
+    position: absolute;
+    right: 12px;
+    top: 3px;
+
+    span {
+      margin-right: var(--spacing-unit);
+    }
+  }
+
   &__separator {
     width: 100%;
     height: 1px;
