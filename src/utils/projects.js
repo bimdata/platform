@@ -1,4 +1,4 @@
-import { statusLimitNew, statusLimitActive } from "@/config/projects.js";
+import { statusLimitNew, statusLimitActive } from "../config/projects.js";
 
 // Project statuses
 const NEW = "new";
@@ -14,8 +14,8 @@ const INACTIVE = "inactive";
  */
 function projectStatus(project) {
   const today = new Date();
-  const createDate = new Date(project.createdAt);
-  const updateDate = new Date(project.updatedAt);
+  const createDate = new Date(project.created_at);
+  const updateDate = new Date(project.updated_at);
 
   const newDateLimit = new Date(today);
   newDateLimit.setDate(today.getDate() - statusLimitNew);

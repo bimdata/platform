@@ -42,10 +42,10 @@
 <script>
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
-import { useListFilter } from "@/composables/list-filter.js";
-import { useGroups } from "@/state/groups.js";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import { useGroups } from "../../../../state/groups.js";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
 
 export default {
   components: {
@@ -74,7 +74,7 @@ export default {
       return props.users
         .filter(u => !memberIDs.includes(u.id))
         .map(x => {
-          const fullname = x.userId
+          const fullname = x.user_id
             ? `${x.firstname} ${x.lastname}`
             : t("GroupMemberInvitation.name");
           return { ...x, fullname };

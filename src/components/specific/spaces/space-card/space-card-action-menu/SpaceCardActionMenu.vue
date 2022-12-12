@@ -5,7 +5,7 @@
     v-click-away="closeMenu"
   >
     <BIMDataButton
-      data-test="btn-toggle-menu"
+      data-test-id="btn-toggle-menu"
       class="space-card-action-menu__btn"
       ripple
       rounded
@@ -17,16 +17,13 @@
 
     <transition name="fade">
       <div class="space-card-action-menu__container" v-show="showMenu">
-        <transition name="fade" mode="out-in">
-          <template v-if="loading">
-            <div class="space-card-action-menu__container__loader">
-              <BIMDataSpinner />
-            </div>
-          </template>
+        <div class="space-card-action-menu__container__loader" v-show="loading">
+          <BIMDataSpinner />
+        </div>
 
-          <template v-else-if="showUpdateForm">
+        <transition name="fade" mode="out-in">
+          <template v-if="showUpdateForm">
             <SpaceCardUpdateForm
-              data-test="update-form"
               :space="space"
               @close="closeUpdateForm"
               @success="closeMenu"
@@ -34,17 +31,13 @@
           </template>
 
           <template v-else-if="showDeleteGuard">
-            <SpaceCardDeleteGuard
-              data-test="delete-guard"
-              :space="space"
-              @close="closeDeleteGuard"
-            />
+            <SpaceCardDeleteGuard :space="space" @close="closeDeleteGuard" />
           </template>
 
           <template v-else>
             <div class="space-card-action-menu__container__menu">
               <BIMDataButton
-                data-test="btn-open-update"
+                data-test-id="btn-open-update"
                 ghost
                 squared
                 @click="openUpdateForm"
@@ -52,12 +45,12 @@
                 {{ $t("SpaceCardActionMenu.renameButtonText") }}
               </BIMDataButton>
               <SpaceCardImageButton
-                data-test="btn-update-image"
+                data-test-id="btn-update-image"
                 :space="space"
                 @upload-completed="closeMenu"
               />
               <BIMDataButton
-                data-test="btn-delete-image"
+                data-test-id="btn-delete-image"
                 ghost
                 squared
                 @click="removeImage"
@@ -65,7 +58,7 @@
                 {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
               </BIMDataButton>
               <BIMDataButton
-                data-test="btn-open-delete"
+                data-test-id="btn-open-delete"
                 color="high"
                 ghost
                 squared
@@ -83,12 +76,12 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
-import { useSpaces } from "@/state/spaces";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { useSpaces } from "../../../../../state/spaces.js";
 // Components
-import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard";
-import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton";
-import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm";
+import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
+import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
+import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.vue";
 
 export default {
   components: {

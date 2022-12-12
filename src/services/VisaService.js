@@ -1,5 +1,5 @@
-import apiClient from "./api-client";
-import { ERRORS, RuntimeError } from "./ErrorService";
+import apiClient from "./api-client.js";
+import { ERRORS, RuntimeError } from "./ErrorService.js";
 
 class VisaService {
   async createVisa(project, document, visa) {
@@ -15,7 +15,7 @@ class VisaService {
     }
   }
 
-  async createValidation(project, document, visa, validatorId) {
+  async createValidation(project, document, visa, validator_id) {
     try {
       return await apiClient.collaborationApi.createValidation(
         project.cloud.id,
@@ -23,7 +23,7 @@ class VisaService {
         project.id,
         visa.id,
         {
-          validatorId
+          validator_id
         }
       );
     } catch (error) {
@@ -49,7 +49,7 @@ class VisaService {
     try {
       return await apiClient.collaborationApi.getVisa(
         project.cloud.id,
-        visa.documentId,
+        visa.document_id,
         visa.id,
         project.id
       );

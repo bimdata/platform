@@ -1,4 +1,4 @@
-import { FileStructureHandler, getDescendants, segregate } from "@/utils/file-structure.js";
+import { FileStructureHandler, getDescendants, segregate } from "../../../src/utils/file-structure.js";
 
 describe("FileStructureHandler - serialize/deserialize", () => {
 
@@ -279,7 +279,7 @@ describe("FileStructureHandler - accessors", () => {
       // Arrange
       const handler = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
-          { id: 10, parentId: 123, nature: "Folder", name: "child 1" }
+          { id: 10, parent_id: 123, nature: "Folder", name: "child 1" }
         ]
       });
       // Assert
@@ -291,16 +291,16 @@ describe("FileStructureHandler - accessors", () => {
       const handler = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
           {
-            id: 10, parentId: 123, nature: "Folder", name: "child 1", children: [
-              { id: 20, parentId: 10, nature: "Document", name: "child 2" }
+            id: 10, parent_id: 123, nature: "Folder", name: "child 1", children: [
+              { id: 20, parent_id: 10, nature: "Document", name: "child 2" }
             ]
           }
         ]
       });
       // Assert
-      expect(handler.parent({ id: 20, parentId: 10, nature: "Document" })).toEqual({
+      expect(handler.parent({ id: 20, parent_id: 10, nature: "Document" })).toEqual({
         id: 10,
-        parentId: 123,
+        parent_id: 123,
         nature: "Folder",
         name: "child 1",
         children: []
@@ -381,24 +381,24 @@ describe("FileStructureHandler - accessors", () => {
       const hanlder = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
           {
-            id: 10, parentId: 123, nature: "Folder", name: "child 10", children: [
-              { id: 20, parentId: 10, nature: "Folder", name: "child 20" },
-              { id: 30, parentId: 10, nature: "Document", name: "child 30" }
+            id: 10, parent_id: 123, nature: "Folder", name: "child 10", children: [
+              { id: 20, parent_id: 10, nature: "Folder", name: "child 20" },
+              { id: 30, parent_id: 10, nature: "Document", name: "child 30" }
             ]
           },
           { 
-            id: 11, parentId: 123, nature: "Folder", name: "child 11", children: [
-              { id: 40, parentId: 11, nature: "Document", name: "child 40" },
-              { id: 50, parentId: 11, nature: "Document", name: "child 50" }
+            id: 11, parent_id: 123, nature: "Folder", name: "child 11", children: [
+              { id: 40, parent_id: 11, nature: "Document", name: "child 40" },
+              { id: 50, parent_id: 11, nature: "Document", name: "child 50" }
             ]
           },
-          { uuid: 12, parentId: 123, nature: "Ifc", name: "child 12" }
+          { uuid: 12, parent_id: 123, nature: "Ifc", name: "child 12" }
         ]
       });
       // Assert
-      expect(hanlder.ancestors({ id: 40, nature: "Document", parentId: 11 })).toEqual([
+      expect(hanlder.ancestors({ id: 40, nature: "Document", parent_id: 11 })).toEqual([
         { id: 123, nature: "Folder", name: "root", children: [] },
-        { id: 11, parentId: 123, nature: "Folder", name: "child 11", children: [] }
+        { id: 11, parent_id: 123, nature: "Folder", name: "child 11", children: [] }
       ]);
     });
   });
@@ -482,16 +482,16 @@ describe("FileStructureHandler - accessors", () => {
       const hanlder = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
           {
-            id: 10, parentId: 123, nature: "Folder", name: "child 1", children: [
-              { id: 20, parentId: 10, nature: "Document", name: "child 2" },
-              { id: 30, parentId: 10, nature: "Folder", name: "child 3" },
-              { id: 40, parentId: 10, nature: "Folder", name: "child 4" }
+            id: 10, parent_id: 123, nature: "Folder", name: "child 1", children: [
+              { id: 20, parent_id: 10, nature: "Document", name: "child 2" },
+              { id: 30, parent_id: 10, nature: "Folder", name: "child 3" },
+              { id: 40, parent_id: 10, nature: "Folder", name: "child 4" }
             ]
           }
         ]
       });
       // Assert
-      expect(hanlder.siblings({ id: 10, parentId: 123, nature: "Folder" })).toEqual([]);
+      expect(hanlder.siblings({ id: 10, parent_id: 123, nature: "Folder" })).toEqual([]);
     });
 
     it("Should return the node siblings", () => {
@@ -499,24 +499,24 @@ describe("FileStructureHandler - accessors", () => {
       const hanlder = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
           {
-            id: 10, parentId: 123, nature: "Folder", name: "child 10", children: [
-              { id: 20, parentId: 10, nature: "Document", name: "child 20" },
-              { id: 30, parentId: 10, nature: "Document", name: "child 30" }
+            id: 10, parent_id: 123, nature: "Folder", name: "child 10", children: [
+              { id: 20, parent_id: 10, nature: "Document", name: "child 20" },
+              { id: 30, parent_id: 10, nature: "Document", name: "child 30" }
             ]
           },
           { 
-            id: 11, parentId: 123, nature: "Folder", name: "child 11", children: [
-              { id: 40, parentId: 11, nature: "Folder", name: "child 40" },
-              { id: 50, parentId: 11, nature: "Ifc", name: "child 50" }
+            id: 11, parent_id: 123, nature: "Folder", name: "child 11", children: [
+              { id: 40, parent_id: 11, nature: "Folder", name: "child 40" },
+              { id: 50, parent_id: 11, nature: "Ifc", name: "child 50" }
             ]
           },
-          { id: 12, parentId: 123, nature: "Document", name: "child 12" }
+          { id: 12, parent_id: 123, nature: "Document", name: "child 12" }
         ]
       });
       // Assert
-      expect(hanlder.siblings({ id: 10, parentId: 123, nature: "Folder" })).toEqual([
-        { id: 11, parentId: 123, nature: "Folder", name: "child 11", children: [] },
-        { id: 12, parentId: 123, nature: "Document", name: "child 12", children: [] }
+      expect(hanlder.siblings({ id: 10, parent_id: 123, nature: "Folder" })).toEqual([
+        { id: 11, parent_id: 123, nature: "Folder", name: "child 11", children: [] },
+        { id: 12, parent_id: 123, nature: "Document", name: "child 12", children: [] }
       ]);
     });
   });
@@ -539,14 +539,14 @@ describe("FileStructureHandler - mutations", () => {
       const handler = new FileStructureHandler({ id: 123, nature: "Folder" });
       // Assert
       expect(() => handler.createFile({})).toThrow();
-      expect(() => handler.createFile({ parentId: 123, nature: "Folder" })).toThrow();
+      expect(() => handler.createFile({ parent_id: 123, nature: "Folder" })).toThrow();
     });
 
     it("Should throw if file has no type", () => {
       // Arrange
       const handler = new FileStructureHandler({ id: 123, nature: "Folder" });
       // Assert
-      expect(() => handler.createFile({ id: 10, parentId: 123 })).toThrow();
+      expect(() => handler.createFile({ id: 10, parent_id: 123 })).toThrow();
     });
 
     it("Should throw if file has no parent id", () => {
@@ -560,11 +560,11 @@ describe("FileStructureHandler - mutations", () => {
       // Arrange
       const handler = new FileStructureHandler({ id: 123, nature: "Folder", name: "root" });
       // Act
-      handler.createFile({ id: 10, parentId: 123, nature: "Folder", name: "new node" });
+      handler.createFile({ id: 10, parent_id: 123, nature: "Folder", name: "new node" });
       // Assert
       expect(handler.deserialize()).toEqual({
         id: 123, nature: "Folder", name: "root", children: [
-          { id: 10, parentId: 123, nature: "Folder", name: "new node", children: [] }
+          { id: 10, parent_id: 123, nature: "Folder", name: "new node", children: [] }
         ]
       });
     });
@@ -574,11 +574,11 @@ describe("FileStructureHandler - mutations", () => {
       const handler = new FileStructureHandler({ id: 123, nature: "Folder", name: "root" });
       // Act
       handler.createFile({
-        id: 10, parentId: 123, nature: "Folder", name: "new node", children: [
-          { id: 20, parentId: 10, nature: "Document", name: "child 1" },
+        id: 10, parent_id: 123, nature: "Folder", name: "new node", children: [
+          { id: 20, parent_id: 10, nature: "Document", name: "child 1" },
           {
-            id: 21, parentId: 10, nature: "Folder", name: "child 2", children: [
-              { id: 30, parentId: 21, nature: "Ifc", name: "sub-child" }
+            id: 21, parent_id: 10, nature: "Folder", name: "child 2", children: [
+              { id: 30, parent_id: 21, nature: "Ifc", name: "sub-child" }
             ]
           }
         ]
@@ -587,11 +587,11 @@ describe("FileStructureHandler - mutations", () => {
       expect(handler.deserialize()).toEqual({
         id: 123, nature: "Folder", name: "root", children: [
           {
-            id: 10, parentId: 123, nature: "Folder", name: "new node", children: [
-              { id: 20, parentId: 10, nature: "Document", name: "child 1", children: [] },
+            id: 10, parent_id: 123, nature: "Folder", name: "new node", children: [
+              { id: 20, parent_id: 10, nature: "Document", name: "child 1", children: [] },
               {
-                id: 21, parentId: 10, nature: "Folder", name: "child 2", children: [
-                  { id: 30, parentId: 21, nature: "Ifc", name: "sub-child", children: [] }
+                id: 21, parent_id: 10, nature: "Folder", name: "child 2", children: [
+                  { id: 30, parent_id: 21, nature: "Ifc", name: "sub-child", children: [] }
                 ]
               }
             ]
@@ -679,8 +679,8 @@ describe("FileStructureHandler - mutations", () => {
       // Arrange
       const handler = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
-          { id: 10, parentId: 123, nature: "Folder", name: "node 1" },
-          { id: 20, parentId: 123, nature: "Document", name: "node 2" }
+          { id: 10, parent_id: 123, nature: "Folder", name: "node 1" },
+          { id: 20, parent_id: 123, nature: "Document", name: "node 2" }
         ]
       });
       // Act
@@ -688,7 +688,7 @@ describe("FileStructureHandler - mutations", () => {
       // Assert
       expect(handler.deserialize()).toEqual({
         id: 123, nature: "Folder", name: "root", children: [
-          { id: 20, parentId: 123, nature: "Document", name: "node 2", children: [] }
+          { id: 20, parent_id: 123, nature: "Document", name: "node 2", children: [] }
         ]
       });
     });
@@ -698,12 +698,12 @@ describe("FileStructureHandler - mutations", () => {
       const handler = new FileStructureHandler({
         id: 123, nature: "Folder", name: "root", children: [
           {
-            id: 10, parentId: 123, nature: "Folder", name: "node 1", children: [
-              { id: 20, parentId: 10, nature: "Document", name: "child node 1" },
-              { id: 21, parentId: 10, nature: "Ifc", name: "child node 2" }
+            id: 10, parent_id: 123, nature: "Folder", name: "node 1", children: [
+              { id: 20, parent_id: 10, nature: "Document", name: "child node 1" },
+              { id: 21, parent_id: 10, nature: "Ifc", name: "child node 2" }
             ]
           },
-          { id: 11, parentId: 123, nature: "Folder", name: "node 2" }
+          { id: 11, parent_id: 123, nature: "Folder", name: "node 2" }
         ]
       });
       // Act
@@ -711,7 +711,7 @@ describe("FileStructureHandler - mutations", () => {
       // Assert
       expect(handler.deserialize()).toEqual({
         id: 123, nature: "Folder", name: "root", children: [
-          { id: 11, parentId: 123, nature: "Folder", name: "node 2", children: [] }
+          { id: 11, parent_id: 123, nature: "Folder", name: "node 2", children: [] }
         ]
       });
     });

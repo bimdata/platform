@@ -1,23 +1,61 @@
 <template>
-  <div class="files-manager-onboarding">
+  <div ref="onboarding" class="files-manager-onboarding">
     <FilesManagerOnboardingImage />
     <div>
       {{ $t("FilesManagerOnboarding.text") }}
     </div>
     <div class="files-manager-onboarding__actions">
-      <FileUploadButton width="120px" multiple @upload="uploadFile">
-        {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
-      </FileUploadButton>
-      <BIMDataButton
-        width="120px"
-        color="primary"
-        fill
-        radius
-        @click="createFolder"
-      >
-        {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
-      </BIMDataButton>
+      <div class="files-manager-onboarding__actions__base">
+        <BIMDataButton
+          fill
+          radius
+          color="primary"
+          width="150px"
+          @click="
+            fileUploadInput('file', event => uploadFile(event.target.files), {
+              multiple: true
+            })
+          "
+        >
+          {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
+        </BIMDataButton>
+        <BIMDataButton
+          width="150px"
+          color="primary"
+          fill
+          radius
+          @click="createFolder"
+        >
+          {{ $t("FilesManagerOnboarding.createFolderButtonText") }}
+        </BIMDataButton>
+      </div>
+      <div class="files-manager-onboarding__actions__advanced">
+        <template v-if="gedMenu.length > 0">
+          <template v-if="!isGedMenuOpen">
+            <BIMDataButton
+              color="primary"
+              outline
+              radius
+              icon
+              @click="openGedMenu"
+            >
+              <BIMDataIcon name="plus" size="s" />
+            </BIMDataButton>
+          </template>
+          <template v-if="isGedMenuOpen">
+            <BIMDataDropdownMenu
+              class="files-manager-onboarding__actions__advanced__dropdown"
+              v-click-away="closeGedMenu"
+              ref="dropdown"
+              :header="false"
+              :menuItems="gedMenu"
+              :subListMaxHeight="dropdownMaxHeight + 'px'"
+            />
+          </template>
+        </template>
+      </div>
     </div>
+
     <transition name="fade">
       <div
         v-show="showFolderForm || fileUploads.length > 0"
@@ -51,22 +89,30 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
+
+import { useToggle } from "../../../../../composables/toggle.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
+import FileService from "../../../../../services/FileService.js";
+
 // Components
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard";
-import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
+import FileUploadCard from "../../file-upload-card/FileUploadCard.vue";
+import FolderCreationForm from "../../folder-creation-form/FolderCreationForm.vue";
 
 export default {
   components: {
     FilesManagerOnboardingImage,
-    FileUploadButton,
     FileUploadCard,
     FolderCreationForm
   },
   props: {
     project: {
+      type: Object,
+      required: true
+    },
+    projectsTree: {
       type: Object,
       required: true
     },
@@ -77,11 +123,30 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props, { emit }) {
+    const { t } = useI18n();
+
+    const {
+      isOpen: isGedMenuOpen,
+      open: openGedMenu,
+      close: closeGedMenu
+    } = useToggle();
+
     let uploadCount = 0;
     const fileUploads = ref([]);
-    const uploadFile = files => {
+    const uploadFile = async files => {
       uploadCount = 0;
-      fileUploads.value = files;
+
+      const fileList = Array.from(files);
+
+      if (fileList[0].webkitRelativePath) {
+        fileUploads.value = await FileService.createFolderStructure(
+          props.project,
+          props.rootFolder,
+          fileList
+        );
+      } else {
+        fileUploads.value = fileList;
+      }
     };
 
     const updateUploadCount = () => {
@@ -98,14 +163,54 @@ export default {
       showFolderForm.value = true;
     };
 
+    const onboarding = ref(null);
+    const dropdown = ref(null);
+    const dropdownMaxHeight = computed(
+      () =>
+        dropdown.value?.$el?.getBoundingClientRect().y -
+        onboarding.value?.getBoundingClientRect().y
+    );
+
+    const gedMenu = computed(() => {
+      const items = [];
+
+      if (props.project.isAdmin) {
+        items.push({
+          name: t("FilesManagerOnboarding.GEDStructureImport"),
+          children: {
+            position: "up",
+            list: props.projectsTree
+          }
+        });
+      }
+
+      if (!props.project.isGuest) {
+        items.push({
+          name: t("FilesManagerOnboarding.folderImport"),
+          action: () =>
+            fileUploadInput("folder", event => uploadFile(event.target.files))
+        });
+      }
+
+      return items;
+    });
+
     return {
       // References
       fileUploads,
       showFolderForm,
+      dropdownMaxHeight,
+      onboarding,
+      dropdown,
+      gedMenu,
+      isGedMenuOpen,
       // Methods
+      openGedMenu,
+      closeGedMenu,
       createFolder,
       updateUploadCount,
-      uploadFile
+      uploadFile,
+      fileUploadInput
     };
   }
 };

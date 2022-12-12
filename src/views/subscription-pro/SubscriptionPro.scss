@@ -4,6 +4,7 @@
   &__title {
     height: 32px;
     margin: 0;
+    white-space: nowrap;
   }
 
   &__content {
@@ -34,14 +35,14 @@
       justify-content: center;
       gap: calc(var(--spacing-unit) * 3);
 
-      &__left,
+      &__start,
       &__center,
-      &__right {
+      &__end {
         box-shadow: var(--box-shadow);
         background-color: var(--color-white);
       }
 
-      &__left {
+      &__start {
         width: 400px;
       }
 
@@ -49,7 +50,7 @@
         width: 600px;
       }
 
-      &__right {
+      &__end {
         width: 400px;
       }
     }

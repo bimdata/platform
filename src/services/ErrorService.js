@@ -1,5 +1,5 @@
-import i18n from "@/i18n/index.js";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
+import { useAppNotification } from "../components/specific/app/app-notification/app-notification.js";
+import i18n from "../i18n/index.js";
 
 const ERRORS = Object.freeze({
   ORGANIZATIONS_FETCH_ERROR: "organizationsFetchError",
@@ -12,15 +12,23 @@ const ERRORS = Object.freeze({
   SPACE_DELETE_ERROR: "spaceDeleteError",
   SPACE_IMAGE_UPDATE_ERROR: "spaceImageUpdateError",
   SPACE_IMAGE_DELETE_ERROR: "spaceImageDeleteError",
+  SPACE_GET_CLOUD_SIZE_ERROR: "spaceGetCloudSizeError",
+  SPACE_FETCH_ERROR: "spaceFetchError",
   PROJECTS_FETCH_ERROR: "projectsFetchError",
   PROJECT_CREATE_ERROR: "projectCreateError",
   PROJECT_UPDATE_ERROR: "projectUpdateError",
   PROJECT_DELETE_ERROR: "projectDeleteError",
   PROJECT_FETCH_FILE_ERROR: "projectFetchFileError",
+  PROJECT_FOLDER_TREE_FETCH_ERROR: "projectFolderTreeFetchError",
+  DOCUMENT_CREATE_ERROR: "documentCreateError",
   INVITATIONS_FETCH_ERROR: "invitationsFetchError",
   INVITATION_SEND_ERROR: "invitationSendError",
   INVITATION_RESEND_ERROR: "invitationResendError",
   INVITATION_CANCEL_ERROR: "invitationCancelError",
+  INVITATION_VIEW_FETCH_ERROR: "invitationViewFetchError",
+  INVITATION_VIEW_ACCEPT_ERROR: "invitationViewAcceptError",
+  INVITATION_VIEW_DENY_ERROR: "invitationViewDenyError",
+  USER_ALREADY_EXISTS_ERROR: "userAlreadyExistsError",
   USERS_FETCH_ERROR: "usersFetchError",
   USER_UPDATE_ERROR: "userUpdateError",
   USER_DELETE_ERROR: "userDeleteError",
@@ -36,6 +44,10 @@ const ERRORS = Object.freeze({
   FILE_UPDATE_ERROR: "fileUpdateError",
   FILE_DOWNLOAD_ERROR: "fileDownloadError",
   FILE_DELETE_ERROR: "fileDeleteError",
+  FILE_VERSIONS_FETCH_ERROR: "fileVersionsFetchError",
+  FILE_VERSIONS_MAKE_HEAD_ERROR: "fileVersionsMakeHeadError",
+  FILE_VERSIONS_DELETE_ERROR: "fileVersionDelete",
+  FILE_STRUCTURE_CREATE_ERROR: "fileStructureCreateError",
   FOLDER_CREATE_ERROR: "folderCreateError",
   FILE_FETCH_ERROR: "fileFetchError",
   DOCUMENT_UPLOAD_ERROR: "documentUploadError",
@@ -43,6 +55,12 @@ const ERRORS = Object.freeze({
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
   GROUP_DELETE_ERROR: "groupDeleteError",
+  TAGS_FETCH_ERROR: "tagsFetchError",
+  TAGS_CREATE_ERROR: "tagsCreateError",
+  TAGS_UPDATE_ERROR: "tagsUpdateError",
+  TAGS_DELETE_ERROR: "tagsDeleteError",
+  TAGS_ADD_DOCUMENT_ERROR: "tagsAddDocumentError",
+  TAGS_DELETE_DOCUMENT_ERROR: "tagsDeleteDocumentError",
   VISA_CREATE_ERROR: "visaCreateError",
   VISA_CREATE_VALIDATION_ERROR: "visaCreateValidationError",
   VISA_FETCH_ERROR: "visaFetchError",
@@ -63,25 +81,15 @@ const ERRORS = Object.freeze({
   SUBSCRIPTIONS_FETCH_ERROR: "subscriptionsFetchError",
   PLATFORM_SUBSCRIBE_ERROR: "platformSubscribeError",
   DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",
-  DATAPACK_UPDATE_ERROR: "datapackUpdateError"
+  DATAPACK_UPDATE_ERROR: "datapackUpdateError",
+  BCF_IMPORT_ERROR: "bcfImportError",
+  BCF_EXPORT_ERROR: "bcfExportError"
 });
 
 class RuntimeError {
   constructor(id, error) {
     this.id = id;
     this.error = error;
-  }
-}
-
-class HttpClientError extends RuntimeError {
-  constructor(id, error) {
-    super(id, error);
-  }
-}
-
-class HttpServerError extends RuntimeError {
-  constructor(id, error) {
-    super(id, error);
   }
 }
 
@@ -109,12 +117,6 @@ class ErrorService {
 
 const service = new ErrorService();
 
-export {
-  ERRORS,
-  RuntimeError,
-  HttpClientError,
-  HttpServerError,
-  service as ErrorService
-};
+export { ERRORS, RuntimeError, service as ErrorService };
 
 export default service;

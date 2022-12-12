@@ -3,35 +3,126 @@
 // https://docs.cypress.io/api/cypress-api/custom-commands
 // ***********************************************
 
-import { apiMocks, fileMocks } from "./mocks";
+Cypress.Commands.add(
+  "createUser",
+  ({ key, firstname, lastname }) => {
+    cy.task("create-user", { key, firstname, lastname }).then(
+      user => {
+        cy.visit("/");
 
-Cypress.Commands.add("getHook", names => {
-  const selector = names.split(".").map(name => `[data-test~=${name}]`).join(" ");
-  // eslint-disable-next-line cypress/require-data-selectors
-  return cy.get(selector);
-});
+        cy.get("a[href^=\"/signup\"]").click();
+        cy.get("input[name=email]").type(user.email);
+        cy.get("input[name=first_name]").type(user.firstname);
+        cy.get("input[name=last_name]").type(user.lastname);
+        cy.get("input[name=password1]").type(user.password);
+        cy.get("input[name=password2]").type(user.password);
+        cy.get("input[type=submit]").click();
 
-Cypress.Commands.add("login", () => {
-  const key = `oidc.user:${Cypress.env("IAM_BASE_URL")}/auth/realms/bimdata:${Cypress.env("OIDC_CLIENT_ID")}`;
-  const user = {};
-  localStorage.setItem(key, JSON.stringify(user));
-});
+        return cy.url()
+          .should("contain", Cypress.env("APP_BASE_URL"))
+          .then(() => user);
+      }
+    );
+  }
+);
 
-Cypress.Commands.add("logout", () => {
-  const key = `oidc.user:${Cypress.env("IAM_BASE_URL")}/auth/realms/bimdata:${Cypress.env("OIDC_CLIENT_ID")}`;
-  localStorage.removeItem(key);
-});
+Cypress.Commands.add(
+  "deleteUser",
+  ({ key }) => {
+    cy.task("get-user", key).then(
+      user => {
+        cy.login(user);
+        cy.visit(`${Cypress.env("AUTH_BASE_URL")}/profile/delete/`);
+        cy.get("input#id_password").type(user.password);
+        cy.get("button[type=submit]").click();
+      }
+    );
+  }
+);
 
-Cypress.Commands.add("apiMock", ({ name, method = "GET", path, data }) => {
-  cy.intercept(method, `${Cypress.env("API_BASE_URL")}${path}`, { fixture: data }).as(name);
-});
+Cypress.Commands.add(
+  "login",
+  ({ email, password }) => {
+    cy.session([email, password], () => {
+      cy.visit("/");
 
-Cypress.Commands.add("fileMock", ({ path, data }) => {
-  cy.intercept("GET", `https://file-storage${path}`, { fixture: data });
-});
+      cy.get("input[name=email]").type(email);
+      cy.get("input[name=password]").type(password);
+      cy.get("input[type=submit]").click();
 
-Cypress.Commands.add("setupMocks", () => {
-  cy.intercept(`${Cypress.env("BACKEND_BASE_URL")}/*`, req => req.reply({ statusCode: 200 }));
-  apiMocks.forEach(cy.apiMock);
-  fileMocks.forEach(cy.fileMock);
-});
+      cy.url().should("contain", Cypress.env("APP_BASE_URL"));
+    });
+  }
+);
+
+Cypress.Commands.add(
+  "logout",
+  () => {
+    cy.hook("btn-toggle-app-menu").click();
+    cy.hook("btn-logout").click();
+
+    cy.url().should("contain", `${Cypress.env("AUTH_BASE_URL")}/accounts/login`);
+  }
+);
+
+Cypress.Commands.add(
+  "hook", 
+  (path, options) => cy.get(path.split(".").map(name => `[data-test-id=${name}]`).join(" "), options)
+);
+Cypress.Commands.add(
+  "findHook",
+  { prevSubject: true },
+  (subject, id) => subject.find(`[data-test-id=${id}]`)
+);
+Cypress.Commands.add(
+  "withParam",
+  { prevSubject: true },
+  (subject, param) => subject.filter(`[data-test-param=${param}]`)
+);
+Cypress.Commands.add(
+  "param",
+  { prevSubject: true },
+  subject => subject.data("testParam")
+);
+
+Cypress.Commands.add(
+  "getSpaceCard",
+  name => cy.contains("[data-test-id=space-card]", name)
+);
+Cypress.Commands.add(
+  "getProjectCard",
+  name => cy.contains("[data-test-id=project-card]", name)
+);
+
+Cypress.Commands.add(
+  "deleteGedDoc",
+  name => {
+    cy.hook("files-table").contains("tr", name).within(() => {
+      cy.hook("btn-actions-cell").click();
+    });
+    cy.hook("btn-delete-doc").filter(":visible").click();
+    cy.hook("btn-confirm-delete").click();  
+  }
+);
+
+Cypress.Commands.add(
+  "createTag",
+  name => {
+    cy.hook("btn-create-tag").click();
+    cy.get("input[name=add-tag]").type(name);
+    cy.hook("btn-validate-tag").click();
+
+    cy.hook("tag-list").contains("div", name).should("have.length", 1);
+  }
+);
+
+Cypress.Commands.add(
+  "deleteTag",
+  name => {
+    cy.hook("tag-list").contains("div[data-test-id=tags-item]", name).within(() => {
+      cy.hook("btn-delete-tag").click();
+      cy.hook("btn-confirm-delete").click();
+    });
+    cy.hook("tag-list").contains(name).should("not.exist");
+  }
+);

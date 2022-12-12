@@ -1,18 +1,23 @@
 <template>
-  <ModelsManagerWrapper :project="project" :tabs="tabs" />
+  <GenericModelsManager
+    :project="project"
+    :type="type"
+    :tabs="tabs"
+    @file-uploaded="$emit('file-uploaded')"
+  />
 </template>
 
 <script>
 import { ref, watch } from "vue";
-import { segregateBySource } from "@/utils/models.js";
+import { segregateBySource } from "../../../../../utils/models.js";
 // Components
-import ModelsManagerWrapper from "../models-manager-wrapper/ModelsManagerWrapper.vue";
+import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
 
 const tabsDef = [{ id: "upload" }, { id: "archive" }];
 
 export default {
   components: {
-    ModelsManagerWrapper
+    GenericModelsManager
   },
   props: {
     project: {
@@ -22,8 +27,13 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    type: {
+      type: String,
+      required: true
     }
   },
+  emits: ["file-uploaded"],
   setup(props) {
     const tabs = ref(tabsDef);
 

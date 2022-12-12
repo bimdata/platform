@@ -38,17 +38,21 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { VISA_STATUS } from "../../../../../config/visa.js";
+import { useUser } from "../../../../../state/user.js";
+import { useVisa } from "../../../../../state/visa.js";
+import { fullName } from "../../../../../utils/users.js";
+
+// Components
 import VisaCommentPost from "./visa-comment-post/VisaCommentPost.vue";
 import VisaCommentsInput from "./visa-comments-input/VisaCommentsInput.vue";
 
-import { useVisa } from "@/state/visa.js";
-import { useUser } from "@/state/user.js";
-import { fullName } from "@/utils/users.js";
-import { VISA_STATUS } from "@/config/visa.js";
-
 export default {
-  components: { VisaCommentPost, VisaCommentsInput },
+  components: {
+    VisaCommentPost,
+    VisaCommentsInput
+  },
   props: {
     comments: {
       type: Array,
@@ -81,11 +85,11 @@ export default {
 
     const formatComments = comments => {
       return comments
-        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+        .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
         .map(comment => ({
           ...comment,
           fullName: fullName(comment.author),
-          isSelf: comment.author.userId === currentUserId
+          isSelf: comment.author.user_id === currentUserId
         }));
     };
 

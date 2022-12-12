@@ -83,8 +83,8 @@
 <script>
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { fullName } from "@/utils/users";
-import { VISA_STATUS } from "@/config/visa";
+import { VISA_STATUS } from "../../../../config/visa.js";
+import { fullName } from "../../../../utils/users.js";
 
 // This variable is shared between all componant instances.
 let lastUsedTabIndex = 0;
@@ -132,13 +132,13 @@ export default {
     };
 
     const isVisaUnderError = visa =>
-      visa.status !== VISA_STATUS.CLOSE && visa.validationsInError.length;
+      visa.status !== VISA_STATUS.CLOSE && visa.validations_in_error.length;
 
     const iconStatus = visa => {
-      const { status, validationsInError } = visa;
+      const { status, validations_in_error } = visa;
       if (status === VISA_STATUS.CLOSE) {
         return "validatedFile";
-      } else if (validationsInError.length) {
+      } else if (validations_in_error.length) {
         return "deniedFile";
       } else {
         return "inProgressFile";

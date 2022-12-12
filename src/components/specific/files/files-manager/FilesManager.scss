@@ -4,36 +4,82 @@
 
   &:deep() {
     --header-height: 38px;
+    --actions-height: 32px;
+    --tree-max-width: 400px;
 
-    .bimdata-card__header {
+    > .bimdata-card__header {
       height: var(--header-height);
     }
 
-    .bimdata-card__submenu {
+    > .bimdata-card__submenu {
       height: var(--submenu-height);
       z-index: 5;
     }
 
-    .bimdata-card__content {
+    > .bimdata-card__content {
       position: relative;
       z-index: 0;
       height: calc(100% - var(--header-height));
 
       display: grid;
-      grid-template-columns: 400px 1fr;
-      grid-template-rows: 32px 1fr;
+      grid-template-columns: min(25%, var(--tree-max-width)) 1fr;
+      grid-template-rows: var(--actions-height) 1fr;
       gap: var(--spacing-unit);
       grid-template-areas:
-        "actions actions"
-        "tree    files";
+        "actions-start actions-end"
+        "tree          files";
 
       .files-manager__actions {
-        grid-area: actions;
+        &.start {
+          display: flex;
+          align-items: center;
+          grid-area: actions-start;
+        }
+        &__dropdown {
+          .bimdata-dropdown__content {
+            padding: 7px 8px 7px 6px;
+            box-shadow: var(--box-shadow);
+            border: none;
+
+            .ghost-element {
+              width: calc(var(--spacing-unit) / 5);
+            }
+          }
+          .bimdata-textbox {
+            padding: 0;
+          }
+
+          .bimdata-dropdown__elements {
+            &__menu-items {
+              &__item {
+                font-size: calc(var(--font-size) / 1.1);
+                padding-left: var(--spacing-unit);
+              }
+            }
+          }
+
+          .submenu--down {
+            z-index: 3;
+            width: 470%;
+          }
+        }
+
+        &.end {
+          grid-area: actions-end;
+        }
+
         display: flex;
         gap: var(--spacing-unit);
 
         &__btn-new-folder {
           z-index: 2;
+          width: 48%;
+        }
+        &__btn-new-file {
+          width: 48%;
+          button {
+            padding: 0 var(--spacing-unit);
+          }
         }
 
         &__input-search {
@@ -54,6 +100,7 @@
             display: flex;
             align-items: center;
             gap: var(--spacing-unit);
+
             &__counter {
               display: flex;
               justify-content: center;
@@ -65,7 +112,6 @@
             }
           }
         }
-
       }
 
       .files-manager__tree {

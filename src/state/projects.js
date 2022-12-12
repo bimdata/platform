@@ -1,8 +1,9 @@
 import { reactive, readonly, toRefs } from "vue";
-import ProjectService from "@/services/ProjectService.js";
-import { mapProjects, mapUsers } from "@/state/mappers.js";
-import { useUser } from "@/state/user.js";
-import { fullName } from "@/utils/users";
+import ProjectService from "../services/ProjectService.js";
+import { fullName } from "../utils/users.js";
+
+import { mapProjects, mapUsers } from "./mappers.js";
+import { useUser } from "./user.js";
 
 const state = reactive({
   userProjects: [],
@@ -140,6 +141,12 @@ const getUserProjectList = async (project, folder) => {
     }));
 };
 
+const fetchProjectFolderTreeSerializers = async project => {
+  return (
+    await ProjectService.fetchProjectFolderTreeSerializers(project)
+  ).filter(p => p.name !== project.name);
+};
+
 export function useProjects() {
   const readonlyState = readonly(state);
   return {
@@ -160,6 +167,7 @@ export function useProjects() {
     updateProjectUser,
     deleteProjectUser,
     fetchFolderProjectUsers,
-    getUserProjectList
+    getUserProjectList,
+    fetchProjectFolderTreeSerializers
   };
 }

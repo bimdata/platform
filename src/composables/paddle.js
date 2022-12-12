@@ -6,8 +6,8 @@ import {
   IS_SUBSCRIPTION_ENABLED,
   PADDLE_VENDOR_ID,
   PRO_PLAN_ID
-} from "@/config/subscription.js";
-import { getPrice } from "@/utils/price.js";
+} from "../config/subscription.js";
+import { getPrice } from "../utils/price.js";
 
 // Setup Paddle configuration (on module load)
 if (IS_SUBSCRIPTION_ENABLED) {
@@ -27,7 +27,7 @@ const loadCheckout = (containerID, link, locale, { onLoad, onSuccess }) => {
     frameTarget: containerID,
     frameInitialHeight: 416,
     frameStyle:
-      "width:100%; min-width:312px; background-color: transparent; border: none;",
+      "width:100%; min-width:312px; height: 660px; background-color: transparent; border: none;",
 
     loadCallback: onLoad,
     successCallback: onSuccess

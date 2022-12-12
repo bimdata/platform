@@ -1,5 +1,6 @@
-import { downloadAll } from "@/utils/download.js";
-import { isPlanModel } from "@/utils/models.js";
+import { downloadAll } from "../utils/download.js";
+import { isPlanModel } from "../utils/models.js";
+
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
@@ -34,7 +35,7 @@ class ModelService {
         project.cloud.id,
         project.id,
         {
-          documentId: file.id
+          document_id: file.id
         }
       );
     } catch (error) {
@@ -65,7 +66,7 @@ class ModelService {
         models
           .filter(model => model.document)
           .map(model => ({
-            name: model.document.fileName,
+            name: model.document.file_name,
             url: model.document.file
           }))
       );
@@ -74,11 +75,11 @@ class ModelService {
     }
   }
 
-  async deleteModels(project, models) {
+  async deleteModels(project, models, { hard } = {}) {
     try {
       return await Promise.all(
         models.map(model => {
-          if (isPlanModel(model)) {
+          if (isPlanModel(model) && !hard) {
             return apiClient.modelApi.deleteModelWithoutDoc(
               project.cloud.id,
               model.id,
@@ -267,8 +268,8 @@ class ModelService {
   async mergeModels(project, models, name) {
     try {
       return await apiClient.modelApi.mergeIfcs(project.cloud.id, project.id, {
-        ifcIds: models.map(model => model.id),
-        exportName: name
+        ifc_ids: models.map(model => model.id),
+        export_name: name
       });
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_MERGE_ERROR, error);

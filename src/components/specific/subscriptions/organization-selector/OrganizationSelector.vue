@@ -76,8 +76,8 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
-import { delay } from "@/utils/async.js";
+import { useOrganizations } from "../../../../state/organizations.js";
+import { debounce, delay } from "../../../../utils/async.js";
 
 export default {
   props: {
@@ -102,7 +102,7 @@ export default {
 
     const isSuccess = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       try {
         newOrgaLoading.value = true;
         if (mode.value === "create") {
@@ -116,7 +116,7 @@ export default {
         newOrgaLoading.value = false;
         isSuccess.value = false;
       }
-    };
+    }, 500);
 
     return {
       // Reference

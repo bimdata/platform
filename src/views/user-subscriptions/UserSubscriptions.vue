@@ -1,12 +1,12 @@
 <template>
-  <div class="user-subscriptions">
+  <div data-test-id="view-user-subscriptions" class="user-subscriptions">
     <ViewHeader>
       <template #left>
         <GoBackButton />
       </template>
     </ViewHeader>
     <div class="user-subscriptions__header">
-      <div class="user-subscriptions__header__left">
+      <div class="user-subscriptions__header__start">
         <h1>
           {{ $t("UserSubscriptions.title") }}
         </h1>
@@ -48,7 +48,7 @@
           </BIMDataDropdownList>
         </div>
       </div>
-      <div class="user-subscriptions__header__right">
+      <div class="user-subscriptions__header__end">
         <SubscribeCard />
       </div>
     </div>
@@ -60,17 +60,16 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from "vue";
-import { useOrganizations } from "@/state/organizations.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
 import mapLimit from "async/mapLimit";
-
+import { onMounted, ref, watch } from "vue";
+import { useOrganizations } from "../../state/organizations.js";
+import { useSubscriptions } from "../../state/subscriptions.js";
 // Components
-import ViewHeader from "@/components/specific/app/view-header/ViewHeader.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
-import BillingsTable from "@/components/specific/subscriptions/billings-table/BillingsTable.vue";
-import InvoicesTable from "@/components/specific/subscriptions/invoices-table/InvoicesTable.vue";
-import SubscribeCard from "@/components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
+import BillingsTable from "../../components/specific/subscriptions/billings-table/BillingsTable.vue";
+import InvoicesTable from "../../components/specific/subscriptions/invoices-table/InvoicesTable.vue";
+import SubscribeCard from "../../components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
 export default {
   components: {
@@ -102,17 +101,18 @@ export default {
           subscriptions.value = await loadOrganizationSubscriptions(
             selectedOrga.value
           );
+
           // When a cloud is deleted, the subscription history stays
           // We don't show custom subscriptions
-
-          const validSubscriptions = subscriptions.value.filter(sub => sub.cloud && !sub.is_custom)
-          const allPayments = mapLimit(validSubscriptions, 10, async sub => {
-            return loadSubscriptionPayments(
-              selectedOrga.value,
-              sub.cloud,
-              sub
-            );
-          })
+          const validSubscriptions = subscriptions.value.filter(
+            sub => sub.cloud && !sub.is_custom
+          );
+          const allPayments = await mapLimit(
+            validSubscriptions,
+            10,
+            async sub =>
+              await loadSubscriptionPayments(selectedOrga.value, sub.cloud, sub)
+          );
 
           const tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
@@ -124,11 +124,10 @@ export default {
                 // Do not show future payments in the invoices table
                 new Date(payment.payout_date).getTime() < tomorrow.getTime()
             )
-            .sort((a, b) =>
-              new Date(a.payout_date).getTime() >
-              new Date(b.payout_date).getTime()
-                ? -1
-                : 1
+            .sort(
+              (a, b) =>
+                new Date(b.payout_date).getTime() -
+                new Date(a.payout_date).getTime()
             );
         },
         { immediate: true }

@@ -2,12 +2,17 @@
   <BIMDataCard class="models-card">
     <template #left>
       <AppLink
+        data-test-id="btn-open-viewer"
+        :data-test-param="model.id"
         :to="{
           name: routeNames.modelViewer,
           params: {
             spaceID: project.cloud.id,
             projectID: project.id,
             modelIDs: model.id
+          },
+          query: {
+            window: windowType(model.document)
           }
         }"
       >
@@ -29,9 +34,10 @@
 
 <script>
 import { ref, watch } from "vue";
-import routeNames from "@/router/route-names.js";
+import routeNames from "../../../../router/route-names.js";
+import { windowType } from "../../../../utils/models.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview.vue";
 
 export default {
@@ -73,7 +79,8 @@ export default {
       model: currentModel,
       routeNames,
       // Methods
-      onModelChange
+      onModelChange,
+      windowType
     };
   }
 };

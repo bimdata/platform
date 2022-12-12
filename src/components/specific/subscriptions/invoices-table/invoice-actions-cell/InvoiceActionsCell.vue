@@ -1,7 +1,6 @@
 <template>
   <div class="invoice-actions-cell" v-click-away="closeMenu">
     <BIMDataButton
-      v-if="invoice.receipt_url"
       class="invoice-actions-cell__btn"
       ripple
       rounded
@@ -13,43 +12,61 @@
 
     <transition name="fade">
       <div class="invoice-actions-cell__menu" v-show="showMenu">
-        <a
-          :href="invoice.receipt_url"
-          target="_blank"
-          class="
-            bimdata-btn bimdata-btn__ghost bimdata-btn__ghost--default
-            invoice-actions-cell__menu__btn
-          "
+        <BIMDataButton
+          v-if="payment.receipt_url"
+          ghost
+          squared
+          @click="openReceiptUrl"
         >
           {{ $t("InvoiceActionsCell.downloadButton") }}
-        </a>
+        </BIMDataButton>
+        <BIMDataButton
+          v-if="payment.subscription.status !== SUB_STATUS.DELETED"
+          ghost
+          squared
+          @click="openUpdateUrl"
+        >
+          {{ $t("BillingActionsCell.updateButtonText") }}
+        </BIMDataButton>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle.js";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { SUB_STATUS } from "../../../../../config/subscription.js";
 
 export default {
   props: {
-    invoice: {
+    payment: {
       type: Object,
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const {
       isOpen: showMenu,
       close: closeMenu,
       toggle: toggleMenu
     } = useToggle();
 
+    const openReceiptUrl = () => {
+      window.open(props.payment.receipt_url);
+    };
+
+    const openUpdateUrl = () => {
+      window.open(props.payment.subscription.update_url);
+    };
+
     return {
       // References
       showMenu,
+      SUB_STATUS,
       // Methods
       closeMenu,
+      openReceiptUrl,
+      openUpdateUrl,
       toggleMenu
     };
   }

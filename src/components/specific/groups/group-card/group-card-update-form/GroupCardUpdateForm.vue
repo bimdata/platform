@@ -3,7 +3,7 @@
     <div class="group-card-update-form__title">
       {{ $t("GroupCardUpdateForm.title") }}
       <BIMDataButton
-        data-test="btn-close-update"
+        data-test-id="btn-close-update"
         ghost
         rounded
         icon
@@ -14,7 +14,7 @@
     </div>
     <BIMDataInput
       ref="nameInput"
-      data-test="input-update-name"
+      data-test-id="input-update-name"
       class="group-card-update-form__input"
       :placeholder="$t('GroupCardUpdateForm.inputPlaceholder')"
       v-model="groupName"
@@ -24,7 +24,7 @@
       @keyup.enter.stop="submit"
     />
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="group-card-update-form__btn-submit"
       color="primary"
       fill
@@ -38,7 +38,8 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useGroups } from "@/state/groups";
+import { useGroups } from "../../../../../state/groups.js";
+import { debounce } from "../../../../../utils/async.js";
 
 export default {
   props: {
@@ -61,7 +62,7 @@ export default {
     const groupName = ref(props.group.name);
     const hasError = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (groupName.value) {
         try {
           loading.value = true;
@@ -77,7 +78,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       hasError.value = false;

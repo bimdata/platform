@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
-import OrganizationService from "@/services/OrganizationService.js";
-import { useSpaces } from "@/state/spaces.js";
+import OrganizationService from "../services/OrganizationService.js";
+
+import { useSpaces } from "./spaces.js";
 
 const state = reactive({
   userOrganizations: [],

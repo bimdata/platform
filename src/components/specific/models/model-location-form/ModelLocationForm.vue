@@ -1,6 +1,10 @@
 <template>
   <div class="model-location-form">
-    <MapboxWrapper :longitude="inputLongitude" :latitude="inputLatitude" />
+    <MaplibreWrapper
+      containerID="model-location-form"
+      :longitude="inputLongitude"
+      :latitude="inputLatitude"
+    />
     <div class="model-location-form__form-control">
       <AddressInput
         class="model-location-form__form-control__input"
@@ -40,16 +44,19 @@
 
 <script>
 import { inject, ref, watch } from "vue";
-import { useModels } from "@/state/models.js";
-import { DD2DMS, getCoordinatesFromAddress } from "@/utils/location.js";
+import { useModels } from "../../../../state/models.js";
+import {
+  DD2DMS,
+  getCoordinatesFromAddress
+} from "../../../../utils/location.js";
 // Components
-import AddressInput from "@/components/generic/address-input/AddressInput.vue";
-import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper.vue";
+import AddressInput from "../../../generic/address-input/AddressInput.vue";
+import MaplibreWrapper from "../../../generic/maplibre-wrapper/MaplibreWrapper.vue";
 
 export default {
   components: {
     AddressInput,
-    MapboxWrapper
+    MaplibreWrapper
   },
   props: {
     project: {
@@ -76,7 +83,7 @@ export default {
       default: 0
     }
   },
-  emits: ["close", "success"],
+  emits: ["close", "location-updated"],
   setup(props, { emit }) {
     const { createModelLocation, updateModelLocation } = useModels();
 
@@ -115,7 +122,7 @@ export default {
         } else {
           await createModelLocation(props.project, props.model, location);
         }
-        emit("success");
+        emit("location-updated");
       } finally {
         submitLoading.value = false;
       }

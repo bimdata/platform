@@ -1,10 +1,10 @@
 /* eslint-disable */
-import { load } from "@/components/specific/app/app-loading/app-loading.js";
-import { useGroups } from "@/state/groups.js";
-import { useModels } from "@/state/models.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
-import { useFiles } from "@/state/files.js";
+import { load } from "../../../components/specific/app/app-loading/app-loading.js";
+import { useFiles } from "../../../state/files.js";
+import { useGroups } from "../../../state/groups.js";
+import { useModels } from "../../../state/models.js";
+import { useProjects } from "../../../state/projects.js";
+import { useSpaces } from "../../../state/spaces.js";
 
 const spaces = useSpaces();
 const projects = useProjects();

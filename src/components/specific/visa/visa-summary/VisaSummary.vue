@@ -91,16 +91,19 @@
             <span class="visa-summary__shell__content__deadline__title">{{
               $t("Visa.summary.term")
             }}</span>
-            <BIMDataInput
+            <BIMDataDatePicker
               v-if="isEditing"
               v-model="formatedVisa.deadline"
+              :value="formatedVisa.deadline"
+              :clearButton="true"
+              width="100%"
+              format="dd/MM/yyyy"
               :placeholder="$t('Visa.add.toValidate')"
-              :error="hasDateError"
-              :errorMessage="$t('Visa.add.errorDate')"
+              fixedPosition="bottom-right"
             >
-            </BIMDataInput>
+            </BIMDataDatePicker>
             <span v-else class="visa-summary__shell__content__deadline__date">{{
-              formatedVisa.deadline
+              $d(formatedVisa.deadline)
             }}</span>
           </div>
         </div>
@@ -150,7 +153,7 @@
         <div class="visa-summary__shell__file">
           <div class="visa-summary__shell__file__content">
             <BIMDataFileIcon
-              :fileName="formatedVisa.document.fileName"
+              :fileName="formatedVisa.document.file_name"
               :size="20"
             />
             <BIMDataTextbox
@@ -169,7 +172,7 @@
               @click="
                 $emit('reach-file', {
                   ...formatedVisa.document,
-                  nature: formatedVisa.document.modelId ? 'Model' : 'Document'
+                  nature: formatedVisa.document.model_id ? 'Model' : 'Document'
                 })
               "
             >
@@ -216,29 +219,25 @@
 <script>
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { VALIDATION_STATUS } from "@/config/visa";
-import { VISA_STATUS } from "@/config/visa";
+import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useUser } from "../../../../state/user.js";
+import { useVisa } from "../../../../state/visa.js";
+import { fullName } from "../../../../utils/users.js";
+import { localeDate } from "../../../../utils/date.js";
 
-import { formatDate } from "@/utils/date";
-
-import VisaSummaryValidator from "./visa-summary-validator/VisaSummaryValidator";
-import VisaComments from "./visa-comments/VisaComments";
-import VisaSafeZone from "../visa-safe-zone/VisaSafeZone";
-import VisaSelectionValidator from "@/components/specific/visa/visa-selection-validator/VisaSelectionValidator.vue";
-
-import { useVisa } from "@/state/visa";
-import { useUser } from "@/state/user";
-import { useProjects } from "@/state/projects";
-
-import { fullName } from "@/utils/users";
-import { isDateValid } from "@/utils/visas";
+// Components
+import VisaComments from "./visa-comments/VisaComments.vue";
+import VisaSafeZone from "../visa-safe-zone/VisaSafeZone.vue";
+import VisaSelectionValidator from "../visa-selection-validator/VisaSelectionValidator.vue";
+import VisaSummaryValidator from "./visa-summary-validator/VisaSummaryValidator.vue";
 
 export default {
   components: {
-    VisaSummaryValidator,
+    VisaComments,
     VisaSafeZone,
     VisaSelectionValidator,
-    VisaComments
+    VisaSummaryValidator
   },
   props: {
     project: {
@@ -265,12 +264,11 @@ export default {
     } = useVisa();
     const { getUserProjectList } = useProjects();
     const { user } = useUser();
-    const { t, d } = useI18n();
+    const { t } = useI18n();
     const { id: currentUserId } = user.value;
 
     const isClosed = ref(false);
     const isEditing = ref(false);
-    const hasDateError = ref(false);
     const formatedVisa = ref(null);
     const validationUserId = ref(null);
     const isAuthor = ref(false);
@@ -285,10 +283,9 @@ export default {
     /**
      * GLOBAL
      */
-
     const formatVisa = visa => ({
       ...visa,
-      deadline: d(visa.deadline),
+      deadline: visa.deadline,
       creator: {
         ...visa.creator,
         fullName: visa.creator
@@ -298,15 +295,15 @@ export default {
       validations: visa.validations
         .map(validation => ({
           ...validation,
-          userId: validation.validator ? validation.validator.userId : 0,
+          userId: validation.validator ? validation.validator.user_id : 0,
           fullName: validation.validator
             ? fullName(validation.validator)
             : t("Visa.summary.deletedUser"),
           isSelf: validation.validator
-            ? validation.validator.userId === currentUserId
+            ? validation.validator.user_id === currentUserId
             : false,
-          hasAccess: visa.validationsInError.length
-            ? !visa.validationsInError.some(
+          hasAccess: visa.validations_in_error.length
+            ? !visa.validations_in_error.some(
                 validationInErrorId => validationInErrorId === validation.id
               )
             : true
@@ -320,7 +317,7 @@ export default {
 
     const fetchDocumentUsers = async visa => {
       const users = await getUserProjectList(props.project, {
-        id: visa.document.parentId
+        id: visa.document.parent_id
       });
       return users.map(user => {
         return {
@@ -336,12 +333,12 @@ export default {
     };
 
     onMounted(async () => {
-      if (props.visa.creator.userId === currentUserId) {
+      if (props.visa.creator.user_id === currentUserId) {
         isAuthor.value = true;
       }
       if (!isAuthor.value) {
         validationUserId.value = props.visa.validations.find(
-          ({ validator }) => validator.userId === currentUserId
+          ({ validator }) => validator.user_id === currentUserId
         ).id;
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;
@@ -519,12 +516,11 @@ export default {
     };
 
     const confirmEdit = async () => {
-      const dateValid = isDateValid(formatedVisa.value.deadline);
-      hasDateError.value = !dateValid;
+      const dateValid = formatedVisa.value.deadline;
       if (dateValid) {
         await updateVisa(props.project, props.visa.document, props.visa, {
           description: formatedVisa.value.description,
-          deadline: formatDate(formatedVisa.value.deadline)
+          deadline: localeDate(formatedVisa.value.deadline)
         });
         await reloadVisa();
         isEditing.value = false;
@@ -542,7 +538,6 @@ export default {
       isSelectingValidator,
       validatorList,
       isEditing,
-      hasDateError,
       isClosed,
       userValidationStatus,
       // methods

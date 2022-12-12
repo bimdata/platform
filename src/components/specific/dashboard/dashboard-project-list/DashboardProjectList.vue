@@ -5,7 +5,7 @@
     </div>
     <component
       :class="isCarousel ? '' : 'dashboard-project-list__content'"
-      :is="isCarousel ? 'CarouselList' : 'div'"
+      :is="isCarousel ? 'BIMDataCarousel' : 'div'"
     >
       <ProjectCard
         v-for="project in displayedProjects"
@@ -20,12 +20,10 @@
 <script>
 import { ref, watchEffect } from "vue";
 // Components
-import CarouselList from "@/components/generic/carousel-list/CarouselList";
-import ProjectCard from "@/components/specific/projects/project-card/ProjectCard";
+import ProjectCard from "../../projects/project-card/ProjectCard.vue";
 
 export default {
   components: {
-    CarouselList,
     ProjectCard
   },
   props: {
@@ -45,7 +43,7 @@ export default {
       if (props.projects) {
         displayedProjects.value = props.projects
           .slice()
-          .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+          .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1))
           .slice(0, 10);
       }
     });

@@ -12,7 +12,12 @@
 
     <transition name="fade">
       <div class="billing-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton ghost squared @click="goToSubscriptionDatapack">
+        <BIMDataButton
+          v-if="subscription.status === SUB_STATUS.ACTIVE"
+          ghost
+          squared
+          @click="goToSubscriptionDatapack"
+        >
           {{ $t("BillingActionsCell.datapackButtonText") }}
         </BIMDataButton>
         <BIMDataButton ghost squared @click="openUpdateUrl">
@@ -28,12 +33,13 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { useToggle } from "@/composables/toggle.js";
-import routeNames from "@/router/route-names.js";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { SUB_STATUS } from "../../../../../config/subscription.js";
+import routeNames from "../../../../../router/route-names.js";
 
 export default {
   props: {
-    billing: {
+    subscription: {
       type: Object,
       required: true
     }
@@ -51,22 +57,23 @@ export default {
       router.push({
         name: routeNames.subscriptionDatapack,
         query: {
-          space: props.billing.cloud?.id
+          space: props.subscription.cloud?.id
         }
       });
     };
 
     const openUpdateUrl = () => {
-      window.open(props.billing.update_url);
+      window.open(props.subscription.update_url);
     };
 
     const openCancelUrl = () => {
-      window.open(props.billing.cancel_url);
+      window.open(props.subscription.cancel_url);
     };
 
     return {
       // References
       showMenu,
+      SUB_STATUS,
       // Methods
       closeMenu,
       goToSubscriptionDatapack,

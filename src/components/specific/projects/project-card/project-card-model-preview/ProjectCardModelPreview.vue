@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="project-card-model-preview"
-    ref="container"
-    @mousemove="handleMouseMove"
-  >
+  <div class="project-card-model-preview">
     <div
       v-if="images.length > 1"
       class="project-card-model-preview__switcher"
@@ -18,18 +14,19 @@
       <span>{{ `${image.index} / ${images.length}` }}</span>
       <BIMDataIcon name="chevron" size="xs" @click="nextImage" />
     </div>
-    <div class="project-card-model-preview__viewport" ref="viewport">
-      <img
-        loading="lazy"
-        :src="image.url || '/static/default-model-preview.png'"
-        :style="{ transform: `translateX(-${translation}px)` }"
-      />
-    </div>
+    <BIMDataModelPreview
+      :type="!image.url || image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
+      :previewUrl="image.url"
+      defaultUrl="/static/default-model-preview.png"
+      :width="320"
+      :height="205"
+    />
   </div>
 </template>
 
 <script>
 import { ref, watch } from "vue";
+import { MODEL_TYPE } from "../../../../../config/models.js";
 
 export default {
   props: {
@@ -40,22 +37,8 @@ export default {
   },
   emis: ["preview-changed"],
   setup(props, { emit }) {
-    const nbSlices = 15;
     const container = ref(null);
     const viewport = ref(null);
-
-    const translation = ref(0);
-    const handleMouseMove = event => {
-      if (container.value && viewport.value) {
-        const containerRect = container.value.getBoundingClientRect();
-        const viewportRect = viewport.value.getBoundingClientRect();
-        let offset = Math.abs(
-          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
-        );
-        offset = Math.min(offset, nbSlices);
-        translation.value = (offset - 1) * viewportRect.width;
-      }
-    };
 
     const images = ref([]);
     const image = ref({});
@@ -84,8 +67,8 @@ export default {
           .filter(model => !model.archived)
           .map((model, i) => ({
             index: i + 1,
-            name: model.name,
-            url: model.viewer360File
+            type: model.type,
+            url: model.preview_file
           }));
         image.value = images.value.length > 0 ? images.value[0] : {};
         index.value = 0;
@@ -98,12 +81,11 @@ export default {
       container,
       image,
       images,
-      translation,
       viewport,
+      MODEL_TYPE,
       // Methods
       nextImage,
-      previousImage,
-      handleMouseMove
+      previousImage
     };
   }
 };

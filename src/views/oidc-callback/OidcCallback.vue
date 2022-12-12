@@ -1,5 +1,5 @@
 <template>
-  <div data-test="oidc-callback" class="view oidc-callback">
+  <div data-test-id="view-oidc-callback" class="view oidc-callback">
     <BIMDataBigSpinner width="88" height="146" />
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuth } from "@/state/auth.js";
+import { useAuth } from "../../state/auth.js";
 
 export default {
   setup() {
@@ -18,9 +18,9 @@ export default {
       try {
         const result = await signInCallback();
         router.push({ path: result.state ? result.state : "/" });
-      } catch(e) {
+      } catch (e) {
         console.error(e);
-        router.push('/')
+        router.push("/");
       }
     });
   }

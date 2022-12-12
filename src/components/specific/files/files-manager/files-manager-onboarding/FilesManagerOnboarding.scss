@@ -8,7 +8,25 @@
 
   &__actions {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: var(--spacing-unit);
+    max-height: 72px;
+
+    &__base {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-unit); 
+    }
+
+    &__advanced {
+      &__dropdown {
+        margin-top: var(--spacing-unit);
+        &:deep(.submenu) {
+          font-size: calc(var(--font-size) * 0.9);
+        }
+      }
+    }
   }
 
   &__overlay {

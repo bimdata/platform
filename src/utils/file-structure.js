@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { FILE_TYPE } from "@/config/files.js";
+import { FILE_TYPE } from "../config/files.js";
 
 /**
  * Compute a file UUID.
@@ -88,7 +88,7 @@ function createFileNode(nodeMap, file) {
     _children: (file.children || []).map(child => uuid(child)),
 
     get parent() {
-      return this.file.parentId ? nodeMap.get(`${FILE_TYPE.FOLDER}-${this.file.parentId}`) : null;
+      return this.file.parent_id ? nodeMap.get(`${FILE_TYPE.FOLDER}-${this.file.parent_id}`) : null;
     },
     get children() {
       return this._children.map(nodeId => nodeMap.get(nodeId));
@@ -217,7 +217,7 @@ class FileStructureHandler {
    */
 
   createFile(file) {
-    validate(file, ['parentId']);
+    validate(file, ['parent_id']);
     const nodeId = uuid(file);
     const node = createFileNode(this.nodeMap, file);
     this.nodeMap.set(nodeId, node);
@@ -281,8 +281,12 @@ function segregate(files) {
   };
 }
 
-function isFolder(file) { 
+function isFolder(file) {
   return file.nature === FILE_TYPE.FOLDER;
+}
+
+function hasAdminPerm(project, file) {
+  return project.isAdmin || file.user_permission === 100;
 }
 
 
@@ -290,5 +294,6 @@ export {
   FileStructureHandler,
   getDescendants,
   segregate,
-  isFolder
+  isFolder,
+  hasAdminPerm
 };

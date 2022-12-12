@@ -5,7 +5,7 @@
     </div>
     <component
       :class="isCarousel ? '' : 'dashboard-space-list__content'"
-      :is="isCarousel ? 'CarouselList' : 'div'"
+      :is="isCarousel ? 'BIMDataCarousel' : 'div'"
     >
       <SpaceCard
         v-for="space in displayedSpaces"
@@ -21,12 +21,10 @@
 <script>
 import { ref, watchEffect } from "vue";
 // Components
-import CarouselList from "@/components/generic/carousel-list/CarouselList";
-import SpaceCard from "@/components/specific/spaces/space-card/SpaceCard";
+import SpaceCard from "../../spaces/space-card/SpaceCard.vue";
 
 export default {
   components: {
-    CarouselList,
     SpaceCard
   },
   props: {
@@ -46,7 +44,7 @@ export default {
       if (props.spaces) {
         displayedSpaces.value = props.spaces
           .slice()
-          .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+          .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1))
           .slice(0, 10);
       }
     });

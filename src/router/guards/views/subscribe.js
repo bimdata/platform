@@ -1,6 +1,6 @@
-import { useSession } from "@/composables/session.js";
-import routeNames from "@/router/route-names.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useSession } from "../../../composables/session.js";
+import routeNames from "../../../router/route-names.js";
+import { useSpaces } from "../../../state/spaces.js";
 
 const { previousView } = useSession();
 const { freeSpaces } = useSpaces();

@@ -3,7 +3,7 @@
     <div class="space-card-update-form__title">
       <span>{{ $t("SpaceCardUpdateForm.title") }}</span>
       <BIMDataButton
-        data-test="btn-close-update"
+        data-test-id="btn-close-update"
         ghost
         rounded
         icon
@@ -14,7 +14,7 @@
     </div>
     <BIMDataInput
       ref="nameInput"
-      data-test="input-update-name"
+      data-test-id="input-update-name"
       class="space-card-update-form__input"
       :placeholder="$t('SpaceCardUpdateForm.inputPlaceholder')"
       v-model="spaceName"
@@ -24,7 +24,7 @@
       @keyup.enter.prevent.stop="submit"
     />
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="space-card-update-form__btn-submit"
       fill
       radius
@@ -38,7 +38,8 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
-import { useSpaces } from "@/state/spaces";
+import { useSpaces } from "../../../../../state/spaces.js";
+import { debounce } from "../../../../../utils/async.js";
 
 export default {
   props: {
@@ -57,7 +58,7 @@ export default {
     const spaceName = ref(props.space.name);
     const hasError = ref(false);
 
-    const submit = async () => {
+    const submit = debounce(async () => {
       if (spaceName.value) {
         try {
           loading.value = true;
@@ -70,7 +71,7 @@ export default {
         nameInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       hasError.value = false;

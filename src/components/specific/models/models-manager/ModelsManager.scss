@@ -16,6 +16,7 @@
   &__tab {
     width: 188px;
     height: 100%;
+    padding: 0 var(--spacing-unit);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,12 +66,11 @@
 
     &__container {
       position: absolute;
-      z-index: 1;
+      z-index: 5;
       top: 30px;
       right: 0;
       display: flex;
       flex-direction: column;
-      width: 100px;
       padding: calc(var(--spacing-unit) / 2) 0;
       box-shadow: var(--box-shadow);
       background-color: var(--color-white);
@@ -80,7 +80,8 @@
       display: flex;
       align-items: center;
       gap: var(--spacing-unit);
-      padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+      padding: calc(var(--spacing-unit) / 3) var(--spacing-unit);
+      white-space: nowrap;
 
       &.disabled > span {
         opacity: 0.6;

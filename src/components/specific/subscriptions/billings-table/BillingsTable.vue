@@ -6,7 +6,8 @@
 
     <BIMDataCard class="billings-table__table" v-if="subscriptions.length > 0">
       <template #content>
-        <GenericTable
+        <BIMDataTable
+          tableLayout="fixed"
           :columns="columns"
           :rows="subscriptions"
           :paginated="true"
@@ -26,7 +27,7 @@
             </AppLink>
           </template>
           <template #cell-nextpayment="{ row: sub }">
-            <div v-if="!sub.is_custom" >
+            <div v-if="!sub.is_custom">
               {{ $d(sub.next_bill_date, "short") }}
             </div>
           </template>
@@ -45,20 +46,23 @@
             </span>
           </template>
           <template #cell-amount="{ row: sub }">
-            <div v-if="!sub.is_custom" >
+            <div v-if="!sub.is_custom">
               {{
                 +sub.unit_price +
                 sub.data_packs
                   .map(d => +d.unit_price * d.quantity)
                   .reduce((a, b) => a + b, 0)
               }}
-              <span> {{ sub.currency === "EUR" ? "€" : "£" }} </span>
+              {{ sub.currency === "EUR" ? "€" : "£" }}
             </div>
           </template>
           <template #cell-actions="{ row: sub }">
-            <BillingActionsCell v-if="sub.status === 'active' && !sub.is_custom" :billing="sub" />
+            <BillingActionsCell
+              v-if="sub.status !== SUB_STATUS.DELETED && !sub.is_custom"
+              :subscription="sub"
+            />
           </template>
-        </GenericTable>
+        </BIMDataTable>
       </template>
     </BIMDataCard>
 
@@ -79,20 +83,20 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import routeNames from "@/router/route-names.js";
 import columnsDef from "./columns.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { SUB_STATUS } from "../../../../config/subscription.js";
+import routeNames from "../../../../router/route-names.js";
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
+import AppLink from "../../app/app-link/AppLink.vue";
 import BillingActionsCell from "./billing-actions-cell/BillingActionsCell.vue";
 
 export default {
   components: {
     AppLink,
-    BillingActionsCell,
-    GenericTable
+    BillingActionsCell
   },
   props: {
     subscriptions: {
@@ -101,24 +105,29 @@ export default {
     }
   },
   setup() {
-    const { locale, t } = useI18n();
-    const columns = ref([]);
+    const { t } = useI18n();
+    const { isLG } = useStandardBreakpoints();
 
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`BillingsTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+    const columns = computed(() => {
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["space", "nextpayment", "status", "amount", "actions"].includes(
+            col.id
+          )
+        );
+      }
+      return filteredColumns.map(col => ({
+        ...col,
+        label: col.label || t(`BillingsTable.headers.${col.id}`)
+      }));
+    });
 
     return {
       // References
       columns,
-      routeNames
+      routeNames,
+      SUB_STATUS
     };
   }
 };

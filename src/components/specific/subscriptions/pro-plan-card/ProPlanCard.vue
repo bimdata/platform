@@ -41,10 +41,10 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { usePaddle } from "@/composables/paddle.js";
-import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
-import routeNames from "@/router/route-names.js";
-import { formatBytes } from "@/utils/files.js";
+import { usePaddle } from "../../../../composables/paddle.js";
+import { PRO_PLAN_STORAGE } from "../../../../config/subscription.js";
+import routeNames from "../../../../router/route-names.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   setup() {

@@ -3,26 +3,26 @@
     <div class="models-card-model-preview__index" v-if="images.length > 1">
       {{ `${image.index} / ${images.length}` }}
     </div>
-
-    <div
-      class="models-card-model-preview__container"
-      ref="container"
-      @mousemove="handleMouseMove"
-    >
-      <div
-        v-if="image && image.url"
-        class="models-card-model-preview__container__viewport"
-        ref="viewport"
-      >
-        <img
-          :src="image.url"
-          :style="{ transform: `translateX(-${translation}px)` }"
-        />
+    <template v-if="image.url">
+      <BIMDataModelPreview
+        class="models-card-model-preview__viewer"
+        :type="image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
+        :previewUrl="image.url"
+        :width="377"
+        :height="342"
+        backgroundColor="var(--color-silver)"
+      />
+      <BIMDataIcon
+        class="models-card-model-preview__index__preview-icon"
+        :name="MODEL_ICON[image.type]"
+        size="l"
+      />
+    </template>
+    <template v-else>
+      <div class="models-card-model-preview__placeholder">
+        <BIMDataIcon :name="MODEL_ICON[image.type]" customSize="150" />
       </div>
-      <div v-else class="models-card-model-preview__container__empty-preview">
-        {{ $t("ModelsCardModelPreview.emptyPreviewPlaceholder") }}
-      </div>
-    </div>
+    </template>
 
     <div class="models-card-model-preview__switcher" v-if="images.length > 0">
       <div class="models-card-model-preview__switcher__text">
@@ -56,6 +56,7 @@
 
 <script>
 import { ref, watch } from "vue";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../../config/models.js";
 
 export default {
   props: {
@@ -66,22 +67,8 @@ export default {
   },
   emits: ["model-changed"],
   setup(props, { emit }) {
-    const nbSlices = 15;
     const container = ref(null);
     const viewport = ref(null);
-
-    const translation = ref(0);
-    const handleMouseMove = event => {
-      if (container.value && viewport.value) {
-        const containerRect = container.value.getBoundingClientRect();
-        const viewportRect = viewport.value.getBoundingClientRect();
-        let offset = Math.abs(
-          Math.ceil(nbSlices * (1 - (event.clientX - containerRect.x) / containerRect.width))
-        );
-        offset = Math.min(offset, nbSlices);
-        translation.value = (offset - 1) * viewportRect.width;
-      }
-    };
 
     const images = ref([]);
     const image = ref({});
@@ -111,10 +98,13 @@ export default {
           .map((model, i) => ({
             index: i + 1,
             name: model.name,
-            url: model.viewer360File
+            type: model.type,
+            url: model.preview_file
           }));
-        image.value = images.value.length > 0 ? images.value[0] : {};
+
         index.value = 0;
+        image.value = images.value.length > 0 ? images.value[0] : {};
+        emit("model-changed", props.models[index.value]);
       },
       { immediate: true }
     );
@@ -124,12 +114,12 @@ export default {
       container,
       image,
       images,
-      translation,
       viewport,
+      MODEL_TYPE,
+      MODEL_ICON,
       // Methods
       nextImage,
-      previousImage,
-      handleMouseMove
+      previousImage
     };
   }
 };

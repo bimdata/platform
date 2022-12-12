@@ -1,5 +1,6 @@
-import { isConvertible, isModel } from "@/utils/models.js";
-import { createFileUploader } from "@/utils/upload.js";
+import { isConvertible, isModel } from "../utils/models.js";
+import { createFileUploader } from "../utils/upload.js";
+
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 import ModelService from "./ModelService.js";
@@ -48,7 +49,9 @@ class UploadService {
     const uploader = createFileUploader(
       {
         method: "POST",
-        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
+        url: `${process.env.VUE_APP_API_BASE_URL}/cloud/${
+          project.cloud.id
+        }/project/${project.id}/document`,
         accessToken: apiClient.accessToken
       },
       {
@@ -57,20 +60,28 @@ class UploadService {
         onUploadComplete,
         onUploadError: event => {
           ErrorService.handleError(
-            new RuntimeError(ERRORS.DOCUMENT_UPLOAD_ERROR, event)
+            new RuntimeError(
+              ERRORS[
+                event.srcElement.status === 402
+                  ? "SPACE_SIZE_FULL_ERROR"
+                  : "DOCUMENT_UPLOAD_ERROR"
+              ],
+              event
+            )
           );
           onUploadError(event);
         }
       }
     );
 
-    const upload = (file, parentId) => {
+    const upload = (file, parentId, successorOf) => {
       const data = new FormData();
       data.append("file", file);
       data.append("name", file.name);
       if (parentId) data.append("parent_id", parentId);
+      if (successorOf) data.append("successor_of", successorOf);
 
-      uploader.upload(data);
+      return uploader.upload(data);
     };
 
     const cancel = () => {

@@ -1,13 +1,7 @@
 <template>
   <div class="model-location">
     <transition name="fade" mode="out-in">
-      <template v-if="loading">
-        <div class="model-location__loader">
-          <BIMDataSpinner />
-        </div>
-      </template>
-
-      <template v-else-if="showLocationForm">
+      <template v-if="isOpenForm">
         <ModelLocationForm
           class="model-location__form"
           :project="project"
@@ -16,14 +10,14 @@
           :address="address"
           :longitude="longitude"
           :latitude="latitude"
-          @success="setLocation"
+          @location-updated="onLocationUpdated"
           @close="closeLocationForm"
         />
       </template>
 
       <template v-else-if="longitude && latitude">
         <div class="model-location__map">
-          <MapboxWrapper :longitude="longitude" :latitude="latitude" />
+          <MaplibreWrapper :longitude="longitude" :latitude="latitude" />
           <BIMDataButton
             v-if="project.isAdmin"
             class="model-location__map__edit-btn"
@@ -56,20 +50,30 @@
         </div>
       </template>
     </transition>
+
+    <transition name="fade">
+      <div v-show="loading" class="model-location__loader">
+        <BIMDataSpinner />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { onActivated, provide, ref, watch } from "vue";
-import { useModels } from "@/state/models.js";
-import { DMS2DD, getCoordinatesFromAddress } from "@/utils/location.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { useModels } from "../../../../state/models.js";
+import {
+  DMS2DD,
+  getCoordinatesFromAddress
+} from "../../../../utils/location.js";
 // Components
-import MapboxWrapper from "@/components/generic/mapbox-wrapper/MapboxWrapper.vue";
-import ModelLocationForm from "@/components/specific/models/model-location-form/ModelLocationForm.vue";
+import MaplibreWrapper from "../../../generic/maplibre-wrapper/MaplibreWrapper.vue";
+import ModelLocationForm from "../model-location-form/ModelLocationForm.vue";
 
 export default {
   components: {
-    MapboxWrapper,
+    MaplibreWrapper,
     ModelLocationForm
   },
   props: {
@@ -87,13 +91,11 @@ export default {
     const loading = ref(false);
     provide("loading", loading);
 
-    const showLocationForm = ref(false);
-    const openLocationForm = () => {
-      showLocationForm.value = true;
-    };
-    const closeLocationForm = () => {
-      showLocationForm.value = false;
-    };
+    const {
+      isOpen: isOpenForm,
+      open: openLocationForm,
+      close: closeLocationForm
+    } = useToggle();
 
     const site = ref(null);
     const address = ref("");
@@ -102,7 +104,7 @@ export default {
 
     const reset = () => {
       loading.value = false;
-      showLocationForm.value = false;
+      isOpenForm.value = false;
       site.value = null;
       address.value = "";
       longitude.value = 0;
@@ -110,7 +112,6 @@ export default {
     };
 
     const setLocation = async () => {
-      reset();
       loading.value = true;
       const location = await fetchModelLocation(props.project, props.model);
       site.value = location.site;
@@ -135,6 +136,11 @@ export default {
       loading.value = false;
     };
 
+    const onLocationUpdated = async () => {
+      await setLocation();
+      closeLocationForm();
+    };
+
     watch(
       () => props.model,
       () => {
@@ -154,10 +160,11 @@ export default {
       latitude,
       loading,
       longitude,
-      showLocationForm,
+      isOpenForm,
       site,
       // Methods
       closeLocationForm,
+      onLocationUpdated,
       openLocationForm,
       setLocation
     };

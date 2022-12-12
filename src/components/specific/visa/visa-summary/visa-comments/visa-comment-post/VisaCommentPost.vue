@@ -20,7 +20,7 @@
         />
         <span class="visa-comment-post__header__left-side__separator">•</span>
         <span class="visa-comment-post__header__left-side__date">{{
-          $d(comment.createdAt, "long")
+          $d(comment.created_at, "long")
         }}</span>
       </div>
       <div class="visa-comment-post__header__right-side">
@@ -55,10 +55,11 @@
 
 <script>
 import { ref, watch } from "vue";
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar";
+import { useVisa } from "../../../../../../state/visa.js";
 
+// Components
+import UserAvatar from "../../../../users/user-avatar/UserAvatar.vue";
 import VisaCommentPostActions from "./visa-comment-post-actions/VisaCommentPostActions.vue";
-import { useVisa } from "@/state/visa";
 
 export default {
   components: {

@@ -8,7 +8,7 @@
       <BIMDataRadio name="role" text="Admin" :value="100" v-model="role" />
     </span>
     <BIMDataButton
-      data-test="btn-submit-update"
+      data-test-id="btn-submit-update"
       class="user-card-update-form__btn-submit"
       width="80px"
       color="primary"
@@ -19,7 +19,7 @@
       {{ $t("UserCardUpdateForm.submitButtonText") }}
     </BIMDataButton>
     <BIMDataButton
-      data-test="btn-close-update"
+      data-test-id="btn-close-update"
       class="user-card-update-form__btn-close"
       color="default"
       ghost
@@ -34,8 +34,8 @@
 
 <script>
 import { inject, ref } from "vue";
-import { useProjects } from "@/state/projects";
-import { useSpaces } from "@/state/spaces";
+import { useProjects } from "../../../../../state/projects.js";
+import { useSpaces } from "../../../../../state/spaces.js";
 
 export default {
   props: {
@@ -59,7 +59,7 @@ export default {
 
     const loading = inject("loading", false);
 
-    const role = ref(props.project ? props.user.role : props.user.cloudRole);
+    const role = ref(props.project ? props.user.role : props.user.cloud_role);
 
     const submit = async () => {
       try {
@@ -73,7 +73,7 @@ export default {
         } else if (props.space) {
           await updateSpaceUser(props.space, {
             ...props.user,
-            cloudRole: role.value
+            cloud_role: role.value
           });
         }
       } finally {

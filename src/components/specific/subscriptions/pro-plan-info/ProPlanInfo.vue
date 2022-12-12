@@ -1,7 +1,7 @@
 <template>
-  <div class="pro-plan-info">
-    <ProPlanInfoHeadingImage />
-    <div class="pro-plan-info__middle">
+  <div class="pro-plan-info" :class="`pro-plan-info--${layout}`">
+    <div class="pro-plan-info__head">
+      <ProPlanInfoHeadingImage />
       <h1 class="pro-plan-info__title">
         {{ $t("ProPlanInfo.title") }}
       </h1>
@@ -39,11 +39,18 @@
 
 <script>
 import { ref } from "vue";
-import { usePaddle } from "@/composables/paddle.js";
-import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
-import { formatBytes } from "@/utils/files.js";
+import { usePaddle } from "../../../../composables/paddle.js";
+import { PRO_PLAN_STORAGE } from "../../../../config/subscription.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
+  props: {
+    layout: {
+      type: String,
+      default: "vertical",
+      validator: value => ["horizontal", "vertical"].includes(value)
+    }
+  },
   setup() {
     const { getProPlanPrice } = usePaddle();
 

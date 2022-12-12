@@ -1,6 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
-import ModelService from "@/services/ModelService.js";
-import { useFiles } from "@/state/files.js";
+import ModelService from "../services/ModelService.js";
+
+import { useFiles } from "./files.js";
 
 const state = reactive({
   projectModels: []
@@ -47,8 +48,8 @@ const downloadModels = async models => {
   await ModelService.downloadModels(models);
 };
 
-const deleteModels = async (project, models) => {
-  await ModelService.deleteModels(project, models);
+const deleteModels = async (project, models, options) => {
+  await ModelService.deleteModels(project, models, options);
 
   await loadProjectModels(project);
   const { loadProjectFileStructure } = useFiles();

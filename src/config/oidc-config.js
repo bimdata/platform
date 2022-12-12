@@ -8,8 +8,8 @@ const AUTHORITY = `${process.env.VUE_APP_IAM_BASE_URL}/auth/realms/bimdata`;
 const OIDC_ENDPOINT = `${AUTHORITY}/protocol/openid-connect`;
 
 const CLIENT_ID = process.env.VUE_APP_OIDC_CLIENT_ID;
-const AUTHORIZED_IDENTITY_PROVIDERS =
-  process.env.VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
+const AUTHORIZED_IDENTITY_PROVIDERS = process.env
+  .VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
 
 const config = {
   // Auth request config
@@ -47,7 +47,7 @@ const config = {
 
 if (AUTHORIZED_IDENTITY_PROVIDERS) {
   config.extraQueryParams = {
-    kc_idp_hint: AUTHORIZED_IDENTITY_PROVIDERS,
+    kc_idp_hint: AUTHORIZED_IDENTITY_PROVIDERS
   };
 }
 

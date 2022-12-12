@@ -1,56 +1,48 @@
 <template>
   <div class="project-bcf">
-    <app-slot-content name="project-board-action">
-      <BIMDataButton
-        color="primary"
-        outline
-        radius
-        icon
-        class="m-r-12"
-        @click="openBcfSettings"
-      >
-        <BIMDataIcon name="settings" size="xxs" color="default" />
+    <AppSlotContent name="project-board-action">
+      <BIMDataButton color="primary" outline radius icon @click="openSettings">
+        <BIMDataIcon name="settings" size="xxs" />
       </BIMDataButton>
-      <FileUploadButton
-        class="m-r-12"
-        width="auto"
-        multiple
-        color="default"
-        :accept="['.bcf']"
-        @upload="uploadFiles"
-      >
-        <BIMDataIcon name="import" size="xs" margin="0 6px 0 0" />
-        {{ $t("ProjectBcf.importButtonText") }}
-      </FileUploadButton>
       <BIMDataButton
-        color="default"
         fill
         radius
-        @click="exportBcfTopics"
-        class="m-r-12"
+        :icon="isXL"
+        color="default"
+        width="120px"
+        @click="
+          fileUploadInput(
+            'file',
+            event => importBcfTopics(event.target.files),
+            {
+              accept: ['.bcf'],
+              multiple: true
+            }
+          )
+        "
       >
-        <BIMDataIcon name="export" size="xs" margin="0 6px 0 0" />
-        {{ $t("ProjectBcf.exportButtonText") }}
+        <BIMDataIcon name="import" size="xs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("ProjectBcf.importButtonText") }}
+        </span>
       </BIMDataButton>
       <BIMDataButton
-        width="130px"
         color="primary"
         fill
         radius
-        @click="openCreateBcfTopic"
+        :icon="isXL"
+        width="120px"
+        @click="openTopicCreate"
       >
-        <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
-        <span>{{ $t("ProjectBcf.createBcfButtonText") }}</span>
+        <BIMDataIcon name="plus" size="xxxs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("ProjectBcf.createBcfButtonText") }}
+        </span>
       </BIMDataButton>
-    </app-slot-content>
-    <AppSidePanel :title="$t('ProjectBcf.createBcfTitle')">
-      <CreateBcfTopic :bcfTopics="bcfTopics" />
-    </AppSidePanel>
-    <div class="project-bcf__settings" v-show="showBcfSettings">
-      <BcfSettings @close="closeBcfSettings" />
-    </div>
-    <div class="project-bcf__actions flex justify-between">
-      <div class="flex">
+    </AppSlotContent>
+
+    <div class="project-bcf__actions">
+      <div class="project-bcf__actions--start">
         <BIMDataTooltip
           maxWidth="100px"
           :message="
@@ -58,350 +50,494 @@
               ? $t('ProjectBcf.showStatisticsTooltip')
               : $t('ProjectBcf.hideStatisticsTooltip')
           "
-          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <template #content>
-            <BIMDataButton
-              data-test="btn-sort-index"
-              color="default"
-              fill
-              square
-              icon
-              class="m-r-12"
-              @click="toggleMetrics"
-              :class="{ active: !showMetrics }"
-            >
-              <Graph
-                style="heiht: 18px; width: 18px"
-                :activeColor="
-                  !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
-                "
-              />
-            </BIMDataButton>
-          </template>
+          <BIMDataButton
+            :class="{ active: !showMetrics }"
+            color="default"
+            fill
+            square
+            icon
+            @click="toggleMetrics"
+          >
+            <PieGraphIcon
+              :activeColor="
+                !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
+              "
+            />
+          </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataSearch
-          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
+          width="calc(100% - 32px - var(--spacing-unit))"
           color="secondary"
           radius
-          width="42%"
+          :placeholder="$t('ProjectBcf.searchInputPlaceholder')"
           v-model="searchText"
-        >
-        </BIMDataSearch>
+        />
       </div>
-      <div class="flex justify-end">
+      <div class="project-bcf__actions--end">
         <BIMDataTooltip
+          :disabled="topics.length === 0"
           :message="
-            isSortByIndexActive
+            sortOrderIndex === 'asc'
               ? $t('ProjectBcf.ascendingIndexTooltip')
               : $t('ProjectBcf.descendingIndexTooltip')
           "
-          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <template #content>
-            <BIMDataButton
-              data-test="btn-sort-index"
-              color="default"
-              fill
-              square
-              icon
-              class="m-r-12"
-              :class="{ active: activeButton === 'indexSort' }"
-              @click="sortByIndex"
-              :disabled="!bcfTopics.length"
-            >
-              <IndexAscending
-                v-if="isSortByIndexActive"
-                style="heiht: 18px; width: 18px"
-              />
-              <IndexDescending v-else style="heiht: 18px; width: 18px" />
-            </BIMDataButton>
-          </template>
+          <BIMDataButton
+            :disabled="topics.length === 0"
+            :class="{ active: sortedBy === 'index' }"
+            fill
+            square
+            icon
+            @click="sortByIndex"
+          >
+            <BIMDataIcon
+              :name="
+                sortOrderIndex === 'asc' ? 'indexAscending' : 'indexDescending'
+              "
+              size="s"
+            />
+          </BIMDataButton>
         </BIMDataTooltip>
 
         <BIMDataTooltip
+          :disabled="topics.length === 0"
           :message="
-            isSortByNameActive
+            sortOrderTitle === 'asc'
               ? $t('ProjectBcf.alphabeticalAscendingOrderTooltip')
               : $t('ProjectBcf.alphabeticalDescendingOrderTooltip')
           "
-          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <template #content>
-            <BIMDataButton
-              data-test="btn-sort-name"
-              color="default"
-              fill
-              square
-              icon
-              class="m-r-12"
-              :class="{ active: activeButton === 'nameSort' }"
-              @click="sortByName"
-              :disabled="!bcfTopics.length"
-            >
-              <AlphabeticalAscending
-                v-if="isSortByNameActive"
-                style="heiht: 18px; width: 18px"
-              />
-              <AlphabeticalDescending v-else style="heiht: 18px; width: 18px" />
-            </BIMDataButton>
-          </template>
+          <BIMDataButton
+            :disabled="topics.length === 0"
+            :class="{ active: sortedBy === 'title' }"
+            fill
+            square
+            icon
+            @click="sortByTitle"
+          >
+            <BIMDataIcon
+              :name="
+                sortOrderTitle === 'asc'
+                  ? 'alphabeticalAscending'
+                  : 'alphabeticalDescending'
+              "
+              size="s"
+            />
+          </BIMDataButton>
         </BIMDataTooltip>
         <BIMDataTooltip
-          ref="dateTooltip"
+          :disabled="topics.length === 0"
           :message="
-            isSortByDateActive
+            sortOrderDate === 'asc'
               ? $t('ProjectBcf.ascendingDateTooltip')
-              : $t('ProjectBcf.ascendingDateTooltip')
+              : $t('ProjectBcf.descendingDateTooltip')
           "
-          class="m-r-12"
-          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <template #content>
-            <BIMDataButton
-              data-test="btn-sort-date"
-              color="default"
-              fill
-              square
-              icon
-              :class="{ active: activeButton === 'dateSort' }"
-              @click="sortByDate"
-              :disabled="!bcfTopics.length"
-            >
-              <DateAscending
-                v-if="isSortByDateActive"
-                style="heiht: 18px; width: 18px"
-              />
-              <DateDescending v-else style="heiht: 18px; width: 18px" />
-            </BIMDataButton>
-          </template>
+          <BIMDataButton
+            :disabled="topics.length === 0"
+            :class="{ active: sortedBy === 'date' }"
+            fill
+            square
+            icon
+            @click="sortByDate"
+          >
+            <BIMDataIcon
+              :name="
+                sortOrderDate === 'asc' ? 'dateAscending' : 'dateDescending'
+              "
+              size="s"
+            />
+          </BIMDataButton>
         </BIMDataTooltip>
-        <!-- <BIMDataTooltip
+        <BIMDataTooltip
+          :disabled="topics.length === 0"
           :message="
-            isDisplayByListActive
+            isListView
               ? $t('ProjectBcf.viewGridTooltip')
               : $t('ProjectBcf.viewListTooltip')
           "
-          className="bimdata-tooltip--bottom bimdata-tooltip--primary bimdata-tooltip--arrow"
         >
-          <template #content>
-            <BIMDataButton
-              color="default"
-              fill
-              square
-              icon
-              class="m-r-12"
-              @click="toggleDisplayBcfTopics"
-              :disabled="!bcfTopics.length"
-            >
-              <Grid
-                v-if="isDisplayByListActive"
-                style="heiht: 18px; width: 18px"
-              />
-              <List v-else style="heiht: 18px; width: 18px" />
-            </BIMDataButton>
-          </template>
-        </BIMDataTooltip> -->
-        <BcfFilters :bcfTopics="bcfTopics" @submit="onFiltersSubmit" />
+          <BIMDataButton
+            :disabled="topics.length === 0"
+            fill
+            square
+            icon
+            @click="isListView = !isListView"
+          >
+            <BIMDataIcon :name="isListView ? 'grid' : 'list'" size="s" />
+          </BIMDataButton>
+        </BIMDataTooltip>
+        <BcfFilters :topics="topics" @submit="applyFilters($event.filters)" />
       </div>
     </div>
 
-    <div class="project-bcf__content flex m-t-24">
-      <div class="project-bcf__content__metrics m-r-24" v-if="!showMetrics">
-        <p class="text-center">
-          Total : <strong>{{ bcfTopics.length }} issues BCF</strong>
-        </p>
-        <BcfTopicsMetrics
-          v-if="bcfTopics.length"
-          :bcfTopics="displayedBcfTopics"
-          extensionType="Status"
-          :availableExtensions="detailedExtensions.topicStatuses"
-        />
-        <BcfTopicsMetrics
-          v-if="bcfTopics.length"
-          :bcfTopics="displayedBcfTopics"
-          extensionType="Priority"
-          :availableExtensions="detailedExtensions.priorities"
-          class="m-t-24"
-        />
-        <EmptyBcfTopicsMetrics
-          v-else
-          :bcfTopics="displayedBcfTopics"
-          :loading="loading"
-        />
-      </div>
-      <!-- loading BCF -->
-      <div
-        class="project-bcf__content__empty flex items-center justify-center"
-        v-if="loading"
-      >
-        <BIMDataSpinner />
-      </div>
-      <!-- if no Bcf topics -->
-      <BcfTopicCreationCard v-else-if="displayedBcfTopics.length === 0" />
-
-      <!-- display Bcf topics in list mode -->
-      <transition-group v-else-if="isDisplayByListActive" name="list">
-        <div class="project-bcf__content__list" key="display-bcf-list">
-          <BcfTopicsList
-            :bcfTopics="displayedBcfTopics"
-            :detailedExtensions="detailedExtensions"
-          />
-        </div>
-      </transition-group>
-
-      <!-- display Bcf topics in grid mode -->
-      <transition-group v-else name="grid">
-        <div class="project-bcf__content__grid" key="display-bcf-grid">
-          <BcfTopicGridItem
-            v-for="bcfTopic in displayedBcfTopics"
-            :key="bcfTopic.guid"
+    <AppSidePanelContent :header="false">
+      <Transition name="fade" mode="out-in">
+        <template v-if="showSettings">
+          <BcfSettings
+            :uiConfig="{
+              closeButton: true
+            }"
             :project="project"
-            :bcfTopic="bcfTopic"
             :detailedExtensions="detailedExtensions"
-            :showSidePanel="bcfTopicPanelShown === bcfTopic"
-            @showPanel="bcfTopicPanelShown = bcfTopic"
-            @hidePanel="bcfTopicPanelShown = null"
+            @extension-created="reloadExtensions"
+            @extension-updated="reloadExtensions"
+            @extension-deleted="reloadExtensions"
+            @close="closeSidePanel"
           />
+        </template>
+        <template v-else-if="showTopicOverview">
+          <BcfTopicOverview
+            :uiConfig="{
+              closeButton: true,
+              editButton: true,
+              deleteButton: true
+            }"
+            :project="project"
+            :detailedExtensions="detailedExtensions"
+            :topic="currentTopic"
+            @edit-topic="openTopicUpdate(currentTopic)"
+            @view-topic="openTopicViewer(currentTopic)"
+            @view-topic-viewpoint="topicViewpoint"
+            @topic-deleted="reloadBcfTopics(), closeSidePanel()"
+            @comment-created="reloadComments(currentTopic)"
+            @comment-updated="reloadComments(currentTopic)"
+            @comment-deleted="reloadComments(currentTopic)"
+            @close="closeSidePanel"
+          />
+        </template>
+        <template v-else-if="showTopicCreate || showTopicUpdate">
+          <BcfTopicForm
+            :uiConfig="{
+              backButton: !showTopicCreate,
+              closeButton: true
+            }"
+            :project="project"
+            :extensions="extensions"
+            :topics="topics"
+            :topic="currentTopic"
+            @topic-updated="reloadBcfTopics"
+            @topic-created="reloadBcfTopics(), closeSidePanel()"
+            @back="openTopicOverview(currentTopic)"
+            @close="closeSidePanel"
+          />
+        </template>
+      </Transition>
+    </AppSidePanelContent>
+
+    <div class="project-bcf__content">
+      <Transition name="fade">
+        <div v-show="!showMetrics" class="project-bcf__content__stats">
+          <div class="project-bcf__content__stats__title">
+            {{ $t("ProjectBcf.metricsTitle", { count: topics.length }) }}
+          </div>
+          <template v-if="topics.length && displayedTopics.length === 0">
+            <BcfStatisticsEmptyImage class="no-stats" />
+          </template>
+          <template v-else-if="topics.length > 0">
+            <BcfStatistics
+              :detailedExtensions="detailedExtensions"
+              extensionType="Status"
+              :topics="displayedTopics"
+            />
+            <BcfStatistics
+              :detailedExtensions="detailedExtensions"
+              extensionType="Priority"
+              :topics="displayedTopics"
+            />
+          </template>
+          <template v-else>
+            <BcfStatisticsEmptyImage />
+            <p>{{ $t("ProjectBcf.metricsEmptyText") }}</p>
+          </template>
         </div>
-      </transition-group>
+      </Transition>
+
+      <div class="project-bcf__content__selected-topics">
+        <div v-if="!loading" class="selected-topics flex items-center">
+          <BIMDataCheckbox
+            :modelValue="fullSelectionRef"
+            @update:modelValue="toggleFullSelection"
+          />
+          <span>
+            {{ $t("ProjectBcf.selectedTopicCount") }} :
+            <strong>{{ selectedTopics.size }} BCF</strong>
+          </span>
+          <BIMDataButton
+            v-if="selectedTopics.size > 0"
+            class="m-l-18"
+            fill
+            radius
+            :icon="isXL"
+            @click="exportBcfTopics"
+          >
+            <BIMDataIcon name="export" size="xs" />
+            <span v-if="!isXL" style="margin-left: 6px">
+              {{ $t("ProjectBcf.exportButtonText") }}
+            </span>
+          </BIMDataButton>
+        </div>
+
+        <Transition name="fade" mode="out-in">
+          <div v-if="loading" class="project-bcf__content__loader">
+            <BIMDataSpinner />
+          </div>
+
+          <div v-else-if="isListView" class="project-bcf__content__list">
+            <BcfTopicsTable
+              :columns="isXL ? ['index', 'title', 'actions'] : undefined"
+              :paginated="true"
+              :perPage="14"
+              :detailedExtensions="detailedExtensions"
+              :topics="displayedTopics"
+              :selectable="true"
+              v-model:selection="selectedTopics"
+              @open-topic="openTopicOverview($event)"
+            />
+          </div>
+
+          <div v-else class="project-bcf__content__grid m-t-12">
+            <TransitionGroup name="grid">
+              <BcfTopicCreationCard
+                v-if="topics.length === 0"
+                :key="-1"
+                @create-topic="openTopicCreate"
+              />
+              <BcfTopicCard
+                v-for="topic in displayedTopics"
+                :key="topic.guid"
+                :detailedExtensions="detailedExtensions"
+                :topic="topic"
+                :selectable="true"
+                :selected="selectedTopics.has(topic.guid)"
+                @update:selected="toggleTopicSelection(topic)"
+                @open-topic="openTopicOverview(topic)"
+              />
+
+              <div
+                v-if="topics.length > 0 && displayedTopics.length === 0"
+                class="project-bcf__content__grid__placeholder"
+              >
+                <BIMDataCard>
+                  <template #content>
+                    <NoSearchResultsImage />
+                    <h3>{{ $t("ProjectBcf.noSearchResultsTitle") }}</h3>
+                    <p>{{ $t("ProjectBcf.noSearchResultsText") }}</p>
+                  </template>
+                </BIMDataCard>
+              </div>
+            </TransitionGroup>
+          </div>
+        </Transition>
+      </div>
     </div>
+    <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
+      <SnapshotModal :topicSnapshot="topicSnapshot" />
+    </AppModal>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
-import { useAppSidePanel } from "@/components/specific/app/app-side-panel/app-side-panel.js";
-import { useBcf } from "@/state/bcf.js";
-import { useProjects } from "@/state/projects.js";
-
-// composables
-import useFilter from "./composables/filter.js";
-import useSearch from "./composables/search.js";
-import useSort from "./composables/sort.js";
-import { useToggle } from "@/composables/toggle";
-
+import {
+  getViewpointConfig,
+  getViewpointModels,
+  useBcfFilter,
+  useBcfSearch,
+  useBcfSort
+} from "@bimdata/bcf-components";
+import { computed, onActivated, onDeactivated, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
+import { useStandardBreakpoints } from "../../../composables/responsive.js";
+import { useToggle } from "../../../composables/toggle.js";
+import { MODEL_STATUS } from "../../../config/models.js";
+import { DEFAULT_WINDOW, WINDOW_MODELS } from "../../../config/viewer.js";
+import routeNames from "../../../router/route-names.js";
+import { useBcf } from "../../../state/bcf.js";
+import { useModels } from "../../../state/models.js";
+import { useProjects } from "../../../state/projects.js";
+import { fileUploadInput } from "../../../utils/upload.js";
+import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
+import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 // Components
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import AppSidePanel from "@/components/specific/app/app-side-panel/AppSidePanel.vue";
-import FileUploadButton from "@/components/specific/files/file-upload-button/FileUploadButton";
-import BcfFilters from "../../../components/specific/bcf/bcf-filters/BcfFilters.vue";
-import BcfSettings from "../../../components/specific/bcf/bcf-settings/BcfSettings.vue";
-
-import BcfTopicCreationCard from "../../../components/specific/bcf/bcf-topic-creation-card/BcfTopicCreationCard.vue";
-import BcfTopicGridItem from "../../../components/specific/bcf/bcf-topic-grid-item/BcfTopicGridItem.vue";
-import BcfTopicsList from "../../../components/specific/bcf/bcf-topics-list/BcfTopicsList.vue";
-import BcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/BcfTopicsMetrics.vue";
-import EmptyBcfTopicsMetrics from "../../../components/specific/bcf/bcf-topics-metrics/EmptyBcfTopicsMetrics.vue";
-import CreateBcfTopic from "../../../components/specific/bcf/create-bcf-topic/CreateBcfTopic.vue";
+import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
+import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
+import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
+import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+import AppModal from "../../../components/specific/app/app-modal/AppModal.vue";
+import SnapshotModal from "../snapshot-modal/SnapshotModal.vue";
 
 export default {
   components: {
+    AppSidePanelContent,
     AppSlotContent,
-    AppSidePanel,
-    CreateBcfTopic,
-    BcfFilters,
-    BcfSettings,
-    BcfTopicGridItem,
-    BcfTopicsList,
-    BcfTopicsMetrics,
-    EmptyBcfTopicsMetrics,
-    BcfTopicCreationCard,
-    FileUploadButton
+    BcfStatisticsEmptyImage,
+    NoSearchResultsImage,
+    AppModal,
+    SnapshotModal
   },
   setup() {
+    const { t } = useI18n();
+    const router = useRouter();
+    const { pushNotification } = useAppNotification();
     const { currentProject } = useProjects();
-    const { openSidePanel } = useAppSidePanel();
+    const { projectModels } = useModels();
     const {
-      bcfTopics,
+      topics,
+      extensions,
+      detailedExtensions,
       loadBcfTopics,
+      loadExtensions,
+      loadDetailedExtensions,
+      loadBcfTopicComments,
       importBcf,
-      exportBcf,
-      detailedExtensions
+      exportBcf
     } = useBcf();
+
     const loading = ref(false);
+    const isListView = ref(false);
+    const currentTopic = ref(null);
+
+    const reloadExtensions = async () => {
+      await Promise.all([
+        loadExtensions(currentProject.value),
+        loadDetailedExtensions(currentProject.value)
+      ]);
+    };
+
+    const reloadBcfTopics = async () => {
+      await loadBcfTopics(currentProject.value);
+    };
+
+    const reloadComments = async topic => {
+      await loadBcfTopicComments(currentProject.value, topic);
+    };
 
     watch(
       currentProject,
       async () => {
         try {
           loading.value = true;
-          await loadBcfTopics(currentProject.value);
+          currentTopic.value = null;
+          await reloadExtensions();
+          await reloadBcfTopics();
         } finally {
           loading.value = false;
         }
       },
-      {
-        immediate: true
-      }
+      { immediate: true }
     );
 
-    const { onFiltersSubmit, filteredTopics } = useFilter(bcfTopics);
+    watch(
+      topics,
+      () => {
+        if (currentTopic.value) {
+          currentTopic.value = topics.value.find(
+            t => t.guid === currentTopic.value.guid
+          );
+        }
+      },
+      { immediate: true }
+    );
 
-    const { searchText, searchedTopics: displayedBcfTopics } =
-      useSearch(filteredTopics);
+    onActivated(() => {
+      currentTopic.value = null;
+    });
+    onDeactivated(() => {
+      currentTopic.value = null;
+      closeSidePanel();
+    });
 
+    const { filteredTopics, apply: applyFilters } = useBcfFilter(topics);
+    const { searchText, filteredTopics: displayedTopics } =
+      useBcfSearch(filteredTopics);
     const {
-      sortByName,
+      sortedBy,
+      sortByTitle,
       sortByIndex,
       sortByDate,
-      activeButton,
-      isSortByNameActive,
-      isSortByIndexActive,
-      isSortByDateActive
-    } = useSort(displayedBcfTopics);
+      sortOrderIndex,
+      sortOrderTitle,
+      sortOrderDate
+    } = useBcfSort(displayedTopics);
 
-    const isDisplayByListActive = ref(false);
-    const toggleDisplayBcfTopics = () => {
-      isDisplayByListActive.value = !isDisplayByListActive.value;
+    const selectedTopics = ref(new Map());
+    const fullSelectionRef = computed(() =>
+      selectedTopics.value.size < topics.value.length
+        ? selectedTopics.value.size > 0
+          ? null
+          : false
+        : true
+    );
+
+    const toggleTopicSelection = topic => {
+      const selection = selectedTopics.value;
+      if (!selection.delete(topic.guid)) {
+        selection.set(topic.guid, topic);
+      }
+      selectedTopics.value = new Map([...selection.entries()]);
+      fullSelectionRef.value =
+        selection.size < topics.value.length
+          ? selection.size > 0
+            ? null
+            : false
+          : true;
     };
 
-    const uploadFiles = async files => {
+    const toggleFullSelection = () => {
+      if (selectedTopics.value.size < topics.value.length) {
+        selectedTopics.value = new Map([...topics.value.map(t => [t.guid, t])]);
+      } else {
+        selectedTopics.value = new Map();
+      }
+    };
+
+    const importBcfTopics = async files => {
       try {
         loading.value = true;
         await importBcf(currentProject.value, files[0]);
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("ProjectBcf.importBcfNotificationSuccess")
+        });
+      } catch {
+        pushNotification({
+          type: "error",
+          title: t("Error"),
+          message: t("ProjectBcf.importBcfNotificationError")
+        });
       } finally {
         loading.value = false;
       }
     };
 
-    const saveAs = async (response, fileName) => {
-      const content = await response.arrayBuffer();
-      const blob = new Blob([content], { type: "application/octet-stream" });
-
-      const URL = window.URL;
-      const a = document.createElement("a");
-      a.download = fileName;
-      a.rel = "noopener";
-      a.href = URL.createObjectURL(blob);
-      setTimeout(function () {
-        URL.revokeObjectURL(a.href);
-      }, 4e4);
-      setTimeout(function () {
-        a.click();
-      }, 0);
-    };
-
     const exportBcfTopics = async () => {
-      const response = await exportBcf(currentProject.value);
-      const fileName = decodeURI(
-        response.headers.get("Content-Disposition")
-      ).match("[^']*$");
-      if (fileName) {
-        fileName[0];
-      }
-      if (response.ok) {
-        await saveAs(response, fileName);
-      } else {
-        console.log("erreur");
+      try {
+        await exportBcf(currentProject.value, [
+          ...selectedTopics.value.values()
+        ]);
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("ProjectBcf.exportBcfNotificationSuccess")
+        });
+      } catch {
+        pushNotification({
+          type: "error",
+          title: t("Error"),
+          message: t("ProjectBcf.importBcfNotificationError")
+        });
       }
     };
 
-    const {
-      isOpen: showBcfSettings,
-      close: closeBcfSettings,
-      open: openBcfSettings
-    } = useToggle();
+    const { openSidePanel, closeSidePanel } = useAppSidePanel();
+    const showSettings = ref(false);
+    const showTopicOverview = ref(false);
+    const showTopicCreate = ref(false);
+    const showTopicUpdate = ref(false);
 
     const {
       isOpen: showMetrics,
@@ -409,35 +545,132 @@ export default {
       toggle: toggleMetrics
     } = useToggle();
 
-    const bcfTopicPanelShown = ref(null);
+    const openSettings = () => {
+      showSettings.value = true;
+      showTopicOverview.value = false;
+      showTopicCreate.value = false;
+      showTopicUpdate.value = false;
+      openSidePanel();
+    };
+
+    const openTopicOverview = topic => {
+      currentTopic.value = topic;
+      showSettings.value = false;
+      showTopicOverview.value = true;
+      showTopicCreate.value = false;
+      showTopicUpdate.value = false;
+      loadBcfTopicComments(currentProject.value, topic);
+      openSidePanel();
+    };
+
+    const openTopicCreate = () => {
+      currentTopic.value = null;
+      showSettings.value = false;
+      showTopicOverview.value = false;
+      showTopicCreate.value = true;
+      showTopicUpdate.value = false;
+      openSidePanel();
+    };
+
+    const openTopicUpdate = topic => {
+      currentTopic.value = topic;
+      showSettings.value = false;
+      showTopicOverview.value = false;
+      showTopicCreate.value = false;
+      showTopicUpdate.value = true;
+      openSidePanel();
+    };
+
+    const { openModal } = useAppModal();
+    const topicSnapshot = ref();
+    const topicViewpoint = topic => {
+      openModal();
+      topicSnapshot.value = topic.snapshot.snapshot_data;
+    };
+
+    const openTopicViewer = topic => {
+      let viewpoint = topic.viewpoints[0] ?? {};
+      let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
+      let modelIDs = getViewpointModels(viewpoint);
+
+      if (modelIDs.length === 0) {
+        // If no models are specified on the viewpoint
+        // get the last created model of proper type
+        // with respect to the target window
+        const models = projectModels.value
+          .filter(
+            m =>
+              m.status === MODEL_STATUS.COMPLETED &&
+              WINDOW_MODELS[window].includes(m.type)
+          )
+          .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+        if (models.length > 0) {
+          modelIDs.push(models[0].id);
+        }
+      }
+
+      router.push({
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: currentProject.value.cloud.id,
+          projectID: currentProject.value.id,
+          modelIDs: modelIDs.join(",")
+        },
+        query: {
+          window,
+          topicGuid: topic.guid
+        }
+      });
+    };
 
     return {
-      loading,
-      bcfTopics,
-      bcfTopicPanelShown,
-      project: currentProject,
-      displayedBcfTopics,
+      // References
+      currentTopic,
       detailedExtensions,
-      onFiltersSubmit,
+      displayedTopics,
+      extensions,
+      fullSelectionRef,
+      isListView,
+      loading,
+      models: projectModels,
+      project: currentProject,
       searchText,
-      sortByName,
-      sortByIndex,
-      sortByDate,
-      activeButton,
-      isSortByNameActive,
-      isSortByIndexActive,
-      isSortByDateActive,
-      openBcfSettings,
-      closeBcfSettings,
-      showBcfSettings,
+      selectedTopics,
       showMetrics,
+      showSettings,
+      showTopicCreate,
+      showTopicUpdate,
+      showTopicOverview,
+      sortedBy,
+      sortOrderDate,
+      sortOrderIndex,
+      sortOrderTitle,
+      topics,
+      topicSnapshot,
+      // Methods
+      applyFilters,
       closeMetrics,
+      closeSidePanel,
+      exportBcfTopics,
+      fileUploadInput,
+      importBcfTopics,
+      openSettings,
+      openTopicCreate,
+      openTopicUpdate,
+      openTopicOverview,
+      openTopicViewer,
+      reloadBcfTopics,
+      reloadComments,
+      reloadExtensions,
+      sortByDate,
+      sortByIndex,
+      sortByTitle,
+      topicViewpoint,
+      toggleFullSelection,
       toggleMetrics,
-      toggleDisplayBcfTopics,
-      isDisplayByListActive,
-      openCreateBcfTopic: openSidePanel,
-      uploadFiles,
-      exportBcfTopics
+      toggleTopicSelection,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

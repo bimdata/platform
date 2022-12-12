@@ -1,9 +1,9 @@
 <template>
-  <div data-test="model-viewer" class="view model-viewer">
-    <app-slot-content name="app-header-action">
+  <div data-test-id="view-model-viewer" class="view model-viewer">
+    <AppSlotContent name="app-header-action">
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />
-    </app-slot-content>
+    </AppSlotContent>
 
     <div id="viewer"></div>
 
@@ -23,12 +23,12 @@ import {
   AVAILABLE_PLUGINS,
   DEFAULT_WINDOW,
   PLUGINS_CONFIG
-} from "@/config/viewer.js";
-import { useAuth } from "@/state/auth.js";
-import { useSpaces } from "@/state/spaces.js";
+} from "../../config/viewer.js";
+import { useAuth } from "../../state/auth.js";
+import { useSpaces } from "../../state/spaces.js";
 // Components
-import AppSlotContent from "@/components/specific/app/app-slot/AppSlotContent.vue";
-import GoBackButton from "@/components/specific/app/go-back-button/GoBackButton.vue";
+import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.vue";
+import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 
 export default {
   components: {
@@ -45,7 +45,8 @@ export default {
     const apiUrl = process.env.VUE_APP_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
-    const modelIDs = route.params.modelIDs.split(",").map(id => +id);
+    const modelIDs =
+      (route.params.modelIDs || undefined)?.split(",").map(id => +id) ?? [];
     const initialWindow = route.query.window || DEFAULT_WINDOW;
     const topicGuid = route.query.topicGuid;
 
@@ -53,8 +54,8 @@ export default {
     const pluginsConfig = cloneDeep(PLUGINS_CONFIG);
     merge(pluginsConfig, {
       bcf: {
-        topicGuid,
-      },
+        topicGuid
+      }
     });
     // Extract space specific plugins config
     // and merges it into initial config
@@ -78,9 +79,9 @@ export default {
       .filter(Boolean); // keep only existing plugins
 
     // Extract space specific plugins urls from marketplace
-    const appPlugins = currentSpace.value.marketplaceApps
-      .filter(app => app.viewerPluginsUrls && app.viewerPluginsUrls.length)
-      .map(app => app.viewerPluginsUrls)
+    const appPlugins = currentSpace.value.marketplace_apps
+      .filter(app => app.viewer_plugins_urls?.length > 0)
+      .map(app => app.viewer_plugins_urls)
       .reduce((set, urls) => {
         urls.forEach(url => set.add(url));
         return set;
@@ -101,15 +102,12 @@ export default {
           modelIds: modelIDs
         },
         plugins: pluginsConfig,
-        locale: locale.value,
+        locale: locale.value
       });
 
       await Promise.all(
-        // Webpack annotation is needed to prevent Webpack from using its own
-        // import function instead of standard JS import function.
-        // (see: https://stackoverflow.com/a/56998596/8298197)
         pluginUrls.map(url =>
-          import(/* webpackIgnore: true */ url)
+          import(/* @vite-ignore */ url)
             .then(pluginModule =>
               bimdataViewer.registerPlugin(pluginModule.default)
             )

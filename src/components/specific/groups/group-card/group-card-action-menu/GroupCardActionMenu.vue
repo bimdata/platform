@@ -1,13 +1,13 @@
 <template>
   <div class="group-card-action-menu" v-click-away="resetMenu">
-    <transition name="fade" mode="out-in">
-      <template v-if="loading">
-        <div class="group-card-action-menu__loader">
-          <BIMDataSpinner />
-        </div>
-      </template>
+    <transition name="fade">
+      <div v-if="loading" class="group-card-action-menu__loader">
+        <BIMDataSpinner />
+      </div>
+    </transition>
 
-      <template v-else-if="showUpdateForm">
+    <transition name="fade" mode="out-in">
+      <template v-if="showUpdateForm">
         <GroupCardUpdateForm
           :project="project"
           :group="group"
@@ -38,7 +38,7 @@
           <div class="group-card-action-menu__menu__title">
             <BIMDataTextbox maxWidth="200px" :text="group.name" />
             <BIMDataButton
-              data-test="btn-close-menu"
+              data-test-id="btn-close-menu"
               ghost
               rounded
               icon
@@ -48,7 +48,7 @@
             </BIMDataButton>
           </div>
           <BIMDataButton
-            data-test="btn-open-update"
+            data-test-id="btn-open-update"
             ghost
             squared
             @click="openUpdateForm"
@@ -56,7 +56,7 @@
             {{ $t("GroupCardActionMenu.renameButtonText") }}
           </BIMDataButton>
           <BIMDataButton
-            data-test="btn-open-color"
+            data-test-id="btn-open-color"
             ghost
             squared
             @click="openColorPicker"
@@ -64,7 +64,7 @@
             {{ $t("GroupCardActionMenu.changeColorButtonText") }}
           </BIMDataButton>
           <BIMDataButton
-            data-test="btn-open-delete"
+            data-test-id="btn-open-delete"
             ghost
             squared
             @click="openDeleteGuard"
@@ -79,11 +79,11 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import GroupCardColorPicker from "../group-card-color-picker/GroupCardColorPicker";
-import GroupCardDeleteGuard from "../group-card-delete-guard/GroupCardDeleteGuard";
-import GroupCardUpdateForm from "../group-card-update-form/GroupCardUpdateForm";
+import GroupCardColorPicker from "../group-card-color-picker/GroupCardColorPicker.vue";
+import GroupCardDeleteGuard from "../group-card-delete-guard/GroupCardDeleteGuard.vue";
+import GroupCardUpdateForm from "../group-card-update-form/GroupCardUpdateForm.vue";
 
 export default {
   components: {

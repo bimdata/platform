@@ -46,10 +46,11 @@
 <script>
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useAppNotification } from "@/components/specific/app/app-notification/app-notification.js";
-import { PROJECT_ROLE } from "@/config/projects.js";
-import { useProjects } from "@/state/projects.js";
-import { useSpaces } from "@/state/spaces.js";
+import { useAppNotification } from "../../app/app-notification/app-notification.js";
+import { PROJECT_ROLE } from "../../../../config/projects.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { debounce } from "../../../../utils/async.js";
 
 const roleList = [
   { id: "admin", value: PROJECT_ROLE.ADMIN },
@@ -72,7 +73,7 @@ export default {
   setup(props, { emit }) {
     const { locale, t } = useI18n();
     const { pushNotification } = useAppNotification();
-    const { sendSpaceInvitation } = useSpaces();
+    const { sendSpaceInvitation, updateSpaceUser, spaceUsers } = useSpaces();
     const { sendProjectInvitation } = useProjects();
 
     const roleOptions = ref([]);
@@ -101,7 +102,8 @@ export default {
       hasError.value = false;
     };
 
-    const submit = async () => {
+    const submit = debounce(async () => {
+      let currentUser;
       if (email.value) {
         if (props.project) {
           await sendProjectInvitation(props.project, {
@@ -109,14 +111,28 @@ export default {
             role: role.value.value
           });
         } else if (props.space) {
-          await sendSpaceInvitation(props.space, {
-            email: email.value
-          });
+          currentUser = spaceUsers.value.find(
+            user => user.email === email.value
+          );
+          if (currentUser) {
+            await updateSpaceUser(props.space, {
+              ...currentUser,
+              cloud_role: 100
+            });
+          } else {
+            await sendSpaceInvitation(props.space, {
+              email: email.value
+            });
+          }
         }
         pushNotification({
           type: "success",
           title: t("Success"),
-          message: t("InvitationForm.successNotifText")
+          message: t(
+            currentUser
+              ? "InvitationForm.successUsertoAdmin"
+              : "InvitationForm.successNotifText"
+          )
         });
         reset();
         emit("success");
@@ -124,7 +140,7 @@ export default {
         emailInput.value.focus();
         hasError.value = true;
       }
-    };
+    }, 500);
 
     const close = () => {
       reset();

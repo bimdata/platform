@@ -1,6 +1,6 @@
 import async from "async";
-import VisaService from "@/services/VisaService.js";
-import FileService from "@/services/FileService.js";
+import FileService from "../services/FileService.js";
+import VisaService from "../services/VisaService.js";
 
 const createVisa = async (project, document, visa) => {
   return VisaService.createVisa(project, document, visa);
@@ -17,7 +17,7 @@ const deleteValidation = async (project, document, visa, validationId) => {
 const fetchVisa = async (project, visa) => {
   const [visaInfo, document] = await Promise.all([
     VisaService.fetchVisa(project, visa),
-    FileService.getDocument(project, { id: visa.documentId })
+    FileService.getDocument(project, { id: visa.document_id })
   ]);
 
   return {
@@ -55,11 +55,11 @@ const fetchCreatedVisas = async project => {
 
   const visasWithDoc = await async.mapLimit(visas, 20, async visa => ({
     ...visa,
-    document: await FileService.getDocument(project, { id: visa.documentId })
+    document: await FileService.getDocument(project, { id: visa.document_id })
   }));
 
   return visasWithDoc.sort((a, b) =>
-    a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+    a.created_at.getTime() < b.created_at.getTime() ? 1 : -1
   );
 };
 
@@ -68,11 +68,11 @@ const fetchToValidateVisas = async project => {
 
   const visasWithDoc = await async.mapLimit(visas, 20, async visa => ({
     ...visa,
-    document: await FileService.getDocument(project, { id: visa.documentId })
+    document: await FileService.getDocument(project, { id: visa.document_id })
   }));
 
   return visasWithDoc.sort((a, b) =>
-    a.createdAt.getTime() < b.createdAt.getTime() ? 1 : -1
+    a.created_at.getTime() < b.created_at.getTime() ? 1 : -1
   );
 };
 

@@ -5,6 +5,7 @@ async function download({ name, url }) {
   link.style.display = "none";
   link.download = name;
   link.href = url;
+  link.target = "_blank";
   document.body.append(link);
   link.click();
   await delay(100);
@@ -18,4 +19,18 @@ async function downloadAll(downloads) {
   }
 }
 
-export { download, downloadAll };
+async function downloadBlobAs(name, blob) {
+  const { URL } = window;
+  const link = document.createElement("a");
+  link.rel = "noopener";
+  link.download = name;
+  // Create object url from blob
+  link.href = URL.createObjectURL(blob);
+
+  // Trigger "Save As" dialog
+  setTimeout(() => link.click(), 0);
+  // Revoke object url after 40 seconds
+  setTimeout(() => URL.revokeObjectURL(link.href), 4e4);
+}
+
+export { download, downloadAll, downloadBlobAs };

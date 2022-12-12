@@ -1,7 +1,7 @@
 <template>
   <div class="files-action-bar">
     <BIMDataButton
-      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
+      :disabled="!project.isAdmin && files.some(f => f.user_permission < 100)"
       width="120px"
       color="high"
       ghost
@@ -12,7 +12,7 @@
       <span>{{ $t("FilesActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
-      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
+      :disabled="!project.isAdmin && files.some(f => f.user_permission < 100)"
       width="120px"
       color="secondary"
       ghost
@@ -23,7 +23,7 @@
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
-      :disabled="!project.isAdmin && files.some(f => f.userPermission < 100)"
+      :disabled="!project.isAdmin && files.some(f => f.user_permission < 100)"
       width="120px"
       ghost
       squared
@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import FolderSelector from "@/components/specific/files/folder-selector/FolderSelector";
+import FolderSelector from "../../folder-selector/FolderSelector.vue";
 
 export default {
   components: {

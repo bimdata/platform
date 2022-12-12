@@ -6,8 +6,8 @@
 
 <script>
 import { computed } from "vue";
-import { PROJECT_ROLE } from "@/config/projects.js";
-import { SPACE_ROLE } from "@/config/spaces.js";
+import { PROJECT_ROLE } from "../../../../config/projects.js";
+import { SPACE_ROLE } from "../../../../config/spaces.js";
 
 export default {
   props: {

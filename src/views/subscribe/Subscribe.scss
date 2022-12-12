@@ -2,6 +2,7 @@
   &__title {
     height: 32px;
     margin: 0;
+    white-space: nowrap;
   }
 
   &__body {
@@ -19,6 +20,16 @@
     &__content {
       display: flex;
       gap: calc(var(--spacing-unit) * 3);
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .subscribe {
+    &__body {
+      &__content {
+        flex-direction: column;
+      }
     }
   }
 }

@@ -28,8 +28,8 @@
 
 <script>
 import { ref, watch } from "vue";
-import { FILE_PERMISSION } from "@/config/files.js";
-import { useFiles } from "@/state/files.js";
+import { FILE_PERMISSION } from "../../../../../config/files.js";
+import { useFiles } from "../../../../../state/files.js";
 
 const permissionList = [
   { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
@@ -54,7 +54,7 @@ export default {
 
     const folderPermission = ref();
     watch(
-      () => props.folder.defaultPermission,
+      () => props.folder.default_permission,
       permValue => {
         folderPermission.value = permissionList.find(
           perm => perm.value === permValue
@@ -66,7 +66,7 @@ export default {
     const update = async perm => {
       folderPermission.value = perm;
       const [response] = await updateFiles(props.project, [
-        { ...props.folder, defaultPermission: perm.value }
+        { ...props.folder, default_permission: perm.value }
       ]);
       emit("folder-permission-updated", {
         folder: response,

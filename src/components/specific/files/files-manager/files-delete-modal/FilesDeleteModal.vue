@@ -10,7 +10,11 @@
     </template>
     <template #body>
       <div class="files-delete-modal__message">
-        <div>{{ $t("FilesDeleteModal.message") }}</div>
+        <div>
+          {{
+            $t(`FilesDeleteModal.${hasVersions ? "messageVersion" : "message"}`)
+          }}
+        </div>
         <ul class="files-delete-modal__message__list">
           <li
             class="files-delete-modal__message__list__item"
@@ -26,7 +30,14 @@
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
         {{ $t("FilesDeleteModal.cancelButtonText") }}
       </BIMDataButton>
-      <BIMDataButton color="high" fill radius width="120px" @click="submit">
+      <BIMDataButton
+        data-test-id="btn-confirm-delete"
+        color="high"
+        fill
+        radius
+        width="120px"
+        @click="submit"
+      >
         {{ $t("FilesDeleteModal.deleteButtonText") }}
       </BIMDataButton>
     </template>
@@ -34,9 +45,10 @@
 </template>
 
 <script>
-import { useFiles } from "@/state/files.js";
+import { computed } from "vue";
+import { useFiles } from "../../../../../state/files.js";
 // Components
-import GenericModal from "@/components/generic/generic-modal/GenericModal.vue";
+import GenericModal from "../../../../generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {
@@ -56,6 +68,10 @@ export default {
   setup(props, { emit }) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
 
+    const hasVersions = computed(() =>
+      props.files.some(file => file.history?.length > 1)
+    );
+
     const submit = () => {
       deleteFiles(props.project, props.files);
       softUpdateFileStructure("delete", props.files);
@@ -63,7 +79,8 @@ export default {
     };
 
     return {
-      submit
+      submit,
+      hasVersions
     };
   }
 };

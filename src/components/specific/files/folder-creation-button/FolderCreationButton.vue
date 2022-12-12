@@ -4,14 +4,16 @@
       class="folder-creation-button__btn"
       :width="width"
       :height="height"
-      color="primary"
+      :color="color"
       fill
       radius
       :disabled="disabled"
       @click="toggle"
     >
-      <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("FolderCreationButton.buttonText") }}</span>
+      <slot>
+        <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
+        {{ $t("FolderCreationButton.buttonText") }}
+      </slot>
     </BIMDataButton>
 
     <transition name="fade">
@@ -28,9 +30,9 @@
 </template>
 
 <script>
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../composables/toggle.js";
 // Components
-import FolderCreationForm from "@/components/specific/files/folder-creation-form/FolderCreationForm";
+import FolderCreationForm from "../folder-creation-form/FolderCreationForm.vue";
 
 export default {
   components: {
@@ -44,6 +46,10 @@ export default {
     height: {
       type: String,
       default: "32px"
+    },
+    color: {
+      type: String,
+      default: "primary"
     },
     project: {
       type: Object,

@@ -3,6 +3,10 @@
   flex-wrap: wrap;
   gap: calc(var(--spacing-unit) * 2);
 
+  &__tooltip-upload {
+    font-size: calc(var(--font-size) / 1.2)
+  }
+
   &__block {
     &--upload {
       width: 100%;

@@ -20,7 +20,7 @@
         </div>
         <div class="organization-space-card__info__data">
           <span class="organization-space-card__info__data--date">
-            {{ $d(space.created_at || space.createdAt, "short") }}
+            {{ $d(space.created_at, "short") }}
           </span>
         </div>
       </div>
@@ -30,11 +30,11 @@
 
 <script>
 import { computed } from "vue";
-import { useSpaces } from "@/state/spaces.js";
-import routeNames from "@/router/route-names.js";
+import { useSpaces } from "../../../../../../state/spaces.js";
+import routeNames from "../../../../../../router/route-names.js";
 // Components
-import AppLink from "@/components/specific/app/app-link/AppLink.vue";
-import SpaceCardImage from "@/components/specific/spaces/space-card/space-card-image/SpaceCardImage.vue";
+import AppLink from "../../../../app/app-link/AppLink.vue";
+import SpaceCardImage from "../../../../spaces/space-card/space-card-image/SpaceCardImage.vue";
 
 export default {
   components: {

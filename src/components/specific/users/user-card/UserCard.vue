@@ -1,5 +1,5 @@
 <template>
-  <div data-test="user-card" class="user-card" v-click-away="resetCard">
+  <div data-test-id="user-card" class="user-card" v-click-away="resetCard">
     <transition name="fade" mode="out-in">
       <template v-if="loading">
         <div class="user-card__loader">
@@ -56,10 +56,10 @@
 
 <script>
 import { computed, provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle.js";
+import { useToggle } from "../../../../composables/toggle.js";
 // Components
-import UserAvatar from "@/components/specific/users/user-avatar/UserAvatar.vue";
-import UserRoleBadge from "@/components/specific/users/user-role-badge/UserRoleBadge.vue";
+import UserAvatar from "../user-avatar/UserAvatar.vue";
+import UserRoleBadge from "../user-role-badge/UserRoleBadge.vue";
 import UserCardActionMenu from "./user-card-action-menu/UserCardActionMenu.vue";
 import UserCardDeleteGuard from "./user-card-delete-guard/UserCardDeleteGuard.vue";
 import UserCardUpdateForm from "./user-card-update-form/UserCardUpdateForm.vue";
@@ -97,7 +97,7 @@ export default {
       () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
     );
     const role = computed(() =>
-      props.project ? props.user.role : props.user.cloudRole
+      props.project ? props.user.role : props.user.cloud_role
     );
 
     const loading = ref(false);

@@ -6,17 +6,16 @@
           v-if="tab.displayed"
           class="models-manager__tab"
           :class="{ selected: tab.id === currentTab.id }"
+          :style="{ width: isLG ? 'auto' : '' }"
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
-            <img :src="tab.icon" />
+            <BIMDataIcon size="m" :name="tab.icon" />
           </span>
-          <span class="models-manager__tab__text">
+          <span v-if="!isMD" class="models-manager__tab__text">
             {{ tab.label }}
           </span>
-          <span v-if="tab.id === 'dwg' || tab.id === 'dxf'" class="beta-badge">
-            BETA
-          </span>
+          <span v-if="tab.beta" class="beta-badge">BETA</span>
           <span class="models-manager__tab__count" v-if="tab.models.length > 0">
             {{ tab.models.length }}
           </span>
@@ -60,7 +59,9 @@
             :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
+            :type="currentTab.type"
             :models="currentTab.models"
+            @file-uploaded="$emit('file-uploaded')"
           />
         </keep-alive>
       </transition>
@@ -70,42 +71,67 @@
 
 <script>
 import { ref, watch } from "vue";
-import { useToggle } from "@/composables/toggle.js";
-import { MODEL_TYPE } from "@/config/models.js";
-import { segregateByType } from "@/utils/models.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { MODEL_TYPE, MODEL_ICON } from "../../../../config/models.js";
+import { segregateByType } from "../../../../utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
+import PointCloudManager from "./point-cloud-manager/PointCloudManager.vue";
 
 const tabsDef = [
   {
     id: "ifc",
     label: "IFC",
-    icon: "/static/ifc-file.svg",
+    icon: MODEL_ICON.IFC,
+    type: MODEL_TYPE.IFC,
     modelTypes: [MODEL_TYPE.IFC],
     component: "IFCManager"
   },
   {
     id: "dwg",
     label: "DWG",
-    icon: "/static/dwg-file.svg",
+    icon: MODEL_ICON.DWG,
+    type: MODEL_TYPE.DWG,
     modelTypes: [MODEL_TYPE.DWG],
-    component: "DWGManager"
+    component: "DWGManager",
+    beta: true
   },
   {
     id: "dxf",
     label: "DXF",
-    icon: "/static/dxf-file.svg",
+    icon: MODEL_ICON.DXF,
+    type: MODEL_TYPE.DXF,
     modelTypes: [MODEL_TYPE.DXF],
-    component: "DWGManager"
+    component: "DWGManager",
+    beta: true
   },
   {
     id: "pdf",
     label: "PDF",
-    icon: "/static/pdf-file.svg",
+    icon: MODEL_ICON.PDF,
+    type: MODEL_TYPE.PDF,
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
+  },
+  // TODO: uncomment when point-cloud is ready
+  // {
+  //   id: "point-cloud",
+  //   label: "Point Cloud",
+  //   icon: MODEL_ICON.POINT_CLOUD,
+  //   type: MODEL_TYPE.POINT_CLOUD,
+  //   modelTypes: [MODEL_TYPE.POINT_CLOUD],
+  //   component: "PointCloudManager"
+  // }
+  {
+    id: "photos",
+    label: "Photos",
+    icon: MODEL_ICON.PHOTOS,
+    type: MODEL_TYPE.PHOTOS,
+    modelTypes: [MODEL_TYPE.JPEG, MODEL_TYPE.PNG],
+    component: "DWGManager"
   }
 ];
 
@@ -113,7 +139,8 @@ export default {
   components: {
     DWGManager,
     IFCManager,
-    PDFManager
+    PDFManager,
+    PointCloudManager
   },
   props: {
     project: {
@@ -125,6 +152,7 @@ export default {
       required: true
     }
   },
+  emits: ["file-uploaded"],
   setup(props) {
     const {
       isOpen: showMenu,
@@ -163,7 +191,9 @@ export default {
       // Methods
       closeMenu,
       selectTab,
-      toggleMenu
+      toggleMenu,
+      // Responsive breakpoints
+      ...useStandardBreakpoints()
     };
   }
 };

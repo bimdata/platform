@@ -1,0 +1,124 @@
+.invitations {
+  display: flex;
+  height: 100%;
+  
+  &__back-btn {
+    flex: 1;
+  }
+
+  &__content {
+    flex: 5;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    max-width: 800px;
+    min-width: 50%;
+
+    &__title {
+      padding-top: calc(var(--spacing-unit) / 1.5);
+      padding-left: calc(var(--spacing-unit) / 2);
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: calc(var(--spacing-unit) / 2);
+
+      &__counter {
+        display: flex;
+        color: var(--color-granite-light);
+      }
+    }
+
+    &__list {
+      display: flex;
+      padding: calc(var(--spacing-unit) / 2);
+      overflow: auto;
+      flex-direction: column;
+      gap: var(--spacing-unit);
+
+      &__invit {
+        display: flex;
+        align-items: center;
+        padding: 0 calc(var(--spacing-unit) / 0.9);
+        border-left: 2px solid var(--color-secondary);
+        box-shadow: var(--box-shadow);
+        min-width: 80%;
+
+        &__icon-bcg {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: var(--color-primary);
+        }
+
+        &__text {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 80px;
+          width: 60%;
+          margin-left: var(--spacing-unit);
+
+          span {
+            padding: 0;
+          }
+
+          &__invited-by {
+            font-size: 0.9rem;
+            color: var(--color-granite-light);
+
+            &__highlight {
+              font-weight: 900;
+              color: var(--color-primary);
+            }
+          }
+
+          &__invitation-status {
+            &--D, &--A, &--P {
+              font-size: 0.8rem;
+              font-style: italic;
+            } 
+
+            &--D {
+              color: var(--color-high);
+            }
+
+            &--A {
+              color: var(--color-success);
+            }
+
+            &--P {
+              color: var(--color-granite-light);
+            }
+          }
+        }
+
+        &__button {
+          margin-left: auto;
+
+          &__pending {
+            display: flex;
+            gap: 15px;
+
+            &--deny {
+              box-shadow: var(--box-shadow);
+            }
+
+            &--accept {
+              box-shadow: var(--box-shadow);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__empty-div {
+    flex: 1;
+  }
+}

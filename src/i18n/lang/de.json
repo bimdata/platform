@@ -1,1048 +1,968 @@
 {
-    "GroupBoard": {
-        "searchInputPlaceholder": "Mitglied suchen"
-    },
-    "OidcCallbackError": {
-        "message": "Bei der Authentifizierung ist ein Fehler aufgetreten...",
-        "tryAgainButtonText": "Nochmals versuchen"
-    },
-    "ProjectBoard": {
-        "tabs": {
-            "overview": "Projekt",
-            "files": "EDM",
-            "bcf": "BCF"
-        }
-    },
-    "ProjectGroups": {
-        "searchInputPlaceholder": "Gruppe suchen"
-    },
-    "SpaceBoard": {
-        "searchInputPlaceholder": "Projekt suchen"
-    },
-    "UserProjects": {
-        "searchInputPlaceholder": "Projekt suchen"
-    },
-    "UserSpaces": {
-        "searchInputPlaceholder": "Bereich suchen",
-        "createButtonText": "Bereich erstellen",
-        "organizationsButtonText": "Organisationen"
-    },
-    "ProjectFiles": {
-        "groupsButtonText": "Gruppenverwaltung"
-    },
-    "ProjectOverview": {
-        "openFileUploadButtonText": "Modell hinzufügen",
-        "closeFileUploadButtonText": "Schließen",
-        "forbiddenUploadNotification": {
-            "title": "Fehler",
-            "message": "Wählen Sie eine Modell Datei: {extensions}"
-        }
-    },
-    "BreadcrumbSelector": {
-        "inputPlaceholder": "Suchen"
-    },
-    "GenericTable": {
-        "pagination": "{start} - {end} auf {total}"
-    },
-    "GoBackButton": {
-        "text": "Zurück"
-    },
-    "LanguageSelector": {
-        "title": "Sprachenauswahl"
-    },
-    "AppHeaderMenu": {
-        "entrySettings": "Kontoeinstellungen",
-        "entryConnect": "BIMData Connect",
-        "entryDocumentation": "Dokumentation",
-        "entryMarketplace": "Marketplace",
-        "entryOldPlatform": "Plattform V1",
-        "entryLanguage": "Sprachenauswahl",
-        "logoutButtonText": "Ausloggen",
-        "subscriptionPlatform": "Plattform-Abonnement"
-    },
-    "BreadcrumbGroupSelector": {
-        "text": "Gruppen"
-    },
-    "BreadcrumbProjectSelector": {
-        "placeholder": "< Kein Projekt >"
-    },
-    "DashboardInfoTile": {
-        "title": "Sicherheit"
-    },
-    "DashboardProjectList": {
-        "title": "Neueste Projekte"
-    },
-    "DashboardSpaceList": {
-        "title": "Neueste Bereiche"
-    },
-    "DashboardWelcomeTile": {
-        "title": "Dashboard",
-        "message": "Guten Tag {name}, schön, Sie wiederzusehen!"
-    },
-    "FileActionsCell": {
-        "openViewerButtonText": "Sehen",
-        "addTagsButtonText": "Tags hinzufügen",
-        "validationRequestButtonText": "Bestätigungsanfrage",
-        "renameButtonText": "Umbenennen",
-        "downloadButtonText": "Herunterladen",
-        "addVersionButtonText": "Version hinzufügen",
-        "manageAccessButtonText": "Zugang verwalten",
-        "deleteButtonText": "Löschen",
-        "VisaButtonText": "Bestätigungsantrag",
-        "createModelButtonText": "Als Vorlage festlegen"
-    },
-    "FileNameCell": {
-        "inputErrorMessage": "Ungültiger Dateiname",
-        "submitButtonText": "Bestätigen"
-    },
-    "FilesActionBar": {
-        "deleteButtonText": "Löschen",
-        "moveButtonText": "Verschieben nach",
-        "downloadButtonText": "Herunterladen"
-    },
-    "FilesDeleteModal": {
-        "title": "Dateien löschen",
-        "message": "Sie sind dabei, folgende Dateien/Ordner endgültig zu löschen:",
-        "cancelButtonText": "Abbrechen",
-        "deleteButtonText": "Löschen"
-    },
-    "FilesManager": {
-        "title": "Projektdokumente",
-        "searchInputPlaceholder": "Suchen",
-        "createModelNotification": "Vorlage erfolgreich erstellt",
-        "uploadDisableMessage": {
-            "permission": "Sie verfügen nicht über die erforderlichen Rechte",
-            "size": "Sie verfügen nicht mehr über genügend Speicherplatz."
-        }
-    },
-    "FilesManagerOnboarding": {
-        "text": "Erste Datei hochladen",
-        "uploadFileButtonText": "Datei hochladen",
-        "createFolderButtonText": "Ordner erstellen"
-    },
-    "FilesTable": {
-        "emptyTablePlaceholder": "Leerer Ordner",
-        "folder": "Ordner",
-        "headers": {
-            "name": "Name",
-            "type": "Typ",
-            "creator": "Erstellt von",
-            "tags": "Tags",
-            "lastupdate": "Geändert am",
-            "size": "Größe"
-        }
-    },
-    "FileUploadButton": {
-        "addFileButtonText": "Datei laden"
-    },
-    "FileUploadCard": {
-        "cancelMessage": "Abgebrochen",
-        "errorMessage": "Hochladen nicht erfolgreich"
-    },
-    "FileUploader": {
-        "uploadAreaText": "Dateien hier herklicken/herziehen",
-        "separatorText": "oder",
-        "uploadButtonText": "Modell Datei wählen"
-    },
-    "FolderAccessManager": {
-        "title": "Zugang verwalten",
-        "rightsHeader": "Rechte",
-        "membersHeader": "Mitglieder",
-        "searchInputPlaceholder": "Eine Gruppe suchen",
-        "groupHeader": "Gruppe"
-    },
-    "FolderCreationButton": {
-        "buttonText": "Neuer Ordner"
-    },
-    "FolderCreationForm": {
-        "creationFormTitle": "Ordner erstellen",
-        "nameInputPlaceholder": "Ordnername",
-        "nameInputErrorMessage": "Ungültiger Ordnername",
-        "cancelButtonText": "Abbrechen",
-        "submitButtonText": "Bestätigen"
-    },
-    "FolderSelector": {
-        "selectedFolder": "Ausgewählter Ordner",
-        "submitButtonText": {
-            "moveTo": "Bestätigen",
-            "moveHere": "Hierher verschieben"
-        },
-        "emptyFolderPlaceholder": "Leerer Ordner"
-    },
-    "GroupCardActionMenu": {
-        "renameButtonText": "Umbenennen",
-        "changeColorButtonText": "Farbe ändern",
-        "deleteButtonText": "Löschen"
-    },
-    "GroupCardDeleteGuard": {
-        "title": "Gruppe löschen",
-        "message": "Wollen Sie wirklich (endgültig) die Gruppe {name} löschen?",
-        "deleteButtonText": "Löschen"
-    },
-    "GroupCardUpdateForm": {
-        "title": "Gruppe umbenennen",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Ungültiger Gruppenname",
-        "submitButtonText": "Umbenennen"
-    },
-    "GroupCreationCard": {
-        "text": "Gruppe erstellen",
-        "title": "Neue Gruppe",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Ungültiger Gruppenname",
-        "submitButtonText": "Erstellen"
-    },
-    "GroupMemberSelectionCard": {
-        "text": "Nutzer hinzufügen"
-    },
-    "InvitationCard": {
-        "pendingMessage": "Eingeladen - keine Antwort.",
-        "resendLinkText": "Einladung nochmal versenden?",
-        "resendSuccessNotifText": "Einladung zurückgeschickt",
-        "cancelSuccessNotifText": "Einladung annulliert"
-    },
-    "InvitationForm": {
-        "emailInputPlaceholder": "Nutzer-Email",
-        "emailInputErrorMessage": "Ungültige Email-Adresse",
-        "roleInputLabel": "Rolle",
-        "roles": {
-            "admin": "Administrator",
-            "user": "Nutzer",
-            "guest": "Eingeladen"
-        },
-        "cancelButtonText": "Abbrechen",
-        "submitButtonText": "Einladen",
-        "successNotifText": "Einladung versendet"
-    },
-    "ModelActionsCell": {
-        "addTagsButtonText": "Tags hinzufügen",
-        "renameButtonText": "Umbenennen",
-        "archiveButtonText": "Archivieren",
-        "deleteButtonText": "Löschen",
-        "unarchiveButtonText": "Dearchivieren"
-    },
-    "ModelLocation": {
-        "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
-        "addLocationButtonText": "Nachfragen"
-    },
-    "ModelLocationForm": {
-        "addressInputPlaceholder": "Adresse eingeben",
-        "checkButtonText": "Verifizieren",
-        "submitButtonText": "Bestätigen",
-        "cancelButtonText": "Ändern"
-    },
-    "ModelNameCell": {
-        "inputErrorMessage": "Ungültiger Modellname",
-        "submitButtonText": "Bestätigen"
-    },
-    "ModelsActionBar": {
-        "deleteButtonText": "Löschen",
-        "archiveButtonText": "Archivieren",
-        "unarchiveButtonText": "Dearchiveren",
-        "downloadButtonText": "Herunterladen",
-        "mergeButtonText": "Zusammenschließen"
-    },
-    "ModelsCard": {
-        "openButtonText": "Öffnen"
-    },
-    "ModelsCardModelPreview": {
-        "emptyPreviewPlaceholder": "Keine Vorschau"
-    },
-    "ModelsDeleteModal": {
-        "title": "Achtung!",
-        "message": "Diese Handlung kann nicht rückgängig gemacht werden. Es werden gelöscht:",
-        "cancelButtonText": "Annullieren",
-        "deleteButtonText": "Löschen"
-    },
-    "ModelsManager": {
-        "title": "Modelle des Projekts",
-        "tabs": {
-            "ifc": "IFC",
-            "split": "Aufteilen / exportieren",
-            "merge": "Zusammenführen",
-            "archive": "Archiv",
-            "dwg": "DWG",
-            "metaBuildings": "Meta Buildings",
-            "upload": "Hochladen"
-        }
-    },
-    "ModelsMergeModal": {
-        "title": "Auswahl zusammenführen",
-        "inputPlaceholder": "Name Ihrer IFC-Zusammenführung",
-        "inputErrorMessage": "Sie müssen einen Namen für die Datei angeben",
-        "submitButtonText": "Exportieren"
-    },
-    "ModelsOverview": {
-        "title": "Projektübersicht"
-    },
-    "ModelsOverviewOnboarding": {
-        "text": "Ihr erstes Modell hochladen",
-        "uploadButtonText": "Hochladen"
-    },
-    "ModelsTable": {
-        "emptyTablePlaceholder": "Kein Modell",
-        "headers": {
-            "id": "ID",
-            "name": "Name",
-            "version": "Version",
-            "creator": "Erstellt von",
-            "lastupdate": "Geändert am",
-            "status": "Status"
-        }
-    },
-    "ProjectCardActionMenu": {
-        "renameButtonText": "Umbenennen",
-        "deleteButtonText": "Löschen",
-        "leaveButtonText": "Verlassen"
-    },
-    "ProjectCardDeleteGuard": {
-        "title": "Das Projekt löschen",
-        "message": "Sind Sie sicher, dass Sie dieses Projekt (endgültig) löschen möchten?",
-        "deleteButtonText": "Löschen"
-    },
-    "ProjectCardUpdateForm": {
-        "title": "Projekt umbenennen",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Dieser Projektname ist ungültig.",
-        "renameButtonText": "Umbenennen"
-    },
-    "ProjectCreationCard": {
-        "title": "Neues Projekt",
-        "text": "Ein neues Projekt erstellen",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Sie müssen einen Namen für das Projekt angeben:",
-        "createButtonText": "Erstellen"
-    },
-    "ProjectUsersManager": {
-        "title": "Nutzer",
-        "searchInputPlaceholder": "Einen Nutzer suchen"
-    },
-    "SpaceCard": {
-        "projects": "PROJEKTE",
-        "free": "Kostenlos"
-    },
-    "SpaceCardActionMenu": {
-        "renameButtonText": "Umbenennen",
-        "removeImageButtonText": "Abbildung löschen",
-        "deleteButtonText": "Diesen Bereich löschen"
-    },
-    "SpaceCardDeleteGuard": {
-        "title": "Den Bereich löschen",
-        "message": "Sind Sie sicher, dass Sie diesen Bereich (endgültig) löschen möchten?",
-        "deleteButtonText": "Löschen"
-    },
-    "SpaceCardImageButton": {
-        "buttonText": "Abbildung ändern"
-    },
-    "SpaceCardUpdateForm": {
-        "title": "Bereich umbenennen",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Dieser Name für einen Bereich ist ungültig.",
-        "submitButtonText": "Umbenennen"
-    },
-    "SpaceCreationCard": {
-        "title": "Neuer Bereich",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Sie müssen für den Bereich einen Namen angeben!",
-        "createButtonText": "Erstellen"
-    },
-    "SpaceUsersManager": {
-        "title": "Verwaltung von Bereichs-Administratoren",
-        "tabs": {
-            "admins": "Administratoren",
-            "users": "Nutzer"
-        },
-        "searchInputPlaceholder": "Einen Nutzer suchen",
-        "addUserButtonText": "Einen Administratoren hinzufügen"
-    },
-    "UserCard": {
-        "self": "Sie"
-    },
-    "UserCardDeleteGuard": {
-        "message": {
-            "space": "{name} dieses Bereichs löschen?",
-            "project": "{name} dieses Projekts löschen?"
-        },
-        "submitButtonText": "Löschen"
-    },
-    "UserCardUpdateForm": {
-        "submitButtonText": "Bestätigen"
-    },
-    "UserRoleBadge": {
-        "admin": "Admin",
-        "user": "User",
-        "guest": "Gast"
-    },
-    "UsersManagerOnboarding": {
-        "text": "Ihren ersten Mitarbeiter einladen",
-        "inviteButtonText": "Einladung"
-    },
-    "PageNotFound": {
-        "title": "Seite nicht gefunden",
-        "text": {
-            "line1": "Woopsie! The page that you are looking for does not exist.",
-            "line2": "Please return home."
-        },
-        "homeButtonText": "Home"
-    },
-    "FolderPermissionSelector": {
-        "label": "Alle",
-        "options": {
-            "accessDenied": "Zugang verweigert",
-            "readOnly": "Schreibgeschützt",
-            "readWrite": "Lesen / schreiben"
-        }
-    },
-    "GroupMembersSelector": {
-        "title": "Verwaltung der Gruppenmitglieder",
-        "searchInputPlaceholder": "Suchen"
-    },
-    "GroupPermissionSelector": {
-        "options": {
-            "accessDenied": "Zugang verweigert",
-            "readOnly": "Schreibgeschützt",
-            "readWrite": "Lesen / schreiben"
-        }
-    },
-    "Error": "Fehler",
-    "Success": "Erfolg",
-    "Errors": {
-        "spacesFetchError": "Unmöglich, die Bereichsliste abzurufen",
-        "spaceCreateError": "Fehler beim Erstellen des Bereichs",
-        "spaceUpdateError": "Fehler bei der Aktualisierung des Bereichs",
-        "spaceDeleteError": "Fehler beim Löschen des Bereichs",
-        "spaceImageUpdateError": "Fehler bei der Änderung der Abbildung des Bereichs",
-        "spaceImageDeleteError": "Fehler beim Löschen der Abbildung des Bereichs",
-        "projectsFetchError": "Unmöglich die Projekteliste abzurufen",
-        "projectCreateError": "Bei der Erstellung des Projekts ist ein Fehler aufgetreten",
-        "projectUpdateError": "Aktualisierung des Projekts fehlgeschlagen",
-        "projectDeleteError": "Fehler beim Löschen des Projekts",
-        "invitationsFetchError": "Unmöglich die Liste der Einladungen abzurufen",
-        "invitationSendError": "Die Einladung konnte nicht versandt werden",
-        "invitationResendError": "Einladung konnte nicht zurückgesendet werden",
-        "invitationCancelError": "Die Einladung konnte nicht annulliert werden",
-        "usersFetchError": "Unmöglich, die Nutzerliste abzurufen",
-        "userUpdateError": "Fehler bei der Aktualisierung des Nutzers",
-        "userDeleteError": "Fehler beim Löschen des Nutzers",
-        "modelsFetchError": "Unmöglich, die Modellliste abzurufen",
-        "modelUploadError": "Das Modell/die Modelle konnten nicht hochgeladen werden",
-        "modelUpdateError": "Fehler bei der Aktualisierung des Modells",
-        "modelDownloadError": "Beim Herunterladen ist ein Fehler aufgetreten",
-        "modelMergeError": "Fehler beim Zusammenführen der Modelle",
-        "modelDeleteError": "Fehler beim Löschen des Modells",
-        "fileStructureFetchError": "Unmöglich, die Dateistruktur abzurufen",
-        "fileUpdateError": "Bei der Aktualisierung der Ordner/Dateien ist ein Fehler aufgetreten",
-        "fileDownloadError": "Beim Herunterladen der Ordner/Dateien ist ein Fehler aufgetreten",
-        "fileDeleteError": "Beim Löschen der Ordner/Dateien ist ein Fehler aufgetreten",
-        "folderCreateError": "Beim Erstellen des Ordners ist ein Fehler aufgetreten",
-        "documentUploadError": "Fehler beim Hochladen der Datei",
-        "groupsFetchError": "Unmöglich, die Gruppenliste abzurufen",
-        "groupCreateError": "Fehler beim Erstellen der Gruppe",
-        "groupUpdateError": "Fehler bei der Aktualisierung der Gruppe",
-        "groupDeleteError": "Fehler beim Löschen der Gruppe",
-        "organizationsFetchError": "Fail to fetch organizations",
-        "organizationCreateError": "Fehler beim Erstellen des organisation",
-        "organizationUpdateError": "Fehler bei der Aktualisierung des organisationen",
-        "organizationDeleteError": "Fehler beim Löschen des organisationen",
-        "userLeaveError": "Sie können dieses Projekt nicht verlassen, da Sie der letzte Administrator sind",
-        "subscriptionsFetchError": "Die Liste der Abonnements kann nicht abgerufen werden",
-        "platformSubscribeError": "Fehler beim Erstellen des Links für das Abonnement",
-        "datapackSubscribeError": "Fehler beim Abonnieren eines neuen Datapacks",
-        "datapackUpdateError": "Fehler bei der Aktualisierung des Datapacks",
-        "projectFetchFileError": "Dieses Dokument kann nicht abgerufen werden",
-        "visaCreateError": "Fehler bei der Erstellung des Visums",
-        "visaCreateValidationError": "Fehler beim Hinzufügen einer/s Bestätigenden",
-        "visaFetchError": "Dieses Visum kann nicht aufgerufen werden",
-        "visaAcceptError": "Fehler beim Senden Ihrer Antwort",
-        "visaDenyError": "Fehler beim Senden Ihrer Antwort",
-        "visaCloseError": "Fehler beim Schließen des Visums",
-        "visaResumeError": "Fehler beim Wiederöffnen des Visums",
-        "visaFetchCreatedError": "Visa können nicht aufgerufen werden",
-        "visaFetchValidatorError": "Visa können nicht aufgerufen werden",
-        "visaDeleteValidationError": "Dieser Nutzer kann nicht gelöscht werden",
-        "visaDeleteError": "Dieses Visum kann nicht gelöscht werden",
-        "visaUpdateError": "Dieses Visum kann nicht aktualisiert werden",
-        "visaRefreshError": "Ihre Antwort kann nicht aktualisiert werden",
-        "visaFetchAllCommentsError": "Die Kommentare können nicht aufgerufen werden",
-        "visaCreateCommentsError": "Dieser Kommentar kann nicht veröffentlicht werden",
-        "visaUpdateCommentError": "Dieser Kommentar kann nicht bearbeitet werden",
-        "visaDeleteCommentError": "Dieser Kommentar kann nicht gelöscht werden",
-        "modelCreateError": "Fehler beim Erstellen der Vorlage",
-        "fileFetchError": ""
-    },
-    "ProjectStatusBadge": {
-        "new": "NEU",
-        "active": "AKTIV",
-        "inactive": "NICHT AKTIV",
-        "paused": "PAUSE"
-    },
-    "Dashboard": {
-        "spacesTileTitle": "Bereiche",
-        "spacesTileBottomText": "Meine Bereiche",
-        "projectsTileTitle": "Projekte",
-        "projectsTileBottomText": "Meine Projekte",
-        "subscriptionsTileTitle": "Abonnements",
-        "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
-        "subscriptionsTileBottomText": "Meine Abonnements verwalten"
-    },
-    "Payment": {
-        "titlePlatform": "Zur professionellen Plattform wechseln",
-        "titleDatapack": "Zufügen eines DataPacks"
-    },
-    "Subscribe": {
-        "title": "Wählen Sie Ihr Abonnement",
-        "text": "Sie dürfen nur einen kostenlosen Raum innerhalb Ihrer Organisation haben. Wenn Sie über so einen Raum bereits verfügen, müssen Sie auf das professionelle Abonnement hochstufen, um weitere Funktionen zu erhalten."
-    },
-    "SubscriptionDatapack": {
-        "title": "Meine DataPacks verwalten",
-        "successNotification": "Sie haben jetzt {size} im Raum {spaceName}"
-    },
-    "SubscriptionFree": {
-        "title": "Kostenlos einen Raum erstellen",
-        "text": "Sie sind dabei, Ihren kostenlosen Raum zu erstellen. Ihr kostenloser Raum umfasst: {size}, 6 Benutzer.",
-        "spaceCreatedNotification": "Sie haben gerade den Raum {spaceName} in Organisation {organizationName} erstellt"
-    },
-    "SubscriptionPro": {
-        "subscribeTitle": "Das professionelle Abonnement beanspruchen",
-        "upgradeTitle": "Zur professionellen Plattform wechseln",
-        "text": "Sie sind im Begriff, Ihr professionelles Abonnement zu starten. Es beinhaltet: {size} Speicherplatz, Erstellung unbegrenzter Projekte mit einer unbegrenzten Anzahl Nutzern.",
-        "spaceCreatedNotification": "Sie haben soeben den Raum {spaceName} in Organisation {organizationName} erstellt",
-        "spaceUpgradedNotification": "Herzlichen Glückwunsch! Sie haben soeben ein professionelles Abonnement für den Bereich {spaceName} abgeschlossen."
-    },
-    "UserSubscriptions": {
-        "title": "Abonnement der Plattform",
-        "text": "Durchsuchen Sie Ihre Organisationen, um Abonnements und Rechnungen für Ihre Plattformbereiche zu verwalten.",
-        "list": "Liste meiner Organisationen:"
-    },
-    "BillingActionsCell": {
-        "updateButtonText": "Die Zahlungskarte ändern",
-        "datapackButtonText": "Meine Datapacks verwalten",
-        "cancelButtonText": "Dieses Abonnement kündigen"
-    },
-    "BillingsTable": {
-        "title": "Abonnements",
-        "nextPayment": "am",
-        "professionalPlan": "Professionnelles",
-        "withDatapack": "+ Datapack",
-        "cancelSubscriptionButton": "Abonnement kündigen",
-        "updateCreditCardButton": "Kreditkarte aktualisieren",
-        "emptyTableText": "Hm.. Es scheint, als hätten Sie noch nie ein Abonnement abgeschlossen. Haben Sie unsere Pro-Plattform schon einmal ausprobiert?",
-        "subscribeButton": "Zu unserer Pro-Plattform",
-        "headers": {
-            "space": "Raum",
-            "nextpayment": "Nächste Zahlung",
-            "subscriptionplan": "Abo-Formel",
-            "status": "Status",
-            "amount": "Summe"
-        },
-        "status": {
-            "active": "Aktiv",
-            "deleted": "Gelöscht",
-            "paused": "Pausiert",
-            "custom": "Verwaltet durch BIMData.io"
-        }
-    },
-    "DatapackForm": {
-        "baseNote": "Speicher",
-        "baseText": "Im Abonnement enthalten",
-        "datapackNote": "Zusätzlicher Speicher",
-        "priceUnit": "/ GB / Monat mit MwSt.",
-        "totalUnit": "/ Monat mit MwSt.",
-        "actualStorage": "Aktueller Speicherplatz",
-        "newStorage": "Neuer Speicherplatz",
-        "submitButtonText": "Bestätigen",
-        "cancelButtonText": "Kündigen"
-    },
-    "DatapackInfo": {
-        "title": "Aktuelles Abonnement",
-        "datapacks": "Zusammenfassung des aktiven DataPacks",
-        "storage": "Zusammenfassung der aktiven GB",
-        "including": "wovon {quantity} GB DataPack"
-    },
-    "GroupMemberInvitation": {
-        "name": "Einladung in Bearbeitung"
-    },
-    "InvoiceActionsCell": {
-        "downloadButton": "Die Rechnung herunterladen"
-    },
-    "InvoicesTable": {
-        "title": "Rechnungen",
-        "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, werden die Rechnungen hier angezeigt.",
-        "subscribeButton": "Zu unserer Pro-Plattform",
-        "headers": {
-            "amount": "Summe",
-            "status": "Status",
-            "space": "Raum",
-            "date": "Datum"
-        }
-    },
-    "InvoiceStatusCell": {
-        "completed": "Bezahlt",
-        "pending": "Ausstehend"
-    },
-    "OrganizationCard": {
-        "spaces": "{number} Bereichs"
-    },
-    "OrganizationDeleteGuard": {
-        "title": "Organisation löschen",
-        "submitButtonText": "Löschen"
-    },
-    "OrganizationForm": {
-        "createTitle": "Organisation erstellen",
-        "updateTitle": "Organisation ändern",
-        "infoSectionTitle": "Grundinformationen",
-        "nameInputPlaceholder": "Name",
-        "nameInputErrorMessage": "Ungültiger Name",
-        "logoInputLabel": "Ein Logo wählen",
-        "logoInputMessage": "Das Logo muss ein Bild im JP(E)G- oder PNG-Format  sein und die Dateigröße darf 1 MB nicht überschreiten.",
-        "submitButtonText": "Bestätigen",
-        "successTitle": "Herzlichen Glückwunsch, Ihre Organisation wurde gerade erstellt",
-        "successButtonText": "OK"
-    },
-    "OrganizationsList": {
-        "explanationText": "Die Organisation ist die Einheit, die die Rechnungsstellung von BIMData.io-Bereichen zentralisiert",
-        "createButtonText": "Organisation erstellen",
-        "searchInputPlaceholder": "Suchen"
-    },
-    "OrganizationsManager": {
-        "title": "Verwaltung von organisationen",
-        "backButtonText": "Zurück"
-    },
-    "OrganizationSpaceCard": {
-        "projects": "{number} Projekte"
-    },
-    "OrganizationSpacesImport": {
-        "spaceListTitle": "Die zu importierenden Räume auswählen",
-        "spaceListPlaceholder": "Kein Raum zu importieren ...",
-        "submitButtonText": "Bestätigen",
-        "successTitle": "Herzlichen Glückwunsch, Ihre Räume wurden gerade verschoben",
-        "successButtonText": "OK"
-    },
-    "OrganizationSpacesList": {
-        "importButtonText": "Einen Raum importieren",
-        "addButtonText": "Einen Raum hinzufügen",
-        "searchInputPlaceholder": "Suchen",
-        "spaceListTitle": "Liste der Räume der Organisationen",
-        "spaceListPlaceholder": "Diesem Rechnungskonto ist kein Bereich zugeordnet."
-    },
-    "ProjectCardLeaveGuard": {
-        "title": "Projekt verlassen",
-        "message": "Sind Sie sicher, dass Sie dieses Projekt verlassen wollen?",
-        "leaveButtonText": "Bestätigen"
-    },
-    "ProPlanCard": {
-        "title": "PROFESSIONELL",
-        "priceUnit": "/ Raum / Monat",
-        "bullet2": "Unbegrenzte Projekte",
-        "bullet3": "Unbegrenzte Nutzer",
-        "buttonText": "Abonnieren",
-        "note": "erweiterbar für {price} / GB / Monat"
-    },
-    "ProPlanForm": {
-        "priceUnit": "/ Monat",
-        "successTitle": "Glückwünsch! Sie haben ein Pro-Abonnement abonniert!",
-        "successMessage": "Ihre Zahlung wurde abgeschlossen. Sie können Ihr professionelles Abonnement jetzt nutzen.",
-        "titleNet": "Zwischensumme",
-        "titleTax": "MwSt 20%",
-        "titleTotal": "Preis",
-        "noteTotal": "mit MwSt."
-    },
-    "ProPlanInfo": {
-        "title": "Ihr Abonnement",
-        "subTitle": "Professionnell",
-        "priceUnit": "/ Monat o. MwSt.",
-        "bulletsHead": "Das Abonnement beinhaltet",
-        "bullet1": "{size} Speicherplatz",
-        "bullet2": "BIMData-Plattform",
-        "bullet3": "3D-Viewer",
-        "bullet4": "2D-Viewer",
-        "bullet5": "Unbegrenzte Projekte",
-        "bullet6": "Unbegrenzte Nutzer",
-        "bullet7": "Unbegrenzte Kommentare (BCF)",
-        "bullet8": "IFC-Fusion/-Division",
-        "bullet9": "IFC-Editor",
-        "bullet10": "Support via E-Mail"
-    },
-    "SpaceSelected": {
-        "selectedOrga": "Ausgewählte Organisation:",
-        "selectedSpace": "Ausgewählter Raum:"
-    },
-    "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Ein DataPack kaufen",
-        "subscribePlatformButton": "Zur Pro-Plattform wechseln",
-        "usage": "{used} verwendet auf {total}"
-    },
-    "SpaceSizePreview": {
-        "title": "Speicherplatz",
-        "actualStorage": "Aktueller Speicherplatz",
-        "newStorage": "Neuer Speicherplatz",
-        "newStorageText": "Wenn Sie das professionelle Abonnement beanspruchen, profitieren Sie von {size} Speicherplatz. Zusätzlichen Speicherplatz können Sie direkt von Ihrem Raum aus erwerben."
-    },
-    "SubscribeCard": {
-        "title": "Ihren neuen Raum erstellen",
-        "text": "Möchten Sie alle Vorteile der Plattform nutzen? Wenn Sie zum professionellen Abonnement wechseln, erhalten Sie {size} für Ihre Projekte sowie eine unbegrenzte Anzahl Nutzer.",
-        "button": "Ein Abonnement beanspruchen"
-    },
-    "FreePlanInfo": {
-        "title": "FREE",
-        "price": "0 €",
-        "bullet2": "1 kostenloser Raum",
-        "bullet3": "6 Nutzer",
-        "buttonText": "Einen kostenlosen Raum erstellen",
-        "note": "für immer"
-    },
-    "FreePlanRedirect": {
-        "title": "Mein kostenloser Bereich",
-        "text": "Sie besitzen bereits einen kostenlosen Bereich.",
-        "buttonText": "Zugang zu meinem kostenlosen Bereich"
-    },
-    "SubscriptionStatusBanner": {
-        "activate": "Dieser kostenlose Bereich hat seine Grenzen erreicht. Wechseln Sie zu einem professionellen Abonnement, um alle Funktionen von BIMData freizuschalten.",
-        "reactivate": "Dieser Bereich ist derzeit nicht mit einem Abonnement verbunden. Um alle Funktionen von BIMData freizuschalten, wechseln Sie zu einem professionellen Abonnement."
-    },
-    "OrganizationSelector": {
-        "title": "Rechnungskonto",
-        "radioLabelSelect": "Ein Rechnungskonto auswählen",
-        "radioLabelCreate": "Ein Rechnungskonto erstellen",
-        "inputPlaceholder": "Name des Rechnungskontos",
-        "submitButtonText": "Bestätigen",
-        "successMessage": "Herzlichen Glückwunsch, Ihr Rechnungskonto wurde soeben erstellt."
-    },
-    "SpaceCreator": {
-        "title": "Einen Raum erstellen",
-        "text": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
-        "inputPlaceholder": "Name meines neuen Raums",
-        "billingAccountLabel": "Rechnungskonto:",
-        "billingAccountButton": "Ändern",
-        "submitButtonText": "Zur Zahlung übergehen"
-    },
-    "Visa": {
-        "button": "Bestätigungen / VISUM",
-        "add": {
-            "title": "Bestätigungsantrag",
-            "validator": "Bestätigend",
-            "toValidate": "Zu bestätigen vor",
-            "errorDate": "ungültiges Datum",
-            "description": "Beschreibung",
-            "cancel": "Abbrechen",
-            "validate": "Bestätigen",
-            "validatorView": {
-                "getBack": "Zurück",
-                "validator": "Bestätigend",
-                "accept": "Akzeptieren"
-            },
-            "errorValidator": "Sie müssen mindestens 1 gültigen Eintrag hinzufügen."
-        },
-        "safeZone": {
-            "add": {
-                "content": "Sind Sie sicher, dass Sie diese Seite verlassen möchten? Möglicherweise gibt es noch unbestätigte Informationen.",
-                "action": "Ja, diese Seite verlassen",
-                "keepView": "Abbrechen, auf dieser Seite bleiben"
-            },
-            "delete": {
-                "content": "Sind Sie sicher, dass Sie dieses Visum löschen wollen?",
-                "action": "Ja, dieses Visum löschen",
-                "keepView": "Abbrechen"
-            },
-            "close": {
-                "content": "Sind Sie sicher, dass Sie dieses Visum abschließen möchten?",
-                "action": "Ja, dieses Visum abschließen",
-                "keepView": "Abbrechen"
-            },
-            "deleteComment": {
-                "content": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?",
-                "action": "Ja, diesen Kommentar löschen",
-                "keepView": "Abbrechen"
-            }
-        },
-        "summary": {
-            "title": {
-                "open": "Antrag läuft",
-                "closed": "Antrag abgeschloßen"
-            },
-            "appliedBy": "Bestätigungsantrag durch",
-            "validate": "Bestätigen",
-            "deny": "Ablehnen",
-            "delete": "Löschen",
-            "close": "Schließen",
-            "comment": "Kommentieren",
-            "term": "Fälligkeit",
-            "validator": "Bestätigende",
-            "deletedUser": "Gelöschter Nutzer",
-            "validatorList": {
-                "accept": "Bestätigt",
-                "deny": "Abgelehnt",
-                "commented": "Kommentiert",
-                "pending": "Ausstehend",
-                "getRidOfValidator": "Den/die Bestätigende/n entfernen",
-                "refresh": "Die Bestätigung neu starten"
-            }
-        },
-        "comments": {
-            "comment": "Kommentieren",
-            "commentary": "Kommentar",
-            "postComment": "Einen Kommentar veröffentlichen",
-            "replyComment": "Auf einen Kommentar antworten",
-            "publish": "Veröffentlichen",
-            "cancel": "Abbrechen",
-            "reply": "Antworten",
-            "actions": {
-                "edit": "Bearbeiten",
-                "delete": "Löschen",
-                "confirmDelete": "Diesen Kommentar löschen?"
-            }
-        },
-        "list": {
-            "title": "Anfrage in Bearbeitung",
-            "toValidateVisas": "Meine Bestätigungen",
-            "createdVisas": "Meine Anfragen",
-            "emptyValidation": "Keine Bestätigungen ausstehend",
-            "emptyDemand": "Keine Anfrage ausstehend"
-        },
-        "selectionValidator": {
-            "warning": "Dieser Nutzer hat keine Zugangsrechte zum Ordner."
-        },
-        "noVisa": "Es wurde noch kein VISA erstellt."
-    },
-    "ProjectBcf": {
-        "importButtonText": "Importieren",
-        "exportButtonText": "Exportieren",
-        "createBcfButtonText": "Ein BCF erstellen",
-        "createBcfTitle": "Ein Problem melden",
-        "showStatisticsTooltip": "Die Statistiken anzeigen",
-        "hideStatisticsTooltip": "Die Statistiken ausblenden",
-        "searchInputPlaceholder": "Nach Indexnummer, Name, Ersteller oder Etikett suchen",
-        "ascendingIndexTooltip": "aufsteigender Index",
-        "descendingIndexTooltip": "absteigender Index",
-        "alphabeticalAscendingOrderTooltip": "alphabetische Reihenfolge",
-        "alphabeticalDescendingOrderTooltip": "umgekehrte alphabetische Reihenfolge",
-        "ascendingDateTooltip": "aufsteigendes Datum",
-        "descendingDateTooltip": "absteigendes Datum",
-        "viewGridTooltip": "Rasteransicht",
-        "viewListTooltip": "Listenansicht"
-    },
-    "BcfComments": {
-        "commentButton": "Ein Kommentar verfassen",
-        "commentLabel": "Ein Kommentar verfassen",
-        "commentText": "Kommentar",
-        "cancelButton": "Abbrechen",
-        "publishButton": "Veröffentlichen",
-        "commentsText": "Kommentare"
-    },
-    "BcfComment": {
-        "deleteCommentText": "Diesen Kommentar löschen?",
-        "deleteButton": "Löschen"
-    },
-    "BcfFilters": {
-        "filtersButton": "Filter",
-        "filtersTitle": "Filter",
-        "priorityLabel": "Priorität",
-        "statusLabel": "Status",
-        "startDatePlaceholder": "Anfangsdatum",
-        "startDateExample": "(Z. B.: 28.04.2022)",
-        "endDatePlaceholder": "Enddatum",
-        "endDateExample": "(Z. B.: 28.05.2022)",
-        "assignedToLabel": "Zugewiesen an",
-        "creatorsLabel": "Erstellt von",
-        "tagsLabel": "Tags",
-        "resetButton": "Zurücksetzen",
-        "searchButton": "Suchen",
-        "noPriority": "Keine Priorität",
-        "undefinedStatus": "Nicht definiert",
-        "undefinedUser": "Nicht definiert",
-        "undefinedCreator": "Nicht definiert"
-    },
-    "BcfSettings": {
-        "goBackButton": "Zurück",
-        "title": "BCF-Parameter",
-        "validateButton": "Die BCF-Parameter anerkennen",
-        "text": "Erstellen, füllen und listen Sie die BCF-Einstellungen auf, die Sie für dieses Projekt haben möchten."
-    },
-    "SettingCard": {
-        "addButton": "ein Element hinzufügen",
-        "cancelButton": "Abbrechen",
-        "validateButton": "Bestätigen",
-        "title": {
-            "Priority": "Prioritäten",
-            "Label": "Tags",
-            "Status": "Status",
-            "Type": "Typen",
-            "Stage": "Phasen"
-        },
-        "input": {
-            "Priority": "Eine neue Priorität hinzufügen",
-            "Label": "Ein neues Etikett hinzufügen",
-            "Status": "Einen neuen Status hinzufügen",
-            "Type": "Einen neuen Typ hinzufügen",
-            "Stage": "Eine neue Phase hinzufügen"
-        },
-        "text": {
-            "Priority": "Liste der Prioritäten",
-            "Label": "Liste von Tags",
-            "Status": "Liste der Status",
-            "Type": "Liste der Typen",
-            "Stage": "Liste der Phasen"
-        }
-    },
-    "Extension": {
-        "deleteExtensionText": "Diesen Parameter löschen",
-        "deleteButton": "Löschen"
-    },
-    "BcfTopicCreationCard": {
-        "text": "Ein neues BCF-Thema erstellen",
-        "createBcfSideTitle": "Ein Problem melden"
-    },
-    "BcfTopicGridItem": {
-        "priority": "Priorität:",
-        "assignedTo": "Zugewiesen an :",
-        "noPriority": "Keine",
-        "notSpecified": "Nicht definiert",
-        "elements": "Elemente",
-        "noElements": "0 Elemente",
-        "see": "Anzeigen"
-    },
-    "BcfTopicsList": {
-        "headers": {
-            "index": "#",
-            "priority": "Priorität",
-            "status": "Status",
-            "title": "Titel",
-            "creator": "Erstellt durch",
-            "date": "Datum",
-            "actions": "Aktionen"
-        }
-    },
-    "BcfActionsCell": {
-        "seeButton": "Anzeigen"
-    },
-    "ModalDeleteTopic": {
-        "deleteText": "Sie löschen jetzt {Name}",
-        "deleteBcfButton": "Dieses BCF löschen",
-        "keepBcfButton": "Dieses BCF beibehalten"
-    },
-    "OpenTopicIssue": {
-        "openViewer": "Im Viewer öffnen",
-        "openViewerNoModels": "Es sind keine Vorlagen zur Ansicht bereit",
-        "elements": "Elemente",
-        "noElements": "0 Element",
-        "type": "Typ:",
-        "noTypeSpecified": "Kein Typ angegeben",
-        "description": "Beschreibung:",
-        "noDescriptionProvided": "Keine Beschreibung angegeben",
-        "assignedTo": "Zugeteilt an:",
-        "notAssigned": "Nicht zugewiesen",
-        "dueDate": "Fälligkeitsdatum:",
-        "noDueDate": "Kein Fälligkeitsdatum",
-        "informations": "Informationen",
-        "status": "Status:",
-        "noStatusSpecified": "Kein Status angegeben",
-        "stage": "Phase:",
-        "noStageProvided": "Keine Phase angegeben",
-        "priority": "Priorität:",
-        "priorityNotDefined": "Nicht definiert",
-        "tags": "Tags:",
-        "noTags": "Keine Tags",
-        "commentButton": "Ein Kommentar veröffentlichen"
-    },
-    "BcfTopicsMetrics": {
-        "emptyText": "Fügen Sie Fragen hinzu, um zugehörige Statistiken hier anzuzeigen.",
-        "issues": "Probleme",
-        "extension": {
-            "Priority": "Priorität",
-            "PriorityNotDefined": "Keine Priorität",
-            "PriorityTitle": "Prioritäten",
-            "Status": "Status",
-            "StatusNotDefined": "Kein Status",
-            "StatusTitle": "Status"
-        }
-    },
-    "CreateBcfTopic": {
-        "dragDropImageText": "Bitte wählen Sie eine Datei aus",
-        "addPictureButton": "Ein Bild hinzufügen",
-        "titlePlaceholder": "Titel *",
-        "titleErrorMessage": "Fehlender Titel",
-        "typeLabel": "Typ",
-        "priorityLabel": "Priorität",
-        "statusLabel": "Status",
-        "stageLabel": "Phase",
-        "assignedToLabel": "Zugewiesen an",
-        "dueDateLabel": "Fälligkeitsdatum (TT.MM.JJJJ)",
-        "dateErrorMessage": "Datumsformat oder falsches Datum",
-        "dateExample": "(Z. B.: 28.04.2022)",
-        "descriptionLabel": "Beschreibung",
-        "tagsLabel": "Tags",
-        "validateButton": "Bestätigen"
-    },
-    "EditBcfTopic": {
-        "goBackButton": "Zurück",
-        "dragDropImageText": "Bitte wählen Sie eine Datei aus.",
-        "addPictureButton": "Fügen Sie ein Bild hinzu.",
-        "titlePlaceholder": "Titel*",
-        "titleErrorMessage": "Titel fehlt",
-        "typeLabel": "Typ",
-        "priorityLabel": "Priorität",
-        "statusLabel": "Status",
-        "stageLabel": "Phase",
-        "assignedToLabel": "Zugewiesen an",
-        "descriptionLabel": "Beschreibung",
-        "tagsPlaceholder": "Tags",
-        "editButton": "Diesen BCF bearbeiten"
-    },
-    "EditBcfTopicModal": {
-        "modalText": "Sie sind dabei, die Bearbeitung der Ausgabe {Name} zu beenden, aber es gibt noch ungespeicherte Änderungen.",
-        "cancelButton": "Änderungen verwerfen",
-        "continueButton": "Änderungen fortsetzen"
-    },
-    "GuidedTour": {
-        "platform": {
-            "intro": {
-                "title": "Willkommen",
-                "content": "Lassen Sie uns gemeinsam die BIMData-Plattform erkunden."
-            },
-            "actionButtons": {
-                "title": "Dashboard",
-                "content": "Greifen Sie direkt von diesem Dashboard auf alle Ihre Räume, Projekte und Abonnements zu."
-            },
-            "firstSpace": {
-                "title": "Ihre Räume",
-                "content": "Greifen Sie direkt von diesem Shortcut aus auf Ihre zuletzt verwendeten Räume zu."
-            },
-            "firstProject": {
-                "title": "Ihre Projekte",
-                "content": "Greifen Sie direkt von diesem Shortcut auf Ihre letzten Projekte zu."
-            },
-            "previewIfc": {
-                "title": "Vorschau",
-                "content": "Navigieren Sie einfach durch die Vorschauen der Vorlagen Ihres Projekts."
-            },
-            "usersManager": {
-                "title": "Zusammenarbeit",
-                "content": "Laden Sie Ihre ersten Mitarbeiter zu Ihrem Projekt ein."
-            },
-            "modelsManager": {
-                "title": "Vorlagen",
-                "content": "Laden Sie die Vorlagen Ihres Projekts herunter und verwalten Sie sie (IFC, DWG, PDF...)."
-            },
-            "gedButton": {
-                "title": "DV",
-                "content": "Greifen Sie über den Reiter \"DV\" auf die Dokumentenverwaltung Ihres Projekts zu."
-            },
-            "fileTree": {
-                "title": "Baumstruktur",
-                "content": "Erstellen Sie Ihre Ordner und laden Sie Ihre Dateien direkt aus der DV hoch."
-            },
-            "groupManager": {
-                "title": "Verwaltung von Rechten",
-                "content": "Erstellen Sie Benutzergruppen, um deren Zugriffsrechte zu verwalten."
-            },
-            "changeSpace": {
-                "title": "Ariadnefaden",
-                "content": "Greifen Sie über den Ariadnefaden schnell auf Ihren Raum zu."
-            },
-            "outro": {
-                "title": "Bravo!",
-                "content": "Jetzt müssen Sie nur noch Ihr erstes Projekt starten"
-            }
-        }
+  "GroupBoard": {
+    "searchInputPlaceholder": "Mitglied suchen"
+  },
+  "OidcCallbackError": {
+    "message": "Bei der Authentifizierung ist ein Fehler aufgetreten...",
+    "tryAgainButtonText": "Nochmals versuchen"
+  },
+  "ProjectBoard": {
+    "tabs": {
+      "overview": "Projekt",
+      "files": "EDM",
+      "bcf": "BCF"
     }
+  },
+  "ProjectGroups": {
+    "searchInputPlaceholder": "Gruppe suchen"
+  },
+  "SpaceBoard": {
+    "searchInputPlaceholder": "Projekt suchen"
+  },
+  "UserProjects": {
+    "searchInputPlaceholder": "Projekt suchen"
+  },
+  "UserSpaces": {
+    "searchInputPlaceholder": "Bereich suchen",
+    "createButtonText": "Bereich erstellen",
+    "organizationsButtonText": "Organisationen"
+  },
+  "ProjectFiles": {
+    "groupsButtonText": "Gruppenverwaltung"
+  },
+  "ProjectOverview": {
+    "openFileUploadButtonText": "Modell hinzufügen",
+    "closeFileUploadButtonText": "Schließen",
+    "forbiddenUploadNotification": {
+      "title": "Fehler",
+      "message": "Wählen Sie eine Modell Datei: {extensions}"
+    }
+  },
+  "BreadcrumbSelector": {
+    "inputPlaceholder": "Suchen"
+  },
+  "GoBackButton": {
+    "text": "Zurück"
+  },
+  "LanguageSelector": {
+    "title": "Sprachenauswahl"
+  },
+  "AppHeaderMenu": {
+    "entrySettings": "Kontoeinstellungen",
+    "entryConnect": "BIMData Connect",
+    "entryDocumentation": "Dokumentation",
+    "entryMarketplace": "Marketplace",
+    "entryOldPlatform": "Plattform V1",
+    "entryLanguage": "Sprachenauswahl",
+    "logoutButtonText": "Ausloggen",
+    "subscriptionPlatform": "Plattform-Abonnement"
+  },
+  "BreadcrumbGroupSelector": {
+    "text": "Gruppen"
+  },
+  "BreadcrumbProjectSelector": {
+    "placeholder": "< Kein Projekt >"
+  },
+  "DashboardInfoTile": {
+    "title": "Sicherheit"
+  },
+  "DashboardProjectList": {
+    "title": "Neueste Projekte"
+  },
+  "DashboardSpaceList": {
+    "title": "Neueste Bereiche"
+  },
+  "DashboardWelcomeTile": {
+    "title": "Dashboard",
+    "message": "Guten Tag {name}, schön, Sie wiederzusehen!"
+  },
+  "FileActionsCell": {
+    "openViewerButtonText": "Sehen",
+    "addTagsButtonText": "Tags hinzufügen",
+    "validationRequestButtonText": "Bestätigungsanfrage",
+    "renameButtonText": "Umbenennen",
+    "downloadButtonText": "Herunterladen",
+    "addVersionButtonText": "Version hinzufügen",
+    "manageAccessButtonText": "Zugang verwalten",
+    "deleteButtonText": "Löschen",
+    "VisaButtonText": "Bestätigungsantrag",
+    "createModelButtonText": "Als Vorlage festlegen",
+    "VersioningButtonText": "Eine Version hinzufügen",
+    "removeModelButtonText": "Modelle entfernen"
+  },
+  "FileNameCell": {
+    "inputErrorMessage": "Ungültiger Dateiname",
+    "submitButtonText": "Bestätigen"
+  },
+  "FilesActionBar": {
+    "deleteButtonText": "Löschen",
+    "moveButtonText": "Verschieben nach",
+    "downloadButtonText": "Herunterladen"
+  },
+  "FilesDeleteModal": {
+    "title": "Dateien löschen",
+    "message": "Sie sind dabei, folgende Dateien/Ordner endgültig zu löschen:",
+    "cancelButtonText": "Abbrechen",
+    "deleteButtonText": "Löschen",
+    "messageVersion": "Sie sind im Begriff, die folgenden Dateien/Ordner und den zugehörigen Versionsverlauf dauerhaft zu löschen:"
+  },
+  "FilesManager": {
+    "title": "Projektdokumente",
+    "searchInputPlaceholder": "Suchen",
+    "createModelNotification": "Vorlage erfolgreich erstellt",
+    "structureImport": "Eine GED-Struktur importieren",
+    "gedDownload": "EDM herunterladen",
+    "folderImport": "Einen Ordner importieren"
+  },
+  "FilesManagerOnboarding": {
+    "text": "Erste Datei hochladen",
+    "uploadFileButtonText": "Datei hochladen",
+    "createFolderButtonText": "Ordner erstellen",
+    "GEDStructureImport": "Eine GED-Struktur importieren"
+  },
+  "FilesTable": {
+    "emptyTablePlaceholder": "Leerer Ordner",
+    "folder": "Ordner",
+    "headers": {
+      "name": "Name",
+      "type": "Typ",
+      "creator": "Erstellt von",
+      "tags": "Tags",
+      "lastupdate": "Geändert am",
+      "size": "Größe"
+    }
+  },
+  "FileUploadButton": {
+    "addFileButtonText": "Datei laden",
+    "shortAddFileButtonText": "Datei"
+  },
+  "FileUploadCard": {
+    "cancelMessage": "Abgebrochen",
+    "errorMessage": "Hochladen nicht erfolgreich",
+    "upload": "uploaded} von {total} ({percentage} % hochgeladen)"
+  },
+  "FileUploader": {
+    "uploadAreaText": "Dateien hier herklicken/herziehen",
+    "separatorText": "oder",
+    "uploadButtonText": "Modell Datei wählen"
+  },
+  "FolderAccessManager": {
+    "title": "Zugang verwalten",
+    "rightsHeader": "Rechte",
+    "membersHeader": "Mitglieder",
+    "searchInputPlaceholder": "Eine Gruppe suchen",
+    "groupHeader": "Gruppe"
+  },
+  "FolderCreationButton": {
+    "buttonText": "Neuer Ordner",
+    "shortButtonText": "Dossier"
+  },
+  "FolderCreationForm": {
+    "creationFormTitle": "Ordner erstellen",
+    "nameInputPlaceholder": "Ordnername",
+    "nameInputErrorMessage": "Ungültiger Ordnername",
+    "cancelButtonText": "Abbrechen",
+    "submitButtonText": "Bestätigen"
+  },
+  "FolderSelector": {
+    "selectedFolder": "Ausgewählter Ordner",
+    "submitButtonText": {
+      "moveTo": "Bestätigen",
+      "moveHere": "Hierher verschieben"
+    },
+    "emptyFolderPlaceholder": "Leerer Ordner"
+  },
+  "GroupCardActionMenu": {
+    "renameButtonText": "Umbenennen",
+    "changeColorButtonText": "Farbe ändern",
+    "deleteButtonText": "Löschen"
+  },
+  "GroupCardDeleteGuard": {
+    "title": "Gruppe löschen",
+    "message": "Wollen Sie wirklich (endgültig) die Gruppe {name} löschen?",
+    "deleteButtonText": "Löschen"
+  },
+  "GroupCardUpdateForm": {
+    "title": "Gruppe umbenennen",
+    "inputPlaceholder": "Name",
+    "inputErrorMessage": "Ungültiger Gruppenname",
+    "submitButtonText": "Umbenennen"
+  },
+  "GroupCreationCard": {
+    "text": "Gruppe erstellen",
+    "title": "Neue Gruppe",
+    "inputPlaceholder": "Name",
+    "inputErrorMessage": "Ungültiger Gruppenname",
+    "submitButtonText": "Erstellen"
+  },
+  "GroupMemberSelectionCard": {
+    "text": "Nutzer hinzufügen"
+  },
+  "InvitationCard": {
+    "pendingMessage": "Eingeladen - keine Antwort.",
+    "resendLinkText": "Einladung nochmal versenden?",
+    "resendSuccessNotifText": "Einladung zurückgeschickt",
+    "cancelSuccessNotifText": "Einladung annulliert"
+  },
+  "InvitationForm": {
+    "emailInputPlaceholder": "Nutzer-Email",
+    "emailInputErrorMessage": "Ungültige Email-Adresse",
+    "roleInputLabel": "Rolle",
+    "roles": {
+      "admin": "Administrator",
+      "user": "Nutzer",
+      "guest": "Eingeladen"
+    },
+    "cancelButtonText": "Abbrechen",
+    "submitButtonText": "Einladen",
+    "successNotifText": "Einladung versendet"
+  },
+  "ModelActionsCell": {
+    "addTagsButtonText": "Tags hinzufügen",
+    "renameButtonText": "Umbenennen",
+    "archiveButtonText": "Archivieren",
+    "deleteButtonText": "Löschen",
+    "unarchiveButtonText": "Dearchivieren"
+  },
+  "ModelLocation": {
+    "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
+    "addLocationButtonText": "Nachfragen"
+  },
+  "ModelLocationForm": {
+    "addressInputPlaceholder": "Adresse eingeben",
+    "checkButtonText": "Verifizieren",
+    "submitButtonText": "Bestätigen",
+    "cancelButtonText": "Ändern"
+  },
+  "ModelNameCell": {
+    "inputErrorMessage": "Ungültiger Modellname",
+    "submitButtonText": "Bestätigen"
+  },
+  "ModelsActionBar": {
+    "deleteButtonText": "Löschen",
+    "archiveButtonText": "Archivieren",
+    "unarchiveButtonText": "Dearchiveren",
+    "downloadButtonText": "Herunterladen",
+    "mergeButtonText": "Zusammenschließen"
+  },
+  "ModelsCard": {
+    "openButtonText": "Öffnen"
+  },
+  "ModelsCardModelPreview": {
+    "emptyPreviewPlaceholder": "Keine Vorschau"
+  },
+  "ModelsDeleteModal": {
+    "title": "Achtung!",
+    "message": "Diese Handlung kann nicht rückgängig gemacht werden. Es werden gelöscht:",
+    "cancelButtonText": "Annullieren",
+    "deleteButtonText": "Löschen"
+  },
+  "ModelsManager": {
+    "title": "Modelle des Projekts",
+    "tabs": {
+      "ifc": "IFC",
+      "split": "Aufteilen / exportieren",
+      "merge": "Zusammenführen",
+      "archive": "Archiv",
+      "dwg": "DWG",
+      "metaBuildings": "Meta Buildings",
+      "upload": "Hochladen"
+    }
+  },
+  "ModelsMergeModal": {
+    "title": "Auswahl zusammenführen",
+    "inputPlaceholder": "Name Ihrer IFC-Zusammenführung",
+    "inputErrorMessage": "Sie müssen einen Namen für die Datei angeben",
+    "submitButtonText": "Exportieren"
+  },
+  "ModelsOverview": {
+    "title": "Projektübersicht"
+  },
+  "ModelsOverviewOnboarding": {
+    "text": "Ihr erstes Modell hochladen",
+    "uploadButtonText": "Hochladen"
+  },
+  "ModelsTable": {
+    "headers": {
+      "id": "ID",
+      "name": "Name",
+      "version": "Version",
+      "creator": "Erstellt von",
+      "lastupdate": "Geändert am",
+      "status": "Status"
+    },
+    "emptyTablePlaceholder": {
+      "text": "Keine Vorlage",
+      "textPdf": "Vom Menü \"Datei\" im EDM aus klicken Sie auf \"Als Vorlage festlegen\", um Ihre pdf-Zeichnungen in Ihrem Projekt anzuzeigen."
+    }
+  },
+  "ProjectCardActionMenu": {
+    "renameButtonText": "Umbenennen",
+    "deleteButtonText": "Löschen",
+    "leaveButtonText": "Verlassen"
+  },
+  "ProjectCardDeleteGuard": {
+    "title": "Das Projekt löschen",
+    "message": "Sind Sie sicher, dass Sie dieses Projekt (endgültig) löschen möchten?",
+    "deleteButtonText": "Löschen"
+  },
+  "ProjectCardUpdateForm": {
+    "title": "Projekt umbenennen",
+    "inputPlaceholder": "Name",
+    "inputErrorMessage": "Dieser Projektname ist ungültig.",
+    "renameButtonText": "Umbenennen"
+  },
+  "ProjectCreationCard": {
+    "title": "Neues Projekt",
+    "text": "Ein neues Projekt erstellen",
+    "inputPlaceholder": "Name",
+    "inputErrorMessage": "Sie müssen einen Namen für das Projekt angeben:",
+    "createButtonText": "Erstellen"
+  },
+  "ProjectUsersManager": {
+    "title": "Nutzer",
+    "searchInputPlaceholder": "Einen Nutzer suchen"
+  },
+  "SpaceCard": {
+    "projects": "PROJEKTE",
+    "free": "Kostenlos"
+  },
+  "SpaceCardActionMenu": {
+    "renameButtonText": "Umbenennen",
+    "removeImageButtonText": "Abbildung löschen",
+    "deleteButtonText": "Diesen Bereich löschen"
+  },
+  "SpaceCardDeleteGuard": {
+    "title": "Den Bereich löschen",
+    "message": "Sind Sie sicher, dass Sie diesen Bereich (endgültig) löschen möchten?",
+    "deleteButtonText": "Löschen"
+  },
+  "SpaceCardImageButton": {
+    "buttonText": "Abbildung ändern"
+  },
+  "SpaceCardUpdateForm": {
+    "title": "Bereich umbenennen",
+    "inputPlaceholder": "Name",
+    "inputErrorMessage": "Dieser Name für einen Bereich ist ungültig.",
+    "submitButtonText": "Umbenennen"
+  },
+  "SpaceCreationCard": {
+    "title": "Neuer Bereich",
+    "inputPlaceholder": "Name",
+    "inputErrorMessage": "Sie müssen für den Bereich einen Namen angeben!",
+    "createButtonText": "Erstellen"
+  },
+  "SpaceUsersManager": {
+    "title": "Verwaltung von Bereichs-Administratoren",
+    "tabs": {
+      "admins": "Administratoren",
+      "users": "Nutzer"
+    },
+    "searchInputPlaceholder": "Einen Nutzer suchen",
+    "addUserButtonText": "Einen Administratoren hinzufügen"
+  },
+  "UserCard": {
+    "self": "Sie"
+  },
+  "UserCardDeleteGuard": {
+    "message": {
+      "space": "{name} dieses Bereichs löschen?",
+      "project": "{name} dieses Projekts löschen?"
+    },
+    "submitButtonText": "Löschen"
+  },
+  "UserCardUpdateForm": {
+    "submitButtonText": "Bestätigen"
+  },
+  "UserRoleBadge": {
+    "admin": "Admin",
+    "user": "User",
+    "guest": "Gast"
+  },
+  "UsersManagerOnboarding": {
+    "text": "Ihren ersten Mitarbeiter einladen",
+    "inviteButtonText": "Einladung"
+  },
+  "PageNotFound": {
+    "title": "Seite nicht gefunden",
+    "text": {
+      "line1": "Woopsie! The page that you are looking for does not exist.",
+      "line2": "Please return home."
+    },
+    "homeButtonText": "Home"
+  },
+  "FolderPermissionSelector": {
+    "label": "Alle",
+    "options": {
+      "accessDenied": "Zugang verweigert",
+      "readOnly": "Schreibgeschützt",
+      "readWrite": "Lesen / schreiben"
+    }
+  },
+  "GroupMembersSelector": {
+    "title": "Verwaltung der Gruppenmitglieder",
+    "searchInputPlaceholder": "Suchen"
+  },
+  "GroupPermissionSelector": {
+    "options": {
+      "accessDenied": "Zugang verweigert",
+      "readOnly": "Schreibgeschützt",
+      "readWrite": "Lesen / schreiben"
+    }
+  },
+  "Error": "Fehler",
+  "Success": "Erfolg",
+  "Errors": {
+    "spacesFetchError": "Unmöglich, die Bereichsliste abzurufen",
+    "spaceCreateError": "Fehler beim Erstellen des Bereichs",
+    "spaceUpdateError": "Fehler bei der Aktualisierung des Bereichs",
+    "spaceDeleteError": "Fehler beim Löschen des Bereichs",
+    "spaceImageUpdateError": "Fehler bei der Änderung der Abbildung des Bereichs",
+    "spaceImageDeleteError": "Fehler beim Löschen der Abbildung des Bereichs",
+    "projectsFetchError": "Unmöglich die Projekteliste abzurufen",
+    "projectCreateError": "Bei der Erstellung des Projekts ist ein Fehler aufgetreten",
+    "projectUpdateError": "Aktualisierung des Projekts fehlgeschlagen",
+    "projectDeleteError": "Fehler beim Löschen des Projekts",
+    "invitationsFetchError": "Unmöglich die Liste der Einladungen abzurufen",
+    "invitationSendError": "Die Einladung konnte nicht versandt werden",
+    "invitationResendError": "Einladung konnte nicht zurückgesendet werden",
+    "invitationCancelError": "Die Einladung konnte nicht annulliert werden",
+    "usersFetchError": "Unmöglich, die Nutzerliste abzurufen",
+    "userUpdateError": "Fehler bei der Aktualisierung des Nutzers",
+    "userDeleteError": "Fehler beim Löschen des Nutzers",
+    "modelsFetchError": "Unmöglich, die Modellliste abzurufen",
+    "modelUploadError": "Das Modell/die Modelle konnten nicht hochgeladen werden",
+    "modelUpdateError": "Fehler bei der Aktualisierung des Modells",
+    "modelDownloadError": "Beim Herunterladen ist ein Fehler aufgetreten",
+    "modelMergeError": "Fehler beim Zusammenführen der Modelle",
+    "modelDeleteError": "Fehler beim Löschen des Modells",
+    "fileStructureFetchError": "Unmöglich, die Dateistruktur abzurufen",
+    "fileUpdateError": "Bei der Aktualisierung der Ordner/Dateien ist ein Fehler aufgetreten",
+    "fileDownloadError": "Beim Herunterladen der Ordner/Dateien ist ein Fehler aufgetreten",
+    "fileDeleteError": "Beim Löschen der Ordner/Dateien ist ein Fehler aufgetreten",
+    "folderCreateError": "Beim Erstellen des Ordners ist ein Fehler aufgetreten",
+    "documentUploadError": "Fehler beim Hochladen der Datei",
+    "groupsFetchError": "Unmöglich, die Gruppenliste abzurufen",
+    "groupCreateError": "Fehler beim Erstellen der Gruppe",
+    "groupUpdateError": "Fehler bei der Aktualisierung der Gruppe",
+    "groupDeleteError": "Fehler beim Löschen der Gruppe",
+    "organizationsFetchError": "Fail to fetch organizations",
+    "organizationCreateError": "Fehler beim Erstellen des organisation",
+    "organizationUpdateError": "Fehler bei der Aktualisierung des organisationen",
+    "organizationDeleteError": "Fehler beim Löschen des organisationen",
+    "userLeaveError": "Sie können dieses Projekt nicht verlassen, da Sie der letzte Administrator sind",
+    "subscriptionsFetchError": "Die Liste der Abonnements kann nicht abgerufen werden",
+    "platformSubscribeError": "Fehler beim Erstellen des Links für das Abonnement",
+    "datapackSubscribeError": "Fehler beim Abonnieren eines neuen Datapacks",
+    "datapackUpdateError": "Fehler bei der Aktualisierung des Datapacks",
+    "projectFetchFileError": "Dieses Dokument kann nicht abgerufen werden",
+    "visaCreateError": "Fehler bei der Erstellung des Visums",
+    "visaCreateValidationError": "Fehler beim Hinzufügen einer/s Bestätigenden",
+    "visaFetchError": "Dieses Visum kann nicht aufgerufen werden",
+    "visaAcceptError": "Fehler beim Senden Ihrer Antwort",
+    "visaDenyError": "Fehler beim Senden Ihrer Antwort",
+    "visaCloseError": "Fehler beim Schließen des Visums",
+    "visaResumeError": "Fehler beim Wiederöffnen des Visums",
+    "visaFetchCreatedError": "Visa können nicht aufgerufen werden",
+    "visaFetchValidatorError": "Visa können nicht aufgerufen werden",
+    "visaDeleteValidationError": "Dieser Nutzer kann nicht gelöscht werden",
+    "visaDeleteError": "Dieses Visum kann nicht gelöscht werden",
+    "visaUpdateError": "Dieses Visum kann nicht aktualisiert werden",
+    "visaRefreshError": "Ihre Antwort kann nicht aktualisiert werden",
+    "visaFetchAllCommentsError": "Die Kommentare können nicht aufgerufen werden",
+    "visaCreateCommentsError": "Dieser Kommentar kann nicht veröffentlicht werden",
+    "visaUpdateCommentError": "Dieser Kommentar kann nicht bearbeitet werden",
+    "visaDeleteCommentError": "Dieser Kommentar kann nicht gelöscht werden",
+    "modelCreateError": "Fehler beim Erstellen der Vorlage",
+    "fileFetchError": "Fehler beim Abrufen dieses Ordners/dieser Datei",
+    "bcfImportError": "Beim Importieren ist ein Fehler aufgetreten",
+    "bcfExportError": "Export ist fehlgeschlagen ...",
+    "fileVersionsFetchError": "Die Versionen dieses Dokuments können nicht abgerufen werden",
+    "fileVersionsMakeHeadError": "Fehler beim Ändern des Dokuments in die aktuelle Version",
+    "fileVersionDelete": "Fehler beim Löschen des Dokuments",
+    "userAlreadyExistsError": "Dieser Benutzer ist bereits Mitglied des Raums/Projekts",
+    "tagsFetchError": "Tags können nicht abgerufen werden",
+    "tagsCreateError": "Fehler bei der Erstellung des Tags",
+    "tagsUpdateError": "Fehler beim Bearbeiten des Tags",
+    "tagsDeleteError": "Fehler beim Löschen des Tags",
+    "tagsAddDocumentError": "Fehler beim Zuordnen des Tags zum Dokument",
+    "tagsDeleteDocumentError": "Fehler beim Entkoppeln des Tags vom Dokument",
+    "spaceSizeFullError": "Ihr Speicherplatz ist voll",
+    "spaceFetchError": "Abrufen von Rauminformationen nicht möglich",
+    "projectFolderTreeFetchError": "Die Projektliste kann nicht abgerufen werden",
+    "fileStructureCreateError": "Unmöglich, die Dateistruktur zu erstellen",
+    "documentCreateError": "Dieses Dokument kann nicht heruntergeladen werden"
+  },
+  "ProjectStatusBadge": {
+    "new": "NEU",
+    "active": "AKTIV",
+    "inactive": "NICHT AKTIV",
+    "paused": "PAUSE"
+  },
+  "Dashboard": {
+    "spacesTileTitle": "Bereiche",
+    "spacesTileBottomText": "Meine Bereiche",
+    "projectsTileTitle": "Projekte",
+    "projectsTileBottomText": "Meine Projekte",
+    "subscriptionsTileTitle": "Abonnements",
+    "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
+    "subscriptionsTileBottomText": "Meine Abonnements verwalten"
+  },
+  "Payment": {
+    "titlePlatform": "Zur professionellen Plattform wechseln",
+    "titleDatapack": "Zufügen eines DataPacks"
+  },
+  "Subscribe": {
+    "title": "Wählen Sie Ihr Abonnement",
+    "text": "Sie dürfen nur einen kostenlosen Raum innerhalb Ihrer Organisation haben. Wenn Sie über so einen Raum bereits verfügen, müssen Sie auf das professionelle Abonnement hochstufen, um weitere Funktionen zu erhalten."
+  },
+  "SubscriptionDatapack": {
+    "title": "Meine DataPacks verwalten",
+    "successNotification": "Sie haben jetzt {size} im Raum {spaceName}"
+  },
+  "SubscriptionFree": {
+    "title": "Kostenlos einen Raum erstellen",
+    "text": "Sie sind dabei, Ihren kostenlosen Raum zu erstellen. Ihr kostenloser Raum umfasst: {size}, 6 Benutzer.",
+    "spaceCreatedNotification": "Sie haben gerade den Raum {spaceName} in Organisation {organizationName} erstellt"
+  },
+  "SubscriptionPro": {
+    "subscribeTitle": "Das professionelle Abonnement beanspruchen",
+    "upgradeTitle": "Zur professionellen Plattform wechseln",
+    "text": "Sie sind im Begriff, Ihr professionelles Abonnement zu starten. Es beinhaltet: {size} Speicherplatz, Erstellung unbegrenzter Projekte mit einer unbegrenzten Anzahl Nutzern.",
+    "spaceCreatedNotification": "Sie haben soeben den Raum {spaceName} in Organisation {organizationName} erstellt",
+    "spaceUpgradedNotification": "Herzlichen Glückwunsch! Sie haben soeben ein professionelles Abonnement für den Bereich {spaceName} abgeschlossen."
+  },
+  "UserSubscriptions": {
+    "title": "Abonnement der Plattform",
+    "text": "Durchsuchen Sie Ihre Organisationen, um Abonnements und Rechnungen für Ihre Plattformbereiche zu verwalten.",
+    "list": "Liste meiner Organisationen:"
+  },
+  "BillingActionsCell": {
+    "updateButtonText": "Die Zahlungskarte ändern",
+    "datapackButtonText": "Meine Datapacks verwalten",
+    "cancelButtonText": "Dieses Abonnement kündigen"
+  },
+  "BillingsTable": {
+    "title": "Abonnements",
+    "nextPayment": "am",
+    "professionalPlan": "Professionnelles",
+    "withDatapack": "+ Datapack",
+    "cancelSubscriptionButton": "Abonnement kündigen",
+    "updateCreditCardButton": "Kreditkarte aktualisieren",
+    "emptyTableText": "Hm.. Es scheint, als hätten Sie noch nie ein Abonnement abgeschlossen. Haben Sie unsere Pro-Plattform schon einmal ausprobiert?",
+    "subscribeButton": "Zu unserer Pro-Plattform",
+    "headers": {
+      "space": "Raum",
+      "nextpayment": "Nächste Zahlung",
+      "subscriptionplan": "Abo-Formel",
+      "status": "Status",
+      "amount": "Summe"
+    },
+    "status": {
+      "active": "Aktiv",
+      "deleted": "Gelöscht",
+      "paused": "Pausiert",
+      "custom": "Verwaltet durch BIMData.io",
+      "past_due": "Aufgehängt"
+    }
+  },
+  "DatapackForm": {
+    "baseNote": "Speicher",
+    "baseText": "Im Abonnement enthalten",
+    "datapackNote": "Zusätzlicher Speicher",
+    "priceUnit": "/ GB / Monat mit MwSt.",
+    "totalUnit": "/ Monat mit MwSt.",
+    "actualStorage": "Aktueller Speicherplatz",
+    "newStorage": "Neuer Speicherplatz",
+    "submitButtonText": "Bestätigen",
+    "cancelButtonText": "Kündigen"
+  },
+  "DatapackInfo": {
+    "title": "Aktuelles Abonnement",
+    "datapacks": "Zusammenfassung des aktiven DataPacks",
+    "storage": "Zusammenfassung der aktiven GB",
+    "including": "wovon {quantity} GB DataPack"
+  },
+  "InvoiceActionsCell": {
+    "downloadButton": "Die Rechnung herunterladen"
+  },
+  "InvoicesTable": {
+    "title": "Rechnungen",
+    "emptyTableText": "Wenn Sie Ihre Abonnements aktiviert haben, werden die Rechnungen hier angezeigt.",
+    "subscribeButton": "Zu unserer Pro-Plattform",
+    "headers": {
+      "amount": "Summe",
+      "status": "Status",
+      "space": "Raum",
+      "date": "Datum"
+    }
+  },
+  "InvoiceStatusCell": {
+    "completed": "Bezahlt",
+    "pending": "Ausstehend"
+  },
+  "OrganizationCard": {
+    "spaces": "{number} Bereichs"
+  },
+  "OrganizationDeleteGuard": {
+    "title": "Organisation löschen",
+    "submitButtonText": "Löschen"
+  },
+  "OrganizationForm": {
+    "createTitle": "Organisation erstellen",
+    "updateTitle": "Organisation ändern",
+    "infoSectionTitle": "Grundinformationen",
+    "nameInputPlaceholder": "Name",
+    "nameInputErrorMessage": "Ungültiger Name",
+    "logoInputLabel": "Ein Logo wählen",
+    "logoInputMessage": "Das Logo muss ein Bild im JP(E)G- oder PNG-Format  sein und die Dateigröße darf 1 MB nicht überschreiten.",
+    "submitButtonText": "Bestätigen",
+    "successTitle": "Herzlichen Glückwunsch, Ihre Organisation wurde gerade erstellt",
+    "successButtonText": "OK"
+  },
+  "OrganizationsList": {
+    "explanationText": "Die Organisation ist die Einheit, die die Rechnungsstellung von BIMData.io-Bereichen zentralisiert",
+    "createButtonText": "Organisation erstellen",
+    "searchInputPlaceholder": "Suchen"
+  },
+  "OrganizationsManager": {
+    "title": "Verwaltung von organisationen",
+    "backButtonText": "Zurück"
+  },
+  "OrganizationSpaceCard": {
+    "projects": "{number} Projekte"
+  },
+  "OrganizationSpacesImport": {
+    "spaceListTitle": "Die zu importierenden Räume auswählen",
+    "spaceListPlaceholder": "Kein Raum zu importieren ...",
+    "submitButtonText": "Bestätigen",
+    "successTitle": "Herzlichen Glückwunsch, Ihre Räume wurden gerade verschoben",
+    "successButtonText": "OK"
+  },
+  "OrganizationSpacesList": {
+    "importButtonText": "Einen Raum importieren",
+    "addButtonText": "Einen Raum hinzufügen",
+    "searchInputPlaceholder": "Suchen",
+    "spaceListTitle": "Liste der Räume der Organisationen",
+    "spaceListPlaceholder": "Diesem Rechnungskonto ist kein Bereich zugeordnet."
+  },
+  "ProjectCardLeaveGuard": {
+    "title": "Projekt verlassen",
+    "message": "Sind Sie sicher, dass Sie dieses Projekt verlassen wollen?",
+    "leaveButtonText": "Bestätigen"
+  },
+  "ProPlanCard": {
+    "title": "PROFESSIONELL",
+    "priceUnit": "/ Raum / Monat",
+    "bullet2": "Unbegrenzte Projekte",
+    "bullet3": "Unbegrenzte Nutzer",
+    "buttonText": "Abonnieren",
+    "note": "erweiterbar für {price} / GB / Monat"
+  },
+  "ProPlanForm": {
+    "priceUnit": "/ Monat",
+    "successTitle": "Glückwünsch! Sie haben ein Pro-Abonnement abonniert!",
+    "successMessage": "Ihre Zahlung wurde abgeschlossen. Sie können Ihr professionelles Abonnement jetzt nutzen.",
+    "titleNet": "Zwischensumme",
+    "titleTax": "MwSt 20%",
+    "titleTotal": "Preis",
+    "noteTotal": "mit MwSt."
+  },
+  "ProPlanInfo": {
+    "title": "Ihr Abonnement",
+    "subTitle": "Professionnell",
+    "priceUnit": "/ Monat o. MwSt.",
+    "bulletsHead": "Das Abonnement beinhaltet",
+    "bullet1": "{size} Speicherplatz",
+    "bullet2": "BIMData-Plattform",
+    "bullet3": "3D-Viewer",
+    "bullet4": "2D-Viewer",
+    "bullet5": "Unbegrenzte Projekte",
+    "bullet6": "Unbegrenzte Nutzer",
+    "bullet7": "Unbegrenzte Kommentare (BCF)",
+    "bullet8": "IFC-Fusion/-Division",
+    "bullet9": "IFC-Editor",
+    "bullet10": "Support via E-Mail"
+  },
+  "SpaceSelected": {
+    "selectedOrga": "Ausgewählte Organisation:",
+    "selectedSpace": "Ausgewählter Raum:"
+  },
+  "SpaceSizeInfo": {
+    "subscribePlatformButton": "Zur Pro-Plattform wechseln",
+    "usage": "{used} verwendet auf {total}"
+  },
+  "SpaceSizePreview": {
+    "title": "Speicherplatz",
+    "actualStorage": "Aktueller Speicherplatz",
+    "newStorage": "Neuer Speicherplatz",
+    "newStorageText": "Wenn Sie das professionelle Abonnement beanspruchen, profitieren Sie von {size} Speicherplatz. Zusätzlichen Speicherplatz können Sie direkt von Ihrem Raum aus erwerben."
+  },
+  "SubscribeCard": {
+    "title": "Ihren neuen Raum erstellen",
+    "text": "Möchten Sie alle Vorteile der Plattform nutzen? Wenn Sie zum professionellen Abonnement wechseln, erhalten Sie {size} für Ihre Projekte sowie eine unbegrenzte Anzahl Nutzer.",
+    "button": "Ein Abonnement beanspruchen"
+  },
+  "FreePlanInfo": {
+    "title": "FREE",
+    "price": "0 €",
+    "bullet2": "1 kostenloser Raum",
+    "bullet3": "6 Nutzer",
+    "buttonText": "Einen kostenlosen Raum erstellen",
+    "note": "für immer"
+  },
+  "FreePlanRedirect": {
+    "title": "Mein kostenloser Bereich",
+    "text": "Sie besitzen bereits einen kostenlosen Bereich.",
+    "buttonText": "Zugang zu meinem kostenlosen Bereich"
+  },
+  "SubscriptionStatusBanner": {
+    "activate": "Dieser kostenlose Bereich hat seine Grenzen erreicht. Wechseln Sie zu einem professionellen Abonnement, um alle Funktionen von BIMData freizuschalten.",
+    "reactivate": "Dieser Bereich ist derzeit nicht mit einem Abonnement verbunden. Um alle Funktionen von BIMData freizuschalten, wechseln Sie zu einem professionellen Abonnement."
+  },
+  "OrganizationSelector": {
+    "title": "Rechnungskonto",
+    "radioLabelSelect": "Ein Rechnungskonto auswählen",
+    "radioLabelCreate": "Ein Rechnungskonto erstellen",
+    "inputPlaceholder": "Name des Rechnungskontos",
+    "submitButtonText": "Bestätigen",
+    "successMessage": "Herzlichen Glückwunsch, Ihr Rechnungskonto wurde soeben erstellt."
+  },
+  "SpaceCreator": {
+    "title": "Einen Raum erstellen",
+    "text": "Ihr Raum vereint Ihre verschiedenen BIM-Projekte.",
+    "inputPlaceholder": "Name meines neuen Raums",
+    "billingAccountLabel": "Rechnungskonto:",
+    "billingAccountButton": "Ändern",
+    "submitButtonText": "Zur Zahlung übergehen"
+  },
+  "Visa": {
+    "button": "Bestätigungen / VISUM",
+    "add": {
+      "title": "Bestätigungsantrag",
+      "validator": "Bestätigend",
+      "toValidate": "Zu bestätigen vor",
+      "description": "Beschreibung",
+      "cancel": "Abbrechen",
+      "validate": "Bestätigen",
+      "validatorView": {
+        "getBack": "Zurück",
+        "validator": "Bestätigend",
+        "accept": "Akzeptieren"
+      },
+      "errorValidator": "Sie müssen mindestens 1 gültigen Eintrag hinzufügen."
+    },
+    "safeZone": {
+      "add": {
+        "content": "Sind Sie sicher, dass Sie diese Seite verlassen möchten? Möglicherweise gibt es noch unbestätigte Informationen.",
+        "action": "Ja, diese Seite verlassen",
+        "keepView": "Abbrechen, auf dieser Seite bleiben"
+      },
+      "delete": {
+        "content": "Sind Sie sicher, dass Sie dieses Visum löschen wollen?",
+        "action": "Ja, dieses Visum löschen",
+        "keepView": "Abbrechen"
+      },
+      "close": {
+        "content": "Sind Sie sicher, dass Sie dieses Visum abschließen möchten?",
+        "action": "Ja, dieses Visum abschließen",
+        "keepView": "Abbrechen"
+      },
+      "deleteComment": {
+        "content": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?",
+        "action": "Ja, diesen Kommentar löschen",
+        "keepView": "Abbrechen"
+      }
+    },
+    "summary": {
+      "title": {
+        "open": "Antrag läuft",
+        "closed": "Antrag abgeschloßen"
+      },
+      "appliedBy": "Bestätigungsantrag durch",
+      "validate": "Bestätigen",
+      "deny": "Ablehnen",
+      "delete": "Löschen",
+      "close": "Schließen",
+      "comment": "Kommentieren",
+      "term": "Fälligkeit",
+      "validator": "Bestätigende",
+      "deletedUser": "Gelöschter Nutzer",
+      "validatorList": {
+        "accept": "Bestätigt",
+        "deny": "Abgelehnt",
+        "commented": "Kommentiert",
+        "pending": "Ausstehend",
+        "getRidOfValidator": "Den/die Bestätigende/n entfernen",
+        "refresh": "Die Bestätigung neu starten"
+      }
+    },
+    "comments": {
+      "comment": "Kommentieren",
+      "commentary": "Kommentar",
+      "postComment": "Einen Kommentar veröffentlichen",
+      "replyComment": "Auf einen Kommentar antworten",
+      "publish": "Veröffentlichen",
+      "cancel": "Abbrechen",
+      "reply": "Antworten",
+      "actions": {
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "confirmDelete": "Diesen Kommentar löschen?"
+      }
+    },
+    "list": {
+      "title": "Anfrage in Bearbeitung",
+      "toValidateVisas": "Meine Bestätigungen",
+      "createdVisas": "Meine Anfragen",
+      "emptyValidation": "Keine Bestätigungen ausstehend",
+      "emptyDemand": "Keine Anfrage ausstehend"
+    },
+    "selectionValidator": {
+      "warning": "Dieser Nutzer hat keine Zugangsrechte zum Ordner."
+    },
+    "noVisa": "Es wurde noch kein VISA erstellt."
+  },
+  "ProjectBcf": {
+    "importButtonText": "Importieren",
+    "exportButtonText": "Exportieren",
+    "createBcfButtonText": "Ein BCF erstellen",
+    "createBcfTitle": "Ein Problem melden",
+    "showStatisticsTooltip": "Die Statistiken anzeigen",
+    "hideStatisticsTooltip": "Die Statistiken ausblenden",
+    "searchInputPlaceholder": "Nach Indexnummer, Name, Ersteller oder Etikett suchen",
+    "ascendingIndexTooltip": "aufsteigender Index",
+    "descendingIndexTooltip": "absteigender Index",
+    "alphabeticalAscendingOrderTooltip": "alphabetische Reihenfolge",
+    "alphabeticalDescendingOrderTooltip": "umgekehrte alphabetische Reihenfolge",
+    "ascendingDateTooltip": "aufsteigendes Datum",
+    "descendingDateTooltip": "absteigendes Datum",
+    "viewGridTooltip": "Rasteransicht",
+    "viewListTooltip": "Listenansicht",
+    "metricsTitle": "Insgesamt: {count} BCF-Issues",
+    "metricsEmptyText": "Fügen Sie Issues hinzu, um die zugehörigen Statistiken hier anzuzeigen.",
+    "noSearchResultsTitle": "Keine Ergebnisse",
+    "noSearchResultsText": "Ihre Suche ergab keine Ergebnisse, bitte überprüfen Sie Ihre Filter oder Schlüsselwörter.",
+    "goBackButton": "Zurück"
+  },
+  "GuidedTour": {
+    "platform": {
+      "intro": {
+        "title": "Willkommen",
+        "content": "Lassen Sie uns gemeinsam die BIMData-Plattform erkunden."
+      },
+      "actionButtons": {
+        "title": "Dashboard",
+        "content": "Greifen Sie direkt von diesem Dashboard auf alle Ihre Räume, Projekte und Abonnements zu."
+      },
+      "firstSpace": {
+        "title": "Ihre Räume",
+        "content": "Greifen Sie direkt von diesem Shortcut aus auf Ihre zuletzt verwendeten Räume zu."
+      },
+      "firstProject": {
+        "title": "Ihre Projekte",
+        "content": "Greifen Sie direkt von diesem Shortcut auf Ihre letzten Projekte zu."
+      },
+      "previewIfc": {
+        "title": "Vorschau",
+        "content": "Navigieren Sie einfach durch die Vorschauen der Vorlagen Ihres Projekts."
+      },
+      "usersManager": {
+        "title": "Zusammenarbeit",
+        "content": "Laden Sie Ihre ersten Mitarbeiter zu Ihrem Projekt ein."
+      },
+      "modelsManager": {
+        "title": "Vorlagen",
+        "content": "Laden Sie die Vorlagen Ihres Projekts herunter und verwalten Sie sie (IFC, DWG, PDF...)."
+      },
+      "gedButton": {
+        "title": "DV",
+        "content": "Greifen Sie über den Reiter \"DV\" auf die Dokumentenverwaltung Ihres Projekts zu."
+      },
+      "fileTree": {
+        "title": "Baumstruktur",
+        "content": "Erstellen Sie Ihre Ordner und laden Sie Ihre Dateien direkt aus der DV hoch."
+      },
+      "groupManager": {
+        "title": "Verwaltung von Rechten",
+        "content": "Erstellen Sie Benutzergruppen, um deren Zugriffsrechte zu verwalten."
+      },
+      "changeSpace": {
+        "title": "Ariadnefaden",
+        "content": "Greifen Sie über den Ariadnefaden schnell auf Ihren Raum zu."
+      },
+      "outro": {
+        "title": "Bravo!",
+        "content": "Jetzt müssen Sie nur noch Ihr erstes Projekt starten"
+      }
+    }
+  },
+  "Versioning": {
+    "title": "Versionsverlauf",
+    "addVersion": "Eine Version hinzufügen",
+    "currentVersion": "Aktuelle Version",
+    "previousVersion": "Vorherige Version",
+    "addedBy": "Hinzugefügt von:",
+    "titleDate": "Der",
+    "AddVersion": "Eine neue Version hinzufügen",
+    "loading": {
+      "subMessage": "Dieser Vorgang kann einige Augenblicke dauern.",
+      "downloadMessage": "Ladevorgang läuft.",
+      "deleteMessage": "Löschung läuft."
+    },
+    "delete": "Löschen",
+    "getToHead": "Zur aktuellen Version wechseln",
+    "download": "Herunterladen",
+    "show": "Anzeigen",
+    "safeZone": {
+      "delete": {
+        "content": "Sind Sie sicher, dass Sie diese Version löschen wollen?",
+        "action": "Ja, diese Version löschen.",
+        "keepView": "Abbrechen"
+      }
+    },
+    "emptyArea": "Sie haben derzeit keinen Versionsverlauf für diese Datei."
+  },
+  "Tag": {
+    "title": "Tags verwalten",
+    "list": "Liste der Tags",
+    "addTag": "einen Tag hinzufügen",
+    "addNewTag": "Ein neues Tag hinzufügen",
+    "search": "Suche",
+    "validate": "Bestätigen",
+    "cancel": "Abbrechen",
+    "deleteTag": "Diesen Tag löschen",
+    "deleteTagButton": "Löschen"
+  },
+  "SubscriptionModal": {
+    "title": "Erhalten Sie mehr Platz",
+    "subtitle": "Sie haben derzeit eine Speicherkapazität von 300mb",
+    "10gbSize": "10 GB",
+    "100mbSize": "+ 100 MB",
+    "soon": "SOON",
+    "upgrade": {
+      "title": "Zur Pro-Plattform wechseln",
+      "subtitle": "Melden Sie sich für BIMData Pro an, um mehr Platz zu erhalten."
+    },
+    "referal": {
+      "title": "Nimm an unserem Empfehlungsprogramm teil!",
+      "subtitle": "Teile deinen Sponsorcode, um Platz zu gewinnen."
+    },
+    "linkedin": {
+      "title": "Verbinden Sie Ihr LinkedIn-Konto",
+      "subtitle": "Folgen Sie der BIMData-Seite, um Platz zu sparen."
+    },
+    "uploadDisableMessage": {
+      "permission": "Sie haben nicht die erforderlichen Rechte",
+      "size": "Sie haben nicht mehr genug Speicherplatz"
+    }
+  },
+  "FileTreePreview": {
+    "title": "Importieren der GED-Struktur aus",
+    "cancel": "Abbrechen",
+    "validate": "Bestätigen"
+  },
+  "GroupMemberCard": {
+    "pending": "Einladung in Arbeit"
+  }
 }

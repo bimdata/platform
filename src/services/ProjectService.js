@@ -100,11 +100,15 @@ class ProjectService {
         {
           email: invitation.email,
           role: invitation.role,
-          redirectUri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
+          redirect_uri: `${process.env.VUE_APP_BASE_URL}/spaces/${project.cloud.id}/projects/${project.id}`
         }
       );
     } catch (error) {
-      throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
+      if (error.status === 400 && (await error.json()).already_exists) {
+        throw new RuntimeError(ERRORS.USER_ALREADY_EXISTS_ERROR, error);
+      } else {
+        throw new RuntimeError(ERRORS.INVITATION_SEND_ERROR, error);
+      }
     }
   }
 
@@ -122,17 +126,12 @@ class ProjectService {
 
   async updateProjectUser(project, user) {
     try {
-      // TODO: API model should be updated to return
-      // user data instead of role value.
-      const res = await apiClient.collaborationApi.updateProjectUser(
+      return await apiClient.collaborationApi.updateProjectUser(
         project.cloud.id,
         user.id,
         project.id,
         { role: user.role }
       );
-      return {
-        role: res.role
-      };
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
     }
@@ -170,6 +169,16 @@ class ProjectService {
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
+    }
+  }
+
+  async fetchProjectFolderTreeSerializers(project) {
+    try {
+      return await apiClient.collaborationApi.getProjectFolderTreeSerializers(
+        project.cloud.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.PROJECT_FOLDER_TREE_FETCH_ERROR, error);
     }
   }
 }

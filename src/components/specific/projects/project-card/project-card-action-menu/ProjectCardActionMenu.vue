@@ -26,7 +26,7 @@
           <div class="project-card-action-menu__menu__title">
             <BIMDataTextbox width="220px" :text="project.name" />
             <BIMDataButton
-              data-test="btn-close-menu"
+              data-test-id="btn-close-menu"
               ghost
               rounded
               icon
@@ -37,7 +37,7 @@
           </div>
           <BIMDataButton
             v-if="project.isAdmin"
-            data-test="btn-open-update"
+            data-test-id="btn-open-update"
             ghost
             squared
             @click="openUpdateForm"
@@ -46,7 +46,7 @@
           </BIMDataButton>
           <BIMDataButton
             v-if="project.isAdmin"
-            data-test="btn-open-delete"
+            data-test-id="btn-open-delete"
             ghost
             squared
             @click="openDeleteGuard"
@@ -54,7 +54,7 @@
             {{ $t("ProjectCardActionMenu.deleteButtonText") }}
           </BIMDataButton>
           <BIMDataButton
-            data-test="btn-open-leave"
+            data-test-id="btn-open-leave"
             ghost
             squared
             @click="openLeaveGuard"
@@ -69,11 +69,11 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useToggle } from "@/composables/toggle";
+import { useToggle } from "../../../../../composables/toggle.js";
 // Components
-import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard";
-import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm";
-import ProjectCardLeaveGuard from "../project-card-leave-guard/ProjectCardLeaveGuard";
+import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard.vue";
+import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm.vue";
+import ProjectCardLeaveGuard from "../project-card-leave-guard/ProjectCardLeaveGuard.vue";
 
 export default {
   components: {

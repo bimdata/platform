@@ -21,12 +21,12 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceSubInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smart_data_size) }}
           </span>
         </template>
         <template #text-below-right>
           <span>
-            {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
+            {{ formatBytes(spaceSubInfo.smart_data_dize_available) }}
           </span>
         </template>
       </ProgressBar>
@@ -93,7 +93,7 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceSubInfo.smartDataSize) }}
+            {{ formatBytes(spaceSubInfo.smart_data_size) }}
           </span>
         </template>
         <template #text-below-right>
@@ -121,13 +121,13 @@
 <script>
 import { computed, inject, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { usePaddle } from "@/composables/paddle.js";
-import { PRO_PLAN_STORAGE } from "@/config/subscription.js";
-import SIZE_UNIT from "@/config/size-unit.js";
-import { useSubscriptions } from "@/state/subscriptions.js";
-import { formatBytes } from "@/utils/files.js";
+import { usePaddle } from "../../../../composables/paddle.js";
+import { PRO_PLAN_STORAGE } from "../../../../config/subscription.js";
+import SIZE_UNIT from "../../../../config/size-unit.js";
+import { useSubscriptions } from "../../../../state/subscriptions.js";
+import { formatBytes } from "../../../../utils/files.js";
 // Components
-import ProgressBar from "@/components/generic/progress-bar/ProgressBar.vue";
+import ProgressBar from "../../../generic/progress-bar/ProgressBar.vue";
 
 export default {
   components: {
@@ -163,7 +163,7 @@ export default {
     const totalSizePercent = computed(() => {
       return Math.round(
         props.spaceSubInfo.usedSizePercent *
-          (props.spaceSubInfo.smartDataSizeAvailable / totalSize.value)
+          (props.spaceSubInfo.smart_data_size_available / totalSize.value)
       );
     });
 

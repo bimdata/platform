@@ -31,10 +31,10 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-import { FILE_PERMISSION } from "@/config/files.js";
-import { useGroups } from "@/state/groups.js";
+import { FILE_PERMISSION } from "../../../../../config/files.js";
+import { useGroups } from "../../../../../state/groups.js";
 // Components
-import UserAvatarList from "@/components/specific/users/user-avatar-list/UserAvatarList.vue";
+import UserAvatarList from "../../../users/user-avatar-list/UserAvatarList.vue";
 
 const permissionList = [
   { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
@@ -65,14 +65,14 @@ export default {
     const { updateGroupPermission } = useGroups();
 
     const disabled = computed(
-      () => props.folder.defaultPermission === FILE_PERMISSION.READ_WRITE
+      () => props.folder.default_permission === FILE_PERMISSION.READ_WRITE
     );
 
     const groupPermission = ref();
     watch(
       [() => props.folder, () => props.group],
       () => {
-        const perm = props.folder.groupsPermissions.find(
+        const perm = props.folder.groups_permissions.find(
           p => p.group.id === props.group.id
         );
         groupPermission.value = permissionList.find(

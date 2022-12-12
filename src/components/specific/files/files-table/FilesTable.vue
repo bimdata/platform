@@ -1,10 +1,13 @@
 <template>
-  <GenericTable
+  <BIMDataTable
+    ref="filesTable"
     class="files-table"
+    data-test-id="files-table"
+    tableLayout="fixed"
     :columns="columns"
     :rows="files"
     rowKey="id"
-    :rowHeight="44"
+    :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
@@ -12,7 +15,7 @@
     <template #sub-header>
       <div
         :style="{
-          display: folder.parentId ? 'flex' : 'none',
+          display: folder.parent_id ? 'flex' : 'none',
           alignItems: 'center'
         }"
       >
@@ -23,11 +26,7 @@
           style="margin: 5px 14px"
           @click="$emit('back-parent-folder', folder)"
         >
-          <BIMDataIcon
-            name="arrow"
-            size="xxs"
-            style="cursor: pointer"
-          />
+          <BIMDataIcon name="arrow" size="xxs" style="cursor: pointer" />
         </BIMDataButton>
         <FilesManagerBreadcrumb
           :file="folder"
@@ -53,6 +52,7 @@
         :project="project"
         :file="file"
         @file-clicked="$emit('file-clicked', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         :editMode="nameEditMode[file.id]"
         @close="nameEditMode[file.id] = false"
       />
@@ -60,43 +60,51 @@
     <template #cell-type="{ row: file }">
       <FileTypeCell :file="file" />
     </template>
-    <template #cell-creator="{ row: { createdBy } }">
-      {{ createdBy ? `${createdBy.firstname} ${createdBy.lastname[0]}.` : "?" }}
+    <template #cell-creator="{ row: { created_by } }">
+      {{
+        created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?"
+      }}
     </template>
     <template #cell-tags="{ row: file }">
-      <FileTagsCell :file="file" />
+      <FileTagsCell :file="file" :filesTable="filesTable" />
     </template>
     <template #cell-lastupdate="{ row: file }">
-      {{ $d(file.updatedAt, "long") }}
+      {{ $d(file.updated_at, "long") }}
     </template>
     <template #cell-size="{ row: file }">
       {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
     <template #cell-actions="{ row: file }">
       <FileActionsCell
+        :filesTable="filesTable"
         :project="project"
         :file="file"
         @create-model="$emit('create-model', $event)"
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @manage-access="$emit('manage-access', $event)"
+        @open-versioning-manager="$emit('open-versioning-manager', $event)"
         @open-visa-manager="$emit('open-visa-manager', $event)"
+        @open-tag-manager="$emit('open-tag-manager', $event)"
+        @remove-model="$emit('remove-model', $event)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
-  </GenericTable>
+  </BIMDataTable>
 </template>
 
 <script>
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { isFolder } from "@/utils/file-structure.js";
-import { formatBytes, generateFileKey } from "@/utils/files.js";
 import columnsDef from "./columns.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { FILE_TYPE } from "../../../../config/files.js";
+import { isFolder } from "../../../../utils/file-structure.js";
+import { formatBytes, generateFileKey } from "../../../../utils/files.js";
+
 // Components
-import GenericTable from "@/components/generic/generic-table/GenericTable.vue";
-import FileUploadCard from "@/components/specific/files/file-upload-card/FileUploadCard.vue";
-import FilesManagerBreadcrumb from "@/components/specific/files/files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
+import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
+import FileUploadCard from "../file-upload-card/FileUploadCard.vue";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "./file-name-cell/FileNameCell.vue";
 import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
@@ -104,13 +112,12 @@ import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 
 export default {
   components: {
-    GenericTable,
     FileActionsCell,
     FileNameCell,
+    FilesManagerBreadcrumb,
     FileTagsCell,
     FileTypeCell,
-    FileUploadCard,
-    FilesManagerBreadcrumb
+    FileUploadCard
   },
   props: {
     project: {
@@ -126,8 +133,7 @@ export default {
       required: true
     },
     filesToUpload: {
-      type: Array,
-      default: () => []
+      type: Array
     }
   },
   emits: [
@@ -138,23 +144,34 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "open-versioning-manager",
     "open-visa-manager",
-    "selection-changed"
+    "selection-changed",
+    "open-tag-manager",
+    "remove-model"
   ],
   setup(props, { emit }) {
-    const { locale, t } = useI18n();
+    const { t } = useI18n();
+    const { isLG, isXL } = useStandardBreakpoints();
 
-    const columns = ref([]);
-    watch(
-      () => locale.value,
-      () => {
-        columns.value = columnsDef.map(col => ({
-          ...col,
-          label: col.label || t(`FilesTable.headers.${col.id}`)
-        }));
-      },
-      { immediate: true }
-    );
+    const filesTable = ref(null);
+
+    const columns = computed(() => {
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "size", "actions"].includes(col.id)
+        );
+      } else if (isXL.value) {
+        filteredColumns = filteredColumns.filter(col =>
+          ["name", "lastupdate", "size", "actions"].includes(col.id)
+        );
+      }
+      return filteredColumns.map(col => ({
+        ...col,
+        label: col.label || t(`FilesTable.headers.${col.id}`)
+      }));
+    });
 
     let nameEditMode;
     watch(
@@ -177,8 +194,7 @@ export default {
             Object.assign(file, { key: generateFileKey(file) })
           )
         );
-      },
-      { immediate: true }
+      }
     );
 
     const onUploadCompleted = (key, file) => {
@@ -196,13 +212,17 @@ export default {
     return {
       // References
       columns,
+      filesTable,
       fileUploads,
       nameEditMode,
+      FILE_TYPE,
       // Methods
       cleanUpload,
       formatBytes,
       isFolder,
-      onUploadCompleted
+      onUploadCompleted,
+      // Responsive breakpoints
+      isXL
     };
   }
 };

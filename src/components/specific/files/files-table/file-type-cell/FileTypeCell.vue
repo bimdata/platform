@@ -4,14 +4,14 @@
       {{ $t("FilesTable.folder") }}
     </template>
     <template v-else>
-      {{ fileExtension(file.fileName).slice(0, 8) || "?" }}
+      {{ fileExtension(file.file_name).slice(0, 8) || "?" }}
     </template>
   </div>
 </template>
 
 <script>
-import { isFolder } from "@/utils/file-structure.js";
-import { fileExtension } from "@/utils/files.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { fileExtension } from "../../../../../utils/files.js";
 
 export default {
   props: {

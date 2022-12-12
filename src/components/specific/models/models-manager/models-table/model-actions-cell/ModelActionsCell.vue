@@ -1,7 +1,7 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
     <template v-if="model.type === MODEL_TYPE.IFC">
-      <template v-for="window of [WINDOWS.V2D, WINDOWS.V3D]" :key="window">
+      <template v-for="window of [WINDOWS.IFC2D, WINDOWS.IFC3D]" :key="window">
         <ViewerButton
           :disabled="!isModelReady"
           :project="project"
@@ -33,7 +33,10 @@
 
     <template
       v-else-if="
-        model.type === MODEL_TYPE.PDF || model.type === MODEL_TYPE.META_BUILDING
+        model.type === MODEL_TYPE.PDF ||
+        model.type === MODEL_TYPE.META_BUILDING ||
+        model.type === MODEL_TYPE.JPEG ||
+        model.type === MODEL_TYPE.PNG
       "
     >
       <ViewerButton
@@ -45,9 +48,20 @@
       />
     </template>
 
+    <template v-else-if="model.type === MODEL_TYPE.POINT_CLOUD">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.TILESET"
+        text="3D"
+      />
+    </template>
+
     <template v-if="model.document">
       <BIMDataButton
         class="model-actions-cell__btn"
+        data-test-id="btn-download-model"
         ripple
         rounded
         icon
@@ -58,8 +72,9 @@
     </template>
 
     <BIMDataButton
-      :disabled="!project.isAdmin && model.document?.userPermission < 100"
       class="model-actions-cell__btn"
+      data-test-id="btn-toggle-menu"
+      :disabled="!project.isAdmin && model.document?.user_permission < 100"
       ripple
       rounded
       icon
@@ -73,6 +88,7 @@
         <template v-if="model.document">
           <BIMDataButton
             class="model-actions-cell__menu__btn"
+            data-test-id="btn-update-model"
             ghost
             squared
             @click="onClick('update')"
@@ -82,6 +98,7 @@
         </template>
         <BIMDataButton
           class="model-actions-cell__menu__btn"
+          data-test-id="btn-archive-model"
           ghost
           squared
           @click="onClick(model.archived ? 'unarchive' : 'archive')"
@@ -93,27 +110,26 @@
             {{ $t("ModelActionsCell.archiveButtonText") }}
           </template>
         </BIMDataButton>
-        <template v-if="model.type === MODEL_TYPE.PDF">
+        <template v-if="model.type === MODEL_TYPE.META_BUILDING">
           <BIMDataButton
             class="model-actions-cell__menu__btn"
             ghost
             squared
-            @click="onClick('remove-model')"
+            @click="onClick('edit-metaBuilding')"
           >
-            {{ $t("ModelActionsCell.removeButtonText") }}
+            {{ $t("ModelActionsCell.editButtontext") }}
           </BIMDataButton>
         </template>
-        <template v-else>
-          <BIMDataButton
-            class="model-actions-cell__menu__btn"
-            color="high"
-            ghost
-            squared
-            @click="onClick('delete')"
-          >
-            {{ $t("ModelActionsCell.deleteButtonText") }}
-          </BIMDataButton>
-        </template>
+        <BIMDataButton
+          class="model-actions-cell__menu__btn"
+          data-test-id="btn-delete-model"
+          color="high"
+          ghost
+          squared
+          @click="onClick('delete')"
+        >
+          {{ $t("ModelActionsCell.deleteButtonText") }}
+        </BIMDataButton>
       </div>
     </transition>
   </div>
@@ -121,9 +137,9 @@
 
 <script>
 import { computed } from "vue";
-import { useToggle } from "@/composables/toggle.js";
-import { MODEL_STATUS, MODEL_TYPE } from "@/config/models.js";
-import { WINDOWS } from "@/config/viewer.js";
+import { useToggle } from "../../../../../../composables/toggle.js";
+import { MODEL_STATUS, MODEL_TYPE } from "../../../../../../config/models.js";
+import { WINDOWS } from "../../../../../../config/viewer.js";
 // Components
 import ViewerButton from "./ViewerButton.vue";
 
@@ -141,7 +157,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "remove-model", "update"],
+  emits: ["archive", "delete", "download", "update", "edit-metaBuilding"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,

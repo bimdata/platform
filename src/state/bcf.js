@@ -1,83 +1,59 @@
-import { reactive, shallowReadonly, toRefs } from "vue";
-import BcfService from "@/services/BcfService.js";
 import mapLimit from "async/mapLimit";
+import { reactive, shallowReadonly, toRefs } from "vue";
+import BcfService from "../services/BcfService.js";
+
+import { useProjects } from "./projects.js";
 
 const state = reactive({
-  bcfTopics: [],
-  extensions: [],
+  topics: [],
+  extensions: {
+    topic_type: [],
+    priority: [],
+    topic_status: [],
+    stage: [],
+    user_id_type: [],
+    topic_label: []
+  },
   detailedExtensions: {
-    topicTypes: [],
+    topic_types: [],
     priorities: [],
-    topicStatuses: [],
-    labels: [],
-    stages: []
+    topic_statuses: [],
+    stages: [],
+    topic_labels: []
   }
 });
 
 const loadBcfTopics = async project => {
   const topics = await BcfService.fetchProjectTopics(project);
+  topics.sort((a, b) => b.index - a.index);
 
-  let topicsWithSnapshotsAndComments = [];
+  let mappedTopics = [];
 
-  topicsWithSnapshotsAndComments = await mapLimit(topics, 10, async topic => {
-    const viewpoints = await BcfService.fetchTopicViewpoints(
-      project,
-      topic,
-      "url"
+  const { projectUsers } = useProjects();
+  mappedTopics = await mapLimit(topics, 10, async topic => {
+    topic.creator = projectUsers.value.find(
+      u => u.email === topic.creation_author
     );
-
-    topic.viewpoints = viewpoints;
+    topic.viewpoints = await BcfService.fetchTopicViewpoints(project, topic);
     return topic;
   });
 
-  state.bcfTopics = topicsWithSnapshotsAndComments;
+  state.topics = mappedTopics;
 
-  return topicsWithSnapshotsAndComments;
-};
-
-const createFullTopic = async (project, topic) => {
-  const newTopic = await BcfService.createFullTopic(project, topic, "url");
-  await loadBcfTopics(project);
-  return newTopic;
-};
-const createTopic = async (project, topic) => {
-  const newTopic = await BcfService.createTopic(project, topic);
-  await loadBcfTopics(project);
-  return newTopic;
-};
-const updateTopic = async (project, bcfTopic, topic) => {
-  const newTopic = await BcfService.updateProjectTopics(
-    project,
-    bcfTopic,
-    topic
-  );
-  await loadBcfTopics(project);
-  return newTopic;
-};
-const deleteTopic = async (project, topic) => {
-  await BcfService.deleteTopic(project, topic);
-  await loadBcfTopics(project);
-  return topic;
+  return mappedTopics;
 };
 
-const createViewpoint = async (project, topic, data) => {
-  const newViewpoint = await BcfService.createViewpoint(project, topic, data);
-  await loadBcfTopics(project);
-  return newViewpoint;
-};
-const deleteViewpoint = (project, topic, viewpoint) => {
-  return BcfService.deleteViewpoint(project, topic, viewpoint);
-  // We don't want to reload topic here because this method may be called many times in parallel
-};
+const loadBcfTopicComments = async (project, topic) => {
+  const comments = await BcfService.fetchTopicComments(project, topic);
+  comments.sort((a, b) => (a.date > b.date ? -1 : 1));
 
-const importBcf = async (project, file) => {
-  const bcf = await BcfService.importBcf(project, file);
-  await loadBcfTopics(project);
-  await loadDetailedExtensions(project);
-  return bcf;
-};
-const exportBcf = project => {
-  return BcfService.exportBcf(project);
+  const { projectUsers } = useProjects();
+  comments.forEach(c => {
+    c.user = projectUsers.value.find(u => u.email === c.author);
+  });
+
+  topic.comments = comments;
+  return comments;
 };
 
 const loadExtensions = async project => {
@@ -92,61 +68,15 @@ const loadDetailedExtensions = async project => {
   return detailedExtensions;
 };
 
-const createExtension = async (project, extensionType, data) => {
-  const newExtension = await BcfService.createExtension(
-    project,
-    extensionType,
-    data
-  );
+const importBcf = async (project, file) => {
+  const res = await BcfService.importBcf(project, file);
+  await loadBcfTopics(project);
   await loadDetailedExtensions(project);
-  return newExtension;
-};
-const deleteExtension = async (project, extensionType, priority) => {
-  const newExtension = await BcfService.deleteExtension(
-    project,
-    extensionType,
-    priority
-  );
-  await loadDetailedExtensions(project);
-  return newExtension;
-};
-const updateExtension = async (project, extensionType, id, priority) => {
-  const newExtension = await BcfService.updateExtension(
-    project,
-    extensionType,
-    id,
-    priority
-  );
-  await loadDetailedExtensions(project);
-  return newExtension;
+  return res;
 };
 
-// comments
-const loadTopicComments = async (project, topic) => {
-  let allComments = await BcfService.fetchAllComments(project, topic);
-  allComments.sort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1));
-  topic.comments = allComments;
-  return allComments;
-};
-const createComment = async (project, topic, data) => {
-  const newComment = await BcfService.createComment(project, topic, data);
-  await loadTopicComments(project, topic);
-  return newComment;
-};
-const deleteComment = async (project, topic, comment) => {
-  const newComment = await BcfService.deleteComment(project, topic, comment);
-  await loadTopicComments(project, topic);
-  return newComment;
-};
-const updateComment = async (project, topic, comment, data) => {
-  const newComment = await BcfService.updateComment(
-    project,
-    topic,
-    comment,
-    data
-  );
-  await loadTopicComments(project, topic);
-  return newComment;
+const exportBcf = (project, topics) => {
+  return BcfService.exportBcf(project, topics);
 };
 
 export function useBcf() {
@@ -156,22 +86,10 @@ export function useBcf() {
     ...toRefs(readonlyState),
     // Methods
     loadBcfTopics,
-    createFullTopic,
-    createTopic,
-    updateTopic,
-    deleteTopic,
-    createViewpoint,
-    deleteViewpoint,
-    importBcf,
-    exportBcf,
+    loadBcfTopicComments,
     loadExtensions,
     loadDetailedExtensions,
-    createExtension,
-    deleteExtension,
-    updateExtension,
-    loadTopicComments,
-    createComment,
-    deleteComment,
-    updateComment
+    importBcf,
+    exportBcf
   };
 }

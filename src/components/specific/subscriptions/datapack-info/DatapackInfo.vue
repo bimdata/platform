@@ -5,7 +5,7 @@
     </div>
     <div class="datapack-info__info">
       <span>
-        {{ formatBytes(spaceSubInfo.smartDataSizeAvailable) }}
+        {{ formatBytes(spaceSubInfo.smart_data_size_available) }}
       </span>
       <span>
         ({{
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { formatBytes } from "@/utils/files.js";
+import { formatBytes } from "../../../../utils/files.js";
 
 export default {
   props: {

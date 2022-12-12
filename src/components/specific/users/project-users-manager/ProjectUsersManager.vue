@@ -38,7 +38,7 @@
                   key="invitation-form"
                   :project="project"
                   @close="closeInvitationForm"
-                  @success="closeInvitationForm"
+                  @success="onInvitationSuccess"
                 />
 
                 <InvitationCard
@@ -68,13 +68,15 @@
 
 <script>
 import { computed, ref } from "vue";
-import { useListFilter } from "@/composables/list-filter";
-import { useToggle } from "@/composables/toggle";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import { useProjects } from "../../../../state/projects.js";
+import { wait } from "../../../../utils/async.js";
 // Components
-import InvitationCard from "@/components/specific/users/invitation-card/InvitationCard";
-import InvitationForm from "@/components/specific/users/invitation-form/InvitationForm";
-import UserCard from "@/components/specific/users/user-card/UserCard";
-import UsersManagerOnboarding from "./users-manager-onboarding/UsersManagerOnboarding";
+import InvitationCard from "../invitation-card/InvitationCard.vue";
+import InvitationForm from "../invitation-form/InvitationForm.vue";
+import UserCard from "../user-card/UserCard.vue";
+import UsersManagerOnboarding from "./users-manager-onboarding/UsersManagerOnboarding.vue";
 
 export default {
   components: {
@@ -98,8 +100,10 @@ export default {
     }
   },
   setup(props) {
+    const { loadProjectUsers, loadProjectInvitations } = useProjects();
+
     const { filteredList: displayedUsers, searchText } = useListFilter(
-      computed(() => props.users.filter(user => user.userId)),
+      computed(() => props.users.filter(user => user.user_id)),
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
@@ -115,6 +119,13 @@ export default {
       showUserSearch.value = !showUserSearch.value;
     };
 
+    const onInvitationSuccess = async () => {
+      closeInvitationForm();
+      await wait(2000);
+      loadProjectUsers(props.project);
+      loadProjectInvitations(props.project);
+    };
+
     return {
       // References
       displayedUsers,
@@ -123,6 +134,7 @@ export default {
       showUserSearch,
       // Methods
       closeInvitationForm,
+      onInvitationSuccess,
       toggleInvitationForm,
       toggleUserSearch
     };

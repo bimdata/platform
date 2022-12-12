@@ -1,0 +1,65 @@
+.pdf-manager {
+  &__placeholder {
+    width: 300px;
+    height: 277px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__circle {
+      width: 186px;
+      height: 186px;
+      border-radius: 50%;
+      position: relative;
+
+      .icon {
+        position: absolute; 
+        top: 152px;
+        right: 26px;
+      }
+    } 
+
+    &__content {
+      font-weight: normal;
+      text-align: center;
+    }
+  }
+
+  &__building-maker-btn {
+    position: absolute;
+    right: 124px;
+    top: 3px;
+  }
+  
+  &__building-maker { 
+    position: fixed;
+    top: 0%;
+    right: 0%;
+    z-index: 1000;
+    width: 423px;
+    height: 100vh;
+    box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: var(--color-white);
+
+    &:deep(.bimdata-file-manager) {
+      .file-card__content__header__btn-menu .bimdata-checkbox {
+        // both properties below are a temporary workaround, 
+        // since the given class is not applied thus the style neither
+        top: 6px;
+        right: 6px;
+      }
+    }
+
+    &__close {
+      position: absolute;
+      z-index: 1001;
+      right: var(--spacing-unit);
+      top: calc(var(--spacing-unit) / 2);
+    }
+
+    &__content {
+      height: calc(100% - 32px);
+    }
+  }
+}

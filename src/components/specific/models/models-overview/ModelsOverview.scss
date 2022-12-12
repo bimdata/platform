@@ -1,11 +1,22 @@
 .models-overview {
   @include block-card($padding: calc(var(--spacing-unit) * 2));
+  overflow: visible;
 
   &.bimdata-card {
     &:deep() > .bimdata-card__content {
       display: flex;
       align-items: center;
       gap: 12px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .models-overview {
+    &.bimdata-card {
+      &:deep() > .bimdata-card__content .models-card {
+        flex-grow: 1;
+      }
     }
   }
 }

@@ -41,9 +41,6 @@
     "BreadcrumbSelector": {
         "inputPlaceholder": "Search"
     },
-    "GenericTable": {
-        "pagination": "{start} - {end} of {total}"
-    },
     "GoBackButton": {
         "text": "Back"
     },
@@ -89,7 +86,9 @@
         "manageAccessButtonText": "Manage access",
         "deleteButtonText": "Delete",
         "VisaButtonText": "Validation request",
-        "createModelButtonText": "Define as model"
+        "createModelButtonText": "Define as model",
+        "VersioningButtonText": "Add a version",
+        "removeModelButtonText": "Remove models"
     },
     "FileNameCell": {
         "inputErrorMessage": "Invalid file name",
@@ -104,21 +103,23 @@
         "title": "Delete files",
         "message": "This action will permanently delete the following files/folders :",
         "cancelButtonText": "Cancel",
-        "deleteButtonText": "Delete"
+        "deleteButtonText": "Delete",
+        "messageVersion": "You are about to permanently delete the following files/folders and their associated version history:"
     },
     "FilesManager": {
         "title": "Project Files",
         "searchInputPlaceholder": "Search",
         "createModelNotification": "Model successfully created",
-        "uploadDisableMessage": {
-            "permission": "You don't have permission to do this",
-            "size": "You don't have enough storage space"
-        }
+        "structureImport": "Import a GED structure",
+        "gedDownload": "Download the GED",
+        "folderImport": "Import a folder"
     },
     "FilesManagerOnboarding": {
         "text": "Upload your first file",
         "uploadFileButtonText": "Upload a file",
-        "createFolderButtonText": "Create a folder"
+        "createFolderButtonText": "Create a folder",
+        "GEDStructureImport": "Import a GED structure",
+        "folderImport": "Import a file"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Empty folder",
@@ -133,11 +134,13 @@
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Upload a file"
+        "addFileButtonText": "Upload a file",
+        "shortAddFileButtonText": "File"
     },
     "FileUploadCard": {
         "cancelMessage": "Canceled",
-        "errorMessage": "Upload failed"
+        "errorMessage": "Upload failed",
+        "upload": "{uploaded} to {total} ({percentage}% uploaded)"
     },
     "FileUploader": {
         "uploadAreaText": "Drag and drop to store your project assets",
@@ -152,7 +155,8 @@
         "groupHeader": "Group"
     },
     "FolderCreationButton": {
-        "buttonText": "New folder"
+        "buttonText": "New folder",
+        "shortButtonText": "Folder"
     },
     "FolderCreationForm": {
         "creationFormTitle": "Create folder",
@@ -219,8 +223,7 @@
         "renameButtonText": "Rename",
         "archiveButtonText": "Archive",
         "deleteButtonText": "Delete",
-        "unarchiveButtonText": "Unarchive",
-        "removeButtonText": "Remove from models"
+        "unarchiveButtonText": "Unarchive"
     },
     "ModelLocation": {
         "emptyLocationMessage": "No location data available",
@@ -281,7 +284,6 @@
         "uploadButtonText": "Upload Model"
     },
     "ModelsTable": {
-        "emptyTablePlaceholder": "No model",
         "headers": {
             "id": "ID",
             "name": "Name",
@@ -289,6 +291,10 @@
             "creator": "Creator",
             "lastupdate": "Last modified",
             "status": "Status"
+        },
+        "emptyTablePlaceholder": {
+            "text": "No template",
+            "textPdf": "From the \"File\" menu in GED, click on \"Set as template\" to display your pdf drawings in your project."
         }
     },
     "ProjectCardActionMenu": {
@@ -469,7 +475,27 @@
         "visaUpdateCommentError": "Impossible to edit this comment",
         "visaDeleteCommentError": "Impossible to remove this comment",
         "modelCreateError": "Error creating model",
-        "fileFetchError": ""
+        "fileFetchError": "Error while recovering this folder/file",
+        "bcfImportError": "An error occurred while importing",
+        "bcfExportError": "Export failed...",
+        "fileVersionsFetchError": "The versions of this document cannot be recovered.",
+        "fileVersionsMakeHeadError": "Failed to switch document to current version.",
+        "fileVersionDelete": "Failed to delete document",
+        "userAlreadyExistsError": "This user is already a member of the space/project.",
+        "tagsFetchError": "Impossible to recover tags",
+        "tagsCreateError": "Error while creating the tag",
+        "tagsUpdateError": "Error while modifying the tag",
+        "tagsDeleteError": "Error when deleting the tag",
+        "tagsAddDocumentError": "Error when associating the tag to the document",
+        "tagsDeleteDocumentError": "Error when dissociating the tag from the document",
+        "spaceSizeFullError": "Your storage space is full",
+        "spaceFetchError": "Unable to retrieve information from the space",
+        "projectFolderTreeFetchError": "Unable to retrieve project list",
+        "fileStructureCreateError": "Unable to create the file structure",
+        "documentCreateError": "Unable to upload this document",
+        "invitationViewFetchError": "Unable to retrieve invitation list",
+        "invitationViewAcceptError": "Unable to accept the invitation",
+        "invitationViewDenyError": "Impossible to decline the invitation"
     },
     "ProjectStatusBadge": {
         "new": "NEW",
@@ -540,7 +566,8 @@
             "active": "Active",
             "deleted": "Deleted",
             "paused": "Paused",
-            "custom": "Managed by BIMData.io"
+            "custom": "Managed by BIMData.io",
+            "past_due": "Suspended"
         }
     },
     "DatapackForm": {
@@ -559,9 +586,6 @@
         "datapacks": "Active DataPacks",
         "storage": "Active storage",
         "including": "including {quantity} GB of DataPack"
-    },
-    "GroupMemberInvitation": {
-        "name": "Pending invitation"
     },
     "InvoiceActionsCell": {
         "downloadButton": "Download invoice"
@@ -669,7 +693,6 @@
         "selectedSpace": "Selected space:"
     },
     "SpaceSizeInfo": {
-        "subscribeDatapackButton": "Upgrade storage",
         "subscribePlatformButton": "Upgrade to pro subscription",
         "usage": "{used} used out of {total}"
     },
@@ -724,7 +747,7 @@
             "validator": "Validating",
             "toValidate": "To be validated before",
             "errorDate": "Date invalid",
-            "exempleDate": "format: dd/mm/yyyy",
+            "exempleDate": "(Ex: 31/05/2022)",
             "description": "Description",
             "cancel": "Cancel",
             "validate": "Validate",
@@ -821,179 +844,17 @@
         "ascendingDateTooltip": "increasing date",
         "descendingDateTooltip": "decreasing date",
         "viewGridTooltip": "grid view",
-        "viewListTooltip": "list view"
-    },
-    "BcfComments": {
-        "commentButton": "Post a comment",
-        "commentLabel": "Post a comment",
-        "commentText": "Comment",
-        "cancelButton": "Cancel",
-        "publishButton": "Post",
-        "commentsText": "comments"
-    },
-    "BcfComment": {
-        "deleteCommentText": "Delete this comment?",
-        "deleteButton": "Delete"
-    },
-    "BcfFilters": {
-        "filtersButton": "Filters",
-        "filtersTitle": "Filters",
-        "priorityLabel": "Priority",
-        "statusLabel": "Status",
-        "startDatePlaceholder": "Start date",
-        "startDateExample": "(Ex: 04/28/2022)",
-        "endDatePlaceholder": "End date",
-        "endDateExample": "(Ex: 05/28/2022)",
-        "assignedToLabel": "Assigned to",
-        "creatorsLabel": "Created by",
-        "tagsLabel": "Tags",
-        "resetButton": "Reset",
-        "searchButton": "Search",
-        "noPriority": "No priority",
-        "undefinedStatus": "Undefined",
-        "undefinedUser": "Undefined",
-        "undefinedCreator": "Undefined"
-    },
-    "BcfSettings": {
-        "goBackButton": "Back",
-        "title": "BCF parameters",
-        "validateButton": "Validate BCF parameters",
-        "text": "Create, enter in, and list the BCF settings you would like to have for this project"
-    },
-    "SettingCard": {
-        "addButton": "add an element",
-        "cancelButton": "Cancel",
-        "validateButton": "Validate",
-        "title": {
-            "Priority": "Priorities",
-            "Label": "Tags",
-            "Status": "Status",
-            "Type": "Types",
-            "Stage": "Phases"
-        },
-        "input": {
-            "Priority": "Add a new priority",
-            "Label": "Add a new label",
-            "Status": "Add a new status",
-            "Type": "Add a new type",
-            "Stage": "Add a new phase"
-        },
-        "text": {
-            "Priority": "List of priorities",
-            "Label": "List of tags",
-            "Status": "List of status",
-            "Type": "List of types",
-            "Stage": "List of phases"
-        }
-    },
-    "Extension": {
-        "deleteExtensionText": "Delete this parameter",
-        "deleteButton": "Delete"
-    },
-    "BcfTopicCreationCard": {
-        "text": "Create a new BCF topic",
-        "createBcfSideTitle": "Report a problem"
-    },
-    "BcfTopicGridItem": {
-        "priority": "Priority:",
-        "assignedTo": "Assigned to:",
-        "noPriority": "None",
-        "notSpecified": "Not defined",
-        "elements": "Items",
-        "noElements": "0 Item",
-        "see": "View"
-    },
-    "BcfTopicsList": {
-        "headers": {
-            "index": "#",
-            "priority": "Priority",
-            "status": "Status",
-            "title": "Title",
-            "creator": "Created by",
-            "date": "Date",
-            "actions": "Actions"
-        }
-    },
-    "BcfActionsCell": {
-        "seeButton": "View"
-    },
-    "ModalDeleteTopic": {
-        "deleteText": "You are about to delete {name}",
-        "deleteBcfButton": "Delete this BCF",
-        "keepBcfButton": "Keep this BCF"
-    },
-    "OpenTopicIssue": {
-        "openViewer": "Open in viewer",
-        "openViewerNoModels": "There is no model ready for viewing",
-        "elements": "Items",
-        "noElements": "0 Item",
-        "type": "Type:",
-        "noTypeSpecified": "No type specified",
-        "description": "Description:",
-        "noDescriptionProvided": "No description filled in",
-        "assignedTo": "Assigned to:",
-        "notAssigned": "Not assigned",
-        "dueDate": "Due Date:",
-        "noDueDate": "No due date",
-        "informations": "Informations",
-        "status": "Status:",
-        "noStatusSpecified": "No status specified",
-        "stage": "Phase:",
-        "noStageProvided": "No phase specified",
-        "priority": "Priority:",
-        "priorityNotDefined": "Not defined",
-        "tags": "Tags:",
-        "noTags": "No tags",
-        "commentButton": "Post a comment"
-    },
-    "BcfTopicsMetrics": {
-        "emptyText": "Add issues to see associated statistics here.",
-        "issues": "issues",
-        "extension": {
-            "Priority": "Priority",
-            "PriorityNotDefined": "No priority",
-            "PriorityTitle": "Priorities",
-            "Status": "Status",
-            "StatusNotDefined": "No status",
-            "StatusTitle": "Status"
-        }
-    },
-    "CreateBcfTopic": {
-        "dragDropImageText": "Please select a file",
-        "addPictureButton": "Add an image",
-        "titlePlaceholder": "Title *",
-        "titleErrorMessage": "Missing title",
-        "typeLabel": "Type",
-        "priorityLabel": "Priority",
-        "statusLabel": "Status",
-        "stageLabel": "Phase",
-        "assignedToLabel": "Assigned to",
-        "dueDateLabel": "Due Date (MM/DD/YYYY)",
-        "dateErrorMessage": "Incorrect date or date format",
-        "dateExample": "(Eg: 04/28/2022)",
-        "descriptionLabel": "Description",
-        "tagsLabel": "Tags",
-        "validateButton": "Validate"
-    },
-    "EditBcfTopic": {
-        "goBackButton": "Back",
-        "dragDropImageText": "Please select a file",
-        "addPictureButton": "Add an image",
-        "titlePlaceholder": "Title*",
-        "titleErrorMessage": "Missing title",
-        "typeLabel": "Type",
-        "priorityLabel": "Priority",
-        "statusLabel": "Status",
-        "stageLabel": "Phase",
-        "assignedToLabel": "Assigned to",
-        "descriptionLabel": "Description",
-        "tagsPlaceholder": "Tags",
-        "editButton": "Modify this BCF"
-    },
-    "EditBcfTopicModal": {
-        "modalText": "You are about to leave the {name} issue edition but there are unsaved changes.",
-        "cancelButton": "Cancel changes",
-        "continueButton": "Consult changes"
+        "viewListTooltip": "list view",
+        "metricsTitle": "Total: {count} issues BCF",
+        "metricsEmptyText": "Add issues to see the associated statistics here.",
+        "noSearchResultsTitle": "No results",
+        "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
+        "goBackButton": "Return",
+        "selectedTopicCount": "Number of selected topics",
+        "importBcfNotificationSuccess": "BCF file successfully imported",
+        "importBcfNotificationError": "Error while importing the BCF file",
+        "exportBcfNotificationSuccess": "BCF successfully exported",
+        "exportBcfNotificationError": "Error while exporting the BCF file"
     },
     "GuidedTour": {
         "platform": {
@@ -1046,5 +907,94 @@
                 "content": "Now, all you have left to do is get going on your first project"
             }
         }
+    },
+    "Versioning": {
+        "title": "Version history",
+        "addVersion": "Add a version",
+        "currentVersion": "Current version",
+        "previousVersion": "Previous version",
+        "addedBy": "Added by:",
+        "titleDate": "On",
+        "AddVersion": "Add a new version",
+        "loading": {
+            "subMessage": "This process may take a few moments.",
+            "downloadMessage": "Loading in progress.",
+            "deleteMessage": "Deleting in progress."
+        },
+        "delete": "Delete",
+        "getToHead": "Switch to current version",
+        "download": "Download",
+        "show": "See",
+        "safeZone": {
+            "delete": {
+                "content": "Are you sure you want to delete this version?",
+                "action": "Yes, delete this version",
+                "keepView": "Cancel"
+            }
+        },
+        "emptyArea": "You currently have no version history for this file."
+    },
+    "Tag": {
+        "title": "Tags management",
+        "list": "List of tags",
+        "addTag": "add a tag",
+        "addNewTag": "Add a new tag",
+        "search": "Search",
+        "validate": "Validate",
+        "cancel": "Cancel",
+        "deleteTag": "Delete this tag",
+        "deleteTagButton": "Delete"
+    },
+    "SubscriptionModal": {
+        "title": "Get more space",
+        "subtitle": "You currently have 300mb of storage capacity",
+        "10gbSize": "10 GB",
+        "100mbSize": "+ 100 MB",
+        "soon": "SOON",
+        "upgrade": {
+            "title": "Upgrade to the pro platform",
+            "subtitle": "Subscribe to BIMData Pro to get more space."
+        },
+        "referal": {
+            "title": "Join our referral program!",
+            "subtitle": "Share your referral code to earn space."
+        },
+        "linkedin": {
+            "title": "Connect your LinkedIn account",
+            "subtitle": "Follow the BIMData page to earn space."
+        },
+        "uploadDisableMessage": {
+            "permission": "You don't have the required rights",
+            "size": "You don't have enough storage space"
+        }
+    },
+    "FileTreePreview": {
+        "title": "Import GED structure from",
+        "cancel": "Cancel",
+        "validate": "Validate"
+    },
+    "GroupMemberCard": {
+        "pending": "Invitation in progress"
+    },
+    "ProfileSettings": {
+        "title": "Profile settings",
+        "loading": {
+            "message": "Deleting in progress.",
+            "subMessage": "This process may take a few moments, please stay on the page."
+        }
+    },
+    "Invitations": {
+        "title": "My invitations",
+        "invitCounter": "Invitations in progress -",
+        "acceptAll": "Accept all",
+        "invitedInProject": "You were invited by {sender} to join the {project} project in the {cloud} space",
+        "invitedInSpace": "You have been invited by {sender} to join the {cloud} space",
+        "invitAccepted": "Accepted invitation",
+        "invitDenied": "Invitation declined",
+        "invitPending": "Invitation in progress",
+        "goToProjectLong": "Access to the project",
+        "goToProjectShort": "Project",
+        "goToSpaceLong": "Access to the space",
+        "goToSpaceShort": "The space"
     }
 }
