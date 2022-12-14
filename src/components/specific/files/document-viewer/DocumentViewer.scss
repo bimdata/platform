@@ -44,8 +44,21 @@
       color: var(--color-white);
     }
 
-    .bimdata-model-preview {
-      border-radius: 10px;
+    .btn-box {
+      border-radius: 50%;
+      padding: var(--spacing-unit);
+    }
+
+    .preview-container {
+      width: 80%;
+      height: calc(100% - var(--spacing-unit)  * 4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .bimdata-model-preview {
+        border-radius: 10px;
+      }
     }
 
     .pdf-container {
@@ -55,9 +68,7 @@
     }
 
     .img-container {
-      min-width: 500px;
-      max-width: 80%;
-      width: fit-content;
+      width: 80%;
       height: calc(100% - var(--spacing-unit)  * 4);
       display: flex;
       justify-content: center;
@@ -72,7 +83,7 @@
     }
 
     .doc-placeholder {
-      width: 500px;
+      width: 80%;
       text-align: center;
       color: var(--color-white);
     }

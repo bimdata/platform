@@ -2,7 +2,7 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
-import { MODEL_TYPE } from "../../../../config/models.js";
+import { MODEL_ICON, MODEL_TYPE } from "../../../../config/models.js";
 import routeNames from "../../../../router/route-names.js";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
@@ -51,6 +51,8 @@ const fileType = computed(() => {
   return doc.model_type ?? fileExtension(doc.file_name);
 });
 const file = computed(() => {
+  const models = projectModels.value;
+  const doc = currentDocument.value;
   switch (fileType.value) {
     case IFC:
     case ".ifc":
@@ -58,14 +60,12 @@ const file = computed(() => {
     case ".dwg":
     case DXF:
     case ".dxf":
-      return projectModels.value.find(
-        m => m.id === currentDocument.value.model_id
-      )?.preview_file;
+      return models.find(m => m.id === doc.model_id)?.preview_file;
     case PDF:
     case ".pdf":
-      return { file: currentDocument.value.file };
+      return { file: doc.file };
     default:
-      return currentDocument.value.file;
+      return doc.file;
   }
 });
 
@@ -114,13 +114,17 @@ const download = () => {
         radius
         @click="openInViewer"
       >
-        <BIMDataIcon name="show" size="xs" margin="0 6px 0 0" />
+        <BIMDataIcon
+          :name="MODEL_ICON[currentDocument.model_type]"
+          size="s"
+          margin="0 6px 0 0"
+        />
         {{ $t("DocumentViewer.viewerButton") }}
       </BIMDataButton>
 
       <div class="document-viewer__head__actions">
         <BIMDataButton ghost rounded icon @click="download">
-          <BIMDataIcon name="download" size="xs" />
+          <BIMDataIcon name="download" size="m" />
         </BIMDataButton>
         <BIMDataButton ghost rounded icon @click="closeModal">
           <BIMDataIcon name="close" size="xxs" />
@@ -133,26 +137,30 @@ const download = () => {
         <BIMDataTextbox :text="currentDocument?.name" />
       </div>
 
-      <BIMDataButton
-        width="40px"
-        height="40px"
-        fill
-        rounded
-        icon
-        :disabled="index === 0"
-        @click="index--"
-      >
-        <BIMDataIcon name="chevron" size="xs" :rotate="180" />
-      </BIMDataButton>
+      <div class="btn-box">
+        <BIMDataButton
+          width="40px"
+          height="40px"
+          fill
+          rounded
+          icon
+          :disabled="index === 0"
+          @click="index--"
+        >
+          <BIMDataIcon name="chevron" size="xs" :rotate="180" />
+        </BIMDataButton>
+      </div>
 
       <template v-if="file">
         <template v-if="[DWG, DXF, IFC].includes(fileType)">
-          <BIMDataModelPreview
-            :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
-            :previewUrl="file"
-            :width="500"
-            :height="500"
-          />
+          <div class="preview-container">
+            <BIMDataModelPreview
+              :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
+              :previewUrl="file"
+              :width="600"
+              :height="600"
+            />
+          </div>
         </template>
 
         <template v-else-if="[PDF, '.pdf'].includes(fileType)">
@@ -174,17 +182,19 @@ const download = () => {
         </div>
       </template>
 
-      <BIMDataButton
-        width="40px"
-        height="40px"
-        fill
-        rounded
-        icon
-        :disabled="index === documents.length - 1"
-        @click="index++"
-      >
-        <BIMDataIcon name="chevron" size="xs" />
-      </BIMDataButton>
+      <div class="btn-box">
+        <BIMDataButton
+          width="40px"
+          height="40px"
+          fill
+          rounded
+          icon
+          :disabled="index === documents.length - 1"
+          @click="index++"
+        >
+          <BIMDataIcon name="chevron" size="xs" />
+        </BIMDataButton>
+      </div>
     </div>
   </div>
 </template>
