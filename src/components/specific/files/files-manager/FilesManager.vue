@@ -22,7 +22,7 @@
               height="32px"
               :menuItems="menuItems"
               :subListMaxHeight="dropdownMaxHeight"
-              @click="toggle"
+              @click="toggleTree"
             >
               <template #header>
                 <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
@@ -675,6 +675,43 @@ export default {
           };
         }
       }));
+
+      // projectsTree.value = spaceProjects.value
+      //   .filter(({ isAdmin }) => isAdmin)
+      //   .map(p => ({
+      //     name: p.name,
+      //     action: () => {
+      //       openModal();
+      //       projectsToUpload.value = {
+      //         ...p,
+      //         folders: treeIdGenerator(p),
+      //         upload: () => {
+      //           FileService.createFileStructure(props.project, p.folders);
+      //           emit("file-updated");
+      //         }
+      //       };
+      //     }
+      //   }));
+    };
+
+    const toggleTree = async () => {
+      projectsTree.value = (
+        await fetchProjectFolderTreeSerializers(props.project)
+      ).map(p => ({
+        name: p.name,
+        action: () => {
+          openModal();
+          projectsToUpload.value = {
+            ...p,
+            folders: treeIdGenerator(p),
+            upload: () => {
+              FileService.createFileStructure(props.project, p.folders);
+              emit("file-updated");
+            }
+          };
+        }
+      }));
+      toggle();
     };
 
     watch(
@@ -718,7 +755,7 @@ export default {
     onMounted(() => {
       fetchVisas();
       fetchTags();
-      fetchProjectsTree();
+      // fetchProjectsTree();
     });
 
     const fileManager = ref(null);
@@ -762,7 +799,8 @@ export default {
       isOpen,
       menuItems,
       // Methods
-      toggle,
+      // toggle,
+      toggleTree,
       close,
       closeAccessManager,
       closeDeleteModal,
