@@ -10,7 +10,7 @@ import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
 import { windowType } from "../../../../utils/models.js";
 
-const { DWG, DXF, IFC, PDF } = MODEL_TYPE;
+const { DWG, DXF, IFC, JPEG, PDF, PNG } = MODEL_TYPE;
 
 const props = defineProps({
   project: {
@@ -55,17 +55,28 @@ const file = computed(() => {
   const doc = currentDocument.value;
   switch (fileType.value) {
     case IFC:
-    case ".ifc":
     case DWG:
-    case ".dwg":
     case DXF:
+    case ".ifc":
+    case ".dwg":
     case ".dxf":
       return models.find(m => m.id === doc.model_id)?.preview_file;
     case PDF:
     case ".pdf":
       return { file: doc.file };
-    default:
+    case JPEG:
+    case PNG:
+    case ".apng":
+    case ".avif":
+    case ".gif":
+    case ".jpeg":
+    case ".jpg":
+    case ".png":
+    case ".svg":
+    case ".webp":
       return doc.file;
+    default:
+      return null;
   }
 });
 
