@@ -22,7 +22,7 @@
               height="32px"
               :menuItems="menuItems"
               :subListMaxHeight="dropdownMaxHeight"
-              @click="toggleTree"
+              @click="toggleDropdown"
             >
               <template #header>
                 <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
@@ -299,7 +299,6 @@
 
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
-import async from "async";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
@@ -658,43 +657,7 @@ export default {
     };
 
     const projectsTree = ref([]);
-    const fetchProjectsTree = async () => {
-      projectsTree.value = (
-        await fetchProjectFolderTreeSerializers(props.project)
-      ).map(p => ({
-        name: p.name,
-        action: () => {
-          openModal();
-          projectsToUpload.value = {
-            ...p,
-            folders: treeIdGenerator(p),
-            upload: () => {
-              FileService.createFileStructure(props.project, p.folders);
-              emit("file-updated");
-            }
-          };
-        }
-      }));
-
-      // projectsTree.value = spaceProjects.value
-      //   .filter(({ isAdmin }) => isAdmin)
-      //   .map(p => ({
-      //     name: p.name,
-      //     action: () => {
-      //       openModal();
-      //       projectsToUpload.value = {
-      //         ...p,
-      //         folders: treeIdGenerator(p),
-      //         upload: () => {
-      //           FileService.createFileStructure(props.project, p.folders);
-      //           emit("file-updated");
-      //         }
-      //       };
-      //     }
-      //   }));
-    };
-
-    const toggleTree = async () => {
+    const toggleDropdown = async () => {
       projectsTree.value = (
         await fetchProjectFolderTreeSerializers(props.project)
       ).map(p => ({
@@ -755,7 +718,6 @@ export default {
     onMounted(() => {
       fetchVisas();
       fetchTags();
-      // fetchProjectsTree();
     });
 
     const fileManager = ref(null);
@@ -799,8 +761,7 @@ export default {
       isOpen,
       menuItems,
       // Methods
-      // toggle,
-      toggleTree,
+      toggleDropdown,
       close,
       closeAccessManager,
       closeDeleteModal,
