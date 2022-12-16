@@ -22,7 +22,7 @@
               height="32px"
               :menuItems="menuItems"
               :subListMaxHeight="dropdownMaxHeight"
-              @click="toggle"
+              @click="toggleDropdown"
             >
               <template #header>
                 <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
@@ -299,7 +299,6 @@
 
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
-import async from "async";
 import { useI18n } from "vue-i18n";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
@@ -658,7 +657,7 @@ export default {
     };
 
     const projectsTree = ref([]);
-    const fetchProjectsTree = async () => {
+    const toggleDropdown = async () => {
       projectsTree.value = (
         await fetchProjectFolderTreeSerializers(props.project)
       ).map(p => ({
@@ -675,6 +674,7 @@ export default {
           };
         }
       }));
+      toggle();
     };
 
     watch(
@@ -718,7 +718,6 @@ export default {
     onMounted(() => {
       fetchVisas();
       fetchTags();
-      fetchProjectsTree();
     });
 
     const fileManager = ref(null);
@@ -762,7 +761,7 @@ export default {
       isOpen,
       menuItems,
       // Methods
-      toggle,
+      toggleDropdown,
       close,
       closeAccessManager,
       closeDeleteModal,
