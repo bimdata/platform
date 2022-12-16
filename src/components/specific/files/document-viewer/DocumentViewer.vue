@@ -9,6 +9,8 @@ import { useModels } from "../../../../state/models.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
 import { windowType } from "../../../../utils/models.js";
+// Componentqs
+import NoDocPreviewImage from "../../../images/NoDocPreviewImage.vue";
 
 const { DWG, DXF, IFC, JPEG, PDF, PNG } = MODEL_TYPE;
 
@@ -189,7 +191,8 @@ const download = () => {
 
       <template v-else>
         <div class="doc-placeholder">
-          {{ $t("DocumentViewer.docPlaceholder") }}
+          <NoDocPreviewImage style="width: 200px; height: 200px" />
+          <div>{{ $t("DocumentViewer.docPlaceholder") }}</div>
         </div>
       </template>
 
