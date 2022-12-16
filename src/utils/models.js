@@ -50,8 +50,8 @@ function isModel(file) {
 }
 
 function isPlanModel(model) {
-  const { JPG, PDF, PNG } = MODEL_TYPE;
-  return [JPG, PDF, PNG].includes(model.type);
+  const { JPEG, PDF, PNG } = MODEL_TYPE;
+  return [JPEG, PDF, PNG].includes(model.type);
 }
 
 function isIFC(file) {
@@ -97,8 +97,7 @@ function extensionListFromType(type) {
   if (type === DWG) return [MODEL_EXTENSIONS.DWG];
   if (type === DXF) return [MODEL_EXTENSIONS.DXF];
   if (type === PDF) return [MODEL_EXTENSIONS.PDF];
-  if (type === PHOTOS)
-    return [MODEL_EXTENSIONS.PNG, MODEL_EXTENSIONS.JPG, MODEL_EXTENSIONS.JPEG];
+  if (type === PHOTOS) return [MODEL_EXTENSIONS.PNG, MODEL_EXTENSIONS.JPEG];
   if (type === POINT_CLOUD)
     return [
       MODEL_EXTENSIONS.E57,

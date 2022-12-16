@@ -61,7 +61,7 @@
           size="xxs"
           fill
           color="primary"
-          @click="$emit('open-versioning-manager', file)"
+          @click.stop="$emit('open-versioning-manager', file)"
         />
       </div>
     </transition>

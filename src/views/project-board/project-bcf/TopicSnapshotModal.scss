@@ -1,0 +1,14 @@
+.topic-snapshot-modal {
+  width: fit-content;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    max-height: calc(100vh - 72px);
+    background-color: var(--color-silver-light);
+    border-radius: 10px;
+  }
+}

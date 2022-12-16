@@ -199,7 +199,7 @@
             :topic="currentTopic"
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
-            @view-topic-viewpoint="topicViewpoint"
+            @view-topic-viewpoint="openTopicSnapshot"
             @topic-deleted="reloadBcfTopics(), closeSidePanel()"
             @comment-created="reloadComments(currentTopic)"
             @comment-updated="reloadComments(currentTopic)"
@@ -332,9 +332,19 @@
         </Transition>
       </div>
     </div>
-    <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
-      <SnapshotModal :topicSnapshot="topicSnapshot" />
-    </AppModal>
+
+    <AppModalContent
+      :boxStyle="{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(47, 55, 74, 0.8)'
+      }"
+      closeBtnColor="white"
+    >
+      <div class="topic-snapshot-modal" v-click-away="closeTopicSnapshot">
+        <img :src="topicSnapshot" />
+      </div>
+    </AppModalContent>
   </div>
 </template>
 
@@ -349,6 +359,8 @@ import {
 import { computed, onActivated, onDeactivated, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
+import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
@@ -359,24 +371,21 @@ import { useBcf } from "../../../state/bcf.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { fileUploadInput } from "../../../utils/upload.js";
-import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
-import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
+
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
+import AppModalContent from "../../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
-import AppModal from "../../../components/specific/app/app-modal/AppModal.vue";
-import SnapshotModal from "../snapshot-modal/SnapshotModal.vue";
 
 export default {
   components: {
+    AppModalContent,
     AppSidePanelContent,
     AppSlotContent,
     BcfStatisticsEmptyImage,
-    NoSearchResultsImage,
-    AppModal,
-    SnapshotModal
+    NoSearchResultsImage
   },
   setup() {
     const { t } = useI18n();
@@ -478,12 +487,6 @@ export default {
         selection.set(topic.guid, topic);
       }
       selectedTopics.value = new Map([...selection.entries()]);
-      fullSelectionRef.value =
-        selection.size < topics.value.length
-          ? selection.size > 0
-            ? null
-            : false
-          : true;
     };
 
     const toggleFullSelection = () => {
@@ -581,11 +584,15 @@ export default {
       openSidePanel();
     };
 
-    const { openModal } = useAppModal();
-    const topicSnapshot = ref();
-    const topicViewpoint = topic => {
+    const { openModal, closeModal } = useAppModal();
+    const topicSnapshot = ref(null);
+    const openTopicSnapshot = topic => {
       openModal();
       topicSnapshot.value = topic.snapshot.snapshot_data;
+    };
+    const closeTopicSnapshot = () => {
+      closeModal();
+      topicSnapshot.value = null;
     };
 
     const openTopicViewer = topic => {
@@ -651,6 +658,7 @@ export default {
       applyFilters,
       closeMetrics,
       closeSidePanel,
+      closeTopicSnapshot,
       exportBcfTopics,
       fileUploadInput,
       importBcfTopics,
@@ -658,6 +666,7 @@ export default {
       openTopicCreate,
       openTopicUpdate,
       openTopicOverview,
+      openTopicSnapshot,
       openTopicViewer,
       reloadBcfTopics,
       reloadComments,
@@ -665,7 +674,6 @@ export default {
       sortByDate,
       sortByIndex,
       sortByTitle,
-      topicViewpoint,
       toggleFullSelection,
       toggleMetrics,
       toggleTopicSelection,

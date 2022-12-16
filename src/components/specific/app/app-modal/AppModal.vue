@@ -1,51 +1,33 @@
 <template>
-  <teleport to="#app-modal-container">
-    <transition name="fade">
-      <div
-        class="app-modal__overlay"
-        :class="{ 'app-modal__large': isModalLarge }"
-        v-show="showModal"
-      >
-        <div class="app-modal__box" :style="{ backgroundColor: bgColor }">
-          <BIMDataButton
-            class="app-modal__box__btn-close"
-            ghost
-            rounded
-            icon
-            @click="closeModal"
-          >
-            <BIMDataIcon name="close" size="xxs" fill :color="iconColor" />
-          </BIMDataButton>
-          <slot></slot>
-        </div>
+  <Teleport to="#app-modal-container">
+    <Transition name="fade">
+      <div class="app-modal__overlay" v-show="showModal">
+        <template v-if="content">
+          <component :is="content.component" v-bind="content.props" />
+        </template>
+        <template v-else>
+          <AppSlot name="app-modal" />
+        </template>
       </div>
-    </transition>
-  </teleport>
+    </Transition>
+  </Teleport>
 </template>
 
 <script>
 import { useAppModal } from "./app-modal.js";
+// Components
+import AppSlot from "../app-slot/AppSlot.js";
 
 export default {
-  props: {
-    bgColor: {
-      type: String,
-      default: "var(--color-white)"
-    },
-    iconColor: {
-      type: String,
-      default: "granite-light"
-    },
-    isModalLarge: {
-      type: Boolean,
-      default: false
-    }
+  components: {
+    AppSlot
   },
   setup() {
-    const { showModal, closeModal } = useAppModal();
+    const { content, showModal, closeModal } = useAppModal();
 
     return {
       // References
+      content,
       showModal,
       // Methods
       closeModal

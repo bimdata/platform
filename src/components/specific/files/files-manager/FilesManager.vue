@@ -5,12 +5,6 @@
     :titleHeader="$t('FilesManager.title')"
   >
     <template #content>
-      <AppModal v-if="projectsToUpload">
-        <FileTreePreviewModal
-          :projectsToUpload="projectsToUpload"
-          :loadingData="loadingData"
-        />
-      </AppModal>
       <template v-if="fileStructure.children.length > 0">
         <div class="files-manager__actions start">
           <template v-if="menuItems.length > 0">
@@ -83,12 +77,7 @@
                 color="primary"
                 fill
                 radius
-                @click="
-                  {
-                    openModal();
-                    $emit('switch-sub-modal', true);
-                  }
-                "
+                @click="openSubscriptionModal"
               >
                 <BIMDataIcon name="addFile" size="xs" />
                 <span
@@ -293,6 +282,13 @@
           @file-uploaded="$emit('file-uploaded')"
         />
       </template>
+
+      <AppModalContent v-if="projectsToUpload">
+        <FileTreePreviewModal
+          :projectsToUpload="projectsToUpload"
+          :loadingData="loadingData"
+        />
+      </AppModalContent>
     </template>
   </BIMDataCard>
 </template>
@@ -322,7 +318,8 @@ import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
-import AppModal from "../../app/app-modal/AppModal.vue";
+import AppModalContent from "../../app/app-modal/AppModalContent.vue";
+import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
@@ -331,13 +328,14 @@ import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
 import FolderCreationButton from "../folder-creation-button/FolderCreationButton.vue";
+import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
 
 export default {
   components: {
-    AppModal,
+    AppModalContent,
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,
@@ -377,8 +375,7 @@ export default {
     "file-updated",
     "folder-permission-updated",
     "group-permission-updated",
-    "model-created",
-    "switch-sub-modal"
+    "model-created"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -443,6 +440,15 @@ export default {
     const onFileSelected = file => {
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
+      } else {
+        openModal({
+          component: DocumentViewer,
+          props: {
+            project: props.project,
+            folder: currentFolder.value,
+            document: file
+          }
+        });
       }
     };
 
@@ -730,6 +736,10 @@ export default {
       }px`;
     });
 
+    const openSubscriptionModal = () => {
+      openModal({ component: SubscriptionModal });
+    };
+
     return {
       // References
       currentFolder,
@@ -785,8 +795,8 @@ export default {
       closeVersioningManager,
       hasAdminPerm,
       isFullTotal,
-      openModal,
       fileUploadInput,
+      openSubscriptionModal,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,

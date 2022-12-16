@@ -13,7 +13,7 @@ export default {
     },
     target: {
       type: String,
-      default: () => ""
+      default: ""
     }
   }
 };

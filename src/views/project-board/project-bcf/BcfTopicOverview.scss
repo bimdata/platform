@@ -1,0 +1,20 @@
+.bcf-topic-overview {
+  &:deep(.bcf-topic-viewpoints) {
+    .snapshot-preview {
+      position: relative;
+
+      img {
+        transition: all ease-in 0.35s;
+      }
+
+      &:hover {
+        cursor: pointer;
+        img {
+          transition: all ease 0.35s;
+          transform: scale(1.05);
+          opacity: 0.9;
+        }
+      }
+    }
+  }
+}
