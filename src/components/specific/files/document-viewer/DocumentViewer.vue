@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { MODEL_ICON, MODEL_TYPE } from "../../../../config/models.js";
@@ -96,6 +96,9 @@ const onKeyUp = ({ key }) => {
   }
 };
 
+onMounted(() => document.addEventListener("keyup", onKeyUp));
+onUnmounted(() => document.removeEventListener("keyup", onKeyUp));
+
 const openInViewer = () => {
   closeModal();
   const doc = currentDocument.value;
@@ -119,7 +122,7 @@ const download = () => {
 </script>
 
 <template>
-  <div class="document-viewer" @keyup.prevent="onKeyUp">
+  <div class="document-viewer">
     <div class="document-viewer__head">
       <BIMDataButton
         v-show="currentDocument.model_id"
