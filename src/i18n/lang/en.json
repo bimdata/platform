@@ -216,14 +216,16 @@
         },
         "cancelButtonText": "Cancel",
         "submitButtonText": "Send invitation",
-        "successNotifText": "Invitation sent"
+        "successNotifText": "Invitation sent",
+        "successUsertoAdmin": "The user has now admin role"
     },
     "ModelActionsCell": {
         "addTagsButtonText": "Add tags",
         "renameButtonText": "Rename",
         "archiveButtonText": "Archive",
         "deleteButtonText": "Delete",
-        "unarchiveButtonText": "Unarchive"
+        "unarchiveButtonText": "Unarchive",
+        "editButtontext": "Edit"
     },
     "ModelLocation": {
         "emptyLocationMessage": "No location data available",
@@ -268,7 +270,8 @@
             "dwg": "DWG",
             "metaBuildings": "Meta Buildings",
             "upload": "Upload"
-        }
+        },
+        "add": "Add"
     },
     "ModelsMergeModal": {
         "title": "Merge selection",
@@ -295,6 +298,9 @@
         "emptyTablePlaceholder": {
             "text": "No template",
             "textPdf": "From the \"File\" menu in GED, click on \"Set as template\" to display your pdf drawings in your project."
+        },
+        "buildingMaker": {
+            "create": "Create"
         }
     },
     "ProjectCardActionMenu": {
@@ -850,11 +856,11 @@
         "noSearchResultsTitle": "No results",
         "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
         "goBackButton": "Return",
-        "selectedTopicCount": "Number of selected topics",
         "importBcfNotificationSuccess": "BCF file successfully imported",
         "importBcfNotificationError": "Error while importing the BCF file",
         "exportBcfNotificationSuccess": "BCF successfully exported",
-        "exportBcfNotificationError": "Error while exporting the BCF file"
+        "exportBcfNotificationError": "Error while exporting the BCF file",
+        "selectedTopicCount": "Number of selected topics"
     },
     "GuidedTour": {
         "platform": {
