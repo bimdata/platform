@@ -8,6 +8,7 @@
         <BIMDataCard class="project-users-manager__manager">
           <template #right>
             <BIMDataButton
+              data-test-id="btn-invit"
               v-if="project.isAdmin"
               ghost
               rounded

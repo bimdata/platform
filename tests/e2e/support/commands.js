@@ -17,7 +17,8 @@ Cypress.Commands.add(
         cy.get("input[name=password1]").type(user.password);
         cy.get("input[name=password2]").type(user.password);
         cy.get("input[type=submit]").click();
-
+        cy.get("input[type=submit][value=Accept]").click();
+        
         return cy.url()
           .should("contain", Cypress.env("APP_BASE_URL"))
           .then(() => user);
@@ -124,5 +125,22 @@ Cypress.Commands.add(
       cy.hook("btn-confirm-delete").click();
     });
     cy.hook("tag-list").contains(name).should("not.exist");
+  }
+);
+
+Cypress.Commands.add(
+  "invitInProject",
+  (user1, user2) => {
+    cy.task("get-user", user1).then(user => cy.login(user));
+    cy.visit("/projects");
+    cy.hook("project-card").first().click();
+    cy.hook("btn-invit").click();
+
+    cy.task("get-user", user2).then(({ email }) => {
+      cy.get("input[class=invitation-form__input__email]").type(email);
+      cy.hook("btn-submit-invit").click();
+
+      cy.hook("view-project-board").contains(email).should("have.length", 1);
+    });
   }
 );
