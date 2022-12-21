@@ -7,7 +7,7 @@ const { t } = i18n.global;
 const { projectView } = useSession();
 const { isMidXL } = useStandardBreakpoints();
 
-const GUIDED_TOUR_ENABLED = bimdata.env.VUE_APP_GUIDED_TOUR_ENABLED;
+const GUIDED_TOUR_ENABLED = ENV.VUE_APP_GUIDED_TOUR_ENABLED;
 const IS_GUIDED_TOUR_ENABLED = GUIDED_TOUR_ENABLED === "true";
 
 const IMG_PATH = "/static/guidedTour/platform/";
