@@ -70,7 +70,7 @@ export default {
       deleteLoader,
       displayIframe,
       showGlobalLoader,
-      bimDataConnectUrl: bimdata.env.VUE_APP_URL_BIMDATACONNECT,
+      bimDataConnectUrl: ENV.VUE_APP_URL_BIMDATACONNECT,
       // Methods
       getBack: () => router.back()
     };

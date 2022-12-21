@@ -54,7 +54,7 @@ class BcfService {
       formData.append("name", file.name);
       formData.append("file", file);
       await fetch(
-        `${bimdata.env.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/import`,
+        `${ENV.VUE_APP_API_BASE_URL}/bcf/2.1/projects/${project.id}/import`,
         {
           method: "POST",
           credentials: "include",

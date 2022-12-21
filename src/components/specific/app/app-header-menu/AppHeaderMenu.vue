@@ -144,10 +144,10 @@ export default {
     } = useToggle();
 
     const bimdataConnectProfileUrl =
-      bimdata.env.VUE_APP_URL_BIMDATACONNECT + "/profile/";
-    const documentationUrl = bimdata.env.VUE_APP_URL_DOCUMENTATION;
-    const marketPlaceUrl = bimdata.env.VUE_APP_URL_MARKETPLACE;
-    const userIframeProfile = bimdata.env.VUE_APP_USER_IFRAME_PROFILE;
+      ENV.VUE_APP_URL_BIMDATACONNECT + "/profile/";
+    const documentationUrl = ENV.VUE_APP_URL_DOCUMENTATION;
+    const marketPlaceUrl = ENV.VUE_APP_URL_MARKETPLACE;
+    const userIframeProfile = ENV.VUE_APP_USER_IFRAME_PROFILE;
 
     return {
       // References

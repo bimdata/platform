@@ -20,5 +20,8 @@ module.exports = {
         arrowParens: "avoid"
       }
     ]
+  },
+  globals: {
+    ENV: true
   }
 };

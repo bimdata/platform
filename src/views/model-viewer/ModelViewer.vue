@@ -42,7 +42,7 @@ export default {
     const { currentSpace } = useSpaces();
     const loading = ref(false);
 
-    const apiUrl = bimdata.env.VUE_APP_API_BASE_URL;
+    const apiUrl = ENV.VUE_APP_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs =
