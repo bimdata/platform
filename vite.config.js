@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
 
   if (mode !== "production") {
     config.plugins.push(
-      env("all", { prefix: "VUE_APP_", defineOn: "process.env" })
+      env("all", { prefix: "VUE_APP_", defineOn: "bimdata.env" })
     );
   }
 

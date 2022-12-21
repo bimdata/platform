@@ -33,7 +33,7 @@ import AppGlobalLoader from "../../components/specific/app/app-global-loader/App
 export default {
   components: {
     GoBackButton,
-    AppGlobalLoader,
+    AppGlobalLoader
   },
   setup() {
     const router = useRouter();
@@ -46,7 +46,7 @@ export default {
     const displayIframe = ref(true);
 
     onMounted(() => {
-      window.addEventListener("message", async (message) => {
+      window.addEventListener("message", async message => {
         switch (message.data) {
           case "profile update successful":
             displayIframe.value = false;
@@ -70,11 +70,11 @@ export default {
       deleteLoader,
       displayIframe,
       showGlobalLoader,
-      bimDataConnectUrl: process.env.VUE_APP_URL_BIMDATACONNECT,
+      bimDataConnectUrl: bimdata.env.VUE_APP_URL_BIMDATACONNECT,
       // Methods
-      getBack: () => router.back(),
+      getBack: () => router.back()
     };
-  },
+  }
 };
 </script>
 
