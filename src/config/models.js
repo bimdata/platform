@@ -43,7 +43,8 @@ const UPLOADABLE_EXTENSIONS = Object.freeze([
   ".dwg",
   ".dxf",
   ".ifc",
-  ".ifczip"
+  ".ifczip",
+  ".pdf"
 ]);
 
 /**
@@ -53,7 +54,6 @@ const UPLOADABLE_EXTENSIONS = Object.freeze([
 const CONVERTIBLE_EXTENSIONS = Object.freeze([
   ".jpeg",
   ".jpg",
-  ".pdf",
   ".png"
 ]);
 
