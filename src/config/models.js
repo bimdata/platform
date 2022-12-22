@@ -42,8 +42,12 @@ const MODEL_EXTENSIONS = Object.freeze({
 const UPLOADABLE_EXTENSIONS = Object.freeze([
   ".dwg",
   ".dxf",
+  ".e57",
   ".ifc",
-  ".ifczip"
+  ".ifczip",
+  ".las",
+  ".laz",
+  ".ply"
 ]);
 
 /**

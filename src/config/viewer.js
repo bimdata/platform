@@ -24,7 +24,7 @@ const WINDOWS = Object.freeze({
   IFC2D: "2d",
   IFC3D: "3d",
   PLAN: "plan",
-  TILESET: "tileset"
+  TILESET: "pointCloud"
 });
 
 /**
@@ -68,7 +68,7 @@ const PLUGINS_CONFIG = {
     merge: true,
     export: true
   },
-  tileset: false, // TODO: set to true when point-cloud is ready
+  tileset: true,
   "tileset-viewer-parameters": true,
   "viewer2d-background": true,
   viewer3d: {

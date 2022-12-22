@@ -116,15 +116,15 @@ const tabsDef = [
     modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
     component: "PDFManager"
   },
-  // TODO: uncomment when point-cloud is ready
-  // {
-  //   id: "point-cloud",
-  //   label: "Point Cloud",
-  //   icon: MODEL_ICON.POINT_CLOUD,
-  //   type: MODEL_TYPE.POINT_CLOUD,
-  //   modelTypes: [MODEL_TYPE.POINT_CLOUD],
-  //   component: "PointCloudManager"
-  // }
+  {
+    id: "point-cloud",
+    label: "Point Cloud",
+    icon: MODEL_ICON.POINT_CLOUD,
+    type: MODEL_TYPE.POINT_CLOUD,
+    modelTypes: [MODEL_TYPE.POINT_CLOUD],
+    component: "PointCloudManager",
+    beta: true
+  },
   {
     id: "photos",
     label: "Photos",
@@ -132,7 +132,7 @@ const tabsDef = [
     type: MODEL_TYPE.PHOTOS,
     modelTypes: [MODEL_TYPE.JPEG, MODEL_TYPE.PNG],
     component: "DWGManager"
-  }
+  },
 ];
 
 export default {
