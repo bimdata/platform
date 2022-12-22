@@ -122,7 +122,8 @@ const tabsDef = [
     icon: MODEL_ICON.POINT_CLOUD,
     type: MODEL_TYPE.POINT_CLOUD,
     modelTypes: [MODEL_TYPE.POINT_CLOUD],
-    component: "PointCloudManager"
+    component: "PointCloudManager",
+    beta: true
   },
   {
     id: "photos",
@@ -131,6 +132,7 @@ const tabsDef = [
     type: MODEL_TYPE.PHOTOS,
     modelTypes: [MODEL_TYPE.JPEG, MODEL_TYPE.PNG],
     component: "DWGManager"
+  },
 ];
 
 export default {
