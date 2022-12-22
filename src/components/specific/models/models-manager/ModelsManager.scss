@@ -14,13 +14,13 @@
   }
 
   &__tab {
-    width: 188px;
+    width: 193px;
     height: 100%;
     padding: 0 var(--spacing-unit);
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--spacing-unit);
+    gap: calc(var(--spacing-unit) * 0.5);
     cursor: pointer;
 
     opacity: 0.6;
@@ -29,6 +29,10 @@
     &.selected {
       opacity: 1;
       background-color: var(--color-white);
+    }
+
+    &__text {
+      white-space: nowrap;
     }
 
     &__icon {
