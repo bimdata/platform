@@ -128,19 +128,48 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add("fillInvitForm", user => {
+  cy.hook("btn-invit").click();
+
+  cy.task("get-user", user).then(({ email }) => {
+    cy.get("input[class=invitation-form__input__email]").type(email);
+    cy.hook("btn-submit-invit").click();
+
+    cy.hook("view-project-board").contains(email).should("have.length", 1);
+  });
+})
+
 Cypress.Commands.add(
   "invitInProject",
-  (user1, user2) => {
-    cy.task("get-user", user1).then(user => cy.login(user));
+  (requester, requested) => {
+    cy.task("get-user", requester).then(user => cy.login(user));
     cy.visit("/projects");
     cy.hook("project-card").first().click();
-    cy.hook("btn-invit").click();
 
-    cy.task("get-user", user2).then(({ email }) => {
-      cy.get("input[class=invitation-form__input__email]").type(email);
-      cy.hook("btn-submit-invit").click();
-
-      cy.hook("view-project-board").contains(email).should("have.length", 1);
-    });
+    cy.fillInvitForm(requested)
   }
 );
+
+Cypress.Commands.add(
+  "acceptInvit",
+ (requester, requested) => {
+  cy.task("get-user", requested).then(user => cy.login(user))
+  cy.visit("/invitations",);
+
+  cy.task("get-user", requester).then(({ firstname, lastname }) => {
+    cy.hook("card-invitation", { timeout: 60000 }).first().within(() => {
+      cy.contains(firstname).should("have.length", 1);
+      cy.contains(lastname).should("have.length", 1);
+
+      cy.hook("btn-accept-invit").click();
+      cy.hook("btn-go-to-project").click();
+    });
+  })
+
+  cy.task("get-user", requested).then(({ email }) => {
+    cy.hook("view-project-board").last().within(() => {
+      cy.contains(email).should("have.length", 1);
+      cy.contains("Admin").should("have.length", 1);
+    });
+  })
+})
