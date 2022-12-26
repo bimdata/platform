@@ -364,8 +364,8 @@ import { useAppNotification } from "../../../components/specific/app/app-notific
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
-import { MODEL_STATUS } from "../../../config/models.js";
-import { DEFAULT_WINDOW, WINDOW_MODELS } from "../../../config/viewer.js";
+import { MODEL_CONFIG, MODEL_STATUS } from "../../../config/models.js";
+import { DEFAULT_WINDOW } from "../../../config/viewer.js";
 import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
 import { useModels } from "../../../state/models.js";
@@ -608,7 +608,7 @@ export default {
           .filter(
             m =>
               m.status === MODEL_STATUS.COMPLETED &&
-              WINDOW_MODELS[window].includes(m.type)
+              MODEL_CONFIG[m.type].window === window
           )
           .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
         if (models.length > 0) {

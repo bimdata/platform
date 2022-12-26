@@ -2,14 +2,13 @@
 import { computed, ref, watch, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
-import { MODEL_ICON, MODEL_TYPE } from "../../../../config/models.js";
-import routeNames from "../../../../router/route-names.js";
+import { MODEL_CONFIG, MODEL_TYPE } from "../../../../config/models.js";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
-import { windowType } from "../../../../utils/models.js";
-// Componentqs
+import { openInViewer } from "../../../../utils/models.js";
+// Components
 import NoDocPreviewImage from "../../../images/NoDocPreviewImage.vue";
 
 const { DWG, DXF, IFC, JPEG, PDF, PNG } = MODEL_TYPE;
@@ -99,19 +98,12 @@ const onKeyUp = ({ key }) => {
 onMounted(() => document.addEventListener("keyup", onKeyUp));
 onUnmounted(() => document.removeEventListener("keyup", onKeyUp));
 
-const openInViewer = () => {
+const openViewer = () => {
   closeModal();
   const doc = currentDocument.value;
-  router.push({
-    name: routeNames.modelViewer,
-    params: {
-      spaceID: props.project.cloud.id,
-      projectID: props.project.id,
-      modelIDs: doc.model_id
-    },
-    query: {
-      window: windowType(doc)
-    }
+  openInViewer(router, props.project, {
+    id: doc.model_id,
+    type: doc.model_type
   });
 };
 
@@ -128,10 +120,10 @@ const download = () => {
         v-show="currentDocument.model_id"
         fill
         radius
-        @click="openInViewer"
+        @click="openViewer"
       >
         <BIMDataIcon
-          :name="MODEL_ICON[currentDocument.model_type]"
+          :name="MODEL_CONFIG[currentDocument.model_type].icon"
           size="s"
           margin="0 6px 0 0"
         />

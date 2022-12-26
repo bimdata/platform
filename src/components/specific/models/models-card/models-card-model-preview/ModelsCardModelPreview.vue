@@ -14,13 +14,13 @@
       />
       <BIMDataIcon
         class="models-card-model-preview__index__preview-icon"
-        :name="MODEL_ICON[image.type]"
+        :name="MODEL_CONFIG[image.type].icon"
         size="l"
       />
     </template>
     <template v-else>
       <div class="models-card-model-preview__placeholder">
-        <BIMDataIcon :name="MODEL_ICON[image.type]" customSize="150" />
+        <BIMDataIcon :name="MODEL_CONFIG[image.type].icon" customSize="150" />
       </div>
     </template>
 
@@ -56,7 +56,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE, MODEL_ICON } from "../../../../../config/models.js";
+import { MODEL_CONFIG, MODEL_TYPE } from "../../../../../config/models.js";
 
 export default {
   props: {
@@ -114,9 +114,9 @@ export default {
       container,
       image,
       images,
-      viewport,
+      MODEL_CONFIG,
       MODEL_TYPE,
-      MODEL_ICON,
+      viewport,
       // Methods
       nextImage,
       previousImage

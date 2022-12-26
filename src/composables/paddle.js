@@ -1,5 +1,3 @@
-/* eslint no-undef: "off" */
-
 import {
   DATAPACK_PLAN_ID,
   IS_PADDLE_SANDBOX,

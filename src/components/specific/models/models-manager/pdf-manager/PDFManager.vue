@@ -2,10 +2,10 @@
   <GenericModelsManager
     class="pdf-manager"
     :project="project"
-    :type="type"
+    :types="types"
     :tabs="tabs"
-    @edit-metaBuilding="editBM"
     @tab-changed="currentTab = $event"
+    @edit-metaBuilding="editBM"
     @file-uploaded="$emit('file-uploaded')"
   >
     <template #tablePlaceholder v-if="models.length === 0">
@@ -36,7 +36,7 @@
       </BIMDataButton>
 
       <transition name="slide-fade-right">
-        <div v-if="isBMOpen" class="pdf-manager__building-maker">
+        <div v-if="isOpenBM" class="pdf-manager__building-maker">
           <BIMDataButton
             class="pdf-manager__building-maker__close"
             ghost
@@ -89,19 +89,19 @@ export default {
       type: Array,
       required: true
     },
-    type: {
-      type: String,
+    types: {
+      type: Array,
       required: true
     }
   },
   emits: ["file-uploaded"],
   setup(props) {
     const { locale, fallbackLocale } = useI18n();
+    const { loadProjectModels } = useModels();
+    const { isOpen: isOpenBM, close: closeBM, open: openBM } = useToggle();
+
     const tabs = ref(tabsDef);
     const currentTab = ref(null);
-
-    const { isOpen: isBMOpen, close: closeBM, open: openBM } = useToggle();
-
     const currentModel = ref(null);
 
     const editBM = model => {
@@ -129,28 +129,26 @@ export default {
       { immediate: true }
     );
 
-    const placeholderBackground = computed(
-      () =>
-        `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${
-          ["fr", "de", "it", "es", "en"].find(lang => lang === locale.value) ||
-          fallbackLocale.value
-        }.gif") no-repeat 11% 143% / 79%`
-    );
+    const placeholderBackground = computed(() => {
+      const lang =
+        ["fr", "de", "it", "es", "en"].find(lang => lang === locale.value) ||
+        fallbackLocale.value;
+      return `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${lang}.gif") no-repeat 11% 143% / 79%`;
+    });
 
     return {
       // References
+      apiClient,
       currentModel,
-      isBMOpen,
+      currentTab,
+      isOpenBM,
       placeholderBackground,
       tabs,
-      apiClient,
-      currentTab,
       // Methods
-      openBM,
       closeBM,
       editBM,
-      loadProjectModels: useModels().loadProjectModels,
-      console
+      loadProjectModels,
+      openBM
     };
   }
 };

@@ -53,7 +53,7 @@
         :disabled="!isModelReady"
         :project="project"
         :model="model"
-        :window="WINDOWS.TILESET"
+        :window="WINDOWS.POINT_CLOUD"
         text="3D"
       />
     </template>

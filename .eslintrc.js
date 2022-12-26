@@ -4,7 +4,11 @@ module.exports = {
   env: {
     node: true,
     browser: true,
-    es2021: true
+    es2022: true
+  },
+  globals: {
+    ENV: "readonly",
+    Paddle: "readonly"
   },
   extends: [
     "eslint:recommended",
@@ -20,8 +24,5 @@ module.exports = {
         arrowParens: "avoid"
       }
     ]
-  },
-  globals: {
-    ENV: true
   }
 };

@@ -28,11 +28,7 @@
       fill
       radius
       icon
-      @click="
-        fileUploadInput('file', event => (fileUpload = event.target.files[0]), {
-          accept: extensionListFromType(type)
-        })
-      "
+      @click="uploadModels"
     >
       <BIMDataIcon name="export" margin="0 12px" />
       <span> {{ $t("ModelsManager.add") }}</span>
@@ -59,11 +55,11 @@
       :models="displayedModels"
       :fileUpload="fileUpload"
       @update-upload="updateUpload($event)"
+      @selection-changed="setSelection"
       @archive="archiveModels([$event])"
+      @unarchive="unarchiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
-      @selection-changed="setSelection"
-      @unarchive="unarchiveModels([$event])"
       @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
     >
       <template #placeholder>
@@ -85,10 +81,11 @@
 </template>
 
 <script>
-import { ref, watch, watchEffect } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
+import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { useModels } from "../../../../../state/models.js";
+import { isModel } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
-import { extensionListFromType } from "../../../../../utils/models.js";
 
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
@@ -111,16 +108,19 @@ export default {
       required: true,
       validator: value => value.length > 0
     },
-    type: {
-      type: String,
+    types: {
+      type: Array,
       required: true
     }
   },
-  emits: ["edit-metaBuilding", "tab-changed", "file-uploaded"],
+  emits: ["edit-metaBuilding", "file-uploaded", "tab-changed"],
   setup(props, { emit }) {
-    const { downloadModels: download, updateModels, createModel } = useModels();
+    const { createModel, updateModels, downloadModels: download } = useModels();
 
     const fileUpload = ref(null);
+    const fileExtensions = computed(() =>
+      props.types.reduce((ext, t) => ext.concat(MODEL_CONFIG[t].ext), [])
+    );
 
     const currentTab = ref({});
     const selectTab = tab => {
@@ -177,8 +177,16 @@ export default {
       await download(models);
     };
 
+    const uploadModels = () => {
+      fileUploadInput(
+        "file",
+        event => (fileUpload.value = event.target.files[0]),
+        { accept: fileExtensions.value }
+      );
+    };
+
     const updateUpload = async file => {
-      if (!file?.model_id) {
+      if (!isModel(file)) {
         await createModel(props.project, file);
       }
       fileUpload.value = null;
@@ -189,21 +197,20 @@ export default {
       // References
       currentTab,
       displayedModels,
+      fileUpload,
       modelsToDelete,
       selection,
-      fileUpload,
       showDeleteModal,
-      extensionListFromType,
       // Methods
       archiveModels,
-      downloadModels,
       closeDeleteModal,
+      downloadModels,
       openDeleteModal,
       selectTab,
       setSelection,
       unarchiveModels,
-      fileUploadInput,
-      updateUpload
+      updateUpload,
+      uploadModels
     };
   }
 };
