@@ -1,9 +1,14 @@
 module.exports = {
   root: true,
+  env: {
+    node: true,
+  },
   extends: [
-    "plugin:cypress/recommended"
+    "eslint:recommended",
+    "plugin:cypress/recommended",
+    "plugin:prettier/recommended",
   ],
   rules: {
-    "cypress/require-data-selectors": "off"
-  }
+    "cypress/require-data-selectors": "off",
+  },
 };

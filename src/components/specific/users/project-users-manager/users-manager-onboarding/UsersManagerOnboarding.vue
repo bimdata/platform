@@ -7,6 +7,7 @@
       </div>
       <div class="users-manager-onboarding__actions">
         <BIMDataButton
+          data-test-id="btn-invit"
           width="120px"
           color="primary"
           fill

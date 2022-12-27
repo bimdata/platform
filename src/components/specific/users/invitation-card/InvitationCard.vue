@@ -1,5 +1,5 @@
 <template>
-  <div class="invitation-card">
+  <div data-test-id="invitation-card" class="invitation-card">
     <div class="invitation-card__avatar">
       <InvitationAvatarImage />
     </div>
