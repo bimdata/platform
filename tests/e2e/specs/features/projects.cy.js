@@ -1,8 +1,13 @@
 describe("Project features", () => {
   beforeEach(() => {
-    cy.task("get-user", "user0").then((user) => cy.login(user));
-    cy.visit("/spaces");
-    cy.hook("space-card").first().click();
+    cy.task("get-user", "user0").then((user) => {
+      cy.login(user);
+      cy.visit("/spaces");
+      cy.contains(
+        "[data-test-id=space-card]",
+        `${user.firstname} ${user.lastname}`
+      ).click();
+    });
   });
 
   it("Should create project", () => {
