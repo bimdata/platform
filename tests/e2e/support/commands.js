@@ -14,7 +14,7 @@ Cypress.Commands.add("createUser", ({ key, firstname, lastname }) => {
     cy.get("input[name=password1]").type(user.password);
     cy.get("input[name=password2]").type(user.password);
     cy.get("input[type=submit]").click();
-    cy.get("input[type=submit][value=Accept]").click();
+    // cy.get("input[type=submit][value=Accept]").click();
 
     return cy
       .url()
