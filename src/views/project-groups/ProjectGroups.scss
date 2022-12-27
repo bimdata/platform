@@ -5,6 +5,11 @@
     }
   }
 
+  &__menu {
+    top: 35px;
+    position: absolute;
+  }
+
   .bimdata-responsive-grid {
     padding: calc(var(--spacing-unit) * 2) 0;
   }
