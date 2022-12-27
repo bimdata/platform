@@ -1,6 +1,5 @@
 describe("versioning CRUD", () => {
   beforeEach(() => {
-    cy.viewport(1220, 728);
     cy.fixture("house-plan.pdf").as("housePlan");
 
     cy.task("get-user", "user0").then((user) => cy.login(user));

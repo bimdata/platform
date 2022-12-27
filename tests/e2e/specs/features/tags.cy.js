@@ -2,7 +2,6 @@ describe("Tags CRUD", () => {
   const tagList = ["outdated", "priority", "lyon"];
 
   beforeEach(() => {
-    cy.viewport(1220, 728);
     cy.task("get-user", "user0").then((user) => cy.login(user));
     cy.visit("/spaces");
     cy.hook("space-card").first().click();
