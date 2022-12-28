@@ -19,7 +19,7 @@
           square
           icon
           style="padding: 6px; width: 170px"
-          @click="open"
+          @click="openGroupImport"
         >
           <BIMDataIcon name="group" size="xs" margin="0 6px 0 0" />
           <span>Importer un groupe</span>
@@ -38,23 +38,36 @@
             :menuItems="projectsToDisplay"
             v-click-away="close"
           >
-            <!-- <template #header>
+            <template #child-header="{ children }">
               <BIMDataCheckbox
                 style="width: 14px; margin: 0 6px 0 0"
-                :modelValue="options.length === checkedItems.length"
-                @update:modelValue="checkAllItems"
+                :modelValue="
+                  checkedItems[children.project_id].length ===
+                  children.list.length
+                "
+                @update:modelValue="checkAllItems(children)"
               />
               <span>Tout sélectionner</span>
-            </template> -->
-            <!-- <template #item="{ item }">
+            </template>
+            <template #child-item="{ child }">
               <BIMDataCheckbox
                 style="width: 14px; margin: 0 6px 0 0"
-                :modelValue="checkedItems.includes(item.text)"
-                @update:modelValue="checkItem(item)"
+                :modelValue="
+                  Boolean(
+                    checkedItems[child.project.id]?.find(
+                      item => item.id === child.id
+                    )
+                  )
+                "
+                @update:modelValue="checkItem(child)"
               />
-              <span>{{ item.text }}</span>
-            </template> -->
-            <!-- <template #footer>AUREVOIR</template> -->
+              <span>{{ child.text }}</span>
+            </template>
+            <template #child-footer>
+              <BIMDataButton fill square icon>
+                <span>Ajouter</span>
+              </BIMDataButton>
+            </template>
           </BIMDataMenu>
         </template>
       </template>
@@ -115,35 +128,57 @@ export default {
       group => group.name
     );
 
-    console.log("projectGroups", projectGroups);
+    const projectsToDisplay = ref([]);
+    const checkedItems = ref({});
 
-    const projectsToDisplay = spaceProjects.value
-      .filter(({ isAdmin }) => isAdmin)
-      .map(p => ({
-        ...p,
-        text: p.name,
-        children: { list: [{ name: "coucou" }] }
-      }));
-
-    const checkedItems = ref([]);
-
-    const checkItem = ({ text }) => {
-      const isChecked = this.checkedItems.includes(text);
-
-      if (isChecked) {
-        const itemIndex = this.checkedItems.indexOf(text);
-        this.checkedItems.splice(itemIndex, 1);
-      } else {
-        this.checkedItems.push(text);
-      }
-      return !isChecked;
+    const openGroupImport = async () => {
+      projectsToDisplay.value = await Promise.all(
+        spaceProjects.value
+          .filter(({ isAdmin }) => isAdmin)
+          .map(async project => {
+            checkedItems.value[project.id] = [];
+            return {
+              ...project,
+              text: project.name,
+              children: {
+                project_id: project.id,
+                list: (await GroupService.fetchProjectGroups(project)).map(
+                  group => {
+                    return {
+                      ...group,
+                      text: group.name,
+                      project
+                    };
+                  }
+                )
+              }
+            };
+          })
+      );
+      open();
     };
 
-    const checkAllItems = () => {
-      this.checkedItems =
-        this.checkedItems.length === this.options.length
+    const checkItem = currentItem => {
+      const currentProjectId = currentItem.project.id;
+
+      const currentItemIndex = checkedItems.value[currentProjectId].findIndex(
+        item => item.id === currentItem.id
+      );
+
+      if (currentItemIndex === -1) {
+        checkedItems.value[currentProjectId].push(currentItem);
+      } else {
+        checkedItems.value[currentProjectId].splice(currentItemIndex, 1);
+      }
+
+      return currentItemIndex === -1 || currentItemIndex === 0 ? true : false;
+    };
+
+    const checkAllItems = children => {
+      checkedItems.value[children.project_id] =
+        checkedItems.value[children.project_id].length === children.list.length
           ? []
-          : this.options.map(item => item.text);
+          : Array.from(children.list);
     };
 
     return {
@@ -155,7 +190,7 @@ export default {
       checkedItems,
       // methods
       console,
-      open,
+      openGroupImport,
       close,
       isOpen,
       checkItem,
