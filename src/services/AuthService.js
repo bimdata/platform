@@ -1,5 +1,6 @@
 import { User, UserManager, WebStorageStateStore } from "oidc-client";
 import OIDC_CONFIG from "../config/oidc-config.js";
+import { tokenHasExpired } from "../utils/auth.js";
 
 const userManager = new UserManager({
   ...OIDC_CONFIG,
@@ -13,15 +14,15 @@ async function signinEndWithForcedLogout(url, args = {}) {
   // Let UserManager process signin response "as usual"
   const signinResponse = await this.processSigninResponse(url);
 
-  const authorizedIdentityProviders = OIDC_CONFIG.authorizedIdentityProviders;
+  const providers = OIDC_CONFIG.authorizedIdentityProviders;
 
-  if (authorizedIdentityProviders.length) {
+  if (providers.length) {
     // Extract identity provider from signin response
     // Note: `profile.preferred_username` is of the following form: <IDENTITY_PROVIDER>.<USER_EMAIL>
     const identityProvider =
       signinResponse.profile.preferred_username.split(".")[0];
 
-    if (!authorizedIdentityProviders.includes(identityProvider)) {
+    if (!providers.includes(identityProvider)) {
       // If the current identity provider is not authorized then logout
       // and set the post logout uri to the platform itself.
       // When the unauthenticated user comes back to the platform
@@ -63,23 +64,43 @@ async function signinEndWithForcedLogout(url, args = {}) {
   return user;
 }
 
+function onAccessTokenExpired() {
+  console.log("Access token expired, reloading the platform...");
+  location.reload();
+}
+
 // Override UserManager `_signinEnd` method with our custom implementation
 signinEndWithForcedLogout.bind(userManager);
 userManager._signinEnd = signinEndWithForcedLogout;
 
 class AuthServive {
-  getUser() {
-    return userManager.getUser();
-  }
+  async signIn(path, isAuthenticated, onUserLoaded) {
+    let user = await userManager.getUser();
+    let redirectPath = path ? { state: path } : undefined;
 
-  signIn(redirectPath) {
-    return userManager.signinRedirect(
-      redirectPath ? { state: redirectPath } : undefined
-    );
-  }
+    if (!user) {
+      await userManager.signinRedirect(redirectPath);
+      return;
+    }
 
-  signInSilent() {
-    return userManager.signinSilent();
+    if (!isAuthenticated) {
+      if (user.expired) {
+        // If refresh token has expired then sign in
+        if (tokenHasExpired(user.refresh_token)) {
+          await userManager.signinRedirect(redirectPath);
+          return;
+        }
+        // Else refresh access token silently
+        user = await userManager.signInSilent();
+      }
+
+      // Keep access token up to date across refresh
+      this._userLoadedCallback = onUserLoaded;
+      userManager.events.addUserLoaded(onUserLoaded);
+      userManager.events.addAccessTokenExpired(onAccessTokenExpired);
+    }
+
+    return user;
   }
 
   signInCallback() {
@@ -87,20 +108,10 @@ class AuthServive {
   }
 
   signOut() {
-    return userManager.signoutRedirect();
-  }
-
-  onUserLoaded(callback) {
-    this._userLoadedCallback = callback;
-    userManager.events.addUserLoaded(callback);
-    userManager.events.addAccessTokenExpired(() => {
-      console.log("Access token expired, reloading the platform...");
-      location.reload();
-    });
-  }
-
-  offUserLoaded() {
     userManager.events.removeUserLoaded(this._userLoadedCallback);
+    userManager.events.removeAccessTokenExpired(onAccessTokenExpired);
+    this._userLoadedCallback = null;
+    return userManager.signoutRedirect();
   }
 }
 
