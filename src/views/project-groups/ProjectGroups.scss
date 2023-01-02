@@ -10,6 +10,21 @@
     position: absolute;
   }
 
+  &__children-menu {
+    &--header {
+      display: flex;
+      margin: auto;
+      width: 88%;
+      border-bottom: 1px solid var(--color-granite-light);
+      padding: 6px 6px 12px 0px;
+      margin-bottom: 6px;
+    }
+
+    &--footer {
+      margin: 6px auto 0px;
+    }
+  }
+
   .bimdata-responsive-grid {
     padding: calc(var(--spacing-unit) * 2) 0;
   }

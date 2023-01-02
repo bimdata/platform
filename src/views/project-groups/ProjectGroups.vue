@@ -18,7 +18,7 @@
           fill
           square
           icon
-          style="padding: 6px; width: 170px"
+          style="padding: 6px; width: 200px"
           @click="openGroupImport"
         >
           <BIMDataIcon name="group" size="xs" margin="0 6px 0 0" />
@@ -30,24 +30,26 @@
             :rotate="isOpen ? 90 : 0"
           />
         </BIMDataButton>
+        {{ console.log("isOpen in template", isOpen) }}
         <template v-if="isOpen">
           <BIMDataMenu
             class="project-groups__menu"
-            isClickAway
             childrenLeft
             :menuItems="projectsToDisplay"
             v-click-away="close"
           >
             <template #child-header="{ children }">
-              <BIMDataCheckbox
-                style="width: 14px; margin: 0 6px 0 0"
-                :modelValue="
-                  checkedItems[children.project_id].length ===
-                  children.list.length
-                "
-                @update:modelValue="checkAllItems(children)"
-              />
-              <span>Tout sélectionner</span>
+              <div class="project-groups__children-menu--header">
+                <BIMDataCheckbox
+                  style="width: 14px; margin: 0 6px 0 0px"
+                  :modelValue="
+                    checkedItems[children.project_id].length ===
+                    children.list.length
+                  "
+                  @update:modelValue="checkAllItems(children)"
+                />
+                <span>Tout sélectionner</span>
+              </div>
             </template>
             <template #child-item="{ child }">
               <BIMDataCheckbox
@@ -64,7 +66,13 @@
               <span>{{ child.text }}</span>
             </template>
             <template #child-footer>
-              <BIMDataButton fill square icon>
+              <BIMDataButton
+                class="project-groups__children-menu--footer"
+                color="primary"
+                fill
+                radius
+                width="88%"
+              >
                 <span>Ajouter</span>
               </BIMDataButton>
             </template>
@@ -132,6 +140,11 @@ export default {
     const checkedItems = ref({});
 
     const openGroupImport = async () => {
+      console.log("isOpen", isOpen.value);
+      if (isOpen.value) {
+        close();
+        return;
+      }
       projectsToDisplay.value = await Promise.all(
         spaceProjects.value
           .filter(({ isAdmin }) => isAdmin)
