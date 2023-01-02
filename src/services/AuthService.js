@@ -1,4 +1,4 @@
-import { User, UserManager, WebStorageStateStore } from "oidc-client";
+import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 import OIDC_CONFIG from "../config/oidc-config.js";
 import { tokenHasExpired } from "../utils/auth.js";
 
@@ -12,7 +12,7 @@ const userManager = new UserManager({
  */
 async function signinEndWithForcedLogout(url, args = {}) {
   // Let UserManager process signin response "as usual"
-  const signinResponse = await this.processSigninResponse(url);
+  const signinResponse = await this._client.processSigninResponse(url);
 
   const providers = OIDC_CONFIG.authorizedIdentityProviders;
 
@@ -108,8 +108,8 @@ class AuthServive {
   }
 
   signOut() {
-    userManager.events.removeUserLoaded(this._userLoadedCallback);
     userManager.events.removeAccessTokenExpired(onAccessTokenExpired);
+    userManager.events.removeUserLoaded(this._userLoadedCallback);
     this._userLoadedCallback = null;
     return userManager.signoutRedirect();
   }

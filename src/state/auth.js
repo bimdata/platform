@@ -34,15 +34,12 @@ const authenticate = async path => {
   }
 };
 
-const signInCallback = async () => {
-  const user = await AuthService.signInCallback();
-  return user;
+const signInCallback = () => {
+  return AuthService.signInCallback();
 };
 
-const signOut = async () => {
-  await AuthService.signOut();
-  state.isAuthenticated = false;
-  state.accessToken = null;
+const signOut = () => {
+  AuthService.signOut();
 };
 
 export function useAuth() {
