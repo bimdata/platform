@@ -54,7 +54,7 @@
       :project="project"
       :models="displayedModels"
       :fileUpload="fileUpload"
-      @update-upload="updateUpload($event)"
+      @file-uploaded="onFileUploaded($event)"
       @selection-changed="setSelection"
       @archive="archiveModels([$event])"
       @unarchive="unarchiveModels([$event])"
@@ -185,7 +185,7 @@ export default {
       );
     };
 
-    const updateUpload = async file => {
+    const onFileUploaded = async file => {
       if (!isModel(file)) {
         await createModel(props.project, file);
       }
@@ -205,11 +205,11 @@ export default {
       archiveModels,
       closeDeleteModal,
       downloadModels,
+      onFileUploaded,
       openDeleteModal,
       selectTab,
       setSelection,
       unarchiveModels,
-      updateUpload,
       uploadModels
     };
   }
