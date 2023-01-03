@@ -34,7 +34,6 @@
           :spaceSubInfo="spaceSubInfo"
           :project="project"
           :fileStructure="fileStructure"
-          :groups="groups"
           :loadingData="loadingData"
           @file-uploaded="reloadData"
           @file-updated="
@@ -43,8 +42,6 @@
               reloadData();
             }
           "
-          @folder-permission-updated="reloadData"
-          @group-permission-updated="reloadData"
           @model-created="reloadData"
         />
       </AppLoading>
@@ -57,7 +54,6 @@ import { ref } from "vue";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import routeNames from "../../../router/route-names.js";
 import { useFiles } from "../../../state/files.js";
-import { useGroups } from "../../../state/groups.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
@@ -80,7 +76,6 @@ export default {
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
-    const { projectGroups } = useGroups();
 
     const loadingData = ref(false);
     const reloadData = debounce(async () => {
@@ -95,7 +90,6 @@ export default {
     return {
       // References
       fileStructure: projectFileStructure,
-      groups: projectGroups,
       project: currentProject,
       routeNames,
       spaceSubInfo,

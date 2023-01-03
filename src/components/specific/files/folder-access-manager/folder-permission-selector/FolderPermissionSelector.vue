@@ -65,13 +65,10 @@ export default {
 
     const update = async perm => {
       folderPermission.value = perm;
-      const [response] = await updateFiles(props.project, [
+      await updateFiles(props.project, [
         { ...props.folder, default_permission: perm.value }
       ]);
-      emit("folder-permission-updated", {
-        folder: response,
-        permission: perm.value
-      });
+      emit("folder-permission-updated");
     };
 
     return {
