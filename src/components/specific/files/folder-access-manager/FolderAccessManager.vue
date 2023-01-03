@@ -22,7 +22,7 @@
         <FolderPermissionSelector
           :project="project"
           :folder="currentFolder"
-          @folder-permission-updated="getGroupList"
+          @folder-permission-updated="getFolderInfo"
         />
       </div>
       <div class="folder-access-manager__body">
@@ -44,7 +44,7 @@
             :project="project"
             :folder="currentFolder"
             :group="group"
-            @group-permission-updated="getGroupList"
+            @group-permission-updated="getFolderInfo"
           />
         </transition-group>
       </div>
@@ -80,7 +80,7 @@ export default {
     const listFilter = ref(null);
     const currentFolder = ref(null);
 
-    const getGroupList = async () => {
+    const getFolderInfo = async () => {
       currentFolder.value = await FileService.fetchFolder(
         props.project,
         props.folder
@@ -92,14 +92,14 @@ export default {
       );
     };
 
-    onMounted(() => getGroupList());
+    onMounted(() => getFolderInfo());
 
     return {
       // References
       listFilter,
       currentFolder,
       // methods
-      getGroupList
+      getFolderInfo
     };
   }
 };
