@@ -14,70 +14,71 @@
         />
       </template>
       <template #right>
-        <BIMDataButton
-          fill
-          square
-          icon
-          style="padding: 6px; width: 200px"
-          @click="openGroupImport"
-        >
-          <BIMDataIcon name="group" size="xs" margin="0 6px 0 0" />
-          <span>Importer un groupe</span>
-          <BIMDataIcon
-            name="chevron"
-            size="xxs"
-            margin="0 0 0 auto"
-            :rotate="isOpen ? 90 : 0"
-          />
-        </BIMDataButton>
-        {{ console.log("isOpen in template", isOpen) }}
-        <template v-if="isOpen">
-          <BIMDataMenu
-            class="project-groups__menu"
-            childrenLeft
-            :menuItems="projectsToDisplay"
-            v-click-away="close"
+        <div v-click-away="close">
+          <BIMDataButton
+            fill
+            square
+            icon
+            style="padding: 6px; width: 200px"
+            @click="openGroupImport"
           >
-            <template #child-header="{ children }">
-              <div class="project-groups__children-menu--header">
+            <BIMDataIcon name="group" size="xs" margin="0 6px 0 0" />
+            <span>Importer un groupe</span>
+            <BIMDataIcon
+              name="chevron"
+              size="xxs"
+              margin="0 0 0 auto"
+              :rotate="isOpen ? 90 : 0"
+            />
+          </BIMDataButton>
+          <template v-if="isOpen">
+            <BIMDataMenu
+              class="project-groups__menu"
+              childrenLeft
+              :menuItems="projectsToDisplay"
+            >
+              <template #child-header="{ children }">
+                <div class="project-groups__children-menu--header">
+                  <BIMDataCheckbox
+                    style="width: 14px; margin: 0 6px 0 0px"
+                    :modelValue="
+                      checkedItems[children.project_id].length ===
+                      children.list.length
+                    "
+                    @update:modelValue="checkAllItems(children)"
+                  />
+                  <span>Tout sélectionner</span>
+                </div>
+              </template>
+              <template #child-item="{ child }">
                 <BIMDataCheckbox
-                  style="width: 14px; margin: 0 6px 0 0px"
+                  style="width: 14px; margin: 0 6px 0 0"
                   :modelValue="
-                    checkedItems[children.project_id].length ===
-                    children.list.length
-                  "
-                  @update:modelValue="checkAllItems(children)"
-                />
-                <span>Tout sélectionner</span>
-              </div>
-            </template>
-            <template #child-item="{ child }">
-              <BIMDataCheckbox
-                style="width: 14px; margin: 0 6px 0 0"
-                :modelValue="
-                  Boolean(
-                    checkedItems[child.project.id]?.find(
-                      item => item.id === child.id
+                    Boolean(
+                      checkedItems[child.project.id]?.find(
+                        item => item.id === child.id
+                      )
                     )
-                  )
-                "
-                @update:modelValue="checkItem(child)"
-              />
-              <span>{{ child.text }}</span>
-            </template>
-            <template #child-footer>
-              <BIMDataButton
-                class="project-groups__children-menu--footer"
-                color="primary"
-                fill
-                radius
-                width="88%"
-              >
-                <span>Ajouter</span>
-              </BIMDataButton>
-            </template>
-          </BIMDataMenu>
-        </template>
+                  "
+                  @update:modelValue="checkItem(child)"
+                />
+                <span>{{ child.text }}</span>
+              </template>
+              <template #child-footer="{ children }">
+                <BIMDataButton
+                  class="project-groups__children-menu--footer"
+                  color="primary"
+                  fill
+                  radius
+                  width="88%"
+                  @click="importGroup(children)"
+                >
+                  <span>Ajouter</span>
+                </BIMDataButton>
+              </template>
+            </BIMDataMenu>
+          </template>
+        </div>
       </template>
     </ViewHeader>
 
@@ -128,7 +129,7 @@ export default {
   },
   setup() {
     const { currentProject, spaceProjects } = useProjects();
-    const { projectGroups } = useGroups();
+    const { projectGroups, loadProjectGroups } = useGroups();
     const { isOpen, close, open } = useToggle();
 
     const { filteredList: displayedGroups, searchText } = useListFilter(
@@ -140,11 +141,8 @@ export default {
     const checkedItems = ref({});
 
     const openGroupImport = async () => {
-      console.log("isOpen", isOpen.value);
-      if (isOpen.value) {
-        close();
-        return;
-      }
+      if (isOpen.value) return close();
+
       projectsToDisplay.value = await Promise.all(
         spaceProjects.value
           .filter(({ isAdmin }) => isAdmin)
@@ -169,6 +167,17 @@ export default {
           })
       );
       open();
+    };
+
+    const importGroup = async children => {
+      await GroupService.importGroup(
+        currentProject.value,
+        checkedItems.value[children.project_id].map(({ id }) => id)
+      );
+
+      close();
+      loadProjectGroups(currentProject.value);
+      checkedItems.value[children.project_id] = [];
     };
 
     const checkItem = currentItem => {
@@ -202,7 +211,7 @@ export default {
       projectsToDisplay,
       checkedItems,
       // methods
-      console,
+      importGroup,
       openGroupImport,
       close,
       isOpen,

@@ -477,6 +477,7 @@
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
+    "groupImportError": "Échec lors de l'importation des groupes",
     "organizationsFetchError": "Impossible de récupérer la liste des comptes de facturation",
     "organizationCreateError": "Erreur lors de la création du compte de facturation",
     "organizationUpdateError": "Erreur lors le de mise à jour du compte de facturation",

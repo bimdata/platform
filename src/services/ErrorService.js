@@ -55,6 +55,7 @@ const ERRORS = Object.freeze({
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
   GROUP_DELETE_ERROR: "groupDeleteError",
+  GROUP_IMPORT_ERROR: "groupImportError",
   TAGS_FETCH_ERROR: "tagsFetchError",
   TAGS_CREATE_ERROR: "tagsCreateError",
   TAGS_UPDATE_ERROR: "tagsUpdateError",

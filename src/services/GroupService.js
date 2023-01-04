@@ -132,6 +132,21 @@ class GroupService {
       throw new RuntimeError(ERRORS.GROUP_UPDATE_ERROR, error);
     }
   }
+
+  async importGroup(project, group_ids) {
+    try {
+      return await apiClient.collaborationApi.importManageGroup(
+        project.cloud.id,
+        project.id,
+        {
+          group_ids,
+          redirect_uri: `${ENV.VUE_APP_BASE_URL}/invitations`
+        }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.GROUP_IMPORT_ERROR, error);
+    }
+  }
 }
 
 const service = new GroupService();
