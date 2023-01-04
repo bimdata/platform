@@ -206,6 +206,11 @@
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
   },
+  "GroupImport": {
+    "title": "Importer un groupe",
+    "selectAll": "Tout sélectionner",
+    "add": "Ajouter"
+  },
   "Invitations": {
     "title": "Mes invitations",
     "invitCounter": "Invitations en cours -",
