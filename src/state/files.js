@@ -13,7 +13,6 @@ let fileStructureHandler = new FileStructureHandler();
 
 const loadProjectFileStructure = async project => {
   const fileStructure = await FileService.fetchFileStructure(project);
-  console.log("fileStructure", fileStructure);
   state.projectFileStructure = fileStructure;
   fileStructureHandler.serialize(fileStructure);
   return fileStructure;
