@@ -99,7 +99,7 @@ export default {
     const fileName = ref("");
     const hasError = ref(false);
 
-    const hasHistory = computed(() => props.file.history?.length > 1);
+    const hasHistory = computed(() => props.file?.history_count > 0);
 
     const renameFile = debounce(async () => {
       if (fileName.value) {

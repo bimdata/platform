@@ -471,6 +471,7 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "folderFetchFolder": "Erreur lors de la récupération des informations du dossier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversement du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",

@@ -25,7 +25,10 @@ class PlatformService {
         }
       }
     );
-
+    if (res.status !== 200) {
+      console.warn(`Unable to load guidedtour info. Error code: ${res.status}`)
+      return [];
+    }
     return res.json();
   }
 
