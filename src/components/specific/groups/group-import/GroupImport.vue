@@ -1,10 +1,10 @@
 <template>
   <div class="group-import" v-click-away="close">
     <BIMDataButton
+      class="group-import__button"
       fill
       radius
       icon
-      style="padding: 6px; width: 200px"
       @click="openGroupImport"
     >
       <BIMDataIcon name="group" size="xs" margin="0 6px 0 0" />
@@ -23,23 +23,26 @@
         :menuItems="projectsToDisplay"
       >
         <template #child-header="{ children }">
-          <div class="group-import__children-menu--header">
-            <BIMDataCheckbox
-              style="width: 14px; margin: 0 6px 0 0px"
-              :modelValue="
-                checkedItems[children.project_id].length ===
-                children.list.length
-              "
-              @update:modelValue="checkAllItems(children)"
-            />
-            <BIMDataButton ghost @click="importGroup(children)">
+          <div class="group-import__children-menu__header">
+            <div class="group-import__children-menu__header__content">
+              <BIMDataCheckbox
+                class="group-import__children-menu__header__content--checkbox"
+                margin="0 6px 0 0"
+                :modelValue="
+                  checkedItems[children.project_id].length ===
+                  children.list.length
+                "
+                @update:modelValue="checkAllItems(children)"
+              />
               <span>{{ $t("GroupImport.selectAll") }}</span>
-            </BIMDataButton>
+            </div>
+            <div class="group-import__children-menu__header__divider" />
           </div>
         </template>
         <template #child-item="{ child }">
           <BIMDataCheckbox
-            style="width: 14px; margin: 0 6px 0 0"
+            class="group-import__children-menu__item--checkbox"
+            margin="0 6px 0 0"
             :modelValue="
               Boolean(
                 checkedItems[child.project.id]?.find(
@@ -57,7 +60,7 @@
             color="primary"
             fill
             radius
-            width="88%"
+            width="95%"
             @click="importGroup(children)"
           >
             <span>{{ $t("GroupImport.add") }}</span>

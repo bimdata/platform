@@ -16,7 +16,7 @@ const loadProjectGroups = async project => {
   let groups = [];
   if (project.isAdmin) {
     groups = await GroupService.fetchProjectGroups(project);
-    groups.sort((a, b) => (a.name < b.name ? -1 : 1));
+    groups.sort((a, b) => (a.id < b.id ? 1 : -1));
   }
   state.projectGroups = groups;
   return groups;

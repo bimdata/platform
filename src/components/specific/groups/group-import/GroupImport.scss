@@ -1,18 +1,51 @@
 
 .group-import {
+
+  &__button {
+    width: 200px;
+    padding: 6px 12px;
+  }
+
   &__menu {
     top: 35px;
     position: absolute;
   }
 
   &__children-menu {
-    &--header {
+    &__header {
+      height: 38px;
       display: flex;
-      margin: auto;
-      width: 88%;
-      border-bottom: 1px solid var(--color-silver-light);
-      padding: 6px 6px 12px 0px;
-      margin-bottom: 6px;
+      position: relative;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--color-silver-light);
+      }
+
+      &__content {
+        display: flex;
+        padding: 6px 0;
+        margin-left: 12px;
+
+        &--checkbox {
+          width: 14px;
+        }
+      }
+
+      &__divider {
+        left: 12px;
+        width: 88%;
+        bottom: -1px;
+        position: absolute;
+        border-bottom: 2px solid var(--color-silver-light);
+      }
+    }
+
+    &__item {
+      &--checkbox {
+        width: 14px;
+      }
     }
 
     &--footer {
