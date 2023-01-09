@@ -16,7 +16,7 @@
     "@bimdata/christmas-sleigh-viewer-plugin": "^2.0.0",
     "@bimdata/design-system": "file:../design-system",
     "@bimdata/guided-tour-components": "1.0.3",
-    "@bimdata/typescript-fetch-api-client": "9.4.0",
+    "@bimdata/typescript-fetch-api-client": "9.5.0",
     "@bimdata/viewer": "1.10.0-rc.14",
     "async": "^3.2.4",
     "lodash": "^4.17.21",

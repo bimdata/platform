@@ -22,17 +22,44 @@
         childrenLeft
         :menuItems="projectsToDisplay"
       >
+        <template #item="{ item }">
+          <template v-if="isWarning(item)">
+            <BIMDataTextbox
+              :text="item.text"
+              :style="{
+                marginLeft: '11px'
+              }"
+            />
+            <BIMDataTooltip
+              class="group-import__menu__warning"
+              :text="$t(`GroupImport.${item.isAdmin ? 'notAdmin' : 'noGroup'}`)"
+              maxWidth="240px"
+              position="left"
+              color="high"
+            >
+              <BIMDataIcon
+                name="warning"
+                margin="3px 6px 0 0"
+                color="high"
+                size="xxs"
+                fill
+              />
+            </BIMDataTooltip>
+          </template>
+        </template>
+
         <template #child-header="{ children }">
-          <div class="group-import__children-menu__header">
+          <div
+            class="group-import__children-menu__header"
+            @click="checkAllItems(children)"
+          >
             <div class="group-import__children-menu__header__content">
               <BIMDataCheckbox
                 class="group-import__children-menu__header__content--checkbox"
                 margin="0 6px 0 0"
                 :modelValue="
-                  checkedItems[children.project_id].length ===
-                  children.list.length
+                  groups[children.project_id].length === children.list.length
                 "
-                @update:modelValue="checkAllItems(children)"
               />
               <span>{{ $t("GroupImport.selectAll") }}</span>
             </div>
@@ -45,18 +72,16 @@
             margin="0 6px 0 0"
             :modelValue="
               Boolean(
-                checkedItems[child.project.id]?.find(
-                  item => item.id === child.id
-                )
+                groups[child.project.id]?.find(item => item.id === child.id)
               )
             "
-            @update:modelValue="checkItem(child)"
           />
           <span>{{ child.text }}</span>
         </template>
         <template #child-footer="{ children }">
           <BIMDataButton
             class="group-import__children-menu--footer"
+            :disabled="groups[children.project_id].length === 0"
             color="primary"
             fill
             radius
@@ -90,32 +115,40 @@ export default {
     const { loadProjectGroups } = useGroups();
     const { isOpen, close, open } = useToggle();
 
+    const groups = ref({});
     const projectsToDisplay = ref([]);
-    const checkedItems = ref({});
 
     const openGroupImport = async () => {
       if (isOpen.value) return close();
 
       projectsToDisplay.value = await Promise.all(
         spaceProjects.value
-          .filter(({ isAdmin, id }) => isAdmin && props.project.id !== id)
+          .filter(({ id }) => id !== props.project.id)
           .map(async project => {
-            checkedItems.value[project.id] = [];
-            return {
-              ...project,
-              text: project.name,
-              children: {
+            groups.value[project.id] = [];
+
+            let children = {};
+            if (project.isAdmin) {
+              children = {
                 project_id: project.id,
                 list: (await GroupService.fetchProjectGroups(project)).map(
                   group => {
-                    return {
+                    const currentGroup = {
                       ...group,
                       text: group.name,
-                      project
+                      project,
+                      action: () => checkItem(currentGroup)
                     };
+                    return currentGroup;
                   }
                 )
-              }
+              };
+            }
+
+            return {
+              ...project,
+              text: project.name,
+              children
             };
           })
       );
@@ -125,11 +158,11 @@ export default {
     const importGroup = async children => {
       await GroupService.importGroup(
         props.project,
-        checkedItems.value[children.project_id].map(({ id }) => id)
+        groups.value[children.project_id].map(({ id }) => id)
       );
 
       loadProjectGroups(props.project);
-      checkedItems.value[children.project_id] = [];
+      groups.value[children.project_id] = [];
 
       close();
     };
@@ -137,34 +170,35 @@ export default {
     const checkItem = currentItem => {
       const currentProjectId = currentItem.project.id;
 
-      const currentItemIndex = checkedItems.value[currentProjectId].findIndex(
+      const currentItemIndex = groups.value[currentProjectId].findIndex(
         item => item.id === currentItem.id
       );
 
       if (currentItemIndex === -1) {
-        checkedItems.value[currentProjectId].push(currentItem);
+        groups.value[currentProjectId].push(currentItem);
       } else {
-        checkedItems.value[currentProjectId].splice(currentItemIndex, 1);
+        groups.value[currentProjectId].splice(currentItemIndex, 1);
       }
-
-      return currentItemIndex === -1 || currentItemIndex === 0 ? true : false;
     };
 
     const checkAllItems = children => {
-      checkedItems.value[children.project_id] =
-        checkedItems.value[children.project_id].length === children.list.length
+      groups.value[children.project_id] =
+        groups.value[children.project_id].length === children.list.length
           ? []
           : Array.from(children.list);
     };
 
+    const isWarning = project =>
+      !project.isAdmin || project.children.list.length === 0;
+
     return {
       // References
-      checkedItems,
+      groups,
       projectsToDisplay,
       // methods
       close,
       isOpen,
-      checkItem,
+      isWarning,
       importGroup,
       checkAllItems,
       openGroupImport

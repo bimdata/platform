@@ -9,36 +9,45 @@
   &__menu {
     top: 35px;
     position: absolute;
+
+    &__warning {
+      position: absolute;
+      right: 6px;
+    } 
   }
 
   &__children-menu {
     &__header {
-      height: 38px;
       display: flex;
       position: relative;
       align-items: center;
-
-      &:hover {
-        cursor: pointer;
-        background-color: var(--color-silver-light);
-      }
+      flex-direction: column;
+      height: 38px;
+      margin-bottom: 6px;
 
       &__content {
         display: flex;
-        padding: 6px 0;
-        margin-left: 12px;
+        align-items: center;
+        width: 100%;
+        height: 100%;        
+        padding: 6px 0 6px 12px;
 
         &--checkbox {
           width: 14px;
         }
+
+        &:hover {
+          cursor: pointer;
+          background-color: var(--color-silver-light);
+        }
       }
 
       &__divider {
-        left: 12px;
         width: 88%;
-        bottom: -1px;
-        position: absolute;
-        border-bottom: 2px solid var(--color-silver-light);
+        height: 2px;
+        margin-top: 6px;
+        background-color: var(--color-silver-light);
+
       }
     }
 
