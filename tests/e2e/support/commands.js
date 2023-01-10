@@ -44,6 +44,10 @@ Cypress.Commands.add("login", ({ email, password }) => {
   });
 });
 
+Cypress.Commands.add("logout", () => {
+  cy.hook("btn-toggle-app-menu").click();
+  cy.hook("btn-logout").click();
+
   cy.url().should("contain", `${Cypress.env("AUTH_BASE_URL")}/accounts/login`);
 });
 
