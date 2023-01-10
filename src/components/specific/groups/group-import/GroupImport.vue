@@ -87,7 +87,7 @@
             fill
             radius
             width="95%"
-            @click="importGroup(children)"
+            @click="uploadGroup(children)"
           >
             <span>{{ $t("GroupImport.add") }}</span>
           </BIMDataButton>
@@ -113,7 +113,7 @@ export default {
   },
   setup(props) {
     const { spaceProjects } = useProjects();
-    const { loadProjectGroups } = useGroups();
+    const { importGroup } = useGroups();
     const { isOpen, close, open } = useToggle();
 
     const groups = ref({});
@@ -156,15 +156,12 @@ export default {
       open();
     };
 
-    const importGroup = async children => {
-      await GroupService.importGroup(
+    const uploadGroup = async children => {
+      await importGroup(
         props.project,
         groups.value[children.project_id].map(({ id }) => id)
       );
-
-      loadProjectGroups(props.project);
       groups.value[children.project_id] = [];
-
       close();
     };
 
@@ -200,7 +197,7 @@ export default {
       close,
       isOpen,
       isWarning,
-      importGroup,
+      uploadGroup,
       checkAllItems,
       openGroupImport
     };

@@ -34,6 +34,12 @@ const updateGroup = async (project, group) => {
   return newGroup;
 };
 
+const importGroup = async (project, groupIds) => {
+  const importedGroups = await GroupService.importGroup(project, groupIds);
+  await loadProjectGroups(project);
+  return importedGroups;
+};
+
 const addGroupMembers = async (project, group, membersToAdd) => {
   const addedMembers = await GroupService.addGroupMembers(
     project,
@@ -107,6 +113,7 @@ export function useGroups() {
     loadProjectGroups,
     createGroup,
     updateGroup,
+    importGroup,
     addGroupMembers,
     removeGroupMembers,
     updateGroupMembers,
