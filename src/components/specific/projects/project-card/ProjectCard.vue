@@ -63,11 +63,11 @@
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "../../../../composables/toggle.js";
+import { MODEL_TYPE } from "../../../../config/models.js";
 import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
 import { isSpaceAdmin } from "../../../../utils/spaces.js";
-import { windowType } from "../../../../utils/models.js";
-import { MODEL_TYPE } from "../../../../config/models.js";
+import { openInViewer } from "../../../../utils/models.js";
 
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
@@ -102,7 +102,6 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
 
     const currentModel = ref(null);
@@ -130,17 +129,7 @@ export default {
     };
 
     const goToModelViewer = () => {
-      router.push({
-        name: routeNames.modelViewer,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id,
-          modelIDs: currentModel.value.id
-        },
-        query: {
-          window: windowType(currentModel.value.document)
-        }
-      });
+      openInViewer(router, props.project, currentModel.value);
     };
 
     return {

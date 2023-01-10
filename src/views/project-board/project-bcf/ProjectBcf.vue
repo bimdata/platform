@@ -174,7 +174,7 @@
 
     <AppSidePanelContent :header="false">
       <Transition name="fade" mode="out-in">
-        <template v-if="showSettings">
+        <template v-if="currentPanel === sidePanelViews.settings">
           <BcfSettings
             :uiConfig="{
               closeButton: true
@@ -187,7 +187,7 @@
             @close="closeSidePanel"
           />
         </template>
-        <template v-else-if="showTopicOverview">
+        <template v-else-if="currentPanel === sidePanelViews.overview">
           <BcfTopicOverview
             :uiConfig="{
               closeButton: true,
@@ -201,16 +201,18 @@
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
             @topic-deleted="reloadBcfTopics(), closeSidePanel()"
-            @comment-created="reloadComments(currentTopic)"
-            @comment-updated="reloadComments(currentTopic)"
-            @comment-deleted="reloadComments(currentTopic)"
             @close="closeSidePanel"
           />
         </template>
-        <template v-else-if="showTopicCreate || showTopicUpdate">
+        <template
+          v-else-if="
+            currentPanel === sidePanelViews.create ||
+            currentPanel === sidePanelViews.update
+          "
+        >
           <BcfTopicForm
             :uiConfig="{
-              backButton: !showTopicCreate,
+              backButton: currentPanel === sidePanelViews.update,
               closeButton: true
             }"
             :project="project"
@@ -364,8 +366,8 @@ import { useAppNotification } from "../../../components/specific/app/app-notific
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
-import { MODEL_STATUS } from "../../../config/models.js";
-import { DEFAULT_WINDOW, WINDOW_MODELS } from "../../../config/viewer.js";
+import { MODEL_CONFIG, MODEL_STATUS } from "../../../config/models.js";
+import { DEFAULT_WINDOW } from "../../../config/viewer.js";
 import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
 import { useModels } from "../../../state/models.js";
@@ -378,6 +380,13 @@ import NoSearchResultsImage from "../../../components/images/NoSearchResultsImag
 import AppModalContent from "../../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+
+const sidePanelViews = {
+  settings: "settings",
+  overview: "overview",
+  create: "create",
+  update: "update"
+};
 
 export default {
   components: {
@@ -400,13 +409,13 @@ export default {
       loadBcfTopics,
       loadExtensions,
       loadDetailedExtensions,
-      loadBcfTopicComments,
       importBcf,
       exportBcf
     } = useBcf();
 
     const loading = ref(false);
     const isListView = ref(false);
+    const currentPanel = ref("");
     const currentTopic = ref(null);
 
     const reloadExtensions = async () => {
@@ -420,15 +429,12 @@ export default {
       await loadBcfTopics(currentProject.value);
     };
 
-    const reloadComments = async topic => {
-      await loadBcfTopicComments(currentProject.value, topic);
-    };
-
     watch(
       currentProject,
       async () => {
         try {
           loading.value = true;
+          currentPanel.value = "";
           currentTopic.value = null;
           await reloadExtensions();
           await reloadBcfTopics();
@@ -452,9 +458,11 @@ export default {
     );
 
     onActivated(() => {
+      currentPanel.value = "";
       currentTopic.value = null;
     });
     onDeactivated(() => {
+      currentPanel.value = "";
       currentTopic.value = null;
       closeSidePanel();
     });
@@ -537,10 +545,6 @@ export default {
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const showSettings = ref(false);
-    const showTopicOverview = ref(false);
-    const showTopicCreate = ref(false);
-    const showTopicUpdate = ref(false);
 
     const {
       isOpen: showMetrics,
@@ -549,38 +553,25 @@ export default {
     } = useToggle();
 
     const openSettings = () => {
-      showSettings.value = true;
-      showTopicOverview.value = false;
-      showTopicCreate.value = false;
-      showTopicUpdate.value = false;
+      currentPanel.value = sidePanelViews.settings;
       openSidePanel();
     };
 
     const openTopicOverview = topic => {
+      currentPanel.value = sidePanelViews.overview;
       currentTopic.value = topic;
-      showSettings.value = false;
-      showTopicOverview.value = true;
-      showTopicCreate.value = false;
-      showTopicUpdate.value = false;
-      loadBcfTopicComments(currentProject.value, topic);
       openSidePanel();
     };
 
     const openTopicCreate = () => {
+      currentPanel.value = sidePanelViews.create;
       currentTopic.value = null;
-      showSettings.value = false;
-      showTopicOverview.value = false;
-      showTopicCreate.value = true;
-      showTopicUpdate.value = false;
       openSidePanel();
     };
 
     const openTopicUpdate = topic => {
+      currentPanel.value = sidePanelViews.update;
       currentTopic.value = topic;
-      showSettings.value = false;
-      showTopicOverview.value = false;
-      showTopicCreate.value = false;
-      showTopicUpdate.value = true;
       openSidePanel();
     };
 
@@ -608,7 +599,7 @@ export default {
           .filter(
             m =>
               m.status === MODEL_STATUS.COMPLETED &&
-              WINDOW_MODELS[window].includes(m.type)
+              MODEL_CONFIG[m.type].window === window
           )
           .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
         if (models.length > 0) {
@@ -632,6 +623,7 @@ export default {
 
     return {
       // References
+      currentPanel,
       currentTopic,
       detailedExtensions,
       displayedTopics,
@@ -644,10 +636,7 @@ export default {
       searchText,
       selectedTopics,
       showMetrics,
-      showSettings,
-      showTopicCreate,
-      showTopicUpdate,
-      showTopicOverview,
+      sidePanelViews,
       sortedBy,
       sortOrderDate,
       sortOrderIndex,
@@ -669,7 +658,6 @@ export default {
       openTopicSnapshot,
       openTopicViewer,
       reloadBcfTopics,
-      reloadComments,
       reloadExtensions,
       sortByDate,
       sortByIndex,

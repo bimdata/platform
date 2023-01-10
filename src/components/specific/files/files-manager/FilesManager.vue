@@ -226,9 +226,6 @@
               v-if="showAccessManager"
               :project="project"
               :folder="folderToManage"
-              :groups="groups"
-              @folder-permission-updated="$emit('folder-permission-updated')"
-              @group-permission-updated="$emit('group-permission-updated')"
               @close="closeAccessManager"
             />
             <VisaMain
@@ -361,22 +358,12 @@ export default {
       type: Object,
       required: true
     },
-    groups: {
-      type: Array,
-      required: true
-    },
     loadingData: {
       type: Boolean,
       required: true
     }
   },
-  emits: [
-    "file-uploaded",
-    "file-updated",
-    "folder-permission-updated",
-    "group-permission-updated",
-    "model-created"
-  ],
+  emits: ["file-uploaded", "file-updated", "model-created"],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();

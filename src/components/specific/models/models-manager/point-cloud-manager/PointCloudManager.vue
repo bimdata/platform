@@ -13,8 +13,8 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  type: {
-    type: String,
+  types: {
+    type: Array,
     required: true
   }
 });
@@ -41,7 +41,7 @@ watch(
 <template>
   <GenericModelsManager
     :project="project"
-    :type="type"
+    :types="types"
     :tabs="tabs"
     @file-uploaded="emit('file-uploaded')"
   />

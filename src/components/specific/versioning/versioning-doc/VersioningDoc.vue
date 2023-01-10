@@ -101,7 +101,7 @@
                       modelIDs: document.model_id
                     },
                     query: {
-                      window: windowType(document)
+                      window: MODEL_CONFIG[document.model_type].window
                     }
                   }"
                 >
@@ -176,12 +176,13 @@
 import { isEmpty } from "lodash";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { MODEL_CONFIG } from "../../../../config/models.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import routeNames from "../../../../router/route-names.js";
 import FileService from "../../../../services/FileService.js";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
-import { isViewable, isPDF, windowType } from "../../../../utils/models.js";
+import { isPDF, isViewable, openInViewer } from "../../../../utils/models.js";
 import { fullName } from "../../../../utils/users.js";
 
 // Components
@@ -217,9 +218,9 @@ export default {
   },
   emits: ["on-delete", "get-all-doc-versions"],
   setup(props, { emit }) {
-    const { downloadFiles } = useFiles();
-    const { createModel } = useModels();
     const router = useRouter();
+    const { createModel } = useModels();
+    const { downloadFiles } = useFiles();
 
     const hasOneVisaClosed = computed(() =>
       props.document.visas.some(v => v.status === VISA_STATUS.CLOSE)
@@ -236,32 +237,22 @@ export default {
 
     const convertToModelAndShow = async () => {
       const model = await createModel(props.project, props.document);
-      router.push({
-        name: routeNames.modelViewer,
-        params: {
-          spaceID: props.project.cloud.id,
-          projectID: props.project.id,
-          modelIDs: model.document.model_id
-        },
-        query: {
-          window: windowType(model.document)
-        }
-      });
+      openInViewer(router, props.project, model);
     };
 
     return {
-      // references
+      // References
       fullName,
-      routeNames,
       hasOneVisaClosed,
-      // methods
-      download: downloadFiles,
+      MODEL_CONFIG,
+      routeNames,
+      // Methods
       convertToModelAndShow,
-      swapHeadDoc,
-      isViewable,
-      windowType,
+      download: downloadFiles,
       isEmpty,
-      isPDF
+      isPDF,
+      isViewable,
+      swapHeadDoc
     };
   }
 };

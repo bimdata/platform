@@ -59,7 +59,7 @@
             :key="currentTab.id"
             :is="currentTab.component"
             :project="project"
-            :type="currentTab.type"
+            :types="currentTab.modelTypes"
             :models="currentTab.models"
             @file-uploaded="$emit('file-uploaded')"
           />
@@ -73,7 +73,7 @@
 import { ref, watch } from "vue";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { useToggle } from "../../../../composables/toggle.js";
-import { MODEL_TYPE, MODEL_ICON } from "../../../../config/models.js";
+import { MODEL_CONFIG, MODEL_TYPE } from "../../../../config/models.js";
 import { segregateByType } from "../../../../utils/models.js";
 // Components
 import DWGManager from "./dwg-manager/DWGManager.vue";
@@ -81,58 +81,55 @@ import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
 import PointCloudManager from "./point-cloud-manager/PointCloudManager.vue";
 
+const { DWG, DXF, IFC, JPEG, META_BUILDING, PDF, PNG, POINT_CLOUD } =
+  MODEL_TYPE;
+
 const tabsDef = [
   {
     id: "ifc",
     label: "IFC",
-    icon: MODEL_ICON.IFC,
-    type: MODEL_TYPE.IFC,
-    modelTypes: [MODEL_TYPE.IFC],
+    icon: MODEL_CONFIG[IFC].icon,
+    modelTypes: [IFC],
     component: "IFCManager"
   },
   {
     id: "dwg",
     label: "DWG",
-    icon: MODEL_ICON.DWG,
-    type: MODEL_TYPE.DWG,
-    modelTypes: [MODEL_TYPE.DWG],
+    icon: MODEL_CONFIG[DWG].icon,
+    modelTypes: [DWG],
     component: "DWGManager",
     beta: true
   },
   {
     id: "dxf",
     label: "DXF",
-    icon: MODEL_ICON.DXF,
-    type: MODEL_TYPE.DXF,
-    modelTypes: [MODEL_TYPE.DXF],
+    icon: MODEL_CONFIG[DXF].icon,
+    modelTypes: [DXF],
     component: "DWGManager",
     beta: true
   },
   {
     id: "pdf",
     label: "PDF",
-    icon: MODEL_ICON.PDF,
-    type: MODEL_TYPE.PDF,
-    modelTypes: [MODEL_TYPE.PDF, MODEL_TYPE.META_BUILDING],
+    icon: MODEL_CONFIG[PDF].icon,
+    modelTypes: [PDF, META_BUILDING],
     component: "PDFManager"
   },
   {
     id: "point-cloud",
     label: "Point Cloud",
-    icon: MODEL_ICON.POINT_CLOUD,
-    type: MODEL_TYPE.POINT_CLOUD,
-    modelTypes: [MODEL_TYPE.POINT_CLOUD],
+    icon: MODEL_CONFIG[POINT_CLOUD].icon,
+    modelTypes: [POINT_CLOUD],
     component: "PointCloudManager",
     beta: true
   },
   {
     id: "photos",
     label: "Photos",
-    icon: MODEL_ICON.PHOTOS,
-    type: MODEL_TYPE.PHOTOS,
-    modelTypes: [MODEL_TYPE.JPEG, MODEL_TYPE.PNG],
+    icon: "fileImagePolychrome",
+    modelTypes: [JPEG, PNG],
     component: "DWGManager"
-  },
+  }
 ];
 
 export default {

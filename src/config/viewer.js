@@ -1,8 +1,3 @@
-import { MODEL_TYPE } from "./models.js";
-
-const { DWG, DXF, IFC, JPEG, META_BUILDING, PDF, PNG, POINT_CLOUD } =
-  MODEL_TYPE;
-
 const AVAILABLE_PLUGINS = Object.freeze({
   backgroundColor:
     "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
@@ -24,20 +19,7 @@ const WINDOWS = Object.freeze({
   IFC2D: "2d",
   IFC3D: "3d",
   PLAN: "plan",
-  TILESET: "pointCloud"
-});
-
-/**
- * Define the type of models that can be opened
- * in each viewer window.
- */
-const WINDOW_MODELS = Object.freeze({
-  [WINDOWS.DWG]: [DWG],
-  [WINDOWS.DXF]: [DXF],
-  [WINDOWS.IFC2D]: [IFC],
-  [WINDOWS.IFC3D]: [IFC],
-  [WINDOWS.PLAN]: [JPEG, META_BUILDING, PDF, PNG],
-  [WINDOWS.TILESET]: [POINT_CLOUD]
+  POINT_CLOUD: "pointCloud"
 });
 
 /**
@@ -53,33 +35,23 @@ const PLUGINS_CONFIG = {
   header: {
     warnings: false
   },
-  measure3d: true,
-  plan: true,
   properties: {
     editProperties: true
   },
   split: true,
-  "structure-properties": {
-    merge: true,
-    export: true,
-    editProperties: true
-  },
   structure: {
-    merge: true,
-    export: true
+    export: true,
+    merge: true
   },
-  tileset: true,
-  "tileset-viewer-parameters": true,
+  "structure-properties": {
+    editProperties: true,
+    export: true,
+    merge: true
+  },
   "viewer2d-background": true,
   viewer3d: {
     enableDynamicLOD: true
   }
 };
 
-export {
-  AVAILABLE_PLUGINS,
-  DEFAULT_WINDOW,
-  PLUGINS_CONFIG,
-  WINDOW_MODELS,
-  WINDOWS
-};
+export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };

@@ -17,9 +17,7 @@
           condensed
           :project="project"
           :file="fileUpload"
-          @upload-completed="$emit('update-upload', $event)"
-          @upload-canceled="$emit('update-upload')"
-          @upload-failed="$emit('update-upload')"
+          @upload-completed="$emit('file-uploaded', $event)"
         />
       </transition>
     </template>
@@ -100,10 +98,10 @@ export default {
     "archive",
     "delete",
     "download",
-    "selection-changed",
-    "unarchive",
     "edit-metaBuilding",
-    "update-upload"
+    "file-uploaded",
+    "selection-changed",
+    "unarchive"
   ],
   setup(props) {
     const { t } = useI18n();

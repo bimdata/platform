@@ -1,3 +1,7 @@
+/* eslint-disable */
+
+import { WINDOWS } from "./viewer.js";
+
 /**
  * List of all model types.
  */
@@ -14,7 +18,6 @@ const MODEL_TYPE = Object.freeze({
   PDF: "PDF",
   PNG: "PNG",
   POINT_CLOUD: "POINT_CLOUD",
-  PHOTOS: "PHOTOS"
 });
 
 /**
@@ -23,42 +26,41 @@ const MODEL_TYPE = Object.freeze({
 const MODEL_EXTENSIONS = Object.freeze({
   DWG: ".dwg",
   DXF: ".dxf",
+  E57: ".e57",
   IFC: ".ifc",
   IFCZIP: ".ifczip",
   JPEG: ".jpeg",
   JPG: ".jpg",
-  PDF: ".pdf",
-  PNG: ".png",
-  E57: ".e57",
   LAS: ".las",
   LAZ: ".laz",
+  PDF: ".pdf",
+  PLY: ".ply",
+  PNG: ".png",
   XYZ: ".xyz",
-  PLY: ".ply"
 });
 
 /**
  * List of file extensions that can be directly uploaded as models.
  */
 const UPLOADABLE_EXTENSIONS = Object.freeze([
-  ".dwg",
-  ".dxf",
-  ".e57",
-  ".ifc",
-  ".ifczip",
-  ".las",
-  ".laz",
-  ".ply"
+  MODEL_EXTENSIONS.DWG,
+  MODEL_EXTENSIONS.DXF,
+  MODEL_EXTENSIONS.E57,
+  MODEL_EXTENSIONS.IFC,
+  MODEL_EXTENSIONS.IFCZIP,
+  MODEL_EXTENSIONS.LAS,
+  MODEL_EXTENSIONS.LAZ,
+  MODEL_EXTENSIONS.PLY,
 ]);
 
 /**
- * List of file extensions that can be marked as models.
+ * List of file extensions that can be converted to models.
  */
-// eslint-disable-next-line prettier/prettier
 const CONVERTIBLE_EXTENSIONS = Object.freeze([
-  ".jpeg",
-  ".jpg",
-  ".pdf",
-  ".png"
+  MODEL_EXTENSIONS.JPEG,
+  MODEL_EXTENSIONS.JPG,
+  MODEL_EXTENSIONS.PDF,
+  MODEL_EXTENSIONS.PNG,
 ]);
 
 /**
@@ -69,7 +71,7 @@ const MODEL_SOURCE = Object.freeze({
   SPLIT: "SPLIT",
   EXPORT: "EXPORT",
   MERGE: "MERGE",
-  OPTIMIZED: "OPTIMIZED"
+  OPTIMIZED: "OPTIMIZED",
 });
 
 /**
@@ -79,27 +81,64 @@ const MODEL_STATUS = Object.freeze({
   PENDING: "P",
   IN_PROGRESS: "I",
   COMPLETED: "C",
-  ERROR: "E"
+  ERROR: "E",
 });
 
-const MODEL_ICON = Object.freeze({
-  [MODEL_TYPE.IFC]: "fileIfcPolychrome",
-  [MODEL_TYPE.DXF]: "fileDxfPolychrome",
-  [MODEL_TYPE.DWG]: "fileDwgPolychrome",
-  [MODEL_TYPE.JPEG]: "fileJpegPolychrome",
-  [MODEL_TYPE.PNG]: "filePngPolychrome",
-  [MODEL_TYPE.PDF]: "filePdfPolychrome",
-  [MODEL_TYPE.META_BUILDING]: "filePlanPolychrome",
-  [MODEL_TYPE.POINT_CLOUD]: "filePointCloudPolychrome",
-  [MODEL_TYPE.PHOTOS]: "fileImagePolychrome"
+const MODEL_CONFIG = Object.freeze({
+  [MODEL_TYPE.IFC]: {
+    ext: [MODEL_EXTENSIONS.IFC, MODEL_EXTENSIONS.IFCZIP],
+    window: WINDOWS.IFC3D,
+    icon: "fileIfcPolychrome",
+  },
+  [MODEL_TYPE.DWG]: {
+    ext: [MODEL_EXTENSIONS.DWG],
+    window: WINDOWS.DWG,
+    icon: "fileDwgPolychrome",
+  },
+  [MODEL_TYPE.DXF]: {
+    ext: [MODEL_EXTENSIONS.DXF],
+    window: WINDOWS.DXF,
+    icon: "fileDxfPolychrome",
+  },
+  [MODEL_TYPE.JPEG]: {
+    ext: [MODEL_EXTENSIONS.JPEG, MODEL_EXTENSIONS.JPG],
+    window: WINDOWS.PLAN,
+    icon: "fileJpegPolychrome",
+  },
+  [MODEL_TYPE.META_BUILDING]: {
+    ext: [],
+    window: WINDOWS.PLAN,
+    icon: "filePlanPolychrome",
+  },
+  [MODEL_TYPE.PDF]: {
+    ext: [MODEL_EXTENSIONS.PDF],
+    window: WINDOWS.PLAN,
+    icon: "filePdfPolychrome",
+  },
+  [MODEL_TYPE.PNG]: {
+    ext: [MODEL_EXTENSIONS.PNG],
+    window: WINDOWS.PLAN,
+    icon: "filePngPolychrome",
+  },
+  [MODEL_TYPE.POINT_CLOUD]: {
+    ext: [
+      MODEL_EXTENSIONS.E57,
+      MODEL_EXTENSIONS.LAS,
+      MODEL_EXTENSIONS.LAZ,
+      MODEL_EXTENSIONS.PLY,
+      MODEL_EXTENSIONS.XYZ
+    ],
+    window: WINDOWS.POINT_CLOUD,
+    icon: "filePointCloudPolychrome",
+  },
 });
 
 export {
   CONVERTIBLE_EXTENSIONS,
+  MODEL_CONFIG,
   MODEL_EXTENSIONS,
   MODEL_SOURCE,
   MODEL_STATUS,
   MODEL_TYPE,
-  UPLOADABLE_EXTENSIONS,
-  MODEL_ICON
+  UPLOADABLE_EXTENSIONS
 };

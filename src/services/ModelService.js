@@ -1,5 +1,5 @@
 import { downloadAll } from "../utils/download.js";
-import { isPlanModel } from "../utils/models.js";
+import { isPlan } from "../utils/models.js";
 
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
@@ -79,7 +79,7 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model => {
-          if (isPlanModel(model) && !hard) {
+          if (isPlan(model) && !hard) {
             return apiClient.modelApi.deleteModelWithoutDoc(
               project.cloud.id,
               model.id,

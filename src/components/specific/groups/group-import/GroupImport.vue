@@ -21,6 +21,7 @@
         class="group-import__menu"
         childrenLeft
         :menuItems="projectsToDisplay"
+        subListMaxHeight="300px"
       >
         <template #item="{ item }">
           <template v-if="isWarning(item)">
@@ -32,7 +33,7 @@
             />
             <BIMDataTooltip
               class="group-import__menu__warning"
-              :text="$t(`GroupImport.${item.isAdmin ? 'notAdmin' : 'noGroup'}`)"
+              :text="$t(`GroupImport.${item.isAdmin ? 'noGroup' : 'notAdmin'}`)"
               maxWidth="240px"
               position="left"
               color="high"
@@ -188,8 +189,14 @@ export default {
           : Array.from(children.list);
     };
 
-    const isWarning = project =>
-      !project.isAdmin || project.children.list.length === 0;
+    const isWarning = project => {
+      console.log("project", project);
+      console.log(
+        "test",
+        !project.isAdmin || project.children.list.length === 0
+      );
+      return !project.isAdmin || project.children.list.length === 0;
+    };
 
     return {
       // References

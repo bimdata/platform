@@ -43,7 +43,7 @@
           <BIMDataIcon name="building" size="s" />
         </template>
         <template v-else>
-          <BIMDataIcon :name="MODEL_ICON[model.type]" size="m" />
+          <BIMDataIcon :name="MODEL_CONFIG[model.type].icon" size="m" />
         </template>
         <BIMDataTextbox :text="model.name" />
       </div>
@@ -53,7 +53,7 @@
 
 <script>
 import { ref, watch } from "vue";
-import { MODEL_TYPE, MODEL_ICON } from "../../../../../../config/models.js";
+import { MODEL_CONFIG, MODEL_TYPE } from "../../../../../../config/models.js";
 import { useModels } from "../../../../../../state/models.js";
 import { debounce } from "../../../../../../utils/async.js";
 
@@ -131,8 +131,8 @@ export default {
       hasError,
       loading,
       modelName,
+      MODEL_CONFIG,
       MODEL_TYPE,
-      MODEL_ICON,
       nameInput,
       showUpdateForm,
       // Methods

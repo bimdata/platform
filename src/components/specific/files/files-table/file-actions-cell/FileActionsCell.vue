@@ -10,6 +10,7 @@
     >
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
+
     <div class="file-actions-cell__menu" ref="menu" v-show="isOpen">
       <AppLink
         v-if="isViewable(file)"
@@ -22,7 +23,7 @@
             modelIDs: file.model_id
           },
           query: {
-            window: windowType(file)
+            window: MODEL_CONFIG[file.model_type].window
           }
         }"
       >
@@ -140,15 +141,14 @@
 
 <script>
 import { nextTick, ref } from "vue";
+import { MODEL_CONFIG } from "../../../../../config/models.js";
 import routeNames from "../../../../../router/route-names.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import {
   isConvertible,
   isIFC,
   isModel,
-  isSmartFile,
-  isViewable,
-  windowType
+  isViewable
 } from "../../../../../utils/models.js";
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
@@ -215,8 +215,9 @@ export default {
     return {
       // References
       menu,
-      routeNames,
       isOpen,
+      routeNames,
+      MODEL_CONFIG,
       // Methods
       closeMenu,
       isConvertible,
@@ -224,10 +225,8 @@ export default {
       isFolder,
       isModel,
       isIFC,
-      isSmartFile,
       onClick,
-      openMenu,
-      windowType
+      openMenu
     };
   }
 };

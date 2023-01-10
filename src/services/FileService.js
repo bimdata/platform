@@ -59,6 +59,21 @@ class FileService {
     }
   }
 
+  async fetchFolder(project, folder) {
+    try {
+      return await apiClient.collaborationApi.getFolder(
+        project.cloud.id,
+        folder.id,
+        project.id
+      );
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.FOLDER_FETCH_ERROR, error)
+      );
+      return {};
+    }
+  }
+
   async createFolder(project, folder) {
     try {
       return await apiClient.collaborationApi.createFolder(
