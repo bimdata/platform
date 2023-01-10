@@ -11,4 +11,5 @@ export default async function projectBoardResolver(route) {
   const project = projects.setCurrentProject(+route.params.projectID);
 
   await groups.loadProjectGroups(project);
+  await projects.loadSpaceProjects(spaces.currentSpace.value);
 }
