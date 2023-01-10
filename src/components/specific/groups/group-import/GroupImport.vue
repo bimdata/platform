@@ -189,14 +189,8 @@ export default {
           : Array.from(children.list);
     };
 
-    const isWarning = project => {
-      console.log("project", project);
-      console.log(
-        "test",
-        !project.isAdmin || project.children.list.length === 0
-      );
-      return !project.isAdmin || project.children.list.length === 0;
-    };
+    const isWarning = project =>
+      !project.isAdmin || project.children.list.length === 0;
 
     return {
       // References
