@@ -14,7 +14,7 @@
     "@bimdata/bcf-components": "3.1.1-rc.2",
     "@bimdata/building-maker": "1.5.1",
     "@bimdata/christmas-sleigh-viewer-plugin": "^2.0.0",
-    "@bimdata/design-system": "1.4.0-rc.81np",
+    "@bimdata/design-system": "1.4.0-rc.81",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.5.0",
     "@bimdata/viewer": "1.10.0-rc.15",
