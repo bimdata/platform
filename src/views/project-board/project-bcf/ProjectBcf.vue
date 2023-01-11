@@ -451,7 +451,7 @@ export default {
       loadBcfTopics,
       loadExtensions,
       loadDetailedExtensions,
-      deleteTopic,
+      deleteTopics,
       importBcf,
       exportBcf
     } = useBcf();
@@ -589,9 +589,7 @@ export default {
 
     const deleteBcfTopics = async () => {
       try {
-        await selectedTopics.value.forEach(topic => {
-          deleteTopic(currentProject.value, topic);
-        });
+        await deleteTopics(currentProject.value, selectedTopics.value.values());
         pushNotification({
           type: "success",
           title: t("Success"),

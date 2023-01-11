@@ -1,3 +1,5 @@
+import async from "async";
+
 import { useService } from "@bimdata/bcf-components";
 import { reactive, shallowReadonly, toRefs } from "vue";
 import BcfService from "../services/BcfService.js";
@@ -54,8 +56,10 @@ const importBcf = async (project, file) => {
   return res;
 };
 
-const deleteTopic = async (project, topic) => {
-  const res = await service.deleteTopic(project, topic);
+const deleteTopics = async (project, topics) => {
+  const res = await async.eachLimit(topics, 10, async topic =>
+    service.deleteTopic(project, topic)
+  );
   await loadBcfTopics(project);
   return res;
 };
@@ -70,7 +74,7 @@ export function useBcf() {
     // References
     ...toRefs(readonlyState),
     // Methods
-    deleteTopic,
+    deleteTopics,
     loadBcfTopics,
     loadExtensions,
     loadDetailedExtensions,
