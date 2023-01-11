@@ -112,27 +112,6 @@ function createFolderTree(rootFolder, paths) {
   return pathsBySiblings.map(treeBuilder);
 }
 
-function matchFoldersAndDocs(DMSTree, docsInfos) {
-  return docsInfos.map(doc => {
-    const docPath = Array.from(doc.path);
-
-    docPath.shift();
-    let parentId = null;
-    const parentFolder = docPath.reduce((parentFolder, currentFolderName) => {
-      return (
-        parentFolder.children.find(child => child.name === currentFolderName) ??
-        parentFolder
-      );
-    }, DMSTree[0]);
-    parentId = parentFolder.id;
-
-    return {
-      ...doc,
-      parentId
-    };
-  });
-}
-
 function treeIdGenerator(projectToImport) {
   if (projectToImport.folders.length === 0) return;
   // Populate folder tree with IDs permit to satisfy a requieremet from FileTree component. Front-end use only.
@@ -193,7 +172,6 @@ export {
   getPaths,
   handleInputFiles,
   createFolderTree,
-  matchFoldersAndDocs,
   treeIdGenerator,
   handleDragAndDropFile,
   getFileFormat,
