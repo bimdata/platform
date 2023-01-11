@@ -4,7 +4,6 @@ import { segregate } from "../utils/file-structure.js";
 import {
   getPaths,
   handleInputFiles,
-  matchFoldersAndDocs,
   createFolderTree,
   handleDragAndDropFile,
   removeRootFolder
@@ -243,8 +242,8 @@ class FileService {
     }
 
     const createdFolders = await Promise.all(
-      currentFiles.map(async folder => {
-        const paths = getPaths(folder);
+      currentFiles.map(async files => {
+        const paths = getPaths(files);
 
         const rootFolder = await this.createFolder(project, {
           parent_id: currentFolder.id,
@@ -270,11 +269,22 @@ class FileService {
 
           const rootFolderNode = getRootFolderNode(DMSTree);
 
+          const mappedPath = new Map();
+          const parseNode = (node, parent) => {
+            node.path = parent.path + "/" + node.name;
+            mappedPath.set(node.path, node.id);
+            node.children.forEach(child => parseNode(child, node));
+          };
+          parseNode(rootFolderNode, { path: "" });
+
           return {
             type: FILE_TYPE.FOLDER,
             name: rootFolderNode.name,
-            size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs([rootFolderNode], folder)
+            size: files.reduce((a, b) => a + b.file?.size ?? 0, 0),
+            files: files.map(file => ({
+              ...file,
+              parentId: mappedPath.get("/" + file.path.join("/"))
+            }))
           };
         } catch (error) {
           ErrorService.handleError(
