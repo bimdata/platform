@@ -1,5 +1,33 @@
 <template>
   <div class="project-bcf">
+    <template v-if="isDeleting">
+      <teleport to="body">
+        <BIMDataSafeZoneModal style="z-index: 100">
+          <template #text>
+            {{ $t("ProjectBcf.deleteBcfText") }}
+          </template>
+          <template #actions>
+            <BIMDataButton
+              color="high"
+              fill
+              radius
+              class="m-r-12"
+              @click="
+                {
+                  deleteBcfTopics();
+                  closeDelete();
+                }
+              "
+            >
+              {{ $t("ProjectBcf.deleteBcfConfirm") }}
+            </BIMDataButton>
+            <BIMDataButton color="primary" outline radius @click="closeDelete">
+              {{ $t("ProjectBcf.cancelBcfConfirm") }}
+            </BIMDataButton>
+          </template>
+        </BIMDataSafeZoneModal>
+      </teleport>
+    </template>
     <AppSlotContent name="project-board-action">
       <BIMDataButton color="primary" outline radius icon @click="openSettings">
         <BIMDataIcon name="settings" size="xxs" />
@@ -279,6 +307,20 @@
               {{ $t("ProjectBcf.exportButtonText") }}
             </span>
           </BIMDataButton>
+          <BIMDataButton
+            v-if="selectedTopics.size > 0"
+            class="m-l-18"
+            fill
+            radius
+            :icon="isXL"
+            color="high"
+            @click="toggleDelete"
+          >
+            <BIMDataIcon name="delete" size="xs" />
+            <span v-if="!isXL" style="margin-left: 6px">
+              {{ $t("ProjectBcf.deleteButtonText") }}
+            </span>
+          </BIMDataButton>
         </div>
 
         <Transition name="fade" mode="out-in">
@@ -409,6 +451,7 @@ export default {
       loadBcfTopics,
       loadExtensions,
       loadDetailedExtensions,
+      deleteTopic,
       importBcf,
       exportBcf
     } = useBcf();
@@ -539,7 +582,26 @@ export default {
         pushNotification({
           type: "error",
           title: t("Error"),
-          message: t("ProjectBcf.importBcfNotificationError")
+          message: t("ProjectBcf.exportBcfNotificationError")
+        });
+      }
+    };
+
+    const deleteBcfTopics = async () => {
+      try {
+        await selectedTopics.value.forEach(topic => {
+          deleteTopic(currentProject.value, topic);
+        });
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("ProjectBcf.deleteBcfNotificationSuccess")
+        });
+      } catch {
+        pushNotification({
+          type: "error",
+          title: t("Error"),
+          message: t("ProjectBcf.deleteBcfNotificationError")
         });
       }
     };
@@ -621,6 +683,12 @@ export default {
       });
     };
 
+    const {
+      isOpen: isDeleting,
+      close: closeDelete,
+      toggle: toggleDelete
+    } = useToggle();
+
     return {
       // References
       currentPanel,
@@ -643,7 +711,11 @@ export default {
       sortOrderTitle,
       topics,
       topicSnapshot,
+      isDeleting,
       // Methods
+      deleteBcfTopics,
+      closeDelete,
+      toggleDelete,
       applyFilters,
       closeMetrics,
       closeSidePanel,

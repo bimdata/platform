@@ -54,6 +54,12 @@ const importBcf = async (project, file) => {
   return res;
 };
 
+const deleteTopic = async (project, topic) => {
+  const res = await service.deleteTopic(project, topic);
+  await loadBcfTopics(project);
+  return res;
+};
+
 const exportBcf = (project, topics) => {
   return BcfService.exportBcf(project, topics);
 };
@@ -64,6 +70,7 @@ export function useBcf() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    deleteTopic,
     loadBcfTopics,
     loadExtensions,
     loadDetailedExtensions,
