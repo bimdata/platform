@@ -866,6 +866,8 @@
     "deleteButtonText": "Supprimer",
     "deleteBcfText": "Vous êtes sur le point de supprimer la sélection de BCF",
     "deleteBcfConfirm": "Confimer la suppression",
+    "deleteInProgress": "Suppression en cours",
+    "deleteInProgressSub": "Ce processus peut prendre quelques instants.",
     "deleteBcfNotificationSuccess": "La sélection de BCF a bien été supprimée",
     "deleteBcfNotificationError": "Erreur lors de la suppression de la selection de BCF",
     "cancelBcfConfirm": "Annuler",

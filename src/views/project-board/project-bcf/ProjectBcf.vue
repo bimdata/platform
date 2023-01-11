@@ -1,31 +1,40 @@
 <template>
   <div class="project-bcf">
-    <template v-if="isDeleting">
+    <template v-if="deleteMode">
       <teleport to="body">
-        <BIMDataSafeZoneModal style="z-index: 100">
-          <template #text>
-            {{ $t("ProjectBcf.deleteBcfText") }}
-          </template>
-          <template #actions>
-            <BIMDataButton
-              color="high"
-              fill
-              radius
-              class="m-r-12"
-              @click="
-                {
-                  deleteBcfTopics();
-                  closeDelete();
-                }
-              "
-            >
-              {{ $t("ProjectBcf.deleteBcfConfirm") }}
-            </BIMDataButton>
-            <BIMDataButton color="primary" outline radius @click="closeDelete">
-              {{ $t("ProjectBcf.cancelBcfConfirm") }}
-            </BIMDataButton>
-          </template>
-        </BIMDataSafeZoneModal>
+        <template v-if="true">
+          <BIMDataLoading
+            style="z-index: 100"
+            :message="$t('ProjectBcf.deleteInProgress')"
+            :subMessage="$t('ProjectBcf.deleteInProgressSub')"
+          />
+        </template>
+        <template v-else>
+          <BIMDataSafeZoneModal style="z-index: 100">
+            <template #text>
+              {{ $t("ProjectBcf.deleteBcfText") }}
+            </template>
+            <template #actions>
+              <BIMDataButton
+                color="high"
+                fill
+                radius
+                class="m-r-12"
+                @click="deleteBcfTopics"
+              >
+                {{ $t("ProjectBcf.deleteBcfConfirm") }}
+              </BIMDataButton>
+              <BIMDataButton
+                color="primary"
+                outline
+                radius
+                @click="closeDeleteMode"
+              >
+                {{ $t("ProjectBcf.cancelBcfConfirm") }}
+              </BIMDataButton>
+            </template>
+          </BIMDataSafeZoneModal>
+        </template>
       </teleport>
     </template>
     <AppSlotContent name="project-board-action">
@@ -314,7 +323,7 @@
             radius
             :icon="isXL"
             color="high"
-            @click="toggleDelete"
+            @click="toggleDeleteMode"
           >
             <BIMDataIcon name="delete" size="xs" />
             <span v-if="!isXL" style="margin-left: 6px">
@@ -587,10 +596,17 @@ export default {
       }
     };
 
+    const isLoadingDelete = ref(false);
+
     const deleteBcfTopics = async () => {
       try {
+        isLoadingDelete.value = true;
         await deleteTopics(currentProject.value, selectedTopics.value.values());
+        isLoadingDelete.value = false;
+
+        closeDeleteMode();
         selectedTopics.value.clear();
+
         pushNotification({
           type: "success",
           title: t("Success"),
@@ -683,9 +699,9 @@ export default {
     };
 
     const {
-      isOpen: isDeleting,
-      close: closeDelete,
-      toggle: toggleDelete
+      isOpen: deleteMode,
+      close: closeDeleteMode,
+      toggle: toggleDeleteMode
     } = useToggle();
 
     return {
@@ -710,10 +726,11 @@ export default {
       sortOrderTitle,
       topics,
       topicSnapshot,
-      isDeleting,
+      deleteMode,
+      isLoadingDelete,
       // Methods
-      closeDelete,
-      toggleDelete,
+      closeDeleteMode,
+      toggleDeleteMode,
       deleteBcfTopics,
       applyFilters,
       closeMetrics,
