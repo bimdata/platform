@@ -2,7 +2,7 @@
   <div class="project-bcf">
     <template v-if="deleteMode">
       <teleport to="body">
-        <template v-if="true">
+        <template v-if="isLoadingDelete">
           <BIMDataLoading
             style="z-index: 100"
             :message="$t('ProjectBcf.deleteInProgress')"
