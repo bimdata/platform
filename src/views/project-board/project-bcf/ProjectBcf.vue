@@ -713,9 +713,9 @@ export default {
       topicSnapshot,
       isDeleting,
       // Methods
-      deleteBcfTopics,
       closeDelete,
       toggleDelete,
+      deleteBcfTopics,
       applyFilters,
       closeMetrics,
       closeSidePanel,
