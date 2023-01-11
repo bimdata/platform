@@ -590,6 +590,7 @@ export default {
     const deleteBcfTopics = async () => {
       try {
         await deleteTopics(currentProject.value, selectedTopics.value.values());
+        selectedTopics.value.clear();
         pushNotification({
           type: "success",
           title: t("Success"),
