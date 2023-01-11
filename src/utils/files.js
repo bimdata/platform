@@ -70,13 +70,16 @@ function handleInputFiles(files) {
  */
 function createFolderTree(rootFolder, paths) {
   const pathsBySiblings = paths.reduce((globalPath, currentPath) => {
-    if (globalPath.length === 0 || currentPath.length === 1) {
-      globalPath.push([currentPath]);
+    const currentPathIndex = globalPath.findIndex(
+      path => path[0][0] === currentPath[0]
+    );
+
+    if (currentPathIndex !== -1) {
+      globalPath[currentPathIndex].push(currentPath);
     } else {
-      globalPath.forEach((path, index) => {
-        if (path[0][0] === currentPath[0]) globalPath[index].push(currentPath);
-      });
+      globalPath.push([currentPath]);
     }
+
     return globalPath;
   }, []);
 
