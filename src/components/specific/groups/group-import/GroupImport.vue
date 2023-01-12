@@ -20,8 +20,10 @@
       <BIMDataMenu
         class="group-import__menu"
         childrenLeft
+        width="230px"
         :menuItems="projectsToDisplay"
         subListMaxHeight="300px"
+        maxHeight="500px"
       >
         <template #item="{ item }">
           <template v-if="isWarning(item)">
@@ -129,11 +131,10 @@ export default {
             .map(async project => {
               groups.value[project.id] = [];
 
-              let children = {};
+              let children = { project_id: project.id, list: [] };
               if (project.isAdmin) {
-                children = {
-                  project_id: project.id,
-                  list: (await GroupService.fetchProjectGroups(project)).map(
+                children.list.push(
+                  ...(await GroupService.fetchProjectGroups(project)).map(
                     group => {
                       const currentGroup = {
                         ...group,
@@ -144,7 +145,7 @@ export default {
                       return currentGroup;
                     }
                   )
-                };
+                );
               }
               return {
                 ...project,

@@ -2,7 +2,7 @@
 .group-import {
 
   &__button {
-    width: 200px;
+    width: 230px;
     padding: 6px 12px;
   }
 
@@ -11,8 +11,9 @@
     position: absolute;
 
     &__warning {
-      position: absolute;
       right: 6px;
+      font-size: 10px;
+      position: absolute;
     } 
   }
 
@@ -29,7 +30,7 @@
         display: flex;
         align-items: center;
         width: 100%;
-        height: 100%;        
+        height: 100%;
         padding: 6px 0 6px 12px;
 
         &--checkbox {
