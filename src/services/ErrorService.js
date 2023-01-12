@@ -85,7 +85,8 @@ const ERRORS = Object.freeze({
   DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",
   DATAPACK_UPDATE_ERROR: "datapackUpdateError",
   BCF_IMPORT_ERROR: "bcfImportError",
-  BCF_EXPORT_ERROR: "bcfExportError"
+  BCF_EXPORT_ERROR: "bcfExportError",
+  BCF_DELETE_ERROR: "bcfDeleteError"
 });
 
 class RuntimeError {
