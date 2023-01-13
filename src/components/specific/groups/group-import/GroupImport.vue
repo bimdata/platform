@@ -89,7 +89,7 @@
             margin="0 6px 0 0"
             :modelValue="
               Boolean(
-                groups[currentProject.id]?.find(item => item.id === child.id)
+                groups[currentProject.id]?.some(item => item.id === child.id)
               )
             "
           />
