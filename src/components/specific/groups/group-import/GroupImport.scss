@@ -2,64 +2,88 @@
 .group-import {
 
   &__button {
-    width: 230px;
+    width: 200px;
     padding: 6px 12px;
   }
 
   &__menu {
     top: 35px;
     position: absolute;
+    margin-bottom: 6px;
 
     &__warning {
       right: 6px;
-      font-size: 10px;
       position: absolute;
-    } 
+    }
   }
 
-  &__children-menu {
-    &__header {
-      display: flex;
-      position: relative;
-      align-items: center;
-      flex-direction: column;
-      height: 38px;
-      margin-bottom: 6px;
+  &__children {
+    position: relative;
+
+    &__no-child {
+      position: fixed;
+      background-color: white;
+      width: 200px;
+      right: 242px;
+      height: 29px;
+      padding: 0 0 50px 0;
+      margin: 20px 0 0 0;
+      box-shadow: var(--box-shadow);
 
       &__content {
         display: flex;
+        position: absolute; 
         align-items: center;
-        width: 100%;
-        height: 100%;
-        padding: 6px 0 6px 12px;
+        top: -2px;
+        padding: var(--spacing-unit);
+        gap: var(--spacing-unit);
+        color: var(--color-high);
+      }
+    }
 
-        &--checkbox {
-          width: 14px;
+    &__menu {
+      &__header {
+        display: flex;
+        position: relative;
+        align-items: center;
+        flex-direction: column;
+        height: 38px;
+        margin-bottom: 6px;
+
+        &__content {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          padding: 6px 0 6px 12px;
+
+          &--checkbox {
+            width: 14px;
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: var(--color-silver-light);
+          }
         }
 
-        &:hover {
-          cursor: pointer;
+        &__divider {
+          width: 88%;
+          height: 2px;
+          margin-top: 6px;
           background-color: var(--color-silver-light);
         }
       }
 
-      &__divider {
-        width: 88%;
-        height: 2px;
-        margin-top: 6px;
-        background-color: var(--color-silver-light);
-
+      &__item {
+        &--checkbox {
+          width: 14px;
+        }
       }
-    }
 
-    &__item {
-      &--checkbox {
-        width: 14px;
+      &--footer {
+        margin: 6px auto 0px;
       }
-    }
-
-    &--footer {
-      margin: 6px auto 0px;
     }
   }
 }

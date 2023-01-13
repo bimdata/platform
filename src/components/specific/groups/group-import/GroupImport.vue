@@ -20,76 +20,97 @@
       <BIMDataMenu
         class="group-import__menu"
         childrenLeft
-        width="230px"
         :menuItems="projectsToDisplay"
         subListMaxHeight="300px"
         maxHeight="500px"
+        @hover="project => (currentProject = project)"
       >
         <template #item="{ item }">
           <template v-if="isWarning(item)">
             <BIMDataTextbox
+              width="70%"
               :text="item.text"
+              :tooltip="false"
               :style="{
                 marginLeft: '11px'
               }"
             />
-            <BIMDataTooltip
+            <BIMDataIcon
               class="group-import__menu__warning"
-              :text="$t(`GroupImport.${item.isAdmin ? 'noGroup' : 'notAdmin'}`)"
-              maxWidth="240px"
-              position="left"
+              name="warning"
+              margin="0 6px 0 0"
               color="high"
-            >
-              <BIMDataIcon
-                name="warning"
-                margin="3px 6px 0 0"
-                color="high"
-                size="xxs"
-                fill
-              />
-            </BIMDataTooltip>
+              size="xxs"
+              fill
+            />
           </template>
         </template>
-
-        <template #child-header="{ children }">
+        <template #children-without-child>
           <div
-            class="group-import__children-menu__header"
-            @click="checkAllItems(children)"
+            class="group-import__children__no-child"
+            :style="{
+              top: currentProject.itemPos.top - 20 + 'px'
+            }"
           >
-            <div class="group-import__children-menu__header__content">
+            <div class="group-import__children__no-child__content">
+              <BIMDataIcon name="warning" color="high" size="xs" fill />
+              {{
+                $t(
+                  `GroupImport.${
+                    currentProject.isAdmin ? "noGroup" : "notAdmin"
+                  }`
+                )
+              }}
+            </div>
+          </div>
+        </template>
+        <template #child-header>
+          <div
+            class="group-import__children__menu__header"
+            @click="checkAllItems"
+          >
+            <div class="group-import__children__menu__header__content">
               <BIMDataCheckbox
-                class="group-import__children-menu__header__content--checkbox"
+                class="group-import__children__menu__header__content--checkbox"
                 margin="0 6px 0 0"
                 :modelValue="
-                  groups[children.project_id].length === children.list.length
+                  groups[currentProject.id].length ===
+                  currentProject.children.list.length
                 "
               />
               <span>{{ $t("GroupImport.selectAll") }}</span>
             </div>
-            <div class="group-import__children-menu__header__divider" />
+            <div class="group-import__children__menu__header__divider" />
           </div>
         </template>
         <template #child-item="{ child }">
           <BIMDataCheckbox
-            class="group-import__children-menu__item--checkbox"
+            class="group-import__children__menu__item--checkbox"
             margin="0 6px 0 0"
             :modelValue="
               Boolean(
-                groups[child.project.id]?.find(item => item.id === child.id)
+                groups[currentProject.id]?.find(item => item.id === child.id)
               )
             "
           />
-          <span>{{ child.text }}</span>
+          <BIMDataTextbox
+            width="70%"
+            :text="child.text"
+            :tooltip="false"
+            :style="{
+              marginLeft: '11px'
+            }"
+          />
         </template>
-        <template #child-footer="{ children }">
+        <template #child-footer>
           <BIMDataButton
-            class="group-import__children-menu--footer"
-            :disabled="groups[children.project_id].length === 0"
+            class="group-import__children__menu--footer"
+            :disabled="groups[currentProject.id].length === 0"
             color="primary"
             fill
             radius
             width="95%"
-            @click="uploadGroup(children)"
+            @click="uploadGroup"
           >
             <span>{{ $t("GroupImport.add") }}</span>
           </BIMDataButton>
@@ -121,6 +142,8 @@ export default {
     const groups = ref({});
     const projectsToDisplay = ref([]);
 
+    const currentProject = ref(null);
+
     const openGroupImport = async () => {
       if (isOpen.value) return close();
 
@@ -131,7 +154,9 @@ export default {
             .map(async project => {
               groups.value[project.id] = [];
 
-              let children = { project_id: project.id, list: [] };
+              let children = {
+                list: []
+              };
               if (project.isAdmin) {
                 children.list.push(
                   ...(await GroupService.fetchProjectGroups(project)).map(
@@ -161,34 +186,33 @@ export default {
       open();
     };
 
-    const uploadGroup = async children => {
+    const uploadGroup = async () => {
       await importGroup(
         props.project,
-        groups.value[children.project_id].map(({ id }) => id)
+        groups.value[currentProject.value.id].map(({ id }) => id)
       );
-      groups.value[children.project_id] = [];
+      groups.value[currentProject.value.id] = [];
       close();
     };
 
     const checkItem = currentItem => {
-      const currentProjectId = currentItem.project.id;
-
-      const currentItemIndex = groups.value[currentProjectId].findIndex(
+      const currentItemIndex = groups.value[currentProject.value.id].findIndex(
         item => item.id === currentItem.id
       );
 
       if (currentItemIndex === -1) {
-        groups.value[currentProjectId].push(currentItem);
+        groups.value[currentProject.value.id].push(currentItem);
       } else {
-        groups.value[currentProjectId].splice(currentItemIndex, 1);
+        groups.value[currentProject.value.id].splice(currentItemIndex, 1);
       }
     };
 
-    const checkAllItems = children => {
-      groups.value[children.project_id] =
-        groups.value[children.project_id].length === children.list.length
+    const checkAllItems = () => {
+      groups.value[currentProject.value.id] =
+        groups.value[currentProject.value.id].length ===
+        currentProject.value.children.list.length
           ? []
-          : Array.from(children.list);
+          : Array.from(currentProject.value.children.list);
     };
 
     const isWarning = project =>
@@ -198,13 +222,15 @@ export default {
       // References
       groups,
       projectsToDisplay,
+      currentProject,
       // methods
       close,
       isOpen,
       isWarning,
       uploadGroup,
       checkAllItems,
-      openGroupImport
+      openGroupImport,
+      console
     };
   }
 };
