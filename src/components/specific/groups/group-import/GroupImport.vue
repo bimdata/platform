@@ -158,8 +158,8 @@ export default {
             };
 
             if (project.isAdmin) {
-              const projectGroups = await GroupService.fetchProjectGroups(
-                project
+              const projectGroups = (
+                await GroupService.fetchProjectGroups(project)
               ).map(group => {
                 const currentGroup = {
                   ...group,
@@ -170,7 +170,7 @@ export default {
                 return currentGroup;
               });
 
-              children.list.push(projectGroups);
+              children.list.push(...projectGroups);
             }
 
             return {
