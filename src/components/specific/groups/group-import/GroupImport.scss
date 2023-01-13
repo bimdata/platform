@@ -26,8 +26,8 @@
       width: 200px;
       right: 242px;
       height: 29px;
-      padding: 0 0 50px 0;
       margin: 20px 0 0 0;
+      padding: 0 0 50px 0;
       box-shadow: var(--box-shadow);
 
       &__content {
@@ -35,9 +35,9 @@
         position: absolute; 
         align-items: center;
         top: -2px;
-        padding: var(--spacing-unit);
         gap: var(--spacing-unit);
         color: var(--color-high);
+        padding: var(--spacing-unit);
       }
     }
 

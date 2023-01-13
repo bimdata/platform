@@ -147,42 +147,45 @@ export default {
     const openGroupImport = async () => {
       if (isOpen.value) return close();
 
-      projectsToDisplay.value = (
-        await Promise.all(
-          spaceProjects.value
-            .filter(({ id }) => id !== props.project.id)
-            .map(async project => {
-              groups.value[project.id] = [];
+      const mappedProjects = await Promise.all(
+        spaceProjects.value
+          .filter(({ id }) => id !== props.project.id)
+          .map(async project => {
+            groups.value[project.id] = [];
 
-              let children = {
-                list: []
-              };
-              if (project.isAdmin) {
-                children.list.push(
-                  ...(await GroupService.fetchProjectGroups(project)).map(
-                    group => {
-                      const currentGroup = {
-                        ...group,
-                        text: group.name,
-                        project,
-                        action: () => checkItem(currentGroup)
-                      };
-                      return currentGroup;
-                    }
-                  )
-                );
-              }
-              return {
-                ...project,
-                key: project.id,
-                text: project.name,
-                children
-              };
-            })
-        )
-      ).sort(project =>
+            let children = {
+              list: []
+            };
+
+            if (project.isAdmin) {
+              const projectGroups = await GroupService.fetchProjectGroups(
+                project
+              ).map(group => {
+                const currentGroup = {
+                  ...group,
+                  text: group.name,
+                  project,
+                  action: () => checkItem(currentGroup)
+                };
+                return currentGroup;
+              });
+
+              children.list.push(projectGroups);
+            }
+
+            return {
+              ...project,
+              key: project.id,
+              text: project.name,
+              children
+            };
+          })
+      );
+
+      projectsToDisplay.value = mappedProjects.sort(project =>
         project.isAdmin && project.children.list.length > 0 ? -1 : 1
       );
+
       open();
     };
 
@@ -221,16 +224,15 @@ export default {
     return {
       // References
       groups,
-      projectsToDisplay,
       currentProject,
+      projectsToDisplay,
       // methods
       close,
       isOpen,
       isWarning,
       uploadGroup,
       checkAllItems,
-      openGroupImport,
-      console
+      openGroupImport
     };
   }
 };
