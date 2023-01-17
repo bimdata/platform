@@ -250,13 +250,16 @@ class FileService {
         });
         const tree = createFolderTree(rootFolder, removeRootFolder(paths));
 
-        let rootFolderNode = null;
-        function getRootFolderNode(node) {
-          if (node.id === rootFolder.id) {
-            return (rootFolderNode = node);
+        const getRootFolderNode = (id, node) => {
+          if (node.id === id) {
+            return node;
+          } else {
+            for (const child of node.children ?? []) {
+              const rootFolderNode = getRootFolderNode(id, child);
+              if (rootFolderNode) return rootFolderNode;
+            }
           }
-          return node.children?.forEach(getRootFolderNode);
-        }
+        };
 
         try {
           const DMSTree = await apiClient.collaborationApi.createDMSTree(
@@ -265,7 +268,7 @@ class FileService {
             tree
           );
 
-          getRootFolderNode(DMSTree);
+          const rootFolderNode = getRootFolderNode(rootFolder.id, DMSTree);
 
           const mappedPath = new Map();
           const parseNode = (node, parent) => {
