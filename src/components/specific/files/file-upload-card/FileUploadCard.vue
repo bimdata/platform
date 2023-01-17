@@ -86,6 +86,10 @@ export default {
     folder: {
       type: Object
     },
+    folderDroppedOver: {
+      type: Object,
+      required: true
+    },
     file: {
       type: Object,
       required: true
@@ -229,7 +233,11 @@ export default {
       onMounted(() => {
         const { id } = uploader.upload(
           props.file,
-          props.folder ? props.folder.id : null
+          props.folderDroppedOver
+            ? props.folderDroppedOver.id
+            : props.folder
+            ? props.folder.id
+            : null
         );
         progress.onGoingUploads.set(id, { uploader });
       });

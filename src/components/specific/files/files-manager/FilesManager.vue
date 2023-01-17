@@ -203,6 +203,7 @@
             :folder="currentFolder"
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
+            :folderDroppedOver="folderDroppedOver"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @delete="openDeleteModal([$event])"
@@ -215,6 +216,7 @@
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
+            @row-dropped-over="setFolderDroppedOver"
             @dragover.prevent="() => {}"
             @drop.prevent="event => uploadFiles(event)"
           />
@@ -302,6 +304,7 @@ import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
+import { FILE_TYPE } from "../../../../config/files.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
 import { useFiles } from "../../../../state/files.js";
@@ -454,8 +457,14 @@ export default {
       selection.value = models;
     };
 
-    const filesToUpload = ref([]);
+    const folderDroppedOver = ref({});
+    const setFolderDroppedOver = rowDroppedOver => {
+      if (rowDroppedOver.nature === FILE_TYPE.FOLDER) {
+        folderDroppedOver.value = rowDroppedOver;
+      }
+    };
 
+    const filesToUpload = ref([]);
     const uploadFiles = async event => {
       if (event.dataTransfer) {
         // Files from drag & drop
@@ -463,12 +472,12 @@ export default {
         await Promise.all(
           Array.from(event.dataTransfer.items).map(async file => {
             const fileEntry = file.webkitGetAsEntry();
-
             if (fileEntry.isDirectory) {
               filesToUpload.value = await FileService.createFolderStructure(
                 props.project,
                 currentFolder.value,
-                fileEntry
+                fileEntry,
+                folderDroppedOver.value
               );
             } else {
               docsUpload.push(await getFileFormat(fileEntry));
@@ -491,7 +500,10 @@ export default {
         }
       }
 
-      setTimeout(() => (filesToUpload.value = []), 100);
+      setTimeout(() => {
+        filesToUpload.value = [];
+        folderDroppedOver.value = {};
+      }, 100);
     };
 
     const createModelFromFile = async file => {
@@ -775,7 +787,9 @@ export default {
       dropdown,
       isOpen,
       menuItems,
+      folderDroppedOver,
       // Methods
+      setFolderDroppedOver,
       toggleDropdown,
       close,
       closeAccessManager,

@@ -232,7 +232,7 @@ class FileService {
     }
   }
 
-  async createFolderStructure(project, currentFolder, files) {
+  async createFolderStructure(project, currentFolder, files, destFolder) {
     let currentFiles = [];
 
     if (files.isDirectory) {
@@ -244,20 +244,18 @@ class FileService {
     const createdFolders = await Promise.all(
       currentFiles.map(async files => {
         const paths = getPaths(files);
-
         const rootFolder = await this.createFolder(project, {
-          parent_id: currentFolder.id,
+          parent_id: destFolder?.id ?? currentFolder.id,
           name: paths[0][0]
         });
-
         const tree = createFolderTree(rootFolder, removeRootFolder(paths));
 
+        let rootFolderNode = null;
         function getRootFolderNode(node) {
           if (node.id === rootFolder.id) {
-            return node;
-          } else {
-            return node.children?.find(getRootFolderNode);
+            return (rootFolderNode = node);
           }
+          return node.children?.forEach(getRootFolderNode);
         }
 
         try {
@@ -267,7 +265,7 @@ class FileService {
             tree
           );
 
-          const rootFolderNode = getRootFolderNode(DMSTree);
+          getRootFolderNode(DMSTree);
 
           const mappedPath = new Map();
           const parseNode = (node, parent) => {
