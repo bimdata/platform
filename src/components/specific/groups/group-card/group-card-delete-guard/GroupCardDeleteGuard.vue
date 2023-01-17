@@ -14,7 +14,7 @@
     </div>
     <div class="group-card-delete-guard__message">
       <i18n-t keypath="GroupCardDeleteGuard.message" tag="span">
-        <template v-slot:name>
+        <template #name>
           <BIMDataTextbox :text="group.name" maxWidth="80%" />
         </template>
       </i18n-t>

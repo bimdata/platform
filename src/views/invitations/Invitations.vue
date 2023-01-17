@@ -53,7 +53,7 @@
                 }`"
                 tag="span"
               >
-                <template v-slot:sender>
+                <template #sender>
                   <BIMDataTextbox
                     v-if="invit.sender"
                     class="invitations__content__list__invit__text__invited-by__highlight"
@@ -69,7 +69,7 @@
                     :text="invit.client_name"
                   />
                 </template>
-                <template v-if="invit.project_name" v-slot:project>
+                <template v-if="invit.project_name" #project>
                   <BIMDataTextbox
                     class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="40%"
@@ -77,7 +77,7 @@
                     :text="invit.project_name"
                   />
                 </template>
-                <template v-slot:cloud>
+                <template #cloud>
                   <BIMDataTextbox
                     class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="40%"
