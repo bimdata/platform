@@ -11,7 +11,7 @@
     "test:e2e": "cypress open"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "3.1.1-rc.2",
+    "@bimdata/bcf-components": "3.1.1-rc.3",
     "@bimdata/building-maker": "1.5.1",
     "@bimdata/christmas-sleigh-viewer-plugin": "^2.0.0",
     "@bimdata/design-system": "1.4.0-rc.87",
