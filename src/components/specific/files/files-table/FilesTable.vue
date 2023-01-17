@@ -11,6 +11,7 @@
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
+    @row-dropped-over="$emit('row-dropped-over', $event)"
   >
     <template #sub-header>
       <div
@@ -40,6 +41,7 @@
           condensed
           :project="project"
           :folder="folder"
+          :folderDroppedOver="folderDroppedOver"
           :file="file"
           @upload-completed="onUploadCompleted(file.key, $event)"
           @upload-canceled="cleanUpload(file.key, 6000)"
@@ -134,6 +136,10 @@ export default {
     },
     filesToUpload: {
       type: Array
+    },
+    folderDroppedOver: {
+      type: Object,
+      required: true
     }
   },
   emits: [
@@ -148,7 +154,8 @@ export default {
     "open-visa-manager",
     "selection-changed",
     "open-tag-manager",
-    "remove-model"
+    "remove-model",
+    "row-dropped-over"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
