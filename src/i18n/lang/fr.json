@@ -206,6 +206,13 @@
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
   },
+  "GroupImport": {
+    "title": "Importer un groupe",
+    "selectAll": "Tout sélectionner",
+    "add": "Ajouter",
+    "notAdmin": "Vous devez être administrateur du projet",
+    "noGroup": "Il n'y a pas de groupe dans ce projet"
+  },
   "Invitations": {
     "title": "Mes invitations",
     "invitCounter": "Invitations en cours -",
@@ -478,6 +485,7 @@
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
+    "groupImportError": "Échec lors de l'importation des groupes",
     "organizationsFetchError": "Impossible de récupérer la liste des comptes de facturation",
     "organizationCreateError": "Erreur lors de la création du compte de facturation",
     "organizationUpdateError": "Erreur lors le de mise à jour du compte de facturation",

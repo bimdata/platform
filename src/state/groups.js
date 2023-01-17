@@ -16,7 +16,7 @@ const loadProjectGroups = async project => {
   let groups = [];
   if (project.isAdmin) {
     groups = await GroupService.fetchProjectGroups(project);
-    groups.sort((a, b) => (a.name < b.name ? -1 : 1));
+    groups.sort((a, b) => (a.id < b.id ? 1 : -1));
   }
   state.projectGroups = groups;
   return groups;
@@ -32,6 +32,12 @@ const updateGroup = async (project, group) => {
   const newGroup = await GroupService.updateGroup(project, group);
   await loadProjectGroups(project);
   return newGroup;
+};
+
+const importGroup = async (project, groupIds) => {
+  const importedGroups = await GroupService.importGroup(project, groupIds);
+  await loadProjectGroups(project);
+  return importedGroups;
 };
 
 const addGroupMembers = async (project, group, membersToAdd) => {
@@ -107,6 +113,7 @@ export function useGroups() {
     loadProjectGroups,
     createGroup,
     updateGroup,
+    importGroup,
     addGroupMembers,
     removeGroupMembers,
     updateGroupMembers,

@@ -13,6 +13,9 @@
           clear
         />
       </template>
+      <template #right>
+        <GroupImport :project="project" />
+      </template>
     </ViewHeader>
 
     <BIMDataResponsiveGrid
@@ -43,18 +46,21 @@ import { useListFilter } from "../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useGroups } from "../../state/groups.js";
 import { useProjects } from "../../state/projects.js";
+
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import GroupCard from "../../components/specific/groups/group-card/GroupCard.vue";
 import GroupCreationCard from "../../components/specific/groups/group-creation-card/GroupCreationCard.vue";
+import GroupImport from "../../components/specific/groups/group-import/GroupImport.vue";
 
 export default {
   components: {
-    AppBreadcrumb,
     GroupCard,
-    GroupCreationCard,
-    ViewHeader
+    ViewHeader,
+    GroupImport,
+    AppBreadcrumb,
+    GroupCreationCard
   },
   setup() {
     const { currentProject } = useProjects();
