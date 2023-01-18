@@ -1,7 +1,12 @@
 <template>
   <template v-for="user in userList" :key="user.id">
-    <div v-if="user.isFindable" class="visa-add-validator-users">
+    <div
+      v-if="user.isFindable"
+      class="visa-add-validator-users"
+      data-test-id="visa-validator-users"
+    >
       <BIMDataCheckbox
+        data-test-id="checkbox-add-validator"
         :disabled="!user.hasAccess"
         :modelValue="user.isSelected"
         @update:modelValue="toggle(user, $event)"

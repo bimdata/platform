@@ -3,6 +3,7 @@
     <template v-if="!isCommenting && isVisaOpen">
       <BIMDataButton
         class="visa-comments__comment-button"
+        data-test-id="visa-open-comments"
         color="primary"
         fill
         radius
@@ -24,6 +25,7 @@
     </template>
     <div
       class="visa-comments__thread-list"
+      data-test-id="visa-comments-thread-list"
       v-for="comment in commentList"
       :key="comment.id"
     >

@@ -35,6 +35,7 @@
         </div>
         <div class="visa-add__content__validator">
           <BIMDataButton
+            data-test-id="btn-add-visa-validator"
             color="primary"
             fill
             radius
@@ -77,9 +78,14 @@
           <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
             $t("Visa.add.cancel")
           }}</BIMDataButton>
-          <BIMDataButton color="primary" fill radius @click="submit">{{
-            $t("Visa.add.validate")
-          }}</BIMDataButton>
+          <BIMDataButton
+            data-test-id="btn-submit-visa-creation"
+            color="primary"
+            fill
+            radius
+            @click="submit"
+            >{{ $t("Visa.add.validate") }}</BIMDataButton
+          >
         </div>
       </div>
     </template>

@@ -19,12 +19,19 @@
         <span>{{ $t("Visa.list.title") }}</span>
       </div>
       <div class="visa-list__header__right-side">
-        <BIMDataButton ghost rounded icon @click="$emit('close')">
+        <BIMDataButton
+          data-test-id="visa-close-panel-visa"
+          ghost
+          rounded
+          icon
+          @click="$emit('close')"
+        >
           <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </div>
     </div>
     <BIMDataTabs
+      data-test-id="visa-list-tabs"
       width="100%"
       height="40px"
       tabSize="50%"
@@ -53,6 +60,7 @@
         <div
           class="visa-list__content__visa"
           :class="{ disabled: visasLoading }"
+          data-test-id="visa-validation-item"
           v-for="visa of currentTab.visas"
           :key="visa.id"
           @click="!visasLoading && $emit('reach-visa', visa)"
