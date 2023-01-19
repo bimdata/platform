@@ -12,6 +12,7 @@ describe("Visa CRUD", () => {
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-visa-manager").click();
     cy.hook("btn-add-visa-validator").click();
+
     cy.task("get-user", "user1").then(({ firstname, lastname }) => {
       cy.hook("visa-validator-list")
         .contains(
@@ -22,6 +23,7 @@ describe("Visa CRUD", () => {
           cy.hook("checkbox-add-validator").click();
         });
     });
+
     cy.task("get-user", "user2").then(({ firstname, lastname }) => {
       cy.hook("visa-validator-list")
         .contains(
@@ -32,8 +34,10 @@ describe("Visa CRUD", () => {
           cy.hook("checkbox-add-validator").click();
         });
     });
+
     cy.hook("btn-submit-validators").click();
     cy.hook("btn-submit-visa-creation").click();
+
     cy.hook("visa-summary-validator-list").within(() => {
       cy.task("get-user", "user1").then(({ firstname, lastname }) => {
         cy.contains(`${firstname} ${lastname}`);
@@ -99,92 +103,91 @@ describe("Visa CRUD", () => {
   });
 
   it("Should user1 vote in user0 visa", () => {
-    cy.task("get-user", "user1").then((user) => cy.login(user));
-    cy.visit("/spaces");
-    cy.task("get-user", "user0").then((user) => {
-      cy.hook("space-card")
-        .contains(`${user.firstname} ${user.lastname}`)
-        .click();
-    });
-
-    cy.hook("project-card").contains("Demo").click();
-    cy.hook("project-tab-files").click();
-    cy.hook("btn-open-visa-list").click();
-    cy.hook("visa-validation-item").first().click();
-    cy.hook("btn-validate-visa").click();
-
-    cy.task("get-user", "user1").then(({ firstname, lastname }) => {
-      cy.hook("visa-summary-validator-list")
-        .contains(
-          "div[data-test-id=visa-summary-validator-item]",
-          `${firstname} ${lastname}`
-        )
-        .within(() => {
-          cy.get(".visa-summary-validator__right-side__A").should(
-            "have.length",
-            1
-          );
+    cy.task("get-user", "user1").then(
+      ({ firstname, lastname, email, password }) => {
+        cy.login({ email, password });
+        cy.visit("/spaces");
+        cy.task("get-user", "user0").then((user) => {
+          cy.hook("space-card")
+            .contains(`${user.firstname} ${user.lastname}`)
+            .click();
         });
 
-      cy.hook("btn-validate-visa").click();
+        cy.hook("project-card").contains("Demo").click();
+        cy.hook("project-tab-files").click();
+        cy.hook("btn-open-visa-list").click();
+        cy.hook("visa-validation-item").first().click();
+        cy.hook("btn-validate-visa").click();
 
-      cy.hook("visa-summary-validator-list")
-        .contains(
-          "div[data-test-id=visa-summary-validator-item]",
-          `${firstname} ${lastname}`
-        )
-        .within(() => {
-          cy.get(".visa-summary-validator__right-side__P").should(
-            "have.length",
-            1
-          );
-        });
+        cy.hook("visa-summary-validator-list")
+          .contains(
+            "div[data-test-id=visa-summary-validator-item]",
+            `${firstname} ${lastname}`
+          )
+          .within(() => {
+            cy.get(".visa-summary-validator__right-side__A").should(
+              "have.length",
+              1
+            );
+          });
 
-      cy.hook("btn-deny-visa").click();
+        cy.hook("btn-validate-visa").click();
 
-      cy.hook("visa-summary-validator-list")
-        .contains(
-          "div[data-test-id=visa-summary-validator-item]",
-          `${firstname} ${lastname}`
-        )
-        .within(() => {
-          cy.get(".visa-summary-validator__right-side__D").should(
-            "have.length",
-            1
-          );
-        });
+        cy.hook("visa-summary-validator-list")
+          .contains(
+            "div[data-test-id=visa-summary-validator-item]",
+            `${firstname} ${lastname}`
+          )
+          .within(() => {
+            cy.get(".visa-summary-validator__right-side__P").should(
+              "have.length",
+              1
+            );
+          });
 
-      cy.hook("btn-deny-visa").click();
+        cy.hook("btn-deny-visa").click();
+        cy.hook("visa-summary-validator-list")
+          .contains(
+            "div[data-test-id=visa-summary-validator-item]",
+            `${firstname} ${lastname}`
+          )
+          .within(() => {
+            cy.get(".visa-summary-validator__right-side__D").should(
+              "have.length",
+              1
+            );
+          });
 
-      cy.hook("visa-summary-validator-list")
-        .contains(
-          "div[data-test-id=visa-summary-validator-item]",
-          `${firstname} ${lastname}`
-        )
-        .within(() => {
-          cy.get(".visa-summary-validator__right-side__P").should(
-            "have.length",
-            1
-          );
-        });
+        cy.hook("btn-deny-visa").click();
+        cy.hook("visa-summary-validator-list")
+          .contains(
+            "div[data-test-id=visa-summary-validator-item]",
+            `${firstname} ${lastname}`
+          )
+          .within(() => {
+            cy.get(".visa-summary-validator__right-side__P").should(
+              "have.length",
+              1
+            );
+          });
 
-      cy.hook("btn-deny-visa").click();
+        cy.hook("btn-deny-visa").click();
+        cy.hook("visa-summary-validator-list")
+          .contains(
+            "div[data-test-id=visa-summary-validator-item]",
+            `${firstname} ${lastname}`
+          )
+          .within(() => {
+            cy.hook("btn-refresh-validation").click();
+            cy.get(".visa-summary-validator__right-side__P").should(
+              "have.length",
+              1
+            );
+          });
 
-      cy.hook("visa-summary-validator-list")
-        .contains(
-          "div[data-test-id=visa-summary-validator-item]",
-          `${firstname} ${lastname}`
-        )
-        .within(() => {
-          cy.hook("btn-refresh-validation").click();
-          cy.get(".visa-summary-validator__right-side__P").should(
-            "have.length",
-            1
-          );
-        });
-
-      cy.hook("btn-validate-visa").click();
-    });
+        cy.hook("btn-validate-visa").click();
+      }
+    );
   });
 
   it("Should user1 manage comment", () => {
@@ -316,7 +319,6 @@ describe("Visa CRUD", () => {
 });
 
 /// CREATOR
-// cancel visa creation
 // create visa OK
 // ajouter validator apres création OK
 // retirer validator après création OK
