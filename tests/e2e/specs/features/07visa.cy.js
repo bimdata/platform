@@ -205,7 +205,7 @@ describe("Visa CRUD", () => {
     cy.hook("visa-validation-item").first().click();
 
     cy.hook("visa-open-comments").click();
-    cy.get("textarea[name=comment]").type("I validate the visa{enter}");
+    cy.get("textarea[name=comment]").type("I validate the visa");
     cy.hook("btn-submit-visa-comment").click();
 
     cy.task("get-user", "user1").then(({ firstname, lastname }) => {
@@ -317,19 +317,3 @@ describe("Visa CRUD", () => {
     cy.hook("visa-validation-item").first().should("not.exist");
   });
 });
-
-/// CREATOR
-// create visa OK
-// ajouter validator apres création OK
-// retirer validator après création OK
-// close visa OK
-// delete visa OK
-// refresh vote OK
-
-/// VALIDATOR
-// accept visa OK
-// deny visa OK
-// refresh visa OK
-// comment visa OK
-// edit comment OK
-// delete comment OK

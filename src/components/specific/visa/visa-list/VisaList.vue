@@ -20,7 +20,7 @@
       </div>
       <div class="visa-list__header__right-side">
         <BIMDataButton
-          data-test-id="visa-close-panel-visa"
+          data-test-id="btn-close-visa-panel"
           ghost
           rounded
           icon
