@@ -1,5 +1,5 @@
 describe("Visa CRUD", () => {
-  it("Should user 0 create a visa including user1 as validators", () => {
+  it("Should user0 create a visa including user1 and user2 as validators", () => {
     cy.task("get-user", "user0").then((user) => {
       cy.login(user);
       cy.visit("/spaces");
@@ -7,7 +7,7 @@ describe("Visa CRUD", () => {
         .contains(`${user.firstname} ${user.lastname}`)
         .click();
     });
-    cy.hook("project-card").contains("Demo").click();
+    cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-visa-manager").click();
@@ -56,7 +56,7 @@ describe("Visa CRUD", () => {
         .contains(`${user.firstname} ${user.lastname}`)
         .click();
     });
-    cy.hook("project-card").contains("Demo").click();
+    cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
     cy.hook("btn-open-visa-list").click();
 
@@ -113,7 +113,7 @@ describe("Visa CRUD", () => {
             .click();
         });
 
-        cy.hook("project-card").contains("Demo").click();
+        cy.hook("project-card").first().click();
         cy.hook("project-tab-files").click();
         cy.hook("btn-open-visa-list").click();
         cy.hook("visa-validation-item").first().click();
@@ -199,13 +199,13 @@ describe("Visa CRUD", () => {
         .click();
     });
 
-    cy.hook("project-card").contains("Demo").click();
+    cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
     cy.hook("btn-open-visa-list").click();
     cy.hook("visa-validation-item").first().click();
 
     cy.hook("visa-open-comments").click();
-    cy.get("textarea[name=comment]").type("I validate the visa");
+    cy.get("textarea[name=comment]").type("I validated the visa");
     cy.hook("btn-submit-visa-comment").click();
 
     cy.task("get-user", "user1").then(({ firstname, lastname }) => {
@@ -221,7 +221,7 @@ describe("Visa CRUD", () => {
           cy.hook("btn-undo-edit-visa-comment").click();
           cy.get("textarea[name=description]").should(
             "have.value",
-            "I validate the visa"
+            "I validated the visa"
           );
 
           cy.hook("btn-visa-comment-action").click();
@@ -229,12 +229,12 @@ describe("Visa CRUD", () => {
 
           cy.get("textarea[name=description]")
             .clear()
-            .type("I disapprove the visa");
+            .type("I disapproved the visa");
 
           cy.hook("btn-edit-visa-comment").click();
           cy.get("textarea[name=description]").should(
             "have.value",
-            "I disapprove the visa"
+            "I disapproved the visa"
           );
 
           cy.hook("btn-visa-comment-action").click();
@@ -258,7 +258,7 @@ describe("Visa CRUD", () => {
         .contains(`${user.firstname} ${user.lastname}`)
         .click();
     });
-    cy.hook("project-card").contains("Demo").click();
+    cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
     cy.hook("btn-open-visa-list").click();
 
@@ -292,7 +292,7 @@ describe("Visa CRUD", () => {
         .contains(`${user.firstname} ${user.lastname}`)
         .click();
     });
-    cy.hook("project-card").contains("Demo").click();
+    cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
     cy.hook("btn-open-visa-list").click();
 
@@ -304,7 +304,7 @@ describe("Visa CRUD", () => {
     cy.hook("btn-close-visa").click();
     cy.hook("btn-confirm-visa-safe-zone").click();
 
-    cy.hook("visa-close-panel-visa").click();
+    cy.hook("btn-close-visa-panel").click();
 
     cy.hook("btn-open-visa-list").click();
     cy.hook("visa-validation-item").first().click();

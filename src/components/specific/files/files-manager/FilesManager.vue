@@ -154,7 +154,7 @@
             class="files-manager__actions__visa-tooltip"
             position="left"
             color="high"
-            :disabled="createdVisas.length < 1 && visasCounter < 1"
+            :disabled="visasCounter > 0 || createdVisas.length > 0"
             :text="$t('Visa.noVisa')"
           >
             <BIMDataButton
