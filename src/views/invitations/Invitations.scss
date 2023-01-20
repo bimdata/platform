@@ -1,7 +1,7 @@
 .invitations {
   display: flex;
   height: 100%;
-  
+
   &__back-btn {
     flex: 1;
   }
@@ -43,6 +43,7 @@
         align-items: center;
         padding: 0 calc(var(--spacing-unit) / 0.9);
         border-left: 2px solid var(--color-secondary);
+        background-color: var(--color-white);
         box-shadow: var(--box-shadow);
         min-width: 80%;
 
@@ -79,10 +80,12 @@
           }
 
           &__invitation-status {
-            &--D, &--A, &--P {
+            &--D,
+            &--A,
+            &--P {
               font-size: 0.8rem;
               font-style: italic;
-            } 
+            }
 
             &--D {
               color: var(--color-high);
