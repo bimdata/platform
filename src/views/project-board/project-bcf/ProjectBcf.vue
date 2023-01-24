@@ -241,15 +241,22 @@
             @close="closeSidePanel"
           />
         </template>
-        <template
-          v-else-if="
-            currentPanel === sidePanelViews.create ||
-            currentPanel === sidePanelViews.update
-          "
-        >
+        <template v-else-if="currentPanel === sidePanelViews.create">
           <BcfTopicForm
             :uiConfig="{
-              backButton: currentPanel === sidePanelViews.update,
+              closeButton: true
+            }"
+            :project="project"
+            :extensions="extensions"
+            :topics="topics"
+            @topic-created="reloadBcfTopics(), closeSidePanel()"
+            @close="closeSidePanel"
+          />
+        </template>
+        <template v-else-if="currentPanel === sidePanelViews.update">
+          <BcfTopicForm
+            :uiConfig="{
+              backButton: true,
               closeButton: true
             }"
             :project="project"
@@ -257,7 +264,6 @@
             :topics="topics"
             :topic="currentTopic"
             @topic-updated="reloadBcfTopics"
-            @topic-created="reloadBcfTopics(), closeSidePanel()"
             @back="openTopicOverview(currentTopic)"
             @close="closeSidePanel"
           />
