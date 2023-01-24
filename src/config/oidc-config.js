@@ -27,6 +27,8 @@ const config = {
   // Auth metadata
   metadataUrl: `${AUTHORITY}/.well-known/openid-configuration`,
 
+  // (cutsom)
+  endSessionEndpoint: `${AUTHORITY}/protocol/openid-connect/logout`,
   // Limit authorized identity providers (custom)
   authorizedIdentityProviders: AUTHORIZED_IDENTITY_PROVIDERS?.split(",") ?? []
 };

@@ -34,7 +34,7 @@ async function signinEndWithForcedLogout(url, args = {}) {
         initiating_idp: identityProvider
       });
       const redirectUrl =
-        OIDC_CONFIG.metadata.end_session_endpoint + "?" + params.toString();
+        OIDC_CONFIG.endSessionEndpoint + "?" + params.toString();
       window.location.replace(redirectUrl);
       await new Promise(resolve => {
         // Wait for window.location.replace to trigger
