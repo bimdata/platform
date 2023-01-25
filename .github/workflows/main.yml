@@ -24,7 +24,7 @@ jobs:
           while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save; do
             sleep 5
           done
-          GITDIFF=$(git diff -- package-lock.json)
+          GITDIFF=$(git diff -- package-lock.json | tr '\n' ' ')
           echo "gitdiff=$GITDIFF" >> $GITHUB_OUTPUT
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
