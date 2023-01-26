@@ -13,16 +13,13 @@
   }
 
   &__menu {
+    padding: calc(var(--spacing-unit) / 2) 0;
     position: absolute;
-    z-index: 1;
     top: 30px;
     right: 0;
     display: flex;
     flex-direction: column;
-    width: 180px;
-    padding: calc(var(--spacing-unit) / 2) 0;
-    box-shadow: var(--box-shadow);
-    background-color: var(--color-white);
+    z-index: 1;
 
     &__btn {
       justify-content: flex-start;

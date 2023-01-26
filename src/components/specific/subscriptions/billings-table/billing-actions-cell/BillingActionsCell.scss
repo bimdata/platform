@@ -2,21 +2,11 @@
   position: relative;
 
   &__menu {
+    padding: calc(var(--spacing-unit) / 2) 0;
     position: absolute;
     z-index: 1;
     top: 30px;
     right: 0;
-
-    min-width: 180px;
-    padding: calc(var(--spacing-unit) / 2) 0;
-    background-color: var(--color-white);
-    box-shadow: var(--box-shadow);
-
-    display: flex;
-    flex-direction: column;
-
-    .bimdata-btn {
-      justify-content: flex-start;
-    }
+    text-align: left;
   }
 }

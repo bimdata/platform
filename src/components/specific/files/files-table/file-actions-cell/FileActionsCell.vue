@@ -11,137 +11,61 @@
       <BIMDataIcon name="ellipsis" size="l" />
     </BIMDataButton>
 
-    <div class="file-actions-cell__menu" ref="menu" v-show="isOpen">
-      <AppLink
-        v-if="isViewable(file)"
-        class="file-actions-cell__menu__btn"
-        :to="{
-          name: routeNames.modelViewer,
-          params: {
-            spaceID: project.cloud.id,
-            projectID: project.id,
-            modelIDs: file.model_id
-          },
-          query: {
-            window: MODEL_CONFIG[file.model_type].window
-          }
-        }"
-      >
-        <BIMDataButton
-          class="file-actions-cell__menu__btn__viewer"
-          ghost
-          squared
-        >
-          {{ $t("FileActionsCell.openViewerButtonText") }}
-        </BIMDataButton>
-      </AppLink>
-      <template v-if="!isFolder(file) && isConvertible(file)">
-        <template v-if="!isModel(file)">
-          <BIMDataButton
+    <BIMDataMenu
+      :menuItems="menuItems"
+      class="file-actions-cell__menu"
+      ref="menu"
+      v-show="isOpen"
+    >
+      <template #item="{ item }">
+        <template v-if="item.key === 1">
+          <AppLink
+            v-if="isViewable(file)"
             class="file-actions-cell__menu__btn"
-            ghost
-            squared
-            @click="onClick('create-model')"
+            :to="{
+              name: routeNames.modelViewer,
+              params: {
+                spaceID: project.cloud.id,
+                projectID: project.id,
+                modelIDs: file.model_id
+              },
+              query: {
+                window: MODEL_CONFIG[file.model_type].window
+              }
+            }"
           >
-            {{ $t("FileActionsCell.createModelButtonText") }}
-          </BIMDataButton>
+            <BIMDataButton
+              class="file-actions-cell__menu__btn__viewer"
+              ghost
+              squared
+              width="100%"
+            >
+              {{ $t("FileActionsCell.openViewerButtonText") }}
+            </BIMDataButton>
+          </AppLink>
         </template>
         <template v-else>
           <BIMDataButton
-            class="file-actions-cell__menu__btn"
+            :color="item.color"
             ghost
             squared
-            @click="onClick('remove-model')"
+            width="100%"
+            :disabled="item.disabled"
+            :data-test-id="item.dataTestId"
           >
-            {{ $t("FileActionsCell.removeModelButtonText") }}
+            {{ item.text }}
           </BIMDataButton>
         </template>
       </template>
-
-      <BIMDataButton
-        :disabled="!project.isAdmin && file.user_permission < 100"
-        class="file-actions-cell__menu__btn"
-        ghost
-        squared
-        @click="onClick('update')"
-      >
-        {{ $t("FileActionsCell.renameButtonText") }}
-      </BIMDataButton>
-
-      <BIMDataButton
-        :disabled="!project.isAdmin && file.user_permission < 100"
-        class="file-actions-cell__menu__btn"
-        ghost
-        squared
-        @click="onClick('download')"
-      >
-        {{ $t("FileActionsCell.downloadButtonText") }}
-      </BIMDataButton>
-
-      <BIMDataButton
-        v-if="isFolder(file) && project.isAdmin"
-        class="file-actions-cell__menu__btn"
-        ghost
-        squared
-        @click="onClick('manage-access')"
-      >
-        {{ $t("FileActionsCell.manageAccessButtonText") }}
-      </BIMDataButton>
-
-      <BIMDataButton
-        v-if="
-          !isFolder(file) && (project.isAdmin || file.user_permission === 100)
-        "
-        class="file-actions-cell__menu__btn"
-        ghost
-        squared
-        @click="onClick('open-visa-manager')"
-      >
-        {{ $t("FileActionsCell.VisaButtonText") }}
-      </BIMDataButton>
-      <BIMDataButton
-        v-if="
-          !isFolder(file) && (project.isAdmin || file.user_permission === 100)
-        "
-        data-test-id="btn-open-tag-manager"
-        class="file-actions-cell__menu__btn"
-        ghost
-        squared
-        @click="onClick('open-tag-manager')"
-      >
-        {{ $t("FileActionsCell.addTagsButtonText") }}
-      </BIMDataButton>
-      <BIMDataButton
-        v-if="
-          !isFolder(file) && (project.isAdmin || file.user_permission === 100)
-        "
-        data-test-id="btn-open-versioning-manager"
-        class="file-actions-cell__menu__btn"
-        ghost
-        squared
-        @click="onClick('open-versioning-manager')"
-      >
-        {{ $t("FileActionsCell.VersioningButtonText") }}
-      </BIMDataButton>
-
-      <BIMDataButton
-        :disabled="!project.isAdmin && file.user_permission < 100"
-        data-test-id="btn-delete-doc"
-        class="file-actions-cell__menu__btn"
-        color="high"
-        ghost
-        squared
-        @click="onClick('delete')"
-      >
-        {{ $t("FileActionsCell.deleteButtonText") }}
-      </BIMDataButton>
-    </div>
+    </BIMDataMenu>
   </div>
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { nextTick, ref } from "vue";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
+import { FILE_PERMISSION } from "../../../../../config/files.js";
 import routeNames from "../../../../../router/route-names.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import {
@@ -192,9 +116,9 @@ export default {
       isOpen.value = true;
       nextTick(() => {
         if (props.filesTable) {
-          menu.value.style.top = dropdownPositioner(
+          menu.value.$el.style.top = dropdownPositioner(
             props.filesTable.$el,
-            menu.value
+            menu.value.$el
           );
         }
       });
@@ -203,7 +127,7 @@ export default {
     const closeMenu = () => {
       isOpen.value = false;
       nextTick(() => {
-        menu.value.style.top = "30px";
+        menu.value.$el.style.top = "";
       });
     };
 
@@ -212,12 +136,137 @@ export default {
       emit(event, props.file);
     };
 
+    const { t } = useI18n();
+
+    const menuItems = [];
+
+    if (isViewable(props.file)) {
+      menuItems.push({
+        key: 1,
+        get text() {
+          return t("FileActionsCell.openViewerButtonText");
+        },
+        color: "var(--color-primary)"
+      });
+    }
+
+    if (!isFolder(props.file) && isConvertible(props.file)) {
+      if (!isModel(props.file)) {
+        menuItems.push({
+          key: 2,
+          get text() {
+            return t("FileActionsCell.createModelButtonText");
+          },
+          action: () => onClick("create-model")
+        });
+      } else {
+        menuItems.push({
+          key: 3,
+          get text() {
+            return t("FileActionsCell.removeModelButtonText");
+          },
+          action: () => onClick("remove-model")
+        });
+      }
+    }
+
+    menuItems.push({
+      key: 4,
+      get text() {
+        return t("FileActionsCell.renameButtonText");
+      },
+      action: () => onClick("update"),
+      disabled:
+        !props.project.isAdmin &&
+        props.file.user_permission < FILE_PERMISSION.READ_WRITE
+    });
+
+    menuItems.push({
+      key: 5,
+      get text() {
+        return t("FileActionsCell.downloadButtonText");
+      },
+      action: () => onClick("download"),
+      disabled:
+        !props.project.isAdmin &&
+        props.file.user_permission < FILE_PERMISSION.READ_WRITE
+    });
+
+    if (isFolder(props.file) && props.project.isAdmin) {
+      menuItems.push({
+        key: 6,
+        get text() {
+          return t("FileActionsCell.manageAccessButtonText");
+        },
+        action: () => onClick("manage-access")
+      });
+    }
+
+    if (
+      !isFolder(props.file) &&
+      (props.project.isAdmin ||
+        props.file.user_permission === FILE_PERMISSION.READ_WRITE)
+    ) {
+      menuItems.push({
+        key: 7,
+        get text() {
+          return t("FileActionsCell.VisaButtonText");
+        },
+        action: () => onClick("open-visa-manager")
+      });
+    }
+
+    if (
+      !isFolder(props.file) &&
+      (props.project.isAdmin ||
+        props.file.user_permission === FILE_PERMISSION.READ_WRITE)
+    ) {
+      menuItems.push({
+        key: 8,
+        get text() {
+          return t("FileActionsCell.addTagsButtonText");
+        },
+        action: () => onClick("open-tag-manager"),
+        dataTestId: "btn-open-tag-manager"
+      });
+    }
+
+    if (
+      !isFolder(props.file) &&
+      (props.project.isAdmin ||
+        props.file.user_permission === FILE_PERMISSION.READ_WRITE)
+    ) {
+      menuItems.push({
+        key: 9,
+        get text() {
+          return t("FileActionsCell.VersioningButtonText");
+        },
+        action: () => onClick("open-tag-manager"),
+        dataTestId: "btn-open-versioning-manager"
+      });
+    }
+
+    menuItems.push({
+      key: 10,
+      get text() {
+        return t("FileActionsCell.deleteButtonText");
+      },
+      action: () => onClick("delete"),
+      color: "high",
+      background: "var(--color-high-lighter)",
+      dataTestId: "btn-delete-doc",
+      disabled:
+        !props.project.isAdmin &&
+        props.file.user_permission < FILE_PERMISSION.READ_WRITE
+    });
+
     return {
       // References
       menu,
       isOpen,
       routeNames,
       MODEL_CONFIG,
+      menuItems,
       // Methods
       closeMenu,
       isConvertible,

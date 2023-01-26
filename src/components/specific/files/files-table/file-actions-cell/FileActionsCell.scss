@@ -6,23 +6,23 @@
   }
 
   &__menu {
+    padding: calc(var(--spacing-unit) / 2) 0;
     position: absolute;
-    z-index: 1;
     top: 30px;
     right: 0;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    padding: calc(var(--spacing-unit) / 2) 0;
-    box-shadow: var(--box-shadow);
-    background-color: var(--color-white);
-
-    &__btn {
-      justify-content: flex-start;
-
-      &__viewer {
-        width: 100%;
-        justify-content: flex-start;
+    z-index: 1;
+    &.bimdata-menu {
+      &:deep() {
+        li {
+          width: 100%;
+          padding: 0;
+          a {
+            width: 100%;
+          }
+          .bimdata-btn {
+            justify-content: flex-start;
+          }
+        }
       }
     }
   }

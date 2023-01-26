@@ -11,29 +11,21 @@
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="invoice-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton
-          v-if="payment.receipt_url"
-          ghost
-          squared
-          @click="openReceiptUrl"
-        >
-          {{ $t("InvoiceActionsCell.downloadButton") }}
-        </BIMDataButton>
-        <BIMDataButton
-          v-if="payment.subscription.status !== SUB_STATUS.DELETED"
-          ghost
-          squared
-          @click="openUpdateUrl"
-        >
-          {{ $t("BillingActionsCell.updateButtonText") }}
-        </BIMDataButton>
-      </div>
+      <BIMDataMenu
+        :menuItems="menuItems"
+        class="invoice-actions-cell__menu"
+        v-show="showMenu"
+      >
+        <template #item="{ item }">
+          <span>{{ item.text }}</span>
+        </template>
+      </BIMDataMenu>
     </transition>
   </div>
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { SUB_STATUS } from "../../../../../config/subscription.js";
 
@@ -59,10 +51,36 @@ export default {
       window.open(props.payment.subscription.update_url);
     };
 
+    const { t } = useI18n();
+    const menuItems = [];
+
+    if (props.payment.receipt_url) {
+      menuItems.push({
+        key: 1,
+        get text() {
+          return t("InvoiceActionsCell.downloadButton");
+        },
+        action: () => openReceiptUrl,
+        color: "var(--color-primary)"
+      });
+    }
+
+    if (props.payment.subscription.status !== SUB_STATUS.DELETED) {
+      menuItems.push({
+        key: 2,
+        get text() {
+          return t("BillingActionsCell.updateButtonText");
+        },
+        action: () => openUpdateUrl,
+        color: "var(--color-primary)"
+      });
+    }
+
     return {
       // References
       showMenu,
       SUB_STATUS,
+      menuItems,
       // Methods
       closeMenu,
       openReceiptUrl,
