@@ -53,7 +53,7 @@
             :disabled="item.disabled"
             :data-test-id="item.dataTestId"
           >
-            {{ item.text }}
+            {{ $t(item.text) }}
           </BIMDataButton>
         </template>
       </template>
@@ -62,12 +62,11 @@
 </template>
 
 <script>
-import { useI18n } from "vue-i18n";
 import { nextTick, ref } from "vue";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { FILE_PERMISSION } from "../../../../../config/files.js";
 import routeNames from "../../../../../router/route-names.js";
-import { isFolder } from "../../../../../utils/file-structure.js";
+import { isFolder, hasAdminPerm } from "../../../../../utils/file-structure.js";
 import {
   isConvertible,
   isIFC,
@@ -136,16 +135,12 @@ export default {
       emit(event, props.file);
     };
 
-    const { t } = useI18n();
-
     const menuItems = [];
 
     if (isViewable(props.file)) {
       menuItems.push({
         key: 1,
-        get text() {
-          return t("FileActionsCell.openViewerButtonText");
-        },
+        text: "FileActionsCell.openViewerButtonText",
         color: "var(--color-primary)"
       });
     }
@@ -154,17 +149,13 @@ export default {
       if (!isModel(props.file)) {
         menuItems.push({
           key: 2,
-          get text() {
-            return t("FileActionsCell.createModelButtonText");
-          },
+          text: "FileActionsCell.createModelButtonText",
           action: () => onClick("create-model")
         });
       } else {
         menuItems.push({
           key: 3,
-          get text() {
-            return t("FileActionsCell.removeModelButtonText");
-          },
+          text: "FileActionsCell.removeModelButtonText",
           action: () => onClick("remove-model")
         });
       }
@@ -172,9 +163,7 @@ export default {
 
     menuItems.push({
       key: 4,
-      get text() {
-        return t("FileActionsCell.renameButtonText");
-      },
+      text: "FileActionsCell.renameButtonText",
       action: () => onClick("update"),
       disabled:
         !props.project.isAdmin &&
@@ -183,9 +172,7 @@ export default {
 
     menuItems.push({
       key: 5,
-      get text() {
-        return t("FileActionsCell.downloadButtonText");
-      },
+      text: "FileActionsCell.downloadButtonText",
       action: () => onClick("download"),
       disabled:
         !props.project.isAdmin &&
@@ -195,52 +182,26 @@ export default {
     if (isFolder(props.file) && props.project.isAdmin) {
       menuItems.push({
         key: 6,
-        get text() {
-          return t("FileActionsCell.manageAccessButtonText");
-        },
+        text: "FileActionsCell.manageAccessButtonText",
         action: () => onClick("manage-access")
       });
     }
 
-    if (
-      !isFolder(props.file) &&
-      (props.project.isAdmin ||
-        props.file.user_permission === FILE_PERMISSION.READ_WRITE)
-    ) {
+    if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
       menuItems.push({
         key: 7,
-        get text() {
-          return t("FileActionsCell.VisaButtonText");
-        },
+        text: "FileActionsCell.VisaButtonText",
         action: () => onClick("open-visa-manager")
       });
-    }
-
-    if (
-      !isFolder(props.file) &&
-      (props.project.isAdmin ||
-        props.file.user_permission === FILE_PERMISSION.READ_WRITE)
-    ) {
       menuItems.push({
         key: 8,
-        get text() {
-          return t("FileActionsCell.addTagsButtonText");
-        },
+        text: "FileActionsCell.addTagsButtonText",
         action: () => onClick("open-tag-manager"),
         dataTestId: "btn-open-tag-manager"
       });
-    }
-
-    if (
-      !isFolder(props.file) &&
-      (props.project.isAdmin ||
-        props.file.user_permission === FILE_PERMISSION.READ_WRITE)
-    ) {
       menuItems.push({
         key: 9,
-        get text() {
-          return t("FileActionsCell.VersioningButtonText");
-        },
+        text: "FileActionsCell.VersioningButtonText",
         action: () => onClick("open-tag-manager"),
         dataTestId: "btn-open-versioning-manager"
       });
@@ -248,9 +209,7 @@ export default {
 
     menuItems.push({
       key: 10,
-      get text() {
-        return t("FileActionsCell.deleteButtonText");
-      },
+      text: "FileActionsCell.deleteButtonText",
       action: () => onClick("delete"),
       color: "high",
       background: "var(--color-high-lighter)",

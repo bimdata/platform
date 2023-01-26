@@ -89,14 +89,19 @@
         class="model-actions-cell__menu"
         v-show="showMenu"
         width="180px"
-      />
+      >
+        <template #item="{ item }">
+          <span :data-test-id="item.dataTestId">
+            {{ $t(item.text) }}
+          </span>
+        </template>
+      </BIMDataMenu>
     </transition>
   </div>
 </template>
 
 <script>
 import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { useToggle } from "../../../../../../composables/toggle.js";
 import { MODEL_STATUS, MODEL_TYPE } from "../../../../../../config/models.js";
 import { WINDOWS } from "../../../../../../config/viewer.js";
@@ -134,38 +139,31 @@ export default {
       emit(event, props.model);
     };
 
-    const { t } = useI18n();
-
     const menuItems = [];
-
     if (props.model.document) {
       menuItems.push({
         key: 1,
-        get text() {
-          return t("ModelActionsCell.renameButtonText");
-        },
+        text: "ModelActionsCell.renameButtonText",
         action: () => onClick("update"),
-        color: "var(--color-primary)"
+        color: "var(--color-primary)",
+        dataTestId: "btn-update-model"
       });
     }
 
     menuItems.push({
       key: 2,
-      get text() {
-        return props.model.archived
-          ? t("ModelActionsCell.unarchiveButtonText")
-          : t("ModelActionsCell.archiveButtonText");
-      },
+      text: props.model.archived
+        ? "ModelActionsCell.unarchiveButtonText"
+        : "ModelActionsCell.archiveButtonText",
       action: () => onClick(props.model.archived ? "unarchive" : "archive"),
-      color: "var(--color-primary)"
+      color: "var(--color-primary)",
+      dataTestId: "btn-archive-model"
     });
 
     if (props.model.type === MODEL_TYPE.META_BUILDING) {
       menuItems.push({
         key: 3,
-        get text() {
-          return t("ModelActionsCell.editButtontext");
-        },
+        text: "ModelActionsCell.editButtontext",
         action: () => onClick("edit-metaBuilding"),
         color: "var(--color-primary)"
       });
@@ -173,12 +171,11 @@ export default {
 
     menuItems.push({
       key: 4,
-      get text() {
-        return t("ModelActionsCell.deleteButtonText");
-      },
+      text: "ModelActionsCell.deleteButtonText",
       action: () => onClick("delete"),
       color: "var(--color-high)",
-      background: "var(--color-high-lighter)"
+      background: "var(--color-high-lighter)",
+      dataTestId: "btn-delete-model"
     });
 
     return {

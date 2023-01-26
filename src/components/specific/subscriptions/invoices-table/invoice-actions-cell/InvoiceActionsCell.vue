@@ -17,7 +17,7 @@
         v-show="showMenu"
       >
         <template #item="{ item }">
-          <span>{{ item.text }}</span>
+          <span>{{ $t(item.text) }}</span>
         </template>
       </BIMDataMenu>
     </transition>
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { useI18n } from "vue-i18n";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { SUB_STATUS } from "../../../../../config/subscription.js";
 
@@ -51,16 +50,12 @@ export default {
       window.open(props.payment.subscription.update_url);
     };
 
-    const { t } = useI18n();
     const menuItems = [];
-
     if (props.payment.receipt_url) {
       menuItems.push({
         key: 1,
-        get text() {
-          return t("InvoiceActionsCell.downloadButton");
-        },
-        action: () => openReceiptUrl,
+        text: "InvoiceActionsCell.downloadButton",
+        action: openReceiptUrl,
         color: "var(--color-primary)"
       });
     }
@@ -68,10 +63,8 @@ export default {
     if (props.payment.subscription.status !== SUB_STATUS.DELETED) {
       menuItems.push({
         key: 2,
-        get text() {
-          return t("BillingActionsCell.updateButtonText");
-        },
-        action: () => openUpdateUrl,
+        text: "BillingActionsCell.updateButtonText",
+        action: openUpdateUrl,
         color: "var(--color-primary)"
       });
     }

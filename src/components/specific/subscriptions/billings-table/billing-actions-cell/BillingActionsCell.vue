@@ -17,7 +17,7 @@
         v-show="showMenu"
       >
         <template #item="{ item }">
-          <span>{{ item.text }}</span>
+          <span>{{ $t(item.text) }}</span>
         </template>
       </BIMDataMenu>
     </transition>
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { SUB_STATUS } from "../../../../../config/subscription.js";
@@ -64,34 +63,27 @@ export default {
       window.open(props.subscription.cancel_url);
     };
 
-    const { t } = useI18n();
     const menuItems = [];
 
     if (props.subscription.status === SUB_STATUS.ACTIVE) {
       menuItems.push({
         key: 1,
-        get text() {
-          return t("BillingActionsCell.datapackButtonText");
-        },
-        action: () => goToSubscriptionDatapack,
+        text: "BillingActionsCell.datapackButtonText",
+        action: goToSubscriptionDatapack,
         color: "var(--color-primary)"
       });
     }
 
     menuItems.push({
       key: 2,
-      get text() {
-        return t("BillingActionsCell.updateButtonText");
-      },
-      action: () => openUpdateUrl,
+      text: "BillingActionsCell.updateButtonText",
+      action: openUpdateUrl,
       color: "var(--color-primary)"
     });
     menuItems.push({
       key: 3,
-      get text() {
-        return t("BillingActionsCell.cancelButtonText");
-      },
-      action: () => openCancelUrl,
+      text: "BillingActionsCell.cancelButtonText",
+      action: openCancelUrl,
       color: "var(--color-high)",
       background: "var(--color-high-lighter)"
     });
