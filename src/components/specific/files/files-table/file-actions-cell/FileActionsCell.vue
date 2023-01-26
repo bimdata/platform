@@ -202,7 +202,7 @@ export default {
       menuItems.push({
         key: 9,
         text: "FileActionsCell.VersioningButtonText",
-        action: () => onClick("open-tag-manager"),
+        action: () => onClick("open-versioning-manager"),
         dataTestId: "btn-open-versioning-manager"
       });
     }
