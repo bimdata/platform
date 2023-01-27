@@ -106,7 +106,7 @@ jobs:
         with:
           branch: ${{ github.ref }}
       - name: Deploy on ${{ env.tag }}
-        uses: bimdata/actions/deployment@v1
+        uses: bimdata/actions/deployment@v2
         with:
           inventory: ${{ env.tag }}
           app: ${{ env.app }}
