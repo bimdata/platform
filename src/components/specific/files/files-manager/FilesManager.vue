@@ -708,9 +708,27 @@ export default {
       return items;
     });
 
-    onMounted(() => {
+    onMounted(async () => {
       fetchVisas();
       fetchTags();
+      if (props.fileStructure.children.length === 0) {
+        projectsTree.value = (
+          await fetchProjectFolderTreeSerializers(props.project)
+        ).map(p => ({
+          name: p.name,
+          action: () => {
+            openModal();
+            projectsToUpload.value = {
+              ...p,
+              folders: treeIdGenerator(p),
+              upload: () => {
+                FileService.createFileStructure(props.project, p.folders);
+                emit("file-updated");
+              }
+            };
+          }
+        }));
+      }
     });
 
     const fileManager = ref(null);
