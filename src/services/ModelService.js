@@ -3,11 +3,17 @@ import { isPlan } from "../utils/models.js";
 
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
+import queue from 'async/queue';
+
 
 class ModelService {
+  callQueue = queue(async task => {
+    return await task();
+  }, 40);
+
   async fetchModels(project) {
     try {
-      return await apiClient.modelApi.getModels(project.cloud.id, project.id);
+      return await this.callQueue.push(() => apiClient.modelApi.getModels(project.cloud.id, project.id));
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)
