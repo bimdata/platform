@@ -34,3 +34,7 @@ export default [
     align: "center"
   }
 ];
+
+export const columnsXL = ["name", "lastupdate", "size", "actions"];
+
+export const columnsLG = ["name", "size", "actions"];

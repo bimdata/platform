@@ -163,18 +163,6 @@ class FileService {
     }
   }
 
-  async deleteDocVersion(project, document) {
-    try {
-      return await apiClient.collaborationApi.deleteDocument(
-        project.cloud.id,
-        document.id,
-        project.id
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
-    }
-  }
-
   async downloadFiles(project, files, accessToken) {
     try {
       let downloadName, downloadUrl;
@@ -232,14 +220,17 @@ class FileService {
     }
   }
 
-  async createFolderStructure(project, currentFolder, files, destFolder) {
-    let currentFiles = [];
-
-    if (files.isDirectory) {
-      currentFiles.push(await handleDragAndDropFile(files));
-    } else {
-      currentFiles.push(handleInputFiles(files));
+  async deleteDocumentVersion(project, document) {
+    try {
+      return await apiClient.collaborationApi.deleteDocument(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
     }
+  }
 
     const createdFolders = await Promise.all(
       currentFiles.map(async files => {
