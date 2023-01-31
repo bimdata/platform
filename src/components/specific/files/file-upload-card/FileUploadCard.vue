@@ -73,6 +73,8 @@ import { useUpload } from "../../../../composables/upload.js";
 import { FILE_TYPE } from "../../../../config/files.js";
 import { formatBytes } from "../../../../utils/files.js";
 
+const simultaneousUploadLimit = 3;
+
 export default {
   props: {
     isModelUpload: {
@@ -103,7 +105,6 @@ export default {
   setup(props, { emit }) {
     const { projectFileUploader, projectModelUploader } = useUpload();
 
-    const simultaneousUploadLimit = 3;
     const uploading = ref(false);
     const canceled = ref(false);
     const failed = ref(false);

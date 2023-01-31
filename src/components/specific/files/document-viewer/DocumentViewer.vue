@@ -117,7 +117,7 @@ const download = () => {
   <div class="document-viewer">
     <div class="document-viewer__head">
       <BIMDataButton
-        v-show="currentDocument.model_id"
+        v-if="currentDocument.model_id"
         fill
         radius
         @click="openViewer"

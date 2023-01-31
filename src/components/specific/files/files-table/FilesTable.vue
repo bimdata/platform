@@ -98,9 +98,8 @@
 <script>
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef from "./columns.js";
+import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
-import { FILE_TYPE } from "../../../../config/files.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
 
@@ -166,12 +165,12 @@ export default {
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isLG.value) {
-        filteredColumns = filteredColumns.filter(col =>
-          ["name", "size", "actions"].includes(col.id)
+        filteredColumns = columnsLG.map(id =>
+          filteredColumns.find(col => col.id === id)
         );
       } else if (isXL.value) {
-        filteredColumns = filteredColumns.filter(col =>
-          ["name", "lastupdate", "size", "actions"].includes(col.id)
+        filteredColumns = columnsXL.map(id =>
+          filteredColumns.find(col => col.id === id)
         );
       }
       return filteredColumns.map(col => ({
@@ -222,7 +221,6 @@ export default {
       filesTable,
       fileUploads,
       nameEditMode,
-      FILE_TYPE,
       // Methods
       cleanUpload,
       formatBytes,

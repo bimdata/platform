@@ -49,9 +49,7 @@ class UploadService {
     const uploader = createFileUploader(
       {
         method: "POST",
-        url: `${ENV.VUE_APP_API_BASE_URL}/cloud/${
-          project.cloud.id
-        }/project/${project.id}/document`,
+        url: `${ENV.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/document`,
         accessToken: apiClient.accessToken
       },
       {

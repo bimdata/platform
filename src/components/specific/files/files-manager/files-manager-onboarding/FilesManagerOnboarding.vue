@@ -12,12 +12,12 @@
           color="primary"
           width="150px"
           @click="
-            fileUploadInput('file', event => uploadFile(event.target.files), {
+            fileUploadInput('file', event => uploadFiles(event.target.files), {
               multiple: true
             })
           "
         >
-          {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
+          {{ $t("FilesManagerOnboarding.uploadFilesButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           width="150px"
@@ -89,12 +89,11 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-
 import { useToggle } from "../../../../../composables/toggle.js";
-import { fileUploadInput } from "../../../../../utils/upload.js";
 import FileService from "../../../../../services/FileService.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
@@ -133,12 +132,12 @@ export default {
 
     let uploadCount = 0;
     const fileUploads = ref([]);
-    const uploadFile = async files => {
+    const uploadFiles = async files => {
       uploadCount = 0;
 
       const fileList = Array.from(files);
 
-      if (fileList[0].webkitRelativePath) {
+      if (fileList[0]?.webkitRelativePath) {
         fileUploads.value = await FileService.createFolderStructure(
           props.project,
           props.rootFolder,
@@ -188,7 +187,7 @@ export default {
         items.push({
           name: t("FilesManagerOnboarding.folderImport"),
           action: () =>
-            fileUploadInput("folder", event => uploadFile(event.target.files))
+            fileUploadInput("folder", event => uploadFiles(event.target.files))
         });
       }
 
@@ -209,7 +208,7 @@ export default {
       closeGedMenu,
       createFolder,
       updateUploadCount,
-      uploadFile,
+      uploadFiles,
       fileUploadInput
     };
   }
