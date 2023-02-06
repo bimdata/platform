@@ -93,6 +93,10 @@ class AuthServive {
   onUserLoaded(callback) {
     this._userLoadedCallback = callback;
     userManager.events.addUserLoaded(callback);
+    userManager.events.addAccessTokenExpired(() => {
+      console.log("Access token expired, reloading the platform...");
+      location.reload();
+    });
   }
 
   offUserLoaded() {
