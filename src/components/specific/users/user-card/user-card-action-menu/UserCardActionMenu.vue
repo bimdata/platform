@@ -1,5 +1,9 @@
 <template>
-  <BIMDataMenuInline :isSubmenuRight="false" :isClickAway="true">
+  <BIMDataMenuInline
+    :isSubmenuRight="false"
+    :isClickAway="true"
+    iconEllipsisSize="l"
+  >
     <template #submenu>
       <div class="flex items-center justify-center">
         <BIMDataButton
