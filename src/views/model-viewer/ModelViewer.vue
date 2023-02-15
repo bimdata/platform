@@ -92,9 +92,12 @@ export default {
 
     let unwatchAccessToken = () => {};
     let unwatchLocale = () => {};
+
+    let bimdataViewer;
+
     onMounted(async () => {
       loading.value = true;
-      const bimdataViewer = makeBIMDataViewer({
+      bimdataViewer = makeBIMDataViewer({
         api: {
           apiUrl,
           accessToken: accessToken.value,
@@ -132,6 +135,7 @@ export default {
     });
 
     onBeforeUnmount(() => {
+      bimdataViewer?.$destroy();
       unwatchAccessToken();
       unwatchLocale();
     });
