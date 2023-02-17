@@ -899,7 +899,8 @@
     "noSearchResultsTitle": "Pas de résultats",
     "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
     "goBackButton": "Retour",
-    "selectedTopicCount": "Nombre de BCF sélectionnés"
+    "selectedTopicCount": "Nombre de BCF sélectionnés",
+    "onlyAdminParameters": "Seuls les administrateurs peuvent modifier les paramètres BCF"
   },
   "GuidedTour": {
     "platform": {

@@ -38,9 +38,19 @@
       </teleport>
     </template>
     <AppSlotContent name="project-board-action">
-      <BIMDataButton color="primary" outline radius icon @click="openSettings">
-        <BIMDataIcon name="settings" size="xxs" />
-      </BIMDataButton>
+      <template v-if="project.isAdmin">
+        <BIMDataButton color="primary" outline radius icon @click="openSettings">
+          <BIMDataIcon name="settings" size="xxs" />
+        </BIMDataButton>
+      </template>
+      <template v-else>
+        <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
+          <BIMDataButton disabled color="primary" outline radius icon>
+            <BIMDataIcon name="settings" size="xxs" />
+          </BIMDataButton>
+        </BIMDataTooltip>
+      </template>
+
       <BIMDataButton
         fill
         radius
