@@ -860,7 +860,8 @@
         "importBcfNotificationError": "Error while importing the BCF file",
         "exportBcfNotificationSuccess": "BCF successfully exported",
         "exportBcfNotificationError": "Error while exporting the BCF file",
-        "selectedTopicCount": "Number of selected topics"
+        "selectedTopicCount": "Number of selected topics",
+        "onlyAdminParameters": "Only administrators can change the BCF settings"
     },
     "GuidedTour": {
         "platform": {
