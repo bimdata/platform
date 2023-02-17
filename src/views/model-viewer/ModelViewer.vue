@@ -29,7 +29,6 @@ import { useSpaces } from "../../state/spaces.js";
 // Components
 import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.vue";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
-import christmasPlugin from "@bimdata/christmas-sleigh-viewer-plugin";
 
 export default {
   components: {
@@ -120,7 +119,6 @@ export default {
             )
         )
       );
-      bimdataViewer.registerPlugin(christmasPlugin);
       loading.value = false;
 
       bimdataViewer.mount("#viewer", initialWindow);
@@ -135,7 +133,7 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      bimdataViewer?.$destroy();
+      bimdataViewer?.destroy();
       unwatchAccessToken();
       unwatchLocale();
     });
