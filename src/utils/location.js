@@ -12,8 +12,9 @@
  */
 function DMS2DD([degrees, minutes, seconds, secondsFraction]) {
   degrees = +degrees;
-  minutes = +minutes;
-  seconds = parseFloat(`${seconds}.${Math.abs(secondsFraction) || 0}`);
+  const factor = degrees < 0 ? -1 : 1;
+  minutes = factor * (+minutes);
+  seconds = factor * parseFloat(`${seconds}.${Math.abs(secondsFraction) || 0}`);
   return degrees + minutes / 60 + seconds / 3600;
 }
 
