@@ -12,6 +12,8 @@ jobs:
     runs-on: [self-hosted, common]
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.REPOS_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
