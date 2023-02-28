@@ -23,19 +23,15 @@ function DMS2DD([degrees, minutes, seconds, secondsFraction]) {
  * @param {Number} param DD coordinate
  * @returns {Array} DMS coordinate
  */
-function DD2DMS(value) {
-  value = +value;
-  const degrees = Math.trunc(value);
-  const minutes = Math.trunc(60 * Math.abs(value - degrees));
-  const seconds = 3600 * Math.abs(value - degrees) - 60 * minutes;
-  return [
-    degrees,
-    minutes,
-    ...seconds
-      .toString()
-      .split(".")
-      .map(s => +s)
-  ];
+function DD2DMS(latOrLong) {
+  const result = new Array(3);
+  result[0] = 0 | latOrLong;
+  if (latOrLong < 0) {
+    latOrLong *= -1;
+  }
+  result[1] = 0 | (((latOrLong += 1e-9) % 1) * 60)
+  result[2] = (0 | (((latOrLong * 60) % 1) * 6000)) / 100
+  return result;
 }
 
 /**
