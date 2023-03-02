@@ -13,7 +13,7 @@
             <BIMDataIcon size="m" :name="tab.icon" />
           </span>
           <span v-if="!isMD" class="models-manager__tab__text">
-            {{ tab.label }}
+            {{ tab.text }}
           </span>
           <span v-if="tab.beta" class="beta-badge">BETA</span>
           <span class="models-manager__tab__count" v-if="tab.models.length > 0">
@@ -34,8 +34,13 @@
           />
         </BIMDataButton>
 
-        <div class="models-manager__menu__container" v-show="showMenu">
-          <template v-for="tab of tabs" :key="tab.id">
+        <BIMDataMenu
+          v-show="showMenu"
+          class="models-manager__menu__container"
+          :menuItems="tabs"
+          width="auto"
+        >
+          <template #item="{ item: tab }">
             <div
               class="models-manager__menu__item"
               :class="{ disabled: tab.models.length > 0 }"
@@ -44,11 +49,11 @@
                 :disabled="tab.models.length > 0"
                 :modelValue="tab.models.length > 0 || tab.displayed"
                 @update:modelValue="tab.displayed = !tab.displayed"
+                :text="tab.text"
               />
-              <span>{{ tab.label }}</span>
             </div>
           </template>
-        </div>
+        </BIMDataMenu>
       </div>
     </div>
 
@@ -87,14 +92,14 @@ const { DWG, DXF, IFC, JPEG, META_BUILDING, PDF, PNG, POINT_CLOUD } =
 const tabsDef = [
   {
     id: "ifc",
-    label: "IFC",
+    text: "IFC",
     icon: MODEL_CONFIG[IFC].icon,
     modelTypes: [IFC],
     component: "IFCManager"
   },
   {
     id: "dwg",
-    label: "DWG",
+    text: "DWG",
     icon: MODEL_CONFIG[DWG].icon,
     modelTypes: [DWG],
     component: "DWGManager",
@@ -102,7 +107,7 @@ const tabsDef = [
   },
   {
     id: "dxf",
-    label: "DXF",
+    text: "DXF",
     icon: MODEL_CONFIG[DXF].icon,
     modelTypes: [DXF],
     component: "DWGManager",
@@ -110,14 +115,14 @@ const tabsDef = [
   },
   {
     id: "pdf",
-    label: "PDF",
+    text: "PDF",
     icon: MODEL_CONFIG[PDF].icon,
     modelTypes: [PDF, META_BUILDING],
     component: "PDFManager"
   },
   {
     id: "point-cloud",
-    label: "Point Cloud",
+    text: "Point Cloud",
     icon: MODEL_CONFIG[POINT_CLOUD].icon,
     modelTypes: [POINT_CLOUD],
     component: "PointCloudManager",
@@ -125,7 +130,7 @@ const tabsDef = [
   },
   {
     id: "photos",
-    label: "Photos",
+    text: "Photos",
     icon: "fileImagePolychrome",
     modelTypes: [JPEG, PNG],
     component: "DWGManager"

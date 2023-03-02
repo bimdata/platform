@@ -84,53 +84,18 @@
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="model-actions-cell__menu" v-show="showMenu">
-        <template v-if="model.document">
-          <BIMDataButton
-            class="model-actions-cell__menu__btn"
-            data-test-id="btn-update-model"
-            ghost
-            squared
-            @click="onClick('update')"
-          >
-            {{ $t("ModelActionsCell.renameButtonText") }}
-          </BIMDataButton>
+      <BIMDataMenu
+        :menuItems="menuItems"
+        class="model-actions-cell__menu"
+        v-show="showMenu"
+        width="180px"
+      >
+        <template #item="{ item }">
+          <span :data-test-id="item.dataTestId">
+            {{ $t(item.text) }}
+          </span>
         </template>
-        <BIMDataButton
-          class="model-actions-cell__menu__btn"
-          data-test-id="btn-archive-model"
-          ghost
-          squared
-          @click="onClick(model.archived ? 'unarchive' : 'archive')"
-        >
-          <template v-if="model.archived">
-            {{ $t("ModelActionsCell.unarchiveButtonText") }}
-          </template>
-          <template v-else>
-            {{ $t("ModelActionsCell.archiveButtonText") }}
-          </template>
-        </BIMDataButton>
-        <template v-if="model.type === MODEL_TYPE.META_BUILDING">
-          <BIMDataButton
-            class="model-actions-cell__menu__btn"
-            ghost
-            squared
-            @click="onClick('edit-metaBuilding')"
-          >
-            {{ $t("ModelActionsCell.editButtontext") }}
-          </BIMDataButton>
-        </template>
-        <BIMDataButton
-          class="model-actions-cell__menu__btn"
-          data-test-id="btn-delete-model"
-          color="high"
-          ghost
-          squared
-          @click="onClick('delete')"
-        >
-          {{ $t("ModelActionsCell.deleteButtonText") }}
-        </BIMDataButton>
-      </div>
+      </BIMDataMenu>
     </transition>
   </div>
 </template>
@@ -174,12 +139,52 @@ export default {
       emit(event, props.model);
     };
 
+    const menuItems = [];
+    if (props.model.document) {
+      menuItems.push({
+        key: 1,
+        text: "ModelActionsCell.renameButtonText",
+        action: () => onClick("update"),
+        color: "var(--color-primary)",
+        dataTestId: "btn-update-model"
+      });
+    }
+
+    menuItems.push({
+      key: 2,
+      text: props.model.archived
+        ? "ModelActionsCell.unarchiveButtonText"
+        : "ModelActionsCell.archiveButtonText",
+      action: () => onClick(props.model.archived ? "unarchive" : "archive"),
+      color: "var(--color-primary)",
+      dataTestId: "btn-archive-model"
+    });
+
+    if (props.model.type === MODEL_TYPE.META_BUILDING) {
+      menuItems.push({
+        key: 3,
+        text: "ModelActionsCell.editButtontext",
+        action: () => onClick("edit-metaBuilding"),
+        color: "var(--color-primary)"
+      });
+    }
+
+    menuItems.push({
+      key: 4,
+      text: "ModelActionsCell.deleteButtonText",
+      action: () => onClick("delete"),
+      color: "var(--color-high)",
+      background: "var(--color-high-lighter)",
+      dataTestId: "btn-delete-model"
+    });
+
     return {
       // References
       isModelReady,
       MODEL_TYPE,
       showMenu,
       WINDOWS,
+      menuItems,
       // Methods
       closeMenu,
       onClick,

@@ -11,22 +11,15 @@
     </BIMDataButton>
 
     <transition name="fade">
-      <div class="billing-actions-cell__menu" v-show="showMenu">
-        <BIMDataButton
-          v-if="subscription.status === SUB_STATUS.ACTIVE"
-          ghost
-          squared
-          @click="goToSubscriptionDatapack"
-        >
-          {{ $t("BillingActionsCell.datapackButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton ghost squared @click="openUpdateUrl">
-          {{ $t("BillingActionsCell.updateButtonText") }}
-        </BIMDataButton>
-        <BIMDataButton color="high" ghost squared @click="openCancelUrl">
-          {{ $t("BillingActionsCell.cancelButtonText") }}
-        </BIMDataButton>
-      </div>
+      <BIMDataMenu
+        :menuItems="menuItems"
+        class="billing-actions-cell__menu"
+        v-show="showMenu"
+      >
+        <template #item="{ item }">
+          <span>{{ $t(item.text) }}</span>
+        </template>
+      </BIMDataMenu>
     </transition>
   </div>
 </template>
@@ -70,10 +63,36 @@ export default {
       window.open(props.subscription.cancel_url);
     };
 
+    const menuItems = [];
+
+    if (props.subscription.status === SUB_STATUS.ACTIVE) {
+      menuItems.push({
+        key: 1,
+        text: "BillingActionsCell.datapackButtonText",
+        action: goToSubscriptionDatapack,
+        color: "var(--color-primary)"
+      });
+    }
+
+    menuItems.push({
+      key: 2,
+      text: "BillingActionsCell.updateButtonText",
+      action: openUpdateUrl,
+      color: "var(--color-primary)"
+    });
+    menuItems.push({
+      key: 3,
+      text: "BillingActionsCell.cancelButtonText",
+      action: openCancelUrl,
+      color: "var(--color-high)",
+      background: "var(--color-high-lighter)"
+    });
+
     return {
       // References
       showMenu,
       SUB_STATUS,
+      menuItems,
       // Methods
       closeMenu,
       goToSubscriptionDatapack,
