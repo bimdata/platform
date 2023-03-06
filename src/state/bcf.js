@@ -1,4 +1,4 @@
-import async from "async";
+import eachLimit from "async/eachLimit";
 
 import { useService } from "@bimdata/bcf-components";
 import { reactive, shallowReadonly, toRefs } from "vue";
@@ -58,7 +58,7 @@ const importBcf = async (project, file) => {
 };
 
 const deleteTopics = async (project, topics) => {
-  const res = await async.eachLimit(topics, 10, async topic =>
+  const res = await eachLimit(topics, 10, async topic =>
     service.deleteTopic(project, topic)
   );
   await loadBcfTopics(project);
