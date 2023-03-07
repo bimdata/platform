@@ -39,7 +39,13 @@
     </template>
     <AppSlotContent name="project-board-action">
       <template v-if="project.isAdmin">
-        <BIMDataButton color="primary" outline radius icon @click="openSettings">
+        <BIMDataButton
+          color="primary"
+          outline
+          radius
+          icon
+          @click="openSettings"
+        >
           <BIMDataIcon name="settings" size="xxs" />
         </BIMDataButton>
       </template>
@@ -247,6 +253,7 @@
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
+            @view-comment-snapshot="openTopicCommentSnapshot"
             @topic-deleted="reloadBcfTopics(), closeSidePanel()"
             @close="closeSidePanel"
           />
@@ -410,8 +417,20 @@
       }"
       closeBtnColor="white"
     >
-      <div class="topic-snapshot-modal" v-click-away="closeTopicSnapshot">
+      <div
+        v-if="topicSnapshot"
+        class="topic-snapshot-modal"
+        v-click-away="closeTopicSnapshot"
+      >
         <img :src="topicSnapshot" />
+      </div>
+
+      <div
+        v-if="commentSnapshot"
+        class="topic-comment-snapshot-modal"
+        v-click-away="closeCommentSnapshot"
+      >
+        <img :src="commentSnapshot" />
       </div>
     </AppModalContent>
   </div>
@@ -678,6 +697,15 @@ export default {
       closeModal();
       topicSnapshot.value = null;
     };
+    const commentSnapshot = ref(null);
+    const openTopicCommentSnapshot = topic => {
+      openModal();
+      commentSnapshot.value = topic.snapshot.snapshot_data;
+    };
+    const closeCommentSnapshot = () => {
+      closeModal();
+      commentSnapshot.value = null;
+    };
 
     const openTopicViewer = topic => {
       let viewpoint = topic.viewpoints[0] ?? {};
@@ -742,6 +770,7 @@ export default {
       sortOrderTitle,
       topics,
       topicSnapshot,
+      commentSnapshot,
       deleteMode,
       isLoadingDelete,
       // Methods
@@ -752,6 +781,7 @@ export default {
       closeMetrics,
       closeSidePanel,
       closeTopicSnapshot,
+      closeCommentSnapshot,
       exportBcfTopics,
       fileUploadInput,
       importBcfTopics,
@@ -759,6 +789,7 @@ export default {
       openTopicCreate,
       openTopicUpdate,
       openTopicOverview,
+      openTopicCommentSnapshot,
       openTopicSnapshot,
       openTopicViewer,
       reloadBcfTopics,
