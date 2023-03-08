@@ -44,7 +44,7 @@ jobs:
   e2e-tests:
     runs-on: [self-hosted, testendtoend]
     needs: build-and-push
-    if: "contains(github.event.head_commit.message, '[skip e2e]') != true"
+    if: ${{ !contains(github.event.head_commit.message, '[skip e2e]') }}
     steps:
       - uses: actions/checkout@v3
         with:
