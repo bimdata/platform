@@ -54,8 +54,17 @@
             :disabled="item.disabled"
             :data-test-id="item.dataTestId"
           >
-            <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
-            {{ $t(item.text) }}
+            <div v-if="item.component" class="m-r-12">
+              <component :is="item.component" width="16px" height="14px" />
+            </div>
+            <BIMDataIcon
+              v-else
+              :name="item.icon"
+              size="xs"
+              margin="0 12px 0 0"
+            />
+
+            <span>{{ $t(item.text) }}</span>
           </BIMDataButton>
         </template>
       </template>
@@ -78,6 +87,8 @@ import {
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
 import AppLink from "../../../app/app-link/AppLink.vue";
+import SetAsModelIcon from "../../../../../components/images/SetAsModelIcon.vue";
+import RemoveModelsIcon from "../../../../../components/images/RemoveModelsIcon.vue";
 
 export default {
   components: {
@@ -153,12 +164,14 @@ export default {
         menuItems.push({
           key: 2,
           text: "FileActionsCell.createModelButtonText",
+          component: SetAsModelIcon,
           action: () => onClick("create-model")
         });
       } else {
         menuItems.push({
           key: 3,
           text: "FileActionsCell.removeModelButtonText",
+          component: RemoveModelsIcon,
           action: () => onClick("remove-model")
         });
       }
