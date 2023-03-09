@@ -157,13 +157,8 @@ export default {
 
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
-        folders.map(
-          async f =>
-            await FileService.createFolderStructure(
-              props.project,
-              props.rootFolder,
-              f
-            )
+        folders.map(f =>
+          FileService.createFolderStructure(props.project, props.rootFolder, f)
         )
       );
     };

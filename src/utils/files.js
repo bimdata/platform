@@ -50,11 +50,11 @@ function treeIdGenerator(projectToImport) {
   ];
 }
 
-async function getFileFromFileEntry(entry) {
+function getFileFromFileEntry(entry) {
   return new Promise((resolve, reject) => entry.file(resolve, reject));
 }
 
-async function getEntriesFromDirEntry(entry) {
+function getEntriesFromDirEntry(entry) {
   return new Promise((resolve, reject) =>
     entry.createReader().readEntries(resolve, reject)
   );
@@ -64,9 +64,7 @@ async function parseDirEntry(entry, tree = {}, files = []) {
   if (entry.isDirectory) {
     const childEntries = await getEntriesFromDirEntry(entry);
     const children = await Promise.all(
-      childEntries.map(
-        async e => await parseDirEntry(e, {}, files).then(res => res.tree)
-      )
+      childEntries.map(e => parseDirEntry(e, {}, files).then(res => res.tree))
     );
     Object.assign(tree, {
       name: entry.name,
@@ -86,9 +84,9 @@ async function getFilesFromEvent(event) {
 
   if (event.dataTransfer) {
     // Files from drag & drop
-    Array.from(event.dataTransfer.items)
-      .map(it => it.webkitGetAsEntry())
-      .forEach(e => (e.isDirectory ? dirEntries : fileEntries).push(e));
+    Array.from(event.dataTransfer.items, it => it.webkitGetAsEntry()).forEach(
+      e => (e.isDirectory ? dirEntries : fileEntries).push(e)
+    );
   } else {
     // Files from file input
     files = Array.from(event.target.files);
@@ -101,7 +99,7 @@ async function getFilesFromEvent(event) {
   const asyncFiles = fileEntries.map(getFileFromFileEntry);
   files = (files ?? []).concat(await Promise.all(asyncFiles));
 
-  const asyncFolders = dirEntries.map(async e => await parseDirEntry(e));
+  const asyncFolders = dirEntries.map(e => parseDirEntry(e));
   folders = await Promise.all(asyncFolders);
 
   return { files, folders };

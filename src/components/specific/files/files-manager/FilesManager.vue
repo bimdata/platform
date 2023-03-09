@@ -217,7 +217,7 @@
             @drop.prevent="uploadFiles"
             @row-drop="({ data, event }) => null"
             @selection-changed="setSelection"
-            @manage-access="openAccessManager($event)"
+            @manage-access="openAccessManager"
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
@@ -465,13 +465,12 @@ export default {
 
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
-        folders.map(
-          async f =>
-            await FileService.createFolderStructure(
-              props.project,
-              folder ?? currentFolder.value,
-              f
-            )
+        folders.map(f =>
+          FileService.createFolderStructure(
+            props.project,
+            folder ?? currentFolder.value,
+            f
+          )
         )
       );
 
