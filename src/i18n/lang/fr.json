@@ -144,7 +144,7 @@
     "addFileButtonText": "Charger un fichier",
     "shortAddFileButtonText": "Fichier"
   },
-  "FileUploadCard": {
+  "UploadCard": {
     "cancelMessage": "Annulé",
     "errorMessage": "Le téléversement a échoué",
     "upload": "{uploaded} sur {total} ({percentage}% téléversé)"
