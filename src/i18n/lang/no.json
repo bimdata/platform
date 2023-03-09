@@ -136,7 +136,7 @@
     "addFileButtonText": "Last opp en fil",
     "shortAddFileButtonText": ""
   },
-  "FileUploadCard": {
+  "UploadCard": {
     "cancelMessage": "Avbrutt",
     "errorMessage": "Opplasting feilet",
     "upload": ""

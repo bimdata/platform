@@ -136,7 +136,7 @@
     "addFileButtonText": "Carica un file",
     "shortAddFileButtonText": "File"
   },
-  "FileUploadCard": {
+  "UploadCard": {
     "cancelMessage": "Annullato",
     "errorMessage": "Caricamento non riuscito",
     "upload": "{uploaded} su {total} ({percentage}% caricato)"

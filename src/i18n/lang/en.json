@@ -137,7 +137,7 @@
         "addFileButtonText": "Upload a file",
         "shortAddFileButtonText": "File"
     },
-    "FileUploadCard": {
+    "UploadCard": {
         "cancelMessage": "Canceled",
         "errorMessage": "Upload failed",
         "upload": "{uploaded} to {total} ({percentage}% uploaded)"

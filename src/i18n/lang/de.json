@@ -136,10 +136,10 @@
     "addFileButtonText": "Datei laden",
     "shortAddFileButtonText": "Datei"
   },
-  "FileUploadCard": {
+  "UploadCard": {
     "cancelMessage": "Abgebrochen",
     "errorMessage": "Hochladen nicht erfolgreich",
-    "upload": "uploaded} von {total} ({percentage} % hochgeladen)"
+    "upload": "{uploaded} von {total} ({percentage} % hochgeladen)"
   },
   "FileUploader": {
     "uploadAreaText": "Dateien hier herklicken/herziehen",

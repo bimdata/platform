@@ -139,6 +139,7 @@
             </template>
           </BIMDataTooltip>
         </div>
+
         <div class="files-manager__actions end">
           <BIMDataSearch
             class="files-manager__actions__input-search"
@@ -173,6 +174,7 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
+
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -203,22 +205,22 @@
             :folder="currentFolder"
             :files="displayedFiles"
             :filesToUpload="filesToUpload"
-            :folderDroppedOver="folderDroppedOver"
+            :foldersToUpload="foldersToUpload"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
+            @remove-model="removeModel"
             @delete="openDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
-            @manage-access="openAccessManager($event)"
-            @remove-model="removeModel"
+            @dragover.prevent="() => {}"
+            @drop.prevent="uploadFiles"
+            @row-drop="({ data, event }) => null"
             @selection-changed="setSelection"
+            @manage-access="openAccessManager($event)"
             @open-visa-manager="openVisaManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
-            @row-dropped-over="setFolderDroppedOver"
-            @dragover.prevent="() => {}"
-            @drop.prevent="event => uploadFiles(event)"
           />
         </div>
 
@@ -295,16 +297,15 @@
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
+import { useAppModal } from "../../app/app-modal/app-modal.js";
+import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
   useStandardBreakpoints,
   useCustomBreakpoints
 } from "../../../../composables/responsive.js";
-import { useAppModal } from "../../app/app-modal/app-modal.js";
-import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
-import { FILE_TYPE } from "../../../../config/files.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
 import { useFiles } from "../../../../state/files.js";
@@ -313,7 +314,7 @@ import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
-import { treeIdGenerator, getFileFormat } from "../../../../utils/files.js";
+import { getFilesFromEvent, treeIdGenerator } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -457,53 +458,27 @@ export default {
       selection.value = models;
     };
 
-    const folderDroppedOver = ref({});
-    const setFolderDroppedOver = rowDroppedOver => {
-      if (rowDroppedOver.nature === FILE_TYPE.FOLDER) {
-        folderDroppedOver.value = rowDroppedOver;
-      }
-    };
-
     const filesToUpload = ref([]);
-    const uploadFiles = async event => {
-      if (event.dataTransfer) {
-        // Files from drag & drop
-        let docsUpload = [];
-        await Promise.all(
-          Array.from(event.dataTransfer.items).map(async file => {
-            const fileEntry = file.webkitGetAsEntry();
-            if (fileEntry.isDirectory) {
-              filesToUpload.value = await FileService.createFolderStructure(
-                props.project,
-                currentFolder.value,
-                fileEntry,
-                folderDroppedOver.value
-              );
-            } else {
-              docsUpload.push(await getFileFormat(fileEntry));
-            }
-          })
-        );
-        filesToUpload.value = docsUpload;
-      } else {
-        // Files from input
-        const fileList = Array.from(event.target.files);
+    const foldersToUpload = ref([]);
+    const uploadFiles = async (event, folder) => {
+      const { files, folders } = await getFilesFromEvent(event);
 
-        if (fileList[0].webkitRelativePath) {
-          filesToUpload.value = await FileService.createFolderStructure(
-            props.project,
-            currentFolder.value,
-            fileList
-          );
-        } else {
-          filesToUpload.value = fileList;
-        }
-      }
+      filesToUpload.value = files;
+      foldersToUpload.value = await Promise.all(
+        folders.map(
+          async f =>
+            await FileService.createFolderStructure(
+              props.project,
+              folder ?? currentFolder.value,
+              f
+            )
+        )
+      );
 
       setTimeout(() => {
         filesToUpload.value = [];
-        folderDroppedOver.value = {};
-      }, 100);
+        foldersToUpload.value = [];
+      }, 10);
     };
 
     const createModelFromFile = async file => {
@@ -763,6 +738,7 @@ export default {
       displayedFiles,
       filesToDelete,
       filesToUpload,
+      foldersToUpload,
       folderToManage,
       searchText,
       selection,
@@ -787,9 +763,7 @@ export default {
       dropdown,
       isOpen,
       menuItems,
-      folderDroppedOver,
       // Methods
-      setFolderDroppedOver,
       toggleDropdown,
       close,
       closeAccessManager,
