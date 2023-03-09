@@ -77,6 +77,7 @@
                 color="primary"
                 fill
                 radius
+                :disabled="!hasAdminPerm(project, currentFolder)"
                 @click="openSubscriptionModal"
               >
                 <BIMDataIcon name="addFile" size="xs" />
@@ -102,14 +103,15 @@
             </template>
             <template v-else>
               <BIMDataButton
-                :disabled="
-                  !currentSpace.isUserOrga && isFullTotal(spaceSubInfo)
-                "
+                width="100%"
+                color="primary"
                 fill
                 radius
                 icon
-                color="primary"
-                width="100%"
+                :disabled="
+                  (!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)) ||
+                  !hasAdminPerm(project, currentFolder)
+                "
                 @click="
                   fileUploadInput('file', event => uploadFiles(event), {
                     multiple: true
