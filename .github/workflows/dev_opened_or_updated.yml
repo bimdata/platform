@@ -33,8 +33,9 @@ jobs:
             docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:staging
 
-  test:
+  e2e-tests:
     runs-on: [self-hosted, testendtoend]
+    if: ${{ !contains(github.event.pull_request.body , '[ ] I want to run the tests for the commits of this PR') }}
     needs: build-and-push
     steps:
       - uses: actions/checkout@v3
@@ -57,7 +58,8 @@ jobs:
 
   deploy:
     runs-on: [self-hosted, common]
-    needs: build-and-push
+    needs: [e2e-tests]
+    if: always() && (needs.e2e-tests.result == 'skipped' || needs.e2e-tests.result == 'success')
     steps:
       - name: Login to BIMData Docker Registry
         uses: docker/login-action@v2
