@@ -30,7 +30,7 @@ jobs:
             --pull always \
             --rm \
             -e ANSIBLE_VAULT_PASSWD="${{ secrets.ANSIBLE_VAULT_PASSWD }}" \
-            docker-registry.bimdata.io/bimdata/deployment:kubernetes-latest \
+            docker-registry.bimdata.io/bimdata/deployment:kubernetes \
             ansible-playbook \
               -u deploy \
               -i inventories/staging \
