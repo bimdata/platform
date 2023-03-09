@@ -1,4 +1,4 @@
-import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "../config/files.js";
+import { FILE_TYPE, STANDARD_IGNORED_FILES } from "../config/files.js";
 
 function fileExtension(fileName) {
   const parts = fileName.split(".");
@@ -50,16 +50,30 @@ function treeIdGenerator(projectToImport) {
   ];
 }
 
+/**
+ * @param {FileSystemFileEntry} entry
+ * @returns {Promise<File>}
+ */
 function getFileFromFileEntry(entry) {
   return new Promise((resolve, reject) => entry.file(resolve, reject));
 }
 
+/**
+ * @param {FileSystemDirectoryEntry} entry
+ * @returns {Promise<FileSystemEntry[]>}
+ */
 function getEntriesFromDirEntry(entry) {
   return new Promise((resolve, reject) =>
     entry.createReader().readEntries(resolve, reject)
   );
 }
 
+/**
+ * @param {FileSystemEntry} entry
+ * @param {Object} tree
+ * @param {File[]} files
+ * @returns {{ tree: Object, files: File[] }}
+ */
 async function parseDirEntry(entry, tree = {}, files = []) {
   if (entry.isDirectory) {
     const childEntries = await getEntriesFromDirEntry(entry);
@@ -76,8 +90,15 @@ async function parseDirEntry(entry, tree = {}, files = []) {
   return { tree, files };
 }
 
+/**
+ * @param {InputEvent} event
+ * @returns {{ files: File[], folders: { tree: Object, files: File[] }[] }}
+ */
 async function getFilesFromEvent(event) {
-  let files, folders;
+  /** @type {File[]} */
+  let files;
+  /** @type {{ tree: Object, files: File[] }[]} */
+  let folders;
 
   const fileEntries = [];
   const dirEntries = [];
@@ -98,9 +119,16 @@ async function getFilesFromEvent(event) {
 
   const asyncFiles = fileEntries.map(getFileFromFileEntry);
   files = (files ?? []).concat(await Promise.all(asyncFiles));
+  files = files.filter(file => !STANDARD_IGNORED_FILES.includes(file.name));
 
   const asyncFolders = dirEntries.map(e => parseDirEntry(e));
   folders = await Promise.all(asyncFolders);
+  folders.forEach(
+    folder =>
+      (folder.files = folder.files.filter(
+        file => !STANDARD_IGNORED_FILES.includes(file.name)
+      ))
+  );
 
   return { files, folders };
 }
