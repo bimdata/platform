@@ -2,7 +2,7 @@
   <template v-if="listFilter">
     <div class="folder-access-manager">
       <div class="folder-access-manager__title">
-        <BIMDataIcon name="key" size="l" />
+        <BIMDataIcon name="key" size="s" />
         <span class="folder-access-manager__title__text">
           {{ $t("FolderAccessManager.title") }} -
           <BIMDataTextbox width="auto" maxWidth="100px" :text="folder.name" />
