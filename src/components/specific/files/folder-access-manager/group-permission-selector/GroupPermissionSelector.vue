@@ -11,7 +11,6 @@
       height="32px"
       :list="permissionList"
       :closeOnElementClick="true"
-      :disabled="disabled"
       @element-click="update"
     >
       <template #header>
@@ -36,12 +35,6 @@ import { useGroups } from "../../../../../state/groups.js";
 // Components
 import UserAvatarList from "../../../users/user-avatar-list/UserAvatarList.vue";
 
-const permissionList = [
-  { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
-  { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
-  { id: "readWrite", value: FILE_PERMISSION.READ_WRITE }
-];
-
 export default {
   components: {
     UserAvatarList
@@ -64,19 +57,22 @@ export default {
   setup(props, { emit }) {
     const { updateGroupPermission } = useGroups();
 
-    const disabled = computed(
-      () => props.folder.default_permission === FILE_PERMISSION.READ_WRITE
-    );
+    const permissionList = computed(() => [
+      { id: "default", value: props.folder.default_permission },
+      { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
+      { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
+      { id: "readWrite", value: FILE_PERMISSION.READ_WRITE }
+    ]);
 
     const groupPermission = ref();
     watch(
-      [() => props.folder, () => props.group],
+      [() => props.folder, () => props.group, permissionList],
       () => {
         const perm = props.folder.groups_permissions.find(
           p => p.group.id === props.group.id
         );
-        groupPermission.value = permissionList.find(
-          right => right.value === perm.permission
+        groupPermission.value = permissionList.value.find(
+          p => p.value === perm.permission
         );
       },
       { immediate: true }
@@ -99,7 +95,6 @@ export default {
 
     return {
       // References
-      disabled,
       groupPermission,
       permissionList,
       // Methods
