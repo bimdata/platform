@@ -69,6 +69,43 @@ function getEntriesFromDirEntry(entry) {
 }
 
 /**
+ * @param {File[]} files
+ * @returns {{ tree: Object, files: File[] }}
+ */
+function parseDirFiles(files) {
+  const paths = Array.from(new Set(files.map(fileDirectory)), dirPath =>
+    dirPath.split("/")
+  );
+
+  const treeFromPath = (path, node, parent) => {
+    if (path.length === 0) return [];
+
+    const name = path.shift();
+    if (!name) return [];
+
+    const children = () => [treeFromPath(path)].flat();
+
+    if (!node) return { name, children: children() };
+
+    if (node.name === name) {
+      if (node.children.length > 0) {
+        node.children.forEach(child => treeFromPath(path, child, node));
+      } else {
+        node.children = children();
+      }
+    } else {
+      parent?.children.push({ name, children: children() });
+    }
+
+    return node;
+  };
+
+  const tree = paths.reduce((node, path) => treeFromPath(path, node), null);
+
+  return { tree, files };
+}
+
+/**
  * @param {FileSystemEntry} entry
  * @param {Object} tree
  * @param {File[]} files
@@ -96,39 +133,43 @@ async function parseDirEntry(entry, tree = {}, files = []) {
  */
 async function getFilesFromEvent(event) {
   /** @type {File[]} */
-  let files;
+  let files = [];
   /** @type {{ tree: Object, files: File[] }[]} */
-  let folders;
-
-  const fileEntries = [];
-  const dirEntries = [];
+  let folders = [];
 
   if (event.dataTransfer) {
     // Files from drag & drop
+    const asyncFiles = [];
+    const asyncFolders = [];
     Array.from(event.dataTransfer.items, it => it.webkitGetAsEntry()).forEach(
-      e => (e.isDirectory ? dirEntries : fileEntries).push(e)
+      entry => {
+        if (entry.isDirectory) {
+          asyncFolders.push(parseDirEntry(entry));
+        } else {
+          asyncFiles.push(getFileFromFileEntry(entry));
+        }
+      }
     );
+    files = await Promise.all(asyncFiles);
+    folders = await Promise.all(asyncFolders);
   } else {
     // Files from file input
-    files = Array.from(event.target.files);
-    if (files[0]?.webkitRelativePath) {
-      dirEntries.push(files[0]);
-      files = [];
+    const inputFiles = Array.from(event.target.files);
+    if (event.target.webkitdirectory) {
+      const folder = parseDirFiles(inputFiles);
+      folders = folder.tree ? [folder] : [];
+    } else {
+      files = inputFiles;
     }
   }
 
-  const asyncFiles = fileEntries.map(getFileFromFileEntry);
-  files = (files ?? []).concat(await Promise.all(asyncFiles));
+  // Filter ignored files
   files = files.filter(file => !STANDARD_IGNORED_FILES.includes(file.name));
-
-  const asyncFolders = dirEntries.map(e => parseDirEntry(e));
-  folders = await Promise.all(asyncFolders);
-  folders.forEach(
-    folder =>
-      (folder.files = folder.files.filter(
-        file => !STANDARD_IGNORED_FILES.includes(file.name)
-      ))
-  );
+  folders.forEach(folder => {
+    folder.files = folder.files.filter(
+      file => !STANDARD_IGNORED_FILES.includes(file.name)
+    );
+  });
 
   return { files, folders };
 }
