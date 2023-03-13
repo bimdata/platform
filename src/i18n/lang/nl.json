@@ -136,7 +136,7 @@
     "addFileButtonText": "Upload een bestand",
     "shortAddFileButtonText": ""
   },
-  "FileUploadCard": {
+  "UploadCard": {
     "cancelMessage": "Geannuleerd",
     "errorMessage": "Upload mislukt",
     "upload": ""

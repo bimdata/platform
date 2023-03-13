@@ -72,7 +72,7 @@ import { useStandardBreakpoints } from "../../../../../composables/responsive.js
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
-import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.vue";
+import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.js";
 
 export default {
   components: {

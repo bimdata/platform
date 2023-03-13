@@ -1,10 +1,8 @@
-import { downloadAll } from "../utils/download.js";
-import { isPlan } from "../utils/models.js";
-
+import queue from "async/queue";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
-import queue from 'async/queue';
-
+import { downloadAll } from "../utils/download.js";
+import { isPlan } from "../utils/models.js";
 
 class ModelService {
   callQueue = queue(async task => {

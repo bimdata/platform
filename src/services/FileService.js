@@ -1,13 +1,7 @@
 import { FILE_TYPE } from "../config/files.js";
 import { download } from "../utils/download.js";
 import { segregate } from "../utils/file-structure.js";
-import {
-  getPaths,
-  handleInputFiles,
-  createFolderTree,
-  handleDragAndDropFile,
-  removeRootFolder
-} from "../utils/files.js";
+import { getFilesWithParentIds } from "../utils/files.js";
 
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
@@ -163,18 +157,6 @@ class FileService {
     }
   }
 
-  async deleteDocVersion(project, document) {
-    try {
-      return await apiClient.collaborationApi.deleteDocument(
-        project.cloud.id,
-        document.id,
-        project.id
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
-    }
-  }
-
   async downloadFiles(project, files, accessToken) {
     try {
       let downloadName, downloadUrl;
@@ -232,70 +214,42 @@ class FileService {
     }
   }
 
-  async createFolderStructure(project, currentFolder, files) {
-    let currentFiles = [];
-
-    if (files.isDirectory) {
-      currentFiles.push(await handleDragAndDropFile(files));
-    } else {
-      currentFiles.push(handleInputFiles(files));
+  async deleteDocumentVersion(project, document) {
+    try {
+      return await apiClient.collaborationApi.deleteDocument(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
     }
+  }
 
-    const createdFolders = await Promise.all(
-      currentFiles.map(async files => {
-        const paths = getPaths(files);
-
-        const rootFolder = await this.createFolder(project, {
-          parent_id: currentFolder.id,
-          name: paths[0][0]
-        });
-
-        const tree = createFolderTree(rootFolder, removeRootFolder(paths));
-
-        function getRootFolderNode(node) {
-          if (node.id === rootFolder.id) {
-            return node;
-          } else {
-            return node.children?.find(getRootFolderNode);
-          }
-        }
-
-        try {
-          const DMSTree = await apiClient.collaborationApi.createDMSTree(
-            project.cloud.id,
-            project.id,
-            tree
-          );
-
-          const rootFolderNode = getRootFolderNode(DMSTree);
-
-          const mappedPath = new Map();
-          const parseNode = (node, parent) => {
-            node.path = parent.path + "/" + node.name;
-            mappedPath.set(node.path, node.id);
-            node.children.forEach(child => parseNode(child, node));
-          };
-          parseNode(rootFolderNode, { path: "" });
-
-          return {
-            type: FILE_TYPE.FOLDER,
-            name: rootFolderNode.name,
-            size: files.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: files.map(file => ({
-              ...file,
-              parentId: mappedPath.get("/" + file.path.join("/"))
-            }))
-          };
-        } catch (error) {
-          ErrorService.handleError(
-            new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
-          );
-          return undefined;
-        }
-      })
-    );
-
-    return createdFolders.filter(Boolean);
+  async createFolderStructure(project, parent, { tree, files }) {
+    try {
+      const treeFolder = await this.createFolder(project, {
+        name: tree.name,
+        parent_id: parent.id
+      });
+      let root = treeFolder;
+      if (tree.children.length > 0) {
+        root = await apiClient.collaborationApi.createDMSTree(
+          project.cloud.id,
+          project.id,
+          tree.children.map(c => ({ ...c, parent_id: treeFolder.id }))
+        );
+      }
+      return {
+        name: treeFolder.name,
+        size: files.reduce((a, b) => a + (b.size ?? 0), 0),
+        files: getFilesWithParentIds(root, treeFolder, files)
+      };
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
+      );
+    }
   }
 }
 

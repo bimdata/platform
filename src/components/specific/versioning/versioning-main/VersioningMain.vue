@@ -148,7 +148,10 @@ export default {
     const onSafeZone = async isActionConfirmed => {
       if (isActionConfirmed) {
         loading.value = "delete";
-        await FileService.deleteDocVersion(props.project, docToDelete.value);
+        await FileService.deleteDocumentVersion(
+          props.project,
+          docToDelete.value
+        );
         loading.value = null;
         const documentHistory = allDocVersions.value.find(
           version => version.id !== docToDelete.value.id

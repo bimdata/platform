@@ -12,12 +12,12 @@
           color="primary"
           width="150px"
           @click="
-            fileUploadInput('file', event => uploadFile(event.target.files), {
+            fileUploadInput('file', uploadFiles, {
               multiple: true
             })
           "
         >
-          {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
+          {{ $t("FilesManagerOnboarding.uploadFilesButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           width="150px"
@@ -58,17 +58,31 @@
 
     <transition name="fade">
       <div
-        v-show="showFolderForm || fileUploads.length > 0"
+        v-show="
+          showFolderForm ||
+          filesToUpload.length > 0 ||
+          foldersToUpload.length > 0
+        "
         class="files-manager-onboarding__overlay"
       >
         <div class="files-manager-onboarding__overlay__uploads">
           <FileUploadCard
-            v-for="(file, i) of fileUploads"
-            :key="i"
+            v-for="(file, i) of filesToUpload"
+            :key="'file-' + i"
             condensed
             :project="project"
             :folder="rootFolder"
             :file="file"
+            @upload-completed="updateUploadCount"
+            @upload-canceled="updateUploadCount"
+            @upload-failed="updateUploadCount"
+          />
+          <FolderUploadCard
+            v-for="(folder, i) of foldersToUpload"
+            :key="'folder' + i"
+            condensed
+            :project="project"
+            :folder="folder"
             @upload-completed="updateUploadCount"
             @upload-canceled="updateUploadCount"
             @upload-failed="updateUploadCount"
@@ -89,23 +103,25 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-
 import { useToggle } from "../../../../../composables/toggle.js";
-import { fileUploadInput } from "../../../../../utils/upload.js";
 import FileService from "../../../../../services/FileService.js";
+import { getFilesFromEvent } from "../../../../../utils/files.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
 import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
-import FileUploadCard from "../../file-upload-card/FileUploadCard.vue";
+import FileUploadCard from "../../file-upload-card/FileUploadCard.js";
+import FolderUploadCard from "../../file-upload-card/FolderUploadCard.js";
 import FolderCreationForm from "../../folder-creation-form/FolderCreationForm.vue";
 
 export default {
   components: {
     FilesManagerOnboardingImage,
     FileUploadCard,
-    FolderCreationForm
+    FolderCreationForm,
+    FolderUploadCard
   },
   props: {
     project: {
@@ -132,28 +148,30 @@ export default {
     } = useToggle();
 
     let uploadCount = 0;
-    const fileUploads = ref([]);
-    const uploadFile = async files => {
+    const filesToUpload = ref([]);
+    const foldersToUpload = ref([]);
+    const uploadFiles = async event => {
       uploadCount = 0;
 
-      const fileList = Array.from(files);
+      const { files, folders } = await getFilesFromEvent(event);
 
-      if (fileList[0].webkitRelativePath) {
-        fileUploads.value = await FileService.createFolderStructure(
-          props.project,
-          props.rootFolder,
-          fileList
-        );
-      } else {
-        fileUploads.value = fileList;
-      }
+      filesToUpload.value = files;
+      foldersToUpload.value = await Promise.all(
+        folders.map(f =>
+          FileService.createFolderStructure(props.project, props.rootFolder, f)
+        )
+      );
     };
 
     const updateUploadCount = () => {
       uploadCount++;
-      if (uploadCount === fileUploads.value.length) {
+      if (
+        uploadCount ===
+        filesToUpload.value.length + foldersToUpload.value.length
+      ) {
         uploadCount = 0;
-        fileUploads.value = [];
+        filesToUpload.value = [];
+        foldersToUpload.value = [];
         emit("file-uploaded");
       }
     };
@@ -187,8 +205,7 @@ export default {
       if (!props.project.isGuest) {
         items.push({
           name: t("FilesManagerOnboarding.folderImport"),
-          action: () =>
-            fileUploadInput("folder", event => uploadFile(event.target.files))
+          action: () => fileUploadInput("folder", uploadFiles)
         });
       }
 
@@ -197,7 +214,8 @@ export default {
 
     return {
       // References
-      fileUploads,
+      filesToUpload,
+      foldersToUpload,
       showFolderForm,
       dropdownMaxHeight,
       onboarding,
@@ -209,7 +227,7 @@ export default {
       closeGedMenu,
       createFolder,
       updateUploadCount,
-      uploadFile,
+      uploadFiles,
       fileUploadInput
     };
   }
