@@ -75,8 +75,9 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useSession } from "../../../../composables/session.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../config/models.js";
 import { segregateByType } from "../../../../utils/models.js";
@@ -156,6 +157,7 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props) {
+    const { projectModelTab } = useSession();
     const {
       isOpen: showMenu,
       close: closeMenu,
@@ -166,6 +168,7 @@ export default {
     const currentTab = ref({});
 
     const selectTab = tab => {
+      projectModelTab.set(props.project.id, tab.id);
       currentTab.value = tab;
     };
 
@@ -184,6 +187,13 @@ export default {
       },
       { immediate: true }
     );
+
+    onBeforeMount(() => {
+      // Look for current model tab from session storage
+      const tabId = projectModelTab.get(props.project.id);
+      const tab = tabs.value.find(t => t.id === tabId);
+      if (tab) selectTab(tab);
+    });
 
     return {
       // References
