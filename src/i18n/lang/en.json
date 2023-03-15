@@ -399,7 +399,7 @@
         "homeButtonText": "Home"
     },
     "FolderPermissionSelector": {
-        "label": "All",
+        "label": "Default",
         "options": {
             "accessDenied": "Access denied",
             "readOnly": "Read only",
@@ -412,6 +412,7 @@
     },
     "GroupPermissionSelector": {
         "options": {
+            "default": "Default",
             "accessDenied": "Access denied",
             "readOnly": "Read only",
             "readWrite": "Read / Write"

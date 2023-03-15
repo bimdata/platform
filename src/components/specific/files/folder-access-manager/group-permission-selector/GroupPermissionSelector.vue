@@ -29,11 +29,18 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { FILE_PERMISSION } from "../../../../../config/files.js";
 import { useGroups } from "../../../../../state/groups.js";
 // Components
 import UserAvatarList from "../../../users/user-avatar-list/UserAvatarList.vue";
+
+const permissionList = [
+  { id: "default", value: null },
+  { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
+  { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
+  { id: "readWrite", value: FILE_PERMISSION.READ_WRITE }
+];
 
 export default {
   components: {
@@ -55,25 +62,23 @@ export default {
   },
   emits: ["group-permission-updated"],
   setup(props, { emit }) {
-    const { updateGroupPermission } = useGroups();
-
-    const permissionList = computed(() => [
-      { id: "default", value: props.folder.default_permission },
-      { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
-      { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
-      { id: "readWrite", value: FILE_PERMISSION.READ_WRITE }
-    ]);
+    const { updateGroupPermission, deleteGroupPermission } = useGroups();
 
     const groupPermission = ref();
     watch(
-      [() => props.folder, () => props.group, permissionList],
+      [() => props.folder, () => props.group],
       () => {
         const perm = props.folder.groups_permissions.find(
           p => p.group.id === props.group.id
         );
-        groupPermission.value = permissionList.value.find(
-          p => p.value === perm.permission
-        );
+        if (perm) {
+          groupPermission.value = permissionList.find(
+            p => p.value === perm.permission
+          );
+        } else {
+          // No permission means 'default permission'
+          groupPermission.value = permissionList[0];
+        }
       },
       { immediate: true }
     );
@@ -81,12 +86,16 @@ export default {
     const update = async perm => {
       try {
         groupPermission.value = perm;
-        await updateGroupPermission(
-          props.project,
-          props.folder,
-          props.group,
-          perm.value
-        );
+        if (perm.value) {
+          await updateGroupPermission(
+            props.project,
+            props.folder,
+            props.group,
+            perm.value
+          );
+        } else {
+          await deleteGroupPermission(props.project, props.folder, props.group);
+        }
         emit("group-permission-updated");
       } catch (error) {
         console.error(error);

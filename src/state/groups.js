@@ -97,6 +97,10 @@ const updateGroupPermission = async (project, folder, group, permission) => {
   );
 };
 
+const deleteGroupPermission = async (project, folder, group) => {
+  return await GroupService.deleteGroupPermission(project, folder, group);
+};
+
 const deleteGroup = async (project, group) => {
   await GroupService.deleteGroup(project, group);
   await loadProjectGroups(project);
@@ -118,6 +122,7 @@ export function useGroups() {
     removeGroupMembers,
     updateGroupMembers,
     updateGroupPermission,
+    deleteGroupPermission,
     deleteGroup
   };
 }

@@ -133,6 +133,20 @@ class GroupService {
     }
   }
 
+  async deleteGroupPermission(project, folder, group) {
+    try {
+      // TODO: wait for API method to be implemented
+      // return await apiClient.collaborationApi.deleteGroupFolder(
+      //   project.cloud.id,
+      //   folder.id,
+      //   group.id,
+      //   project.id
+      // );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.GROUP_UPDATE_ERROR, error);
+    }
+  }
+
   async importGroup(project, group_ids) {
     try {
       return await apiClient.collaborationApi.importManageGroup(
