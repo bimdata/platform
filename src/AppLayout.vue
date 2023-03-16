@@ -1,5 +1,5 @@
 <template>
-  <div class="app-layout bimdata-scrollbar">
+  <div class="app-layout">
     <template v-if="isGuidedTourEnabled && tourToDisplay">
       <BIMDataGuidedTour
         :locale="$i18n.locale"
