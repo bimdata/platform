@@ -64,8 +64,8 @@ const deleteTopics = async (project, topics) => {
   return res;
 };
 
-const exportBcf = async (project, topics) => {
-  return await service.exportBcf(project, topics);
+const exportBcf = (project, topics) => {
+  return service.exportBcf(project, topics);
 };
 
 export function useBcf() {
