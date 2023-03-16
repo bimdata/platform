@@ -40,6 +40,7 @@
               squared
               width="100%"
             >
+              <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
               {{ $t("FileActionsCell.openViewerButtonText") }}
             </BIMDataButton>
           </AppLink>
@@ -53,7 +54,17 @@
             :disabled="item.disabled"
             :data-test-id="item.dataTestId"
           >
-            {{ $t(item.text) }}
+            <div v-if="item.component" class="m-r-12">
+              <component :is="item.component" width="16px" height="14px" />
+            </div>
+            <BIMDataIcon
+              v-else
+              :name="item.icon"
+              size="xs"
+              margin="0 12px 0 0"
+            />
+
+            <span>{{ $t(item.text) }}</span>
           </BIMDataButton>
         </template>
       </template>
@@ -76,6 +87,8 @@ import {
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
 import AppLink from "../../../app/app-link/AppLink.vue";
+import SetAsModelIcon from "../../../../../components/images/SetAsModelIcon.vue";
+import RemoveModelsIcon from "../../../../../components/images/RemoveModelsIcon.vue";
 
 export default {
   components: {
@@ -141,7 +154,8 @@ export default {
       menuItems.push({
         key: 1,
         text: "FileActionsCell.openViewerButtonText",
-        color: "var(--color-primary)"
+        color: "var(--color-primary)",
+        icon: "show"
       });
     }
 
@@ -150,12 +164,14 @@ export default {
         menuItems.push({
           key: 2,
           text: "FileActionsCell.createModelButtonText",
+          component: SetAsModelIcon,
           action: () => onClick("create-model")
         });
       } else {
         menuItems.push({
           key: 3,
           text: "FileActionsCell.removeModelButtonText",
+          component: RemoveModelsIcon,
           action: () => onClick("remove-model")
         });
       }
@@ -165,6 +181,7 @@ export default {
       key: 4,
       text: "FileActionsCell.renameButtonText",
       action: () => onClick("update"),
+      icon: "edit",
       disabled:
         !props.project.isAdmin &&
         props.file.user_permission < FILE_PERMISSION.READ_WRITE
@@ -174,6 +191,7 @@ export default {
       key: 5,
       text: "FileActionsCell.downloadButtonText",
       action: () => onClick("download"),
+      icon: "download",
       disabled:
         !props.project.isAdmin &&
         props.file.user_permission < FILE_PERMISSION.READ_WRITE
@@ -183,7 +201,9 @@ export default {
       menuItems.push({
         key: 6,
         text: "FileActionsCell.manageAccessButtonText",
-        action: () => onClick("manage-access")
+        action: () => onClick("manage-access"),
+        icon: "key",
+        divider: true
       });
     }
 
@@ -191,19 +211,23 @@ export default {
       menuItems.push({
         key: 7,
         text: "FileActionsCell.VisaButtonText",
+        icon: "visa",
         action: () => onClick("open-visa-manager")
       });
       menuItems.push({
         key: 8,
         text: "FileActionsCell.addTagsButtonText",
+        icon: "tag",
         action: () => onClick("open-tag-manager"),
         dataTestId: "btn-open-tag-manager"
       });
       menuItems.push({
         key: 9,
         text: "FileActionsCell.VersioningButtonText",
+        icon: "versioning",
         action: () => onClick("open-versioning-manager"),
-        dataTestId: "btn-open-versioning-manager"
+        dataTestId: "btn-open-versioning-manager",
+        divider: true
       });
     }
 
@@ -214,6 +238,7 @@ export default {
       color: "high",
       background: "var(--color-high-lighter)",
       dataTestId: "btn-delete-doc",
+      icon: "delete",
       disabled:
         !props.project.isAdmin &&
         props.file.user_permission < FILE_PERMISSION.READ_WRITE

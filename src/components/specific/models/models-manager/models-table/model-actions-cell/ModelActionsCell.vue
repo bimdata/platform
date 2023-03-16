@@ -91,6 +91,7 @@
         width="180px"
       >
         <template #item="{ item }">
+          <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
           <span :data-test-id="item.dataTestId">
             {{ $t(item.text) }}
           </span>
@@ -144,6 +145,7 @@ export default {
       menuItems.push({
         key: 1,
         text: "ModelActionsCell.renameButtonText",
+        icon: "edit",
         action: () => onClick("update"),
         color: "var(--color-primary)",
         dataTestId: "btn-update-model"
@@ -155,6 +157,7 @@ export default {
       text: props.model.archived
         ? "ModelActionsCell.unarchiveButtonText"
         : "ModelActionsCell.archiveButtonText",
+      icon: props.model.archived ? "unarchive" : "archive",
       action: () => onClick(props.model.archived ? "unarchive" : "archive"),
       color: "var(--color-primary)",
       dataTestId: "btn-archive-model"
@@ -164,14 +167,20 @@ export default {
       menuItems.push({
         key: 3,
         text: "ModelActionsCell.editButtontext",
+        icon: "edit",
         action: () => onClick("edit-metaBuilding"),
         color: "var(--color-primary)"
       });
     }
 
     menuItems.push({
+      divider: true
+    });
+
+    menuItems.push({
       key: 4,
       text: "ModelActionsCell.deleteButtonText",
+      icon: "delete",
       action: () => onClick("delete"),
       color: "var(--color-high)",
       background: "var(--color-high-lighter)",
