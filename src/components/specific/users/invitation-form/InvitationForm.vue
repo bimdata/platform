@@ -127,15 +127,18 @@ export default {
             });
           }
         }
-        pushNotification({
-          type: "success",
-          title: t("Success"),
-          message: t(
-            currentUser
-              ? "InvitationForm.successUsertoAdmin"
-              : "InvitationForm.successNotifText"
-          )
-        });
+        pushNotification(
+          {
+            type: "success",
+            title: t("Success"),
+            message: t(
+              currentUser
+                ? "InvitationForm.successUsertoAdmin"
+                : "InvitationForm.successNotifText"
+            )
+          },
+          2500
+        );
         reset();
         emit("success");
       } else {
