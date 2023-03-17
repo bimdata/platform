@@ -212,7 +212,8 @@ export default {
         key: 7,
         text: "FileActionsCell.VisaButtonText",
         icon: "visa",
-        action: () => onClick("open-visa-manager")
+        action: () => onClick("open-visa-manager"),
+        dataTestId: "btn-open-visa-manager"
       });
       menuItems.push({
         key: 8,
