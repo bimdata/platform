@@ -6,6 +6,7 @@
     </div>
     <div class="visa-safe-zone__action">
       <BIMDataButton
+        data-test-id="btn-confirm-visa-safe-zone"
         color="high"
         fill
         radius

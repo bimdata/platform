@@ -1,5 +1,10 @@
 <template>
-  <div class="visa-summary-validator" v-for="user in userList" :key="user.id">
+  <div
+    class="visa-summary-validator"
+    data-test-id="visa-summary-validator-item"
+    v-for="user in userList"
+    :key="user.id"
+  >
     <div class="visa-summary-validator__left-side">
       <UserAvatar
         :user="user.validator || {}"
@@ -25,6 +30,7 @@
         "
       >
         <BIMDataButton
+          data-test-id="btn-refresh-validation"
           radius
           ghost
           style="margin: 2px 0px 0px 0px"

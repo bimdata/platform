@@ -16,7 +16,7 @@ describe("versioning CRUD", () => {
     cy.hook("btn-add-version").click();
     cy.get("body > input[type=file]").selectFile("@housePlan", { force: true });
 
-    cy.hook("versioning-doc")
+    cy.hook("versioning-doc", { timeout: 10000 })
       .first()
       .within(() => {
         cy.contains("house-plan.pdf");

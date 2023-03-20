@@ -154,12 +154,13 @@
             class="files-manager__actions__visa-tooltip"
             position="left"
             color="high"
-            :disabled="visasCounter !== 0"
+            :disabled="visasCounter > 0 || createdVisas.length > 0"
             :text="$t('Visa.noVisa')"
           >
             <BIMDataButton
-              :disabled="!visasCounter"
+              :disabled="createdVisas.length < 1 && visasCounter < 1"
               class="files-manager__actions__visa"
+              data-test-id="btn-open-visa-list"
               color="primary"
               fill
               radius
