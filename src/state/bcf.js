@@ -2,7 +2,6 @@ import eachLimit from "async/eachLimit";
 
 import { useService } from "@bimdata/bcf-components";
 import { reactive, shallowReadonly, toRefs } from "vue";
-import BcfService from "../services/BcfService.js";
 import { useProjects } from "./projects.js";
 
 const service = useService();
@@ -50,7 +49,7 @@ const loadDetailedExtensions = async project => {
 };
 
 const importBcf = async (project, file) => {
-  const res = await BcfService.importBcf(project, file);
+  const res = await service.importBcf(project, file);
   await loadExtensions(project);
   await loadDetailedExtensions(project);
   await loadBcfTopics(project);
@@ -66,7 +65,7 @@ const deleteTopics = async (project, topics) => {
 };
 
 const exportBcf = (project, topics) => {
-  return BcfService.exportBcf(project, topics);
+  return service.exportBcf(project, topics);
 };
 
 export function useBcf() {
