@@ -1,6 +1,7 @@
 .file-actions-cell {
   position: relative;
-
+  display: flex;
+  justify-content: center;
   &__btn {
     color: var(--color-granite-light);
   }
