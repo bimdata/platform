@@ -91,14 +91,15 @@
         :filesTable="filesTable"
         :project="project"
         :file="file"
-        @create-model="$emit('create-model', $event)"
-        @delete="$emit('delete', $event)"
-        @download="$emit('download', $event)"
-        @manage-access="$emit('manage-access', $event)"
-        @open-versioning-manager="$emit('open-versioning-manager', $event)"
-        @open-visa-manager="$emit('open-visa-manager', $event)"
-        @open-tag-manager="$emit('open-tag-manager', $event)"
-        @remove-model="$emit('remove-model', $event)"
+        :loading="loadingFileIds.includes(file.id)"
+        @create-model="$emit('create-model', file)"
+        @delete="$emit('delete', file)"
+        @download="$emit('download', file)"
+        @manage-access="$emit('manage-access', file)"
+        @open-versioning-manager="$emit('open-versioning-manager', file)"
+        @open-visa-manager="$emit('open-visa-manager', file)"
+        @open-tag-manager="$emit('open-tag-manager', file)"
+        @remove-model="$emit('remove-model', file)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -133,6 +134,10 @@ export default {
     FolderUploadCard
   },
   props: {
+    loadingFileIds: {
+      type: Array,
+      required: true
+    },
     project: {
       type: Object,
       required: true

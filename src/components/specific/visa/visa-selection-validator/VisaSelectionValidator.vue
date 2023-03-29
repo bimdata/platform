@@ -26,14 +26,24 @@
       >
       </BIMDataSearch>
     </div>
-    <div class="visa-add-validator__people-list">
+    <div
+      class="visa-add-validator__people-list"
+      data-test-id="visa-validator-list"
+    >
       <VisaValidatorUsers
         :userList="peopleList"
         @update-people="updatedSelection = $event"
       />
     </div>
     <div class="visa-add-validator__action">
-      <BIMDataButton color="primary" fill radius width="100%" @click="onClick">
+      <BIMDataButton
+        data-test-id="btn-submit-validators"
+        color="primary"
+        fill
+        radius
+        width="100%"
+        @click="onClick"
+      >
         {{ $t("Visa.add.validatorView.accept") }}
         <div class="visa-add-validator__action__counter">
           <span>

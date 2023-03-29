@@ -2,6 +2,7 @@
   <div
     ref="visaCommentPost"
     class="visa-comment-post"
+    data-test-id="visa-comment-item"
     v-click-away:mousedown="toggleCloseActions"
   >
     <div class="visa-comment-post__header">

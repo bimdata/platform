@@ -14,7 +14,11 @@ Cypress.Commands.add("createUser", ({ key, firstname, lastname }) => {
     cy.get("input[name=password1]").type(user.password);
     cy.get("input[name=password2]").type(user.password);
     cy.get("input[type=submit]").click();
-    // cy.get("input[type=submit][value=Accept]").click();
+
+    // TODO: add BIMData CGU into bimdata-test on-premise to avoid this "tricks".
+    // Make sure this line is commented before committing, otherwise the tests will fail in the CI.
+    // Uncomment this line when you want to launch tests locally.
+    // cy.get("input[type=submit][value=Accept]").click(); // <!> Keep this line <!>
 
     return cy
       .url()

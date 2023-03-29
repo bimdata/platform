@@ -18,7 +18,7 @@ module.exports = defineConfig({
   screenshotsFolder: "tests/e2e/screenshots",
   videosFolder: "tests/e2e/videos",
 
-  viewportWidth: 1220,
+  viewportWidth: 1625,
   viewportHeight: 728,
 
   e2e: {

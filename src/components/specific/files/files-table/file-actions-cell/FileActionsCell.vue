@@ -1,6 +1,8 @@
 <template>
   <div class="file-actions-cell" v-click-away="closeMenu">
+    <BIMDataSpinner v-if="loading" />
     <BIMDataButton
+      v-else
       data-test-id="btn-actions-cell"
       class="file-actions-cell__btn"
       ripple
@@ -40,6 +42,7 @@
               squared
               width="100%"
             >
+              <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
               {{ $t("FileActionsCell.openViewerButtonText") }}
             </BIMDataButton>
           </AppLink>
@@ -53,7 +56,17 @@
             :disabled="item.disabled"
             :data-test-id="item.dataTestId"
           >
-            {{ $t(item.text) }}
+            <div v-if="item.component" class="m-r-12">
+              <component :is="item.component" width="16px" height="14px" />
+            </div>
+            <BIMDataIcon
+              v-else
+              :name="item.icon"
+              size="xs"
+              margin="0 12px 0 0"
+            />
+
+            <span>{{ $t(item.text) }}</span>
           </BIMDataButton>
         </template>
       </template>
@@ -62,7 +75,7 @@
 </template>
 
 <script>
-import { nextTick, ref } from "vue";
+import { nextTick, ref, shallowRef } from "vue";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { FILE_PERMISSION } from "../../../../../config/files.js";
 import routeNames from "../../../../../router/route-names.js";
@@ -76,12 +89,18 @@ import {
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
 import AppLink from "../../../app/app-link/AppLink.vue";
+import SetAsModelIcon from "../../../../../components/images/SetAsModelIcon.vue";
+import RemoveModelsIcon from "../../../../../components/images/RemoveModelsIcon.vue";
 
 export default {
   components: {
     AppLink
   },
   props: {
+    loading: {
+      type: Boolean,
+      required: true
+    },
     filesTable: {
       type: Object
     },
@@ -108,11 +127,108 @@ export default {
   setup(props, { emit }) {
     const menu = ref(null);
     const isOpen = ref(false);
+    const menuItems = shallowRef([]);
 
     const openMenu = () => {
       if (!props.filesTable) return;
 
       isOpen.value = true;
+
+      if (isViewable(props.file)) {
+        menuItems.value.push({
+          key: 1,
+          text: "FileActionsCell.openViewerButtonText",
+          color: "var(--color-primary)",
+          icon: "show"
+        });
+      }
+
+      if (!isFolder(props.file) && isConvertible(props.file)) {
+        if (!isModel(props.file)) {
+          menuItems.value.push({
+            key: 2,
+            text: "FileActionsCell.createModelButtonText",
+            component: SetAsModelIcon,
+            action: () => onClick("create-model")
+          });
+        } else {
+          menuItems.value.push({
+            key: 3,
+            text: "FileActionsCell.removeModelButtonText",
+            component: RemoveModelsIcon,
+            action: () => onClick("remove-model")
+          });
+        }
+      }
+
+      menuItems.value.push({
+        key: 4,
+        text: "FileActionsCell.renameButtonText",
+        action: () => onClick("update"),
+        icon: "edit",
+        disabled:
+          !props.project.isAdmin &&
+          props.file.user_permission < FILE_PERMISSION.READ_WRITE
+      });
+
+      menuItems.value.push({
+        key: 5,
+        text: "FileActionsCell.downloadButtonText",
+        action: () => onClick("download"),
+        icon: "download",
+        disabled:
+          !props.project.isAdmin &&
+          props.file.user_permission < FILE_PERMISSION.READ_WRITE
+      });
+
+      if (isFolder(props.file) && props.project.isAdmin) {
+        menuItems.value.push({
+          key: 6,
+          text: "FileActionsCell.manageAccessButtonText",
+          action: () => onClick("manage-access"),
+          icon: "key",
+          divider: true
+        });
+      }
+
+      if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
+        menuItems.value.push({
+          key: 7,
+          text: "FileActionsCell.VisaButtonText",
+          icon: "visa",
+          action: () => onClick("open-visa-manager"),
+          dataTestId: "btn-open-visa-manager"
+        });
+        menuItems.value.push({
+          key: 8,
+          text: "FileActionsCell.addTagsButtonText",
+          icon: "tag",
+          action: () => onClick("open-tag-manager"),
+          dataTestId: "btn-open-tag-manager"
+        });
+        menuItems.value.push({
+          key: 9,
+          text: "FileActionsCell.VersioningButtonText",
+          icon: "versioning",
+          action: () => onClick("open-versioning-manager"),
+          dataTestId: "btn-open-versioning-manager",
+          divider: true
+        });
+      }
+
+      menuItems.value.push({
+        key: 10,
+        text: "FileActionsCell.deleteButtonText",
+        action: () => onClick("delete"),
+        color: "high",
+        background: "var(--color-high-lighter)",
+        dataTestId: "btn-delete-doc",
+        icon: "delete",
+        disabled:
+          !props.project.isAdmin &&
+          props.file.user_permission < FILE_PERMISSION.READ_WRITE
+      });
+
       nextTick(() => {
         if (props.filesTable) {
           menu.value.$el.style.top = dropdownPositioner(
@@ -125,6 +241,7 @@ export default {
 
     const closeMenu = () => {
       isOpen.value = false;
+      menuItems.value = [];
       nextTick(() => {
         menu.value.$el.style.top = "";
       });
@@ -132,92 +249,8 @@ export default {
 
     const onClick = event => {
       closeMenu();
-      emit(event, props.file);
+      emit(event);
     };
-
-    const menuItems = [];
-
-    if (isViewable(props.file)) {
-      menuItems.push({
-        key: 1,
-        text: "FileActionsCell.openViewerButtonText",
-        color: "var(--color-primary)"
-      });
-    }
-
-    if (!isFolder(props.file) && isConvertible(props.file)) {
-      if (!isModel(props.file)) {
-        menuItems.push({
-          key: 2,
-          text: "FileActionsCell.createModelButtonText",
-          action: () => onClick("create-model")
-        });
-      } else {
-        menuItems.push({
-          key: 3,
-          text: "FileActionsCell.removeModelButtonText",
-          action: () => onClick("remove-model")
-        });
-      }
-    }
-
-    menuItems.push({
-      key: 4,
-      text: "FileActionsCell.renameButtonText",
-      action: () => onClick("update"),
-      disabled:
-        !props.project.isAdmin &&
-        props.file.user_permission < FILE_PERMISSION.READ_WRITE
-    });
-
-    menuItems.push({
-      key: 5,
-      text: "FileActionsCell.downloadButtonText",
-      action: () => onClick("download"),
-      disabled:
-        !props.project.isAdmin &&
-        props.file.user_permission < FILE_PERMISSION.READ_WRITE
-    });
-
-    if (isFolder(props.file) && props.project.isAdmin) {
-      menuItems.push({
-        key: 6,
-        text: "FileActionsCell.manageAccessButtonText",
-        action: () => onClick("manage-access")
-      });
-    }
-
-    if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
-      menuItems.push({
-        key: 7,
-        text: "FileActionsCell.VisaButtonText",
-        action: () => onClick("open-visa-manager")
-      });
-      menuItems.push({
-        key: 8,
-        text: "FileActionsCell.addTagsButtonText",
-        action: () => onClick("open-tag-manager"),
-        dataTestId: "btn-open-tag-manager"
-      });
-      menuItems.push({
-        key: 9,
-        text: "FileActionsCell.VersioningButtonText",
-        action: () => onClick("open-versioning-manager"),
-        dataTestId: "btn-open-versioning-manager"
-      });
-    }
-
-    menuItems.push({
-      key: 10,
-      text: "FileActionsCell.deleteButtonText",
-      action: () => onClick("delete"),
-      color: "high",
-      background: "var(--color-high-lighter)",
-      dataTestId: "btn-delete-doc",
-      disabled:
-        !props.project.isAdmin &&
-        props.file.user_permission < FILE_PERMISSION.READ_WRITE
-    });
 
     return {
       // References
