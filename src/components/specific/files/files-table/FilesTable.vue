@@ -6,6 +6,7 @@
     tableLayout="fixed"
     :columns="columns"
     :rows="files"
+    :canDragOverRow="file => !file.file"
     rowKey="id"
     :rowHeight="54"
     :selectable="true"
@@ -264,3 +265,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.bimdata-table__row--drag-overed {
+  outline: solid var(--color-primary) 1px;
+  outline-offset: -1px;
+}
+</style>

@@ -215,7 +215,7 @@
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
-            @dragover.prevent="() => {}"
+            @dragover.prevent
             @drop.prevent="uploadFiles"
             @row-drop="({ event, data }) => uploadFiles(event, data)"
             @selection-changed="setSelection"
