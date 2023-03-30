@@ -6,12 +6,13 @@
     tableLayout="fixed"
     :columns="columns"
     :rows="files"
+    :canDragOverRow="file => !file.file"
     rowKey="id"
     :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
+    @row-drop="onRowDrop"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
-    @row-dropped-over="$emit('row-dropped-over', $event)"
   >
     <template #sub-header>
       <div
@@ -40,7 +41,7 @@
           :key="file.key"
           condensed
           :project="project"
-          :folder="folder"
+          :folder="file.folder"
           :file="file"
           @upload-completed="onUploadCompleted(file.key, $event)"
           @upload-canceled="cleanUpload(file.key, 6000)"
@@ -166,10 +167,10 @@ export default {
     "manage-access",
     "open-versioning-manager",
     "open-visa-manager",
-    "selection-changed",
     "open-tag-manager",
     "remove-model",
-    "row-dropped-over"
+    "row-drop",
+    "selection-changed"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -193,6 +194,12 @@ export default {
         label: col.label || t(`FilesTable.headers.${col.id}`)
       }));
     });
+
+    const onRowDrop = ({ event, data }) => {
+      event.preventDefault();
+      event.stopPropagation();
+      emit("row-drop", { event, data });
+    };
 
     let nameEditMode;
     watch(
@@ -255,6 +262,7 @@ export default {
       cleanUpload,
       formatBytes,
       isFolder,
+      onRowDrop,
       onUploadCompleted,
       // Responsive breakpoints
       isXL
@@ -262,3 +270,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.bimdata-table__row--drag-overed {
+  outline: solid var(--color-primary) 1px;
+  outline-offset: -1px;
+}
+</style>
