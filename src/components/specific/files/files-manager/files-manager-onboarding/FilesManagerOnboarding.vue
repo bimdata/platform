@@ -17,7 +17,7 @@
             })
           "
         >
-          {{ $t("FilesManagerOnboarding.uploadFilesButtonText") }}
+          {{ $t("FilesManagerOnboarding.uploadFileButtonText") }}
         </BIMDataButton>
         <BIMDataButton
           width="150px"
