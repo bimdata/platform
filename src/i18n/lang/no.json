@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "cancel": "Avbryt",
+    "validate": "Verifiser"
+  },
   "GroupBoard": {
     "searchInputPlaceholder": "Søk opp medlemmer"
   },

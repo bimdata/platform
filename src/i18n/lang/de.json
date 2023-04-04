@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "cancel": "Abbrechen",
+    "validate": "Bestätigen"
+  },
   "GroupBoard": {
     "searchInputPlaceholder": "Mitglied suchen"
   },

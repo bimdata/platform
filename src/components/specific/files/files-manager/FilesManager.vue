@@ -338,6 +338,7 @@ import SubscriptionModal from "../../subscriptions/subscription-modal/Subscripti
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
+import FileDragAndDropModal from "./file-drag-and-drop-modal/FileDragAndDropModal.vue";
 
 export default {
   components: {
@@ -704,7 +705,9 @@ export default {
         items.splice(1, 0, {
           name: t("FilesManager.folderImport"),
           action: () => {
-            fileUploadInput("folder", event => uploadFiles(event));
+            openModal({
+              component: FileDragAndDropModal
+            });
           }
         });
       }
