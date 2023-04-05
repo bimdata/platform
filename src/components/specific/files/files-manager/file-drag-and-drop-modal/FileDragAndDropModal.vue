@@ -37,10 +37,12 @@ export default {
       dragOver.value = false;
     };
     const onDragover = event => {
-      event.preventDefault();
-      event.stopPropagation();
+      if (event.dataTransfer.types.includes("Files")) {
+        event.preventDefault();
+        event.stopPropagation();
 
-      dragOver.value = true;
+        dragOver.value = true;
+      }
     };
 
     const onDrop = event => {
