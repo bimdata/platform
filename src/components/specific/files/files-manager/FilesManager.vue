@@ -11,14 +11,13 @@
             <BIMDataDropdownMenu
               ref="dropdown"
               class="files-manager__actions__dropdown"
-              v-click-away="close"
               width="20%"
               height="32px"
               :menuItems="menuItems"
               :subListMaxHeight="dropdownMaxHeight"
               @click="toggleDropdown"
             >
-              <template #header>
+              <template #header="{ isOpen }">
                 <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
                 <BIMDataIcon
                   :name="isOpen ? 'deploy' : 'chevron'"
@@ -309,7 +308,6 @@ import {
   useStandardBreakpoints,
   useCustomBreakpoints
 } from "../../../../composables/responsive.js";
-import { useToggle } from "../../../../composables/toggle.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -379,7 +377,6 @@ export default {
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
     const { openModal, closeModal } = useAppModal();
-    const { isOpen, toggle, close } = useToggle();
 
     const { fetchProjectFolderTreeSerializers } = useProjects();
 
@@ -672,7 +669,6 @@ export default {
           };
         }
       }));
-      toggle();
     };
 
     watch(
@@ -684,6 +680,7 @@ export default {
       }
     );
 
+    const dropdown = ref(null);
     const projectsToUpload = ref(null);
     const menuItems = computed(() => {
       const items = [];
@@ -706,8 +703,12 @@ export default {
           name: t("FilesManager.folderImport"),
           action: () => {
             openModal({
-              component: FileDragAndDropModal
+              component: FileDragAndDropModal,
+              props: {
+                onDrop: event => uploadFiles(event)
+              }
             });
+            dropdown.value.displayed = false; // force close the drop down menu
           }
         });
       }
@@ -739,7 +740,6 @@ export default {
     });
 
     const fileManager = ref(null);
-    const dropdown = ref(null);
     const dropdownMaxHeight = computed(() => {
       if (!fileManager.value || !dropdown.value) return;
       const { y, height: H } = dropdown.value.$el.getBoundingClientRect();
@@ -781,12 +781,10 @@ export default {
       dropdownMaxHeight,
       fileManager,
       dropdown,
-      isOpen,
       menuItems,
       loadingFileIds,
       // Methods
       toggleDropdown,
-      close,
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
