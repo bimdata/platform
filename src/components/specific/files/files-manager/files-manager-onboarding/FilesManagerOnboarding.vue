@@ -115,6 +115,8 @@ import FilesManagerOnboardingImage from "./FilesManagerOnboardingImage.vue";
 import FileUploadCard from "../../file-upload-card/FileUploadCard.js";
 import FolderUploadCard from "../../file-upload-card/FolderUploadCard.js";
 import FolderCreationForm from "../../folder-creation-form/FolderCreationForm.vue";
+import FileDragAndDropModal from "../file-drag-and-drop-modal/FileDragAndDropModal.vue";
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 
 export default {
   components: {
@@ -140,6 +142,8 @@ export default {
   emits: ["file-uploaded"],
   setup(props, { emit }) {
     const { t } = useI18n();
+
+    const { openModal } = useAppModal();
 
     const {
       isOpen: isGedMenuOpen,
@@ -205,7 +209,15 @@ export default {
       if (!props.project.isGuest) {
         items.push({
           name: t("FilesManagerOnboarding.folderImport"),
-          action: () => fileUploadInput("folder", uploadFiles)
+          action: () => {
+            openModal({
+              component: FileDragAndDropModal,
+              props: {
+                onDrop: event => uploadFiles(event)
+              }
+            });
+            dropdown.value.displayed = false;
+          }
         });
       }
 
