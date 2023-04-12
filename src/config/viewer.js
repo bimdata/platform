@@ -5,7 +5,7 @@ const AVAILABLE_PLUGINS = Object.freeze({
   gltfExtractor:
     "https://unpkg.com/@bimdata/gltf-extractor-viewer-plugin@1.0.2",
   idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.8",
-  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.10",
+  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.13",
   realiz3D: "https://unpkg.com/@bimdata/realiz3d-viewer-plugin@0.0.2",
   svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.2"
 });
