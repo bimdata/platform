@@ -5,6 +5,7 @@ async function download({ name, url }) {
   link.style.display = "none";
   link.download = name;
   link.href = url;
+  link.target = "_blank";
   document.body.append(link);
   link.click();
   await delay(100);

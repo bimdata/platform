@@ -10,4 +10,4 @@ import "./commands.js";
 
 // Prevents Cypress from failing test
 // when an unhandled error occur
-Cypress.on('uncaught:exception', () => false);
+Cypress.on("uncaught:exception", () => false);

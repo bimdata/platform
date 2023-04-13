@@ -3,7 +3,8 @@ const KEY_PREFIX = "bimdata-platform";
 const STORAGE_KEYS = Object.freeze({
   CURRENT_VIEW: `${KEY_PREFIX}:current-view`,
   PREVIOUS_VIEW: `${KEY_PREFIX}:previous-view`,
-  PROJECT_VIEW: `${KEY_PREFIX}:project-view`
+  PROJECT_VIEW: `${KEY_PREFIX}:project-view`,
+  PROJECT_MODEL_TAB: `${KEY_PREFIX}:project-model-tab`
 });
 
 const getEntry = key => JSON.parse(sessionStorage.getItem(key));
@@ -38,10 +39,20 @@ const projectView = {
   }
 };
 
+const projectModelTab = {
+  get(projectID) {
+    return getEntry(`${STORAGE_KEYS.PROJECT_MODEL_TAB}:${projectID}`);
+  },
+  set(projectID, tabKey) {
+    setEntry(`${STORAGE_KEYS.PROJECT_MODEL_TAB}:${projectID}`, tabKey);
+  }
+};
+
 export function useSession() {
   return {
     currentView,
     previousView,
-    projectView
+    projectView,
+    projectModelTab
   };
 }

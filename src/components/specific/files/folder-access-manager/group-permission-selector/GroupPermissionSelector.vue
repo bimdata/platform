@@ -85,13 +85,13 @@ export default {
     const update = async perm => {
       try {
         groupPermission.value = perm;
-        const response = await updateGroupPermission(
+        await updateGroupPermission(
           props.project,
           props.folder,
           props.group,
           perm.value
         );
-        emit("group-permission-updated", response);
+        emit("group-permission-updated");
       } catch (error) {
         console.error(error);
       }

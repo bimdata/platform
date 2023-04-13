@@ -144,7 +144,7 @@
     "addFileButtonText": "Charger un fichier",
     "shortAddFileButtonText": "Fichier"
   },
-  "FileUploadCard": {
+  "UploadCard": {
     "cancelMessage": "Annulé",
     "errorMessage": "Le téléversement a échoué",
     "upload": "{uploaded} sur {total} ({percentage}% téléversé)"
@@ -205,6 +205,13 @@
   },
   "GroupMemberSelectionCard": {
     "text": "Ajouter un utilisateur"
+  },
+  "GroupImport": {
+    "title": "Importer un groupe",
+    "selectAll": "Tout sélectionner",
+    "add": "Ajouter",
+    "notAdmin": "Vous devez être administrateur du projet",
+    "noGroup": "Il n'y a pas de groupe dans ce projet"
   },
   "Invitations": {
     "title": "Mes invitations",
@@ -291,7 +298,8 @@
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
       "upload": "Upload"
-    }
+    },
+    "add": "Ajouter"
   },
   "ModelsMergeModal": {
     "title": "Fusionner la sélection",
@@ -470,12 +478,14 @@
     "fileUpdateError": "Une erreur est survenue lors de la mise à jour des dossiers/fichiers",
     "fileDownloadError": "Échec du téléchargement des dossiers/fichiers",
     "fileDeleteError": "Erreur lors de la suppression des dossiers/fichiers",
+    "folderFetchFolder": "Erreur lors de la récupération des informations du dossier",
     "folderCreateError": "Erreur lors de la création du dossier",
     "documentUploadError": "Erreur lors du téléversement du fichier",
     "groupsFetchError": "Impossible de récupérer la liste des groupes",
     "groupCreateError": "Erreur lors de la création du groupe",
     "groupUpdateError": "Erreur lors de la mise à jour du groupe",
     "groupDeleteError": "Échec de la suppression du groupe",
+    "groupImportError": "Échec lors de l'importation des groupes",
     "organizationsFetchError": "Impossible de récupérer la liste des comptes de facturation",
     "organizationCreateError": "Erreur lors de la création du compte de facturation",
     "organizationUpdateError": "Erreur lors le de mise à jour du compte de facturation",
@@ -507,6 +517,7 @@
     "fileFetchError": "Erreur lors de la récupération de ce dossier/fichier",
     "bcfImportError": "Une erreur s'est produite lors de l'import",
     "bcfExportError": "L'export a échoué...",
+    "bcfDeleteError": "La suppression a échouée...",
     "fileVersionsFetchError": "Impossible de récupérer les versions de ce document",
     "fileVersionsMakeHeadError": "Échec lors du passage du document en version actuelle",
     "fileVersionDelete": "Échec lors de la suppression du document",
@@ -860,6 +871,14 @@
     "importBcfNotificationSuccess": "Fichier BCF importé avec succès",
     "importBcfNotificationError": "Erreur lors de l'import du fichier BCF",
     "exportButtonText": "Exporter",
+    "deleteButtonText": "Supprimer",
+    "deleteBcfText": "Vous êtes sur le point de supprimer la sélection de BCF",
+    "deleteBcfConfirm": "Confimer la suppression",
+    "deleteInProgress": "Suppression en cours",
+    "deleteInProgressSub": "Ce processus peut prendre quelques instants.",
+    "deleteBcfNotificationSuccess": "La sélection de BCF a bien été supprimée",
+    "deleteBcfNotificationError": "Erreur lors de la suppression de la selection de BCF",
+    "cancelBcfConfirm": "Annuler",
     "exportBcfNotificationSuccess": "BCF exporté avec succès",
     "exportBcfNotificationError": "Erreur lors de l'export du fichier BCF",
     "createBcfButtonText": "Créer un BCF",
@@ -880,7 +899,8 @@
     "noSearchResultsTitle": "Pas de résultats",
     "noSearchResultsText": "Votre recherche n'a donné aucun résultat, veuillez vérifier vos filtres ou vos mots clés.",
     "goBackButton": "Retour",
-    "selectedTopicCount": "Nombre de BCF sélectionnés"
+    "selectedTopicCount": "Nombre de BCF sélectionnés",
+    "onlyAdminParameters": "Seuls les administrateurs peuvent modifier les paramètres BCF"
   },
   "GuidedTour": {
     "platform": {
@@ -973,9 +993,7 @@
   },
   "SubscriptionModal": {
     "title": "Obtenez plus d'espace",
-    "subtitle": "Vous avez actuellement une capacité de 300mb de stockage ",
-    "10gbSize": "10 GB",
-    "100mbSize": "+ 100 MB",
+    "subtitle": "Vous avez actuellement une capacité de {size} de stockage ",
     "soon": "SOON",
     "upgrade": {
       "title": "Passer à la plateforme pro",
@@ -1001,5 +1019,9 @@
   },
   "GroupMemberCard": {
     "pending": "Invitation en cours"
+  },
+  "DocumentViewer": {
+    "viewerButton": "Ouvrir dans la visionneuse",
+    "docPlaceholder": "Aucune prévisualisation pour ce document"
   }
 }

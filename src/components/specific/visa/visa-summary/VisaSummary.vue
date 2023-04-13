@@ -111,6 +111,7 @@
           <template v-if="isAuthor">
             <BIMDataButton
               class="visa-summary__shell__action-button__delete"
+              data-test-id="btn-delete-visa"
               color="high"
               fill
               radius
@@ -119,6 +120,7 @@
             >
             <BIMDataButton
               class="visa-summary__shell__action-button__close"
+              data-test-id="btn-close-visa"
               color="primary"
               fill
               radius
@@ -131,6 +133,7 @@
             <BIMDataButton
               class="visa-summary__shell__action-button__validate"
               :class="{ active: userValidationStatus.isValidated && !isClosed }"
+              data-test-id="btn-validate-visa"
               color="success"
               fill
               radius
@@ -141,6 +144,7 @@
             <BIMDataButton
               class="visa-summary__shell__action-button__deny"
               :class="{ active: userValidationStatus.isRefused && !isClosed }"
+              data-test-id="btn-deny-visa"
               color="high"
               fill
               radius
@@ -185,7 +189,13 @@
             <span class="visa-summary__shell__validator__header__title">{{
               $t("Visa.summary.validator")
             }}</span>
-            <BIMDataButton v-if="isAuthor && !isClosed" ghost rounded icon>
+            <BIMDataButton
+              data-test-id="btn-add-validator"
+              v-if="isAuthor && !isClosed"
+              ghost
+              rounded
+              icon
+            >
               <BIMDataIcon
                 name="addUser"
                 size="s"
@@ -193,7 +203,10 @@
               />
             </BIMDataButton>
           </div>
-          <div class="visa-summary__shell__validator__user-list">
+          <div
+            class="visa-summary__shell__validator__user-list"
+            data-test-id="visa-summary-validator-list"
+          >
             <VisaSummaryValidator
               :isAuthor="isAuthor"
               :userList="formatedVisa.validations"

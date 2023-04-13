@@ -20,6 +20,7 @@
         >{{ $t("Visa.comments.cancel") }}</BIMDataButton
       >
       <BIMDataButton
+        data-test-id="btn-submit-visa-comment"
         color="primary"
         fill
         radius

@@ -2,6 +2,7 @@
   <div className="visa-summary-validator-actions" v-click-away="closeMenu">
     <BIMDataButton
       class="visa-summary-validator-actions__btn"
+      data-test-id="btn-action-visa-summary-validator"
       rounded
       icon
       @click="toggleMenu"
@@ -12,6 +13,7 @@
       <div class="visa-summary-validator-actions__menu" v-show="showMenu">
         <BIMDataButton
           class="visa-summary-validator-actions__menu__btn"
+          data-test-id="btn-delete-validator"
           ghost
           squared
           @click="onDelete"
@@ -21,6 +23,7 @@
         <template v-if="hasAccess">
           <BIMDataButton
             class="visa-summary-validator-actions__menu__btn"
+            data-test-id="btn-refresh-validator"
             ghost
             squared
             @click="onReset"

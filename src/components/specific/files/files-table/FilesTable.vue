@@ -6,10 +6,12 @@
     tableLayout="fixed"
     :columns="columns"
     :rows="files"
+    :canDragOverRow="file => !file.file"
     rowKey="id"
     :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
+    @row-drop="onRowDrop"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
     <template #sub-header>
@@ -39,11 +41,21 @@
           :key="file.key"
           condensed
           :project="project"
-          :folder="folder"
+          :folder="file.folder"
           :file="file"
           @upload-completed="onUploadCompleted(file.key, $event)"
           @upload-canceled="cleanUpload(file.key, 6000)"
           @upload-failed="cleanUpload(file.key, 12000)"
+        />
+        <FolderUploadCard
+          v-for="folder of folderUploads"
+          :key="folder.key"
+          condensed
+          :project="project"
+          :folder="folder"
+          @upload-completed="onUploadCompleted(folder.key, $event)"
+          @upload-canceled="cleanUpload(folder.key, 6000)"
+          @upload-failed="cleanUpload(folder.key, 12000)"
         />
       </transition-group>
     </template>
@@ -79,14 +91,15 @@
         :filesTable="filesTable"
         :project="project"
         :file="file"
-        @create-model="$emit('create-model', $event)"
-        @delete="$emit('delete', $event)"
-        @download="$emit('download', $event)"
-        @manage-access="$emit('manage-access', $event)"
-        @open-versioning-manager="$emit('open-versioning-manager', $event)"
-        @open-visa-manager="$emit('open-visa-manager', $event)"
-        @open-tag-manager="$emit('open-tag-manager', $event)"
-        @remove-model="$emit('remove-model', $event)"
+        :loading="loadingFileIds.includes(file.id)"
+        @create-model="$emit('create-model', file)"
+        @delete="$emit('delete', file)"
+        @download="$emit('download', file)"
+        @manage-access="$emit('manage-access', file)"
+        @open-versioning-manager="$emit('open-versioning-manager', file)"
+        @open-visa-manager="$emit('open-visa-manager', file)"
+        @open-tag-manager="$emit('open-tag-manager', file)"
+        @remove-model="$emit('remove-model', file)"
         @update="nameEditMode[file.id] = true"
       />
     </template>
@@ -96,15 +109,15 @@
 <script>
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef from "./columns.js";
+import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
-import { FILE_TYPE } from "../../../../config/files.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
 
 // Components
 import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
-import FileUploadCard from "../file-upload-card/FileUploadCard.vue";
+import FileUploadCard from "../file-upload-card/FileUploadCard.js";
+import FolderUploadCard from "../file-upload-card/FolderUploadCard.js";
 import FileActionsCell from "./file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "./file-name-cell/FileNameCell.vue";
 import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
@@ -117,9 +130,14 @@ export default {
     FilesManagerBreadcrumb,
     FileTagsCell,
     FileTypeCell,
-    FileUploadCard
+    FileUploadCard,
+    FolderUploadCard
   },
   props: {
+    loadingFileIds: {
+      type: Array,
+      required: true
+    },
     project: {
       type: Object,
       required: true
@@ -134,6 +152,9 @@ export default {
     },
     filesToUpload: {
       type: Array
+    },
+    foldersToUpload: {
+      type: Array
     }
   },
   emits: [
@@ -146,9 +167,10 @@ export default {
     "manage-access",
     "open-versioning-manager",
     "open-visa-manager",
-    "selection-changed",
     "open-tag-manager",
-    "remove-model"
+    "remove-model",
+    "row-drop",
+    "selection-changed"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -159,12 +181,12 @@ export default {
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isLG.value) {
-        filteredColumns = filteredColumns.filter(col =>
-          ["name", "size", "actions"].includes(col.id)
+        filteredColumns = columnsLG.map(id =>
+          filteredColumns.find(col => col.id === id)
         );
       } else if (isXL.value) {
-        filteredColumns = filteredColumns.filter(col =>
-          ["name", "lastupdate", "size", "actions"].includes(col.id)
+        filteredColumns = columnsXL.map(id =>
+          filteredColumns.find(col => col.id === id)
         );
       }
       return filteredColumns.map(col => ({
@@ -173,14 +195,18 @@ export default {
       }));
     });
 
+    const onRowDrop = ({ event, data }) => {
+      event.preventDefault();
+      event.stopPropagation();
+      emit("row-drop", { event, data });
+    };
+
     let nameEditMode;
     watch(
       () => props.files,
-      () => {
+      files => {
         nameEditMode = reactive({});
-        props.files.forEach(row => {
-          nameEditMode[row.id] = false;
-        });
+        files.forEach(row => (nameEditMode[row.id] = false));
       },
       { immediate: true }
     );
@@ -188,11 +214,19 @@ export default {
     const fileUploads = ref([]);
     watch(
       () => props.filesToUpload,
-      () => {
+      files => {
         fileUploads.value = fileUploads.value.concat(
-          props.filesToUpload.map(file =>
-            Object.assign(file, { key: generateFileKey(file) })
-          )
+          files.map(f => Object.assign(f, { key: generateFileKey(f) }))
+        );
+      }
+    );
+
+    const folderUploads = ref([]);
+    watch(
+      () => props.foldersToUpload,
+      folders => {
+        folderUploads.value = folderUploads.value.concat(
+          folders.map(f => Object.assign(f, { key: generateFileKey(f) }))
         );
       }
     );
@@ -204,8 +238,16 @@ export default {
 
     const cleanUpload = (key, delay = 100) => {
       setTimeout(() => {
-        const index = fileUploads.value.findIndex(f => f.key === key);
-        fileUploads.value.splice(index, 1);
+        let index = fileUploads.value.findIndex(f => f.key === key);
+        if (index >= 0) {
+          fileUploads.value.splice(index, 1);
+          return;
+        }
+
+        index = folderUploads.value.findIndex(f => f.key === key);
+        if (index >= 0) {
+          folderUploads.value.splice(index, 1);
+        }
       }, delay);
     };
 
@@ -214,12 +256,13 @@ export default {
       columns,
       filesTable,
       fileUploads,
+      folderUploads,
       nameEditMode,
-      FILE_TYPE,
       // Methods
       cleanUpload,
       formatBytes,
       isFolder,
+      onRowDrop,
       onUploadCompleted,
       // Responsive breakpoints
       isXL
@@ -227,3 +270,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.bimdata-table__row--drag-overed {
+  outline: solid var(--color-primary) 1px;
+  outline-offset: -1px;
+}
+</style>

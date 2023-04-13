@@ -1,5 +1,10 @@
 <template>
-  <GenericModelsManager :project="project" :tabs="tabs" />
+  <GenericModelsManager
+    :project="project"
+    :types="types"
+    :tabs="tabs"
+    @file-uploaded="$emit('file-uploaded')"
+  />
 </template>
 
 <script>
@@ -22,8 +27,13 @@ export default {
     models: {
       type: Array,
       required: true
+    },
+    types: {
+      type: Array,
+      required: true
     }
   },
+  emits: ["file-uploaded"],
   setup(props) {
     const tabs = ref(tabsDef);
 

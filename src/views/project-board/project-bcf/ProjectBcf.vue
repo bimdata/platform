@@ -1,9 +1,62 @@
 <template>
   <div class="project-bcf">
+    <template v-if="deleteMode">
+      <teleport to="body">
+        <template v-if="isLoadingDelete">
+          <BIMDataLoading
+            style="z-index: 100"
+            :message="$t('ProjectBcf.deleteInProgress')"
+            :subMessage="$t('ProjectBcf.deleteInProgressSub')"
+          />
+        </template>
+        <template v-else>
+          <BIMDataSafeZoneModal style="z-index: 100">
+            <template #text>
+              {{ $t("ProjectBcf.deleteBcfText") }}
+            </template>
+            <template #actions>
+              <BIMDataButton
+                color="high"
+                fill
+                radius
+                class="m-r-12"
+                @click="deleteBcfTopics"
+              >
+                {{ $t("ProjectBcf.deleteBcfConfirm") }}
+              </BIMDataButton>
+              <BIMDataButton
+                color="primary"
+                outline
+                radius
+                @click="closeDeleteMode"
+              >
+                {{ $t("ProjectBcf.cancelBcfConfirm") }}
+              </BIMDataButton>
+            </template>
+          </BIMDataSafeZoneModal>
+        </template>
+      </teleport>
+    </template>
     <AppSlotContent name="project-board-action">
-      <BIMDataButton color="primary" outline radius icon @click="openSettings">
-        <BIMDataIcon name="settings" size="xxs" />
-      </BIMDataButton>
+      <template v-if="project.isAdmin">
+        <BIMDataButton
+          color="primary"
+          outline
+          radius
+          icon
+          @click="openSettings"
+        >
+          <BIMDataIcon name="settings" size="xxs" />
+        </BIMDataButton>
+      </template>
+      <template v-else>
+        <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
+          <BIMDataButton disabled color="primary" outline radius icon>
+            <BIMDataIcon name="settings" size="xxs" />
+          </BIMDataButton>
+        </BIMDataTooltip>
+      </template>
+
       <BIMDataButton
         fill
         radius
@@ -174,7 +227,7 @@
 
     <AppSidePanelContent :header="false">
       <Transition name="fade" mode="out-in">
-        <template v-if="showSettings">
+        <template v-if="currentPanel === sidePanelViews.settings">
           <BcfSettings
             :uiConfig="{
               closeButton: true
@@ -187,7 +240,7 @@
             @close="closeSidePanel"
           />
         </template>
-        <template v-else-if="showTopicOverview">
+        <template v-else-if="currentPanel === sidePanelViews.overview">
           <BcfTopicOverview
             :uiConfig="{
               closeButton: true,
@@ -199,18 +252,28 @@
             :topic="currentTopic"
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
-            @view-topic-viewpoint="topicViewpoint"
+            @view-topic-viewpoint="openTopicSnapshot"
+            @view-comment-snapshot="openTopicCommentSnapshot"
             @topic-deleted="reloadBcfTopics(), closeSidePanel()"
-            @comment-created="reloadComments(currentTopic)"
-            @comment-updated="reloadComments(currentTopic)"
-            @comment-deleted="reloadComments(currentTopic)"
             @close="closeSidePanel"
           />
         </template>
-        <template v-else-if="showTopicCreate || showTopicUpdate">
+        <template v-else-if="currentPanel === sidePanelViews.create">
           <BcfTopicForm
             :uiConfig="{
-              backButton: !showTopicCreate,
+              closeButton: true
+            }"
+            :project="project"
+            :extensions="extensions"
+            :topics="topics"
+            @topic-created="reloadBcfTopics(), closeSidePanel()"
+            @close="closeSidePanel"
+          />
+        </template>
+        <template v-else-if="currentPanel === sidePanelViews.update">
+          <BcfTopicForm
+            :uiConfig="{
+              backButton: true,
               closeButton: true
             }"
             :project="project"
@@ -218,7 +281,6 @@
             :topics="topics"
             :topic="currentTopic"
             @topic-updated="reloadBcfTopics"
-            @topic-created="reloadBcfTopics(), closeSidePanel()"
             @back="openTopicOverview(currentTopic)"
             @close="closeSidePanel"
           />
@@ -277,6 +339,20 @@
               {{ $t("ProjectBcf.exportButtonText") }}
             </span>
           </BIMDataButton>
+          <BIMDataButton
+            v-if="selectedTopics.size > 0"
+            class="m-l-18"
+            fill
+            radius
+            :icon="isXL"
+            color="high"
+            @click="toggleDeleteMode"
+          >
+            <BIMDataIcon name="delete" size="xs" />
+            <span v-if="!isXL" style="margin-left: 6px">
+              {{ $t("ProjectBcf.deleteButtonText") }}
+            </span>
+          </BIMDataButton>
         </div>
 
         <Transition name="fade" mode="out-in">
@@ -332,9 +408,31 @@
         </Transition>
       </div>
     </div>
-    <AppModal bgColor="transparent" iconColor="white" :isModalLarge="true">
-      <SnapshotModal :topicSnapshot="topicSnapshot" />
-    </AppModal>
+
+    <AppModalContent
+      :boxStyle="{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(47, 55, 74, 0.8)'
+      }"
+      closeBtnColor="white"
+    >
+      <div
+        v-if="topicSnapshot"
+        class="topic-snapshot-modal"
+        v-click-away="closeTopicSnapshot"
+      >
+        <img :src="topicSnapshot" />
+      </div>
+
+      <div
+        v-if="commentSnapshot"
+        class="topic-comment-snapshot-modal"
+        v-click-away="closeCommentSnapshot"
+      >
+        <img :src="commentSnapshot" />
+      </div>
+    </AppModalContent>
   </div>
 </template>
 
@@ -349,34 +447,40 @@ import {
 import { computed, onActivated, onDeactivated, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
+import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
-import { MODEL_STATUS } from "../../../config/models.js";
-import { DEFAULT_WINDOW, WINDOW_MODELS } from "../../../config/viewer.js";
+import { MODEL_CONFIG, MODEL_STATUS } from "../../../config/models.js";
+import { DEFAULT_WINDOW } from "../../../config/viewer.js";
 import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { fileUploadInput } from "../../../utils/upload.js";
-import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
-import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
+
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
+import AppModalContent from "../../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
-import AppModal from "../../../components/specific/app/app-modal/AppModal.vue";
-import SnapshotModal from "../snapshot-modal/SnapshotModal.vue";
+
+const sidePanelViews = {
+  settings: "settings",
+  overview: "overview",
+  create: "create",
+  update: "update"
+};
 
 export default {
   components: {
+    AppModalContent,
     AppSidePanelContent,
     AppSlotContent,
     BcfStatisticsEmptyImage,
-    NoSearchResultsImage,
-    AppModal,
-    SnapshotModal
+    NoSearchResultsImage
   },
   setup() {
     const { t } = useI18n();
@@ -391,13 +495,14 @@ export default {
       loadBcfTopics,
       loadExtensions,
       loadDetailedExtensions,
-      loadBcfTopicComments,
+      deleteTopics,
       importBcf,
       exportBcf
     } = useBcf();
 
     const loading = ref(false);
     const isListView = ref(false);
+    const currentPanel = ref("");
     const currentTopic = ref(null);
 
     const reloadExtensions = async () => {
@@ -411,15 +516,12 @@ export default {
       await loadBcfTopics(currentProject.value);
     };
 
-    const reloadComments = async topic => {
-      await loadBcfTopicComments(currentProject.value, topic);
-    };
-
     watch(
       currentProject,
       async () => {
         try {
           loading.value = true;
+          currentPanel.value = "";
           currentTopic.value = null;
           await reloadExtensions();
           await reloadBcfTopics();
@@ -443,9 +545,11 @@ export default {
     );
 
     onActivated(() => {
+      currentPanel.value = "";
       currentTopic.value = null;
     });
     onDeactivated(() => {
+      currentPanel.value = "";
       currentTopic.value = null;
       closeSidePanel();
     });
@@ -478,12 +582,6 @@ export default {
         selection.set(topic.guid, topic);
       }
       selectedTopics.value = new Map([...selection.entries()]);
-      fullSelectionRef.value =
-        selection.size < topics.value.length
-          ? selection.size > 0
-            ? null
-            : false
-          : true;
     };
 
     const toggleFullSelection = () => {
@@ -528,16 +626,37 @@ export default {
         pushNotification({
           type: "error",
           title: t("Error"),
-          message: t("ProjectBcf.importBcfNotificationError")
+          message: t("ProjectBcf.exportBcfNotificationError")
+        });
+      }
+    };
+
+    const isLoadingDelete = ref(false);
+
+    const deleteBcfTopics = async () => {
+      try {
+        isLoadingDelete.value = true;
+        await deleteTopics(currentProject.value, selectedTopics.value.values());
+        isLoadingDelete.value = false;
+
+        closeDeleteMode();
+        selectedTopics.value.clear();
+
+        pushNotification({
+          type: "success",
+          title: t("Success"),
+          message: t("ProjectBcf.deleteBcfNotificationSuccess")
+        });
+      } catch {
+        pushNotification({
+          type: "error",
+          title: t("Error"),
+          message: t("ProjectBcf.deleteBcfNotificationError")
         });
       }
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const showSettings = ref(false);
-    const showTopicOverview = ref(false);
-    const showTopicCreate = ref(false);
-    const showTopicUpdate = ref(false);
 
     const {
       isOpen: showMetrics,
@@ -546,46 +665,46 @@ export default {
     } = useToggle();
 
     const openSettings = () => {
-      showSettings.value = true;
-      showTopicOverview.value = false;
-      showTopicCreate.value = false;
-      showTopicUpdate.value = false;
+      currentPanel.value = sidePanelViews.settings;
       openSidePanel();
     };
 
     const openTopicOverview = topic => {
+      currentPanel.value = sidePanelViews.overview;
       currentTopic.value = topic;
-      showSettings.value = false;
-      showTopicOverview.value = true;
-      showTopicCreate.value = false;
-      showTopicUpdate.value = false;
-      loadBcfTopicComments(currentProject.value, topic);
       openSidePanel();
     };
 
     const openTopicCreate = () => {
+      currentPanel.value = sidePanelViews.create;
       currentTopic.value = null;
-      showSettings.value = false;
-      showTopicOverview.value = false;
-      showTopicCreate.value = true;
-      showTopicUpdate.value = false;
       openSidePanel();
     };
 
     const openTopicUpdate = topic => {
+      currentPanel.value = sidePanelViews.update;
       currentTopic.value = topic;
-      showSettings.value = false;
-      showTopicOverview.value = false;
-      showTopicCreate.value = false;
-      showTopicUpdate.value = true;
       openSidePanel();
     };
 
-    const { openModal } = useAppModal();
-    const topicSnapshot = ref();
-    const topicViewpoint = topic => {
+    const { openModal, closeModal } = useAppModal();
+    const topicSnapshot = ref(null);
+    const openTopicSnapshot = topic => {
       openModal();
       topicSnapshot.value = topic.snapshot.snapshot_data;
+    };
+    const closeTopicSnapshot = () => {
+      closeModal();
+      topicSnapshot.value = null;
+    };
+    const commentSnapshot = ref(null);
+    const openTopicCommentSnapshot = topic => {
+      openModal();
+      commentSnapshot.value = topic.snapshot.snapshot_data;
+    };
+    const closeCommentSnapshot = () => {
+      closeModal();
+      commentSnapshot.value = null;
     };
 
     const openTopicViewer = topic => {
@@ -601,7 +720,7 @@ export default {
           .filter(
             m =>
               m.status === MODEL_STATUS.COMPLETED &&
-              WINDOW_MODELS[window].includes(m.type)
+              MODEL_CONFIG[m.type].window === window
           )
           .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
         if (models.length > 0) {
@@ -623,8 +742,15 @@ export default {
       });
     };
 
+    const {
+      isOpen: deleteMode,
+      close: closeDeleteMode,
+      toggle: toggleDeleteMode
+    } = useToggle();
+
     return {
       // References
+      currentPanel,
       currentTopic,
       detailedExtensions,
       displayedTopics,
@@ -637,20 +763,25 @@ export default {
       searchText,
       selectedTopics,
       showMetrics,
-      showSettings,
-      showTopicCreate,
-      showTopicUpdate,
-      showTopicOverview,
+      sidePanelViews,
       sortedBy,
       sortOrderDate,
       sortOrderIndex,
       sortOrderTitle,
       topics,
       topicSnapshot,
+      commentSnapshot,
+      deleteMode,
+      isLoadingDelete,
       // Methods
+      closeDeleteMode,
+      toggleDeleteMode,
+      deleteBcfTopics,
       applyFilters,
       closeMetrics,
       closeSidePanel,
+      closeTopicSnapshot,
+      closeCommentSnapshot,
       exportBcfTopics,
       fileUploadInput,
       importBcfTopics,
@@ -658,14 +789,14 @@ export default {
       openTopicCreate,
       openTopicUpdate,
       openTopicOverview,
+      openTopicCommentSnapshot,
+      openTopicSnapshot,
       openTopicViewer,
       reloadBcfTopics,
-      reloadComments,
       reloadExtensions,
       sortByDate,
       sortByIndex,
       sortByTitle,
-      topicViewpoint,
       toggleFullSelection,
       toggleMetrics,
       toggleTopicSelection,

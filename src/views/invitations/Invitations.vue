@@ -18,6 +18,7 @@
           </span>
         </div>
         <BIMDataButton
+          data-test-id="btn-accept-all-invit"
           :disabled="invitationListPending.length < 1 || isLoadingAllInvit"
           color="primary"
           width="130px"
@@ -32,6 +33,7 @@
         <div class="invitations__content__list">
           <div
             class="invitations__content__list__invit"
+            data-test-id="card-invitation"
             v-for="invit in invitationList"
             :key="invit.id"
           >
@@ -51,7 +53,7 @@
                 }`"
                 tag="span"
               >
-                <template v-slot:sender>
+                <template #sender>
                   <BIMDataTextbox
                     v-if="invit.sender"
                     class="invitations__content__list__invit__text__invited-by__highlight"
@@ -67,7 +69,7 @@
                     :text="invit.client_name"
                   />
                 </template>
-                <template v-if="invit.project_name" v-slot:project>
+                <template v-if="invit.project_name" #project>
                   <BIMDataTextbox
                     class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="40%"
@@ -75,7 +77,7 @@
                     :text="invit.project_name"
                   />
                 </template>
-                <template v-slot:cloud>
+                <template #cloud>
                   <BIMDataTextbox
                     class="invitations__content__list__invit__text__invited-by__highlight"
                     maxWidth="40%"
@@ -123,6 +125,7 @@
                   "
                 >
                   <BIMDataButton
+                    data-test-id="btn-go-to-project"
                     color="primary"
                     :width="isMD ? 'inherit' : '130px'"
                     fill
@@ -144,6 +147,7 @@
               <template v-if="invit.status === INVITATION_STATUS.PENDING">
                 <div class="invitations__content__list__invit__button__pending">
                   <BIMDataButton
+                    data-test-id="btn-deny-invit"
                     class="invitations__content__list__invit__button__pending--deny"
                     :disabled="isLoadingSingleInvit || isLoadingAllInvit"
                     width="35px"
@@ -156,6 +160,7 @@
                     <BIMDataIcon name="close" fill color="high" size="s" />
                   </BIMDataButton>
                   <BIMDataButton
+                    data-test-id="btn-accept-invit"
                     :disabled="
                       isLoadingAllInvit ||
                       (currentInvitation && currentInvitation.id !== invit.id)

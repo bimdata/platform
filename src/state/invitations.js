@@ -1,4 +1,4 @@
-import async from "async";
+import eachLimit from "async/eachLimit";
 import { reactive, readonly, toRefs } from "vue";
 
 import { INVITATION_STATUS } from "../config/invitation.js";
@@ -27,7 +27,7 @@ const loadUserInvitations = async () => {
 };
 
 const acceptInvitations = async invitations => {
-  await async.eachLimit(
+  await eachLimit(
     invitations,
     20,
     InvitationViewService.acceptInvitation

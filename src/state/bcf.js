@@ -1,8 +1,10 @@
-import mapLimit from "async/mapLimit";
-import { reactive, shallowReadonly, toRefs } from "vue";
-import BcfService from "../services/BcfService.js";
+import eachLimit from "async/eachLimit";
 
+import { useService } from "@bimdata/bcf-components";
+import { reactive, shallowReadonly, toRefs } from "vue";
 import { useProjects } from "./projects.js";
+
+const service = useService();
 
 const state = reactive({
   topics: [],
@@ -24,59 +26,46 @@ const state = reactive({
 });
 
 const loadBcfTopics = async project => {
-  const topics = await BcfService.fetchProjectTopics(project);
-  topics.sort((a, b) => b.index - a.index);
-
-  let mappedTopics = [];
-
   const { projectUsers } = useProjects();
-  mappedTopics = await mapLimit(topics, 10, async topic => {
-    topic.creator = projectUsers.value.find(
-      u => u.email === topic.creation_author
-    );
-    topic.viewpoints = await BcfService.fetchTopicViewpoints(project, topic);
-    return topic;
+  const topics = await service.fetchTopics(project, {
+    extensions: state.detailedExtensions,
+    users: projectUsers.value
   });
-
-  state.topics = mappedTopics;
-
-  return mappedTopics;
-};
-
-const loadBcfTopicComments = async (project, topic) => {
-  const comments = await BcfService.fetchTopicComments(project, topic);
-  comments.sort((a, b) => (a.date > b.date ? -1 : 1));
-
-  const { projectUsers } = useProjects();
-  comments.forEach(c => {
-    c.user = projectUsers.value.find(u => u.email === c.author);
-  });
-
-  topic.comments = comments;
-  return comments;
+  await service.loadTopicsViewpoints(project, topics);
+  state.topics = topics;
+  return topics;
 };
 
 const loadExtensions = async project => {
-  const extensions = await BcfService.fetchExtensions(project);
+  const extensions = await service.fetchExtensions(project);
   state.extensions = extensions;
   return extensions;
 };
 
 const loadDetailedExtensions = async project => {
-  const detailedExtensions = await BcfService.fetchDetailedExtensions(project);
-  state.detailedExtensions = detailedExtensions;
-  return detailedExtensions;
+  const extensions = await service.fetchDetailedExtensions(project);
+  state.detailedExtensions = extensions;
+  return extensions;
 };
 
 const importBcf = async (project, file) => {
-  const res = await BcfService.importBcf(project, file);
-  await loadBcfTopics(project);
+  const res = await service.importBcf(project, file);
+  await loadExtensions(project);
   await loadDetailedExtensions(project);
+  await loadBcfTopics(project);
+  return res;
+};
+
+const deleteTopics = async (project, topics) => {
+  const res = await eachLimit(topics, 10, async topic =>
+    service.deleteTopic(project, topic)
+  );
+  await loadBcfTopics(project);
   return res;
 };
 
 const exportBcf = (project, topics) => {
-  return BcfService.exportBcf(project, topics);
+  return service.exportBcf(project, topics);
 };
 
 export function useBcf() {
@@ -85,8 +74,8 @@ export function useBcf() {
     // References
     ...toRefs(readonlyState),
     // Methods
+    deleteTopics,
     loadBcfTopics,
-    loadBcfTopicComments,
     loadExtensions,
     loadDetailedExtensions,
     importBcf,

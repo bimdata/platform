@@ -48,13 +48,13 @@
       {{ $t("SpaceCreator.submitButtonText") }}
     </BIMDataButton>
 
-    <AppModal>
+    <AppModalContent>
       <OrganizationSelector
         :organizations="organizations"
         :initialOrga="initialOrga"
         @orga-selected="updateOrga"
       />
-    </AppModal>
+    </AppModalContent>
   </div>
 </template>
 
@@ -64,12 +64,12 @@ import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { debounce } from "../../../../utils/async.js";
 // Components
-import AppModal from "../../app/app-modal/AppModal.vue";
+import AppModalContent from "../../app/app-modal/AppModalContent.vue";
 import OrganizationSelector from "../organization-selector/OrganizationSelector.vue";
 
 export default {
   components: {
-    AppModal,
+    AppModalContent,
     OrganizationSelector
   },
   props: {

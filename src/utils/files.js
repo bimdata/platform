@@ -1,10 +1,13 @@
-import async from "async";
-import { FILE_TYPE, STANDARD_HIDDEN_FILES } from "../config/files.js";
+import { FILE_TYPE, STANDARD_IGNORED_FILES } from "../config/files.js";
 
 function fileExtension(fileName) {
   const parts = fileName.split(".");
   const extension = parts[parts.length - 1];
   return parts.length > 1 && extension ? `.${extension}` : "";
+}
+
+function fileDirectory(file) {
+  return file.webkitRelativePath?.split("/").slice(0, -1).join("/") ?? "";
 }
 
 function formatBytes(bytes, decimals = 0) {
@@ -28,114 +31,9 @@ function generateFileKey(file) {
   return key;
 }
 
-function removeRootFolder(paths) {
-  return paths
-    .map(path => {
-      const newPath = Array.from(path);
-      newPath.shift();
-      return newPath;
-    })
-    .filter(path => path.length > 0);
-}
-
-/**
- * Get paths for each files
- *
- * @param {Array} files an array of string representing breadcrumb for each file
- * @returns {Array} an array of array filled by string representing nested folders
- */
-function getPaths(files) {
-  return Array.from(
-    new Set(files.map(file => JSON.stringify(file.path))),
-    JSON.parse
-  ).sort((a, b) => a.length - b.length);
-}
-function handleInputFiles(files) {
-  return files
-    .map(file => ({
-      file: file,
-      path: file.webkitRelativePath.split("/").slice(0, -1)
-    }))
-    .filter(file => !STANDARD_HIDDEN_FILES.includes(file.file.name));
-}
-
-/**
- * Tree creation based
- *
- * @param {Object} folder current folder where the user is
- * @param {Array} paths an array of array filled by string representing nested folders
- *
- * since folders in paths array are not identified by IDs (unicity), if two
- * folders have the same name at the same level of nestings, they will merge.
- */
-function createFolderTree(rootFolder, paths) {
-  const pathsBySiblings = paths.reduce((globalPath, currentPath) => {
-    if (currentPath.length === 1) {
-      globalPath.push([currentPath]);
-    } else {
-      globalPath.forEach((path, index) => {
-        if (path[0][0] === currentPath[0]) globalPath[index].push(currentPath);
-      });
-    }
-    return globalPath;
-  }, []);
-
-  const treeBuilder = paths => {
-    const tree = {
-      name: paths[0][0],
-      parent_id: rootFolder.id,
-      default_permission: 1,
-      children: []
-    };
-
-    removeRootFolder(paths).forEach(path =>
-      path.reduce((parentFolder, currentFolderName) => {
-        let currentFolder = parentFolder.children.find(
-          child => child.name === currentFolderName
-        );
-        if (!currentFolder) {
-          currentFolder = {
-            name: currentFolderName,
-            default_permission: 1,
-            children: []
-          };
-          parentFolder.children.push(currentFolder);
-        }
-
-        return currentFolder;
-      }, tree)
-    );
-
-    return tree;
-  };
-
-  return pathsBySiblings.map(treeBuilder);
-}
-
-function matchFoldersAndDocs(DMSTree, docsInfos) {
-  return docsInfos.map(doc => {
-    const docPath = Array.from(doc.path);
-
-    docPath.shift();
-    let parentId = null;
-    const parentFolder = docPath.reduce((parentFolder, currentFolderName) => {
-      return (
-        parentFolder.children.find(child => child.name === currentFolderName) ??
-        parentFolder
-      );
-    }, DMSTree[0]);
-    parentId = parentFolder.id;
-
-    return {
-      ...doc,
-      parentId
-    };
-  });
-}
-
 function treeIdGenerator(projectToImport) {
   if (projectToImport.folders.length === 0) return;
-  // Populate folder tree with IDs permit to satisfy a requieremet from FileTree component. Front-end use only.
+  // Populate folder tree with IDs permit to satisfy a requirement from FileTree component. Front-end use only.
   let idGenerator = 1;
 
   const mapping = folders => {
@@ -152,50 +50,167 @@ function treeIdGenerator(projectToImport) {
   ];
 }
 
-async function getFileFormat(fileEntry) {
-  return new Promise((resolve, reject) => fileEntry.file(resolve, reject));
+/**
+ * @param {FileSystemFileEntry} entry
+ * @returns {Promise<File>}
+ */
+function getFileFromFileEntry(entry) {
+  return new Promise((resolve, reject) => entry.file(resolve, reject));
 }
 
-async function handleDragAndDropFile(dirEntry) {
-  let fileList = [];
+/**
+ * @param {FileSystemDirectoryEntry} entry
+ * @returns {Promise<FileSystemEntry[]>}
+ */
+function getEntriesFromDirEntry(entry) {
+  return new Promise((resolve, reject) =>
+    entry.createReader().readEntries(resolve, reject)
+  );
+}
 
-  async function traverseFileTree(fileEntry) {
-    if (fileEntry.isFile) {
-      // Get file
-      return fileList.push(fileEntry);
-    } else if (fileEntry.isDirectory) {
-      // Get folder contents
-      const dirReader = fileEntry.createReader();
-      const filesEntry = await new Promise((resolve, reject) =>
-        dirReader.readEntries(resolve, reject)
-      );
-      await async.map(filesEntry, traverseFileTree);
+/**
+ * @param {File[]} files
+ * @returns {{ tree: Object, files: File[] }}
+ */
+function parseDirFiles(files) {
+  const paths = Array.from(new Set(files.map(fileDirectory)), dirPath =>
+    dirPath.split("/")
+  );
+
+  const treeFromPath = (path, node, parent) => {
+    if (path.length === 0) return [];
+
+    const name = path.shift();
+    if (!name) return [];
+
+    const children = () => [treeFromPath(path)].flat();
+
+    if (!node) return { name, children: children() };
+
+    if (node.name === name) {
+      if (node.children.length > 0) {
+        node.children.forEach(child => treeFromPath(path, child, node));
+      } else {
+        node.children = children();
+      }
+    } else {
+      parent?.children.push({ name, children: children() });
+    }
+
+    return node;
+  };
+
+  const tree = paths.reduce((node, path) => treeFromPath(path, node), null);
+
+  return { tree, files };
+}
+
+/**
+ * @param {FileSystemEntry} entry
+ * @param {Object} tree
+ * @param {File[]} files
+ * @returns {{ tree: Object, files: File[] }}
+ */
+async function parseDirEntry(entry, tree = {}, files = []) {
+  if (entry.isDirectory) {
+    const childEntries = await getEntriesFromDirEntry(entry);
+    const children = await Promise.all(
+      childEntries.map(e => parseDirEntry(e, {}, files).then(res => res.tree))
+    );
+    Object.assign(tree, {
+      name: entry.name,
+      children: children.filter(child => child.name)
+    });
+  } else {
+    files.push(await getFileFromFileEntry(entry));
+  }
+  return { tree, files };
+}
+
+/**
+ * @param {InputEvent} event
+ * @returns {{ files: File[], folders: { tree: Object, files: File[] }[] }}
+ */
+async function getFilesFromEvent(event) {
+  /** @type {File[]} */
+  let files = [];
+  /** @type {{ tree: Object, files: File[] }[]} */
+  let folders = [];
+
+  if (event.dataTransfer) {
+    // Files from drag & drop
+    const asyncFiles = [];
+    const asyncFolders = [];
+    Array.from(event.dataTransfer.items, it => it.webkitGetAsEntry()).forEach(
+      entry => {
+        if (entry.isDirectory) {
+          asyncFolders.push(parseDirEntry(entry));
+        } else {
+          asyncFiles.push(getFileFromFileEntry(entry));
+        }
+      }
+    );
+    files = await Promise.all(asyncFiles);
+    folders = await Promise.all(asyncFolders);
+  } else {
+    // Files from file input
+    const inputFiles = Array.from(event.target.files);
+    if (event.target.webkitdirectory) {
+      const folder = parseDirFiles(inputFiles);
+      folders = folder.tree ? [folder] : [];
+    } else {
+      files = inputFiles;
     }
   }
 
-  await traverseFileTree(dirEntry);
+  // Filter ignored files
+  files = files.filter(file => !STANDARD_IGNORED_FILES.includes(file.name));
+  folders.forEach(folder => {
+    folder.files = folder.files.filter(
+      file => !STANDARD_IGNORED_FILES.includes(file.name)
+    );
+  });
 
-  return async.map(
-    Array.from(fileList).filter(
-      file => !STANDARD_HIDDEN_FILES.includes(file.name)
-    ),
-    async file => ({
-      file: await getFileFormat(file),
-      path: file.fullPath.split("/").slice(0, -1).filter(Boolean)
-    })
-  );
+  return { files, folders };
+}
+
+function getFilesWithParentIds(root, folder, files) {
+  // Create a 'dir path => file list' mapping
+  const filesMap = new Map();
+  for (const file of files) {
+    const dir = fileDirectory(file);
+    if (!filesMap.has(dir)) filesMap.set(dir, []);
+    filesMap.get(dir).push({ file });
+  }
+
+  // Find the tree folder node
+  const findNode = (node, id) => {
+    if (node.id === id) {
+      return node;
+    } else {
+      for (const child of node.children ?? []) {
+        const res = findNode(child, id);
+        if (res) return res;
+      }
+    }
+  };
+  const parent = findNode(root, folder.id);
+
+  // Set parent ids recursively
+  const setParentIds = (path, node) => {
+    filesMap.get(path)?.forEach(f => (f.parentId = node.id));
+    node.children?.forEach(c => setParentIds(`${path}/${c.name}`, c));
+  };
+  setParentIds(parent.name, parent);
+
+  return [...filesMap.values()].flat();
 }
 
 export {
   fileExtension,
   formatBytes,
   generateFileKey,
-  getPaths,
-  handleInputFiles,
-  createFolderTree,
-  matchFoldersAndDocs,
-  treeIdGenerator,
-  handleDragAndDropFile,
-  getFileFormat,
-  removeRootFolder
+  getFilesFromEvent,
+  getFilesWithParentIds,
+  treeIdGenerator
 };

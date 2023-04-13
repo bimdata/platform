@@ -42,7 +42,7 @@ export default {
     const { currentSpace } = useSpaces();
     const loading = ref(false);
 
-    const apiUrl = process.env.VUE_APP_API_BASE_URL;
+    const apiUrl = ENV.VUE_APP_API_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs =
@@ -91,9 +91,12 @@ export default {
 
     let unwatchAccessToken = () => {};
     let unwatchLocale = () => {};
+
+    let bimdataViewer;
+
     onMounted(async () => {
       loading.value = true;
-      const bimdataViewer = makeBIMDataViewer({
+      bimdataViewer = makeBIMDataViewer({
         api: {
           apiUrl,
           accessToken: accessToken.value,
@@ -130,6 +133,7 @@ export default {
     });
 
     onBeforeUnmount(() => {
+      bimdataViewer?.destroy();
       unwatchAccessToken();
       unwatchLocale();
     });

@@ -13,7 +13,11 @@
       </BIMDataButton>
     </div>
     <div class="group-card-delete-guard__message">
-      {{ $t("GroupCardDeleteGuard.message", { name: group.name }) }}
+      <i18n-t keypath="GroupCardDeleteGuard.message" tag="span">
+        <template #name>
+          <BIMDataTextbox :text="group.name" maxWidth="80%" />
+        </template>
+      </i18n-t>
     </div>
     <BIMDataButton
       data-test-id="btn-submit-delete"

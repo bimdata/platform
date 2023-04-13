@@ -10,6 +10,6 @@ const FILE_TYPE = Object.freeze({
   IFC: "Ifc"
 });
 
-const STANDARD_HIDDEN_FILES = Object.freeze([".DS_Store"]);
+const STANDARD_IGNORED_FILES = Object.freeze([".DS_Store"]);
 
-export { FILE_PERMISSION, FILE_TYPE, STANDARD_HIDDEN_FILES };
+export { FILE_PERMISSION, FILE_TYPE, STANDARD_IGNORED_FILES };

@@ -1,13 +1,17 @@
-import { downloadAll } from "../utils/download.js";
-import { isPlanModel } from "../utils/models.js";
-
+import queue from "async/queue";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
+import { downloadAll } from "../utils/download.js";
+import { isPlan } from "../utils/models.js";
 
 class ModelService {
+  callQueue = queue(async task => {
+    return await task();
+  }, 40);
+
   async fetchModels(project) {
     try {
-      return await apiClient.modelApi.getModels(project.cloud.id, project.id);
+      return await this.callQueue.push(() => apiClient.modelApi.getModels(project.cloud.id, project.id));
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)
@@ -79,7 +83,7 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model => {
-          if (isPlanModel(model) && !hard) {
+          if (isPlan(model) && !hard) {
             return apiClient.modelApi.deleteModelWithoutDoc(
               project.cloud.id,
               model.id,

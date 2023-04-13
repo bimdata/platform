@@ -2,6 +2,7 @@
   <div class="invitation-form">
     <div class="invitation-form__input">
       <BIMDataInput
+        data-test-id="input-email"
         ref="emailInput"
         class="invitation-form__input__email"
         :placeholder="$t('InvitationForm.emailInputPlaceholder')"
@@ -31,6 +32,7 @@
       {{ $t("InvitationForm.cancelButtonText") }}
     </BIMDataButton>
     <BIMDataButton
+      data-test-id="btn-submit-invit"
       class="invitation-form__btn-submit"
       width="80px"
       color="primary"
@@ -125,15 +127,18 @@ export default {
             });
           }
         }
-        pushNotification({
-          type: "success",
-          title: t("Success"),
-          message: t(
-            currentUser
-              ? "InvitationForm.successUsertoAdmin"
-              : "InvitationForm.successNotifText"
-          )
-        });
+        pushNotification(
+          {
+            type: "success",
+            title: t("Success"),
+            message: t(
+              currentUser
+                ? "InvitationForm.successUsertoAdmin"
+                : "InvitationForm.successNotifText"
+            )
+          },
+          2500
+        );
         reset();
         emit("success");
       } else {

@@ -48,6 +48,7 @@ const ERRORS = Object.freeze({
   FILE_VERSIONS_MAKE_HEAD_ERROR: "fileVersionsMakeHeadError",
   FILE_VERSIONS_DELETE_ERROR: "fileVersionDelete",
   FILE_STRUCTURE_CREATE_ERROR: "fileStructureCreateError",
+  FOLDER_FETCH_ERROR: "folderFetchFolder",
   FOLDER_CREATE_ERROR: "folderCreateError",
   FILE_FETCH_ERROR: "fileFetchError",
   DOCUMENT_UPLOAD_ERROR: "documentUploadError",
@@ -55,6 +56,7 @@ const ERRORS = Object.freeze({
   GROUP_CREATE_ERROR: "groupCreateError",
   GROUP_UPDATE_ERROR: "groupUpdateError",
   GROUP_DELETE_ERROR: "groupDeleteError",
+  GROUP_IMPORT_ERROR: "groupImportError",
   TAGS_FETCH_ERROR: "tagsFetchError",
   TAGS_CREATE_ERROR: "tagsCreateError",
   TAGS_UPDATE_ERROR: "tagsUpdateError",
@@ -83,7 +85,8 @@ const ERRORS = Object.freeze({
   DATAPACK_SUBSCRIBE_ERROR: "datapackSubscribeError",
   DATAPACK_UPDATE_ERROR: "datapackUpdateError",
   BCF_IMPORT_ERROR: "bcfImportError",
-  BCF_EXPORT_ERROR: "bcfExportError"
+  BCF_EXPORT_ERROR: "bcfExportError",
+  BCF_DELETE_ERROR: "bcfDeleteError"
 });
 
 class RuntimeError {

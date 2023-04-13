@@ -2,10 +2,22 @@
   <div class="visa-comment-post-actions">
     <div style="display: flex">
       <template v-if="showMenu">
-        <BIMDataButton ghost rounded icon @click="onOpenEdit">
+        <BIMDataButton
+          data-test-id="btn-edit-visa-comment"
+          ghost
+          rounded
+          icon
+          @click="onOpenEdit"
+        >
           <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="onOpenDelete">
+        <BIMDataButton
+          data-test-id="btn-delete-visa-comment"
+          ghost
+          rounded
+          icon
+          @click="onOpenDelete"
+        >
           <BIMDataIcon name="delete" size="xxs" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton ghost rounded icon @click="toggleMenu">
@@ -13,17 +25,35 @@
         </BIMDataButton>
       </template>
       <template v-if="isEditing">
-        <BIMDataButton ghost rounded icon @click="onUndoEdit">
+        <BIMDataButton
+          data-test-id="btn-undo-edit-visa-comment"
+          ghost
+          rounded
+          icon
+          @click="onUndoEdit"
+        >
           <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
         </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="onConfirmEdit">
+        <BIMDataButton
+          data-test-id="btn-edit-visa-comment"
+          ghost
+          rounded
+          icon
+          @click="onConfirmEdit"
+        >
           <BIMDataIcon name="validate" size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </template>
     </div>
     <div v-if="isDeleting" class="visa-comment-post-actions__delete">
       <span> {{ $t("Visa.comments.actions.confirmDelete") }}</span>
-      <BIMDataButton fill radius color="high" @click="onConfirmDelete">
+      <BIMDataButton
+        data-test-id="btn-confirm-delete-visa-comment"
+        fill
+        radius
+        color="high"
+        @click="onConfirmDelete"
+      >
         {{ $t("Visa.comments.actions.delete") }}
       </BIMDataButton>
       <BIMDataButton ghost rounded icon @click="isDeleting = false">
@@ -33,6 +63,7 @@
     <BIMDataButton
       v-if="!showMenu && !isEditing && !isDeleting"
       class="visa-comment-post-actions__btn"
+      data-test-id="btn-visa-comment-action"
       rounded
       icon
       @click="toggleMenu"

@@ -7,8 +7,9 @@ const projects = useProjects();
 const groups = useGroups();
 
 export default async function projectBoardResolver(route) {
-  spaces.setCurrentSpace(+route.params.spaceID);
-  const project = projects.setCurrentProject(+route.params.projectID);
+  const space = spaces.setCurrentSpace(+route.params.spaceID);
+  await projects.loadSpaceProjects(space);
 
+  const project = projects.setCurrentProject(+route.params.projectID);
   await groups.loadProjectGroups(project);
 }

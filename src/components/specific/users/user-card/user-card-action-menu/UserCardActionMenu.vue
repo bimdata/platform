@@ -1,28 +1,18 @@
 <template>
-  <div class="user-card-action-menu" v-click-away="closeMenu">
-    <BIMDataButton
-      data-test-id="btn-toggle-menu"
-      class="user-card-action-menu__btn"
-      color="default"
-      ripple
-      rounded
-      icon
-      @click="toggleMenu"
-    >
-      <BIMDataIcon
-        :name="showMenu ? 'close' : 'ellipsis'"
-        :size="showMenu ? 'xxs' : 'l'"
-      />
-    </BIMDataButton>
-
-    <transition name="fade">
-      <div class="user-card-action-menu__container" v-show="showMenu">
+  <BIMDataMenuInline
+    :isSubmenuRight="false"
+    :isClickAway="true"
+    iconEllipsisSize="l"
+  >
+    <template #submenu>
+      <div class="flex items-center justify-center">
         <BIMDataButton
           data-test-id="btn-open-update"
           ghost
           rounded
           icon
           @click="$emit('open-update')"
+          class="m-r-6"
         >
           <BIMDataIcon name="edit" size="xxs" />
         </BIMDataButton>
@@ -36,31 +26,12 @@
           <BIMDataIcon name="delete" size="xxs" />
         </BIMDataButton>
       </div>
-    </transition>
-  </div>
+    </template>
+  </BIMDataMenuInline>
 </template>
 
 <script>
-import { useToggle } from "../../../../../composables/toggle.js";
-
 export default {
-  emits: ["open-update", "open-delete"],
-  setup() {
-    const {
-      isOpen: showMenu,
-      close: closeMenu,
-      toggle: toggleMenu
-    } = useToggle();
-
-    return {
-      // References
-      showMenu,
-      // Methods
-      closeMenu,
-      toggleMenu
-    };
-  }
+  emits: ["open-update", "open-delete"]
 };
 </script>
-
-<style scoped lang="scss" src="./UserCardActionMenu.scss"></style>

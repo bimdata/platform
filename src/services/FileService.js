@@ -1,14 +1,7 @@
 import { FILE_TYPE } from "../config/files.js";
 import { download } from "../utils/download.js";
 import { segregate } from "../utils/file-structure.js";
-import {
-  getPaths,
-  handleInputFiles,
-  matchFoldersAndDocs,
-  createFolderTree,
-  handleDragAndDropFile,
-  removeRootFolder
-} from "../utils/files.js";
+import { getFilesWithParentIds } from "../utils/files.js";
 
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
@@ -56,6 +49,21 @@ class FileService {
       ErrorService.handleError(
         new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
       );
+    }
+  }
+
+  async fetchFolder(project, folder) {
+    try {
+      return await apiClient.collaborationApi.getFolder(
+        project.cloud.id,
+        folder.id,
+        project.id
+      );
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.FOLDER_FETCH_ERROR, error)
+      );
+      return {};
     }
   }
 
@@ -149,18 +157,6 @@ class FileService {
     }
   }
 
-  async deleteDocVersion(project, document) {
-    try {
-      return await apiClient.collaborationApi.deleteDocument(
-        project.cloud.id,
-        document.id,
-        project.id
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
-    }
-  }
-
   async downloadFiles(project, files, accessToken) {
     try {
       let downloadName, downloadUrl;
@@ -184,7 +180,7 @@ class FileService {
     const { folders, documents } = segregate(files);
     let url = "";
     if (folders.length > 0 || documents.length > 0) {
-      url += `${process.env.VUE_APP_ARCHIVE_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}?`;
+      url += `${ENV.VUE_APP_ARCHIVE_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}?`;
       url += `accessToken=${accessToken}&`;
       url += folders.map(f => `folderId[]=${f.id}`).join("&");
       url += folders.length > 0 && documents.length > 0 ? "&" : "";
@@ -218,59 +214,42 @@ class FileService {
     }
   }
 
-  async createFolderStructure(project, currentFolder, files) {
-    let currentFiles = [];
-
-    if (files.isDirectory) {
-      currentFiles.push(await handleDragAndDropFile(files));
-    } else {
-      currentFiles.push(handleInputFiles(files));
+  async deleteDocumentVersion(project, document) {
+    try {
+      return await apiClient.collaborationApi.deleteDocument(
+        project.cloud.id,
+        document.id,
+        project.id
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.FILE_VERSIONS_DELETE_ERROR, error);
     }
+  }
 
-    const createdFolders = await Promise.all(
-      currentFiles.map(async folder => {
-        const paths = getPaths(folder);
-
-        const rootFolder = await this.createFolder(project, {
-          parent_id: currentFolder.id,
-          name: paths[0][0]
-        });
-
-        const tree = createFolderTree(rootFolder, removeRootFolder(paths));
-
-        function getRootFolderNode(node) {
-          if (node.id === rootFolder.id) {
-            return node;
-          } else {
-            return node.children?.find(getRootFolderNode);
-          }
-        }
-
-        try {
-          const DMSTree = await apiClient.collaborationApi.createDMSTree(
-            project.cloud.id,
-            project.id,
-            tree
-          );
-
-          const rootFolderNode = getRootFolderNode(DMSTree);
-
-          return {
-            type: FILE_TYPE.FOLDER,
-            name: rootFolderNode.name,
-            size: folder.reduce((a, b) => a + b.file?.size ?? 0, 0),
-            files: matchFoldersAndDocs([rootFolderNode], folder)
-          };
-        } catch (error) {
-          ErrorService.handleError(
-            new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
-          );
-          return undefined;
-        }
-      })
-    );
-
-    return createdFolders.filter(Boolean);
+  async createFolderStructure(project, parent, { tree, files }) {
+    try {
+      const treeFolder = await this.createFolder(project, {
+        name: tree.name,
+        parent_id: parent.id
+      });
+      let root = treeFolder;
+      if (tree.children.length > 0) {
+        root = await apiClient.collaborationApi.createDMSTree(
+          project.cloud.id,
+          project.id,
+          tree.children.map(c => ({ ...c, parent_id: treeFolder.id }))
+        );
+      }
+      return {
+        name: treeFolder.name,
+        size: files.reduce((a, b) => a + (b.size ?? 0), 0),
+        files: getFilesWithParentIds(root, treeFolder, files)
+      };
+    } catch (error) {
+      ErrorService.handleError(
+        new RuntimeError(ERRORS.FILE_STRUCTURE_CREATE_ERROR, error)
+      );
+    }
   }
 }
 
