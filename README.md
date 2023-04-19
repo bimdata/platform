@@ -67,7 +67,7 @@ Before you can run the tests you need to have a working test environment.
 To do so copy the example env file:
 
 ```
-$ cp cyress.env.example cypress.env.json
+$ cp cyress.env.json.example cypress.env.json
 ```
 
 Then open it and set variables values as appropriate:

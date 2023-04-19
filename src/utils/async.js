@@ -4,9 +4,9 @@ function delay(ms) {
 
 function debounce(callback, ms) {
   let timeoutID = null;
-  return () => {
+  return (...args) => {
     clearTimeout(timeoutID);
-    timeoutID = setTimeout(callback, ms);
+    timeoutID = setTimeout(() => callback(...args), ms);
   };
 }
 

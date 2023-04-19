@@ -217,9 +217,9 @@
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
-            @dragover.prevent="() => {}"
+            @dragover.prevent
             @drop.prevent="uploadFiles"
-            @row-drop="({ data, event }) => null"
+            @row-drop="({ event, data }) => uploadFiles(event, data)"
             @selection-changed="setSelection"
             @manage-access="openAccessManager"
             @open-visa-manager="openVisaManager"
@@ -464,17 +464,14 @@ export default {
 
     const filesToUpload = ref([]);
     const foldersToUpload = ref([]);
-    const uploadFiles = async (event, folder) => {
+    const uploadFiles = async (event, folder = currentFolder.value) => {
       const { files, folders } = await getFilesFromEvent(event);
+      files.forEach(file => (file.folder = folder));
 
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
         folders.map(f =>
-          FileService.createFolderStructure(
-            props.project,
-            folder ?? currentFolder.value,
-            f
-          )
+          FileService.createFolderStructure(props.project, folder, f)
         )
       );
 
