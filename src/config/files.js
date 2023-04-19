@@ -1,4 +1,5 @@
 const FILE_PERMISSION = Object.freeze({
+  DEFAULT: null,
   ACCESS_DENIED: 1,
   READ_ONLY: 50,
   READ_WRITE: 100

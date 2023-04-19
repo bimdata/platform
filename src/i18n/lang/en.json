@@ -149,6 +149,7 @@
     },
     "FolderAccessManager": {
         "title": "Manage access rights",
+        "propagate": "Propagate rights to sub folders",
         "rightsHeader": "Rights",
         "membersHeader": "Members",
         "searchInputPlaceholder": "Search group",

@@ -14,7 +14,7 @@
       @element-click="update"
     >
       <template #header>
-        {{ $t(`GroupPermissionSelector.options.${groupPermission.id}`) }}
+        {{ $t(`GroupPermissionSelector.options.${selectedPermission.id}`) }}
       </template>
       <template #element="{ element }">
         {{ $t(`GroupPermissionSelector.options.${element.id}`) }}
@@ -36,7 +36,7 @@ import { useGroups } from "../../../../../state/groups.js";
 import UserAvatarList from "../../../users/user-avatar-list/UserAvatarList.vue";
 
 const permissionList = [
-  { id: "default", value: null },
+  { id: "default", value: FILE_PERMISSION.DEFAULT },
   { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
   { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
   { id: "readWrite", value: FILE_PERMISSION.READ_WRITE }
@@ -58,54 +58,43 @@ export default {
     group: {
       type: Object,
       required: true
+    },
+    propagate: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ["group-permission-updated"],
   setup(props, { emit }) {
-    const { updateGroupPermission, deleteGroupPermission } = useGroups();
+    const { updateGroupPermission } = useGroups();
 
-    const groupPermission = ref();
+    const selectedPermission = ref();
     watch(
       [() => props.folder, () => props.group],
       () => {
         const perm = props.folder.groups_permissions.find(
           p => p.group.id === props.group.id
         );
-        if (perm) {
-          groupPermission.value = permissionList.find(
-            p => p.value === perm.permission
-          );
-        } else {
-          // No permission means 'default permission'
-          groupPermission.value = permissionList[0];
-        }
+        selectedPermission.value =
+          permissionList.find(p => p.value === perm.permission) ??
+          permissionList[0];
       },
       { immediate: true }
     );
 
     const update = async perm => {
-      try {
-        groupPermission.value = perm;
-        if (perm.value) {
-          await updateGroupPermission(
-            props.project,
-            props.folder,
-            props.group,
-            perm.value
-          );
-        } else {
-          await deleteGroupPermission(props.project, props.folder, props.group);
-        }
-        emit("group-permission-updated");
-      } catch (error) {
-        console.error(error);
-      }
+      selectedPermission.value = perm;
+      await updateGroupPermission(props.project, props.folder, props.group, {
+        permission: perm.value,
+        propagate: props.propagate
+      });
+      emit("group-permission-updated");
     };
 
     return {
       // References
-      groupPermission,
       permissionList,
+      selectedPermission,
       // Methods
       update
     };

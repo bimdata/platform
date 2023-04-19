@@ -161,6 +161,7 @@
   },
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
+    "propagate": "Propager les droits aux sous dossiers",
     "rightsHeader": "Droits",
     "membersHeader": "Membres",
     "searchInputPlaceholder": "Rechercher un groupe",
