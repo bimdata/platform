@@ -45,7 +45,7 @@
           color="primary"
           width="100%"
           @click="
-            fileUploadInput('file', event => addVersion(event.target.files))
+            fileUploadInput('file', event => addVersion(event.target.files[0]))
           "
         >
           <BIMDataIcon
@@ -87,8 +87,8 @@
 
 <script>
 import { ref, onMounted, computed } from "vue";
-import { useUpload } from "../../../../composables/upload.js";
 import FileService from "../../../../services/FileService.js";
+import UploadService from "../../../../services/UploadService.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
@@ -121,20 +121,17 @@ export default {
   emits: ["file-uploaded", "close"],
 
   setup(props, { emit }) {
-    const { projectFileUploader } = useUpload();
-
     const loading = ref(null);
+    const uploader = UploadService.createProjectFileUploader(props.project, {
+      onUploadStart: () => (loading.value = "download"),
+      onUploadComplete: async ({ response: newHeadVersion }) => {
+        await getAllDocVersions(newHeadVersion);
+        loading.value = null;
+      }
+    });
 
-    const addVersion = async files => {
-      const handlers = {
-        onUploadStart: () => (loading.value = "download"),
-        onUploadComplete: async ({ response: newHeadVersion }) => {
-          await getAllDocVersions(newHeadVersion);
-          loading.value = null;
-        }
-      };
-      const uploader = projectFileUploader(props.project, handlers);
-      uploader.upload(files[0], null, allDocVersions.value[0].id);
+    const addVersion = async file => {
+      uploader.upload(file, { successorOf: allDocVersions.value[0].id });
     };
 
     const docToDelete = ref(null);

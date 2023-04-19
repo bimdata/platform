@@ -1,9 +1,8 @@
-import { isConvertible, isModel } from "../utils/models.js";
-import { createFileUploader } from "../utils/upload.js";
-
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 import ModelService from "./ModelService.js";
+import { isConvertible, isModel } from "../utils/models.js";
+import { createFileUploader } from "../utils/upload.js";
 
 class UploadService {
   createSpaceImageUploader(
@@ -31,15 +30,10 @@ class UploadService {
     const upload = file => {
       const data = new FormData();
       data.append("image", file);
-
-      uploader.upload(data);
+      return uploader.upload(data);
     };
 
-    const cancel = () => {
-      uploader.cancel();
-    };
-
-    return { upload, cancel };
+    return { upload };
   }
 
   createProjectFileUploader(
@@ -57,36 +51,30 @@ class UploadService {
         onUploadProgress,
         onUploadComplete,
         onUploadError: event => {
-          ErrorService.handleError(
-            new RuntimeError(
-              ERRORS[
-                event.srcElement.status === 402
-                  ? "SPACE_SIZE_FULL_ERROR"
-                  : "DOCUMENT_UPLOAD_ERROR"
-              ],
-              event
-            )
-          );
+          const errorId =
+            event.srcElement?.status === 402
+              ? "SPACE_SIZE_FULL_ERROR"
+              : "DOCUMENT_UPLOAD_ERROR";
+          ErrorService.handleError(new RuntimeError(ERRORS[errorId], event));
           onUploadError(event);
         }
+      },
+      {
+        retryCount: 3,
+        retryInterval: 500
       }
     );
 
-    const upload = (file, parentId, successorOf) => {
+    const upload = (file, { parentId, successorOf }) => {
       const data = new FormData();
       data.append("file", file);
       data.append("name", file.name);
       if (parentId) data.append("parent_id", parentId);
       if (successorOf) data.append("successor_of", successorOf);
-
       return uploader.upload(data);
     };
 
-    const cancel = () => {
-      uploader.cancel();
-    };
-
-    return { upload, cancel };
+    return { upload };
   }
 
   createProjectModelUploader(
@@ -97,12 +85,12 @@ class UploadService {
       onUploadStart,
       onUploadProgress,
       onUploadError,
-      onUploadComplete: async e => {
-        const document = e.response;
+      onUploadComplete: async event => {
+        const document = event.response;
         if (isConvertible(document) && !isModel(document)) {
           await ModelService.createModel(project, document);
         }
-        onUploadComplete(e);
+        onUploadComplete(event);
       }
     });
   }

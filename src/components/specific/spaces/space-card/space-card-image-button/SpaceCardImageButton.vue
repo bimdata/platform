@@ -11,7 +11,7 @@
 
 <script>
 import { inject } from "vue";
-import { useUpload } from "../../../../../composables/upload.js";
+import UploadService from "../../../../../services/UploadService.js";
 import { useOrganizations } from "../../../../../state/organizations.js";
 import { useSpaces } from "../../../../../state/spaces.js";
 
@@ -26,11 +26,10 @@ export default {
   setup(props, { emit }) {
     const { loadOrganizationSpaces } = useOrganizations();
     const { loadUserSpaces } = useSpaces();
-    const { spaceImageUploader } = useUpload();
 
     const loading = inject("loading", false);
 
-    const uploader = spaceImageUploader(props.space, {
+    const uploader = UploadService.createSpaceImageUploader(props.space, {
       onUploadStart: () => {
         loading.value = true;
       },
@@ -47,9 +46,7 @@ export default {
 
     const uploadImage = event => {
       const file = event.target.files[0];
-      if (file) {
-        uploader.upload(file);
-      }
+      if (file) uploader.upload(file);
     };
 
     const selectImage = () => {
