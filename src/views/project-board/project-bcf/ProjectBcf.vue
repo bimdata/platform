@@ -714,6 +714,11 @@ export default {
 
       if (modelIDs.length === 0) {
         // If no models are specified on the viewpoint
+        // get the models of the topic
+        modelIDs = topic.models;
+      }
+      if (modelIDs.length === 0) {
+        // If no models are specified on the viewpoint
         // get the last created model of proper type
         // with respect to the target window
         const models = projectModels.value
