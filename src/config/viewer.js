@@ -1,13 +1,9 @@
 const AVAILABLE_PLUGINS = Object.freeze({
-  backgroundColor:
-    "https://unpkg.com/@bimdata/background-color-viewer-plugin@1.0.1",
-  bimobject: "https://unpkg.com/@bimdata/bimobject-viewer-plugin@1.0.2",
-  gltfExtractor:
-    "https://unpkg.com/@bimdata/gltf-extractor-viewer-plugin@1.0.2",
-  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@1.0.8",
-  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.13",
-  realiz3D: "https://unpkg.com/@bimdata/realiz3d-viewer-plugin@0.0.2",
-  svgExtractor: "https://unpkg.com/@bimdata/svg-extractor-viewer-plugin@1.0.2"
+  bimobject: "https://cdn.jsdelivr.net/npm/@bimdata/bimobject-viewer-plugin@2.0.1",
+  gltfExtractor:"https://cdn.jsdelivr.net/npm/@bimdata/gltf-extractor-viewer-plugin@2.0.1",
+  idex: "https://cdn.jsdelivr.net/npm/@bimdata/idex-viewer-plugin@1.0.7",
+  iot: "https://cdn.jsdelivr.net/npm/@bimdata/iot-viewer-plugin@2.0.0",
+  svgExtractor: "https://cdn.jsdelivr.net/npm/@bimdata/svg-extractor-viewer-plugin@2.0.0"
 });
 
 /**
