@@ -34,13 +34,10 @@ function createFileUploader(
         return;
       }
 
-      let request, resolve, reject;
+      let request;
       let count = 0;
 
       const uploadId = nextUploadId++;
-      const promise = new Promise(
-        (res, rej) => ((resolve = res), (reject = rej))
-      );
 
       const handleError = e => {
         if (count < retryCount) {
@@ -49,43 +46,37 @@ function createFileUploader(
           setTimeout(sendRequest, retryInterval);
         } else {
           onUploadError({ id: uploadId, error: e });
-          reject({ id: uploadId, error: e });
         }
       };
 
       const sendRequest = () => {
-        // Abort any previous request that is not terminated
-        if (request?.readyState < XMLHttpRequest.DONE) request?.abort();
-
         request = new XMLHttpRequest();
 
-        request.upload.addEventListener("loadstart", e => {
+        request.upload.addEventListener("loadstart", ({ loaded, total }) => {
           onUploadStart({
             id: uploadId,
-            bytesUploaded: e.loaded,
-            bytesTotal: e.total,
-            percentage: (e.loaded / e.total) * 100
+            bytesUploaded: loaded,
+            bytesTotal: total,
+            percentage: (loaded / total) * 100
           });
         });
-        request.upload.addEventListener("progress", e => {
+        request.upload.addEventListener("progress", ({ loaded, total }) => {
           onUploadProgress({
             id: uploadId,
-            bytesUploaded: e.loaded,
-            bytesTotal: e.total,
-            percentage: (e.loaded / e.total) * 100
+            bytesUploaded: loaded,
+            bytesTotal: total,
+            percentage: (loaded / total) * 100
           });
         });
         request.addEventListener("load", e => {
           if (request.status < 400) {
-            const data = {
+            onUploadComplete({
               id: uploadId,
               bytesUploaded: e.loaded,
               bytesTotal: e.total,
               percentage: (e.loaded / e.total) * 100,
               response: request.response
-            };
-            onUploadComplete(data);
-            resolve(data);
+            });
           } else {
             handleError(e);
           }
@@ -95,7 +86,6 @@ function createFileUploader(
         });
         request.upload.addEventListener("abort", e => {
           onUploadCancel(e);
-          reject(e);
         });
 
         request.open(method, url);
@@ -109,7 +99,6 @@ function createFileUploader(
 
       return {
         id: uploadId,
-        promise,
         request: () => request,
         cancel: () => request.abort()
       };

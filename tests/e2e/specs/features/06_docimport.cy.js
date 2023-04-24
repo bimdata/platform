@@ -79,7 +79,12 @@ describe("Documents import feature", () => {
 
     // Act
     cy.hook("btn-upload-file").click();
-    cy.get("body > input[type=file]").selectFile("@housePlan", { force: true });
+    cy.get("body > input[type=file]").selectFile(
+      { contents: "@housePlan", fileName: "house-plan.pdf" },
+      { force: true }
+    );
+    cy.intercept("**/dms-tree").as("getDmsTree");
+    cy.wait("@getDmsTree");
 
     // Assert
     cy.hook("files-table")
@@ -99,7 +104,10 @@ describe("Documents import feature", () => {
 
     // Act
     cy.hook("btn-upload-file").click();
-    cy.get("body > input[type=file]").selectFile("@housePlan", { force: true });
+    cy.get("body > input[type=file]").selectFile(
+      { contents: "@housePlan", fileName: "house-plan.pdf" },
+      { force: true }
+    );
 
     // Assert
     for (let i = 0; i < 4; i++) cy.wait("@uploadRequest");
