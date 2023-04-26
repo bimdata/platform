@@ -13,6 +13,8 @@ import NoDocPreviewImage from "../../../images/NoDocPreviewImage.vue";
 
 const { DWG, DXF, IFC, JPEG, PDF, PNG } = MODEL_TYPE;
 
+const OFFICE_FILES = [".ppt",".pptx",".odp",".xls",".xlsx",".ods",".doc",".docx",".odt"]
+
 const props = defineProps({
   project: {
     type: Object,
@@ -76,6 +78,18 @@ const file = computed(() => {
     case ".svg":
     case ".webp":
       return doc.file;
+    case ".ppt":
+    case ".pptx":
+    case ".odp":
+    case ".xls":
+    case ".xlsx":
+    case ".ods":
+    case ".doc":
+    case ".docx":
+    case ".odt":
+      if (doc.office_preview) {
+        return { file: doc.office_preview };
+      }
     default:
       return null;
   }
@@ -171,7 +185,7 @@ const download = () => {
           </div>
         </template>
 
-        <template v-else-if="[PDF, '.pdf'].includes(fileType)">
+        <template v-else-if="[...OFFICE_FILES, PDF, '.pdf'].includes(fileType)">
           <div class="pdf-container">
             <BIMDataPDFViewer :pdf="file" />
           </div>
