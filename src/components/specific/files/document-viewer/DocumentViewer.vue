@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, onMounted, onUnmounted } from "vue";
+import { computed, ref, watch, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../config/models.js";
@@ -9,6 +9,8 @@ import { useModels } from "../../../../state/models.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
 import { openInViewer } from "../../../../utils/models.js";
+import FileService from "../../../../services/FileService.js";
+
 // Components
 import NoDocPreviewImage from "../../../images/NoDocPreviewImage.vue";
 
@@ -53,32 +55,45 @@ const fileType = computed(() => {
   return doc.model_type ?? fileExtension(doc.file_name);
 });
 
-const file = computed(() => {
+const file = ref(null);
+
+watchEffect(async () => {
   const models = projectModels.value;
   const doc = currentDocument.value;
   switch (fileType.value) {
     case IFC:
     case DWG:
     case DXF:
-      return models.find(m => m.id === doc.model_id)?.preview_file;
+      file.value = models.find(m => m.id === doc.model_id)?.preview_file;
+      break;
     case PDF:
     case ".pdf":
       // Both model and not model pdf have the same preview
-      return { file: doc.file };
+      file.value = { file: doc.file };
+      break;
     case JPEG:
     case PNG:
       // jpeg and png models
-      return doc.file;
+      file.value = doc.file;
+      break;
     default:
-      if (OFFICE_FILES.includes(fileType.value) && doc.office_preview) {
+      if (OFFICE_FILES.includes(fileType.value)) {
         // Office files
-        return { file: doc.office_preview };
+        if (doc.office_preview) {
+          file.value = { file: doc.office_preview };
+        } else {
+          // When the preview is not yet loaded.
+          const newDoc = await FileService.getDocument(props.project, { id: doc.id });
+          if (newDoc.office_preview) {
+            currentDocument.value.office_preview = newDoc.office_preview;
+            file.value = { file: newDoc.office_preview };
+          }
+        }
       }
-      if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
+      else if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
         // images not defined as models
-        return doc.file;
+        file.value = doc.file;
       }
-      return null;
   }
 });
 
