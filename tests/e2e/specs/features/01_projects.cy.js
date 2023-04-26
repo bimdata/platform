@@ -34,7 +34,7 @@ describe("Project features", () => {
 
   it("Should delete project", () => {
     cy.getProjectCard("New Project Name").within(() => {
-      cy.get(".project-card-action-bar__btn.action-menu").click();
+      cy.hook("btn-open-menu").click();
       cy.hook("btn-open-delete").click({ force: true });
       cy.hook("btn-submit-delete").click({ force: true });
     });

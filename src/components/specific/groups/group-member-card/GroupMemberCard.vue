@@ -1,7 +1,8 @@
 <template>
-  <BIMDataCard class="group-member-card">
+  <BIMDataCard data-test-id="group-member-card" class="group-member-card">
     <template #content>
       <BIMDataButton
+        data-test-id="btn-remove-member"
         class="group-member-card__btn-remove"
         ghost
         rounded

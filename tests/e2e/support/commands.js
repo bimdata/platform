@@ -80,6 +80,9 @@ Cypress.Commands.add("getSpaceCard", (name) =>
 Cypress.Commands.add("getProjectCard", (name) =>
   cy.contains("[data-test-id=project-card]", name)
 );
+Cypress.Commands.add("getGroupCard", (name) =>
+  cy.contains("[data-test-id=group-card]", name)
+);
 
 Cypress.Commands.add("deleteGedDoc", (name) => {
   cy.hook("files-table")
