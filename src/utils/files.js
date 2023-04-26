@@ -3,7 +3,7 @@ import { FILE_TYPE, STANDARD_IGNORED_FILES } from "../config/files.js";
 function fileExtension(fileName) {
   const parts = fileName.split(".");
   const extension = parts[parts.length - 1];
-  return parts.length > 1 && extension ? `.${extension}` : "";
+  return (parts.length > 1 && extension ? `.${extension}` : "").toLowerCase();
 }
 
 function fileDirectory(file) {
