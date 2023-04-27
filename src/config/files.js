@@ -12,4 +12,8 @@ const FILE_TYPE = Object.freeze({
 
 const STANDARD_IGNORED_FILES = Object.freeze([".DS_Store"]);
 
-export { FILE_PERMISSION, FILE_TYPE, STANDARD_IGNORED_FILES };
+const OFFICE_FILES = [".ppt", ".pptx", ".odp", ".xls", ".xlsx", ".ods", ".doc", ".docx", ".odt"];
+
+const IMAGE_PREVIEW_FILES = [".apng", ".avif", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"];
+
+export { FILE_PERMISSION, FILE_TYPE, STANDARD_IGNORED_FILES, OFFICE_FILES, IMAGE_PREVIEW_FILES };
