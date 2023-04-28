@@ -1,16 +1,15 @@
-/**
- * OIDC Client Configuration
- * See: https://github.com/IdentityModel/oidc-client-js/wiki#configuration
- */
-
 const APP_BASE_URL = ENV.VUE_APP_BASE_URL;
 const AUTHORITY = `${ENV.VUE_APP_IAM_BASE_URL}/auth/realms/bimdata`;
-const OIDC_ENDPOINT = `${AUTHORITY}/protocol/openid-connect`;
 
 const CLIENT_ID = ENV.VUE_APP_OIDC_CLIENT_ID;
-const AUTHORIZED_IDENTITY_PROVIDERS =
-  ENV.VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
+const AUTHORIZED_IDENTITY_PROVIDERS = ENV.VUE_APP_AUTHORIZED_IDENTITY_PROVIDERS;
 
+/**
+ * OIDC Client Configuration
+ * See: https://authts.github.io/oidc-client-ts/interfaces/UserManagerSettings.html
+ *
+ * @type {import("oidc-client-ts").UserManagerSettings}
+ */
 const config = {
   // Auth request config
   authority: AUTHORITY,
@@ -21,28 +20,17 @@ const config = {
 
   // Logout config
   post_logout_redirect_uri: APP_BASE_URL,
-  revokeAccessTokenOnSignout: true,
 
   // Enable access token refresh
   automaticSilentRenew: true,
 
-  // Other options
-  clockSkew: 900,
-
   // Auth metadata
-  metadata: {
-    issuer: AUTHORITY,
-    authorization_endpoint: `${OIDC_ENDPOINT}/auth`,
-    token_endpoint: `${OIDC_ENDPOINT}/token`,
-    userinfo_endpoint: `${OIDC_ENDPOINT}/userinfo`,
-    end_session_endpoint: `${OIDC_ENDPOINT}/logout`,
-    jwks_uri: `${OIDC_ENDPOINT}/certs`
-  },
+  metadataUrl: `${AUTHORITY}/.well-known/openid-configuration`,
 
-  // Limit authorized identity providers
-  authorizedIdentityProviders: AUTHORIZED_IDENTITY_PROVIDERS
-    ? AUTHORIZED_IDENTITY_PROVIDERS.split(",")
-    : []
+  // (cutsom)
+  endSessionEndpoint: `${AUTHORITY}/protocol/openid-connect/logout`,
+  // Limit authorized identity providers (custom)
+  authorizedIdentityProviders: AUTHORIZED_IDENTITY_PROVIDERS?.split(",") ?? []
 };
 
 if (AUTHORIZED_IDENTITY_PROVIDERS) {
