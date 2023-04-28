@@ -1,15 +1,34 @@
 import { FILE_TYPE, STANDARD_IGNORED_FILES } from "../config/files.js";
 
+/**
+ * Get file extension from file name.
+ *
+ * @param {String} fileName
+ * @returns {String}
+ */
 function fileExtension(fileName) {
   const parts = fileName.split(".");
   const extension = parts[parts.length - 1];
   return (parts.length > 1 && extension ? `.${extension}` : "").toLowerCase();
 }
 
+/**
+ * Get directory path from file object.
+ *
+ * @param {File} file
+ * @returns {String}
+ */
 function fileDirectory(file) {
   return file.webkitRelativePath?.split("/").slice(0, -1).join("/") ?? "";
 }
 
+/**
+ * Get formatted file size in bytes.
+ *
+ * @param {Number|String} bytes
+ * @param {Number} decimals
+ * @returns {String}
+ */
 function formatBytes(bytes, decimals = 0) {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const { floor, log, pow } = Math;
@@ -24,6 +43,12 @@ function formatBytes(bytes, decimals = 0) {
   return (b / pow(1024, i)).toFixed(d) + " " + sizes[i];
 }
 
+/**
+ * Generate a pseudo-random file key from file object.
+ *
+ * @param {File} file
+ * @returns {String}
+ */
 function generateFileKey(file) {
   let key = Math.max(file.size, 1000);
   key = Math.random() * key + 1;
@@ -141,15 +166,14 @@ async function getFilesFromEvent(event) {
     // Files from drag & drop
     const asyncFiles = [];
     const asyncFolders = [];
-    Array.from(event.dataTransfer.items, it => it.webkitGetAsEntry()).forEach(
-      entry => {
-        if (entry.isDirectory) {
-          asyncFolders.push(parseDirEntry(entry));
-        } else {
-          asyncFiles.push(getFileFromFileEntry(entry));
-        }
+    for (const item of event.dataTransfer.items) {
+      const entry = item.webkitGetAsEntry();
+      if (entry.isDirectory) {
+        asyncFolders.push(parseDirEntry(entry));
+      } else {
+        asyncFiles.push(getFileFromFileEntry(entry));
       }
-    );
+    }
     files = await Promise.all(asyncFiles);
     folders = await Promise.all(asyncFolders);
   } else {
@@ -174,6 +198,12 @@ async function getFilesFromEvent(event) {
   return { files, folders };
 }
 
+/**
+ * @param {{ id: number, name: string, children: any[] }} root file structure root
+ * @param {{ id: number, name: string, children: any[] }} folder files parent folder
+ * @param {File[]} files
+ * @returns {{ file: File, parentId: number|undefined }[]}
+ */
 function getFilesWithParentIds(root, folder, files) {
   // Create a 'dir path => file list' mapping
   const filesMap = new Map();

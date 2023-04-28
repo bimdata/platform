@@ -1,5 +1,5 @@
 import { h, onMounted, reactive, ref } from "vue";
-import { useUpload } from "../../../../composables/upload.js";
+import UploadService from "../../../../services/UploadService.js";
 
 import UploadCard from "./UploadCard.vue";
 
@@ -27,8 +27,6 @@ export default {
   },
   emits: ["upload-completed", "upload-canceled", "upload-failed"],
   setup(props, { emit }) {
-    const { projectFileUploader, projectModelUploader } = useUpload();
-
     const uploading = ref(false);
     const failed = ref(false);
     const canceled = ref(false);
@@ -39,6 +37,7 @@ export default {
       rate: 0
     });
 
+    let uploader, upload;
     let lastProgressTime = null;
 
     const handlers = {
@@ -67,20 +66,28 @@ export default {
     };
 
     const cancelUpload = () => {
+      upload?.cancel();
       uploading.value = false;
       canceled.value = true;
       emit("upload-canceled");
     };
 
-    let uploader;
     if (props.isModelUpload) {
-      uploader = projectModelUploader(props.project, handlers);
+      uploader = UploadService.createProjectModelUploader(
+        props.project,
+        handlers
+      );
     } else {
-      uploader = projectFileUploader(props.project, handlers);
+      uploader = UploadService.createProjectFileUploader(
+        props.project,
+        handlers
+      );
     }
 
     onMounted(() => {
-      uploader.upload(props.file, props.folder?.id ?? null);
+      upload = uploader.upload(props.file, {
+        parentId: props.folder?.id ?? null
+      });
     });
 
     return () =>
