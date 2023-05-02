@@ -29,117 +29,121 @@
               </template>
             </BIMDataDropdownMenu>
           </template>
-          <FolderCreationButton
-            data-guide="btn-new-folder"
-            class="files-manager__actions__btn-new-folder"
-            width="100%"
-            :project="project"
-            :folder="currentFolder"
-            :disabled="!hasAdminPerm(project, currentFolder)"
-          >
-            <BIMDataIcon name="addFolder" size="xs" />
-            <span
-              v-if="
-                (project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)
-              "
-              style="margin-left: 6px"
+          <template v-if="!project.isGuest">
+            <FolderCreationButton
+              data-guide="btn-new-folder"
+              class="files-manager__actions__btn-new-folder"
+              width="100%"
+              :project="project"
+              :folder="currentFolder"
+              :disabled="!hasAdminPerm(project, currentFolder)"
             >
-              {{ $t("FolderCreationButton.buttonText") }}
-            </span>
-            <span
-              v-else-if="
-                (project.isAdmin && !isXL && isXXXL) ||
-                (!project.isAdmin && !isMD && isMidXL)
+              <BIMDataIcon name="addFolder" size="xs" />
+              <span
+                v-if="
+                  (project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)
+                "
+                style="margin-left: 6px"
+              >
+                {{ $t("FolderCreationButton.buttonText") }}
+              </span>
+              <span
+                v-else-if="
+                  (project.isAdmin && !isXL && isXXXL) ||
+                  (!project.isAdmin && !isMD && isMidXL)
+                "
+                style="margin-left: 6px"
+              >
+                {{ $t("FolderCreationButton.shortButtonText") }}
+              </span>
+            </FolderCreationButton>
+          </template>
+          <template v-if="!project.isGuest">
+            <BIMDataTooltip
+              data-guide="btn-upload-file"
+              data-test-id="btn-upload-file"
+              class="files-manager__actions__btn-new-file"
+              color="high"
+              :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
+              :text="
+                $t(
+                  `SubscriptionModal.uploadDisableMessage.${
+                    isFullTotal(spaceSubInfo) ? 'size' : 'permission'
+                  }`
+                )
               "
-              style="margin-left: 6px"
             >
-              {{ $t("FolderCreationButton.shortButtonText") }}
-            </span>
-          </FolderCreationButton>
-          <BIMDataTooltip
-            data-guide="btn-upload-file"
-            data-test-id="btn-upload-file"
-            class="files-manager__actions__btn-new-file"
-            color="high"
-            :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
-            :text="
-              $t(
-                `SubscriptionModal.uploadDisableMessage.${
-                  isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-                }`
-              )
-            "
-          >
-            <template v-if="isAbleToSub">
-              <BIMDataButton
-                width="100%"
-                height="32px"
-                color="primary"
-                fill
-                radius
-                :disabled="!hasAdminPerm(project, currentFolder)"
-                @click="openSubscriptionModal"
-              >
-                <BIMDataIcon name="addFile" size="xs" />
-                <span
-                  v-if="
-                    (project.isAdmin && !isXXXL) ||
-                    (!project.isAdmin && !isMidXL)
-                  "
-                  style="margin-left: 6px"
+              <template v-if="isAbleToSub">
+                <BIMDataButton
+                  width="100%"
+                  height="32px"
+                  color="primary"
+                  fill
+                  radius
+                  :disabled="!hasAdminPerm(project, currentFolder)"
+                  @click="openSubscriptionModal"
                 >
-                  {{ $t("FileUploadButton.addFileButtonText") }}
-                </span>
-                <span
-                  v-else-if="
-                    (project.isAdmin && !isXL && isXXXL) ||
-                    (!project.isAdmin && !isMD && isMidXL)
+                  <BIMDataIcon name="addFile" size="xs" />
+                  <span
+                    v-if="
+                      (project.isAdmin && !isXXXL) ||
+                      (!project.isAdmin && !isMidXL)
+                    "
+                    style="margin-left: 6px"
+                  >
+                    {{ $t("FileUploadButton.addFileButtonText") }}
+                  </span>
+                  <span
+                    v-else-if="
+                      (project.isAdmin && !isXL && isXXXL) ||
+                      (!project.isAdmin && !isMD && isMidXL)
+                    "
+                    style="margin-left: 6px"
+                  >
+                    {{ $t("FileUploadButton.shortAddFileButtonText") }}
+                  </span>
+                </BIMDataButton>
+              </template>
+              <template v-else>
+                <BIMDataButton
+                  width="100%"
+                  color="primary"
+                  fill
+                  radius
+                  icon
+                  :disabled="
+                    (!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)) ||
+                    !hasAdminPerm(project, currentFolder)
                   "
-                  style="margin-left: 6px"
-                >
-                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
-                </span>
-              </BIMDataButton>
-            </template>
-            <template v-else>
-              <BIMDataButton
-                width="100%"
-                color="primary"
-                fill
-                radius
-                icon
-                :disabled="
-                  (!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)) ||
-                  !hasAdminPerm(project, currentFolder)
-                "
-                @click="
-                  fileUploadInput('file', event => uploadFiles(event), {
-                    multiple: true
-                  })
-                "
-              >
-                <BIMDataIcon name="addFile" size="xs" />
-                <span
-                  v-if="
-                    (project.isAdmin && !isXXXL) ||
-                    (!project.isAdmin && !isMidXL)
+                  @click="
+                    fileUploadInput('file', event => uploadFiles(event), {
+                      multiple: true
+                    })
                   "
-                  style="margin-left: 6px"
                 >
-                  {{ $t("FileUploadButton.addFileButtonText") }}
-                </span>
-                <span
-                  v-else-if="
-                    (project.isAdmin && !isXL && isXXXL) ||
-                    (!project.isAdmin && !isMD && isMidXL)
-                  "
-                  style="margin-left: 6px"
-                >
-                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
-                </span>
-              </BIMDataButton>
-            </template>
-          </BIMDataTooltip>
+                  <BIMDataIcon name="addFile" size="xs" />
+                  <span
+                    v-if="
+                      (project.isAdmin && !isXXXL) ||
+                      (!project.isAdmin && !isMidXL)
+                    "
+                    style="margin-left: 6px"
+                  >
+                    {{ $t("FileUploadButton.addFileButtonText") }}
+                  </span>
+                  <span
+                    v-else-if="
+                      (project.isAdmin && !isXL && isXXXL) ||
+                      (!project.isAdmin && !isMD && isMidXL)
+                    "
+                    style="margin-left: 6px"
+                  >
+                    {{ $t("FileUploadButton.shortAddFileButtonText") }}
+                  </span>
+                </BIMDataButton>
+              </template>
+            </BIMDataTooltip>
+          </template>
         </div>
 
         <div class="files-manager__actions end">

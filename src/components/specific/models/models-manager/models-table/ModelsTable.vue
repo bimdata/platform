@@ -42,7 +42,7 @@
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />
     </template>
-    <template #cell-actions="{ row: model }">
+    <template v-if="!project.isGuest" #cell-actions="{ row: model }">
       <ModelActionsCell
         :project="project"
         :model="model"
