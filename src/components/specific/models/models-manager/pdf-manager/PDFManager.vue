@@ -22,18 +22,20 @@
       </div>
     </template>
     <template #content v-if="currentTab && currentTab.id === 'metaBuildings'">
-      <BIMDataButton
-        class="pdf-manager__building-maker-btn"
-        width="100px"
-        color="primary"
-        outline
-        radius
-        icon
-        @click="openBM"
-      >
-        <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
-        <span> {{ $t("ModelsTable.buildingMaker.create") }} </span>
-      </BIMDataButton>
+      <template v-if="!project.isGuest">
+        <BIMDataButton
+          class="pdf-manager__building-maker-btn"
+          width="100px"
+          color="primary"
+          outline
+          radius
+          icon
+          @click="openBM"
+        >
+          <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
+          <span> {{ $t("ModelsTable.buildingMaker.create") }} </span>
+        </BIMDataButton>
+      </template>
 
       <transition name="slide-fade-right">
         <div v-if="isOpenBM" class="pdf-manager__building-maker">

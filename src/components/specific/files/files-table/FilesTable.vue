@@ -86,7 +86,7 @@
     <template #cell-size="{ row: file }">
       {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
-    <template #cell-actions="{ row: file }">
+    <template v-if="!project.isGuest" #cell-actions="{ row: file }">
       <FileActionsCell
         :filesTable="filesTable"
         :project="project"
