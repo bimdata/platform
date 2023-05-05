@@ -11,12 +11,12 @@
     "test:e2e": "cypress open"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "file:../bcf-components",
+    "@bimdata/bcf-components": "^4.1.1-rc.1",
     "@bimdata/building-maker": "1.5.2",
     "@bimdata/design-system": "2.0.0-rc.10",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.7.2",
-    "@bimdata/viewer": "file:../viewer",
+    "@bimdata/viewer": "^1.10.0-rc.65",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
     "maplibre-gl": "^2.4.0",
