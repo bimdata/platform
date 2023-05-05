@@ -245,13 +245,13 @@
           <BcfTopicOverview
             :uiConfig="{
               closeButton: true,
-              editButton: true,
-              deleteButton: true
+              editButton: !project.isGuest,
+              deleteButton: !project.isGuest,
+              commentCreation: !project.isGuest
             }"
             :project="project"
             :detailedExtensions="detailedExtensions"
             :topic="currentTopic"
-            :currentUserEmail="currentUser.email"
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
@@ -461,7 +461,6 @@ import { useBcf } from "../../../state/bcf.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { fileUploadInput } from "../../../utils/upload.js";
-import { useUser } from "../../../state/user.js";
 
 // Components
 import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmptyImage.vue";
@@ -502,7 +501,6 @@ export default {
       importBcf,
       exportBcf
     } = useBcf();
-    const { user: currentUser } = useUser();
 
     const loading = ref(false);
     const isListView = ref(false);
@@ -761,7 +759,6 @@ export default {
       // References
       currentPanel,
       currentTopic,
-      currentUser,
       detailedExtensions,
       displayedTopics,
       extensions,
