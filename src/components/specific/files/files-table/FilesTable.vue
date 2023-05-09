@@ -6,11 +6,11 @@
     tableLayout="fixed"
     :columns="columns"
     :rows="files"
-    :canDragOverRow="file => !file.file"
     rowKey="id"
     :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
+    :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
