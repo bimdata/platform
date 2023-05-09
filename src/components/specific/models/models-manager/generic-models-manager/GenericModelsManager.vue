@@ -21,21 +21,19 @@
       </template>
     </BIMDataTabs>
 
-    <template v-if="!project.isGuest">
-      <BIMDataButton
-        class="generic-models-manager__btn-add"
-        color="primary"
-        width="100px"
-        fill
-        radius
-        icon
-        :disabled="project.isGuest"
-        @click="uploadModels"
-      >
-        <BIMDataIcon name="export" margin="0 12px" />
-        <span> {{ $t("ModelsManager.add") }}</span>
-      </BIMDataButton>
-    </template>
+    <BIMDataButton
+      v-if="!project.isGuest"
+      class="generic-models-manager__btn-add"
+      color="primary"
+      width="100px"
+      fill
+      radius
+      icon
+      @click="uploadModels"
+    >
+      <BIMDataIcon name="export" margin="0 12px" />
+      <span> {{ $t("ModelsManager.add") }}</span>
+    </BIMDataButton>
     <div class="generic-models-manager__separator"></div>
 
     <transition name="fade">
