@@ -1,44 +1,43 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
-      <template v-if="!project.isGuest">
-        <BIMDataTooltip
-          class="project-overview__tooltip-upload"
-          color="high"
-          position="left"
-          :disabled="space.isUserOrga || !isFullTotal(spaceSubInfo)"
-          :text="
-            $t(
-              `SubscriptionModal.uploadDisableMessage.${
-                isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-              }`
-            )
-          "
+      <BIMDataTooltip
+        v-if="!project.isGuest"
+        class="project-overview__tooltip-upload"
+        color="high"
+        position="left"
+        :disabled="space.isUserOrga || !isFullTotal(spaceSubInfo)"
+        :text="
+          $t(
+            `SubscriptionModal.uploadDisableMessage.${
+              isFullTotal(spaceSubInfo) ? 'size' : 'permission'
+            }`
+          )
+        "
+      >
+        <BIMDataButton
+          data-test-id="btn-toggle-upload"
+          :width="isLG ? undefined : '120px'"
+          :color="showFileUploader ? 'granite' : 'primary'"
+          fill
+          radius
+          :icon="isLG"
+          :disabled="!space.isUserOrga && isFullTotal(spaceSubInfo)"
+          @click="() => (isAbleToSub ? modalOpener() : toggleFileUploader())"
         >
-          <BIMDataButton
-            data-test-id="btn-toggle-upload"
-            :width="isLG ? undefined : '120px'"
-            :color="showFileUploader ? 'granite' : 'primary'"
-            fill
-            radius
-            :icon="isLG"
-            :disabled="!space.isUserOrga && isFullTotal(spaceSubInfo)"
-            @click="() => (isAbleToSub ? modalOpener() : toggleFileUploader())"
-          >
-            <BIMDataIcon
-              :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
-              :size="isLG ? 'xxs' : 'xxxs'"
-            />
-            <span v-if="!isLG" style="margin-left: 6px">
-              {{
-                showFileUploader
-                  ? $t("ProjectOverview.closeFileUploadButtonText")
-                  : $t("ProjectOverview.openFileUploadButtonText")
-              }}
-            </span>
-          </BIMDataButton>
-        </BIMDataTooltip>
-      </template>
+          <BIMDataIcon
+            :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
+            :size="isLG ? 'xxs' : 'xxxs'"
+          />
+          <span v-if="!isLG" style="margin-left: 6px">
+            {{
+              showFileUploader
+                ? $t("ProjectOverview.closeFileUploadButtonText")
+                : $t("ProjectOverview.openFileUploadButtonText")
+            }}
+          </span>
+        </BIMDataButton>
+      </BIMDataTooltip>
     </AppSlotContent>
 
     <transition name="fade">
