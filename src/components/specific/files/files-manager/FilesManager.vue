@@ -29,7 +29,6 @@
               </template>
             </BIMDataDropdownMenu>
           </template>
-
           <FolderCreationButton
             data-guide="btn-new-folder"
             class="files-manager__actions__btn-new-folder"
@@ -812,8 +811,7 @@ export default {
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,
-      isXXXL,
-      console
+      isXXXL
     };
   }
 };
