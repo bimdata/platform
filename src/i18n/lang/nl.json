@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "cancel": "Annuleren",
+    "validate": "Valideren"
+  },
   "GroupBoard": {
     "searchInputPlaceholder": "Leden zoeken"
   },

@@ -1,4 +1,8 @@
 {
+    "Global": {
+        "cancel": "Cancel",
+        "validate": "Validate"
+    },
     "GroupBoard": {
         "searchInputPlaceholder": "Search members"
     },
@@ -119,7 +123,7 @@
         "uploadFileButtonText": "Upload a file",
         "createFolderButtonText": "Create a folder",
         "GEDStructureImport": "Import a GED structure",
-        "folderImport": "Import a file"
+        "folderImport": "Import a folder"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Empty folder",
@@ -139,6 +143,7 @@
     },
     "FileUploader": {
         "uploadAreaText": "Drag and drop to store your project assets",
+        "uploadDropArea": "Drag and drop to upload",
         "separatorText": "or",
         "uploadButtonText": "Select a model file"
     },
