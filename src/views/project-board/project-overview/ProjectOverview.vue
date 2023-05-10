@@ -2,6 +2,7 @@
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
       <BIMDataTooltip
+        v-if="!project.isGuest"
         class="project-overview__tooltip-upload"
         color="high"
         position="left"

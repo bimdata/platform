@@ -23,6 +23,7 @@
     </template>
     <template #content v-if="currentTab && currentTab.id === 'metaBuildings'">
       <BIMDataButton
+        v-if="!project.isGuest"
         class="pdf-manager__building-maker-btn"
         width="100px"
         color="primary"

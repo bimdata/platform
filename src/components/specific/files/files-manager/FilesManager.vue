@@ -35,7 +35,7 @@
             width="100%"
             :project="project"
             :folder="currentFolder"
-            :disabled="!hasAdminPerm(project, currentFolder)"
+            :disabled="project.isGuest || !hasAdminPerm(project, currentFolder)"
           >
             <BIMDataIcon name="addFolder" size="xs" />
             <span
@@ -109,6 +109,7 @@
                 radius
                 icon
                 :disabled="
+                  project.isGuest ||
                   (!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)) ||
                   !hasAdminPerm(project, currentFolder)
                 "

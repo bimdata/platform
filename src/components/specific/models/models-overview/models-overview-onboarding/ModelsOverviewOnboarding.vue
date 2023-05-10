@@ -10,6 +10,7 @@
         color="primary"
         fill
         radius
+        :disabled="project.isGuest"
         @click="$emit('open-file-uploader')"
       >
         {{ $t("ModelsOverviewOnboarding.uploadButtonText") }}
@@ -21,12 +22,18 @@
 <script>
 // Components
 import ModelsOverviewOnboardingImage from "./ModelsOverviewOnboardingImage.vue";
+import { useProjects } from "../../../../../state/projects.js";
 
 export default {
   components: {
     ModelsOverviewOnboardingImage
   },
-  emits: ["open-file-uploader"]
+  emits: ["open-file-uploader"],
+  setup() {
+    const { currentProject } = useProjects();
+
+    return { project: currentProject };
+  }
 };
 </script>
 
