@@ -6,11 +6,11 @@
     tableLayout="fixed"
     :columns="columns"
     :rows="files"
-    :canDragOverRow="file => !file.file"
     rowKey="id"
     :rowHeight="54"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
+    :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
     :placeholder="$t('FilesTable.emptyTablePlaceholder')"
   >
@@ -86,7 +86,7 @@
     <template #cell-size="{ row: file }">
       {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
-    <template #cell-actions="{ row: file }">
+    <template v-if="!project.isGuest" #cell-actions="{ row: file }">
       <FileActionsCell
         :filesTable="filesTable"
         :project="project"

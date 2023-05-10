@@ -74,7 +74,7 @@ export default {
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
-    const { updateModelName } = useModels();
+    const { updateModelName, updateModels } = useModels();
 
     const loading = ref(false);
 
@@ -86,7 +86,13 @@ export default {
       if (modelName.value) {
         try {
           loading.value = true;
-          await updateModelName(props.project, props.model, modelName.value);
+          if (props.model.type === MODEL_TYPE.META_BUILDING) {
+            await updateModels(props.project, [
+              { ...props.model, name: modelName.value }
+            ]);
+          } else {
+            await updateModelName(props.project, props.model, modelName.value);
+          }
           closeUpdateForm();
           emit("success");
         } finally {

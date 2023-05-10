@@ -1,4 +1,8 @@
 {
+    "Global": {
+        "cancel": "Cancel",
+        "validate": "Validate"
+    },
     "GroupBoard": {
         "searchInputPlaceholder": "Search members"
     },
@@ -88,7 +92,7 @@
         "VisaButtonText": "Validation request",
         "createModelButtonText": "Define as model",
         "VersioningButtonText": "Add a version",
-        "removeModelButtonText": "Remove models"
+        "removeModelButtonText": "Remove from models"
     },
     "FileNameCell": {
         "inputErrorMessage": "Invalid file name",
@@ -119,7 +123,7 @@
         "uploadFileButtonText": "Upload a file",
         "createFolderButtonText": "Create a folder",
         "GEDStructureImport": "Import a GED structure",
-        "folderImport": "Import a file"
+        "folderImport": "Import a folder"
     },
     "FilesTable": {
         "emptyTablePlaceholder": "Empty folder",
@@ -137,13 +141,9 @@
         "addFileButtonText": "Upload a file",
         "shortAddFileButtonText": "File"
     },
-    "UploadCard": {
-        "cancelMessage": "Canceled",
-        "errorMessage": "Upload failed",
-        "upload": "{uploaded} to {total} ({percentage}% uploaded)"
-    },
     "FileUploader": {
         "uploadAreaText": "Drag and drop to store your project assets",
+        "uploadDropArea": "Drag and drop to upload",
         "separatorText": "or",
         "uploadButtonText": "Select a model file"
     },
@@ -297,7 +297,7 @@
         },
         "emptyTablePlaceholder": {
             "text": "No template",
-            "textPdf": "From the \"File\" menu in GED, click on \"Set as template\" to display your pdf drawings in your project."
+            "textPdf": "From the file manager \"file\" menu, click on \"Define as model\" to make your pdf plans available in models manager."
         },
         "buildingMaker": {
             "create": "Create"
@@ -501,7 +501,10 @@
         "documentCreateError": "Unable to upload this document",
         "invitationViewFetchError": "Unable to retrieve invitation list",
         "invitationViewAcceptError": "Unable to accept the invitation",
-        "invitationViewDenyError": "Impossible to decline the invitation"
+        "invitationViewDenyError": "Impossible to decline the invitation",
+        "folderFetchFolder": "Fail to retrieve folder data",
+        "bcfDeleteError": "Deletion failed",
+        "groupImportError": "Group import failure"
     },
     "ProjectStatusBadge": {
         "new": "NEW",
@@ -861,7 +864,15 @@
         "exportBcfNotificationSuccess": "BCF successfully exported",
         "exportBcfNotificationError": "Error while exporting the BCF file",
         "selectedTopicCount": "Number of selected topics",
-        "onlyAdminParameters": "Only administrators can change the BCF settings"
+        "deleteButtonText": "Delete",
+        "deleteBcfText": "You are about to delete all selected topics",
+        "deleteBcfConfirm": "Confirm",
+        "deleteInProgress": "Delete in progress",
+        "deleteInProgressSub": "This process may take a few moments.",
+        "deleteBcfNotificationSuccess": "Topics deleted",
+        "deleteBcfNotificationError": "Error while deleting topics",
+        "cancelBcfConfirm": "Cancel",
+        "onlyAdminParameters": "You must be a project administrator"
     },
     "GuidedTour": {
         "platform": {
@@ -1005,5 +1016,17 @@
     "DocumentViewer": {
         "viewerButton": "Open in viewer",
         "docPlaceholder": "No preview for this document"
+    },
+    "GroupImport": {
+        "title": "Import a group",
+        "selectAll": "Select all",
+        "add": "Add",
+        "notAdmin": "You must be a project administrator",
+        "noGroup": "There is no group for this project"
+    },
+    "UploadCard": {
+        "cancelMessage": "Canceled",
+        "errorMessage": "Upload failed",
+        "upload": "{uploaded} to {total} ({percentage}% uploaded)"
     }
 }

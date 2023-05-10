@@ -22,6 +22,7 @@
     </BIMDataTabs>
 
     <BIMDataButton
+      v-if="!project.isGuest"
       class="generic-models-manager__btn-add"
       color="primary"
       width="100px"
@@ -33,7 +34,6 @@
       <BIMDataIcon name="export" margin="0 12px" />
       <span> {{ $t("ModelsManager.add") }}</span>
     </BIMDataButton>
-
     <div class="generic-models-manager__separator"></div>
 
     <transition name="fade">

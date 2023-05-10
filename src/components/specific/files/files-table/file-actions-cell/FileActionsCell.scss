@@ -14,8 +14,7 @@
     z-index: 1;
     &.bimdata-menu {
       &:deep() {
-        li {
-          width: 100%;
+        .bimdata-menu__item__content {
           padding: 0;
           a {
             width: 100%;

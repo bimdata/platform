@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "cancel": "Annuler",
+    "validate": "Valider"
+  },
   "GroupBoard": {
     "searchInputPlaceholder": "Rechercher un membre"
   },
@@ -151,6 +155,7 @@
   },
   "FileUploader": {
     "uploadAreaText": "Cliquer/Glisser vos fichiers ici",
+    "uploadDropArea": "Glisser déposer pour uploader",
     "separatorText": "ou",
     "uploadButtonText": "Sélectionner un modèle"
   },

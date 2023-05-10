@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "cancel": "Annulla",
+    "validate": "Convalida"
+  },
   "GroupBoard": {
     "searchInputPlaceholder": "Cerca tra i membri"
   },

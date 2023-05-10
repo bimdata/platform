@@ -1,13 +1,16 @@
 <script setup>
-import { computed, ref, watch, onMounted, onUnmounted } from "vue";
+import { computed, ref, watch, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../config/models.js";
+import { OFFICE_FILES, IMAGE_PREVIEW_FILES } from "../../../../config/files.js";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
 import { openInViewer } from "../../../../utils/models.js";
+import FileService from "../../../../services/FileService.js";
+
 // Components
 import NoDocPreviewImage from "../../../images/NoDocPreviewImage.vue";
 
@@ -51,33 +54,46 @@ const fileType = computed(() => {
   const doc = currentDocument.value;
   return doc.model_type ?? fileExtension(doc.file_name);
 });
-const file = computed(() => {
+
+const file = ref(null);
+
+watchEffect(async () => {
   const models = projectModels.value;
   const doc = currentDocument.value;
   switch (fileType.value) {
     case IFC:
     case DWG:
     case DXF:
-    case ".ifc":
-    case ".dwg":
-    case ".dxf":
-      return models.find(m => m.id === doc.model_id)?.preview_file;
+      file.value = models.find(m => m.id === doc.model_id)?.preview_file;
+      break;
     case PDF:
     case ".pdf":
-      return { file: doc.file };
+      // Both model and not model pdf have the same preview
+      file.value = { file: doc.file };
+      break;
     case JPEG:
     case PNG:
-    case ".apng":
-    case ".avif":
-    case ".gif":
-    case ".jpeg":
-    case ".jpg":
-    case ".png":
-    case ".svg":
-    case ".webp":
-      return doc.file;
+      // jpeg and png models
+      file.value = doc.file;
+      break;
     default:
-      return null;
+      if (OFFICE_FILES.includes(fileType.value)) {
+        // Office files
+        if (doc.office_preview) {
+          file.value = { file: doc.office_preview };
+        } else {
+          // When the preview is not yet loaded.
+          const newDoc = await FileService.getDocument(props.project, { id: doc.id });
+          if (newDoc.office_preview) {
+            currentDocument.value.office_preview = newDoc.office_preview;
+            file.value = { file: newDoc.office_preview };
+          }
+        }
+      }
+      else if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
+        // images not defined as models
+        file.value = doc.file;
+      }
   }
 });
 
@@ -161,7 +177,7 @@ const download = () => {
 
       <template v-if="file">
         <template v-if="[DWG, DXF, IFC].includes(fileType)">
-          <div class="preview-container">
+          <div class="preview-container" @click.self="closeModal">
             <BIMDataModelPreview
               :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
               :previewUrl="file"
@@ -171,7 +187,7 @@ const download = () => {
           </div>
         </template>
 
-        <template v-else-if="[PDF, '.pdf'].includes(fileType)">
+        <template v-else-if="[...OFFICE_FILES, PDF, '.pdf'].includes(fileType)">
           <div class="pdf-container">
             <BIMDataPDFViewer :pdf="file" />
           </div>

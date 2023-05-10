@@ -38,60 +38,61 @@
       </teleport>
     </template>
     <AppSlotContent name="project-board-action">
-      <template v-if="project.isAdmin">
-        <BIMDataButton
-          color="primary"
-          outline
-          radius
-          icon
-          @click="openSettings"
-        >
-          <BIMDataIcon name="settings" size="xxs" />
-        </BIMDataButton>
-      </template>
-      <template v-else>
-        <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
-          <BIMDataButton disabled color="primary" outline radius icon>
+      <template v-if="!project.isGuest">
+        <template v-if="project.isAdmin">
+          <BIMDataButton
+            color="primary"
+            outline
+            radius
+            icon
+            @click="openSettings"
+          >
             <BIMDataIcon name="settings" size="xxs" />
           </BIMDataButton>
-        </BIMDataTooltip>
+        </template>
+        <template v-else>
+          <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
+            <BIMDataButton disabled color="primary" outline radius icon>
+              <BIMDataIcon name="settings" size="xxs" />
+            </BIMDataButton>
+          </BIMDataTooltip>
+        </template>
+        <BIMDataButton
+          fill
+          radius
+          :icon="isXL"
+          color="default"
+          width="120px"
+          @click="
+            fileUploadInput(
+              'file',
+              event => importBcfTopics(event.target.files),
+              {
+                accept: ['.bcf'],
+                multiple: true
+              }
+            )
+          "
+        >
+          <BIMDataIcon name="import" size="xs" />
+          <span v-if="!isXL" style="margin-left: 6px">
+            {{ $t("ProjectBcf.importButtonText") }}
+          </span>
+        </BIMDataButton>
+        <BIMDataButton
+          color="primary"
+          fill
+          radius
+          :icon="isXL"
+          width="120px"
+          @click="openTopicCreate"
+        >
+          <BIMDataIcon name="plus" size="xxxs" />
+          <span v-if="!isXL" style="margin-left: 6px">
+            {{ $t("ProjectBcf.createBcfButtonText") }}
+          </span>
+        </BIMDataButton>
       </template>
-
-      <BIMDataButton
-        fill
-        radius
-        :icon="isXL"
-        color="default"
-        width="120px"
-        @click="
-          fileUploadInput(
-            'file',
-            event => importBcfTopics(event.target.files),
-            {
-              accept: ['.bcf'],
-              multiple: true
-            }
-          )
-        "
-      >
-        <BIMDataIcon name="import" size="xs" />
-        <span v-if="!isXL" style="margin-left: 6px">
-          {{ $t("ProjectBcf.importButtonText") }}
-        </span>
-      </BIMDataButton>
-      <BIMDataButton
-        color="primary"
-        fill
-        radius
-        :icon="isXL"
-        width="120px"
-        @click="openTopicCreate"
-      >
-        <BIMDataIcon name="plus" size="xxxs" />
-        <span v-if="!isXL" style="margin-left: 6px">
-          {{ $t("ProjectBcf.createBcfButtonText") }}
-        </span>
-      </BIMDataButton>
     </AppSlotContent>
 
     <div class="project-bcf__actions">
@@ -244,8 +245,9 @@
           <BcfTopicOverview
             :uiConfig="{
               closeButton: true,
-              editButton: true,
-              deleteButton: true
+              editButton: !project.isGuest,
+              deleteButton: !project.isGuest,
+              commentCreation: !project.isGuest
             }"
             :project="project"
             :detailedExtensions="detailedExtensions"
@@ -712,6 +714,11 @@ export default {
       let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
       let modelIDs = getViewpointModels(viewpoint);
 
+      if (modelIDs.length === 0) {
+        // If no models are specified on the viewpoint
+        // get the models of the topic
+        modelIDs = topic.models;
+      }
       if (modelIDs.length === 0) {
         // If no models are specified on the viewpoint
         // get the last created model of proper type

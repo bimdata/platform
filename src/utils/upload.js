@@ -1,7 +1,15 @@
 /**
- * @param {Object} param0
- * @param {Object} param1
- * @returns {Object} file uploader
+ * @param {Object} params
+ * @param {Object} handlers
+ * @param {Object} options
+ * @returns {{
+ *  upload: FormData => {
+ *    id: number,
+ *    request: XMLHttpRequest,
+ *    promise: Promise,
+ *    cancel: () => void
+ *  }
+ * }} file uploader
  */
 function createFileUploader(
   { method, url, accessToken },
@@ -9,80 +17,91 @@ function createFileUploader(
     onUploadStart = () => {},
     onUploadProgress = () => {},
     onUploadComplete = () => {},
+    onUploadRetry = () => {},
     onUploadError = () => {},
     onUploadCancel = () => {}
-  }
+  },
+  { retryCount = 0, retryInterval = 0 } = {}
 ) {
-  let lastUploadId = 0;
+  let nextUploadId = 0;
 
   const fileUploader = {
-    request: null,
     upload(data) {
       if (!(data instanceof FormData)) {
         console.error(
-          "[File Uploader] Error: 'data' argument is not an instance of FormData."
+          "[File Uploader] Error: 'data' argument must be an instance of FormData."
         );
         return;
       }
 
-      const uploadId = lastUploadId++;
-      const request = new XMLHttpRequest();
+      let request;
+      let count = 0;
 
-      request.upload.addEventListener("loadstart", e => {
-        onUploadStart({
-          id: uploadId,
-          bytesUploaded: e.loaded,
-          bytesTotal: e.total,
-          percentage: (e.loaded / e.total) * 100
-        });
-      });
-      request.upload.addEventListener("progress", e => {
-        onUploadProgress({
-          id: uploadId,
-          bytesUploaded: e.loaded,
-          bytesTotal: e.total,
-          percentage: (e.loaded / e.total) * 100
-        });
-      });
-      request.addEventListener("load", e => {
-        onUploadComplete({
-          id: uploadId,
-          bytesUploaded: e.loaded,
-          bytesTotal: e.total,
-          percentage: (e.loaded / e.total) * 100,
-          response: request.response
-        });
-        this.request = null;
-      });
-      request.upload.addEventListener("error", e => {
-        onUploadError(e);
-        this.request = null;
-      });
-      request.upload.addEventListener("abort", e => {
-        onUploadCancel(e);
-        this.request = null;
-      });
-      request.addEventListener("readystatechange", e => {
-        if (request.readyState === XMLHttpRequest.DONE) {
-          if (request.status >= 400) {
-            onUploadError(e);
-            this.request = null;
-          }
+      const uploadId = nextUploadId++;
+
+      const handleError = e => {
+        if (count < retryCount) {
+          count++;
+          onUploadRetry({ id: uploadId, error: e, count });
+          setTimeout(sendRequest, retryInterval);
+        } else {
+          onUploadError({ id: uploadId, error: e });
         }
-      });
+      };
 
-      request.open(method, url);
-      request.setRequestHeader("Authorization", `Bearer ${accessToken}`);
-      request.responseType = "json";
-      request.withCredentials = true;
+      const sendRequest = () => {
+        request = new XMLHttpRequest();
 
-      this.request = request;
-      this.request.send(data);
+        request.upload.addEventListener("loadstart", ({ loaded, total }) => {
+          onUploadStart({
+            id: uploadId,
+            bytesUploaded: loaded,
+            bytesTotal: total,
+            percentage: (loaded / total) * 100
+          });
+        });
+        request.upload.addEventListener("progress", ({ loaded, total }) => {
+          onUploadProgress({
+            id: uploadId,
+            bytesUploaded: loaded,
+            bytesTotal: total,
+            percentage: (loaded / total) * 100
+          });
+        });
+        request.addEventListener("load", e => {
+          if (request.status < 400) {
+            onUploadComplete({
+              id: uploadId,
+              bytesUploaded: e.loaded,
+              bytesTotal: e.total,
+              percentage: (e.loaded / e.total) * 100,
+              response: request.response
+            });
+          } else {
+            handleError(e);
+          }
+        });
+        request.upload.addEventListener("error", e => {
+          handleError(e);
+        });
+        request.upload.addEventListener("abort", e => {
+          onUploadCancel(e);
+        });
 
-      return { id: uploadId, request };
-    },
-    cancel() {
-      if (this.request) this.request.abort();
+        request.open(method, url);
+        request.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+        request.responseType = "json";
+        request.withCredentials = true;
+        request.send(data);
+      };
+
+      sendRequest();
+
+      return {
+        id: uploadId,
+        request: () => request,
+        cancel: () => request.abort()
+      };
     }
   };
 

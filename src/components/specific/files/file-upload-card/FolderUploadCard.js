@@ -1,5 +1,5 @@
 import { h, reactive, ref } from "vue";
-import { useUpload } from "../../../../composables/upload.js";
+import UploadService from "../../../../services/UploadService.js";
 
 import UploadCard from "./UploadCard.vue";
 
@@ -22,8 +22,6 @@ export default {
   },
   emits: ["upload-completed", "upload-canceled", "upload-failed"],
   setup(props, { emit }) {
-    const { projectFileUploader } = useUpload();
-
     const uploading = ref(false);
     const failed = ref(false);
     const canceled = ref(false);
@@ -39,7 +37,7 @@ export default {
     const onGoingUploads = new Map();
     let lastProgressTime = null;
 
-    const uploader = projectFileUploader(props.project, {
+    const uploader = UploadService.createProjectFileUploader(props.project, {
       onUploadStart: () => {
         uploading.value = true;
       },
@@ -72,7 +70,7 @@ export default {
         }
       },
       onUploadError: () => {
-        onGoingUploads.forEach(upload => upload.request.abort());
+        onGoingUploads.forEach(upload => upload.cancel());
         uploading.value = false;
         failed.value = true;
         files = [];
@@ -82,12 +80,12 @@ export default {
 
     const startNextUpload = () => {
       const { file, parentId } = files.shift();
-      const { id, request } = uploader.upload(file, parentId);
-      onGoingUploads.set(id, { request, uploaded: 0 });
+      const { id, cancel } = uploader.upload(file, { parentId });
+      onGoingUploads.set(id, { uploaded: 0, cancel });
     };
 
     const cancelUpload = () => {
-      onGoingUploads.forEach(upload => upload.request.abort());
+      onGoingUploads.forEach(upload => upload.cancel());
       uploading.value = false;
       canceled.value = true;
       files = [];

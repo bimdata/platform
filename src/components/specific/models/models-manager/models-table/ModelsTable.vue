@@ -5,6 +5,7 @@
     tableLayout="fixed"
     :columns="columns"
     :rows="models"
+    rowKey="id"
     :paginated="true"
     :perPage="7"
     :selectable="true"
@@ -42,7 +43,7 @@
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />
     </template>
-    <template #cell-actions="{ row: model }">
+    <template v-if="!project.isGuest" #cell-actions="{ row: model }">
       <ModelActionsCell
         :project="project"
         :model="model"
@@ -69,10 +70,10 @@ import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { useStandardBreakpoints } from "../../../../../composables/responsive.js";
 // Components
+import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.js";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
-import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.js";
 
 export default {
   components: {
@@ -131,7 +132,7 @@ export default {
       () => props.models,
       () => {
         nameEditMode = reactive({});
-        props.models.forEach(row => (nameEditMode[row.id] = false));
+        props.models.forEach(model => (nameEditMode[model.id] = false));
       },
       { immediate: true }
     );
