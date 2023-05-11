@@ -8,7 +8,7 @@ export default async function authGuard(route) {
     return true;
   } else if (route.matched.some(r => r.meta.requiresAuth)) {
     // Trigger authentication process if required
-    await authenticate(route.path);
+    await authenticate(route.fullPath);
     // Continue navigation if authentication succeeds (cancel navigation otherwise)
     return isAuthenticated.value;
   }
