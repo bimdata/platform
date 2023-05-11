@@ -17,7 +17,7 @@ export default {
     onMounted(async () => {
       try {
         const result = await signInCallback();
-        router.push({ path: result.state ? result.state : "/" });
+        router.push(result.state ? result.state : "/");
       } catch (e) {
         console.error(e);
         router.push("/");
