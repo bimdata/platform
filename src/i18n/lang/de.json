@@ -437,7 +437,6 @@
     "modelsFetchError": "Unmöglich, die Modellliste abzurufen",
     "modelUploadError": "Das Modell/die Modelle konnten nicht hochgeladen werden",
     "modelUpdateError": "Fehler bei der Aktualisierung des Modells",
-    "modelDownloadError": "Beim Herunterladen ist ein Fehler aufgetreten",
     "modelMergeError": "Fehler beim Zusammenführen der Modelle",
     "modelDeleteError": "Fehler beim Löschen des Modells",
     "fileStructureFetchError": "Unmöglich, die Dateistruktur abzurufen",

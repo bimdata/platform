@@ -476,7 +476,6 @@
     "modelsFetchError": "Impossible de récupérer la liste des modèles",
     "modelUploadError": "Le(s) modèle(s) n'as pas pu être téléversé",
     "modelUpdateError": "Échec de la mise à jour du modèle",
-    "modelDownloadError": "Une erreur est survenue lors du téléchargement",
     "modelMergeError": "Échec de la fusion des modèles",
     "modelDeleteError": "Erreur lors de la suppression du modèle",
     "fileStructureFetchError": "Impossible de récupérer la structure de fichier",

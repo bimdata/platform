@@ -437,7 +437,6 @@
     "modelsFetchError": "Impossibile recuperare modelli",
     "modelUploadError": "Impossibile caricare modello",
     "modelUpdateError": "Impossibile caricare modello",
-    "modelDownloadError": "Impossibile scaricare modello",
     "modelMergeError": "Impossibile unire modelli",
     "modelDeleteError": "Impossibile eliminare modello",
     "fileStructureFetchError": "Impossibile recuperare struttura file",

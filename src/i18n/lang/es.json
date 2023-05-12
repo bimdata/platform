@@ -437,7 +437,6 @@
     "modelsFetchError": "Imposible recuperar la lista de modelos",
     "modelUploadError": "Lo(s) modelo(s) no ha(n) podido ser transferido(s)",
     "modelUpdateError": "Fracaso de la puesta en marcha del modelo",
-    "modelDownloadError": "Un error ha surgido durante la transferencia",
     "modelMergeError": "Fracaso de la fusión de los modelos",
     "modelDeleteError": "Error durante la supresión del modelo",
     "fileStructureFetchError": "Imposible recuperar la estructura del fichero",

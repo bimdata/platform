@@ -44,10 +44,6 @@ const mergeModels = async (project, models, name) => {
   await ModelService.mergeModels(project, models, name);
 };
 
-const downloadModels = async models => {
-  await ModelService.downloadModels(models);
-};
-
 const deleteModels = async (project, models, options) => {
   await ModelService.deleteModels(project, models, options);
 
@@ -170,7 +166,6 @@ export function useModels() {
     updateModels,
     updateModelName,
     mergeModels,
-    downloadModels,
     deleteModels,
     softDeleteModels,
     fetchModelLocation,

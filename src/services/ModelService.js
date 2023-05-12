@@ -1,7 +1,6 @@
 import queue from "async/queue";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
-import { downloadAll } from "../utils/download.js";
 import { isPlan } from "../utils/models.js";
 
 class ModelService {
@@ -61,21 +60,6 @@ class ModelService {
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_UPDATE_ERROR, error);
-    }
-  }
-
-  async downloadModels(models) {
-    try {
-      return await downloadAll(
-        models
-          .filter(model => model.document)
-          .map(model => ({
-            name: model.document.file_name,
-            url: model.document.file
-          }))
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.MODEL_DOWNLOAD_ERROR, error);
     }
   }
 
