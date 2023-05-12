@@ -437,7 +437,6 @@
     "modelsFetchError": "Kunne ikke hente frem modeller",
     "modelUploadError": "Kunne ikke laste opp modell",
     "modelUpdateError": "Kunne ikke oppdatere modell",
-    "modelDownloadError": "Kunne ikke laste ned modell",
     "modelMergeError": "Kunne ikke slå sammen modeller",
     "modelDeleteError": "Kunne ikke slette modell",
     "fileStructureFetchError": "Kunne ikke hente frem filstruktur",

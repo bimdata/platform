@@ -64,21 +64,6 @@ class ModelService {
     }
   }
 
-  async downloadModels(models) {
-    try {
-      return await downloadAll(
-        models
-          .filter(model => model.document)
-          .map(model => ({
-            name: model.document.file_name,
-            url: model.document.file
-          }))
-      );
-    } catch (error) {
-      throw new RuntimeError(ERRORS.MODEL_DOWNLOAD_ERROR, error);
-    }
-  }
-
   async deleteModels(project, models, { hard } = {}) {
     try {
       return await Promise.all(

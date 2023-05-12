@@ -84,6 +84,7 @@
 import { computed, ref, watch, watchEffect } from "vue";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { useModels } from "../../../../../state/models.js";
+import { useFiles } from "../../../../../state/files.js";
 import { isModel } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
@@ -115,7 +116,8 @@ export default {
   },
   emits: ["edit-metaBuilding", "file-uploaded", "tab-changed"],
   setup(props, { emit }) {
-    const { createModel, updateModels, downloadModels: download } = useModels();
+    const { createModel, updateModels } = useModels();
+    const { downloadFiles: download } = useFiles();
 
     const fileUpload = ref(null);
     const fileExtensions = computed(() =>
@@ -174,7 +176,10 @@ export default {
     };
 
     const downloadModels = async models => {
-      await download(models);
+      await download(
+        props.project,
+        models.map(({ document }) => document)
+      );
     };
 
     const uploadModels = () => {

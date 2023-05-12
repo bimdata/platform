@@ -440,7 +440,6 @@
         "modelsFetchError": "Fail to fetch models",
         "modelUploadError": "Fail to upload model",
         "modelUpdateError": "Fail to update model",
-        "modelDownloadError": "Fail to download model",
         "modelMergeError": "Fail to merge models",
         "modelDeleteError": "Fail to delete model",
         "fileStructureFetchError": "Fail to fetch file structure",

@@ -437,7 +437,6 @@
     "modelsFetchError": "Ophalen van modellen mislukt",
     "modelUploadError": "Uploaden van model mislukt",
     "modelUpdateError": "Bijwerken van model mislukt",
-    "modelDownloadError": "Downloaden van model mislukt",
     "modelMergeError": "Samenvoegen van modellen mislukt",
     "modelDeleteError": "Verwijderen van model mislukt",
     "fileStructureFetchError": "Ophalen van bestandstructuur mislukt",
