@@ -20,7 +20,7 @@ describe("Groups features", () => {
       cy.hook("btn-open-menu").click();
       cy.hook("btn-open-update").click({ force: true });
       cy.get("input[data-test-id=input-update-name]").type("New Group Name", {
-        force: true,
+        force: true
       });
       cy.hook("btn-submit-update").click({ force: true });
     });

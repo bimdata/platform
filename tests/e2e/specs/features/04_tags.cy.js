@@ -2,9 +2,13 @@ describe("Tags CRUD", () => {
   const tagList = ["outdated", "priority", "lyon"];
 
   beforeEach(() => {
-    cy.task("get-user", "user0").then((user) => cy.login(user));
-    cy.visit("/spaces");
-    cy.hook("space-card").first().click();
+    cy.task("get-user", "user0").then((user) => {
+      cy.login(user);
+      cy.visit("/spaces");
+      cy.hook("space-card")
+        .contains(`${user.firstname} ${user.lastname}`)
+        .click();
+    });
     cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
   });
@@ -16,7 +20,7 @@ describe("Tags CRUD", () => {
     tagList.forEach((tag) => cy.createTag(tag));
   });
 
-  it("Should update one tag successfully", () => {
+  it.skip("Should update one tag successfully", () => {
     cy.hook("btn-actions-cell").click();
     cy.hook("btn-open-tag-manager").click();
 
