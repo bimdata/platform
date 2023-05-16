@@ -242,14 +242,10 @@ describe("Visa CRUD", () => {
           cy.hook("btn-confirm-delete-visa-comment").click();
         });
 
-      cy.hook("visa-comments-thread-list")
-        .contains(
-          "div[data-test-id=visa-comment-item]",
-          `${firstname} ${lastname}`
-        )
-        .should("not.exist");
+      cy.hook("visa-comment-item").should("have.length", 0);
     });
   });
+
   it("Should user0 refresh user1 vote", () => {
     cy.task("get-user", "user0").then((user) => {
       cy.login(user);
@@ -314,6 +310,6 @@ describe("Visa CRUD", () => {
     cy.hook("btn-delete-visa").click();
     cy.hook("btn-confirm-visa-safe-zone").click();
 
-    cy.hook("visa-validation-item").first().should("not.exist");
+    cy.hook("visa-validation-item").should("have.length", 0);
   });
 });
