@@ -25,7 +25,7 @@
             >
               <BIMDataTextbox
                 maxWidth="300px"
-                :text="payment.subscription.cloud.name"
+                :text="getPaymentName(payment)"
               />
             </AppLink>
           </template>
@@ -103,17 +103,38 @@ export default {
         (map, sub) => ({ ...map, [sub.subscription_id]: sub }),
         {}
       );
-      return props.payments.map(payment => ({
-        ...payment,
-        subscription: subscriptionsMap[payment.subscription_id]
-      }));
+
+      return props.payments.map(payment => {
+        if (payment.parent_subscription_id) {
+          return {
+            ...payment,
+            subscription: subscriptionsMap[payment.parent_subscription_id],
+            is_data_pack: true,
+          }
+        } else {
+          return {
+            ...payment,
+            subscription: subscriptionsMap[payment.subscription_id],
+            is_data_pack: false,
+          }
+        }
+      });
     });
+
+    const getPaymentName = function(payment) {
+      let name = payment.subscription.cloud.name;
+      if (payment.is_data_pack) {
+        name += " (DataPack)";
+      }
+      return name;
+    }
 
     return {
       // References
       columns,
       displayedPayments,
-      routeNames
+      routeNames,
+      getPaymentName,
     };
   }
 };
