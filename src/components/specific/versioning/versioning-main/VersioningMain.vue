@@ -90,6 +90,7 @@ import { ref, onMounted, computed } from "vue";
 import FileService from "../../../../services/FileService.js";
 import UploadService from "../../../../services/UploadService.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
+import { fileExtension } from "../../../../utils/files.js";
 
 // Components
 import VersioningDoc from "../versioning-doc/VersioningDoc.vue";
@@ -131,7 +132,12 @@ export default {
     });
 
     const addVersion = async file => {
-      uploader.upload(file, { successorOf: allDocVersions.value[0].id });
+      const currentVersion = allDocVersions.value[0];
+      if (
+        fileExtension(file.name) === fileExtension(currentVersion.file_name)
+      ) {
+        uploader.upload(file, { successorOf: currentVersion.id });
+      }
     };
 
     const docToDelete = ref(null);
