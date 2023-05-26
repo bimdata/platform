@@ -45,7 +45,11 @@
           color="primary"
           width="100%"
           @click="
-            fileUploadInput('file', event => addVersion(event.target.files[0]))
+            fileUploadInput(
+              'file',
+              event => addVersion(event.target.files[0]),
+              { accept: [currentExtension] }
+            )
           "
         >
           <BIMDataIcon
@@ -132,12 +136,7 @@ export default {
     });
 
     const addVersion = async file => {
-      const currentVersion = allDocVersions.value[0];
-      if (
-        fileExtension(file.name) === fileExtension(currentVersion.file_name)
-      ) {
-        uploader.upload(file, { successorOf: currentVersion.id });
-      }
+      uploader.upload(file, { successorOf: allDocVersions.value[0].id });
     };
 
     const docToDelete = ref(null);
@@ -198,6 +197,7 @@ export default {
       allDocVersions,
       hasPrevVersions,
       getAllDocVersions,
+      currentExtension: fileExtension(props.document.file_name),
       // methods
       fileUploadInput,
       addVersion,
