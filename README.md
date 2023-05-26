@@ -29,8 +29,8 @@ Here are the instructions to get the platform up and running on your development
 - **(1)** Get the sources
 
 ```
-$ git clone git@github.com:bimdata/platform-next.git
-$ cd platform-next/
+$ git clone git@github.com:bimdata/platform.git
+$ cd platform/
 ```
 
 - **(2)** Install dependencies

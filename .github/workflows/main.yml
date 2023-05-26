@@ -1,4 +1,4 @@
-name: Platform-next
+name: Platform
 
 on:
   push:
