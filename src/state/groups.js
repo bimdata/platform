@@ -88,14 +88,7 @@ const updateGroupMembers = async (project, group, members) => {
   return { addedMembers, removedMembers };
 };
 
-const updateGroupPermission = async (project, folder, group, permission) => {
-  return await GroupService.updateGroupPermission(
-    project,
-    folder,
-    group,
-    permission
-  );
-};
+const updateGroupPermission = GroupService.updateGroupPermission;
 
 const deleteGroup = async (project, group) => {
   await GroupService.deleteGroup(project, group);

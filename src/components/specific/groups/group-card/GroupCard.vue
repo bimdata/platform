@@ -25,6 +25,7 @@
             ></div>
             <BIMDataButton
               v-if="actionMenu"
+              data-test-id="btn-open-menu"
               class="group-card__btn-menu"
               ghost
               rounded

@@ -161,6 +161,7 @@
   },
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
+    "propagate": "Propager les droits aux sous dossiers",
     "rightsHeader": "Droits",
     "membersHeader": "Membres",
     "searchInputPlaceholder": "Rechercher un groupe",
@@ -432,7 +433,7 @@
     "homeButtonText": "Home"
   },
   "FolderPermissionSelector": {
-    "label": "Tout le monde",
+    "label": "Par défaut",
     "options": {
       "accessDenied": "Accès refusé",
       "readOnly": "Lecture seule",
@@ -445,6 +446,7 @@
   },
   "GroupPermissionSelector": {
     "options": {
+      "default": "Par défaut",
       "accessDenied": "Accès refusé",
       "readOnly": "Lecture seule",
       "readWrite": "Lecture / Écriture"

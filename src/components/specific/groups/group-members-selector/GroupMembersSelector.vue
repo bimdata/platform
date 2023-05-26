@@ -10,6 +10,7 @@
     <div class="list-container">
       <transition-group name="list">
         <div
+          data-test-id="user-list-item"
           class="user-add-card"
           v-for="user of displayedUsers"
           :key="user.id"
@@ -24,6 +25,7 @@
             </div>
           </div>
           <BIMDataButton
+            data-test-id="btn-add-member"
             width="36px"
             height="36px"
             fill
