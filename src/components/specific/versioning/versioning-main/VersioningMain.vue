@@ -45,7 +45,11 @@
           color="primary"
           width="100%"
           @click="
-            fileUploadInput('file', event => addVersion(event.target.files[0]))
+            fileUploadInput(
+              'file',
+              event => addVersion(event.target.files[0]),
+              { accept: [currentExtension] }
+            )
           "
         >
           <BIMDataIcon
@@ -90,6 +94,7 @@ import { ref, onMounted, computed } from "vue";
 import FileService from "../../../../services/FileService.js";
 import UploadService from "../../../../services/UploadService.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
+import { fileExtension } from "../../../../utils/files.js";
 
 // Components
 import VersioningDoc from "../versioning-doc/VersioningDoc.vue";
@@ -192,6 +197,7 @@ export default {
       allDocVersions,
       hasPrevVersions,
       getAllDocVersions,
+      currentExtension: fileExtension(props.document.file_name),
       // methods
       fileUploadInput,
       addVersion,
