@@ -95,8 +95,7 @@ const tabsDef = [
   },
   {
     id: "bcf",
-    icon: "bcf",
-    beta: true
+    icon: "bcf"
   }
 ];
 
