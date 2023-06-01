@@ -16,7 +16,7 @@
     "@bimdata/design-system": "2.0.0-rc.11",
     "@bimdata/guided-tour-components": "1.0.3",
     "@bimdata/typescript-fetch-api-client": "9.8.0",
-    "@bimdata/viewer": "^1.10.0-rc.69",
+    "@bimdata/viewer": "^1.10.0-rc.70",
     "async": "^3.2.4",
     "lodash": "^4.17.21",
     "maplibre-gl": "^2.4.0",
