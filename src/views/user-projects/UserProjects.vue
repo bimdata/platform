@@ -66,12 +66,12 @@ export default {
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       userProjects,
-      project => project.name
+      project => project.name + project.description ?? ""
     );
 
     const { sortToggle: sortProjects } = useListSort(
       displayedProjects,
-      project => project.name
+      project => project.name + project.description ?? ""
     );
 
     return {

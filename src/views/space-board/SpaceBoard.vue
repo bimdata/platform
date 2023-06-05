@@ -122,7 +122,7 @@ export default {
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
-      project => project.name
+      project => project.name + project.description ?? ""
     );
 
     const { sortToggle: sortProjects } = useListSort(
