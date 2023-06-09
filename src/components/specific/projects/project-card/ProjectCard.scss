@@ -78,3 +78,19 @@
     }
   }
 }
+
+.project-card-placeholder {
+  min-width: $card-width;
+  width: $card-width;
+  height: $card-height;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-silver-light);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .bimdata-spinner {
+    transform: scale(2);
+  }
+}
