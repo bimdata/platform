@@ -71,7 +71,7 @@ async function onAccessTokenExpired() {
   // We wait for a success call before reloading the page
   const origin = window.location.origin;
   let response;
-  let retriesLeft = 10;
+  let retriesLeft = 40;  // 20 * 0.2 sec = 8 seconds to wake up
   do {
     retriesLeft--;
     await delay(200);
