@@ -35,6 +35,7 @@ const PLUGINS_CONFIG = {
   header: {
     warnings: false
   },
+  panorama: true,
   properties: {
     editProperties: true
   },
