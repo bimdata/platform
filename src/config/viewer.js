@@ -19,7 +19,8 @@ const WINDOWS = Object.freeze({
   IFC2D: "2d",
   IFC3D: "3d",
   PLAN: "plan",
-  POINT_CLOUD: "pointCloud"
+  POINT_CLOUD: "pointCloud",
+  PANORAMA: "panorama",
 });
 
 /**

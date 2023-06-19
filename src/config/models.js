@@ -102,7 +102,7 @@ const MODEL_CONFIG = Object.freeze({
   },
   [MODEL_TYPE.JPEG]: {
     ext: [MODEL_EXTENSIONS.JPEG, MODEL_EXTENSIONS.JPG],
-    window: WINDOWS.PLAN,
+    window: WINDOWS.PANORAMA,
     icon: "fileJpegPolychrome",
   },
   [MODEL_TYPE.META_BUILDING]: {
@@ -117,7 +117,7 @@ const MODEL_CONFIG = Object.freeze({
   },
   [MODEL_TYPE.PNG]: {
     ext: [MODEL_EXTENSIONS.PNG],
-    window: WINDOWS.PLAN,
+    window: WINDOWS.PANORAMA,
     icon: "filePngPolychrome",
   },
   [MODEL_TYPE.POINT_CLOUD]: {
