@@ -43,7 +43,7 @@
         :disabled="!isModelReady"
         :project="project"
         :model="model"
-        :window="WINDOWS.PLAN"
+        :window="MODEL_CONFIG[model.type].window"
         text="2D"
       />
     </template>
@@ -104,7 +104,7 @@
 <script>
 import { computed } from "vue";
 import { useToggle } from "../../../../../../composables/toggle.js";
-import { MODEL_STATUS, MODEL_TYPE } from "../../../../../../config/models.js";
+import { MODEL_STATUS, MODEL_TYPE, MODEL_CONFIG } from "../../../../../../config/models.js";
 import { WINDOWS } from "../../../../../../config/viewer.js";
 // Components
 import ViewerButton from "./ViewerButton.vue";
@@ -189,6 +189,7 @@ export default {
       // References
       isModelReady,
       MODEL_TYPE,
+      MODEL_CONFIG,
       showMenu,
       WINDOWS,
       menuItems,
