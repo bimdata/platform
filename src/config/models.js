@@ -107,7 +107,7 @@ const MODEL_CONFIG = Object.freeze({
   },
   [MODEL_TYPE.META_BUILDING]: {
     ext: [],
-    window: WINDOWS.PLAN,
+    window: WINDOWS.PANORAMA,
     icon: "filePlanPolychrome",
   },
   [MODEL_TYPE.PDF]: {
