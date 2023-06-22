@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { MODEL_CONFIG } from "../../../../config/models.js";

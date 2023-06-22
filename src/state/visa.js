@@ -1,4 +1,4 @@
-import async from "async";
+import mapLimit from "async/mapLimit";
 import FileService from "../services/FileService.js";
 import VisaService from "../services/VisaService.js";
 
@@ -53,7 +53,7 @@ const resumeVisa = async (visaId, baseInfo) => {
 const fetchCreatedVisas = async project => {
   const visas = await VisaService.fetchCreatedVisas(project);
 
-  const visasWithDoc = await async.mapLimit(visas, 20, async visa => ({
+  const visasWithDoc = await mapLimit(visas, 20, async visa => ({
     ...visa,
     document: await FileService.getDocument(project, { id: visa.document_id })
   }));
@@ -66,7 +66,7 @@ const fetchCreatedVisas = async project => {
 const fetchToValidateVisas = async project => {
   const visas = await VisaService.fetchToValidateVisas(project);
 
-  const visasWithDoc = await async.mapLimit(visas, 20, async visa => ({
+  const visasWithDoc = await mapLimit(visas, 20, async visa => ({
     ...visa,
     document: await FileService.getDocument(project, { id: visa.document_id })
   }));

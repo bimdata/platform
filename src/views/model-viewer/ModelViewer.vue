@@ -15,7 +15,9 @@
 
 <script>
 import makeBIMDataViewer from "@bimdata/viewer";
-import { set, merge, cloneDeep } from "lodash";
+import set from "lodash/set";
+import merge from "lodash/merge";
+import cloneDeep from "lodash/cloneDeep";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";

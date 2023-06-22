@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { contexts, useLoadingContext } from "./composables/loading.js";

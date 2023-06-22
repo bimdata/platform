@@ -1,4 +1,4 @@
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 import { ref } from "vue";
 import { BREAKPOINTS } from "../config/responsive.js";
 
