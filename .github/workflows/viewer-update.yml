@@ -10,6 +10,11 @@ env:
 jobs:
   viewer-update:
     runs-on: [self-hosted, common]
+    if: contains('
+      refs/heads/develop
+      refs/heads/master
+      refs/heads/main'
+      , github.event.client_payload.ref)
     steps:
       - uses: actions/checkout@v3
         with:
