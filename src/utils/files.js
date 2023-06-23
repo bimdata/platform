@@ -19,7 +19,8 @@ function fileExtension(fileName) {
  * @returns {String}
  */
 function fileDirectory(file) {
-  return file.webkitRelativePath?.split("/").slice(0, -1).join("/") ?? "";
+  const filePath = file.webkitRelativePath || file._webkitRelativePath;
+  return filePath?.split("/").slice(0, -1).join("/") ?? "";
 }
 
 /**
@@ -79,8 +80,13 @@ function treeIdGenerator(projectToImport) {
  * @param {FileSystemFileEntry} entry
  * @returns {Promise<File>}
  */
-function getFileFromFileEntry(entry) {
-  return new Promise((resolve, reject) => entry.file(resolve, reject));
+async function getFileFromFileEntry(entry) {
+  const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+  if (!file.webkitRelativePath) {
+    // Chrome remove path for unknow reason
+    file._webkitRelativePath = entry.fullPath.replace('/', '');
+  }
+  return file
 }
 
 /**
