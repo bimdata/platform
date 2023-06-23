@@ -81,12 +81,14 @@ function treeIdGenerator(projectToImport) {
  * @returns {Promise<File>}
  */
 async function getFileFromFileEntry(entry) {
-  const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+  const file = await new Promise((resolve, reject) =>
+    entry.file(resolve, reject)
+  );
   if (!file.webkitRelativePath) {
-    // Chrome remove path for unknow reason
-    file._webkitRelativePath = entry.fullPath.replace('/', '');
+    // Chrome remove path for an unknown reason
+    file._webkitRelativePath = entry.fullPath?.replace("/", "");
   }
-  return file
+  return file;
 }
 
 /**
