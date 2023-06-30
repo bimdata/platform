@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { defineConfig } from "vite";
+import { defineConfig, searchForWorkspaceRoot } from "vite";
 import env from "vite-plugin-environment";
 import vue from "@vitejs/plugin-vue";
 
@@ -17,7 +17,14 @@ export default defineConfig(({ mode }) => {
       }
     },
     server: {
-      port: 8080
+      port: 8080,
+      fs: {
+        allow: [
+          // Allow to load design system fonts in dev mode
+          searchForWorkspaceRoot(process.cwd()),
+          "../design-system/src/assets/fonts"
+        ]
+      }
     }
   };
 
