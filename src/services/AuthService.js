@@ -1,6 +1,7 @@
 import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 import OIDC_CONFIG from "../config/oidc-config.js";
 import { tokenHasExpired } from "../utils/auth.js";
+import { delay } from "../utils/async.js";
 
 const userManager = new UserManager({
   ...OIDC_CONFIG,
@@ -64,9 +65,19 @@ async function signinEndWithForcedLogout(url, args = {}) {
   return user;
 }
 
-function onAccessTokenExpired() {
+async function onAccessTokenExpired() {
   console.log("Access token expired, reloading the platform...");
-  location.reload();
+  // After wake-up, network may take few seconds to come back online.
+  // We wait for a success call before reloading the page
+  const origin = window.location.origin;
+  let response;
+  let retriesLeft = 40;  // 20 * 0.2 sec = 8 seconds to wake up
+  do {
+    retriesLeft--;
+    await delay(200);
+    response = await fetch(origin, {method: 'HEAD'});
+  } while (retriesLeft > 0 && !response.ok);
+  location.reload()
 }
 
 // Override UserManager `_signinEnd` method with our custom implementation
@@ -91,7 +102,7 @@ class AuthServive {
           return;
         }
         // Else refresh access token silently
-        user = await userManager.signInSilent();
+        user = await userManager.signinSilent();
       }
 
       // Keep access token up to date across refresh
