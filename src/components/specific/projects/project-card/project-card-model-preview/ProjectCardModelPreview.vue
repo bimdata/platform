@@ -81,8 +81,8 @@ export default {
       container,
       image,
       images,
-      viewport,
       MODEL_TYPE,
+      viewport,
       // Methods
       nextImage,
       previousImage

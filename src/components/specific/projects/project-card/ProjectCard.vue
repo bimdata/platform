@@ -1,5 +1,6 @@
 <template>
   <FlippableCard
+    v-if="visible"
     class="project-card"
     data-test-id="project-card"
     :data-test-param="project.id"
@@ -57,17 +58,21 @@
       <ProjectCardActionMenu :project="project" @close="closeMenu" />
     </template>
   </FlippableCard>
+
+  <div v-else ref="placeholder" class="project-card-placeholder">
+    <BIMDataSpinner v-if="loading" />
+  </div>
 </template>
 
 <script>
-import { ref, watch, computed } from "vue";
+import { inject, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "../../../../composables/toggle.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
 import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
-import { isSpaceAdmin } from "../../../../utils/spaces.js";
 import { openInViewer } from "../../../../utils/models.js";
+import { isSpaceAdmin } from "../../../../utils/spaces.js";
 
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
@@ -103,26 +108,13 @@ export default {
   setup(props) {
     const router = useRouter();
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
+    const viewContainer = inject("viewContainer");
 
+    const visible = ref(false);
+    const loading = ref(false);
+    const placeholder = ref(null);
+    const displayedModels = ref([]);
     const currentModel = ref(null);
-    const models = ref([]);
-    const displayedModels = computed(() =>
-      models.value.filter(
-        model => !model.archived && model.type !== MODEL_TYPE.META_BUILDING
-      )
-    );
-
-    watch(
-      () => props.project,
-      async () => {
-        models.value = await ModelService.fetchModels(props.project);
-      },
-      { immediate: true }
-    );
-
-    watch(displayedModels, () => {
-      currentModel.value = displayedModels.value[0];
-    });
 
     const onPreviewChange = model => {
       currentModel.value = model;
@@ -132,18 +124,60 @@ export default {
       openInViewer(router, props.project, currentModel.value);
     };
 
+    onMounted(() => {
+      const observer = new IntersectionObserver(
+        ([{ isIntersecting }]) => {
+          if (!isIntersecting) return;
+
+          watch(
+            () => props.project,
+            async () => {
+              loading.value = true;
+              const models = await ModelService.fetchModels(props.project);
+              displayedModels.value = models.filter(
+                model =>
+                  !model.archived && model.type !== MODEL_TYPE.META_BUILDING
+              );
+              loading.value = false;
+              visible.value = true;
+            },
+            { immediate: true }
+          );
+
+          watch(
+            displayedModels,
+            () => {
+              currentModel.value = displayedModels.value[0];
+            },
+            { immediate: true }
+          );
+
+          observer.disconnect();
+        },
+        {
+          root: viewContainer.value,
+          rootMargin: `${viewContainer.value.clientHeight}px`
+        }
+      );
+
+      observer.observe(placeholder.value);
+    });
+
     return {
       // References
       currentModel,
       displayedModels,
+      loading,
+      placeholder,
       routeNames,
       showMenu,
+      visible,
       // Methods
       closeMenu,
       goToModelViewer,
+      isSpaceAdmin,
       onPreviewChange,
-      openMenu,
-      isSpaceAdmin
+      openMenu
     };
   }
 };

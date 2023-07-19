@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import isEmpty from "lodash/isEmpty";
-import { onMounted, ref, watch } from "vue";
+import { isEmpty } from "lodash/isEmpty";
+import { onMounted, provide, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { contexts, useLoadingContext } from "./composables/loading.js";
 import {
@@ -62,6 +62,8 @@ export default {
     const { loadGuidedTours, setTourCompleted, completedTours } = useUser();
 
     const viewContainer = ref(null);
+    provide("viewContainer", viewContainer);
+
     const tourToDisplay = ref(null);
 
     const setTourToDisplay = () => {
