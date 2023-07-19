@@ -59,7 +59,7 @@
         height: 32px;
         margin-bottom: calc(var(--spacing-unit) * 2);
         gap: 8px;
-        ::v-deep .bimdata-checkbox__mark {
+        :deep(.bimdata-checkbox__mark) {
           width: 15px;
           height: 15px;
           &::after {
