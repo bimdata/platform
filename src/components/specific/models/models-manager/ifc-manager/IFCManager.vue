@@ -13,7 +13,7 @@ import { segregateBySource } from "../../../../../utils/models.js";
 // Components
 import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
 
-const tabsDef = [{ id: "upload" }, { id: "split" }, { id: "archive" }];
+const tabsDef = [{ id: "upload" }, { id: "split" }, {id: "merge"}, { id: "archive" }];
 
 export default {
   components: {
