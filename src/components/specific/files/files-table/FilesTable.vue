@@ -28,7 +28,7 @@
           style="margin: 5px 14px"
           @click="$emit('back-parent-folder', folder)"
         >
-          <BIMDataIcon name="arrow" size="xxs" style="cursor: pointer" />
+          <BIMDataIconArrow size="xxs" style="cursor: pointer" />
         </BIMDataButton>
         <FilesManagerBreadcrumb
           :file="folder"

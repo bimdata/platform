@@ -33,7 +33,7 @@
             icon
             @click="addMember(user)"
           >
-            <BIMDataIcon name="plus" size="s" />
+            <BIMDataIconPlus size="s" />
           </BIMDataButton>
         </div>
       </transition-group>

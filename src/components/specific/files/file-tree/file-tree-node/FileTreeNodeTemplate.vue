@@ -7,9 +7,8 @@
       @click="select"
     >
       <div class="file-tree-node__node__background"></div>
-      <BIMDataIcon
+      <BIMDataIconChevron
         class="file-tree-node__node__icon-arrow"
-        name="chevron"
         size="xxs"
         :rotate="showChildren ? 90 : 0"
         :style="{

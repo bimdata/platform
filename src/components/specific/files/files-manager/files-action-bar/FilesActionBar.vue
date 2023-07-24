@@ -8,7 +8,7 @@
       squared
       @click="$emit('delete', files)"
     >
-      <BIMDataIcon name="delete" size="xs" margin="0 6px 0 0" />
+      <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
       <span>{{ $t("FilesActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
@@ -19,7 +19,7 @@
       squared
       @click="toggleFolderSelector"
     >
-      <BIMDataIcon name="folderMove" size="s" margin="0 6px 0 0" />
+      <BIMDataIconFolderMove size="s" margin="0 6px 0 0" />
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
@@ -29,7 +29,7 @@
       squared
       @click="$emit('download', files)"
     >
-      <BIMDataIcon name="download" size="s" margin="0 6px 0 0" />
+      <BIMDataIconDownload size="s" margin="0 6px 0 0" />
       <span>{{ $t("FilesActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
 

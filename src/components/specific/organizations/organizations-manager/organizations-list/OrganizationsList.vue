@@ -1,7 +1,7 @@
 <template>
   <div class="organizations-list">
     <BIMDataButton outline radius color="primary" @click="open('form')">
-      <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+      <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
       <span>{{ $t("OrganizationsList.createButtonText") }}</span>
     </BIMDataButton>
 

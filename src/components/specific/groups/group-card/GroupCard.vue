@@ -32,14 +32,9 @@
               icon
               @click.prevent.stop="openMenu"
             >
-              <BIMDataIcon
-                name="ellipsis"
-                size="l"
-                fill
-                color="granite-light"
-              />
+              <BIMDataIconEllipsis size="l" fill color="granite-light" />
             </BIMDataButton>
-            <BIMDataIcon name="group" size="xxl" />
+            <BIMDataIconGroup size="xxl" />
             <BIMDataTextbox class="group-card__title" :text="group.name" />
             <UserAvatarList
               class="group-card__avatars"

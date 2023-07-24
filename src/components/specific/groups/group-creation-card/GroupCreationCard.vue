@@ -22,7 +22,7 @@
               icon
               @click.stop="closeCreationForm"
             >
-              <BIMDataIcon name="close" size="xxs" />
+              <BIMDataIconClose name="close" size="xxs" />
             </BIMDataButton>
           </div>
           <BIMDataInput
@@ -56,7 +56,7 @@
           @click="openCreationForm"
         >
           <div class="group-creation-card__btn-open__icon">
-            <BIMDataIcon name="plus" size="l" />
+            <BIMDataIconPlus size="l" />
           </div>
           <div class="group-creation-card__btn-open__text">
             {{ $t("GroupCreationCard.text") }}

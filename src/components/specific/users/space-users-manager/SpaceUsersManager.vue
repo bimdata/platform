@@ -32,7 +32,7 @@
           color="primary"
           @click="openInvitationForm"
         >
-          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+          <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
           <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
         </BIMDataButton>
       </template>

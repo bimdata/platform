@@ -7,7 +7,7 @@
       icon
       @click="toggleMenu"
     >
-      <BIMDataIcon name="ellipsis" size="l" />
+      <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
     <transition name="fade">
       <div class="visa-summary-validator-actions__menu" v-show="showMenu">

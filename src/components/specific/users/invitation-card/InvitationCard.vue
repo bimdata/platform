@@ -21,7 +21,7 @@
       icon
       @click="cancelInvitation"
     >
-      <BIMDataIcon name="delete" size="xs" />
+      <BIMDataIconDelete size="xs" />
     </BIMDataButton>
   </div>
 </template>

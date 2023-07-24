@@ -9,7 +9,7 @@
         icon
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxs" />
+        <BIMDataIconClose size="xxs" />
       </BIMDataButton>
     </div>
     <BIMDataInput

@@ -10,7 +10,7 @@
       squared
       @click="$emit('delete', models)"
     >
-      <BIMDataIcon name="delete" size="xs" margin="0 6px 0 0" />
+      <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
     </BIMDataButton>
 
@@ -54,7 +54,7 @@
       squared
       @click="$emit('download', models)"
     >
-      <BIMDataIcon name="download" size="s" margin="0 6px 0 0" />
+      <BIMDataIconDownload size="s" margin="0 6px 0 0" />
       <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
     </BIMDataButton>
   </div>

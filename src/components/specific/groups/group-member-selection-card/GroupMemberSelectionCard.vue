@@ -9,7 +9,7 @@
       radius
       icon
     >
-      <BIMDataIcon name="plus" size="l" />
+      <BIMDataIconPlus size="l" />
     </BIMDataButton>
     <div class="group-member-selection-card__text">
       {{ $t("GroupMemberSelectionCard.text") }}

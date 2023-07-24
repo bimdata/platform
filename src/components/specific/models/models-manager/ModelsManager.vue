@@ -10,7 +10,7 @@
           @click="selectTab(tab)"
         >
           <span class="models-manager__tab__icon">
-            <BIMDataIcon size="m" :name="tab.icon" />
+            <BIMDataIcon :name="tab.icon" size="m" />
           </span>
           <span v-if="!isMD" class="models-manager__tab__text">
             {{ tab.text }}
@@ -24,9 +24,8 @@
 
       <div class="models-manager__menu" v-click-away="closeMenu">
         <BIMDataButton>
-          <BIMDataIcon
+          <BIMDataIconEllipsis
             color="granite-light"
-            name="ellipsis"
             size="l"
             fill
             :rotate="90"

@@ -34,13 +34,13 @@
           icon
           @click="closeUpdateForm"
         >
-          <BIMDataIcon name="close" size="xxs" />
+          <BIMDataIconClose size="xxs" />
         </BIMDataButton>
       </div>
 
       <div v-else class="model-name-cell__content">
         <template v-if="model.type === MODEL_TYPE.META_BUILDING">
-          <BIMDataIcon name="building" size="s" />
+          <BIMDataIconBuilding size="s" />
         </template>
         <template v-else>
           <BIMDataIcon :name="MODEL_CONFIG[model.type].icon" size="m" />

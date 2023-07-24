@@ -18,8 +18,7 @@
       <div class="visa-add__content" :class="{ safeZone: isSafeZone }">
         <div class="visa-add__content__header">
           <div class="visa-add__content__header__left-side">
-            <BIMDataIcon
-              name="visa"
+            <BIMDataIconVisa
               fill
               color="primary"
               size="s"
@@ -29,7 +28,7 @@
           </div>
           <div class="visa-add__content__header__right-side">
             <BIMDataButton ghost rounded icon @click="safeZoneHandler">
-              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+              <BIMDataIconClose size="xxs" fill color="granite-light" />
             </BIMDataButton>
           </div>
         </div>

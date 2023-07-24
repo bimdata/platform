@@ -26,7 +26,7 @@
         icon
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxxs" />
+        <BIMDataIconClose size="xxxs" />
       </BIMDataButton>
       <div class="file-uploader__upload-area__text">
         {{ $t("FileUploader.uploadAreaText") }}

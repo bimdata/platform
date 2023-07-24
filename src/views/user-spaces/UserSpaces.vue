@@ -22,7 +22,7 @@
           icon
           @click="sortSpaces"
         >
-          <BIMDataIcon name="alphabeticalSort" size="s" />
+          <BIMDataIconAlphabeticalSort size="s" />
         </BIMDataButton>
         <BIMDataButton
           v-if="isSubscriptionEnabled"
@@ -33,7 +33,7 @@
           @click="openOrganizationsManager"
         >
           <template v-if="isLG">
-            <BIMDataIcon name="organization" size="xs" />
+            <BIMDataIconOrganization size="xs" />
           </template>
           <template v-else>
             {{ $t("UserSpaces.organizationsButtonText") }}
@@ -50,7 +50,7 @@
               radius
               :icon="isLG"
             >
-              <BIMDataIcon name="plus" size="xxxs" />
+              <BIMDataIconPlus size="xxxs" />
               <span v-if="!isLG" style="margin-left: 6px">
                 {{ $t("UserSpaces.createButtonText") }}
               </span>
@@ -66,7 +66,7 @@
             radius
             @click="openCreationForm"
           >
-            <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+            <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
             <span>{{ $t("UserSpaces.createButtonText") }}</span>
           </BIMDataButton>
         </template>

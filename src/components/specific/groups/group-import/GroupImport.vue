@@ -7,10 +7,9 @@
       icon
       @click="openGroupImport"
     >
-      <BIMDataIcon name="group" size="xs" margin="0 6px 0 0" />
+      <BIMDataIconGroup size="xs" margin="0 6px 0 0" />
       <span>{{ $t("GroupImport.title") }}</span>
-      <BIMDataIcon
-        name="chevron"
+      <BIMDataIconChevron
         size="xxs"
         margin="0 0 0 auto"
         :rotate="isOpen ? 90 : 0"
@@ -33,15 +32,14 @@
             <BIMDataTextbox width="70%" :text="item.text" :tooltip="false" />
             <div class="flex items-center">
               <template v-if="isWarning(item)">
-                <BIMDataIcon
+                <BIMDataIconWarning
                   class="group-import__menu__warning"
-                  name="warning"
                   color="high"
                   size="xxs"
                   fill
                 />
               </template>
-              <BIMDataIcon name="chevron" size="xxs" margin="0 0 0 6px" />
+              <BIMDataIconChevron size="xxs" margin="0 0 0 6px" />
             </div>
           </div>
         </template>
@@ -49,7 +47,7 @@
         <template #children="{ item }">
           <div v-if="isWarning(item)" class="group-import__children__no-child">
             <div class="group-import__children__no-child__content">
-              <BIMDataIcon name="warning" color="high" size="xs" fill />
+              <BIMDataIconWarning color="high" size="xs" fill />
               {{ item.children[0].text }}
             </div>
           </div>

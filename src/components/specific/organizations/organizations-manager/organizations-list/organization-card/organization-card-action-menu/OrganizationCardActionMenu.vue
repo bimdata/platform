@@ -17,10 +17,10 @@
     <transition name="fade">
       <div class="organization-card-action-menu__container" v-show="showMenu">
         <BIMDataButton ghost rounded icon @click="$emit('update')">
-          <BIMDataIcon name="edit" size="xxs" />
+          <BIMDataIconEdit size="xxs" />
         </BIMDataButton>
         <BIMDataButton ghost rounded icon disabled @click="$emit('delete')">
-          <BIMDataIcon name="delete" size="xxs" />
+          <BIMDataIconDelete size="xxs" />
         </BIMDataButton>
       </div>
     </transition>

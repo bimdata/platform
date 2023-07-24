@@ -5,7 +5,7 @@
       class="organizations-manager__header"
     >
       <BIMDataButton ghost radius :disabled="localState.loading" @click="back">
-        <BIMDataIcon name="arrow" size="xxs" margin="0 6px 0 0" />
+        <BIMDataIconArrow size="xxs" margin="0 6px 0 0" />
         <span>{{ $t("OrganizationsManager.backButtonText") }}</span>
       </BIMDataButton>
       <BIMDataTextbox
@@ -20,7 +20,7 @@
         :disabled="localState.loading"
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
 

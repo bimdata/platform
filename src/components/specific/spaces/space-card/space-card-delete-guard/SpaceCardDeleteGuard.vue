@@ -9,7 +9,7 @@
         icon
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxxs" />
+        <BIMDataIconClose size="xxxs" />
       </BIMDataButton>
     </div>
     <div class="space-card-delete-guard__message">

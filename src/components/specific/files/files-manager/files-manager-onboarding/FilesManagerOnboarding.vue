@@ -39,7 +39,7 @@
               icon
               @click="openGedMenu"
             >
-              <BIMDataIcon name="plus" size="s" />
+              <BIMDataIconPlus size="s" />
             </BIMDataButton>
           </template>
           <template v-if="isGedMenuOpen">

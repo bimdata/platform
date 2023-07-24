@@ -1,7 +1,7 @@
 <template>
   <div class="organization-selector">
     <div class="organization-selector__title">
-      <BIMDataIcon name="organization" size="m" fill color="primary" />
+      <BIMDataIconOrganization size="m" fill color="primary" />
       <h2>{{ $t("OrganizationSelector.title") }}</h2>
     </div>
     <div class="organization-selector__select">

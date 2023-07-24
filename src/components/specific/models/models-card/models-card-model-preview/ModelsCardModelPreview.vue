@@ -37,7 +37,7 @@
           :disabled="image.index === 1"
           @click="previousImage"
         >
-          <BIMDataIcon name="chevron" size="xxs" :rotate="180" />
+          <BIMDataIconChevron size="xxs" :rotate="180" />
         </BIMDataButton>
         <BIMDataButton
           class="models-card-model-preview__switcher__btn-next"
@@ -47,7 +47,7 @@
           :disabled="image.index === images.length"
           @click="nextImage"
         >
-          <BIMDataIcon name="chevron" size="xxs" />
+          <BIMDataIconChevron size="xxs" />
         </BIMDataButton>
       </template>
     </div>

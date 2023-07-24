@@ -10,7 +10,7 @@
       icon
       @click="() => (isOpen ? closeMenu() : openMenu())"
     >
-      <BIMDataIcon name="ellipsis" size="l" />
+      <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
 
     <BIMDataMenu

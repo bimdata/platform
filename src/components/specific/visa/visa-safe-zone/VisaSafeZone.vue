@@ -1,7 +1,7 @@
 <template>
   <div class="visa-safe-zone">
     <div class="visa-safe-zone__content">
-      <BIMDataIcon name="warning" size="l" class="fill-high" />
+      <BIMDataIconWarning size="l" class="fill-high" />
       <span>{{ $t(`Visa.safeZone.${actionType}.content`) }}</span>
     </div>
     <div class="visa-safe-zone__action">

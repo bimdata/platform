@@ -3,7 +3,7 @@
     <div class="visa-add-validator__header">
       <div class="visa-add-validator__header__left-side">
         <BIMDataButton ghost rounded icon @click="$emit('get-back')">
-          <BIMDataIcon name="arrow" size="xxs" />
+          <BIMDataIconArrow size="xxs" />
         </BIMDataButton>
         <span>{{ $t("Visa.add.validatorView.getBack") }}</span>
       </div>
@@ -12,7 +12,7 @@
       </div>
       <div class="visa-add-validator__header__right-side">
         <BIMDataButton ghost rounded icon @click="$emit('get-back')">
-          <BIMDataIcon name="close" size="xxxs" />
+          <BIMDataIconClose size="xxxs" />
         </BIMDataButton>
       </div>
     </div>

@@ -20,7 +20,7 @@
           fill
           radius
         >
-          <BIMDataIcon name="plus" size="xxs" margin="0 9px 0 0" />
+          <BIMDataIconPlus size="xxs" margin="0 9px 0 0" />
           <span>{{ $t("SubscribeCard.button") }}</span>
         </BIMDataButton>
       </AppLink>

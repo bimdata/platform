@@ -29,7 +29,7 @@
             icon
             @click="isSafeZone = false"
           >
-            <BIMDataIcon name="close" size="xxxs" />
+            <BIMDataIconClose size="xxxs" />
           </BIMDataButton>
         </div>
       </div>
@@ -56,9 +56,8 @@
         </template>
         <div class="tags-item__content__info__action">
           <template v-if="!editTagName">
-            <BIMDataIcon
+            <BIMDataIconEdit
               data-test-id="btn-edit-tag-name"
-              name="edit"
               size="xxs"
               fill
               color="default"
@@ -67,8 +66,7 @@
             />
           </template>
           <template v-else>
-            <BIMDataIcon
-              name="close"
+            <BIMDataIconClose
               size="xxs"
               fill
               color="default"
@@ -76,9 +74,8 @@
               @click="onCancelSubmitTagName"
             />
           </template>
-          <BIMDataIcon
+          <BIMDataIconDelete
             data-test-id="btn-delete-tag"
-            name="delete"
             size="xxs"
             fill
             color="high"

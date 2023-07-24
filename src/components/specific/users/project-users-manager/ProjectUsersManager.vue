@@ -15,10 +15,10 @@
               icon
               @click="toggleInvitationForm"
             >
-              <BIMDataIcon name="addUser" size="xs" />
+              <BIMDataIconAddUser size="xs" />
             </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="toggleUserSearch">
-              <BIMDataIcon name="search" size="xs" />
+              <BIMDataIconSearch size="xs" />
             </BIMDataButton>
           </template>
           <template #content>

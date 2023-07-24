@@ -9,7 +9,7 @@
           icon
           @click="onOpenEdit"
         >
-          <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
+          <BIMDataIconEdit size="xxs" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton
           data-test-id="btn-delete-visa-comment"
@@ -18,10 +18,10 @@
           icon
           @click="onOpenDelete"
         >
-          <BIMDataIcon name="delete" size="xxs" fill color="granite-light" />
+          <BIMDataIconDelete size="xxs" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton ghost rounded icon @click="toggleMenu">
-          <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+          <BIMDataIconClose size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </template>
       <template v-if="isEditing">
@@ -32,7 +32,7 @@
           icon
           @click="onUndoEdit"
         >
-          <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
+          <BIMDataIconUndo size="xxs" fill color="granite-light" />
         </BIMDataButton>
         <BIMDataButton
           data-test-id="btn-edit-visa-comment"
@@ -41,7 +41,7 @@
           icon
           @click="onConfirmEdit"
         >
-          <BIMDataIcon name="validate" size="xxs" fill color="granite-light" />
+          <BIMDataIconValidate size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </template>
     </div>
@@ -57,7 +57,7 @@
         {{ $t("Visa.comments.actions.delete") }}
       </BIMDataButton>
       <BIMDataButton ghost rounded icon @click="isDeleting = false">
-        <BIMDataIcon name="close" size="xxs" fill color="primary" />
+        <BIMDataIconClose size="xxs" fill color="primary" />
       </BIMDataButton>
     </div>
     <BIMDataButton
@@ -68,7 +68,7 @@
       icon
       @click="toggleMenu"
     >
-      <BIMDataIcon name="ellipsis" size="l" />
+      <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
   </div>
 </template>

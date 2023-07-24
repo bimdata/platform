@@ -1,6 +1,6 @@
 <template>
   <div class="subscription-status-banner" :class="{ visible }">
-    <BIMDataIcon name="lock" size="s" />
+    <BIMDataIconLock size="s" />
     <AppLink
       v-if="textKey"
       :to="{

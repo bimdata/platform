@@ -83,14 +83,15 @@ watchEffect(async () => {
           file.value = { file: doc.office_preview };
         } else {
           // When the preview is not yet loaded.
-          const newDoc = await FileService.getDocument(props.project, { id: doc.id });
+          const newDoc = await FileService.getDocument(props.project, {
+            id: doc.id
+          });
           if (newDoc.office_preview) {
             currentDocument.value.office_preview = newDoc.office_preview;
             file.value = { file: newDoc.office_preview };
           }
         }
-      }
-      else if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
+      } else if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
         // images not defined as models
         file.value = doc.file;
       }
@@ -148,10 +149,10 @@ const download = () => {
 
       <div class="document-viewer__head__actions">
         <BIMDataButton ghost rounded icon @click="download">
-          <BIMDataIcon name="download" size="m" />
+          <BIMDataIconDownload size="m" />
         </BIMDataButton>
         <BIMDataButton ghost rounded icon @click="closeModal">
-          <BIMDataIcon name="close" size="xxs" />
+          <BIMDataIconClose size="xxs" />
         </BIMDataButton>
       </div>
     </div>
@@ -171,7 +172,7 @@ const download = () => {
           :disabled="index === 0"
           @click="index--"
         >
-          <BIMDataIcon name="chevron" size="xs" :rotate="180" />
+          <BIMDataIconChevron size="xs" :rotate="180" />
         </BIMDataButton>
       </div>
 
@@ -217,7 +218,7 @@ const download = () => {
           :disabled="index === documents.length - 1"
           @click="index++"
         >
-          <BIMDataIcon name="chevron" size="xs" />
+          <BIMDataIconChevron size="xs" />
         </BIMDataButton>
       </div>
     </div>

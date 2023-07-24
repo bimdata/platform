@@ -1,13 +1,13 @@
 <template>
   <div class="folder-access-manager" v-if="currentFolder">
     <div class="folder-access-manager__title">
-      <BIMDataIcon name="key" size="s" />
+      <BIMDataIconKey size="s" />
       <span class="folder-access-manager__title__text">
         {{ $t("FolderAccessManager.title") }} -
         <BIMDataTextbox width="auto" maxWidth="100px" :text="folder.name" />
       </span>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
-        <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
     <div class="folder-access-manager__head">

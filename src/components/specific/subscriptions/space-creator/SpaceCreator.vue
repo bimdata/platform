@@ -1,7 +1,7 @@
 <template>
   <div class="space-creator" :class="{ disabled }">
     <div class="space-creator__title">
-      <BIMDataIcon name="cloud" size="m" fill color="primary" />
+      <BIMDataIconCloud size="m" fill color="primary" />
       <h2>{{ $t("SpaceCreator.title") }}</h2>
     </div>
     <div class="space-creator__text">

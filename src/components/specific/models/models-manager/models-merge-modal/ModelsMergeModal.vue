@@ -5,7 +5,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <BIMDataIcon name="union" size="xl" />
+      <BIMDataIconUnion size="xl" />
       <div>{{ $t("ModelsMergeModal.title") }}</div>
     </template>
     <template #body>

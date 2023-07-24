@@ -6,9 +6,8 @@
     radius
     @click="goBack"
   >
-    <BIMDataIcon
+    <BIMDataIconArrow
       class="go-back-button__icon"
-      name="arrow"
       size="xxs"
       margin="0 6px 0 0"
     />

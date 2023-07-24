@@ -18,7 +18,7 @@
               @click="toggleDropdown"
             >
               <template #header="{ isOpen }">
-                <BIMDataIcon name="burgerMenu" fill color="primary" size="m" />
+                <BIMDataIconBurgerMenu size="m" fill color="primary" />
                 <BIMDataIcon
                   :name="isOpen ? 'deploy' : 'chevron'"
                   size="xxs"
@@ -36,7 +36,7 @@
             :folder="currentFolder"
             :disabled="project.isGuest || !hasAdminPerm(project, currentFolder)"
           >
-            <BIMDataIcon name="addFolder" size="xs" />
+            <BIMDataIconAddFolder size="xs" />
             <span
               v-if="
                 (project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)
@@ -79,7 +79,7 @@
                 :disabled="!hasAdminPerm(project, currentFolder)"
                 @click="openSubscriptionModal"
               >
-                <BIMDataIcon name="addFile" size="xs" />
+                <BIMDataIconAddFile size="xs" />
                 <span
                   v-if="
                     (project.isAdmin && !isXXXL) ||
@@ -118,7 +118,7 @@
                   })
                 "
               >
-                <BIMDataIcon name="addFile" size="xs" />
+                <BIMDataIconAddFile size="xs" />
                 <span
                   v-if="
                     (project.isAdmin && !isXXXL) ||

@@ -8,13 +8,7 @@
           </div>
         </template>
         <template v-else>
-          <BIMDataIcon
-            name="visa"
-            fill
-            color="primary"
-            size="s"
-            margin="2.5px 0 0 0"
-          />
+          <BIMDataIconVisa fill color="primary" size="s" margin="2.5px 0 0 0" />
         </template>
         <span>{{ $t("Visa.list.title") }}</span>
       </div>
@@ -26,7 +20,7 @@
           icon
           @click="$emit('close')"
         >
-          <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+          <BIMDataIconClose size="xxs" fill color="granite-light" />
         </BIMDataButton>
       </div>
     </div>
@@ -42,12 +36,7 @@
     <div class="visa-list__content">
       <template v-if="currentTab.visas.length === 0">
         <div class="visa-list__content__empty">
-          <BIMDataIcon
-            name="visa"
-            size="xxl"
-            color="silver"
-            margin="3px 0 0 0"
-          />
+          <BIMDataIconVisa size="xxl" color="silver" margin="3px 0 0 0" />
           <span v-if="currentTab.id === 'toValidateVisas'">
             {{ $t("Visa.list.emptyValidation") }}
           </span>

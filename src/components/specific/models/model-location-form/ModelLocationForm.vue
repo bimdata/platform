@@ -36,7 +36,7 @@
         icon
         @click="close"
       >
-        <BIMDataIcon name="close" size="xs" />
+        <BIMDataIconClose size="xs" />
       </BIMDataButton>
     </div>
   </div>

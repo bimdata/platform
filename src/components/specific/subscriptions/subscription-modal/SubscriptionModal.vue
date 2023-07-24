@@ -7,7 +7,7 @@
       icon
       @click="closeModal"
     >
-      <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+      <BIMDataIconClose size="xxs" fill color="granite-light" />
     </BIMDataButton>
 
     <div class="subscription-modal__header">

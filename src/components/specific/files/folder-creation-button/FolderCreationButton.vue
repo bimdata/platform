@@ -11,7 +11,7 @@
       @click="toggle"
     >
       <slot>
-        <BIMDataIcon name="addFolder" size="xs" margin="0 6px 0 0" />
+        <BIMDataIconAddFolder size="xs" margin="0 6px 0 0" />
         {{ $t("FolderCreationButton.buttonText") }}
       </slot>
     </BIMDataButton>
