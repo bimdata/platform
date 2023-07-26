@@ -54,11 +54,25 @@ class SpaceService {
   }
 
   async createSpace(space) {
-    try {
-      return await apiClient.collaborationApi.createCloud(space);
-    } catch (error) {
+    const response = await fetch(
+      `${ENV.VUE_APP_BACKEND_BASE_URL}/create-cloud/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...apiClient.authHeader
+        },
+        body: JSON.stringify(space)
+      }
+    );
+    if (response.status !== 201) {
+      let error = "";
+      if (response.headers.get("Content-Type") === "application/json") {
+        error = await response.text();
+      }
       throw new RuntimeError(ERRORS.SPACE_CREATE_ERROR, error);
     }
+    return response.json();
   }
 
   async updateSpace(space) {
