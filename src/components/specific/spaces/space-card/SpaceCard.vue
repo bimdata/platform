@@ -61,10 +61,10 @@ export default {
     }
   },
   setup(props) {
-    const { userProjects } = useProjects();
+    const { projectsBySpace } = useProjects();
 
     const nbProjects = computed(
-      () => userProjects.value.filter(p => p.cloud.id === props.space.id).length
+      () => projectsBySpace.value[props.space.id]?.length ?? 0
     );
 
     return {

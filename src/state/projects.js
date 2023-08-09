@@ -8,6 +8,7 @@ import { useUser } from "./user.js";
 const state = reactive({
   userProjects: [],
   spaceProjects: [],
+  projectsBySpace: {},
   currentProject: null,
   projectUsers: [],
   projectInvitations: []
@@ -21,6 +22,13 @@ const setCurrentProject = id => {
 const loadUserProjects = async () => {
   const projects = await ProjectService.fetchUserProjects();
   state.userProjects = mapProjects(projects);
+  state.projectsBySpace = projects.reduce((acc, project) => {
+    if (!acc[project.cloud.id]) {
+      acc[project.cloud.id] = [];
+    }
+    acc[project.cloud.id].push(project);
+    return acc;
+  }, {});
   return projects;
 };
 
