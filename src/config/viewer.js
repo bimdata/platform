@@ -51,7 +51,8 @@ const PLUGINS_CONFIG = {
   "viewer2d-background": true,
   viewer3d: {
     enableDynamicLOD: true
-  }
+  },
+  "zone-editor": true
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };
