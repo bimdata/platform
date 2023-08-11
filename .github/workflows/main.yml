@@ -2,6 +2,11 @@ name: Platform
 
 on:
   push:
+    branches:
+      - main
+      - master
+      - release
+      - develop
 
 env:
   app: platform
@@ -9,12 +14,6 @@ env:
 jobs:
   build-and-push:
     runs-on: [self-hosted, common]
-    if: contains('
-      refs/heads/develop
-      refs/heads/release
-      refs/heads/master
-      refs/heads/main'
-      , github.ref)
     steps:
       - uses: actions/checkout@v3
         with:
