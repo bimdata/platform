@@ -33,7 +33,7 @@
             icon
             @click="sortProjects"
           >
-            <BIMDataIcon name="alphabeticalSort" size="s" />
+            <BIMDataIconAlphabeticalSort size="s" />
           </BIMDataButton>
           <BIMDataButton
             data-test-id="btn-users"
@@ -44,7 +44,7 @@
             icon
             @click="openUsersManager"
           >
-            <BIMDataIcon name="addUser" size="s" />
+            <BIMDataIconAddUser size="s" />
           </BIMDataButton>
         </div>
       </template>

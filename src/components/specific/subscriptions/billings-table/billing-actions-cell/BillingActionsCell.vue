@@ -7,7 +7,7 @@
       icon
       @click="toggleMenu"
     >
-      <BIMDataIcon name="ellipsis" size="l" fill color="granite-light" />
+      <BIMDataIconEllipsis size="l" fill color="granite-light" />
     </BIMDataButton>
 
     <transition name="fade">

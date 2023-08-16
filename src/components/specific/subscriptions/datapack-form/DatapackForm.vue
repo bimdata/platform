@@ -70,7 +70,7 @@
             :disabled="quantity === 0"
             @click="decrement"
           >
-            <BIMDataIcon name="minus" size="xxxs" />
+            <BIMDataIconMinus size="xxxs" />
           </BIMDataButton>
           <BIMDataButton
             width="42px"
@@ -81,7 +81,7 @@
             icon
             @click="increment"
           >
-            <BIMDataIcon name="plus" size="xxxs" />
+            <BIMDataIconPlus size="xxxs" />
           </BIMDataButton>
         </div>
       </div>

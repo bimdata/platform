@@ -14,7 +14,7 @@
         icon
         @click="$emit('close')"
       >
-        <BIMDataIcon name="close" size="xxs" />
+        <BIMDataIconClose size="xxs" />
       </BIMDataButton>
       <div class="generic-modal__content__title">
         <slot name="header"></slot>

@@ -15,7 +15,7 @@
       {{ initials }}
     </template>
     <template v-else>
-      <BIMDataIcon name="user" size="s" />
+      <BIMDataIconUser size="s" />
     </template>
   </div>
 </template>

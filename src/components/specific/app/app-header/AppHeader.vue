@@ -9,7 +9,7 @@
         <template v-if="invitationListPending.length > 0">
           <div class="app-header__invitation__notif"><div></div></div>
         </template>
-        <BIMDataIcon name="invitation" size="m" />
+        <BIMDataIconInvitation size="m" />
       </BIMDataButton>
     </AppLink>
     <AppHeaderMenu class="app-header__menu" />

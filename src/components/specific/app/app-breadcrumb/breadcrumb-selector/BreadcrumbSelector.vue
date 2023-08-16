@@ -7,9 +7,8 @@
         :text="header"
         @click="$emit('header-clicked')"
       />
-      <BIMDataIcon
+      <BIMDataIconChevron
         class="breadcrumb-selector__header__icon"
-        name="chevron"
         size="xs"
         :rotate="isOpen ? 90 : 0"
         margin="0 0 0 6px"

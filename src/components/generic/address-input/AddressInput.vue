@@ -26,7 +26,7 @@
             @click="selectAddress(i)"
           >
             <span class="address-input__suggestions__item__icon">
-              <BIMDataIcon name="location" size="xs" />
+              <BIMDataIconLocation size="xs" />
             </span>
             <span class="address-input__suggestions__item__text">
               {{ result.address }}

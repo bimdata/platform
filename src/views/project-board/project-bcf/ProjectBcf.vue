@@ -47,13 +47,13 @@
             icon
             @click="openSettings"
           >
-            <BIMDataIcon name="settings" size="xxs" />
+            <BIMDataIconSettings size="xxs" />
           </BIMDataButton>
         </template>
         <template v-else>
           <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
             <BIMDataButton disabled color="primary" outline radius icon>
-              <BIMDataIcon name="settings" size="xxs" />
+              <BIMDataIconSettings size="xxs" />
             </BIMDataButton>
           </BIMDataTooltip>
         </template>
@@ -74,7 +74,7 @@
             )
           "
         >
-          <BIMDataIcon name="import" size="xs" />
+          <BIMDataIconImport size="xs" />
           <span v-if="!isXL" style="margin-left: 6px">
             {{ $t("ProjectBcf.importButtonText") }}
           </span>
@@ -87,7 +87,7 @@
           width="120px"
           @click="openTopicCreate"
         >
-          <BIMDataIcon name="plus" size="xxxs" />
+          <BIMDataIconPlus size="xxxs" />
           <span v-if="!isXL" style="margin-left: 6px">
             {{ $t("ProjectBcf.createBcfButtonText") }}
           </span>
@@ -336,7 +336,7 @@
             :icon="isXL"
             @click="exportBcfTopics"
           >
-            <BIMDataIcon name="export" size="xs" />
+            <BIMDataIconExport size="xs" />
             <span v-if="!isXL" style="margin-left: 6px">
               {{ $t("ProjectBcf.exportButtonText") }}
             </span>
@@ -350,7 +350,7 @@
             color="high"
             @click="toggleDeleteMode"
           >
-            <BIMDataIcon name="delete" size="xs" />
+            <BIMDataIconDelete size="xs" />
             <span v-if="!isXL" style="margin-left: 6px">
               {{ $t("ProjectBcf.deleteButtonText") }}
             </span>
@@ -441,7 +441,6 @@
 <script>
 import {
   getViewpointConfig,
-  getViewpointModels,
   useBcfFilter,
   useBcfSearch,
   useBcfSort
@@ -712,7 +711,7 @@ export default {
     const openTopicViewer = topic => {
       let viewpoint = topic.viewpoints[0] ?? {};
       let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
-      let modelIDs = getViewpointModels(viewpoint);
+      let modelIDs = viewpoint.model_ids ?? [];
 
       if (modelIDs.length === 0) {
         // If no models are specified on the viewpoint

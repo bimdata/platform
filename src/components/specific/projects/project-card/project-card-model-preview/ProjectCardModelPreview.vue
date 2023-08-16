@@ -5,14 +5,9 @@
       class="project-card-model-preview__switcher"
       @click.prevent.stop="() => {}"
     >
-      <BIMDataIcon
-        name="chevron"
-        size="xs"
-        :rotate="180"
-        @click="previousImage"
-      />
+      <BIMDataIconChevron size="xs" :rotate="180" @click="previousImage" />
       <span>{{ `${image.index} / ${images.length}` }}</span>
-      <BIMDataIcon name="chevron" size="xs" @click="nextImage" />
+      <BIMDataIconChevron size="xs" @click="nextImage" />
     </div>
     <BIMDataModelPreview
       :type="!image.url || image.type === MODEL_TYPE.IFC ? '3d' : '2d'"

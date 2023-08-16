@@ -40,10 +40,10 @@
     >
       <BIMDataButton color="secondary" fill radius :icon="isXL">
         <template v-if="isXL">
-          <BIMDataIcon name="plus" size="xxxs" />
+          <BIMDataIconPlus size="xxxs" />
         </template>
         <template v-else-if="spaceSubInfo.isPlatformPro">
-          <BIMDataIcon name="plus" size="xxxs" margin="0 6px 0 0" />
+          <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
           DataPack
         </template>
         <template v-else>

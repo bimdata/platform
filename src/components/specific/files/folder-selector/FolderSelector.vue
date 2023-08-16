@@ -9,10 +9,10 @@
         :disabled="currentFolder.id === fileStructure.id"
         @click="exitFolder"
       >
-        <BIMDataIcon name="arrow" size="xs" />
+        <BIMDataIconArrow size="xs" />
       </BIMDataButton>
 
-      <BIMDataIcon name="folder" size="xs" />
+      <BIMDataIconFolder size="xs" />
       <BIMDataTextbox
         class="folder-selector__head__name"
         maxWidth="120px"
@@ -25,7 +25,7 @@
         icon
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxs" />
+        <BIMDataIconClose size="xxs" />
       </BIMDataButton>
     </div>
     <div class="folder-selector__body">
@@ -41,7 +41,7 @@
         @dblclick="enterFolder(file)"
       >
         <span class="folder-selector__body__item__icon">
-          <BIMDataIcon v-if="isFolder(file)" name="folder" size="xs" />
+          <BIMDataIconFolder v-if="isFolder(file)" size="xs" />
           <BIMDataFileIcon v-else :fileName="file.file_name" :size="13" />
         </span>
         <BIMDataTextbox
@@ -49,9 +49,8 @@
           :text="file.name"
           :tooltip="false"
         />
-        <BIMDataIcon
+        <BIMDataIconChevron
           v-if="isFolder(file)"
-          name="chevron"
           size="xxs"
           @click.stop="enterFolder(file)"
         />
@@ -60,9 +59,8 @@
         v-show="displayedFiles.length === 0"
         class="folder-selector__body__placeholder"
       >
-        <BIMDataIcon
+        <BIMDataIconFolderOpen
           class="folder-selector__body__placeholder__icon"
-          name="folderOpen"
           size="xxxl"
           margin="0 0 25px 0px"
         />

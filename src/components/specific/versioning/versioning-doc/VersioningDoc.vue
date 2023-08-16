@@ -20,8 +20,7 @@
             <span> {{ $t("Versioning.previousVersion") }} </span>
           </template>
           <template v-if="!isEmpty(document.visas)">
-            <BIMDataIcon
-              name="visa"
+            <BIMDataIconVisa
               :color="hasOneVisaClosed ? 'success' : 'granite'"
               size="s"
               fill
@@ -43,7 +42,7 @@
                   height="30px"
                   @click="$emit('on-delete', document)"
                 >
-                  <BIMDataIcon name="delete" color="granite" size="xs" fill />
+                  <BIMDataIconDelete color="granite" size="xs" fill />
                 </BIMDataButton>
               </BIMDataTooltip>
             </div>
@@ -65,12 +64,7 @@
                   height="30px"
                   @click="swapHeadDoc"
                 >
-                  <BIMDataIcon
-                    name="backInTime"
-                    color="granite"
-                    size="xs"
-                    fill
-                  />
+                  <BIMDataIconBackInTime color="granite" size="xs" fill />
                 </BIMDataButton>
               </BIMDataTooltip>
             </div>
@@ -85,7 +79,7 @@
                 height="30px"
                 @click="download(project, [document])"
               >
-                <BIMDataIcon name="download" color="granite" size="xs" fill />
+                <BIMDataIconDownload color="granite" size="xs" fill />
               </BIMDataButton>
             </BIMDataTooltip>
           </div>
@@ -106,7 +100,7 @@
                   }"
                 >
                   <BIMDataButton ghost rounded icon width="30px" height="30px">
-                    <BIMDataIcon name="show" color="granite" size="xs" fill />
+                    <BIMDataIconShow color="granite" size="xs" fill />
                   </BIMDataButton>
                 </AppLink>
               </BIMDataTooltip>
@@ -123,7 +117,7 @@
                   height="30px"
                   @click="convertToModelAndShow"
                 >
-                  <BIMDataIcon name="show" color="granite" size="xs" fill />
+                  <BIMDataIconShow color="granite" size="xs" fill />
                 </BIMDataButton>
               </BIMDataTooltip>
             </div>

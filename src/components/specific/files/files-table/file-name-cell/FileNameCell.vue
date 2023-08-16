@@ -32,7 +32,7 @@
           icon
           @click="closeUpdateForm"
         >
-          <BIMDataIcon name="close" size="xxs" />
+          <BIMDataIconClose size="xxs" />
         </BIMDataButton>
       </div>
 
@@ -54,9 +54,8 @@
         />
         <BIMDataFileIcon v-else :fileName="file.file_name" :size="20" />
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="70%" />
-        <BIMDataIcon
+        <BIMDataIconVersioning
           v-if="hasHistory"
-          name="versioning"
           margin="0px 0px 0px 4px"
           size="xxs"
           fill

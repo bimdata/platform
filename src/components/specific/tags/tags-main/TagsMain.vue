@@ -3,13 +3,7 @@
     <div class="tags-main__content">
       <div class="tags-main__content__header">
         <div class="tags-main__content__header__left-side">
-          <BIMDataIcon
-            name="tag"
-            fill
-            color="primary"
-            size="s"
-            margin="2.5px 0 0 0"
-          />
+          <BIMDataIconTag fill color="primary" size="s" margin="2.5px 0 0 0" />
           <span>{{ $t("Tag.title") }}</span>
         </div>
         <div class="tags-main__content__header__right-side">
@@ -20,7 +14,7 @@
             icon
             @click="$emit('close')"
           >
-            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+            <BIMDataIconClose size="xxs" fill color="granite-light" />
           </BIMDataButton>
         </div>
       </div>
@@ -35,8 +29,7 @@
           margin="12px"
           @click="toggleAddTagInput"
         >
-          <BIMDataIcon
-            name="plus"
+          <BIMDataIconPlus
             size="xxxs"
             margin="0 calc(var(--spacing-unit) / 2) 0 var(--spacing-unit)"
           />

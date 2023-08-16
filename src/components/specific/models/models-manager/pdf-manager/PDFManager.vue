@@ -32,7 +32,7 @@
         icon
         @click="openBM"
       >
-        <BIMDataIcon name="building" size="xxxs" margin="0 12px 0 0" />
+        <BIMDataIconBuilding size="xxxs" margin="0 12px 0 0" />
         <span> {{ $t("ModelsTable.buildingMaker.create") }} </span>
       </BIMDataButton>
 
@@ -45,7 +45,7 @@
             icon
             @click="closeBM"
           >
-            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+            <BIMDataIconClose size="xxs" fill color="granite-light" />
           </BIMDataButton>
           <div class="pdf-manager__building-maker__content">
             <BuildingMaker

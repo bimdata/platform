@@ -42,7 +42,7 @@
             </template>
             <template v-else>
               <div class="invitations__content__list__invit__icon-bcg">
-                <BIMDataIcon name="app" color="white" />
+                <BIMDataIconApp color="white" />
               </div>
             </template>
             <div class="invitations__content__list__invit__text">
@@ -157,7 +157,7 @@
                     icon
                     @click="onDenyInvitation(invit)"
                   >
-                    <BIMDataIcon name="close" fill color="high" size="s" />
+                    <BIMDataIconClose fill color="high" size="s" />
                   </BIMDataButton>
                   <BIMDataButton
                     data-test-id="btn-accept-invit"
@@ -183,12 +183,7 @@
                       <BIMDataSpinner />
                     </template>
                     <template v-else>
-                      <BIMDataIcon
-                        name="validate"
-                        fill
-                        color="success"
-                        size="s"
-                      />
+                      <BIMDataIconValidate fill color="success" size="s" />
                     </template>
                   </BIMDataButton>
                 </div>

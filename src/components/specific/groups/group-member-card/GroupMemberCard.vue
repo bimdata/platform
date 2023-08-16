@@ -9,7 +9,7 @@
         icon
         @click="remove"
       >
-        <BIMDataIcon name="delete" size="s" fill color="high" />
+        <BIMDataIconDelete size="s" fill color="high" />
       </BIMDataButton>
       <UserAvatar :user="user" size="64" />
       <div class="group-member-card__info">

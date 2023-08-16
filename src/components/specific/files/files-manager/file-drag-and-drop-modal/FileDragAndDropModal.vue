@@ -3,7 +3,7 @@
     <div class="file-drag-and-drop-modal__header">
       <div>{{ $t("FilesManager.folderImport") }}</div>
       <BIMDataButton ghost rounded icon @click="closeModal">
-        <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
     <div
@@ -13,7 +13,7 @@
       @dragover="onDragover"
       @drop="onDrop"
     >
-      <BIMDataIcon name="upload" size="l" />
+      <BIMDataIconUpload size="l" />
       <div class="file-drag-and-drop-modal__drop-zone__text">
         {{ $t("FileUploader.uploadDropArea") }}
       </div>

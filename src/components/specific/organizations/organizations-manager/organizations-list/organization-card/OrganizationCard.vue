@@ -2,12 +2,7 @@
   <div class="organization-card">
     <div class="organization-card__image">
       <img v-if="organization.logo" :src="organization.logo" />
-      <BIMDataIcon
-        v-else
-        style="margin-top: 4px; margin-left: 3px"
-        name="organization"
-        size="xxl"
-      />
+      <BIMDataIconOrganization v-else margin="4px 0 0 3px" size="xxl" />
     </div>
     <div class="organization-card__info">
       <div class="organization-card__info__name">

@@ -14,7 +14,7 @@
           @click="$emit('open-update')"
           class="m-r-6"
         >
-          <BIMDataIcon name="edit" size="xxs" />
+          <BIMDataIconEdit size="xxs" />
         </BIMDataButton>
         <BIMDataButton
           data-test-id="btn-open-delete"
@@ -23,7 +23,7 @@
           icon
           @click="$emit('open-delete')"
         >
-          <BIMDataIcon name="delete" size="xxs" />
+          <BIMDataIconDelete size="xxs" />
         </BIMDataButton>
       </div>
     </template>

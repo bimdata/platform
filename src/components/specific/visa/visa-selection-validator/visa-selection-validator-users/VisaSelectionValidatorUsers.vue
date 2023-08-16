@@ -40,8 +40,7 @@
         @mouseover="handleCurrentPerson(user.id)"
         @mouseleave="handleCurrentPerson()"
       >
-        <BIMDataIcon
-          name="warning"
+        <BIMDataIconWarning
           size="xl"
           class="fill-warning"
           style="padding: 10px; z-index: 3"

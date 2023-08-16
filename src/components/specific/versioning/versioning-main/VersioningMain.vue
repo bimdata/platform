@@ -16,8 +16,7 @@
     <div class="versioning-main__content" :class="{ safeZone: isSafeZone }">
       <div class="versioning-main__content__header">
         <div class="versioning-main__content__header__left-side">
-          <BIMDataIcon
-            name="versioning"
+          <BIMDataIconVersioning
             fill
             color="primary"
             size="s"
@@ -27,7 +26,7 @@
         </div>
         <div class="versioning-main__content__header__right-side">
           <BIMDataButton ghost rounded icon @click="$emit('close')">
-            <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+            <BIMDataIconClose size="xxs" fill color="granite-light" />
           </BIMDataButton>
         </div>
       </div>
@@ -52,12 +51,7 @@
             )
           "
         >
-          <BIMDataIcon
-            name="close"
-            size="xxxs"
-            :rotate="45"
-            margin="0 6px 0 0"
-          />
+          <BIMDataIconClose size="xxxs" :rotate="45" margin="0 6px 0 0" />
           {{ $t("Versioning.AddVersion") }}
         </BIMDataButton>
       </div>

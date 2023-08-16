@@ -22,7 +22,7 @@
           icon
           @click="sortProjects"
         >
-          <BIMDataIcon name="alphabeticalSort" size="s" />
+          <BIMDataIconAlphabeticalSort size="s" />
         </BIMDataButton>
       </template>
     </ViewHeader>

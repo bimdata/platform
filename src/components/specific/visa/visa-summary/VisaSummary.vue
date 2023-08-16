@@ -18,8 +18,7 @@
       <div class="visa-summary__shell" :class="{ safeZone: isSafeZone }">
         <div class="visa-summary__shell__header">
           <div class="visa-summary__shell__header__left-side">
-            <BIMDataIcon
-              name="visa"
+            <BIMDataIconVisa
               fill
               color="primary"
               size="s"
@@ -37,7 +36,7 @@
               icon
               @click="undoEdit"
             >
-              <BIMDataIcon name="undo" size="xxs" fill color="granite-light" />
+              <BIMDataIconUndo size="xxs" fill color="granite-light" />
             </BIMDataButton>
             <BIMDataButton
               v-if="isAuthor && !isClosed && !isEditing"
@@ -46,7 +45,7 @@
               icon
               @click="initEdit"
             >
-              <BIMDataIcon name="edit" size="xxs" fill color="granite-light" />
+              <BIMDataIconEdit size="xxs" fill color="granite-light" />
             </BIMDataButton>
             <BIMDataButton
               v-if="isAuthor && !isClosed && isEditing"
@@ -55,15 +54,10 @@
               icon
               @click="confirmEdit"
             >
-              <BIMDataIcon
-                name="validate"
-                size="xxs"
-                fill
-                color="granite-light"
-              />
+              <BIMDataIconValidate size="xxs" fill color="granite-light" />
             </BIMDataButton>
             <BIMDataButton ghost rounded icon @click="onClose">
-              <BIMDataIcon name="close" size="xxs" fill color="granite-light" />
+              <BIMDataIconClose size="xxs" fill color="granite-light" />
             </BIMDataButton>
           </div>
         </div>
@@ -180,7 +174,7 @@
                 })
               "
             >
-              <BIMDataIcon name="folder" size="xs" fill />
+              <BIMDataIconFolder size="xs" fill />
             </BIMDataButton>
           </div>
         </div>
@@ -196,8 +190,7 @@
               rounded
               icon
             >
-              <BIMDataIcon
-                name="addUser"
+              <BIMDataIconAddUser
                 size="s"
                 @click="isSelectingValidator = true"
               />

@@ -19,7 +19,7 @@
         icon
         @click="submit"
       >
-        <BIMDataIcon name="close" size="xxs" />
+        <BIMDataIconClose size="xxs" />
       </BIMDataButton>
     </div>
   </div>

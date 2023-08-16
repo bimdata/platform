@@ -1,7 +1,7 @@
 <template>
   <div class="folder-creation-form">
     <div class="folder-creation-form__title">
-      <BIMDataIcon name="addFolder" size="xs" />
+      <BIMDataIconAddFolder size="xs" />
       <span>{{ $t("FolderCreationForm.creationFormTitle") }}</span>
     </div>
     <BIMDataInput

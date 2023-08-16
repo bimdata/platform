@@ -13,7 +13,7 @@
         v-show="!loading"
         @click="close"
       >
-        <BIMDataIcon name="close" size="xxxs" />
+        <BIMDataIconClose size="xxxs" />
       </BIMDataButton>
     </template>
     <template #content>

@@ -31,7 +31,7 @@ onBeforeRouteLeave(() => closeModal());
         icon
         @click="closeModal"
       >
-        <BIMDataIcon name="close" size="xxs" />
+        <BIMDataIconClose size="xxs" />
       </BIMDataButton>
       <slot></slot>
     </div>

@@ -9,7 +9,7 @@
       :disabled="models.length === 0"
       @click.prevent.stop="$emit('open-viewer')"
     >
-      <BIMDataIcon name="show" size="s" />
+      <BIMDataIconShow size="s" />
     </BIMDataButton>
 
     <BIMDataButton
@@ -22,7 +22,7 @@
       icon
       @click.prevent.stop="$emit('open-menu')"
     >
-      <BIMDataIcon name="ellipsis" size="l" />
+      <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
   </div>
 </template>

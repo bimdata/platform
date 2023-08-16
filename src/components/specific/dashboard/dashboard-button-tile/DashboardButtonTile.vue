@@ -8,7 +8,7 @@
     </span>
     <span class="dashboard-button-tile__bottom-text">
       <slot name="bottom-text"></slot>
-      <BIMDataIcon name="arrow" size="xs" margin="0 0 0 12px" :rotate="180" />
+      <BIMDataIconArrow size="xs" margin="0 0 0 12px" :rotate="180" />
     </span>
   </div>
 </template>

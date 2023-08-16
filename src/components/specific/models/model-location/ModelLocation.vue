@@ -28,14 +28,14 @@
             icon
             @click="openLocationForm"
           >
-            <BIMDataIcon name="edit" size="s" />
+            <BIMDataIconEdit size="s" />
           </BIMDataButton>
         </div>
       </template>
 
       <template v-else>
         <div class="model-location__empty">
-          <BIMDataIcon name="location" size="xxl" />
+          <BIMDataIconLocation size="xxl" />
           <div>{{ $t("ModelLocation.emptyLocationMessage") }}</div>
           <BIMDataButton
             v-if="project.isAdmin"

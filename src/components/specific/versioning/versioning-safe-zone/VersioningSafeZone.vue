@@ -1,7 +1,7 @@
 <template>
   <div class="versioning-safe-zone">
     <div class="versioning-safe-zone__content">
-      <BIMDataIcon name="warning" size="l" class="fill-high" />
+      <BIMDataIconWarning size="l" class="fill-high" />
       <span>{{ $t(`Versioning.safeZone.delete.content`) }}</span>
     </div>
     <div class="versioning-safe-zone__action">

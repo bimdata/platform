@@ -36,7 +36,7 @@
           style="margin: 2px 0px 0px 0px"
           @click="$emit('reset-validation', user.id)"
         >
-          <BIMDataIcon name="reset" size="xs" />
+          <BIMDataIconReset size="xs" />
         </BIMDataButton>
       </template>
       <template v-if="user.hasAccess">
@@ -58,7 +58,7 @@
           @mouseover="hoveringValidator(user.id)"
           @mouseleave="hoveringValidator()"
         >
-          <BIMDataIcon name="warning" customSize="40" class="fill-warning" />
+          <BIMDataIconWarning customSize="40" class="fill-warning" />
           <div
             v-if="isWarningHover && currentPeopleId === user.id"
             class="visa-summary-validator__right-side__access-denied__hover"

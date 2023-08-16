@@ -20,7 +20,7 @@
           radius
           :icon="isLG"
         >
-          <BIMDataIcon name="group" size="s" />
+          <BIMDataIconGroup size="s" />
           <span v-if="!isLG" style="margin-left: 6px">
             {{ $t("ProjectFiles.groupsButtonText") }}
           </span>

@@ -19,7 +19,7 @@
             icon
             @click.stop="closeCreationForm"
           >
-            <BIMDataIcon name="close" size="xxs" />
+            <BIMDataIconClose size="xxs" />
           </BIMDataButton>
         </div>
         <BIMDataInput
@@ -53,7 +53,7 @@
         @click="openCreationForm"
       >
         <div class="project-creation-card__btn-open__icon">
-          <BIMDataIcon name="plus" size="l" />
+          <BIMDataIconPlus size="l" />
         </div>
         <div class="project-creation-card__btn-open__text">
           {{ $t("ProjectCreationCard.text") }}

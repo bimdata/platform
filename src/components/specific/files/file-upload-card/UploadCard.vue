@@ -52,7 +52,7 @@ defineEmits(["cancel"]);
   <div class="upload-card" :class="{ condensed, failed }">
     <div class="upload-card--left">
       <template v-if="type === 'folder'">
-        <BIMDataIcon name="folder" size="s" />
+        <BIMDataIconFolder size="s" />
       </template>
       <template v-else>
         <BIMDataFileIcon :fileName="name" :size="condensed ? 20 : 32" />
@@ -104,7 +104,7 @@ defineEmits(["cancel"]);
         icon
         @click="$emit('cancel')"
       >
-        <BIMDataIcon name="close" size="xxxs" />
+        <BIMDataIconClose size="xxxs" />
       </BIMDataButton>
     </div>
   </div>
