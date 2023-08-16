@@ -4,7 +4,6 @@ import BcfComponents from "@bimdata/bcf-components/vue3-plugin.js";
 import BIMDataComponents from "@bimdata/components/vue3-plugin.js";
 import BIMDataDesignSystem from "@bimdata/design-system/vue3-plugin.js";
 import BuildingMaker from "@bimdata/building-maker/vue3-plugin.js";
-import BIMDataGuidedTourComponents from "@bimdata/guided-tour-components/vue-plugin.js";
 import i18n from "./i18n/index.js";
 import router from "./router/index.js";
 import globalComponents from "./components/global-components.js";
@@ -19,7 +18,6 @@ const app = createApp(App)
   .use(router)
   .use(BIMDataDesignSystem())
   .use(BIMDataComponents())
-  .use(BIMDataGuidedTourComponents())
   .use(BcfComponents({ apiClient, i18nPlugin: i18n }))
   .use(BuildingMaker({ i18nPlugin: i18n }));
 
