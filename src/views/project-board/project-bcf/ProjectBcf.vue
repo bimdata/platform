@@ -441,7 +441,6 @@
 <script>
 import {
   getViewpointConfig,
-  getViewpointModels,
   useBcfFilter,
   useBcfSearch,
   useBcfSort
@@ -712,7 +711,7 @@ export default {
     const openTopicViewer = topic => {
       let viewpoint = topic.viewpoints[0] ?? {};
       let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
-      let modelIDs = getViewpointModels(viewpoint);
+      let modelIDs = viewpoint.model_ids ?? [];
 
       if (modelIDs.length === 0) {
         // If no models are specified on the viewpoint
