@@ -1,14 +1,7 @@
 {
-    "Global": {
-        "cancel": "Cancel",
-        "validate": "Validate"
-    },
-    "GroupBoard": {
-        "searchInputPlaceholder": "Search members"
-    },
     "OidcCallbackError": {
         "message": "An error occured during authentication...",
-        "tryAgainButtonText": "Try Again"
+        "retryButtonText": "Try Again"
     },
     "ProjectBoard": {
         "tabs": {
@@ -17,17 +10,7 @@
             "bcf": "BCF"
         }
     },
-    "ProjectGroups": {
-        "searchInputPlaceholder": "Search groups"
-    },
-    "SpaceBoard": {
-        "searchInputPlaceholder": "Search projects"
-    },
-    "UserProjects": {
-        "searchInputPlaceholder": "Search projects"
-    },
     "UserSpaces": {
-        "searchInputPlaceholder": "Search spaces",
         "createButtonText": "Create a space",
         "organizationsButtonText": "Billing accounts"
     },
@@ -36,39 +19,23 @@
     },
     "ProjectOverview": {
         "openFileUploadButtonText": "Add a model",
-        "closeFileUploadButtonText": "Close",
-        "forbiddenUploadNotification": {
-            "title": "Upload error",
-            "message": "Please select a model file: {extensions}"
-        }
-    },
-    "BreadcrumbSelector": {
-        "inputPlaceholder": "Search"
-    },
-    "GoBackButton": {
-        "text": "Back"
+        "forbiddenUploadNotification": "Please select a model file: {extensions}"
     },
     "LanguageSelector": {
         "title": "Choose a language"
     },
     "AppHeaderMenu": {
         "entrySettings": "Account settings",
-        "entryConnect": "BIMData Connect",
         "entryDocumentation": "Documentation",
         "entryMarketplace": "Marketplace",
-        "entryOldPlatform": "Platform V1",
         "entryLanguage": "Choose a language",
-        "logoutButtonText": "Log Out",
-        "subscriptionPlatform": "Platform subscription"
+        "logoutButtonText": "Log Out"
     },
     "BreadcrumbGroupSelector": {
         "text": "Groups"
     },
     "BreadcrumbProjectSelector": {
         "placeholder": "< No project >"
-    },
-    "DashboardInfoTile": {
-        "title": "Security"
     },
     "DashboardProjectList": {
         "title": "Recent projects"
@@ -83,36 +50,23 @@
     "FileActionsCell": {
         "openViewerButtonText": "Open in viewer",
         "addTagsButtonText": "Add tags",
-        "validationRequestButtonText": "Validation request",
-        "renameButtonText": "Rename",
-        "downloadButtonText": "Download",
         "addVersionButtonText": "Add version",
         "manageAccessButtonText": "Manage access",
-        "deleteButtonText": "Delete",
-        "VisaButtonText": "Validation request",
         "createModelButtonText": "Define as model",
-        "VersioningButtonText": "Add a version",
-        "removeModelButtonText": "Remove from models"
-    },
-    "FileNameCell": {
-        "inputErrorMessage": "Invalid file name",
-        "submitButtonText": "Validate"
+        "removeModelButtonText": "Remove from models",
+        "versioningButtonText": "Add a version",
+        "visaButtonText": "Validation request"
     },
     "FilesActionBar": {
-        "deleteButtonText": "Delete",
-        "moveButtonText": "Move to",
-        "downloadButtonText": "Download"
+        "moveButtonText": "Move to"
     },
     "FilesDeleteModal": {
         "title": "Delete files",
         "message": "This action will permanently delete the following files/folders :",
-        "cancelButtonText": "Cancel",
-        "deleteButtonText": "Delete",
         "messageVersion": "You are about to permanently delete the following files/folders and their associated version history:"
     },
     "FilesManager": {
         "title": "Project Files",
-        "searchInputPlaceholder": "Search",
         "createModelNotification": "Model successfully created",
         "structureImport": "Import a GED structure",
         "gedDownload": "Download the GED",
@@ -123,78 +77,44 @@
         "uploadFileButtonText": "Upload a file",
         "createFolderButtonText": "Create a folder",
         "GEDStructureImport": "Import a GED structure",
-        "folderImport": "Import a folder"
+        "folderImport": "Import a file"
     },
     "FilesTable": {
-        "emptyTablePlaceholder": "Empty folder",
-        "folder": "Folder",
         "headers": {
-            "name": "Name",
-            "type": "Type",
-            "creator": "Created by",
-            "tags": "Tags",
-            "lastupdate": "Last Modified",
-            "size": "Size"
+            "tags": "Tags"
         }
     },
     "FileUploadButton": {
-        "addFileButtonText": "Upload a file",
-        "shortAddFileButtonText": "File"
+        "addFileButtonText": "Upload a file"
     },
     "FileUploader": {
-        "uploadAreaText": "Drag and drop to upload",
-        "separatorText": "or",
+        "uploadAreaText": "Drag and drop to store your project assets",
         "uploadButtonText": "Select a model file"
     },
     "FolderAccessManager": {
         "title": "Manage access rights",
-        "propagate": "Propagate rights to sub folders",
         "rightsHeader": "Rights",
         "membersHeader": "Members",
-        "searchInputPlaceholder": "Search group",
-        "groupHeader": "Group"
-    },
-    "FolderCreationButton": {
-        "buttonText": "New folder",
-        "shortButtonText": "Folder"
-    },
-    "FolderCreationForm": {
-        "creationFormTitle": "Create folder",
-        "nameInputPlaceholder": "Folder name",
-        "nameInputErrorMessage": "Invalid folder name",
-        "cancelButtonText": "Cancel",
-        "submitButtonText": "Submit"
+        "groupHeader": "Group",
+        "propagate": "Apply rights to sub folders (recursively)"
     },
     "FolderSelector": {
         "selectedFolder": "Selected folder",
-        "submitButtonText": {
-            "moveTo": "Validate",
-            "moveHere": "Move here"
-        },
-        "emptyFolderPlaceholder": "Empty folder"
+        "moveHere": "Move here"
     },
     "GroupCardActionMenu": {
-        "renameButtonText": "Rename",
-        "changeColorButtonText": "Change color",
-        "deleteButtonText": "Delete"
+        "changeColorButtonText": "Change color"
     },
     "GroupCardDeleteGuard": {
         "title": "Delete group",
-        "message": "You are about to (definitely) delete group {name}, are you sure ?",
-        "deleteButtonText": "Delete"
+        "message": "You are about to (definitely) delete group {name}, are you sure ?"
     },
     "GroupCardUpdateForm": {
-        "title": "Rename group",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Invalid group name",
-        "submitButtonText": "Rename"
+        "title": "Rename group"
     },
     "GroupCreationCard": {
         "text": "Create a group",
-        "title": "New group",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Invalid group name",
-        "submitButtonText": "Create"
+        "title": "New group"
     },
     "GroupMemberSelectionCard": {
         "text": "Add a member"
@@ -214,51 +134,29 @@
             "user": "User",
             "guest": "Guest"
         },
-        "cancelButtonText": "Cancel",
         "submitButtonText": "Send invitation",
         "successNotifText": "Invitation sent",
         "successUsertoAdmin": "The user has now admin role"
     },
     "ModelActionsCell": {
-        "addTagsButtonText": "Add tags",
-        "renameButtonText": "Rename",
-        "archiveButtonText": "Archive",
-        "deleteButtonText": "Delete",
-        "unarchiveButtonText": "Unarchive",
-        "editButtontext": "Edit"
+        "addTagsButtonText": "Add tags"
     },
     "ModelLocation": {
         "emptyLocationMessage": "No location data available",
         "addLocationButtonText": "Fill in"
     },
     "ModelLocationForm": {
-        "addressInputPlaceholder": "Enter address",
-        "checkButtonText": "Check",
-        "submitButtonText": "Validate",
-        "cancelButtonText": "Change"
-    },
-    "ModelNameCell": {
-        "inputErrorMessage": "Invalid model name",
-        "submitButtonText": "Validate"
+        "addressInputPlaceholder": "Enter address"
     },
     "ModelsActionBar": {
-        "deleteButtonText": "Delete",
-        "archiveButtonText": "Archive",
-        "unarchiveButtonText": "Unarchive",
-        "downloadButtonText": "Download",
         "mergeButtonText": "Merge"
-    },
-    "ModelsCard": {
-        "openButtonText": "Open"
     },
     "ModelsCardModelPreview": {
         "emptyPreviewPlaceholder": "No preview available"
     },
     "ModelsDeleteModal": {
         "title": "Warning !",
-        "message": "This action will permanently delete the following models :",
-        "cancelButtonText": "Cancel",
-        "deleteButtonText": "Delete"
+        "message": "This action will permanently delete the following models :"
     },
     "ModelsManager": {
         "title": "Project Models",
@@ -270,14 +168,11 @@
             "dwg": "DWG",
             "metaBuildings": "Meta Buildings",
             "upload": "Upload"
-        },
-        "add": "Add"
+        }
     },
     "ModelsMergeModal": {
         "title": "Merge selection",
-        "inputPlaceholder": "Name of your merge",
-        "inputErrorMessage": "You must provide a name for the file",
-        "submitButtonText": "Export"
+        "inputPlaceholder": "Name of your merge"
     },
     "ModelsOverview": {
         "title": "Project Models Overview"
@@ -288,76 +183,43 @@
     },
     "ModelsTable": {
         "headers": {
-            "id": "ID",
-            "name": "Name",
-            "version": "Version",
-            "creator": "Creator",
-            "lastupdate": "Last modified",
-            "status": "Status"
+            "version": "Version"
         },
         "emptyTablePlaceholder": {
             "text": "No template",
             "textPdf": "From the file manager \"file\" menu, click on \"Define as model\" to make your pdf plans available in models manager."
-        },
-        "buildingMaker": {
-            "create": "Create"
         }
-    },
-    "ProjectCardActionMenu": {
-        "renameButtonText": "Rename",
-        "deleteButtonText": "Delete",
-        "leaveButtonText": "Leave"
     },
     "ProjectCardDeleteGuard": {
         "title": "Delete project",
-        "message": "Are you sure you want to (permanently) delete this project ?",
-        "deleteButtonText": "Delete"
+        "message": "Are you sure you want to (permanently) delete this project ?"
     },
     "ProjectCardUpdateForm": {
-        "title": "Rename project",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Invalid project name.",
-        "renameButtonText": "Rename"
+        "title": "Rename project"
     },
     "ProjectCreationCard": {
         "title": "New project",
-        "text": "Create a new project",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "You must provide a name for the project !",
-        "createButtonText": "Create"
+        "text": "Create a new project"
     },
     "ProjectUsersManager": {
-        "title": "Project Users",
-        "searchInputPlaceholder": "Search user"
+        "title": "Project Users"
     },
     "SpaceCard": {
         "projects": "PROJECTS",
         "free": "Free"
     },
     "SpaceCardActionMenu": {
-        "renameButtonText": "Rename",
-        "removeImageButtonText": "Remove image",
-        "deleteButtonText": "Delete"
+        "removeImageButtonText": "Remove image"
     },
     "SpaceCardDeleteGuard": {
         "title": "Delete space",
-        "message": "Are you sure ?",
-        "deleteButtonText": "Delete"
-    },
-    "SpaceCardImageButton": {
-        "buttonText": "Upload image"
+        "message": "Are you sure ?"
     },
     "SpaceCardUpdateForm": {
-        "title": "Rename space",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "Invalid space name.",
-        "submitButtonText": "Rename"
+        "title": "Rename space"
     },
     "SpaceCreationCard": {
-        "title": "New space",
-        "inputPlaceholder": "Name",
-        "inputErrorMessage": "You must provide a name for the space !",
-        "createButtonText": "Create"
+        "title": "New space"
     },
     "SpaceUsersManager": {
         "title": "Manage space admins",
@@ -365,7 +227,6 @@
             "admins": "Administrators",
             "users": "Users"
         },
-        "searchInputPlaceholder": "Search user",
         "addUserButtonText": "Add new admin"
     },
     "UserCard": {
@@ -375,11 +236,7 @@
         "message": {
             "space": "Remove {name} from this space ?",
             "project": "Remove {name} from this project ?"
-        },
-        "submitButtonText": "Remove"
-    },
-    "UserCardUpdateForm": {
-        "submitButtonText": "Validate"
+        }
     },
     "UserRoleBadge": {
         "admin": "Admin",
@@ -399,7 +256,7 @@
         "homeButtonText": "Home"
     },
     "FolderPermissionSelector": {
-        "label": "Default",
+        "label": "All",
         "options": {
             "accessDenied": "Access denied",
             "readOnly": "Read only",
@@ -407,19 +264,16 @@
         }
     },
     "GroupMembersSelector": {
-        "title": "Manage group members",
-        "searchInputPlaceholder": "Search"
+        "title": "Manage group members"
     },
     "GroupPermissionSelector": {
         "options": {
-            "default": "Default",
             "accessDenied": "Access denied",
             "readOnly": "Read only",
-            "readWrite": "Read / Write"
+            "readWrite": "Read / Write",
+            "default": "Default"
         }
     },
-    "Error": "Error",
-    "Success": "Success",
     "Errors": {
         "spacesFetchError": "Fail to fetch spaces",
         "spaceCreateError": "Fail to create space",
@@ -521,10 +375,6 @@
         "subscriptionsTileText": "Find all your invoices and your latest payment information here.",
         "subscriptionsTileBottomText": "Manage subscriptions"
     },
-    "Payment": {
-        "titlePlatform": "Upgrade to pro platform",
-        "titleDatapack": "Add DataPack"
-    },
     "Subscribe": {
         "title": "Choose your plan",
         "text": "You are only allowed a single free space among your billing accounts. If this space already exists, upgrade to the professional subscription for additional features."
@@ -565,11 +415,8 @@
         "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before..",
         "subscribeButton": "Upgrade to our Pro Platform",
         "headers": {
-            "space": "Space",
             "nextpayment": "Next payment",
-            "subscriptionplan": "Subscription plan",
-            "status": "Status",
-            "amount": "Amount"
+            "subscriptionplan": "Subscription plan"
         },
         "status": {
             "active": "Active",
@@ -586,9 +433,7 @@
         "priceUnit": " / GB / month Tax incl.",
         "totalUnit": " / month Tax incl.",
         "actualStorage": "Actual storage",
-        "newStorage": "New Storage",
-        "submitButtonText": "Validate",
-        "cancelButtonText": "Cancel"
+        "newStorage": "New Storage"
     },
     "DatapackInfo": {
         "title": "Actual subscription",
@@ -602,13 +447,7 @@
     "InvoicesTable": {
         "title": "Invoices",
         "emptyTableText": "Your invoices will be listed here when you have active subsctiptions.",
-        "subscribeButton": "Upgrade to our Pro Platform",
-        "headers": {
-            "amount": "Amount",
-            "status": "Status",
-            "space": "Space",
-            "date": "Date"
-        }
+        "subscribeButton": "Upgrade to our Pro Platform"
     },
     "InvoiceStatusCell": {
         "completed": "Completed",
@@ -618,29 +457,22 @@
         "spaces": "{number} spaces"
     },
     "OrganizationDeleteGuard": {
-        "title": "Delete billing account",
-        "submitButtonText": "Delete"
+        "title": "Delete billing account"
     },
     "OrganizationForm": {
         "createTitle": "Create a billing account",
         "updateTitle": "Update billing account",
         "infoSectionTitle": "Basic information",
-        "nameInputPlaceholder": "Name",
-        "nameInputErrorMessage": "Invalid name",
         "logoInputLabel": "Upload logo",
         "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
-        "submitButtonText": "Validate",
-        "successTitle": "Congratulation your billing account has just been created",
-        "successButtonText": "OK"
+        "successTitle": "Congratulation your billing account has just been created"
     },
     "OrganizationsList": {
         "explanationText": "A billing account is the entity that gather your billing at BIMData.io",
-        "createButtonText": "Add new billing account",
-        "searchInputPlaceholder": "Search an account"
+        "createButtonText": "Add new billing account"
     },
     "OrganizationsManager": {
-        "title": "Manage billing accounts",
-        "backButtonText": "Back"
+        "title": "Manage billing accounts"
     },
     "OrganizationSpaceCard": {
         "projects": "{number} projects"
@@ -648,21 +480,17 @@
     "OrganizationSpacesImport": {
         "spaceListTitle": "Select spaces to import",
         "spaceListPlaceholder": "No space to import...",
-        "submitButtonText": "Import spaces",
-        "successTitle": "Spaces successfully imported",
-        "successButtonText": "OK"
+        "successTitle": "Spaces successfully imported"
     },
     "OrganizationSpacesList": {
         "importButtonText": "Import space",
         "addButtonText": "Add new space",
-        "searchInputPlaceholder": "Search",
         "spaceListTitle": "Account spaces",
         "spaceListPlaceholder": "No space is attached to this billing account."
     },
     "ProjectCardLeaveGuard": {
         "title": "Leave projet",
-        "message": "Are you sure you want to leave this project ?",
-        "leaveButtonText": "Validate"
+        "message": "Are you sure you want to leave this project ?"
     },
     "ProPlanCard": {
         "title": "PROFESSIONAL",
@@ -738,56 +566,21 @@
         "radioLabelSelect": "Select a billing account",
         "radioLabelCreate": "Create a billing account",
         "inputPlaceholder": "Name of the account",
-        "submitButtonText": "Validate",
         "successMessage": "Congratulation your billing account has just been created"
     },
     "SpaceCreator": {
         "title": "Create a space",
         "text": "Your space groups your different BIM projects.",
-        "inputPlaceholder": "Space name",
         "billingAccountLabel": "Billing account :",
-        "billingAccountButton": "Change",
         "submitButtonText": "Continue to payment"
     },
     "Visa": {
         "button": "Approvals",
         "add": {
             "title": "Validation request",
-            "validator": "Validating",
-            "toValidate": "To be validated before",
             "errorDate": "Date invalid",
-            "exempleDate": "(Ex: 31/05/2022)",
-            "description": "Description",
-            "cancel": "Cancel",
-            "validate": "Validate",
-            "validatorView": {
-                "getBack": "Return",
-                "validator": "Validate",
-                "accept": "Accept"
-            },
-            "errorValidator": "You must add at least 1 confirmer"
-        },
-        "safeZone": {
-            "add": {
-                "content": "Are you sure you want to leave this page? There may be unverified information.",
-                "action": "Yes, leave this page",
-                "keepView": "Cancel, stay here"
-            },
-            "delete": {
-                "content": "Are you sure you want to remove this document approval?",
-                "action": "Yes, remove this document approval",
-                "keepView": "Cancel"
-            },
-            "close": {
-                "content": "Are you sure you want to close this document approval?",
-                "action": "Yes, close the document approval",
-                "keepView": "Cancel"
-            },
-            "deleteComment": {
-                "content": "Are you sure you want to remove this comment?",
-                "action": "Yes, remove the comment",
-                "keepView": "Cancel"
-            }
+            "errorValidator": "You must add at least 1 confirmer",
+            "dateInputPlaceholder": "To be validated before"
         },
         "summary": {
             "title": {
@@ -795,13 +588,6 @@
                 "closed": "Request closed"
             },
             "appliedBy": "Request validation by",
-            "validate": "Validate",
-            "deny": "Refuse",
-            "delete": "Remove",
-            "close": "Close",
-            "comment": "Comment",
-            "term": "Due date",
-            "validator": "Verifiers",
             "deletedUser": "User removed",
             "validatorList": {
                 "accept": "Validated",
@@ -813,18 +599,10 @@
             }
         },
         "comments": {
-            "comment": "Comment",
             "commentary": "Commentry",
-            "postComment": "Post a comment",
-            "replyComment": "Respond to a comment",
             "publish": "Publish",
-            "cancel": "Cancel",
-            "reply": "Respond",
-            "actions": {
-                "edit": "Edit",
-                "delete": "Remove",
-                "confirmDelete": "Remove this comment?"
-            }
+            "commentInputPlaceholder": "Post a comment",
+            "confirmDelete": "Remove this comment?"
         },
         "list": {
             "title": "Request in progress",
@@ -836,11 +614,29 @@
         "selectionValidator": {
             "warning": "This user cannot access the file."
         },
-        "noVisa": "A VISA has not yet been created"
+        "noVisa": "A VISA has not yet been created",
+        "accept": "Accept",
+        "close": "Close",
+        "deny": "Refuse",
+        "term": "Due date",
+        "validator": "Validator",
+        "validators": "Validators",
+        "safeZone": {
+            "add": {
+                "text": "Are you sure you want to leave this page? There may be unverified information."
+            },
+            "delete": {
+                "text": "Are you sure you want to remove this document approval?"
+            },
+            "close": {
+                "text": "Are you sure you want to close this document approval?"
+            },
+            "deleteComment": {
+                "text": "Are you sure you want to remove this comment?"
+            }
+        }
     },
     "ProjectBcf": {
-        "importButtonText": "Import",
-        "exportButtonText": "Export",
         "createBcfButtonText": "Create a BCF",
         "createBcfTitle": "Report a problem",
         "showStatisticsTooltip": "Show statistics",
@@ -858,20 +654,16 @@
         "metricsEmptyText": "Add issues to see the associated statistics here.",
         "noSearchResultsTitle": "No results",
         "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
-        "goBackButton": "Return",
         "importBcfNotificationSuccess": "BCF file successfully imported",
         "importBcfNotificationError": "Error while importing the BCF file",
         "exportBcfNotificationSuccess": "BCF successfully exported",
         "exportBcfNotificationError": "Error while exporting the BCF file",
         "selectedTopicCount": "Number of selected topics",
-        "deleteButtonText": "Delete",
         "deleteBcfText": "You are about to delete all selected topics",
-        "deleteBcfConfirm": "Confirm",
         "deleteInProgress": "Delete in progress",
         "deleteInProgressSub": "This process may take a few moments.",
         "deleteBcfNotificationSuccess": "Topics deleted",
         "deleteBcfNotificationError": "Error while deleting topics",
-        "cancelBcfConfirm": "Cancel",
         "onlyAdminParameters": "You must be a project administrator"
     },
     "GuidedTour": {
@@ -939,15 +731,12 @@
             "downloadMessage": "Loading in progress.",
             "deleteMessage": "Deleting in progress."
         },
-        "delete": "Delete",
         "getToHead": "Switch to current version",
-        "download": "Download",
         "show": "See",
         "safeZone": {
             "delete": {
                 "content": "Are you sure you want to delete this version?",
-                "action": "Yes, delete this version",
-                "keepView": "Cancel"
+                "action": "Yes, delete this version"
             }
         },
         "emptyArea": "You currently have no version history for this file."
@@ -957,11 +746,7 @@
         "list": "List of tags",
         "addTag": "add a tag",
         "addNewTag": "Add a new tag",
-        "search": "Search",
-        "validate": "Validate",
-        "cancel": "Cancel",
-        "deleteTag": "Delete this tag",
-        "deleteTagButton": "Delete"
+        "deleteTag": "Delete this tag"
     },
     "SubscriptionModal": {
         "title": "Get more space",
@@ -983,11 +768,6 @@
             "permission": "You don't have the required rights",
             "size": "You don't have enough storage space"
         }
-    },
-    "FileTreePreview": {
-        "title": "Import GED structure from",
-        "cancel": "Cancel",
-        "validate": "Validate"
     },
     "GroupMemberCard": {
         "pending": "Invitation in progress"
@@ -1020,7 +800,6 @@
     "GroupImport": {
         "title": "Import a group",
         "selectAll": "Select all",
-        "add": "Add",
         "notAdmin": "You must be a project administrator",
         "noGroup": "There is no group for this project"
     },
@@ -1028,5 +807,59 @@
         "cancelMessage": "Canceled",
         "errorMessage": "Upload failed",
         "upload": "{uploaded} to {total} ({percentage}% uploaded)"
+    },
+    "t": {
+        "add": "Add",
+        "amount": "Amount",
+        "archive": "Archive",
+        "back": "Back",
+        "cancel": "Cancel",
+        "change": "Change",
+        "comment": "Comment",
+        "confirm": "Confirm",
+        "create": "Create",
+        "createdBy": "Created by",
+        "close": "Close",
+        "date": "Date",
+        "delete": "Delete",
+        "description": "Description",
+        "download": "Download",
+        "edit": "Edit",
+        "emptyFolder": "Empty folder",
+        "error": "Error",
+        "export": "Export",
+        "file": "File",
+        "folder": "Folder",
+        "import": "Import",
+        "invalidName": "Invalid name",
+        "leave": "Leave",
+        "modifiedOn": "Last modified",
+        "modify": "Edit",
+        "name": "Name",
+        "ok": "OK",
+        "open": "Open",
+        "or": "or",
+        "rename": "Rename",
+        "search": "Search",
+        "size": "Size",
+        "space": "Space",
+        "status": "Status",
+        "success": "Success",
+        "type": "Type",
+        "unarchive": "Unarchive",
+        "validate": "Validate",
+        "verify": "Check"
+    },
+    "FolderCreationButton": {
+        "text": "New folder"
+    },
+    "FolderCreationForm": {
+        "title": "Create folder"
+    },
+    "SpaceCardImageButton": {
+        "text": "Change image"
+    },
+    "FileTreePreviewModal": {
+        "title": "Import DMS tree from"
     }
 }
