@@ -4,9 +4,9 @@
       <GoBackButton />
     </div>
     <div class="invitations__content">
-      <span class="invitations__content__title">{{
-        $t("Invitations.title")
-      }}</span>
+      <span class="invitations__content__title">
+        {{ $t("Invitations.title") }}
+      </span>
 
       <div class="invitations__content__header">
         <div class="invitations__content__header__counter">

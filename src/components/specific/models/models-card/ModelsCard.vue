@@ -18,7 +18,7 @@
       >
         <BIMDataButton color="primary" fill radius>
           <BIMDataIconShow size="xs" margin="0 6px 0 0" />
-          <span>{{ $t("ModelsCard.openButtonText") }}</span>
+          <span>{{ $t("t.open") }}</span>
         </BIMDataButton>
       </AppLink>
     </template>

@@ -12,7 +12,7 @@
       margin="0 6px 0 0"
     />
     <span>
-      {{ $t("GoBackButton.text") }}
+      {{ $t("t.back") }}
     </span>
   </BIMDataButton>
 </template>

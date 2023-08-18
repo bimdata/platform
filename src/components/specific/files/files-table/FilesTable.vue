@@ -12,7 +12,7 @@
     @selection-changed="$emit('selection-changed', $event)"
     :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
-    :placeholder="$t('FilesTable.emptyTablePlaceholder')"
+    :placeholder="$t('t.emptyFolder')"
   >
     <template #sub-header>
       <div
@@ -191,7 +191,7 @@ export default {
       }
       return filteredColumns.map(col => ({
         ...col,
-        label: col.label || t(`FilesTable.headers.${col.id}`)
+        label: col.label || t(col.text)
       }));
     });
 

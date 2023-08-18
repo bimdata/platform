@@ -13,7 +13,7 @@
         <BIMDataSearch
           class="space-board__header__search"
           :width="isLG ? '150px' : isXL ? '225px' : '300px'"
-          :placeholder="isSM ? '' : $t('SpaceBoard.searchInputPlaceholder')"
+          :placeholder="isSM ? '' : $t('t.search')"
           v-model="searchText"
           clear
         />

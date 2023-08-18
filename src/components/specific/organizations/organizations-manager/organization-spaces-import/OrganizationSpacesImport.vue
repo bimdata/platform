@@ -48,7 +48,7 @@
             :disabled="selection.size < 1"
             @click="submit"
           >
-            {{ $t("OrganizationSpacesImport.submitButtonText") }}
+            {{ $t("t.import") }}
           </BIMDataButton>
         </div>
       </template>

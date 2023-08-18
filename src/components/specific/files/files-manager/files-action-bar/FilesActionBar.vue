@@ -9,7 +9,7 @@
       @click="$emit('delete', files)"
     >
       <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("FilesActionBar.deleteButtonText") }}</span>
+      <span>{{ $t("t.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton
       :disabled="!project.isAdmin && files.some(f => f.user_permission < 100)"
@@ -30,7 +30,7 @@
       @click="$emit('download', files)"
     >
       <BIMDataIconDownload size="s" margin="0 6px 0 0" />
-      <span>{{ $t("FilesActionBar.downloadButtonText") }}</span>
+      <span>{{ $t("t.download") }}</span>
     </BIMDataButton>
 
     <transition name="fade">

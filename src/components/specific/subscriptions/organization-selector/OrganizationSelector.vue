@@ -59,7 +59,7 @@
       radius
       @click="submit"
     >
-      {{ $t("OrganizationSelector.submitButtonText") }}
+      {{ $t("t.validate") }}
     </BIMDataButton>
 
     <!-- Creation success message -->

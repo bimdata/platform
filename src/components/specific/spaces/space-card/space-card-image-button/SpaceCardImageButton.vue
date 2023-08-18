@@ -5,7 +5,7 @@
     squared
     @click="selectImage"
   >
-    {{ $t("SpaceCardImageButton.buttonText") }}
+    {{ $t("SpaceCardImageButton.text") }}
   </BIMDataButton>
 </template>
 

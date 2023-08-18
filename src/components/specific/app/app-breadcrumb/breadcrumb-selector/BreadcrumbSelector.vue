@@ -18,9 +18,9 @@
     <transition name="slide-fade-down">
       <div class="breadcrumb-selector__list" v-show="isOpen">
         <BIMDataSearch
-          radius
           width="204px"
-          :placeholder="$t('BreadcrumbSelector.inputPlaceholder')"
+          radius
+          :placeholder="$t('t.search')"
           v-model="searchText"
         />
         <transition-group name="list">

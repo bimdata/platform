@@ -119,7 +119,7 @@ export default {
       }
       return filteredColumns.map(col => ({
         ...col,
-        label: col.label || t(`BillingsTable.headers.${col.id}`)
+        label: col.label || t(col.text)
       }));
     });
 

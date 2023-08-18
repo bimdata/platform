@@ -9,7 +9,7 @@
           data-guide="project-input-search"
           class="user-projects__header__search"
           :width="isSM ? '150px' : '300px'"
-          :placeholder="isSM ? '' : $t('UserProjects.searchInputPlaceholder')"
+          :placeholder="isSM ? '' : $t('t.search')"
           v-model="searchText"
           clear
         />

@@ -77,7 +77,7 @@ export default {
 
       pushNotification({
         type: "success",
-        title: t("Success"),
+        title: t("t.success"),
         message: t("InvitationCard.resendSuccessNotifText")
       });
 
@@ -99,7 +99,7 @@ export default {
       }
       pushNotification({
         type: "success",
-        title: t("Success"),
+        title: t("t.success"),
         message: t("InvitationCard.cancelSuccessNotifText")
       });
     };

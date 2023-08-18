@@ -28,7 +28,7 @@
     </template>
     <template #footer>
       <BIMDataButton ghost radius width="120px" @click="$emit('close')">
-        {{ $t("FilesDeleteModal.cancelButtonText") }}
+        {{ $t("t.cancel") }}
       </BIMDataButton>
       <BIMDataButton
         data-test-id="btn-confirm-delete"
@@ -38,7 +38,7 @@
         width="120px"
         @click="submit"
       >
-        {{ $t("FilesDeleteModal.deleteButtonText") }}
+        {{ $t("t.delete") }}
       </BIMDataButton>
     </template>
   </GenericModal>

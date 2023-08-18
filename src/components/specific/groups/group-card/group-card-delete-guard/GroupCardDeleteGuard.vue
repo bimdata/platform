@@ -27,7 +27,7 @@
       radius
       @click="removeGroup"
     >
-      {{ $t("GroupCardDeleteGuard.deleteButtonText") }}
+      {{ $t("t.delete") }}
     </BIMDataButton>
   </div>
 </template>

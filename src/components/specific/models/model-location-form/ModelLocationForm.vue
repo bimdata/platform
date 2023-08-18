@@ -17,15 +17,15 @@
 
       <template v-if="!isSubmitStep">
         <BIMDataButton color="primary" fill radius @click="checkAddress">
-          {{ $t("ModelLocationForm.checkButtonText") }}
+          {{ $t("t.verify") }}
         </BIMDataButton>
       </template>
       <template v-else>
         <BIMDataButton color="primary" fill radius @click="submitAddress">
-          {{ $t("ModelLocationForm.submitButtonText") }}
+          {{ $t("t.validate") }}
         </BIMDataButton>
         <BIMDataButton color="default" outline radius @click="cancel">
-          {{ $t("ModelLocationForm.cancelButtonText") }}
+          {{ $t("t.change") }}
         </BIMDataButton>
       </template>
 

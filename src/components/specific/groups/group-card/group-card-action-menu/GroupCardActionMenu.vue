@@ -53,7 +53,7 @@
             squared
             @click="openUpdateForm"
           >
-            {{ $t("GroupCardActionMenu.renameButtonText") }}
+            {{ $t("t.rename") }}
           </BIMDataButton>
           <BIMDataButton
             data-test-id="btn-open-color"
@@ -65,11 +65,12 @@
           </BIMDataButton>
           <BIMDataButton
             data-test-id="btn-open-delete"
+            color="high"
             ghost
             squared
             @click="openDeleteGuard"
           >
-            {{ $t("GroupCardActionMenu.deleteButtonText") }}
+            {{ $t("t.delete") }}
           </BIMDataButton>
         </div>
       </template>

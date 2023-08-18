@@ -60,7 +60,7 @@ export default {
     const onSpaceCreated = space => {
       pushNotification({
         type: "success",
-        title: t("Success"),
+        title: t("t.success"),
         message: t("SubscriptionFree.spaceCreatedNotification", {
           organizationName: space.organization.name,
           spaceName: space.name

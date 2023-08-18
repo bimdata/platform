@@ -2,15 +2,15 @@
   <div class="folder-creation-form">
     <div class="folder-creation-form__title">
       <BIMDataIconAddFolder size="xs" />
-      <span>{{ $t("FolderCreationForm.creationFormTitle") }}</span>
+      <span>{{ $t("FolderCreationForm.title") }}</span>
     </div>
     <BIMDataInput
       ref="nameInput"
       class="folder-creation-form__input"
-      :placeholder="$t('FolderCreationForm.nameInputPlaceholder')"
+      :placeholder="$t('t.name')"
       v-model="name"
       :error="hasError"
-      :errorMessage="$t('FolderCreationForm.nameInputErrorMessage')"
+      :errorMessage="$t('t.invalidName')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="submit"
       margin="24px 0px"
@@ -22,7 +22,7 @@
       radius
       @click="close"
     >
-      {{ $t("FolderCreationForm.cancelButtonText") }}
+      {{ $t("t.cancel") }}
     </BIMDataButton>
     <BIMDataButton
       class="folder-creation-form__btn-submit"
@@ -32,7 +32,7 @@
       radius
       @click="submit"
     >
-      {{ $t("FolderCreationForm.submitButtonText") }}
+      {{ $t("t.validate") }}
     </BIMDataButton>
   </div>
 </template>

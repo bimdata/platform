@@ -15,7 +15,7 @@
         disabled
         @click="submit"
       >
-        {{ $t("OrganizationDeleteGuard.submitButtonText") }}
+        {{ $t("t.delete") }}
       </BIMDataButton>
     </div>
   </div>

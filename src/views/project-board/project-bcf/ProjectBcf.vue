@@ -22,7 +22,7 @@
                 class="m-r-12"
                 @click="deleteBcfTopics"
               >
-                {{ $t("ProjectBcf.deleteBcfConfirm") }}
+                {{ $t("t.confirm") }}
               </BIMDataButton>
               <BIMDataButton
                 color="primary"
@@ -30,7 +30,7 @@
                 radius
                 @click="closeDeleteMode"
               >
-                {{ $t("ProjectBcf.cancelBcfConfirm") }}
+                {{ $t("t.cancel") }}
               </BIMDataButton>
             </template>
           </BIMDataSafeZoneModal>
@@ -76,7 +76,7 @@
         >
           <BIMDataIconImport size="xs" />
           <span v-if="!isXL" style="margin-left: 6px">
-            {{ $t("ProjectBcf.importButtonText") }}
+            {{ $t("t.import") }}
           </span>
         </BIMDataButton>
         <BIMDataButton
@@ -338,7 +338,7 @@
           >
             <BIMDataIconExport size="xs" />
             <span v-if="!isXL" style="margin-left: 6px">
-              {{ $t("ProjectBcf.exportButtonText") }}
+              {{ $t("t.export") }}
             </span>
           </BIMDataButton>
           <BIMDataButton
@@ -352,7 +352,7 @@
           >
             <BIMDataIconDelete size="xs" />
             <span v-if="!isXL" style="margin-left: 6px">
-              {{ $t("ProjectBcf.deleteButtonText") }}
+              {{ $t("t.delete") }}
             </span>
           </BIMDataButton>
         </div>
@@ -599,13 +599,13 @@ export default {
         await importBcf(currentProject.value, files[0]);
         pushNotification({
           type: "success",
-          title: t("Success"),
+          title: t("t.success"),
           message: t("ProjectBcf.importBcfNotificationSuccess")
         });
       } catch {
         pushNotification({
           type: "error",
-          title: t("Error"),
+          title: t("t.error"),
           message: t("ProjectBcf.importBcfNotificationError")
         });
       } finally {
@@ -620,13 +620,13 @@ export default {
         ]);
         pushNotification({
           type: "success",
-          title: t("Success"),
+          title: t("t.success"),
           message: t("ProjectBcf.exportBcfNotificationSuccess")
         });
       } catch {
         pushNotification({
           type: "error",
-          title: t("Error"),
+          title: t("t.error"),
           message: t("ProjectBcf.exportBcfNotificationError")
         });
       }
@@ -645,13 +645,13 @@ export default {
 
         pushNotification({
           type: "success",
-          title: t("Success"),
+          title: t("t.success"),
           message: t("ProjectBcf.deleteBcfNotificationSuccess")
         });
       } catch {
         pushNotification({
           type: "error",
-          title: t("Error"),
+          title: t("t.error"),
           message: t("ProjectBcf.deleteBcfNotificationError")
         });
       }

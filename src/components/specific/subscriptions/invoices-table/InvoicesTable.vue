@@ -94,7 +94,7 @@ export default {
     const columns = computed(() => {
       return columnsDef.map(col => ({
         ...col,
-        label: col.label || t(`InvoicesTable.headers.${col.id}`)
+        label: col.label || t(col.text)
       }));
     });
 
@@ -109,32 +109,32 @@ export default {
           return {
             ...payment,
             subscription: subscriptionsMap[payment.parent_subscription_id],
-            is_data_pack: true,
-          }
+            is_data_pack: true
+          };
         } else {
           return {
             ...payment,
             subscription: subscriptionsMap[payment.subscription_id],
-            is_data_pack: false,
-          }
+            is_data_pack: false
+          };
         }
       });
     });
 
-    const getPaymentName = function(payment) {
+    const getPaymentName = function (payment) {
       let name = payment.subscription.cloud.name;
       if (payment.is_data_pack) {
         name += " (DataPack)";
       }
       return name;
-    }
+    };
 
     return {
       // References
       columns,
       displayedPayments,
       routeNames,
-      getPaymentName,
+      getPaymentName
     };
   }
 };

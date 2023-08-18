@@ -15,7 +15,7 @@
         class="folder-access-manager__head__search"
         width="100%"
         color="primary"
-        :placeholder="$t('FolderAccessManager.searchInputPlaceholder')"
+        :placeholder="$t('t.search')"
         v-model="searchText"
         clear
       />

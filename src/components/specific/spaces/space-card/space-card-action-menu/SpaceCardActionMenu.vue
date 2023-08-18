@@ -42,7 +42,7 @@
                 squared
                 @click="openUpdateForm"
               >
-                {{ $t("SpaceCardActionMenu.renameButtonText") }}
+                {{ $t("t.rename") }}
               </BIMDataButton>
               <SpaceCardImageButton
                 data-test-id="btn-update-image"
@@ -64,7 +64,7 @@
                 squared
                 @click="openDeleteGuard"
               >
-                {{ $t("SpaceCardActionMenu.deleteButtonText") }}
+                {{ $t("t.delete") }}
               </BIMDataButton>
             </div>
           </template>

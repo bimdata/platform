@@ -33,7 +33,7 @@
       </div>
       <div class="file-uploader__upload-area__separator">
         <span class="file-uploader__upload-area__separator__text">
-          {{ $t("FileUploader.separatorText") }}
+          {{ $t("t.or") }}
         </span>
       </div>
       <BIMDataButton

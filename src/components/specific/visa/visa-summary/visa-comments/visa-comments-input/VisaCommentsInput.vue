@@ -3,7 +3,7 @@
     <BIMDataTextarea
       ref="textarea"
       v-model="textAreaContent"
-      :placeholder="$t('Visa.comments.postComment')"
+      :placeholder="$t('Visa.comments.commentInputPlaceholder')"
       name="comment"
       width="100%"
       :resizable="false"
@@ -13,21 +13,23 @@
     />
     <div class="visa-comments-input__action-button">
       <BIMDataButton
+        width="30%"
         color="secondary"
         radius
-        width="30%"
         @click="$emit('close-comments-input')"
-        >{{ $t("Visa.comments.cancel") }}</BIMDataButton
       >
+        {{ $t("t.cancel") }}
+      </BIMDataButton>
       <BIMDataButton
         data-test-id="btn-submit-visa-comment"
+        width="30%"
         color="primary"
         fill
         radius
-        width="30%"
         @click="pushComment"
-        >{{ $t("Visa.comments.publish") }}</BIMDataButton
       >
+        {{ $t("Visa.comments.publish") }}
+      </BIMDataButton>
     </div>
   </div>
 </template>

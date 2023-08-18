@@ -7,20 +7,17 @@
     <div class="versioning-safe-zone__action">
       <BIMDataButton
         data-test-id="btn-confirm-delete"
+        width="40%"
         color="high"
         fill
         radius
-        width="40%"
         @click="$emit('close', true)"
-        >{{ $t(`Versioning.safeZone.delete.action`) }}</BIMDataButton
       >
-      <BIMDataButton
-        outline
-        radius
-        width="40%"
-        @click="$emit('close', false)"
-        >{{ $t(`Versioning.safeZone.delete.keepView`) }}</BIMDataButton
-      >
+        {{ $t(`Versioning.safeZone.delete.action`) }}
+      </BIMDataButton>
+      <BIMDataButton width="40%" outline radius @click="$emit('close', false)">
+        {{ $t("t.cancel") }}
+      </BIMDataButton>
     </div>
   </div>
 </template>

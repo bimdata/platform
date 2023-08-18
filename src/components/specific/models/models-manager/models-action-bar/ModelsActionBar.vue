@@ -11,7 +11,7 @@
       @click="$emit('delete', models)"
     >
       <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
-      <span>{{ $t("ModelsActionBar.deleteButtonText") }}</span>
+      <span>{{ $t("t.delete") }}</span>
     </BIMDataButton>
 
     <BIMDataButton
@@ -31,15 +31,7 @@
         margin="0 6px 0 0"
       />
       <span>
-        {{
-          $t(
-            `ModelsActionBar.${
-              models.every(m => m.archived)
-                ? "unarchiveButtonText"
-                : "archiveButtonText"
-            }`
-          )
-        }}
+        {{ $t(`t.${models.every(m => m.archived) ? "unarchive" : "archive"}`) }}
       </span>
     </BIMDataButton>
 
@@ -55,7 +47,7 @@
       @click="$emit('download', models)"
     >
       <BIMDataIconDownload size="s" margin="0 6px 0 0" />
-      <span>{{ $t("ModelsActionBar.downloadButtonText") }}</span>
+      <span>{{ $t("t.download") }}</span>
     </BIMDataButton>
   </div>
 </template>

@@ -46,15 +46,15 @@
       </template>
     </div>
     <div v-if="isDeleting" class="visa-comment-post-actions__delete">
-      <span> {{ $t("Visa.comments.actions.confirmDelete") }}</span>
+      <span>{{ $t("Visa.comments.confirmDelete") }}</span>
       <BIMDataButton
         data-test-id="btn-confirm-delete-visa-comment"
+        color="high"
         fill
         radius
-        color="high"
         @click="onConfirmDelete"
       >
-        {{ $t("Visa.comments.actions.delete") }}
+        {{ $t("t.delete") }}
       </BIMDataButton>
       <BIMDataButton ghost rounded icon @click="isDeleting = false">
         <BIMDataIconClose size="xxs" fill color="primary" />

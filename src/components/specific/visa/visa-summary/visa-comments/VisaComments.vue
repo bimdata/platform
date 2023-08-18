@@ -9,8 +9,9 @@
         radius
         width="100%"
         @click="isCommenting = true"
-        >{{ $t("Visa.comments.comment") }}</BIMDataButton
       >
+        {{ $t("t.comment") }}
+      </BIMDataButton>
     </template>
     <template v-if="commentList.length > 0">
       <div class="visa-comments__comment-title">

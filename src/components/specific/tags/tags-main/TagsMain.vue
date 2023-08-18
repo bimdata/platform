@@ -46,31 +46,28 @@
           @keyup.enter.stop="addNewTag"
         />
         <div class="tags-main__content__list-add__input-btn">
-          <BIMDataButton
-            ghost
-            radius
-            class="m-r-6"
-            @click="toggleAddTagInput"
-            >{{ $t("Tag.cancel") }}</BIMDataButton
-          >
+          <BIMDataButton class="m-r-6" ghost radius @click="toggleAddTagInput">
+            {{ $t("t.cancel") }}
+          </BIMDataButton>
           <BIMDataButton
             data-test-id="btn-validate-tag"
             color="primary"
             fill
             radius
             @click="addNewTag"
-            >{{ $t("Tag.validate") }}</BIMDataButton
           >
+            {{ $t("t.validate") }}
+          </BIMDataButton>
         </div>
       </template>
       <div class="tags-main__content__search-bar">
         <BIMDataSearch
-          v-model="filter"
-          :placeholder="$t('Tag.search')"
-          color="primary"
-          radius
           width="100%"
           height="calc(var(--spacing-unit) * 2.5)"
+          :placeholder="$t('t.search')"
+          color="primary"
+          radius
+          v-model="filter"
         />
       </div>
       <div data-test-id="tag-list" class="tags-main__content__tag-list">

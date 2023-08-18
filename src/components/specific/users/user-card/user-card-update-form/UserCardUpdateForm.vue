@@ -16,7 +16,7 @@
       radius
       @click="submit"
     >
-      {{ $t("UserCardUpdateForm.submitButtonText") }}
+      {{ $t("t.validate") }}
     </BIMDataButton>
     <BIMDataButton
       data-test-id="btn-close-update"

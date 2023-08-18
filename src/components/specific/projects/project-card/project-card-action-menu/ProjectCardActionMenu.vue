@@ -42,24 +42,26 @@
             squared
             @click="openUpdateForm"
           >
-            {{ $t("ProjectCardActionMenu.renameButtonText") }}
+            {{ $t("t.rename") }}
           </BIMDataButton>
           <BIMDataButton
             v-if="project.isAdmin"
             data-test-id="btn-open-delete"
+            color="high"
             ghost
             squared
             @click="openDeleteGuard"
           >
-            {{ $t("ProjectCardActionMenu.deleteButtonText") }}
+            {{ $t("t.delete") }}
           </BIMDataButton>
           <BIMDataButton
             data-test-id="btn-open-leave"
+            color="high"
             ghost
             squared
             @click="openLeaveGuard"
           >
-            {{ $t("ProjectCardActionMenu.leaveButtonText") }}
+            {{ $t("t.leave") }}
           </BIMDataButton>
         </div>
       </template>

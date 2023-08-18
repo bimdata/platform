@@ -30,7 +30,7 @@
         width="120px"
         @click="$emit('close')"
       >
-        {{ $t("ModelsDeleteModal.cancelButtonText") }}
+        {{ $t("t.cancel") }}
       </BIMDataButton>
       <BIMDataButton
         data-test-id="btn-submit"
@@ -40,7 +40,7 @@
         width="120px"
         @click="submit"
       >
-        {{ $t("ModelsDeleteModal.deleteButtonText") }}
+        {{ $t("t.delete") }}
       </BIMDataButton>
     </template>
   </GenericModal>

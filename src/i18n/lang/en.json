@@ -142,8 +142,7 @@
         "shortAddFileButtonText": "File"
     },
     "FileUploader": {
-        "uploadAreaText": "Drag and drop to store your project assets",
-        "uploadDropArea": "Drag and drop to upload",
+        "uploadAreaText": "Drag and drop to upload",
         "separatorText": "or",
         "uploadButtonText": "Select a model file"
     },

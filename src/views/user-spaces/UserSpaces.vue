@@ -8,7 +8,7 @@
         <BIMDataSearch
           class="user-spaces__header__search"
           :width="isLG ? '150px' : isXL ? '225px' : '300px'"
-          :placeholder="isSM ? '' : $t('UserSpaces.searchInputPlaceholder')"
+          :placeholder="isSM ? '' : $t('t.search')"
           v-model="searchText"
           clear
         />

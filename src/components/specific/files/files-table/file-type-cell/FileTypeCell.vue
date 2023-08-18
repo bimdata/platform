@@ -1,7 +1,7 @@
 <template>
   <div class="file-type-cell">
     <template v-if="isFolder(file)">
-      {{ $t("FilesTable.folder") }}
+      {{ $t("t.folder") }}
     </template>
     <template v-else>
       {{ fileExtension(file.file_name).slice(0, 8) || "?" }}

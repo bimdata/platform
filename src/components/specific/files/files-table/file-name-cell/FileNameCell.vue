@@ -13,7 +13,7 @@
           @keyup.esc.stop="closeUpdateForm"
           @keyup.enter.stop="renameFile"
           :error="hasError"
-          :errorMessage="$t('FileNameCell.inputErrorMessage')"
+          :errorMessage="$t('t.invalidName')"
           margin="0"
         />
         <BIMDataButton
@@ -23,7 +23,7 @@
           radius
           @click="renameFile"
         >
-          {{ $t("FileNameCell.submitButtonText") }}
+          {{ $t("t.validate") }}
         </BIMDataButton>
         <BIMDataButton
           class="file-name-cell__update-form__btn-close"

@@ -16,10 +16,10 @@
       ref="nameInput"
       data-test-id="input-update-name"
       class="project-card-update-form__input"
-      :placeholder="$t('ProjectCardUpdateForm.inputPlaceholder')"
+      :placeholder="$t('t.name')"
       v-model="projectName"
       :error="hasError"
-      :errorMessage="$t('ProjectCardUpdateForm.inputErrorMessage')"
+      :errorMessage="$t('t.invalidName')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="renameProject"
     />
@@ -31,7 +31,7 @@
       radius
       @click="renameProject"
     >
-      {{ $t("ProjectCardUpdateForm.renameButtonText") }}
+      {{ $t("t.rename") }}
     </BIMDataButton>
   </div>
 </template>

@@ -11,7 +11,7 @@
       radius
       @click="$emit('close')"
     >
-      {{ $t("OrganizationForm.successButtonText") }}
+      {{ $t("t.ok") }}
     </BIMDataButton>
   </div>
 </template>

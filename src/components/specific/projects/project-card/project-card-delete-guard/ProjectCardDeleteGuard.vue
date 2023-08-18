@@ -23,7 +23,7 @@
       radius
       @click="submit"
     >
-      {{ $t("ProjectCardDeleteGuard.deleteButtonText") }}
+      {{ $t("t.delete") }}
     </BIMDataButton>
   </div>
 </template>

@@ -16,10 +16,10 @@
       ref="nameInput"
       data-test-id="input-update-name"
       class="group-card-update-form__input"
-      :placeholder="$t('GroupCardUpdateForm.inputPlaceholder')"
+      :placeholder="$t('t.name')"
       v-model="groupName"
       :error="hasError"
-      :errorMessage="$t('GroupCardUpdateForm.inputErrorMessage')"
+      :errorMessage="$t('t.invalidName')"
       @keyup.esc.stop="close"
       @keyup.enter.stop="submit"
     />
@@ -31,7 +31,7 @@
       radius
       @click="submit"
     >
-      {{ $t("GroupCardUpdateForm.submitButtonText") }}
+      {{ $t("t.rename") }}
     </BIMDataButton>
   </div>
 </template>

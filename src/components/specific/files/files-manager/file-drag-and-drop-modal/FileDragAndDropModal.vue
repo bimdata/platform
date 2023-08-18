@@ -15,7 +15,7 @@
     >
       <BIMDataIconUpload size="l" />
       <div class="file-drag-and-drop-modal__drop-zone__text">
-        {{ $t("FileUploader.uploadDropArea") }}
+        {{ $t("FileUploader.uploadAreaText") }}
       </div>
     </div>
   </div>

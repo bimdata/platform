@@ -6,7 +6,7 @@
     >
       <BIMDataButton ghost radius :disabled="localState.loading" @click="back">
         <BIMDataIconArrow size="xxs" margin="0 6px 0 0" />
-        <span>{{ $t("OrganizationsManager.backButtonText") }}</span>
+        <span>{{ $t("t.back") }}</span>
       </BIMDataButton>
       <BIMDataTextbox
         v-if="localState.organization"

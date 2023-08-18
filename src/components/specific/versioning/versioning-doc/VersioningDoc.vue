@@ -32,7 +32,7 @@
             <div
               class="versioning-doc__content__header__right-side__btn-delete"
             >
-              <BIMDataTooltip position="left" :text="$t('Versioning.delete')">
+              <BIMDataTooltip position="left" :text="$t('t.delete')">
                 <BIMDataButton
                   data-test-id="btn-delete-version"
                   ghost
@@ -70,7 +70,7 @@
             </div>
           </template>
           <div class="versioning-doc__content__header__right-side__btn-dl">
-            <BIMDataTooltip position="left" :text="$t('Versioning.download')">
+            <BIMDataTooltip position="left" :text="$t('t.download')">
               <BIMDataButton
                 ghost
                 rounded
