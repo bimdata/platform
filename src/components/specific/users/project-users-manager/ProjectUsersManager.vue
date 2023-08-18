@@ -27,9 +27,7 @@
                 <BIMDataSearch
                   v-if="showUserSearch"
                   key="user-search"
-                  :placeholder="
-                    $t('ProjectUsersManager.searchInputPlaceholder')
-                  "
+                  :placeholder="$t('t.search')"
                   v-model="searchText"
                   clear
                 />

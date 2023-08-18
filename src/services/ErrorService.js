@@ -111,7 +111,7 @@ class ErrorService {
   notifyError(errorId) {
     this.notify({
       type: "error",
-      title: this.t("Error"),
+      title: this.t("t.error"),
       message: this.t(`Errors.${errorId}`)
     });
   }

@@ -9,7 +9,7 @@
         <BIMDataSearch
           class="group-board__header__search"
           :width="isSM ? '150px' : '300px'"
-          :placeholder="isSM ? '' : $t('GroupBoard.searchInputPlaceholder')"
+          :placeholder="isSM ? '' : $t('t.search')"
           v-model="searchText"
           clear
         />

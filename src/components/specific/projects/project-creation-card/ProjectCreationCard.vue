@@ -26,10 +26,10 @@
           ref="nameInput"
           data-test-id="input-create-name"
           class="project-creation-card__form__input"
-          :placeholder="$t('ProjectCreationCard.inputPlaceholder')"
+          :placeholder="$t('t.name')"
           v-model="newProject.name"
           :error="hasError"
-          :errorMessage="$t('ProjectCreationCard.inputErrorMessage')"
+          :errorMessage="$t('t.invalidName')"
           @keyup.esc.stop="closeCreationForm"
           @keyup.enter.stop="submit"
         />
@@ -41,7 +41,7 @@
           color="primary"
           @click="submit"
         >
-          {{ $t("ProjectCreationCard.createButtonText") }}
+          {{ $t("t.create") }}
         </BIMDataButton>
       </div>
 

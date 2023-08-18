@@ -20,7 +20,7 @@
             height="28px"
             @click="onDeleteTag"
           >
-            {{ $t("Tag.deleteTagButton") }}
+            {{ $t("t.delete") }}
           </BIMDataButton>
           <BIMDataButton
             color="primary"

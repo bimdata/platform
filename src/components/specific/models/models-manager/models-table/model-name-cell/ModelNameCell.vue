@@ -14,7 +14,7 @@
           @keyup.esc.stop="closeUpdateForm"
           @keyup.enter.stop="renameModel"
           :error="hasError"
-          :errorMessage="$t('ModelNameCell.inputErrorMessage')"
+          :errorMessage="$t('t.invalidName')"
         />
         <BIMDataButton
           class="model-name-cell__update-form__btn-submit"
@@ -24,7 +24,7 @@
           radius
           @click="renameModel"
         >
-          {{ $t("ModelNameCell.submitButtonText") }}
+          {{ $t("t.validate") }}
         </BIMDataButton>
         <BIMDataButton
           class="model-name-cell__update-form__btn-close"

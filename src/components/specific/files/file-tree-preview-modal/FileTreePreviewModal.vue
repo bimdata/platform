@@ -6,11 +6,11 @@
       </div>
     </template>
     <span class="file-tree-preview-modal__title">
-      {{ $t("FileTreePreview.title") }}
+      {{ $t("FileTreePreviewModal.title") }}
       <span class="file-tree-preview-modal__title__project">
-        {{ projectsToUpload.name }}</span
-      ></span
-    >
+        {{ projectsToUpload.name }}
+      </span>
+    </span>
     <div class="file-tree-preview-modal__content">
       <template v-for="folder of projectsToUpload.folders" :key="folder.id">
         <FileTree
@@ -28,7 +28,7 @@
         width="45%"
         @click="closeModal"
       >
-        {{ $t("FileTreePreview.cancel") }}
+        {{ $t("t.cancel") }}
       </BIMDataButton>
       <BIMDataButton
         color="primary"
@@ -37,7 +37,7 @@
         width="45%"
         @click="projectsToUpload.upload"
       >
-        {{ $t("FileTreePreview.validate") }}
+        {{ $t("t.validate") }}
       </BIMDataButton>
     </div>
   </div>

@@ -43,7 +43,7 @@
               "
               style="margin-left: 6px"
             >
-              {{ $t("FolderCreationButton.buttonText") }}
+              {{ $t("FolderCreationButton.text") }}
             </span>
             <span
               v-else-if="
@@ -52,7 +52,7 @@
               "
               style="margin-left: 6px"
             >
-              {{ $t("FolderCreationButton.shortButtonText") }}
+              {{ $t("t.folder") }}
             </span>
           </FolderCreationButton>
           <BIMDataTooltip
@@ -96,7 +96,7 @@
                   "
                   style="margin-left: 6px"
                 >
-                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
+                  {{ $t("t.file") }}
                 </span>
               </BIMDataButton>
             </template>
@@ -135,7 +135,7 @@
                   "
                   style="margin-left: 6px"
                 >
-                  {{ $t("FileUploadButton.shortAddFileButtonText") }}
+                  {{ $t("t.file") }}
                 </span>
               </BIMDataButton>
             </template>
@@ -146,7 +146,7 @@
           <BIMDataSearch
             class="files-manager__actions__input-search"
             :width="isMD ? '200px' : isLG ? '300px' : '400px'"
-            :placeholder="$t('FilesManager.searchInputPlaceholder')"
+            :placeholder="$t('t.search')"
             v-model="searchText"
             clear
           />
@@ -489,7 +489,7 @@ export default {
         emit("model-created", model);
         pushNotification({
           type: "success",
-          title: t("Success"),
+          title: t("t.success"),
           message: t("FilesManager.createModelNotification")
         });
       } finally {

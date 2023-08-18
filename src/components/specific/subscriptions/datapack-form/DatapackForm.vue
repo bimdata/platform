@@ -38,7 +38,7 @@
         radius
         @click="cancel"
       >
-        {{ $t("DatapackForm.cancelButtonText") }}
+        {{ $t("t.cancel") }}
       </BIMDataButton>
     </div>
 
@@ -112,7 +112,7 @@
         :disabled="quantity === (datapack?.quantity || 0)"
         @click="submit"
       >
-        {{ $t("DatapackForm.submitButtonText") }}
+        {{ $t("t.validate") }}
       </BIMDataButton>
     </div>
   </div>

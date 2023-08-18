@@ -29,10 +29,10 @@
             ref="nameInput"
             data-test-id="input-create-name"
             class="group-creation-card__form__input"
-            :placeholder="$t('GroupCreationCard.inputPlaceholder')"
+            :placeholder="$t('t.name')"
             v-model="groupName"
             :error="hasError"
-            :errorMessage="$t('GroupCreationCard.inputErrorMessage')"
+            :errorMessage="$t('t.invalidName')"
             @keyup.esc.stop="closeCreationForm"
             @keyup.enter.stop="submit"
           />
@@ -44,7 +44,7 @@
             color="primary"
             @click="submit"
           >
-            {{ $t("GroupCreationCard.submitButtonText") }}
+            {{ $t("t.create") }}
           </BIMDataButton>
         </div>
       </template>

@@ -29,7 +29,7 @@
       radius
       @click="close"
     >
-      {{ $t("InvitationForm.cancelButtonText") }}
+      {{ $t("t.cancel") }}
     </BIMDataButton>
     <BIMDataButton
       data-test-id="btn-submit-invit"
@@ -130,7 +130,7 @@ export default {
         pushNotification(
           {
             type: "success",
-            title: t("Success"),
+            title: t("t.success"),
             message: t(
               currentUser
                 ? "InvitationForm.successUsertoAdmin"

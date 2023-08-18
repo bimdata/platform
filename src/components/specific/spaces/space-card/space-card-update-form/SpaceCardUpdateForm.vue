@@ -16,10 +16,10 @@
       ref="nameInput"
       data-test-id="input-update-name"
       class="space-card-update-form__input"
-      :placeholder="$t('SpaceCardUpdateForm.inputPlaceholder')"
+      :placeholder="$t('t.name')"
       v-model="spaceName"
       :error="hasError"
-      :errorMessage="$t('SpaceCardUpdateForm.inputErrorMessage')"
+      :errorMessage="$t('t.invalidName')"
       @keyup.esc.stop="close"
       @keyup.enter.prevent.stop="submit"
     />
@@ -31,7 +31,7 @@
       color="primary"
       @click="submit"
     >
-      {{ $t("SpaceCardUpdateForm.submitButtonText") }}
+      {{ $t("t.rename") }}
     </BIMDataButton>
   </div>
 </template>

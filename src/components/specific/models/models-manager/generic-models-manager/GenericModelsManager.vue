@@ -32,7 +32,7 @@
       @click="uploadModels"
     >
       <BIMDataIconExport margin="0 12px" />
-      <span> {{ $t("ModelsManager.add") }}</span>
+      <span> {{ $t("t.add") }}</span>
     </BIMDataButton>
     <div class="generic-models-manager__separator"></div>
 

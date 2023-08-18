@@ -64,7 +64,7 @@
           size="xxxl"
           margin="0 0 25px 0px"
         />
-        <div>{{ $t("FolderSelector.emptyFolderPlaceholder") }}</div>
+        <div>{{ $t("t.emptyFolder") }}</div>
       </div>
     </div>
     <div class="folder-selector__footer">
@@ -89,13 +89,7 @@
         @click="submit"
         :disabled="isAllowedToMoveFile"
       >
-        {{
-          $t(
-            `FolderSelector.submitButtonText.${
-              selectedFolder ? "moveTo" : "moveHere"
-            }`
-          )
-        }}
+        {{ selectedFolder ? $t("t.validate") : $t("FolderSelector.moveHere") }}
       </BIMDataButton>
     </div>
   </div>

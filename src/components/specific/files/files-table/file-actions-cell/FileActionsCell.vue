@@ -163,7 +163,7 @@ export default {
 
       menuItems.value.push({
         key: 4,
-        text: "FileActionsCell.renameButtonText",
+        text: "t.rename",
         action: () => onClick("update"),
         icon: "edit",
         disabled:
@@ -173,7 +173,7 @@ export default {
 
       menuItems.value.push({
         key: 5,
-        text: "FileActionsCell.downloadButtonText",
+        text: "t.download",
         action: () => onClick("download"),
         icon: "download",
         disabled:
@@ -194,7 +194,7 @@ export default {
       if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
         menuItems.value.push({
           key: 7,
-          text: "FileActionsCell.VisaButtonText",
+          text: "FileActionsCell.visaButtonText",
           icon: "visa",
           action: () => onClick("open-visa-manager"),
           dataTestId: "btn-open-visa-manager"
@@ -208,7 +208,7 @@ export default {
         });
         menuItems.value.push({
           key: 9,
-          text: "FileActionsCell.VersioningButtonText",
+          text: "FileActionsCell.versioningButtonText",
           icon: "versioning",
           action: () => onClick("open-versioning-manager"),
           dataTestId: "btn-open-versioning-manager",
@@ -218,7 +218,7 @@ export default {
 
       menuItems.value.push({
         key: 10,
-        text: "FileActionsCell.deleteButtonText",
+        text: "t.delete",
         action: () => onClick("delete"),
         color: "high",
         background: "var(--color-high-lighter)",

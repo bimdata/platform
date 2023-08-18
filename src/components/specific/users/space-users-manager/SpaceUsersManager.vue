@@ -11,7 +11,7 @@
 
     <BIMDataSearch
       width="100%"
-      :placeholder="$t('SpaceUsersManager.searchInputPlaceholder')"
+      :placeholder="$t('t.search')"
       v-model="searchText"
       clear
     />

@@ -8,7 +8,7 @@
         <BIMDataSearch
           class="project-groups__header__search"
           :width="isSM ? '150px' : '300px'"
-          :placeholder="isSM ? '' : $t('ProjectGroups.searchInputPlaceholder')"
+          :placeholder="isSM ? '' : $t('t.search')"
           v-model="searchText"
           clear
         />

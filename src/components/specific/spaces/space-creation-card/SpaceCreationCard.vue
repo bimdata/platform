@@ -29,10 +29,10 @@
             <BIMDataInput
               ref="nameInput"
               data-test-id="input-create-name"
-              :placeholder="$t('SpaceCreationCard.inputPlaceholder')"
+              :placeholder="$t('t.name')"
               v-model="newSpace.name"
               :error="hasError"
-              :errorMessage="$t('SpaceCreationCard.inputErrorMessage')"
+              :errorMessage="$t('t.invalidName')"
               @keyup.esc.stop="close"
               @keyup.enter.stop="submit"
             />
@@ -43,7 +43,7 @@
               color="primary"
               @click="submit"
             >
-              {{ $t("SpaceCreationCard.createButtonText") }}
+              {{ $t("t.create") }}
             </BIMDataButton>
           </div>
         </template>

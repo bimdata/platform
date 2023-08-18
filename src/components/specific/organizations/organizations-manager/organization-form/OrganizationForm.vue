@@ -18,9 +18,9 @@
               {{ $t("OrganizationForm.infoSectionTitle") }}
             </div>
             <BIMDataInput
-              :placeholder="$t('OrganizationForm.nameInputPlaceholder')"
+              :placeholder="$t('t.name')"
               :error="hasInvalidName"
-              :errorMessage="$t('OrganizationForm.nameInputErrorMessage')"
+              :errorMessage="$t('t.invalidName')"
               v-model="orgaName"
             />
           </div>
@@ -54,7 +54,7 @@
               radius
               @click="submit"
             >
-              {{ $t("OrganizationForm.submitButtonText") }}
+              {{ $t("t.validate") }}
             </BIMDataButton>
           </div>
         </div>

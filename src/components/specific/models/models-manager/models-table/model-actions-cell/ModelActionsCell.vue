@@ -144,7 +144,7 @@ export default {
     if (props.model.document) {
       menuItems.push({
         key: 1,
-        text: "ModelActionsCell.renameButtonText",
+        text: "t.rename",
         icon: "edit",
         action: () => onClick("update"),
         color: "var(--color-primary)",
@@ -154,9 +154,7 @@ export default {
 
     menuItems.push({
       key: 2,
-      text: props.model.archived
-        ? "ModelActionsCell.unarchiveButtonText"
-        : "ModelActionsCell.archiveButtonText",
+      text: props.model.archived ? "t.unarchive" : "t.archive",
       icon: props.model.archived ? "unarchive" : "archive",
       action: () => onClick(props.model.archived ? "unarchive" : "archive"),
       color: "var(--color-primary)",
@@ -166,7 +164,7 @@ export default {
     if (props.model.type === MODEL_TYPE.META_BUILDING) {
       menuItems.push({
         key: 3,
-        text: "ModelActionsCell.editButtontext",
+        text: "t.edit",
         icon: "edit",
         action: () => onClick("edit-metaBuilding"),
         color: "var(--color-primary)"
@@ -179,7 +177,7 @@ export default {
 
     menuItems.push({
       key: 4,
-      text: "ModelActionsCell.deleteButtonText",
+      text: "t.delete",
       icon: "delete",
       action: () => onClick("delete"),
       color: "var(--color-high)",

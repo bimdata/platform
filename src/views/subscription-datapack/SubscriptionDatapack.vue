@@ -98,7 +98,7 @@ export default {
       pushNotification(
         {
           type: "success",
-          title: t("Success"),
+          title: t("t.success"),
           message: t("SubscriptionDatapack.successNotification", {
             spaceName: currentSpace.value.name,
             size: formatBytes(size)

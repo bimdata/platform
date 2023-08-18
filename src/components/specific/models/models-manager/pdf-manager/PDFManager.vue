@@ -33,7 +33,7 @@
         @click="openBM"
       >
         <BIMDataIconBuilding size="xxxs" margin="0 12px 0 0" />
-        <span> {{ $t("ModelsTable.buildingMaker.create") }} </span>
+        <span> {{ $t("t.create") }} </span>
       </BIMDataButton>
 
       <transition name="slide-fade-right">

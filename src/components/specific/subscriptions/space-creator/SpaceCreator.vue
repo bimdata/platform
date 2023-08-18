@@ -10,7 +10,7 @@
     <div class="space-creator__input">
       <BIMDataInput
         ref="spaceNameInput"
-        :placeholder="$t('SpaceCreator.inputPlaceholder')"
+        :placeholder="$t('t.name')"
         :loading="newSpaceLoading"
         :disabled="disabled"
         v-model="newSpace.name"
@@ -34,7 +34,7 @@
         :disabled="disabled"
         @click="openBillingAccountModal"
       >
-        {{ $t("SpaceCreator.billingAccountButton") }}
+        {{ $t("t.modify") }}
       </BIMDataButton>
     </div>
     <BIMDataButton

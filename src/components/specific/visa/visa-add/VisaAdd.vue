@@ -40,7 +40,8 @@
             radius
             width="100%"
             @click="isSelectingValidator = true"
-            >{{ $t("Visa.add.validator") }}
+          >
+            {{ $t("Visa.validator") }}
             <div class="visa-add__content__validator__counter">
               <span>{{ validatorListCounter }}</span>
             </div>
@@ -56,7 +57,7 @@
             v-model="dateInput"
             :clearButton="true"
             width="100%"
-            :placeholder="$t('Visa.add.toValidate')"
+            :placeholder="$t('Visa.add.dateInputPlaceholder')"
             :disabledDates="disabledDates(dateInput)"
             :showEdgeDates="false"
           >
@@ -65,7 +66,7 @@
         <div class="visa-add__content__description">
           <BIMDataTextarea
             v-model="descInput"
-            :label="$t('Visa.add.description')"
+            :label="$t('t.description')"
             name="description"
             fitContent
             :resizable="false"
@@ -74,17 +75,18 @@
           />
         </div>
         <div class="visa-add__content__action-button">
-          <BIMDataButton color="primary" radius @click="safeZoneHandler">{{
-            $t("Visa.add.cancel")
-          }}</BIMDataButton>
+          <BIMDataButton color="primary" radius @click="safeZoneHandler">
+            {{ $t("t.cancel") }}
+          </BIMDataButton>
           <BIMDataButton
             data-test-id="btn-submit-visa-creation"
             color="primary"
             fill
             radius
             @click="submit"
-            >{{ $t("Visa.add.validate") }}</BIMDataButton
           >
+            {{ $t("t.validate") }}
+          </BIMDataButton>
         </div>
       </div>
     </template>

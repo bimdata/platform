@@ -16,12 +16,12 @@
         v-model="mergeName"
         @keyup.enter.stop="merge"
         :error="error"
-        :errorMessage="$t('ModelsMergeModal.inputErrorMessage')"
+        :errorMessage="$t('t.invalidName')"
       />
     </template>
     <template #footer>
       <BIMDataButton color="primary" fill radius width="120px" @click="merge">
-        {{ $t("ModelsMergeModal.submitButtonText") }}
+        {{ $t("t.export") }}
       </BIMDataButton>
     </template>
   </GenericModal>

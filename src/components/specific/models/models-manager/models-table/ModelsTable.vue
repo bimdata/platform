@@ -123,7 +123,7 @@ export default {
       }
       return filteredColumns.map(col => ({
         ...col,
-        label: col.label || t(`ModelsTable.headers.${col.id}`)
+        label: col.label || t(col.text)
       }));
     });
 

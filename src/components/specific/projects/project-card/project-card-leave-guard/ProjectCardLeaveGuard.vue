@@ -23,7 +23,7 @@
       radius
       @click="submit"
     >
-      {{ $t("ProjectCardLeaveGuard.leaveButtonText") }}
+      {{ $t("t.validate") }}
     </BIMDataButton>
   </div>
 </template>

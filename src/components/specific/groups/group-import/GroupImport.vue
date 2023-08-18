@@ -98,7 +98,7 @@
               width="95%"
               @click.stop="uploadGroup(item)"
             >
-              <span>{{ $t("GroupImport.add") }}</span>
+              <span>{{ $t("t.add") }}</span>
             </BIMDataButton>
           </div>
         </template>

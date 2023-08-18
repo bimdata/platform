@@ -2,7 +2,7 @@
   <div class="group-members-selector">
     <BIMDataSearch
       width="100%"
-      :placeholder="$t('GroupMembersSelector.searchInputPlaceholder')"
+      :placeholder="$t('t.search')"
       v-model="searchText"
       clear
     />

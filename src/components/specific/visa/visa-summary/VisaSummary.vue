@@ -83,7 +83,7 @@
           </div>
           <div class="visa-summary__shell__content__deadline">
             <span class="visa-summary__shell__content__deadline__title">{{
-              $t("Visa.summary.term")
+              $t("Visa.term")
             }}</span>
             <BIMDataDatePicker
               v-if="isEditing"
@@ -92,7 +92,7 @@
               :clearButton="true"
               width="100%"
               format="dd/MM/yyyy"
-              :placeholder="$t('Visa.add.toValidate')"
+              :placeholder="$t('Visa.add.dateInputPlaceholder')"
               fixedPosition="bottom-right"
             >
             </BIMDataDatePicker>
@@ -110,8 +110,9 @@
               fill
               radius
               @click="onDeleteVisa"
-              >{{ $t("Visa.summary.delete") }}</BIMDataButton
             >
+              {{ $t("t.delete") }}
+            </BIMDataButton>
             <BIMDataButton
               class="visa-summary__shell__action-button__close"
               data-test-id="btn-close-visa"
@@ -120,8 +121,9 @@
               radius
               :disabled="isClosed"
               @click="onCloseVisa"
-              >{{ $t("Visa.summary.close") }}</BIMDataButton
             >
+              {{ $t("Visa.close") }}
+            </BIMDataButton>
           </template>
           <template v-else>
             <BIMDataButton
@@ -133,8 +135,9 @@
               radius
               :disabled="isClosed"
               @click="onAcceptValidation"
-              >{{ $t("Visa.summary.validate") }}</BIMDataButton
             >
+              {{ $t("t.validate") }}
+            </BIMDataButton>
             <BIMDataButton
               class="visa-summary__shell__action-button__deny"
               :class="{ active: userValidationStatus.isRefused && !isClosed }"
@@ -144,8 +147,9 @@
               radius
               :disabled="isClosed"
               @click="onDenyValidation"
-              >{{ $t("Visa.summary.deny") }}</BIMDataButton
             >
+              {{ $t("Visa.deny") }}
+            </BIMDataButton>
           </template>
         </div>
         <div class="visa-summary__shell__file">
@@ -180,9 +184,9 @@
         </div>
         <div class="visa-summary__shell__validator">
           <div class="visa-summary__shell__validator__header">
-            <span class="visa-summary__shell__validator__header__title">{{
-              $t("Visa.summary.validator")
-            }}</span>
+            <span class="visa-summary__shell__validator__header__title">
+              {{ $t("Visa.validators") }}
+            </span>
             <BIMDataButton
               data-test-id="btn-add-validator"
               v-if="isAuthor && !isClosed"

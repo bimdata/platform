@@ -16,7 +16,7 @@
       radius
       @click="submit"
     >
-      {{ $t("UserCardDeleteGuard.submitButtonText") }}
+      {{ $t("t.delete") }}
     </BIMDataButton>
     <BIMDataButton
       data-test-id="btn-close-delete"

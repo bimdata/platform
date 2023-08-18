@@ -5,10 +5,10 @@
         <BIMDataButton ghost rounded icon @click="$emit('get-back')">
           <BIMDataIconArrow size="xxs" />
         </BIMDataButton>
-        <span>{{ $t("Visa.add.validatorView.getBack") }}</span>
+        <span>{{ $t("t.back") }}</span>
       </div>
       <div class="visa-add-validator__header__middle">
-        {{ $t("Visa.add.validatorView.validator") }}
+        {{ $t("Visa.validator") }}
       </div>
       <div class="visa-add-validator__header__right-side">
         <BIMDataButton ghost rounded icon @click="$emit('get-back')">
@@ -44,7 +44,7 @@
         width="100%"
         @click="onClick"
       >
-        {{ $t("Visa.add.validatorView.accept") }}
+        {{ $t("Visa.accept") }}
         <div class="visa-add-validator__action__counter">
           <span>
             {{ peopleListCounter }}

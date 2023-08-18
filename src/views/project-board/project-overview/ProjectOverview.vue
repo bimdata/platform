@@ -32,7 +32,7 @@
           <span v-if="!isLG" style="margin-left: 6px">
             {{
               showFileUploader
-                ? $t("ProjectOverview.closeFileUploadButtonText")
+                ? $t("t.close")
                 : $t("ProjectOverview.openFileUploadButtonText")
             }}
           </span>
@@ -153,8 +153,8 @@ export default {
     const notifyForbiddenUpload = () => {
       pushNotification({
         type: "error",
-        title: t("ProjectOverview.forbiddenUploadNotification.title"),
-        message: t("ProjectOverview.forbiddenUploadNotification.message", {
+        title: t("t.error"),
+        message: t("ProjectOverview.forbiddenUploadNotification", {
           extensions: UPLOADABLE_EXTENSIONS.join(", ")
         })
       });
