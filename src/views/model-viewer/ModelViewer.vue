@@ -31,6 +31,7 @@ import { useSpaces } from "../../state/spaces.js";
 // Components
 import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.vue";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
+import Listen from "../../listen.plugin.js";
 
 export default {
   components: {
@@ -122,7 +123,7 @@ export default {
         )
       );
       loading.value = false;
-
+      bimdataViewer.registerPlugin(Listen)
       bimdataViewer.mount("#viewer", initialWindow);
 
       // Keep viewer access token and locale in sync with application
