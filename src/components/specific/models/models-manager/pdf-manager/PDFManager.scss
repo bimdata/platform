@@ -52,14 +52,5 @@
     &__content {
       height: 100%;
     }
-
-    &:deep(.bimdata-file-manager) {
-      .bimdata-file-manager__pdf-page-selector {
-        position: fixed;
-        z-index: 1002;
-        width: 400px;
-        left: calc(100% - 400px);
-      }
-    }
   }
 }
