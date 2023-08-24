@@ -1,4 +1,4 @@
-# BIMData Platform, next generation
+# BIMData Platform
 
 This repository host the BIMData Platform project.
 The Platform is a Vue 3.x application bundled with [Vite](https://vitejs.dev/).
@@ -59,7 +59,7 @@ $ npm run dev
 
 - **(5)** Have a coffee and start coding... :coffee: `</>`
 
-## Tests :passport_control: :heavy_check_mark:
+## Tests :passport_control: :white_check_mark:
 
 This project comes with a set of end-to-end tests built with [Cypress](https://www.cypress.io/).
 
@@ -71,9 +71,10 @@ $ cp cyress.env.json.example cypress.env.json
 ```
 
 Then open it and set variables values as appropriate:
- - **APP_BASE_URL**: will be used by Cypress as [baseUrl](https://docs.cypress.io/guides/references/configuration#e2e)
- - **AUTH_BASE_URL**: authentication server
- - **IAM_BASE_URL**: identity server
+
+- **APP_BASE_URL**: will be used by Cypress as [baseUrl](https://docs.cypress.io/guides/references/configuration#e2e)
+- **AUTH_BASE_URL**: authentication server
+- **IAM_BASE_URL**: identity server
 
 Start the platform locally (only needed if your **APP_BASE_URL** point to `localhost`):
 
@@ -103,10 +104,6 @@ $ npm run build
 ```
 
 This will create a `dist/` directory that contain the bundled application ready to be deployed.
-
-## Documentation :closed_book:
-
-A work in progress documentation is available [here](https://github.com/bimdata/platform-next/wiki).
 
 ## License
 
