@@ -256,8 +256,8 @@
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
             @view-comment-snapshot="openTopicCommentSnapshot"
-            @topic-deleted="reloadBcfTopics(), closeSidePanel()"
-            @close="closeSidePanel"
+            @topic-deleted="reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()"
+            @close="closeSidePanel(), removeTopicGuidFromUrl()"
           />
         </template>
         <template v-else-if="currentPanel === sidePanelViews.create">
@@ -560,6 +560,7 @@ export default {
       currentPanel.value = "";
       currentTopic.value = null;
       closeSidePanel();
+      removeTopicGuidFromUrl();
     });
 
     const { filteredTopics, apply: applyFilters } = useBcfFilter(topics);
@@ -680,6 +681,7 @@ export default {
     const openTopicOverview = topic => {
       currentPanel.value = sidePanelViews.overview;
       currentTopic.value = topic;
+      addTopicGuidToUrl();
       openSidePanel();
     };
 
@@ -714,6 +716,16 @@ export default {
       closeModal();
       commentSnapshot.value = null;
     };
+
+    const removeTopicGuidFromUrl = () => {
+      delete route.query.topicGuid;
+      window.history.replaceState({}, '', router.resolve(route).fullPath);
+    };
+
+    const addTopicGuidToUrl = () => {
+      route.query.topicGuid = currentTopic.value.guid;
+      window.history.replaceState({}, '', router.resolve(route).fullPath);
+    }
 
     const openTopicViewer = topic => {
       let viewpoint = topic.viewpoints[0] ?? {};
@@ -807,6 +819,7 @@ export default {
       openTopicViewer,
       reloadBcfTopics,
       reloadExtensions,
+      removeTopicGuidFromUrl,
       sortByDate,
       sortByIndex,
       sortByTitle,
