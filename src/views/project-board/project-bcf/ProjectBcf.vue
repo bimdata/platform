@@ -447,7 +447,7 @@ import {
 } from "@bimdata/bcf-components";
 import { computed, onActivated, onDeactivated, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
@@ -486,6 +486,7 @@ export default {
   setup() {
     const { t } = useI18n();
     const router = useRouter();
+    const route = useRoute();
     const { pushNotification } = useAppNotification();
     const { currentProject } = useProjects();
     const { projectModels } = useModels();
@@ -526,6 +527,12 @@ export default {
           currentTopic.value = null;
           await reloadExtensions();
           await reloadBcfTopics();
+          const topic = topics.value.find(
+            t => t.guid === route.query.topicGuid
+          );
+          if (topic) {
+            openTopicOverview(topic);
+          }
         } finally {
           loading.value = false;
         }
