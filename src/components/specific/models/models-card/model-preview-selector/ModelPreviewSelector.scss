@@ -1,0 +1,64 @@
+.model-preview-selector {
+  width: 75%;
+  height: 75%;
+  padding: calc(var(--spacing-unit) * 2);
+  background-color: var(--color-white);
+
+  display: flex;
+  flex-direction: column;
+
+  &__head {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-unit);
+  }
+
+  &__body {
+    height: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    .model-preview-item {
+      position: relative;
+      width: 215px;
+      height: 247px;
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+
+      &.selected {
+        border: 2px solid var(--color-primary);
+      }
+
+      .bimdata-radio {
+        position: absolute;
+        top: calc(var(--spacing-unit) / 2);
+        right: calc(var(--spacing-unit) / 2);
+        border-radius: 50%;
+        background-color: var(--color-white);
+      }
+
+      &__img {
+        height: calc(100% - 32px);
+        overflow: hidden;
+        background-color: var(--color-silver-light);
+        display: flex;
+        align-items: center;
+
+        img {
+          height: 100%;
+        }
+      }
+      &__txt {
+        height: 32px;
+        padding: calc(var(--spacing-unit) / 2);
+      }
+    }
+  }
+
+  &__foot {
+    margin-top: var(--spacing-unit);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-unit);
+  }
+}

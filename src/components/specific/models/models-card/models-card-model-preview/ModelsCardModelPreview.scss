@@ -7,18 +7,33 @@
   height: 100%;
   background-color: $card-background;
 
-  &__index {
+  &__head {
     position: absolute;
     z-index: 2;
-    top: 20px;
-    right: 20px;
-    font-size: 14px;
+    top: var(--spacing-unit);
+    right: calc(var(--spacing-unit) / 2);
 
-    &__preview-icon {
-      position: absolute;
-      right: calc(var(--spacing-unit) / 2);
-      bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) / 2);
+
+    &__index {
+      font-size: 14px;
     }
+
+    &__menu {
+      .bimdata-menu {
+        position: absolute;
+        bottom: calc(0px - 100% - 2 * var(--spacing-unit));
+        right: 0;
+      }
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    bottom: 60px;
+    right: calc(var(--spacing-unit) / 2);
   }
 
   &__viewer {
@@ -51,7 +66,7 @@
       width: calc(#{$card-width} - 2 * var(--spacing-unit) - 72px);
     }
 
-    &__btn-previous {
+    &__btn-prev {
       margin-left: auto;
     }
   }

@@ -1,8 +1,6 @@
 <template>
   <div class="invoices-table">
-    <h2>
-      {{ $t("InvoicesTable.title") }}
-    </h2>
+    <h2>{{ $t("InvoicesTable.title") }}</h2>
 
     <BIMDataCard class="invoices-table__table" v-if="payments.length > 0">
       <template #content>
