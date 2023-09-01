@@ -75,7 +75,11 @@ async function onAccessTokenExpired() {
   do {
     retriesLeft--;
     await delay(200);
-    response = await fetch(origin, {method: 'HEAD'});
+    try {
+      response = await fetch(origin, {method: 'HEAD'});
+    } catch (e) {
+      response = {ok: false};
+    }
   } while (retriesLeft > 0 && !response.ok);
   location.reload()
 }
