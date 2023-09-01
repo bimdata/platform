@@ -1,9 +1,11 @@
 <script setup>
 import { ref, watch } from "vue";
 import { MODEL_TYPE } from "../../../../../config/models.js";
+import { useModels } from "../../../../../state/models.js";
 import { useProjects } from "../../../../../state/projects.js";
 
 const { IFC, POINT_CLOUD } = MODEL_TYPE;
+const { loadProjectModels } = useModels();
 const { updateProject } = useProjects();
 
 const props = defineProps({
@@ -26,6 +28,7 @@ const props = defineProps({
   }
 });
 
+const loading = ref(false);
 const selectedModel = ref(null);
 
 watch(
@@ -44,19 +47,27 @@ const cancel = () => {
 
 const submit = async () => {
   try {
+    loading.value = true;
     await updateProject({
       ...props.project,
       main_model_id: selectedModel.value.id
     });
+    await loadProjectModels(props.project);
     props.onSuccess?.();
   } catch (error) {
     props.onError?.(error);
+  } finally {
+    loading.value = false;
   }
 };
 </script>
 
 <template>
   <div class="model-preview-selector">
+    <div v-if="loading" class="model-preview-selector__loading">
+      <BIMDataSpinner />
+    </div>
+
     <div class="model-preview-selector__head">
       <h3>{{ $t("ModelPreviewSelector.title") }}</h3>
     </div>

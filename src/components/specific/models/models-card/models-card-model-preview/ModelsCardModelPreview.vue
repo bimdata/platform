@@ -145,14 +145,23 @@ export default {
     watch(
       () => props.models,
       () => {
-        images.value = props.models
+        const models = [];
+        props.models
           .filter(model => !model.archived)
-          .map((model, i) => ({
-            index: i + 1,
-            name: model.name,
-            type: model.type,
-            url: model.preview_file
-          }));
+          .forEach(model => {
+            if (model.id === props.project.main_model_id) {
+              models.unshift(model);
+            } else {
+              models.push(model);
+            }
+          });
+
+        images.value = models.map((model, i) => ({
+          index: i + 1,
+          name: model.name,
+          type: model.type,
+          url: model.preview_file
+        }));
 
         index.value = 0;
         image.value = images.value.length > 0 ? images.value[0] : {};

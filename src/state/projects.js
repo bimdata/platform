@@ -67,6 +67,9 @@ const createProject = async (space, project) => {
 const updateProject = async project => {
   const newProject = await ProjectService.updateProject(project);
 
+  if (newProject.id === state.currentProject?.id) {
+    state.currentProject = newProject;
+  }
   await loadUserProjects();
   await loadSpaceProjects({ id: project.cloud.id });
 
