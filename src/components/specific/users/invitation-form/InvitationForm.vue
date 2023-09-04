@@ -8,7 +8,11 @@
         :placeholder="$t('InvitationForm.emailInputPlaceholder')"
         v-model="email"
         :error="hasError"
-        :errorMessage="$t('InvitationForm.emailInputErrorMessage')"
+        :errorMessage="
+          userAlreadyExist
+            ? $t('InvitationForm.userAlreadyExistInputErrorMessage')
+            : $t('InvitationForm.emailInputErrorMessage')
+        "
         @keyup.enter.stop="submit"
         margin="0px"
       />
@@ -69,6 +73,10 @@ export default {
     project: {
       type: Object,
       default: null
+    },
+    displayedUsers: {
+      type: Array,
+      default: () => []
     }
   },
   emits: ["close", "success"],
@@ -98,6 +106,7 @@ export default {
     const emailInput = ref(null);
     const email = ref("");
     const hasError = ref(false);
+    const userAlreadyExist = ref(false);
 
     const reset = () => {
       email.value = "";
@@ -107,40 +116,49 @@ export default {
     const submit = debounce(async () => {
       let currentUser;
       if (email.value) {
-        if (props.project) {
-          await sendProjectInvitation(props.project, {
-            email: email.value,
-            role: role.value.value
-          });
-        } else if (props.space) {
-          currentUser = spaceUsers.value.find(
-            user => user.email === email.value
-          );
-          if (currentUser) {
-            await updateSpaceUser(props.space, {
-              ...currentUser,
-              cloud_role: 100
+        if (
+          props.displayedUsers.map(user => user.email).includes(email.value)
+        ) {
+          emailInput.value.focus();
+          hasError.value = true;
+          userAlreadyExist.value = true;
+        } else {
+          userAlreadyExist.value = false;
+          if (props.project) {
+            await sendProjectInvitation(props.project, {
+              email: email.value,
+              role: role.value.value
             });
-          } else {
-            await sendSpaceInvitation(props.space, {
-              email: email.value
-            });
+          } else if (props.space) {
+            currentUser = spaceUsers.value.find(
+              user => user.email === email.value
+            );
+            if (currentUser) {
+              await updateSpaceUser(props.space, {
+                ...currentUser,
+                cloud_role: 100
+              });
+            } else {
+              await sendSpaceInvitation(props.space, {
+                email: email.value
+              });
+            }
           }
+          pushNotification(
+            {
+              type: "success",
+              title: t("t.success"),
+              message: t(
+                currentUser
+                  ? "InvitationForm.successUsertoAdmin"
+                  : "InvitationForm.successNotifText"
+              )
+            },
+            2500
+          );
+          reset();
+          emit("success");
         }
-        pushNotification(
-          {
-            type: "success",
-            title: t("t.success"),
-            message: t(
-              currentUser
-                ? "InvitationForm.successUsertoAdmin"
-                : "InvitationForm.successNotifText"
-            )
-          },
-          2500
-        );
-        reset();
-        emit("success");
       } else {
         emailInput.value.focus();
         hasError.value = true;
@@ -161,6 +179,7 @@ export default {
       email,
       emailInput,
       hasError,
+      userAlreadyExist,
       role,
       roleOptions,
       // Methods
