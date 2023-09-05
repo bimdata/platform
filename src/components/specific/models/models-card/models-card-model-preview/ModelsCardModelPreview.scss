@@ -12,6 +12,7 @@
     z-index: 2;
     top: var(--spacing-unit);
     right: calc(var(--spacing-unit) / 2);
+    min-height: 32px;
 
     display: flex;
     align-items: center;

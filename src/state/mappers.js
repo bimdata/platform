@@ -22,14 +22,18 @@ function mapSpaces(spaces, freeSpaces) {
   return result;
 }
 
-function mapProjects(projects) {
-  const result = projects.map(project => ({
+function mapProject(project) {
+  return {
     ...project,
     isAdmin: projectRoles.value[project.id] === PROJECT_ROLE.ADMIN,
     isUser: projectRoles.value[project.id] === PROJECT_ROLE.USER,
     isGuest: projectRoles.value[project.id] === PROJECT_ROLE.GUEST,
     projectStatus: projectStatus(project)
-  }));
+  };
+}
+
+function mapProjects(projects) {
+  const result = projects.map(mapProject);
   result.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   return result;
 }
@@ -45,4 +49,4 @@ function mapUsers(users) {
   return result;
 }
 
-export { mapSpaces, mapProjects, mapUsers };
+export { mapSpaces, mapProject, mapProjects, mapUsers };
