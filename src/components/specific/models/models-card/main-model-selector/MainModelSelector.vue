@@ -63,18 +63,18 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="model-preview-selector">
-    <div v-if="loading" class="model-preview-selector__loading">
+  <div class="main-model-selector">
+    <div v-if="loading" class="main-model-selector__loading">
       <BIMDataSpinner />
     </div>
 
-    <div class="model-preview-selector__head">
+    <div class="main-model-selector__head">
       <h3>{{ $t("ModelPreviewSelector.title") }}</h3>
     </div>
-    <div class="model-preview-selector__body">
+    <div class="main-model-selector__body">
       <BIMDataResponsiveGrid itemWidth="215px">
         <div
-          class="model-preview-item"
+          class="model-item"
           :class="{ selected: selectedModel?.id === model.id }"
           v-for="model of models"
           :key="model.id"
@@ -82,7 +82,7 @@ const submit = async () => {
         >
           <BIMDataRadio v-model="selectedModel" :value="model" big />
           <div
-            class="model-preview-item__img"
+            class="model-item__img"
             :style="{
               'justify-content': [IFC, POINT_CLOUD].includes(model.type)
                 ? 'start'
@@ -91,13 +91,13 @@ const submit = async () => {
           >
             <img :src="model.preview_file" />
           </div>
-          <div class="model-preview-item__txt">
+          <div class="model-item__txt">
             <BIMDataTextbox :text="model.name" />
           </div>
         </div>
       </BIMDataResponsiveGrid>
     </div>
-    <div class="model-preview-selector__foot">
+    <div class="main-model-selector__foot">
       <BIMDataButton width="120px" color="high" outline radius @click="cancel">
         {{ $t("t.cancel") }}
       </BIMDataButton>
@@ -108,4 +108,4 @@ const submit = async () => {
   </div>
 </template>
 
-<style scoped lang="scss" src="./ModelPreviewSelector.scss"></style>
+<style scoped lang="scss" src="./MainModelSelector.scss"></style>

@@ -91,7 +91,7 @@ import { fileUploadInput } from "../../../../../utils/upload.js";
 // Components
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
-import ModelsTable from "../models-table/ModelsTable.vue";
+import ModelsTable from "../../models-table/ModelsTable.vue";
 
 export default {
   components: {

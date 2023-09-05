@@ -68,9 +68,9 @@
 import { computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
-import { useStandardBreakpoints } from "../../../../../composables/responsive.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 // Components
-import FileUploadCard from "../../../files/file-upload-card/FileUploadCard.js";
+import FileUploadCard from "../../files/file-upload-card/FileUploadCard.js";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";

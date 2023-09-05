@@ -88,7 +88,7 @@ import { ref, watch } from "vue";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../../config/models.js";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 // Components
-import ModelPreviewSelector from "../model-preview-selector/ModelPreviewSelector.vue";
+import MainModelSelector from "../main-model-selector/MainModelSelector.vue";
 
 export default {
   props: {
@@ -125,7 +125,7 @@ export default {
     const openPreviewSelector = () => {
       isOpenMenu.value = false;
       openModal({
-        component: ModelPreviewSelector,
+        component: MainModelSelector,
         props: {
           project: props.project,
           models: props.models,
