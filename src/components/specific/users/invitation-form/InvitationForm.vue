@@ -74,7 +74,7 @@ export default {
       type: Object,
       default: null
     },
-    displayedUsers: {
+    users: {
       type: Array,
       default: () => []
     }
@@ -116,9 +116,7 @@ export default {
     const submit = debounce(async () => {
       let currentUser;
       if (email.value) {
-        if (
-          props.displayedUsers.map(user => user.email).includes(email.value)
-        ) {
+        if (props.users.map(user => user.email).includes(email.value)) {
           emailInput.value.focus();
           hasError.value = true;
           userAlreadyExist.value = true;
