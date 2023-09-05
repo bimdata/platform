@@ -128,7 +128,6 @@
   "InvitationForm": {
     "emailInputPlaceholder": "Mail address",
     "emailInputErrorMessage": "Invalid email",
-    "userAlreadyExistInputErrorMessage": "The user is already in your project",
     "roleInputLabel": "Role",
     "roles": {
       "admin": "Administrator",
