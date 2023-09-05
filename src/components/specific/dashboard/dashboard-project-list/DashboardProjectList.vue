@@ -11,7 +11,6 @@
         v-for="project in displayedProjects"
         :key="project.id"
         :project="project"
-        :actionMenu="false"
       />
     </component>
   </div>
