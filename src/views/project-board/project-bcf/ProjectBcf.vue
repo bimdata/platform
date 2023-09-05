@@ -341,6 +341,21 @@
               {{ $t("t.export") }}
             </span>
           </BIMDataButton>
+
+          <BIMDataButton
+            v-if="selectedTopics.size > 0"
+            class="m-l-18"
+            fill
+            radius
+            :icon="isXL" 
+            @click="exportBcfXlsxTopics"
+          >
+            <BIMDataIconExportXlsx size="xs" />
+            <span v-if="!isXL" style="margin-left: 6px">
+              {{ $t("t.exportXlsx") }}
+            </span>
+          </BIMDataButton>
+
           <BIMDataButton
             v-if="selectedTopics.size > 0"
             class="m-l-18"
@@ -499,7 +514,8 @@ export default {
       loadDetailedExtensions,
       deleteTopics,
       importBcf,
-      exportBcf
+      exportBcf, 
+      exportBcfXlsx, 
     } = useBcf();
 
     const loading = ref(false);
@@ -636,6 +652,26 @@ export default {
           type: "error",
           title: t("t.error"),
           message: t("ProjectBcf.exportBcfNotificationError")
+        });
+      }
+    };
+
+    const exportBcfXlsxTopics = async () => {
+      try {
+        await exportBcfXlsx(currentProject.value, [
+          ...selectedTopics.value.values()
+        ]);
+        pushNotification({
+          type: "success",
+          title: t("t.success"),
+          message: t("ProjectBcf.exportBcfXlsxNotificationSuccess")
+        });
+      } catch(e) {
+        console.error(e); 
+        pushNotification({
+          type: "error",
+          title: t("t.error"),
+          message: t("ProjectBcf.exportBcfXlsxNotificationError")
         });
       }
     };
@@ -810,6 +846,7 @@ export default {
       exportBcfTopics,
       fileUploadInput,
       importBcfTopics,
+      exportBcfXlsxTopics, 
       openSettings,
       openTopicCreate,
       openTopicUpdate,

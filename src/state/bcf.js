@@ -68,6 +68,10 @@ const exportBcf = (project, topics) => {
   return service.exportBcf(project, topics);
 };
 
+const exportBcfXlsx = (project, topics) => {
+  return service.exportBcfXLSX(project, topics);
+};
+
 export function useBcf() {
   const readonlyState = shallowReadonly(state);
   return {
@@ -79,6 +83,7 @@ export function useBcf() {
     loadExtensions,
     loadDetailedExtensions,
     importBcf,
-    exportBcf
+    exportBcf, 
+    exportBcfXlsx
   };
 }
