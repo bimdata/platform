@@ -18,13 +18,16 @@ const props = defineProps({
     required: true
   },
   onCancel: {
-    type: Function
+    type: Function,
+    required: true
   },
   onSuccess: {
-    type: Function
+    type: Function,
+    required: true
   },
   onError: {
-    type: Function
+    type: Function,
+    default: () => console.error
   }
 });
 
@@ -42,7 +45,7 @@ watch(
 );
 
 const cancel = () => {
-  props.onCancel?.();
+  props.onCancel();
 };
 
 const submit = async () => {
@@ -53,9 +56,9 @@ const submit = async () => {
       main_model_id: selectedModel.value.id
     });
     await loadProjectModels(props.project);
-    props.onSuccess?.();
+    props.onSuccess();
   } catch (error) {
-    props.onError?.(error);
+    props.onError(error);
   } finally {
     loading.value = false;
   }

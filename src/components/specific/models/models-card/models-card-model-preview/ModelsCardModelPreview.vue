@@ -6,6 +6,7 @@
       </div>
       <div class="models-card-model-preview__head__menu">
         <BIMDataButton
+          v-if="project.isAdmin"
           data-test-id="btn-actions-cell"
           class="file-actions-cell__btn"
           ripple
