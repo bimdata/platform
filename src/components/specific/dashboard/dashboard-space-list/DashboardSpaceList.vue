@@ -12,7 +12,6 @@
         data-guide="dashboard-space"
         :key="space.id"
         :space="space"
-        :actionMenu="false"
       />
     </component>
   </div>
