@@ -36,6 +36,7 @@
                   v-if="showInvitationForm"
                   key="invitation-form"
                   :project="project"
+                  :users="users"
                   @close="closeInvitationForm"
                   @success="onInvitationSuccess"
                 />
