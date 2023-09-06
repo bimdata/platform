@@ -1,865 +1,865 @@
 {
-    "OidcCallbackError": {
-        "message": "An error occured during authentication...",
-        "retryButtonText": "Try Again"
-    },
-    "ProjectBoard": {
-        "tabs": {
-            "overview": "Project",
-            "files": "Files",
-            "bcf": "BCF"
-        }
-    },
-    "UserSpaces": {
-        "createButtonText": "Create a space",
-        "organizationsButtonText": "Billing accounts"
-    },
-    "ProjectFiles": {
-        "groupsButtonText": "Manage groups"
-    },
-    "ProjectOverview": {
-        "openFileUploadButtonText": "Add a model",
-        "forbiddenUploadNotification": "Please select a model file: {extensions}"
-    },
-    "LanguageSelector": {
-        "title": "Choose a language"
-    },
-    "AppHeaderMenu": {
-        "entrySettings": "Account settings",
-        "entryDocumentation": "Documentation",
-        "entryMarketplace": "Marketplace",
-        "entryLanguage": "Choose a language",
-        "logoutButtonText": "Log Out"
-    },
-    "BreadcrumbGroupSelector": {
-        "text": "Groups"
-    },
-    "BreadcrumbProjectSelector": {
-        "placeholder": "< No project >"
-    },
-    "DashboardProjectList": {
-        "title": "Recent projects"
-    },
-    "DashboardSpaceList": {
-        "title": "Recent spaces"
-    },
-    "DashboardWelcomeTile": {
-        "title": "Dashboard",
-        "message": "Hi {name}, it's great to see you again !"
-    },
-    "FileActionsCell": {
-        "openViewerButtonText": "Open in viewer",
-        "addTagsButtonText": "Add tags",
-        "addVersionButtonText": "Add version",
-        "manageAccessButtonText": "Manage access",
-        "createModelButtonText": "Define as model",
-        "removeModelButtonText": "Remove from models",
-        "versioningButtonText": "Add a version",
-        "visaButtonText": "Validation request"
-    },
-    "FilesActionBar": {
-        "moveButtonText": "Move to"
-    },
-    "FilesDeleteModal": {
-        "title": "Delete files",
-        "message": "This action will permanently delete the following files/folders :",
-        "messageVersion": "You are about to permanently delete the following files/folders and their associated version history:"
-    },
-    "FilesManager": {
-        "title": "Project Files",
-        "createModelNotification": "Model successfully created",
-        "structureImport": "Import a GED structure",
-        "gedDownload": "Download the GED",
-        "folderImport": "Import a folder"
-    },
-    "FilesManagerOnboarding": {
-        "text": "Upload your first file",
-        "uploadFileButtonText": "Upload a file",
-        "createFolderButtonText": "Create a folder",
-        "GEDStructureImport": "Import a GED structure",
-        "folderImport": "Import a file"
-    },
-    "FilesTable": {
-        "headers": {
-            "tags": "Tags"
-        }
-    },
-    "FileUploadButton": {
-        "addFileButtonText": "Upload a file"
-    },
-    "FileUploader": {
-        "uploadAreaText": "Drag and drop to store your project assets",
-        "uploadButtonText": "Select a model file"
-    },
-    "FolderAccessManager": {
-        "title": "Manage access rights",
-        "rightsHeader": "Rights",
-        "membersHeader": "Members",
-        "groupHeader": "Group",
-        "propagate": "Apply rights to sub folders (recursively)"
-    },
-    "FolderSelector": {
-        "selectedFolder": "Selected folder",
-        "moveHere": "Move here"
-    },
-    "GroupCardActionMenu": {
-        "changeColorButtonText": "Change color"
-    },
-    "GroupCardDeleteGuard": {
-        "title": "Delete group",
-        "message": "You are about to (definitely) delete group {name}, are you sure ?"
-    },
-    "GroupCardUpdateForm": {
-        "title": "Rename group"
-    },
-    "GroupCreationCard": {
-        "text": "Create a group",
-        "title": "New group"
-    },
-    "GroupMemberSelectionCard": {
-        "text": "Add a member"
-    },
-    "InvitationCard": {
-        "pendingMessage": "Invited - Pending.",
-        "resendLinkText": "Send invitation again ?",
-        "resendSuccessNotifText": "Invitation sent again",
-        "cancelSuccessNotifText": "Invitation canceled"
-    },
-    "InvitationForm": {
-        "emailInputPlaceholder": "Mail address",
-        "emailInputErrorMessage": "Invalid email",
-        "roleInputLabel": "Role",
-        "roles": {
-            "admin": "Administrator",
-            "user": "User",
-            "guest": "Guest"
-        },
-        "submitButtonText": "Send invitation",
-        "successNotifText": "Invitation sent",
-        "successUsertoAdmin": "The user has now admin role"
-    },
-    "ModelActionsCell": {
-        "addTagsButtonText": "Add tags"
-    },
-    "ModelLocation": {
-        "emptyLocationMessage": "No location data available",
-        "addLocationButtonText": "Fill in"
-    },
-    "ModelLocationForm": {
-        "addressInputPlaceholder": "Enter address"
-    },
-    "ModelsActionBar": {
-        "mergeButtonText": "Merge"
-    },
-    "ModelsCardModelPreview": {
-        "emptyPreviewPlaceholder": "No preview available"
-    },
-    "ModelsDeleteModal": {
-        "title": "Warning !",
-        "message": "This action will permanently delete the following models :"
-    },
-    "ModelsManager": {
-        "title": "Project Models",
-        "tabs": {
-            "ifc": "IFC",
-            "split": "Split / Export",
-            "merge": "Merge",
-            "archive": "Archives",
-            "dwg": "DWG",
-            "metaBuildings": "Meta Buildings",
-            "upload": "Upload"
-        }
-    },
-    "ModelsMergeModal": {
-        "title": "Merge selection",
-        "inputPlaceholder": "Name of your merge"
-    },
-    "ModelsOverview": {
-        "title": "Project Models Overview"
-    },
-    "ModelsOverviewOnboarding": {
-        "text": "Upload your first model",
-        "uploadButtonText": "Upload Model"
-    },
-    "ModelsTable": {
-        "headers": {
-            "version": "Version"
-        },
-        "emptyTablePlaceholder": {
-            "text": "No template",
-            "textPdf": "From the file manager \"file\" menu, click on \"Define as model\" to make your pdf plans available in models manager."
-        }
-    },
-    "ProjectCardDeleteGuard": {
-        "title": "Delete project",
-        "message": "Are you sure you want to (permanently) delete this project ?"
-    },
-    "ProjectCardUpdateForm": {
-        "title": "Rename project"
-    },
-    "ProjectCreationCard": {
-        "title": "New project",
-        "text": "Create a new project"
-    },
-    "ProjectUsersManager": {
-        "title": "Project Users"
-    },
-    "SpaceCard": {
-        "projects": "PROJECTS",
-        "free": "Free"
-    },
-    "SpaceCardActionMenu": {
-        "removeImageButtonText": "Remove image"
-    },
-    "SpaceCardDeleteGuard": {
-        "title": "Delete space",
-        "message": "Are you sure ?"
-    },
-    "SpaceCardUpdateForm": {
-        "title": "Rename space"
-    },
-    "SpaceCreationCard": {
-        "title": "New space"
-    },
-    "SpaceUsersManager": {
-        "title": "Manage space admins",
-        "tabs": {
-            "admins": "Administrators",
-            "users": "Users"
-        },
-        "addUserButtonText": "Add new admin"
-    },
-    "UserCard": {
-        "self": "you"
-    },
-    "UserCardDeleteGuard": {
-        "message": {
-            "space": "Remove {name} from this space ?",
-            "project": "Remove {name} from this project ?"
-        }
-    },
-    "UserRoleBadge": {
-        "admin": "Admin",
-        "user": "User",
-        "guest": "Guest"
-    },
-    "UsersManagerOnboarding": {
-        "text": "Invite your first collaborator",
-        "inviteButtonText": "Invite"
-    },
-    "PageNotFound": {
-        "title": "Page not found",
-        "text": {
-            "line1": "Woopsie! The page that you are looking for does not exist.",
-            "line2": "Please return home."
-        },
-        "homeButtonText": "Home"
-    },
-    "FolderPermissionSelector": {
-        "label": "All",
-        "options": {
-            "accessDenied": "Access denied",
-            "readOnly": "Read only",
-            "readWrite": "Read / Write"
-        }
-    },
-    "GroupMembersSelector": {
-        "title": "Manage group members"
-    },
-    "GroupPermissionSelector": {
-        "options": {
-            "accessDenied": "Access denied",
-            "readOnly": "Read only",
-            "readWrite": "Read / Write",
-            "default": "Default"
-        }
-    },
-    "Errors": {
-        "spacesFetchError": "Fail to fetch spaces",
-        "spaceCreateError": "Fail to create space",
-        "spaceUpdateError": "Fail to update space",
-        "spaceDeleteError": "Fail to delete space",
-        "spaceImageUpdateError": "Fail to update space image",
-        "spaceImageDeleteError": "Fail to delete space image",
-        "projectsFetchError": "Fail to fetch projects",
-        "projectCreateError": "Fail to create project",
-        "projectUpdateError": "Fail to update project",
-        "projectDeleteError": "Fail to delete project",
-        "invitationsFetchError": "Fail to fetch invitations",
-        "invitationSendError": "Fail to send invitation",
-        "invitationResendError": "Fail to resend invitation",
-        "invitationCancelError": "Fail to cancel invitation",
-        "usersFetchError": "Fail to fetch users",
-        "userUpdateError": "Fail to update user",
-        "userDeleteError": "Fail to delete user",
-        "modelsFetchError": "Fail to fetch models",
-        "modelUploadError": "Fail to upload model",
-        "modelUpdateError": "Fail to update model",
-        "modelMergeError": "Fail to merge models",
-        "modelDeleteError": "Fail to delete model",
-        "fileStructureFetchError": "Fail to fetch file structure",
-        "fileUpdateError": "Fail to update files",
-        "fileDownloadError": "Fail to download files",
-        "fileDeleteError": "Fail to delete files",
-        "folderCreateError": "Fail to create folder",
-        "documentUploadError": "Fail to upload document",
-        "groupsFetchError": "Fail to fetch groups",
-        "groupCreateError": "Fail to create group",
-        "groupUpdateError": "Fail to update group",
-        "groupDeleteError": "Fail to delete group",
-        "organizationsFetchError": "Fail to fetch billing accounts",
-        "organizationCreateError": "Fail to create billing accounts",
-        "organizationUpdateError": "Fail to update billing accounts",
-        "organizationDeleteError": "Fail to delete billing accounts",
-        "userLeaveError": "You can't leave the project as you are the last administrator",
-        "subscriptionsFetchError": "Fail to fetch subscriptions",
-        "platformSubscribeError": "Fail to initialize platform subscription",
-        "datapackSubscribeError": "Fail to create datapack subscription",
-        "datapackUpdateError": "Fail to update datapack subscription",
-        "projectFetchFileError": "Impossible to retrieve this document",
-        "visaCreateError": "Error during visa creation",
-        "visaCreateValidationError": "Error when adding a validator",
-        "visaFetchError": "Impossible to retrieve the document approval",
-        "visaAcceptError": "Error in sending your response",
-        "visaDenyError": "Error in sending your response",
-        "visaCloseError": "Error in closing the document approval",
-        "visaResumeError": "Error in reopening the document approval",
-        "visaFetchCreatedError": "Impossible to recover the document approvals",
-        "visaFetchValidatorError": "Impossible to recover the document approvals",
-        "visaDeleteValidationError": "Impossible to remove this validator",
-        "visaDeleteError": "Impossible to close this document approval",
-        "visaUpdateError": "Impossible to update this document approval",
-        "visaRefreshError": "Impossipble to update your response",
-        "visaFetchAllCommentsError": "Impossible to retrieve the comments",
-        "visaCreateCommentsError": "Impossible to post this comment",
-        "visaUpdateCommentError": "Impossible to edit this comment",
-        "visaDeleteCommentError": "Impossible to remove this comment",
-        "modelCreateError": "Error creating model",
-        "fileFetchError": "Error while recovering this folder/file",
-        "bcfImportError": "An error occurred while importing",
-        "bcfExportError": "Export failed...",
-        "fileVersionsFetchError": "The versions of this document cannot be recovered.",
-        "fileVersionsMakeHeadError": "Failed to switch document to current version.",
-        "fileVersionDelete": "Failed to delete document",
-        "userAlreadyExistsError": "This user is already a member of the space/project.",
-        "tagsFetchError": "Impossible to recover tags",
-        "tagsCreateError": "Error while creating the tag",
-        "tagsUpdateError": "Error while modifying the tag",
-        "tagsDeleteError": "Error when deleting the tag",
-        "tagsAddDocumentError": "Error when associating the tag to the document",
-        "tagsDeleteDocumentError": "Error when dissociating the tag from the document",
-        "spaceSizeFullError": "Your storage space is full",
-        "spaceFetchError": "Unable to retrieve information from the space",
-        "projectFolderTreeFetchError": "Unable to retrieve project list",
-        "fileStructureCreateError": "Unable to create the file structure",
-        "documentCreateError": "Unable to upload this document",
-        "invitationViewFetchError": "Unable to retrieve invitation list",
-        "invitationViewAcceptError": "Unable to accept the invitation",
-        "invitationViewDenyError": "Impossible to decline the invitation",
-        "folderFetchFolder": "Fail to retrieve folder data",
-        "bcfDeleteError": "Deletion failed",
-        "groupImportError": "Group import failure"
-    },
-    "ProjectStatusBadge": {
-        "new": "NEW",
-        "active": "ACTIVE",
-        "inactive": "INACTIVE",
-        "paused": "PAUSED"
-    },
-    "Dashboard": {
-        "spacesTileTitle": "Active Spaces",
-        "spacesTileBottomText": "View spaces",
-        "projectsTileTitle": "Active Projects",
-        "projectsTileBottomText": "View projects",
-        "subscriptionsTileTitle": "Billing & Invoices",
-        "subscriptionsTileText": "Find all your invoices and your latest payment information here.",
-        "subscriptionsTileBottomText": "Manage subscriptions"
-    },
-    "Subscribe": {
-        "title": "Choose your plan",
-        "text": "You are only allowed a single free space among your billing accounts. If this space already exists, upgrade to the professional subscription for additional features."
-    },
-    "SubscriptionDatapack": {
-        "title": "Manage DataPack",
-        "successNotification": "You now have {size} of storage in space {spaceName}"
-    },
-    "SubscriptionFree": {
-        "title": "Create Free Plan",
-        "text": "You are about to create your free space. Your free space includes: {size}, 6 users.",
-        "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}"
-    },
-    "SubscriptionPro": {
-        "subscribeTitle": "Subscribe to Professional Plan",
-        "upgradeTitle": "Upgrade to pro platform",
-        "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
-        "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}",
-        "spaceUpgradedNotification": "Congratulation ! You just upgraded your space {spaceName} to pro plan."
-    },
-    "UserSubscriptions": {
-        "title": "Platform subscription",
-        "text": "Browse through your billing accounts to manage subscriptions and invoices for your platform spaces.",
-        "list": "My billing accounts:"
-    },
-    "BillingActionsCell": {
-        "updateButtonText": "Modify the payment card",
-        "datapackButtonText": "Manage datapacks",
-        "cancelButtonText": "Cancel this subscription"
-    },
-    "BillingsTable": {
-        "title": "Billing details",
-        "nextPayment": "on",
-        "professionalPlan": "Professionnal",
-        "withDatapack": "with Datapack",
-        "cancelSubscriptionButton": "Cancel subscription",
-        "updateCreditCardButton": "Update credit card",
-        "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before..",
-        "subscribeButton": "Upgrade to our Pro Platform",
-        "headers": {
-            "nextpayment": "Next payment",
-            "subscriptionplan": "Subscription plan"
-        },
-        "status": {
-            "active": "Active",
-            "deleted": "Deleted",
-            "paused": "Paused",
-            "custom": "Managed by BIMData.io",
-            "past_due": "Suspended"
-        }
-    },
-    "DatapackForm": {
-        "baseNote": "Storage",
-        "baseText": "Included with pro plan",
-        "datapackNote": "Additional storage",
-        "priceUnit": " / GB / month Tax incl.",
-        "totalUnit": " / month Tax incl.",
-        "actualStorage": "Actual storage",
-        "newStorage": "New Storage"
-    },
-    "DatapackInfo": {
-        "title": "Actual subscription",
-        "datapacks": "Active DataPacks",
-        "storage": "Active storage",
-        "including": "including {quantity} GB of DataPack"
-    },
-    "InvoiceActionsCell": {
-        "downloadButton": "Download invoice"
-    },
-    "InvoicesTable": {
-        "title": "Invoices",
-        "emptyTableText": "Your invoices will be listed here when you have active subsctiptions.",
-        "subscribeButton": "Upgrade to our Pro Platform"
-    },
-    "InvoiceStatusCell": {
-        "completed": "Completed",
-        "pending": "Pending"
-    },
-    "OrganizationCard": {
-        "spaces": "{number} spaces"
-    },
-    "OrganizationDeleteGuard": {
-        "title": "Delete billing account"
-    },
-    "OrganizationForm": {
-        "createTitle": "Create a billing account",
-        "updateTitle": "Update billing account",
-        "infoSectionTitle": "Basic information",
-        "logoInputLabel": "Upload logo",
-        "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
-        "successTitle": "Congratulation your billing account has just been created"
-    },
-    "OrganizationsList": {
-        "explanationText": "A billing account is the entity that gather your billing at BIMData.io",
-        "createButtonText": "Add new billing account"
-    },
-    "OrganizationsManager": {
-        "title": "Manage billing accounts"
-    },
-    "OrganizationSpaceCard": {
-        "projects": "{number} projects"
-    },
-    "OrganizationSpacesImport": {
-        "spaceListTitle": "Select spaces to import",
-        "spaceListPlaceholder": "No space to import...",
-        "successTitle": "Spaces successfully imported"
-    },
-    "OrganizationSpacesList": {
-        "importButtonText": "Import space",
-        "addButtonText": "Add new space",
-        "spaceListTitle": "Account spaces",
-        "spaceListPlaceholder": "No space is attached to this billing account."
-    },
-    "ProjectCardLeaveGuard": {
-        "title": "Leave projet",
-        "message": "Are you sure you want to leave this project ?"
-    },
-    "ProPlanCard": {
-        "title": "PROFESSIONAL",
-        "priceUnit": "/ Space / month",
-        "bullet2": "Unlimited projects",
-        "bullet3": "Unlimited users",
-        "buttonText": "Choose professional",
-        "note": "expand 1GB for {price} / month"
-    },
-    "ProPlanForm": {
-        "priceUnit": "/ month",
-        "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
-        "successMessage": "Your payment has been completed. You can now enjoy your professional subscription.",
-        "titleNet": "Price ex-tax",
-        "titleTax": "Taxes",
-        "titleTotal": "Price",
-        "noteTotal": "Tax incl."
-    },
-    "ProPlanInfo": {
-        "title": "Your subscription",
-        "subTitle": "Professionnal plan",
-        "priceUnit": "/ month (ex-tax)",
-        "bulletsHead": "The subscription includes",
-        "bullet1": "{size} of storage",
-        "bullet2": "BIMData Platform",
-        "bullet3": "3D Viewer",
-        "bullet4": "2D Viewer",
-        "bullet5": "Unlimited projects",
-        "bullet6": "Unlimited users",
-        "bullet7": "Unlimited comments (BCF)",
-        "bullet8": "IFC Merge / Split",
-        "bullet9": "IFC Edition",
-        "bullet10": "Support"
-    },
-    "SpaceSelected": {
-        "selectedOrga": "Billing account:",
-        "selectedSpace": "Selected space:"
-    },
-    "SpaceSizeInfo": {
-        "subscribePlatformButton": "Upgrade to pro subscription",
-        "usage": "{used} used out of {total}"
-    },
-    "SpaceSizePreview": {
-        "title": "Storage",
-        "actualStorage": "Actual storage",
-        "newStorage": "New storage",
-        "newStorageText": "By purchasing the professional subscription you benefit from {size} of storage. You can purchase additional storage directly from your space."
-    },
-    "SubscribeCard": {
-        "title": "Create your new space",
-        "text": "Would you like to take full advantage of the platform? Make use of {size} for your projects and of unlimited users by upgrading to a professional subscription.",
-        "button": "Create a new space"
-    },
-    "FreePlanInfo": {
-        "title": "FREE",
-        "price": "0€",
-        "bullet2": "1 Free space",
-        "bullet3": "6 Users",
-        "buttonText": "Create a free space",
-        "note": "Forever"
-    },
-    "FreePlanRedirect": {
-        "title": "Access Free space",
-        "text": "You have already created your free space.",
-        "buttonText": "Go to my free space"
-    },
-    "SubscriptionStatusBanner": {
-        "activate": "This free space has reached its limits, proceed to a professional subscription to unblock the full functionality of BIMData.",
-        "reactivate": "This space is currently not connected to any subscription. To unblock all the functionalities of BIMData, upgrade to a professional subscription."
-    },
-    "OrganizationSelector": {
-        "title": "Billing account",
-        "radioLabelSelect": "Select a billing account",
-        "radioLabelCreate": "Create a billing account",
-        "inputPlaceholder": "Name of the account",
-        "successMessage": "Congratulation your billing account has just been created"
-    },
-    "SpaceCreator": {
-        "title": "Create a space",
-        "text": "Your space groups your different BIM projects.",
-        "billingAccountLabel": "Billing account :",
-        "submitButtonText": "Continue to payment"
-    },
-    "Visa": {
-        "button": "Approvals",
-        "add": {
-            "title": "Validation request",
-            "errorDate": "Date invalid",
-            "errorValidator": "You must add at least 1 confirmer",
-            "dateInputPlaceholder": "To be validated before"
-        },
-        "summary": {
-            "title": {
-                "open": "Request in process",
-                "closed": "Request closed"
-            },
-            "appliedBy": "Request validation by",
-            "deletedUser": "User removed",
-            "validatorList": {
-                "accept": "Validated",
-                "deny": "Refused",
-                "commented": "Commented",
-                "pending": "Awaiting",
-                "getRidOfValidator": "Remove validator",
-                "refresh": "Reinitialise verification"
-            }
-        },
-        "comments": {
-            "commentary": "Commentry",
-            "publish": "Publish",
-            "commentInputPlaceholder": "Post a comment",
-            "confirmDelete": "Remove this comment?"
-        },
-        "list": {
-            "title": "Request in progress",
-            "toValidateVisas": "My validations",
-            "createdVisas": "My requests",
-            "emptyValidation": "No validation in progress",
-            "emptyDemand": "No request in progress"
-        },
-        "selectionValidator": {
-            "warning": "This user cannot access the file."
-        },
-        "noVisa": "A VISA has not yet been created",
-        "accept": "Accept",
-        "close": "Close",
-        "deny": "Refuse",
-        "term": "Due date",
-        "validator": "Validator",
-        "validators": "Validators",
-        "safeZone": {
-            "add": {
-                "text": "Are you sure you want to leave this page? There may be unverified information."
-            },
-            "delete": {
-                "text": "Are you sure you want to remove this document approval?"
-            },
-            "close": {
-                "text": "Are you sure you want to close this document approval?"
-            },
-            "deleteComment": {
-                "text": "Are you sure you want to remove this comment?"
-            }
-        }
-    },
-    "ProjectBcf": {
-        "createBcfButtonText": "Create a BCF",
-        "createBcfTitle": "Report a problem",
-        "showStatisticsTooltip": "Show statistics",
-        "hideStatisticsTooltip": "Hide statistics",
-        "searchInputPlaceholder": "Search by index number, name, creator or tag",
-        "ascendingIndexTooltip": "ascending index",
-        "descendingIndexTooltip": "descending index",
-        "alphabeticalAscendingOrderTooltip": "alphabetical order",
-        "alphabeticalDescendingOrderTooltip": "reverse alphabetical order",
-        "ascendingDateTooltip": "increasing date",
-        "descendingDateTooltip": "decreasing date",
-        "viewGridTooltip": "grid view",
-        "viewListTooltip": "list view",
-        "metricsTitle": "Total: {count} issues BCF",
-        "metricsEmptyText": "Add issues to see the associated statistics here.",
-        "noSearchResultsTitle": "No results",
-        "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
-        "importBcfNotificationSuccess": "BCF file successfully imported",
-        "importBcfNotificationError": "Error while importing the BCF file",
-        "exportBcfNotificationSuccess": "BCF successfully exported",
-        "exportBcfNotificationError": "Error while exporting the BCF file",
-        "selectedTopicCount": "Number of selected topics",
-        "deleteBcfText": "You are about to delete all selected topics",
-        "deleteInProgress": "Delete in progress",
-        "deleteInProgressSub": "This process may take a few moments.",
-        "deleteBcfNotificationSuccess": "Topics deleted",
-        "deleteBcfNotificationError": "Error while deleting topics",
-        "onlyAdminParameters": "You must be a project administrator"
-    },
-    "GuidedTour": {
-        "platform": {
-            "intro": {
-                "title": "Welcome",
-                "content": "Let's explore the BIMData platform together"
-            },
-            "actionButtons": {
-                "title": "Dashboard",
-                "content": "Access to all of your spaces, projects, and subscriptions directly through this dashboard"
-            },
-            "firstSpace": {
-                "title": "Your spaces",
-                "content": "Access your recent spaces directly through this shortcut"
-            },
-            "firstProject": {
-                "title": "Your projects",
-                "content": "Access your recent projects directly through this shortcut"
-            },
-            "previewIfc": {
-                "title": "Overview",
-                "content": "Easily navigate between your project model overviews"
-            },
-            "usersManager": {
-                "title": "Collaboration",
-                "content": "Invite your first contributors to your project"
-            },
-            "modelsManager": {
-                "title": "Models",
-                "content": "Download and manage your project models (ICF, DWG, PDF...)"
-            },
-            "gedButton": {
-                "title": "GED",
-                "content": "Access document management for your project via the \"GED\" tab"
-            },
-            "fileTree": {
-                "title": "Tree diagram",
-                "content": "Create your folders and download your files directly from the GED"
-            },
-            "groupManager": {
-                "title": "Rights management",
-                "content": "Create user groups to manage their access permissions"
-            },
-            "changeSpace": {
-                "title": "Breadcrumb trail",
-                "content": "Get quick access to your space via the breadcrumb trail"
-            },
-            "outro": {
-                "title": "Great job!",
-                "content": "Now, all you have left to do is get going on your first project"
-            }
-        }
-    },
-    "Versioning": {
-        "title": "Version history",
-        "addVersion": "Add a version",
-        "currentVersion": "Current version",
-        "previousVersion": "Previous version",
-        "addedBy": "Added by:",
-        "titleDate": "On",
-        "AddVersion": "Add a new version",
-        "loading": {
-            "subMessage": "This process may take a few moments.",
-            "downloadMessage": "Loading in progress.",
-            "deleteMessage": "Deleting in progress."
-        },
-        "getToHead": "Switch to current version",
-        "show": "See",
-        "safeZone": {
-            "delete": {
-                "content": "Are you sure you want to delete this version?",
-                "action": "Yes, delete this version"
-            }
-        },
-        "emptyArea": "You currently have no version history for this file."
-    },
-    "Tag": {
-        "title": "Tags management",
-        "list": "List of tags",
-        "addTag": "add a tag",
-        "addNewTag": "Add a new tag",
-        "deleteTag": "Delete this tag"
-    },
-    "SubscriptionModal": {
-        "title": "Get more space",
-        "subtitle": "You currently have {size} of storage capacity",
-        "soon": "SOON",
-        "upgrade": {
-            "title": "Upgrade to the pro platform",
-            "subtitle": "Subscribe to BIMData Pro to get more space."
-        },
-        "referal": {
-            "title": "Join our referral program!",
-            "subtitle": "Share your referral code to earn space."
-        },
-        "linkedin": {
-            "title": "Connect your LinkedIn account",
-            "subtitle": "Follow the BIMData page to earn space."
-        },
-        "uploadDisableMessage": {
-            "permission": "You don't have the required rights",
-            "size": "You don't have enough storage space"
-        }
-    },
-    "GroupMemberCard": {
-        "pending": "Invitation in progress"
-    },
-    "ProfileSettings": {
-        "title": "Profile settings",
-        "loading": {
-            "message": "Deleting in progress.",
-            "subMessage": "This process may take a few moments, please stay on the page."
-        }
-    },
-    "Invitations": {
-        "title": "My invitations",
-        "invitCounter": "Invitations in progress -",
-        "acceptAll": "Accept all",
-        "invitedInProject": "You were invited by {sender} to join the {project} project in the {cloud} space",
-        "invitedInSpace": "You have been invited by {sender} to join the {cloud} space",
-        "invitAccepted": "Accepted invitation",
-        "invitDenied": "Invitation declined",
-        "invitPending": "Invitation in progress",
-        "goToProjectLong": "Access to the project",
-        "goToProjectShort": "Project",
-        "goToSpaceLong": "Access to the space",
-        "goToSpaceShort": "The space"
-    },
-    "DocumentViewer": {
-        "viewerButton": "Open in viewer",
-        "docPlaceholder": "No preview for this document"
-    },
-    "GroupImport": {
-        "title": "Import a group",
-        "selectAll": "Select all",
-        "notAdmin": "You must be a project administrator",
-        "noGroup": "There is no group for this project"
-    },
-    "UploadCard": {
-        "cancelMessage": "Canceled",
-        "errorMessage": "Upload failed",
-        "upload": "{uploaded} to {total} ({percentage}% uploaded)"
-    },
-    "t": {
-        "add": "Add",
-        "amount": "Amount",
-        "archive": "Archive",
-        "back": "Back",
-        "cancel": "Cancel",
-        "change": "Change",
-        "comment": "Comment",
-        "confirm": "Confirm",
-        "create": "Create",
-        "createdBy": "Created by",
-        "close": "Close",
-        "date": "Date",
-        "delete": "Delete",
-        "description": "Description",
-        "download": "Download",
-        "edit": "Edit",
-        "emptyFolder": "Empty folder",
-        "error": "Error",
-        "export": "Export",
-        "file": "File",
-        "folder": "Folder",
-        "import": "Import",
-        "invalidName": "Invalid name",
-        "leave": "Leave",
-        "modifiedOn": "Last modified",
-        "modify": "Edit",
-        "name": "Name",
-        "ok": "OK",
-        "open": "Open",
-        "or": "or",
-        "rename": "Rename",
-        "search": "Search",
-        "size": "Size",
-        "space": "Space",
-        "status": "Status",
-        "success": "Success",
-        "type": "Type",
-        "unarchive": "Unarchive",
-        "validate": "Validate",
-        "verify": "Check"
-    },
-    "FolderCreationButton": {
-        "text": "New folder"
-    },
-    "FolderCreationForm": {
-        "title": "Create folder"
-    },
-    "SpaceCardImageButton": {
-        "text": "Change image"
-    },
-    "FileTreePreviewModal": {
-        "title": "Import DMS tree from"
+  "OidcCallbackError": {
+    "message": "An error occured during authentication...",
+    "retryButtonText": "Try Again"
+  },
+  "ProjectBoard": {
+    "tabs": {
+      "overview": "Project",
+      "files": "Files",
+      "bcf": "BCF"
     }
+  },
+  "UserSpaces": {
+    "createButtonText": "Create a space",
+    "organizationsButtonText": "Billing accounts"
+  },
+  "ProjectFiles": {
+    "groupsButtonText": "Manage groups"
+  },
+  "ProjectOverview": {
+    "openFileUploadButtonText": "Add a model",
+    "forbiddenUploadNotification": "Please select a model file: {extensions}"
+  },
+  "LanguageSelector": {
+    "title": "Choose a language"
+  },
+  "AppHeaderMenu": {
+    "entrySettings": "Account settings",
+    "entryDocumentation": "Documentation",
+    "entryMarketplace": "Marketplace",
+    "entryLanguage": "Choose a language",
+    "logoutButtonText": "Log Out"
+  },
+  "BreadcrumbGroupSelector": {
+    "text": "Groups"
+  },
+  "BreadcrumbProjectSelector": {
+    "placeholder": "< No project >"
+  },
+  "DashboardProjectList": {
+    "title": "Recent projects"
+  },
+  "DashboardSpaceList": {
+    "title": "Recent spaces"
+  },
+  "DashboardWelcomeTile": {
+    "title": "Dashboard",
+    "message": "Hi {name}, it's great to see you again !"
+  },
+  "FileActionsCell": {
+    "openViewerButtonText": "Open in viewer",
+    "addTagsButtonText": "Add tags",
+    "addVersionButtonText": "Add version",
+    "manageAccessButtonText": "Manage access",
+    "createModelButtonText": "Define as model",
+    "removeModelButtonText": "Remove from models",
+    "versioningButtonText": "Add a version",
+    "visaButtonText": "Validation request"
+  },
+  "FilesActionBar": {
+    "moveButtonText": "Move to"
+  },
+  "FilesDeleteModal": {
+    "title": "Delete files",
+    "message": "This action will permanently delete the following files/folders :",
+    "messageVersion": "You are about to permanently delete the following files/folders and their associated version history:"
+  },
+  "FilesManager": {
+    "title": "Project Files",
+    "createModelNotification": "Model successfully created",
+    "structureImport": "Import a GED structure",
+    "gedDownload": "Download the GED",
+    "folderImport": "Import a folder"
+  },
+  "FilesManagerOnboarding": {
+    "text": "Upload your first file",
+    "uploadFileButtonText": "Upload a file",
+    "createFolderButtonText": "Create a folder",
+    "GEDStructureImport": "Import a GED structure",
+    "folderImport": "Import a file"
+  },
+  "FilesTable": {
+    "headers": {
+      "tags": "Tags"
+    }
+  },
+  "FileUploadButton": {
+    "addFileButtonText": "Upload a file"
+  },
+  "FileUploader": {
+    "uploadAreaText": "Drag and drop to store your project assets",
+    "uploadButtonText": "Select a model file"
+  },
+  "FolderAccessManager": {
+    "title": "Manage access rights",
+    "rightsHeader": "Rights",
+    "membersHeader": "Members",
+    "groupHeader": "Group",
+    "propagate": "Apply rights to sub folders (recursively)"
+  },
+  "FolderSelector": {
+    "selectedFolder": "Selected folder",
+    "moveHere": "Move here"
+  },
+  "GroupCardActionMenu": {
+    "changeColorButtonText": "Change color"
+  },
+  "GroupCardDeleteGuard": {
+    "title": "Delete group",
+    "message": "You are about to (definitely) delete group {name}, are you sure ?"
+  },
+  "GroupCardUpdateForm": {
+    "title": "Rename group"
+  },
+  "GroupCreationCard": {
+    "text": "Create a group",
+    "title": "New group"
+  },
+  "GroupMemberSelectionCard": {
+    "text": "Add a member"
+  },
+  "InvitationCard": {
+    "pendingMessage": "Invited - Pending.",
+    "resendLinkText": "Send invitation again ?",
+    "resendSuccessNotifText": "Invitation sent again",
+    "cancelSuccessNotifText": "Invitation canceled"
+  },
+  "InvitationForm": {
+    "emailInputPlaceholder": "Mail address",
+    "emailInputErrorMessage": "Invalid email",
+    "roleInputLabel": "Role",
+    "roles": {
+      "admin": "Administrator",
+      "user": "User",
+      "guest": "Guest"
+    },
+    "submitButtonText": "Send invitation",
+    "successNotifText": "Invitation sent",
+    "successUsertoAdmin": "The user has now admin role"
+  },
+  "ModelActionsCell": {
+    "addTagsButtonText": "Add tags"
+  },
+  "ModelLocation": {
+    "emptyLocationMessage": "No location data available",
+    "addLocationButtonText": "Fill in"
+  },
+  "ModelLocationForm": {
+    "addressInputPlaceholder": "Enter address"
+  },
+  "ModelsActionBar": {
+    "mergeButtonText": "Merge"
+  },
+  "ModelsCardModelPreview": {
+    "emptyPreviewPlaceholder": "No preview available"
+  },
+  "ModelsDeleteModal": {
+    "title": "Warning !",
+    "message": "This action will permanently delete the following models :"
+  },
+  "ModelsManager": {
+    "title": "Project Models",
+    "tabs": {
+      "ifc": "IFC",
+      "split": "Split / Export",
+      "merge": "Merge",
+      "archive": "Archives",
+      "dwg": "DWG",
+      "metaBuildings": "Meta Buildings",
+      "upload": "Upload"
+    }
+  },
+  "ModelsMergeModal": {
+    "title": "Merge selection",
+    "inputPlaceholder": "Name of your merge"
+  },
+  "ModelsOverview": {
+    "title": "Project Models Overview"
+  },
+  "ModelsOverviewOnboarding": {
+    "text": "Upload your first model",
+    "uploadButtonText": "Upload Model"
+  },
+  "ModelsTable": {
+    "headers": {
+      "version": "Version"
+    },
+    "emptyTablePlaceholder": {
+      "text": "No template",
+      "textPdf": "From the file manager \"file\" menu, click on \"Define as model\" to make your pdf plans available in models manager."
+    }
+  },
+  "ProjectCardDeleteGuard": {
+    "title": "Delete project",
+    "message": "Are you sure you want to (permanently) delete this project ?"
+  },
+  "ProjectCardUpdateForm": {
+    "title": "Rename project"
+  },
+  "ProjectCreationCard": {
+    "title": "New project",
+    "text": "Create a new project"
+  },
+  "ProjectUsersManager": {
+    "title": "Project Users"
+  },
+  "SpaceCard": {
+    "projects": "PROJECTS",
+    "free": "Free"
+  },
+  "SpaceCardActionMenu": {
+    "removeImageButtonText": "Remove image"
+  },
+  "SpaceCardDeleteGuard": {
+    "title": "Delete space",
+    "message": "Are you sure ?"
+  },
+  "SpaceCardUpdateForm": {
+    "title": "Rename space"
+  },
+  "SpaceCreationCard": {
+    "title": "New space"
+  },
+  "SpaceUsersManager": {
+    "title": "Manage space admins",
+    "tabs": {
+      "admins": "Administrators",
+      "users": "Users"
+    },
+    "addUserButtonText": "Add new admin"
+  },
+  "UserCard": {
+    "self": "you"
+  },
+  "UserCardDeleteGuard": {
+    "message": {
+      "space": "Remove {name} from this space ?",
+      "project": "Remove {name} from this project ?"
+    }
+  },
+  "UserRoleBadge": {
+    "admin": "Admin",
+    "user": "User",
+    "guest": "Guest"
+  },
+  "UsersManagerOnboarding": {
+    "text": "Invite your first collaborator",
+    "inviteButtonText": "Invite"
+  },
+  "PageNotFound": {
+    "title": "Page not found",
+    "text": {
+      "line1": "Woopsie! The page that you are looking for does not exist.",
+      "line2": "Please return home."
+    },
+    "homeButtonText": "Home"
+  },
+  "FolderPermissionSelector": {
+    "label": "All",
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write"
+    }
+  },
+  "GroupMembersSelector": {
+    "title": "Manage group members"
+  },
+  "GroupPermissionSelector": {
+    "options": {
+      "accessDenied": "Access denied",
+      "readOnly": "Read only",
+      "readWrite": "Read / Write",
+      "default": "Default"
+    }
+  },
+  "Errors": {
+    "spacesFetchError": "Fail to fetch spaces",
+    "spaceCreateError": "Fail to create space",
+    "spaceUpdateError": "Fail to update space",
+    "spaceDeleteError": "Fail to delete space",
+    "spaceImageUpdateError": "Fail to update space image",
+    "spaceImageDeleteError": "Fail to delete space image",
+    "projectsFetchError": "Fail to fetch projects",
+    "projectCreateError": "Fail to create project",
+    "projectUpdateError": "Fail to update project",
+    "projectDeleteError": "Fail to delete project",
+    "invitationsFetchError": "Fail to fetch invitations",
+    "invitationSendError": "Fail to send invitation",
+    "invitationResendError": "Fail to resend invitation",
+    "invitationCancelError": "Fail to cancel invitation",
+    "usersFetchError": "Fail to fetch users",
+    "userUpdateError": "Fail to update user",
+    "userDeleteError": "Fail to delete user",
+    "modelsFetchError": "Fail to fetch models",
+    "modelUploadError": "Fail to upload model",
+    "modelUpdateError": "Fail to update model",
+    "modelMergeError": "Fail to merge models",
+    "modelDeleteError": "Fail to delete model",
+    "fileStructureFetchError": "Fail to fetch file structure",
+    "fileUpdateError": "Fail to update files",
+    "fileDownloadError": "Fail to download files",
+    "fileDeleteError": "Fail to delete files",
+    "folderCreateError": "Fail to create folder",
+    "documentUploadError": "Fail to upload document",
+    "groupsFetchError": "Fail to fetch groups",
+    "groupCreateError": "Fail to create group",
+    "groupUpdateError": "Fail to update group",
+    "groupDeleteError": "Fail to delete group",
+    "organizationsFetchError": "Fail to fetch billing accounts",
+    "organizationCreateError": "Fail to create billing accounts",
+    "organizationUpdateError": "Fail to update billing accounts",
+    "organizationDeleteError": "Fail to delete billing accounts",
+    "userLeaveError": "You can't leave the project as you are the last administrator",
+    "subscriptionsFetchError": "Fail to fetch subscriptions",
+    "platformSubscribeError": "Fail to initialize platform subscription",
+    "datapackSubscribeError": "Fail to create datapack subscription",
+    "datapackUpdateError": "Fail to update datapack subscription",
+    "projectFetchFileError": "Impossible to retrieve this document",
+    "visaCreateError": "Error during visa creation",
+    "visaCreateValidationError": "Error when adding a validator",
+    "visaFetchError": "Impossible to retrieve the document approval",
+    "visaAcceptError": "Error in sending your response",
+    "visaDenyError": "Error in sending your response",
+    "visaCloseError": "Error in closing the document approval",
+    "visaResumeError": "Error in reopening the document approval",
+    "visaFetchCreatedError": "Impossible to recover the document approvals",
+    "visaFetchValidatorError": "Impossible to recover the document approvals",
+    "visaDeleteValidationError": "Impossible to remove this validator",
+    "visaDeleteError": "Impossible to close this document approval",
+    "visaUpdateError": "Impossible to update this document approval",
+    "visaRefreshError": "Impossipble to update your response",
+    "visaFetchAllCommentsError": "Impossible to retrieve the comments",
+    "visaCreateCommentsError": "Impossible to post this comment",
+    "visaUpdateCommentError": "Impossible to edit this comment",
+    "visaDeleteCommentError": "Impossible to remove this comment",
+    "modelCreateError": "Error creating model",
+    "fileFetchError": "Error while recovering this folder/file",
+    "bcfImportError": "An error occurred while importing",
+    "bcfExportError": "Export failed...",
+    "fileVersionsFetchError": "The versions of this document cannot be recovered.",
+    "fileVersionsMakeHeadError": "Failed to switch document to current version.",
+    "fileVersionDelete": "Failed to delete document",
+    "userAlreadyExistsError": "This user is already a member of the space/project.",
+    "tagsFetchError": "Impossible to recover tags",
+    "tagsCreateError": "Error while creating the tag",
+    "tagsUpdateError": "Error while modifying the tag",
+    "tagsDeleteError": "Error when deleting the tag",
+    "tagsAddDocumentError": "Error when associating the tag to the document",
+    "tagsDeleteDocumentError": "Error when dissociating the tag from the document",
+    "spaceSizeFullError": "Your storage space is full",
+    "spaceFetchError": "Unable to retrieve information from the space",
+    "projectFolderTreeFetchError": "Unable to retrieve project list",
+    "fileStructureCreateError": "Unable to create the file structure",
+    "documentCreateError": "Unable to upload this document",
+    "invitationViewFetchError": "Unable to retrieve invitation list",
+    "invitationViewAcceptError": "Unable to accept the invitation",
+    "invitationViewDenyError": "Impossible to decline the invitation",
+    "folderFetchFolder": "Fail to retrieve folder data",
+    "bcfDeleteError": "Deletion failed",
+    "groupImportError": "Group import failure"
+  },
+  "ProjectStatusBadge": {
+    "new": "NEW",
+    "active": "ACTIVE",
+    "inactive": "INACTIVE",
+    "paused": "PAUSED"
+  },
+  "Dashboard": {
+    "spacesTileTitle": "Active Spaces",
+    "spacesTileBottomText": "View spaces",
+    "projectsTileTitle": "Active Projects",
+    "projectsTileBottomText": "View projects",
+    "subscriptionsTileTitle": "Billing & Invoices",
+    "subscriptionsTileText": "Find all your invoices and your latest payment information here.",
+    "subscriptionsTileBottomText": "Manage subscriptions"
+  },
+  "Subscribe": {
+    "title": "Choose your plan",
+    "text": "You are only allowed a single free space among your billing accounts. If this space already exists, upgrade to the professional subscription for additional features."
+  },
+  "SubscriptionDatapack": {
+    "title": "Manage DataPack",
+    "successNotification": "You now have {size} of storage in space {spaceName}"
+  },
+  "SubscriptionFree": {
+    "title": "Create Free Plan",
+    "text": "You are about to create your free space. Your free space includes: {size}, 6 users.",
+    "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}"
+  },
+  "SubscriptionPro": {
+    "subscribeTitle": "Subscribe to Professional Plan",
+    "upgradeTitle": "Upgrade to pro platform",
+    "text": "You are about to subscribe to your pro plan. This includes: {size} of storage, unlimited projects with unlimited users.",
+    "spaceCreatedNotification": "You have just created the space {spaceName} with billing account {organizationName}",
+    "spaceUpgradedNotification": "Congratulation ! You just upgraded your space {spaceName} to pro plan."
+  },
+  "UserSubscriptions": {
+    "title": "Platform subscription",
+    "text": "Browse through your billing accounts to manage subscriptions and invoices for your platform spaces.",
+    "list": "My billing accounts:"
+  },
+  "BillingActionsCell": {
+    "updateButtonText": "Modify the payment card",
+    "datapackButtonText": "Manage datapacks",
+    "cancelButtonText": "Cancel this subscription"
+  },
+  "BillingsTable": {
+    "title": "Billing details",
+    "nextPayment": "on",
+    "professionalPlan": "Professionnal",
+    "withDatapack": "with Datapack",
+    "cancelSubscriptionButton": "Cancel subscription",
+    "updateCreditCardButton": "Update credit card",
+    "emptyTableText": "Oh no. There is no active plan here. You have probably never tried our Pro version before..",
+    "subscribeButton": "Upgrade to our Pro Platform",
+    "headers": {
+      "nextpayment": "Next payment",
+      "subscriptionplan": "Subscription plan"
+    },
+    "status": {
+      "active": "Active",
+      "deleted": "Deleted",
+      "paused": "Paused",
+      "custom": "Managed by BIMData.io",
+      "past_due": "Suspended"
+    }
+  },
+  "DatapackForm": {
+    "baseNote": "Storage",
+    "baseText": "Included with pro plan",
+    "datapackNote": "Additional storage",
+    "priceUnit": " / GB / month Tax incl.",
+    "totalUnit": " / month Tax incl.",
+    "actualStorage": "Actual storage",
+    "newStorage": "New Storage"
+  },
+  "DatapackInfo": {
+    "title": "Actual subscription",
+    "datapacks": "Active DataPacks",
+    "storage": "Active storage",
+    "including": "including {quantity} GB of DataPack"
+  },
+  "InvoiceActionsCell": {
+    "downloadButton": "Download invoice"
+  },
+  "InvoicesTable": {
+    "title": "Invoices",
+    "emptyTableText": "Your invoices will be listed here when you have active subsctiptions.",
+    "subscribeButton": "Upgrade to our Pro Platform"
+  },
+  "InvoiceStatusCell": {
+    "completed": "Completed",
+    "pending": "Pending"
+  },
+  "OrganizationCard": {
+    "spaces": "{number} spaces"
+  },
+  "OrganizationDeleteGuard": {
+    "title": "Delete billing account"
+  },
+  "OrganizationForm": {
+    "createTitle": "Create a billing account",
+    "updateTitle": "Update billing account",
+    "infoSectionTitle": "Basic information",
+    "logoInputLabel": "Upload logo",
+    "logoInputMessage": "Logo should be in JP(E)G/PNG format. The file size cannot exceed 1 MB.",
+    "successTitle": "Congratulation your billing account has just been created"
+  },
+  "OrganizationsList": {
+    "explanationText": "A billing account is the entity that gather your billing at BIMData.io",
+    "createButtonText": "Add new billing account"
+  },
+  "OrganizationsManager": {
+    "title": "Manage billing accounts"
+  },
+  "OrganizationSpaceCard": {
+    "projects": "{number} projects"
+  },
+  "OrganizationSpacesImport": {
+    "spaceListTitle": "Select spaces to import",
+    "spaceListPlaceholder": "No space to import...",
+    "successTitle": "Spaces successfully imported"
+  },
+  "OrganizationSpacesList": {
+    "importButtonText": "Import space",
+    "addButtonText": "Add new space",
+    "spaceListTitle": "Account spaces",
+    "spaceListPlaceholder": "No space is attached to this billing account."
+  },
+  "ProjectCardLeaveGuard": {
+    "title": "Leave projet",
+    "message": "Are you sure you want to leave this project ?"
+  },
+  "ProPlanCard": {
+    "title": "PROFESSIONAL",
+    "priceUnit": "/ Space / month",
+    "bullet2": "Unlimited projects",
+    "bullet3": "Unlimited users",
+    "buttonText": "Choose professional",
+    "note": "expand 1GB for {price} / month"
+  },
+  "ProPlanForm": {
+    "priceUnit": "/ month",
+    "successTitle": "Congratulation ! You just subscribed to the Pro Platform.",
+    "successMessage": "Your payment has been completed. You can now enjoy your professional subscription.",
+    "titleNet": "Price ex-tax",
+    "titleTax": "Taxes",
+    "titleTotal": "Price",
+    "noteTotal": "Tax incl."
+  },
+  "ProPlanInfo": {
+    "title": "Your subscription",
+    "subTitle": "Professionnal plan",
+    "priceUnit": "/ month (ex-tax)",
+    "bulletsHead": "The subscription includes",
+    "bullet1": "{size} of storage",
+    "bullet2": "BIMData Platform",
+    "bullet3": "3D Viewer",
+    "bullet4": "2D Viewer",
+    "bullet5": "Unlimited projects",
+    "bullet6": "Unlimited users",
+    "bullet7": "Unlimited comments (BCF)",
+    "bullet8": "IFC Merge / Split",
+    "bullet9": "IFC Edition",
+    "bullet10": "Support"
+  },
+  "SpaceSelected": {
+    "selectedOrga": "Billing account:",
+    "selectedSpace": "Selected space:"
+  },
+  "SpaceSizeInfo": {
+    "subscribePlatformButton": "Upgrade to pro subscription",
+    "usage": "{used} used out of {total}"
+  },
+  "SpaceSizePreview": {
+    "title": "Storage",
+    "actualStorage": "Actual storage",
+    "newStorage": "New storage",
+    "newStorageText": "By purchasing the professional subscription you benefit from {size} of storage. You can purchase additional storage directly from your space."
+  },
+  "SubscribeCard": {
+    "title": "Create your new space",
+    "text": "Would you like to take full advantage of the platform? Make use of {size} for your projects and of unlimited users by upgrading to a professional subscription.",
+    "button": "Create a new space"
+  },
+  "FreePlanInfo": {
+    "title": "FREE",
+    "price": "0€",
+    "bullet2": "1 Free space",
+    "bullet3": "6 Users",
+    "buttonText": "Create a free space",
+    "note": "Forever"
+  },
+  "FreePlanRedirect": {
+    "title": "Access Free space",
+    "text": "You have already created your free space.",
+    "buttonText": "Go to my free space"
+  },
+  "SubscriptionStatusBanner": {
+    "activate": "This free space has reached its limits, proceed to a professional subscription to unblock the full functionality of BIMData.",
+    "reactivate": "This space is currently not connected to any subscription. To unblock all the functionalities of BIMData, upgrade to a professional subscription."
+  },
+  "OrganizationSelector": {
+    "title": "Billing account",
+    "radioLabelSelect": "Select a billing account",
+    "radioLabelCreate": "Create a billing account",
+    "inputPlaceholder": "Name of the account",
+    "successMessage": "Congratulation your billing account has just been created"
+  },
+  "SpaceCreator": {
+    "title": "Create a space",
+    "text": "Your space groups your different BIM projects.",
+    "billingAccountLabel": "Billing account :",
+    "submitButtonText": "Continue to payment"
+  },
+  "Visa": {
+    "button": "Approvals",
+    "add": {
+      "title": "Validation request",
+      "errorDate": "Date invalid",
+      "errorValidator": "You must add at least 1 confirmer",
+      "dateInputPlaceholder": "To be validated before"
+    },
+    "summary": {
+      "title": {
+        "open": "Request in process",
+        "closed": "Request closed"
+      },
+      "appliedBy": "Request validation by",
+      "deletedUser": "User removed",
+      "validatorList": {
+        "accept": "Validated",
+        "deny": "Refused",
+        "commented": "Commented",
+        "pending": "Awaiting",
+        "getRidOfValidator": "Remove validator",
+        "refresh": "Reinitialise verification"
+      }
+    },
+    "comments": {
+      "commentary": "Commentry",
+      "publish": "Publish",
+      "commentInputPlaceholder": "Post a comment",
+      "confirmDelete": "Remove this comment?"
+    },
+    "list": {
+      "title": "Request in progress",
+      "toValidateVisas": "My validations",
+      "createdVisas": "My requests",
+      "emptyValidation": "No validation in progress",
+      "emptyDemand": "No request in progress"
+    },
+    "selectionValidator": {
+      "warning": "This user cannot access the file."
+    },
+    "noVisa": "A VISA has not yet been created",
+    "accept": "Accept",
+    "close": "Close",
+    "deny": "Refuse",
+    "term": "Due date",
+    "validator": "Validator",
+    "validators": "Validators",
+    "safeZone": {
+      "add": {
+        "text": "Are you sure you want to leave this page? There may be unverified information."
+      },
+      "delete": {
+        "text": "Are you sure you want to remove this document approval?"
+      },
+      "close": {
+        "text": "Are you sure you want to close this document approval?"
+      },
+      "deleteComment": {
+        "text": "Are you sure you want to remove this comment?"
+      }
+    }
+  },
+  "ProjectBcf": {
+    "createBcfButtonText": "Create a BCF",
+    "createBcfTitle": "Report a problem",
+    "showStatisticsTooltip": "Show statistics",
+    "hideStatisticsTooltip": "Hide statistics",
+    "searchInputPlaceholder": "Search by index number, name, creator or tag",
+    "ascendingIndexTooltip": "ascending index",
+    "descendingIndexTooltip": "descending index",
+    "alphabeticalAscendingOrderTooltip": "alphabetical order",
+    "alphabeticalDescendingOrderTooltip": "reverse alphabetical order",
+    "ascendingDateTooltip": "increasing date",
+    "descendingDateTooltip": "decreasing date",
+    "viewGridTooltip": "grid view",
+    "viewListTooltip": "list view",
+    "metricsTitle": "Total: {count} issues BCF",
+    "metricsEmptyText": "Add issues to see the associated statistics here.",
+    "noSearchResultsTitle": "No results",
+    "noSearchResultsText": "Your search returned no results, so please check your filters or keywords.",
+    "importBcfNotificationSuccess": "BCF file successfully imported",
+    "importBcfNotificationError": "Error while importing the BCF file",
+    "exportBcfNotificationSuccess": "BCF successfully exported",
+    "exportBcfNotificationError": "Error while exporting the BCF file",
+    "selectedTopicCount": "Number of selected topics",
+    "deleteBcfText": "You are about to delete all selected topics",
+    "deleteInProgress": "Delete in progress",
+    "deleteInProgressSub": "This process may take a few moments.",
+    "deleteBcfNotificationSuccess": "Topics deleted",
+    "deleteBcfNotificationError": "Error while deleting topics",
+    "onlyAdminParameters": "You must be a project administrator"
+  },
+  "GuidedTour": {
+    "platform": {
+      "intro": {
+        "title": "Welcome",
+        "content": "Let's explore the BIMData platform together"
+      },
+      "actionButtons": {
+        "title": "Dashboard",
+        "content": "Access to all of your spaces, projects, and subscriptions directly through this dashboard"
+      },
+      "firstSpace": {
+        "title": "Your spaces",
+        "content": "Access your recent spaces directly through this shortcut"
+      },
+      "firstProject": {
+        "title": "Your projects",
+        "content": "Access your recent projects directly through this shortcut"
+      },
+      "previewIfc": {
+        "title": "Overview",
+        "content": "Easily navigate between your project model overviews"
+      },
+      "usersManager": {
+        "title": "Collaboration",
+        "content": "Invite your first contributors to your project"
+      },
+      "modelsManager": {
+        "title": "Models",
+        "content": "Download and manage your project models (ICF, DWG, PDF...)"
+      },
+      "gedButton": {
+        "title": "GED",
+        "content": "Access document management for your project via the \"GED\" tab"
+      },
+      "fileTree": {
+        "title": "Tree diagram",
+        "content": "Create your folders and download your files directly from the GED"
+      },
+      "groupManager": {
+        "title": "Rights management",
+        "content": "Create user groups to manage their access permissions"
+      },
+      "changeSpace": {
+        "title": "Breadcrumb trail",
+        "content": "Get quick access to your space via the breadcrumb trail"
+      },
+      "outro": {
+        "title": "Great job!",
+        "content": "Now, all you have left to do is get going on your first project"
+      }
+    }
+  },
+  "Versioning": {
+    "title": "Version history",
+    "addVersion": "Add a version",
+    "currentVersion": "Current version",
+    "previousVersion": "Previous version",
+    "addedBy": "Added by:",
+    "titleDate": "On",
+    "AddVersion": "Add a new version",
+    "loading": {
+      "subMessage": "This process may take a few moments.",
+      "downloadMessage": "Loading in progress.",
+      "deleteMessage": "Deleting in progress."
+    },
+    "getToHead": "Switch to current version",
+    "show": "See",
+    "safeZone": {
+      "delete": {
+        "content": "Are you sure you want to delete this version?",
+        "action": "Yes, delete this version"
+      }
+    },
+    "emptyArea": "You currently have no version history for this file."
+  },
+  "Tag": {
+    "title": "Tags management",
+    "list": "List of tags",
+    "addTag": "add a tag",
+    "addNewTag": "Add a new tag",
+    "deleteTag": "Delete this tag"
+  },
+  "SubscriptionModal": {
+    "title": "Get more space",
+    "subtitle": "You currently have {size} of storage capacity",
+    "soon": "SOON",
+    "upgrade": {
+      "title": "Upgrade to the pro platform",
+      "subtitle": "Subscribe to BIMData Pro to get more space."
+    },
+    "referal": {
+      "title": "Join our referral program!",
+      "subtitle": "Share your referral code to earn space."
+    },
+    "linkedin": {
+      "title": "Connect your LinkedIn account",
+      "subtitle": "Follow the BIMData page to earn space."
+    },
+    "uploadDisableMessage": {
+      "permission": "You don't have the required rights",
+      "size": "You don't have enough storage space"
+    }
+  },
+  "GroupMemberCard": {
+    "pending": "Invitation in progress"
+  },
+  "ProfileSettings": {
+    "title": "Profile settings",
+    "loading": {
+      "message": "Deleting in progress.",
+      "subMessage": "This process may take a few moments, please stay on the page."
+    }
+  },
+  "Invitations": {
+    "title": "My invitations",
+    "invitCounter": "Invitations in progress -",
+    "acceptAll": "Accept all",
+    "invitedInProject": "You were invited by {sender} to join the {project} project in the {cloud} space",
+    "invitedInSpace": "You have been invited by {sender} to join the {cloud} space",
+    "invitAccepted": "Accepted invitation",
+    "invitDenied": "Invitation declined",
+    "invitPending": "Invitation in progress",
+    "goToProjectLong": "Access to the project",
+    "goToProjectShort": "Project",
+    "goToSpaceLong": "Access to the space",
+    "goToSpaceShort": "The space"
+  },
+  "DocumentViewer": {
+    "viewerButton": "Open in viewer",
+    "docPlaceholder": "No preview for this document"
+  },
+  "GroupImport": {
+    "title": "Import a group",
+    "selectAll": "Select all",
+    "notAdmin": "You must be a project administrator",
+    "noGroup": "There is no group for this project"
+  },
+  "UploadCard": {
+    "cancelMessage": "Canceled",
+    "errorMessage": "Upload failed",
+    "upload": "{uploaded} to {total} ({percentage}% uploaded)"
+  },
+  "t": {
+    "add": "Add",
+    "amount": "Amount",
+    "archive": "Archive",
+    "back": "Back",
+    "cancel": "Cancel",
+    "change": "Change",
+    "comment": "Comment",
+    "confirm": "Confirm",
+    "create": "Create",
+    "createdBy": "Created by",
+    "close": "Close",
+    "date": "Date",
+    "delete": "Delete",
+    "description": "Description",
+    "download": "Download",
+    "edit": "Edit",
+    "emptyFolder": "Empty folder",
+    "error": "Error",
+    "export": "Export",
+    "file": "File",
+    "folder": "Folder",
+    "import": "Import",
+    "invalidName": "Invalid name",
+    "leave": "Leave",
+    "modifiedOn": "Last modified",
+    "modify": "Edit",
+    "name": "Name",
+    "ok": "OK",
+    "open": "Open",
+    "or": "or",
+    "rename": "Rename",
+    "search": "Search",
+    "size": "Size",
+    "space": "Space",
+    "status": "Status",
+    "success": "Success",
+    "type": "Type",
+    "unarchive": "Unarchive",
+    "validate": "Validate",
+    "verify": "Check"
+  },
+  "FolderCreationButton": {
+    "text": "New folder"
+  },
+  "FolderCreationForm": {
+    "title": "Create folder"
+  },
+  "SpaceCardImageButton": {
+    "text": "Change image"
+  },
+  "FileTreePreviewModal": {
+    "title": "Import DMS tree from"
+  }
 }

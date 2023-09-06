@@ -65,8 +65,7 @@ jobs:
 
   deploy:
     runs-on: [self-hosted, common]
-    needs: [build-and-push, e2e-tests]
-    if: always() && (needs.e2e-tests.result == 'skipped' || needs.e2e-tests.result == 'success')
+    needs: build-and-push
     steps:
       - name: Login to BIMData Docker Registry
         uses: docker/login-action@v2
