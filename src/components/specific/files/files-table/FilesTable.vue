@@ -95,6 +95,7 @@
         @create-model="$emit('create-model', file)"
         @delete="$emit('delete', file)"
         @download="$emit('download', file)"
+        @file-clicked="$emit('file-clicked', file)"
         @manage-access="$emit('manage-access', file)"
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"

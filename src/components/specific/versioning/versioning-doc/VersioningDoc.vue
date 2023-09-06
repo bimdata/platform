@@ -64,7 +64,7 @@
                   height="30px"
                   @click="swapHeadDoc"
                 >
-                  <BIMDataIconBackInTime color="granite" size="xs" fill />
+                  <BIMDataIconRestore color="granite" size="xs" fill />
                 </BIMDataButton>
               </BIMDataTooltip>
             </div>
