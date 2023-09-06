@@ -20,7 +20,7 @@
       v-show="isOpen"
     >
       <template #item="{ item }">
-        <template v-if="item.key === 1">
+        <template v-if="item.key === 2">
           <AppLink
             v-if="isViewable(file)"
             class="file-actions-cell__menu__btn"
@@ -134,9 +134,19 @@ export default {
 
       isOpen.value = true;
 
-      if (isViewable(props.file)) {
+      if (!isFolder(props.file)) {
         menuItems.value.push({
           key: 1,
+          text: "FileActionsCell.previewModelButtonText",
+          color: "var(--color-primary)",
+          icon: "preview",
+          action: () => onClick("file-clicked")
+        });
+      }
+
+      if (isViewable(props.file)) {
+        menuItems.value.push({
+          key: 2,
           text: "FileActionsCell.openViewerButtonText",
           color: "var(--color-primary)",
           icon: "show"
@@ -146,14 +156,14 @@ export default {
       if (!isFolder(props.file) && isConvertible(props.file)) {
         if (!isModel(props.file)) {
           menuItems.value.push({
-            key: 2,
+            key: 3,
             text: "FileActionsCell.createModelButtonText",
             component: SetAsModelIcon,
             action: () => onClick("create-model")
           });
         } else {
           menuItems.value.push({
-            key: 3,
+            key: 4,
             text: "FileActionsCell.removeModelButtonText",
             component: RemoveModelsIcon,
             action: () => onClick("remove-model")
@@ -162,7 +172,7 @@ export default {
       }
 
       menuItems.value.push({
-        key: 4,
+        key: 5,
         text: "t.rename",
         action: () => onClick("update"),
         icon: "edit",
@@ -172,7 +182,7 @@ export default {
       });
 
       menuItems.value.push({
-        key: 5,
+        key: 6,
         text: "t.download",
         action: () => onClick("download"),
         icon: "download",
@@ -183,7 +193,7 @@ export default {
 
       if (isFolder(props.file) && props.project.isAdmin) {
         menuItems.value.push({
-          key: 6,
+          key: 7,
           text: "FileActionsCell.manageAccessButtonText",
           action: () => onClick("manage-access"),
           icon: "key",
@@ -193,21 +203,21 @@ export default {
 
       if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
         menuItems.value.push({
-          key: 7,
+          key: 8,
           text: "FileActionsCell.visaButtonText",
           icon: "visa",
           action: () => onClick("open-visa-manager"),
           dataTestId: "btn-open-visa-manager"
         });
         menuItems.value.push({
-          key: 8,
+          key: 9,
           text: "FileActionsCell.addTagsButtonText",
           icon: "tag",
           action: () => onClick("open-tag-manager"),
           dataTestId: "btn-open-tag-manager"
         });
         menuItems.value.push({
-          key: 9,
+          key: 10,
           text: "FileActionsCell.versioningButtonText",
           icon: "versioning",
           action: () => onClick("open-versioning-manager"),
@@ -217,7 +227,7 @@ export default {
       }
 
       menuItems.value.push({
-        key: 10,
+        key: 11,
         text: "t.delete",
         action: () => onClick("delete"),
         color: "high",

@@ -101,7 +101,8 @@
     "addVersionButtonText": "Ajouter une version",
     "createModelButtonText": "Définir comme modèle",
     "manageAccessButtonText": "Gérer les accès",
-    "openViewerButtonText": "Voir",
+    "openViewerButtonText": "Ouvrir",
+    "previewModelButtonText": "Prévisualiser",
     "removeModelButtonText": "Retirer des modèles",
     "versioningButtonText": "Ajouter une version",
     "visaButtonText": "Demande de validation"
