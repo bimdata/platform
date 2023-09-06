@@ -863,5 +863,8 @@
   "DocumentViewer": {
     "viewerButton": "Ouvrir dans la visionneuse",
     "docPlaceholder": "Aucune prévisualisation pour ce document"
+  },
+  "MainModelSelector": {
+    "title": "Choix de l'aperçu du projet"
   }
 }

@@ -5,7 +5,7 @@
     </div>
 
     <div class="main-model-selector__head">
-      <h3>{{ $t("ModelPreviewSelector.title") }}</h3>
+      <h3>{{ $t("MainModelSelector.title") }}</h3>
     </div>
     <div class="main-model-selector__body">
       <BIMDataResponsiveGrid itemWidth="215px">
@@ -37,7 +37,14 @@
       <BIMDataButton width="120px" color="high" outline radius @click="cancel">
         {{ $t("t.cancel") }}
       </BIMDataButton>
-      <BIMDataButton width="120px" color="primary" fill radius @click="submit">
+      <BIMDataButton
+        width="120px"
+        color="primary"
+        fill
+        radius
+        :disabled="!selectedModel || selectedModel?.id === mainModel?.id"
+        @click="submit"
+      >
         {{ $t("t.validate") }}
       </BIMDataButton>
     </div>
@@ -75,14 +82,16 @@ export default {
     const { updateProject } = useProjects();
 
     const loading = ref(false);
+    const mainModel = ref(null);
     const selectedModel = ref(null);
 
     watch(
       () => props.models,
       () => {
-        selectedModel.value =
-          props.models.find(m => m.id === props.project.main_model_id) ??
-          props.models[0];
+        mainModel.value = props.models.find(
+          m => m.id === props.project.main_model_id
+        );
+        selectedModel.value = mainModel.value ?? props.models[0];
       },
       { immediate: true }
     );
@@ -110,6 +119,7 @@ export default {
     return {
       // References
       loading,
+      mainModel,
       selectedModel,
       IFC,
       POINT_CLOUD,
