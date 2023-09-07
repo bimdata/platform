@@ -62,6 +62,7 @@ jobs:
           ref: ${{ github.ref }}
           github_token: ${{ secrets.REPOS_TOKEN }}
           vault_passwd: ${{ secrets.VAULT_PASSWD }}
+          cypress_version: 13.1.0
 
   deploy:
     runs-on: [self-hosted, common]
