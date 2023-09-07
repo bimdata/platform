@@ -41,6 +41,7 @@
             ></div>
             <ProjectStatusBadge :status="project.projectStatus" />
             <ProjectCardModelPreview
+              :project="project"
               :models="displayedModels"
               @preview-changed="onPreviewChange"
             />

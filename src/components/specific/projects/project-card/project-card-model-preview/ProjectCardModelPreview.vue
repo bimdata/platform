@@ -25,6 +25,10 @@ import { MODEL_TYPE } from "../../../../../config/models.js";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     models: {
       type: Array,
       required: true
@@ -58,15 +62,25 @@ export default {
     watch(
       () => props.models,
       () => {
-        images.value = props.models
+        const models = [];
+        props.models
           .filter(model => !model.archived)
-          .map((model, i) => ({
-            index: i + 1,
-            type: model.type,
-            url: model.preview_file
-          }));
-        image.value = images.value.length > 0 ? images.value[0] : {};
+          .forEach(model => {
+            if (model.id === props.project.main_model_id) {
+              models.unshift(model);
+            } else {
+              models.push(model);
+            }
+          });
+
+        images.value = models.map((model, i) => ({
+          index: i + 1,
+          type: model.type,
+          url: model.preview_file
+        }));
+
         index.value = 0;
+        image.value = images.value.length > 0 ? images.value[0] : {};
       },
       { immediate: true }
     );

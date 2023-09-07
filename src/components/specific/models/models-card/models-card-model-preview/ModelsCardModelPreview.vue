@@ -1,7 +1,37 @@
 <template>
   <div class="models-card-model-preview">
-    <div class="models-card-model-preview__index" v-if="images.length > 1">
-      {{ `${image.index} / ${images.length}` }}
+    <div v-if="images.length > 1" class="models-card-model-preview__head">
+      <div class="models-card-model-preview__head__index">
+        {{ `${image.index} / ${images.length}` }}
+      </div>
+      <div class="models-card-model-preview__head__menu">
+        <BIMDataButton
+          v-if="project.isAdmin"
+          data-test-id="btn-actions-cell"
+          class="file-actions-cell__btn"
+          ripple
+          rounded
+          icon
+          @click="isOpenMenu = !isOpenMenu"
+        >
+          <BIMDataIconEllipsis size="l" />
+        </BIMDataButton>
+
+        <BIMDataMenu
+          v-show="isOpenMenu"
+          :menuItems="[
+            {
+              key: 1,
+              text: 'Select preview',
+              action: openPreviewSelector
+            }
+          ]"
+        >
+          <template #item="{ item }">
+            <span>{{ item.text }}</span>
+          </template>
+        </BIMDataMenu>
+      </div>
     </div>
     <template v-if="image.url">
       <BIMDataModelPreview
@@ -13,7 +43,7 @@
         backgroundColor="var(--color-silver)"
       />
       <BIMDataIcon
-        class="models-card-model-preview__index__preview-icon"
+        class="models-card-model-preview__icon"
         :name="MODEL_CONFIG[image.type].icon"
         size="l"
       />
@@ -30,12 +60,12 @@
       </div>
       <template v-if="images.length > 1">
         <BIMDataButton
-          class="models-card-model-preview__switcher__btn-previous"
+          class="models-card-model-preview__switcher__btn-prev"
           ghost
           rounded
           icon
           :disabled="image.index === 1"
-          @click="previousImage"
+          @click="prevImage"
         >
           <BIMDataIconChevron size="xxs" :rotate="180" />
         </BIMDataButton>
@@ -57,9 +87,16 @@
 <script>
 import { ref, watch } from "vue";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../../config/models.js";
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
+// Components
+import MainModelSelector from "../main-model-selector/MainModelSelector.vue";
 
 export default {
   props: {
+    project: {
+      type: Object,
+      required: true
+    },
     models: {
       type: Array,
       required: true
@@ -67,20 +104,36 @@ export default {
   },
   emits: ["model-changed"],
   setup(props, { emit }) {
+    const { openModal, closeModal } = useAppModal();
+
     const container = ref(null);
     const viewport = ref(null);
+    const isOpenMenu = ref(false);
 
     const images = ref([]);
     const image = ref({});
     const index = ref(0);
 
-    const previousImage = () => {
+    const prevImage = () => {
       // Can't go below 0
       if (index.value > 0) index.value--;
     };
     const nextImage = () => {
       // Can't go above max length
       if (index.value < images.value.length - 1) index.value++;
+    };
+
+    const openPreviewSelector = () => {
+      isOpenMenu.value = false;
+      openModal({
+        component: MainModelSelector,
+        props: {
+          project: props.project,
+          models: props.models,
+          onCancel: closeModal,
+          onSuccess: closeModal
+        }
+      });
     };
 
     watch(index, (newIndex, oldIndex) => {
@@ -93,14 +146,23 @@ export default {
     watch(
       () => props.models,
       () => {
-        images.value = props.models
+        const models = [];
+        props.models
           .filter(model => !model.archived)
-          .map((model, i) => ({
-            index: i + 1,
-            name: model.name,
-            type: model.type,
-            url: model.preview_file
-          }));
+          .forEach(model => {
+            if (model.id === props.project.main_model_id) {
+              models.unshift(model);
+            } else {
+              models.push(model);
+            }
+          });
+
+        images.value = models.map((model, i) => ({
+          index: i + 1,
+          name: model.name,
+          type: model.type,
+          url: model.preview_file
+        }));
 
         index.value = 0;
         image.value = images.value.length > 0 ? images.value[0] : {};
@@ -114,12 +176,14 @@ export default {
       container,
       image,
       images,
+      isOpenMenu,
       MODEL_CONFIG,
       MODEL_TYPE,
       viewport,
       // Methods
       nextImage,
-      previousImage
+      prevImage,
+      openPreviewSelector
     };
   }
 };
