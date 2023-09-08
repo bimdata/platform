@@ -2,9 +2,13 @@ describe("versioning CRUD", () => {
   beforeEach(() => {
     cy.fixture("house-plan.pdf").as("housePlan");
 
-    cy.task("get-user", "user0").then((user) => cy.login(user));
-    cy.visit("/spaces");
-    cy.hook("space-card").first().click();
+    cy.task("get-user", "user0").then((user) => {
+      cy.login(user);
+      cy.visit("/spaces");
+      cy.hook("space-card")
+        .contains(`${user.firstname} ${user.lastname}`)
+        .click();
+    });
     cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
   });
@@ -35,7 +39,7 @@ describe("versioning CRUD", () => {
 
     cy.hook("btn-add-version").click();
     cy.get("body > input[type=file]").selectFile("@terminauxPlafond", {
-      force: true,
+      force: true
     });
 
     cy.intercept("**/dms-tree").as("getDmsTree");

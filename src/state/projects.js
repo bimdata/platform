@@ -2,7 +2,7 @@ import { reactive, readonly, toRefs } from "vue";
 import ProjectService from "../services/ProjectService.js";
 import { fullName } from "../utils/users.js";
 
-import { mapProjects, mapUsers } from "./mappers.js";
+import { mapProject, mapProjects, mapUsers } from "./mappers.js";
 import { useUser } from "./user.js";
 
 const state = reactive({
@@ -67,6 +67,9 @@ const createProject = async (space, project) => {
 const updateProject = async project => {
   const newProject = await ProjectService.updateProject(project);
 
+  if (newProject.id === state.currentProject?.id) {
+    state.currentProject = mapProject(newProject);
+  }
   await loadUserProjects();
   await loadSpaceProjects({ id: project.cloud.id });
 

@@ -102,7 +102,8 @@
     "addVersionButtonText": "Ajouter une version",
     "createModelButtonText": "Définir comme modèle",
     "manageAccessButtonText": "Gérer les accès",
-    "openViewerButtonText": "Voir",
+    "openViewerButtonText": "Ouvrir",
+    "previewModelButtonText": "Prévisualiser",
     "removeModelButtonText": "Retirer des modèles",
     "versioningButtonText": "Ajouter une version",
     "visaButtonText": "Demande de validation"
@@ -865,5 +866,8 @@
   "DocumentViewer": {
     "viewerButton": "Ouvrir dans la visionneuse",
     "docPlaceholder": "Aucune prévisualisation pour ce document"
+  },
+  "MainModelSelector": {
+    "title": "Choix de l'aperçu du projet"
   }
 }

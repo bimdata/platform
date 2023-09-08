@@ -25,6 +25,7 @@
     <template #content>
       <ModelsCardModelPreview
         data-guide="preview-ifc"
+        :project="project"
         :models="models"
         @model-changed="onModelChange"
       />

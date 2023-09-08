@@ -45,7 +45,7 @@ describe("Documents import feature", () => {
     cy.hook("files-table").selectFile(
       [
         { contents: "@housePlan", fileName: "house-plan.pdf" },
-        "@terminauxPlafond",
+        "@terminauxPlafond"
       ],
       { action: "drag-drop" }
     );

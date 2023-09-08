@@ -103,9 +103,9 @@
 
 <script>
 import { computed } from "vue";
-import { useToggle } from "../../../../../../composables/toggle.js";
-import { MODEL_STATUS, MODEL_TYPE } from "../../../../../../config/models.js";
-import { WINDOWS } from "../../../../../../config/viewer.js";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { MODEL_STATUS, MODEL_TYPE } from "../../../../../config/models.js";
+import { WINDOWS } from "../../../../../config/viewer.js";
 // Components
 import ViewerButton from "./ViewerButton.vue";
 
