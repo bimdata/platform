@@ -9,7 +9,7 @@
     "serve": "vite preview",
     "lint": "eslint --fix",
     "test:unit": "jest",
-    "test:e2e": "cypress open",
+    "test:e2e": "playwright test",
     "release": "semantic-release"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
+    "@playwright/test": "^1.37.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@vitejs/plugin-vue": "^5.2.3",
