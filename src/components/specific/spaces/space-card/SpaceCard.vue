@@ -1,6 +1,7 @@
 <template>
   <AppLink
     data-test-id="space-card"
+    data-testid="space-card"
     :data-test-param="space.id"
     :to="{ name: routeNames.spaceBoard, params: { spaceID: space.id } }"
   >
