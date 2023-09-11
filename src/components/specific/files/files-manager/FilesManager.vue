@@ -63,13 +63,13 @@
             :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
             :text="
               $t(
-                `SubscriptionModal.uploadDisableMessage.${
+                `ProjectOverview.uploadDisableMessage.${
                   isFullTotal(spaceSubInfo) ? 'size' : 'permission'
                 }`
               )
             "
           >
-            <template v-if="isAbleToSub">
+            <template v-if="shouldSubscribe">
               <BIMDataButton
                 width="100%"
                 height="32px"
@@ -217,7 +217,7 @@
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
-            @dragover.prevent
+            @dragover.prevent="() => {}"
             @drop.prevent="uploadFiles"
             @row-drop="({ event, data }) => uploadFiles(event, data)"
             @selection-changed="setSelection"
@@ -748,6 +748,7 @@ export default {
       }px`;
     });
 
+    const shouldSubscribe = inject("shouldSubscribe");
     const openSubscriptionModal = () => {
       openModal({ component: SubscriptionModal });
     };
@@ -774,7 +775,7 @@ export default {
       showTagManager,
       allTags,
       showVersioningManager,
-      isAbleToSub: inject("isAbleToSub"),
+      shouldSubscribe,
       currentSpace,
       projectsTree,
       projectsToUpload,

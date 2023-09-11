@@ -256,7 +256,9 @@
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
             @view-comment-snapshot="openTopicCommentSnapshot"
-            @topic-deleted="reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()"
+            @topic-deleted="
+              reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()
+            "
             @close="closeSidePanel(), removeTopicGuidFromUrl()"
           />
         </template>
@@ -582,7 +584,7 @@ export default {
         ? selectedTopics.value.size > 0
           ? null
           : false
-        : true
+        : selectedTopics.value.size > 0
     );
 
     const toggleTopicSelection = topic => {
@@ -719,13 +721,13 @@ export default {
 
     const removeTopicGuidFromUrl = () => {
       delete route.query.topicGuid;
-      window.history.replaceState({}, '', router.resolve(route).fullPath);
+      window.history.replaceState({}, "", router.resolve(route).fullPath);
     };
 
     const addTopicGuidToUrl = () => {
       route.query.topicGuid = currentTopic.value.guid;
-      window.history.replaceState({}, '', router.resolve(route).fullPath);
-    }
+      window.history.replaceState({}, "", router.resolve(route).fullPath);
+    };
 
     const openTopicViewer = topic => {
       let viewpoint = topic.viewpoints[0] ?? {};

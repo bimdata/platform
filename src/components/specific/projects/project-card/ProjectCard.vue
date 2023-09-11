@@ -148,7 +148,9 @@ export default {
           watch(
             displayedModels,
             () => {
-              currentModel.value = displayedModels.value[0];
+              currentModel.value = displayedModels.value.find(
+                model => model.id === props.project.main_model_id
+              );
             },
             { immediate: true }
           );
