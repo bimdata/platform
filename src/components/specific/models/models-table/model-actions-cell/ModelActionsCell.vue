@@ -58,7 +58,7 @@
       />
     </template>
 
-    <template v-if="model.document">
+    <template v-if="model.document && !project.isGuest">
       <BIMDataButton
         class="model-actions-cell__btn"
         data-test-id="btn-download-model"
@@ -72,6 +72,7 @@
     </template>
 
     <BIMDataButton
+      v-if="!project.isGuest"
       class="model-actions-cell__btn"
       data-test-id="btn-toggle-menu"
       :disabled="!project.isAdmin && model.document?.user_permission < 100"
@@ -83,7 +84,7 @@
       <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
 
-    <transition name="fade">
+    <transition name="fade" v-if="!project.isGuest">
       <BIMDataMenu
         :menuItems="menuItems"
         class="model-actions-cell__menu"
