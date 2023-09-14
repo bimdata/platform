@@ -28,6 +28,8 @@ const WINDOWS = Object.freeze({
  */
 const DEFAULT_WINDOW = WINDOWS.IFC3D;
 
+const translateIfcType = ENV.VUE_APP_TRANSLATE_IFC_TYPE === "true";
+
 const PLUGINS_CONFIG = {
   accessMarketplace: true,
   bcfManager: true,
@@ -36,7 +38,8 @@ const PLUGINS_CONFIG = {
     warnings: false
   },
   properties: {
-    editProperties: true
+    editProperties: true,
+    translateIfcEntities: translateIfcType,
   },
   split: true,
   structure: {
@@ -45,6 +48,7 @@ const PLUGINS_CONFIG = {
   },
   "structure-properties": {
     editProperties: true,
+    translateIfcEntities: translateIfcType,
     export: true,
     merge: true
   },
