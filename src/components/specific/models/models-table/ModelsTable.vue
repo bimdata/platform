@@ -8,7 +8,7 @@
     rowKey="id"
     :paginated="true"
     :perPage="7"
-    :selectable="true"
+    :selectable="!project.isGuest"
     @selection-changed="$emit('selection-changed', $event)"
   >
     <template #sub-header>
@@ -43,7 +43,7 @@
     <template #cell-status="{ row: model }">
       <ModelStatusCell :project="project" :model="model" />
     </template>
-    <template v-if="!project.isGuest" #cell-actions="{ row: model }">
+    <template #cell-actions="{ row: model }">
       <ModelActionsCell
         :project="project"
         :model="model"

@@ -38,61 +38,59 @@
       </teleport>
     </template>
     <AppSlotContent name="project-board-action">
-      <template v-if="!project.isGuest">
-        <template v-if="project.isAdmin">
-          <BIMDataButton
-            color="primary"
-            outline
-            radius
-            icon
-            @click="openSettings"
-          >
-            <BIMDataIconSettings size="xxs" />
-          </BIMDataButton>
-        </template>
-        <template v-else>
-          <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
-            <BIMDataButton disabled color="primary" outline radius icon>
-              <BIMDataIconSettings size="xxs" />
-            </BIMDataButton>
-          </BIMDataTooltip>
-        </template>
-        <BIMDataButton
-          fill
-          radius
-          :icon="isXL"
-          color="default"
-          width="120px"
-          @click="
-            fileUploadInput(
-              'file',
-              event => importBcfTopics(event.target.files),
-              {
-                accept: ['.bcf'],
-                multiple: true
-              }
-            )
-          "
-        >
-          <BIMDataIconImport size="xs" />
-          <span v-if="!isXL" style="margin-left: 6px">
-            {{ $t("t.import") }}
-          </span>
-        </BIMDataButton>
+      <template v-if="project.isAdmin">
         <BIMDataButton
           color="primary"
-          fill
+          outline
           radius
-          :icon="isXL"
-          width="120px"
-          @click="openTopicCreate"
+          icon
+          @click="openSettings"
         >
-          <BIMDataIconPlus size="xxxs" />
-          <span v-if="!isXL" style="margin-left: 6px">
-            {{ $t("ProjectBcf.createBcfButtonText") }}
-          </span>
+          <BIMDataIconSettings size="xxs" />
         </BIMDataButton>
       </template>
+      <template v-else>
+        <BIMDataTooltip :message="$t('ProjectBcf.onlyAdminParameters')">
+          <BIMDataButton disabled color="primary" outline radius icon>
+            <BIMDataIconSettings size="xxs" />
+          </BIMDataButton>
+        </BIMDataTooltip>
+      </template>
+      <BIMDataButton
+        fill
+        radius
+        :icon="isXL"
+        color="default"
+        width="120px"
+        @click="
+          fileUploadInput(
+            'file',
+            event => importBcfTopics(event.target.files),
+            {
+              accept: ['.bcf'],
+              multiple: true
+            }
+          )
+        "
+      >
+        <BIMDataIconImport size="xs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("t.import") }}
+        </span>
+      </BIMDataButton>
+      <BIMDataButton
+        color="primary"
+        fill
+        radius
+        :icon="isXL"
+        width="120px"
+        @click="openTopicCreate"
+      >
+        <BIMDataIconPlus size="xxxs" />
+        <span v-if="!isXL" style="margin-left: 6px">
+          {{ $t("ProjectBcf.createBcfButtonText") }}
+        </span>
+      </BIMDataButton>
     </AppSlotContent>
 
     <div class="project-bcf__actions">

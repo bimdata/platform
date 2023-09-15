@@ -8,7 +8,7 @@
     :rows="files"
     rowKey="id"
     :rowHeight="54"
-    :selectable="true"
+    :selectable="!project.isGuest"
     @selection-changed="$emit('selection-changed', $event)"
     :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
