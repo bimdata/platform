@@ -240,6 +240,7 @@
               v-if="showVisaManager"
               :project="project"
               :document="fileToManage"
+              :visa="currentVisa"
               :toValidateVisas="toValidateVisas"
               :createdVisas="createdVisas"
               :visasLoading="visasLoading"
@@ -301,6 +302,7 @@
 <script>
 import { computed, onMounted, ref, watch, inject } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
@@ -373,6 +375,7 @@ export default {
   },
   emits: ["file-uploaded", "file-updated", "model-created"],
   setup(props, { emit }) {
+    const route = useRoute();
     const { t } = useI18n();
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
@@ -538,6 +541,7 @@ export default {
     const showTagManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
+    const currentVisa = ref(null)
 
     let stopCurrentFilesWatcher;
     const openAccessManager = folder => {
@@ -571,7 +575,7 @@ export default {
     };
 
     const openVisaManager = file => {
-      if (file.file_name) {
+      if (file?.file_name) {
         fileToManage.value = file;
       } else {
         fileToManage.value = { id: null };
@@ -588,6 +592,7 @@ export default {
       setTimeout(() => {
         showVisaManager.value = false;
         fileToManage.value = null;
+        currentVisa.value = null;
       }, 100);
     };
 
@@ -635,6 +640,14 @@ export default {
 
         toValidateVisas.value = toValidateResponse;
         createdVisas.value = createdResponse;
+        if (route.query.visaId) {
+          currentVisa.value = toValidateVisas.value.find(
+            v => v.id === parseInt(route.query.visaId)
+          );
+          if (currentVisa.value) {
+            openVisaManager();
+          }
+        }
       } finally {
         visasLoading.value = false;
       }
@@ -768,6 +781,7 @@ export default {
       showDeleteModal,
       showSidePanel,
       fileToManage,
+      currentVisa,
       toValidateVisas,
       createdVisas,
       visasLoading,
