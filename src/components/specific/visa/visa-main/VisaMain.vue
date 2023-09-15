@@ -52,6 +52,10 @@ export default {
       type: Object,
       required: true
     },
+    visa: {
+      type: Object,
+      required: false
+    },
     toValidateVisas: {
       type: Array,
       required: true
@@ -69,8 +73,8 @@ export default {
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 
-    const currentView = ref(props.document.id ? "visaAdd" : "visaList");
-    const currentVisa = ref(null);
+    const currentVisa = ref(props.visa);
+    const currentView = ref(currentVisa.value ? "visaSummary" : props.document.id ? "visaAdd" : "visaList");
 
     const createVisa = async visa => {
       currentVisa.value = await fetchVisa(props.project, visa);
