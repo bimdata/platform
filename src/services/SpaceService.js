@@ -1,9 +1,6 @@
 import apiClient from "./api-client.js";
+import { IS_NOTIFICATION_ENABLED } from "../config/notification.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
-
-const NOTIFICATION_ENABLED = ENV.VUE_APP_NOTIFICATION_ENABLED;
-
-const IS_NOTIFICATION_ENABLED = NOTIFICATION_ENABLED === "true";
 
 class SpaceService {
   async fetchUserSpaces() {
