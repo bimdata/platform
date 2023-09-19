@@ -1,4 +1,5 @@
 import apiClient from "./api-client.js";
+import { IS_NOTIFICATION_ENABLED } from "../config/notification.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class SpaceService {
@@ -54,25 +55,33 @@ class SpaceService {
   }
 
   async createSpace(space) {
-    const response = await fetch(
-      `${ENV.VUE_APP_BACKEND_BASE_URL}/create-cloud/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...apiClient.authHeader
-        },
-        body: JSON.stringify(space)
+    if (IS_NOTIFICATION_ENABLED) {
+      const response = await fetch(
+        `${ENV.VUE_APP_BACKEND_BASE_URL}/create-cloud/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...apiClient.authHeader
+          },
+          body: JSON.stringify(space)
+        }
+      );
+      if (response.status !== 201) {
+        let error = "";
+        if (response.headers.get("Content-Type") === "application/json") {
+          error = await response.text();
+        }
+        throw new RuntimeError(ERRORS.SPACE_CREATE_ERROR, error);
       }
-    );
-    if (response.status !== 201) {
-      let error = "";
-      if (response.headers.get("Content-Type") === "application/json") {
-        error = await response.text();
+      return response.json();
+    } else {
+      try {
+        return await apiClient.collaborationApi.createCloud(space);
+      } catch (error) {
+        throw new RuntimeError(ERRORS.SPACE_CREATE_ERROR, error);
       }
-      throw new RuntimeError(ERRORS.SPACE_CREATE_ERROR, error);
     }
-    return response.json();
   }
 
   async updateSpace(space) {
