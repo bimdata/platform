@@ -140,6 +140,7 @@
         height: 100%;
         box-shadow: var(--box-shadow);
         background-color: var(--color-white);
+        overflow: auto;
       }
 
       .files-manager__onboarding {

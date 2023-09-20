@@ -6,10 +6,10 @@
         class="project-overview__tooltip-upload"
         color="high"
         position="left"
-        :disabled="space.isUserOrga || !isFullTotal(spaceSubInfo)"
+        :disabled="space.isUserOrga || !isFullSmartData(spaceSubInfo)"
         :text="
           $t(
-            `SubscriptionModal.uploadDisableMessage.${
+            `ProjectOverview.uploadDisableMessage.${
               isFullTotal(spaceSubInfo) ? 'size' : 'permission'
             }`
           )
@@ -22,8 +22,11 @@
           fill
           radius
           :icon="isLG"
-          :disabled="!space.isUserOrga && isFullTotal(spaceSubInfo)"
-          @click="() => (isAbleToSub ? modalOpener() : toggleFileUploader())"
+          :disabled="!space.isUserOrga && isFullSmartData(spaceSubInfo)"
+          @click="
+            () =>
+              shouldSubscribe ? openSubscriptionModal() : toggleFileUploader()
+          "
         >
           <BIMDataIcon
             :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
@@ -101,7 +104,7 @@ import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
 import { debounce } from "../../../utils/async.js";
-import { isFullTotal } from "../../../utils/spaces.js";
+import { isFullSmartData, isFullTotal } from "../../../utils/spaces.js";
 // Components
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
@@ -109,6 +112,7 @@ import FileUploader from "../../../components/specific/files/file-uploader/FileU
 import ModelsManager from "../../../components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
 import ProjectUsersManager from "../../../components/specific/users/project-users-manager/ProjectUsersManager.vue";
+import SubscriptionModal from "../../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 
 export default {
   components: {
@@ -119,8 +123,7 @@ export default {
     ModelsOverview,
     ProjectUsersManager
   },
-  emits: ["switch-sub-modal"],
-  setup(_, { emit }) {
+  setup() {
     const { t } = useI18n();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
@@ -160,10 +163,9 @@ export default {
       });
     };
 
-    const isAbleToSub = inject("isAbleToSub");
-    const modalOpener = () => {
-      openModal();
-      emit("switch-sub-modal", true);
+    const shouldSubscribe = inject("shouldSubscribe");
+    const openSubscriptionModal = () => {
+      openModal({ component: SubscriptionModal });
     };
 
     return {
@@ -171,7 +173,7 @@ export default {
       allowedExtensions: UPLOADABLE_EXTENSIONS,
       modelsPreview,
       invitations: projectInvitations,
-      isAbleToSub,
+      shouldSubscribe,
       models: projectModels,
       project: currentProject,
       showFileUploader,
@@ -180,10 +182,11 @@ export default {
       users: projectUsers,
       // Methods
       closeFileUploader,
+      isFullSmartData,
       isFullTotal,
       notifyForbiddenUpload,
       openFileUploader,
-      modalOpener,
+      openSubscriptionModal,
       reloadData,
       toggleFileUploader,
       // Responsive breakpoints

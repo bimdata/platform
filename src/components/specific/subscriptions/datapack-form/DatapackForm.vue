@@ -26,7 +26,7 @@
         </template>
         <template #text-below-right>
           <span>
-            {{ formatBytes(spaceSubInfo.smart_data_dize_available) }}
+            {{ formatBytes(spaceSubInfo.smart_data_size_available) }}
           </span>
         </template>
       </ProgressBar>

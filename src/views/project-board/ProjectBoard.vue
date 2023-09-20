@@ -141,7 +141,7 @@ export default {
     });
 
     provide(
-      "isAbleToSub",
+      "shouldSubscribe",
       computed(
         () =>
           currentSpace.value.isFree &&
@@ -149,8 +149,6 @@ export default {
           isFullTotal(spaceSubInfo.value)
       )
     );
-
-    const isSubscriptionModal = ref(false);
 
     return {
       // References
@@ -160,7 +158,6 @@ export default {
       tabs,
       space: currentSpace,
       spaceSubInfo,
-      isSubscriptionModal,
       // Methods
       changeView,
       // Responsive breakpoints

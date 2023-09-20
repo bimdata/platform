@@ -19,7 +19,11 @@
     },
     "ProjectOverview": {
         "openFileUploadButtonText": "Añadir un modelo",
-        "forbiddenUploadNotification": "Por favor seleccione un modelo: {extensions}"
+        "forbiddenUploadNotification": "Por favor seleccione un modelo: {extensions}",
+        "uploadDisableMessage": {
+            "permission": "No tienes los derechos requeridos",
+            "size": "No hay suficiente espacio de almacenamiento disponible"
+        }
     },
     "LanguageSelector": {
         "title": "Selección de idioma"
@@ -763,10 +767,6 @@
         "linkedin": {
             "title": "Vincula tu cuenta de LinkedIn",
             "subtitle": "Siga la página de BIMData para ahorrar espacio."
-        },
-        "uploadDisableMessage": {
-            "permission": "No tienes los derechos requeridos",
-            "size": "No hay suficiente espacio de almacenamiento disponible"
         }
     },
     "GroupMemberCard": {
