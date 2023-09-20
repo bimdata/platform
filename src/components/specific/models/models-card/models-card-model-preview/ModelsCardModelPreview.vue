@@ -146,18 +146,7 @@ export default {
     watch(
       () => props.models,
       () => {
-        const models = [];
-        props.models
-          .filter(model => !model.archived)
-          .forEach(model => {
-            if (model.id === props.project.main_model_id) {
-              models.unshift(model);
-            } else {
-              models.push(model);
-            }
-          });
-
-        images.value = models.map((model, i) => ({
+        images.value = props.models.map((model, i) => ({
           index: i + 1,
           name: model.name,
           type: model.type,

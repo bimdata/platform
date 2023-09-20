@@ -10,11 +10,7 @@
           :models="models"
           @model-changed="onModelChange"
         />
-        <ModelLocation
-          v-if="!isLG"
-          :project="project"
-          :model="displayedModel"
-        />
+        <ModelLocation v-if="!isLG" :project="project" :model="currentModel" />
       </template>
       <template v-else>
         <ModelsOverviewOnboarding
@@ -51,25 +47,25 @@ export default {
   },
   emits: ["open-file-uploader"],
   setup(props) {
-    const displayedModel = ref(null);
+    const currentModel = ref(null);
+
+    const onModelChange = model => {
+      if (!currentModel.value || currentModel.value.id !== model.id) {
+        currentModel.value = model;
+      }
+    };
 
     watch(
       () => props.models,
       () => {
-        displayedModel.value = props.models.length > 0 ? props.models[0] : null;
+        currentModel.value = props.models[0];
       },
       { immediate: true }
     );
 
-    const onModelChange = model => {
-      if (!displayedModel.value || displayedModel.value.id !== model.id) {
-        displayedModel.value = model;
-      }
-    };
-
     return {
       // References
-      displayedModel,
+      currentModel,
       // Methods
       onModelChange,
       // Responsive breakpoints

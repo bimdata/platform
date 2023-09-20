@@ -128,8 +128,8 @@ export default {
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
-    const { openModal } = useAppModal();
     const { loadProjectFileStructure } = useFiles();
+    const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
 
     const modelsPreview = computed(() =>
@@ -171,11 +171,11 @@ export default {
     return {
       // References
       allowedExtensions: UPLOADABLE_EXTENSIONS,
-      modelsPreview,
       invitations: projectInvitations,
-      shouldSubscribe,
       models: projectModels,
+      modelsPreview,
       project: currentProject,
+      shouldSubscribe,
       showFileUploader,
       space: currentSpace,
       spaceSubInfo,

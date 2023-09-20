@@ -34,7 +34,7 @@ export default {
       required: true
     }
   },
-  emis: ["preview-changed"],
+  emis: ["model-changed"],
   setup(props, { emit }) {
     const container = ref(null);
     const viewport = ref(null);
@@ -55,25 +55,14 @@ export default {
     watch(index, (newIndex, oldIndex) => {
       if (newIndex !== oldIndex) {
         image.value = images.value[newIndex] || {};
-        emit("preview-changed", props.models[newIndex]);
+        emit("model-changed", props.models[newIndex]);
       }
     });
 
     watch(
       () => props.models,
       () => {
-        const models = [];
-        props.models
-          .filter(model => !model.archived)
-          .forEach(model => {
-            if (model.id === props.project.main_model_id) {
-              models.unshift(model);
-            } else {
-              models.push(model);
-            }
-          });
-
-        images.value = models.map((model, i) => ({
+        images.value = props.models.map((model, i) => ({
           index: i + 1,
           type: model.type,
           url: model.preview_file
@@ -81,6 +70,7 @@ export default {
 
         index.value = 0;
         image.value = images.value.length > 0 ? images.value[0] : {};
+        emit("model-changed", props.models[index.value]);
       },
       { immediate: true }
     );

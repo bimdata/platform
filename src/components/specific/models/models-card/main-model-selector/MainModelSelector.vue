@@ -78,8 +78,8 @@ export default {
   },
   setup(props) {
     const { IFC, POINT_CLOUD } = MODEL_TYPE;
-    const { loadProjectModels } = useModels();
     const { updateProject } = useProjects();
+    const { loadProjectModels } = useModels();
 
     const loading = ref(false);
     const mainModel = ref(null);
@@ -103,11 +103,11 @@ export default {
     const submit = async () => {
       try {
         loading.value = true;
-        await updateProject({
+        const updatedProject = await updateProject({
           ...props.project,
           main_model_id: selectedModel.value.id
         });
-        await loadProjectModels(props.project);
+        await loadProjectModels(updatedProject);
         props.onSuccess();
       } catch (error) {
         console.error(error);

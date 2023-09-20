@@ -8,7 +8,12 @@ const state = reactive({
 });
 
 const loadProjectModels = async project => {
-  const models = await ModelService.fetchModels(project);
+  let models = await ModelService.fetchModels(project);
+  models = models.reduce(
+    (acc, model) =>
+      model.id === project.main_model_id ? [model, ...acc] : [...acc, model],
+    []
+  );
   state.projectModels = models;
   return models;
 };

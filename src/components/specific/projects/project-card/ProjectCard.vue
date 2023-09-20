@@ -43,7 +43,7 @@
             <ProjectCardModelPreview
               :project="project"
               :models="displayedModels"
-              @preview-changed="onPreviewChange"
+              @model-changed="onModelChange"
             />
           </template>
           <template #footer>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { inject, onMounted, ref, watch } from "vue";
+import { inject, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "../../../../composables/toggle.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
@@ -117,7 +117,7 @@ export default {
     const displayedModels = ref([]);
     const currentModel = ref(null);
 
-    const onPreviewChange = model => {
+    const onModelChange = model => {
       currentModel.value = model;
     };
 
@@ -125,33 +125,40 @@ export default {
       openInViewer(router, props.project, currentModel.value);
     };
 
+    let unwatchProject, unwatchModels;
+
     onMounted(() => {
       const observer = new IntersectionObserver(
         ([{ isIntersecting }]) => {
           if (!isIntersecting) return;
 
-          watch(
+          unwatchProject = watch(
             () => props.project,
             async () => {
               loading.value = true;
               const models = await ModelService.fetchModels(props.project);
-              displayedModels.value = models.filter(
-                model =>
-                  !model.archived && model.type !== MODEL_TYPE.META_BUILDING
-              );
+              displayedModels.value = models
+                .filter(
+                  model =>
+                    !model.archived && model.type !== MODEL_TYPE.META_BUILDING
+                )
+                .reduce(
+                  (acc, model) =>
+                    model.id === props.project.main_model_id
+                      ? [model, ...acc]
+                      : [...acc, model],
+                  []
+                );
               loading.value = false;
               visible.value = true;
             },
             { immediate: true }
           );
 
-          watch(
+          unwatchModels = watch(
             displayedModels,
             () => {
-              currentModel.value =
-                displayedModels.value.find(
-                  model => model.id === props.project.main_model_id
-                ) ?? displayedModels.value[0];
+              currentModel.value = displayedModels.value[0];
             },
             { immediate: true }
           );
@@ -167,6 +174,11 @@ export default {
       observer.observe(placeholder.value);
     });
 
+    onUnmounted(() => {
+      unwatchProject?.();
+      unwatchModels?.();
+    });
+
     return {
       // References
       currentModel,
@@ -180,7 +192,7 @@ export default {
       closeMenu,
       goToModelViewer,
       isSpaceAdmin,
-      onPreviewChange,
+      onModelChange,
       openMenu
     };
   }
