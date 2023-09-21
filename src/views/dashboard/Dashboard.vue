@@ -115,7 +115,7 @@ export default {
     const { userProjects } = useProjects();
 
     const isSubscribeHorizontal = computed(
-      () => userSpaces.value.length + userProjects.value.length < 4
+      () => userSpaces.value.length + userProjects.value.length <= 4
     );
 
     return {
