@@ -14,14 +14,14 @@ const loadUser = async () => {
   const user = await UserService.fetchUserData();
   state.user = user;
 
-  state.spaceRoles = user.clouds.reduce(
-    (roles, role) => ({ ...roles, [role.cloud]: role.role }),
-    {}
-  );
-  state.projectRoles = user.projects.reduce(
-    (roles, role) => ({ ...roles, [role.project]: role.role }),
-    {}
-  );
+  state.spaceRoles = user.clouds.reduce((roles, role) => {
+    roles[role.cloud] = role.role;
+    return roles;
+  }, {});
+  state.projectRoles = user.projects.reduce((roles, role) => {
+    roles[role.project] = role.role;
+    return roles;
+  }, {});
 
   return user;
 };
