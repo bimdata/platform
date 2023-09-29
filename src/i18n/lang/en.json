@@ -59,7 +59,8 @@
     "createModelButtonText": "Define as model",
     "removeModelButtonText": "Remove from models",
     "versioningButtonText": "Add a version",
-    "visaButtonText": "Validation request"
+    "visaButtonText": "Validation request",
+    "previewModelButtonText": "Preview"
   },
   "FilesActionBar": {
     "moveButtonText": "Move to"
