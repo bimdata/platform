@@ -214,6 +214,8 @@
     "free": "Free"
   },
   "SpaceCardActionMenu": {
+    "addToFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites",
     "removeImageButtonText": "Remove image"
   },
   "SpaceCardDeleteGuard": {

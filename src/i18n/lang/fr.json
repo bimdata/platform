@@ -296,6 +296,8 @@
     "free": "Gratuit"
   },
   "SpaceCardActionMenu": {
+    "addToFavorite": "Ajouter aux favoris",
+    "removeFavorite": "Retirer des favoris",
     "removeImageButtonText": "Supprimer l'image"
   },
   "SpaceCardDeleteGuard": {

@@ -36,6 +36,17 @@
 
           <template v-else>
             <div class="space-card-action-menu__container__menu">
+              <BIMDataButton ghost squared @click="toggleFavorite">
+                {{
+                  $t(
+                    `SpaceCardActionMenu.${
+                      isFavoriteSpace(space)
+                        ? "removeFavorite"
+                        : "addToFavorite"
+                    }`
+                  )
+                }}
+              </BIMDataButton>
               <BIMDataButton
                 data-test-id="btn-open-update"
                 ghost
@@ -50,6 +61,7 @@
                 @upload-completed="closeMenu"
               />
               <BIMDataButton
+                v-if="space.image"
                 data-test-id="btn-delete-image"
                 ghost
                 squared
@@ -78,6 +90,7 @@
 import { provide, ref } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { useSpaces } from "../../../../../state/spaces.js";
+import { useUser } from "../../../../../state/user.js";
 // Components
 import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
 import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
@@ -96,10 +109,20 @@ export default {
     }
   },
   setup(props) {
+    const { isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
+      useUser();
     const { removeSpaceImage } = useSpaces();
 
     const loading = ref(false);
     provide("loading", loading);
+
+    const toggleFavorite = async () => {
+      if (isFavoriteSpace(props.space)) {
+        await removeFavoriteSpace(props.space);
+      } else {
+        await addFavoriteSpace(props.space);
+      }
+    };
 
     const {
       isOpen: showUpdateForm,
@@ -148,9 +171,11 @@ export default {
       closeMenu,
       closeDeleteGuard,
       closeUpdateForm,
+      isFavoriteSpace,
       openDeleteGuard,
       openUpdateForm,
       removeImage,
+      toggleFavorite,
       toggleMenu
     };
   }

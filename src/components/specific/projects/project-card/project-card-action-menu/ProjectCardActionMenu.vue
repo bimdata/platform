@@ -35,6 +35,17 @@
               <BIMDataIconClose size="xxs" />
             </BIMDataButton>
           </div>
+          <BIMDataButton ghost squared @click="toggleFavorite">
+            {{
+              $t(
+                `SpaceCardActionMenu.${
+                  isFavoriteProject(project)
+                    ? "removeFavorite"
+                    : "addToFavorite"
+                }`
+              )
+            }}
+          </BIMDataButton>
           <BIMDataButton
             v-if="project.isAdmin"
             data-test-id="btn-open-update"
@@ -72,6 +83,7 @@
 <script>
 import { provide, ref } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
+import { useUser } from "../../../../../state/user.js";
 // Components
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard.vue";
 import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm.vue";
@@ -91,8 +103,19 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
+    const { isFavoriteProject, addFavoriteProject, removeFavoriteProject } =
+      useUser();
+
     const loading = ref(false);
     provide("loading", loading);
+
+    const toggleFavorite = async () => {
+      if (isFavoriteProject(props.project)) {
+        await removeFavoriteProject(props.project);
+      } else {
+        await addFavoriteProject(props.project);
+      }
+    };
 
     const {
       isOpen: showUpdateForm,
@@ -135,10 +158,12 @@ export default {
       closeDeleteGuard,
       closeUpdateForm,
       closeLeaveGuard,
+      isFavoriteProject,
       openDeleteGuard,
       openUpdateForm,
       openLeaveGuard,
-      resetMenu
+      resetMenu,
+      toggleFavorite
     };
   }
 };

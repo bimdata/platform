@@ -43,6 +43,13 @@
       }
     }
 
+    .favorite-badge {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: calc($card-width - 66px);
+    }
+
     .project-status-badge {
       position: absolute;
       z-index: 1;

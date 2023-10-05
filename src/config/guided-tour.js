@@ -11,13 +11,13 @@ const GUIDED_TOUR_ENABLED = ENV.VUE_APP_GUIDED_TOUR_ENABLED;
 const IS_GUIDED_TOUR_ENABLED = GUIDED_TOUR_ENABLED === "true";
 
 const IMG_PATH = "/static/guidedTour/platform/";
-const TOURS_NAME = Object.freeze({
+const TOUR_NAMES = Object.freeze({
   PLATFORM_INTRO: "PLATFORM_INTRO"
 });
 
 const tours = [
   {
-    name: TOURS_NAME.PLATFORM_INTRO,
+    name: TOUR_NAMES.PLATFORM_INTRO,
     steps: [
       {
         props: {
@@ -167,4 +167,4 @@ const tours = [
   }
 ];
 
-export { IS_GUIDED_TOUR_ENABLED, TOURS_NAME, tours };
+export { IS_GUIDED_TOUR_ENABLED, TOUR_NAMES, tours };
