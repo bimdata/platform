@@ -61,7 +61,7 @@ import { debounce } from "../../../utils/async.js";
 // Components
 import AppLink from "../../../components/specific/app/app-link/AppLink.vue";
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
-import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
 import FilesManager from "../../../components/specific/files/files-manager/FilesManager.vue";
 
 export default {

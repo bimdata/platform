@@ -253,7 +253,7 @@
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
-            @view-comment-snapshot="openTopicCommentSnapshot"
+            @view-comment-snapshot="openTopicSnapshot"
             @topic-deleted="
               reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()
             "
@@ -347,7 +347,7 @@
             class="m-l-18"
             fill
             radius
-            :icon="isXL" 
+            :icon="isXL"
             @click="exportBcfXlsxTopics"
           >
             <BIMDataIconExportXlsx size="xs" />
@@ -441,14 +441,6 @@
       >
         <img :src="topicSnapshot" />
       </div>
-
-      <div
-        v-if="commentSnapshot"
-        class="topic-comment-snapshot-modal"
-        v-click-away="closeCommentSnapshot"
-      >
-        <img :src="commentSnapshot" />
-      </div>
     </AppModalContent>
   </div>
 </template>
@@ -481,7 +473,7 @@ import BcfStatisticsEmptyImage from "../../../components/images/BcfStatisticsEmp
 import NoSearchResultsImage from "../../../components/images/NoSearchResultsImage.vue";
 import AppModalContent from "../../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
-import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.vue";
+import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
 
 const sidePanelViews = {
   settings: "settings",
@@ -514,8 +506,8 @@ export default {
       loadDetailedExtensions,
       deleteTopics,
       importBcf,
-      exportBcf, 
-      exportBcfXlsx, 
+      exportBcf,
+      exportBcfXlsx
     } = useBcf();
 
     const loading = ref(false);
@@ -666,8 +658,8 @@ export default {
           title: t("t.success"),
           message: t("ProjectBcf.exportBcfXlsxNotificationSuccess")
         });
-      } catch(e) {
-        console.error(e); 
+      } catch (error) {
+        console.error(error);
         pushNotification({
           type: "error",
           title: t("t.error"),
@@ -743,15 +735,6 @@ export default {
       closeModal();
       topicSnapshot.value = null;
     };
-    const commentSnapshot = ref(null);
-    const openTopicCommentSnapshot = topic => {
-      openModal();
-      commentSnapshot.value = topic.snapshot.snapshot_data;
-    };
-    const closeCommentSnapshot = () => {
-      closeModal();
-      commentSnapshot.value = null;
-    };
 
     const removeTopicGuidFromUrl = () => {
       delete route.query.topicGuid;
@@ -814,10 +797,12 @@ export default {
       currentPanel,
       currentTopic,
       detailedExtensions,
+      deleteMode,
       displayedTopics,
       extensions,
       fullSelectionRef,
       isListView,
+      isLoadingDelete,
       loading,
       models: projectModels,
       project: currentProject,
@@ -831,27 +816,21 @@ export default {
       sortOrderTitle,
       topics,
       topicSnapshot,
-      commentSnapshot,
-      deleteMode,
-      isLoadingDelete,
       // Methods
-      closeDeleteMode,
-      toggleDeleteMode,
-      deleteBcfTopics,
       applyFilters,
+      closeDeleteMode,
       closeMetrics,
       closeSidePanel,
       closeTopicSnapshot,
-      closeCommentSnapshot,
+      deleteBcfTopics,
       exportBcfTopics,
+      exportBcfXlsxTopics,
       fileUploadInput,
       importBcfTopics,
-      exportBcfXlsxTopics, 
       openSettings,
       openTopicCreate,
       openTopicUpdate,
       openTopicOverview,
-      openTopicCommentSnapshot,
       openTopicSnapshot,
       openTopicViewer,
       reloadBcfTopics,
@@ -860,6 +839,7 @@ export default {
       sortByDate,
       sortByIndex,
       sortByTitle,
+      toggleDeleteMode,
       toggleFullSelection,
       toggleMetrics,
       toggleTopicSelection,

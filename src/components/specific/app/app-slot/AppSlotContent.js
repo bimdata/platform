@@ -1,4 +1,3 @@
-<script>
 import { onActivated, onBeforeUnmount, onDeactivated, onMounted } from "vue";
 import { useAppSlot } from "./app-slot.js";
 
@@ -25,4 +24,3 @@ export default {
     return [];
   }
 };
-</script>

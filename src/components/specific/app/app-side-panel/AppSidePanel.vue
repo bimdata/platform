@@ -3,7 +3,12 @@
   <teleport to="#app-side-panel-container--left">
     <transition name="slide-fade-left">
       <div v-show="isOpenLeft" class="app-side-panel">
-        <AppSlot name="app-side-panel-left" />
+        <template v-if="contentLeft">
+          <component :is="contentLeft.component" v-bind="contentLeft.props" />
+        </template>
+        <template v-else>
+          <AppSlot name="app-side-panel-left" />
+        </template>
       </div>
     </transition>
   </teleport>
@@ -12,7 +17,12 @@
   <teleport to="#app-side-panel-container--right">
     <transition name="slide-fade-right">
       <div v-show="isOpenRight" class="app-side-panel">
-        <AppSlot name="app-side-panel-right" />
+        <template v-if="contentRight">
+          <component :is="contentRight.component" v-bind="contentRight.props" />
+        </template>
+        <template v-else>
+          <AppSlot name="app-side-panel-right" />
+        </template>
       </div>
     </transition>
   </teleport>
@@ -28,9 +38,10 @@ export default {
     AppSlot
   },
   setup() {
-    const { isOpenLeft, isOpenRight } = useAppSidePanel();
+    const { isOpenLeft, contentLeft, isOpenRight, contentRight } =
+      useAppSidePanel();
 
-    return { isOpenLeft, isOpenRight };
+    return { isOpenLeft, contentLeft, isOpenRight, contentRight };
   }
 };
 </script>

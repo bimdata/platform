@@ -20,7 +20,7 @@
 import { onBeforeRouteLeave } from "vue-router";
 import { useAppSidePanel } from "./app-side-panel.js";
 // Components
-import AppSlotContent from "../app-slot/AppSlotContent.vue";
+import AppSlotContent from "../app-slot/AppSlotContent.js";
 
 export default {
   components: {

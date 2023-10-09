@@ -9,7 +9,7 @@
       >
         <DashboardButtonTile color="primary">
           <template #title>
-            {{ $t("Dashboard.spacesTileTitle") }}
+            {{ $t("t.spaces") }}
           </template>
           <template #content>
             <span style="font-size: 3rem; font-weight: bold">
@@ -28,7 +28,7 @@
       >
         <DashboardButtonTile color="secondary">
           <template #title>
-            {{ $t("Dashboard.projectsTileTitle") }}
+            {{ $t("t.projects") }}
           </template>
           <template #content>
             <span style="font-size: 3rem; font-weight: bold">

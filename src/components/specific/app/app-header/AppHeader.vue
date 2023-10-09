@@ -3,13 +3,28 @@
     <AppLink :to="{ name: routeNames.dashboard }">
       <PlatformLogo class="app-header__logo" />
     </AppLink>
-    <app-slot name="app-header-action" />
-    <AppLink :to="{ name: routeNames.invitations }" style="margin-left: auto">
-      <BIMDataButton class="app-header__invitation" radius ghost icon>
-        <template v-if="invitationListPending.length > 0">
-          <div class="app-header__invitation__notif"><div></div></div>
-        </template>
+    <AppSlot name="app-header-action" />
+    <BIMDataButton
+      class="app-header__fav-btn"
+      width="38px"
+      height="38px"
+      fill
+      square
+      icon
+      @click="openFavoritesManager"
+    >
+      <span class="icon">&starf;</span>
+    </BIMDataButton>
+    <AppLink
+      class="app-header__invit-btn"
+      :to="{ name: routeNames.invitations }"
+    >
+      <BIMDataButton width="38px" height="38px" fill square icon>
         <BIMDataIconInvitation size="m" />
+        <div
+          v-if="invitationListPending.length > 0"
+          class="app-header__invit-btn__notif"
+        ></div>
       </BIMDataButton>
     </AppLink>
     <AppHeaderMenu class="app-header__menu" />
@@ -17,6 +32,7 @@
 </template>
 
 <script>
+import { useAppSidePanel } from "../app-side-panel/app-side-panel.js";
 import routeNames from "../../../../router/route-names.js";
 import { useInvitations } from "../../../../state/invitations.js";
 
@@ -24,6 +40,7 @@ import { useInvitations } from "../../../../state/invitations.js";
 import AppSlot from "../app-slot/AppSlot.js";
 import AppLink from "../app-link/AppLink.vue";
 import AppHeaderMenu from "../app-header-menu/AppHeaderMenu.vue";
+import UserFavoritesManager from "../../users/user-favorites-manager/UserFavoritesManager.vue";
 
 export default {
   components: {
@@ -32,9 +49,19 @@ export default {
     AppHeaderMenu
   },
   setup() {
+    const { invitationListPending } = useInvitations();
+    const { openSidePanel } = useAppSidePanel();
+
+    const openFavoritesManager = () => {
+      openSidePanel("right", {
+        component: UserFavoritesManager
+      });
+    };
+
     return {
+      invitationListPending,
       routeNames,
-      invitationListPending: useInvitations().invitationListPending
+      openFavoritesManager
     };
   }
 };
