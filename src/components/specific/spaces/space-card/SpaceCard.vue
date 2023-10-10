@@ -15,6 +15,7 @@
         <div v-if="space.isFree" class="free-badge">
           {{ $t("SpaceCard.free") }}
         </div>
+        <FavoriteBadge v-if="isFavoriteSpace(space)" />
         <SpaceCardImage :space="space" topStripe />
       </template>
       <template #footer>
@@ -39,14 +40,17 @@
 import { computed } from "vue";
 import routeNames from "../../../../router/route-names.js";
 import { useProjects } from "../../../../state/projects.js";
+import { useUser } from "../../../../state/user.js";
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
+import FavoriteBadge from "../../../generic/favorite-badge/FavoriteBadge.vue";
 import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu.vue";
 import SpaceCardImage from "./space-card-image/SpaceCardImage.vue";
 
 export default {
   components: {
     AppLink,
+    FavoriteBadge,
     SpaceCardActionMenu,
     SpaceCardImage
   },
@@ -61,6 +65,7 @@ export default {
     }
   },
   setup(props) {
+    const { isFavoriteSpace } = useUser();
     const { projectsBySpace } = useProjects();
 
     const nbProjects = computed(
@@ -69,6 +74,7 @@ export default {
 
     return {
       // References
+      isFavoriteSpace,
       nbProjects,
       routeNames
     };

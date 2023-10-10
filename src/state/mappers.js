@@ -1,11 +1,10 @@
 import { PROJECT_ROLE } from "../config/projects.js";
 import { projectStatus } from "../utils/projects.js";
-import { isSpaceAdmin } from "../utils/spaces.js";
 
 import { useOrganizations } from "./organizations.js";
 import { useUser } from "./user.js";
 
-const { user: currentUser, projectRoles } = useUser();
+const { user: currentUser, projectRoles, isSpaceAdmin } = useUser();
 const { userOrganizations } = useOrganizations();
 
 function mapSpaces(spaces, freeSpaces) {

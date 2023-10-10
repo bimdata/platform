@@ -23,7 +23,7 @@
 
       .free-badge {
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         top: 4px;
         left: 0;
 
@@ -35,6 +35,13 @@
         align-items: center;
         background-color: var(--color-primary);
         color: var(--color-white);
+      }
+
+      .favorite-badge {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: calc($card-width - 66px);
       }
     }
 
@@ -76,14 +83,12 @@
   }
 
   &:hover {
-    &:deep() {
-      cursor: pointer;
-      box-shadow: var(--box-shadow-dark);
-      .space-card-image {
-        img,
-        svg {
-          transform: scale(1.05);
-        }
+    cursor: pointer;
+    box-shadow: var(--box-shadow-dark);
+    &:deep(.space-card-image) {
+      img,
+      svg {
+        transform: scale(1.05);
       }
     }
   }

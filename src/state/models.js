@@ -8,13 +8,16 @@ const state = reactive({
 });
 
 const loadProjectModels = async project => {
-  let models = await ModelService.fetchModels(project);
-  models = models.reduce(
-    (acc, model) =>
-      model.id === project.main_model_id ? [model, ...acc] : [...acc, model],
-    []
-  );
-  state.projectModels = models;
+  const models = await ModelService.fetchModels(project);
+  const projectModels = [];
+  for (const model of models) {
+    if (model.id === project.main_model_id) {
+      projectModels.unshift(model);
+    } else {
+      projectModels.push(model);
+    }
+  }
+  state.projectModels = projectModels;
   return models;
 };
 

@@ -31,10 +31,13 @@
     "ok": "OK",
     "open": "Ouvrir",
     "or": "ou",
+    "project": "Projet",
+    "projects": "Projets",
     "rename": "Renommer",
     "search": "Rechercher",
     "size": "Taille",
     "space": "Espace",
+    "spaces": "Espaces",
     "status": "Statut",
     "success": "Succès",
     "type": "Type",
@@ -200,10 +203,8 @@
     "invitAccepted": "Invitation acceptée",
     "invitDenied": "Invitation refusée",
     "invitPending": "Invitation en cours",
-    "goToProjectLong": "Accéder au projet",
-    "goToProjectShort": "Projet",
-    "goToSpaceLong": "Accéder à l'espace",
-    "goToSpaceShort": "Espace"
+    "goToProject": "Accéder au projet",
+    "goToSpace": "Accéder à l'espace"
   },
   "InvitationCard": {
     "pendingMessage": "Invité - Sans réponse.",
@@ -296,6 +297,8 @@
     "free": "Gratuit"
   },
   "SpaceCardActionMenu": {
+    "addToFavorite": "Ajouter aux favoris",
+    "removeFavorite": "Retirer des favoris",
     "removeImageButtonText": "Supprimer l'image"
   },
   "SpaceCardDeleteGuard": {
@@ -458,9 +461,7 @@
     "paused": "PAUSE"
   },
   "Dashboard": {
-    "spacesTileTitle": "Espaces",
     "spacesTileBottomText": "Mes espaces",
-    "projectsTileTitle": "Projets",
     "projectsTileBottomText": "Mes projets",
     "subscriptionsTileTitle": "Abonnements",
     "subscriptionsTileText": "Retrouvez toutes vos factures et vos dernières informations de paiement ici.",
@@ -869,5 +870,8 @@
   },
   "MainModelSelector": {
     "title": "Choix de l'aperçu du projet"
+  },
+  "UserFavoritesManager": {
+    "title": "Gestion des favoris"
   }
 }

@@ -39,6 +39,7 @@
               class="project-card__left-stripe"
               :class="`project-card__left-stripe--${project.projectStatus}`"
             ></div>
+            <FavoriteBadge v-if="isFavoriteProject(project)" />
             <ProjectStatusBadge :status="project.projectStatus" />
             <ProjectCardModelPreview
               :project="project"
@@ -72,11 +73,12 @@ import { useToggle } from "../../../../composables/toggle.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
 import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
+import { useUser } from "../../../../state/user.js";
 import { openInViewer } from "../../../../utils/models.js";
-import { isSpaceAdmin } from "../../../../utils/spaces.js";
 
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
+import FavoriteBadge from "../../../generic/favorite-badge/FavoriteBadge.vue";
 import FlippableCard from "../../../generic/flippable-card/FlippableCard.vue";
 import ProjectCardActionBar from "./project-card-action-bar/ProjectCardActionBar.vue";
 import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionMenu.vue";
@@ -86,6 +88,7 @@ import ProjectStatusBadge from "../project-status-badge/ProjectStatusBadge.vue";
 export default {
   components: {
     AppLink,
+    FavoriteBadge,
     FlippableCard,
     ProjectCardActionBar,
     ProjectCardActionMenu,
@@ -108,6 +111,7 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const { isSpaceAdmin, isFavoriteProject } = useUser();
     const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
     const viewContainer = inject("viewContainer");
 
@@ -191,6 +195,7 @@ export default {
       // Methods
       closeMenu,
       goToModelViewer,
+      isFavoriteProject,
       isSpaceAdmin,
       onModelChange,
       openMenu

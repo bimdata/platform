@@ -133,13 +133,11 @@
                   >
                     <template v-if="invit.project_name">
                       {{
-                        $t(`Invitations.goToProject${isMD ? "Short" : "Long"}`)
+                        isMD ? $t("t.project") : $t("Invitations.goToProject")
                       }}
                     </template>
                     <template v-else>
-                      {{
-                        $t(`Invitations.goToSpace${isMD ? "Short" : "Long"}`)
-                      }}
+                      {{ isMD ? $t("t.space") : $t("Invitations.goToSpace") }}
                     </template>
                   </BIMDataButton>
                 </AppLink>

@@ -71,17 +71,17 @@ async function onAccessTokenExpired() {
   // We wait for a success call before reloading the page
   const origin = window.location.origin;
   let response;
-  let retriesLeft = 40;  // 20 * 0.2 sec = 8 seconds to wake up
+  let retriesLeft = 40; // 20 * 0.2 sec = 8 seconds to wake up
   do {
     retriesLeft--;
     await delay(200);
     try {
-      response = await fetch(origin, {method: 'HEAD'});
+      response = await fetch(origin, { method: "HEAD" });
     } catch (e) {
-      response = {ok: false};
+      response = { ok: false };
     }
   } while (retriesLeft > 0 && !response.ok);
-  location.reload()
+  location.reload();
 }
 
 // Override UserManager `_signinEnd` method with our custom implementation
@@ -127,6 +127,16 @@ class AuthServive {
     userManager.events.removeUserLoaded(this._userLoadedCallback);
     this._userLoadedCallback = null;
     return userManager.signoutRedirect();
+  }
+
+  platformLoginCallback(accessToken) {
+    return fetch(`${ENV.VUE_APP_BACKEND_BASE_URL}/create_or_update_user/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
   }
 }
 

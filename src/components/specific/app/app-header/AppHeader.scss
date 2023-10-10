@@ -13,32 +13,26 @@
     height: calc(var(--platform-header-height) - 2 * var(--spacing-unit));
   }
 
-  &__invitation {
-    position: relative;
-    padding: calc(var(--spacing-unit) / 1.5);
-    box-shadow: var(--box-shadow);
-    margin-right: var(--spacing-unit);
+  &__fav-btn {
+    margin-left: auto;
+    .icon {
+      font-size: 1.75rem;
+    }
+  }
+
+  &__invit-btn {
+    margin: 0 var(--spacing-unit);
 
     &__notif {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: var(--color-white);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       z-index: 1;
-      right: 8px;
       top: 8px;
-
-      div {
-        position: absolute;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background-color: var(--color-high);
-      }
+      right: 8px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 1px solid var(--color-white);
+      background-color: var(--color-high);
     }
   }
 }

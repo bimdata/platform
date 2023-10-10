@@ -2,7 +2,7 @@
 import { onBeforeRouteLeave } from "vue-router";
 import { useAppModal } from "./app-modal.js";
 // Components
-import AppSlotContent from "../app-slot/AppSlotContent.vue";
+import AppSlotContent from "../app-slot/AppSlotContent.js";
 
 defineProps({
   boxStyle: {
