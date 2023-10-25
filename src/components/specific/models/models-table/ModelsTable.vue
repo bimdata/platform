@@ -8,7 +8,7 @@
     rowKey="id"
     :paginated="true"
     :perPage="7"
-    :selectable="!project.isGuest"
+    :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
   >
     <template #sub-header>

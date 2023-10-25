@@ -8,7 +8,7 @@
     :rows="files"
     rowKey="id"
     :rowHeight="54"
-    :selectable="!project.isGuest"
+    :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
@@ -86,7 +86,7 @@
     <template #cell-size="{ row: file }">
       {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
     </template>
-    <template v-if="!project.isGuest" #cell-actions="{ row: file }">
+    <template #cell-actions="{ row: file }">
       <FileActionsCell
         :filesTable="filesTable"
         :project="project"

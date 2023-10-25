@@ -58,7 +58,7 @@
       />
     </template>
 
-    <template v-if="model.document && !project.isGuest">
+    <template v-if="model.document">
       <BIMDataButton
         class="model-actions-cell__btn"
         data-test-id="btn-download-model"
