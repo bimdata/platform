@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
+    optimizeDeps: {
+      exclude: ["@bimdata/bcf-components"]
+    },
     server: {
       port: 8080,
       fs: {

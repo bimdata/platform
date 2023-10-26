@@ -1,10 +1,8 @@
 import eachLimit from "async/eachLimit";
 
-import { useService } from "@bimdata/bcf-components";
+import { service } from "@bimdata/bcf-components";
 import { reactive, shallowReadonly, toRefs } from "vue";
 import { useProjects } from "./projects.js";
-
-const service = useService();
 
 const state = reactive({
   topics: [],
@@ -83,7 +81,7 @@ export function useBcf() {
     loadExtensions,
     loadDetailedExtensions,
     importBcf,
-    exportBcf, 
+    exportBcf,
     exportBcfXlsx
   };
 }
