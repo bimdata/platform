@@ -6,10 +6,7 @@
   >
     <BIMDataCard class="space-card">
       <template #right>
-        <SpaceCardActionMenu
-          v-if="actionMenu && space.isAdmin"
-          :space="space"
-        />
+        <SpaceCardActionMenu v-if="actionMenu" :space="space" />
       </template>
       <template #content>
         <div v-if="space.isFree" class="free-badge">

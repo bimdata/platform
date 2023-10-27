@@ -8,12 +8,9 @@
   }
 
   &__container {
-    $card-menu-height: 132px;
-
     position: absolute;
     right: 0;
     width: calc(#{$card-width} - var(--spacing-unit));
-    min-height: $card-menu-height;
     margin-top: calc(var(--spacing-unit) / 2);
     padding: calc(var(--spacing-unit) / 2) 0;
     border-radius: 4px;

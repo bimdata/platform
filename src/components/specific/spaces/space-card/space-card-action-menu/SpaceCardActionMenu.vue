@@ -48,6 +48,7 @@
                 }}
               </BIMDataButton>
               <BIMDataButton
+                v-if="space.isAdmin"
                 data-test-id="btn-open-update"
                 ghost
                 squared
@@ -56,12 +57,13 @@
                 {{ $t("t.rename") }}
               </BIMDataButton>
               <SpaceCardImageButton
+                v-if="space.isAdmin"
                 data-test-id="btn-update-image"
                 :space="space"
                 @upload-completed="closeMenu"
               />
               <BIMDataButton
-                v-if="space.image"
+                v-if="space.isAdmin && space.image"
                 data-test-id="btn-delete-image"
                 ghost
                 squared
@@ -70,6 +72,7 @@
                 {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
               </BIMDataButton>
               <BIMDataButton
+                v-if="space.isAdmin"
                 data-test-id="btn-open-delete"
                 color="high"
                 ghost
