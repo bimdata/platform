@@ -2,7 +2,7 @@
   <div class="models-action-bar">
     <BIMDataButton
       :disabled="
-        !project.isAdmin && models.some(m => m.document?.user_permission < 100)
+        project.isGuest || !project.isAdmin && models.some(m => m.document?.user_permission < 100)
       "
       width="120px"
       color="high"
@@ -16,7 +16,7 @@
 
     <BIMDataButton
       :disabled="
-        !project.isAdmin && models.some(m => m.document?.user_permission < 100)
+        project.isGuest || !project.isAdmin && models.some(m => m.document?.user_permission < 100)
       "
       width="120px"
       ghost
@@ -36,11 +36,6 @@
     </BIMDataButton>
 
     <BIMDataButton
-      :disabled="
-        (!project.isAdmin &&
-          models.some(m => m.document.user_permission < 100)) ||
-        models.every(m => !m.document)
-      "
       width="120px"
       ghost
       squared

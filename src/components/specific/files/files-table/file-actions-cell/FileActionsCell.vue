@@ -159,6 +159,7 @@ export default {
             key: 3,
             text: "FileActionsCell.createModelButtonText",
             component: SetAsModelIcon,
+            disabled: props.project.isGuest || !props.project.isAdmin && props.file.user_permission < FILE_PERMISSION.READ_WRITE,
             action: () => onClick("create-model")
           });
         } else {
@@ -170,14 +171,13 @@ export default {
           });
         }
       }
-
       menuItems.value.push({
         key: 5,
         text: "t.rename",
         action: () => onClick("update"),
         icon: "edit",
         disabled:
-          !props.project.isAdmin &&
+          props.project.isGuest || !props.project.isAdmin &&
           props.file.user_permission < FILE_PERMISSION.READ_WRITE
       });
 
@@ -186,9 +186,6 @@ export default {
         text: "t.download",
         action: () => onClick("download"),
         icon: "download",
-        disabled:
-          !props.project.isAdmin &&
-          props.file.user_permission < FILE_PERMISSION.READ_WRITE
       });
 
       if (isFolder(props.file) && props.project.isAdmin) {
@@ -235,7 +232,7 @@ export default {
         dataTestId: "btn-delete-doc",
         icon: "delete",
         disabled:
-          !props.project.isAdmin &&
+          props.project.isGuest || !props.project.isAdmin &&
           props.file.user_permission < FILE_PERMISSION.READ_WRITE
       });
 

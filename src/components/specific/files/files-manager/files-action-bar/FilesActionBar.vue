@@ -1,7 +1,7 @@
 <template>
   <div class="files-action-bar">
     <BIMDataButton
-      :disabled="!project.isAdmin && files.some(f => f.user_permission < 100)"
+      :disabled="project.isGuest || !project.isAdmin && files.some(f => f.user_permission < 100)"
       width="120px"
       color="high"
       ghost
@@ -12,7 +12,7 @@
       <span>{{ $t("t.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton
-      :disabled="!project.isAdmin && files.some(f => f.user_permission < 100)"
+      :disabled="project.isGuest || !project.isAdmin && files.some(f => f.user_permission < 100)"
       width="120px"
       color="secondary"
       ghost
