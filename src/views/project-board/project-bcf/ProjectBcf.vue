@@ -586,7 +586,7 @@ export default {
 
     const selectedTopics = ref(new Map());
     const fullSelectionRef = computed(() =>
-      selectedTopics.value.size < topics.value.length
+      selectedTopics.value.size < displayedTopics.value.length
         ? selectedTopics.value.size > 0
           ? null
           : false
@@ -602,8 +602,10 @@ export default {
     };
 
     const toggleFullSelection = () => {
-      if (selectedTopics.value.size < topics.value.length) {
-        selectedTopics.value = new Map([...topics.value.map(t => [t.guid, t])]);
+      if (selectedTopics.value.size < displayedTopics.value.length) {
+        selectedTopics.value = new Map([
+          ...displayedTopics.value.map(t => [t.guid, t])
+        ]);
       } else {
         selectedTopics.value = new Map();
       }
