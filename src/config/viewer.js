@@ -1,6 +1,6 @@
 const AVAILABLE_PLUGINS = Object.freeze({
-  idex: "https://unpkg.com/@bimdata/idex-viewer-plugin@2.0.0",
-  iot: "https://unpkg.com/@bimdata/iot-viewer-plugin@1.0.13",
+  idex: "https://cdn.jsdelivr.net/npm/@bimdata/idex-viewer-plugin@2.0.1",
+  iot: "https://cdn.jsdelivr.net/npm/@bimdata/iot-viewer-plugin@1.0.13",
 });
 
 /**
