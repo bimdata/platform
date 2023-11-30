@@ -243,13 +243,14 @@
           <BcfTopicOverview
             :uiConfig="{
               closeButton: true,
-              editButton: !project.isGuest,
-              deleteButton: !project.isGuest,
-              commentCreation: !project.isGuest
+              commentCreation: true,
+              editButton: hasEditPermission(currentTopic),
+              deleteButton: hasEditPermission(currentTopic),
             }"
             :project="project"
             :detailedExtensions="detailedExtensions"
             :topic="currentTopic"
+            :currentUserEmail="user.email"
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
@@ -464,6 +465,7 @@ import { MODEL_CONFIG, MODEL_STATUS } from "../../../config/models.js";
 import { DEFAULT_WINDOW } from "../../../config/viewer.js";
 import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
+import { useUser } from "../../../state/user.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { fileUploadInput } from "../../../utils/upload.js";
@@ -497,6 +499,8 @@ export default {
     const { pushNotification } = useAppNotification();
     const { currentProject } = useProjects();
     const { projectModels } = useModels();
+    const { user, isProjectAdmin } = useUser();
+
     const {
       topics,
       extensions,
@@ -592,6 +596,10 @@ export default {
           : false
         : selectedTopics.value.size > 0
     );
+
+    const hasEditPermission = topic => {
+      return isProjectAdmin(currentProject.value) || user.value.email === topic.creation_author;
+    };
 
     const toggleTopicSelection = topic => {
       const selection = selectedTopics.value;
@@ -818,7 +826,9 @@ export default {
       sortOrderTitle,
       topics,
       topicSnapshot,
+      user,
       // Methods
+      hasEditPermission,
       applyFilters,
       closeDeleteMode,
       closeMetrics,
