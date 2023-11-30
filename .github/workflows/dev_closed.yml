@@ -6,7 +6,7 @@ on:
       - closed
 
 env:
-  app: platform_dev
+  app: platform
 
 jobs:
   remove_app_and_deploy:
@@ -21,7 +21,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "name=$(echo dev_${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Delete app deployment
         env:
           BRANCH_NAME: ${{ steps.branch.outputs.name }}
