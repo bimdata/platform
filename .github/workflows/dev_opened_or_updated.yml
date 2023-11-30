@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, edited]
 
 env:
-  app: platform_dev
+  app: platform
 
 jobs:
   build-and-push:
@@ -23,7 +23,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "name=$(echo dev_${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -32,8 +32,9 @@ jobs:
           push: true
           pull: true
           tags: |
-            docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:${{ github.sha }}
-            docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}:staging
+            docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
+            docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.branch.outputs.name }}
+
 
   e2e-tests:
     runs-on: [self-hosted, testendtoend]
@@ -48,12 +49,12 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "name=$(echo dev_${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Run e2e tests
         uses: ./end-to-end/
         with:
           docker_tag: staging
-          docker_platform_image: docker-registry.bimdata.io/bimdata/${{ env.app }}_${{ steps.branch.outputs.name }}
+          docker_platform_image: docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.branch.outputs.name }}
           ref: ${{ github.ref }}
           github_token: ${{ secrets.REPOS_TOKEN }}
           vault_passwd: ${{ secrets.VAULT_PASSWD }}
@@ -72,7 +73,7 @@ jobs:
       - name: Define branch_name var
         id: branch
         run: |
-          echo "name=$(echo ${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "name=$(echo dev_${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Deploy on staging
         env:
           BRANCH_NAME: ${{ steps.branch.outputs.name }}
