@@ -53,8 +53,8 @@ jobs:
       - name: Run e2e tests
         uses: ./end-to-end/
         with:
-          docker_tag: ${{ steps.branch.outputs.name }}
-          docker_platform_image: docker-registry.bimdata.io/bimdata/${{ env.app }}
+          docker_tag: staging
+          docker_platform_tag: ${{ steps.branch.outputs.name }}
           ref: ${{ github.ref }}
           github_token: ${{ secrets.REPOS_TOKEN }}
           vault_passwd: ${{ secrets.VAULT_PASSWD }}
