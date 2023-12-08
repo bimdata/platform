@@ -22,6 +22,7 @@
         :menuItems="projectsToDisplay"
         subListMaxHeight="300px"
         maxHeight="500px"
+        v-if="projectsToDisplay.length"
       >
         <template #item="{ item }">
           <div
@@ -103,6 +104,9 @@
           </div>
         </template>
       </BIMDataMenu>
+      <div v-else class="group-import__menu group-import__menu--empty p-12">
+        <span class="color-granite">{{ $t("GroupImport.noGroup") }}</span>
+      </div>
     </template>
   </div>
 </template>
