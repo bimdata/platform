@@ -192,7 +192,8 @@
     "title": "Importer un groupe",
     "selectAll": "Tout sélectionner",
     "notAdmin": "Vous devez être administrateur du projet",
-    "noGroup": "Il n'y a pas de groupe dans ce projet"
+    "noGroup": "Il n'y a pas de groupe dans ce projet",
+    "noGroupAccess": "Vous n'avez accès à aucun autre projet de l'espace"
   },
   "Invitations": {
     "title": "Mes invitations",
