@@ -105,7 +105,7 @@
         </template>
       </BIMDataMenu>
       <div v-else class="group-import__menu group-import__menu--empty p-12">
-        <span class="color-granite">{{ $t("GroupImport.noGroup") }}</span>
+        <span class="color-granite">{{ $t("GroupImport.noGroupAccess") }}</span>
       </div>
     </template>
   </div>
