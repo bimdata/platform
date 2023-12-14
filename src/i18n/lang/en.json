@@ -804,7 +804,8 @@
     "selectAll": "Select all",
     "notAdmin": "You must be a project administrator",
     "noGroup": "There is no group for this project",
-    "noGroupAccess": "You do not have access to any other projects in this space"
+    "noProject": "You have no other project.",
+    "noResult": "No project with this name."
   },
   "UploadCard": {
     "cancelMessage": "Canceled",
