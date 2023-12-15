@@ -33,7 +33,7 @@
           </div>
         </template>
         <!-- Template if no group when searching  -->
-        <template v-if="filteredProjectsToDisplay.length === 0">
+        <template v-else-if="filteredProjectsToDisplay.length === 0">
           <div class="group-import__menu--empty p-6 color-granite">
             <span>
               {{ $t("GroupImport.noResult") }}
