@@ -193,8 +193,8 @@
     "selectAll": "Tout sélectionner",
     "notAdmin": "Vous devez être administrateur du projet",
     "noGroup": "Il n'y a pas de groupe dans ce projet",
-    "noProject": "Vous n'avez pas d'autre projet.",
-    "noResult": "Pas de projet avec ce nom."
+    "noProject": "Vous n'avez pas d'autre projet",
+    "noResult": "Pas de projet avec ce nom"
   },
   "Invitations": {
     "title": "Mes invitations",
