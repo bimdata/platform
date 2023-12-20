@@ -2,9 +2,18 @@
   <div class="file-tree-preview-modal" v-click-away="closeModal">
     <template v-if="loadingData">
       <div class="file-tree-preview-modal__loader">
-        <BIMDataSpinner />
+        <BIMDataSpinner style="transform: scale(2)" />
       </div>
     </template>
+    <BIMDataButton
+      class="file-tree-preview-modal__btn-close"
+      ghost
+      rounded
+      icon
+      @click="closeModal"
+    >
+      <BIMDataIconClose size="xxs" />
+    </BIMDataButton>
     <span class="file-tree-preview-modal__title">
       {{ $t("FileTreePreviewModal.title") }}
       <span class="file-tree-preview-modal__title__project">
@@ -69,32 +78,37 @@ export default {
     onSuccess: {
       type: Function,
       required: true
-    },
+    }
   },
   setup(props) {
     const folders = ref([]);
     const loadingData = ref(true);
 
     onMounted(async () => {
-      const folderResponse = await ProjectService.getProjectFolderTree(props.sourceProject);
-      setFolderType(folderResponse)
+      const folderResponse = await ProjectService.getProjectFolderTree(
+        props.sourceProject
+      );
+      setFolderType(folderResponse);
       folders.value = folderResponse;
       loadingData.value = false;
     });
 
     const onValidate = async () => {
       loadingData.value = true;
-      await FileService.createFileStructure(props.currentProject, folders.value);
+      await FileService.createFileStructure(
+        props.currentProject,
+        folders.value
+      );
       loadingData.value = false;
       props.onSuccess();
       useAppModal().closeModal();
     };
 
-    return { 
-      closeModal: useAppModal().closeModal,
-      loadingData,
+    return {
       folders,
-      onValidate,
+      loadingData,
+      closeModal: useAppModal().closeModal,
+      onValidate
     };
   }
 };

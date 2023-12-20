@@ -1,18 +1,34 @@
 .file-tree-preview-modal {
-  width: 88%;
-  max-width: 288px;
-  margin: auto;
+  position: relative;
+  min-width: 400px;
+  min-height: 400px;
+  padding: calc(var(--spacing-unit) * 3);
+  background-color: var(--color-white);
+
   display: flex;
   flex-direction: column;
-  position: relative;
   
   &__loader {
     position: absolute;
-    right: -43px;
-    top: -22px;
-    height: 6%;
-    width: 6%;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: var(--color-white);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__btn-close {
+    position: absolute;
+    top: calc(var(--spacing-unit) / 2);
+    right: calc(var(--spacing-unit) / 2);
+    &:hover {
+      background-color: rgba(216, 216, 216, 0.1);
+    }
   }
 
   &__title {
