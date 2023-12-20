@@ -8,11 +8,11 @@
     <span class="file-tree-preview-modal__title">
       {{ $t("FileTreePreviewModal.title") }}
       <span class="file-tree-preview-modal__title__project">
-        {{ projectsToUpload.name }}
+        {{ currentProject.name }}
       </span>
     </span>
     <div class="file-tree-preview-modal__content">
-      <template v-for="folder of projectsToUpload.folders" :key="folder.id">
+      <template v-for="folder of folders" :key="folder.id">
         <FileTree
           :fileStructure="folder"
           :selectedFile="folder"
@@ -35,7 +35,7 @@
         fill
         radius
         width="45%"
-        @click="projectsToUpload.upload"
+        @click="onValidate"
       >
         {{ $t("t.validate") }}
       </BIMDataButton>
@@ -44,26 +44,58 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
+import FileService from "../../../../services/FileService.js";
+import ProjectService from "../../../../services/ProjectService.js";
+
 // Components
 import FileTree from "../file-tree/FileTree.vue";
+import { setFolderType } from "../../../../utils/files.js";
 
 export default {
   components: {
     FileTree
   },
   props: {
-    projectsToUpload: {
+    currentProject: {
       type: Object,
       required: true
     },
-    loadingData: {
-      type: Boolean,
+    sourceProject: {
+      type: Object,
       required: true
-    }
+    },
+    onSuccess: {
+      type: Function,
+      required: true
+    },
   },
-  setup() {
-    return { closeModal: useAppModal().closeModal };
+  setup(props) {
+    const folders = ref([]);
+    const loadingData = ref(true);
+
+    onMounted(async () => {
+      const folderResponse = await ProjectService.getProjectFolderTree(props.sourceProject);
+      setFolderType(folderResponse)
+      folders.value = folderResponse;
+      loadingData.value = false;
+    });
+
+    const onValidate = async () => {
+      loadingData.value = true;
+      await FileService.createFileStructure(props.currentProject, folders.value);
+      loadingData.value = false;
+      props.onSuccess();
+      useAppModal().closeModal();
+    };
+
+    return { 
+      closeModal: useAppModal().closeModal,
+      loadingData,
+      folders,
+      onValidate,
+    };
   }
 };
 </script>

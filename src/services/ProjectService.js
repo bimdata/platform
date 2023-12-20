@@ -172,10 +172,10 @@ class ProjectService {
     }
   }
 
-  async fetchProjectFolderTreeSerializers(project) {
+  async getProjectFolderTree(project) {
     try {
-      return await apiClient.collaborationApi.getProjectFolderTreeSerializers(
-        project.cloud.id
+      return await apiClient.collaborationApi.getProjectFolderTree(
+        project.cloud.id, project.id
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.PROJECT_FOLDER_TREE_FETCH_ERROR, error);

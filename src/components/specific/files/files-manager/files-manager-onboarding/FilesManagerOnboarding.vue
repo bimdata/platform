@@ -42,7 +42,7 @@
               <BIMDataIconPlus size="s" />
             </BIMDataButton>
           </template>
-          <template v-if="isGedMenuOpen">
+          <template v-else>
             <BIMDataDropdownMenu
               class="files-manager-onboarding__actions__advanced__dropdown"
               v-click-away="closeGedMenu"
@@ -130,8 +130,8 @@ export default {
       type: Object,
       required: true
     },
-    projectsTree: {
-      type: Object,
+    importFromOtherProjectsActions: {
+      type: Array,
       required: true
     },
     rootFolder: {
@@ -201,7 +201,7 @@ export default {
           name: t("FilesManagerOnboarding.GEDStructureImport"),
           children: {
             position: "up",
-            list: props.projectsTree
+            list: props.importFromOtherProjectsActions
           }
         });
       }

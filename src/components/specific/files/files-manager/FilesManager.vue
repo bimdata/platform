@@ -15,7 +15,6 @@
               height="32px"
               :menuItems="menuItems"
               :subListMaxHeight="dropdownMaxHeight"
-              @click="toggleDropdown"
             >
               <template #header="{ isOpen }">
                 <BIMDataIconBurgerMenu size="m" fill color="primary" />
@@ -283,18 +282,11 @@
         <FilesManagerOnboarding
           class="files-manager__onboarding"
           :project="project"
+          :importFromOtherProjectsActions="importFromOtherProjectsActions"
           :rootFolder="fileStructure"
-          :projectsTree="projectsTree"
           @file-uploaded="$emit('file-uploaded')"
         />
       </template>
-
-      <AppModalContent v-if="projectsToUpload">
-        <FileTreePreviewModal
-          :projectsToUpload="projectsToUpload"
-          :loadingData="loadingData"
-        />
-      </AppModalContent>
     </template>
   </BIMDataCard>
 </template>
@@ -319,7 +311,7 @@ import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
-import { getFilesFromEvent, treeIdGenerator } from "../../../../utils/files.js";
+import { getFilesFromEvent } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -368,10 +360,6 @@ export default {
       type: Object,
       required: true
     },
-    loadingData: {
-      type: Boolean,
-      required: true
-    }
   },
   emits: ["file-uploaded", "file-updated", "model-created"],
   setup(props, { emit }) {
@@ -381,7 +369,7 @@ export default {
     const { currentSpace } = useSpaces();
     const { openModal, closeModal } = useAppModal();
 
-    const { fetchProjectFolderTreeSerializers } = useProjects();
+    const { getProjectFolderTree, spaceProjects } = useProjects();
 
     const { isXXXL, isMidXL } = useCustomBreakpoints({
       isXXXL: ({ width }) => width <= 1521 - 0.02,
@@ -664,37 +652,27 @@ export default {
       allTags.value = await TagService.fetchAllTags(props.project);
     };
 
-    const projectsTree = ref([]);
-    const toggleDropdown = async () => {
-      projectsTree.value = (
-        await fetchProjectFolderTreeSerializers(props.project)
-      ).map(p => ({
-        name: p.name,
-        action: () => {
-          openModal();
-          projectsToUpload.value = {
-            ...p,
-            folders: treeIdGenerator(p),
-            upload: () => {
-              FileService.createFileStructure(props.project, p.folders);
-              emit("file-updated");
-            }
-          };
-        }
-      }));
-    };
-
-    watch(
-      () => props.loadingData,
-      () => {
-        if (!props.loadingData) {
-          closeModal();
-        }
-      }
-    );
+    const importFromOtherProjectsActions = computed(() => {
+      return spaceProjects.value
+        .filter(project => project.id != props.project.id)
+        .map(project => ({
+          name: project.name,
+          action: () => {
+            openModal({
+              component: FileTreePreviewModal,
+              props: {
+                sourceProject: project,
+                currentProject: props.project,
+                onSuccess() {
+                  emit("file-updated");
+                }
+              },
+            });
+          }
+        }));
+    });
 
     const dropdown = ref(null);
-    const projectsToUpload = ref(null);
     const menuItems = computed(() => {
       const items = [];
 
@@ -702,7 +680,7 @@ export default {
         items.push(
           {
             name: t("FilesManager.structureImport"),
-            children: { list: projectsTree.value }
+            children: { list: importFromOtherProjectsActions.value }
           },
           {
             name: t("FilesManager.gedDownload"),
@@ -732,24 +710,6 @@ export default {
     onMounted(async () => {
       fetchVisas();
       fetchTags();
-      if (props.fileStructure.children.length === 0) {
-        projectsTree.value = (
-          await fetchProjectFolderTreeSerializers(props.project)
-        ).map(p => ({
-          name: p.name,
-          action: () => {
-            openModal();
-            projectsToUpload.value = {
-              ...p,
-              folders: treeIdGenerator(p),
-              upload: () => {
-                FileService.createFileStructure(props.project, p.folders);
-                emit("file-updated");
-              }
-            };
-          }
-        }));
-      }
     });
 
     const fileManager = ref(null);
@@ -791,15 +751,13 @@ export default {
       showVersioningManager,
       shouldSubscribe,
       currentSpace,
-      projectsTree,
-      projectsToUpload,
+      importFromOtherProjectsActions,
       dropdownMaxHeight,
       fileManager,
       dropdown,
       menuItems,
       loadingFileIds,
       // Methods
-      toggleDropdown,
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
