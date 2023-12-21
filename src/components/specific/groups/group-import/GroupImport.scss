@@ -1,17 +1,27 @@
 .group-import {
+  width: 200px;
   position: relative;
+  background-color: var(--color-white);
   &__button {
     width: 200px;
     padding: 6px 12px;
   }
-
   &__menu {
-    top: 35px;
+    top: calc(32px + 6px);
     position: absolute;
-    margin-bottom: 6px;
-    overflow: auto;
-    &:deep().bimdata-menu__item__content {
+    width: 200px;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    &:deep().bimdata-paginated-list {
+      overflow: inherit;
+    }
+    &:deep().bimdata-tooltip__content {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
+    }
+    &:deep().bimdata-navigation__left {
+      margin: 0;
     }
     .warning {
       &:deep().bimdata-textbox {
@@ -31,74 +41,51 @@
     &--empty {
       width: 100%;
       background-color: var(--color-white);
+      font-size: 12px;
     }
-  }
+    &__children {
+      height: 28px;
+      position: relative;
+      font-size: 12px;
+      cursor: pointer;
 
-  &__children {
-    position: relative;
-
-    &__no-child {
-      position: fixed;
-      background-color: white;
-      width: 200px;
-      right: 242px;
-      height: 29px;
-      margin: 20px 0 0 0;
-      padding: 0 0 50px 0;
-      box-shadow: var(--box-shadow);
-
-      &__content {
-        display: flex;
-        position: absolute;
-        align-items: center;
-        top: -2px;
-        gap: var(--spacing-unit);
-        color: var(--color-high);
-        padding: var(--spacing-unit);
+      &:not(.warning):hover {
+        background-color: var(--color-silver-light);
       }
-    }
+      &--active {
+        background-color: #f0f5ff;
+      }
 
-    &__menu {
-      &__header {
-        display: flex;
-        position: relative;
-        align-items: center;
-        flex-direction: column;
-        height: 38px;
-        margin-bottom: 6px;
-
-        &__content {
+      &__submenu {
+        &__header {
           display: flex;
+          position: relative;
           align-items: center;
-          width: 100%;
-          height: 100%;
+          flex-direction: column;
+          height: 38px;
 
-          &--checkbox {
-            width: 14px;
+          &__content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+
+            &:hover {
+              background-color: var(--color-silver-light);
+            }
           }
 
-          &:hover {
-            cursor: pointer;
+          &__divider {
+            width: 88%;
+            height: 2px;
+            margin-top: 6px;
             background-color: var(--color-silver-light);
           }
         }
 
-        &__divider {
-          width: 88%;
-          height: 2px;
-          margin-top: 6px;
-          background-color: var(--color-silver-light);
+        &--footer {
+          margin: 6px auto 0px;
         }
-      }
-
-      &__item {
-        &--checkbox {
-          width: 14px;
-        }
-      }
-
-      &--footer {
-        margin: 6px auto 0px;
       }
     }
   }

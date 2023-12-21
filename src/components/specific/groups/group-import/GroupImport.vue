@@ -1,5 +1,5 @@
 <template>
-  <div class="group-import" v-click-away="close">
+  <div class="group-import" v-click-away="closeMenu">
     <BIMDataButton
       class="group-import__button"
       fill
@@ -16,96 +16,192 @@
       />
     </BIMDataButton>
     <template v-if="isOpen">
-      <BIMDataMenu
-        class="group-import__menu"
-        childrenLeft
-        :menuItems="projectsToDisplay"
-        subListMaxHeight="300px"
-        maxHeight="500px"
-        v-if="projectsToDisplay.length"
-      >
-        <template #item="{ item }">
-          <div
-            class="flex items-center justify-between"
-            :class="{ warning: isWarning(item) }"
-            style="width: 100%"
-          >
-            <BIMDataTextbox width="70%" :text="item.text" :tooltip="false" />
-            <div class="flex items-center">
-              <template v-if="isWarning(item)">
-                <BIMDataIconWarning
-                  class="group-import__menu__warning"
-                  color="high"
-                  size="xxs"
-                  fill
-                />
-              </template>
-              <BIMDataIconChevron size="xxs" margin="0 0 0 6px" />
-            </div>
+      <div class="group-import__menu">
+        <BIMDataSearch
+          v-if="projectsToDisplay.length"
+          width="200px"
+          radius
+          :placeholder="$t('t.search')"
+          v-model="searchText"
+        />
+        <!-- Template if no project in space  -->
+        <template v-if="projectsToDisplay.length === 0">
+          <div class="group-import__menu--empty p-6 color-granite">
+            <span>
+              {{ $t("GroupImport.noProject") }}
+            </span>
           </div>
         </template>
-
-        <template #children="{ item }">
-          <div v-if="isWarning(item)" class="group-import__children__no-child">
-            <div class="group-import__children__no-child__content">
-              <BIMDataIconWarning color="high" size="xs" fill />
-              {{ item.children[0].text }}
-            </div>
+        <!-- Template if no group when searching  -->
+        <template v-else-if="filteredProjectsToDisplay.length === 0">
+          <div class="group-import__menu--empty p-6 color-granite">
+            <span>
+              {{ $t("GroupImport.noResult") }}
+            </span>
           </div>
-          <div v-else class="submenu p-y-6">
+        </template>
+        <!-- Groups list -->
+        <BIMDataPaginatedList
+          :list="filteredProjectsToDisplay"
+          :perPage="14"
+          :numberDataElements="
+            filteredProjectsToDisplay.length > 99 ? false : true
+          "
+        >
+          <template #element="{ element = project }">
             <div
-              class="group-import__children__menu__header"
-              @click.stop="checkAllItems(item)"
+              class="group-import__menu__children flex items-center justify-between p-x-6"
+              :class="{
+                warning: isWarning(element),
+                'group-import__menu__children--active': isItemActive(element)
+              }"
+              @click.stop="onElementClick(element)"
+              @mouseover="onMouseOver(element)"
+              @mouseleave="onMouseLeave"
             >
-              <div
-                class="group-import__children__menu__header__content p-y-6 p-x-12"
-              >
-                <BIMDataCheckbox
-                  class="group-import__children__menu__header__content--checkbox"
-                  margin="0 6px 0 0"
-                  :modelValue="groups[item.id].length === item.children.length"
-                />
-                <span>{{ $t("GroupImport.selectAll") }}</span>
-              </div>
-              <div class="group-import__children__menu__header__divider" />
+              <!-- Template if not admin or if no child project -->
+              <template v-if="isWarning(element)">
+                <BIMDataTooltip
+                  v-if="element.isAdmin === false"
+                  :text="$t('GroupImport.notAdmin')"
+                  maxWidth="176px"
+                  color="high"
+                  :style="{ width: '100%' }"
+                >
+                  <BIMDataTextbox
+                    width="calc(100% - 12px - 18px)"
+                    :text="element.name"
+                    :tooltip="false"
+                  />
+                  <div
+                    style="width: 18px"
+                    class="flex items-center justify-start m-l-6"
+                  >
+                    <BIMDataIconWarning
+                      class="group-import__menu__warning"
+                      color="high"
+                      size="xxs"
+                      fill
+                    />
+                  </div>
+                </BIMDataTooltip>
+                <BIMDataTooltip
+                  v-else
+                  :text="$t('GroupImport.noGroup')"
+                  maxWidth="176px"
+                  color="high"
+                  :style="{ width: '100%' }"
+                >
+                  <BIMDataTextbox
+                    width="calc(100% - 12px - 18px)"
+                    :text="element.name"
+                    :tooltip="false"
+                  />
+                  <div
+                    style="width: 18px"
+                    class="flex items-center justify-start m-l-6"
+                  >
+                    <BIMDataIconWarning
+                      class="group-import__menu__warning"
+                      color="high"
+                      size="xxs"
+                      fill
+                    />
+                  </div>
+                </BIMDataTooltip>
+              </template>
+              <!-- Template for list all group in projects -->
+              <template v-else>
+                <div class="flex items-center" style="width: 100%">
+                  <BIMDataTextbox
+                    width="calc(100% - 12px - 18px)"
+                    :text="element.name"
+                    :tooltip="false"
+                  />
+                  <div
+                    style="width: 18px"
+                    class="flex items-center justify-end m-l-6"
+                  >
+                    <BIMDataIconChevron size="xxs" />
+                  </div>
+                </div>
+                <template v-if="element.children.length">
+                  <div
+                    v-if="isWarning(element)"
+                    class="group-import__menu__children__no-child"
+                  >
+                    <div
+                      class="group-import__menu__children__no-child__content"
+                    >
+                      <BIMDataIconWarning color="high" size="xs" fill />
+                      {{ element.children[0].text }}
+                    </div>
+                  </div>
+                  <div v-if="isItemActive(element)" class="submenu p-y-6">
+                    <div
+                      v-if="element.children.length > 1"
+                      class="group-import__menu__children__submenu__header m-b-6"
+                      @click.stop="checkAllItems(element)"
+                    >
+                      <div
+                        class="group-import__menu__children__submenu__header__content p-6"
+                      >
+                        <BIMDataCheckbox
+                          class="group-import__menu__children__submenu__header__content--checkbox"
+                          margin="0 6px 0 0"
+                          :modelValue="
+                            groups[element.id].length ===
+                            element.children.length
+                          "
+                        />
+                        <span>{{ $t("GroupImport.selectAll") }}</span>
+                      </div>
+                      <div
+                        class="group-import__menu__children__submenu__header__divider"
+                      />
+                    </div>
+                    <ul class="bimdata-list">
+                      <li
+                        v-for="child in element.children"
+                        :key="child.id"
+                        class="flex items-center"
+                        @click.stop="checkItem(child, element)"
+                      >
+                        <BIMDataCheckbox
+                          class="group-import__menu__children__submenu__item--checkbox"
+                          margin="0 6px 0 0"
+                          :modelValue="
+                            Boolean(
+                              groups[element.id]?.some(
+                                element => element.id === child.id
+                              )
+                            )
+                          "
+                        />
+                        <BIMDataTextbox
+                          width="70%"
+                          :text="child.text"
+                          :tooltip="false"
+                        />
+                      </li>
+                    </ul>
+                    <BIMDataButton
+                      class="group-import__menu__children__submenu--footer"
+                      :disabled="groups[element.id].length === 0"
+                      color="primary"
+                      fill
+                      radius
+                      width="95%"
+                      @click.stop="uploadGroup(element)"
+                    >
+                      <span>{{ $t("t.add") }}</span>
+                    </BIMDataButton>
+                  </div>
+                </template>
+              </template>
             </div>
-            <ul class="bimdata-list">
-              <li
-                v-for="child in item.children"
-                :key="child.id"
-                class="submenu__item flex items-center p-x-12"
-                @click="checkItem(child, item)"
-              >
-                <BIMDataCheckbox
-                  class="group-import__children__menu__item--checkbox"
-                  margin="0 6px 0 0"
-                  :modelValue="
-                    Boolean(groups[item.id]?.some(item => item.id === child.id))
-                  "
-                />
-                <BIMDataTextbox
-                  width="70%"
-                  :text="child.text"
-                  :tooltip="false"
-                />
-              </li>
-            </ul>
-            <BIMDataButton
-              class="group-import__children__menu--footer"
-              :disabled="groups[item.id].length === 0"
-              color="primary"
-              fill
-              radius
-              width="95%"
-              @click.stop="uploadGroup(item)"
-            >
-              <span>{{ $t("t.add") }}</span>
-            </BIMDataButton>
-          </div>
-        </template>
-      </BIMDataMenu>
-      <div v-else class="group-import__menu group-import__menu--empty p-12">
-        <span class="color-granite">{{ $t("GroupImport.noGroupAccess") }}</span>
+          </template>
+        </BIMDataPaginatedList>
       </div>
     </template>
   </div>
@@ -113,10 +209,10 @@
 
 <script>
 import { ref } from "vue";
-import { useI18n } from "vue-i18n";
 import { useGroups } from "../../../../state/groups.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useToggle } from "../../../../composables/toggle.js";
+import { useListFilter } from "../../../../composables/list-filter.js";
 import GroupService from "../../../../services/GroupService.js";
 
 export default {
@@ -133,10 +229,44 @@ export default {
 
     const groups = ref({});
     const projectsToDisplay = ref([]);
-    const { t } = useI18n();
+    const clickedItemKey = ref(null);
+    const hoveredItemKey = ref(null);
+
+    const isItemActive = element => {
+      return (
+        (element.children?.length > 0 &&
+          hoveredItemKey.value === element.key &&
+          !clickedItemKey.value) ||
+        clickedItemKey.value === element.key
+      );
+    };
+
+    const onMouseOver = element => {
+      hoveredItemKey.value = element.key;
+    };
+
+    const onMouseLeave = () => {
+      hoveredItemKey.value = null;
+    };
+
+    const closeMenu = () => {
+      clickedItemKey.value = null;
+      close();
+    };
+
+    const onElementClick = element => {
+      if (!element.children || element.key === clickedItemKey.value) {
+        clickedItemKey.value = null;
+      } else {
+        clickedItemKey.value = element.id;
+      }
+    };
+
+    const { filteredList: filteredProjectsToDisplay, searchText } =
+      useListFilter(projectsToDisplay, item => item.name);
 
     const openGroupImport = async () => {
-      if (isOpen.value) return close();
+      if (isOpen.value) return closeMenu();
 
       const mappedProjects = await Promise.all(
         spaceProjects.value
@@ -158,12 +288,7 @@ export default {
                 return currentGroup;
               });
 
-              children.push(...projectGroups) ||
-                children.push({
-                  text: t(
-                    `GroupImport.${project.isAdmin ? "noGroup" : "notAdmin"}`
-                  )
-                });
+              children.push(...projectGroups);
             }
 
             return {
@@ -176,7 +301,11 @@ export default {
       );
 
       projectsToDisplay.value = mappedProjects.sort(project =>
-        project.isAdmin && project.children[0].project ? -1 : 1
+        project.isAdmin &&
+        project.children.length &&
+        project.children[0].project
+          ? -1
+          : 1
       );
 
       open();
@@ -188,7 +317,7 @@ export default {
         groups.value[item.id].map(({ id }) => id)
       );
       groups.value[item.id] = [];
-      close();
+      closeMenu();
     };
 
     const checkItem = (child, item) => {
@@ -217,8 +346,14 @@ export default {
       // References
       groups,
       projectsToDisplay,
+      filteredProjectsToDisplay,
+      searchText,
+      isItemActive,
       // methods
-      close,
+      closeMenu,
+      onElementClick,
+      onMouseOver,
+      onMouseLeave,
       isOpen,
       isWarning,
       uploadGroup,
