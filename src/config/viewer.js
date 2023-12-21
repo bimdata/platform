@@ -48,7 +48,8 @@ const PLUGINS_CONFIG = {
   "viewer2d-background": true,
   viewer3d: {
     enableDynamicLOD: true
-  }
+  },
+  "drawing-tools" : true
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };
