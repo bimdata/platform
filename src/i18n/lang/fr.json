@@ -860,7 +860,8 @@
     }
   },
   "FileTreePreviewModal": {
-    "title": "Importer la structure GED depuis"
+    "title": "Importer la structure GED depuis",
+    "emptySource": "Ce projet n'a aucun dossier"
   },
   "GroupMemberCard": {
     "pending": "Invitation en cours"

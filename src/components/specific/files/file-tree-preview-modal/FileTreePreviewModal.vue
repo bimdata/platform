@@ -17,10 +17,10 @@
     <span class="file-tree-preview-modal__title">
       {{ $t("FileTreePreviewModal.title") }}
       <span class="file-tree-preview-modal__title__project">
-        {{ currentProject.name }}
+        {{ sourceProject.name }}
       </span>
     </span>
-    <div class="file-tree-preview-modal__content">
+    <div v-if="folders[0].children.length > 0" class="file-tree-preview-modal__content" >
       <template v-for="folder of folders" :key="folder.id">
         <FileTree
           :fileStructure="folder"
@@ -28,6 +28,12 @@
           :project="{}"
         />
       </template>
+    </div>
+    <div v-else class="file-tree-preview-modal__empty_content">
+      <img src="/static/dms/empty-dms-import.svg" />
+      <span>
+        {{ $t("FileTreePreviewModal.emptySource") }}
+      </span>
     </div>
     <div class="file-tree-preview-modal__action">
       <BIMDataButton
@@ -44,6 +50,7 @@
         fill
         radius
         width="45%"
+        :disabled="folders[0].children.length === 0"
         @click="onValidate"
       >
         {{ $t("t.validate") }}
@@ -85,9 +92,12 @@ export default {
     const loadingData = ref(true);
 
     onMounted(async () => {
-      const folderResponse = await ProjectService.getProjectFolderTree(
-        props.sourceProject
-      );
+      const folderResponse = [{
+        name: props.sourceProject.name,
+        children: await ProjectService.getProjectFolderTree(
+          props.sourceProject
+        ),
+      }];
       setFolderType(folderResponse);
       folders.value = folderResponse;
       loadingData.value = false;
@@ -97,7 +107,7 @@ export default {
       loadingData.value = true;
       await FileService.createFileStructure(
         props.currentProject,
-        folders.value
+        folders.value[0].children // We don't want to import the project root folder
       );
       loadingData.value = false;
       props.onSuccess();
