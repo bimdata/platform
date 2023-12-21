@@ -34,14 +34,8 @@
           :spaceSubInfo="spaceSubInfo"
           :project="project"
           :fileStructure="fileStructure"
-          :loadingData="loadingData"
           @file-uploaded="reloadData"
-          @file-updated="
-            {
-              loadingData = true;
-              reloadData();
-            }
-          "
+          @file-updated="reloadData"
           @model-created="reloadData"
         />
       </AppLoading>
@@ -77,14 +71,12 @@ export default {
     const { loadProjectModels } = useModels();
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
 
-    const loadingData = ref(false);
     const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
         loadProjectModels(currentProject.value)
       ]);
-      loadingData.value = false;
     }, 1000);
 
     return {
@@ -93,7 +85,6 @@ export default {
       project: currentProject,
       routeNames,
       spaceSubInfo,
-      loadingData,
       // Methods
       reloadData,
       // Responsive breakpoints

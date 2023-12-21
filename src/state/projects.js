@@ -152,11 +152,10 @@ const getUserProjectList = async (project, folder) => {
     }));
 };
 
-const fetchProjectFolderTreeSerializers = async project => {
-  return (
-    await ProjectService.fetchProjectFolderTreeSerializers(project)
-  ).filter(p => p.name !== project.name);
+const getProjectFolderTree = async project => {
+  return ProjectService.getProjectFolderTree(project);
 };
+
 
 export function useProjects() {
   const readonlyState = readonly(state);
@@ -179,6 +178,6 @@ export function useProjects() {
     deleteProjectUser,
     fetchFolderProjectUsers,
     getUserProjectList,
-    fetchProjectFolderTreeSerializers
+    getProjectFolderTree,
   };
 }

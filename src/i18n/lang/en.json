@@ -871,7 +871,8 @@
     "title": "Import DMS tree from"
   },
   "MainModelSelector": {
-    "title": "Choose project preview"
+    "title": "Choose project preview",
+    "emptySource": "This projet doesn't have any folder"
   },
   "UserFavoritesManager": {
     "title": "Favorite Spaces / Projects"

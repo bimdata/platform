@@ -57,23 +57,19 @@ function generateFileKey(file) {
   return key;
 }
 
-function treeIdGenerator(projectToImport) {
-  if (projectToImport.folders.length === 0) return;
-  // Populate folder tree with IDs permit to satisfy a requirement from FileTree component. Front-end use only.
-  let idGenerator = 1;
-
-  const mapping = folders => {
-    return folders.map(folder => ({
-      ...folder,
-      id: idGenerator++,
-      type: FILE_TYPE.FOLDER,
-      children: folder.children?.length > 0 ? mapping(folder.children) : []
-    }));
-  };
-
-  return [
-    { name: projectToImport.name, children: mapping(projectToImport.folders) }
-  ];
+/**
+ *  Set type: FILE_TYPE.FOLDER to all folders and their children
+ *
+ * @param {File[]} folders
+ * @returns {void}
+ */
+function setFolderType(folders) {
+  folders.forEach(folder => {
+    folder.type = FILE_TYPE.FOLDER;
+    if (folder.children?.length > 0) {
+      setFolderType(folder.children);
+    }
+  })
 }
 
 /**
@@ -250,5 +246,5 @@ export {
   generateFileKey,
   getFilesFromEvent,
   getFilesWithParentIds,
-  treeIdGenerator
+  setFolderType,
 };
