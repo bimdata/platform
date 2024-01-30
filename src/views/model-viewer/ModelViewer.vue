@@ -135,7 +135,6 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      bimdataViewer?.destroy();
       unwatchAccessToken();
       unwatchLocale();
     });
