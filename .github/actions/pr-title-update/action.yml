@@ -1,7 +1,7 @@
 name: "Pull Request title update to include platform url"
 description: "A GitHub Action that updates the PR title with platform url"
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
 inputs:
   platform_url:
