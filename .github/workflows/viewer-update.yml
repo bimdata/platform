@@ -26,7 +26,7 @@ jobs:
         id: viewer-install
         timeout-minutes: 2
         run: |
-          while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save; do
+          while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save-exact; do
             sleep 5
           done
           GITDIFF=$(git diff -- package-lock.json | tr '\n' ' ')
