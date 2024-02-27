@@ -1,6 +1,6 @@
 const { defineConfig } = require("cypress");
 const { existsSync } = require("fs");
-const { generateLogins } = require("./tests/e2e/test-utils.js");
+const { generateLogins } = require("./tests/e2e/test-utils.cjs");
 
 const users = new Map();
 
