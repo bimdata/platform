@@ -30,6 +30,7 @@ const PLUGINS_CONFIG = {
   header: {
     warnings: false
   },
+  pdfExport: true,
   properties: {
     editProperties: true,
     translateIfcEntities: translateIfcType,
