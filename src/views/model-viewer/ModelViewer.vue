@@ -45,6 +45,7 @@ export default {
     const loading = ref(false);
 
     const apiUrl = ENV.VUE_APP_API_BASE_URL;
+    const archiveUrl = ENV.VUE_APP_ARCHIVE_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs =
@@ -101,6 +102,7 @@ export default {
       bimdataViewer = makeBIMDataViewer({
         api: {
           apiUrl,
+          archiveUrl,
           accessToken: accessToken.value,
           cloudId: spaceID,
           projectId: projectID,
