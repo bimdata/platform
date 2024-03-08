@@ -245,7 +245,7 @@
               closeButton: true,
               commentCreation: true,
               editButton: hasEditPermission(currentTopic),
-              deleteButton: hasEditPermission(currentTopic),
+              deleteButton: hasDeletePermission(currentTopic),
             }"
             :project="project"
             :detailedExtensions="detailedExtensions"
@@ -598,6 +598,10 @@ export default {
     );
 
     const hasEditPermission = topic => {
+      return isProjectAdmin(currentProject.value) || user.value.email === topic.creation_author || user.value.email === topic.assigned_to;
+    };
+
+    const hasDeletePermission = topic => {
       return isProjectAdmin(currentProject.value) || user.value.email === topic.creation_author;
     };
 
@@ -829,6 +833,7 @@ export default {
       user,
       // Methods
       hasEditPermission,
+      hasDeletePermission,
       applyFilters,
       closeDeleteMode,
       closeMetrics,

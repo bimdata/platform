@@ -32,9 +32,13 @@ async function run() {
 
     const platform_url = core.getInput("platform_url", { required: true });
     let body = github.context.payload.pull_request.body
-    body = `${platform_url}
+
+    // Prepend platform URL to PR body
+    body =
+`${platform_url}
 
 ${body ? body : ""}`;
+
     const pull_number = github.context.payload.pull_request.number;
     const owner = github.context.repo.owner;
     const repo = github.context.repo.repo;

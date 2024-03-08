@@ -16,17 +16,17 @@ jobs:
       refs/heads/main'
       , github.event.client_payload.ref)
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.REPOS_TOKEN }}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "20"
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 2
         run: |
-          while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save; do
+          while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save-exact; do
             sleep 5
           done
           GITDIFF=$(git diff -- package-lock.json | tr '\n' ' ')
