@@ -49,7 +49,7 @@ const PLUGINS_CONFIG = {
   viewer3d: {
     enableDynamicLOD: true
   },
-  "drawing-tools" : true
+  "drawing-tools" : false
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };
