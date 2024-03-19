@@ -50,8 +50,8 @@ const PLUGINS_CONFIG = {
     enableDynamicLOD: true
   },
   "drawing-tools" : false,
-  "zone-editor": false,
-  "zone-editor-button": false
+  "zone-editor": true,
+  "zone-editor-button": true
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };
