@@ -1,3 +1,6 @@
+/**
+ * List of available (non native) plugins.
+ */
 const AVAILABLE_PLUGINS = Object.freeze({
   idex: "https://cdn.jsdelivr.net/npm/@bimdata/idex-viewer-plugin@2.0.1",
   iot: "https://cdn.jsdelivr.net/npm/@bimdata/iot-viewer-plugin@1.0.13",
@@ -16,8 +19,7 @@ const WINDOWS = Object.freeze({
 });
 
 /**
- * Viewer window that will be opened by default
- * if none is specified.
+ * Viewer window that will be opened by default if none is specified.
  */
 const DEFAULT_WINDOW = WINDOWS.IFC3D;
 
@@ -27,6 +29,7 @@ const PLUGINS_CONFIG = {
   accessMarketplace: true,
   bcfManager: true,
   buildingMaker: true,
+  "drawing-tools" : true,
   header: {
     warnings: false
   },
@@ -41,15 +44,14 @@ const PLUGINS_CONFIG = {
   },
   "structure-properties": {
     editProperties: true,
-    translateIfcEntities: translateIfcType,
     export: true,
-    merge: true
+    merge: true,
+    translateIfcEntities: translateIfcType,
   },
   "viewer2d-background": true,
   viewer3d: {
     enableDynamicLOD: true
   },
-  "drawing-tools" : false,
   "zone-editor": true,
   "zone-editor-button": true
 };

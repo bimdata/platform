@@ -3,7 +3,7 @@
     <div class="group-card-color-picker__grid">
       <div
         class="group-card-color-picker__grid__item"
-        v-for="color of colors"
+        v-for="color of AVAILABLE_COLORS"
         :key="color"
         :class="{ selected: groupColor === color }"
         :style="{ backgroundColor: color }"
@@ -27,7 +27,7 @@
 
 <script>
 import { inject, ref } from "vue";
-import colors from "../../../../../config/group-colors.js";
+import { AVAILABLE_COLORS } from "../../../../../config/groups.js";
 import { useGroups } from "../../../../../state/groups.js";
 import { debounce } from "../../../../../utils/async.js";
 
@@ -69,7 +69,7 @@ export default {
 
     return {
       // References
-      colors,
+      AVAILABLE_COLORS,
       groupColor,
       // Methods
       submit

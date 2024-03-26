@@ -1,8 +1,7 @@
 /**
  * Available group colors
  */
-
-export default [
+const AVAILABLE_COLORS = [
   // red / orange
   "#FFE4C4",
   "#FFA500",
@@ -45,3 +44,5 @@ export default [
   "#808080",
   "#000000"
 ];
+
+export { AVAILABLE_COLORS };

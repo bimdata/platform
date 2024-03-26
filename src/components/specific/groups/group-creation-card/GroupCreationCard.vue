@@ -69,7 +69,7 @@
 
 <script>
 import { ref } from "vue";
-import colors from "../../../../config/group-colors.js";
+import { AVAILABLE_COLORS } from "../../../../config/groups.js";
 import { useGroups } from "../../../../state/groups.js";
 import { debounce } from "../../../../utils/async.js";
 import { getRandomElement } from "../../../../utils/random.js";
@@ -95,7 +95,7 @@ export default {
           loading.value = true;
           await createGroup(props.project, {
             name: groupName.value,
-            color: getRandomElement(colors)
+            color: getRandomElement(AVAILABLE_COLORS)
           });
           closeCreationForm();
         } finally {
