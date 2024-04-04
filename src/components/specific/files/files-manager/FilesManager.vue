@@ -19,10 +19,11 @@
               <template #header="{ isOpen }">
                 <BIMDataIconBurgerMenu size="m" fill color="primary" />
                 <BIMDataIcon
-                  :name="isOpen ? 'deploy' : 'chevron'"
+                  name="chevron"
                   size="xxs"
                   fill
                   color="primary"
+                  :rotate="isOpen ? 90 : 0"
                 />
               </template>
             </BIMDataDropdownMenu>
