@@ -7,18 +7,18 @@
     :columns="columns"
     :rows="files"
     rowKey="id"
-    :rowHeight="54"
+    :rowHeight="48"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
     :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
     :placeholder="$t('t.emptyFolder')"
   >
-    <template #sub-header>
+  <template #sub-header>
       <div
         :style="{
           display: folder.parent_id ? 'flex' : 'none',
-          alignItems: 'center'
+          alignItems: 'center',
         }"
       >
         <BIMDataButton
@@ -30,10 +30,7 @@
         >
           <BIMDataIconArrow size="xxs" style="cursor: pointer" />
         </BIMDataButton>
-        <FilesManagerBreadcrumb
-          :file="folder"
-          @file-clicked="$emit('file-clicked', $event)"
-        />
+        <FilesManagerBreadcrumb :file="folder" @file-clicked="$emit('file-clicked', $event)" />
       </div>
       <transition-group name="list">
         <FileUploadCard
@@ -59,6 +56,9 @@
         />
       </transition-group>
     </template>
+    <template #cell-type="{ row: file }">
+      <FileTypeCell :project="project" :file="file" />
+    </template>
     <template #cell-name="{ row: file }">
       <FileNameCell
         :project="project"
@@ -69,13 +69,11 @@
         @close="nameEditMode[file.id] = false"
       />
     </template>
-    <template #cell-type="{ row: file }">
-      <FileTypeCell :file="file" />
+    <template #column-filter-empty>
+      <span class="color-granite" style="font-weight: 400;">{{ $t("Tag.emptyTag") }}</span>
     </template>
     <template #cell-creator="{ row: { created_by } }">
-      {{
-        created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?"
-      }}
+      {{ created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?" }}
     </template>
     <template #cell-tags="{ row: file }">
       <FileTagsCell :file="file" :filesTable="filesTable" />
@@ -132,30 +130,33 @@ export default {
     FileTagsCell,
     FileTypeCell,
     FileUploadCard,
-    FolderUploadCard
+    FolderUploadCard,
   },
   props: {
     loadingFileIds: {
       type: Array,
-      required: true
+      required: true,
     },
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     folder: {
       type: Object,
-      required: true
+      required: true,
     },
     files: {
       type: Array,
-      required: true
+      required: true,
     },
     filesToUpload: {
-      type: Array
+      type: Array,
     },
     foldersToUpload: {
-      type: Array
+      type: Array,
+    },
+    allTags: {
+      type: Array,
     }
   },
   emits: [
@@ -171,7 +172,7 @@ export default {
     "open-tag-manager",
     "remove-model",
     "row-drop",
-    "selection-changed"
+    "selection-changed",
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -182,17 +183,13 @@ export default {
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isLG.value) {
-        filteredColumns = columnsLG.map(id =>
-          filteredColumns.find(col => col.id === id)
-        );
+        filteredColumns = columnsLG.map((id) => filteredColumns.find((col) => col.id === id));
       } else if (isXL.value) {
-        filteredColumns = columnsXL.map(id =>
-          filteredColumns.find(col => col.id === id)
-        );
+        filteredColumns = columnsXL.map((id) => filteredColumns.find((col) => col.id === id));
       }
-      return filteredColumns.map(col => ({
+      return filteredColumns.map((col) => ({
         ...col,
-        label: col.label || t(col.text)
+        label: col.label || t(col.text),
       }));
     });
 
@@ -205,9 +202,9 @@ export default {
     let nameEditMode;
     watch(
       () => props.files,
-      files => {
+      (files) => {
         nameEditMode = reactive({});
-        files.forEach(row => (nameEditMode[row.id] = false));
+        files.forEach((row) => (nameEditMode[row.id] = false));
       },
       { immediate: true }
     );
@@ -215,9 +212,9 @@ export default {
     const fileUploads = ref([]);
     watch(
       () => props.filesToUpload,
-      files => {
+      (files) => {
         fileUploads.value = fileUploads.value.concat(
-          files.map(f => Object.assign(f, { key: generateFileKey(f) }))
+          files.map((f) => Object.assign(f, { key: generateFileKey(f) }))
         );
       }
     );
@@ -225,9 +222,9 @@ export default {
     const folderUploads = ref([]);
     watch(
       () => props.foldersToUpload,
-      folders => {
+      (folders) => {
         folderUploads.value = folderUploads.value.concat(
-          folders.map(f => Object.assign(f, { key: generateFileKey(f) }))
+          folders.map((f) => Object.assign(f, { key: generateFileKey(f) }))
         );
       }
     );
@@ -239,17 +236,26 @@ export default {
 
     const cleanUpload = (key, delay = 100) => {
       setTimeout(() => {
-        let index = fileUploads.value.findIndex(f => f.key === key);
+        let index = fileUploads.value.findIndex((f) => f.key === key);
         if (index >= 0) {
           fileUploads.value.splice(index, 1);
           return;
         }
 
-        index = folderUploads.value.findIndex(f => f.key === key);
+        index = folderUploads.value.findIndex((f) => f.key === key);
         if (index >= 0) {
           folderUploads.value.splice(index, 1);
         }
       }, delay);
+    };
+
+    const updateFilters = columnFilter => {
+      filters.value = filters.value.filter(
+        filter => filter.columnKey !== columnFilter.columnKey,
+      );
+      if (columnFilter.columnFilters.length > 0) {
+        filters.value.push(columnFilter);
+      }
     };
 
     return {
@@ -265,10 +271,11 @@ export default {
       isFolder,
       onRowDrop,
       onUploadCompleted,
+      updateFilters,
       // Responsive breakpoints
-      isXL
+      isXL,
     };
-  }
+  },
 };
 </script>
 

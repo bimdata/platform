@@ -1,7 +1,6 @@
 .tags-main {
   height: 100%;
   padding: var(--spacing-unit) var(--spacing-unit) 0;
-  
 
   &__content {
     height: 100%;
@@ -13,12 +12,12 @@
       display: flex;
       align-items: center;
       gap: var(--spacing-unit);
-  
+
       &__left-side {
         flex-grow: 1;
         display: flex;
         margin: auto 0;
-  
+
         span {
           margin: auto 0 auto calc(var(--spacing-unit) * 1.4);
           color: var(--color-primary);
@@ -74,6 +73,15 @@
       flex-direction: column;
       gap: calc(var(--spacing-unit) / 2);
       margin-bottom: var(--spacing-unit);
+      .empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        span {
+          color: var(--color-granite);
+        }
+      }
     }
   }
 }

@@ -41,18 +41,6 @@
         class="file-name-cell__content"
         @click="$emit('file-clicked', file)"
       >
-        <BIMDataIcon
-          v-if="isFolder(file)"
-          :name="
-            !project.isAdmin && file.user_permission < 100
-              ? 'readonlyFolder'
-              : 'folder'
-          "
-          size="m"
-          fill
-          color="primary"
-        />
-        <BIMDataFileIcon v-else :fileName="file.file_name" :size="20" />
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="70%" />
         <BIMDataIconVersioning
           v-if="hasHistory"

@@ -1,12 +1,8 @@
 <template>
-  <BIMDataCard
-    ref="fileManager"
-    class="files-manager"
-    :titleHeader="$t('FilesManager.title')"
-  >
-    <template #content>
-      <template v-if="fileStructure.children.length > 0">
-        <div class="files-manager__actions start">
+  <div class="files-manager">
+    <template v-if="fileStructure.children.length > 0">
+      <div class="files-manager__actions">
+        <div class="start">
           <template v-if="menuItems.length > 0">
             <BIMDataDropdownMenu
               ref="dropdown"
@@ -38,17 +34,14 @@
           >
             <BIMDataIconAddFolder size="xs" />
             <span
-              v-if="
-                (project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)
-              "
+              v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
               style="margin-left: 6px"
             >
               {{ $t("FolderCreationButton.text") }}
             </span>
             <span
               v-else-if="
-                (project.isAdmin && !isXL && isXXXL) ||
-                (!project.isAdmin && !isMD && isMidXL)
+                (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
               "
               style="margin-left: 6px"
             >
@@ -81,18 +74,14 @@
               >
                 <BIMDataIconAddFile size="xs" />
                 <span
-                  v-if="
-                    (project.isAdmin && !isXXXL) ||
-                    (!project.isAdmin && !isMidXL)
-                  "
+                  v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
                   style="margin-left: 6px"
                 >
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
                 <span
                   v-else-if="
-                    (project.isAdmin && !isXL && isXXXL) ||
-                    (!project.isAdmin && !isMD && isMidXL)
+                    (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
                   "
                   style="margin-left: 6px"
                 >
@@ -113,25 +102,21 @@
                   !hasAdminPerm(project, currentFolder)
                 "
                 @click="
-                  fileUploadInput('file', event => uploadFiles(event), {
-                    multiple: true
+                  fileUploadInput('file', (event) => uploadFiles(event), {
+                    multiple: true,
                   })
                 "
               >
                 <BIMDataIconAddFile size="xs" />
                 <span
-                  v-if="
-                    (project.isAdmin && !isXXXL) ||
-                    (!project.isAdmin && !isMidXL)
-                  "
+                  v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
                   style="margin-left: 6px"
                 >
                   {{ $t("FileUploadButton.addFileButtonText") }}
                 </span>
                 <span
                   v-else-if="
-                    (project.isAdmin && !isXL && isXXXL) ||
-                    (!project.isAdmin && !isMD && isMidXL)
+                    (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
                   "
                   style="margin-left: 6px"
                 >
@@ -142,7 +127,7 @@
           </BIMDataTooltip>
         </div>
 
-        <div class="files-manager__actions end">
+        <div class="middle">
           <BIMDataSearch
             class="files-manager__actions__input-search"
             :width="isMD ? '200px' : isLG ? '300px' : '400px'"
@@ -150,6 +135,9 @@
             v-model="searchText"
             clear
           />
+        </div>
+
+        <div class="end">
           <BIMDataTooltip
             class="files-manager__actions__visa-tooltip"
             position="left"
@@ -177,7 +165,10 @@
             </BIMDataButton>
           </BIMDataTooltip>
         </div>
-
+      </div>
+    </template>
+    <template v-if="fileStructure.children.length > 0">
+      <div class="files-manager__content">
         <FileTree
           data-guide="file-tree"
           class="files-manager__tree"
@@ -201,6 +192,7 @@
               @move="moveFiles"
             />
           </transition>
+          
           <FilesTable
             data-test-id="files-table"
             class="files-manager__files__table"
@@ -210,6 +202,7 @@
             :filesToUpload="filesToUpload"
             :foldersToUpload="foldersToUpload"
             :loadingFileIds="loadingFileIds"
+            :allTags="allTags"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @remove-model="removeModel"
@@ -277,19 +270,19 @@
             @close="closeDeleteModal"
           />
         </transition>
-      </template>
-
-      <template v-else>
-        <FilesManagerOnboarding
-          class="files-manager__onboarding"
-          :project="project"
-          :importFromOtherProjectsActions="importFromOtherProjectsActions"
-          :rootFolder="fileStructure"
-          @file-uploaded="$emit('file-uploaded')"
-        />
-      </template>
+      </div>
     </template>
-  </BIMDataCard>
+
+    <template v-else>
+      <FilesManagerOnboarding
+        class="files-manager__onboarding"
+        :project="project"
+        :importFromOtherProjectsActions="importFromOtherProjectsActions"
+        :rootFolder="fileStructure"
+        @file-uploaded="$emit('file-uploaded')"
+      />
+    </template>
+  </div>
 </template>
 
 <script>
@@ -301,7 +294,7 @@ import { useAppNotification } from "../../app/app-notification/app-notification.
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
   useStandardBreakpoints,
-  useCustomBreakpoints
+  useCustomBreakpoints,
 } from "../../../../composables/responsive.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
@@ -346,20 +339,20 @@ export default {
     FolderCreationButton,
     TagsMain,
     VersioningMain,
-    VisaMain
+    VisaMain,
   },
   props: {
     spaceSubInfo: {
       type: Object,
-      required: true
+      required: true,
     },
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     fileStructure: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   emits: ["file-uploaded", "file-updated", "model-created"],
@@ -374,14 +367,14 @@ export default {
 
     const { isXXXL, isMidXL } = useCustomBreakpoints({
       isXXXL: ({ width }) => width <= 1521 - 0.02,
-      isMidXL: ({ width }) => width <= 1277 - 0.02
+      isMidXL: ({ width }) => width <= 1277 - 0.02,
     });
 
     const {
       fileStructureHandler: handler,
       moveFiles: move,
       downloadFiles: download,
-      projectFileStructure
+      projectFileStructure,
     } = useFiles();
     const { createModel, deleteModels } = useModels();
 
@@ -396,7 +389,7 @@ export default {
 
     watch(
       () => props.fileStructure,
-      struct => {
+      (struct) => {
         if (!currentFolder.value || !handler.exists(currentFolder.value)) {
           currentFolder.value = struct;
         } else {
@@ -407,23 +400,19 @@ export default {
     );
     watch(
       () => currentFolder.value,
-      folder => {
+      (folder) => {
         const childrenFolders = folder.children
-          .filter(child => isFolder(child))
-          .sort((a, b) =>
-            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-          );
+          .filter((child) => isFolder(child))
+          .sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
         const childrenFiles = folder.children
-          .filter(child => !isFolder(child))
-          .sort((a, b) =>
-            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-          );
+          .filter((child) => !isFolder(child))
+          .sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
         currentFiles.value = childrenFolders.concat(childrenFiles);
       },
       { immediate: true }
     );
 
-    const onFileSelected = file => {
+    const onFileSelected = (file) => {
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       } else {
@@ -432,24 +421,24 @@ export default {
           props: {
             project: props.project,
             folder: currentFolder.value,
-            document: file
-          }
+            document: file,
+          },
         });
       }
     };
 
-    const backToParent = file => {
+    const backToParent = (file) => {
       const parentFolder = handler.parent(file);
       currentFolder.value = handler.deserialize(parentFolder);
     };
 
     const { filteredList: displayedFiles, searchText } = useListFilter(
       currentFiles,
-      file => file.name
+      (file) => file.name
     );
 
     const selection = ref([]);
-    const setSelection = models => {
+    const setSelection = (models) => {
       selection.value = models;
     };
 
@@ -457,13 +446,11 @@ export default {
     const foldersToUpload = ref([]);
     const uploadFiles = async (event, folder = currentFolder.value) => {
       const { files, folders } = await getFilesFromEvent(event);
-      files.forEach(file => (file.folder = folder));
+      files.forEach((file) => (file.folder = folder));
 
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
-        folders.map(f =>
-          FileService.createFolderStructure(props.project, folder, f)
-        )
+        folders.map((f) => FileService.createFolderStructure(props.project, folder, f))
       );
 
       setTimeout(() => {
@@ -474,7 +461,7 @@ export default {
 
     const loadingFileIds = ref([]);
 
-    const createModelFromFile = async file => {
+    const createModelFromFile = async (file) => {
       try {
         loadingFileIds.value.push(file.id);
         const model = await createModel(props.project, file);
@@ -482,31 +469,25 @@ export default {
         pushNotification({
           type: "success",
           title: t("t.success"),
-          message: t("FilesManager.createModelNotification")
+          message: t("FilesManager.createModelNotification"),
         });
       } finally {
-        loadingFileIds.value = loadingFileIds.value.filter(
-          id => id !== file.id
-        );
+        loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
       }
     };
 
-    const removeModel = async file => {
+    const removeModel = async (file) => {
       try {
         loadingFileIds.value.push(file.id);
-        await deleteModels(props.project, [
-          { id: file.model_id, type: file.model_type }
-        ]);
+        await deleteModels(props.project, [{ id: file.model_id, type: file.model_type }]);
       } finally {
-        loadingFileIds.value = loadingFileIds.value.filter(
-          id => id !== file.id
-        );
+        loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
       }
     };
 
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
-    const openDeleteModal = models => {
+    const openDeleteModal = (models) => {
       filesToDelete.value = models;
       showDeleteModal.value = true;
     };
@@ -515,11 +496,11 @@ export default {
       showDeleteModal.value = false;
     };
 
-    const moveFiles = async event => {
+    const moveFiles = async (event) => {
       await move(props.project, event.files, event.dest);
     };
 
-    const downloadFiles = async files => {
+    const downloadFiles = async (files) => {
       await download(props.project, files);
     };
 
@@ -530,10 +511,10 @@ export default {
     const showTagManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
-    const currentVisa = ref(null)
+    const currentVisa = ref(null);
 
     let stopCurrentFilesWatcher;
-    const openAccessManager = folder => {
+    const openAccessManager = (folder) => {
       folderToManage.value = folder;
       showAccessManager.value = true;
       showVersioningManager.value = false;
@@ -544,8 +525,8 @@ export default {
       // folder data in access manager accordingly
       stopCurrentFilesWatcher = watch(
         () => currentFiles.value,
-        files => {
-          const newFolder = files.find(file => file.id === folder.id);
+        (files) => {
+          const newFolder = files.find((file) => file.id === folder.id);
           if (newFolder) {
             folderToManage.value = newFolder;
           } else {
@@ -563,7 +544,7 @@ export default {
       }, 100);
     };
 
-    const openVisaManager = file => {
+    const openVisaManager = (file) => {
       if (file?.file_name) {
         fileToManage.value = file;
       } else {
@@ -585,7 +566,7 @@ export default {
       }, 100);
     };
 
-    const openTagManager = file => {
+    const openTagManager = (file) => {
       if (file.file_name) {
         fileToManage.value = file;
         showSidePanel.value = true;
@@ -600,7 +581,7 @@ export default {
       }, 100);
     };
 
-    const openVersioningManager = file => {
+    const openVersioningManager = (file) => {
       if (file.file_name) {
         fileToManage.value = file;
         showVersioningManager.value = true;
@@ -624,14 +605,14 @@ export default {
 
         const [toValidateResponse, createdResponse] = await Promise.all([
           fetchToValidateVisas(props.project),
-          fetchCreatedVisas(props.project)
+          fetchCreatedVisas(props.project),
         ]);
 
         toValidateVisas.value = toValidateResponse;
         createdVisas.value = createdResponse;
         if (route.query.visaId) {
           currentVisa.value = toValidateVisas.value.find(
-            v => v.id === parseInt(route.query.visaId)
+            (v) => v.id === parseInt(route.query.visaId)
           );
           if (currentVisa.value) {
             openVisaManager();
@@ -644,9 +625,8 @@ export default {
 
     const visasCounter = computed(
       () =>
-        toValidateVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE)
-          .length +
-        createdVisas.value.filter(v => v.status !== VISA_STATUS.CLOSE).length
+        toValidateVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length +
+        createdVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length
     );
 
     const fetchTags = async () => {
@@ -655,8 +635,8 @@ export default {
 
     const importFromOtherProjectsActions = computed(() => {
       return spaceProjects.value
-        .filter(project => project.id != props.project.id)
-        .map(project => ({
+        .filter((project) => project.id != props.project.id)
+        .map((project) => ({
           name: project.name,
           action: () => {
             openModal({
@@ -666,10 +646,10 @@ export default {
                 currentProject: props.project,
                 onSuccess() {
                   emit("file-updated");
-                }
+                },
               },
             });
-          }
+          },
         }));
     });
 
@@ -681,11 +661,11 @@ export default {
         items.push(
           {
             name: t("FilesManager.structureImport"),
-            children: { list: importFromOtherProjectsActions.value }
+            children: { list: importFromOtherProjectsActions.value },
           },
           {
             name: t("FilesManager.gedDownload"),
-            action: () => downloadFiles([projectFileStructure.value])
+            action: () => downloadFiles([projectFileStructure.value]),
           }
         );
       }
@@ -697,11 +677,11 @@ export default {
             openModal({
               component: FileDragAndDropModal,
               props: {
-                onDrop: event => uploadFiles(event)
-              }
+                onDrop: (event) => uploadFiles(event),
+              },
             });
             dropdown.value.displayed = false; // force close the drop down menu
-          }
+          },
         });
       }
 
@@ -717,9 +697,7 @@ export default {
     const dropdownMaxHeight = computed(() => {
       if (!fileManager.value || !dropdown.value) return;
       const { y, height: H } = dropdown.value.$el.getBoundingClientRect();
-      return `${
-        fileManager.value?.$el?.getBoundingClientRect().height - H - y
-      }px`;
+      return `${fileManager.value?.$el?.getBoundingClientRect().height - H - y}px`;
     });
 
     const shouldSubscribe = inject("shouldSubscribe");
@@ -786,9 +764,9 @@ export default {
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,
-      isXXXL
+      isXXXL,
     };
-  }
+  },
 };
 </script>
 

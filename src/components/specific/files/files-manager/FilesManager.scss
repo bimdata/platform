@@ -1,153 +1,149 @@
 .files-manager {
   position: relative;
   overflow-x: hidden;
+  --header-height: 38px;
+  --actions-height: 32px;
+  --actions-max-width: 438px;
+  --tree-max-width: 400px;
 
-  &:deep() {
-    --header-height: 38px;
-    --actions-height: 32px;
-    --tree-max-width: 400px;
+  position: relative;
+  z-index: 0;
+  // height: calc(100% - var(--header-height));
+  height: 100%;
 
-    > .bimdata-card__header {
-      height: var(--header-height);
+  &__actions {
+    display: grid;
+    grid-template-columns: min(25%, var(--actions-max-width)) 1fr min(25%, var(--actions-max-width));
+    grid-template-rows: var(--actions-height) 1fr;
+    gap: var(--spacing-unit);
+    grid-template-areas: "actions-start actions-middle actions-end";
+    .start {
+      display: flex;
+      align-items: center;
+      grid-area: actions-start;
+      gap: 10px;
+    }
+    &__dropdown {
+      &:deep() .bimdata-dropdown__content {
+        box-shadow: var(--box-shadow);
+        border: none;
+        background-color: var(--color-white);
+
+        .ghost-element {
+          width: calc(var(--spacing-unit) / 5);
+        }
+      }
+      .bimdata-textbox {
+        padding: 0;
+      }
+
+      &:deep() .bimdata-dropdown__elements {
+        &__menu-items {
+          &__item {
+            font-size: calc(var(--font-size) / 1.1);
+            padding-left: var(--spacing-unit);
+          }
+        }
+      }
+
+      &:deep() .submenu--down {
+        z-index: 3;
+        width: 470%;
+      }
     }
 
-    > .bimdata-card__submenu {
-      height: var(--submenu-height);
-      z-index: 5;
+    .middle {
+      display: flex;
+      justify-content: center;
+      grid-area: actions-middle;
     }
 
-    > .bimdata-card__content {
-      position: relative;
-      z-index: 0;
-      height: calc(100% - var(--header-height));
+    .end {
+      display: flex;
+      grid-area: actions-end;
+    }
 
-      display: grid;
-      grid-template-columns: min(25%, var(--tree-max-width)) 1fr;
-      grid-template-rows: var(--actions-height) 1fr;
-      gap: var(--spacing-unit);
-      grid-template-areas:
-        "actions-start actions-end"
-        "tree          files";
+    &__btn-new-folder {
+      z-index: 2;
+      width: 48%;
+    }
+    &__btn-new-file {
+      width: 48%;
+      button {
+        padding: 0 var(--spacing-unit);
+      }
+    }
 
-      .files-manager__actions {
-        &.start {
-          display: flex;
-          align-items: center;
-          grid-area: actions-start;
-        }
-        &__dropdown {
-          .bimdata-dropdown__content {
-            padding: 7px 8px 7px 6px;
-            box-shadow: var(--box-shadow);
-            border: none;
+    &__input-search {
+      font-size: 1rem;
+      background-color: var(--color-white);
+      color: var(--color-primary);
+      &.focus {
+        background-color: var(--color-white);
+      }
+    }
 
-            .ghost-element {
-              width: calc(var(--spacing-unit) / 5);
-            }
-          }
-          .bimdata-textbox {
-            padding: 0;
-          }
+    &__visa-tooltip {
+      margin-left: auto;
+    }
 
-          .bimdata-dropdown__elements {
-            &__menu-items {
-              &__item {
-                font-size: calc(var(--font-size) / 1.1);
-                padding-left: var(--spacing-unit);
-              }
-            }
-          }
-
-          .submenu--down {
-            z-index: 3;
-            width: 470%;
-          }
-        }
-
-        &.end {
-          grid-area: actions-end;
-        }
-
+    &__visa {
+      &__content {
         display: flex;
+        align-items: center;
         gap: var(--spacing-unit);
 
-        &__btn-new-folder {
-          z-index: 2;
-          width: 48%;
+        &__counter {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 15px;
+          height: 15px;
+          border-radius: 15%;
+          background-color: var(--color-high);
         }
-        &__btn-new-file {
-          width: 48%;
-          button {
-            padding: 0 var(--spacing-unit);
-          }
-        }
-
-        &__input-search {
-          font-size: 1rem;
-          background-color: var(--color-silver-light);
-          color: var(--color-primary);
-          &.focus {
-            background-color: var(--color-white);
-          }
-        }
-
-        &__visa-tooltip {
-          margin-left: auto;
-        }
-
-        &__visa {
-          &__content {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-unit);
-
-            &__counter {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 15px;
-              height: 15px;
-              border-radius: 15%;
-              background-color: var(--color-high);
-            }
-          }
-        }
-      }
-
-      .files-manager__tree {
-        grid-area: tree;
-        box-shadow: var(--box-shadow);
-      }
-
-      .files-manager__files {
-        grid-area: files;
-        position: relative;
-
-        &__action-bar {
-          position: absolute;
-          z-index: 2;
-          margin-top: 4px;
-          margin-left: 48px;
-        }
-      }
-
-      .files-manager__side-panel {
-        position: absolute;
-        z-index: 5;
-        top: 0;
-        right: 0;
-        width: 420px;
-        height: 100%;
-        box-shadow: var(--box-shadow);
-        background-color: var(--color-white);
-        overflow: auto;
-      }
-
-      .files-manager__onboarding {
-        position: absolute;
-        width: 100%;
-        height: 100%;
       }
     }
+  }
+  &__content {
+    display: grid;
+    grid-template-columns: min(25%, var(--tree-max-width)) 1fr;
+    grid-template-rows: var(--actions-height) 1fr;
+    gap: var(--spacing-unit);
+    grid-template-areas: "tree    files      files";
+  }
+
+  .files-manager__tree {
+    grid-area: tree;
+  }
+
+  .files-manager__files {
+    grid-area: files;
+    position: relative;
+
+    &__action-bar {
+      position: absolute;
+      z-index: 2;
+      margin-top: 4px;
+      margin-left: 48px;
+    }
+  }
+
+  .files-manager__side-panel {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100%;
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+    overflow: auto;
+  }
+
+  .files-manager__onboarding {
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
 }

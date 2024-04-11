@@ -18,9 +18,9 @@
           left: calc(0px - var(--spacing-unit));
           width: calc(100% + var(--spacing-unit) * 2);
           height: 26px;
-          background-color: var(--color-silver);
-          opacity: 0;
-          transition: opacity 0.2s ease-out;
+          border-radius: 15px;
+          background-color: transparent;
+          transition: background-color 0.2s ease-out;
         }
 
         &__name,
@@ -48,13 +48,18 @@
 
       &__node.selected {
         .file-tree-node__node__background {
-          opacity: 0.4;
+          background-color: #e0eef9;
+        }
+        &:hover {
+          .file-tree-node__node__background {
+            background-color: #d7e9f7;
+          }
         }
       }
 
       &__node:hover:not(.selected) {
         .file-tree-node__node__background {
-          opacity: 0.3;
+          background-color: var(--color-white);
         }
       }
     }

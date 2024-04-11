@@ -4,9 +4,10 @@
   &__content {
     width: 100%;
     height: 100%;
-    min-height: 560px;
+    // min-height: 560px;
+    min-height: 100%;
     max-height: 100%;
-    background-color: var(--color-white);
+    // background-color: var(--color-white);
 
     .files-manager {
       width: 100%;
@@ -20,6 +21,7 @@
     .file-tree,
     .files-table {
       overflow: auto;
+      background-color: transparent;
 
       /**
        * Details:
@@ -33,9 +35,7 @@
        *  - 32px                           | files-manager actions height
        *  - var(--spacing-unit)            | files-manager grid gap
        **/
-      height: calc(
-        100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 102px
-      );
+      height: calc(100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 16px);
 
       .bimdata-table__container {
         height: 100%;
@@ -45,7 +45,15 @@
           position: sticky;
           top: 0;
           z-index: 1;
+          background-color: #f2f2f2;
+        }
+
+        table tbody tr:nth-child(odd) {
           background-color: var(--color-white);
+        }
+
+        table td {
+          border-right: 2.5px solid #f2f2f2;
         }
 
         /**
