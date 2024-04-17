@@ -124,7 +124,7 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "update", "edit-metaBuilding"],
+  emits: ["archive", "delete", "download", "edit-metaBuilding", "update"],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,
@@ -153,15 +153,6 @@ export default {
       });
     }
 
-    menuItems.push({
-      key: 2,
-      text: props.model.archived ? "t.unarchive" : "t.archive",
-      icon: props.model.archived ? "unarchive" : "archive",
-      action: () => onClick(props.model.archived ? "unarchive" : "archive"),
-      color: "var(--color-primary)",
-      dataTestId: "btn-archive-model"
-    });
-
     if (props.model.type === MODEL_TYPE.META_BUILDING) {
       menuItems.push({
         key: 3,
@@ -171,6 +162,15 @@ export default {
         color: "var(--color-primary)"
       });
     }
+
+    menuItems.push({
+      key: 2,
+      text: props.model.archived ? "t.unarchive" : "t.archive",
+      icon: props.model.archived ? "unarchive" : "archive",
+      action: () => onClick(props.model.archived ? "unarchive" : "archive"),
+      color: "var(--color-primary)",
+      dataTestId: "btn-archive-model"
+    });
 
     menuItems.push({
       divider: true

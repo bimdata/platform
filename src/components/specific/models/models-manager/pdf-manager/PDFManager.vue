@@ -5,7 +5,7 @@
     :types="types"
     :tabs="tabs"
     @tab-changed="currentTab = $event"
-    @edit-metaBuilding="editBM"
+    @edit-metaBuilding="editMetaBuilding"
     @file-uploaded="$emit('file-uploaded')"
   >
     <template #tablePlaceholder v-if="models.length === 0">
@@ -21,7 +21,7 @@
         </div>
       </div>
     </template>
-    <template #content v-if="currentTab && currentTab.id === 'metaBuildings'">
+    <template #content v-if="currentTab?.id === 'metaBuildings'">
       <BIMDataButton
         v-if="!project.isGuest"
         class="pdf-manager__building-maker-btn"
@@ -30,36 +30,34 @@
         outline
         radius
         icon
-        @click="openBM"
+        @click="openBuildingMaker"
       >
         <BIMDataIconBuilding size="xxxs" margin="0 12px 0 0" />
         <span> {{ $t("t.create") }} </span>
       </BIMDataButton>
 
-      <transition name="slide-fade-right">
-        <div v-if="isOpenBM" class="pdf-manager__building-maker">
-          <BIMDataButton
-            class="pdf-manager__building-maker__close"
-            ghost
-            rounded
-            icon
-            @click="closeBM"
-          >
-            <BIMDataIconClose size="xxs" fill color="granite-light" />
-          </BIMDataButton>
-          <div class="pdf-manager__building-maker__content">
-            <BuildingMaker
-              :apiClient="apiClient"
-              :space="project.cloud"
-              :project="project"
-              :model="currentModel"
-              @metaBuilding-created="loadProjectModels(project)"
-              @metaBuilding-updated="loadProjectModels(project)"
-              @metaBuilding-deleted="loadProjectModels(project)"
-            />
-          </div>
+      <AppSidePanelContent :header="false">
+        <BIMDataButton
+          class="pdf-manager__building-maker__close"
+          ghost
+          rounded
+          icon
+          @click="closeBuildingMaker"
+        >
+          <BIMDataIconClose size="xxs" fill color="granite-light" />
+        </BIMDataButton>
+        <div class="pdf-manager__building-maker__content">
+          <BIMDataBuildingMaker
+            :apiClient="apiClient"
+            :space="project.cloud"
+            :project="project"
+            :model="metaBuilding"
+            @metaBuilding-created="loadProjectModels(project)"
+            @metaBuilding-updated="loadProjectModels(project)"
+            @metaBuilding-deleted="loadProjectModels(project)"
+          />
         </div>
-      </transition>
+      </AppSidePanelContent>
     </template>
   </GenericModelsManager>
 </template>
@@ -67,18 +65,24 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import { MODEL_TYPE } from "../../../../../config/models.js";
-import { useToggle } from "../../../../../composables/toggle";
 import { useModels } from "../../../../../state/models.js";
 import apiClient from "../../../../../services/api-client.js";
 import { segregateBySource } from "../../../../../utils/models.js";
 // Components
+import AppSidePanelContent from "../../../app/app-side-panel/AppSidePanelContent.vue";
 import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
 
-const tabsDef = [{ id: "upload" }, { id: "metaBuildings" }, { id: "archive" }];
+const tabsDef = [
+  { id: "upload" },
+  { id: "metaBuildings" },
+  { id: "archive" }
+];
 
 export default {
   components: {
+    AppSidePanelContent,
     GenericModelsManager
   },
   props: {
@@ -99,16 +103,15 @@ export default {
   setup(props) {
     const { locale, fallbackLocale } = useI18n();
     const { loadProjectModels } = useModels();
-    const { isOpen: isOpenBM, close: closeBM, open: openBM } = useToggle();
+    const { openSidePanel: openBuildingMaker, closeSidePanel: closeBuildingMaker } = useAppSidePanel();
 
     const tabs = ref(tabsDef);
     const currentTab = ref(null);
-    const currentModel = ref(null);
+    const metaBuilding = ref(null);
 
-    const editBM = model => {
-      currentModel.value = model;
-      openBM();
-      setTimeout(() => (currentModel.value = null), 100);
+    const editMetaBuilding = model => {
+      metaBuilding.value = model;
+      openBuildingMaker();
     };
 
     watch(
@@ -140,16 +143,15 @@ export default {
     return {
       // References
       apiClient,
-      currentModel,
       currentTab,
-      isOpenBM,
+      metaBuilding,
       placeholderBackground,
       tabs,
       // Methods
-      closeBM,
-      editBM,
+      closeBuildingMaker,
+      editMetaBuilding,
       loadProjectModels,
-      openBM
+      openBuildingMaker
     };
   }
 };
