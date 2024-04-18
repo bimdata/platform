@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import { useAppSidePanel } from "./app-side-panel.js";
 // Components
 import AppSlot from "../app-slot/AppSlot.js";
@@ -38,8 +39,15 @@ export default {
     AppSlot
   },
   setup() {
-    const { isOpenLeft, contentLeft, isOpenRight, contentRight } =
+    const router = useRouter();
+    const { isOpenLeft, contentLeft, isOpenRight, contentRight, closeSidePanel } =
       useAppSidePanel();
+
+    // Auto-close side panels on route change
+    router.beforeEach(() => {
+      closeSidePanel("left");
+      closeSidePanel("right");
+    });
 
     return { isOpenLeft, contentLeft, isOpenRight, contentRight };
   }

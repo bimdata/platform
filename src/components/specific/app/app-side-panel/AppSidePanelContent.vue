@@ -2,7 +2,7 @@
   <AppSlotContent :name="`app-side-panel-${side}`">
     <div v-if="header" class="app-side-panel__header">
       <slot name="header">
-        <span class="app-side-panel__header__title">
+        <span class="title">
           {{ title }}
         </span>
         <BIMDataButton ghost rounded icon @click="closeSidePanel(side)">
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { onBeforeRouteLeave } from "vue-router";
 import { useAppSidePanel } from "./app-side-panel.js";
 // Components
 import AppSlotContent from "../app-slot/AppSlotContent.js";
@@ -44,25 +43,19 @@ export default {
   setup() {
     const { closeSidePanel } = useAppSidePanel();
 
-    // Auto-close side panel(s) on route change
-    onBeforeRouteLeave(() => {
-      closeSidePanel("left");
-      closeSidePanel("right");
-    });
-
     return { closeSidePanel };
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .app-side-panel__header {
   display: flex;
   align-items: center;
   height: var(--header-height);
   padding: calc(var(--spacing-unit) / 2) 0;
 
-  &__title {
+  .title {
     flex-grow: 1;
     font-weight: bold;
   }
