@@ -1,0 +1,24 @@
+.files-table-manager {
+  .bimdata-tabs__container__tab {
+    border-bottom: 1px solid #eeeeee;
+  }
+  &__tab-label {
+    font-size: 11px;
+  }
+  &__tab-count {
+    padding: 0 6px;
+    min-width: 17px;
+    height: 17px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-size: 10px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bimdata-table__row--drag-overed {
+    outline: solid var(--color-primary) 1px;
+    outline-offset: -1px;
+  }
+}

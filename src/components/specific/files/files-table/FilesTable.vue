@@ -1,108 +1,129 @@
 <template>
-  <BIMDataTable
-    ref="filesTable"
-    class="files-table"
-    data-test-id="files-table"
-    tableLayout="fixed"
-    :columns="columns"
-    :rows="files"
-    rowKey="id"
-    :rowHeight="48"
-    :selectable="true"
-    @selection-changed="$emit('selection-changed', $event)"
-    :canDragOverRow="isFolder"
-    @row-drop="onRowDrop"
-    :placeholder="$t('t.emptyFolder')"
-  >
-  <template #sub-header>
-      <div
-        :style="{
-          display: folder.parent_id ? 'flex' : 'none',
-          alignItems: 'center',
-        }"
+  <div class="files-table-manager">
+    <BIMDataTabs
+      :tabs="filesTabs"
+      width="100%"
+      height="40px"
+      tabSize="160"
+      :selected="selectedFileTab.id"
+      @tab-selected="$emit('tab-selected', $event)"
+    >
+    <template #tab="{ tab }">
+        <span class="files-table-manager__tab-label">
+          {{ tab.text }}
+        </span>
+        <span v-if="tab.id !== 'folders'" class="files-table-manager__tab-count m-l-6">
+          {{ tab.data.length }}
+        </span>
+      </template>
+    </BIMDataTabs>
+    <transition name="fade">
+      <BIMDataTable
+        ref="filesTable"
+        class="files-table"
+        data-test-id="files-table"
+        tableLayout="fixed"
+        :columns="columns"
+        :rows="displayedFiles"
+        rowKey="id"
+        :rowHeight="48"
+        :selectable="true"
+        @selection-changed="$emit('selection-changed', $event)"
+        :canDragOverRow="isFolder"
+        @row-drop="onRowDrop"
+        :placeholder="$t('t.emptyFolder')"
       >
-        <BIMDataButton
-          ghost
-          rounded
-          icon
-          style="margin: 5px 14px"
-          @click="$emit('back-parent-folder', folder)"
-        >
-          <BIMDataIconArrow size="xxs" style="cursor: pointer" />
-        </BIMDataButton>
-        <FilesManagerBreadcrumb :file="folder" @file-clicked="$emit('file-clicked', $event)" />
-      </div>
-      <transition-group name="list">
-        <FileUploadCard
-          v-for="file of fileUploads"
-          :key="file.key"
-          condensed
-          :project="project"
-          :folder="file.folder"
-          :file="file"
-          @upload-completed="onUploadCompleted(file.key, $event)"
-          @upload-canceled="cleanUpload(file.key, 6000)"
-          @upload-failed="cleanUpload(file.key, 12000)"
-        />
-        <FolderUploadCard
-          v-for="folder of folderUploads"
-          :key="folder.key"
-          condensed
-          :project="project"
-          :folder="folder"
-          @upload-completed="onUploadCompleted(folder.key, $event)"
-          @upload-canceled="cleanUpload(folder.key, 6000)"
-          @upload-failed="cleanUpload(folder.key, 12000)"
-        />
-      </transition-group>
-    </template>
-    <template #cell-type="{ row: file }">
-      <FileTypeCell :project="project" :file="file" />
-    </template>
-    <template #cell-name="{ row: file }">
-      <FileNameCell
-        :project="project"
-        :file="file"
-        @file-clicked="$emit('file-clicked', $event)"
-        @open-versioning-manager="$emit('open-versioning-manager', $event)"
-        :editMode="nameEditMode[file.id]"
-        @close="nameEditMode[file.id] = false"
-      />
-    </template>
-    <template #column-filter-empty>
-      <span class="color-granite" style="font-weight: 400;">{{ $t("Tag.emptyTag") }}</span>
-    </template>
-    <template #cell-creator="{ row: { created_by } }">
-      {{ created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?" }}
-    </template>
-    <template #cell-tags="{ row: file }">
-      <FileTagsCell :file="file" :filesTable="filesTable" />
-    </template>
-    <template #cell-lastupdate="{ row: file }">
-      {{ $d(file.updated_at, "long") }}
-    </template>
-    <template #cell-size="{ row: file }">
-      {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
-    </template>
-    <template #cell-actions="{ row: file }">
-      <FileActionsCell
-        :filesTable="filesTable"
-        :project="project"
-        :file="file"
-        :loading="loadingFileIds.includes(file.id)"
-        @create-model="$emit('create-model', file)"
-        @delete="$emit('delete', file)"
-        @download="$emit('download', file)"
-        @file-clicked="$emit('file-clicked', file)"
-        @manage-access="$emit('manage-access', file)"
-        @open-versioning-manager="$emit('open-versioning-manager', file)"
-        @open-visa-manager="$emit('open-visa-manager', file)"
-        @open-tag-manager="$emit('open-tag-manager', file)"
-        @remove-model="$emit('remove-model', file)"
-        @update="nameEditMode[file.id] = true"
-      />
-    </template>
-  </BIMDataTable>
+        <template #sub-header>
+          <div
+            :style="{
+              display: folder.parent_id ? 'flex' : 'none',
+              alignItems: 'center',
+            }"
+          >
+            <BIMDataButton
+              ghost
+              rounded
+              icon
+              style="margin: 5px 14px"
+              @click="$emit('back-parent-folder', folder)"
+            >
+              <BIMDataIconArrow size="xxs" style="cursor: pointer" />
+            </BIMDataButton>
+            <FilesManagerBreadcrumb :file="folder" @file-clicked="$emit('file-clicked', $event)" />
+          </div>
+          <transition-group name="list">
+            <FileUploadCard
+              v-for="file of fileUploads"
+              :key="file.key"
+              condensed
+              :project="project"
+              :folder="file.folder"
+              :file="file"
+              @upload-completed="onUploadCompleted(file.key, $event)"
+              @upload-canceled="cleanUpload(file.key, 6000)"
+              @upload-failed="cleanUpload(file.key, 12000)"
+            />
+            <FolderUploadCard
+              v-for="folder of folderUploads"
+              :key="folder.key"
+              condensed
+              :project="project"
+              :folder="folder"
+              @upload-completed="onUploadCompleted(folder.key, $event)"
+              @upload-canceled="cleanUpload(folder.key, 6000)"
+              @upload-failed="cleanUpload(folder.key, 12000)"
+            />
+          </transition-group>
+        </template>
+        <template #cell-type="{ row: file }">
+          <FileTypeCell :project="project" :file="file" />
+        </template>
+        <template #cell-name="{ row: file }">
+          <FileNameCell
+            :project="project"
+            :file="file"
+            @file-clicked="$emit('file-clicked', $event)"
+            @open-versioning-manager="$emit('open-versioning-manager', $event)"
+            :editMode="nameEditMode[file.id]"
+            @close="nameEditMode[file.id] = false"
+          />
+        </template>
+        <template #column-filter-empty>
+          <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
+        </template>
+        <template #cell-created_by="{ row: { created_by } }">
+          {{ created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?" }}
+        </template>
+        <template #cell-tags="{ row: file }">
+          <FileTagsCell :file="file" :filesTable="filesTable" />
+        </template>
+        <template #cell-lastupdate="{ row: file }">
+          {{ $d(file.updated_at, "long") }}
+        </template>
+        <template #cell-size="{ row: file }">
+          {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
+        </template>
+        <template #cell-actions="{ row: file }">
+          <FileActionsCell
+            :filesTable="filesTable"
+            :project="project"
+            :file="file"
+            :loading="loadingFileIds.includes(file.id)"
+            @create-model="$emit('create-model', file)"
+            @delete="$emit('delete', file)"
+            @download="$emit('download', file)"
+            @file-clicked="$emit('file-clicked', file)"
+            @manage-access="$emit('manage-access', file)"
+            @open-versioning-manager="$emit('open-versioning-manager', file)"
+            @open-visa-manager="$emit('open-visa-manager', file)"
+            @open-tag-manager="$emit('open-tag-manager', file)"
+            @remove-model="$emit('remove-model', file)"
+            @update="nameEditMode[file.id] = true"
+          />
+        </template>
+      </BIMDataTable>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -157,7 +178,16 @@ export default {
     },
     allTags: {
       type: Array,
-    }
+    },
+    allFiles: {
+      type: Array,
+    },
+    filesTabs: {
+      type: Array,
+    },
+    selectedFileTab: {
+      type: Object,
+    },
   },
   emits: [
     "back-parent-folder",
@@ -173,6 +203,7 @@ export default {
     "remove-model",
     "row-drop",
     "selection-changed",
+    "tab-selected"
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -249,14 +280,20 @@ export default {
       }, delay);
     };
 
-    const updateFilters = columnFilter => {
-      filters.value = filters.value.filter(
-        filter => filter.columnKey !== columnFilter.columnKey,
-      );
+    const updateFilters = (columnFilter) => {
+      filters.value = filters.value.filter((filter) => filter.columnKey !== columnFilter.columnKey);
       if (columnFilter.columnFilters.length > 0) {
         filters.value.push(columnFilter);
       }
     };
+
+    const displayedFiles = computed(() => {
+      if(props.selectedFileTab.id === "folders") {
+        return props.files;
+      } else {
+        return props.selectedFileTab.data;
+      }
+    });
 
     return {
       // References
@@ -265,6 +302,7 @@ export default {
       fileUploads,
       folderUploads,
       nameEditMode,
+      displayedFiles,
       // Methods
       cleanUpload,
       formatBytes,
@@ -279,9 +317,4 @@ export default {
 };
 </script>
 
-<style>
-.bimdata-table__row--drag-overed {
-  outline: solid var(--color-primary) 1px;
-  outline-offset: -1px;
-}
-</style>
+<style lang="scss" src="./FilesTable.scss"></style>
