@@ -2,7 +2,7 @@
   <div class="files-manager">
     <template v-if="fileStructure.children.length > 0">
       <div class="files-manager__actions">
-        <div class="start">
+        <div class="start" v-if="selectedFileTab.id === 'folders'">
           <template v-if="menuItems.length > 0">
             <BIMDataDropdownMenu
               ref="dropdown"
@@ -169,16 +169,22 @@
     </template>
     <template v-if="fileStructure.children.length > 0">
       <div class="files-manager__content">
-        <FileTree
-          data-guide="file-tree"
-          class="files-manager__tree"
-          :project="project"
-          :fileStructure="fileStructure"
-          :selectedFile="currentFolder"
-          @file-selected="onFileSelected"
-        />
+        <transition name="slide-fade-left">
+          <FileTree
+            v-if="selectedFileTab.id === 'folders'"
+            data-guide="file-tree"
+            class="files-manager__tree"
+            :project="project"
+            :fileStructure="fileStructure"
+            :selectedFile="currentFolder"
+            @file-selected="onFileSelected"
+          />
+        </transition>
 
-        <div class="files-manager__files">
+        <div
+          class="files-manager__files"
+          :class="selectedFileTab.id !== 'folders' ? `without-tree` : ''"
+        >
           <transition name="fade">
             <FilesActionBar
               class="files-manager__files__action-bar"
@@ -192,33 +198,38 @@
               @move="moveFiles"
             />
           </transition>
-          
-          <FilesTable
-            data-test-id="files-table"
-            class="files-manager__files__table"
-            :project="project"
-            :folder="currentFolder"
-            :files="displayedFiles"
-            :filesToUpload="filesToUpload"
-            :foldersToUpload="foldersToUpload"
-            :loadingFileIds="loadingFileIds"
-            :allTags="allTags"
-            @back-parent-folder="backToParent"
-            @create-model="createModelFromFile"
-            @remove-model="removeModel"
-            @delete="openDeleteModal([$event])"
-            @download="downloadFiles([$event])"
-            @file-clicked="onFileSelected"
-            @file-uploaded="$emit('file-uploaded')"
-            @dragover.prevent="() => {}"
-            @drop.prevent="uploadFiles"
-            @row-drop="({ event, data }) => uploadFiles(event, data)"
-            @selection-changed="setSelection"
-            @manage-access="openAccessManager"
-            @open-visa-manager="openVisaManager"
-            @open-tag-manager="openTagManager"
-            @open-versioning-manager="openVersioningManager"
-          />
+          <transition name="slide-fade-left">
+            <FilesTable
+              data-test-id="files-table"
+              class="files-manager__files__table"
+              :project="project"
+              :folder="currentFolder"
+              :files="displayedFiles"
+              :filesToUpload="filesToUpload"
+              :foldersToUpload="foldersToUpload"
+              :loadingFileIds="loadingFileIds"
+              :allTags="allTags"
+              :allFiles="allFiles"
+              :filesTabs="filesTabs"
+              :selectedFileTab="selectedFileTab"
+              @tab-selected="onTabChange"
+              @back-parent-folder="backToParent"
+              @create-model="createModelFromFile"
+              @remove-model="removeModel"
+              @delete="openDeleteModal([$event])"
+              @download="downloadFiles([$event])"
+              @file-clicked="onFileSelected"
+              @file-uploaded="$emit('file-uploaded')"
+              @dragover.prevent="() => {}"
+              @drop.prevent="uploadFiles"
+              @row-drop="({ event, data }) => uploadFiles(event, data)"
+              @selection-changed="setSelection"
+              @manage-access="openAccessManager"
+              @open-visa-manager="openVisaManager"
+              @open-tag-manager="openTagManager"
+              @open-versioning-manager="openVersioningManager"
+            />
+          </transition>
         </div>
 
         <transition name="slide-fade-right">
@@ -286,7 +297,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch, inject } from "vue";
+import { computed, onMounted, ref, watch, inject, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
@@ -705,6 +716,44 @@ export default {
       openModal({ component: SubscriptionModal });
     };
 
+    const getFilesInFolder = (folder) => {
+      const files = [];
+      folder.children.forEach((child) => {
+        if (isFolder(child)) {
+          files.push(...getFilesInFolder(child));
+        } else {
+          files.push(child);
+        }
+      });
+      return files;
+    };
+    const allFiles = computed(() =>
+      props.fileStructure.children.flatMap((file) => {
+        if (isFolder(file)) {
+          return getFilesInFolder(file);
+        } else {
+          return file;
+        }
+      })
+    );
+
+    const filesTabs = reactive([
+      {
+        id: "folders",
+        text: "Dossiers",
+        data: props.fileStructure.children,
+      },
+      {
+        id: "files",
+        text: "Tous les fichiers",
+        data: allFiles.value,
+      },
+    ]);
+    const selectedFileTab = ref(filesTabs[0]);
+    const onTabChange = (tab) => {
+      selectedFileTab.value = tab;
+    };
+
     return {
       // References
       currentFolder,
@@ -736,6 +785,9 @@ export default {
       dropdown,
       menuItems,
       loadingFileIds,
+      allFiles,
+      filesTabs,
+      selectedFileTab,
       // Methods
       closeAccessManager,
       closeDeleteModal,
@@ -761,6 +813,7 @@ export default {
       isFullTotal,
       fileUploadInput,
       openSubscriptionModal,
+      onTabChange,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,

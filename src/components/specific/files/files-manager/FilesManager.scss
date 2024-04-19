@@ -127,6 +127,10 @@
       margin-top: 4px;
       margin-left: 48px;
     }
+
+    &.without-tree {
+      grid-area: tree / tree / files / files;
+    }
   }
 
   .files-manager__side-panel {
