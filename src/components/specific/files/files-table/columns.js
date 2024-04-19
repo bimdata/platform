@@ -35,25 +35,12 @@ export default [
     defaultSortOrder: "desc"
   },
   {
-    id: "creator",
+    id: "created_by",
     text: "t.createdBy",
     width: "160px",
     align: "center",
-    sortable: true,
-    defaultSortOrder: "asc",
-    sortFunction: (a, b) => {
-      const fullNameA = `${a.created_by.firstname} ${a.created_by.lastlame}`;
-      const fullNameB = `${b.created_by.firstname} ${b.created_by.lastlame}`;
-      return fullNameA < fullNameB ? 1 : -1;
-    },
-  },
-  {
-    id: "tags",
-    text: "FilesTable.headers.tags",
-    width: "120px",
-    align: "center",
     filter: true,
-    filterKey: "name",
+    filterFunction: rowData => `${rowData.lastname} ${rowData.firstname}`,
   },
   {
     id: "lastupdate",
@@ -75,6 +62,14 @@ export default [
     align: "center",
     sortable: true,
     defaultSortOrder: "asc"
+  },
+  {
+    id: "tags",
+    text: "FilesTable.headers.tags",
+    width: "120px",
+    align: "center",
+    filter: true,
+    filterKey: "name",
   },
   {
     id: "actions",
