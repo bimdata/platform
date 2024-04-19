@@ -14,14 +14,14 @@
           v-if="project.isAdmin"
           data-test-id="btn-manage-groups"
           data-guide="btn-manage-groups"
-          :width="isLG ? undefined : '120px'"
+          :width="isXXL ? undefined : '120px'"
           color="primary"
           fill
           radius
-          :icon="isLG"
+          :icon="isXXL"
         >
           <BIMDataIconGroup size="s" />
-          <span v-if="!isLG" style="margin-left: 6px">
+          <span v-if="!isXXL" style="margin-left: 6px">
             {{ $t("ProjectFiles.groupsButtonText") }}
           </span>
         </BIMDataButton>
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import routeNames from "../../../router/route-names.js";
 import { useFiles } from "../../../state/files.js";

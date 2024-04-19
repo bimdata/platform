@@ -35,7 +35,7 @@
        *  - 32px                           | files-manager actions height
        *  - var(--spacing-unit)            | files-manager grid gap
        **/
-      height: calc(100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 16px);
+      height: calc(100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 16px - 40px);
 
       .bimdata-table__container {
         height: 100%;
