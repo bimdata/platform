@@ -1,5 +1,17 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
+    <template v-if="model.type === MODEL_TYPE.META_BUILDING">
+      <BIMDataButton
+        color="primary"
+        outline
+        radius
+        icon
+        @click="onClick('view-metaBuilding')"
+      >
+      <BIMDataIconStructure size="s" />
+    </BIMDataButton>
+    </template>
+
     <template v-if="model.type === MODEL_TYPE.IFC">
       <template v-for="window of [WINDOWS.IFC2D, WINDOWS.IFC3D]" :key="window">
         <ViewerButton
@@ -124,7 +136,14 @@ export default {
       required: true
     }
   },
-  emits: ["archive", "delete", "download", "edit-metaBuilding", "update"],
+  emits: [
+    "archive",
+    "delete",
+    "download",
+    "edit-metaBuilding",
+    "update",
+    "view-metaBuilding"
+  ],
   setup(props, { emit }) {
     const {
       isOpen: showMenu,

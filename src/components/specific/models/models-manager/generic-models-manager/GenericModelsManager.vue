@@ -62,6 +62,7 @@
       @unarchive="unarchiveModels([$event])"
       @delete="openDeleteModal([$event])"
       @download="downloadModels([$event])"
+      @view-metaBuilding="$emit('view-metaBuilding', $event)"
       @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
     >
       <template #placeholder>
@@ -117,7 +118,12 @@ export default {
       required: true
     }
   },
-  emits: ["edit-metaBuilding", "file-uploaded", "tab-changed"],
+  emits: [
+    "edit-metaBuilding",
+    "file-uploaded",
+    "tab-changed",
+    "view-metaBuilding"
+  ],
   setup(props, { emit }) {
     const { createModel, updateModels } = useModels();
     const { downloadFiles: download } = useFiles();

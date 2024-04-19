@@ -31,21 +31,4 @@
     right: 124px;
     top: 3px;
   }
-
-  &__building-maker {
-    &__close {
-      position: absolute;
-      z-index: 1001;
-      top: calc(var(--spacing-unit) / 2);
-      right: var(--spacing-unit);
-    }
-
-    &__content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
 }

@@ -57,6 +57,7 @@
         @download="$emit('download', $event)"
         @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
+        @view-metaBuilding="$emit('view-metaBuilding', $event)"
         @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
       />
     </template>
@@ -109,8 +110,12 @@ export default {
     "file-uploaded",
     "selection-changed",
     "unarchive",
+<<<<<<< HEAD
     "upload-canceled",
     "upload-failed",
+=======
+    "view-metaBuilding",
+>>>>>>> c1fba15d (feat(models): meta-building-structure integration)
   ],
   setup(props) {
     const { t } = useI18n();
