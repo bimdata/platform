@@ -115,15 +115,11 @@ function fileUploadInput(type, onChange, attrs = {}) {
   input.hidden = true;
   input.webkitdirectory = type === "folder";
 
-  let attrsList = Object.keys(attrs);
-
-  if (attrsList.includes("accept")) {
-    input.accept = attrs.accept.join(",");
-    attrsList = attrsList.filter(attr => attr !== "accept");
-  }
-
-  attrsList.forEach(prop => {
-    input[prop] = attrs[prop];
+  Object.entries(attrs).forEach(([key, value]) => {
+    if (key === "accept" && Array.isArray(value)) {
+      value = value.join(",");
+    }
+    input[key] = value;
   });
 
   input.addEventListener(
@@ -133,6 +129,12 @@ function fileUploadInput(type, onChange, attrs = {}) {
       input.remove();
     },
     { once: true }
+  );
+  input.addEventListener(
+    "cancel",
+    () => {
+      input.remove();
+    }
   );
 
   document.body.appendChild(input);
