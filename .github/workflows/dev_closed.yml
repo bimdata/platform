@@ -5,6 +5,10 @@ on:
     types:
       - closed
 
+concurrency:
+  group: dev-${{ github.head_ref }}
+  cancel-in-progress: true
+
 env:
   app: platform
 
