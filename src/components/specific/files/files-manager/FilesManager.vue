@@ -232,46 +232,44 @@
           </transition>
         </div>
 
-        <transition name="slide-fade-right">
-          <div v-show="showSidePanel" class="files-manager__side-panel">
-            <FolderAccessManager
-              v-if="showAccessManager"
-              :project="project"
-              :folder="folderToManage"
-              @close="closeAccessManager"
-            />
-            <VisaMain
-              v-if="showVisaManager"
-              :project="project"
-              :document="fileToManage"
-              :visa="currentVisa"
-              :toValidateVisas="toValidateVisas"
-              :createdVisas="createdVisas"
-              :visasLoading="visasLoading"
-              @fetch-visas="fetchVisas"
-              @close="closeVisaManager"
-              @reach-file="backToParent"
-            />
-            <TagsMain
-              v-if="showTagManager"
-              :project="project"
-              :document="fileToManage"
-              :allTags="allTags"
-              @close="closeTagManager"
-              @fetch-tags="fetchTags"
-              @file-updated="$emit('file-updated')"
-            />
-            <VersioningMain
-              v-if="showVersioningManager"
-              :project="project"
-              :document="fileToManage"
-              :currentFolder="currentFolder"
-              :spaceSubInfo="spaceSubInfo"
-              @file-uploaded="$emit('file-uploaded')"
-              @close="closeVersioningManager"
-            />
-          </div>
-        </transition>
+        <AppSidePanelContent side="right" :header="false">
+          <FolderAccessManager
+            v-if="showAccessManager"
+            :project="project"
+            :folder="folderToManage"
+            @close="closeSidePanel"
+          />
+          <VisaMain
+            v-else-if="showVisaManager"
+            :project="project"
+            :document="fileToManage"
+            :visa="currentVisa"
+            :toValidateVisas="toValidateVisas"
+            :createdVisas="createdVisas"
+            :visasLoading="visasLoading"
+            @fetch-visas="fetchVisas"
+            @close="closeVisaManager"
+            @reach-file="backToParent"
+          />
+          <TagsMain
+            v-else-if="showTagManager"
+            :project="project"
+            :document="fileToManage"
+            :allTags="allTags"
+            @close="closeTagManager"
+            @fetch-tags="fetchTags"
+            @file-updated="$emit('file-updated')"
+          />
+          <VersioningMain
+            v-else-if="showVersioningManager"
+            :project="project"
+            :document="fileToManage"
+            :currentFolder="currentFolder"
+            :spaceSubInfo="spaceSubInfo"
+            @file-uploaded="$emit('file-uploaded')"
+            @close="closeVersioningManager"
+          />
+        </AppSidePanelContent>
 
         <transition name="fade">
           <FilesDeleteModal
@@ -302,6 +300,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
+import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import {
   useStandardBreakpoints,
@@ -321,6 +320,7 @@ import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
+import AppSidePanelContent from "../../../specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppModalContent from "../../app/app-modal/AppModalContent.vue";
 import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
@@ -339,6 +339,7 @@ import FileDragAndDropModal from "./file-drag-and-drop-modal/FileDragAndDropModa
 
 export default {
   components: {
+    AppSidePanelContent,
     AppModalContent,
     FilesActionBar,
     FilesDeleteModal,
@@ -515,7 +516,8 @@ export default {
       await download(props.project, files);
     };
 
-    const showSidePanel = ref(false);
+    const { openSidePanel, closeSidePanel } = useAppSidePanel();
+
     const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
@@ -531,7 +533,7 @@ export default {
       showVersioningManager.value = false;
       showVisaManager.value = false;
       showTagManager.value = false;
-      showSidePanel.value = true;
+      openSidePanel();
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
       stopCurrentFilesWatcher = watch(
@@ -548,14 +550,14 @@ export default {
     };
     const closeAccessManager = () => {
       stopCurrentFilesWatcher();
-      showSidePanel.value = false;
       setTimeout(() => {
-        showAccessManager.value = false;
+        closeSidePanel();
         folderToManage.value = null;
       }, 100);
     };
 
     const openVisaManager = (file) => {
+      openSidePanel();
       if (file?.file_name) {
         fileToManage.value = file;
       } else {
@@ -565,11 +567,10 @@ export default {
       showVersioningManager.value = false;
       showAccessManager.value = false;
       showTagManager.value = false;
-      showSidePanel.value = true;
     };
 
     const closeVisaManager = () => {
-      showSidePanel.value = false;
+      closeSidePanel();
       setTimeout(() => {
         showVisaManager.value = false;
         fileToManage.value = null;
@@ -578,32 +579,32 @@ export default {
     };
 
     const openTagManager = (file) => {
+      openSidePanel();
       if (file.file_name) {
         fileToManage.value = file;
-        showSidePanel.value = true;
         showTagManager.value = true;
       }
     };
 
     const closeTagManager = () => {
-      showSidePanel.value = false;
+      closeSidePanel();
       setTimeout(() => {
         showTagManager.value = false;
       }, 100);
     };
 
     const openVersioningManager = (file) => {
+      openSidePanel();
       if (file.file_name) {
         fileToManage.value = file;
         showVersioningManager.value = true;
         showAccessManager.value = false;
         showVisaManager.value = false;
-        showSidePanel.value = true;
       }
     };
 
     const closeVersioningManager = () => {
-      showSidePanel.value = false;
+      closeSidePanel();
       setTimeout(() => {
         showVersioningManager.value = false;
         fileToManage.value = null;
@@ -767,7 +768,6 @@ export default {
       showAccessManager,
       showVisaManager,
       showDeleteModal,
-      showSidePanel,
       fileToManage,
       currentVisa,
       toValidateVisas,
@@ -789,6 +789,8 @@ export default {
       filesTabs,
       selectedFileTab,
       // Methods
+      openSidePanel,
+      closeSidePanel,
       closeAccessManager,
       closeDeleteModal,
       createModelFromFile,
