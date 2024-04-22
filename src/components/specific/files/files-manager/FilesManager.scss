@@ -121,28 +121,29 @@
     grid-area: files;
     position: relative;
 
+    &__table {
+      &:deep() {
+        .bimdata-tabs {
+          .bimdata-tabs__container__tab.active {
+            background-color: rgba(47, 55, 74, 0.1);
+          }
+          .bimdata-tabs__container__tab:hover {
+            background-color: rgba(47, 55, 74, 0.03);
+          }
+        }
+      }
+    }
+
     &__action-bar {
       position: absolute;
-      z-index: 2;
-      margin-top: 4px;
+      z-index: 3;
+      margin-top: 48px;
       margin-left: 48px;
     }
 
     &.without-tree {
       grid-area: tree / tree / files / files;
     }
-  }
-
-  .files-manager__side-panel {
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    right: 0;
-    width: 420px;
-    height: 100%;
-    box-shadow: var(--box-shadow);
-    background-color: var(--color-white);
-    overflow: auto;
   }
 
   .files-manager__onboarding {
