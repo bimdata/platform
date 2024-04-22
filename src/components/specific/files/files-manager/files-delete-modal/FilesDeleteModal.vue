@@ -1,23 +1,23 @@
 <template>
-  <GenericModal
-    class="files-delete-modal"
-    contentWidth="450px"
-    zIndex="8"
-    @close="$emit('close')"
-  >
-    <template #header>
+  <div class="files-delete-modal p-24">
+    <div class="files-delete-modal__actions">
+      <BIMDataButton ghost rounded color="default" icon @click="close">
+      <BIMDataIconClose size="xxs"  />
+    </BIMDataButton>
+    </div>
+    <div class="files-delete-modal__header flex justify-center">
       {{ $t("FilesDeleteModal.title") }}
-    </template>
-    <template #body>
-      <div class="files-delete-modal__message">
-        <div>
+    </div>
+    <div class="files-delete-modal__content m-y-24">
+      <div class="files-delete-modal__content__message">
+        <span>
           {{
             $t(`FilesDeleteModal.${hasVersions ? "messageVersion" : "message"}`)
           }}
-        </div>
-        <ul class="files-delete-modal__message__list">
+        </span>
+        <ul class="files-delete-modal__content__message__list">
           <li
-            class="files-delete-modal__message__list__item"
+            class="files-delete-modal__content__message__list__item"
             v-for="file of files"
             :key="file.id"
           >
@@ -25,9 +25,9 @@
           </li>
         </ul>
       </div>
-    </template>
-    <template #footer>
-      <BIMDataButton ghost radius width="120px" @click="$emit('close')">
+    </div>
+    <div class="files-delete-modal__footer flex justify-center">
+      <BIMDataButton ghost radius width="120px" @click="close">
         {{ $t("t.cancel") }}
       </BIMDataButton>
       <BIMDataButton
@@ -40,19 +40,19 @@
       >
         {{ $t("t.delete") }}
       </BIMDataButton>
-    </template>
-  </GenericModal>
+    </div>
+  </div>
 </template>
 
 <script>
 import { computed } from "vue";
 import { useFiles } from "../../../../../state/files.js";
 // Components
-import GenericModal from "../../../../generic/generic-modal/GenericModal.vue";
+import AppModalContent from "../../../app/app-modal/AppModalContent.vue";
 
 export default {
   components: {
-    GenericModal
+    AppModalContent
   },
   props: {
     project: {
@@ -62,24 +62,32 @@ export default {
     files: {
       type: Array,
       required: true
+    },
+    onClose: {
+      type: Function,
+      required: true,
     }
   },
-  emits: ["close"],
-  setup(props, { emit }) {
+  setup(props) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
 
     const hasVersions = computed(() =>
       props.files.some(file => file.history?.length > 1)
     );
 
+    const close = () => {
+      props.onClose();
+    }
+
     const submit = () => {
       deleteFiles(props.project, props.files);
       softUpdateFileStructure("delete", props.files);
-      emit("close");
+      close();
     };
 
     return {
       submit,
+      close,
       hasVersions
     };
   }

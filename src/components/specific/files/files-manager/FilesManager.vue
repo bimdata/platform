@@ -270,15 +270,6 @@
             @close="closeVersioningManager"
           />
         </AppSidePanelContent>
-
-        <transition name="fade">
-          <FilesDeleteModal
-            v-if="showDeleteModal"
-            :project="project"
-            :files="filesToDelete"
-            @close="closeDeleteModal"
-          />
-        </transition>
       </div>
     </template>
 
@@ -501,11 +492,19 @@ export default {
     const showDeleteModal = ref(false);
     const openDeleteModal = (models) => {
       filesToDelete.value = models;
+      openModal({
+          component: FilesDeleteModal,
+          props: {
+            project: props.project,
+            files: filesToDelete.value,
+            onClose: closeModal,
+          },
+        });
       showDeleteModal.value = true;
     };
     const closeDeleteModal = () => {
       filesToDelete.value = [];
-      showDeleteModal.value = false;
+      closeModal();
     };
 
     const moveFiles = async (event) => {
