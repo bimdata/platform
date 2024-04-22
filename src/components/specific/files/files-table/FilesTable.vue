@@ -291,7 +291,7 @@ export default {
       if(props.selectedFileTab.id === "folders") {
         return props.files;
       } else {
-        return props.selectedFileTab.data;
+        return props.allFiles;
       }
     });
 
