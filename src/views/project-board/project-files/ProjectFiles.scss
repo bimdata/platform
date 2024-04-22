@@ -65,5 +65,15 @@
         }
       }
     }
+    .files-table {
+      table {
+        thead {
+          tr:first-child {
+            z-index: 2;
+            position: relative;
+          }
+        }
+      }
+    }
   }
 }
