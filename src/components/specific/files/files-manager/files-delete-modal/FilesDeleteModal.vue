@@ -68,6 +68,7 @@ export default {
       required: true,
     }
   },
+  emits: ["close"],
   setup(props) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
 
@@ -83,6 +84,7 @@ export default {
       deleteFiles(props.project, props.files);
       softUpdateFileStructure("delete", props.files);
       close();
+      emit("close");
     };
 
     return {
