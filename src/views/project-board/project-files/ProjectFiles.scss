@@ -74,6 +74,14 @@
           }
         }
       }
+      .upload-card {
+        height: 48px;
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        background-color: var(--color-white);
+        box-shadow: var(--box-shadow);
+      }
     }
   }
 }
