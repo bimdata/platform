@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
 
+concurrency:
+  group: dev-${{ github.head_ref }}
+  cancel-in-progress: true
+
 env:
   app: platform
 
@@ -63,6 +67,9 @@ jobs:
     runs-on: [self-hosted, common]
     needs: build-and-push
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
       - name: Login to BIMData Docker Registry
         uses: docker/login-action@v3
         with:
