@@ -5,8 +5,9 @@
     :types="types"
     :tabs="tabs"
     @tab-changed="currentTab = $event"
-    @edit-metaBuilding="editMetaBuilding"
     @file-uploaded="$emit('file-uploaded')"
+    @edit-metaBuilding="editMetaBuilding"
+    @view-metaBuilding="viewMetaBuilding"
   >
     <template #tablePlaceholder v-if="models.length === 0">
       <div class="pdf-manager__placeholder">
@@ -32,47 +33,23 @@
         icon
         @click="openBuildingMaker"
       >
-        <BIMDataIconBuilding size="xxxs" margin="0 12px 0 0" />
+        <BIMDataIconBuilding size="xs" margin="0 12px 0 0" />
         <span> {{ $t("t.create") }} </span>
       </BIMDataButton>
-
-      <AppSidePanelContent :header="false">
-        <BIMDataButton
-          class="pdf-manager__building-maker__close"
-          ghost
-          rounded
-          icon
-          @click="closeBuildingMaker"
-        >
-          <BIMDataIconClose size="xxs" fill color="granite-light" />
-        </BIMDataButton>
-        <div class="pdf-manager__building-maker__content">
-          <BIMDataBuildingMaker
-            :apiClient="apiClient"
-            :space="project.cloud"
-            :project="project"
-            :model="metaBuilding"
-            @metaBuilding-created="loadProjectModels(project)"
-            @metaBuilding-updated="loadProjectModels(project)"
-            @metaBuilding-deleted="loadProjectModels(project)"
-          />
-        </div>
-      </AppSidePanelContent>
     </template>
   </GenericModelsManager>
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { computed, h, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import { MODEL_TYPE } from "../../../../../config/models.js";
-import { useModels } from "../../../../../state/models.js";
-import apiClient from "../../../../../services/api-client.js";
 import { segregateBySource } from "../../../../../utils/models.js";
 // Components
-import AppSidePanelContent from "../../../app/app-side-panel/AppSidePanelContent.vue";
 import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
+import BuildingMakerPanel from "./BuildingMakerPanel.vue";
+import MetaBuildingStructurePanel from "./MetaBuildingStructurePanel.vue";
 
 const tabsDef = [
   { id: "upload" },
@@ -82,7 +59,6 @@ const tabsDef = [
 
 export default {
   components: {
-    AppSidePanelContent,
     GenericModelsManager
   },
   props: {
@@ -102,16 +78,53 @@ export default {
   emits: ["file-uploaded"],
   setup(props) {
     const { locale, fallbackLocale } = useI18n();
-    const { loadProjectModels } = useModels();
-    const { openSidePanel: openBuildingMaker, closeSidePanel: closeBuildingMaker } = useAppSidePanel();
+    const { openSidePanel, closeSidePanel } = useAppSidePanel();
 
     const tabs = ref(tabsDef);
     const currentTab = ref(null);
-    const metaBuilding = ref(null);
+
+    const openBuildingMaker = () => {
+      openSidePanel("right", {
+        component: {
+          render() {
+            return h(BuildingMakerPanel, {
+              onClose: closeSidePanel,
+              space: props.project.cloud,
+              project: props.project,
+            })
+          }
+        }
+      });
+    };
+
+    const viewMetaBuilding = model => {
+      openSidePanel("right", {
+        component: {
+          render() {
+            return h(MetaBuildingStructurePanel, {
+              onClose: closeSidePanel,
+              space: props.project.cloud,
+              project: props.project,
+              model,
+            })
+          }
+        }
+      });
+    };
 
     const editMetaBuilding = model => {
-      metaBuilding.value = model;
-      openBuildingMaker();
+      openSidePanel("right", {
+        component: {
+          render() {
+            return h(BuildingMakerPanel, {
+              onClose: closeSidePanel,
+              space: props.project.cloud,
+              project: props.project,
+              model,
+            })
+          }
+        }
+      });
     };
 
     watch(
@@ -142,16 +155,13 @@ export default {
 
     return {
       // References
-      apiClient,
       currentTab,
-      metaBuilding,
       placeholderBackground,
       tabs,
       // Methods
-      closeBuildingMaker,
       editMetaBuilding,
-      loadProjectModels,
-      openBuildingMaker
+      openBuildingMaker,
+      viewMetaBuilding,
     };
   }
 };

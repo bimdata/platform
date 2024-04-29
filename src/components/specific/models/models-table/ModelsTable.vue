@@ -57,6 +57,7 @@
         @download="$emit('download', $event)"
         @unarchive="$emit('unarchive', $event)"
         @update="nameEditMode[model.id] = true"
+        @view-metaBuilding="$emit('view-metaBuilding', $event)"
         @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
       />
     </template>
@@ -111,6 +112,7 @@ export default {
     "unarchive",
     "upload-canceled",
     "upload-failed",
+    "view-metaBuilding",
   ],
   setup(props) {
     const { t } = useI18n();
