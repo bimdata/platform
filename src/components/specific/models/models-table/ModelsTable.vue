@@ -12,15 +12,20 @@
     @selection-changed="$emit('selection-changed', $event)"
   >
     <template #sub-header>
-      <transition v-if="fileUpload" name="fade">
-        <FileUploadCard
-          class="m-b-6"
-          condensed
-          :project="project"
-          :file="fileUpload"
-          @upload-completed="$emit('file-uploaded', $event)"
-        />
-      </transition>
+      <div class="file-uploads">
+        <transition-group name="list">
+          <FileUploadCard
+            v-for="file in fileUploads"
+            :key="file.key"
+            condensed
+            :project="project"
+            :file="file"
+            @upload-completed="$emit('file-uploaded', { key: file.key, file: $event })"
+            @upload-canceled="$emit('upload-canceled', { key: file.key })"
+            @upload-failed="$emit('upload-failed', { key: file.key })"
+          />
+        </transition-group>
+      </div>
     </template>
 
     <template #cell-name="{ row: model }">
@@ -91,8 +96,9 @@ export default {
       type: Array,
       required: true
     },
-    fileUpload: {
-      type: Object
+    fileUploads: {
+      type: Array,
+      default: () => [],
     }
   },
   emits: [
@@ -102,7 +108,9 @@ export default {
     "edit-metaBuilding",
     "file-uploaded",
     "selection-changed",
-    "unarchive"
+    "unarchive",
+    "upload-canceled",
+    "upload-failed",
   ],
   setup(props) {
     const { t } = useI18n();
@@ -123,7 +131,7 @@ export default {
       }
       return filteredColumns.map(col => ({
         ...col,
-        label: col.label || t(col.text)
+        label: col.label ?? t(col.text)
       }));
     });
 
@@ -140,8 +148,20 @@ export default {
     return {
       // References
       columns,
-      nameEditMode
+      nameEditMode,
     };
   }
 };
 </script>
+
+<style scoped>
+.models-table {
+  .file-uploads {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+  }
+}
+</style>

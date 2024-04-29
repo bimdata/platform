@@ -53,9 +53,11 @@
       class="generic-models-manager__table"
       :project="project"
       :models="displayedModels"
-      :fileUpload="fileUpload"
-      @file-uploaded="onFileUploaded($event)"
-      @selection-changed="setSelection"
+      :fileUploads="fileUploads"
+      @file-uploaded="onFileUploaded"
+      @upload-canceled="onUploadCanceled"
+      @upload-failed="onUploadCanceled"
+      @selection-changed="selection = $event"
       @archive="archiveModels([$event])"
       @unarchive="unarchiveModels([$event])"
       @delete="openDeleteModal([$event])"
@@ -85,6 +87,7 @@ import { computed, ref, watch, watchEffect } from "vue";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { useModels } from "../../../../../state/models.js";
 import { useFiles } from "../../../../../state/files.js";
+import { wait } from "../../../../../utils/async.js";
 import { isModel } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
@@ -119,7 +122,7 @@ export default {
     const { createModel, updateModels } = useModels();
     const { downloadFiles: download } = useFiles();
 
-    const fileUpload = ref(null);
+    const fileUploads = ref([]);
     const fileExtensions = computed(() =>
       props.types.reduce((ext, t) => ext.concat(MODEL_CONFIG[t].ext), [])
     );
@@ -146,9 +149,6 @@ export default {
     });
 
     const selection = ref([]);
-    const setSelection = models => {
-      selection.value = models;
-    };
 
     const archiveModels = async models => {
       await updateModels(
@@ -185,24 +185,38 @@ export default {
     const uploadModels = () => {
       fileUploadInput(
         "file",
-        event => (fileUpload.value = event.target.files[0]),
-        { accept: fileExtensions.value }
+        event => {
+          fileUploads.value = fileUploads.value.concat(
+            Array.from(event.target.files)
+              .map((file, i) => (file.key = Math.random() * i, file))
+          );
+        },
+        {
+          accept: fileExtensions.value,
+          multiple: true
+        }
       );
     };
 
-    const onFileUploaded = async file => {
+    const onFileUploaded = async ({ key, file }) => {
       if (!isModel(file)) {
         await createModel(props.project, file);
       }
-      fileUpload.value = null;
+      const index = fileUploads.value.findIndex(f => f.key === key);
+      fileUploads.value.splice(index, 1);
       emit("file-uploaded");
+    };
+    const onUploadCanceled = async ({ key }) => {
+      await wait(3000);
+      const index = fileUploads.value.findIndex(f => f.key === key);
+      fileUploads.value.splice(index, 1);
     };
 
     return {
       // References
       currentTab,
       displayedModels,
-      fileUpload,
+      fileUploads,
       modelsToDelete,
       selection,
       showDeleteModal,
@@ -211,9 +225,9 @@ export default {
       closeDeleteModal,
       downloadModels,
       onFileUploaded,
+      onUploadCanceled,
       openDeleteModal,
       selectTab,
-      setSelection,
       unarchiveModels,
       uploadModels
     };
