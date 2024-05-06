@@ -200,7 +200,6 @@
           </transition>
           <transition name="slide-fade-left">
             <FilesTable
-              data-test-id="files-table"
               class="files-manager__files__table"
               :project="project"
               :folder="currentFolder"
