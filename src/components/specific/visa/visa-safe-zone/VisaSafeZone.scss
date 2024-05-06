@@ -1,5 +1,4 @@
 .visa-safe-zone {
-  width: 390px;
   height: 300px;
 
   &__content {
@@ -11,7 +10,7 @@
     justify-content: space-evenly;
     font-size: 1.2rem;
     text-align: center;
-    color: var(--color-high)
+    color: var(--color-high);
   }
 
   &__action {
@@ -21,6 +20,4 @@
     align-items: center;
     background-color: var(--color-silver-light);
   }
-
-
 }
