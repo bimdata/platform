@@ -8,8 +8,9 @@
 
   position: relative;
   z-index: 0;
-  // height: calc(100% - var(--header-height));
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   &__actions {
     display: grid;
@@ -108,7 +109,7 @@
   &__content {
     display: grid;
     grid-template-columns: min(25%, var(--tree-max-width)) 1fr;
-    grid-template-rows: var(--actions-height) 1fr;
+    grid-template-rows: 1fr;
     gap: var(--spacing-unit);
     grid-template-areas: "tree    files      files";
   }
