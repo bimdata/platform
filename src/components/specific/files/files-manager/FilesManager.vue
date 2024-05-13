@@ -311,7 +311,6 @@ import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
 import AppSidePanelContent from "../../../specific/app/app-side-panel/AppSidePanelContent.vue";
-import AppModalContent from "../../app/app-modal/AppModalContent.vue";
 import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
@@ -330,7 +329,6 @@ import FileDragAndDropModal from "./file-drag-and-drop-modal/FileDragAndDropModa
 export default {
   components: {
     AppSidePanelContent,
-    AppModalContent,
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,

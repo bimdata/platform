@@ -47,13 +47,8 @@
 <script>
 import { computed } from "vue";
 import { useFiles } from "../../../../../state/files.js";
-// Components
-import AppModalContent from "../../../app/app-modal/AppModalContent.vue";
 
 export default {
-  components: {
-    AppModalContent
-  },
   props: {
     project: {
       type: Object,
