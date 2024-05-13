@@ -26,13 +26,12 @@
        *  - var(--platform-header-height)  | platform header height
        *  - 7 * var(--spacing-unit)        | 2 * view container padding
        *  - 32px                           | view header height
-       *  - 4 * var(--spacing-unit)        | 2 * project-board body padding
-       *  - 38px                           | files-manager header height
-       *  - 2 * var(--spacing-unit)        | 2 * files-manager content paddin
+       *  - 2 * var(--spacing-unit)        | project-board body padding-top
        *  - 32px                           | files-manager actions height
-       *  - var(--spacing-unit)            | files-manager grid gap
+       *  - 1 * var(--spacing-unit)        | files-manager content padding-top
+       *  - 40px                           | files-manager tabs height
        **/
-      height: calc(100vh - var(--platform-header-height) - 14 * var(--spacing-unit) - 16px - 40px);
+      height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
 
       .bimdata-table__container {
         height: 100%;

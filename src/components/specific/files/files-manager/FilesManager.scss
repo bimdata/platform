@@ -15,9 +15,8 @@
   &__actions {
     display: grid;
     grid-template-columns: min(25%, var(--actions-max-width)) 1fr min(25%, var(--actions-max-width));
-    grid-template-rows: var(--actions-height) 1fr;
-    gap: var(--spacing-unit);
     grid-template-areas: "actions-start actions-middle actions-end";
+
     .start {
       display: flex;
       align-items: center;
@@ -107,6 +106,7 @@
     }
   }
   &__content {
+    padding-top: var(--spacing-unit);
     display: grid;
     grid-template-columns: min(25%, var(--tree-max-width)) 1fr;
     grid-template-rows: 1fr;
