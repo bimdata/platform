@@ -3,8 +3,6 @@
     <ul class="bimdata-list">
       <li v-for="{ id, name } in filteredTags">
         <BIMDataCheckbox :id="id" :text="name"  />
-        <!-- <input type="checkbox" :id="id" />
-        <label :for="name">{{ name }}</label> -->
       </li>
     </ul>
   </div>
