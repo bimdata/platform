@@ -2,8 +2,8 @@
   <div class="files-delete-modal p-24">
     <div class="files-delete-modal__actions">
       <BIMDataButton ghost rounded color="default" icon @click="close">
-      <BIMDataIconClose size="xxs"  />
-    </BIMDataButton>
+        <BIMDataIconClose size="xxs"  />
+      </BIMDataButton>
     </div>
     <div class="files-delete-modal__header flex justify-center">
       {{ $t("FilesDeleteModal.title") }}
@@ -63,7 +63,6 @@ export default {
       required: true,
     }
   },
-  emits: ["close"],
   setup(props) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
 
@@ -79,7 +78,6 @@ export default {
       deleteFiles(props.project, props.files);
       softUpdateFileStructure("delete", props.files);
       close();
-      emit("close");
     };
 
     return {
