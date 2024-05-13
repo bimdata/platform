@@ -15,11 +15,7 @@
   // Set files-table height and make it scrollable.
   // TODO: this is very ugly.. should find a way to do it better.
   &:deep() {
-    .file-tree,
     .files-table {
-      overflow: auto;
-      background-color: transparent;
-
       /**
        * Details:
        * 100vh                             | full viewport height
@@ -32,6 +28,17 @@
        *  - 40px                           | files-manager tabs height
        **/
       height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
+    }
+    .file-tree {
+      /**
+       same as above but without files-manager tabs height (40px)
+       **/
+      height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 64px);
+    }
+    .file-tree,
+    .files-table {
+      overflow: auto;
+      background-color: transparent;
 
       .bimdata-table__container {
         height: 100%;
@@ -63,6 +70,7 @@
     }
     .files-table {
       table {
+        border-collapse: initial;
         thead {
           tr:first-child {
             z-index: 2;
