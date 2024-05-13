@@ -317,4 +317,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./FilesTable.scss"></style>
+<style scoped lang="scss" src="./FilesTable.scss"></style>
