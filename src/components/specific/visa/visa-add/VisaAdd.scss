@@ -3,6 +3,7 @@
   height: 100%;
 
   &__safe-zone {
+    width: calc(400px - 12px - 12px);
     z-index: 2;
     position: absolute;
     top: 2.5%;
@@ -16,7 +17,7 @@
       display: flex;
       align-items: center;
       gap: var(--spacing-unit);
-  
+
       &__left-side {
         display: flex;
         flex-grow: 1;
@@ -29,9 +30,9 @@
         }
       }
     }
-  
+
     &__validator {
-      margin: calc(var(--spacing-unit ) * 2) 0;
+      margin: calc(var(--spacing-unit) * 2) 0;
 
       &__counter {
         display: flex;
@@ -50,13 +51,13 @@
         color: var(--color-high);
       }
     }
-  
+
     &__validate-date {
       &:deep() {
         label {
           font-size: 1em;
         }
-        
+
         .error {
           display: block;
           font-size: 1em;
@@ -69,10 +70,10 @@
         font-size: 0.9em;
       }
     }
-  
+
     &__description {
       margin: calc(var(--spacing-unit) * 3) 0;
-  
+
       &:deep() {
         label {
           font-size: 1em;
@@ -88,13 +89,13 @@
         color: red;
       }
     }
-  
+
     &__action-button {
       display: flex;
       justify-content: flex-end;
     }
   }
   .safeZone {
-    filter: blur(4px); 
+    filter: blur(4px);
   }
 }

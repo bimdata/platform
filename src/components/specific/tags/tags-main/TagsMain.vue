@@ -71,7 +71,10 @@
         />
       </div>
       <div data-test-id="tag-list" class="tags-main__content__tag-list">
-        <template v-for="tag of updatedTagList" :key="tag.id">
+        <div v-if="updatedTagList?.length === 0" class="empty">
+         <span> {{ $t("Tag.emptyTag") }} </span>
+        </div>
+        <template v-else v-for="tag of updatedTagList" :key="tag.id">
           <TagsItem
             data-test-id="tags-item"
             v-if="tag.isFindable"
@@ -122,7 +125,7 @@ export default {
     const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
 
     const tagsDocument = ref(null);
-    const tagsMain = ref(null);
+    const tagsMain = ref({});
 
     const input = ref(null);
 

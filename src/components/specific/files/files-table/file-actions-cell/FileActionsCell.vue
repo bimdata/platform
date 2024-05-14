@@ -138,7 +138,7 @@ export default {
         menuItems.value.push({
           key: 1,
           text: "FileActionsCell.previewModelButtonText",
-          color: "var(--color-primary)",
+          color: "primary",
           icon: "preview",
           action: () => onClick("file-clicked")
         });
@@ -148,7 +148,7 @@ export default {
         menuItems.value.push({
           key: 2,
           text: "FileActionsCell.openViewerButtonText",
-          color: "var(--color-primary)",
+          color: "primary",
           icon: "show"
         });
       }

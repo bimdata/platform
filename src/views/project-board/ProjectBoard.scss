@@ -1,6 +1,6 @@
 .project-board {
   display: grid;
-  grid-template-rows: 32px 1fr;
+  grid-template-rows: 32px calc(100% - 32px);
   min-height: 100%;
 
   &__banner {
@@ -27,7 +27,7 @@
       }
 
       .bimdata-tabs__container__tab:hover {
-        background-color: rgba(47, 55, 74, 0.05);
+        background-color: rgba(47, 55, 74, 0.03);
       }
     }
 
@@ -44,6 +44,6 @@
   }
 
   &__body {
-    padding: calc(var(--spacing-unit) * 2) 0;
+    padding: calc(var(--spacing-unit) * 2) 0 0;
   }
 }

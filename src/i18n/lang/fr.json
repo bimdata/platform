@@ -841,7 +841,8 @@
     "list": "Liste des tags",
     "addTag": "ajouter un tag",
     "addNewTag": "Ajouter un nouveau tag",
-    "deleteTag": "Supprimer ce tag"
+    "deleteTag": "Supprimer ce tag",
+    "emptyTag": "Aucun tag"
   },
   "SubscriptionModal": {
     "title": "Obtenez plus d'espace",
