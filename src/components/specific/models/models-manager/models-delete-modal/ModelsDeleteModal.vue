@@ -1,28 +1,21 @@
 <template>
-  <GenericModal
-    class="models-delete-modal"
-    data-test-id="models-delete-modal"
-    contentWidth="450px"
-    @close="$emit('close')"
-  >
-    <template #header>
+  <BIMDataSafeZoneModal style="z-index: 100" width="600px">
+    <template #title>
       {{ $t("ModelsDeleteModal.title") }}
     </template>
-    <template #body>
-      <div class="models-delete-modal__message">
-        <div>{{ $t("ModelsDeleteModal.message") }}</div>
-        <ul class="models-delete-modal__message__list">
+    <template #text>
+      <p>{{ $t("ModelsDeleteModal.message") }}</p>
+      <ul class="models-delete-modal__message__list">
           <li
             class="models-delete-modal__message__list__item"
             v-for="model of models"
             :key="model.id"
           >
-            <BIMDataTextbox :text="model.name" />
+          <span>{{ model.name }}</span>
           </li>
         </ul>
-      </div>
     </template>
-    <template #footer>
+    <template #actions>
       <BIMDataButton
         data-test-id="btn-close"
         ghost
@@ -43,7 +36,7 @@
         {{ $t("t.delete") }}
       </BIMDataButton>
     </template>
-  </GenericModal>
+  </BIMDataSafeZoneModal>
 </template>
 
 <script>
@@ -53,17 +46,17 @@ import GenericModal from "../../../../generic/generic-modal/GenericModal.vue";
 
 export default {
   components: {
-    GenericModal
+    GenericModal,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     models: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["close"],
   setup(props, { emit }) {
@@ -76,10 +69,20 @@ export default {
     };
 
     return {
-      submit
+      submit,
     };
-  }
+  },
 };
 </script>
 
-<style scoped lang="scss" src="./ModelsDeleteModal.scss"></style>
+<style scoped lang="scss">
+ul {
+  max-height: 180px;
+  overflow: auto;
+  text-align: left;
+  line-height: 1.5;
+  li {
+    margin-bottom: calc(var(--spacing-unit) / 2);
+  }
+}
+</style>
