@@ -196,7 +196,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { fullName } from "../../utils/users.js";
 import routeNames from "../../router/route-names.js";
 import { useInvitations } from "../../state/invitations.js";
@@ -215,6 +215,7 @@ export default {
   },
   setup() {
     const {
+      loadUserInvitations,
       acceptInvitations,
       denyInvitation,
       invitationList,
@@ -242,6 +243,14 @@ export default {
     const onDenyInvitation = async invitation => {
       await denyInvitation(invitation);
     };
+
+    let intervalId;
+    onMounted(() => {
+      intervalId = setInterval(async () => await loadUserInvitations(), 5000);
+    });
+    onBeforeUnmount(() => {
+      clearInterval(intervalId);
+    });
 
     return {
       // references
