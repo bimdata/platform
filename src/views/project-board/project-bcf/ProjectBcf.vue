@@ -11,26 +11,22 @@
         </template>
         <template v-else>
           <BIMDataSafeZoneModal style="z-index: 100">
+            <template #title>
+              {{
+                $t("ProjectBcf.deleteBcfTitle", {
+                  bcf: selectedTopics.size,
+                })
+              }}
+            </template>
             <template #text>
-              {{ $t("ProjectBcf.deleteBcfText") }}
+              <p>{{ $t("ProjectBcf.deleteBcfText") }}</p>
             </template>
             <template #actions>
-              <BIMDataButton
-                color="high"
-                fill
-                radius
-                class="m-r-12"
-                @click="deleteBcfTopics"
-              >
-                {{ $t("t.confirm") }}
-              </BIMDataButton>
-              <BIMDataButton
-                color="primary"
-                outline
-                radius
-                @click="closeDeleteMode"
-              >
+              <BIMDataButton color="primary" ghost radius @click="closeDeleteMode" width="120px">
                 {{ $t("t.cancel") }}
+              </BIMDataButton>
+              <BIMDataButton color="high" fill radius @click="deleteBcfTopics" width="120px">
+                {{ $t("t.confirm") }}
               </BIMDataButton>
             </template>
           </BIMDataSafeZoneModal>
@@ -39,13 +35,7 @@
     </template>
     <AppSlotContent name="project-board-action">
       <template v-if="project.isAdmin">
-        <BIMDataButton
-          color="primary"
-          outline
-          radius
-          icon
-          @click="openSettings"
-        >
+        <BIMDataButton color="primary" outline radius icon @click="openSettings">
           <BIMDataIconSettings size="xxs" />
         </BIMDataButton>
       </template>
@@ -63,14 +53,10 @@
         color="default"
         width="120px"
         @click="
-          fileUploadInput(
-            'file',
-            event => importBcfTopics(event.target.files),
-            {
-              accept: ['.bcf'],
-              multiple: true
-            }
-          )
+          fileUploadInput('file', (event) => importBcfTopics(event.target.files), {
+            accept: ['.bcf'],
+            multiple: true,
+          })
         "
       >
         <BIMDataIconImport size="xs" />
@@ -112,9 +98,7 @@
             @click="toggleMetrics"
           >
             <PieGraphIcon
-              :activeColor="
-                !showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'
-              "
+              :activeColor="!showMetrics ? 'var(--color-white)' : 'var(--color-secondary)'"
             />
           </BIMDataButton>
         </BIMDataTooltip>
@@ -144,9 +128,7 @@
             @click="sortByIndex"
           >
             <BIMDataIcon
-              :name="
-                sortOrderIndex === 'asc' ? 'indexAscending' : 'indexDescending'
-              "
+              :name="sortOrderIndex === 'asc' ? 'indexAscending' : 'indexDescending'"
               size="s"
             />
           </BIMDataButton>
@@ -169,11 +151,7 @@
             @click="sortByTitle"
           >
             <BIMDataIcon
-              :name="
-                sortOrderTitle === 'asc'
-                  ? 'alphabeticalAscending'
-                  : 'alphabeticalDescending'
-              "
+              :name="sortOrderTitle === 'asc' ? 'alphabeticalAscending' : 'alphabeticalDescending'"
               size="s"
             />
           </BIMDataButton>
@@ -195,9 +173,7 @@
             @click="sortByDate"
           >
             <BIMDataIcon
-              :name="
-                sortOrderDate === 'asc' ? 'dateAscending' : 'dateDescending'
-              "
+              :name="sortOrderDate === 'asc' ? 'dateAscending' : 'dateDescending'"
               size="s"
             />
           </BIMDataButton>
@@ -205,9 +181,7 @@
         <BIMDataTooltip
           :disabled="topics.length === 0"
           :message="
-            isListView
-              ? $t('ProjectBcf.viewGridTooltip')
-              : $t('ProjectBcf.viewListTooltip')
+            isListView ? $t('ProjectBcf.viewGridTooltip') : $t('ProjectBcf.viewListTooltip')
           "
         >
           <BIMDataButton
@@ -229,7 +203,7 @@
         <template v-if="currentPanel === sidePanelViews.settings">
           <BcfSettings
             :uiConfig="{
-              closeButton: true
+              closeButton: true,
             }"
             :project="project"
             :detailedExtensions="detailedExtensions"
@@ -255,16 +229,14 @@
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
             @view-comment-snapshot="openTopicSnapshot"
-            @topic-deleted="
-              reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()
-            "
+            @topic-deleted="reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()"
             @close="closeSidePanel(), removeTopicGuidFromUrl()"
           />
         </template>
         <template v-else-if="currentPanel === sidePanelViews.create">
           <BcfTopicForm
             :uiConfig="{
-              closeButton: true
+              closeButton: true,
             }"
             :project="project"
             :extensions="extensions"
@@ -277,7 +249,7 @@
           <BcfTopicForm
             :uiConfig="{
               backButton: true,
-              closeButton: true
+              closeButton: true,
             }"
             :project="project"
             :extensions="extensions"
@@ -431,15 +403,11 @@
       :boxStyle="{
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(47, 55, 74, 0.8)'
+        backgroundColor: 'rgba(47, 55, 74, 0.8)',
       }"
       closeBtnColor="white"
     >
-      <div
-        v-if="topicSnapshot"
-        class="topic-snapshot-modal"
-        v-click-away="closeTopicSnapshot"
-      >
+      <div v-if="topicSnapshot" class="topic-snapshot-modal" v-click-away="closeTopicSnapshot">
         <img :src="topicSnapshot" />
       </div>
     </AppModalContent>
@@ -451,7 +419,7 @@ import {
   getViewpointConfig,
   useBcfFilter,
   useBcfSearch,
-  useBcfSort
+  useBcfSort,
 } from "@bimdata/bcf-components";
 import { computed, onActivated, onDeactivated, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -481,7 +449,7 @@ const sidePanelViews = {
   settings: "settings",
   overview: "overview",
   create: "create",
-  update: "update"
+  update: "update",
 };
 
 export default {
@@ -490,7 +458,7 @@ export default {
     AppSidePanelContent,
     AppSlotContent,
     BcfStatisticsEmptyImage,
-    NoSearchResultsImage
+    NoSearchResultsImage,
   },
   setup() {
     const { t } = useI18n();
@@ -511,7 +479,7 @@ export default {
       deleteTopics,
       importBcf,
       exportBcf,
-      exportBcfXlsx
+      exportBcfXlsx,
     } = useBcf();
 
     const loading = ref(false);
@@ -522,7 +490,7 @@ export default {
     const reloadExtensions = async () => {
       await Promise.all([
         loadExtensions(currentProject.value),
-        loadDetailedExtensions(currentProject.value)
+        loadDetailedExtensions(currentProject.value),
       ]);
     };
 
@@ -539,9 +507,7 @@ export default {
           currentTopic.value = null;
           await reloadExtensions();
           await reloadBcfTopics();
-          const topic = topics.value.find(
-            t => t.guid === route.query.topicGuid
-          );
+          const topic = topics.value.find((t) => t.guid === route.query.topicGuid);
           if (topic) {
             openTopicOverview(topic);
           }
@@ -556,9 +522,7 @@ export default {
       topics,
       () => {
         if (currentTopic.value) {
-          currentTopic.value = topics.value.find(
-            t => t.guid === currentTopic.value.guid
-          );
+          currentTopic.value = topics.value.find((t) => t.guid === currentTopic.value.guid);
         }
       },
       { immediate: true }
@@ -576,8 +540,7 @@ export default {
     });
 
     const { filteredTopics, apply: applyFilters } = useBcfFilter(topics);
-    const { searchText, filteredTopics: displayedTopics } =
-      useBcfSearch(filteredTopics);
+    const { searchText, filteredTopics: displayedTopics } = useBcfSearch(filteredTopics);
     const {
       sortedBy,
       sortByTitle,
@@ -585,7 +548,7 @@ export default {
       sortByDate,
       sortOrderIndex,
       sortOrderTitle,
-      sortOrderDate
+      sortOrderDate,
     } = useBcfSort(displayedTopics);
 
     const selectedTopics = ref(new Map());
@@ -597,15 +560,19 @@ export default {
         : selectedTopics.value.size > 0
     );
 
-    const hasEditPermission = topic => {
-      return isProjectAdmin(currentProject.value) || user.value.email === topic.creation_author || user.value.email === topic.assigned_to;
+    const hasEditPermission = (topic) => {
+      return (
+        isProjectAdmin(currentProject.value) ||
+        user.value.email === topic.creation_author ||
+        user.value.email === topic.assigned_to
+      );
     };
 
-    const hasDeletePermission = topic => {
+    const hasDeletePermission = (topic) => {
       return isProjectAdmin(currentProject.value) || user.value.email === topic.creation_author;
     };
 
-    const toggleTopicSelection = topic => {
+    const toggleTopicSelection = (topic) => {
       const selection = selectedTopics.value;
       if (!selection.delete(topic.guid)) {
         selection.set(topic.guid, topic);
@@ -615,28 +582,26 @@ export default {
 
     const toggleFullSelection = () => {
       if (selectedTopics.value.size < displayedTopics.value.length) {
-        selectedTopics.value = new Map([
-          ...displayedTopics.value.map(t => [t.guid, t])
-        ]);
+        selectedTopics.value = new Map([...displayedTopics.value.map((t) => [t.guid, t])]);
       } else {
         selectedTopics.value = new Map();
       }
     };
 
-    const importBcfTopics = async files => {
+    const importBcfTopics = async (files) => {
       try {
         loading.value = true;
         await importBcf(currentProject.value, files[0]);
         pushNotification({
           type: "success",
           title: t("t.success"),
-          message: t("ProjectBcf.importBcfNotificationSuccess")
+          message: t("ProjectBcf.importBcfNotificationSuccess"),
         });
       } catch {
         pushNotification({
           type: "error",
           title: t("t.error"),
-          message: t("ProjectBcf.importBcfNotificationError")
+          message: t("ProjectBcf.importBcfNotificationError"),
         });
       } finally {
         loading.value = false;
@@ -645,39 +610,35 @@ export default {
 
     const exportBcfTopics = async () => {
       try {
-        await exportBcf(currentProject.value, [
-          ...selectedTopics.value.values()
-        ]);
+        await exportBcf(currentProject.value, [...selectedTopics.value.values()]);
         pushNotification({
           type: "success",
           title: t("t.success"),
-          message: t("ProjectBcf.exportBcfNotificationSuccess")
+          message: t("ProjectBcf.exportBcfNotificationSuccess"),
         });
       } catch {
         pushNotification({
           type: "error",
           title: t("t.error"),
-          message: t("ProjectBcf.exportBcfNotificationError")
+          message: t("ProjectBcf.exportBcfNotificationError"),
         });
       }
     };
 
     const exportBcfXlsxTopics = async () => {
       try {
-        await exportBcfXlsx(currentProject.value, [
-          ...selectedTopics.value.values()
-        ]);
+        await exportBcfXlsx(currentProject.value, [...selectedTopics.value.values()]);
         pushNotification({
           type: "success",
           title: t("t.success"),
-          message: t("ProjectBcf.exportBcfXlsxNotificationSuccess")
+          message: t("ProjectBcf.exportBcfXlsxNotificationSuccess"),
         });
       } catch (error) {
         console.error(error);
         pushNotification({
           type: "error",
           title: t("t.error"),
-          message: t("ProjectBcf.exportBcfXlsxNotificationError")
+          message: t("ProjectBcf.exportBcfXlsxNotificationError"),
         });
       }
     };
@@ -696,31 +657,27 @@ export default {
         pushNotification({
           type: "success",
           title: t("t.success"),
-          message: t("ProjectBcf.deleteBcfNotificationSuccess")
+          message: t("ProjectBcf.deleteBcfNotificationSuccess"),
         });
       } catch {
         pushNotification({
           type: "error",
           title: t("t.error"),
-          message: t("ProjectBcf.deleteBcfNotificationError")
+          message: t("ProjectBcf.deleteBcfNotificationError"),
         });
       }
     };
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
 
-    const {
-      isOpen: showMetrics,
-      close: closeMetrics,
-      toggle: toggleMetrics
-    } = useToggle();
+    const { isOpen: showMetrics, close: closeMetrics, toggle: toggleMetrics } = useToggle();
 
     const openSettings = () => {
       currentPanel.value = sidePanelViews.settings;
       openSidePanel();
     };
 
-    const openTopicOverview = topic => {
+    const openTopicOverview = (topic) => {
       currentPanel.value = sidePanelViews.overview;
       currentTopic.value = topic;
       addTopicGuidToUrl();
@@ -733,7 +690,7 @@ export default {
       openSidePanel();
     };
 
-    const openTopicUpdate = topic => {
+    const openTopicUpdate = (topic) => {
       currentPanel.value = sidePanelViews.update;
       currentTopic.value = topic;
       openSidePanel();
@@ -741,7 +698,7 @@ export default {
 
     const { openModal, closeModal } = useAppModal();
     const topicSnapshot = ref(null);
-    const openTopicSnapshot = topic => {
+    const openTopicSnapshot = (topic) => {
       openModal();
       topicSnapshot.value = topic.snapshot.snapshot_data;
     };
@@ -760,7 +717,7 @@ export default {
       window.history.replaceState({}, "", router.resolve(route).fullPath);
     };
 
-    const openTopicViewer = topic => {
+    const openTopicViewer = (topic) => {
       let viewpoint = topic.viewpoints[0] ?? {};
       let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
       let modelIDs = viewpoint.model_ids ?? [];
@@ -776,9 +733,7 @@ export default {
         // with respect to the target window
         const models = projectModels.value
           .filter(
-            m =>
-              m.status === MODEL_STATUS.COMPLETED &&
-              MODEL_CONFIG[m.type].window === window
+            (m) => m.status === MODEL_STATUS.COMPLETED && MODEL_CONFIG[m.type].window === window
           )
           .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
         if (models.length > 0) {
@@ -791,20 +746,16 @@ export default {
         params: {
           spaceID: currentProject.value.cloud.id,
           projectID: currentProject.value.id,
-          modelIDs: modelIDs.join(",")
+          modelIDs: modelIDs.join(","),
         },
         query: {
           window,
-          topicGuid: topic.guid
-        }
+          topicGuid: topic.guid,
+        },
       });
     };
 
-    const {
-      isOpen: deleteMode,
-      close: closeDeleteMode,
-      toggle: toggleDeleteMode
-    } = useToggle();
+    const { isOpen: deleteMode, close: closeDeleteMode, toggle: toggleDeleteMode } = useToggle();
 
     return {
       // References
@@ -861,9 +812,9 @@ export default {
       toggleMetrics,
       toggleTopicSelection,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 
