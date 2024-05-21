@@ -581,10 +581,10 @@ export default {
     };
 
     const toggleFullSelection = () => {
-      if (selectedTopics.value.size < displayedTopics.value.length) {
-        selectedTopics.value = new Map([...displayedTopics.value.map((t) => [t.guid, t])]);
-      } else {
+      if (selectedTopics.value.size > 0) {
         selectedTopics.value = new Map();
+      } else {
+        selectedTopics.value = new Map([...displayedTopics.value.map((t) => [t.guid, t])]);
       }
     };
 
