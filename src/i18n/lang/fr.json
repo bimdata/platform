@@ -120,7 +120,7 @@
     "moveButtonText": "Déplacer vers"
   },
   "FilesDeleteModal": {
-    "title": "Suppression de {files} fichiers",
+    "title": "Suppression de {filesCount} fichiers",
     "message": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants :",
     "messageVersion": "Vous êtes sur le point de supprimer définitivement les fichiers/dossiers suivants et l'historique de versions associé :"
   },
@@ -734,7 +734,7 @@
   "ProjectBcf": {
     "importBcfNotificationSuccess": "Fichier BCF importé avec succès",
     "importBcfNotificationError": "Erreur lors de l'import du fichier BCF",
-    "deleteBcfTitle": "Suppression de {bcf} BCF",
+    "deleteBcfTitle": "Suppression de {bcfCount} BCF",
     "deleteBcfText": "Vous êtes sur le point de supprimer la sélection de BCF",
     "deleteInProgress": "Suppression en cours",
     "deleteInProgressSub": "Ce processus peut prendre quelques instants.",

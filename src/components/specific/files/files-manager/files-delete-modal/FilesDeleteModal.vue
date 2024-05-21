@@ -4,7 +4,7 @@
       {{
         $t("FilesDeleteModal.title",
         {
-          files: files.length,
+          filesCount: files.length,
         })
       }}
     </template>

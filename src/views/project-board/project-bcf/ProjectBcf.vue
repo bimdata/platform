@@ -14,7 +14,7 @@
             <template #title>
               {{
                 $t("ProjectBcf.deleteBcfTitle", {
-                  bcf: selectedTopics.size,
+                  bcfCount: selectedTopics.size,
                 })
               }}
             </template>
