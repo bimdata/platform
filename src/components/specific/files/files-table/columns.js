@@ -1,4 +1,6 @@
 import { fileExtension } from "../../../../utils/files.js";
+import i18n from "../../../../i18n/index.js";
+const { t } = i18n.global;
 export default [
   {
     id: "type",
@@ -40,7 +42,7 @@ export default [
     width: "160px",
     align: "center",
     filter: true,
-    filterFunction: rowData => `${rowData.lastname} ${rowData.firstname}`,
+    filterFunction: rowData => rowData ? `${rowData.lastname} ${rowData.firstname}` : t("t.notSpecified"),
   },
   {
     id: "lastupdate",

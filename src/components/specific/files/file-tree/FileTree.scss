@@ -40,9 +40,6 @@
           @include noselect;
           align-self: flex-end;
           color: var(--color-text);
-          &:hover {
-            z-index: 2;
-          }
         }
       }
 
