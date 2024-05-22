@@ -772,7 +772,7 @@
     "GroupMemberCard": {
         "pending": "Einladung in Arbeit"
     },
-    "ProfileSettings": {
+    "UserProfile": {
         "title": "Profileinstellungen",
         "loading": {
             "message": "Löschvorgang läuft.",

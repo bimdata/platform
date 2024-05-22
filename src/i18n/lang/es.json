@@ -772,7 +772,7 @@
     "GroupMemberCard": {
         "pending": "Invitación en curso"
     },
-    "ProfileSettings": {
+    "UserProfile": {
         "title": "Configuración de perfil",
         "loading": {
             "message": "Eliminación en curso.",

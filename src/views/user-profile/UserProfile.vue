@@ -1,28 +1,28 @@
 <template>
   <AppGlobalLoader
-    :message="$t('ProfileSettings.loading.message')"
-    :subMessage="$t('ProfileSettings.loading.subMessage')"
+    :message="$t('UserProfile.loading.message')"
+    :subMessage="$t('UserProfile.loading.subMessage')"
   />
 
-  <div class="profile-settings" v-show="!showGlobalLoader">
-    <div class="profile-settings__back-btn">
+  <div class="user-profile" v-show="!showGlobalLoader">
+    <div class="user-profile__back-btn">
       <GoBackButton />
     </div>
-    <div class="profile-settings__container">
-      <span class="m-t-6">{{ $t("ProfileSettings.title") }}</span>
-      <div class="profile-settings__container__content">
+    <div class="user-profile__container">
+      <span class="m-t-6">{{ $t("UserProfile.title") }}</span>
+      <div class="user-profile__container__content">
         <BIMDataSpinner />
-        <template v-if="displayIframe">
-          <iframe ref="iframe" :src="bimDataConnectUrl + '/embed_profile/'" />
+        <template v-if="showIframe">
+          <iframe ref="iframe" :src="BIMDATACONNECT_URL + '/embed_profile/'" />
         </template>
       </div>
     </div>
-    <div class="profile-settings__ghost-element" />
+    <div class="user-profile__ghost-element"></div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "../../state/auth.js";
 import { useAppGlobalLoader } from "../../components/specific/app/app-global-loader/app-global-loader.js";
@@ -42,14 +42,13 @@ export default {
       useAppGlobalLoader();
 
     const iframe = ref(null);
-    const deleteLoader = ref(false);
-    const displayIframe = ref(true);
+    const showIframe = ref(true);
 
     onMounted(() => {
       window.addEventListener("message", async message => {
         switch (message.data) {
           case "profile update successful":
-            displayIframe.value = false;
+            showIframe.value = false;
             await signOut();
             break;
           case "account delete start":
@@ -66,16 +65,13 @@ export default {
 
     return {
       // References
+      BIMDATACONNECT_URL: ENV.VUE_APP_URL_BIMDATACONNECT,
       iframe,
-      deleteLoader,
-      displayIframe,
       showGlobalLoader,
-      bimDataConnectUrl: ENV.VUE_APP_URL_BIMDATACONNECT,
-      // Methods
-      getBack: () => router.back()
+      showIframe,
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./ProfileSettings.scss"></style>
+<style scoped lang="scss" src="./UserProfile.scss"></style>

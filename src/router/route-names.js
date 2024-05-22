@@ -5,6 +5,8 @@ const routeNames = Object.freeze({
   oidcCallbackError: "oidc-callback-error",
   pageNotFound: "page-not-found",
   dashboard: "dashboard",
+  userProfile: "user-profile",
+  invitations: "invitations",
   userSpaces: "user-spaces",
   userProjects: "user-projects",
   spaceBoard: "space-board",
@@ -12,8 +14,6 @@ const routeNames = Object.freeze({
   projectGroups: "project-groups",
   groupBoard: "group-board",
   modelViewer: "model-viewer",
-  invitations: "invitations",
-  profileSettings: "profile-settings",
   // Subscription routes
   userSubscriptions: "user-subscriptions",
   subscribe: "subscribe",

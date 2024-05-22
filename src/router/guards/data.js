@@ -9,8 +9,7 @@ import { useInvitations } from "../../state/invitations.js";
 
 const { isAuthenticated } = useAuth();
 const { loadUser } = useUser();
-const { loadUserOrganizations, loadAllOrganizationsSpaces } =
-  useOrganizations();
+const { loadUserOrganizations, loadAllOrganizationsSpaces } = useOrganizations();
 const { loadUserSpaces } = useSpaces();
 const { loadAllSpacesSubscriptions } = useSubscriptions();
 const { loadUserProjects } = useProjects();

@@ -768,7 +768,7 @@
     "GroupMemberCard": {
         "pending": ""
     },
-    "ProfileSettings": {
+    "UserProfile": {
         "title": "",
         "loading": {
             "message": "",

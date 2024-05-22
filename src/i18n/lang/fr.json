@@ -61,7 +61,7 @@
     "createButtonText": "Créer un espace",
     "organizationsButtonText": "Comptes de facturation"
   },
-  "ProfileSettings": {
+  "UserProfile": {
     "title": "Paramètres du profil",
     "loading": {
       "message": "Suppression en cours.",

@@ -47,7 +47,7 @@
               height="40px"
               ghost
               squared
-              @click="router.push({ name: routeNames.profileSettings })"
+              @click="router.push({ name: routeNames.userProfile })"
             >
               {{ $t("AppHeaderMenu.entrySettings") }}
             </BIMDataButton>

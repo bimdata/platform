@@ -776,7 +776,7 @@
   "GroupMemberCard": {
     "pending": "Invitation in progress"
   },
-  "ProfileSettings": {
+  "UserProfile": {
     "title": "Profile settings",
     "loading": {
       "message": "Deleting in progress.",

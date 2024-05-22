@@ -772,7 +772,7 @@
     "GroupMemberCard": {
         "pending": "Invito in corso"
     },
-    "ProfileSettings": {
+    "UserProfile": {
         "title": "Parametri del profilo",
         "loading": {
             "message": "Cancellazione in corso",

@@ -29,15 +29,14 @@ import PageNotFound from "../views/page-not-found/PageNotFound.vue";
 // Lazy loaded view components
 const Dashboard = () => import("../views/dashboard/Dashboard.vue");
 const GroupBoard = () => import("../views/group-board/GroupBoard.vue");
+const Invitations = () => import("../views/invitations/Invitations.vue");
 const ModelViewer = () => import("../views/model-viewer/ModelViewer.vue");
 const ProjectBoard = () => import("../views/project-board/ProjectBoard.vue");
 const ProjectGroups = () => import("../views/project-groups/ProjectGroups.vue");
 const SpaceBoard = () => import("../views/space-board/SpaceBoard.vue");
+const UserProfile = () => import("../views/user-profile/UserProfile.vue");
 const UserProjects = () => import("../views/user-projects/UserProjects.vue");
 const UserSpaces = () => import("../views/user-spaces/UserSpaces.vue");
-const ProfileSettings = () =>
-  import("../views/profile-settings/ProfileSettings.vue");
-const Invitations = () => import("../views/invitations/Invitations.vue");
 
 const {
   root,
@@ -45,6 +44,8 @@ const {
   oidcCallbackError,
   pageNotFound,
   dashboard,
+  userProfile,
+  invitations,
   userSpaces,
   userProjects,
   spaceBoard,
@@ -53,8 +54,6 @@ const {
   projectGroups,
   groupBoard,
   userSubscriptions,
-  profileSettings,
-  invitations
 } = routeNames;
 
 const routes = [
@@ -73,9 +72,17 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "/profile-settings",
-        name: profileSettings,
-        component: ProfileSettings,
+        path: "/profile",
+        name: userProfile,
+        component: UserProfile,
+        meta: {
+          back: dashboard
+        }
+      },
+      {
+        path: "/invitations",
+        name: invitations,
+        component: Invitations,
         meta: {
           back: dashboard
         }
@@ -92,14 +99,6 @@ const routes = [
         path: "/projects",
         name: userProjects,
         component: UserProjects,
-        meta: {
-          back: dashboard
-        }
-      },
-      {
-        path: "/invitations",
-        name: invitations,
-        component: Invitations,
         meta: {
           back: dashboard
         }
@@ -167,7 +166,7 @@ const routes = [
     ]
   },
   {
-    // Should match `redirect_uri` path in oidcConfig
+    // Should match `redirect_uri` path in OIDC config
     path: "/oidc-callback",
     name: oidcCallback,
     component: OidcCallback
