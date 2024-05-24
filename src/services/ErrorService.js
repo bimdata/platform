@@ -27,7 +27,7 @@ const ERRORS = Object.freeze({
   INVITATION_CANCEL_ERROR: "invitationCancelError",
   INVITATION_VIEW_FETCH_ERROR: "invitationViewFetchError",
   INVITATION_VIEW_ACCEPT_ERROR: "invitationViewAcceptError",
-  INVITATION_VIEW_DENY_ERROR: "invitationViewDenyError",
+  INVITATION_VIEW_DECLINE_ERROR: "invitationViewDeclineError",
   USER_ALREADY_EXISTS_ERROR: "userAlreadyExistsError",
   USERS_FETCH_ERROR: "usersFetchError",
   USER_UPDATE_ERROR: "userUpdateError",

@@ -355,7 +355,7 @@
         "documentCreateError": "",
         "invitationViewFetchError": "Ophalen van uitnodigingen mislukt",
         "invitationViewAcceptError": "",
-        "invitationViewDenyError": "",
+        "invitationViewDeclineError": "",
         "folderFetchFolder": "",
         "bcfDeleteError": "",
         "groupImportError": ""

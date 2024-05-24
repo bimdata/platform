@@ -363,7 +363,7 @@
     "documentCreateError": "Unable to upload this document",
     "invitationViewFetchError": "Unable to retrieve invitation list",
     "invitationViewAcceptError": "Unable to accept the invitation",
-    "invitationViewDenyError": "Impossible to decline the invitation",
+    "invitationViewDeclineError": "Impossible to decline the invitation",
     "folderFetchFolder": "Fail to retrieve folder data",
     "bcfDeleteError": "Deletion failed",
     "groupImportError": "Group import failure",

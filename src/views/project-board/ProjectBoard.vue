@@ -34,7 +34,7 @@
         <div class="project-board__header__actions">
           <SpaceSizeInfo
             v-if="
-              isSubscriptionEnabled && space.isAdmin && currentTab.id !== 'bcf'
+              IS_SUBSCRIPTION_ENABLED && space.isAdmin && currentTab.id !== 'bcf'
             "
             :space="space"
             :spaceSubInfo="spaceSubInfo"
@@ -57,6 +57,7 @@
 <script>
 import { onBeforeMount, ref, provide, computed } from "vue";
 import { useRoute } from "vue-router";
+import { useInterval } from "../../composables/interval.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useSession } from "../../composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
@@ -115,10 +116,16 @@ export default {
   setup() {
     const route = useRoute();
     const { currentSpace, spaceSubInfo } = useSpaces();
-    const { currentProject } = useProjects();
+    const { currentProject, loadProjectUsers, loadProjectInvitations } = useProjects();
     const { projectView } = useSession();
 
-    const tabs = ref(tabsDef);
+    const shouldSubscribe = computed(
+      () =>
+        currentSpace.value.isFree &&
+        currentSpace.value.isUserOrga &&
+        isFullTotal(spaceSubInfo.value)
+    );
+    provide("shouldSubscribe", shouldSubscribe);
 
     const currentTab = ref(tabsDef[0]);
     const currentView = ref(PROJECT_VIEWS[DEFAULT_PROJECT_VIEW]);
@@ -140,24 +147,26 @@ export default {
       changeView(viewKey);
     });
 
-    provide(
-      "shouldSubscribe",
-      computed(
-        () =>
-          currentSpace.value.isFree &&
-          currentSpace.value.isUserOrga &&
-          isFullTotal(spaceSubInfo.value)
-      )
+    useInterval(
+      async () => {
+        if (currentView.value = PROJECT_VIEWS.overview) {
+          await Promise.all([
+            loadProjectUsers(currentProject.value),
+            loadProjectInvitations(currentProject.value)
+          ]);
+        }
+      },
+      5000
     );
 
     return {
       // References
       currentTab,
       currentView,
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
-      tabs,
+      IS_SUBSCRIPTION_ENABLED,
       space: currentSpace,
       spaceSubInfo,
+      tabs: tabsDef,
       // Methods
       changeView,
       // Responsive breakpoints

@@ -128,18 +128,7 @@ export default {
       { immediate: true }
     );
 
-    // This watcher is used to create a smoother transition
-    // when switching between admins/users lists.
-    const list = ref([]);
-    watch(
-      [currentTab, admins, users],
-      async ([tab]) => {
-        list.value = [];
-        await wait(250);
-        list.value = tab === "admins" ? admins.value : users.value;
-      },
-      { immediate: true }
-    );
+    const list = computed(() => currentTab.value === "admins" ? admins.value : users.value);
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
       list,

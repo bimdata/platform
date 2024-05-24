@@ -359,7 +359,7 @@
         "documentCreateError": "Impossibile scaricare il documento",
         "invitationViewFetchError": "Impossibile recuperare inviti",
         "invitationViewAcceptError": "Impossibile accettare l'invito",
-        "invitationViewDenyError": "Impossibile rifiutare l'invito",
+        "invitationViewDeclineError": "Impossibile rifiutare l'invito",
         "folderFetchFolder": "Errore durante il recupero delle informazioni sulla cartella",
         "bcfDeleteError": "Eliminazione non riuscita...",
         "groupImportError": "Impossibile importare i gruppi"

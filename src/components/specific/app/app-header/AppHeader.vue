@@ -22,7 +22,7 @@
       <BIMDataButton width="38px" height="38px" fill square icon>
         <BIMDataIconInvitation size="m" />
         <div
-          v-if="invitationListPending.length > 0"
+          v-if="pendingInvitations.length > 0"
           class="app-header__invit-btn__notif"
         ></div>
       </BIMDataButton>
@@ -49,7 +49,7 @@ export default {
     AppHeaderMenu
   },
   setup() {
-    const { invitationListPending } = useInvitations();
+    const { pendingInvitations } = useInvitations();
     const { openSidePanel } = useAppSidePanel();
 
     const openFavoritesManager = () => {
@@ -59,7 +59,7 @@ export default {
     };
 
     return {
-      invitationListPending,
+      pendingInvitations,
       routeNames,
       openFavoritesManager
     };

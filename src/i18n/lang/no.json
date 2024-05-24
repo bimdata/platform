@@ -355,7 +355,7 @@
         "documentCreateError": "",
         "invitationViewFetchError": "Kunne ikke hente frem invitasjoner",
         "invitationViewAcceptError": "",
-        "invitationViewDenyError": "",
+        "invitationViewDeclineError": "",
         "folderFetchFolder": "",
         "bcfDeleteError": "",
         "groupImportError": ""

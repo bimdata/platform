@@ -21,7 +21,7 @@
       <template #right>
         <div class="space-board__header__actions">
           <SpaceSizeInfo
-            v-if="isSubscriptionEnabled && space.isAdmin"
+            v-if="IS_SUBSCRIPTION_ENABLED && space.isAdmin"
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
@@ -36,8 +36,8 @@
             <BIMDataIconAlphabeticalSort size="s" />
           </BIMDataButton>
           <BIMDataButton
-            data-test-id="btn-users"
             v-if="space.isAdmin"
+            data-test-id="btn-users"
             class="space-board__header__btn"
             fill
             squared
@@ -83,6 +83,7 @@
 
 <script>
 import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
+import { useInterval } from "../../composables/interval.js";
 import { useListFilter } from "../../composables/list-filter.js";
 import { useListSort } from "../../composables/list-sort.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
@@ -116,9 +117,8 @@ export default {
   },
   setup() {
     const { openSidePanel } = useAppSidePanel();
-    const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations } =
-      useSpaces();
-    const { spaceProjects } = useProjects();
+    const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations, loadSpaceUsers, loadSpaceInvitations } = useSpaces();
+    const { spaceProjects, loadProjectUsers } = useProjects();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -130,10 +130,18 @@ export default {
       project => project.name
     );
 
+    useInterval(
+      async () => await Promise.all([
+        loadSpaceUsers(currentSpace.value),
+        loadSpaceInvitations(currentSpace.value)
+      ]),
+      5000
+    );
+
     return {
       // References
       invitations: spaceInvitations,
-      isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      IS_SUBSCRIPTION_ENABLED,
       projects: displayedProjects,
       searchText,
       space: currentSpace,
