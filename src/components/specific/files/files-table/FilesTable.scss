@@ -30,6 +30,10 @@
 
     overflow-x: hidden;
 
+    &__content {
+      height: calc(100vh - var(--platform-header-height) - 10* var(--spacing-unit) - 104px - 48px);
+    }
+
     &__element {
       display: flex;
       height: 100%;
@@ -39,6 +43,28 @@
         background-color: var(--color-white);
       }
 
+      &__type {
+        > * {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      &__actions {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &__header {
+      display: flex;
+      height: 48px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    &__element, &__header {
       & > * {
         padding: 0 var(--spacing-unit);
         margin-right: 2.5px;
@@ -51,6 +77,7 @@
 
       &__select {
         width: 42px;
+
         display: flex;        
         justify-content: center;
         align-items: center;
@@ -58,12 +85,6 @@
 
       &__type {
         width: 80px;
-
-        > * {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
       }
 
       &__name {
@@ -89,9 +110,6 @@
 
       &__actions {
         width: 50px;
-
-        display: flex;
-        align-items: center;
       }
     }
   }
