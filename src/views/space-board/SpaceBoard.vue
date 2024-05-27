@@ -116,9 +116,9 @@ export default {
     ViewHeader
   },
   setup() {
-    const { openSidePanel } = useAppSidePanel();
+    const { isOpenRight, openSidePanel } = useAppSidePanel();
     const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations, loadSpaceUsers, loadSpaceInvitations } = useSpaces();
-    const { spaceProjects, loadProjectUsers } = useProjects();
+    const { spaceProjects } = useProjects();
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       spaceProjects,
@@ -131,10 +131,12 @@ export default {
     );
 
     useInterval(
-      async () => await Promise.all([
-        loadSpaceUsers(currentSpace.value),
-        loadSpaceInvitations(currentSpace.value)
-      ]),
+      () => {
+        if (isOpenRight.value) {
+          loadSpaceUsers(currentSpace.value);
+          loadSpaceInvitations(currentSpace.value);
+        }
+      },
       5000
     );
 

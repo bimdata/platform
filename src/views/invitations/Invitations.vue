@@ -153,7 +153,7 @@
                     radius
                     ghost
                     icon
-                    @click="onDenyInvitation(invit)"
+                    @click="declineInvitation(invit)"
                   >
                     <BIMDataIconClose fill color="high" size="s" />
                   </BIMDataButton>
@@ -241,11 +241,7 @@ export default {
       }
     };
 
-    const onDenyInvitation = async invitation => {
-      await declineInvitation(invitation);
-    };
-
-    useInterval(async () => await loadUserInvitations(), 5000);
+    useInterval(loadUserInvitations, 5000);
 
     return {
       // references
@@ -257,8 +253,8 @@ export default {
       pendingInvitations,
       isLoadingSingleInvit,
       // methods
+      declineInvitation,
       fullName,
-      onDenyInvitation,
       onAcceptInvitations,
       // Responsive breakpoints
       ...useStandardBreakpoints()

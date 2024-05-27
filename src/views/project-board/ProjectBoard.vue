@@ -148,12 +148,10 @@ export default {
     });
 
     useInterval(
-      async () => {
+      () => {
         if (currentView.value = PROJECT_VIEWS.overview) {
-          await Promise.all([
-            loadProjectUsers(currentProject.value),
-            loadProjectInvitations(currentProject.value)
-          ]);
+          loadProjectUsers(currentProject.value);
+          loadProjectInvitations(currentProject.value);
         }
       },
       5000
