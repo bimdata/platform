@@ -19,6 +19,7 @@
     </BIMDataTabs>
     <transition name="fade">
       <BIMDataTable
+        v-if="selectedFileTab.id === 'folders'"
         ref="filesTable"
         class="files-table"
         data-test-id="files-table"
@@ -122,6 +123,57 @@
           />
         </template>
       </BIMDataTable>
+      <BIMDataList :items="displayedFiles" v-else class="files-list" :itemHeight="48">
+      <template #default="{ item: file, index }">
+        <div class="files-list__element" :class="{ 'files-list__element--even': index % 2 === 0 }">
+          <div class="files-list__element__select">
+            <BIMDataCheckbox />
+          </div>
+          <div class="files-list__element__type">
+            <FileTypeCell :project="project" :file="file" />
+          </div>
+          <div class="files-list__element__name">
+            <FileNameCell
+              :project="project"
+              :file="file"
+              @file-clicked="$emit('file-clicked', $event)"
+              @open-versioning-manager="$emit('open-versioning-manager', $event)"
+              :editMode="nameEditMode[file.id]"
+              @close="nameEditMode[file.id] = false"
+            />
+          </div>
+          <div class="files-list__element__created-by">
+            {{ file.created_by ? `${file.created_by.firstname} ${file.created_by.lastname[0]}.` : "?" }}
+          </div>
+          <div class="files-list__element__last-update">
+            {{ $d(file.updated_at, "long") }}
+          </div>
+          <div class="files-list__element__size">
+            {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
+          </div>
+          <div class="files-list__element__tags">
+            <FileTagsCell :file="file" :filesTable="filesTable" />
+          </div>
+          <FileActionsCell
+            class="files-list__element__actions"
+            :filesTable="filesTable"
+            :project="project"
+            :file="file"
+            :loading="loadingFileIds.includes(file.id)"
+            @create-model="$emit('create-model', file)"
+            @delete="$emit('delete', file)"
+            @download="$emit('download', file)"
+            @file-clicked="$emit('file-clicked', file)"
+            @manage-access="$emit('manage-access', file)"
+            @open-versioning-manager="$emit('open-versioning-manager', file)"
+            @open-visa-manager="$emit('open-visa-manager', file)"
+            @open-tag-manager="$emit('open-tag-manager', file)"
+            @remove-model="$emit('remove-model', file)"
+            @update="nameEditMode[file.id] = true"
+          />
+        </div>
+      </template>
+      </BIMDataList>
     </transition>
   </div>
 </template>
