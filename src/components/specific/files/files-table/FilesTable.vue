@@ -158,6 +158,44 @@
           </div>
           <div class="files-list__header__created-by" v-if="columns.some(column => column.id === 'created_by')">
             {{ $t("t.createdBy") }}
+            <div
+              v-if="columnsDef[2].filter"
+              v-click-away="() => awayFromFilter(columnsDef[2])"
+            >
+              <BIMDataButton
+                color="primary"
+                ghost
+                rounded
+                icon
+                class="m-l-6"
+                :class="{
+                  active: filters.some(
+                    filter => filter.columnKey === columnsDef[2].id
+                  ),
+                }"
+                @click="toggleFiltersMenu(columnsDef[2])"
+              >
+                <BIMDataIconCaret size="xxxs" fill color="default" />
+              </BIMDataButton>
+              <ColumnFilters
+                v-if="displayedColumnFilterId === columnsDef[2].id"
+                :column="columnsDef[2]"
+                :columnData="
+                  computedRows.map(
+                    computedRow => computedRow.data[columnsDef[2].id]
+                  )
+                "
+                :filters="
+                  filters.find(filter => filter.columnKey === columnsDef[2].id)
+                    ?.columnFilters ?? []
+                "
+                @filter="updateFilters(columnsDef[2], $event)"
+              >
+                <template #column-filter-empty>
+                  <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
+                </template>
+              </ColumnFilters>
+            </div>
           </div>
           <div class="files-list__header__last-update" v-if="columns.some(column => column.id === 'lastupdate')">
             {{ $t("t.modifiedOn") }}
@@ -189,6 +227,44 @@
           </div>
           <div class="files-list__header__tags" v-if="columns.some(column => column.id === 'tags')">
             {{ $t("FilesTable.headers.tags") }}
+            <div
+              v-if="columnsDef[5].filter"
+              v-click-away="() => awayFromFilter(columnsDef[5])"
+            >
+              <BIMDataButton
+                color="primary"
+                ghost
+                rounded
+                icon
+                class="m-l-6"
+                :class="{
+                  active: filters.some(
+                    filter => filter.columnKey === columnsDef[5].id
+                  ),
+                }"
+                @click="toggleFiltersMenu(columnsDef[5])"
+              >
+                <BIMDataIconCaret size="xxxs" fill color="default" />
+              </BIMDataButton>
+              <ColumnFilters
+                v-if="displayedColumnFilterId === columnsDef[5].id"
+                :column="columnsDef[5]"
+                :columnData="
+                  computedRows.map(
+                    computedRow => computedRow.data[columnsDef[5].id]
+                  )
+                "
+                :filters="
+                  filters.find(filter => filter.columnKey === columnsDef[5].id)
+                    ?.columnFilters ?? []
+                "
+                @filter="updateFilters(columnsDef[5], $event)"
+              >
+                <template #column-filter-empty>
+                  <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
+                </template>
+              </ColumnFilters>
+            </div>
           </div>
           <div class="files-list__header__actions">
             <!-- empty -->
@@ -268,6 +344,7 @@ import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 
 import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
+import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
 import useSortAndFilter from "./sortAndFilter.js";
 
 export default {
@@ -280,6 +357,7 @@ export default {
     FileUploadCard,
     FolderUploadCard,
     ColumnSorting,
+    ColumnFilters,
   },
   props: {
     loadingFileIds: {
@@ -411,13 +489,6 @@ export default {
       }, delay);
     };
 
-    const updateFilters = (columnFilter) => {
-      filters.value = filters.value.filter((filter) => filter.columnKey !== columnFilter.columnKey);
-      if (columnFilter.columnFilters.length > 0) {
-        filters.value.push(columnFilter);
-      }
-    };
-
     const displayedFiles = computed(() => {
       if(props.selectedFileTab.id === "folders") {
         return props.files;
@@ -434,8 +505,10 @@ export default {
       toggleSorting,
       awayFromFilter,
       displayedRows,
-      updateFilters: updateListFilters,
+      updateFilters,
       activeHeadercolumnKey,
+      computedRows,
+      filters,
     } = useSortAndFilter(props.allFiles, "id", columnsDef);
 
     const displayedListFiles = computed(() => displayedRows.value.map(row => row.data));
@@ -498,6 +571,11 @@ export default {
       toggleSorting,
       displayedListFiles,
       columnsDef,
+      displayedColumnFilterId,
+      toggleFiltersMenu,
+      computedRows,
+      awayFromFilter,
+      filters,
     };
   },
 };
