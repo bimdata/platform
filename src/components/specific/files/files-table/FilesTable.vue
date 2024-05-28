@@ -128,35 +128,79 @@
           <div class="files-list__header__select">
             <BIMDataCheckbox :modelValue="mainSelectionCheckboxValue" @update:modelValue="onMainSelectionCheckboxClick"/>
           </div>
-          <div class="files-list__header__type">
+          <div class="files-list__header__type" v-if="columns.some(column => column.id === 'type')">
             {{ $t("t.type") }}
+            <ColumnSorting
+              :sortOrder="
+                !sortObject.order || sortObject.column !== columnsDef[0]
+                  ? 'asc'
+                  : sortObject.order
+              "
+              :index="0"
+              :active="activeHeadercolumnKey === 0"
+              @click="toggleSorting(columnsDef[0])"
+              @set-active="activeHeadercolumnKey = $event"
+            />
           </div>
           <div class="files-list__header__name">
             {{ $t("t.name") }}
+            <ColumnSorting
+              :sortOrder="
+                !sortObject.order || sortObject.column !== columnsDef[1]
+                  ? 'asc'
+                  : sortObject.order
+              "
+              :index="1"
+              :active="activeHeadercolumnKey === 1"
+              @click="toggleSorting(columnsDef[1])"
+              @set-active="activeHeadercolumnKey = $event"
+            />
           </div>
-          <div class="files-list__header__created-by">
+          <div class="files-list__header__created-by" v-if="columns.some(column => column.id === 'created_by')">
             {{ $t("t.createdBy") }}
           </div>
-          <div class="files-list__header__last-update">
+          <div class="files-list__header__last-update" v-if="columns.some(column => column.id === 'lastupdate')">
             {{ $t("t.modifiedOn") }}
+            <ColumnSorting
+              :sortOrder="
+                !sortObject.order || sortObject.column !== columnsDef[3]
+                  ? 'asc'
+                  : sortObject.order
+              "
+              :index="3"
+              :active="activeHeadercolumnKey === 3"
+              @click="toggleSorting(columnsDef[3])"
+              @set-active="activeHeadercolumnKey = $event"
+            />
           </div>
           <div class="files-list__header__size">
             {{ $t("t.size") }}
+            <ColumnSorting
+              :sortOrder="
+                !sortObject.order || sortObject.column !== columnsDef[4]
+                  ? 'asc'
+                  : sortObject.order
+              "
+              :index="4"
+              :active="activeHeadercolumnKey === 4"
+              @click="toggleSorting(columnsDef[4])"
+              @set-active="activeHeadercolumnKey = $event"
+            />
           </div>
-          <div class="files-list__header__tags">
+          <div class="files-list__header__tags" v-if="columns.some(column => column.id === 'tags')">
             {{ $t("FilesTable.headers.tags") }}
           </div>
           <div class="files-list__header__actions">
             <!-- empty -->
           </div>
         </div>
-        <BIMDataList :items="displayedFiles" :itemHeight="48" class="files-list__content">
+        <BIMDataList :items="displayedListFiles" :itemHeight="48" class="files-list__content">
           <template #default="{ item: file, index }">
             <div class="files-list__element" :class="{ 'files-list__element--even': index % 2 === 0 }">
               <div class="files-list__element__select">
                 <BIMDataCheckbox :modelValue="selection.includes(file)" @update:modelValue="onFileSelectionChange(file)"/>
               </div>
-              <div class="files-list__element__type">
+              <div class="files-list__element__type" v-if="columns.some(column => column.id === 'type')">
                 <FileTypeCell :project="project" :file="file" />
               </div>
               <div class="files-list__element__name">
@@ -169,16 +213,16 @@
                   @close="nameEditMode[file.id] = false"
                 />
               </div>
-              <div class="files-list__element__created-by">
+              <div class="files-list__element__created-by" v-if="columns.some(column => column.id === 'created_by')">
                 {{ file.created_by ? `${file.created_by.firstname} ${file.created_by.lastname[0]}.` : "?" }}
               </div>
-              <div class="files-list__element__last-update">
+              <div class="files-list__element__last-update" v-if="columns.some(column => column.id === 'lastupdate')">
                 {{ $d(file.updated_at, "long") }}
               </div>
               <div class="files-list__element__size">
                 {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
               </div>
-              <div class="files-list__element__tags">
+              <div class="files-list__element__tags" v-if="columns.some(column => column.id === 'tags')">
                 <FileTagsCell :file="file" :filesTable="filesTable" />
               </div>
               <FileActionsCell
@@ -223,6 +267,9 @@ import FileNameCell from "./file-name-cell/FileNameCell.vue";
 import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 
+import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
+import useSortAndFilter from "./sortAndFilter.js";
+
 export default {
   components: {
     FileActionsCell,
@@ -232,6 +279,7 @@ export default {
     FileTypeCell,
     FileUploadCard,
     FolderUploadCard,
+    ColumnSorting,
   },
   props: {
     loadingFileIds: {
@@ -378,6 +426,20 @@ export default {
       }
     });
 
+    // BIMDataList SECTION
+    const {
+      sortObject,
+      displayedColumnFilterId,
+      toggleFiltersMenu,
+      toggleSorting,
+      awayFromFilter,
+      displayedRows,
+      updateFilters: updateListFilters,
+      activeHeadercolumnKey,
+    } = useSortAndFilter(props.allFiles, "id", columnsDef);
+
+    const displayedListFiles = computed(() => displayedRows.value.map(row => row.data));
+
     const onFileSelectionChange = (file) => {
       let newSelection = null;
       if (props.selection.some((f) => f.id === file.id)) {
@@ -418,8 +480,6 @@ export default {
       folderUploads,
       nameEditMode,
       displayedFiles,
-      mainSelectionCheckboxValue,
-      onMainSelectionCheckboxClick,
       // Methods
       cleanUpload,
       formatBytes,
@@ -430,6 +490,14 @@ export default {
       onFileSelectionChange,
       // Responsive breakpoints
       isXL,
+      // List
+      sortObject,
+      mainSelectionCheckboxValue,
+      onMainSelectionCheckboxClick,
+      activeHeadercolumnKey,
+      toggleSorting,
+      displayedListFiles,
+      columnsDef,
     };
   },
 };

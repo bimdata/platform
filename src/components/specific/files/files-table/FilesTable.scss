@@ -62,6 +62,16 @@
       height: 48px;
       font-weight: 700;
       color: var(--color-primary);
+
+      & > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &__name {
+        justify-content: flex-start;
+      }
     }
 
     &__element, &__header {
