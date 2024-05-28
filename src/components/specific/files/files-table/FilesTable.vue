@@ -106,7 +106,7 @@
         </template>
         <template #cell-actions="{ row: file }">
           <FileActionsCell
-            :filesTable="filesTable"
+            :parent="filesTable"
             :project="project"
             :file="file"
             :loading="loadingFileIds.includes(file.id)"
@@ -270,7 +270,7 @@
             <!-- empty -->
           </div>
         </div>
-        <BIMDataList :items="displayedListFiles" :itemHeight="48" class="files-list__content">
+        <BIMDataList :items="displayedListFiles" :itemHeight="48" class="files-list__content" ref="filesList">
           <template #default="{ item: file, index }">
             <div class="files-list__element" :class="{ 'files-list__element--even': index % 2 === 0 }">
               <div class="files-list__element__select">
@@ -301,23 +301,24 @@
               <div class="files-list__element__tags" v-if="columns.some(column => column.id === 'tags')">
                 <FileTagsCell :file="file" :filesTable="filesTable" />
               </div>
-              <FileActionsCell
-                class="files-list__element__actions"
-                :filesTable="filesTable"
-                :project="project"
-                :file="file"
-                :loading="loadingFileIds.includes(file.id)"
-                @create-model="$emit('create-model', file)"
-                @delete="$emit('delete', file)"
-                @download="$emit('download', file)"
-                @file-clicked="$emit('file-clicked', file)"
-                @manage-access="$emit('manage-access', file)"
-                @open-versioning-manager="$emit('open-versioning-manager', file)"
-                @open-visa-manager="$emit('open-visa-manager', file)"
-                @open-tag-manager="$emit('open-tag-manager', file)"
-                @remove-model="$emit('remove-model', file)"
-                @update="nameEditMode[file.id] = true"
-              />
+              <div class="files-list__element__actions" >
+                <FileActionsCell
+                  :parent="filesList"
+                  :project="project"
+                  :file="file"
+                  :loading="loadingFileIds.includes(file.id)"
+                  @create-model="$emit('create-model', file)"
+                  @delete="$emit('delete', file)"
+                  @download="$emit('download', file)"
+                  @file-clicked="$emit('file-clicked', file)"
+                  @manage-access="$emit('manage-access', file)"
+                  @open-versioning-manager="$emit('open-versioning-manager', file)"
+                  @open-visa-manager="$emit('open-visa-manager', file)"
+                  @open-tag-manager="$emit('open-tag-manager', file)"
+                  @remove-model="$emit('remove-model', file)"
+                  @update="nameEditMode[file.id] = true"
+                />
+              </div>
             </div>
           </template>
         </BIMDataList>
@@ -419,6 +420,7 @@ export default {
     const { isLG, isXL } = useStandardBreakpoints();
 
     const filesTable = ref(null);
+    const filesList = ref(null);
 
     const columns = computed(() => {
       let filteredColumns = columnsDef;
@@ -564,6 +566,7 @@ export default {
       // Responsive breakpoints
       isXL,
       // List
+      filesList,
       sortObject,
       mainSelectionCheckboxValue,
       onMainSelectionCheckboxClick,

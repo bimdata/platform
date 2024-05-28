@@ -101,7 +101,7 @@ export default {
       type: Boolean,
       required: true
     },
-    filesTable: {
+    parent: {
       type: Object
     },
     project: {
@@ -130,7 +130,7 @@ export default {
     const menuItems = shallowRef([]);
 
     const openMenu = () => {
-      if (!props.filesTable) return;
+      if (!props.parent) return;
 
       isOpen.value = true;
 
@@ -237,9 +237,9 @@ export default {
       });
 
       nextTick(() => {
-        if (props.filesTable) {
+        if (props.parent) {
           menu.value.$el.style.top = dropdownPositioner(
-            props.filesTable.$el,
+            props.parent.$el,
             menu.value.$el
           );
         }
