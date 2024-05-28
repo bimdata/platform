@@ -86,7 +86,7 @@ export default {
       type: Object,
       required: true
     },
-    filesTable: {
+    parent: {
       type: Object
     }
   },
@@ -134,7 +134,7 @@ export default {
       isOver.value = true;
       nextTick(() => {
         tagList.value.$el.style.top = dropdownPositioner(
-          props.filesTable.$el,
+          props.parent.$el,
           tagList.value.$el,
           9
         );

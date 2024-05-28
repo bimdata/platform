@@ -96,7 +96,7 @@
           {{ created_by ? `${created_by.firstname} ${created_by.lastname[0]}.` : "?" }}
         </template>
         <template #cell-tags="{ row: file }">
-          <FileTagsCell :file="file" :filesTable="filesTable" />
+          <FileTagsCell :file="file" :parent="filesTable" />
         </template>
         <template #cell-lastupdate="{ row: file }">
           {{ $d(file.updated_at, "long") }}
@@ -296,10 +296,12 @@
                 {{ $d(file.updated_at, "long") }}
               </div>
               <div class="files-list__element__size">
-                {{ !isFolder(file) && file.size ? formatBytes(file.size) : "-" }}
+                {{ formatBytes(file.size) }}
               </div>
               <div class="files-list__element__tags" v-if="columns.some(column => column.id === 'tags')">
-                <FileTagsCell :file="file" :filesTable="filesTable" />
+                <div>
+                  <FileTagsCell :file="file" :parent="filesList" />
+                </div>
               </div>
               <div class="files-list__element__actions" >
                 <FileActionsCell
