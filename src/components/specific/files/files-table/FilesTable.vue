@@ -522,7 +522,7 @@ export default {
     const mainSelectionCheckboxValue = computed(() => {
       if (props.selection.length === 0) {
         return false;
-      } else if (props.selection.length === props.allFiles.value.length) {
+      } else if (props.selection.length === props.allFiles.length) {
         return true;
       } else {
         return null;
@@ -532,7 +532,7 @@ export default {
     const onMainSelectionCheckboxClick = (value) => {
       let newSelection = null;
       if (value) {
-        newSelection = props.allFiles.value;
+        newSelection = props.allFiles;
       } else {
         newSelection = [];
       }
