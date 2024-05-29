@@ -500,13 +500,11 @@ export default {
       toggleFiltersMenu,
       toggleSorting,
       awayFromFilter,
-      displayedRows,
+      displayedRows: displayedListFiles,
       updateFilters,
       activeHeadercolumnKey,
       filters,
     } = useSortAndFilter(props.allFiles, "id", columnsDef);
-
-    const displayedListFiles = computed(() => displayedRows.value.map(row => row.data));
 
     const onFileSelectionChange = (file) => {
       let newSelection = null;

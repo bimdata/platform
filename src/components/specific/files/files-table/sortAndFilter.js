@@ -3,10 +3,6 @@ import { ref, computed, shallowReactive } from "vue";
 // WARNING copied from DesignSystem... could be a good candidate for a shared module
 
 export default function useSortAndFilter(rows, rowKey, columns) {
-    const computedRows = computed(() =>
-        rows.map((row, i) => ({ key: row[rowKey] ?? i, data: row }))
-      );
-
     const displayedColumnFilterId = ref(null);
 
     const activeHeadercolumnKey = ref(null);
@@ -33,15 +29,15 @@ export default function useSortAndFilter(rows, rowKey, columns) {
         const sortOrder = sortObject.order !== "desc" ? 1 : -1;
         if (sortObject.column.sortFunction) {
           const sortFunction = (a, b) => {
-            return sortObject.column.sortFunction(a.data, b.data) * sortOrder;
+            return sortObject.column.sortFunction(a, b) * sortOrder;
           };
-          return Array.from(computedRows.value).sort(sortFunction);
+          return Array.from(rows.value).sort(sortFunction);
         } else {
-          return Array.from(computedRows.value).sort((a, b) => {
-            if (a.data[sortObject.column.id] < b.data[sortObject.column.id]) {
+          return Array.from(rows.value).sort((a, b) => {
+            if (a[sortObject.column.id] < b[sortObject.column.id]) {
               return sortOrder;
             }
-            if (a.data[sortObject.column.id] > b.data[sortObject.column.id]) {
+            if (a[sortObject.column.id] > b[sortObject.column.id]) {
               return -sortOrder;
             }
             return 0;
@@ -49,15 +45,15 @@ export default function useSortAndFilter(rows, rowKey, columns) {
         }
       }
       if (filteringColumns.value.length > 0) {
-        return Array.from(computedRows.value).filter(row => {
+        return Array.from(rows.value).filter(row => {
           return (
-            row.data[filteringColumns.value[0].id] ===
+            row[filteringColumns.value[0].id] ===
             filteringColumns.value[0].text
           );
         });
       }
 
-      return computedRows.value;
+      return rows;
     });
 
     const toggleSorting = column => {
@@ -86,7 +82,7 @@ export default function useSortAndFilter(rows, rowKey, columns) {
           const column = columns.find(
             column => column.id === filter.columnKey
           );
-          const columnRowData = row.data[filter.columnKey];
+          const columnRowData = row[filter.columnKey];
 
           if (columnRowData === null) return;
 
