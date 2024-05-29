@@ -25,7 +25,7 @@
         data-test-id="files-table"
         tableLayout="fixed"
         :columns="columns"
-        :rows="displayedFiles"
+        :rows="files"
         rowKey="id"
         :rowHeight="48"
         :selectable="true"
@@ -123,7 +123,7 @@
           />
         </template>
       </BIMDataTable>
-      <div v-else class="files-list" >
+      <div v-else-if="selectedFileTab.id === 'files'" class="files-list" >
         <div class="files-list__header">
           <div class="files-list__header__select">
             <BIMDataCheckbox :modelValue="mainSelectionCheckboxValue" @update:modelValue="onMainSelectionCheckboxClick"/>
@@ -181,8 +181,8 @@
                 v-if="displayedColumnFilterId === columnsDef[2].id"
                 :column="columnsDef[2]"
                 :columnData="
-                  computedRows.map(
-                    computedRow => computedRow.data[columnsDef[2].id]
+                  allFiles.map(
+                    file => file[columnsDef[2].id]
                   )
                 "
                 :filters="
@@ -250,8 +250,8 @@
                 v-if="displayedColumnFilterId === columnsDef[5].id"
                 :column="columnsDef[5]"
                 :columnData="
-                  computedRows.map(
-                    computedRow => computedRow.data[columnsDef[5].id]
+                  allFiles.map(
+                    file => file[columnsDef[5].id]
                   )
                 "
                 :filters="
@@ -493,14 +493,6 @@ export default {
       }, delay);
     };
 
-    const displayedFiles = computed(() => {
-      if(props.selectedFileTab.id === "folders") {
-        return props.files;
-      } else {
-        return props.allFiles;
-      }
-    });
-
     // BIMDataList SECTION
     const {
       sortObject,
@@ -511,7 +503,6 @@ export default {
       displayedRows,
       updateFilters,
       activeHeadercolumnKey,
-      computedRows,
       filters,
     } = useSortAndFilter(props.allFiles, "id", columnsDef);
 
@@ -531,7 +522,7 @@ export default {
     const mainSelectionCheckboxValue = computed(() => {
       if (props.selection.length === 0) {
         return false;
-      } else if (props.selection.length === displayedFiles.value.length) {
+      } else if (props.selection.length === props.allFiles.value.length) {
         return true;
       } else {
         return null;
@@ -541,7 +532,7 @@ export default {
     const onMainSelectionCheckboxClick = (value) => {
       let newSelection = null;
       if (value) {
-        newSelection = displayedFiles.value;
+        newSelection = props.allFiles.value;
       } else {
         newSelection = [];
       }
@@ -556,7 +547,6 @@ export default {
       fileUploads,
       folderUploads,
       nameEditMode,
-      displayedFiles,
       // Methods
       cleanUpload,
       formatBytes,
@@ -578,7 +568,6 @@ export default {
       columnsDef,
       displayedColumnFilterId,
       toggleFiltersMenu,
-      computedRows,
       awayFromFilter,
       filters,
     };

@@ -137,7 +137,6 @@ export default function useSortAndFilter(rows, rowKey, columns) {
       toggleSorting,
       displayedRows,
       updateFilters,
-      computedRows,
       filters,
     };
 }
