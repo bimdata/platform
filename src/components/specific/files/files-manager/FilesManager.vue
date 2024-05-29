@@ -750,6 +750,7 @@ export default {
     const selectedFileTab = ref(filesTabs[0]);
     const onTabChange = (tab) => {
       selectedFileTab.value = tab;
+      selection.value = [];
     };
 
     return {
