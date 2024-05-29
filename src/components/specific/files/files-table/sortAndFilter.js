@@ -1,8 +1,9 @@
 import { ref, computed, shallowReactive } from "vue";
 
-// WARNING copied from DesignSystem... could be a good candidate for a shared module
+import columnsDef from "./columns.js";
 
-export default function useSortAndFilter(rows, columns) {
+// WARNING copied from DesignSystem... could be a good candidate for a shared module
+export default function useSortAndFilter(rows) {
     const displayedColumnFilterId = ref(null);
 
     const activeHeadercolumnKey = ref(null);
@@ -31,9 +32,9 @@ export default function useSortAndFilter(rows, columns) {
           const sortFunction = (a, b) => {
             return sortObject.column.sortFunction(a, b) * sortOrder;
           };
-          return Array.from(rows).sort(sortFunction);
+          return Array.from(rows.value).sort(sortFunction);
         } else {
-          return Array.from(rows).sort((a, b) => {
+          return Array.from(rows.value).sort((a, b) => {
             if (a[sortObject.column.id] < b[sortObject.column.id]) {
               return sortOrder;
             }
@@ -45,7 +46,7 @@ export default function useSortAndFilter(rows, columns) {
         }
       }
       if (filteringColumns.value.length > 0) {
-        return Array.from(rows).filter(row => {
+        return Array.from(rows.value).filter(row => {
           return (
             row[filteringColumns.value[0].id] ===
             filteringColumns.value[0].text
@@ -53,7 +54,7 @@ export default function useSortAndFilter(rows, columns) {
         });
       }
 
-      return rows;
+      return rows.value;
     });
 
     const toggleSorting = column => {
@@ -79,7 +80,7 @@ export default function useSortAndFilter(rows, columns) {
     const displayedRows = computed(() => {
       return sortedRows.value.filter(row => {
         return filters.value.every(filter => {
-          const column = columns.find(
+          const column = columnsDef.find(
             column => column.id === filter.columnKey
           );
           const columnRowData = row[filter.columnKey];

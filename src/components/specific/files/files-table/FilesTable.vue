@@ -504,7 +504,7 @@ export default {
       updateFilters,
       activeHeadercolumnKey,
       filters,
-    } = useSortAndFilter(props.allFiles, columnsDef);
+    } = useSortAndFilter(computed(() => props.allFiles));
 
     const onFileSelectionChange = (file) => {
       let newSelection = null;
