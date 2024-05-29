@@ -211,6 +211,7 @@
               :allFiles="allFiles"
               :filesTabs="filesTabs"
               :selectedFileTab="selectedFileTab"
+              :selection="selection"
               @tab-selected="onTabChange"
               @back-parent-folder="backToParent"
               @create-model="createModelFromFile"
@@ -749,6 +750,7 @@ export default {
     const selectedFileTab = ref(filesTabs[0]);
     const onTabChange = (tab) => {
       selectedFileTab.value = tab;
+      selection.value = [];
     };
 
     return {
@@ -784,6 +786,7 @@ export default {
       allFiles,
       filesTabs,
       selectedFileTab,
+      selection,
       // Methods
       openSidePanel,
       closeSidePanel,
