@@ -2,7 +2,7 @@ import { ref, computed, shallowReactive } from "vue";
 
 // WARNING copied from DesignSystem... could be a good candidate for a shared module
 
-export default function useSortAndFilter(rows, rowKey, columns) {
+export default function useSortAndFilter(rows, columns) {
     const displayedColumnFilterId = ref(null);
 
     const activeHeadercolumnKey = ref(null);
@@ -31,9 +31,9 @@ export default function useSortAndFilter(rows, rowKey, columns) {
           const sortFunction = (a, b) => {
             return sortObject.column.sortFunction(a, b) * sortOrder;
           };
-          return Array.from(rows.value).sort(sortFunction);
+          return Array.from(rows).sort(sortFunction);
         } else {
-          return Array.from(rows.value).sort((a, b) => {
+          return Array.from(rows).sort((a, b) => {
             if (a[sortObject.column.id] < b[sortObject.column.id]) {
               return sortOrder;
             }
@@ -45,7 +45,7 @@ export default function useSortAndFilter(rows, rowKey, columns) {
         }
       }
       if (filteringColumns.value.length > 0) {
-        return Array.from(rows.value).filter(row => {
+        return Array.from(rows).filter(row => {
           return (
             row[filteringColumns.value[0].id] ===
             filteringColumns.value[0].text
