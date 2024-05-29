@@ -754,7 +754,8 @@
     "list": "List of tags",
     "addTag": "add a tag",
     "addNewTag": "Add a new tag",
-    "deleteTag": "Delete this tag"
+    "deleteTag": "Delete this tag",
+    "emptyTag": "No tag"
   },
   "SubscriptionModal": {
     "title": "Get more space",
@@ -840,6 +841,7 @@
     "modifiedOn": "Last modified",
     "modify": "Edit",
     "name": "Name",
+    "notSpecified": "Not specified",
     "ok": "OK",
     "open": "Open",
     "or": "or",
