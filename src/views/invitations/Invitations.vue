@@ -13,13 +13,13 @@
           <span>
             {{
               $t("Invitations.invitCounter") +
-              ` ${invitationListPending.length}`
+              ` ${pendingInvitations.length}`
             }}
           </span>
         </div>
         <BIMDataButton
           data-test-id="btn-accept-all-invit"
-          :disabled="invitationListPending.length < 1 || isLoadingAllInvit"
+          :disabled="pendingInvitations.length < 1 || isLoadingAllInvit"
           color="primary"
           width="130px"
           fill
@@ -29,12 +29,12 @@
           {{ $t("Invitations.acceptAll") }}
         </BIMDataButton>
       </div>
-      <template v-if="invitationList.length > 0">
+      <template v-if="invitations.length > 0">
         <div class="invitations__content__list">
           <div
             class="invitations__content__list__invit"
             data-test-id="card-invitation"
-            v-for="invit in invitationList"
+            v-for="invit in invitations"
             :key="invit.id"
           >
             <template v-if="invit.sender">
@@ -153,7 +153,7 @@
                     radius
                     ghost
                     icon
-                    @click="onDenyInvitation(invit)"
+                    @click="declineInvitation(invit)"
                   >
                     <BIMDataIconClose fill color="high" size="s" />
                   </BIMDataButton>
@@ -200,8 +200,9 @@ import { ref } from "vue";
 import { fullName } from "../../utils/users.js";
 import routeNames from "../../router/route-names.js";
 import { useInvitations } from "../../state/invitations.js";
-import { INVITATION_STATUS } from "../../config/invitation.js";
+import { useInterval } from "../../composables/interval.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { INVITATION_STATUS } from "../../config/invitation.js";
 
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
 import UserAvatar from "../../components/specific/users/user-avatar/UserAvatar.vue";
@@ -215,10 +216,11 @@ export default {
   },
   setup() {
     const {
+      invitations,
+      pendingInvitations,
+      loadUserInvitations,
       acceptInvitations,
-      denyInvitation,
-      invitationList,
-      invitationListPending
+      declineInvitation,
     } = useInvitations();
 
     const currentInvitation = ref(null);
@@ -234,27 +236,25 @@ export default {
         currentInvitation.value = null;
       } else {
         isLoadingAllInvit.value = true;
-        await acceptInvitations(invitationListPending.value);
+        await acceptInvitations(pendingInvitations.value);
         isLoadingAllInvit.value = false;
       }
     };
 
-    const onDenyInvitation = async invitation => {
-      await denyInvitation(invitation);
-    };
+    useInterval(loadUserInvitations, 5000);
 
     return {
       // references
       routeNames,
-      invitationList,
+      invitations,
       INVITATION_STATUS,
       isLoadingAllInvit,
       currentInvitation,
-      invitationListPending,
+      pendingInvitations,
       isLoadingSingleInvit,
       // methods
+      declineInvitation,
       fullName,
-      onDenyInvitation,
       onAcceptInvitations,
       // Responsive breakpoints
       ...useStandardBreakpoints()

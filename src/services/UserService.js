@@ -1,8 +1,33 @@
 import { apiClient, backendClient } from "./api-client.js";
+import { ERRORS, RuntimeError } from "./ErrorService.js";
 
 class UserService {
   fetchUserData() {
     return apiClient.collaborationApi.getSelfUser();
+  }
+
+  async fetchUserInvitations() {
+    try {
+      return await apiClient.collaborationApi.getUserInvitations();
+    } catch (error) {
+      throw new RuntimeError(ERRORS.INVITATION_VIEW_FETCH_ERROR, error);
+    }
+  }
+
+  async acceptInvitation(invitation) {
+    try {
+      await apiClient.collaborationApi.acceptUserInvitation(invitation.id);
+    } catch (error) {
+      throw new RuntimeError(ERRORS.INVITATION_VIEW_ACCEPT_ERROR, error);
+    }
+  }
+
+  async declineInvitation(invitation) {
+    try {
+      return await apiClient.collaborationApi.denyUserInvitation(invitation.id);
+    } catch (error) {
+      throw new RuntimeError(ERRORS.INVITATION_VIEW_DECLINE_ERROR, error);
+    }
   }
 
   fetchUserFavorites() {

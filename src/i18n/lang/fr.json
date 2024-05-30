@@ -387,7 +387,7 @@
     "invitationCancelError": "L'invitation n'as pas pu être annulée",
     "invitationViewFetchError": "Impossible de récupérer la liste des invitations",
     "invitationViewAcceptError": "Impossible d'accepter l'invitation",
-    "invitationViewDenyError": "Impossible de refuser l'invitation",
+    "invitationViewDeclineError": "Impossible de refuser l'invitation",
     "usersFetchError": "Impossible de récupérer la liste des utilisateurs",
     "userUpdateError": "Échec de la mise à jour de l'utilisateur",
     "userDeleteError": "Échec de la suppression de l'utilisateur",

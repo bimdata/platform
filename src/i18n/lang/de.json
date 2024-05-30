@@ -359,7 +359,7 @@
         "documentCreateError": "Dieses Dokument kann nicht heruntergeladen werden",
         "invitationViewFetchError": "Unmöglich die Liste der Einladungen abzurufen",
         "invitationViewAcceptError": "Die Einladung kann nicht angenommen werden",
-        "invitationViewDenyError": "Einladung kann nicht abgelehnt werden",
+        "invitationViewDeclineError": "Einladung kann nicht abgelehnt werden",
         "folderFetchFolder": "",
         "bcfDeleteError": "Das Löschen ist fehlgeschlagen...",
         "groupImportError": ""
