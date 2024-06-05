@@ -149,7 +149,7 @@ export default {
 
     useInterval(
       () => {
-        if (currentView.value = PROJECT_VIEWS.overview) {
+        if (currentView.value === PROJECT_VIEWS.overview) {
           loadProjectUsers(currentProject.value);
           loadProjectInvitations(currentProject.value);
         }
