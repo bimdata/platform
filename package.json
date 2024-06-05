@@ -16,7 +16,7 @@
     "@bimdata/components": "1.4.10",
     "@bimdata/design-system": "2.1.0-rc.31",
     "@bimdata/typescript-fetch-api-client": "10.1.0",
-    "@bimdata/viewer": "2.3.0-beta.20",
+    "@bimdata/viewer": "2.3.0-beta.21",
     "async": "^3.2.5",
     "lodash": "^4.17.21",
     "maplibre-gl": "^4.3.2",
