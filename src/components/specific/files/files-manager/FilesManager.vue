@@ -795,14 +795,14 @@ export default {
       return folders;
     };
     const allFolders = computed(() =>
-  props.fileStructure.children.flatMap((file) => {
-    if (isFolder(file)) {
-      return [file, ...getFoldersInFolder(file)];
-    } else {
-      return [];
-    }
-  })
-);
+      props.fileStructure.children.flatMap((file) => {
+        if (isFolder(file)) {
+          return [file, ...getFoldersInFolder(file)];
+        } else {
+          return [];
+        }
+      })
+    );
 
     const filesTabs = reactive([
       {
