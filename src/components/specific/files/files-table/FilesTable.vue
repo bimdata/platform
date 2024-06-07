@@ -359,7 +359,7 @@ import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
-import { getAscendants, isFolder } from "../../../../utils/file-structure.js";
+import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
 
 
