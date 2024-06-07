@@ -210,6 +210,7 @@
               :loadingFileIds="loadingFileIds"
               :allTags="allTags"
               :allFiles="allFiles"
+              :allFolders="allFolders"
               :filesTabs="filesTabs"
               :selectedFileTab="selectedFileTab"
               :selection="selection"
@@ -420,11 +421,11 @@ export default {
 
       if (selectedFileTab.value.id === "folders") {
         // WARNING displayedRows is name from DS, may change
-        return filesTable.value.filesTable.displayedRows.map(row => row.data);
+        return filesTable.value.filesTable.displayedRows.map((row) => row.data);
       } else {
         return filesTable.value.displayedListFiles;
       }
-    })
+    });
 
     const onFileSelected = (file) => {
       if (isFolder(file)) {
@@ -436,7 +437,7 @@ export default {
             project: props.project,
             folder: currentFolder.value,
             document: file,
-            currentView: documentViewerFilesList.value
+            currentView: documentViewerFilesList.value,
           },
         });
       }
@@ -505,13 +506,13 @@ export default {
     const openDeleteModal = (models) => {
       filesToDelete.value = models;
       openModal({
-          component: FilesDeleteModal,
-          props: {
-            project: props.project,
-            files: filesToDelete.value,
-            onClose: closeModal,
-          },
-        });
+        component: FilesDeleteModal,
+        props: {
+          project: props.project,
+          files: filesToDelete.value,
+          onClose: closeModal,
+        },
+      });
       showDeleteModal.value = true;
     };
     const closeDeleteModal = () => {
@@ -748,6 +749,25 @@ export default {
         }
       })
     );
+    const getFoldersInFolder = (folder) => {
+      const folders = [];
+      folder.children.forEach((child) => {
+        if (isFolder(child)) {
+          folders.push(child);
+          folders.push(...getFoldersInFolder(child));
+        }
+      });
+      return folders;
+    };
+    const allFolders = computed(() =>
+  props.fileStructure.children.flatMap((file) => {
+    if (isFolder(file)) {
+      return [file, ...getFoldersInFolder(file)];
+    } else {
+      return [];
+    }
+  })
+);
 
     const filesTabs = reactive([
       {
@@ -798,6 +818,7 @@ export default {
       menuItems,
       loadingFileIds,
       allFiles,
+      allFolders,
       filesTabs,
       filesTable,
       selectedFileTab,
