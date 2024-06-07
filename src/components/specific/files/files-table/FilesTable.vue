@@ -579,11 +579,8 @@ export default {
       fileUploads,
       folderUploads,
       nameEditMode,
-      // showFullPath,
       // Methods
       cleanUpload,
-      // folderLocation,
-      // lastFolderLocation,
       formatBytes,
       isFolder,
       onRowDrop,
