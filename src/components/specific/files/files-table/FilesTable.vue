@@ -315,7 +315,6 @@
               </div>
               <div class="files-list__element__location">
                 <FilePathCell :file="file" :allFolders="allFolders" />
-                
               </div>
               <div class="files-list__element__size">
                 {{ formatBytes(file.size) }}
