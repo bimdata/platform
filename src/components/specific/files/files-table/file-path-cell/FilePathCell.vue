@@ -1,5 +1,5 @@
 <template>
-  <div class="file-path-cell" @click="toggleFullPath(file)" @mouseenter="hovering = true" @mouseleave="hovering = false">
+  <div class="file-path-cell" @mouseenter="hovering = true" @mouseleave="hovering = false">
     <div
       class="file-path-cell__last-folder"
       v-click-away="() => (showFullPath = false)"
@@ -14,18 +14,18 @@
       />
     </div>
     <div v-show="hovering || showFullPath" class="file-path-cell__location">
-      <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
-      <div v-if="folderLocation(file).length > 0" class="flex items-center">
-        <div v-for="(folder, index) in folderLocation(file)" :key="index" class="flex items-center">
-          <span class="folder-name flex items-center">
-            {{ folder }}
-          </span>
-          <span v-if="index < folderLocation(file).length - 1" class="m-x-6">
-            >
-          </span>
+      <div v-if="folderLocation(file).length > 0" v-for="(folder, index) in folderLocation(file)" :key="index" class="flex items-center">
+        <div class="folder-name flex items-center">
+          <BIMDataIconFolderLocation v-if="index === folderLocation(file).length - 1" fill color="primary" margin="0 6px 0 0" />
+          <BIMDataIconFolder v-else fill color="primary" margin="0 6px 0 0" />
+        <span> {{ folder }}</span>
+        </div>
+        <div v-if="index < folderLocation(file).length - 1" class="m-x-6">
+          <BIMDataIconChevron size="xxxs" fill color="default" />
         </div>
       </div>
       <span v-else class="folder-name flex items-center" @click.stop="$emit('go-folders-view')">
+        <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
         {{ $t('t.rootFolder') }}
       </span>
     </div>
@@ -63,21 +63,11 @@ export default {
 
     const hovering = ref(false);
     const showFullPath = ref(false);
-    const clickedFileKey = ref(null);
-    const toggleFullPath = (file) => {
-      if(clickedFileKey.value === file.id) {
-        showFullPath.value = !showFullPath.value;
-      } else {
-        clickedFileKey.value = file.id;
-        showFullPath.value = true;
-      }
-    };
     return {
       hovering,
       showFullPath,
       folderLocation,
       lastFolderLocation,
-      toggleFullPath,
     };
   },
 };
