@@ -5,12 +5,16 @@
   align-items: center;
   &__last-folder {
     height: 34px;
+    max-width: 100%;
     padding: 0 var(--spacing-unit);
     border-radius: 50px;
     display: flex;
     align-items: center;
     cursor: pointer;
     transition: all ease 0.25s;
+    .bimdata-textbox:deep() {
+      max-width: 200px;
+    }
     &:hover {
       background-color: rgba(47, 55, 74, 0.03);
       transition: all ease 0.25s;
