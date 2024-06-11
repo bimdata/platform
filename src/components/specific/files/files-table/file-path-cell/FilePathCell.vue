@@ -9,8 +9,7 @@
       <BIMDataTextbox
         :text="lastFolderLocation(file)"
         cutPosition="middle"
-        tooltipPosition="bottom"
-        tooltipColor="primary"
+        :tooltip="false"
         width="auto"
       />
     </div>
