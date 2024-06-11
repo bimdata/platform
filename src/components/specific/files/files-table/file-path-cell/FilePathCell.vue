@@ -1,8 +1,7 @@
 <template>
-  <div class="file-path-cell">
+  <div class="file-path-cell" @click="toggleFullPath(file)">
     <div
       class="file-path-cell__last-folder"
-      @click.stop="onLastFolderClick(file)"
       v-click-away="() => (showFullPath = false)"
     >
       <BIMDataIconFolderLocation fill color="primary" margin="0 12px 0 0" />
@@ -25,7 +24,7 @@
           </span>
         </div>
       </div>
-      <span v-else class="folder-name flex items-center">
+      <span v-else class="folder-name flex items-center" @click.stop="$emit('go-folders-view')">
         Dossier racine
       </span>
     </div>
@@ -46,8 +45,8 @@ export default {
       required: true,
     },
   },
+  emits: ["go-folders-view"],
   setup(props) {
-    const showFullPath = ref(false);
     const folderLocation = (file) => {
       const parentFolders = getAscendants(file, props.allFolders)
         .map((f) => f.name)
@@ -59,8 +58,9 @@ export default {
       return parentFolders[0]?.name ?? "Dossier racine";
     };
 
+    const showFullPath = ref(false);
     const clickedFileKey = ref(null);
-    const onLastFolderClick = (file) => {
+    const toggleFullPath = (file) => {
       if(clickedFileKey.value === file.id) {
         showFullPath.value = !showFullPath.value;
       } else {
@@ -72,7 +72,7 @@ export default {
       showFullPath,
       folderLocation,
       lastFolderLocation,
-      onLastFolderClick,
+      toggleFullPath,
     };
   },
 };

@@ -215,6 +215,7 @@
               :selectedFileTab="selectedFileTab"
               :selection="selection"
               @tab-selected="onTabChange"
+              @go-folders-view="goFoldersView"
               @back-parent-folder="backToParent"
               @create-model="createModelFromFile"
               @remove-model="removeModel"
@@ -821,6 +822,10 @@ export default {
       selectedFileTab.value = tab;
       selection.value = [];
     };
+    const goFoldersView = () => {
+      selectedFileTab.value = filesTabs[0];
+      selection.value = [];
+    };
 
     return {
       // References
@@ -887,6 +892,7 @@ export default {
       fileUploadInput,
       openSubscriptionModal,
       onTabChange,
+      goFoldersView,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,
