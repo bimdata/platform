@@ -210,7 +210,9 @@
               @set-active="activeHeadercolumnKey = $event"
             />
           </div>
-          <div class="files-list__header__location">location</div>
+          <div class="files-list__header__location">
+            {{ $t("t.location") }}
+          </div>
           <div class="files-list__header__size">
             {{ $t("t.size") }}
             <ColumnSorting
