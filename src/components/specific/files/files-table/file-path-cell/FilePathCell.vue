@@ -1,5 +1,5 @@
 <template>
-  <div class="file-path-cell" @click="toggleFullPath(file)">
+  <div class="file-path-cell" @click="toggleFullPath(file)" @mouseenter="hovering = true" @mouseleave="hovering = false">
     <div
       class="file-path-cell__last-folder"
       v-click-away="() => (showFullPath = false)"
@@ -10,9 +10,10 @@
         cutPosition="middle"
         :tooltip="false"
         width="auto"
+        maxWidth="200px"
       />
     </div>
-    <div v-show="showFullPath" class="file-path-cell__location">
+    <div v-show="hovering || showFullPath" class="file-path-cell__location">
       <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
       <div v-if="folderLocation(file).length > 0" class="flex items-center">
         <div v-for="(folder, index) in folderLocation(file)" :key="index" class="flex items-center">
@@ -25,7 +26,7 @@
         </div>
       </div>
       <span v-else class="folder-name flex items-center" @click.stop="$emit('go-folders-view')">
-        Dossier racine
+        {{ $t('t.rootFolder') }}
       </span>
     </div>
   </div>
@@ -33,6 +34,7 @@
 
 <script>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { getAscendants } from "../../../../../utils/file-structure.js";
 export default {
   props: {
@@ -47,6 +49,7 @@ export default {
   },
   emits: ["go-folders-view"],
   setup(props) {
+    const { t } = useI18n();
     const folderLocation = (file) => {
       const parentFolders = getAscendants(file, props.allFolders)
         .map((f) => f.name)
@@ -55,9 +58,10 @@ export default {
     };
     const lastFolderLocation = (file) => {
       const parentFolders = getAscendants(file, props.allFolders);
-      return parentFolders[0]?.name ?? "Dossier racine";
+      return parentFolders[0]?.name ?? t('t.rootFolder');
     };
 
+    const hovering = ref(false);
     const showFullPath = ref(false);
     const clickedFileKey = ref(null);
     const toggleFullPath = (file) => {
@@ -69,6 +73,7 @@ export default {
       }
     };
     return {
+      hovering,
       showFullPath,
       folderLocation,
       lastFolderLocation,
