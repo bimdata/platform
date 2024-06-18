@@ -28,6 +28,10 @@ const props = defineProps({
   document: {
     type: Object,
     default: null
+  }, 
+  currentView: {
+    type: Object,
+    required: true
   }
 });
 
@@ -36,9 +40,7 @@ const { closeModal } = useAppModal();
 const { projectModels } = useModels();
 
 const documents = computed(() =>
-  props.folder.children
-    .filter(f => !isFolder(f))
-    .sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1))
+  props.currentView.filter(f => !isFolder(f))
 );
 
 const index = ref(0);

@@ -200,6 +200,7 @@
           </transition>
           <transition name="slide-fade-left">
             <FilesTable
+              ref="filesTable"
               class="files-manager__files__table"
               :project="project"
               :folder="currentFolder"
@@ -413,6 +414,18 @@ export default {
       { immediate: true }
     );
 
+    const filesTable = ref(null);
+    const documentViewerFilesList = computed(() => {
+      if (!filesTable.value) return [];
+
+      if (selectedFileTab.value.id === "folders") {
+        // WARNING displayedRows is name from DS, may change
+        return filesTable.value.filesTable.displayedRows.map(row => row.data);
+      } else {
+        return filesTable.value.displayedListFiles;
+      }
+    })
+
     const onFileSelected = (file) => {
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
@@ -423,6 +436,7 @@ export default {
             project: props.project,
             folder: currentFolder.value,
             document: file,
+            currentView: documentViewerFilesList.value
           },
         });
       }
@@ -785,6 +799,7 @@ export default {
       loadingFileIds,
       allFiles,
       filesTabs,
+      filesTable,
       selectedFileTab,
       selection,
       // Methods
