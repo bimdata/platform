@@ -358,7 +358,6 @@ export default {
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
     const visasLoading = ref(false);
-    const loadingComplete = ref(false);
     const allTags = ref([]);
 
     const getFilesInFolder = (folder) => {
@@ -633,7 +632,6 @@ export default {
     const fetchVisas = async () => {
       try {
         visasLoading.value = true;
-        loadingComplete.value = false;
 
         const [toValidateResponse, createdResponse] = await Promise.all([
           fetchToValidateVisas(props.project),
@@ -652,7 +650,6 @@ export default {
         }
       } finally {
         visasLoading.value = false;
-        loadingComplete.value = true;
       }
     };
 
@@ -811,7 +808,6 @@ export default {
       foldersToUpload,
       folderToManage,
       importFromOtherProjectsActions,
-      loadingComplete,
       loadingFileIds,
       menuItems,
       searchText,
