@@ -136,35 +136,6 @@
             clear
           />
         </div>
-
-        <div class="end">
-          <BIMDataTooltip
-            class="files-manager__actions__visa-tooltip"
-            position="left"
-            color="high"
-            :disabled="visasCounter > 0 || createdVisas.length > 0"
-            :text="$t('Visa.noVisa')"
-          >
-            <BIMDataButton
-              :disabled="createdVisas.length < 1 && visasCounter < 1"
-              class="files-manager__actions__visa"
-              data-test-id="btn-open-visa-list"
-              color="primary"
-              fill
-              radius
-              @click="openVisaManager"
-            >
-              <span class="files-manager__actions__visa__content">
-                <template v-if="visasCounter > 0">
-                  <div class="files-manager__actions__visa__content__counter">
-                    <span>{{ visasCounter }}</span>
-                  </div>
-                </template>
-                {{ $t("Visa.button") }}
-              </span>
-            </BIMDataButton>
-          </BIMDataTooltip>
-        </div>
       </div>
     </template>
     <template v-if="fileStructure.children.length > 0">
@@ -213,8 +184,7 @@
               :loadingFileIds="loadingFileIds"
               :selectedFileTab="selectedFileTab"
               :selection="selection"
-              @tab-selected="onTabChange"
-              @go-folders-view="goFoldersView"
+              :visas="allVisas"
               @back-parent-folder="backToParent"
               @create-model="createModelFromFile"
               @delete="openDeleteModal([$event])"
@@ -228,6 +198,7 @@
               @open-tag-manager="openTagManager"
               @open-versioning-manager="openVersioningManager"
               @open-visa-manager="openVisaManager"
+              @reach-visa="openVisaManager"
               @remove-model="removeModel"
               @row-drop="({ event, data }) => uploadFiles(event, data)"
               @selection-changed="setSelection"
@@ -248,9 +219,6 @@
             :project="project"
             :document="fileToManage"
             :visa="currentVisa"
-            :toValidateVisas="toValidateVisas"
-            :createdVisas="createdVisas"
-            :visasLoading="visasLoading"
             @fetch-visas="fetchVisas"
             @close="closeVisaManager"
             @reach-file="backToParent"
@@ -368,7 +336,7 @@ export default {
     const { currentSpace } = useSpaces();
     const { openModal, closeModal } = useAppModal();
 
-    const { getProjectFolderTree, spaceProjects } = useProjects();
+    const { spaceProjects } = useProjects();
 
     const { isXXXL, isMidXL } = useCustomBreakpoints({
       isXXXL: ({ width }) => width <= 1521 - 0.02,
@@ -607,6 +575,7 @@ export default {
         fileToManage.value = file;
       } else {
         fileToManage.value = { id: null };
+        currentVisa.value = file;
       }
       showVisaManager.value = true;
       showAccessManager.value = false;
@@ -673,8 +642,6 @@ export default {
 
         toValidateVisas.value = toValidateResponse;
         createdVisas.value = createdResponse;
-        console.log('Fetched toValidateVisas:', toValidateVisas.value);
-        console.log('Fetched createdVisas:', createdVisas.value);
         if (route.query.visaId) {
           currentVisa.value = toValidateVisas.value.find(
             (v) => v.id === parseInt(route.query.visaId)
@@ -754,7 +721,7 @@ export default {
       return items;
     });
 
-    const myVisas = computed(() => {
+    const allVisas = computed(() => {
       return [...toValidateVisas.value, ...createdVisas.value];
     });
 
@@ -809,7 +776,7 @@ export default {
       {
         id: "visas",
         text: "Mes visas",
-        count:computed(() => myVisas.value.length),
+        count: computed(() => visasCounter.value),
       },
     ];
     const selectedFileTab = ref(filesTabs[0]);
@@ -827,7 +794,7 @@ export default {
       allFiles,
       allFolders,
       allTags,
-      createdVisas,
+      allVisas,
       currentFolder,
       currentSpace,
       currentVisa,
@@ -847,7 +814,6 @@ export default {
       loadingComplete,
       loadingFileIds,
       menuItems,
-      myVisas,
       searchText,
       selectedFileTab,
       selection,
@@ -857,23 +823,7 @@ export default {
       showTagManager,
       showVersioningManager,
       showVisaManager,
-      toValidateVisas,
       visasCounter,
-      visasLoading,
-      shouldSubscribe,
-      currentSpace,
-      importFromOtherProjectsActions,
-      dropdownMaxHeight,
-      fileManager,
-      dropdown,
-      menuItems,
-      loadingFileIds,
-      allFiles,
-      allFolders,
-      filesTabs,
-      filesTable,
-      selectedFileTab,
-      selection,
       // Methods
       backToParent,
       closeAccessManager,
