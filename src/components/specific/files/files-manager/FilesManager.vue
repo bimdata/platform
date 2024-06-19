@@ -202,36 +202,35 @@
             <FilesTable
               ref="filesTable"
               class="files-manager__files__table"
-              :allFiles="allFiles"
-              :allFolders="allFolders"
-              :allTags="allTags"
-              :files="displayedFiles"
-              :filesTabs="filesTabs"
-              :filesToUpload="filesToUpload"
+              :project="project"
               :folder="currentFolder"
+              :files="displayedFiles"
+              :filesToUpload="filesToUpload"
               :foldersToUpload="foldersToUpload"
               :loadingFileIds="loadingFileIds"
-              :project="project"
+              :allTags="allTags"
+              :allFiles="allFiles"
+              :allFolders="allFolders"
+              :filesTabs="filesTabs"
               :selectedFileTab="selectedFileTab"
               :selection="selection"
-              :visas="myVisas"
+              @tab-selected="onTabChange"
+              @go-folders-view="goFoldersView"
               @back-parent-folder="backToParent"
               @create-model="createModelFromFile"
+              @remove-model="removeModel"
               @delete="openDeleteModal([$event])"
               @download="downloadFiles([$event])"
-              @dragover.prevent="() => {}"
-              @drop.prevent="uploadFiles"
               @file-clicked="onFileSelected"
               @file-uploaded="$emit('file-uploaded')"
-              @go-folders-view="goFoldersView"
-              @manage-access="openAccessManager"
-              @open-tag-manager="openTagManager"
-              @open-versioning-manager="openVersioningManager"
-              @open-visa-manager="openVisaManager"
-              @remove-model="removeModel"
+              @dragover.prevent="() => {}"
+              @drop.prevent="uploadFiles"
               @row-drop="({ event, data }) => uploadFiles(event, data)"
               @selection-changed="setSelection"
-              @tab-selected="onTabChange"
+              @manage-access="openAccessManager"
+              @open-visa-manager="openVisaManager"
+              @open-tag-manager="openTagManager"
+              @open-versioning-manager="openVersioningManager"
             />
           </transition>
         </div>
@@ -749,10 +748,6 @@ export default {
       return items;
     });
 
-    const myVisas = computed(() => {
-      return [...toValidateVisas.value, ...createdVisas.value];
-    });
-
     onMounted(async () => {
       fetchVisas();
       fetchTags();
@@ -810,23 +805,18 @@ export default {
       })
     );
 
-    const filesTabs = [
+    const filesTabs = reactive([
       {
         id: "folders",
         text: "Dossiers",
-        count: computed(() => props.fileStructure.children.length),
+        data: props.fileStructure.children,
       },
       {
         id: "files",
         text: "Tous les fichiers",
-        count: computed(() => allFiles.value.length),
+        data: allFiles.value,
       },
-      {
-        id: "visas",
-        text: "Mes visas",
-        count:computed(() => myVisas.value.length),
-      },
-    ];
+    ]);
     const selectedFileTab = ref(filesTabs[0]);
     const onTabChange = (tab) => {
       selectedFileTab.value = tab;
@@ -836,73 +826,75 @@ export default {
       selectedFileTab.value = filesTabs[0];
       selection.value = [];
     };
-    
+
     return {
       // References
-      allFiles,
-      allFolders,
-      allTags,
-      createdVisas,
       currentFolder,
       currentSpace,
       currentVisa,
       displayedAllFiles,
       displayedFiles,
-      dropdown,
-      dropdownMaxHeight,
-      fileManager,
-      fileToManage,
-      filesTabs,
-      filesTable,
       filesToDelete,
       filesToUpload,
       foldersToUpload,
       folderToManage,
-      importFromOtherProjectsActions,
-      loadingFileIds,
-      menuItems,
-      myVisas,
       searchText,
+      selection,
+      showAccessManager,
+      showVisaManager,
+      showDeleteModal,
+      fileToManage,
+      currentVisa,
+      toValidateVisas,
+      createdVisas,
+      visasLoading,
+      visasCounter,
+      showTagManager,
+      allTags,
+      showVersioningManager,
+      shouldSubscribe,
+      currentSpace,
+      importFromOtherProjectsActions,
+      dropdownMaxHeight,
+      fileManager,
+      dropdown,
+      menuItems,
+      loadingFileIds,
+      allFiles,
+      allFolders,
+      filesTabs,
+      filesTable,
       selectedFileTab,
       selection,
-      shouldSubscribe,
-      showAccessManager,
-      showDeleteModal,
-      showTagManager,
-      showVersioningManager,
-      showVisaManager,
-      toValidateVisas,
-      visasCounter,
-      visasLoading,
       // Methods
-      backToParent,
+      openSidePanel,
+      closeSidePanel,
       closeAccessManager,
       closeDeleteModal,
-      closeSidePanel,
-      closeTagManager,
-      closeVersioningManager,
-      closeVisaManager,
       createModelFromFile,
-      downloadFiles,
-      fetchTags,
-      fetchVisas,
-      fileUploadInput,
-      goFoldersView,
-      hasAdminPerm,
-      isFullTotal,
-      moveFiles,
-      onFileSelected,
-      openAccessManager,
-      openDeleteModal,
-      openSidePanel,
-      openSubscriptionModal,
-      onTabChange,
-      openTagManager,
-      openVersioningManager,
-      openVisaManager,
       removeModel,
+      downloadFiles,
+      moveFiles,
+      openAccessManager,
+      onFileSelected,
+      openDeleteModal,
       setSelection,
       uploadFiles,
+      backToParent,
+      closeVisaManager,
+      openVisaManager,
+      fetchVisas,
+      openTagManager,
+      closeTagManager,
+      fetchTags,
+      openVersioningManager,
+      closeVersioningManager,
+      hasAdminPerm,
+      isFullTotal,
+      fileUploadInput,
+      openSubscriptionModal,
+      onTabChange,
+      goFoldersView,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,
