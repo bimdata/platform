@@ -171,7 +171,7 @@
       <div class="files-manager__content">
         <transition name="slide-fade-left">
           <FileTree
-            v-if="selectedFileTab.id === 'folders'"
+            v-show="selectedFileTab.id === 'folders'"
             data-guide="file-tree"
             class="files-manager__tree"
             :project="project"
@@ -390,7 +390,6 @@ export default {
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
     const visasLoading = ref(false);
-    const loadingComplete = ref(false);
     const allTags = ref([]);
 
     const getFilesInFolder = (folder) => {
@@ -664,7 +663,6 @@ export default {
     const fetchVisas = async () => {
       try {
         visasLoading.value = true;
-        loadingComplete.value = false;
 
         const [toValidateResponse, createdResponse] = await Promise.all([
           fetchToValidateVisas(props.project),
@@ -673,8 +671,6 @@ export default {
 
         toValidateVisas.value = toValidateResponse;
         createdVisas.value = createdResponse;
-        console.log('Fetched toValidateVisas:', toValidateVisas.value);
-        console.log('Fetched createdVisas:', createdVisas.value);
         if (route.query.visaId) {
           currentVisa.value = toValidateVisas.value.find(
             (v) => v.id === parseInt(route.query.visaId)
@@ -685,7 +681,6 @@ export default {
         }
       } finally {
         visasLoading.value = false;
-        loadingComplete.value = true;
       }
     };
 
@@ -864,7 +859,6 @@ export default {
       foldersToUpload,
       folderToManage,
       importFromOtherProjectsActions,
-      loadingComplete,
       loadingFileIds,
       menuItems,
       myVisas,
