@@ -13,7 +13,7 @@
   &__actions {
     display: grid;
     grid-template-columns: min(25%, var(--actions-max-width)) 1fr min(25%, var(--actions-max-width));
-    grid-template-areas: "actions-start actions-middle actions-end";
+    grid-template-areas: "actions-start actions-middle";
 
     .start {
       display: flex;
@@ -54,11 +54,6 @@
       display: flex;
       justify-content: center;
       grid-area: actions-middle;
-    }
-
-    .end {
-      display: flex;
-      grid-area: actions-end;
     }
 
     &__btn-new-folder {
