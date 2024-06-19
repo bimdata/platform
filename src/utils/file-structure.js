@@ -265,6 +265,14 @@ function getDescendants(file) {
   );
 }
 
+function getAscendants(file, allFolders) {
+  const parent = allFolders.find(f => f.id === file.parent_id);
+  if (!parent) {
+    return [];
+  }
+  return [parent].concat(getAscendants(parent, allFolders));
+}
+
 function segregate(files) {
   const folders = [];
   const documents = [];
@@ -292,6 +300,7 @@ function hasAdminPerm(project, file) {
 
 export {
   FileStructureHandler,
+  getAscendants,
   getDescendants,
   segregate,
   isFolder,
