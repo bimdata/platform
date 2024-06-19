@@ -15,6 +15,7 @@
     "delete": "Supprimer",
     "description": "Description",
     "download": "Télécharger",
+    "dueDate": "Échéance",
     "edit": "Editer",
     "emptyFolder": "Dossier vide",
     "error": "Erreur",
@@ -46,6 +47,8 @@
     "type": "Type",
     "unarchive": "Désarchiver",
     "validate": "Valider",
+    "validation": "Validations",
+    "validator": "Validants",
     "verify": "Vérifier"
   },
   "OidcCallbackError": {
@@ -731,6 +734,17 @@
     },
     "selectionValidator": {
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
+    },
+    "view": {
+      "visaPending": "Visa en attente",
+      "visaClosed": "Visa clôturé",
+      "myRequests": "Mes demandes",
+      "valid": "Validé",
+      "pending": "En attente",
+      "denied": "Refusé",
+      "overdue": "En retard",
+      "openVisaBtn": "Ouvrir le visa",
+      "validateVisaBtn": "Valider le visa"
     }
   },
   "ProjectBcf": {
