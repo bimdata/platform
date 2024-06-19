@@ -14,11 +14,11 @@
       />
     </div>
     <div v-show="hovering || showFullPath" class="file-path-cell__location">
-      <div v-if="folderLocation(file).length > 0" v-for="(folder, index) in folderLocation(file)" :key="index" class="flex items-center">
-        <div class="folder-name flex items-center">
+      <div v-if="folderLocation(file).length > 0" v-for="(folder, index) in folderLocation(file)" :key="folder.id" class="flex items-center">
+        <div class="folder-name flex items-center" @click.stop="selectFile(folder)">
           <BIMDataIconFolderLocation v-if="index === folderLocation(file).length - 1" fill color="primary" margin="0 6px 0 0" />
           <BIMDataIconFolder v-else fill color="primary" margin="0 6px 0 0" />
-        <span> {{ folder }}</span>
+        <span> {{ folder.name }}</span>
         </div>
         <div v-if="index < folderLocation(file).length - 1" class="m-x-6">
           <BIMDataIconChevron size="xxxs" fill color="default" />
@@ -47,15 +47,18 @@ export default {
       required: true,
     },
   },
-  emits: ["go-folders-view"],
-  setup(props) {
+  emits: ["go-folders-view", "file-clicked"],
+  setup(props, { emit }) {
     const { t } = useI18n();
+
     const folderLocation = (file) => {
-      const parentFolders = getAscendants(file, props.allFolders)
-        .map((f) => f.name)
-        .reverse()
+      const parentFolders = getAscendants(file, props.allFolders).map((f) => ({
+        id: f.id,
+        name: f.name,
+      })).reverse();
       return parentFolders;
     };
+
     const lastFolderLocation = (file) => {
       const parentFolders = getAscendants(file, props.allFolders);
       return parentFolders[0]?.name ?? t('t.rootFolder');
@@ -63,11 +66,19 @@ export default {
 
     const hovering = ref(false);
     const showFullPath = ref(false);
+
+    const selectFile = (folder) => {
+      const selectedFolder = props.allFolders.find(f => f.id === folder.id);
+      emit("file-clicked", selectedFolder);
+      emit("go-folders-view");
+    };
+
     return {
       hovering,
       showFullPath,
       folderLocation,
       lastFolderLocation,
+      selectFile,
     };
   },
 };

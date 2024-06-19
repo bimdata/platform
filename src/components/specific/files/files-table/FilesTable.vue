@@ -316,7 +316,7 @@
                 {{ $d(file.updated_at, "long") }}
               </div>
               <div class="files-list__element__location">
-                <FilePathCell :file="file" :allFolders="allFolders" @go-folders-view="$emit('go-folders-view')" />
+                <FilePathCell :file="file" :allFolders="allFolders" @go-folders-view="$emit('go-folders-view')" @file-clicked="$emit('file-clicked', $event)" />
               </div>
               <div class="files-list__element__size">
                 {{ formatBytes(file.size) }}
