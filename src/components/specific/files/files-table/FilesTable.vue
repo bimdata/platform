@@ -13,7 +13,7 @@
           {{ tab.text }}
         </span>
         <span v-if="tab.id !== 'folders'" class="files-table-manager__tab-count m-l-6">
-          {{ tab.count }}
+          {{ tab.data.length }}
         </span>
       </template>
     </BIMDataTabs>
@@ -351,9 +351,6 @@
           </template>
         </BIMDataList>
       </div>
-      <div v-else-if="selectedFileTab.id === 'visas'">
-        <VisasView :visas="visas" />
-      </div>
     </transition>
   </div>
 </template>
@@ -376,7 +373,7 @@ import FileNameCell from "./file-name-cell/FileNameCell.vue";
 import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 import FilePathCell from "./file-path-cell/FilePathCell.vue";
-import VisasView from "./visas-view/VisasView.vue";
+
 
 import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
 import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
@@ -394,35 +391,8 @@ export default {
     FolderUploadCard,
     ColumnSorting,
     ColumnFilters,
-    VisasView,
   },
   props: {
-    allFiles: {
-      type: Array,
-    },
-    allFolders: {
-      type: Array,
-    },
-    allTags: {
-      type: Array,
-    },
-    files: {
-      type: Array,
-      required: true,
-    },
-    filesTabs: {
-      type: Array,
-    },
-    filesToUpload: {
-      type: Array,
-    },
-    folder: {
-      type: Object,
-      required: true,
-    },
-    foldersToUpload: {
-      type: Array,
-    },
     loadingFileIds: {
       type: Array,
       required: true,
@@ -431,15 +401,38 @@ export default {
       type: Object,
       required: true,
     },
+    folder: {
+      type: Object,
+      required: true,
+    },
+    files: {
+      type: Array,
+      required: true,
+    },
+    filesToUpload: {
+      type: Array,
+    },
+    foldersToUpload: {
+      type: Array,
+    },
+    allTags: {
+      type: Array,
+    },
+    allFiles: {
+      type: Array,
+    },
+    allFolders: {
+      type: Array,
+    },
+    filesTabs: {
+      type: Array,
+    },
     selectedFileTab: {
       type: Object,
     },
     selection: {
       type: Array,
     },
-    visas: {
-      type: Array,
-    }
   },
   emits: [
     "back-parent-folder",
