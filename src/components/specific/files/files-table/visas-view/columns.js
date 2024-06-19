@@ -22,7 +22,7 @@ export default [
     id: "validator",
     text: "t.validator",
     width: "270px",
-    align: "center",
+    align: "left",
   },
   {
     id: "due_date",
