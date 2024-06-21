@@ -893,5 +893,9 @@
   },
   "UserFavoritesManager": {
     "title": "Gestion des favoris"
+  },
+  "VisasDeleteModal": {
+    "title": "Suppression de {visasCount} visas",
+    "message": "Vous êtes sur le point de supprimer les visas sur les fichiers suivants :"
   }
 }
