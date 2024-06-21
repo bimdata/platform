@@ -10,6 +10,27 @@
   z-index: 0;
   height: 100%;
 
+  &__tabs {
+    .bimdata-tabs__container__tab:deep() {
+      border-bottom: 1px solid #eeeeee;
+    }
+    &-label {
+      font-size: 11px;
+    }
+    &-count {
+      padding: 0 6px;
+      min-width: 17px;
+      height: 17px;
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      font-size: 10px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   &__actions {
     display: grid;
     grid-template-columns: min(25%, var(--actions-max-width)) 1fr min(25%, var(--actions-max-width));
@@ -105,6 +126,9 @@
     grid-template-rows: 1fr;
     gap: var(--spacing-unit);
     grid-template-areas: "tree    files      files";
+    &__loading {
+      height: 100%;
+    }
   }
 
   .files-manager__tree {
