@@ -9,12 +9,13 @@
       color="high"
       ghost
       squared
-      @click="$emit('delete', files)"
+      @click="onDeleteClick(files)"
     >
       <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
       <span>{{ $t("t.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton
+      v-if="files.some(f => f.type === 'Document' || f.type === 'Folder')"
       :disabled="
         project.isGuest ||
         (!project.isAdmin && files.some(f => f.user_permission < 100))
@@ -29,6 +30,7 @@
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
+    v-if="files.some(f => f.type === 'Document' || f.type === 'Folder')"
       width="120px"
       ghost
       squared
@@ -80,19 +82,30 @@ export default {
       required: true
     }
   },
-  emits: ["delete", "download", "move"],
-  setup() {
+  emits: ["delete-files", "delete-visas", "download", "move"],
+  setup(props, { emit }) {
     const {
       isOpen: showFolderSelector,
       close: closeFolderSelector,
       toggle: toggleFolderSelector
     } = useToggle();
 
+    const onDeleteClick = files => {
+      const isFilesOrFolder = files.some(f => f.type === 'Document' || f.type === 'Folder');
+      console.log({files})
+      if (isFilesOrFolder) {
+        emit('delete-files', files)
+      } else {
+        emit('delete-visas', files)
+      }
+    }
+
     return {
       // References
       showFolderSelector,
       // Methods
       closeFolderSelector,
+      onDeleteClick,
       toggleFolderSelector
     };
   }
