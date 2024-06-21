@@ -53,7 +53,8 @@ export default {
     const { fetchVisa } = useVisa();
 
     const currentVisa = ref(props.visa);
-    const currentView = ref(currentVisa.value ? "visaSummary" : props.document.id ? "visaAdd" : "visaSummary");
+
+    const currentView = ref(currentVisa.value.document ? "visaSummary" : "visaAdd");
 
     const createVisa = async visa => {
       currentVisa.value = await fetchVisa(props.project, visa);
