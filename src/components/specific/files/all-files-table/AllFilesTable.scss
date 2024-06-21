@@ -1,0 +1,117 @@
+// .files-table-manager {
+//   .bimdata-table__row--drag-overed {
+//     outline: solid var(--color-primary) 1px;
+//     outline-offset: -1px;
+//   }
+// }
+.files-list {
+  height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
+
+  font-size: 0.9rem;
+  color: var(--color-granite-light);
+
+  overflow-x: hidden;
+
+  &__content {
+    height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px - 48px);
+  }
+
+  &__element {
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    &--even > * {
+      background-color: var(--color-white);
+    }
+
+    &__type {
+      > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__header {
+    display: flex;
+    height: 48px;
+    font-weight: 700;
+    color: var(--color-primary);
+
+    .active {
+      background-color: #e0eef9;
+    }
+
+    & > * {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__name {
+      justify-content: flex-start;
+    }
+
+    &__created-by,
+    &__tags {
+      position: relative;
+    }
+  }
+
+  &__element,
+  &__header {
+    & > * {
+      padding: 0 var(--spacing-unit);
+      margin-right: 2.5px;
+      height: 100%;
+
+      flex-shrink: 0;
+      text-align: center;
+      align-content: center;
+    }
+
+    &__select {
+      width: 42px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__type {
+      width: 80px;
+    }
+
+    &__name {
+      flex-grow: 1;
+      width: 0px;
+    }
+
+    &__created-by {
+      width: 160px;
+    }
+
+    &__last-update {
+      width: 160px;
+    }
+
+    &__size {
+      width: 100px;
+    }
+
+    &__tags {
+      width: 120px;
+    }
+
+    &__actions {
+      width: 50px;
+    }
+  }
+}
