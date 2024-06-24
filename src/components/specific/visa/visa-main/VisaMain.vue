@@ -30,7 +30,6 @@ import VisaSummary from "../visa-summary/VisaSummary.vue";
 export default {
   components: {
     VisaAdd,
-    VisaList,
     VisaSummary
   },
   props: {
