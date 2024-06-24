@@ -52,11 +52,18 @@
         radius
         @click="$emit('reach-visa', visa)"
         class="validate-visa-btn"
-        data-test-id=btn-open-visa-list
+        data-test-id="btn-open-visa-list"
       >
         {{ $t("Visa.view.validateVisaBtn") }}
       </BIMDataButton>
-      <BIMDataButton v-else color="primary" outline radius @click="$emit('reach-visa', visa)" data-test-id=btn-open-visa-list>
+      <BIMDataButton
+        v-else
+        color="primary"
+        outline
+        radius
+        @click="$emit('reach-visa', visa)"
+        data-test-id="btn-open-visa-list"
+      >
         {{ $t("Visa.view.openVisaBtn") }}
       </BIMDataButton>
     </template>
@@ -95,7 +102,7 @@ export default {
       type: Array,
     },
   },
-  emits: ["reach-visa"],
+  emits: ["delete", "reach-visa", "selection-changed"],
   setup() {
     const { t } = useI18n();
     const { user } = useUser();
