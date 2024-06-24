@@ -159,6 +159,21 @@ export default {
       required: true,
     },
   },
+  emits: [
+    "back-parent-folder",
+    "create-model",
+    "delete",
+    "download",
+    "file-clicked",
+    "file-uploaded",
+    "manage-access",
+    "open-versioning-manager",
+    "open-visa-manager",
+    "open-tag-manager",
+    "remove-model",
+    "row-drop",
+    "selection-changed",
+  ],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();
