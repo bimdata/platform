@@ -325,7 +325,7 @@ import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
-import FilesTable from "../files-table/FilesTable.vue";
+//import FilesTable from "../files-table/FilesTable.vue";
 import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
@@ -347,7 +347,7 @@ export default {
     FilesActionBar,
     FilesDeleteModal,
     FilesManagerOnboarding,
-    FilesTable,
+    // FilesTable,
     FileTree,
     FileTreePreviewModal,
     FolderAccessManager,
