@@ -25,7 +25,6 @@ import { useVisa } from "../../../../state/visa.js";
 
 // Components
 import VisaAdd from "../visa-add/VisaAdd.vue";
-import VisaList from "../visa-list/VisaList.vue";
 import VisaSummary from "../visa-summary/VisaSummary.vue";
 
 export default {
