@@ -1,142 +1,16 @@
 <template>
   <div class="files-manager">
     <template v-if="fileStructure.children.length > 0">
-      <div class="files-manager__actions">
-        <div class="start" v-if="selectedFileTab.id === 'folders'">
-          <template v-if="menuItems.length > 0">
-            <BIMDataDropdownMenu
-              ref="dropdown"
-              class="files-manager__actions__dropdown"
-              width="20%"
-              height="32px"
-              :menuItems="menuItems"
-              :subListMaxHeight="dropdownMaxHeight"
-            >
-              <template #header="{ isOpen }">
-                <BIMDataIconBurgerMenu size="m" fill color="primary" />
-                <BIMDataIcon
-                  name="chevron"
-                  size="xxs"
-                  fill
-                  color="primary"
-                  :rotate="isOpen ? 90 : 0"
-                />
-              </template>
-            </BIMDataDropdownMenu>
-          </template>
-          <FolderCreationButton
-            data-guide="btn-new-folder"
-            class="files-manager__actions__btn-new-folder"
-            width="100%"
-            :project="project"
-            :folder="currentFolder"
-            :disabled="project.isGuest || !hasAdminPerm(project, currentFolder)"
-          >
-            <BIMDataIconAddFolder size="xs" />
-            <span
-              v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
-              style="margin-left: 6px"
-            >
-              {{ $t("FolderCreationButton.text") }}
-            </span>
-            <span
-              v-else-if="
-                (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
-              "
-              style="margin-left: 6px"
-            >
-              {{ $t("t.folder") }}
-            </span>
-          </FolderCreationButton>
-          <BIMDataTooltip
-            data-guide="btn-upload-file"
-            data-test-id="btn-upload-file"
-            class="files-manager__actions__btn-new-file"
-            color="high"
-            :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
-            :text="
-              $t(
-                `ProjectOverview.uploadDisableMessage.${
-                  isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-                }`
-              )
-            "
-          >
-            <template v-if="shouldSubscribe">
-              <BIMDataButton
-                width="100%"
-                height="32px"
-                color="primary"
-                fill
-                radius
-                :disabled="!hasAdminPerm(project, currentFolder)"
-                @click="openSubscriptionModal"
-              >
-                <BIMDataIconAddFile size="xs" />
-                <span
-                  v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
-                  style="margin-left: 6px"
-                >
-                  {{ $t("FileUploadButton.addFileButtonText") }}
-                </span>
-                <span
-                  v-else-if="
-                    (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
-                  "
-                  style="margin-left: 6px"
-                >
-                  {{ $t("t.file") }}
-                </span>
-              </BIMDataButton>
-            </template>
-            <template v-else>
-              <BIMDataButton
-                width="100%"
-                color="primary"
-                fill
-                radius
-                icon
-                :disabled="
-                  project.isGuest ||
-                  (!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)) ||
-                  !hasAdminPerm(project, currentFolder)
-                "
-                @click="
-                  fileUploadInput('file', (event) => uploadFiles(event), {
-                    multiple: true,
-                  })
-                "
-              >
-                <BIMDataIconAddFile size="xs" />
-                <span
-                  v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
-                  style="margin-left: 6px"
-                >
-                  {{ $t("FileUploadButton.addFileButtonText") }}
-                </span>
-                <span
-                  v-else-if="
-                    (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
-                  "
-                  style="margin-left: 6px"
-                >
-                  {{ $t("t.file") }}
-                </span>
-              </BIMDataButton>
-            </template>
-          </BIMDataTooltip>
-        </div>
-
-        <div class="middle">
-          <BIMDataSearch
-            class="files-manager__actions__input-search"
-            :width="isMD ? '200px' : isLG ? '300px' : '400px'"
-            :placeholder="$t('t.search')"
-            v-model="searchText"
-            clear
-          />
-        </div>
-      </div>
+      <FilesManagerActions
+        :currentFolder="currentFolder"
+        :currentSpace="currentSpace"
+        :project="project"
+        :selectedFileTab="selectedFileTab"
+        :spaceSubInfo="spaceSubInfo"
+        :importFromOtherProjectsActions="importFromOtherProjectsActions"
+        :initialSearchText="searchText"
+        @update:searchText="handleSearchTextUpdate"
+      />
     </template>
     <template v-if="fileStructure.children.length > 0">
       <div class="files-manager__content">
@@ -212,7 +86,7 @@
           />
           <AllFilesTable
             v-else-if="selectedFileTab.id === 'files'"
-            :allFiles="allFiles"
+            :allFiles="displayedAllFiles"
             :selection="selection"
             :project="project"
             :loadingFileIds="loadingFileIds"
@@ -231,12 +105,11 @@
           <VisasTable
             v-else-if="selectedFileTab.id === 'visas'"
             :selection="selection"
-            :visas="allVisas"
+            :visas="displayedVisas"
             @reach-visa="openVisaManager"
             @selection-changed="setSelection"
             @delete="openVisaDeleteModal([$event])"
           />
-          <!-- </transition> -->
         </div>
 
         <AppSidePanelContent side="right" :header="false">
@@ -256,8 +129,9 @@
             :project="project"
             :document="fileToManage"
             :visa="currentVisa"
-            @fetch-visas="fetchVisas"
             @close="closeVisaManager"
+            @create-visa="goVisasView"
+            @fetch-visas="fetchVisas"
             @reach-file="backToParent"
           />
           <TagsMain
@@ -295,17 +169,14 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch, inject, reactive } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
-import {
-  useStandardBreakpoints,
-  useCustomBreakpoints,
-} from "../../../../composables/responsive.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -325,20 +196,20 @@ import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
-//import FilesTable from "../files-table/FilesTable.vue";
 import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
-import FolderCreationButton from "../folder-creation-button/FolderCreationButton.vue";
 import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
-import FileDragAndDropModal from "./file-drag-and-drop-modal/FileDragAndDropModal.vue";
+
 import FoldersTable from "../folder-table/FoldersTable.vue";
 import VisasTable from "../visas-table/VisasTable.vue";
 import AllFilesTable from "../all-files-table/AllFilesTable.vue";
 import VisasDeleteModal from "./visas-delete-modal/VisasDeleteModal.vue";
+
+import FilesManagerActions from "./files-manager-actions/FilesManagerActions.vue";
 
 export default {
   components: {
@@ -346,12 +217,13 @@ export default {
     AppSidePanelContent,
     FilesActionBar,
     FilesDeleteModal,
+    FilesManagerActions,
     FilesManagerOnboarding,
     // FilesTable,
     FileTree,
     FileTreePreviewModal,
     FolderAccessManager,
-    FolderCreationButton,
+    // FolderCreationButton,
     FoldersTable,
     TagsMain,
     VersioningMain,
@@ -382,11 +254,6 @@ export default {
     const { openModal, closeModal } = useAppModal();
 
     const { spaceProjects } = useProjects();
-
-    const { isXXXL, isMidXL } = useCustomBreakpoints({
-      isXXXL: ({ width }) => width <= 1521 - 0.02,
-      isMidXL: ({ width }) => width <= 1277 - 0.02,
-    });
 
     const {
       fileStructureHandler: handler,
@@ -486,18 +353,18 @@ export default {
       }
     };
 
-    const { filteredList: displayedFiles, searchText } = useListFilter(
-      currentFiles,
-      (file) => file.name
-    );
+    // const { filteredList: displayedFiles, searchText } = useListFilter(
+    //   currentFiles,
+    //   (file) => file.name
+    // );
 
-    // Apply search to "allFiles" list
-    const displayedAllFiles = computed(() => {
-      const text = searchText.value.trim().toLowerCase();
-      return text ? allFiles.value.filter(file =>
-        file.name.toLowerCase().includes(text)
-      ) : allFiles.value;
-    });
+    // // Apply search to "allFiles" list
+    // const displayedAllFiles = computed(() => {
+    //   const text = searchText.value.trim().toLowerCase();
+    //   return text ? allFiles.value.filter(file =>
+    //     file.name.toLowerCase().includes(text)
+    //   ) : allFiles.value;
+    // });
 
     const selection = ref([]);
     const setSelection = (models) => {
@@ -568,16 +435,23 @@ export default {
       openModal({
         component: VisasDeleteModal,
         props: {
-          document: fileToManage.value,
           project: props.project,
           visas: visasToDelete.value,
           onClose: closeModal,
+          onDelete: closeDeleteModal,
         },
       });
     };
 
-    const closeDeleteModal = () => {
-      filesToDelete.value = [];
+    const closeDeleteModal = async () => {
+      if (filesToDelete.value.length) {
+        filesToDelete.value = [];
+      }
+      if (visasToDelete.value.length) {
+        visasToDelete.value = [];
+        await fetchVisas();
+        await nextTick();
+      }
       closeModal();
     };
 
@@ -594,7 +468,12 @@ export default {
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
-    const setManagerVisibility = ({ visa = false, versioning = false, access = false, tag = false }) => {
+    const setManagerVisibility = ({
+      visa = false,
+      versioning = false,
+      access = false,
+      tag = false,
+    }) => {
       showVisaManager.value = visa;
       showVersioningManager.value = versioning;
       showAccessManager.value = access;
@@ -644,7 +523,6 @@ export default {
         currentVisa.value = file;
 
         setManagerVisibility({ visa: true });
-
       } finally {
         visasLoading.value = false;
       }
@@ -661,7 +539,6 @@ export default {
       closeSidePanel();
       setTimeout(() => {
         setManagerVisibility({ visa: false });
-        // showVisaManager.value = false;
         fileToManage.value = null;
         currentVisa.value = null;
       }, 100);
@@ -677,7 +554,6 @@ export default {
         showVersioningManager.value = false;
       }
     };
-
     const closeTagManager = () => {
       closeSidePanel();
       setTimeout(() => {
@@ -693,7 +569,6 @@ export default {
         setManagerVisibility({ versioning: true });
       }
     };
-
     const closeVersioningManager = () => {
       closeSidePanel();
       setTimeout(() => {
@@ -750,41 +625,6 @@ export default {
         }));
     });
 
-    const dropdown = ref(null);
-    const menuItems = computed(() => {
-      const items = [];
-
-      if (props.project.isAdmin) {
-        items.push(
-          {
-            name: t("FilesManager.structureImport"),
-            children: { list: importFromOtherProjectsActions.value },
-          },
-          {
-            name: t("FilesManager.gedDownload"),
-            action: () => downloadFiles([projectFileStructure.value]),
-          }
-        );
-      }
-
-      if (!props.project.isGuest) {
-        items.splice(1, 0, {
-          name: t("FilesManager.folderImport"),
-          action: () => {
-            openModal({
-              component: FileDragAndDropModal,
-              props: {
-                onDrop: (event) => uploadFiles(event),
-              },
-            });
-            dropdown.value.displayed = false; // force close the drop down menu
-          },
-        });
-      }
-
-      return items;
-    });
-
     const allVisas = computed(() => {
       return [...toValidateVisas.value, ...createdVisas.value].sort((a, b) => {
         if (a.created_at < b.created_at) return 1;
@@ -798,14 +638,6 @@ export default {
       fetchTags();
     });
 
-    const fileManager = ref(null);
-    const dropdownMaxHeight = computed(() => {
-      if (!fileManager.value || !dropdown.value) return;
-      const { y, height: H } = dropdown.value.$el.getBoundingClientRect();
-      return `${fileManager.value?.$el?.getBoundingClientRect().height - H - y}px`;
-    });
-
-    const shouldSubscribe = inject("shouldSubscribe");
     const openSubscriptionModal = () => {
       openModal({ component: SubscriptionModal });
     };
@@ -844,7 +676,7 @@ export default {
       {
         id: "visas",
         text: "Mes visas",
-        count: computed(() => allVisas.value.length),
+        count: computed(() => visasCounter.value),
       },
     ];
     const selectedFileTab = ref(filesTabs[0]);
@@ -856,6 +688,47 @@ export default {
       selectedFileTab.value = filesTabs[0];
       selection.value = [];
     };
+    const goVisasView = () => {
+      selectedFileTab.value = filesTabs[2];
+      selection.value = [];
+    };
+
+    const searchText = ref("");
+    const { filteredList: displayedFiles, searchText: filterFilesSearchText } = useListFilter(
+      currentFiles,
+      (file) => file.name
+    );
+    const { filteredList: displayedAllFiles, searchText: filterAllFilesSearchText } = useListFilter(
+      allFiles,
+      (file) => file.name
+    );
+    const { filteredList: displayedVisas, searchText: filterVisasSearchText } = useListFilter(
+      allVisas,
+      (visa) => visa.document.name
+    );
+    const handleSearchTextUpdate = (newSearchText) => {
+      searchText.value = newSearchText;
+      if (selectedFileTab.value.id === "folders") {
+        filterFilesSearchText.value = newSearchText;
+      }
+      if (selectedFileTab.value.id === "files") {
+        filterAllFilesSearchText.value = newSearchText;
+      }
+      if (selectedFileTab.value.id === "visas") {
+        filterVisasSearchText.value = newSearchText;
+      }
+    };
+    watch(searchText, (newValue) => {
+      if (selectedFileTab.value.id === "folders") {
+        filterFilesSearchText.value = newValue;
+      }
+      if (selectedFileTab.value.id === "files") {
+        filterAllFilesSearchText.value = newValue;
+      }
+      if (selectedFileTab.value.id === "visas") {
+        filterVisasSearchText.value = newValue;
+      }
+    });
 
     return {
       // References
@@ -868,9 +741,8 @@ export default {
       currentVisa,
       displayedAllFiles,
       displayedFiles,
-      dropdown,
-      dropdownMaxHeight,
-      fileManager,
+      displayedAllFiles,
+      displayedVisas,
       fileToManage,
       filesTabs,
       filesTable,
@@ -880,11 +752,10 @@ export default {
       folderToManage,
       importFromOtherProjectsActions,
       loadingFileIds,
-      menuItems,
       searchText,
       selectedFileTab,
       selection,
-      shouldSubscribe,
+      // shouldSubscribe,
       showAccessManager,
       showDeleteModal,
       showTagManager,
@@ -904,7 +775,8 @@ export default {
       fetchVisas,
       fileUploadInput,
       goFoldersView,
-      hasAdminPerm,
+      goVisasView,
+      handleSearchTextUpdate,
       isFullTotal,
       moveFiles,
       onFileSelected,
@@ -923,8 +795,6 @@ export default {
       visasLoading,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
-      isMidXL,
-      isXXXL,
     };
   },
 };
