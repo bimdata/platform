@@ -14,6 +14,7 @@
         :visa="currentVisa"
         @close-visa="$emit('close')"
         @reach-file="$emit('reach-file', $event)"
+        @fetch-visas="$emit('fetch-visas')"
       />
     </template>
   </div>
@@ -46,7 +47,7 @@ export default {
       required: false
     },
   },
-  emits: ["fetch-visas", "close", "reach-file"],
+  emits: ["create-visa", "fetch-visas", "close", "reach-file"],
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 
@@ -57,6 +58,8 @@ export default {
     const createVisa = async visa => {
       currentVisa.value = await fetchVisa(props.project, visa);
       currentView.value = "visaSummary";
+      emit('fetch-visas');
+      emit('create-visa');
     };
 
     const reachVisa = visa => {

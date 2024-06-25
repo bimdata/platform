@@ -32,7 +32,8 @@
 import { nextTick, ref, shallowRef } from "vue";
 
 export default {
-  setup() {
+  emits: ["delete", "edit-visa"],
+  setup(props, { emit }) {
     const menu = ref(null);
     const isOpen = ref(false);
     const menuItems = shallowRef([]);
@@ -43,7 +44,7 @@ export default {
         key: 1,
         text: "t.edit",
         icon: "edit",
-        action: () => onClick(),
+        action: () => onClick("edit-visa"),
         color: "primary",
       });
       menuItems.value.push({
@@ -64,12 +65,18 @@ export default {
       });
     };
 
+    const onClick = event => {
+      closeMenu();
+      emit(event);
+    };
+
     return {
       menu,
       isOpen,
       menuItems,
       closeMenu,
       openMenu,
+      onClick,
     };
   },
 };

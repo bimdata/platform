@@ -73,6 +73,7 @@
             <BIMDataTextarea
               v-model="formatedVisa.description"
               :class="{ editing: isEditing }"
+              label="Description"
               name="description"
               width="100%"
               :readonly="!isEditing"
@@ -259,7 +260,7 @@ export default {
       required: true
     }
   },
-  emits: ["close-visa", "reach-file"],
+  emits: ["close-visa", "fetch-visas", "reach-file"],
   setup(props, { emit }) {
     const {
       fetchVisa,
@@ -446,6 +447,7 @@ export default {
       if (isActionConfirmed) {
         await safeZoneInfo.value.action();
         onClose();
+        emit("fetch-visas");
       }
       isSafeZone.value = false;
       safeZoneInfo.value = null;
