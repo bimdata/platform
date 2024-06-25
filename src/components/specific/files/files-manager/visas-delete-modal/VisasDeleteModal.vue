@@ -57,21 +57,29 @@ export default {
       type: Function,
       required: true,
     },
-    document: {
-      type: Object,
+    onDelete: {
+      type: Function,
+      required: true,
     },
   },
+  emits: ["close", "delete"],
   setup(props) {
-    const { deleteMultipleVisa } = useVisa();
+    const { deleteVisa, deleteMultipleVisa } = useVisa();
 
     const close = () => {
       props.onClose();
     };
+    // const onDelete = () => {
+    //   props.onDelete();
+    // };
 
-    const submit = () => {
-      deleteMultipleVisa(props.project, props.document, props.visas)
-        .then(() => console.log("All delete operations completed"))
-        .catch((error) => console.error("Error in delete operations:", error));
+    const submit = async () => {
+      if(props.visas.length === 1) {
+        deleteVisa(props.project, props.visas[0].document, props.visas[0]);
+      } else {
+        await deleteMultipleVisa(props.project, props.visas);
+      }
+      props.onDelete();
     };
 
     return {
