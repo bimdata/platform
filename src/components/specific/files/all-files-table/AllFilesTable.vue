@@ -294,7 +294,6 @@ export default {
       { immediate: true }
     );
 
-    // BIMDataList SECTION
     const {
       sortObject,
       displayedColumnFilterId,
