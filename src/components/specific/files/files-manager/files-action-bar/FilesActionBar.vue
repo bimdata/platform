@@ -92,7 +92,6 @@ export default {
 
     const onDeleteClick = files => {
       const isFilesOrFolder = files.some(f => f.type === 'Document' || f.type === 'Folder');
-      console.log({files})
       if (isFilesOrFolder) {
         emit('delete-files', files)
       } else {

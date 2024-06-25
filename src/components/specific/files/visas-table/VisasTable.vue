@@ -40,7 +40,7 @@
     </template>
     <template #cell-status="{ row: visa }">
       <div class="visas-view__status" :class="statusClasses(visa)">
-        <BIMDataIcon :name="statusIcon(visa)" size="xs" fill color="default" margin="0 12px 0 0" />
+        <BIMDataIcon :name="statusIcon(visa)" size="xs" fill color="default" margin="0 6px 0 0" />
         {{ statusType(visa) }}
       </div>
     </template>
@@ -52,18 +52,11 @@
         radius
         @click="$emit('reach-visa', visa)"
         class="validate-visa-btn"
-        data-test-id="btn-open-visa-list"
+        data-test-id=btn-open-visa-list
       >
         {{ $t("Visa.view.validateVisaBtn") }}
       </BIMDataButton>
-      <BIMDataButton
-        v-else
-        color="primary"
-        outline
-        radius
-        @click="$emit('reach-visa', visa)"
-        data-test-id="btn-open-visa-list"
-      >
+      <BIMDataButton v-else color="primary" outline radius @click="$emit('reach-visa', visa)" data-test-id=btn-open-visa-list>
         {{ $t("Visa.view.openVisaBtn") }}
       </BIMDataButton>
     </template>
@@ -72,6 +65,7 @@
         v-if="fullName(user) === fullName(visa.creator)"
         :visa="visa"
         @delete="$emit('delete', visa)"
+        @edit-visa="$emit('reach-visa', visa)"
       />
     </template>
   </BIMDataTable>
@@ -139,7 +133,7 @@ export default {
         return "visa";
       }
       if (fullName(user.value) === fullName(visa.creator)) {
-        return "user";
+        return "invitation";
       } else {
         return "visa";
       }
