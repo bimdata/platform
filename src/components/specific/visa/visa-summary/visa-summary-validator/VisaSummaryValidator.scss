@@ -1,10 +1,11 @@
 .visa-summary-validator {
+  margin: calc(var(--spacing-unit) / 2) auto;
+  height: 50px;
   display: flex;
   justify-content: space-between;
-  margin: 4% auto;
   border-radius: 3px;
-  height: 50px;
   background-color: var(--color-silver-light);
+  font-size: 13px;
 
   &__left-side {
     display: flex;
@@ -32,7 +33,6 @@
     display: flex;
     margin: auto var(--spacing-unit) auto 0;
     align-items: center;
-    font-size: 1rem;
 
     span {
       margin: auto var(--spacing-unit) auto 0;
@@ -41,7 +41,6 @@
     &__P {
       display: flex;
       color: var(--color-primary);
-
     }
     &__A {
       display: flex;
@@ -55,7 +54,7 @@
     &__access-denied {
       position: relative;
       display: flex;
-      justify-content: flex-end; 
+      justify-content: flex-end;
       box-shadow: var(--box-shadow);
       right: -12px;
 
@@ -76,12 +75,11 @@
         box-shadow: var(--box-shadow);
         color: var(--color-primary);
 
-
         span {
           margin-left: var(--spacing-unit);
           width: 230px;
         }
-      } 
+      }
 
       &.author {
         right: -8px;
@@ -89,7 +87,7 @@
         .visa-summary-validator__right-side__access-denied__hover {
           right: -36px;
           width: 345px;
-       }
+        }
       }
 
       &.author.closed {
@@ -98,7 +96,7 @@
         .visa-add-summary-validator__right-side__access-denied__hover {
           right: 20px;
           width: 307px;
-       }
+        }
       }
     }
   }
