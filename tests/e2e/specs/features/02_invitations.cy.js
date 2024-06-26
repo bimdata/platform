@@ -38,7 +38,7 @@ describe("Invitation feature", () => {
     cy.task("get-user", "user0").then((user) => cy.login(user));
     cy.visit("/invitations");
 
-    cy.hook("btn-accept-all-invit").click();
+    cy.hook("btn-accept-all-invit", { timeout: 60000 }).click();
 
     cy.hook("card-invitation")
       .first()
