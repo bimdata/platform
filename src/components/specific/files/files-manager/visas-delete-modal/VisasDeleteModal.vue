@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import { useVisa } from "../../../../../state/visa.js";
 
 export default {
@@ -71,8 +70,8 @@ export default {
     };
 
     const submit = async () => {
-      if(props.visas.length === 1) {
-        deleteVisa(props.project, props.visas[0].document, props.visas[0]);
+      if (props.visas.length === 1) {
+        await deleteVisa(props.project, props.visas[0].document, props.visas[0]);
       } else {
         await deleteMultipleVisa(props.project, props.visas);
       }
