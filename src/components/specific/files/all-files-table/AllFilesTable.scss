@@ -1,16 +1,17 @@
-// .files-table-manager {
-//   .bimdata-table__row--drag-overed {
-//     outline: solid var(--color-primary) 1px;
-//     outline-offset: -1px;
-//   }
-// }
 .files-list {
   height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
-
   font-size: 0.9rem;
   color: var(--color-granite-light);
-
   overflow-x: hidden;
+
+  &__empty {
+    height: calc(100% - 44px - 52px);
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-primary);
+  }
 
   &__content {
     height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px - 48px);

@@ -127,6 +127,11 @@
         <!-- empty -->
       </div>
     </div>
+    <template v-if="displayedListFiles.length === 0">
+      <div class="files-list__empty">
+        {{ $t('t.emptyFile') }}
+      </div>
+    </template>
 
     <BIMDataList
       :items="displayedListFiles"
