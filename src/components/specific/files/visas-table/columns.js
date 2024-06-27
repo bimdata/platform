@@ -3,10 +3,11 @@ import i18n from "../../../../i18n/index.js";
 const { t } = i18n.global;
 export default [
   {
-    id: "validation",
+    id: "validationType",
     text: "t.validation",
     width: "155px",
     align: "center",
+    filter: true,
   },
   {
     id: "type",
@@ -19,10 +20,10 @@ export default [
       const getFileType = (file) => {
         return fileExtension(file.document.name);
       };
-    
+
       const fileTypeA = getFileType(a);
       const fileTypeB = getFileType(b);
-    
+
       if (fileTypeA < fileTypeB) {
         return 1;
       } else if (fileTypeA > fileTypeB) {
@@ -30,7 +31,7 @@ export default [
       } else {
         return 0;
       }
-    }
+    },
   },
   {
     id: "file",
@@ -40,7 +41,7 @@ export default [
     sortFunction: (a, b) => {
       const fileNameA = a.document.name;
       const fileNameB = b.document.name;
-    
+
       if (fileNameA < fileNameB) {
         return 1;
       } else if (fileNameA > fileNameB) {
@@ -48,13 +49,23 @@ export default [
       } else {
         return 0;
       }
-    }
+    },
   },
   {
-    id: "validator",
+    id: "validations",
     text: "t.validator",
     width: "150px",
     align: "left",
+    filter: true,
+    filterFunction: (value) => {
+      if (value && value.length > 0) {
+        const validators = value.map((validation) => validation.validator);
+        const uniqueValidators = validators.map((validator) => validator.firstname + " " + validator.lastname);
+        return uniqueValidators;
+      } else {
+        return t("t.notSpecified");
+      }
+    }
   },
   {
     id: "due_date",
@@ -70,10 +81,11 @@ export default [
     },
   },
   {
-    id: "status",
+    id: "statutType",
     text: "t.status",
     width: "150px",
     align: "center",
+    filter: true,
   },
   {
     id: "buttons",
@@ -86,7 +98,7 @@ export default [
     label: " ",
     width: "50px",
     align: "center",
-  }
+  },
 ];
 
 export const columnsXL = ["name", "lastupdate", "size", "actions"];
