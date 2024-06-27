@@ -200,23 +200,6 @@ export default {
       await download(props.project, files);
     };
 
-    const filesToUpload = ref([]);
-    const foldersToUpload = ref([]);
-    const uploadFiles = async (event, folder = props.currentFolder) => {
-      const { files, folders } = await getFilesFromEvent(event);
-      files.forEach((file) => (file.folder = folder));
-
-      filesToUpload.value = files;
-      foldersToUpload.value = await Promise.all(
-        folders.map((f) => FileService.createFolderStructure(props.project, folder, f))
-      );
-
-      setTimeout(() => {
-        filesToUpload.value = [];
-        foldersToUpload.value = [];
-      }, 10);
-    };
-
     const dropdown = ref(null);
     const menuItems = computed(() => {
       const items = [];
@@ -242,8 +225,7 @@ export default {
               component: FileDragAndDropModal,
               props: {
                 onDrop: (event) => {
-                  console.log({event});
-                  uploadFiles(event)
+                  emit("upload-files", event);
                 },
               },
             });
@@ -284,7 +266,6 @@ export default {
       hasAdminPerm,
       isFullTotal,
       fileUploadInput,
-      uploadFiles,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,
