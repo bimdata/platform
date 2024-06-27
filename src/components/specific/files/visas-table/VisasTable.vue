@@ -140,7 +140,6 @@ export default {
         return "waiting-visa";
       }
     };
-
     const validationIcon = (visa) => {
       if (visa.status === VISA_STATUS.CLOSE) {
         return "visa";
@@ -170,12 +169,13 @@ export default {
         return "sandglass";
       }
     };
-
     const statusClasses = (visa) => {
-      if (isDelay(visa) && visa.status !== VISA_STATUS.CLOSE) {
+      const visaStatuses = visa.validations.map((validation) => validation.status);
+      if (isDelay(visa) && (visaStatuses.every((status) => status === VALIDATION_STATUS.PENDING) && visa.status !== VISA_STATUS.CLOSE)) {
         return "delay";
+      } else {
+        return statusIcon(visa);
       }
-      return statusIcon(visa);
     };
 
     return {
