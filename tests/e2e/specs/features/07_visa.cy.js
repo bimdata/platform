@@ -58,6 +58,7 @@ describe("Visa CRUD", () => {
     });
     cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
+    cy.hook("visas-table").click();
     cy.hook("btn-open-visa-list").click();
 
     cy.hook("visa-list-tabs").within(() => {
