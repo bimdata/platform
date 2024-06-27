@@ -10,6 +10,7 @@
         :importFromOtherProjectsActions="importFromOtherProjectsActions"
         :initialSearchText="searchText"
         @update:searchText="handleSearchTextUpdate"
+        @upload-files="uploadFiles"
       />
     </template>
     <template v-if="fileStructure.children.length > 0">
@@ -69,7 +70,9 @@
             :project="project"
             :loadingFileIds="loadingFileIds"
             :selection="selection"
+            :filesToUpload="filesToUpload"
             :folder="currentFolder"
+            :foldersToUpload="foldersToUpload"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @delete="openFileDeleteModal([$event])"

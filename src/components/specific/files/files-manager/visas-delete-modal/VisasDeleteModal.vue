@@ -69,9 +69,6 @@ export default {
     const close = () => {
       props.onClose();
     };
-    // const onDelete = () => {
-    //   props.onDelete();
-    // };
 
     const submit = async () => {
       if(props.visas.length === 1) {

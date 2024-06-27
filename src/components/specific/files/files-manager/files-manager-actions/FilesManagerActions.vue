@@ -60,7 +60,7 @@
             fill
             radius
             :disabled="!hasAdminPerm(project, currentFolder)"
-            @click="openSubscriptionModal"
+            @click="$emit('open-subscription-modal')"
           >
             <BIMDataIconAddFile size="xs" />
             <span
@@ -92,7 +92,8 @@
               !hasAdminPerm(project, currentFolder)
             "
             @click="
-              fileUploadInput('file', (event) => uploadFiles(event), {
+              fileUploadInput('file', (event) => $emit('upload-files', event), {
+                accept: allowedFileTypes,
                 multiple: true,
               })
             "
@@ -132,6 +133,10 @@
 <script>
 import { computed, ref, inject, watch } from "vue";
 
+import FileService from "../../../../../services/FileService.js";
+import { useFiles } from "../../../../../state/files.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
+import { getFilesFromEvent } from "../../../../../utils/files.js";
 import { hasAdminPerm } from "../../../../../utils/file-structure.js";
 import { isFullTotal } from "../../../../../utils/spaces.js";
 
@@ -140,6 +145,8 @@ import {
   useStandardBreakpoints,
   useCustomBreakpoints,
 } from "../../../../../composables/responsive.js";
+
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 
 import FileDragAndDropModal from "../file-drag-and-drop-modal/FileDragAndDropModal.vue";
 import FolderCreationButton from "../../folder-creation-button/FolderCreationButton.vue";
@@ -176,11 +183,39 @@ export default {
       required: true,
     },
   },
-  emits: ["update:searchText"],
+  emits: ["open-subscription-modal", "update:searchText", "upload-files"],
   setup(props, { emit }) {
     const { t } = useI18n();
 
     const shouldSubscribe = inject("shouldSubscribe");
+
+    const { openModal, closeModal } = useAppModal();
+
+    const {
+      downloadFiles: download,
+      projectFileStructure,
+    } = useFiles();
+
+    const downloadFiles = async (files) => {
+      await download(props.project, files);
+    };
+
+    const filesToUpload = ref([]);
+    const foldersToUpload = ref([]);
+    const uploadFiles = async (event, folder = props.currentFolder) => {
+      const { files, folders } = await getFilesFromEvent(event);
+      files.forEach((file) => (file.folder = folder));
+
+      filesToUpload.value = files;
+      foldersToUpload.value = await Promise.all(
+        folders.map((f) => FileService.createFolderStructure(props.project, folder, f))
+      );
+
+      setTimeout(() => {
+        filesToUpload.value = [];
+        foldersToUpload.value = [];
+      }, 10);
+    };
 
     const dropdown = ref(null);
     const menuItems = computed(() => {
@@ -206,7 +241,10 @@ export default {
             openModal({
               component: FileDragAndDropModal,
               props: {
-                onDrop: (event) => uploadFiles(event),
+                onDrop: (event) => {
+                  console.log({event});
+                  uploadFiles(event)
+                },
               },
             });
             dropdown.value.displayed = false; // force close the drop down menu
@@ -242,8 +280,11 @@ export default {
       searchText,
       shouldSubscribe,
       // Methods
+      downloadFiles,
       hasAdminPerm,
       isFullTotal,
+      fileUploadInput,
+      uploadFiles,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,

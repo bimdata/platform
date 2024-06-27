@@ -122,10 +122,6 @@ import FileNameCell from "../files-table/file-name-cell/FileNameCell.vue";
 import FileTagsCell from "../files-table/file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "../files-table/file-type-cell/FileTypeCell.vue";
 
-import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
-import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
-import useSortAndFilter from "../files-table/sortAndFilter.js";
-
 export default {
   components: {
     FolderUploadCard,
@@ -133,8 +129,6 @@ export default {
     FileNameCell,
     FileTagsCell,
     FileTypeCell,
-    ColumnSorting,
-    ColumnFilters,
     FileUploadCard,
     FilesManagerBreadcrumb
   },
@@ -156,6 +150,14 @@ export default {
     },
     folder: {
       type: Object,
+      required: true,
+    },
+    foldersToUpload: {
+      type: Array,
+      required: true,
+    },
+    filesToUpload: {
+      type: Array,
       required: true,
     },
   },
