@@ -445,7 +445,6 @@ export default {
         },
       });
     };
-
     const closeDeleteModal = async () => {
       if (filesToDelete.value.length) {
         filesToDelete.value = [];
@@ -453,7 +452,6 @@ export default {
       if (visasToDelete.value.length) {
         visasToDelete.value = [];
         await fetchVisas();
-        await nextTick();
       }
       closeModal();
     };
