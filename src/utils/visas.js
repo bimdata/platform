@@ -20,16 +20,15 @@ export const enhanceVisa = (visa, user, t) => {
       return visa.deadline < todayDate.setDate(todayDate.getDate() - 1);
     };
 
-    if (visa.status === VISA_STATUS.CLOSE) {
+    if (
+      visa.status === VISA_STATUS.CLOSE ||
+      visaStatuses.some((status) => status === VALIDATION_STATUS.ACCEPT)
+    ) {
       return t("Visa.view.valid");
-    }
-    if (isDelay(visa)) {
-      return t("Visa.view.overdue");
-    }
-    if (visaStatuses.some((status) => status === VALIDATION_STATUS.DENY)) {
+    } else if (visaStatuses.some((status) => status === VALIDATION_STATUS.DENY)) {
       return t("Visa.view.denied");
-    } else if (visaStatuses.some((status) => status === VALIDATION_STATUS.ACCEPT)) {
-      return t("Visa.view.valid");
+    } else if (isDelay(visa) && visa.status !== VISA_STATUS.ACCEPT) {
+      return t("Visa.view.overdue");
     } else if (visaStatuses.every((status) => status === VALIDATION_STATUS.PENDING)) {
       return t("Visa.view.pending");
     }
