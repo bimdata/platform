@@ -158,9 +158,6 @@ export default {
 
     const statusIcon = (visa) => {
       const visaStatuses = visa.validations.map((validation) => validation.status);
-      if (visa.status === VISA_STATUS.CLOSE) {
-        return "success";
-      }
       if (visaStatuses.some((status) => status === VALIDATION_STATUS.DENY)) {
         return "failed";
       } else if (visaStatuses.some((status) => status === VALIDATION_STATUS.ACCEPT)) {
@@ -171,7 +168,7 @@ export default {
     };
     const statusClasses = (visa) => {
       const visaStatuses = visa.validations.map((validation) => validation.status);
-      if (isDelay(visa) && (visaStatuses.every((status) => status === VALIDATION_STATUS.PENDING) && visa.status !== VISA_STATUS.CLOSE)) {
+      if (isDelay(visa) && (visaStatuses.every((status) => status === VALIDATION_STATUS.PENDING))) {
         return "delay";
       } else {
         return statusIcon(visa);

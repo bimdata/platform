@@ -20,10 +20,7 @@ export const enhanceVisa = (visa, user, t) => {
       return visa.deadline < todayDate.setDate(todayDate.getDate() - 1);
     };
 
-    if (
-      visa.status === VISA_STATUS.CLOSE ||
-      visaStatuses.some((status) => status === VALIDATION_STATUS.ACCEPT)
-    ) {
+    if (visaStatuses.some((status) => status === VALIDATION_STATUS.ACCEPT)) {
       return t("Visa.view.valid");
     } else if (visaStatuses.some((status) => status === VALIDATION_STATUS.DENY)) {
       return t("Visa.view.denied");
