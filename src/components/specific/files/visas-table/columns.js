@@ -52,20 +52,11 @@ export default [
     },
   },
   {
-    id: "validations",
+    id: "validators",
     text: "t.validator",
     width: "150px",
     align: "left",
     filter: true,
-    filterFunction: (value) => {
-      if (value && value.length > 0) {
-        const validators = value.map((validation) => validation.validator);
-        const uniqueValidators = validators.map((validator) => validator.firstname + " " + validator.lastname);
-        return uniqueValidators;
-      } else {
-        return t("t.notSpecified");
-      }
-    }
   },
   {
     id: "due_date",

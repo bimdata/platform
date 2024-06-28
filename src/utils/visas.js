@@ -34,9 +34,16 @@ export const enhanceVisa = (visa, user, t) => {
     }
   };
 
+  const getUniqueValidators = () => {
+    const validators = visa.validations.map((validation) => validation.validator);
+    const emailValidators = [...new Set(validators.map((validator) => validator.email))];
+    return emailValidators;
+  };
+
   return {
     ...visa,
     validationType: validationType(),
     statutType: statutType(),
+    validators: getUniqueValidators(),
   };
 };
