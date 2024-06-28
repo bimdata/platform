@@ -29,7 +29,7 @@
     <template #cell-file="{ row: visa }">
       {{ visa.document.name }}
     </template>
-    <template #cell-validations="{ row: visa }">
+    <template #cell-validators="{ row: visa }">
       <UserAvatarList
         class="group-card__avatars"
         :users="visa.validations.map((validation) => validation.validator)"
