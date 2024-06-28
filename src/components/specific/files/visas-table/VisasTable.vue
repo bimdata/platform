@@ -9,7 +9,7 @@
     :rowHeight="48"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
-    :placeholder="$t('t.emptyFolder')"
+    :placeholder="$t('t.emptyVisa')"
   >
     <template #cell-validationType="{ row: visa }">
       <div class="validation-tag" :class="validationClasses(visa)">
