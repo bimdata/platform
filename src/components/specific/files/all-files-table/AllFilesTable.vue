@@ -1,5 +1,5 @@
 <template>
-  <div class="files-list">
+  <div class="files-table files-list">
     <div class="files-list__header">
       <div class="files-list__header__select">
         <BIMDataCheckbox
