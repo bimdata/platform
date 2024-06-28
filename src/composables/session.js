@@ -4,7 +4,8 @@ const STORAGE_KEYS = Object.freeze({
   CURRENT_VIEW: `${KEY_PREFIX}:current-view`,
   PREVIOUS_VIEW: `${KEY_PREFIX}:previous-view`,
   PROJECT_VIEW: `${KEY_PREFIX}:project-view`,
-  PROJECT_MODEL_TAB: `${KEY_PREFIX}:project-model-tab`
+  PROJECT_MODEL_TAB: `${KEY_PREFIX}:project-model-tab`,
+  GED_FILES_TAB: `${KEY_PREFIX}:ged-files-tab`
 });
 
 const getEntry = key => JSON.parse(sessionStorage.getItem(key));
@@ -39,6 +40,15 @@ const projectView = {
   }
 };
 
+const gedFilesTab = {
+  get(projectID) {
+    return getEntry(`${STORAGE_KEYS.GED_FILES_TAB}:${projectID}`);
+  },
+  set(projectID, tabKey) {
+    setEntry(`${STORAGE_KEYS.GED_FILES_TAB}:${projectID}`, tabKey);
+  }
+}
+
 const projectModelTab = {
   get(projectID) {
     return getEntry(`${STORAGE_KEYS.PROJECT_MODEL_TAB}:${projectID}`);
@@ -53,6 +63,7 @@ export function useSession() {
     currentView,
     previousView,
     projectView,
+    gedFilesTab,
     projectModelTab
   };
 }
