@@ -145,7 +145,7 @@ export default {
         return "visa";
       }
       if (fullName(user.value) === fullName(visa.creator)) {
-        return "invitation";
+        return "unknownFile";
       } else {
         return "visa";
       }
