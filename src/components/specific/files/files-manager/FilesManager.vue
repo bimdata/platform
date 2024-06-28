@@ -473,16 +473,28 @@ export default {
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
-    const setManagerVisibility = ({
-      visa = false,
-      versioning = false,
-      access = false,
-      tag = false,
-    }) => {
-      showVisaManager.value = visa;
-      showVersioningManager.value = versioning;
-      showAccessManager.value = access;
-      showTagManager.value = tag;
+    const setManagerVisibility = (manager, visibility) => {
+      showVisaManager.value = false;
+      showVersioningManager.value = false;
+      showAccessManager.value = false;
+      showTagManager.value = false;
+
+      switch (manager) {
+        case "visa":
+          showVisaManager.value = visibility;
+          break;
+        case "versioning":
+          showVersioningManager.value = visibility;
+          break;
+        case "access":
+          showAccessManager.value = visibility;
+          break;
+        case "tag":
+          showTagManager.value = visibility;
+          break;
+        default:
+          break;
+      }
     };
 
     const folderToManage = ref(null);
@@ -492,7 +504,7 @@ export default {
     let stopCurrentFilesWatcher;
     const openAccessManager = (folder) => {
       folderToManage.value = folder;
-      setManagerVisibility({ access: true });
+      setManagerVisibility('access', true);
 
       openSidePanel();
       // Watch for current files changes in order to update
@@ -527,7 +539,7 @@ export default {
         fileToManage.value = file;
         currentVisa.value = file;
 
-        setManagerVisibility({ visa: true });
+        setManagerVisibility('visa', true);
       } finally {
         visasLoading.value = false;
       }
@@ -543,7 +555,7 @@ export default {
     const closeVisaManager = () => {
       closeSidePanel();
       setTimeout(() => {
-        setManagerVisibility({ visa: false });
+        setManagerVisibility('visa', false);
         fileToManage.value = null;
         currentVisa.value = null;
       }, 100);
@@ -571,7 +583,7 @@ export default {
       openSidePanel();
       if (file.file_name) {
         fileToManage.value = file;
-        setManagerVisibility({ versioning: true });
+        setManagerVisibility('versioning', true);
       }
     };
     const closeVersioningManager = () => {
@@ -690,7 +702,7 @@ export default {
     const onTabChange = (tab) => {
       const tabKey = filesTabs.find((t) => t.id === tab.id) ? tab.id : DEFAULT_FILE_TAB;
 
-      gedFilesTab.set(props.project.id, tabKey); 
+      gedFilesTab.set(props.project.id, tabKey);
 
       selectedFileTab.value = tab;
       selection.value = [];
