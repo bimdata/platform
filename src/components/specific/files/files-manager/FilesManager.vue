@@ -172,12 +172,15 @@
 </template>
 
 <script>
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
+
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
+
+import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
@@ -188,7 +191,7 @@ import { useModels } from "../../../../state/models.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
-import { hasAdminPerm, isFolder } from "../../../../utils/file-structure.js";
+import { isFolder } from "../../../../utils/file-structure.js";
 import { getFilesFromEvent } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
@@ -257,6 +260,7 @@ export default {
     const { openModal, closeModal } = useAppModal();
 
     const { spaceProjects } = useProjects();
+    const { gedFilesTab } = useSession();
 
     const {
       fileStructureHandler: handler,
@@ -680,11 +684,23 @@ export default {
         count: computed(() => visasCounter.value),
       },
     ];
+
+    const DEFAULT_FILE_TAB = filesTabs[0].id;
     const selectedFileTab = ref(filesTabs[0]);
     const onTabChange = (tab) => {
+      const tabKey = filesTabs.find((t) => t.id === tab.id) ? tab.id : DEFAULT_FILE_TAB;
+
+      gedFilesTab.set(props.project.id, tabKey); 
+
       selectedFileTab.value = tab;
       selection.value = [];
     };
+    onBeforeMount(() => {
+      const savedTabKey = gedFilesTab.get(props.project.id) || DEFAULT_FILE_TAB;
+      const savedTab = filesTabs.find((t) => t.id === savedTabKey) || filesTabs[0];
+      onTabChange(savedTab);
+    });
+
     const goFoldersView = () => {
       selectedFileTab.value = filesTabs[0];
       selection.value = [];
