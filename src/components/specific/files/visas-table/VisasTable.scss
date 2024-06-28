@@ -1,16 +1,4 @@
-.visas-view {
-  &__element,
-  &__header {
-    & > * {
-      padding: 0 var(--spacing-unit);
-      margin-right: 2.5px;
-      height: 100%;
-
-      flex-shrink: 0;
-      text-align: center;
-      align-content: center;
-    }
-  }
+.visas-table {
   .validation-tag {
     margin: auto;
     width: max-content;

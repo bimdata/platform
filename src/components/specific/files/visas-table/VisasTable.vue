@@ -1,6 +1,6 @@
 <template>
   <BIMDataTable
-    class="files-table visas-view"
+    class="files-table visas-table"
     data-test-id="visas-table"
     tableLayout="fixed"
     :columns="columns"
@@ -41,7 +41,7 @@
       {{ $d(visa.deadline, "short") }}
     </template>
     <template #cell-statutType="{ row: visa }">
-      <div class="visas-view__status" :class="statusClasses(visa)">
+      <div class="visas-table__status" :class="statusClasses(visa)">
         <BIMDataIcon :name="statusIcon(visa)" size="xs" fill color="default" margin="0 6px 0 0" />
         <span>{{ visa.statutType }}</span>
       </div>
