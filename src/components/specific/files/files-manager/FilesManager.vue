@@ -65,6 +65,7 @@
             </template>
           </BIMDataTabs>
           <FoldersTable
+            ref="filesTable"
             v-if="selectedFileTab.id === 'folders'"
             :files="displayedFiles"
             :project="project"
@@ -88,6 +89,7 @@
             @selection-changed="setSelection"
           />
           <AllFilesTable
+            ref="filesTable"
             v-else-if="selectedFileTab.id === 'files'"
             :allFiles="displayedAllFiles"
             :selection="selection"
@@ -106,9 +108,11 @@
             @selection-changed="setSelection"
           />
           <VisasTable
+            ref="filesTable"
             v-else-if="selectedFileTab.id === 'visas'"
             :selection="selection"
             :visas="displayedVisas"
+            @file-clicked="onFileSelected"
             @reach-visa="openVisaManager"
             @selection-changed="setSelection"
             @delete="openVisaDeleteModal([$event])"
@@ -331,12 +335,16 @@ export default {
       if (selectedFileTab.value.id === "folders") {
         // WARNING displayedRows is name from DS, may change
         return filesTable.value.filesTable.displayedRows.map((row) => row.data);
-      } else {
+      } if(selectedFileTab.value.id === "files") {
         return filesTable.value.displayedListFiles;
+      } else {
+        console.log(filesTable.value);
+        return filesTable.value.enhancedVisas;
       }
     });
 
     const onFileSelected = (file) => {
+      console.log({ file }); 
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       } else {
@@ -347,6 +355,7 @@ export default {
             folder: currentFolder.value,
             document: file,
             currentView: documentViewerFilesList.value,
+            selectedFileTab: selectedFileTab.value,
           },
         });
       }

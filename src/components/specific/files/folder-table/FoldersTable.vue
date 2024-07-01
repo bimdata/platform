@@ -181,7 +181,6 @@ export default {
     const { isLG, isXL } = useStandardBreakpoints();
 
     const filesTable = ref(null);
-    const filesList = ref(null);
 
     const columns = computed(() => {
       let filteredColumns = columnsDef;
