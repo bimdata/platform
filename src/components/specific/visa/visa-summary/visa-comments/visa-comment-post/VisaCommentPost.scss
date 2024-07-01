@@ -1,27 +1,19 @@
 .visa-comment-post {
-  
   &__header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 32px;
     &__left-side {
       display: flex;
       align-items: center;
-      margin-left: var(--spacing-unit);
-      max-width: 70%;
+      gap: var(--spacing-unit);
 
       &__user-avatar {
-        box-shadow: var(--box-shadow)
+        box-shadow: var(--box-shadow);
       }
 
       &__name {
         color: var(--color-primary);
         font-weight: bold;
-        margin-left: var(--spacing-unit);
-  
-      }
-
-      &__separator {
-        margin: 0 4px;
       }
 
       &__date {
@@ -32,6 +24,7 @@
 
     &__right-side {
       display: flex;
+      justify-content: end;
     }
   }
 
@@ -44,13 +37,12 @@
         font-family: var(--primary-font);
         color: var(--color-primary);
       }
-      
-      :not(.editing){
+
+      :not(.editing) {
         .bar {
-          display: none; 
+          display: none;
         }
       }
     }
   }
 }
-

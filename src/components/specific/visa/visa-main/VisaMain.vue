@@ -1,14 +1,5 @@
 <template>
   <div class="visa-main">
-    <template v-if="currentView === 'visaList'">
-      <VisaList
-        :toValidateVisas="toValidateVisas"
-        :createdVisas="createdVisas"
-        :visasLoading="visasLoading"
-        @reach-visa="reachVisa"
-        @close="$emit('close', $event)"
-      />
-    </template>
     <template v-if="currentView === 'visaAdd'">
       <VisaAdd
         :project="project"
@@ -21,8 +12,9 @@
       <VisaSummary
         :project="project"
         :visa="currentVisa"
-        @close-visa="closeVisa"
+        @close-visa="$emit('close')"
         @reach-file="$emit('reach-file', $event)"
+        @fetch-visas="$emit('fetch-visas')"
       />
     </template>
   </div>
@@ -34,13 +26,11 @@ import { useVisa } from "../../../../state/visa.js";
 
 // Components
 import VisaAdd from "../visa-add/VisaAdd.vue";
-import VisaList from "../visa-list/VisaList.vue";
 import VisaSummary from "../visa-summary/VisaSummary.vue";
 
 export default {
   components: {
     VisaAdd,
-    VisaList,
     VisaSummary
   },
   props: {
@@ -56,29 +46,20 @@ export default {
       type: Object,
       required: false
     },
-    toValidateVisas: {
-      type: Array,
-      required: true
-    },
-    createdVisas: {
-      type: Array,
-      required: true
-    },
-    visasLoading: {
-      type: Boolean,
-      required: true
-    }
   },
-  emits: ["fetch-visas", "close", "reach-file"],
+  emits: ["create-visa", "fetch-visas", "close", "reach-file"],
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 
     const currentVisa = ref(props.visa);
-    const currentView = ref(currentVisa.value ? "visaSummary" : props.document.id ? "visaAdd" : "visaList");
+
+    const currentView = ref(currentVisa.value.document ? "visaSummary" : "visaAdd");
 
     const createVisa = async visa => {
       currentVisa.value = await fetchVisa(props.project, visa);
       currentView.value = "visaSummary";
+      emit('fetch-visas');
+      emit('create-visa');
     };
 
     const reachVisa = visa => {
@@ -89,7 +70,6 @@ export default {
     const closeVisa = () => {
       emit("fetch-visas");
       currentVisa.value = null;
-      currentView.value = "visaList";
     };
 
     return {

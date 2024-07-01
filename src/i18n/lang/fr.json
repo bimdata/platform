@@ -15,8 +15,11 @@
     "delete": "Supprimer",
     "description": "Description",
     "download": "Télécharger",
+    "dueDate": "Échéance",
     "edit": "Editer",
+    "emptyFile": "Pas de fichier",
     "emptyFolder": "Dossier vide",
+    "emptyVisa": "Pas de visa",
     "error": "Erreur",
     "export": "Exporter en BCF",
     "exportXlsx": "Exporter en Excel",
@@ -44,6 +47,8 @@
     "type": "Type",
     "unarchive": "Désarchiver",
     "validate": "Valider",
+    "validation": "Validations",
+    "validator": "Validants",
     "verify": "Vérifier"
   },
   "OidcCallbackError": {
@@ -729,6 +734,17 @@
     },
     "selectionValidator": {
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
+    },
+    "view": {
+      "visaPending": "Visa en attente",
+      "visaClosed": "Visa clôturé",
+      "myRequests": "Mes demandes",
+      "valid": "Validé",
+      "pending": "En attente",
+      "denied": "Refusé",
+      "overdue": "En retard",
+      "openVisaBtn": "Ouvrir le visa",
+      "validateVisaBtn": "Valider le visa"
     }
   },
   "ProjectBcf": {
@@ -879,5 +895,9 @@
   },
   "UserFavoritesManager": {
     "title": "Gestion des favoris"
+  },
+  "VisasDeleteModal": {
+    "title": "Suppression de {visasCount} visas",
+    "message": "Vous êtes sur le point de supprimer les visas sur les fichiers suivants :"
   }
 }

@@ -3,16 +3,17 @@
   height: 100%;
   overflow: auto;
   overflow-x: hidden;
+  position: relative;
 
   &__safe-zone {
+    width: 100%;
     z-index: 2;
     position: absolute;
-    top: 2.5%;
-    left: 3.5%;
+    top: 0;
+    left: 0;
   }
 
   &__shell {
-
     &__header {
       display: flex;
       align-items: center;
@@ -58,9 +59,9 @@
             color: var(--color-primary);
           }
 
-          :not(.editing){
+          :not(.editing) {
             .bar {
-              display: none; 
+              display: none;
             }
           }
         }
@@ -80,7 +81,6 @@
           font-weight: bold;
         }
       }
-
     }
 
     &__action-button {
@@ -95,21 +95,21 @@
 
       &__validate {
         &.active {
-          filter: contrast(70%)
+          filter: contrast(70%);
         }
       }
 
       &__deny {
         &.active {
-          filter: contrast(70%)
+          filter: contrast(70%);
         }
       }
     }
 
-    &__file {      
+    &__file {
       display: flex;
       align-items: center;
-      &__content {      
+      &__content {
         display: flex;
         align-items: center;
         width: 87%;
@@ -126,7 +126,7 @@
           color: var(--color-primary);
         }
       }
-      
+
       &__btn-file {
         margin-left: auto;
         border-radius: 3px;
@@ -150,6 +150,6 @@
     }
   }
   .safeZone {
-    filter: blur(4px); 
+    filter: blur(4px);
   }
 }
