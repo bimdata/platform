@@ -56,16 +56,22 @@ describe("Visa CRUD", () => {
         .contains(`${user.firstname} ${user.lastname}`)
         .click();
     });
+    // Navigate to project and files tab
     cy.hook("project-card").first().click();
     cy.hook("project-tab-files").click();
-    cy.hook("visas-table").click();
-    cy.hook("btn-open-visa-list").click();
+
+    // Select the visas tab
+    cy.hook("visas-table").should('be.visible').click();
+
+    // Click the first visa in the list to open it
+    cy.hook("btn-open-visa-list").should('be.visible').first().click();
 
     cy.hook("visa-list-tabs").within(() => {
-      cy.get("li[class=bimdata-tabs__container__tab]").not(".active").click();
+      cy.get("li[class=bimdata-tabs__container__tab]").not(".active").should('be.visible').click();
     });
     cy.hook("visa-validation-item").first().click();
 
+    // Remove user2 as validator
     cy.task("get-user", "user2").then(({ firstname, lastname }) => {
       cy.hook("visa-summary-validator-list")
         .contains(
@@ -77,6 +83,7 @@ describe("Visa CRUD", () => {
           cy.hook("btn-delete-validator").click();
         });
 
+      // Verify user2 has been removed
       cy.hook("visa-summary-validator-list")
         .contains(
           "div[data-test-id=visa-summary-validator-item]",
@@ -84,6 +91,7 @@ describe("Visa CRUD", () => {
         )
         .should("not.exist");
 
+      // Add user2 as validator again
       cy.hook("btn-add-validator").click();
       cy.hook("visa-validator-list")
         .contains(
@@ -93,7 +101,11 @@ describe("Visa CRUD", () => {
         .within(() => {
           cy.hook("checkbox-add-validator").click();
         });
+        
+      // Submit the validators form
       cy.hook("btn-submit-validators").click();
+
+      // Verify user2 has been added back
       cy.hook("visa-summary-validator-list")
         .contains(
           "div[data-test-id=visa-summary-validator-item]",
