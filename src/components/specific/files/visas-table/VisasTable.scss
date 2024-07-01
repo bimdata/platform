@@ -22,6 +22,9 @@
       background-color: #fef9ea;
     }
   }
+  &__file-name {
+    cursor: pointer;
+  }
   &__validator {
     display: flex;
     align-items: center;

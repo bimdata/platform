@@ -27,7 +27,9 @@
       <BIMDataFileIcon :fileName="visa.document.name" :size="21.5" />
     </template>
     <template #cell-file="{ row: visa }">
-      {{ visa.document.name }}
+      <span class="visas-table__file-name" @click="$emit('file-clicked', visa)">
+        {{ visa.document.name }}
+      </span>
     </template>
     <template #cell-validators="{ row: visa }">
       <UserAvatarList
@@ -108,7 +110,7 @@ export default {
       type: Array,
     },
   },
-  emits: ["delete", "reach-visa", "selection-changed"],
+  emits: ["delete", "file-clicked", "reach-visa", "selection-changed"],
   setup(props) {
     const { t } = useI18n();
     const { user } = useUser();

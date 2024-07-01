@@ -19,82 +19,104 @@ const { DWG, DXF, IFC, JPEG, PDF, PNG } = MODEL_TYPE;
 const props = defineProps({
   project: {
     type: Object,
-    required: true
+    required: true,
   },
   folder: {
     type: Object,
-    required: true
+    required: true,
   },
   document: {
     type: Object,
-    default: null
-  }, 
+    default: null,
+  },
   currentView: {
+    type: Array,
+    required: true,
+  },
+  selectedFileTab: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const router = useRouter();
 const { closeModal } = useAppModal();
 const { projectModels } = useModels();
 
-const documents = computed(() =>
-  props.currentView.filter(f => !isFolder(f))
-);
+const isVisas = computed(() => {
+  return props.selectedFileTab.id === "visas";
+});
+
+const documents = computed(() => {
+  return isVisas.value ? props.currentView : props.currentView.filter((f) => !isFolder(f));
+});
 
 const index = ref(0);
+
 watch(
   () => props.document,
-  doc => (index.value = documents.value.findIndex(d => d.id === doc.id) ?? 0),
-  { immediate: true }
+  (newDocument) => {
+    if (isVisas.value) {
+      const docIndex = documents.value.findIndex((d) => d.document.id === newDocument.document_id);
+      console.log(newDocument)
+      console.log("docIndex :", documents.value);
+      index.value = docIndex !== -1 ? docIndex : 0;
+    } else {
+      const docIndex = documents.value.findIndex((d) => d.id === newDocument.id);
+      index.value = docIndex !== -1 ? docIndex : 0;
+    }
+  },
+  {
+    immediate: true,
+  }
 );
 
-const currentDocument = computed(() => documents.value[index.value]);
+const currentDocument = computed(() => {
+  if (!documents.value || documents.value.length === 0) return null;
+  console.log("YAY :", documents.value[index.value].document);
+  return isVisas.value ? documents.value[index.value].document : documents.value[index.value];
+});
+
+console.log("HERE :", currentDocument.value);
 
 const fileType = computed(() => {
   const doc = currentDocument.value;
-  return doc.model_type ?? fileExtension(doc.file_name);
+  console.log({ doc });
+  return doc ? doc.model_type ?? fileExtension(doc.file_name) : null;
 });
 
 const file = ref(null);
 
 watchEffect(async () => {
-  const models = projectModels.value;
   const doc = currentDocument.value;
+  if (!doc) return;
+  const models = projectModels.value;
   switch (fileType.value) {
     case IFC:
     case DWG:
     case DXF:
-      file.value = models.find(m => m.id === doc.model_id)?.preview_file;
+      file.value = models.find((m) => m.id === doc.model_id)?.preview_file;
       break;
     case PDF:
     case ".pdf":
-      // Both model and not model pdf have the same preview
       file.value = { file: doc.file };
       break;
     case JPEG:
     case PNG:
-      // jpeg and png models
       file.value = doc.file;
       break;
     default:
       if (OFFICE_FILES.includes(fileType.value)) {
-        // Office files
         if (doc.office_preview) {
           file.value = { file: doc.office_preview };
         } else {
-          // When the preview is not yet loaded.
-          const newDoc = await FileService.getDocument(props.project, {
-            id: doc.id
-          });
+          const newDoc = await FileService.getDocument(props.project, { id: doc.id });
           if (newDoc.office_preview) {
             currentDocument.value.office_preview = newDoc.office_preview;
             file.value = { file: newDoc.office_preview };
           }
         }
       } else if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
-        // images not defined as models
         file.value = doc.file;
       }
   }
@@ -122,7 +144,7 @@ const openViewer = () => {
   const doc = currentDocument.value;
   openInViewer(router, props.project, {
     id: doc.model_id,
-    type: doc.model_type
+    type: doc.model_type,
   });
 };
 
@@ -135,12 +157,7 @@ const download = () => {
 <template>
   <div class="document-viewer">
     <div class="document-viewer__head">
-      <BIMDataButton
-        v-if="currentDocument.model_id"
-        fill
-        radius
-        @click="openViewer"
-      >
+      <BIMDataButton v-if="currentDocument?.model_id" fill radius @click="openViewer">
         <BIMDataIcon
           :name="MODEL_CONFIG[currentDocument.model_type].icon"
           size="s"
