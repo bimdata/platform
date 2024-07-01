@@ -3,11 +3,9 @@
     display: grid;
     grid-template-columns: 1fr 32px;
     &__left-side {
-      // margin-left: var(--spacing-unit);
       display: flex;
       align-items: center;
       gap: var(--spacing-unit);
-      // max-width: 70%;
 
       &__user-avatar {
         box-shadow: var(--box-shadow);
@@ -16,12 +14,7 @@
       &__name {
         color: var(--color-primary);
         font-weight: bold;
-        // margin-left: var(--spacing-unit);
       }
-
-      // &__separator {
-      //   margin: 0 4px;
-      // }
 
       &__date {
         min-width: 101px;
@@ -31,6 +24,7 @@
 
     &__right-side {
       display: flex;
+      justify-content: end;
     }
   }
 

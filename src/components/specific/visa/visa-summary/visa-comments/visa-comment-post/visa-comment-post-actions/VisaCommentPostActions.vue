@@ -82,22 +82,12 @@ export default {
   props: {
     areActionsClosed: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
-  emits: [
-    "init-edit",
-    "undo-edit",
-    "confirm-edit",
-    "confirm-delete",
-    "toggle-close"
-  ],
+  emits: ["init-edit", "undo-edit", "confirm-edit", "confirm-delete", "toggle-close"],
   setup(props, { emit }) {
-    const {
-      isOpen: showMenu,
-      close: closeMenu,
-      toggle: toggleMenu
-    } = useToggle();
+    const { isOpen: showMenu, close: closeMenu, toggle: toggleMenu } = useToggle();
 
     const isEditing = ref(false);
     const isDeleting = ref(false);
@@ -154,9 +144,9 @@ export default {
       onUndoEdit,
       onConfirmEdit,
       onConfirmDelete,
-      onClose
+      onClose,
     };
-  }
+  },
 };
 </script>
 
