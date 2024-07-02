@@ -4,7 +4,7 @@
       <BIMDataIconKey size="s" />
       <span class="folder-access-manager__title__text">
         {{ $t("FolderAccessManager.title") }} -
-        <BIMDataTextbox width="auto" maxWidth="100px" :text="folder.name" />
+        <BIMDataTextbox width="auto" maxWidth="100px" :text="currentFolder.name" />
       </span>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
         <BIMDataIconClose size="xxs" fill color="granite-light" />
@@ -54,10 +54,13 @@
       </transition-group>
     </div>
   </div>
+  <div v-show="loading" class="loading">
+    <BIMDataSpinner class="spinner" />
+  </div>
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import FileService from "../../../../services/FileService.js";
 // Components
@@ -81,6 +84,7 @@ export default {
   },
   emits: ["close"],
   setup(props) {
+    const loading = ref(false);
     const currentFolder = ref(null);
     const propagate = ref(false);
 
@@ -95,18 +99,28 @@ export default {
     );
 
     const loadFolderInfo = async () => {
-      currentFolder.value = await FileService.fetchFolder(
-        props.project,
-        props.folder
-      );
+      try {
+        loading.value = true;
+        currentFolder.value = await FileService.fetchFolder(
+          props.project,
+          props.folder
+        );
+      } finally {
+        loading.value = false;
+      }
     };
 
-    onMounted(loadFolderInfo);
+    watch(
+      () => props.folder,
+      () => loadFolderInfo(),
+      { immediate: true }
+    );
 
     return {
       // References
       currentFolder,
       filteredGroupList,
+      loading,
       propagate,
       searchText,
       // Methods

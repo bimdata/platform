@@ -529,10 +529,10 @@ export default {
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
 
-    const showVersioningManager = ref(false);
     const showAccessManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
+    const showVersioningManager = ref(false);
     const folderToManage = ref(null);
     const fileToManage = ref(null);
     const currentVisa = ref(null);
@@ -541,9 +541,9 @@ export default {
     const openAccessManager = (folder) => {
       folderToManage.value = folder;
       showAccessManager.value = true;
-      showVersioningManager.value = false;
       showVisaManager.value = false;
       showTagManager.value = false;
+      showVersioningManager.value = false;
       openSidePanel();
       // Watch for current files changes in order to update
       // folder data in access manager accordingly
@@ -561,8 +561,9 @@ export default {
     };
     const closeAccessManager = () => {
       stopCurrentFilesWatcher();
+      closeSidePanel();
       setTimeout(() => {
-        closeSidePanel();
+        showAccessManager.value = false;
         folderToManage.value = null;
       }, 100);
     };
@@ -575,8 +576,8 @@ export default {
         fileToManage.value = { id: null };
       }
       showVisaManager.value = true;
-      showVersioningManager.value = false;
       showAccessManager.value = false;
+      showVersioningManager.value = false;
       showTagManager.value = false;
     };
 
@@ -594,6 +595,9 @@ export default {
       if (file.file_name) {
         fileToManage.value = file;
         showTagManager.value = true;
+        showAccessManager.value = false;
+        showVisaManager.value = false;
+        showVersioningManager.value = false;
       }
     };
 
@@ -601,6 +605,7 @@ export default {
       closeSidePanel();
       setTimeout(() => {
         showTagManager.value = false;
+        fileToManage.value = null;
       }, 100);
     };
 
@@ -611,6 +616,7 @@ export default {
         showVersioningManager.value = true;
         showAccessManager.value = false;
         showVisaManager.value = false;
+        showTagManager.value = false;
       }
     };
 

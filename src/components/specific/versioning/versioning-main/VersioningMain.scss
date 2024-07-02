@@ -1,8 +1,9 @@
 .versioning-main {
+  width: 100%;
   height: 100%;
+  padding: 0;
   overflow: auto;
   overflow-x: hidden;
-  padding: var(--spacing-unit);
 
   &__safe-zone {
     z-index: 2;
