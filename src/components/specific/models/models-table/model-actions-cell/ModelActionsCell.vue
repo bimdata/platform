@@ -8,8 +8,20 @@
         icon
         @click="onClick('view-metaBuilding')"
       >
-      <BIMDataIconStructure size="s" />
-    </BIMDataButton>
+        <BIMDataIconStructure size="s" />
+      </BIMDataButton>
+    </template>
+
+    <template v-if="model.type === MODEL_TYPE.PHOTOSPHERE">
+      <BIMDataButton
+        color="primary"
+        outline
+        radius
+        icon
+        @click="onClick('view-photosphereBuilding')"
+      >
+        <BIMDataIconStructure size="s" />
+      </BIMDataButton>
     </template>
 
     <template v-if="model.type === MODEL_TYPE.IFC">
@@ -45,9 +57,9 @@
 
     <template
       v-else-if="
-        model.type === MODEL_TYPE.PDF ||
-        model.type === MODEL_TYPE.META_BUILDING ||
         model.type === MODEL_TYPE.JPEG ||
+        model.type === MODEL_TYPE.META_BUILDING ||
+        model.type === MODEL_TYPE.PDF ||
         model.type === MODEL_TYPE.PNG
       "
     >
@@ -67,6 +79,16 @@
         :model="model"
         :window="WINDOWS.POINT_CLOUD"
         text="3D"
+      />
+    </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.PHOTOSPHERE">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.PHOTOSPHERE"
+        text="2D"
       />
     </template>
 
@@ -144,7 +166,8 @@ export default {
     "download",
     "edit-metaBuilding",
     "update",
-    "view-metaBuilding"
+    "view-metaBuilding",
+    "view-photosphereBuilding",
   ],
   setup(props, { emit }) {
     const { isProjectGuest, hasAdminPerm } = useUser();
