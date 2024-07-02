@@ -43,7 +43,10 @@ jobs:
   e2e-tests:
     runs-on: [self-hosted, testendtoend]
     needs: build-and-push
-    if: ${{ !contains(github.event.head_commit.message, '[skip e2e]') }}
+    if: |
+      ${{ !contains(github.event.head_commit.message, '[skip e2e]') }} &&
+      github.ref != 'refs/heads/release' &&
+      github.ref != 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
         with:
