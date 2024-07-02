@@ -14,6 +14,7 @@ const WINDOWS = Object.freeze({
   DXF: "dxf",
   IFC2D: "2d",
   IFC3D: "3d",
+  PHOTOSPHERE: "photosphere",
   PLAN: "plan",
   POINT_CLOUD: "pointCloud"
 });
