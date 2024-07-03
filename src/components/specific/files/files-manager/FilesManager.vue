@@ -209,7 +209,7 @@
               :foldersToUpload="foldersToUpload"
               :loadingFileIds="loadingFileIds"
               :allTags="allTags"
-              :allFiles="allFiles"
+              :allFiles="displayedAllFiles"
               :filesTabs="filesTabs"
               :selectedFileTab="selectedFileTab"
               :selection="selection"
@@ -389,6 +389,27 @@ export default {
     const visasLoading = ref(false);
     const allTags = ref([]);
 
+    const getFilesInFolder = (folder) => {
+      const files = [];
+      folder.children.forEach((child) => {
+        if (isFolder(child)) {
+          files.push(...getFilesInFolder(child));
+        } else {
+          files.push(child);
+        }
+      });
+      return files;
+    };
+    const allFiles = computed(() =>
+      props.fileStructure.children.flatMap((file) => {
+        if (isFolder(file)) {
+          return getFilesInFolder(file);
+        } else {
+          return file;
+        }
+      })
+    );
+
     watch(
       () => props.fileStructure,
       (struct) => {
@@ -451,6 +472,14 @@ export default {
       currentFiles,
       (file) => file.name
     );
+
+    // Apply search to "allFiles" list
+    const displayedAllFiles = computed(() => {
+      const text = searchText.value.trim().toLowerCase();
+      return text ? allFiles.value.filter(file =>
+        file.name.toLowerCase().includes(text)
+      ) : allFiles.value;
+    });
 
     const selection = ref([]);
     const setSelection = (models) => {
@@ -734,27 +763,6 @@ export default {
       openModal({ component: SubscriptionModal });
     };
 
-    const getFilesInFolder = (folder) => {
-      const files = [];
-      folder.children.forEach((child) => {
-        if (isFolder(child)) {
-          files.push(...getFilesInFolder(child));
-        } else {
-          files.push(child);
-        }
-      });
-      return files;
-    };
-    const allFiles = computed(() =>
-      props.fileStructure.children.flatMap((file) => {
-        if (isFolder(file)) {
-          return getFilesInFolder(file);
-        } else {
-          return file;
-        }
-      })
-    );
-
     const filesTabs = reactive([
       {
         id: "folders",
@@ -776,6 +784,7 @@ export default {
     return {
       // References
       currentFolder,
+      displayedAllFiles,
       displayedFiles,
       filesToDelete,
       filesToUpload,
