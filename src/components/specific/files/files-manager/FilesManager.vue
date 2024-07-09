@@ -338,13 +338,11 @@ export default {
       } if(selectedFileTab.value.id === "files") {
         return filesTable.value.displayedListFiles;
       } else {
-        console.log(filesTable.value);
         return filesTable.value.enhancedVisas;
       }
     });
 
     const onFileSelected = (file) => {
-      console.log({ file }); 
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       } else {

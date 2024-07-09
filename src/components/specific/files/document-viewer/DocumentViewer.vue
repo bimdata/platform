@@ -56,15 +56,8 @@ const index = ref(0);
 watch(
   () => props.document,
   (newDocument) => {
-    if (isVisas.value) {
-      const docIndex = documents.value.findIndex((d) => d.document.id === newDocument.document_id);
-      console.log(newDocument)
-      console.log("docIndex :", documents.value);
-      index.value = docIndex !== -1 ? docIndex : 0;
-    } else {
-      const docIndex = documents.value.findIndex((d) => d.id === newDocument.id);
-      index.value = docIndex !== -1 ? docIndex : 0;
-    }
+    const docIndex = documents.value.findIndex((d) => d.id === newDocument.id);
+    index.value = docIndex !== -1 ? docIndex : 0;
   },
   {
     immediate: true,
@@ -73,15 +66,11 @@ watch(
 
 const currentDocument = computed(() => {
   if (!documents.value || documents.value.length === 0) return null;
-  console.log("YAY :", documents.value[index.value].document);
   return isVisas.value ? documents.value[index.value].document : documents.value[index.value];
 });
 
-console.log("HERE :", currentDocument.value);
-
 const fileType = computed(() => {
   const doc = currentDocument.value;
-  console.log({ doc });
   return doc ? doc.model_type ?? fileExtension(doc.file_name) : null;
 });
 
