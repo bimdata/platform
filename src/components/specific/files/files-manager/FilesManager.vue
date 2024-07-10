@@ -367,19 +367,6 @@ export default {
       }
     };
 
-    // const { filteredList: displayedFiles, searchText } = useListFilter(
-    //   currentFiles,
-    //   (file) => file.name
-    // );
-
-    // // Apply search to "allFiles" list
-    // const displayedAllFiles = computed(() => {
-    //   const text = searchText.value.trim().toLowerCase();
-    //   return text ? allFiles.value.filter(file =>
-    //     file.name.toLowerCase().includes(text)
-    //   ) : allFiles.value;
-    // });
-
     const selection = ref([]);
     const setSelection = (models) => {
       selection.value = models;
@@ -478,6 +465,7 @@ export default {
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
 
     const showAccessManager = ref(false);
+    const showVersioningManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
     const setManagerVisibility = (manager, visibility) => {
@@ -791,7 +779,6 @@ export default {
       searchText,
       selectedFileTab,
       selection,
-      // shouldSubscribe,
       showAccessManager,
       showDeleteModal,
       showTagManager,
