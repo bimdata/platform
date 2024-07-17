@@ -32,7 +32,7 @@
                 modelIDs: file.model_id
               },
               query: {
-                window: MODEL_CONFIG[file.model_type].window
+                layout: MODEL_CONFIG[file.model_type].window
               }
             }"
           >

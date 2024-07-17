@@ -95,7 +95,7 @@
                       modelIDs: document.model_id
                     },
                     query: {
-                      window: MODEL_CONFIG[document.model_type].window
+                      layout: MODEL_CONFIG[document.model_type].window
                     }
                   }"
                 >

@@ -718,38 +718,45 @@ export default {
     };
 
     const openTopicViewer = (topic) => {
-      let viewpoint = topic.viewpoints[0] ?? {};
-      let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
-      let modelIDs = viewpoint.model_ids ?? [];
+      const params = {
+        spaceID: currentProject.value.cloud.id,
+        projectID: currentProject.value.id,
+      };
 
-      if (modelIDs.length === 0) {
-        // If no models are specified on the viewpoint
-        // get the models of the topic
-        modelIDs = topic.models;
-      }
-      if (modelIDs.length === 0) {
-        // If no models are specified on the viewpoint
-        // get the last created model of proper type
-        // with respect to the target window
-        const models = projectModels.value
-          .filter(
-            (m) => m.status === MODEL_STATUS.COMPLETED && MODEL_CONFIG[m.type].window === window
-          )
-          .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
-        if (models.length > 0) {
-          modelIDs.push(models[0].id);
+      let layout = topic.bimdata_viewer_layout;
+
+      if (!layout) {
+        const viewpoint = topic.viewpoints[0] ?? {};
+        layout = { windowName: getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW };
+        let modelIDs = viewpoint.model_ids ?? [];
+
+        if (modelIDs.length === 0) {
+          // If no models are specified on the viewpoint
+          // get the models of the topic
+          modelIDs = topic.models;
         }
+        if (modelIDs.length === 0) {
+          // If no models are specified on the viewpoint
+          // get the last created model of proper type
+          // with respect to the target window
+          const models = projectModels.value
+            .filter(
+              (m) => m.status === MODEL_STATUS.COMPLETED && MODEL_CONFIG[m.type].window === window
+            )
+            .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+          if (models.length > 0) {
+            modelIDs.push(models[0].id);
+          }
+        }
+
+        params.modelIDs = modelIDs.join(",");
       }
 
       router.push({
         name: routeNames.modelViewer,
-        params: {
-          spaceID: currentProject.value.cloud.id,
-          projectID: currentProject.value.id,
-          modelIDs: modelIDs.join(","),
-        },
+        params,
         query: {
-          window,
+          layout,
           topicGuid: topic.guid,
         },
       });

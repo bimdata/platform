@@ -87,7 +87,7 @@ function openInViewer(router, project, model) {
       modelIDs: model.id
     },
     query: {
-      window: MODEL_CONFIG[model.type].window
+      layout: MODEL_CONFIG[model.type].window
     }
   });
 }

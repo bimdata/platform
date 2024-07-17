@@ -10,7 +10,7 @@
         modelIDs: model.id
       },
       query: {
-        window
+        layout: window
       }
     }"
   >

@@ -50,7 +50,26 @@ export default {
     const projectID = +route.params.projectID;
     const modelIDs =
       (route.params.modelIDs || undefined)?.split(",").map(id => +id) ?? [];
-    const initialWindow = route.query.window || DEFAULT_WINDOW;
+    let layout;
+    if (route.query.layout) {
+      if (route.query.layout.startsWith("{")) {
+        // JSON layout
+        try {
+          layout = JSON.parse(route.query.layout);
+        } catch (error) {
+          console.error(
+            "[PLATFORM - ModelViewer] Error parsing layout. Layout ignored.",
+            error
+          );
+        }
+      } else {
+        // simple layout as window name
+        layout = route.query.layout;
+      }
+    }
+    if (!layout) {
+      layout = route.query.window || DEFAULT_WINDOW; // window query is deprecated
+    }
     const topicGuid = route.query.topicGuid;
 
     // Initial plugins config
@@ -125,7 +144,7 @@ export default {
       );
       loading.value = false;
 
-      bimdataViewer.mount("#viewer", initialWindow);
+      bimdataViewer.mount("#viewer", layout);
 
       // Keep viewer access token and locale in sync with application
       unwatchAccessToken = watch(accessToken, token => {
