@@ -209,7 +209,7 @@
               :foldersToUpload="foldersToUpload"
               :loadingFileIds="loadingFileIds"
               :allTags="allTags"
-              :allFiles="allFiles"
+              :allFiles="displayedAllFiles"
               :allFolders="allFolders"
               :filesTabs="filesTabs"
               :selectedFileTab="selectedFileTab"
@@ -765,26 +765,6 @@ export default {
       openModal({ component: SubscriptionModal });
     };
 
-    const getFilesInFolder = (folder) => {
-      const files = [];
-      folder.children.forEach((child) => {
-        if (isFolder(child)) {
-          files.push(...getFilesInFolder(child));
-        } else {
-          files.push(child);
-        }
-      });
-      return files;
-    };
-    const allFiles = computed(() =>
-      props.fileStructure.children.flatMap((file) => {
-        if (isFolder(file)) {
-          return getFilesInFolder(file);
-        } else {
-          return file;
-        }
-      })
-    );
     const getFoldersInFolder = (folder) => {
       const folders = [];
       folder.children.forEach((child) => {
