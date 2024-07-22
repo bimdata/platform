@@ -1,5 +1,5 @@
 .file-name-cell {
-  max-width: calc(773.5px - (var(--spacing-unit) * 2));
+  // max-width: calc(773.5px - (var(--spacing-unit) * 2));
   &__loader {
     display: flex;
     justify-content: center;
@@ -21,6 +21,7 @@
   }
 
   &__content {
+    max-width: 300px;
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);

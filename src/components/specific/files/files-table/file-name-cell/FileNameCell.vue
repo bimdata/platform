@@ -41,7 +41,7 @@
         class="file-name-cell__content"
         @click="$emit('file-clicked', file)"
       >
-        <BIMDataTextbox :text="file.name" width="auto" maxWidth="70%" />
+        <BIMDataTextbox :text="file.name" width="auto" maxWidth="100%" />
         <BIMDataIconVersioning
           v-if="hasHistory"
           margin="0px 0px 0px 4px"
