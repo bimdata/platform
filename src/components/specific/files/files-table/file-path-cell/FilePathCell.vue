@@ -1,9 +1,6 @@
 <template>
   <div class="file-path-cell" @mouseenter="hovering = true" @mouseleave="hovering = false">
-    <div
-      class="file-path-cell__last-folder"
-      v-click-away="() => (showFullPath = false)"
-    >
+    <div class="file-path-cell__last-folder" v-click-away="() => (showFullPath = false)">
       <BIMDataIconFolderLocation fill color="primary" margin="0 12px 0 0" />
       <BIMDataTextbox
         :text="lastFolderLocation(file)"
@@ -14,19 +11,56 @@
       />
     </div>
     <div v-show="hovering || showFullPath" class="file-path-cell__location">
-      <div v-if="folderLocation(file).length > 0" v-for="(folder, index) in folderLocation(file)" :key="folder.id" class="flex items-center">
-        <div class="folder-name flex items-center" @click.stop="selectFile(folder)">
-          <BIMDataIconFolderLocation v-if="index === folderLocation(file).length - 1" fill color="primary" margin="0 6px 0 0" />
+      <div
+        v-if="truncatedFolderLocation(file).length > 0"
+        class="flex items-center"
+        v-for="(folder, index) in truncatedFolderLocation(file)"
+        :key="folder.id"
+      >
+        <div
+          class="folder-name flex items-center"
+          @click.stop="selectFile(folder)"
+          v-if="folder.id !== 'ellipsis'"
+        >
+          <BIMDataIconFolderLocation
+            v-if="index === truncatedFolderLocation(file).length - 1"
+            fill
+            color="primary"
+            margin="0 6px 0 0"
+          />
           <BIMDataIconFolder v-else fill color="primary" margin="0 6px 0 0" />
-        <span> {{ folder.name }}</span>
+          <BIMDataTextbox
+            :text="folder.name"
+            cutPosition="middle"
+            tooltipPosition="bottom"
+            tooltipColor="primary"
+            width="auto"
+            maxWidth="200px"
+          >
+          </BIMDataTextbox>
         </div>
-        <div v-if="index < folderLocation(file).length - 1" class="m-x-6">
+        <div v-if="folder.id === 'ellipsis'" class="folder-ellipsis flex items-center m-x-12">
+          <BIMDataTextbox
+            :text="folder.name"
+            cutPosition="middle"
+            tooltipPosition="bottom"
+            tooltipColor="primary"
+            width="auto"
+            maxWidth="200px"
+          >
+          </BIMDataTextbox>
+        </div>
+        <div
+          v-if="showChevron(folder, index, file)"
+          class="m-x-6"
+        >
           <BIMDataIconChevron size="xxxs" fill color="default" />
         </div>
       </div>
+      
       <span v-else class="folder-name flex items-center" @click.stop="$emit('go-folders-view')">
         <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
-        {{ $t('t.rootFolder') }}
+        {{ $t("t.rootFolder") }}
       </span>
     </div>
   </div>
@@ -52,33 +86,56 @@ export default {
     const { t } = useI18n();
 
     const folderLocation = (file) => {
-      const parentFolders = getAscendants(file, props.allFolders).map((f) => ({
-        id: f.id,
-        name: f.name,
-      })).reverse();
+      const parentFolders = getAscendants(file, props.allFolders)
+        .map((f) => ({
+          id: f.id,
+          name: f.name,
+        }))
+        .reverse();
+      return parentFolders;
+    };
+
+    const truncatedFolderLocation = (file) => {
+      const parentFolders = folderLocation(file);
+      const maxFoldersToShow = 4;
+
+      if (parentFolders.length > maxFoldersToShow) {
+        return [
+          ...parentFolders.slice(0, 2), // Les 2 premiers dossiers
+          { id: "ellipsis", name: "..." }, // L'élément '...'
+          ...parentFolders.slice(-2), // Les 2 derniers dossiers
+        ];
+      }
       return parentFolders;
     };
 
     const lastFolderLocation = (file) => {
       const parentFolders = getAscendants(file, props.allFolders);
-      return parentFolders[0]?.name ?? t('t.rootFolder');
+      return parentFolders[0]?.name ?? t("t.rootFolder");
     };
 
     const hovering = ref(false);
     const showFullPath = ref(false);
 
     const selectFile = (folder) => {
-      const selectedFolder = props.allFolders.find(f => f.id === folder.id);
+      const selectedFolder = props.allFolders.find((f) => f.id === folder.id);
       emit("file-clicked", selectedFolder);
       emit("go-folders-view");
+    };
+
+    const showChevron = (folder, index, file) => {
+      return (
+        index < truncatedFolderLocation(file).length - 1 && folder.id !== 'ellipsis' && truncatedFolderLocation(file)[index + 1].id !== 'ellipsis'
+      );
     };
 
     return {
       hovering,
       showFullPath,
-      folderLocation,
       lastFolderLocation,
       selectFile,
+      showChevron,
+      truncatedFolderLocation,
     };
   },
 };
