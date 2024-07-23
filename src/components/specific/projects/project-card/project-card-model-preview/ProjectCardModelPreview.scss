@@ -15,4 +15,8 @@
     margin: 0 calc((100% - 100px) / 2);
     margin-top: 16px;
   }
+  // @TODO - Remove this and fix width into bcf-components lib for the component to also accept percentages
+  .preview-3d {
+    width: 100% !important;
+  }
 }

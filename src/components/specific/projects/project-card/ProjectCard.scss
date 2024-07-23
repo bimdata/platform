@@ -2,7 +2,6 @@
 
 .project-card {
   min-width: $card-width;
-  width: $card-width;
   height: $card-height;
 
   .bimdata-card {
@@ -24,7 +23,7 @@
       position: absolute;
       z-index: 1;
       width: 4px;
-      height: $card-height;
+      height: 100%;
 
       &--new {
         background-color: var(--color-primary);
