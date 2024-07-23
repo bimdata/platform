@@ -358,11 +358,10 @@
 <script>
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef, { columnsLG, columnsXL } from "./columns.js";
+import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
-
 
 // Components
 import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
@@ -373,7 +372,6 @@ import FileNameCell from "./file-name-cell/FileNameCell.vue";
 import FileTagsCell from "./file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "./file-type-cell/FileTypeCell.vue";
 import FilePathCell from "./file-path-cell/FilePathCell.vue";
-
 
 import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
 import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
@@ -453,7 +451,7 @@ export default {
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const { isLG, isXL } = useStandardBreakpoints();
+    const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
     const filesTable = ref(null);
     const filesList = ref(null);
@@ -464,6 +462,8 @@ export default {
         filteredColumns = columnsLG.map((id) => filteredColumns.find((col) => col.id === id));
       } else if (isXL.value) {
         filteredColumns = columnsXL.map((id) => filteredColumns.find((col) => col.id === id));
+      } else if (isXXL.value) {
+        filteredColumns = columnsXXL.map((id) => filteredColumns.find((col) => col.id === id));
       }
       return filteredColumns.map((col) => ({
         ...col,

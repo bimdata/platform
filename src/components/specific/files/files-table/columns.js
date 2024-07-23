@@ -81,6 +81,8 @@ export default [
   }
 ];
 
+export const columnsXXL = ["type", "name", "created_by", "lastupdate", "size", "actions"];
+
 export const columnsXL = ["name", "lastupdate", "size", "actions"];
 
 export const columnsLG = ["name", "size", "actions"];

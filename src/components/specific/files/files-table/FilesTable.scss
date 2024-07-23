@@ -90,13 +90,14 @@
         margin-right: 2.5px;
         height: 100%;
 
-        flex-shrink: 0;
+        flex: 1;
         text-align: center;
         align-content: center;
       }
 
       &__select {
         width: 42px;
+        max-width: 42px;
 
         display: flex;
         justify-content: center;
@@ -105,38 +106,44 @@
 
       &__type {
         width: 80px;
+        max-width: 80px;
       }
 
       &__name {
         flex-grow: 1;
-        width: auto;
+        width: min(200px, 500px);
       }
 
       &__created-by {
-        width: 160px;
+        width: 140px;
+        max-width: 140px;
       }
 
       &__last-update {
-        width: 160px;
+        width: 140px;
+        max-width: 140px;
       }
 
       &__location {
         width: 280px;
-        flex-grow: 0;
+        max-width: 280px;
         text-align: left;
         justify-content: flex-start;
       }
 
       &__size {
-        width: 100px;
+        width: 90px;
+        max-width: 90px;
       }
 
       &__tags {
-        width: 120px;
+        width: 100px;
+        max-width: 100px;
       }
 
       &__actions {
         width: 50px;
+        max-width: 50px;
       }
     }
   }
