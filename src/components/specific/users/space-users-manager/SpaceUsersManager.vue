@@ -40,21 +40,20 @@
 
     <div class="list-container">
       <transition-group name="list">
-        <template v-if="showInvitations">
+        <template v-for="user in displayedUsers">
           <InvitationCard
-            v-for="invitation in invitations"
-            :key="`invitation-${invitation.id}`"
-            :invitation="invitation"
+            v-if="!user.sub && showInvitations"
+            :key="`invitation-${user.id}`"
             :space="space"
+            :invitation="user"
+          />
+          <UserCard
+            v-else
+            :key="`user-${user.id}`"
+            :space="space"
+            :user="user"
           />
         </template>
-
-        <UserCard
-          v-for="user in displayedUsers"
-          :key="`user-${user.id}`"
-          :user="user"
-          :space="space"
-        />
       </transition-group>
     </div>
   </div>
@@ -128,7 +127,7 @@ export default {
       { immediate: true }
     );
 
-    const list = computed(() => currentTab.value === "admins" ? admins.value : users.value);
+    const list = computed(() => currentTab.value === "admins" ? props.invitations.concat(admins.value) : users.value);
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
       list,
