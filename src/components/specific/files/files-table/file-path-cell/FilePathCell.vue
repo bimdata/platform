@@ -10,59 +10,58 @@
         maxWidth="200px"
       />
     </div>
-    <div v-show="hovering || showFullPath" class="file-path-cell__location">
-      <div
-        v-if="truncatedFolderLocation(file).length > 0"
-        class="flex items-center"
-        v-for="(folder, index) in truncatedFolderLocation(file)"
-        :key="folder.id"
-      >
+    <transition name="fade">
+      <div v-show="hovering || showFullPath" class="file-path-cell__location">
         <div
-          class="folder-name flex items-center"
-          @click.stop="selectFile(folder)"
-          v-if="folder.id !== 'ellipsis'"
+          v-if="truncatedFolderLocation(file).length > 0"
+          class="flex items-center"
+          v-for="(folder, index) in truncatedFolderLocation(file)"
+          :key="folder.id"
         >
-          <BIMDataIconFolderLocation
-            v-if="index === truncatedFolderLocation(file).length - 1"
-            fill
-            color="primary"
-            margin="0 6px 0 0"
-          />
-          <BIMDataIconFolder v-else fill color="primary" margin="0 6px 0 0" />
-          <BIMDataTextbox
-            :text="folder.name"
-            cutPosition="middle"
-            tooltipPosition="bottom"
-            tooltipColor="primary"
-            width="auto"
-            maxWidth="200px"
+          <div
+            class="folder-name flex items-center"
+            @click.stop="selectFile(folder)"
+            v-if="folder.id !== 'ellipsis'"
           >
-          </BIMDataTextbox>
+            <BIMDataIconFolderLocation
+              v-if="index === truncatedFolderLocation(file).length - 1"
+              fill
+              color="primary"
+              margin="0 6px 0 0"
+            />
+            <BIMDataIconFolder v-else fill color="primary" margin="0 6px 0 0" />
+            <BIMDataTextbox
+              :text="folder.name"
+              cutPosition="middle"
+              tooltipPosition="bottom"
+              tooltipColor="primary"
+              width="auto"
+              maxWidth="200px"
+            >
+            </BIMDataTextbox>
+          </div>
+          <div v-if="folder.id === 'ellipsis'" class="folder-ellipsis flex items-center m-x-12">
+            <BIMDataTextbox
+              :text="folder.name"
+              cutPosition="middle"
+              tooltipPosition="bottom"
+              tooltipColor="primary"
+              width="auto"
+              maxWidth="200px"
+            >
+            </BIMDataTextbox>
+          </div>
+          <div v-if="showChevron(folder, index, file)" class="m-x-6">
+            <BIMDataIconChevron size="xxxs" fill color="default" />
+          </div>
         </div>
-        <div v-if="folder.id === 'ellipsis'" class="folder-ellipsis flex items-center m-x-12">
-          <BIMDataTextbox
-            :text="folder.name"
-            cutPosition="middle"
-            tooltipPosition="bottom"
-            tooltipColor="primary"
-            width="auto"
-            maxWidth="200px"
-          >
-          </BIMDataTextbox>
-        </div>
-        <div
-          v-if="showChevron(folder, index, file)"
-          class="m-x-6"
-        >
-          <BIMDataIconChevron size="xxxs" fill color="default" />
-        </div>
+
+        <span v-else class="folder-name flex items-center" @click.stop="$emit('go-folders-view')">
+          <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
+          {{ $t("t.rootFolder") }}
+        </span>
       </div>
-      
-      <span v-else class="folder-name flex items-center" @click.stop="$emit('go-folders-view')">
-        <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
-        {{ $t("t.rootFolder") }}
-      </span>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -125,7 +124,9 @@ export default {
 
     const showChevron = (folder, index, file) => {
       return (
-        index < truncatedFolderLocation(file).length - 1 && folder.id !== 'ellipsis' && truncatedFolderLocation(file)[index + 1].id !== 'ellipsis'
+        index < truncatedFolderLocation(file).length - 1 &&
+        folder.id !== "ellipsis" &&
+        truncatedFolderLocation(file)[index + 1].id !== "ellipsis"
       );
     };
 
