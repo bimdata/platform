@@ -2,15 +2,15 @@
   width: 100%;
   height: 40px;
 
-  display: none;
-  &.visible {
-    display: flex;
-  }
-
   align-items: center;
   gap: calc(var(--spacing-unit) * 2);
   padding: 0 calc(var(--spacing-unit) * 7 / 2);
   font-weight: bold;
   background-color: var(--color-primary);
   color: var(--color-white);
+
+  display: none;
+  &.visible {
+    display: flex;
+  }
 }

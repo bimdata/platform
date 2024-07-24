@@ -38,14 +38,15 @@
       font-style: italic;
 
       .message {
+        margin-left: calc(var(--spacing-unit) / 3);
+        font-weight: bold;
+        color: var(--color-high);
+
         &::before {
           content: "-";
           margin-right: calc(var(--spacing-unit) / 3);
           color: var(--color-granite-light);
         }
-        margin-left: calc(var(--spacing-unit) / 3);
-        font-weight: bold;
-        color: var(--color-high);
       }
     }
   }
