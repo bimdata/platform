@@ -42,12 +42,13 @@
 
   &__datapack {
     &__size {
-      &::before {
-        content: "+ ";
-      }
       font-size: 22px;
       font-weight: bold;
       color: var(--color-primary);
+
+      &::before {
+        content: "+ ";
+      }
     }
     &__note {
       color: var(--color-granite-light);
