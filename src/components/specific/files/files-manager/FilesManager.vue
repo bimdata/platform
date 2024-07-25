@@ -171,7 +171,7 @@
       <div class="files-manager__content">
         <transition name="slide-fade-left">
           <FileTree
-            v-if="selectedFileTab.id === 'folders'"
+            v-show="selectedFileTab.id === 'folders'"
             data-guide="file-tree"
             class="files-manager__tree"
             :project="project"
@@ -210,10 +210,12 @@
               :loadingFileIds="loadingFileIds"
               :allTags="allTags"
               :allFiles="displayedAllFiles"
+              :allFolders="allFolders"
               :filesTabs="filesTabs"
               :selectedFileTab="selectedFileTab"
               :selection="selection"
               @tab-selected="onTabChange"
+              @go-folders-view="goFoldersView"
               @back-parent-folder="backToParent"
               @create-model="createModelFromFile"
               @remove-model="removeModel"
@@ -441,11 +443,11 @@ export default {
 
       if (selectedFileTab.value.id === "folders") {
         // WARNING displayedRows is name from DS, may change
-        return filesTable.value.filesTable.displayedRows.map(row => row.data);
+        return filesTable.value.filesTable.displayedRows.map((row) => row.data);
       } else {
         return filesTable.value.displayedListFiles;
       }
-    })
+    });
 
     const onFileSelected = (file) => {
       if (isFolder(file)) {
@@ -457,7 +459,7 @@ export default {
             project: props.project,
             folder: currentFolder.value,
             document: file,
-            currentView: documentViewerFilesList.value
+            currentView: documentViewerFilesList.value,
           },
         });
       }
@@ -534,13 +536,13 @@ export default {
     const openDeleteModal = (models) => {
       filesToDelete.value = models;
       openModal({
-          component: FilesDeleteModal,
-          props: {
-            project: props.project,
-            files: filesToDelete.value,
-            onClose: closeModal,
-          },
-        });
+        component: FilesDeleteModal,
+        props: {
+          project: props.project,
+          files: filesToDelete.value,
+          onClose: closeModal,
+        },
+      });
       showDeleteModal.value = true;
     };
     const closeDeleteModal = () => {
@@ -763,6 +765,26 @@ export default {
       openModal({ component: SubscriptionModal });
     };
 
+    const getFoldersInFolder = (folder) => {
+      const folders = [];
+      folder.children.forEach((child) => {
+        if (isFolder(child)) {
+          folders.push(child);
+          folders.push(...getFoldersInFolder(child));
+        }
+      });
+      return folders;
+    };
+    const allFolders = computed(() =>
+      props.fileStructure.children.flatMap((file) => {
+        if (isFolder(file)) {
+          return [file, ...getFoldersInFolder(file)];
+        } else {
+          return [];
+        }
+      })
+    );
+
     const filesTabs = reactive([
       {
         id: "folders",
@@ -780,10 +802,16 @@ export default {
       selectedFileTab.value = tab;
       selection.value = [];
     };
+    const goFoldersView = () => {
+      selectedFileTab.value = filesTabs[0];
+      selection.value = [];
+    };
 
     return {
       // References
       currentFolder,
+      currentSpace,
+      currentVisa,
       displayedAllFiles,
       displayedFiles,
       filesToDelete,
@@ -813,6 +841,7 @@ export default {
       menuItems,
       loadingFileIds,
       allFiles,
+      allFolders,
       filesTabs,
       filesTable,
       selectedFileTab,
@@ -845,6 +874,7 @@ export default {
       fileUploadInput,
       openSubscriptionModal,
       onTabChange,
+      goFoldersView,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
       isMidXL,

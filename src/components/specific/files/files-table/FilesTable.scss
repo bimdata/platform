@@ -23,15 +23,15 @@
   }
 
   .files-list {
-    height: calc(100vh - var(--platform-header-height) - 10* var(--spacing-unit) - 104px);
+    height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
 
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: var(--color-granite-light);
 
     overflow-x: hidden;
 
     &__content {
-      height: calc(100vh - var(--platform-header-height) - 10* var(--spacing-unit) - 104px - 48px);
+      height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px - 48px);
     }
 
     &__element {
@@ -77,57 +77,73 @@
         justify-content: flex-start;
       }
 
-      &__created-by, &__tags {
+      &__created-by,
+      &__tags {
         position: relative;
       }
     }
 
-    &__element, &__header {
+    &__element,
+    &__header {
       & > * {
         padding: 0 var(--spacing-unit);
         margin-right: 2.5px;
         height: 100%;
 
-        flex-shrink: 0;
+        flex: 1;
         text-align: center;
         align-content: center;
       }
 
       &__select {
         width: 42px;
+        max-width: 42px;
 
-        display: flex;        
+        display: flex;
         justify-content: center;
         align-items: center;
       }
 
       &__type {
         width: 80px;
+        max-width: 80px;
       }
 
       &__name {
         flex-grow: 1;
-        width: 0px;
+        width: min(200px, 500px);
       }
 
       &__created-by {
-        width: 160px;
+        width: 140px;
+        max-width: 140px;
       }
 
       &__last-update {
-        width: 160px;
+        width: 140px;
+        max-width: 140px;
+      }
+
+      &__location {
+        width: 280px;
+        max-width: 280px;
+        text-align: left;
+        justify-content: flex-start;
       }
 
       &__size {
-        width: 100px;
+        width: 90px;
+        max-width: 90px;
       }
 
       &__tags {
-        width: 120px;
+        width: 100px;
+        max-width: 100px;
       }
 
       &__actions {
         width: 50px;
+        max-width: 50px;
       }
     }
   }

@@ -39,7 +39,7 @@ export default [
   {
     id: "created_by",
     text: "t.createdBy",
-    width: "160px",
+    width: "140px",
     align: "center",
     filter: true,
     filterFunction: rowData => rowData ? `${rowData.lastname} ${rowData.firstname}` : t("t.notSpecified"),
@@ -47,7 +47,7 @@ export default [
   {
     id: "lastupdate",
     text: "t.modifiedOn",
-    width: "160px",
+    width: "140px",
     align: "center",
     sortable: true,
     defaultSortOrder: "asc",
@@ -80,6 +80,8 @@ export default [
     align: "center",
   }
 ];
+
+export const columnsXXL = ["type", "name", "created_by", "lastupdate", "size", "actions"];
 
 export const columnsXL = ["name", "lastupdate", "size", "actions"];
 
