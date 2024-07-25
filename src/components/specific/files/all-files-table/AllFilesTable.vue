@@ -221,9 +221,8 @@
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
-import { isFolder } from "../../../../utils/file-structure.js";
-import { formatBytes, generateFileKey } from "../../../../utils/files.js";
-import columnsDef, { columnsLG, columnsXL } from "../filesColumns.js";
+import { formatBytes } from "../../../../utils/files.js";
+import columnsDef, { columnsLG, columnsXL, columnsXXL } from "../filesColumns.js";
 
 // Components
 import FileActionsCell from "../files-table/file-actions-cell/FileActionsCell.vue";
@@ -283,7 +282,7 @@ export default {
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const { isLG, isXL } = useStandardBreakpoints();
+    const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
     const filesList = ref(null);
 
@@ -293,6 +292,8 @@ export default {
         filteredColumns = columnsLG.map((id) => filteredColumns.find((col) => col.id === id));
       } else if (isXL.value) {
         filteredColumns = columnsXL.map((id) => filteredColumns.find((col) => col.id === id));
+      } else if (isXXL.value) {
+        filteredColumns = columnsXXL.map((id) => filteredColumns.find((col) => col.id === id));
       }
       return filteredColumns.map((col) => ({
         ...col,

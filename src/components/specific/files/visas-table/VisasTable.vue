@@ -28,7 +28,7 @@
     </template>
     <template #cell-file="{ row: visa }">
       <span class="visas-table__file-name" @click="$emit('file-clicked', visa)">
-        {{ visa.document.name }}
+        <BIMDataTextbox :text="visa.document.name" width="auto" maxWidth="100%" /> 
       </span>
     </template>
     <template #cell-validators="{ row: visa }">
@@ -43,7 +43,7 @@
       {{ $d(visa.deadline, "short") }}
     </template>
     <template #cell-location="{ row: visa }">
-      <div class="files-list__element__location">
+      <div class="visas-table__location">
         <FilePathCell
           :file="visa.document"
           :allFolders="allFolders"
@@ -97,11 +97,12 @@
 <script>
 import { computed, watch, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import columnsDef from "./columns.js";
+import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
 import { enhanceVisa } from "../../../../utils/visas.js";
 import { useUser } from "../../../../state/user.js";
 import { fullName } from "../../../../utils/users.js";
+import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
 
 import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
 import VisaActionsCell from "./visa-actions-cell/VisaActionsCell.vue";
@@ -129,6 +130,7 @@ export default {
   setup(props) {
     const { t } = useI18n();
     const { user } = useUser();
+    const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
     const enhancedVisas = ref([]);
 
@@ -141,7 +143,15 @@ export default {
     );
 
     const columns = computed(() => {
-      return columnsDef.map((col) => ({
+      let filteredColumns = columnsDef;
+      if (isLG.value) {
+        filteredColumns = columnsLG.map((id) => filteredColumns.find((col) => col.id === id));
+      } else if (isXL.value) {
+        filteredColumns = columnsXL.map((id) => filteredColumns.find((col) => col.id === id));
+      } else if (isXXL.value) {
+        filteredColumns = columnsXXL.map((id) => filteredColumns.find((col) => col.id === id));
+      }
+      return filteredColumns.map((col) => ({
         ...col,
         label: col.label || t(col.text),
       }));

@@ -54,14 +54,14 @@ export default [
   {
     id: "validators",
     text: "t.validator",
-    width: "150px",
+    width: "120px",
     align: "left",
     filter: true,
   },
   {
     id: "due_date",
     text: "t.dueDate",
-    width: "230px",
+    width: "120px",
     align: "center",
     sortable: true,
     defaultSortOrder: "desc",
@@ -87,7 +87,7 @@ export default [
   {
     id: "buttons",
     label: " ",
-    width: "200px",
+    width: "150px",
     align: "center",
   },
   {
@@ -98,6 +98,8 @@ export default [
   },
 ];
 
-export const columnsXL = ["name", "lastupdate", "size", "actions"];
+export const columnsXXL = ["file", "validators", "due_date", "location", "statutType", "buttons" ,"actions"];
 
-export const columnsLG = ["name", "size", "actions"];
+export const columnsXL = ["file", "location", "statutType", "actions"];
+
+export const columnsLG = ["file", "statutType", "actions"];

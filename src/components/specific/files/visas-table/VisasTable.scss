@@ -35,6 +35,9 @@
       border-radius: 50px;
     }
   }
+  &__location {
+    height: 48px;
+  }
   &__status {
     margin: auto;
     padding: 0 var(--spacing-unit);
