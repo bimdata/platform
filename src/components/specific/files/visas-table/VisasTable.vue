@@ -42,6 +42,16 @@
     <template #cell-due_date="{ row: visa }">
       {{ $d(visa.deadline, "short") }}
     </template>
+    <template #cell-location="{ row: visa }">
+      <div class="files-list__element__location">
+        <FilePathCell
+          :file="visa.document"
+          :allFolders="allFolders"
+          @go-folders-view="$emit('go-folders-view')"
+          @file-clicked="$emit('file-clicked', $event)"
+        />
+      </div>
+    </template>
     <template #cell-statutType="{ row: visa }">
       <div class="visas-table__status" :class="statusClasses(visa)">
         <BIMDataIcon :name="statusIcon(visa)" size="xs" fill color="default" margin="0 6px 0 0" />
@@ -95,13 +105,18 @@ import { fullName } from "../../../../utils/users.js";
 
 import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
 import VisaActionsCell from "./visa-actions-cell/VisaActionsCell.vue";
+import FilePathCell from "../all-files-table/file-path-cell/FilePathCell.vue";
 
 export default {
   components: {
     UserAvatarList,
     VisaActionsCell,
+    FilePathCell,
   },
   props: {
+    allFolders: {
+      type: Array,
+    },
     visas: {
       type: Array,
       required: true,
@@ -170,7 +185,7 @@ export default {
     };
     const statusClasses = (visa) => {
       const visaStatuses = visa.validations.map((validation) => validation.status);
-      if (isDelay(visa) && (visaStatuses.every((status) => status === VALIDATION_STATUS.PENDING))) {
+      if (isDelay(visa) && visaStatuses.every((status) => status === VALIDATION_STATUS.PENDING)) {
         return "delay";
       } else {
         return statusIcon(visa);

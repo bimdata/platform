@@ -72,6 +72,12 @@ export default [
     },
   },
   {
+    id: "location",
+    text: "t.location",
+    width: "280px",
+    align: "left",
+  },
+  {
     id: "statutType",
     text: "t.status",
     width: "150px",
