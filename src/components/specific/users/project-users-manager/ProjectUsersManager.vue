@@ -26,6 +26,7 @@
               <transition-group name="list">
                 <BIMDataSearch
                   v-if="showUserSearch"
+                  ref="searchInput"
                   key="user-search"
                   :placeholder="$t('t.search')"
                   v-model="searchText"
@@ -41,18 +42,20 @@
                   @success="onInvitationSuccess"
                 />
 
-                <InvitationCard
-                  v-for="invitation in invitations"
-                  :key="`invitation-${invitation.id}`"
-                  :invitation="invitation"
-                  :project="project"
-                />
-                <UserCard
-                  v-for="user in displayedUsers"
-                  :key="`user-${user.id}`"
-                  :user="user"
-                  :project="project"
-                />
+                <template v-for="user in displayedUsers">
+                  <InvitationCard
+                    v-if="!user.sub"
+                    :key="`invitation-${user.id}`"
+                    :project="project"
+                    :invitation="user"
+                  />
+                  <UserCard
+                    v-else
+                    :key="`user-${user.id}`"
+                    :project="project"
+                    :user="user"
+                  />
+                </template>
               </transition-group>
             </div>
           </template>
@@ -67,7 +70,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import { useProjects } from "../../../../state/projects.js";
@@ -103,7 +106,7 @@ export default {
     const { loadProjectUsers, loadProjectInvitations } = useProjects();
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
-      computed(() => props.users.filter(user => user.user_id)),
+      computed(() => props.invitations.concat(props.users.filter(user => user.user_id))),
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
@@ -113,10 +116,12 @@ export default {
       toggle: toggleInvitationForm
     } = useToggle();
 
+    const searchInput = ref(null);
     const showUserSearch = ref(false);
     const toggleUserSearch = () => {
       searchText.value = "";
       showUserSearch.value = !showUserSearch.value;
+      if (showUserSearch.value) nextTick(() => searchInput.value.focus());
     };
 
     const onInvitationSuccess = async () => {
@@ -129,6 +134,7 @@ export default {
     return {
       // References
       displayedUsers,
+      searchInput,
       searchText,
       showInvitationForm,
       showUserSearch,
