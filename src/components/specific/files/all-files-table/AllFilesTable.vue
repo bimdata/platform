@@ -80,6 +80,9 @@
           @set-active="activeHeadercolumnKey = $event"
         />
       </div>
+      <div class="files-list__header__location">
+        {{ $t("t.location") }}
+      </div>
       <div class="files-list__header__size">
         {{ $t("t.size") }}
         <ColumnSorting
@@ -177,6 +180,9 @@
           >
             {{ $d(file.updated_at, "long") }}
           </div>
+          <div class="files-list__element__location">
+            <FilePathCell :file="file" :allFolders="allFolders" @go-folders-view="$emit('go-folders-view')" @file-clicked="$emit('file-clicked', $event)" />
+          </div>
           <div class="files-list__element__size">
             {{ formatBytes(file.size) }}
           </div>
@@ -224,6 +230,7 @@ import FileActionsCell from "../files-table/file-actions-cell/FileActionsCell.vu
 import FileNameCell from "../files-table/file-name-cell/FileNameCell.vue";
 import FileTagsCell from "../files-table/file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "../files-table/file-type-cell/FileTypeCell.vue";
+import FilePathCell from "./file-path-cell/FilePathCell.vue";
 
 import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
 import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
@@ -235,6 +242,7 @@ export default {
     FileNameCell,
     FileTagsCell,
     FileTypeCell,
+    FilePathCell,
     ColumnSorting,
     ColumnFilters,
   },
@@ -247,6 +255,9 @@ export default {
       required: true,
     },
     allFiles: {
+      type: Array,
+    },
+    allFolders: {
       type: Array,
     },
     project: {

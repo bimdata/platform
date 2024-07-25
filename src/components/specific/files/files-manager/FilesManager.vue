@@ -92,6 +92,7 @@
             ref="filesTable"
             v-else-if="selectedFileTab.id === 'files'"
             :allFiles="displayedAllFiles"
+            :allFolders="allFolders"
             :selection="selection"
             :project="project"
             :loadingFileIds="loadingFileIds"
