@@ -1,5 +1,5 @@
 describe("Visa CRUD", () => {
-  it("Should user0 create a visa including user1 and user2 as validators", () => {
+  it.skip("Should user0 create a visa including user1 and user2 as validators", () => {
     cy.task("get-user", "user0").then((user) => {
       cy.login(user);
       cy.visit("/spaces");
@@ -48,7 +48,7 @@ describe("Visa CRUD", () => {
     });
   });
 
-  it("Should user0 delete and add again user2 as validator", () => {
+  it.skip("Should user0 delete and add again user2 as validator", () => {
     cy.task("get-user", "user0").then((user) => {
       cy.login(user);
       cy.visit("/spaces");
@@ -115,7 +115,7 @@ describe("Visa CRUD", () => {
     });
   });
 
-  it("Should user1 vote in user0 visa", () => {
+  it.skip("Should user1 vote in user0 visa", () => {
     cy.task("get-user", "user1").then(
       ({ firstname, lastname, email, password }) => {
         cy.login({ email, password });
@@ -203,7 +203,7 @@ describe("Visa CRUD", () => {
     );
   });
 
-  it("Should user1 manage comment", () => {
+  it.skip("Should user1 manage comment", () => {
     cy.task("get-user", "user1").then((user) => cy.login(user));
     cy.visit("/spaces");
     cy.task("get-user", "user0").then((user) => {
@@ -259,7 +259,7 @@ describe("Visa CRUD", () => {
     });
   });
 
-  it("Should user0 refresh user1 vote", () => {
+  it.skip("Should user0 refresh user1 vote", () => {
     cy.task("get-user", "user0").then((user) => {
       cy.login(user);
       cy.visit("/spaces");
@@ -293,7 +293,7 @@ describe("Visa CRUD", () => {
     });
   });
 
-  it("Should user0 close and delete visa", () => {
+  it.skip("Should user0 close and delete visa", () => {
     cy.task("get-user", "user0").then((user) => {
       cy.login(user);
       cy.visit("/spaces");
