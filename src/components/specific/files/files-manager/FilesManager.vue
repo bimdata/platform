@@ -66,7 +66,6 @@
           </BIMDataTabs>
           <FoldersTable
             ref="filesTable"
-            data-test-id="files-table"
             v-if="selectedFileTab.id === 'folders'"
             :files="displayedFiles"
             :project="project"
@@ -87,6 +86,8 @@
             @open-visa-manager="openVisaManager"
             @remove-model="removeModel"
             @row-drop="({ event, data }) => uploadFiles(event, data)"
+            @drop.prevent="uploadFiles"
+            @dragover.prevent="() => {}"
             @selection-changed="setSelection"
           />
           <AllFilesTable

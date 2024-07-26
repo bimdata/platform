@@ -2,6 +2,7 @@
   <BIMDataTable
     ref="filesTable"
     class="files-table"
+    data-test-id="files-table"
     tableLayout="fixed"
     :columns="columns"
     :rows="files"
