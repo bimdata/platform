@@ -66,6 +66,7 @@
           </BIMDataTabs>
           <FoldersTable
             ref="filesTable"
+            data-test-id="files-table"
             v-if="selectedFileTab.id === 'folders'"
             :files="displayedFiles"
             :project="project"
