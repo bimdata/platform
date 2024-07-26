@@ -51,15 +51,13 @@
     grid-area: files;
     position: relative;
 
-    &__table {
-      &:deep() {
-        .bimdata-tabs {
-          .bimdata-tabs__container__tab.active {
-            background-color: rgba(47, 55, 74, 0.1);
-          }
-          .bimdata-tabs__container__tab:hover {
-            background-color: rgba(47, 55, 74, 0.03);
-          }
+    &:deep() {
+      &.bimdata-tabs {
+        .bimdata-tabs__container__tab.active {
+          background-color: rgba(47, 55, 74, 0.1);
+        }
+        .bimdata-tabs__container__tab:hover {
+          background-color: rgba(47, 55, 74, 0.03);
         }
       }
     }
