@@ -111,7 +111,7 @@ import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
-import columnsDef, { columnsLG, columnsXL } from "../filesColumns.js";
+import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 
 // Components
 import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";

@@ -8,7 +8,7 @@
         />
       </div>
       <div class="files-list__header__type" v-if="columns.some((column) => column.id === 'type')">
-        {{ $t("t.type") }}
+        {{ $t(columnsDef[0].text) }}
         <ColumnSorting
           :sortOrder="
             !sortObject.order || sortObject.column !== columnsDef[0] ? 'asc' : sortObject.order
@@ -20,7 +20,7 @@
         />
       </div>
       <div class="files-list__header__name">
-        {{ $t("t.name") }}
+        {{ $t(columnsDef[1].text) }}
         <ColumnSorting
           :sortOrder="
             !sortObject.order || sortObject.column !== columnsDef[1] ? 'asc' : sortObject.order
@@ -35,7 +35,7 @@
         class="files-list__header__created-by"
         v-if="columns.some((column) => column.id === 'created_by')"
       >
-        {{ $t("t.createdBy") }}
+        {{ $t(columnsDef[2].text) }}
         <div v-if="columnsDef[2].filter" v-click-away="() => awayFromFilter(columnsDef[2])">
           <BIMDataButton
             color="primary"
@@ -69,7 +69,7 @@
         class="files-list__header__last-update"
         v-if="columns.some((column) => column.id === 'lastupdate')"
       >
-        {{ $t("t.modifiedOn") }}
+        {{ $t(columnsDef[3].text) }}
         <ColumnSorting
           :sortOrder="
             !sortObject.order || sortObject.column !== columnsDef[3] ? 'asc' : sortObject.order
@@ -80,24 +80,27 @@
           @set-active="activeHeadercolumnKey = $event"
         />
       </div>
-      <div class="files-list__header__location">
-        {{ $t("t.location") }}
+      <div
+        class="files-list__header__location"
+        v-if="columns.some((column) => column.id === 'location')"
+      >
+      {{ $t(columnsDef[4].text) }}
       </div>
-      <div class="files-list__header__size">
-        {{ $t("t.size") }}
+      <div class="files-list__header__size" v-if="columns.some((column) => column.id === 'size')">
+        {{ $t(columnsDef[5].text) }}
         <ColumnSorting
           :sortOrder="
-            !sortObject.order || sortObject.column !== columnsDef[4] ? 'asc' : sortObject.order
+            !sortObject.order || sortObject.column !== columnsDef[5] ? 'asc' : sortObject.order
           "
-          :index="4"
-          :active="activeHeadercolumnKey === 4"
-          @click="toggleSorting(columnsDef[4])"
+          :index="5"
+          :active="activeHeadercolumnKey === 5"
+          @click="toggleSorting(columnsDef[5])"
           @set-active="activeHeadercolumnKey = $event"
         />
       </div>
       <div class="files-list__header__tags" v-if="columns.some((column) => column.id === 'tags')">
-        {{ $t("FilesTable.headers.tags") }}
-        <div v-if="columnsDef[5].filter" v-click-away="() => awayFromFilter(columnsDef[5])">
+        {{ $t(columnsDef[6].text) }}
+        <div v-if="columnsDef[6].filter" v-click-away="() => awayFromFilter(columnsDef[6])">
           <BIMDataButton
             color="primary"
             ghost
@@ -105,20 +108,20 @@
             icon
             class="m-l-6"
             :class="{
-              active: filters.some((filter) => filter.columnKey === columnsDef[5].id),
+              active: filters.some((filter) => filter.columnKey === columnsDef[6].id),
             }"
-            @click="toggleFiltersMenu(columnsDef[5])"
+            @click="toggleFiltersMenu(columnsDef[6])"
           >
             <BIMDataIconCaret size="xxxs" fill color="default" />
           </BIMDataButton>
           <ColumnFilters
-            v-if="displayedColumnFilterId === columnsDef[5].id"
-            :column="columnsDef[5]"
-            :columnData="allFiles.map((file) => file[columnsDef[5].id])"
+            v-if="displayedColumnFilterId === columnsDef[6].id"
+            :column="columnsDef[6]"
+            :columnData="allFiles.map((file) => file[columnsDef[6].id])"
             :filters="
-              filters.find((filter) => filter.columnKey === columnsDef[5].id)?.columnFilters ?? []
+              filters.find((filter) => filter.columnKey === columnsDef[6].id)?.columnFilters ?? []
             "
-            @filter="updateFilters(columnsDef[5], $event)"
+            @filter="updateFilters(columnsDef[6], $event)"
           >
             <template #column-filter-empty>
               <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
@@ -132,7 +135,7 @@
     </div>
     <template v-if="displayedListFiles.length === 0">
       <div class="files-list__empty">
-        {{ $t('t.emptyFile') }}
+        {{ $t("t.emptyFile") }}
       </div>
     </template>
 
@@ -180,10 +183,21 @@
           >
             {{ $d(file.updated_at, "long") }}
           </div>
-          <div class="files-list__element__location">
-            <FilePathCell :file="file" :allFolders="allFolders" @go-folders-view="$emit('go-folders-view')" @file-clicked="$emit('file-clicked', $event)" />
+          <div
+            class="files-list__element__location"
+            v-if="columns.some((column) => column.id === 'location')"
+          >
+            <FilePathCell
+              :file="file"
+              :allFolders="allFolders"
+              @go-folders-view="$emit('go-folders-view')"
+              @file-clicked="$emit('file-clicked', $event)"
+            />
           </div>
-          <div class="files-list__element__size">
+          <div
+            class="files-list__element__size"
+            v-if="columns.some((column) => column.id === 'size')"
+          >
             {{ formatBytes(file.size) }}
           </div>
           <div
@@ -222,7 +236,7 @@ import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { formatBytes } from "../../../../utils/files.js";
-import columnsDef, { columnsLG, columnsXL, columnsXXL } from "../filesColumns.js";
+import columnsDef, { columnsMD, columnsLG, columnsXL, columnsXXL } from "./columns.js";
 
 // Components
 import FileActionsCell from "../files-table/file-actions-cell/FileActionsCell.vue";
@@ -233,7 +247,7 @@ import FilePathCell from "./file-path-cell/FilePathCell.vue";
 
 import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
 import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
-import useSortAndFilter from "../files-table/sortAndFilter.js";
+import useSortAndFilter from "./sortAndFilter.js";
 
 export default {
   components: {
@@ -282,13 +296,17 @@ export default {
   ],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const { isLG, isXL, isXXL } = useStandardBreakpoints();
+    const { isMD, isLG, isXL, isXXL } = useStandardBreakpoints();
 
     const filesList = ref(null);
 
     const columns = computed(() => {
       let filteredColumns = columnsDef;
-      if (isLG.value) {
+      if (isMD.value) {
+        console.log(isMD.value);
+        console.log({ columnsMD });
+        filteredColumns = columnsMD.map((id) => filteredColumns.find((col) => col.id === id));
+      } else if (isLG.value) {
         filteredColumns = columnsLG.map((id) => filteredColumns.find((col) => col.id === id));
       } else if (isXL.value) {
         filteredColumns = columnsXL.map((id) => filteredColumns.find((col) => col.id === id));
@@ -297,7 +315,7 @@ export default {
       }
       return filteredColumns.map((col) => ({
         ...col,
-        label: col.label || t(col.text),
+        // label: col.label || t(col.text),
       }));
     });
 
@@ -376,9 +394,9 @@ export default {
       toggleFiltersMenu,
       awayFromFilter,
       filters,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style scoped lang="scss" src="./AllFilesTable.scss"></style>

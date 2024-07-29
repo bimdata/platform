@@ -1,5 +1,5 @@
-import { fileExtension } from "../../../utils/files.js";
-import i18n from "../../../i18n/index.js";
+import { fileExtension } from "../../../../utils/files.js";
+import i18n from "../../../../i18n/index.js";
 const { t } = i18n.global;
 export default [
   {
@@ -80,8 +80,6 @@ export default [
     align: "center",
   }
 ];
-
-export const columnsXXL = ["type", "name", "created_by", "lastupdate", "size", "actions"];
 
 export const columnsXL = ["name", "lastupdate", "size", "actions"];
 
