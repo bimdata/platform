@@ -611,13 +611,6 @@
       "commentInputPlaceholder": "Post a comment",
       "confirmDelete": "Remove this comment?"
     },
-    "list": {
-      "title": "Request in progress",
-      "toValidateVisas": "My validations",
-      "createdVisas": "My requests",
-      "emptyValidation": "No validation in progress",
-      "emptyDemand": "No request in progress"
-    },
     "selectionValidator": {
       "warning": "This user cannot access the file."
     },

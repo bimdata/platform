@@ -727,13 +727,6 @@
       "publish": "Publier",
       "confirmDelete": "Supprimer ce commentaire ?"
     },
-    "list": {
-      "title": "Demande en cours",
-      "toValidateVisas": "Mes validations",
-      "createdVisas": "Mes demandes",
-      "emptyValidation": "Aucune validation en cours",
-      "emptyDemand": "Aucune demande en cours"
-    },
     "selectionValidator": {
       "warning": "Cet utilisateur n'a pas les droits d'accès au fichier."
     },
