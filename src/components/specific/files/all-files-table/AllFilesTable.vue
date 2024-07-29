@@ -303,8 +303,6 @@ export default {
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isMD.value) {
-        console.log(isMD.value);
-        console.log({ columnsMD });
         filteredColumns = columnsMD.map((id) => filteredColumns.find((col) => col.id === id));
       } else if (isLG.value) {
         filteredColumns = columnsLG.map((id) => filteredColumns.find((col) => col.id === id));
@@ -315,7 +313,6 @@ export default {
       }
       return filteredColumns.map((col) => ({
         ...col,
-        // label: col.label || t(col.text),
       }));
     });
 
