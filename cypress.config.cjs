@@ -22,7 +22,6 @@ module.exports = defineConfig({
   viewportHeight: 728,
 
   e2e: {
-    requestTimeout: 30000,
     supportFile: "tests/e2e/support/index.js",
     specPattern: [
       // Execute "setup tests" first in order to create test users
