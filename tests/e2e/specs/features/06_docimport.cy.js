@@ -11,7 +11,6 @@ describe("Documents import feature", () => {
 
   it("Should upload a file successfully", () => {
     cy.hook("btn-upload-file").click();
-    cy.get("body > input[type=file]").should("exist");
     cy.get("body > input[type=file]").selectFile("@housePlan", { force: true });
 
     cy.intercept("**/dms-tree").as("getDmsTree");
