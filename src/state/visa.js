@@ -17,12 +17,12 @@ const deleteValidation = async (project, document, visa, validationId) => {
 const fetchVisa = async (project, visa) => {
   const [visaInfo, document] = await Promise.all([
     VisaService.fetchVisa(project, visa),
-    FileService.getDocument(project, { id: visa.document_id })
+    FileService.getDocument(project, { id: visa.document_id }),
   ]);
 
   return {
     ...visaInfo,
-    document
+    document,
   };
 };
 
@@ -42,6 +42,9 @@ const deleteVisa = async (project, document, visa) => {
   return VisaService.deleteVisa(project, document, visa);
 };
 
+const deleteMultipleVisa = (project, visas) => 
+  Promise.all(visas.map((visa) => deleteVisa(project, visa.document, visa)));
+
 const closeVisa = async (project, document, visa) => {
   return VisaService.closeVisa(project, document, visa);
 };
@@ -50,30 +53,26 @@ const resumeVisa = async (visaId, baseInfo) => {
   return VisaService.resumeVisa(visaId, baseInfo);
 };
 
-const fetchCreatedVisas = async project => {
+const fetchCreatedVisas = async (project) => {
   const visas = await VisaService.fetchCreatedVisas(project);
 
-  const visasWithDoc = await mapLimit(visas, 20, async visa => ({
+  const visasWithDoc = await mapLimit(visas, 20, async (visa) => ({
     ...visa,
-    document: await FileService.getDocument(project, { id: visa.document_id })
+    document: await FileService.getDocument(project, { id: visa.document_id }),
   }));
 
-  return visasWithDoc.sort((a, b) =>
-    a.created_at.getTime() < b.created_at.getTime() ? 1 : -1
-  );
+  return visasWithDoc.sort((a, b) => (a.created_at.getTime() < b.created_at.getTime() ? 1 : -1));
 };
 
-const fetchToValidateVisas = async project => {
+const fetchToValidateVisas = async (project) => {
   const visas = await VisaService.fetchToValidateVisas(project);
 
-  const visasWithDoc = await mapLimit(visas, 20, async visa => ({
+  const visasWithDoc = await mapLimit(visas, 20, async (visa) => ({
     ...visa,
-    document: await FileService.getDocument(project, { id: visa.document_id })
+    document: await FileService.getDocument(project, { id: visa.document_id }),
   }));
 
-  return visasWithDoc.sort((a, b) =>
-    a.created_at.getTime() < b.created_at.getTime() ? 1 : -1
-  );
+  return visasWithDoc.sort((a, b) => (a.created_at.getTime() < b.created_at.getTime() ? 1 : -1));
 };
 
 const updateVisa = async (project, document, visa, data) => {
@@ -106,6 +105,7 @@ export function useVisa() {
     denyValidation,
     resetValidation,
     deleteVisa,
+    deleteMultipleVisa,
     closeVisa,
     resumeVisa,
     fetchCreatedVisas,
@@ -115,6 +115,6 @@ export function useVisa() {
     fetchAllComments,
     createComment,
     updateComment,
-    deleteComment
+    deleteComment,
   };
 }

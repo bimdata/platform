@@ -28,7 +28,15 @@
        *  - 40px                           | files-manager tabs height
        **/
       height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
+      .bimdata-btn:has(+ .column-filters) {
+        background-color: white;
+        animation: all ease 0.1s;
+      }
+      .column-filters {
+        top: 48px;
+      }
     }
+
     .file-tree {
       /**
        same as above but without files-manager tabs height (40px)
@@ -47,8 +55,8 @@
         table thead tr th {
           position: sticky;
           top: 0;
-          z-index: 1;
           background-color: #f2f2f2;
+          z-index: 2;
         }
 
         table tbody tr:nth-child(odd) {

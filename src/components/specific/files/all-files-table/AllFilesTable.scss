@@ -1,0 +1,130 @@
+.files-list {
+  height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px);
+  font-size: 0.9rem;
+  color: var(--color-granite-light);
+  overflow-x: hidden;
+
+  &__empty {
+    height: calc(100% - 44px - 52px);
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-primary);
+  }
+
+  &__content {
+    height: calc(100vh - var(--platform-header-height) - 10 * var(--spacing-unit) - 104px - 48px);
+  }
+
+  &__element {
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    &--even > * {
+      background-color: var(--color-white);
+    }
+
+    &__type {
+      > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__header {
+    display: flex;
+    height: 48px;
+    font-weight: 700;
+    color: var(--color-primary);
+
+    .active {
+      background-color: #e0eef9;
+    }
+
+    & > * {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__name {
+      justify-content: flex-start;
+    }
+
+    &__created-by,
+    &__tags {
+      position: relative;
+    }
+  }
+
+  &__element,
+  &__header {
+    & > * {
+      padding: 0 var(--spacing-unit);
+      margin-right: 2.5px;
+      height: 100%;
+      text-align: center;
+      align-content: center;
+    }
+
+    &__select {
+      width: 42px;
+      max-width: 42px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__type {
+      width: 80px;
+      max-width: 80px;
+    }
+
+    &__name {
+      flex-grow: 1;
+      width: min(200px, 500px);
+    }
+
+    &__created-by {
+      width: 140px;
+      max-width: 140px;
+    }
+
+    &__last-update {
+      width: 140px;
+      max-width: 140px;
+    }
+
+    &__location {
+      width: 280px;
+      max-width: 280px;
+      text-align: left;
+      justify-content: flex-start;
+    }
+
+    &__size {
+      width: 90px;
+      max-width: 90px;
+    }
+
+    &__tags {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &__actions {
+      width: 50px;
+      max-width: 50px;
+    }
+  }
+}

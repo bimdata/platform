@@ -18,26 +18,22 @@
       <div class="visa-summary__shell" :class="{ safeZone: isSafeZone }">
         <div class="visa-summary__shell__header">
           <div class="visa-summary__shell__header__left-side">
-            <BIMDataIconVisa
-              fill
-              color="primary"
-              size="s"
-              margin="2.5px 0 0 0"
-            />
-            <span>{{
-              $t(`Visa.summary.title.${isClosed ? "closed" : "open"}`)
-            }}</span>
+            <BIMDataIconVisa fill color="primary" size="s" margin="2.5px 0 0 0" />
+            <span>{{ $t(`Visa.summary.title.${isClosed ? "closed" : "open"}`) }}</span>
           </div>
           <div class="visa-summary__shell__header__right-side">
-            <BIMDataButton
+            <BIMDataTooltip
               v-if="isEditing"
-              ghost
-              rounded
-              icon
-              @click="undoEdit"
+              text="Annuler les modifications"
+              maxWidth="105px"
+              position="bottom"
+              color="silver-light"
+              :disabled="false"
             >
-              <BIMDataIconUndo size="xxs" fill color="granite-light" />
-            </BIMDataButton>
+              <BIMDataButton ghost rounded icon @click="undoEdit">
+                <BIMDataIconUndo size="xxs" fill color="granite-light" />
+              </BIMDataButton>
+            </BIMDataTooltip>
             <BIMDataButton
               v-if="isAuthor && !isClosed && !isEditing"
               ghost
@@ -47,8 +43,15 @@
             >
               <BIMDataIconEdit size="xxs" fill color="granite-light" />
             </BIMDataButton>
-            <BIMDataButton
+            <BIMDataTooltip
               v-if="isAuthor && !isClosed && isEditing"
+              text="Valider les modifications"
+              maxWidth="105px"
+              position="bottom"
+              color="silver-light"
+              :disabled="false"
+            >
+            <BIMDataButton
               ghost
               rounded
               icon
@@ -56,6 +59,7 @@
             >
               <BIMDataIconValidate size="xxs" fill color="granite-light" />
             </BIMDataButton>
+          </BIMDataTooltip>
             <BIMDataButton ghost rounded icon @click="onClose">
               <BIMDataIconClose size="xxs" fill color="granite-light" />
             </BIMDataButton>
@@ -73,6 +77,7 @@
             <BIMDataTextarea
               v-model="formatedVisa.description"
               :class="{ editing: isEditing }"
+              label="Description"
               name="description"
               width="100%"
               :readonly="!isEditing"
@@ -82,9 +87,7 @@
             />
           </div>
           <div class="visa-summary__shell__content__deadline">
-            <span class="visa-summary__shell__content__deadline__title">{{
-              $t("Visa.term")
-            }}</span>
+            <span class="visa-summary__shell__content__deadline__title">{{ $t("Visa.term") }}</span>
             <BIMDataDatePicker
               v-if="isEditing"
               v-model="formatedVisa.deadline"
@@ -154,10 +157,7 @@
         </div>
         <div class="visa-summary__shell__file">
           <div class="visa-summary__shell__file__content">
-            <BIMDataFileIcon
-              :fileName="formatedVisa.document.file_name"
-              :size="20"
-            />
+            <BIMDataFileIcon :fileName="formatedVisa.document.file_name" :size="20" />
             <BIMDataTextbox
               class="visa-summary__shell__file__content__name"
               :text="formatedVisa.document.name"
@@ -174,7 +174,7 @@
               @click="
                 $emit('reach-file', {
                   ...formatedVisa.document,
-                  nature: formatedVisa.document.model_id ? 'Model' : 'Document'
+                  nature: formatedVisa.document.model_id ? 'Model' : 'Document',
                 })
               "
             >
@@ -194,10 +194,7 @@
               rounded
               icon
             >
-              <BIMDataIconAddUser
-                size="s"
-                @click="isSelectingValidator = true"
-              />
+              <BIMDataIconAddUser size="s" @click="isSelectingValidator = true" />
             </BIMDataButton>
           </div>
           <div
@@ -247,19 +244,19 @@ export default {
     VisaComments,
     VisaSafeZone,
     VisaSelectionValidator,
-    VisaSummaryValidator
+    VisaSummaryValidator,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     visa: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  emits: ["close-visa", "reach-file"],
+  emits: ["close-visa", "fetch-visas", "reach-file"],
   setup(props, { emit }) {
     const {
       fetchVisa,
@@ -270,7 +267,7 @@ export default {
       closeVisa,
       createValidation,
       deleteValidation,
-      updateVisa
+      updateVisa,
     } = useVisa();
     const { getUserProjectList } = useProjects();
     const { user } = useUser();
@@ -293,43 +290,39 @@ export default {
     /**
      * GLOBAL
      */
-    const formatVisa = visa => ({
+    const formatVisa = (visa) => ({
       ...visa,
       deadline: visa.deadline,
       creator: {
         ...visa.creator,
-        fullName: visa.creator
-          ? fullName(visa.creator)
-          : t("Visa.summary.deletedUser")
+        fullName: visa.creator ? fullName(visa.creator) : t("Visa.summary.deletedUser"),
       },
       validations: visa.validations
-        .map(validation => ({
+        .map((validation) => ({
           ...validation,
           userId: validation.validator ? validation.validator.user_id : 0,
           fullName: validation.validator
             ? fullName(validation.validator)
             : t("Visa.summary.deletedUser"),
-          isSelf: validation.validator
-            ? validation.validator.user_id === currentUserId
-            : false,
+          isSelf: validation.validator ? validation.validator.user_id === currentUserId : false,
           hasAccess: visa.validations_in_error.length
             ? !visa.validations_in_error.some(
-                validationInErrorId => validationInErrorId === validation.id
+                (validationInErrorId) => validationInErrorId === validation.id
               )
-            : true
+            : true,
         }))
         .sort((a, b) => {
           if (!a.fullName) return 1;
           if (!b.fullName) return -1;
           return a.fullName < b.fullName ? -1 : 1;
-        })
+        }),
     });
 
-    const fetchDocumentUsers = async visa => {
+    const fetchDocumentUsers = async (visa) => {
       const users = await getUserProjectList(props.project, {
-        id: visa.document.parent_id
+        id: visa.document.parent_id,
       });
-      return users.map(user => {
+      return users.map((user) => {
         return {
           ...user,
           isSelected: visa.validations.some(
@@ -337,7 +330,7 @@ export default {
           ),
           validation: visa.validations.find(
             ({ validator }) => validator && validator.id === user.id
-          )
+          ),
         };
       });
     };
@@ -360,6 +353,7 @@ export default {
       const visa = await fetchVisa(props.project, props.visa);
       userProjectList.value = await fetchDocumentUsers(visa);
       formatedVisa.value = formatVisa(visa);
+      emit("fetch-visas");
     };
 
     const onClose = () => {
@@ -378,7 +372,7 @@ export default {
 
         return {
           isValidated: status === VALIDATION_STATUS.ACCEPT,
-          isRefused: status === VALIDATION_STATUS.DENY
+          isRefused: status === VALIDATION_STATUS.DENY,
         };
       }
       return null;
@@ -412,7 +406,7 @@ export default {
       }
     };
 
-    const onResetValidation = async validationId => {
+    const onResetValidation = async (validationId) => {
       await resetValidation(
         props.project,
         props.visa.document,
@@ -430,7 +424,7 @@ export default {
       isSafeZone.value = true;
       safeZoneInfo.value = {
         type: "delete",
-        action: () => deleteVisa(props.project, props.visa.document, props.visa)
+        action: () => deleteVisa(props.project, props.visa.document, props.visa),
       };
     };
 
@@ -438,36 +432,27 @@ export default {
       isSafeZone.value = true;
       safeZoneInfo.value = {
         type: "close",
-        action: () => closeVisa(props.project, props.visa.document, props.visa)
+        action: () => closeVisa(props.project, props.visa.document, props.visa),
       };
     };
 
-    const onSafeZone = async isActionConfirmed => {
+    const onSafeZone = async (isActionConfirmed) => {
       if (isActionConfirmed) {
         await safeZoneInfo.value.action();
         onClose();
+        emit("fetch-visas");
       }
       isSafeZone.value = false;
       safeZoneInfo.value = null;
     };
 
-    const onCreateValidation = async validatorId => {
-      await createValidation(
-        props.project,
-        props.visa.document,
-        props.visa,
-        validatorId
-      );
+    const onCreateValidation = async (validatorId) => {
+      await createValidation(props.project, props.visa.document, props.visa, validatorId);
       await reloadVisa();
     };
 
-    const onDeleteValidation = async validationId => {
-      await deleteValidation(
-        props.project,
-        props.visa.document,
-        props.visa,
-        validationId
-      );
+    const onDeleteValidation = async (validationId) => {
+      await deleteValidation(props.project, props.visa.document, props.visa, validationId);
       await reloadVisa();
     };
 
@@ -476,25 +461,23 @@ export default {
      */
 
     const getBack = () => (isSelectingValidator.value = false);
-    const getValidatorList = list => (validatorList.value = list);
+    const getValidatorList = (list) => (validatorList.value = list);
 
     watch(validatorList, async () => {
       await Promise.all(
         validatorList.value
-          .map(validator => {
+          .map((validator) => {
             return {
               ...validator,
               validationId: validator.validation && validator.validation.id,
               isToAdd:
                 validator.isSelected &&
                 userProjectList.value
-                  .filter(user => !user.isSelected)
-                  .some(user => user.id === validator.id),
+                  .filter((user) => !user.isSelected)
+                  .some((user) => user.id === validator.id),
               isToDel:
                 !validator.isSelected &&
-                userProjectList.value.some(
-                  user => user.id === validator.id && user.isSelected
-                )
+                userProjectList.value.some((user) => user.id === validator.id && user.isSelected),
             };
           })
           .filter(({ isToAdd, isToDel }) => isToAdd || isToDel)
@@ -530,7 +513,7 @@ export default {
       if (dateValid) {
         await updateVisa(props.project, props.visa.document, props.visa, {
           description: formatedVisa.value.description,
-          deadline: localeDate(formatedVisa.value.deadline)
+          deadline: localeDate(formatedVisa.value.deadline),
         });
         await reloadVisa();
         isEditing.value = false;
@@ -565,9 +548,9 @@ export default {
       initEdit,
       undoEdit,
       confirmEdit,
-      onClose
+      onClose,
     };
-  }
+  },
 };
 </script>
 
