@@ -28,7 +28,7 @@
     </template>
     <template #cell-file="{ row: visa }">
       <span class="visas-table__file-name" @click="$emit('file-clicked', visa)">
-        <BIMDataTextbox :text="visa.document.name" width="auto" maxWidth="100%" /> 
+        <BIMDataTextbox :text="visa.document.name" width="auto" maxWidth="100%" />
       </span>
     </template>
     <template #cell-validators="{ row: visa }">
@@ -126,20 +126,14 @@ export default {
       type: Array,
     },
   },
-  emits: ["delete", "file-clicked","go-folders-view", "reach-visa", "selection-changed"],
+  emits: ["delete", "file-clicked", "go-folders-view", "reach-visa", "selection-changed"],
   setup(props) {
     const { t } = useI18n();
     const { user } = useUser();
     const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
-    const enhancedVisas = ref([]);
-
-    watch(
-      () => props.visas,
-      (newVisas) => {
-        enhancedVisas.value = newVisas.map((visa) => enhanceVisa(visa, user.value, t));
-      },
-      { immediate: true }
+    const enhancedVisas = computed(() =>
+      props.visas.map((visa) => enhanceVisa(visa, user.value, t))
     );
 
     const columns = computed(() => {
