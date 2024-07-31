@@ -126,7 +126,7 @@ export default {
       type: Array,
     },
   },
-  emits: ["delete", "file-clicked", "reach-visa", "selection-changed"],
+  emits: ["delete", "file-clicked","go-folders-view", "reach-visa", "selection-changed"],
   setup(props) {
     const { t } = useI18n();
     const { user } = useUser();

@@ -287,6 +287,7 @@ export default {
     "delete",
     "download",
     "file-clicked",
+    "go-folders-view",
     "manage-access",
     "open-versioning-manager",
     "open-visa-manager",
