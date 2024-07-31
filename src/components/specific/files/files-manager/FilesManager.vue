@@ -9,7 +9,7 @@
         :spaceSubInfo="spaceSubInfo"
         :importFromOtherProjectsActions="importFromOtherProjectsActions"
         :initialSearchText="searchText"
-        @update:searchText="handleSearchTextUpdate"
+        @update:searchText="searchText = $event"
         @upload-files="uploadFiles"
       />
     </template>
@@ -341,7 +341,8 @@ export default {
       if (selectedFileTab.value.id === "folders") {
         // WARNING displayedRows is name from DS, may change
         return filesTable.value.filesTable.displayedRows.map((row) => row.data);
-      } if(selectedFileTab.value.id === "files") {
+      }
+      if (selectedFileTab.value.id === "files") {
         return filesTable.value.displayedListFiles;
       } else {
         return filesTable.value.enhancedVisas;
@@ -505,7 +506,7 @@ export default {
     let stopCurrentFilesWatcher;
     const openAccessManager = (folder) => {
       folderToManage.value = folder;
-      setManagerVisibility('access', true);
+      setManagerVisibility("access", true);
 
       openSidePanel();
       // Watch for current files changes in order to update
@@ -540,7 +541,7 @@ export default {
         fileToManage.value = file;
         currentVisa.value = file;
 
-        setManagerVisibility('visa', true);
+        setManagerVisibility("visa", true);
       } finally {
         visasLoading.value = false;
       }
@@ -556,7 +557,7 @@ export default {
     const closeVisaManager = () => {
       closeSidePanel();
       setTimeout(() => {
-        setManagerVisibility('visa', false);
+        setManagerVisibility("visa", false);
         fileToManage.value = null;
         currentVisa.value = null;
       }, 100);
@@ -584,7 +585,7 @@ export default {
       openSidePanel();
       if (file.file_name) {
         fileToManage.value = file;
-        setManagerVisibility('versioning', true);
+        setManagerVisibility("versioning", true);
       }
     };
     const closeVersioningManager = () => {
@@ -736,28 +737,11 @@ export default {
       allVisas,
       (visa) => visa.document.name
     );
-    const handleSearchTextUpdate = (newSearchText) => {
-      searchText.value = newSearchText;
-      if (selectedFileTab.value.id === "folders") {
-        filterFilesSearchText.value = newSearchText;
-      }
-      if (selectedFileTab.value.id === "files") {
-        filterAllFilesSearchText.value = newSearchText;
-      }
-      if (selectedFileTab.value.id === "visas") {
-        filterVisasSearchText.value = newSearchText;
-      }
-    };
+
     watch(searchText, (newValue) => {
-      if (selectedFileTab.value.id === "folders") {
-        filterFilesSearchText.value = newValue;
-      }
-      if (selectedFileTab.value.id === "files") {
-        filterAllFilesSearchText.value = newValue;
-      }
-      if (selectedFileTab.value.id === "visas") {
-        filterVisasSearchText.value = newValue;
-      }
+      filterFilesSearchText.value = newValue;
+      filterAllFilesSearchText.value = newValue;
+      filterVisasSearchText.value = newValue;
     });
 
     return {
@@ -769,7 +753,6 @@ export default {
       currentFolder,
       currentSpace,
       currentVisa,
-      displayedAllFiles,
       displayedFiles,
       displayedAllFiles,
       displayedVisas,
@@ -805,7 +788,6 @@ export default {
       fileUploadInput,
       goFoldersView,
       goVisasView,
-      handleSearchTextUpdate,
       isFullTotal,
       moveFiles,
       onFileSelected,
