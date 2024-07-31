@@ -106,7 +106,7 @@ import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
 
 import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
 import VisaActionsCell from "./visa-actions-cell/VisaActionsCell.vue";
-import FilePathCell from "../all-files-table/file-path-cell/FilePathCell.vue";
+import FilePathCell from "../files-table/file-path-cell/FilePathCell.vue";
 
 export default {
   components: {

@@ -243,7 +243,7 @@ import FileActionsCell from "../files-table/file-actions-cell/FileActionsCell.vu
 import FileNameCell from "../files-table/file-name-cell/FileNameCell.vue";
 import FileTagsCell from "../files-table/file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "../files-table/file-type-cell/FileTypeCell.vue";
-import FilePathCell from "./file-path-cell/FilePathCell.vue";
+import FilePathCell from "../files-table/file-path-cell/FilePathCell.vue";
 
 import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
 import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
