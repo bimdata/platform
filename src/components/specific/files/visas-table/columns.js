@@ -17,20 +17,9 @@ export default [
     sortable: true,
     defaultSortOrder: "asc",
     sortFunction: (a, b) => {
-      const getFileType = (file) => {
-        return fileExtension(file.document.name);
-      };
-
-      const fileTypeA = getFileType(a);
-      const fileTypeB = getFileType(b);
-
-      if (fileTypeA < fileTypeB) {
-        return 1;
-      } else if (fileTypeA > fileTypeB) {
-        return -1;
-      } else {
-        return 0;
-      }
+      const fileTypeA = fileExtension(a.document.name);
+      const fileTypeB = fileExtension(b.document.name);
+      return -fileTypeA.localeCompare(fileTypeB);
     },
   },
   {
@@ -41,14 +30,7 @@ export default [
     sortFunction: (a, b) => {
       const fileNameA = a.document.name;
       const fileNameB = b.document.name;
-
-      if (fileNameA < fileNameB) {
-        return 1;
-      } else if (fileNameA > fileNameB) {
-        return -1;
-      } else {
-        return 0;
-      }
+      return -fileNameA.localeCompare(fileNameB);
     },
   },
   {
