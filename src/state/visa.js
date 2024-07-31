@@ -42,14 +42,8 @@ const deleteVisa = async (project, document, visa) => {
   return VisaService.deleteVisa(project, document, visa);
 };
 
-const deleteMultipleVisa = async (project, visas) => {
-  const deletePromises = visas.map((visa) => deleteVisa(project, visa.document, visa));
-  try {
-    await Promise.all(deletePromises);
-  } catch (error) {
-    throw error;
-  }
-};
+const deleteMultipleVisa = (project, visas) => 
+  Promise.all(visas.map((visa) => deleteVisa(project, visa.document, visa)));
 
 const closeVisa = async (project, document, visa) => {
   return VisaService.closeVisa(project, document, visa);
