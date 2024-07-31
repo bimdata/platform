@@ -2,8 +2,7 @@
   <div class="files-action-bar">
     <BIMDataButton
       :disabled="
-        project.isGuest ||
-        (!project.isAdmin && files.some(f => f.user_permission < 100))
+        project.isGuest || (!project.isAdmin && files.some((f) => f.user_permission < 100))
       "
       width="120px"
       color="high"
@@ -15,10 +14,9 @@
       <span>{{ $t("t.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton
-      v-if="files.some(f => f.type === 'Document' || f.type === 'Folder')"
+      v-if="files.some((f) => f.type === 'Document' || f.type === 'Folder')"
       :disabled="
-        project.isGuest ||
-        (!project.isAdmin && files.some(f => f.user_permission < 100))
+        project.isGuest || (!project.isAdmin && files.some((f) => f.user_permission < 100))
       "
       width="120px"
       color="secondary"
@@ -30,7 +28,7 @@
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
-    v-if="files.some(f => f.type === 'Document' || f.type === 'Folder')"
+      v-if="files.some((f) => f.type === 'Document' || f.type === 'Folder')"
       width="120px"
       ghost
       squared
@@ -62,42 +60,38 @@ import FolderSelector from "../../folder-selector/FolderSelector.vue";
 
 export default {
   components: {
-    FolderSelector
+    FolderSelector,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     fileStructure: {
       type: Object,
-      required: true
+      required: true,
     },
     files: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     initialFolder: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["delete-files", "delete-visas", "download", "move"],
   setup(props, { emit }) {
     const {
       isOpen: showFolderSelector,
       close: closeFolderSelector,
-      toggle: toggleFolderSelector
+      toggle: toggleFolderSelector,
     } = useToggle();
 
-    const onDeleteClick = files => {
-      const isFilesOrFolder = files.some(f => f.type === 'Document' || f.type === 'Folder');
-      if (isFilesOrFolder) {
-        emit('delete-files', files)
-      } else {
-        emit('delete-visas', files)
-      }
-    }
+    const onDeleteClick = (files) => {
+      const isFilesOrFolder = files.some((f) => f.type === "Document" || f.type === "Folder");
+      emit(isFilesOrFolder ? "delete-files" : "delete-visas", files);
+    };
 
     return {
       // References
@@ -105,9 +99,9 @@ export default {
       // Methods
       closeFolderSelector,
       onDeleteClick,
-      toggleFolderSelector
+      toggleFolderSelector,
     };
-  }
+  },
 };
 </script>
 
