@@ -21,8 +21,8 @@
     "openFileUploadButtonText": "Añadir un modelo",
     "forbiddenUploadNotification": "Por favor seleccione un modelo: {extensions}",
     "uploadDisableMessage": {
-      "permission": "No tienes los derechos requeridos",
-      "size": "No hay suficiente espacio de almacenamiento disponible"
+      "permission": "",
+      "size": ""
     }
   },
   "LanguageSelector": {
@@ -59,7 +59,8 @@
     "createModelButtonText": "Definir como modelo",
     "removeModelButtonText": "Eliminar modelos",
     "versioningButtonText": "Añadir una versión",
-    "visaButtonText": "Solicitud de aprobación"
+    "visaButtonText": "Solicitud de aprobación",
+    "previewModelButtonText": ""
   },
   "FilesActionBar": {
     "moveButtonText": "Moverse hacia"
@@ -140,7 +141,8 @@
     },
     "submitButtonText": "Invitar",
     "successNotifText": "Invitación enviada",
-    "successUsertoAdmin": "El usuario ha sido ascendido a administrador"
+    "successUsertoAdmin": "El usuario ha sido ascendido a administrador",
+    "userAlreadyExistInputErrorMessage": ""
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Añadir etiquetas"
@@ -213,7 +215,9 @@
     "free": "Gratuito"
   },
   "SpaceCardActionMenu": {
-    "removeImageButtonText": "Suprimir la imagen"
+    "removeImageButtonText": "Suprimir la imagen",
+    "addToFavorite": "",
+    "removeFavorite": ""
   },
   "SpaceCardDeleteGuard": {
     "title": "Suprimir el espacio",
@@ -359,10 +363,11 @@
     "documentCreateError": "No se puede descargar este documento",
     "invitationViewFetchError": "Imposible recuperar la lista de invitaciones",
     "invitationViewAcceptError": "No se puede aceptar la invitación",
-    "invitationViewDeclineError": "No se puede rechazar la invitación",
     "folderFetchFolder": "Error al recuperar la información de la carpeta",
     "bcfDeleteError": "Eliminación fallida...",
-    "groupImportError": "Error al importar grupos"
+    "groupImportError": "Error al importar grupos",
+    "bcfExportXlsxError": "",
+    "invitationViewDeclineError": ""
   },
   "ProjectStatusBadge": {
     "new": "NUEVO",
@@ -371,9 +376,7 @@
     "paused": "PAUSA"
   },
   "Dashboard": {
-    "spacesTileTitle": "Espacios",
     "spacesTileBottomText": "Mis espacios",
-    "projectsTileTitle": "Proyectos",
     "projectsTileBottomText": "Mis proyectos",
     "subscriptionsTileTitle": "Suscripciones",
     "subscriptionsTileText": "Acceda a todas sus facturas y la última información de pago aquí.",
@@ -631,6 +634,17 @@
       "deleteComment": {
         "text": "¿Seguro que quieres eliminar este comentario?"
       }
+    },
+    "view": {
+      "visaPending": "",
+      "visaClosed": "",
+      "myRequests": "",
+      "valid": "",
+      "pending": "",
+      "denied": "",
+      "overdue": "",
+      "openVisaBtn": "",
+      "validateVisaBtn": ""
     }
   },
   "ProjectBcf": {
@@ -661,7 +675,9 @@
     "deleteInProgressSub": "Este proceso puede durar unos instantes.",
     "deleteBcfNotificationSuccess": "La selección de BCF se ha eliminado correctamente",
     "deleteBcfNotificationError": "Error al eliminar la selección BCF",
-    "onlyAdminParameters": "Debes ser administrador del proyecto"
+    "onlyAdminParameters": "Debes ser administrador del proyecto",
+    "exportBcfXlsxNotificationSuccess": "",
+    "deleteBcfTitle": ""
   },
   "GuidedTour": {
     "platform": {
@@ -743,7 +759,8 @@
     "list": "Listado de etiquetas",
     "addTag": "Añadir una etiqueta",
     "addNewTag": "Añadir una etiqueta nueva",
-    "deleteTag": "Eliminar esta etiqueta"
+    "deleteTag": "Eliminar esta etiqueta",
+    "emptyTag": ""
   },
   "SubscriptionModal": {
     "title": "Consigue más espacio",
@@ -765,13 +782,6 @@
   "GroupMemberCard": {
     "pending": "Invitación en curso"
   },
-  "UserProfile": {
-    "title": "Configuración de perfil",
-    "loading": {
-      "message": "Eliminación en curso.",
-      "subMessage": "Este proceso puede durar unos instantes."
-    }
-  },
   "Invitations": {
     "title": "Mis invitaciones",
     "invitCounter": "Invitaciones en curso -",
@@ -781,10 +791,8 @@
     "invitAccepted": "Invitación aceptada",
     "invitDenied": "Invitación rechazada",
     "invitPending": "Invitación en curso",
-    "goToProjectLong": "Proyecto",
-    "goToProjectShort": "Proyecto",
-    "goToSpaceLong": "Espacio",
-    "goToSpaceShort": "Espacio"
+    "goToProject": "Proyecto",
+    "goToSpace": "Espacio"
   },
   "DocumentViewer": {
     "viewerButton": "Abrir en Visor",
@@ -794,7 +802,9 @@
     "title": "Importar un grupo",
     "selectAll": "Seleccionar todo",
     "notAdmin": "Debes ser administrador del proyecto",
-    "noGroup": "No hay ningún grupo en este proyecto"
+    "noGroup": "No hay ningún grupo en este proyecto",
+    "noProject": "",
+    "noResult": ""
   },
   "UploadCard": {
     "cancelMessage": "Cancelado",
@@ -841,7 +851,19 @@
     "type": "Tipo",
     "unarchive": "Desarchivar",
     "validate": "Validar",
-    "verify": "Verificar"
+    "verify": "Verificar",
+    "exportXlsx": "",
+    "project": "Proyecto",
+    "projects": "Proyectos",
+    "spaces": "Espacios",
+    "notSpecified": "",
+    "location": "",
+    "rootFolder": "",
+    "dueDate": "",
+    "emptyFile": "",
+    "emptyVisa": "",
+    "validation": "",
+    "validator": ""
   },
   "FolderCreationButton": {
     "text": "Nueva carpeta"
@@ -853,6 +875,24 @@
     "text": "Cambiar imagen"
   },
   "FileTreePreviewModal": {
-    "title": "Importar estructura de archivos desde"
+    "title": "Importar estructura de archivos desde",
+    "emptySource": ""
+  },
+  "MainModelSelector": {
+    "title": ""
+  },
+  "UserFavoritesManager": {
+    "title": ""
+  },
+  "UserProfile": {
+    "title": "",
+    "loading": {
+      "message": "",
+      "subMessage": ""
+    }
+  },
+  "VisasDeleteModal": {
+    "title": "",
+    "message": ""
   }
 }
