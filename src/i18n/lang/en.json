@@ -363,11 +363,11 @@
     "documentCreateError": "Unable to upload this document",
     "invitationViewFetchError": "Unable to retrieve invitation list",
     "invitationViewAcceptError": "Unable to accept the invitation",
-    "invitationViewDeclineError": "Impossible to decline the invitation",
     "folderFetchFolder": "Fail to retrieve folder data",
     "bcfDeleteError": "Deletion failed",
     "groupImportError": "Group import failure",
-    "bcfExportXlsxError": "xlsx export failed..."
+    "bcfExportXlsxError": "xlsx export failed...",
+    "invitationViewDeclineError": "Unable to decline invitation"
   },
   "ProjectStatusBadge": {
     "new": "NEW",
@@ -634,6 +634,17 @@
       "deleteComment": {
         "text": "Are you sure you want to remove this comment?"
       }
+    },
+    "view": {
+      "visaPending": "Visa pending",
+      "visaClosed": "Visa closed",
+      "myRequests": "My requests",
+      "valid": "Validated",
+      "pending": "Pending",
+      "denied": "Refused",
+      "overdue": "Overdue",
+      "openVisaBtn": "Open visa",
+      "validateVisaBtn": "Validate visa"
     }
   },
   "ProjectBcf": {
@@ -665,7 +676,8 @@
     "deleteBcfNotificationSuccess": "Topics deleted",
     "deleteBcfNotificationError": "Error while deleting topics",
     "onlyAdminParameters": "You must be a project administrator",
-    "exportBcfXlsxNotificationSuccess": "xlsx export success !"
+    "exportBcfXlsxNotificationSuccess": "xlsx export success !",
+    "deleteBcfTitle": "Delete {bcfCount} BCF"
   },
   "GuidedTour": {
     "platform": {
@@ -770,13 +782,6 @@
   "GroupMemberCard": {
     "pending": "Invitation in progress"
   },
-  "UserProfile": {
-    "title": "Profile settings",
-    "loading": {
-      "message": "Deleting in progress.",
-      "subMessage": "This process may take a few moments, please stay on the page."
-    }
-  },
   "Invitations": {
     "title": "My invitations",
     "invitCounter": "Invitations in progress -",
@@ -834,7 +839,6 @@
     "modifiedOn": "Last modified",
     "modify": "Edit",
     "name": "Name",
-    "notSpecified": "Not specified",
     "ok": "OK",
     "open": "Open",
     "or": "or",
@@ -851,7 +855,15 @@
     "exportXlsx": "Export as xlsx",
     "project": "Project",
     "projects": "Projects",
-    "spaces": "Spaces"
+    "spaces": "Spaces",
+    "notSpecified": "Not specified",
+    "location": "Location",
+    "rootFolder": "Root folder",
+    "dueDate": "Due date",
+    "emptyFile": "No file",
+    "emptyVisa": "No visa",
+    "validation": "Validations",
+    "validator": "Validators"
   },
   "FolderCreationButton": {
     "text": "New folder"
@@ -871,5 +883,16 @@
   },
   "UserFavoritesManager": {
     "title": "Favorite Spaces / Projects"
+  },
+  "UserProfile": {
+    "title": "Profile parameters",
+    "loading": {
+      "message": "Deletion in progress.",
+      "subMessage": "This process can take a few moments, please do not leave the page."
+    }
+  },
+  "VisasDeleteModal": {
+    "title": "Delete {visasCount} visas",
+    "message": "You are about to delete the visas on the following files:"
   }
 }
