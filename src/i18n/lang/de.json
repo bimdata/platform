@@ -21,8 +21,8 @@
     "openFileUploadButtonText": "Modell hinzufügen",
     "forbiddenUploadNotification": "Wählen Sie eine Modell Datei: {extensions}",
     "uploadDisableMessage": {
-      "permission": "Sie haben nicht die erforderlichen Rechte",
-      "size": "Sie haben nicht mehr genug Speicherplatz"
+      "permission": "Sie haben die erforderlichen Rechte nicht.",
+      "size": "Sie haben nicht mehr genug Speicherplatz."
     }
   },
   "LanguageSelector": {
@@ -59,7 +59,8 @@
     "createModelButtonText": "Als Vorlage festlegen",
     "removeModelButtonText": "Modelle entfernen",
     "versioningButtonText": "Eine Version hinzufügen",
-    "visaButtonText": "Bestätigungsantrag"
+    "visaButtonText": "Bestätigungsantrag",
+    "previewModelButtonText": "Vorschau"
   },
   "FilesActionBar": {
     "moveButtonText": "Verschieben nach"
@@ -140,7 +141,8 @@
     },
     "submitButtonText": "Einladen",
     "successNotifText": "Einladung versendet",
-    "successUsertoAdmin": ""
+    "successUsertoAdmin": "Der Nutzer wurde zum Administrator befördert.",
+    "userAlreadyExistInputErrorMessage": "Der Nutzer ist bereits in Ihren Projekt."
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Tags hinzufügen"
@@ -213,7 +215,9 @@
     "free": "Kostenlos"
   },
   "SpaceCardActionMenu": {
-    "removeImageButtonText": "Abbildung löschen"
+    "removeImageButtonText": "Abbildung löschen",
+    "addToFavorite": "Zu Favoriten hinzufügen",
+    "removeFavorite": "Aus Favoriten entfernen"
   },
   "SpaceCardDeleteGuard": {
     "title": "Den Bereich löschen",
@@ -359,10 +363,11 @@
     "documentCreateError": "Dieses Dokument kann nicht heruntergeladen werden",
     "invitationViewFetchError": "Unmöglich die Liste der Einladungen abzurufen",
     "invitationViewAcceptError": "Die Einladung kann nicht angenommen werden",
-    "invitationViewDeclineError": "Einladung kann nicht abgelehnt werden",
-    "folderFetchFolder": "",
+    "folderFetchFolder": "Fehler beim Abrufen von Ordnerinformationen.",
     "bcfDeleteError": "Das Löschen ist fehlgeschlagen...",
-    "groupImportError": ""
+    "groupImportError": "Fehler beim Importieren von Gruppen",
+    "bcfExportXlsxError": "Der Excel-Export ist fehlgeschlagen...",
+    "invitationViewDeclineError": "Einladung kann nicht abgelehnt werden"
   },
   "ProjectStatusBadge": {
     "new": "NEU",
@@ -371,9 +376,7 @@
     "paused": "PAUSE"
   },
   "Dashboard": {
-    "spacesTileTitle": "Bereiche",
     "spacesTileBottomText": "Meine Bereiche",
-    "projectsTileTitle": "Projekte",
     "projectsTileBottomText": "Meine Projekte",
     "subscriptionsTileTitle": "Abonnements",
     "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
@@ -620,17 +623,28 @@
     "validators": "Validatoren",
     "safeZone": {
       "add": {
-        "text": ""
+        "text": "Sind Sie sicher, dass Sie diese Seite verlassen möchten? Möglicherweise gibt es noch nicht gespeicherte Informationen."
       },
       "delete": {
-        "text": ""
+        "text": "Sind Sie sicher, dass Sie diese Freigabe löschen wollen?"
       },
       "close": {
-        "text": ""
+        "text": "Sind Sie sicher, dass Sie diese Freigabe abschließen möchten?"
       },
       "deleteComment": {
-        "text": ""
+        "text": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
       }
+    },
+    "view": {
+      "visaPending": "Freigabe in der Warteschleife",
+      "visaClosed": "Abgeschlossene Freigabe",
+      "myRequests": "Meine Anträge",
+      "valid": "Freigegeben",
+      "pending": "In der Warteschleife",
+      "denied": "Abgelehnt",
+      "overdue": "Überfällig",
+      "openVisaBtn": "Freigabe öffnen",
+      "validateVisaBtn": "Freigabe validieren"
     }
   },
   "ProjectBcf": {
@@ -656,12 +670,14 @@
     "exportBcfNotificationSuccess": "BCF-Datei erfolgreich exportiert",
     "exportBcfNotificationError": "Fehler beim Exportieren der BCF-Datei",
     "selectedTopicCount": "Anzahl der ausgewählten BCFs",
-    "deleteBcfText": "",
+    "deleteBcfText": "Sie sind dabei, die BCF-Auswahl zu löschen.",
     "deleteInProgress": "Löschvorgang läuft",
     "deleteInProgressSub": "Dieser Vorgang kann einige Augenblicke dauern.",
-    "deleteBcfNotificationSuccess": "",
-    "deleteBcfNotificationError": "",
-    "onlyAdminParameters": ""
+    "deleteBcfNotificationSuccess": "Die BCF-Auswahl wurde erfolgreich gelöscht.",
+    "deleteBcfNotificationError": "Fehler beim Löschen der BCF-Auswahl.",
+    "onlyAdminParameters": "Nur Administratoren können die BCF-Einstellungen ändern.",
+    "exportBcfXlsxNotificationSuccess": "BCF erfolgreich ins Excel-Format exportiert",
+    "deleteBcfTitle": "Löschen von {bcfCount} BCF"
   },
   "GuidedTour": {
     "platform": {
@@ -743,7 +759,8 @@
     "list": "Liste der Tags",
     "addTag": "einen Tag hinzufügen",
     "addNewTag": "Ein neues Tag hinzufügen",
-    "deleteTag": "Diesen Tag löschen"
+    "deleteTag": "Diesen Tag löschen",
+    "emptyTag": "Keine Tags"
   },
   "SubscriptionModal": {
     "title": "Erhalten Sie mehr Platz",
@@ -765,36 +782,29 @@
   "GroupMemberCard": {
     "pending": "Einladung in Arbeit"
   },
-  "UserProfile": {
-    "title": "Profileinstellungen",
-    "loading": {
-      "message": "Löschvorgang läuft.",
-      "subMessage": "Dieser Vorgang kann einige Augenblicke dauern."
-    }
-  },
   "Invitations": {
     "title": "Meine Einladungen",
     "invitCounter": "Einladungen in Bearbeitung -",
     "acceptAll": "Akzeptiere alles",
-    "invitedInProject": "",
-    "invitedInSpace": "",
+    "invitedInProject": "Sie wurden von {sender} eingeladen, dem Projekt {project} im Bereich {cloud} beizutreten.",
+    "invitedInSpace": "Sie wurden von {sender} eingeladen, dem Bereich {cloud} beizutreten.",
     "invitAccepted": "Einladung angenommen",
     "invitDenied": "Einladung abgelehnt",
     "invitPending": "Einladung in Bearbeitung",
-    "goToProjectLong": "Projekt",
-    "goToProjectShort": "Projekt",
-    "goToSpaceLong": "Raum",
-    "goToSpaceShort": "Raum"
+    "goToProject": "Auf Projekt zugreifen",
+    "goToSpace": "Auf Bereich zugreifen"
   },
   "DocumentViewer": {
     "viewerButton": "Im Viewer öffnen",
-    "docPlaceholder": ""
+    "docPlaceholder": "Keine Vorschau für dieses Dokument."
   },
   "GroupImport": {
     "title": "Einen Gruppe importieren",
     "selectAll": "Alles auswählen",
-    "notAdmin": "",
-    "noGroup": "In diesem Projekt gibt es keine Gruppe"
+    "notAdmin": "Sie müssen Administrator des Projekts sein.",
+    "noGroup": "In diesem Projekt gibt es keine Gruppe",
+    "noProject": "Sie haben keine weiteren Projekte",
+    "noResult": "Kein Projekt mit diesem Namen"
   },
   "UploadCard": {
     "cancelMessage": "Abgebrochen",
@@ -841,7 +851,19 @@
     "type": "Art",
     "unarchive": "Dearchivieren",
     "validate": "Bestätigen",
-    "verify": "Verifizieren"
+    "verify": "Verifizieren",
+    "exportXlsx": "Nach Excel exportieren",
+    "project": "Projekt",
+    "projects": "Projekte",
+    "spaces": "Bereiche",
+    "notSpecified": "Nicht angegeben",
+    "location": "Speicherort",
+    "rootFolder": "Stammordner",
+    "dueDate": "Abgabetermin",
+    "emptyFile": "Keine Dateien",
+    "emptyVisa": "Keine Freigaben",
+    "validation": "Bestätigungen",
+    "validator": "Bestätigte"
   },
   "FolderCreationButton": {
     "text": "Neuer Ordner"
@@ -853,6 +875,24 @@
     "text": "Bild ändern"
   },
   "FileTreePreviewModal": {
-    "title": "Dateibaum importieren aus"
+    "title": "Dateibaum importieren aus",
+    "emptySource": "Dieses Projekt hat keine Unterlagen"
+  },
+  "MainModelSelector": {
+    "title": "Auswahl der Projektübersicht."
+  },
+  "UserFavoritesManager": {
+    "title": "Verwalten von Favoriten"
+  },
+  "UserProfile": {
+    "title": "Profileinstellungen",
+    "loading": {
+      "message": "Löschen wird durchgeführt",
+      "subMessage": "Dieser Vorgang kann einige Augenblicke dauern, bitte verlassen Sie die Seite nicht."
+    }
+  },
+  "VisasDeleteModal": {
+    "title": "Löschen der {visasCount} Freigaben",
+    "message": "Sie sind dabei, die Freigaben für die folgenden Dateien zu löschen:"
   }
 }
