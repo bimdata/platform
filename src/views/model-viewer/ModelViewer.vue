@@ -56,7 +56,7 @@ export default {
     // Initial plugins config
     const pluginsConfig = cloneDeep(PLUGINS_CONFIG);
     merge(pluginsConfig, {
-      bcf: {
+      bcfManager: {
         topicGuid
       }
     });

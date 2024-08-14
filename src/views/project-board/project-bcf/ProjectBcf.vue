@@ -749,7 +749,7 @@ export default {
           modelIDs: modelIDs.join(","),
         },
         query: {
-          window,
+          window: topic.bimdata_viewer_layout ? "null" : window,
           topicGuid: topic.guid,
         },
       });
