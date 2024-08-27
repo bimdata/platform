@@ -14,7 +14,7 @@
       <span>{{ $t("t.delete") }}</span>
     </BIMDataButton>
     <BIMDataButton
-      v-if="files.some((f) => f.type === 'Document' || f.type === 'Folder')"
+      v-if="isFilesOrFolder(files)"
       :disabled="
         project.isGuest || (!project.isAdmin && files.some((f) => f.user_permission < 100))
       "
@@ -28,7 +28,7 @@
       <span>{{ $t("FilesActionBar.moveButtonText") }}</span>
     </BIMDataButton>
     <BIMDataButton
-      v-if="files.some((f) => f.type === 'Document' || f.type === 'Folder')"
+      v-if="isFilesOrFolder(files)"
       width="120px"
       ghost
       squared
@@ -88,9 +88,12 @@ export default {
       toggle: toggleFolderSelector,
     } = useToggle();
 
-    const onDeleteClick = (files) => {
-      const isFilesOrFolder = files.some((f) => f.type === "Document" || f.type === "Folder");
-      emit(isFilesOrFolder ? "delete-files" : "delete-visas", files);
+    const isFilesOrFolder = files => files.some(
+      f => f.nature === "Document" || f.nature === "Model" || f.nature === "Folder"
+    );
+
+    const onDeleteClick = files => {
+      emit(isFilesOrFolder(files) ? "delete-files" : "delete-visas", files);
     };
 
     return {
@@ -98,6 +101,7 @@ export default {
       showFolderSelector,
       // Methods
       closeFolderSelector,
+      isFilesOrFolder,
       onDeleteClick,
       toggleFolderSelector,
     };

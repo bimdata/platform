@@ -8,7 +8,7 @@ const FILE_PERMISSION = Object.freeze({
 const FILE_TYPE = Object.freeze({
   FOLDER: "Folder",
   DOCUMENT: "Document",
-  IFC: "Ifc"
+  MODEL: "Model",
 });
 
 const STANDARD_IGNORED_FILES = Object.freeze([".DS_Store"]);

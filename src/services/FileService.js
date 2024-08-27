@@ -163,7 +163,7 @@ class FileService {
       if (files.length === 0) {
         return;
       }
-      if (files.length === 1 && files[0].type !== FILE_TYPE.FOLDER) {
+      if (files.length === 1 && files[0].nature !== FILE_TYPE.FOLDER) {
         downloadName = files[0].file_name;
         downloadUrl = files[0].file;
       } else {
