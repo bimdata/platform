@@ -5,7 +5,7 @@
  *
  * IFC uses a sightly different format for DD and DMS:
  *   DMS is an array of 3 in IFC2x3 or 3 to 4 in IFC 4+. The first element is the degrees, the second is the minutes the third is the seconds, the fourth is the number of millionth-seconds.
- *   When the direction is West or South, all components me negative. When direction is East or North, all components are negatives.
+ *   When the direction is West or South, all components are negative. When direction is East or North, all components are positive.
  *
  *  DD is negative if South or West
  */
@@ -55,11 +55,9 @@ function DMS2DD([degrees, minutes, seconds, secondsFraction = 0], type) {
  * @returns {[Array, Array]} latitude and longitude DMS coordinate
  */
 function DD2DMS(lat, long) {
-  console.log("DD2DMS:", lat, long)
   const dmsCoords = new DmsCoordinates(lat, long);
   const { longitude, latitude } = dmsCoords.dmsArrays;
   let [latD, latM, latS, latDir] = latitude;
-  console.log("latitude:", [latD, latM, latS, latDir])
   if (latDir == "S") {
     latD *= -1;
     latM *= -1;
@@ -67,7 +65,6 @@ function DD2DMS(lat, long) {
   }
 
   let [longD, longM, longS, longDir] = longitude;
-  console.log("longitude:", [longD, longM, longS, longDir])
   if (longDir == "W") {
     longD *= -1;
     longM *= -1;
