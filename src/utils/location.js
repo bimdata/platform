@@ -2,37 +2,82 @@
  * Coordinate systems:
  *   - DMS: Degrees Minutes Seconds, example: 48° 51' 30.24" N, 2° 17' 40.2" E
  *   - DD: Decimal Degrees, example: 48.8584° N, 2.2945° E
+ *
+ * IFC uses a sightly different format for DD and DMS:
+ *   DMS is an array of 3 in IFC2x3 or 3 to 4 in IFC 4+. The first element is the degrees, the second is the minutes the third is the seconds, the fourth is the number of millionth-seconds.
+ *   When the direction is West or South, all components me negative. When direction is East or North, all components are negatives.
+ *
+ *  DD is negative if South or West
  */
+
+import DmsCoordinates, { parseDms, Dms } from "dms-conversion";
+
 
 /**
  * Convert an array of DMS coordinate values into DD system equivalent.
  *
  * @param {Array} param DMS coordinate
+ * @param {String} param either latitude or longitude
  * @returns {Number} DD coordinate
  */
-function DMS2DD([degrees, minutes, seconds, secondsFraction]) {
+function DMS2DD([degrees, minutes, seconds, secondsFraction = 0], type) {
   degrees = +degrees;
-  const factor = degrees < 0 ? -1 : 1;
-  minutes = factor * (+minutes);
-  seconds = factor * parseFloat(`${seconds}.${Math.abs(secondsFraction) || 0}`);
-  return degrees + minutes / 60 + seconds / 3600;
+  minutes = +minutes;
+  seconds = +seconds;
+  secondsFraction = +secondsFraction;
+
+  // rétro compatibility because we used to save invalid values before 28/08/2024
+  if (degrees < 0 && minutes > 0 && seconds > 0) {
+      minutes *= -1;
+      seconds *= -1;
+      secondsFraction *= -1;
+  }
+
+  let direction = type === "latitude" ? "N": "E";
+  // if degrees === 0, we lose the -0 if any. We need to check if minutes and seconds are negative
+  if (degrees < 0 || (degrees === 0 && minutes <= 0 && seconds <= 0)) {
+    direction = type === "latitude" ? "S": "W";
+    degrees *= -1;
+    minutes *= -1;
+    seconds *= -1;
+    secondsFraction *= -1;
+  }
+  seconds += secondsFraction/1000000;
+  const dmsString = `${degrees}°${minutes}′${seconds}″ ${direction}`;
+  return parseDms(dmsString);
 }
 
 /**
- * Convert a DD coordinate value into DMS system equivalent.
+ * Convert a DD coordinates value into DMS system equivalent.
  *
- * @param {Number} param DD coordinate
- * @returns {Array} DMS coordinate
+ * @param {Number} param latitude DD coordinate
+ * @param {Number} param longitude DD coordinate
+ * @returns {[Array, Array]} latitude and longitude DMS coordinate
  */
-function DD2DMS(latOrLong) {
-  const result = new Array(3);
-  result[0] = 0 | latOrLong;
-  if (latOrLong < 0) {
-    latOrLong *= -1;
+function DD2DMS(lat, long) {
+  console.log("DD2DMS:", lat, long)
+  const dmsCoords = new DmsCoordinates(lat, long);
+  const { longitude, latitude } = dmsCoords.dmsArrays;
+  let [latD, latM, latS, latDir] = latitude;
+  console.log("latitude:", [latD, latM, latS, latDir])
+  if (latDir == "S") {
+    latD *= -1;
+    latM *= -1;
+    latS *= -1;
   }
-  result[1] = 0 | (((latOrLong += 1e-9) % 1) * 60)
-  result[2] = (0 | (((latOrLong * 60) % 1) * 6000)) / 100
-  return result;
+
+  let [longD, longM, longS, longDir] = longitude;
+  console.log("longitude:", [longD, longM, longS, longDir])
+  if (longDir == "W") {
+    longD *= -1;
+    longM *= -1;
+    longS *= -1;
+  }
+
+  const latDMS = [latD, latM, latS];
+  const longDMS = [longD, longM, longS];
+
+  return [latDMS, longDMS];
 }
 
 /**

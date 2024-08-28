@@ -121,8 +121,8 @@ export default {
         // set longitude/latitude accordingly.
         // Also set address if site address is set.
         address.value = location.address || "";
-        longitude.value = DMS2DD(location.longitude);
-        latitude.value = DMS2DD(location.latitude);
+        longitude.value = DMS2DD(location.longitude, "longitude");
+        latitude.value = DMS2DD(location.latitude, "latitude");
       } else if (location.address) {
         // If site coordinates are not set, check for site address.
         // If site address is set, set address accordingly then
