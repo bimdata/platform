@@ -109,7 +109,9 @@ export default {
     };
 
     const submitAddress = async () => {
-      const [latDMS, longDMS ] = DD2DMS(inputLatitude.value, inputLongitude.value)
+      const [latDMS, longDMS] = DD2DMS(inputLatitude.value, inputLongitude.value)
+      console.log([inputLatitude.value, inputLongitude.value])
+      console.log([latDMS, longDMS])
       const location = {
         site: props.site,
         address: inputAddress.value,
