@@ -86,7 +86,7 @@ import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
 import PointCloudManager from "./point-cloud-manager/PointCloudManager.vue";
 
-const { DWG, DXF, IFC, JPEG, META_BUILDING, PDF, PHOTOSPHERE, PNG, POINT_CLOUD } =
+const { DWG, DXF, IFC, META_BUILDING, PDF, PHOTOSPHERE, PHOTOSPHERE_BUILDING, POINT_CLOUD } =
   MODEL_TYPE;
 
 const tabsDef = [
@@ -132,7 +132,7 @@ const tabsDef = [
     id: "photos",
     text: "Photos",
     icon: "fileImagePolychrome",
-    modelTypes: [JPEG, PHOTOSPHERE, PNG],
+    modelTypes: [PHOTOSPHERE, PHOTOSPHERE_BUILDING],
     component: "DWGManager"
   }
 ];
