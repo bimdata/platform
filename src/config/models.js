@@ -17,6 +17,7 @@ const MODEL_TYPE = Object.freeze({
   OBJ: "OBJ",
   PDF: "PDF",
   PHOTOSPHERE: "PHOTOSPHERE",
+  PHOTOSPHERE_BUILDING: "PHOTOSPHERE_BUILDING",
   PNG: "PNG",
   POINT_CLOUD: "POINT_CLOUD",
 });
@@ -119,6 +120,11 @@ const MODEL_CONFIG = Object.freeze({
   },
   [MODEL_TYPE.PHOTOSPHERE]: {
     ext: [MODEL_EXTENSIONS.JPEG, MODEL_EXTENSIONS.JPG],
+    window: WINDOWS.PHOTOSPHERE,
+    icon: "fileImagePolychrome",
+  },
+  [MODEL_TYPE.PHOTOSPHERE_BUILDING]: {
+    ext: [],
     window: WINDOWS.PHOTOSPHERE,
     icon: "fileImagePolychrome",
   },

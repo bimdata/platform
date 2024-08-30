@@ -76,6 +76,7 @@ export default {
   },
   emits: [
     "create-model",
+    "create-photosphere",
     "delete",
     "download",
     "file-clicked",
@@ -135,6 +136,18 @@ export default {
             iconComponent: RemoveModelsIcon,
             text: "FileActionsCell.removeModelButtonText",
             action: () => onClick("remove-model"),
+          });
+        }
+      }
+
+      if (!isFolder(props.file) && isConvertibleToPhotosphere(props.file)) {
+        if (!isModel(props.file)) {
+          menuItems.value.push({
+            key: 3,
+            iconComponent: SetAsModelIcon,
+            text: "FileActionsCell.createPhotosphereButtonText",
+            disabled: !hasAdminPerm(props.project, props.file),
+            action: () => onClick("create-photosphere")
           });
         }
       }
