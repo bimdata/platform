@@ -46,6 +46,25 @@ class ModelService {
     }
   }
 
+  async createPhotosphere(project, file) {
+    try {
+      return await fetch(
+        `${ENV.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/model/create-photosphere`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            ...apiClient.authHeader,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: JSON.stringify({ document_id: file.id })
+        }
+      ).then(res => res.json());
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_CREATE_ERROR, error);
+    }
+  }
+
   async updateModels(project, models) {
     try {
       return await Promise.all(
