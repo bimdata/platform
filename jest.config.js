@@ -1,7 +1,7 @@
 export default {
+  setupFiles: ["<rootDir>/tests/unit/setup.js"],
+  moduleFileExtensions: ["js"],
   transform: {
-    "^.+\\.vue$": "@vue/vue3-jest",
-    '^.+\\.js$': 'babel-jest',
+    "^.+\\.js$": "babel-jest",
   },
-  moduleFileExtensions: ['js', 'jsx'],
 };
