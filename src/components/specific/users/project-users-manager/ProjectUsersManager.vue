@@ -9,7 +9,7 @@
           <template #right>
             <BIMDataButton
               data-test-id="btn-invit"
-              v-if="project.isAdmin"
+              v-if="isProjectAdmin(project)"
               ghost
               rounded
               icon
@@ -74,6 +74,7 @@ import { computed, nextTick, ref } from "vue";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useToggle } from "../../../../composables/toggle.js";
 import { useProjects } from "../../../../state/projects.js";
+import { useUser } from "../../../../state/user.js";
 import { wait } from "../../../../utils/async.js";
 // Components
 import InvitationCard from "../invitation-card/InvitationCard.vue";
@@ -103,6 +104,7 @@ export default {
     }
   },
   setup(props) {
+    const { isProjectAdmin } = useUser();
     const { loadProjectUsers, loadProjectInvitations } = useProjects();
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
@@ -140,6 +142,7 @@ export default {
       showUserSearch,
       // Methods
       closeInvitationForm,
+      isProjectAdmin,
       onInvitationSuccess,
       toggleInvitationForm,
       toggleUserSearch

@@ -11,7 +11,7 @@
         }"
       >
         <BIMDataButton
-          v-if="project.isAdmin"
+          v-if="isProjectAdmin(project)"
           data-test-id="btn-manage-groups"
           data-guide="btn-manage-groups"
           :width="isXXL ? undefined : '120px'"
@@ -50,6 +50,7 @@ import { useFiles } from "../../../state/files.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
+import { useUser } from "../../../state/user.js";
 import { debounce } from "../../../utils/async.js";
 // Components
 import AppLink from "../../../components/specific/app/app-link/AppLink.vue";
@@ -65,6 +66,7 @@ export default {
     FilesManager
   },
   setup() {
+    const { isProjectAdmin } = useUser();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
@@ -85,6 +87,7 @@ export default {
       routeNames,
       spaceSubInfo,
       // Methods
+      isProjectAdmin,
       reloadData,
       // Responsive breakpoints
       ...useStandardBreakpoints()

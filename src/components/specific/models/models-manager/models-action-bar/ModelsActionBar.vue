@@ -1,9 +1,34 @@
+<script setup>
+import { computed } from "vue";
+import { useUser } from "../../../../../state/user.js";
+
+const { hasAdminPermModel } = useUser();
+
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  models: {
+    type: Array,
+    default: () => []
+  }
+});
+
+defineEmits([
+  "archive",
+  "delete",
+  "download",
+  "unarchive"
+]);
+
+const isArchived = computed(() => props.models.every(m => m.archived));
+</script>
+
 <template>
   <div class="models-action-bar">
     <BIMDataButton
-      :disabled="
-        project.isGuest || !project.isAdmin && models.some(m => m.document?.user_permission < 100)
-      "
+      :disabled="!hasAdminPermModel(project, models)"
       width="120px"
       color="high"
       ghost
@@ -15,23 +40,21 @@
     </BIMDataButton>
 
     <BIMDataButton
-      :disabled="
-        project.isGuest || !project.isAdmin && models.some(m => m.document?.user_permission < 100)
-      "
+      :disabled="!hasAdminPermModel(project, models)"
       width="120px"
       ghost
       squared
       @click="
-        $emit(models.every(m => m.archived) ? 'unarchive' : 'archive', models)
+        $emit(isArchived ? 'unarchive' : 'archive', models)
       "
     >
       <BIMDataIcon
-        :name="models.every(m => m.archived) ? 'unarchive' : 'archive'"
+        :name="isArchived ? 'unarchive' : 'archive'"
         size="xs"
         margin="0 6px 0 0"
       />
       <span>
-        {{ $t(`t.${models.every(m => m.archived) ? "unarchive" : "archive"}`) }}
+        {{ $t(`t.${isArchived ? "unarchive" : "archive"}`) }}
       </span>
     </BIMDataButton>
 
@@ -46,21 +69,5 @@
     </BIMDataButton>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    project: {
-      type: Object,
-      required: true
-    },
-    models: {
-      type: Array,
-      default: () => []
-    }
-  },
-  emits: ["delete", "archive", "download", "unarchive"]
-};
-</script>
 
 <style scoped lang="scss" src="./ModelsActionBar.scss"></style>

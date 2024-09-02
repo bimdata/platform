@@ -1,9 +1,7 @@
 <template>
   <div class="files-action-bar">
     <BIMDataButton
-      :disabled="
-        project.isGuest || (!project.isAdmin && files.some((f) => f.user_permission < 100))
-      "
+      :disabled="!hasAdminPerm(project, files)"
       width="120px"
       color="high"
       ghost
@@ -15,9 +13,7 @@
     </BIMDataButton>
     <BIMDataButton
       v-if="isFilesOrFolder(files)"
-      :disabled="
-        project.isGuest || (!project.isAdmin && files.some((f) => f.user_permission < 100))
-      "
+      :disabled="!hasAdminPerm(project, files)"
       width="120px"
       color="secondary"
       ghost
@@ -55,6 +51,7 @@
 
 <script>
 import { useToggle } from "../../../../../composables/toggle.js";
+import { useUser } from "../../../../../state/user.js";
 // Components
 import FolderSelector from "../../folder-selector/FolderSelector.vue";
 
@@ -82,6 +79,8 @@ export default {
   },
   emits: ["delete-files", "delete-visas", "download", "move"],
   setup(props, { emit }) {
+    const { hasAdminPerm } = useUser();
+
     const {
       isOpen: showFolderSelector,
       close: closeFolderSelector,
@@ -101,6 +100,7 @@ export default {
       showFolderSelector,
       // Methods
       closeFolderSelector,
+      hasAdminPerm,
       isFilesOrFolder,
       onDeleteClick,
       toggleFolderSelector,

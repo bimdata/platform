@@ -37,10 +37,10 @@
             />
             <div
               class="project-card__left-stripe"
-              :class="`project-card__left-stripe--${project.projectStatus}`"
+              :class="`project-card__left-stripe--${projectStatus(project)}`"
             ></div>
             <FavoriteBadge v-if="isFavoriteProject(project)" />
-            <ProjectStatusBadge :status="project.projectStatus" />
+            <ProjectStatusBadge :status="projectStatus(project)" />
             <ProjectCardModelPreview
               :project="project"
               :models="displayedModels"
@@ -75,6 +75,7 @@ import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
 import { useUser } from "../../../../state/user.js";
 import { openInViewer } from "../../../../utils/models.js";
+import { projectStatus } from "../../../../utils/projects.js"
 
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
@@ -198,7 +199,8 @@ export default {
       isFavoriteProject,
       isSpaceAdmin,
       onModelChange,
-      openMenu
+      openMenu,
+      projectStatus,
     };
   }
 };

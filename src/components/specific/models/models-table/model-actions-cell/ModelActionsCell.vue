@@ -83,34 +83,35 @@
       </BIMDataButton>
     </template>
 
-    <BIMDataButton
-      v-if="!project.isGuest"
-      class="model-actions-cell__btn"
-      data-test-id="btn-toggle-menu"
-      :disabled="!project.isAdmin && model.document?.user_permission < 100"
-      ripple
-      rounded
-      icon
-      @click="toggleMenu"
-    >
-      <BIMDataIconEllipsis size="l" />
-    </BIMDataButton>
-
-    <transition name="fade" v-if="!project.isGuest">
-      <BIMDataMenu
-        :menuItems="menuItems"
-        class="model-actions-cell__menu"
-        v-show="showMenu"
-        width="180px"
+    <template v-if="!isProjectGuest(project)">
+      <BIMDataButton
+        class="model-actions-cell__btn"
+        data-test-id="btn-toggle-menu"
+        :disabled="!hasAdminPerm(project, model.document)"
+        ripple
+        rounded
+        icon
+        @click="toggleMenu"
       >
-        <template #item="{ item }">
-          <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
-          <span :data-test-id="item.dataTestId">
-            {{ $t(item.text) }}
-          </span>
-        </template>
-      </BIMDataMenu>
-    </transition>
+        <BIMDataIconEllipsis size="l" />
+      </BIMDataButton>
+
+      <transition name="fade">
+        <BIMDataMenu
+          :menuItems="menuItems"
+          class="model-actions-cell__menu"
+          v-show="showMenu"
+          width="180px"
+        >
+          <template #item="{ item }">
+            <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
+            <span :data-test-id="item.dataTestId">
+              {{ $t(item.text) }}
+            </span>
+          </template>
+        </BIMDataMenu>
+      </transition>
+    </template>
   </div>
 </template>
 
@@ -119,6 +120,7 @@ import { computed } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { MODEL_STATUS, MODEL_TYPE } from "../../../../../config/models.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
+import { useUser } from "../../../../../state/user.js";
 // Components
 import ViewerButton from "./ViewerButton.vue";
 
@@ -145,6 +147,8 @@ export default {
     "view-metaBuilding"
   ],
   setup(props, { emit }) {
+    const { isProjectGuest, hasAdminPerm } = useUser();
+
     const {
       isOpen: showMenu,
       close: closeMenu,
@@ -207,13 +211,15 @@ export default {
 
     return {
       // References
+      hasAdminPerm,
       isModelReady,
+      menuItems,
       MODEL_TYPE,
       showMenu,
       WINDOWS,
-      menuItems,
       // Methods
       closeMenu,
+      isProjectGuest,
       onClick,
       toggleMenu
     };

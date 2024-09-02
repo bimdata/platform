@@ -22,7 +22,7 @@
     </BIMDataTabs>
 
     <BIMDataButton
-      v-if="!project.isGuest"
+      v-if="!isProjectGuest(project)"
       class="generic-models-manager__btn-add"
       color="primary"
       width="100px"
@@ -86,8 +86,9 @@
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
-import { useModels } from "../../../../../state/models.js";
 import { useFiles } from "../../../../../state/files.js";
+import { useModels } from "../../../../../state/models.js";
+import { useUser } from "../../../../../state/user.js";
 import { wait } from "../../../../../utils/async.js";
 import { isModel } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
@@ -125,6 +126,7 @@ export default {
     "view-metaBuilding"
   ],
   setup(props, { emit }) {
+    const { isProjectGuest } = useUser();
     const { createModel, updateModels } = useModels();
     const { downloadFiles: download } = useFiles();
 
@@ -230,6 +232,7 @@ export default {
       archiveModels,
       closeDeleteModal,
       downloadModels,
+      isProjectGuest,
       onFileUploaded,
       onUploadCanceled,
       openDeleteModal,

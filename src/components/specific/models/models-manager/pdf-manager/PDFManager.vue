@@ -24,7 +24,7 @@
     </template>
     <template #content v-if="currentTab?.id === 'metaBuildings'">
       <BIMDataButton
-        v-if="!project.isGuest"
+        v-if="!isProjectGuest(project)"
         class="pdf-manager__building-maker-btn"
         width="100px"
         color="primary"
@@ -45,6 +45,7 @@ import { computed, h, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import { MODEL_TYPE } from "../../../../../config/models.js";
+import { useUser } from "../../../../../state/user.js";
 import { segregateBySource } from "../../../../../utils/models.js";
 // Components
 import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
@@ -79,6 +80,7 @@ export default {
   setup(props) {
     const { locale, fallbackLocale } = useI18n();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
+    const { isProjectGuest } = useUser();
 
     const tabs = ref(tabsDef);
     const currentTab = ref(null);
@@ -160,6 +162,7 @@ export default {
       tabs,
       // Methods
       editMetaBuilding,
+      isProjectGuest,
       openBuildingMaker,
       viewMetaBuilding,
     };

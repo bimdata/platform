@@ -258,6 +258,9 @@ export default {
   },
   emits: ["close-visa", "fetch-visas", "reach-file"],
   setup(props, { emit }) {
+    const { t } = useI18n();
+    const { isSelf } = useUser();
+    const { getUserProjectList } = useProjects();
     const {
       fetchVisa,
       acceptValidation,
@@ -269,10 +272,6 @@ export default {
       deleteValidation,
       updateVisa,
     } = useVisa();
-    const { getUserProjectList } = useProjects();
-    const { user } = useUser();
-    const { t } = useI18n();
-    const { id: currentUserId } = user.value;
 
     const isClosed = ref(false);
     const isEditing = ref(false);
@@ -304,7 +303,7 @@ export default {
           fullName: validation.validator
             ? fullName(validation.validator)
             : t("Visa.summary.deletedUser"),
-          isSelf: validation.validator ? validation.validator.user_id === currentUserId : false,
+          isSelf: isSelf(validation.validator),
           hasAccess: visa.validations_in_error.length
             ? !visa.validations_in_error.some(
                 (validationInErrorId) => validationInErrorId === validation.id
@@ -336,12 +335,12 @@ export default {
     };
 
     onMounted(async () => {
-      if (props.visa.creator.user_id === currentUserId) {
+      if (isSelf(props.visa.creator)) {
         isAuthor.value = true;
       }
       if (!isAuthor.value) {
         validationUserId.value = props.visa.validations.find(
-          ({ validator }) => validator.user_id === currentUserId
+          ({ validator }) => isSelf(validator)
         ).id;
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;

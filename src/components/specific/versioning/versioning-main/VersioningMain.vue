@@ -34,7 +34,7 @@
       <div class="versioning-main__content__add-version">
         <BIMDataButton
           :disabled="
-            (!project.isAdmin && currentFolder.user_permission < 100) ||
+            !hasAdminPerm(project, currentFolder) ||
             spaceSubInfo.remaining_total_size <= 0
           "
           data-test-id="btn-add-version"
@@ -87,6 +87,7 @@
 import { ref, onMounted, computed } from "vue";
 import FileService from "../../../../services/FileService.js";
 import UploadService from "../../../../services/UploadService.js";
+import { useUser } from "../../../../state/user.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 import { fileExtension } from "../../../../utils/files.js";
 
@@ -120,6 +121,8 @@ export default {
   emits: ["file-uploaded", "close"],
 
   setup(props, { emit }) {
+    const { hasAdminPerm } = useUser();
+
     const loading = ref(null);
     const uploader = UploadService.createProjectFileUploader(props.project, {
       onUploadStart: () => (loading.value = "download"),
@@ -194,6 +197,7 @@ export default {
       currentExtension: fileExtension(props.document.file_name),
       // methods
       fileUploadInput,
+      hasAdminPerm,
       addVersion,
       onSafeZone,
       onDelete

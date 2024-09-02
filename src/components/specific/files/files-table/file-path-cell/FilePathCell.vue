@@ -80,7 +80,7 @@ export default {
       required: true,
     },
   },
-  emits: ["go-folders-view", "file-clicked"],
+  emits: ["file-clicked", "go-folders-view"],
   setup(props, { emit }) {
     const { t } = useI18n();
 

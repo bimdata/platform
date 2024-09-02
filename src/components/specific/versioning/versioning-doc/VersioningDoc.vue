@@ -28,7 +28,7 @@
           </template>
         </div>
         <div class="versioning-doc__content__header__right-side">
-          <template v-if="project.isAdmin">
+          <template v-if="isProjectAdmin(project)">
             <div
               class="versioning-doc__content__header__right-side__btn-delete"
             >
@@ -176,6 +176,7 @@ import routeNames from "../../../../router/route-names.js";
 import FileService from "../../../../services/FileService.js";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
+import { useUser } from "../../../../state/user.js";
 import { isPDF, isViewable, openInViewer } from "../../../../utils/models.js";
 import { fullName } from "../../../../utils/users.js";
 
@@ -213,6 +214,7 @@ export default {
   emits: ["on-delete", "get-all-doc-versions"],
   setup(props, { emit }) {
     const router = useRouter();
+    const { isProjectAdmin } = useUser();
     const { createModel } = useModels();
     const { downloadFiles } = useFiles();
 
@@ -245,6 +247,7 @@ export default {
       download: downloadFiles,
       isEmpty,
       isPDF,
+      isProjectAdmin,
       isViewable,
       swapHeadDoc
     };

@@ -107,6 +107,7 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useToggle } from "../../../../../composables/toggle.js";
 import FileService from "../../../../../services/FileService.js";
+import { useUser } from "../../../../../state/user.js";
 import { getFilesFromEvent } from "../../../../../utils/files.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
@@ -142,7 +143,7 @@ export default {
   emits: ["file-uploaded"],
   setup(props, { emit }) {
     const { t } = useI18n();
-
+    const { isProjectAdmin, isProjectGuest } = useUser();
     const { openModal } = useAppModal();
 
     const {
@@ -196,7 +197,7 @@ export default {
     const gedMenu = computed(() => {
       const items = [];
 
-      if (props.project.isAdmin) {
+      if (isProjectAdmin(props.project)) {
         items.push({
           name: t("FilesManagerOnboarding.GEDStructureImport"),
           children: {
@@ -206,7 +207,7 @@ export default {
         });
       }
 
-      if (!props.project.isGuest) {
+      if (!isProjectGuest(props.project)) {
         items.push({
           name: t("FilesManagerOnboarding.folderImport"),
           action: () => {

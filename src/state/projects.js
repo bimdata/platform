@@ -1,9 +1,13 @@
 import { reactive, readonly, toRefs } from "vue";
 import ProjectService from "../services/ProjectService.js";
-import { fullName } from "../utils/users.js";
+import { sortProjects } from "../utils/projects.js";
+import { fullName, sortUsers } from "../utils/users.js";
 
-import { mapProject, mapProjects, mapUsers } from "./mappers.js";
 import { useUser } from "./user.js";
+
+const { loadUser, isSelf, isProjectAdmin } = useUser();
+
+// ---
 
 const state = reactive({
   userProjects: [],
@@ -21,7 +25,9 @@ const setCurrentProject = id => {
 
 const loadUserProjects = async () => {
   const projects = await ProjectService.fetchUserProjects();
-  state.userProjects = mapProjects(projects);
+
+  state.userProjects = sortProjects(projects);
+
   state.projectsBySpace = projects.reduce((acc, project) => {
     if (!acc[project.cloud.id]) {
       acc[project.cloud.id] = [];
@@ -29,24 +35,25 @@ const loadUserProjects = async () => {
     acc[project.cloud.id].push(project);
     return acc;
   }, {});
+
   return projects;
 };
 
 const loadSpaceProjects = async space => {
   const projects = await ProjectService.fetchSpaceProjects(space);
-  state.spaceProjects = mapProjects(projects);
+  state.spaceProjects = sortProjects(projects);
   return projects;
 };
 
 const loadProjectUsers = async project => {
   const users = await ProjectService.fetchProjectUsers(project);
-  state.projectUsers = mapUsers(users);
+  state.projectUsers = sortUsers(users);
   return users;
 };
 
 const loadProjectInvitations = async project => {
   let invitations = [];
-  if (project.isAdmin) {
+  if (isProjectAdmin(project)) {
     invitations = await ProjectService.fetchProjectInvitations(project);
   }
   state.projectInvitations = invitations;
@@ -56,7 +63,6 @@ const loadProjectInvitations = async project => {
 const createProject = async (space, project) => {
   const newProject = await ProjectService.createProject(space, project);
 
-  const { loadUser } = useUser();
   await loadUser();
   await loadUserProjects();
   await loadSpaceProjects(space);
@@ -68,7 +74,7 @@ const updateProject = async project => {
   const newProject = await ProjectService.updateProject(project);
 
   if (newProject.id === state.currentProject?.id) {
-    state.currentProject = mapProject(newProject);
+    state.currentProject = newProject;
   }
   await loadUserProjects();
   await loadSpaceProjects({ id: project.cloud.id });
@@ -79,7 +85,6 @@ const updateProject = async project => {
 const deleteProject = async project => {
   await ProjectService.deleteProject(project);
 
-  const { loadUser } = useUser();
   await loadUser();
   await loadUserProjects();
   await loadSpaceProjects({ id: project.cloud.id });
@@ -90,7 +95,6 @@ const deleteProject = async project => {
 const leaveProject = async project => {
   await ProjectService.leaveProject(project);
 
-  const { loadUser } = useUser();
   await loadUser();
   await loadUserProjects();
   await loadSpaceProjects({ id: project.cloud.id });
@@ -133,14 +137,14 @@ const deleteProjectUser = async (project, user) => {
 
 const fetchFolderProjectUsers = async (project, folder) => {
   let users = await ProjectService.fetchFolderProjectUsers(project, folder);
-  users = mapUsers(users);
+  users = sortUsers(users);
   return users;
 };
 
 const getUserProjectList = async (project, folder) => {
   const users = await fetchFolderProjectUsers(project, folder);
   return users
-    .filter(({ isSelf }) => !isSelf)
+    .filter(user => !isSelf(user))
     .map(user => ({
       ...user,
       fullName: fullName(user),

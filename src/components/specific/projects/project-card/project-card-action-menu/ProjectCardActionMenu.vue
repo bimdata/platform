@@ -47,7 +47,7 @@
             }}
           </BIMDataButton>
           <BIMDataButton
-            v-if="project.isAdmin"
+            v-if="isProjectAdmin(project)"
             data-test-id="btn-open-update"
             ghost
             squared
@@ -56,7 +56,7 @@
             {{ $t("t.rename") }}
           </BIMDataButton>
           <BIMDataButton
-            v-if="project.isAdmin"
+            v-if="isProjectAdmin(project)"
             data-test-id="btn-open-delete"
             color="high"
             ghost
@@ -103,7 +103,7 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const { isFavoriteProject, addFavoriteProject, removeFavoriteProject } =
+    const { isProjectAdmin, isFavoriteProject, addFavoriteProject, removeFavoriteProject } =
       useUser();
 
     const loading = ref(false);
@@ -158,6 +158,7 @@ export default {
       closeDeleteGuard,
       closeUpdateForm,
       closeLeaveGuard,
+      isProjectAdmin,
       isFavoriteProject,
       openDeleteGuard,
       openUpdateForm,

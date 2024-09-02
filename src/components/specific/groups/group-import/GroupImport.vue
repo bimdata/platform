@@ -24,6 +24,7 @@
           :placeholder="$t('t.search')"
           v-model="searchText"
         />
+
         <!-- Template if no project in space  -->
         <template v-if="projectsToDisplay.length === 0">
           <div class="group-import__menu--empty p-6 color-granite">
@@ -32,6 +33,7 @@
             </span>
           </div>
         </template>
+
         <!-- Template if no group when searching  -->
         <template v-else-if="filteredProjectsToDisplay.length === 0">
           <div class="group-import__menu--empty p-6 color-granite">
@@ -40,6 +42,7 @@
             </span>
           </div>
         </template>
+
         <!-- Groups list -->
         <BIMDataPaginatedList
           :list="filteredProjectsToDisplay"
@@ -48,7 +51,7 @@
             filteredProjectsToDisplay.length > 99 ? false : true
           "
         >
-          <template #element="{ element = project }">
+          <template #element="{ element }">
             <div
               class="group-import__menu__children flex items-center justify-between p-x-6"
               :class="{
@@ -62,7 +65,7 @@
               <!-- Template if not admin or if no child project -->
               <template v-if="isWarning(element)">
                 <BIMDataTooltip
-                  v-if="element.isAdmin === false"
+                  v-if="!isProjectAdmin(element)"
                   :text="$t('GroupImport.notAdmin')"
                   maxWidth="176px"
                   color="high"
@@ -110,6 +113,7 @@
                   </div>
                 </BIMDataTooltip>
               </template>
+
               <!-- Template for list all group in projects -->
               <template v-else>
                 <div class="flex items-center" style="width: 100%">
@@ -209,11 +213,12 @@
 
 <script>
 import { ref } from "vue";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import { useToggle } from "../../../../composables/toggle.js";
+import GroupService from "../../../../services/GroupService.js";
 import { useGroups } from "../../../../state/groups.js";
 import { useProjects } from "../../../../state/projects.js";
-import { useToggle } from "../../../../composables/toggle.js";
-import { useListFilter } from "../../../../composables/list-filter.js";
-import GroupService from "../../../../services/GroupService.js";
+import { useUser } from "../../../../state/user.js";
 
 export default {
   props: {
@@ -223,6 +228,7 @@ export default {
     }
   },
   setup(props) {
+    const { isProjectAdmin } = useUser();
     const { spaceProjects } = useProjects();
     const { importGroup } = useGroups();
     const { isOpen, close, open } = useToggle();
@@ -276,7 +282,7 @@ export default {
 
             let children = [];
 
-            if (project.isAdmin) {
+            if (isProjectAdmin(project)) {
               const projectGroups = (
                 await GroupService.fetchProjectGroups(project)
               ).map(group => {
@@ -301,7 +307,7 @@ export default {
       );
 
       projectsToDisplay.value = mappedProjects.sort(project =>
-        project.isAdmin &&
+        isProjectAdmin(project) &&
         project.children.length &&
         project.children[0].project
           ? -1
@@ -340,26 +346,27 @@ export default {
     };
 
     const isWarning = project =>
-      !project.isAdmin || !project.children.some(child => child.project);
+      !isProjectAdmin(project) || !project.children.some(child => child.project);
 
     return {
       // References
-      groups,
-      projectsToDisplay,
       filteredProjectsToDisplay,
-      searchText,
+      groups,
       isItemActive,
-      // methods
-      closeMenu,
-      onElementClick,
-      onMouseOver,
-      onMouseLeave,
       isOpen,
-      isWarning,
-      uploadGroup,
-      checkItem,
+      projectsToDisplay,
+      searchText,
+      // Methods
       checkAllItems,
-      openGroupImport
+      checkItem,
+      closeMenu,
+      isProjectAdmin,
+      isWarning,
+      onElementClick,
+      onMouseLeave,
+      onMouseOver,
+      openGroupImport,
+      uploadGroup,
     };
   }
 };

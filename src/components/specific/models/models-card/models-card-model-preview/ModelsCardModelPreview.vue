@@ -6,7 +6,7 @@
       </div>
       <div class="models-card-model-preview__head__menu">
         <BIMDataButton
-          v-if="project.isAdmin"
+          v-if="isProjectAdmin(project)"
           data-test-id="btn-actions-cell"
           class="file-actions-cell__btn"
           ripple
@@ -88,6 +88,7 @@
 import { ref, watch } from "vue";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../../config/models.js";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
+import { useUser } from "../../../../../state/user.js";
 // Components
 import MainModelSelector from "../main-model-selector/MainModelSelector.vue";
 
@@ -104,6 +105,7 @@ export default {
   },
   emits: ["model-changed"],
   setup(props, { emit }) {
+    const { isProjectAdmin } = useUser();
     const { openModal, closeModal } = useAppModal();
 
     const container = ref(null);
@@ -172,7 +174,8 @@ export default {
       // Methods
       nextImage,
       prevImage,
-      openPreviewSelector
+      openPreviewSelector,
+      isProjectAdmin,
     };
   }
 };

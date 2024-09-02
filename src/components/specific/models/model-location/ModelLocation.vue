@@ -19,7 +19,7 @@
         <div class="model-location__map">
           <MaplibreWrapper :longitude="longitude" :latitude="latitude" />
           <BIMDataButton
-            v-if="project.isAdmin"
+            v-if="isProjectAdmin(project)"
             class="model-location__map__edit-btn"
             width="36px"
             height="36px"
@@ -38,7 +38,7 @@
           <BIMDataIconLocation size="xxl" />
           <div>{{ $t("ModelLocation.emptyLocationMessage") }}</div>
           <BIMDataButton
-            v-if="project.isAdmin"
+            v-if="isProjectAdmin(project)"
             width="100px"
             color="primary"
             fill
@@ -63,6 +63,7 @@
 import { onActivated, provide, ref, watch } from "vue";
 import { useToggle } from "../../../../composables/toggle.js";
 import { useModels } from "../../../../state/models.js";
+import { useUser } from "../../../../state/user.js";
 import {
   DMS2DD,
   getCoordinatesFromAddress
@@ -86,6 +87,7 @@ export default {
     }
   },
   setup(props) {
+    const { isProjectAdmin } = useUser();
     const { fetchModelLocation } = useModels();
 
     const loading = ref(false);
@@ -164,6 +166,7 @@ export default {
       site,
       // Methods
       closeLocationForm,
+      isProjectAdmin,
       onLocationUpdated,
       openLocationForm,
       setLocation

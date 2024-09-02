@@ -12,4 +12,8 @@ function isFullTotal(spaceSubInfo) {
   );
 }
 
-export { isFullSmartData, isFullTotal };
+function sortSpaces(spaces) {
+  return spaces.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+}
+
+export { isFullSmartData, isFullTotal, sortSpaces };
