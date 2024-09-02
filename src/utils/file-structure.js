@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import { FILE_TYPE } from "../config/files.js";
 
 /**
@@ -293,10 +294,6 @@ function isFolder(file) {
   return file.nature === FILE_TYPE.FOLDER;
 }
 
-function hasAdminPerm(project, file) {
-  return !project.isGuest && (project.isAdmin || file.user_permission === 100);
-}
-
 
 export {
   FileStructureHandler,
@@ -304,5 +301,4 @@ export {
   getDescendants,
   segregate,
   isFolder,
-  hasAdminPerm
 };

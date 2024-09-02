@@ -2,23 +2,22 @@
   position: relative;
   display: flex;
   justify-content: center;
+
   &__btn {
     color: var(--color-granite-light);
   }
 
   &__menu {
-    padding: calc(var(--spacing-unit) / 2) 0;
     position: absolute;
+    z-index: 1;
     top: 30px;
     right: 0;
-    z-index: 1;
+    padding: calc(var(--spacing-unit) / 2) 0;
+
     &.bimdata-menu {
       &:deep() {
         .bimdata-menu__item__content {
           padding: 0;
-          a {
-            width: 100%;
-          }
           .bimdata-btn {
             justify-content: flex-start;
           }

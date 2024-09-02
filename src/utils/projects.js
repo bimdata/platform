@@ -31,4 +31,8 @@ function projectStatus(project) {
   }
 }
 
-export { projectStatus };
+function sortProjects(projects) {
+  return projects.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+}
+
+export { projectStatus, sortProjects };

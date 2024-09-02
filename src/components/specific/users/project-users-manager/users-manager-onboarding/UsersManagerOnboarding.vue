@@ -1,7 +1,30 @@
+<script setup>
+import { useToggle } from "../../../../../composables/toggle.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import InvitationForm from "../../invitation-form/InvitationForm.vue";
+import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
+
+defineProps({
+  project: {
+    type: Object,
+    required: true
+  }
+});
+
+const { isProjectAdmin } = useUser();
+
+const {
+  isOpen: showInvitationForm,
+  open: openInvitationForm,
+  close: closeInvitationForm
+} = useToggle();
+</script>
+
 <template>
   <div class="users-manager-onboarding">
     <UsersManagerOnboardingImage />
-    <template v-if="project.isAdmin">
+    <template v-if="isProjectAdmin(project)">
       <div>
         {{ $t("UsersManagerOnboarding.text") }}
       </div>
@@ -33,40 +56,5 @@
     </transition>
   </div>
 </template>
-
-<script>
-import { useToggle } from "../../../../../composables/toggle.js";
-// Components
-import InvitationForm from "../../invitation-form/InvitationForm.vue";
-import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
-
-export default {
-  components: {
-    InvitationForm,
-    UsersManagerOnboardingImage
-  },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    }
-  },
-  setup() {
-    const {
-      isOpen: showInvitationForm,
-      open: openInvitationForm,
-      close: closeInvitationForm
-    } = useToggle();
-
-    return {
-      // References
-      showInvitationForm,
-      // Methods
-      closeInvitationForm,
-      openInvitationForm
-    };
-  }
-};
-</script>
 
 <style scoped lang="scss" src="./UsersManagerOnboarding.scss"></style>

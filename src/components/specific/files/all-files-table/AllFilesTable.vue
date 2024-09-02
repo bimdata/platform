@@ -219,9 +219,9 @@
               @download="$emit('download', file)"
               @file-clicked="$emit('file-clicked', file)"
               @manage-access="$emit('manage-access', file)"
+              @open-tag-manager="$emit('open-tag-manager', file)"
               @open-versioning-manager="$emit('open-versioning-manager', file)"
               @open-visa-manager="$emit('open-visa-manager', file)"
-              @open-tag-manager="$emit('open-tag-manager', file)"
               @remove-model="$emit('remove-model', file)"
               @update="nameEditMode[file.id] = true"
             />
@@ -234,20 +234,19 @@
 <script>
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import columnsDef, { columnsMD, columnsLG, columnsXL, columnsXXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { formatBytes } from "../../../../utils/files.js";
-import columnsDef, { columnsMD, columnsLG, columnsXL, columnsXXL } from "./columns.js";
+import useSortAndFilter from "./sortAndFilter.js";
 
 // Components
+import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
+import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
 import FileActionsCell from "../files-table/file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "../files-table/file-name-cell/FileNameCell.vue";
 import FileTagsCell from "../files-table/file-tags-cell/FileTagsCell.vue";
 import FileTypeCell from "../files-table/file-type-cell/FileTypeCell.vue";
 import FilePathCell from "../files-table/file-path-cell/FilePathCell.vue";
-
-import ColumnSorting from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-sorting/ColumnSorting.vue";
-import ColumnFilters from "@bimdata/design-system/src/BIMDataComponents/BIMDataTable/column-filters/ColumnFilters.vue";
-import useSortAndFilter from "./sortAndFilter.js";
 
 export default {
   components: {
@@ -289,9 +288,9 @@ export default {
     "file-clicked",
     "go-folders-view",
     "manage-access",
+    "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
-    "open-tag-manager",
     "remove-model",
     "selection-changed",
   ],

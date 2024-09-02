@@ -76,13 +76,11 @@ export default {
   },
   emits: [],
   setup(props) {
+    const { isSelf } = useUser();
     const { fetchAllComments, createComment } = useVisa();
-    const { user } = useUser();
 
     const isCommenting = ref(false);
     const commentList = ref([]);
-
-    const { id: currentUserId } = user.value;
 
     const isVisaOpen = computed(() => props.visa.status === VISA_STATUS.OPEN);
 
@@ -92,7 +90,7 @@ export default {
         .map(comment => ({
           ...comment,
           fullName: fullName(comment.author),
-          isSelf: comment.author.user_id === currentUserId
+          isSelf: isSelf(comment.author)
         }));
     };
 

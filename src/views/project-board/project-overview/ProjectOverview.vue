@@ -2,11 +2,11 @@
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
       <BIMDataTooltip
-        v-if="!project.isGuest"
+        v-if="!isProjectGuest(project)"
         class="project-overview__tooltip-upload"
         color="high"
         position="left"
-        :disabled="space.isUserOrga || !isFullSmartData(spaceSubInfo)"
+        :disabled="isUserOrga(space) || !isFullSmartData(spaceSubInfo)"
         :text="
           $t(
             `ProjectOverview.uploadDisableMessage.${
@@ -22,7 +22,7 @@
           fill
           radius
           :icon="isLG"
-          :disabled="!space.isUserOrga && isFullSmartData(spaceSubInfo)"
+          :disabled="!isUserOrga(space) && isFullSmartData(spaceSubInfo)"
           @click="
             () =>
               shouldSubscribe ? openSubscriptionModal() : toggleFileUploader()
@@ -103,6 +103,7 @@ import { useFiles } from "../../../state/files.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
+import { useUser } from "../../../state/user.js";
 import { debounce } from "../../../utils/async.js";
 import { isFullSmartData, isFullTotal } from "../../../utils/spaces.js";
 // Components
@@ -125,6 +126,7 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const { isUserOrga, isProjectGuest } = useUser();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations } = useProjects();
     const { loadProjectModels, projectModels } = useModels();
@@ -184,6 +186,8 @@ export default {
       closeFileUploader,
       isFullSmartData,
       isFullTotal,
+      isProjectGuest,
+      isUserOrga,
       notifyForbiddenUpload,
       openFileUploader,
       openSubscriptionModal,

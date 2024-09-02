@@ -1,7 +1,14 @@
 import { reactive, readonly, toRefs } from "vue";
-import { SPACE_ROLE } from "../config/spaces.js";
+import { FILE_PERMISSION } from "../config/files.js";
 import { PROJECT_ROLE } from "../config/projects.js";
+import { SPACE_ROLE } from "../config/spaces.js";
 import UserService from "../services/UserService.js";
+
+import { useOrganizations } from "./organizations.js";
+
+const { userOrganizations } = useOrganizations();
+
+// ---
 
 const state = reactive({
   isNew: false,
@@ -69,12 +76,24 @@ const setGuidedTourComplete = async tour => {
   await loadGuidedTours();
 };
 
+const isSelf = user => {
+  return state.user.id === (user.user_id || user.id);
+};
+
+const isUserOrga = space => {
+  return !!userOrganizations.value.find(orga => orga.id === space.organization.id);
+};
+
 const isSpaceAdmin = space => {
-  return state.spaceRoles[space.id] === SPACE_ROLE.ADMIN;
+  return state.spaceRoles[space?.id] === SPACE_ROLE.ADMIN;
 };
 
 const isProjectAdmin = project => {
-  return state.projectRoles[project.id] === PROJECT_ROLE.ADMIN;
+  return state.projectRoles[project?.id] === PROJECT_ROLE.ADMIN;
+};
+
+const isProjectGuest = project => {
+  return state.projectRoles[project?.id] === PROJECT_ROLE.GUEST;
 };
 
 const isFavoriteSpace = space => {
@@ -88,6 +107,17 @@ const isFavoriteProject = project => {
 const isGuidedTourComplete = tour => {
   return state.guidedTours.some(t => t.name === tour.name);
 };
+
+function hasAdminPerm(project, file) {
+  const files = [].concat(file);
+  return !isProjectGuest(project) &&
+    (isProjectAdmin(project) || files.every(f => f?.user_permission === FILE_PERMISSION.READ_WRITE));
+}
+
+function hasAdminPermModel(project, model) {
+  const models = [].concat(model);
+  return hasAdminPerm(project, models.map(m => m.document));
+}
 
 export function useUser() {
   const readonlyState = readonly(state);
@@ -103,10 +133,15 @@ export function useUser() {
     removeFavoriteProject,
     loadGuidedTours,
     setGuidedTourComplete,
+    isSelf,
+    isUserOrga,
     isSpaceAdmin,
     isProjectAdmin,
+    isProjectGuest,
     isFavoriteSpace,
     isFavoriteProject,
-    isGuidedTourComplete
+    isGuidedTourComplete,
+    hasAdminPerm,
+    hasAdminPermModel,
   };
 }

@@ -97,8 +97,8 @@
 
 <script>
 import { computed, ref, watch } from "vue";
-import { FILE_PERMISSION } from "../../../../config/files.js";
 import { useFiles } from "../../../../state/files.js";
+import { useUser } from "../../../../state/user.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 
 export default {
@@ -122,6 +122,7 @@ export default {
   },
   emits: ["close", "folder-selected"],
   setup(props, { emit }) {
+    const { hasAdminPerm } = useUser();
     const { fileStructureHandler: handler } = useFiles();
 
     const folderPath = ref([]);
@@ -134,8 +135,7 @@ export default {
         .filter(
           child =>
             !props.files.some(f => child.id === f.id) &&
-            (props.project.isAdmin ||
-              child.user_permission === FILE_PERMISSION.READ_WRITE)
+            hasAdminPerm(props.project, child)
         )
         .sort((a, b) => {
           if (isFolder(a) && !isFolder(b)) return -1;

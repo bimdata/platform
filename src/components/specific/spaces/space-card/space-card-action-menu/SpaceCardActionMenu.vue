@@ -48,7 +48,7 @@
                 }}
               </BIMDataButton>
               <BIMDataButton
-                v-if="space.isAdmin"
+                v-if="isSpaceAdmin(space)"
                 data-test-id="btn-open-update"
                 ghost
                 squared
@@ -57,13 +57,13 @@
                 {{ $t("t.rename") }}
               </BIMDataButton>
               <SpaceCardImageButton
-                v-if="space.isAdmin"
+                v-if="isSpaceAdmin(space)"
                 data-test-id="btn-update-image"
                 :space="space"
                 @upload-completed="closeMenu"
               />
               <BIMDataButton
-                v-if="space.isAdmin && space.image"
+                v-if="isSpaceAdmin(space) && space.image"
                 data-test-id="btn-delete-image"
                 ghost
                 squared
@@ -72,7 +72,7 @@
                 {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
               </BIMDataButton>
               <BIMDataButton
-                v-if="space.isAdmin"
+                v-if="isSpaceAdmin(space)"
                 data-test-id="btn-open-delete"
                 color="high"
                 ghost
@@ -112,7 +112,7 @@ export default {
     }
   },
   setup(props) {
-    const { isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
+    const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
       useUser();
     const { removeSpaceImage } = useSpaces();
 
@@ -175,6 +175,7 @@ export default {
       closeDeleteGuard,
       closeUpdateForm,
       isFavoriteSpace,
+      isSpaceAdmin,
       openDeleteGuard,
       openUpdateForm,
       removeImage,

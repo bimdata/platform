@@ -1,11 +1,18 @@
 import { reactive, readonly, toRefs } from "vue";
 import SpaceService from "../services/SpaceService.js";
 import SubscriptionService from "../services/SubscriptionService.js";
+import { sortSpaces } from "../utils/spaces.js";
+import { sortUsers } from "../utils/users.js";
 
-import { mapSpaces, mapUsers } from "./mappers.js";
 import { useOrganizations } from "./organizations.js";
 import { useProjects } from "./projects.js";
 import { useUser } from "./user.js";
+
+const { loadUser, isSpaceAdmin } = useUser();
+const { loadOrganizationSpaces } = useOrganizations();
+const { loadUserProjects } = useProjects();
+
+// ---
 
 const state = reactive({
   userSpaces: [],
@@ -24,7 +31,7 @@ const setCurrentSpace = id => {
 const loadUserSpaces = async () => {
   const spaces = await SpaceService.fetchUserSpaces();
   const freeSpaces = await SubscriptionService.fetchFreeSpaces();
-  state.userSpaces = mapSpaces(spaces, freeSpaces);
+  state.userSpaces = sortSpaces(spaces);
   state.freeSpaces = freeSpaces;
   return spaces;
 };
@@ -37,9 +44,9 @@ const loadSpaceSubInfo = async space => {
 
 const loadSpaceUsers = async space => {
   let users = [];
-  if (space.isAdmin) {
+  if (isSpaceAdmin(space)) {
     users = await SpaceService.fetchSpaceUsers(space);
-    users = mapUsers(users);
+    users = sortUsers(users);
   }
   state.spaceUsers = users;
   return users;
@@ -47,7 +54,7 @@ const loadSpaceUsers = async space => {
 
 const loadSpaceInvitations = async space => {
   let invitations = [];
-  if (space.isAdmin) {
+  if (isSpaceAdmin(space)) {
     invitations = await SpaceService.fetchSpaceInvitations(space);
   }
   state.spaceInvitations = invitations;
@@ -57,10 +64,8 @@ const loadSpaceInvitations = async space => {
 const createSpace = async space => {
   const newSpace = await SpaceService.createSpace(space);
 
-  const { loadUser } = useUser();
   await loadUser();
   await loadUserSpaces();
-  const { loadOrganizationSpaces } = useOrganizations();
   await loadOrganizationSpaces(space.organization);
 
   return newSpace;
@@ -70,7 +75,6 @@ const updateSpace = async space => {
   const newSpace = await SpaceService.updateSpace(space);
 
   await loadUserSpaces();
-  const { loadOrganizationSpaces } = useOrganizations();
   await loadOrganizationSpaces(space.organization);
 
   return newSpace;
@@ -80,7 +84,6 @@ const removeSpaceImage = async space => {
   const newSpace = await SpaceService.removeSpaceImage(space);
 
   await loadUserSpaces();
-  const { loadOrganizationSpaces } = useOrganizations();
   await loadOrganizationSpaces(space.organization);
 
   return newSpace;
@@ -89,12 +92,9 @@ const removeSpaceImage = async space => {
 const deleteSpace = async space => {
   await SpaceService.deleteSpace(space);
 
-  const { loadUser } = useUser();
   await loadUser();
   await loadUserSpaces();
-  const { loadOrganizationSpaces } = useOrganizations();
   await loadOrganizationSpaces(space.organization);
-  const { loadUserProjects } = useProjects();
   await loadUserProjects();
 
   return space;
@@ -133,6 +133,10 @@ const deleteSpaceUser = async (space, user) => {
   return user;
 };
 
+const isFreeSpace = space => {
+  return !!state.freeSpaces.find(s => s.id === space.id);
+};
+
 export function useSpaces() {
   const readonlyState = readonly(state);
   return {
@@ -151,6 +155,7 @@ export function useSpaces() {
     sendSpaceInvitation,
     cancelSpaceInvitation,
     updateSpaceUser,
-    deleteSpaceUser
+    deleteSpaceUser,
+    isFreeSpace,
   };
 }

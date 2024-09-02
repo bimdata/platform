@@ -31,10 +31,11 @@
   }
 
   &__body {
+    height: calc(100% - var(--spacing-unit));
+    overflow: auto;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-unit);
-    overflow: auto;
 
     &__head {
       display: flex;

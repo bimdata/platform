@@ -78,6 +78,8 @@
             @create-model="createModelFromFile"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
+            @dragover.prevent="() => {}"
+            @drop.prevent="uploadFiles"
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager"
@@ -86,8 +88,6 @@
             @open-visa-manager="openVisaManager"
             @remove-model="removeModel"
             @row-drop="({ event, data }) => uploadFiles(event, data)"
-            @drop.prevent="uploadFiles"
-            @dragover.prevent="() => {}"
             @selection-changed="setSelection"
           />
           <AllFilesTable
@@ -186,10 +186,8 @@ import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
-
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
-
 import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
@@ -207,25 +205,23 @@ import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
+import AllFilesTable from "../all-files-table/AllFilesTable.vue";
 import AppSidePanelContent from "../../../specific/app/app-side-panel/AppSidePanelContent.vue";
 import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
+import FilesManagerActions from "./files-manager-actions/FilesManagerActions.vue";
 import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboarding.vue";
 import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
+import FoldersTable from "../folder-table/FoldersTable.vue";
 import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
-
-import FoldersTable from "../folder-table/FoldersTable.vue";
-import VisasTable from "../visas-table/VisasTable.vue";
-import AllFilesTable from "../all-files-table/AllFilesTable.vue";
 import VisasDeleteModal from "./visas-delete-modal/VisasDeleteModal.vue";
-
-import FilesManagerActions from "./files-manager-actions/FilesManagerActions.vue";
+import VisasTable from "../visas-table/VisasTable.vue";
 
 export default {
   components: {
@@ -235,11 +231,9 @@ export default {
     FilesDeleteModal,
     FilesManagerActions,
     FilesManagerOnboarding,
-    // FilesTable,
     FileTree,
     FileTreePreviewModal,
     FolderAccessManager,
-    // FolderCreationButton,
     FoldersTable,
     TagsMain,
     VersioningMain,
@@ -276,7 +270,6 @@ export default {
       fileStructureHandler: handler,
       moveFiles: move,
       downloadFiles: download,
-      projectFileStructure,
     } = useFiles();
     const { createModel, deleteModels } = useModels();
 

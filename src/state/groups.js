@@ -1,6 +1,12 @@
 import { reactive, readonly, toRefs } from "vue";
 import GroupService from "../services/GroupService.js";
 
+import { useUser } from "./user.js";
+
+const { isProjectAdmin } = useUser();
+
+// ---
+
 const state = reactive({
   projectGroups: [],
   currentGroup: null
@@ -14,7 +20,7 @@ const setCurrentGroup = id => {
 
 const loadProjectGroups = async project => {
   let groups = [];
-  if (project.isAdmin) {
+  if (isProjectAdmin(project)) {
     groups = await GroupService.fetchProjectGroups(project);
     groups.sort((a, b) => (a.id < b.id ? 1 : -1));
   }

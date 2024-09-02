@@ -95,9 +95,9 @@
         @download="$emit('download', file)"
         @file-clicked="$emit('file-clicked', file)"
         @manage-access="$emit('manage-access', file)"
+        @open-tag-manager="$emit('open-tag-manager', file)"
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"
-        @open-tag-manager="$emit('open-tag-manager', file)"
         @remove-model="$emit('remove-model', file)"
         @update="nameEditMode[file.id] = true"
       />
@@ -108,15 +108,16 @@
 <script>
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey } from "../../../../utils/files.js";
-import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 
 // Components
 import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
 import FileUploadCard from "../file-upload-card/FileUploadCard.js";
 import FolderUploadCard from "../file-upload-card/FolderUploadCard.js";
+
 import FileActionsCell from "../files-table/file-actions-cell/FileActionsCell.vue";
 import FileNameCell from "../files-table/file-name-cell/FileNameCell.vue";
 import FileTagsCell from "../files-table/file-tags-cell/FileTagsCell.vue";
@@ -169,9 +170,9 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
-    "open-tag-manager",
     "remove-model",
     "row-drop",
     "selection-changed",

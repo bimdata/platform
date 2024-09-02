@@ -1,3 +1,35 @@
+<script setup>
+import { computed } from "vue";
+import routeNames from "../../../../router/route-names.js";
+import { useProjects } from "../../../../state/projects.js";
+import { useSpaces } from "../../../../state/spaces.js";
+import { useUser } from "../../../../state/user.js";
+// Components
+import AppLink from "../../app/app-link/AppLink.vue";
+import FavoriteBadge from "../../../generic/favorite-badge/FavoriteBadge.vue";
+import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu.vue";
+import SpaceCardImage from "./space-card-image/SpaceCardImage.vue";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  },
+  actionMenu: {
+    type: Boolean,
+    default: true
+  }
+});
+
+const { isFavoriteSpace } = useUser();
+const { isFreeSpace } = useSpaces();
+const { projectsBySpace } = useProjects();
+
+const nbProjects = computed(
+  () => projectsBySpace.value[props.space.id]?.length ?? 0
+);
+</script>
+
 <template>
   <AppLink
     data-test-id="space-card"
@@ -9,7 +41,7 @@
         <SpaceCardActionMenu v-if="actionMenu" :space="space" />
       </template>
       <template #content>
-        <div v-if="space.isFree" class="free-badge">
+        <div v-if="isFreeSpace(space)" class="free-badge">
           {{ $t("SpaceCard.free") }}
         </div>
         <FavoriteBadge v-if="isFavoriteSpace(space)" />
@@ -32,51 +64,5 @@
     </BIMDataCard>
   </AppLink>
 </template>
-
-<script>
-import { computed } from "vue";
-import routeNames from "../../../../router/route-names.js";
-import { useProjects } from "../../../../state/projects.js";
-import { useUser } from "../../../../state/user.js";
-// Components
-import AppLink from "../../app/app-link/AppLink.vue";
-import FavoriteBadge from "../../../generic/favorite-badge/FavoriteBadge.vue";
-import SpaceCardActionMenu from "./space-card-action-menu/SpaceCardActionMenu.vue";
-import SpaceCardImage from "./space-card-image/SpaceCardImage.vue";
-
-export default {
-  components: {
-    AppLink,
-    FavoriteBadge,
-    SpaceCardActionMenu,
-    SpaceCardImage
-  },
-  props: {
-    space: {
-      type: Object,
-      required: true
-    },
-    actionMenu: {
-      type: Boolean,
-      default: true
-    }
-  },
-  setup(props) {
-    const { isFavoriteSpace } = useUser();
-    const { projectsBySpace } = useProjects();
-
-    const nbProjects = computed(
-      () => projectsBySpace.value[props.space.id]?.length ?? 0
-    );
-
-    return {
-      // References
-      isFavoriteSpace,
-      nbProjects,
-      routeNames
-    };
-  }
-};
-</script>
 
 <style scoped lang="scss" src="./SpaceCard.scss"></style>

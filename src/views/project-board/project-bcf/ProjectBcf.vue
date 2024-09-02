@@ -34,7 +34,7 @@
       </teleport>
     </template>
     <AppSlotContent name="project-board-action">
-      <template v-if="project.isAdmin">
+      <template v-if="isProjectAdmin(project)">
         <BIMDataButton color="primary" outline radius icon @click="openSettings">
           <BIMDataIconSettings size="xxs" />
         </BIMDataButton>
@@ -465,9 +465,9 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const { pushNotification } = useAppNotification();
+    const { user, isProjectAdmin } = useUser();
     const { currentProject } = useProjects();
     const { projectModels } = useModels();
-    const { user, isProjectAdmin } = useUser();
 
     const {
       topics,
@@ -783,8 +783,6 @@ export default {
       topicSnapshot,
       user,
       // Methods
-      hasEditPermission,
-      hasDeletePermission,
       applyFilters,
       closeDeleteMode,
       closeMetrics,
@@ -794,7 +792,10 @@ export default {
       exportBcfTopics,
       exportBcfXlsxTopics,
       fileUploadInput,
+      hasDeletePermission,
+      hasEditPermission,
       importBcfTopics,
+      isProjectAdmin,
       openSettings,
       openTopicCreate,
       openTopicUpdate,

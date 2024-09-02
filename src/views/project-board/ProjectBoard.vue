@@ -34,7 +34,7 @@
         <div class="project-board__header__actions">
           <SpaceSizeInfo
             v-if="
-              IS_SUBSCRIPTION_ENABLED && space.isAdmin && currentTab.id !== 'bcf'
+              IS_SUBSCRIPTION_ENABLED && isSpaceAdmin(space) && currentTab.id !== 'bcf'
             "
             :space="space"
             :spaceSubInfo="spaceSubInfo"
@@ -64,6 +64,7 @@ import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
+import { useUser } from "../../state/user.js";
 import { isFullTotal } from "../../utils/spaces.js";
 
 // Components
@@ -115,14 +116,15 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const { currentSpace, spaceSubInfo } = useSpaces();
+    const { isUserOrga, isSpaceAdmin } = useUser();
+    const { currentSpace, spaceSubInfo, isFreeSpace } = useSpaces();
     const { currentProject, loadProjectUsers, loadProjectInvitations } = useProjects();
     const { projectView } = useSession();
 
     const shouldSubscribe = computed(
       () =>
-        currentSpace.value.isFree &&
-        currentSpace.value.isUserOrga &&
+        isFreeSpace(currentSpace.value) &&
+        isUserOrga(currentSpace.value) &&
         isFullTotal(spaceSubInfo.value)
     );
     provide("shouldSubscribe", shouldSubscribe);
@@ -154,7 +156,7 @@ export default {
           loadProjectInvitations(currentProject.value);
         }
       },
-      5000
+      10000
     );
 
     return {
@@ -167,6 +169,7 @@ export default {
       tabs: tabsDef,
       // Methods
       changeView,
+      isSpaceAdmin,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

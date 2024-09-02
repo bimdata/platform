@@ -21,7 +21,7 @@
       <template #right>
         <div class="space-board__header__actions">
           <SpaceSizeInfo
-            v-if="IS_SUBSCRIPTION_ENABLED && space.isAdmin"
+            v-if="IS_SUBSCRIPTION_ENABLED && isSpaceAdmin(space)"
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
@@ -36,7 +36,7 @@
             <BIMDataIconAlphabeticalSort size="s" />
           </BIMDataButton>
           <BIMDataButton
-            v-if="space.isAdmin"
+            v-if="isSpaceAdmin(space)"
             data-test-id="btn-users"
             class="space-board__header__btn"
             fill
@@ -69,7 +69,10 @@
         :style="{ justifyContent: isMD ? 'center' : '' }"
       >
         <transition-group name="grid">
-          <ProjectCreationCard v-if="space.isAdmin" :key="-1" :space="space" />
+          <ProjectCreationCard
+            v-if="isSpaceAdmin(space)"
+            :key="-1" :space="space"
+          />
           <ProjectCard
             v-for="project in projects"
             :key="project.id"
@@ -90,6 +93,7 @@ import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
+import { useUser } from "../../state/user.js";
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppLoading from "../../components/specific/app/app-loading/AppLoading.vue";
@@ -117,6 +121,7 @@ export default {
   },
   setup() {
     const { isOpenRight, openSidePanel } = useAppSidePanel();
+    const { isSpaceAdmin } = useUser();
     const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations, loadSpaceUsers, loadSpaceInvitations } = useSpaces();
     const { spaceProjects } = useProjects();
 
@@ -137,7 +142,7 @@ export default {
           loadSpaceInvitations(currentSpace.value);
         }
       },
-      5000
+      10000
     );
 
     return {
@@ -150,6 +155,7 @@ export default {
       spaceSubInfo,
       users: spaceUsers,
       // Methods
+      isSpaceAdmin,
       openUsersManager: openSidePanel,
       sortProjects,
       // Responsive breakpoints

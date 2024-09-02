@@ -85,11 +85,6 @@ const MODEL_STATUS = Object.freeze({
 });
 
 const MODEL_CONFIG = Object.freeze({
-  [MODEL_TYPE.IFC]: {
-    ext: [MODEL_EXTENSIONS.IFC, MODEL_EXTENSIONS.IFCZIP],
-    window: WINDOWS.IFC3D,
-    icon: "fileIfcPolychrome",
-  },
   [MODEL_TYPE.DWG]: {
     ext: [MODEL_EXTENSIONS.DWG],
     window: WINDOWS.DWG,
@@ -99,6 +94,11 @@ const MODEL_CONFIG = Object.freeze({
     ext: [MODEL_EXTENSIONS.DXF],
     window: WINDOWS.DXF,
     icon: "fileDxfPolychrome",
+  },
+  [MODEL_TYPE.IFC]: {
+    ext: [MODEL_EXTENSIONS.IFC, MODEL_EXTENSIONS.IFCZIP],
+    window: WINDOWS.IFC3D,
+    icon: "fileIfcPolychrome",
   },
   [MODEL_TYPE.JPEG]: {
     ext: [MODEL_EXTENSIONS.JPEG, MODEL_EXTENSIONS.JPG],

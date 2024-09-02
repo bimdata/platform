@@ -26,7 +26,7 @@
     >
       <transition-group name="grid">
         <GroupCreationCard
-          v-if="project.isAdmin"
+          v-if="isProjectAdmin(project)"
           :key="-1"
           :project="project"
         />
@@ -46,6 +46,7 @@ import { useListFilter } from "../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useGroups } from "../../state/groups.js";
 import { useProjects } from "../../state/projects.js";
+import { useUser } from "../../state/user.js";
 
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
@@ -63,6 +64,7 @@ export default {
     GroupCreationCard
   },
   setup() {
+    const { isProjectAdmin } = useUser();
     const { currentProject } = useProjects();
     const { projectGroups } = useGroups();
 
@@ -76,6 +78,8 @@ export default {
       groups: displayedGroups,
       project: currentProject,
       searchText,
+      // Methods
+      isProjectAdmin,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

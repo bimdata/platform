@@ -34,7 +34,7 @@
                 width="auto"
                 maxWidth="220px"
                 :text="
-                  fullName + (user.isSelf ? ` (${$t('UserCard.self')})` : '')
+                  fullName + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')
                 "
               />
               <UserRoleBadge :role="role" />
@@ -57,6 +57,7 @@
 <script>
 import { computed, provide, ref } from "vue";
 import { useToggle } from "../../../../composables/toggle.js";
+import { useUser } from "../../../../state/user.js";
 // Components
 import UserAvatar from "../user-avatar/UserAvatar.vue";
 import UserRoleBadge from "../user-role-badge/UserRoleBadge.vue";
@@ -87,11 +88,12 @@ export default {
     }
   },
   setup(props) {
+    const { isSelf, isSpaceAdmin, isProjectAdmin } = useUser();
+
     const showActionMenu = computed(
       () =>
-        !props.user.isSelf &&
-        ((props.space && props.space.isAdmin) ||
-          (props.project && props.project.isAdmin))
+        !isSelf(props.user) &&
+        (isSpaceAdmin(props.space) || isProjectAdmin(props.project))
     );
     const fullName = computed(
       () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
@@ -131,6 +133,7 @@ export default {
       // Methods
       closeDeleteGuard,
       closeUpdateForm,
+      isSelf,
       openDeleteGuard,
       openUpdateForm,
       resetCard

@@ -22,19 +22,13 @@
         width="100%"
         :project="project"
         :folder="currentFolder"
-        :disabled="project.isGuest || !hasAdminPerm(project, currentFolder)"
+        :disabled="!hasAdminPerm(project, currentFolder)"
       >
         <BIMDataIconAddFolder size="xs" />
-        <span
-          v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
-          style="margin-left: 6px"
-        >
+        <span v-if="isLargeLayout" style="margin-left: 6px">
           {{ $t("FolderCreationButton.text") }}
         </span>
-        <span
-          v-else-if="(project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)"
-          style="margin-left: 6px"
-        >
+        <span v-else-if="isMediumLayout" style="margin-left: 6px">
           {{ $t("t.folder") }}
         </span>
       </FolderCreationButton>
@@ -43,7 +37,7 @@
         data-test-id="btn-upload-file"
         class="files-manager__actions__btn-new-file"
         color="high"
-        :disabled="currentSpace.isUserOrga || !isFullTotal(spaceSubInfo)"
+        :disabled="isUserOrga(currentSpace) || !isFullTotal(spaceSubInfo)"
         :text="
           $t(
             `ProjectOverview.uploadDisableMessage.${
@@ -63,18 +57,10 @@
             @click="$emit('open-subscription-modal')"
           >
             <BIMDataIconAddFile size="xs" />
-            <span
-              v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
-              style="margin-left: 6px"
-            >
+            <span v-if="isLargeLayout" style="margin-left: 6px">
               {{ $t("FileUploadButton.addFileButtonText") }}
             </span>
-            <span
-              v-else-if="
-                (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
-              "
-              style="margin-left: 6px"
-            >
+            <span v-else-if="isMediumLayout" style="margin-left: 6px">
               {{ $t("t.file") }}
             </span>
           </BIMDataButton>
@@ -87,9 +73,8 @@
             radius
             icon
             :disabled="
-              project.isGuest ||
-              (!currentSpace.isUserOrga && isFullTotal(spaceSubInfo)) ||
-              !hasAdminPerm(project, currentFolder)
+              !hasAdminPerm(project, currentFolder) ||
+              (!isUserOrga(currentSpace) && isFullTotal(spaceSubInfo))
             "
             @click="
               fileUploadInput('file', (event) => $emit('upload-files', event), {
@@ -99,18 +84,10 @@
             "
           >
             <BIMDataIconAddFile size="xs" />
-            <span
-              v-if="(project.isAdmin && !isXXXL) || (!project.isAdmin && !isMidXL)"
-              style="margin-left: 6px"
-            >
+            <span v-if="isLargeLayout" style="margin-left: 6px">
               {{ $t("FileUploadButton.addFileButtonText") }}
             </span>
-            <span
-              v-else-if="
-                (project.isAdmin && !isXL && isXXXL) || (!project.isAdmin && !isMD && isMidXL)
-              "
-              style="margin-left: 6px"
-            >
+            <span v-else-if="isMediumLayout" style="margin-left: 6px">
               {{ $t("t.file") }}
             </span>
           </BIMDataButton>
@@ -132,24 +109,21 @@
 
 <script>
 import { computed, ref, inject, watch } from "vue";
-
-import FileService from "../../../../../services/FileService.js";
-import { useFiles } from "../../../../../state/files.js";
-import { fileUploadInput } from "../../../../../utils/upload.js";
-import { getFilesFromEvent } from "../../../../../utils/files.js";
-import { hasAdminPerm } from "../../../../../utils/file-structure.js";
-import { isFullTotal } from "../../../../../utils/spaces.js";
-
 import { useI18n } from "vue-i18n";
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import {
   useStandardBreakpoints,
   useCustomBreakpoints,
 } from "../../../../../composables/responsive.js";
+import { useFiles } from "../../../../../state/files.js";
+import { useUser } from "../../../../../state/user.js";
+import { isFullTotal } from "../../../../../utils/spaces.js";
+import { fileUploadInput } from "../../../../../utils/upload.js";
 
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
-
+// Components
 import FileDragAndDropModal from "../file-drag-and-drop-modal/FileDragAndDropModal.vue";
 import FolderCreationButton from "../../folder-creation-button/FolderCreationButton.vue";
+
 export default {
   components: {
     FolderCreationButton,
@@ -186,10 +160,11 @@ export default {
   emits: ["open-subscription-modal", "update:searchText", "upload-files"],
   setup(props, { emit }) {
     const { t } = useI18n();
+    const { isUserOrga, isProjectAdmin, isProjectGuest, hasAdminPerm } = useUser();
+    const { openModal } = useAppModal();
 
     const shouldSubscribe = inject("shouldSubscribe");
 
-    const { openModal, closeModal } = useAppModal();
 
     const {
       downloadFiles: download,
@@ -204,7 +179,7 @@ export default {
     const menuItems = computed(() => {
       const items = [];
 
-      if (props.project.isAdmin) {
+      if (isProjectAdmin(props.project)) {
         items.push(
           {
             name: t("FilesManager.structureImport"),
@@ -217,7 +192,7 @@ export default {
         );
       }
 
-      if (!props.project.isGuest) {
+      if (!isProjectGuest(props.project)) {
         items.splice(1, 0, {
           name: t("FilesManager.folderImport"),
           action: () => {
@@ -244,10 +219,22 @@ export default {
       return `${fileManager.value?.$el?.getBoundingClientRect().height - H - y}px`;
     });
 
-    const { isXXXL, isMidXL } = useCustomBreakpoints({
+    const { isMD, isLG, isXL } = useStandardBreakpoints();
+    const { isMidXXL, isXXXL } = useCustomBreakpoints({
+      isMidXXL: ({ width }) => width <= 1277 - 0.02,
       isXXXL: ({ width }) => width <= 1521 - 0.02,
-      isMidXL: ({ width }) => width <= 1277 - 0.02,
     });
+
+    const isLargeLayout = computed(
+      () =>
+        (isProjectAdmin(props.project) && !isXXXL.value) ||
+        (!isProjectAdmin(props.project) && !isMidXXL.value)
+    );
+    const isMediumLayout = computed(
+      () =>
+        (isProjectAdmin(props.project) && !isXL.value && isXXXL.value) ||
+        (!isProjectAdmin(props.project) && !isMD.value && isMidXXL.value)
+    );
 
     const searchText = ref(props.initialSearchText || '');
     watch(searchText, (newValue) => {
@@ -255,9 +242,12 @@ export default {
     });
 
     return {
+      // References
       dropdown,
       dropdownMaxHeight,
       fileManager,
+      isLargeLayout,
+      isMediumLayout,
       menuItems,
       searchText,
       shouldSubscribe,
@@ -265,11 +255,11 @@ export default {
       downloadFiles,
       hasAdminPerm,
       isFullTotal,
+      isUserOrga,
       fileUploadInput,
       // Responsive breakpoints
-      ...useStandardBreakpoints(),
-      isMidXL,
-      isXXXL,
+      isMD,
+      isLG,
     };
   },
 };
