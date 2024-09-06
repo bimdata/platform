@@ -100,8 +100,7 @@
     "title": "Manage access rights",
     "rightsHeader": "Rights",
     "membersHeader": "Members",
-    "groupHeader": "Group",
-    "propagate": "Apply rights to sub folders (recursively)"
+    "groupHeader": "Group"
   },
   "FolderSelector": {
     "selectedFolder": "Selected folder",

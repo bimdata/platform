@@ -89,10 +89,10 @@ const update = perm => {
       @element-click="update"
     >
       <template #header>
-        {{ $t(`GroupPermissionSelector.options.${selectedPermission.id}`) }}
+        {{ $t(`FolderPermissionSelector.options.${selectedPermission.id}`) }}
       </template>
       <template #element="{ element }">
-        {{ $t(`GroupPermissionSelector.options.${element.id}`) }}
+        {{ $t(`FolderPermissionSelector.options.${element.id}`) }}
       </template>
     </BIMDataDropdownList>
 

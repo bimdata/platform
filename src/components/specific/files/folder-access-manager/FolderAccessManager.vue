@@ -18,12 +18,13 @@ const props = defineProps({
   }
 });
 
-defineEmits(["close"]);
+const emit = defineEmits(["close"]);
 
 const { updateFiles } = useFiles();
 const { updateGroupPermission } = useGroups();
 
 const loading = ref(false);
+const closing = ref(false);
 const currentFolder = ref(null);
 const updates = new Map();
 
@@ -73,9 +74,26 @@ const submit = async () => {
   loadFolderInfo();
 };
 
+const onCloseClick = () => {
+  if (updates.size > 0) {
+    closing.value = true;
+  } else {
+    close();
+  }
+};
+
+const close = () => {
+  updates.clear();
+  closing.value = false;
+  emit("close");
+};
+
 watch(
   () => props.folder,
-  () => loadFolderInfo(),
+  () => {
+    updates.clear();
+    loadFolderInfo();
+  },
   { immediate: true }
 );
 </script>
@@ -88,7 +106,7 @@ watch(
         {{ $t("FolderAccessManager.title") }} -
         <BIMDataTextbox width="auto" maxWidth="100px" :text="currentFolder.name" />
       </span>
-      <BIMDataButton ghost rounded icon @click="$emit('close')">
+      <BIMDataButton ghost rounded icon @click="onCloseClick">
         <BIMDataIconClose size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
@@ -139,18 +157,39 @@ watch(
         />
       </transition-group>
 
-      <BIMDataButton
-        class="folder-access-manager__body__tail"
-        fill radius color="primary"
-        @click="submit"
-      >
-        {{ $t("t.save") }}
-      </BIMDataButton>
+      <div class="folder-access-manager__body__tail">
+        <BIMDataInfobox
+          :text="$t('FolderAccessManager.propagate')"
+          color="secondary"
+        />
+        <BIMDataButton fill radius color="primary" @click="submit">
+          {{ $t("t.save") }}
+        </BIMDataButton>
+      </div>
+
     </div>
   </div>
+
   <div v-show="loading" class="loading">
     <BIMDataSpinner class="spinner" />
   </div>
+
+  <BIMDataSafeZoneModal v-show="closing">
+    <template #title>
+      {{ $t("FolderAccessManager.safeZoneModal.title") }}
+    </template>
+    <template #text>
+      {{ $t("FolderAccessManager.safeZoneModal.text") }}
+    </template>
+    <template #actions>
+      <BIMDataButton width="120px" ghost radius @click="closing = false">
+        {{ $t("t.cancel") }}
+      </BIMDataButton>
+      <BIMDataButton width="120px" color="high" fill radius @click="close">
+        {{ $t("t.ok") }}
+      </BIMDataButton>
+    </template>
+  </BIMDataSafeZoneModal>
 </template>
 
 <style scoped lang="scss">
@@ -240,6 +279,11 @@ watch(
 
     &__tail {
       margin-top: auto;
+
+      .bimdata-btn {
+        width: 100%;
+        margin-top: var(--spacing-unit);
+      }
     }
   }
 }
