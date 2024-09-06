@@ -192,7 +192,7 @@ export default {
         );
       }
 
-      if (!isProjectGuest(props.project)) {
+      if (hasAdminPerm(props.project, props.currentFolder)) {
         items.splice(1, 0, {
           name: t("FilesManager.folderImport"),
           action: () => {
