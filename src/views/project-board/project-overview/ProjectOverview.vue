@@ -6,7 +6,7 @@
         class="project-overview__tooltip-upload"
         color="high"
         position="left"
-        :disabled="isUserOrga(space) || !isFullSmartData(spaceSubInfo)"
+        :disabled="isUserOrga(space) || !isFullTotal(spaceSubInfo)"
         :text="
           $t(
             `ProjectOverview.uploadDisableMessage.${
@@ -22,7 +22,7 @@
           fill
           radius
           :icon="isLG"
-          :disabled="!isUserOrga(space) && isFullSmartData(spaceSubInfo)"
+          :disabled="!isUserOrga(space) && isFullTotal(spaceSubInfo)"
           @click="
             () =>
               shouldSubscribe ? openSubscriptionModal() : toggleFileUploader()
@@ -105,7 +105,7 @@ import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
 import { useUser } from "../../../state/user.js";
 import { debounce } from "../../../utils/async.js";
-import { isFullSmartData, isFullTotal } from "../../../utils/spaces.js";
+import { isFullTotal } from "../../../utils/spaces.js";
 // Components
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
@@ -184,7 +184,6 @@ export default {
       users: projectUsers,
       // Methods
       closeFileUploader,
-      isFullSmartData,
       isFullTotal,
       isProjectGuest,
       isUserOrga,

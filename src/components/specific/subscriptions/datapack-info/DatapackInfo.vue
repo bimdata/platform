@@ -5,7 +5,7 @@
     </div>
     <div class="datapack-info__info">
       <span>
-        {{ formatBytes(spaceSubInfo.smart_data_size_available) }}
+        {{ formatBytes(spaceSubInfo.total_size_available) }}
       </span>
       <span>
         ({{
