@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . /opt/
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 RUN npm run build
 
