@@ -100,8 +100,7 @@
     "title": "Gestión de derechos de acceso",
     "rightsHeader": "Derechos",
     "membersHeader": "Miembros",
-    "groupHeader": "Grupo",
-    "propagate": "Propaga los derechos a las subcarpetas"
+    "groupHeader": "Grupo"
   },
   "FolderSelector": {
     "selectedFolder": "Carpeta seleccionada",

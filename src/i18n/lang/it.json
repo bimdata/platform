@@ -99,8 +99,7 @@
     "title": "Gestisci i diritti di accesso",
     "rightsHeader": "Diritti",
     "membersHeader": "Membri",
-    "groupHeader": "Gruppo",
-    "propagate": "Applicare i diritti alle sottocartelle"
+    "groupHeader": "Gruppo"
   },
   "FolderSelector": {
     "selectedFolder": "Cartella selezionata",

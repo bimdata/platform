@@ -40,6 +40,7 @@
     "projects": "Projets",
     "rename": "Renommer",
     "rootFolder": "Dossier racine",
+    "save": "Sauvegarder",
     "search": "Rechercher",
     "size": "Taille",
     "space": "Espace",
@@ -164,10 +165,14 @@
   },
   "FolderAccessManager": {
     "title": "Gestion des droits d'accès",
-    "propagate": "Propager les droits aux sous dossiers",
     "rightsHeader": "Droits",
     "membersHeader": "Membres",
-    "groupHeader": "Groupe"
+    "groupHeader": "Groupe",
+    "propagate": "Pour propager les droits aux sous-dossiers, veuillez vous assurer de cocher la case avant de valider le formulaire.",
+    "safeZoneModal": {
+      "title": "Attention !",
+      "text": "Les droits d'accès ont été modifiés mais n'ont pas été enregistrés, êtes-vous sûr de vouloir fermer le gestionnaire de droits ? (les modifications seront perdues)"
+    }
   },
   "FolderCreationButton": {
     "text": "Nouveau dossier"
@@ -361,6 +366,7 @@
   "FolderPermissionSelector": {
     "label": "Par défaut",
     "options": {
+      "default": "Par défaut",
       "accessDenied": "Accès refusé",
       "readOnly": "Lecture seule",
       "readWrite": "Lecture / Écriture"
@@ -368,14 +374,6 @@
   },
   "GroupMembersSelector": {
     "title": "Gestion des membres du groupe"
-  },
-  "GroupPermissionSelector": {
-    "options": {
-      "default": "Par défaut",
-      "accessDenied": "Accès refusé",
-      "readOnly": "Lecture seule",
-      "readWrite": "Lecture / Écriture"
-    }
   },
   "Errors": {
     "spacesFetchError": "Impossible de récupérer la liste des espaces",
