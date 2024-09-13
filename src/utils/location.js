@@ -10,7 +10,7 @@
  *  DD is negative if South or West
  */
 
-import DmsCoordinates, { parseDms, Dms } from "dms-conversion";
+import DmsCoordinates, { parseDms } from "dms-conversion";
 
 
 /**
@@ -77,24 +77,26 @@ function DD2DMS(lat, long) {
   return [latDMS, longDMS];
 }
 
+const MAP_TILER_TOKEN = ENV.VUE_APP_MAPTILER_TOKEN;
+
 /**
  * Get the DD coordinates of a given address using OpenStreetMapAPI.
  * The returned value is an object with a "longitude" and "latitude" fields.
- * If no coordinates are found, "longitude" and "latitude" will be undefined.
+ * If no coordinates are found, "longitude" and "latitude" will be null.
  *
  * @param {String} address a postal address
  * @returns {Object} DD coordinates
  */
 const getCoordinatesFromAddress = async address => {
-  const formattedAddress = address.replace(/ /g, "+");
   const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${formattedAddress}&format=json`
+    `https://api.maptiler.com/geocoding/${address}.json?key=${MAP_TILER_TOKEN}&types=poi&excludeTypes=true`
   );
-  const data = await response.json().then(json => ({
-    longitude: json[0] ? +json[0].lon : undefined,
-    latitude: json[0] ? +json[0].lat : undefined
-  }));
-  return data;
+  const data = await response.json();
+  const bestResult = data.features[0];
+  return {
+    longitude: bestResult?.geometry.coordinates[0],
+    latitude: bestResult?.geometry.coordinates[1]
+  };
 };
 
 /**
@@ -105,18 +107,15 @@ const getCoordinatesFromAddress = async address => {
  * @returns {Array} a list of search results
  */
 const getAdressesFromSearchText = async searchText => {
-  const formattedSearchText = searchText.replace(/ /g, "+");
   const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${formattedSearchText}&format=json`
+    `https://api.maptiler.com/geocoding/${searchText}.json?key=${MAP_TILER_TOKEN}&types=poi&excludeTypes=true`
   );
-  const data = await response.json().then(json =>
-    json.map(result => ({
-      longitude: +result.lon,
-      latitude: +result.lat,
-      address: result.display_name
-    }))
-  );
-  return data;
+  const data = await response.json();
+  return data.features.map(result => ({
+    longitude: result.geometry.coordinates[0],
+    latitude: result.geometry.coordinates[1],
+    address: result.place_name,
+  }));
 };
 
 export { DMS2DD, DD2DMS, getCoordinatesFromAddress, getAdressesFromSearchText };
