@@ -146,16 +146,18 @@ watch(
 
       <div class="separator"></div>
 
-      <transition-group name="list">
-        <FolderPermissionSelector
-          v-for="group of filteredGroupList"
-          :key="group.id"
-          :project="project"
-          :folder="currentFolder"
-          :group="group"
-          @folder-permission-update="onPermissionUpdate"
-        />
-      </transition-group>
+      <div class="folder-access-manager__body__list">
+        <transition-group name="list">
+          <FolderPermissionSelector
+            v-for="group of filteredGroupList"
+            :key="group.id"
+            :project="project"
+            :folder="currentFolder"
+            :group="group"
+            @folder-permission-update="onPermissionUpdate"
+          />
+        </transition-group>
+      </div>
 
       <div class="folder-access-manager__body__tail">
         <BIMDataInfobox
@@ -226,7 +228,6 @@ watch(
 
   &__body {
     height: calc(100% - var(--spacing-unit));
-    overflow: auto;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-unit);
@@ -275,6 +276,16 @@ watch(
     .separator {
       margin: calc(var(--spacing-unit) / 2) 0;
       border-bottom: 2px solid var(--color-silver-light);
+    }
+
+    &__list {
+      height: 0;
+      flex-grow: 1;
+      overflow: auto;
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-unit);
     }
 
     &__tail {
