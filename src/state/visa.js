@@ -55,24 +55,12 @@ const resumeVisa = async (visaId, baseInfo) => {
 
 const fetchCreatedVisas = async (project) => {
   const visas = await VisaService.fetchCreatedVisas(project);
-
-  const visasWithDoc = await mapLimit(visas, 20, async (visa) => ({
-    ...visa,
-    document: await FileService.getDocument(project, { id: visa.document_id }),
-  }));
-
-  return visasWithDoc.sort((a, b) => (a.created_at.getTime() < b.created_at.getTime() ? 1 : -1));
+  return visas.sort((a, b) => (a.created_at.getTime() < b.created_at.getTime() ? 1 : -1));
 };
 
 const fetchToValidateVisas = async (project) => {
   const visas = await VisaService.fetchToValidateVisas(project);
-
-  const visasWithDoc = await mapLimit(visas, 20, async (visa) => ({
-    ...visa,
-    document: await FileService.getDocument(project, { id: visa.document_id }),
-  }));
-
-  return visasWithDoc.sort((a, b) => (a.created_at.getTime() < b.created_at.getTime() ? 1 : -1));
+  return visas.sort((a, b) => (a.created_at.getTime() < b.created_at.getTime() ? 1 : -1));
 };
 
 const updateVisa = async (project, document, visa, data) => {
