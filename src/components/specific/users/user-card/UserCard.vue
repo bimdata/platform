@@ -34,7 +34,7 @@
                 width="auto"
                 maxWidth="220px"
                 :text="
-                  fullName + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')
+                  fullName(user) + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')
                 "
               />
               <UserRoleBadge :role="role" />
@@ -58,6 +58,7 @@
 import { computed, provide, ref } from "vue";
 import { useToggle } from "../../../../composables/toggle.js";
 import { useUser } from "../../../../state/user.js";
+import { fullName } from "../../../../utils/users.js";
 // Components
 import UserAvatar from "../user-avatar/UserAvatar.vue";
 import UserRoleBadge from "../user-role-badge/UserRoleBadge.vue";
@@ -95,9 +96,6 @@ export default {
         !isSelf(props.user) &&
         (isSpaceAdmin(props.space) || isProjectAdmin(props.project))
     );
-    const fullName = computed(
-      () => `${props.user.firstname || ""} ${props.user.lastname || ""}`
-    );
     const role = computed(() =>
       props.project ? props.user.role : props.user.cloud_role
     );
@@ -124,7 +122,6 @@ export default {
 
     return {
       // References
-      fullName,
       loading,
       role,
       showActionMenu,
@@ -133,6 +130,7 @@ export default {
       // Methods
       closeDeleteGuard,
       closeUpdateForm,
+      fullName,
       isSelf,
       openDeleteGuard,
       openUpdateForm,

@@ -150,9 +150,9 @@ const getUserProjectList = async (project, folder) => {
       fullName: fullName(user),
       hasAccess: user.permission >= 50,
       isFindable: true,
-      searchContent: `${user.firstname || ""} ${user.lastname || ""} ${
-        user.email || ""
-      }`.toLowerCase()
+      searchContent:
+        `${user.firstname || ""} ${user.lastname || ""} ${user.email || ""}`
+        .toLowerCase()
     }));
 };
 

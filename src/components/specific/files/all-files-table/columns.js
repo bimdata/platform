@@ -1,5 +1,8 @@
 import i18n from "../../../../i18n/index.js";
+import { fullName } from "../../../../utils/users.js";
+
 const { t } = i18n.global;
+
 export default [
   {
     id: "type",
@@ -13,7 +16,7 @@ export default [
     id: "created_by",
     text: "t.createdBy",
     filter: true,
-    filterFunction: rowData => rowData ? `${rowData.lastname} ${rowData.firstname}` : t("t.notSpecified"),
+    filterFunction: rowData => rowData ? fullName(rowData) : t("t.notSpecified"),
   },
   {
     id: "lastupdate",

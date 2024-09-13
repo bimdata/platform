@@ -1,3 +1,32 @@
+<script setup>
+import { useGroups } from "../../../../state/groups.js";
+import { fullName } from "../../../../utils/users.js";
+// Components
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
+
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  group: {
+    type: Object,
+    required: true
+  },
+  user: {
+    type: Object,
+    required: true
+  }
+});
+
+const { setCurrentGroup, removeGroupMembers } = useGroups();
+
+const remove = async () => {
+  await removeGroupMembers(props.project, props.group, [props.user]);
+  setCurrentGroup(props.group.id); // Needed to reload member list
+};
+</script>
+
 <template>
   <BIMDataCard data-test-id="group-member-card" class="group-member-card">
     <template #content>
@@ -14,65 +43,14 @@
       <UserAvatar :user="user" size="64" />
       <div class="group-member-card__info">
         <div class="group-member-card__info__name">
-          {{ fullName }}
+          {{ user.user_id ? fullName(user) : user.email }}
         </div>
         <div class="group-member-card__info__email">
-          {{ user.email }}
+          {{ user.user_id ? user.email : $t("GroupMemberCard.pending") }}
         </div>
       </div>
     </template>
   </BIMDataCard>
 </template>
-
-<script>
-import { useI18n } from "vue-i18n";
-import { computed } from "vue";
-import { useGroups } from "../../../../state/groups.js";
-// Components
-import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
-
-export default {
-  components: {
-    UserAvatar
-  },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    },
-    group: {
-      type: Object,
-      required: true
-    },
-    user: {
-      type: Object,
-      required: true
-    }
-  },
-  setup(props) {
-    const { t } = useI18n();
-    const { setCurrentGroup, removeGroupMembers } = useGroups();
-
-    const fullName = computed(() => {
-      if (props.user.user_id) {
-        return `${props.user.firstname || ""} ${props.user.lastname || ""}`;
-      }
-      return t("GroupMemberCard.pending");
-    });
-
-    const remove = async () => {
-      await removeGroupMembers(props.project, props.group, [props.user]);
-      setCurrentGroup(props.group.id); // Needed to reload member list
-    };
-
-    return {
-      // References
-      fullName,
-      // Methods
-      remove
-    };
-  }
-};
-</script>
 
 <style scoped lang="scss" src="./GroupMemberCard.scss"></style>

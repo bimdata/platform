@@ -47,6 +47,7 @@ import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useGroups } from "../../state/groups.js";
 import { useProjects } from "../../state/projects.js";
+import { fullName } from "../../utils/users.js";
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppSidePanelContent from "../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
@@ -73,7 +74,7 @@ export default {
 
     const { filteredList: displayedMembers, searchText } = useListFilter(
       computed(() => currentGroup.value.members),
-      user => `${user.firstname} ${user.lastname}`
+      user => fullName(user)
     );
 
     const openMembersSelector = () => {
