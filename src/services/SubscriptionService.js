@@ -77,7 +77,7 @@ class SubscriptionService {
     }
 
     // Derive used size from remaining size
-    const usedSizePercent = 100 - subInfo.remaining_smart_data_size_percent;
+    const usedSizePercent = 100 - subInfo.remaining_total_size_percent;
     // Check whether space is managed by a platform subscription
     const isPlatformSubscription = subInfo.managed_by === "BIMDATA_PLATFORM";
     const isCustomSubscription = subInfo.is_custom;

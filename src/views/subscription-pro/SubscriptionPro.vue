@@ -123,7 +123,7 @@ export default {
       if (isSpaceUpgrade) {
         await waitForUpdatedSpaceSize(
           currentSpace.value,
-          spaceSubInfo.value.smart_data_size_available,
+          spaceSubInfo.value.total_size_available,
           newSizeAvailable.value
         );
       }

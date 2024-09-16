@@ -21,12 +21,12 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceSubInfo.smart_data_size) }}
+            {{ formatBytes(spaceSubInfo.total_size) }}
           </span>
         </template>
         <template #text-below-right>
           <span>
-            {{ formatBytes(spaceSubInfo.smart_data_size_available) }}
+            {{ formatBytes(spaceSubInfo.total_size_available) }}
           </span>
         </template>
       </ProgressBar>
@@ -93,7 +93,7 @@
         </template>
         <template #text-below-left>
           <span>
-            {{ formatBytes(spaceSubInfo.smart_data_size) }}
+            {{ formatBytes(spaceSubInfo.total_data_size) }}
           </span>
         </template>
         <template #text-below-right>
@@ -163,7 +163,7 @@ export default {
     const totalSizePercent = computed(() => {
       return Math.round(
         props.spaceSubInfo.usedSizePercent *
-          (props.spaceSubInfo.smart_data_size_available / totalSize.value)
+          (props.spaceSubInfo.total_size_available / totalSize.value)
       );
     });
 

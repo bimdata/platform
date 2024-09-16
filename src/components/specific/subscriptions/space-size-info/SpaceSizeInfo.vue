@@ -9,15 +9,15 @@
         <div v-if="isXXL">
           {{
             `${
-              Math.round((100 * spaceSubInfo.smart_data_size) / GB) / 100
-            } / ${formatBytes(spaceSubInfo.smart_data_size_available)}`
+              Math.round((100 * spaceSubInfo.total_size) / GB) / 100
+            } / ${formatBytes(spaceSubInfo.total_size_available)}`
           }}
         </div>
         <div v-else>
           {{
             $t("SpaceSizeInfo.usage", {
-              used: formatBytes(spaceSubInfo.smart_data_size),
-              total: formatBytes(spaceSubInfo.smart_data_size_available)
+              used: formatBytes(spaceSubInfo.total_size),
+              total: formatBytes(spaceSubInfo.total_size_available)
             })
           }}
         </div>
