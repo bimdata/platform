@@ -100,7 +100,12 @@
     "title": "Manage access rights",
     "rightsHeader": "Rights",
     "membersHeader": "Members",
-    "groupHeader": "Group"
+    "groupHeader": "Group",
+    "propagate": "Apply rights to sub folders (recursively)",
+    "safeZoneModal": {
+      "title": "Warning!",
+      "text": "The access rights have been modified but not saved; are you sure you want to close the access manager? (The modifications will be lost)"
+    }
   },
   "FolderSelector": {
     "selectedFolder": "Selected folder",
@@ -267,19 +272,12 @@
     "options": {
       "accessDenied": "Access denied",
       "readOnly": "Read only",
-      "readWrite": "Read / Write"
+      "readWrite": "Read / Write",
+      "default": "Default"
     }
   },
   "GroupMembersSelector": {
     "title": "Manage group members"
-  },
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Access denied",
-      "readOnly": "Read only",
-      "readWrite": "Read / Write",
-      "default": "Default"
-    }
   },
   "Errors": {
     "spacesFetchError": "Fail to fetch spaces",
@@ -862,7 +860,8 @@
     "emptyFile": "No file",
     "emptyVisa": "No visa",
     "validation": "Validations",
-    "validator": "Validators"
+    "validator": "Validators",
+    "save": "Save"
   },
   "FolderCreationButton": {
     "text": "New folder"
