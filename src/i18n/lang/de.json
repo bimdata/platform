@@ -101,7 +101,11 @@
     "rightsHeader": "Rechte",
     "membersHeader": "Mitglieder",
     "groupHeader": "Gruppe",
-    "propagate": "Wenden Sie Rechte auf Unterordner an"
+    "propagate": "Wenden Sie Rechte auf Unterordner an",
+    "safeZoneModal": {
+      "title": "Achtung!",
+      "text": "Die Änderungen der Zugangsrechte wurden nicht gespeichert. Sind Sie sicher, dass sie das Menü zur Verwaltung der Zugangsrechte schließen möchten? (Änderungen gehen verloren)"
+    }
   },
   "FolderSelector": {
     "selectedFolder": "Ausgewählter Ordner",
@@ -268,19 +272,12 @@
     "options": {
       "accessDenied": "Zugang verweigert",
       "readOnly": "Schreibgeschützt",
-      "readWrite": "Lesen / schreiben"
+      "readWrite": "Lesen / schreiben",
+      "default": "Standardeinstellungen"
     }
   },
   "GroupMembersSelector": {
     "title": "Verwaltung der Gruppenmitglieder"
-  },
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Zugang verweigert",
-      "readOnly": "Schreibgeschützt",
-      "readWrite": "Lesen / schreiben",
-      "default": "Standardmäßig"
-    }
   },
   "Errors": {
     "spacesFetchError": "Unmöglich, die Bereichsliste abzurufen",
@@ -863,7 +860,8 @@
     "emptyFile": "Keine Dateien",
     "emptyVisa": "Keine Freigaben",
     "validation": "Bestätigungen",
-    "validator": "Bestätigte"
+    "validator": "Bestätigte",
+    "save": "Speichern"
   },
   "FolderCreationButton": {
     "text": "Neuer Ordner"
