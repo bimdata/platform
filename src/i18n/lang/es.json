@@ -21,8 +21,8 @@
     "openFileUploadButtonText": "Añadir un modelo",
     "forbiddenUploadNotification": "Por favor seleccione un modelo: {extensions}",
     "uploadDisableMessage": {
-      "permission": "",
-      "size": ""
+      "permission": "No tiene los derechos requeridos",
+      "size": "Ya no tiene suficiente espacio de almacenamiento"
     }
   },
   "LanguageSelector": {
@@ -60,7 +60,7 @@
     "removeModelButtonText": "Eliminar modelos",
     "versioningButtonText": "Añadir una versión",
     "visaButtonText": "Solicitud de aprobación",
-    "previewModelButtonText": ""
+    "previewModelButtonText": "Vista previa"
   },
   "FilesActionBar": {
     "moveButtonText": "Moverse hacia"
@@ -100,7 +100,12 @@
     "title": "Gestión de derechos de acceso",
     "rightsHeader": "Derechos",
     "membersHeader": "Miembros",
-    "groupHeader": "Grupo"
+    "groupHeader": "Grupo",
+    "propagate": "Propaga los derechos a las subcarpetas",
+    "safeZoneModal": {
+      "title": "¡Atención!",
+      "text": "Los derechos de acceso han sido modificados pero no se han guardado, ¿está seguro de que quiere cerrar el administrador de derechos? (los cambios se perderán)"
+    }
   },
   "FolderSelector": {
     "selectedFolder": "Carpeta seleccionada",
@@ -141,7 +146,7 @@
     "submitButtonText": "Invitar",
     "successNotifText": "Invitación enviada",
     "successUsertoAdmin": "El usuario ha sido ascendido a administrador",
-    "userAlreadyExistInputErrorMessage": ""
+    "userAlreadyExistInputErrorMessage": "El usuario ya está en su proyecto"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Añadir etiquetas"
@@ -215,8 +220,8 @@
   },
   "SpaceCardActionMenu": {
     "removeImageButtonText": "Suprimir la imagen",
-    "addToFavorite": "",
-    "removeFavorite": ""
+    "addToFavorite": "Adjuntar a favoritos",
+    "removeFavorite": "Retirar de favoritos"
   },
   "SpaceCardDeleteGuard": {
     "title": "Suprimir el espacio",
@@ -267,19 +272,12 @@
     "options": {
       "accessDenied": "Acceso denegado",
       "readOnly": "Solo lectura",
-      "readWrite": "Lectura / Escritura"
+      "readWrite": "Lectura / Escritura",
+      "default": "Por defecto"
     }
   },
   "GroupMembersSelector": {
     "title": "Gestión de los miembros del grupo"
-  },
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Acceso denegado",
-      "readOnly": "Solo lectura",
-      "readWrite": "Lectura / Escritura",
-      "default": "Por defecto"
-    }
   },
   "Errors": {
     "spacesFetchError": "Imposible recuperar la lista de espacios",
@@ -365,8 +363,8 @@
     "folderFetchFolder": "Error al recuperar la información de la carpeta",
     "bcfDeleteError": "Eliminación fallida...",
     "groupImportError": "Error al importar grupos",
-    "bcfExportXlsxError": "",
-    "invitationViewDeclineError": ""
+    "bcfExportXlsxError": "La exportación a Excél ha fracasado",
+    "invitationViewDeclineError": "No se permite rechazar la invitación"
   },
   "ProjectStatusBadge": {
     "new": "NUEVO",
@@ -635,15 +633,15 @@
       }
     },
     "view": {
-      "visaPending": "",
-      "visaClosed": "",
-      "myRequests": "",
-      "valid": "",
-      "pending": "",
-      "denied": "",
-      "overdue": "",
-      "openVisaBtn": "",
-      "validateVisaBtn": ""
+      "visaPending": "Visa en espera",
+      "visaClosed": "Visa cerrado",
+      "myRequests": "Mis peticiones",
+      "valid": "Validado",
+      "pending": "En espera",
+      "denied": "Denegado",
+      "overdue": "Retrasado",
+      "openVisaBtn": "Abrir la visa",
+      "validateVisaBtn": "Validar la visa"
     }
   },
   "ProjectBcf": {
@@ -675,8 +673,8 @@
     "deleteBcfNotificationSuccess": "La selección de BCF se ha eliminado correctamente",
     "deleteBcfNotificationError": "Error al eliminar la selección BCF",
     "onlyAdminParameters": "Debes ser administrador del proyecto",
-    "exportBcfXlsxNotificationSuccess": "",
-    "deleteBcfTitle": ""
+    "exportBcfXlsxNotificationSuccess": "BCF exportado al formato Excél con éxito",
+    "deleteBcfTitle": "Eliminando {bcfCount} BCF"
   },
   "GuidedTour": {
     "platform": {
@@ -759,7 +757,7 @@
     "addTag": "Añadir una etiqueta",
     "addNewTag": "Añadir una etiqueta nueva",
     "deleteTag": "Eliminar esta etiqueta",
-    "emptyTag": ""
+    "emptyTag": "Sin etiquetas"
   },
   "SubscriptionModal": {
     "title": "Consigue más espacio",
@@ -802,8 +800,8 @@
     "selectAll": "Seleccionar todo",
     "notAdmin": "Debes ser administrador del proyecto",
     "noGroup": "No hay ningún grupo en este proyecto",
-    "noProject": "",
-    "noResult": ""
+    "noProject": "No tiene otros proyectos",
+    "noResult": "No existe proyecto con este nombre"
   },
   "UploadCard": {
     "cancelMessage": "Cancelado",
@@ -851,18 +849,19 @@
     "unarchive": "Desarchivar",
     "validate": "Validar",
     "verify": "Verificar",
-    "exportXlsx": "",
+    "exportXlsx": "Exportar en Excél",
     "project": "Proyecto",
     "projects": "Proyectos",
     "spaces": "Espacios",
-    "notSpecified": "",
-    "location": "",
-    "rootFolder": "",
-    "dueDate": "",
-    "emptyFile": "",
-    "emptyVisa": "",
-    "validation": "",
-    "validator": ""
+    "notSpecified": "No especificado",
+    "location": "Ubicación",
+    "rootFolder": "Carpeta raíz",
+    "dueDate": "Fecha de vencimiento",
+    "emptyFile": "Sin archivo",
+    "emptyVisa": "Sin visa",
+    "validation": "Validaciones",
+    "validator": "Validadores",
+    "save": "Hacer una copia de seguridad"
   },
   "FolderCreationButton": {
     "text": "Nueva carpeta"
@@ -875,23 +874,23 @@
   },
   "FileTreePreviewModal": {
     "title": "Importar estructura de archivos desde",
-    "emptySource": ""
+    "emptySource": "Este proyecto no tiene archivos"
   },
   "MainModelSelector": {
-    "title": ""
+    "title": "Elección de vista previa del proyecto"
   },
   "UserFavoritesManager": {
-    "title": ""
+    "title": "Gestión de favoritos"
   },
   "UserProfile": {
-    "title": "",
+    "title": "Configuración de perfil",
     "loading": {
-      "message": "",
-      "subMessage": ""
+      "message": "Eliminación en curso.",
+      "subMessage": "Este proceso puede tardar unos momentos, no abandone la página."
     }
   },
   "VisasDeleteModal": {
-    "title": "",
-    "message": ""
+    "title": "Eliminación de {visasCount} visas",
+    "message": "Está a punto de eliminar las visas de los siguientes archivos:"
   }
 }
