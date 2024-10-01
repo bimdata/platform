@@ -78,6 +78,13 @@ function isConvertible(document) {
   );
 }
 
+function isConvertibleToPhotosphere(document) {
+  const { JPEG, JPG } = MODEL_EXTENSIONS;
+  return [JPEG, JPG].includes(
+    fileExtension(document.file_name).toLowerCase()
+  );
+}
+
 function openInViewer(router, project, model) {
   router.push({
     name: routeNames.modelViewer,
@@ -94,6 +101,7 @@ function openInViewer(router, project, model) {
 
 export {
   isConvertible,
+  isConvertibleToPhotosphere,
   isIFC,
   isModel,
   isPDF,
