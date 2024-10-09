@@ -531,6 +531,7 @@ export default {
       openSidePanel();
       try {
         visasLoading.value = true;
+        fileToManage.value = file;
         currentVisa.value = file
         setManagerVisibility("visa", true);
       } finally {
