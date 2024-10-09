@@ -526,25 +526,16 @@ export default {
     };
 
     const visasLoading = ref(false);
-    const openVisaManager = async (file) => {
+    const openVisaManager = file => {
+      onTabChange(filesTabs[2]);
       openSidePanel();
       try {
         visasLoading.value = true;
-        await loadVisaData(file);
-        fileToManage.value = file;
-        currentVisa.value = file;
-
+        currentVisa.value = file
         setManagerVisibility("visa", true);
       } finally {
         visasLoading.value = false;
       }
-    };
-    const loadVisaData = async (file) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 500);
-      });
     };
 
     const closeVisaManager = () => {
@@ -602,7 +593,7 @@ export default {
           (v) => v.id === parseInt(route.query.visaId)
         );
         if (currentVisa.value) {
-          openVisaManager();
+          openVisaManager(currentVisa.value);
         }
       }
     };
