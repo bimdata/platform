@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import { MODEL_TYPE } from "../../../../../config/models.js";
 import { useUser } from "../../../../../state/user.js";
 
 const { hasAdminPermModel } = useUser();
@@ -19,10 +20,13 @@ defineEmits([
   "archive",
   "delete",
   "download",
-  "unarchive"
+  "open",
+  "unarchive",
 ]);
 
 const isArchived = computed(() => props.models.every(m => m.archived));
+
+const isIFC = computed(() => props.models.every(m => m.type === MODEL_TYPE.IFC));
 </script>
 
 <template>
@@ -67,7 +71,25 @@ const isArchived = computed(() => props.models.every(m => m.archived));
       <BIMDataIconDownload size="s" margin="0 6px 0 0" />
       <span>{{ $t("t.download") }}</span>
     </BIMDataButton>
+
+    <BIMDataButton
+      v-if="isIFC"
+      width="120px"
+      ghost
+      squared
+      @click="$emit('open', models)"
+    >
+      <BIMDataIconShow size="s" margin="0 6px 0 0" />
+      <span>{{ $t("t.open") }}</span>
+    </BIMDataButton>
   </div>
 </template>
 
-<style scoped lang="scss" src="./ModelsActionBar.scss"></style>
+<style scoped>
+.models-action-bar {
+  display: inline-flex;
+  gap: calc(var(--spacing-unit) / 2);
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
+}
+</style>

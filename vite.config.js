@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
+          api: "modern-compiler",
           // Make global SASS mixins available everywhere
           additionalData: '@import "/src/styles/mixins.scss";'
         }
