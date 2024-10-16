@@ -78,16 +78,17 @@ function isConvertible(document) {
   );
 }
 
-function openInViewer(router, project, model) {
+function openInViewer(router, project, model, window) {
+  const models = [].concat(model);
   router.push({
     name: routeNames.modelViewer,
     params: {
       spaceID: project.cloud.id,
       projectID: project.id,
-      modelIDs: model.id
+      modelIDs: models.map(m => m.id).join(",")
     },
     query: {
-      window: MODEL_CONFIG[model.type].window
+      window: window || MODEL_CONFIG[models[0].type].window
     }
   });
 }

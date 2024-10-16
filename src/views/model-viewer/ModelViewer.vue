@@ -15,9 +15,9 @@
 
 <script>
 import makeBIMDataViewer from "@bimdata/viewer";
-import set from "lodash/set";
-import merge from "lodash/merge";
 import cloneDeep from "lodash/cloneDeep";
+import merge from "lodash/merge";
+import set from "lodash/set";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
@@ -60,6 +60,7 @@ export default {
         topicGuid
       }
     });
+
     // Extract space specific plugins config
     // and merges it into initial config
     const spacePluginsConfig = currentSpace.value.features
@@ -92,10 +93,9 @@ export default {
 
     const pluginUrls = featurePlugins.concat(Array.from(appPlugins));
 
+    let bimdataViewer;
     let unwatchAccessToken = () => {};
     let unwatchLocale = () => {};
-
-    let bimdataViewer;
 
     onMounted(async () => {
       loading.value = true;

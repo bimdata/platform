@@ -34,6 +34,7 @@
       <BIMDataIconExport margin="0 12px" />
       <span> {{ $t("t.add") }}</span>
     </BIMDataButton>
+
     <div class="generic-models-manager__separator"></div>
 
     <transition name="fade">
@@ -45,6 +46,7 @@
         @archive="archiveModels"
         @delete="openDeleteModal"
         @download="downloadModels"
+        @open="openModels"
         @unarchive="unarchiveModels"
       />
     </transition>
@@ -85,12 +87,14 @@
 
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
+import { WINDOWS } from "../../../../../config/viewer.js";
 import { useFiles } from "../../../../../state/files.js";
 import { useModels } from "../../../../../state/models.js";
 import { useUser } from "../../../../../state/user.js";
 import { wait } from "../../../../../utils/async.js";
-import { isModel } from "../../../../../utils/models.js";
+import { isModel, openInViewer } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
@@ -126,6 +130,7 @@ export default {
     "view-metaBuilding"
   ],
   setup(props, { emit }) {
+    const router = useRouter();
     const { isProjectGuest } = useUser();
     const { createModel, updateModels } = useModels();
     const { downloadFiles: download } = useFiles();
@@ -190,6 +195,10 @@ export default {
       );
     };
 
+    const openModels = models => {
+      openInViewer(router, props.project, models, WINDOWS.IFC3D);
+    };
+
     const uploadModels = () => {
       fileUploadInput(
         "file",
@@ -236,6 +245,7 @@ export default {
       onFileUploaded,
       onUploadCanceled,
       openDeleteModal,
+      openModels,
       selectTab,
       unarchiveModels,
       uploadModels

@@ -1,7 +1,37 @@
+<script setup>
+import { DEFAULT_WINDOW } from "../../../../../config/viewer.js";
+import routeNames from "../../../../../router/route-names.js";
+// Components
+import AppLink from "../../../app/app-link/AppLink.vue";
+
+defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  model: {
+    type: Object,
+    required: true
+  },
+  window: {
+    type: String,
+    default: DEFAULT_WINDOW
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  text: {
+    type: String
+  }
+});
+</script>
+
 <template>
   <AppLink
     data-test-id="btn-open-viewer"
     :data-test-param="window"
+    :disabled="disabled"
     :to="{
       name: routeNames.modelViewer,
       params: {
@@ -27,46 +57,7 @@
   </AppLink>
 </template>
 
-<script>
-import { DEFAULT_WINDOW } from "../../../../../config/viewer.js";
-import routeNames from "../../../../../router/route-names.js";
-// Components
-import AppLink from "../../../app/app-link/AppLink.vue";
-
-export default {
-  components: {
-    AppLink
-  },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    },
-    model: {
-      type: Object,
-      required: true
-    },
-    window: {
-      type: String,
-      default: DEFAULT_WINDOW
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    text: {
-      type: String
-    }
-  },
-  setup() {
-    return {
-      routeNames
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss">
+<style scoped>
 .viewer-button {
   color: var(--color-granite-light);
 
