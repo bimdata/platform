@@ -16,7 +16,7 @@
     "@bimdata/bcf-components": "6.4.3",
     "@bimdata/components": "1.6.6",
     "@bimdata/design-system": "2.2.0",
-    "@bimdata/typescript-fetch-api-client": "10.15.0",
+    "@bimdata/typescript-fetch-api-client": "10.17.1",
     "@bimdata/viewer": "2.5.0",
     "async": "^3.2.6",
     "dms-conversion": "^3.1.3",
