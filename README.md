@@ -105,6 +105,21 @@ $ npm run build
 
 This will create a `dist/` directory that contain the bundled application ready to be deployed.
 
+## Development process
+
+There are 3 process banches: `develop`, `release` and `master`.
+
+`develop` is the main development branch. All feature branches should be merged into `develop` using pull requests.
+`release` is the pre-production branch. All fix branches should be merged into `release` using pull requests. The release branch must be merged into `develop` once a PR is merged.
+`master` is the production branch. The release branch must be merged into `master` once a release is ready.
+
+This setup allows us to have unsable features in develop while to blocking fix to be shipped in production.
+
+### BIMData Viewer
+
+When a new version of the Viewer is released, the `develop` branch is automatically updated to use this version.
+When a new stable version of the Viewer is released, the `release` branch is automatically updated to use this version.
+
 ## License
 
 The content of this repository is published under the terms of the [GNU LGPL-3.0](./LICENSE).
