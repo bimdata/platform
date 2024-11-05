@@ -113,7 +113,7 @@ There are 3 process banches: `develop`, `release` and `master`.
 `release` is the pre-production branch. All fix branches should be merged into `release` using pull requests. The release branch must be merged into `develop` once a PR is merged.
 `master` is the production branch. The release branch must be merged into `master` once a release is ready.
 
-This setup allows us to have unsable features in develop while to blocking fix to be shipped in production.
+This setup allows us to have unstable features in develop while not blocking fix to be shipped in production.
 
 ### BIMData Viewer
 
