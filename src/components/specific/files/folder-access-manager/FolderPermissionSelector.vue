@@ -76,7 +76,7 @@ const update = perm => {
   <div class="folder-permission-selector">
     <BIMDataTextbox
       class="folder-permission-selector__label"
-      maxWidth="132px"
+      width="0"
       :text="group?.name ?? $t('FolderPermissionSelector.label')"
     />
 
