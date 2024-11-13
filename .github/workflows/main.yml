@@ -37,6 +37,8 @@ jobs:
           file: etc/Dockerfile
           push: true
           pull: true
+          build-args: |
+            TAG=${{ env.tag }}
           tags: |
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ env.tag }}
