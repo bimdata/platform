@@ -18,6 +18,5 @@ RUN mv /opt/dist/assets /opt/dist/assets-original
 FROM nginx:stable
 RUN rm /etc/nginx/conf.d/default.conf
 COPY etc/nginx.conf /etc/nginx/conf.d/default.conf
-COPY etc/nginx-security-headers.conf /etc/nginx/nginx-security-headers.conf
 COPY etc/env.sh /docker-entrypoint.d
 COPY --from=0 /opt/dist /usr/share/nginx/html
