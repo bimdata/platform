@@ -17,7 +17,7 @@
     "@bimdata/components": "1.6.7",
     "@bimdata/design-system": "2.2.1-beta.3",
     "@bimdata/typescript-fetch-api-client": "10.17.1",
-    "@bimdata/viewer": "2.6.0-beta.17",
+    "@bimdata/viewer": "2.6.0-beta.18",
     "async": "^3.2.6",
     "dms-conversion": "^3.1.3",
     "lodash": "^4.17.21",
