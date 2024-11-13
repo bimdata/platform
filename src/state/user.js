@@ -77,7 +77,7 @@ const setGuidedTourComplete = async tour => {
 };
 
 const isSelf = user => {
-  return state.user.id === (user.user_id || user.id);
+  return user && state.user.id === (user.user_id || user.id);
 };
 
 const isUserOrga = space => {

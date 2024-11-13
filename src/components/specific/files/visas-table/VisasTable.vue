@@ -34,7 +34,7 @@
     <template #cell-validators="{ row: visa }">
       <UserAvatarList
         class="group-card__avatars"
-        :users="visa.validations.map((validation) => validation.validator)"
+        :users="visa.validations.map((validation) => validation.validator).filter(Boolean)"
         itemSize="28"
         itemGap="18"
       />

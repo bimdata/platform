@@ -32,7 +32,7 @@ export const enhanceVisa = (visa, user, t) => {
   };
 
   const getUniqueValidators = () => {
-    const validators = visa.validations.map((validation) => validation.validator);
+    const validators = visa.validations.map((validation) => validation.validator).filter(Boolean);
     const emailValidators = [...new Set(validators.map((validator) => validator.email))];
     return emailValidators;
   };
