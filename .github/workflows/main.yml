@@ -34,11 +34,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: etc/Dockerfile
+          file: etc/withprevious.Dockerfile
           push: true
           pull: true
           build-args: |
-            TAG=${{ env.tag }}
+            PREVIOUS_TAG=${{ env.tag }}
           tags: |
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ env.tag }}
