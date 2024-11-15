@@ -28,6 +28,7 @@ yarn-error.log*
 .env.staging
 .env.local
 .env.*.local
+*.env
 
 # Cypress env and output files
 cypress.env.json

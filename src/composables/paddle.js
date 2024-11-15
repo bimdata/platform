@@ -1,20 +1,26 @@
+import { initializePaddle } from "@paddle/paddle-js";
 import {
   DATAPACK_PLAN_ID,
   IS_PADDLE_SANDBOX,
   IS_SUBSCRIPTION_ENABLED,
   PADDLE_VENDOR_ID,
-  PRO_PLAN_ID
+  PRO_PLAN_ID,
 } from "../config/subscription.js";
 import { getPrice } from "../utils/price.js";
 
+let paddlePromise;
 // Setup Paddle configuration (on module load)
 if (IS_SUBSCRIPTION_ENABLED) {
-  if (IS_PADDLE_SANDBOX) Paddle.Environment.set("sandbox");
-  Paddle.Setup({ vendor: +PADDLE_VENDOR_ID });
+  paddlePromise = initializePaddle({
+    version: "classic",
+    vendor: +PADDLE_VENDOR_ID,
+    environment: IS_PADDLE_SANDBOX ? "sandbox": undefined,
+  });
 }
 
-const loadCheckout = (containerID, link, locale, { onLoad, onSuccess }) => {
-  Paddle.Checkout.open({
+const loadCheckout = async (containerID, link, locale, { onLoad, onSuccess }) => {
+  const paddleInstance = await paddlePromise;
+  paddleInstance.Checkout.open({
     // Checkout params
     method: "inline",
     referring_domain: "platform",
@@ -32,9 +38,10 @@ const loadCheckout = (containerID, link, locale, { onLoad, onSuccess }) => {
   });
 };
 
-const getPrices = productID => {
+const getPrices = async productID => {
+  const paddleInstance = await paddlePromise;
   return new Promise(resolve => {
-    Paddle.Product.Prices(+productID, response => resolve(response));
+    paddleInstance.Product.Prices(+productID, response => resolve(response));
   });
 };
 
