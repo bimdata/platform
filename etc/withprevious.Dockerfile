@@ -19,7 +19,7 @@ RUN mv /opt/dist/assets /opt/dist/assets-original
 
 # When creating a new tag, this will fail.
 # Comment this line and the COPY --from=previous_build line
-FROM ${PREVIOUS_IMAGE}:${TAG} AS previous_build
+FROM ${PREVIOUS_IMAGE}:${PREVIOUS_TAG} AS previous_build
 
 FROM nginx:stable
 RUN rm /etc/nginx/conf.d/default.conf
