@@ -11,13 +11,10 @@ import { getPrice } from "../utils/price.js";
 let paddlePromise;
 // Setup Paddle configuration (on module load)
 if (IS_SUBSCRIPTION_ENABLED) {
-  paddlePromise = new Promise(resolve => {
-    initializePaddle({
-      version: "classic",
-      vendor: +PADDLE_VENDOR_ID,
-      environment: IS_PADDLE_SANDBOX ? "sandbox": undefined,
-    }).then(instance => resolve(instance))
-
+  paddlePromise = initializePaddle({
+    version: "classic",
+    vendor: +PADDLE_VENDOR_ID,
+    environment: IS_PADDLE_SANDBOX ? "sandbox": undefined,
   });
 }
 
