@@ -54,11 +54,6 @@ function isModel(document) {
   return !!document.model_id;
 }
 
-function isPlan(model) {
-  const { JPEG, PDF, PNG } = MODEL_TYPE;
-  return [JPEG, PDF, PNG].includes(model.type);
-}
-
 function isIFC(document) {
   return isModel(document) && document.model_type === MODEL_TYPE.IFC;
 }
@@ -106,7 +101,6 @@ export {
   isIFC,
   isModel,
   isPDF,
-  isPlan,
   isViewable,
   openInViewer,
   segregateBySource,

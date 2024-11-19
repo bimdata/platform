@@ -57,6 +57,7 @@
     "addVersionButtonText": "Add version",
     "manageAccessButtonText": "Manage access",
     "createModelButtonText": "Define as model",
+    "createPhotosphereButtonText": "Define as photosphere",
     "removeModelButtonText": "Remove from models",
     "versioningButtonText": "Add a version",
     "visaButtonText": "Validation request",
@@ -180,6 +181,7 @@
       "archive": "Archives",
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
+      "photosphereBuildings": "Photosphere Buildings",
       "upload": "Upload"
     }
   },

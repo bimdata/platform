@@ -47,6 +47,7 @@ import { useUser } from "../../../../../state/user.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import {
   isConvertible,
+  isConvertibleToPhotosphere,
   isModel,
   isViewable,
   openInViewer
