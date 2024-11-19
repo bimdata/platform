@@ -1,7 +1,7 @@
 import queue from "async/queue";
 import apiClient from "./api-client.js";
+import { MODEL_TYPE } from "../config/models.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
-import { isPlan } from "../utils/models.js";
 
 class ModelService {
   callQueue = queue(async task => {
@@ -48,18 +48,13 @@ class ModelService {
 
   async createPhotosphere(project, file) {
     try {
-      return await fetch(
-        `${ENV.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/model/create-photosphere`,
+      return await apiClient.modelApi.createPhotosphere(
+        project.cloud.id,
+        project.id,
         {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            ...apiClient.authHeader,
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-          body: JSON.stringify({ document_id: file.id })
+          document_id: file.id
         }
-      ).then(res => res.json());
+      );
     } catch (error) {
       throw new RuntimeError(ERRORS.MODEL_CREATE_ERROR, error);
     }
@@ -86,7 +81,8 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model => {
-          if (isPlan(model) && !hard) {
+          const { JPEG, PDF, PHOTOSPHERE, PNG } = MODEL_TYPE;
+          if ([JPEG, PDF, PHOTOSPHERE, PNG].includes(model.type) && !hard) {
             return apiClient.modelApi.deleteModelWithoutDoc(
               project.cloud.id,
               model.id,

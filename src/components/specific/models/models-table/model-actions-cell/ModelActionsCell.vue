@@ -165,6 +165,7 @@ export default {
     "delete",
     "download",
     "edit-metaBuilding",
+    "edit-photosphereBuilding",
     "update",
     "view-metaBuilding",
     "view-photosphereBuilding",
@@ -205,6 +206,16 @@ export default {
         text: "t.edit",
         icon: "edit",
         action: () => onClick("edit-metaBuilding"),
+        color: "var(--color-primary)"
+      });
+    }
+
+    if (props.model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING) {
+      menuItems.push({
+        key: 3,
+        text: "t.edit",
+        icon: "edit",
+        action: () => onClick("edit-photosphereBuilding"),
         color: "var(--color-primary)"
       });
     }
