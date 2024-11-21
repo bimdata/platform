@@ -82,7 +82,12 @@
       />
     </template>
 
-    <template v-else-if="model.type === MODEL_TYPE.PHOTOSPHERE">
+    <template
+      v-else-if="
+        model.type === MODEL_TYPE.PHOTOSPHERE ||
+        model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
+      "
+    >
       <ViewerButton
         :disabled="!isModelReady"
         :project="project"
