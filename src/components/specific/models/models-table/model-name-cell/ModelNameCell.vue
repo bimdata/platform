@@ -39,7 +39,9 @@
       </div>
 
       <div v-else class="model-name-cell__content">
-        <template v-if="model.type === MODEL_TYPE.META_BUILDING">
+        <template
+          v-if="model.type === MODEL_TYPE.META_BUILDING || MODEL_TYPE.PHOTOSPHERE_BUILDING"
+        >
           <BIMDataIconBuilding size="s" />
         </template>
         <template v-else>
