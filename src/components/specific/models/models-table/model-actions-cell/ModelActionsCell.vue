@@ -12,7 +12,7 @@
       </BIMDataButton>
     </template>
 
-    <template v-if="model.type === MODEL_TYPE.PHOTOSPHERE">
+    <template v-if="model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING">
       <BIMDataButton
         color="primary"
         outline
