@@ -66,6 +66,7 @@
         itemWidth="320px"
         rowGap="36px"
         columnGap="36px"
+        :isRepeatFit="true"
         :style="{ justifyContent: isMD ? 'center' : '' }"
       >
         <transition-group name="grid">

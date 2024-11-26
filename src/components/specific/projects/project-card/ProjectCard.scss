@@ -2,7 +2,6 @@
 
 .project-card {
   min-width: $card-width;
-  width: $card-width;
   height: $card-height;
 
   .bimdata-card {
@@ -24,7 +23,7 @@
       position: absolute;
       z-index: 1;
       width: 4px;
-      height: $card-height;
+      height: 100%;
 
       &--new {
         background-color: var(--color-primary);
@@ -47,7 +46,7 @@
       position: absolute;
       z-index: 2;
       top: 0;
-      left: calc($card-width - 66px);
+      right: 15%;
     }
 
     .project-status-badge {
@@ -88,7 +87,7 @@
 
 .project-card-placeholder {
   min-width: $card-width;
-  width: $card-width;
+  width: 100%;
   height: $card-height;
   box-shadow: var(--box-shadow);
   background-color: var(--color-silver-light);

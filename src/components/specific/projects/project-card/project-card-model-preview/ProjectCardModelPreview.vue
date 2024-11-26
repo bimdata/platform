@@ -13,7 +13,6 @@
       :type="!image.url || image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
       :previewUrl="image.url"
       defaultUrl="/static/default-model-preview.png"
-      :width="320"
       :height="205"
     />
   </div>
