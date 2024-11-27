@@ -39,7 +39,7 @@
     "text": "Grupos"
   },
   "BreadcrumbProjectSelector": {
-    "placeholder": "<No existen proyectos>"
+    "placeholder": "( Sin proyectos )"
   },
   "DashboardProjectList": {
     "title": "Proyectos recientes"
@@ -52,7 +52,7 @@
     "message": "Hola {name}, me alegro verte de nuevo !"
   },
   "FileActionsCell": {
-    "openViewerButtonText": "Ver",
+    "openViewerButtonText": "Abrir",
     "addTagsButtonText": "Añadir etiquetas",
     "addVersionButtonText": "Añadir una versión",
     "manageAccessButtonText": "Gestionar los accesos",
@@ -66,7 +66,7 @@
     "moveButtonText": "Moverse hacia"
   },
   "FilesDeleteModal": {
-    "title": "Eliminación de archivos",
+    "title": "Eliminación de {filesCount} archivos",
     "message": "Está apunto de suprimir definitivamente los archivos/carpetas siguientes:",
     "messageVersion": "Está a punto de eliminar permanentemente los siguientes archivos/carpetas y el historial de versiones asociado:"
   },
@@ -101,7 +101,7 @@
     "rightsHeader": "Derechos",
     "membersHeader": "Miembros",
     "groupHeader": "Grupo",
-    "propagate": "Propaga los derechos a las subcarpetas",
+    "propagate": "Para propagar los derechos a las subcarpetas, asegúrese de marcar la casilla antes de validar el formulario.",
     "safeZoneModal": {
       "title": "¡Atención!",
       "text": "Los derechos de acceso han sido modificados pero no se han guardado, ¿está seguro de que quiere cerrar el administrador de derechos? (los cambios se perderán)"
@@ -268,7 +268,7 @@
     "homeButtonText": "Inicio"
   },
   "FolderPermissionSelector": {
-    "label": "Todo el mundo",
+    "label": "Por defecto",
     "options": {
       "accessDenied": "Acceso denegado",
       "readOnly": "Solo lectura",
@@ -761,7 +761,7 @@
   },
   "SubscriptionModal": {
     "title": "Consigue más espacio",
-    "subtitle": "Actualmente tienes una capacidad de almacenamiento de 300 MB.",
+    "subtitle": "Actualmente tienes una capacidad de almacenamiento de {size} ",
     "soon": "SOON",
     "upgrade": {
       "title": "Cambiar a la plataforma profesional",
