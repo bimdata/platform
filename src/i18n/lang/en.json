@@ -66,7 +66,7 @@
     "moveButtonText": "Move to"
   },
   "FilesDeleteModal": {
-    "title": "Delete files",
+    "title": "Delete {filesCount} files",
     "message": "This action will permanently delete the following files/folders :",
     "messageVersion": "You are about to permanently delete the following files/folders and their associated version history:"
   },
@@ -101,7 +101,7 @@
     "rightsHeader": "Rights",
     "membersHeader": "Members",
     "groupHeader": "Group",
-    "propagate": "Apply rights to sub folders (recursively)",
+    "propagate": "To propagate rights to subfolders (recursively), please check the box before validating the form.",
     "safeZoneModal": {
       "title": "Warning!",
       "text": "The access rights have been modified but not saved; are you sure you want to close the access manager? (The modifications will be lost)"
