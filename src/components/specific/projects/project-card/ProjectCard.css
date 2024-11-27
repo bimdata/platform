@@ -1,9 +1,9 @@
-@import "./ProjectCard.vars.scss";
+@import "./ProjectCard.vars.css";
 
 .project-card {
-  min-width: $card-width;
-  width: $card-width;
-  height: $card-height;
+  min-width: var(--card-width);
+  width: var(--card-width);
+  height: var(--card-height);
 
   .bimdata-card {
     position: relative;
@@ -24,48 +24,44 @@
       position: absolute;
       z-index: 1;
       width: 4px;
-      height: $card-height;
-
-      &--new {
-        background-color: var(--color-primary);
-      }
-
-      &--active {
-        background-color: var(--color-success);
-      }
-
-      &--inactive {
-        background-color: var(--color-silver-dark);
-      }
-
-      &--paused {
-        background-color: var(--color-silver-dark);
-      }
+      height: var(--card-height);
+    }
+    .project-card__left-stripe--new {
+      background-color: var(--color-primary);
+    }
+    .project-card__left-stripe--active {
+      background-color: var(--color-success);
+    }
+    .project-card__left-stripe--inactive {
+      background-color: var(--color-silver-dark);
+    }
+    .project-card__left-stripe--paused {
+      background-color: var(--color-silver-dark);
     }
 
     .favorite-badge {
       position: absolute;
       z-index: 2;
       top: 0;
-      left: calc($card-width - 66px);
+      left: calc(var(--card-width) - 66px);
     }
 
     .project-status-badge {
       position: absolute;
       z-index: 1;
-      top: calc(#{$card-content-height} - var(--spacing-unit) - 24px);
+      top: calc(var(--card-content-height) - var(--spacing-unit) - 24px);
       left: calc(var(--spacing-unit) + 4px);
     }
 
     &:deep() {
       .bimdata-card__content {
-        height: $card-content-height;
+        height: var(--card-content-height);
         padding: 0;
         overflow: hidden;
       }
 
       .bimdata-card__footer {
-        height: calc(100% - #{$card-content-height});
+        height: calc(100% - var(--card-content-height));
         padding: 0;
         display: flex;
         justify-content: center;
@@ -87,9 +83,9 @@
 }
 
 .project-card-placeholder {
-  min-width: $card-width;
-  width: $card-width;
-  height: $card-height;
+  min-width: var(--card-width);
+  width: var(--card-width);
+  height: var(--card-height);
   box-shadow: var(--box-shadow);
   background-color: var(--color-silver-light);
 

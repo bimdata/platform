@@ -82,7 +82,7 @@ const addMember = async user => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .group-members-selector {
   height: 100%;
   display: flex;
@@ -112,16 +112,16 @@ const addMember = async user => {
       height: 64px;
       padding-right: calc(var(--spacing-unit) / 2);
 
-      &__info {
+      .user-add-card__info {
         flex-grow: 1;
         padding: 0 var(--spacing-unit);
         line-height: 18px;
 
-        &__name {
+        .user-add-card__info__name {
           font-weight: bold;
         }
 
-        &__email {
+        .user-add-card__info__email {
           font-size: 12px;
           color: var(--color-granite-light);
         }

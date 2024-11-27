@@ -1,16 +1,16 @@
-@import "../models-card/ModelsCard.vars.scss";
+@import "../models-card/ModelsCard.vars.css";
 
 .model-location {
   position: relative;
   flex-grow: 1;
-  height: $card-height;
+  height: var(--card-height);
   background-color: var(--color-silver-light);
 
-  &__map {
+  .model-location__map {
     width: 100%;
     height: 100%;
 
-    &__edit-btn {
+    .model-location__map__edit-btn {
       position: absolute;
       z-index: 1;
       top: 0;
@@ -18,7 +18,7 @@
     }
   }
 
-  &__empty {
+  .model-location__empty {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,7 +31,7 @@
     color: var(--color-primary);
   }
 
-  &__loader {
+  .model-location__loader {
     position: absolute;
     z-index: 2;
     top: 0;

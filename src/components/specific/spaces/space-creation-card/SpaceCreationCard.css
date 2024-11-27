@@ -1,9 +1,9 @@
-@import "../space-card/SpaceCard.vars.scss";
+@import "../space-card/SpaceCard.vars.css";
 
 .space-creation-card {
   position: relative;
-  width: $card-width;
-  height: $card-height;
+  width: var(--card-width);
+  height: var(--card-height);
   box-shadow: bvar(--box-shadow);
   color: var(--color-primary);
 

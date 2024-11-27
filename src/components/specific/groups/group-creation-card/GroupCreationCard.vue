@@ -134,4 +134,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./GroupCreationCard.scss"></style>
+<style scoped src="./GroupCreationCard.css"></style>

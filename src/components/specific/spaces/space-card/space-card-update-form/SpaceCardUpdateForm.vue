@@ -1,3 +1,50 @@
+<script setup>
+import { inject, onMounted, ref } from "vue";
+import { useSpaces } from "../../../../../state/spaces.js";
+import { debounce } from "../../../../../utils/async.js";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  }
+});
+
+const emit = defineEmits(["close", "success"]);
+
+const { updateSpace } = useSpaces();
+
+const loading = inject("loading", false);
+
+const nameInput = ref(null);
+const spaceName = ref(props.space.name);
+const hasError = ref(false);
+
+const submit = debounce(async () => {
+  if (spaceName.value) {
+    try {
+      loading.value = true;
+      await updateSpace({ ...props.space, name: spaceName.value });
+      emit("success");
+    } finally {
+      loading.value = false;
+    }
+  } else {
+    nameInput.value.focus();
+    hasError.value = true;
+  }
+}, 500);
+
+const close = () => {
+  hasError.value = false;
+  emit("close");
+};
+
+onMounted(() => {
+  setTimeout(() => nameInput.value.focus(), 200);
+});
+</script>
+
 <template>
   <div class="space-card-update-form">
     <div class="space-card-update-form__title">
@@ -36,63 +83,4 @@
   </div>
 </template>
 
-<script>
-import { inject, onMounted, ref } from "vue";
-import { useSpaces } from "../../../../../state/spaces.js";
-import { debounce } from "../../../../../utils/async.js";
-
-export default {
-  props: {
-    space: {
-      type: Object,
-      required: true
-    }
-  },
-  emits: ["close", "success"],
-  setup(props, { emit }) {
-    const { updateSpace } = useSpaces();
-
-    const loading = inject("loading", false);
-
-    const nameInput = ref(null);
-    const spaceName = ref(props.space.name);
-    const hasError = ref(false);
-
-    const submit = debounce(async () => {
-      if (spaceName.value) {
-        try {
-          loading.value = true;
-          await updateSpace({ ...props.space, name: spaceName.value });
-          emit("success");
-        } finally {
-          loading.value = false;
-        }
-      } else {
-        nameInput.value.focus();
-        hasError.value = true;
-      }
-    }, 500);
-
-    const close = () => {
-      hasError.value = false;
-      emit("close");
-    };
-
-    onMounted(() => {
-      setTimeout(() => nameInput.value.focus(), 200);
-    });
-
-    return {
-      // References
-      hasError,
-      nameInput,
-      spaceName,
-      // Methods
-      close,
-      submit
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss" src="./SpaceCardUpdateForm.scss"></style>
+<style scoped src="./SpaceCardUpdateForm.css"></style>

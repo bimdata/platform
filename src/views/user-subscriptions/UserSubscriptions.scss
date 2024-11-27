@@ -1,3 +1,5 @@
+@use "/src/styles/mixins.scss";
+
 .user-subscriptions {
   &__header {
     margin-top: var(--spacing-unit);
@@ -50,7 +52,7 @@
   }
 }
 
-@include media-breakpoint-down(xxl) {
+@include mixins.media-breakpoint-down(xxl) {
   .user-subscriptions {
     &__content {
       .billings-table,
@@ -62,7 +64,7 @@
   }
 }
 
-@include media-breakpoint-down(xl) {
+@include mixins.media-breakpoint-down(xl) {
   .user-subscriptions {
     &__header {
       flex-direction: column;

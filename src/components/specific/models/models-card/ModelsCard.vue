@@ -1,18 +1,57 @@
+<script setup>
+import { ref, watch } from "vue";
+import { MODEL_CONFIG } from "../../../../config/models.js";
+import routeNames from "../../../../router/route-names.js";
+// Components
+import AppLink from "../../app/app-link/AppLink.vue";
+import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview.vue";
+
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  models: {
+    type: Array,
+    required: true
+  }
+});
+
+const emit = defineEmits(["model-changed"]);
+
+const currentModel = ref(null);
+
+const onModelChange = model => {
+  if (!currentModel.value || currentModel.value.id !== model.id) {
+    currentModel.value = model;
+    emit("model-changed", model);
+  }
+};
+
+watch(
+  () => props.models,
+  () => {
+    currentModel.value = props.models[0];
+  },
+  { immediate: true }
+);
+</script>
+
 <template>
   <BIMDataCard class="models-card">
     <template #left>
       <AppLink
         data-test-id="btn-open-viewer"
-        :data-test-param="model.id"
+        :data-test-param="currentModel.id"
         :to="{
           name: routeNames.modelViewer,
           params: {
             spaceID: project.cloud.id,
             projectID: project.id,
-            modelIDs: model.id
+            modelIDs: currentModel.id
           },
           query: {
-            window: MODEL_CONFIG[model.type].window
+            window: MODEL_CONFIG[currentModel.type].window
           }
         }"
       >
@@ -33,58 +72,4 @@
   </BIMDataCard>
 </template>
 
-<script>
-import { ref, watch } from "vue";
-import { MODEL_CONFIG } from "../../../../config/models.js";
-import routeNames from "../../../../router/route-names.js";
-// Components
-import AppLink from "../../app/app-link/AppLink.vue";
-import ModelsCardModelPreview from "./models-card-model-preview/ModelsCardModelPreview.vue";
-
-export default {
-  components: {
-    AppLink,
-    ModelsCardModelPreview
-  },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    },
-    models: {
-      type: Array,
-      required: true
-    }
-  },
-  emits: ["model-changed"],
-  setup(props, { emit }) {
-    const currentModel = ref(null);
-
-    const onModelChange = model => {
-      if (!currentModel.value || currentModel.value.id !== model.id) {
-        currentModel.value = model;
-        emit("model-changed", model);
-      }
-    };
-
-    watch(
-      () => props.models,
-      () => {
-        currentModel.value = props.models[0];
-      },
-      { immediate: true }
-    );
-
-    return {
-      // References
-      model: currentModel,
-      MODEL_CONFIG,
-      routeNames,
-      // Methods
-      onModelChange
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss" src="./ModelsCard.scss"></style>
+<style scoped src="./ModelsCard.css"></style>

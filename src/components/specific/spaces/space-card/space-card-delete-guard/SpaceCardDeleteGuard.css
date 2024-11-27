@@ -5,7 +5,7 @@
   flex-direction: column;
   gap: var(--spacing-unit);
 
-  &__title {
+  .space-card-delete-guard__title {
     display: flex;
     justify-content: space-between;
     align-items: center;

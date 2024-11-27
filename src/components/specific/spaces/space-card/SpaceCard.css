@@ -1,8 +1,8 @@
-@import "./SpaceCard.vars.scss";
+@import "./SpaceCard.vars.css";
 
 .space-card {
-  width: $card-width;
-  height: $card-height;
+  width: var(--card-width);
+  height: var(--card-height);
   transition-duration: 0.35s;
   overflow: visible;
 
@@ -18,7 +18,7 @@
     .bimdata-card__content {
       position: relative;
       overflow: hidden;
-      height: $card-content-height;
+      height: var(--card-content-height);
       padding: 0;
 
       .free-badge {
@@ -41,7 +41,7 @@
         position: absolute;
         z-index: 2;
         top: 0;
-        left: calc($card-width - 66px);
+        left: calc(var(--card-width) - 66px);
       }
     }
 
@@ -50,7 +50,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: calc(100% - #{$card-content-height});
+      height: calc(100% - var(--card-content-height));
       padding: 0;
 
       .space-card__title {
@@ -69,12 +69,12 @@
         text-align: center;
         line-height: 14px;
 
-        &__text {
+        .space-card__sub-title__text {
           font-size: 10px;
           color: var(--color-granite-light);
         }
 
-        &__number {
+        .space-card__sub-title__number {
           font-size: 14px;
           font-weight: bold;
         }

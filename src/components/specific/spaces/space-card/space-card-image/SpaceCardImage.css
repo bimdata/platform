@@ -1,10 +1,10 @@
-@import "../SpaceCard.vars.scss";
+@import "../SpaceCard.vars.css";
 
 .space-card-image {
   position: relative;
   height: 100%;
 
-  &__top-stripe {
+  .space-card-image__top-stripe {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -17,7 +17,7 @@
   svg {
     width: 100%;
     height: 100%;
-    background-color: $card-background;
+    background-color: var(--card-background);
     transition-duration: 0.35s;
   }
 

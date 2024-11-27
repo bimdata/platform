@@ -1,0 +1,10 @@
+.space-card,
+.space-card-action-menu,
+.space-card-image,
+.space-creation-card {
+  --card-width: 215px;
+  --card-height: 275px;
+  --card-content-height: 180px;
+  --card-menu-height: 132px;
+  --card-background: var(--color-silver-light);
+}

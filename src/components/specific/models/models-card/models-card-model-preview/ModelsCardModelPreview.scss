@@ -1,11 +1,12 @@
-@import "../ModelsCard.vars.scss";
+@use "/src/styles/mixins.scss";
+@import "../ModelsCard.vars.css";
 
 .models-card-model-preview {
-  @include noselect;
+  @include mixins.noselect;
 
   position: relative;
   height: 100%;
-  background-color: $card-background;
+  background-color: var(--card-background);
 
   &__head {
     position: absolute;
@@ -46,7 +47,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: $card-content-height;
+    height: var(--card-content-height);
     padding: calc(var(--spacing-unit) * 2);
     text-align: center;
     font-size: 18px;
@@ -57,14 +58,14 @@
   &__switcher {
     display: flex;
     align-items: center;
-    height: calc(100% - #{$card-content-height});
+    height: calc(100% - var(--card-content-height));
     padding: var(--spacing-unit);
     font-size: 12px;
     background-color: var(--color-white);
     color: var(--color-text);
 
     &__text {
-      width: calc(#{$card-width} - 2 * var(--spacing-unit) - 72px);
+      width: calc(var(--card-width) - 2 * var(--spacing-unit) - 72px);
     }
 
     &__btn-prev {

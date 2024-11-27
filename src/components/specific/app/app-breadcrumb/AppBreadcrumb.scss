@@ -1,3 +1,5 @@
+@use "/src/styles/mixins.scss";
+
 .app-breadcrumb:deep() {
   display: flex;
   align-items: center;
@@ -11,7 +13,7 @@
   }
 }
 
-@include media-breakpoint-down(xl) {
+@include mixins.media-breakpoint-down(xl) {
   .app-breadcrumb:deep() {
     .breadcrumb-separator {
       margin: 0 calc(var(--spacing-unit) / 3);

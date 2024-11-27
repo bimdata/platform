@@ -17,4 +17,4 @@
   </div>
 </template>
 
-<style scoped lang="scss" src="./GroupMemberSelectionCard.scss"></style>
+<style scoped src="./GroupMemberSelectionCard.css"></style>

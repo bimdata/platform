@@ -1,3 +1,49 @@
+<script setup>
+import { reactive, ref } from "vue";
+import { useProjects } from "../../../../state/projects.js";
+import { debounce } from "../../../../utils/async.js";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  }
+});
+
+const { createProject } = useProjects();
+
+const loading = ref(false);
+const nameInput = ref(null);
+const newProject = reactive({ name: "" });
+const hasError = ref(false);
+
+const submit = debounce(async () => {
+  if (newProject.name) {
+    try {
+      loading.value = true;
+      await createProject(props.space, newProject);
+      closeCreationForm();
+    } finally {
+      loading.value = false;
+    }
+  } else {
+    nameInput.value.focus();
+    hasError.value = true;
+  }
+}, 500);
+
+const showCreationForm = ref(false);
+const openCreationForm = () => {
+  showCreationForm.value = true;
+  setTimeout(() => nameInput.value.focus(), 200);
+};
+const closeCreationForm = () => {
+  newProject.name = "";
+  hasError.value = false;
+  showCreationForm.value = false;
+};
+</script>
+
 <template>
   <div
     class="project-creation-card"
@@ -63,66 +109,4 @@
   </div>
 </template>
 
-<script>
-import { reactive, ref } from "vue";
-import { useProjects } from "../../../../state/projects.js";
-import { debounce } from "../../../../utils/async.js";
-
-export default {
-  props: {
-    space: {
-      type: Object,
-      required: true
-    }
-  },
-  setup(props) {
-    const { createProject } = useProjects();
-
-    const loading = ref(false);
-    const nameInput = ref(null);
-    const newProject = reactive({ name: "" });
-    const hasError = ref(false);
-
-    const submit = debounce(async () => {
-      if (newProject.name) {
-        try {
-          loading.value = true;
-          await createProject(props.space, newProject);
-          closeCreationForm();
-        } finally {
-          loading.value = false;
-        }
-      } else {
-        nameInput.value.focus();
-        hasError.value = true;
-      }
-    }, 500);
-
-    const showCreationForm = ref(false);
-    const openCreationForm = () => {
-      showCreationForm.value = true;
-      setTimeout(() => nameInput.value.focus(), 200);
-    };
-    const closeCreationForm = () => {
-      newProject.name = "";
-      hasError.value = false;
-      showCreationForm.value = false;
-    };
-
-    return {
-      // References
-      hasError,
-      loading,
-      nameInput,
-      newProject,
-      showCreationForm,
-      // Methods
-      closeCreationForm,
-      openCreationForm,
-      submit
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss" src="./ProjectCreationCard.scss"></style>
+<style scoped src="./ProjectCreationCard.css"></style>

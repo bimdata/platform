@@ -1,3 +1,5 @@
+@use "/src/styles/mixins.scss";
+
 .file-tree {
   padding: var(--spacing-unit);
 
@@ -36,7 +38,7 @@
           min-width: 18px;
         }
         &__name {
-          @include noselect;
+          @include mixins.noselect;
           align-self: flex-end;
           color: var(--color-text);
         }

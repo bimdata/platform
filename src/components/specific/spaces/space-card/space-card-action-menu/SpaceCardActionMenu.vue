@@ -1,3 +1,73 @@
+<script setup>
+import { provide, ref } from "vue";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { useSpaces } from "../../../../../state/spaces.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
+import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
+import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.vue";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  }
+});
+
+const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
+  useUser();
+const { removeSpaceImage } = useSpaces();
+
+const loading = ref(false);
+provide("loading", loading);
+
+const toggleFavorite = async () => {
+  if (isFavoriteSpace(props.space)) {
+    await removeFavoriteSpace(props.space);
+  } else {
+    await addFavoriteSpace(props.space);
+  }
+};
+
+const {
+  isOpen: showUpdateForm,
+  open: openUpdateForm,
+  close: closeUpdateForm
+} = useToggle();
+const {
+  isOpen: showDeleteGuard,
+  open: openDeleteGuard,
+  close: closeDeleteGuard
+} = useToggle();
+
+const reset = () => {
+  closeUpdateForm();
+  closeDeleteGuard();
+  loading.value = false;
+};
+
+const showMenu = ref(false);
+const closeMenu = () => {
+  reset();
+  showMenu.value = false;
+};
+const toggleMenu = () => {
+  reset();
+  showMenu.value = !showMenu.value;
+};
+
+const removeImage = async () => {
+  try {
+    loading.value = true;
+    await removeSpaceImage(props.space);
+    closeMenu();
+  } finally {
+    loading.value = false;
+  }
+};
+</script>
+
 <template>
   <div
     class="space-card-action-menu"
@@ -89,101 +159,4 @@
   </div>
 </template>
 
-<script>
-import { provide, ref } from "vue";
-import { useToggle } from "../../../../../composables/toggle.js";
-import { useSpaces } from "../../../../../state/spaces.js";
-import { useUser } from "../../../../../state/user.js";
-// Components
-import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
-import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
-import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.vue";
-
-export default {
-  components: {
-    SpaceCardDeleteGuard,
-    SpaceCardImageButton,
-    SpaceCardUpdateForm
-  },
-  props: {
-    space: {
-      type: Object,
-      required: true
-    }
-  },
-  setup(props) {
-    const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
-      useUser();
-    const { removeSpaceImage } = useSpaces();
-
-    const loading = ref(false);
-    provide("loading", loading);
-
-    const toggleFavorite = async () => {
-      if (isFavoriteSpace(props.space)) {
-        await removeFavoriteSpace(props.space);
-      } else {
-        await addFavoriteSpace(props.space);
-      }
-    };
-
-    const {
-      isOpen: showUpdateForm,
-      open: openUpdateForm,
-      close: closeUpdateForm
-    } = useToggle();
-    const {
-      isOpen: showDeleteGuard,
-      open: openDeleteGuard,
-      close: closeDeleteGuard
-    } = useToggle();
-
-    const reset = () => {
-      closeUpdateForm();
-      closeDeleteGuard();
-      loading.value = false;
-    };
-
-    const showMenu = ref(false);
-    const closeMenu = () => {
-      reset();
-      showMenu.value = false;
-    };
-    const toggleMenu = () => {
-      reset();
-      showMenu.value = !showMenu.value;
-    };
-
-    const removeImage = async () => {
-      try {
-        loading.value = true;
-        await removeSpaceImage(props.space);
-        closeMenu();
-      } finally {
-        loading.value = false;
-      }
-    };
-
-    return {
-      // References
-      loading,
-      showDeleteGuard,
-      showMenu,
-      showUpdateForm,
-      // Methods
-      closeMenu,
-      closeDeleteGuard,
-      closeUpdateForm,
-      isFavoriteSpace,
-      isSpaceAdmin,
-      openDeleteGuard,
-      openUpdateForm,
-      removeImage,
-      toggleFavorite,
-      toggleMenu
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss" src="./SpaceCardActionMenu.scss"></style>
+<style scoped src="./SpaceCardActionMenu.css"></style>

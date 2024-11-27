@@ -1,23 +1,23 @@
-@import "../SpaceCard.vars.scss";
+@import "../SpaceCard.vars.css";
 
 .space-card-action-menu {
   position: relative;
 
-  &__btn {
+  .space-card-action-menu__btn {
     color: var(--color-granite-light);
   }
 
-  &__container {
+  .space-card-action-menu__container {
     position: absolute;
     right: 0;
-    width: calc(#{$card-width} - var(--spacing-unit));
+    width: calc(var(--card-width) - var(--spacing-unit));
     margin-top: calc(var(--spacing-unit) / 2);
     padding: calc(var(--spacing-unit) / 2) 0;
     border-radius: 4px;
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
 
-    &__loader {
+    .space-card-action-menu__container__loader {
       position: absolute;
       z-index: 1;
       width: 100%;
@@ -28,7 +28,7 @@
       background-color: var(--color-white);
     }
 
-    &__menu {
+    .space-card-action-menu__container__menu {
       display: flex;
       flex-direction: column;
     }

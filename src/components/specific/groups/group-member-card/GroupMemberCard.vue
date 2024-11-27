@@ -53,4 +53,4 @@ const remove = async () => {
   </BIMDataCard>
 </template>
 
-<style scoped lang="scss" src="./GroupMemberCard.scss"></style>
+<style scoped src="./GroupMemberCard.css"></style>

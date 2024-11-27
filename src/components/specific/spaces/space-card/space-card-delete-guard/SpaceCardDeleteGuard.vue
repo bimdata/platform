@@ -1,3 +1,35 @@
+<script setup>
+import { inject } from "vue";
+import { useSpaces } from "../../../../../state/spaces.js";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  }
+});
+
+const emit = defineEmits(["close", "success"]);
+
+const { deleteSpace } = useSpaces();
+
+const loading = inject("loading", false);
+
+const submit = async () => {
+  try {
+    loading.value = true;
+    await deleteSpace(props.space);
+    emit("success");
+  } finally {
+    loading.value = false;
+  }
+};
+
+const close = () => {
+  emit("close");
+};
+</script>
+
 <template>
   <div class="space-card-delete-guard">
     <div class="space-card-delete-guard__title">
@@ -28,44 +60,4 @@
   </div>
 </template>
 
-<script>
-import { inject } from "vue";
-import { useSpaces } from "../../../../../state/spaces.js";
-
-export default {
-  props: {
-    space: {
-      type: Object,
-      required: true
-    }
-  },
-  emits: ["close", "success"],
-  setup(props, { emit }) {
-    const { deleteSpace } = useSpaces();
-
-    const loading = inject("loading", false);
-
-    const submit = async () => {
-      try {
-        loading.value = true;
-        await deleteSpace(props.space);
-        emit("success");
-      } finally {
-        loading.value = false;
-      }
-    };
-
-    const close = () => {
-      emit("close");
-    };
-
-    return {
-      // Methods
-      close,
-      submit
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss" src="./SpaceCardDeleteGuard.scss"></style>
+<style scoped src="./SpaceCardDeleteGuard.css"></style>

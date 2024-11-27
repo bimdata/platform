@@ -1,5 +1,6 @@
-@import "./BcfTopicOverview.scss";
-@import "./TopicSnapshotModal.scss";
+@use "/src/styles/mixins.scss";
+@import "./BcfTopicOverview.css";
+@import "./TopicSnapshotModal.css";
 
 .project-bcf {
   &__actions {
@@ -117,7 +118,7 @@
   }
 }
 
-@include media-breakpoint-down(xl) {
+@include mixins.media-breakpoint-down(xl) {
   .project-bcf {
     &__content {
       &__grid {
@@ -127,7 +128,7 @@
   }
 }
 
-@include media-breakpoint-down(lg) {
+@include mixins.media-breakpoint-down(lg) {
   .project-bcf {
     &__actions {
       &--start {

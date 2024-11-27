@@ -1,11 +1,11 @@
-@import "../ProjectCard.vars.scss";
+@import "../ProjectCard.vars.css";
 
 .project-card-model-preview {
   position: relative;
   height: 100%;
-  background-color: $card-background;
+  background-color: var(--card-background);
 
-  &__switcher {
+  .project-card-model-preview__switcher {
     position: absolute;
     z-index: 2;
     display: flex;

@@ -65,4 +65,4 @@ const nbProjects = computed(
   </AppLink>
 </template>
 
-<style scoped lang="scss" src="./SpaceCard.scss"></style>
+<style scoped src="./SpaceCard.css"></style>

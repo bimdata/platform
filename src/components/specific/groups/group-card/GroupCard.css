@@ -1,9 +1,9 @@
-@import "./GroupCard.vars.scss";
+@import "./GroupCard.vars.css";
 
 .group-card {
-  min-width: $card-width;
-  width: $card-width;
-  height: $card-height;
+  min-width: var(--card-width);
+  width: var(--card-width);
+  height: var(--card-height);
 
   .bimdata-card {
     position: relative;
@@ -15,7 +15,7 @@
       position: absolute;
       z-index: 1;
       top: 0;
-      width: $card-width;
+      width: var(--card-width);
       height: 3px;
     }
 
@@ -33,7 +33,7 @@
 
     &:deep() {
       .bimdata-card__content {
-        height: $card-content-height;
+        height: var(--card-content-height);
         padding: 0;
         overflow: hidden;
 

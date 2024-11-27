@@ -13,15 +13,6 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue()
     ],
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: "modern-compiler",
-          // Make global SASS mixins available everywhere
-          additionalData: '@import "/src/styles/mixins.scss";'
-        }
-      }
-    },
     optimizeDeps: {
       exclude: ["@bimdata/bcf-components"]
     },

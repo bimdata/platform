@@ -1,4 +1,4 @@
-@import "../group-member-card//GroupMemberCard.vars.scss";
+@import "../group-card/GroupCard.vars.css";
 
 .group-member-selection-card {
   position: relative;
@@ -6,8 +6,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: $card-width;
-  height: $card-height;
+  width: var(--card-width);
+  height: var(--card-height);
   box-shadow: var(--box-shadow);
   background-color: var(--color-white);
   color: var(--color-primary);

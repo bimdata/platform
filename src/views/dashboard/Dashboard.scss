@@ -1,3 +1,5 @@
+@use "/src/styles/mixins.scss";
+
 .dashboard {
   --tile-width: 300px; // miminum tile width
   --tile-height: 240px;
@@ -38,7 +40,7 @@
   }
 }
 
-@include media-breakpoint-down(xxl) {
+@include mixins.media-breakpoint-down(xxl) {
   .dashboard {
     --tile-height: 200px;
 
@@ -48,7 +50,7 @@
   }
 }
 
-@include media-breakpoint-down(xl) {
+@include mixins.media-breakpoint-down(xl) {
   .dashboard {
     &__body {
       flex-direction: column-reverse;
@@ -60,7 +62,7 @@
   }
 }
 
-@include media-breakpoint-down(lg) {
+@include mixins.media-breakpoint-down(lg) {
   .dashboard {
     &__head {
       grid-template-columns: 1fr;

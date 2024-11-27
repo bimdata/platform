@@ -1,3 +1,39 @@
+<script setup>
+import seedrandom from "seedrandom";
+import colors from "./colors.js";
+import fallbackImages from "./fallback-images/index.js";
+
+defineOptions({
+  components: {
+    ...fallbackImages
+  },
+});
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  },
+  topStripe: {
+    type: Boolean,
+    default: false
+  }
+});
+
+const rng = seedrandom(props.space.id.toString());
+const randomNumber = n => Math.abs(rng.int32()) % n;
+
+const fallbackImageNames = Object.keys(fallbackImages);
+const fallbackImage = fallbackImageNames[randomNumber(fallbackImageNames.length)];
+
+const svgColors = colors[randomNumber(colors.length)];
+
+const svgColorCodes = Object.values(svgColors);
+const stripeColor = svgColorCodes[randomNumber(svgColorCodes.length)];
+
+const svg = { ...svgColors };
+</script>
+
 <template>
   <div class="space-card-image">
     <div
@@ -20,47 +56,4 @@
   </div>
 </template>
 
-<script>
-import seedrandom from "seedrandom";
-import colors from "./colors.js";
-import fallbackImages from "./fallback-images/index.js";
-
-export default {
-  components: {
-    ...fallbackImages
-  },
-  props: {
-    space: {
-      type: Object,
-      required: true
-    },
-    topStripe: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props) {
-    const rng = seedrandom(props.space.id.toString());
-    const randomNumber = n => Math.abs(rng.int32()) % n;
-
-    const fallbackImageNames = Object.keys(fallbackImages);
-    const fallbackImage =
-      fallbackImageNames[randomNumber(fallbackImageNames.length)];
-
-    const svgColors = colors[randomNumber(colors.length)];
-
-    const svgColorCodes = Object.values(svgColors);
-    const stripeColor = svgColorCodes[randomNumber(svgColorCodes.length)];
-
-    return {
-      fallbackImage,
-      stripeColor,
-      svg: {
-        ...svgColors
-      }
-    };
-  }
-};
-</script>
-
-<style scoped lang="scss" src="./SpaceCardImage.scss"></style>
+<style scoped src="./SpaceCardImage.css"></style>

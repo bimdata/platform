@@ -1,7 +1,4 @@
-/**
- * Note: this file is automatically imported at the begining
- * of every .scss file (see vue.config.js).
- */
+@use "sass:map";
 
 @mixin noselect {
   -webkit-touch-callout: none; // iOS Safari
@@ -46,7 +43,7 @@ $breakpoints: (
 // No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name) {
-  $max: map-get($breakpoints, $name);
+  $max: map.get($breakpoints, $name);
   $max: if($max and $max > 0, $max - 0.02, null);
   @if $max {
     @media (max-width: $max) {

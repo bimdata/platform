@@ -1,5 +1,7 @@
+@use "/src/styles/mixins.scss";
+
 .project-users-manager {
-  @include block-card;
+  @include mixins.block-card;
 
   &__manager {
     height: 100%;

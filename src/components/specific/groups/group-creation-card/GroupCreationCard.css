@@ -1,22 +1,22 @@
-@import "../group-card/GroupCard.vars.scss";
+@import "../group-card/GroupCard.vars.css";
 
 .group-creation-card {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: $card-width;
-  height: $card-height;
+  width: var(--card-width);
+  height: var(--card-height);
   box-shadow: var(--box-shadow);
   background-color: var(--color-white);
   color: var(--color-primary);
   transition-duration: 0.35s;
 
-  &__loader {
+  .group-creation-card__loader {
     transform: scale(2);
   }
 
-  &__form {
+  .group-creation-card__form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,7 +25,7 @@
     padding: var(--spacing-unit) calc(var(--spacing-unit) * 2)
       calc(var(--spacing-unit) * 2);
 
-    &__title {
+    .group-creation-card__form__title {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -34,7 +34,7 @@
     }
   }
 
-  &__btn-open {
+  .group-creation-card__btn-open {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,7 +42,7 @@
     width: 100%;
     height: 100%;
 
-    &__icon {
+    .group-creation-card__btn-open__icon {
       display: flex;
       justify-content: center;
       align-items: center;

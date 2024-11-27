@@ -1,0 +1,9 @@
+.project-card,
+.project-card-model-preview,
+.project-card-placeholder,
+.project-creation-card {
+  --card-width: 320px;
+  --card-height: 261px;
+  --card-content-height: 205px;
+  --card-background: var(--color-silver-light);
+}

@@ -1,9 +1,9 @@
-@import "./ModelsCard.vars.scss";
+@import "./ModelsCard.vars.css";
 
 .models-card {
-  min-width: $card-width;
-  width: $card-width;
-  height: $card-height;
+  min-width: var(--card-width);
+  width: var(--card-width);
+  height: var(--card-height);
 
   &:deep() {
     .bimdata-card__brand {

@@ -1,29 +1,29 @@
-@import "./GroupMemberCard.vars.scss";
+@import "../group-card/GroupCard.vars.css";
 
 .group-member-card {
   position: relative;
-  min-width: $card-width;
-  width: $card-width;
-  height: $card-height;
+  min-width: var(--card-width);
+  width: var(--card-width);
+  height: var(--card-height);
   transition-duration: 0.35s;
 
-  &__btn-remove {
+  .group-member-card__btn-remove {
     position: absolute;
     top: calc(var(--spacing-unit) / 2);
     right: calc(var(--spacing-unit) / 2);
   }
 
-  &__info {
+  .group-member-card__info {
     text-align: center;
 
-    &__name {
+    .group-member-card__info__name {
       margin-bottom: calc(var(--spacing-unit) / 3);
       font-size: 1.1rem;
       font-weight: bold;
       color: var(--color-primary);
     }
 
-    &__email {
+    .group-member-card__info__email {
       font-size: 0.9rem;
       color: var(--color-granite-light);
     }
@@ -31,7 +31,7 @@
 
   &:deep() {
     .bimdata-card__content {
-      height: $card-content-height;
+      height: var(--card-content-height);
       padding: 0;
       overflow: hidden;
 

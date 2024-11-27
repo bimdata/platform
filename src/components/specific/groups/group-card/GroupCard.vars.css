@@ -1,0 +1,9 @@
+.group-card,
+.group-creation-card,
+.group-member-card,
+.group-member-selection-card {
+  --card-width: 320px;
+  --card-height: 261px;
+  --card-content-height: var(--card-height);
+  --card-background: var(--color-white);
+}
