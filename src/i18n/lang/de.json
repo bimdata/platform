@@ -39,7 +39,7 @@
     "text": "Gruppen"
   },
   "BreadcrumbProjectSelector": {
-    "placeholder": "< Kein Projekt >"
+    "placeholder": "( Kein Projekt )"
   },
   "DashboardProjectList": {
     "title": "Neueste Projekte"
@@ -52,7 +52,7 @@
     "message": "Guten Tag {name}, schön, Sie wiederzusehen!"
   },
   "FileActionsCell": {
-    "openViewerButtonText": "Sehen",
+    "openViewerButtonText": "Öffnen",
     "addTagsButtonText": "Tags hinzufügen",
     "addVersionButtonText": "Version hinzufügen",
     "manageAccessButtonText": "Zugang verwalten",
@@ -66,7 +66,7 @@
     "moveButtonText": "Verschieben nach"
   },
   "FilesDeleteModal": {
-    "title": "Dateien löschen",
+    "title": "{filesCount} Dateien löschen",
     "message": "Sie sind dabei, folgende Dateien/Ordner endgültig zu löschen:",
     "messageVersion": "Sie sind im Begriff, die folgenden Dateien/Ordner und den zugehörigen Versionsverlauf dauerhaft zu löschen:"
   },
@@ -101,7 +101,7 @@
     "rightsHeader": "Rechte",
     "membersHeader": "Mitglieder",
     "groupHeader": "Gruppe",
-    "propagate": "Wenden Sie Rechte auf Unterordner an",
+    "propagate": "Um die Rechte auf Unterordner zu verbreiten, stellen Sie bitte sicher, dass Sie das Kästchen ankreuzen, bevor Sie das Formular absenden.",
     "safeZoneModal": {
       "title": "Achtung!",
       "text": "Die Änderungen der Zugangsrechte wurden nicht gespeichert. Sind Sie sicher, dass sie das Menü zur Verwaltung der Zugangsrechte schließen möchten? (Änderungen gehen verloren)"
@@ -268,7 +268,7 @@
     "homeButtonText": "Home"
   },
   "FolderPermissionSelector": {
-    "label": "Alle",
+    "label": "Standard",
     "options": {
       "accessDenied": "Zugang verweigert",
       "readOnly": "Schreibgeschützt",
@@ -761,7 +761,7 @@
   },
   "SubscriptionModal": {
     "title": "Erhalten Sie mehr Platz",
-    "subtitle": "Sie haben derzeit eine Speicherkapazität von 300mb",
+    "subtitle": "Sie haben derzeit eine Speicherkapazität von {size}",
     "soon": "SOON",
     "upgrade": {
       "title": "Zur Pro-Plattform wechseln",
