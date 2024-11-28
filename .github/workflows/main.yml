@@ -78,11 +78,11 @@ jobs:
       - name: Run e2e tests
         uses: ./end-to-end/
         with:
-          docker_tag: ${{ env.tag }}
           ref: ${{ github.ref }}
+          docker_tag: ${{ env.tag }}
           github_token: ${{ secrets.REPOS_TOKEN }}
           vault_passwd: ${{ secrets.VAULT_PASSWD }}
-          cypress_version: 13.14.1
+          cypress_version: 13.16.0
 
   deploy:
     runs-on: [self-hosted, common]
