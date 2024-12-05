@@ -66,6 +66,8 @@
       @download="downloadModels([$event])"
       @view-metaBuilding="$emit('view-metaBuilding', $event)"
       @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
+      @view-photosphereBuilding="$emit('view-photosphereBuilding', $event)"
+      @edit-photosphereBuilding="$emit('edit-photosphereBuilding', $event)"
     >
       <template #placeholder>
         <slot name="tablePlaceholder"></slot>
@@ -125,9 +127,11 @@ export default {
   },
   emits: [
     "edit-metaBuilding",
+    "edit-photosphereBuilding",
     "file-uploaded",
     "tab-changed",
-    "view-metaBuilding"
+    "view-metaBuilding",
+    "view-photosphereBuilding",
   ],
   setup(props, { emit }) {
     const router = useRouter();

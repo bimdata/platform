@@ -47,6 +47,7 @@ import { useUser } from "../../../../../state/user.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import {
   isConvertible,
+  isConvertibleToPhotosphere,
   isModel,
   isViewable,
   openInViewer
@@ -76,6 +77,7 @@ export default {
   },
   emits: [
     "create-model",
+    "create-photosphere",
     "delete",
     "download",
     "file-clicked",
@@ -137,6 +139,16 @@ export default {
             action: () => onClick("remove-model"),
           });
         }
+      }
+
+      if (!isFolder(props.file) && isConvertibleToPhotosphere(props.file) && !isModel(props.file)) {
+        menuItems.value.push({
+          key: 3,
+          iconComponent: SetAsModelIcon,
+          text: "FileActionsCell.createPhotosphereButtonText",
+          disabled: !hasAdminPerm(props.project, props.file),
+          action: () => onClick("create-photosphere")
+        });
       }
 
       menuItems.value.push({

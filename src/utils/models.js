@@ -54,11 +54,6 @@ function isModel(document) {
   return !!document.model_id;
 }
 
-function isPlan(model) {
-  const { JPEG, PDF, PNG } = MODEL_TYPE;
-  return [JPEG, PDF, PNG].includes(model.type);
-}
-
 function isIFC(document) {
   return isModel(document) && document.model_type === MODEL_TYPE.IFC;
 }
@@ -74,6 +69,13 @@ function isViewable(document) {
 
 function isConvertible(document) {
   return CONVERTIBLE_EXTENSIONS.includes(
+    fileExtension(document.file_name).toLowerCase()
+  );
+}
+
+function isConvertibleToPhotosphere(document) {
+  const { JPEG, JPG } = MODEL_EXTENSIONS;
+  return [JPEG, JPG].includes(
     fileExtension(document.file_name).toLowerCase()
   );
 }
@@ -95,10 +97,10 @@ function openInViewer(router, project, model, window) {
 
 export {
   isConvertible,
+  isConvertibleToPhotosphere,
   isIFC,
   isModel,
   isPDF,
-  isPlan,
   isViewable,
   openInViewer,
   segregateBySource,

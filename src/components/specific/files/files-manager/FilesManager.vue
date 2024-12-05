@@ -76,6 +76,7 @@
             :foldersToUpload="foldersToUpload"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
+            @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @dragover.prevent="() => {}"
@@ -100,6 +101,7 @@
             :loadingFileIds="loadingFileIds"
             :files="displayedFiles"
             @create-model="createModelFromFile"
+            @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
@@ -191,6 +193,7 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { MODEL_TYPE } from "../../../../config/models.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -271,7 +274,7 @@ export default {
       moveFiles: move,
       downloadFiles: download,
     } = useFiles();
-    const { createModel, deleteModels } = useModels();
+    const { createModel, createPhotosphere, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -391,10 +394,15 @@ export default {
 
     const loadingFileIds = ref([]);
 
-    const createModelFromFile = async (file) => {
+    const createModelFromFile = async (file, type) => {
       try {
         loadingFileIds.value.push(file.id);
-        const model = await createModel(props.project, file);
+        let model;
+        if (type === MODEL_TYPE.PHOTOSPHERE) {
+          model = await createPhotosphere(props.project, file);
+        } else {
+          model = await createModel(props.project, file);
+        }
         emit("model-created", model);
         pushNotification({
           type: "success",
@@ -750,6 +758,7 @@ export default {
       folderToManage,
       importFromOtherProjectsActions,
       loadingFileIds,
+      MODEL_TYPE,
       searchText,
       selectedFileTab,
       selection,

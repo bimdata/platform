@@ -91,6 +91,7 @@
         :file="file"
         :loading="loadingFileIds.includes(file.id)"
         @create-model="$emit('create-model', file)"
+        @create-photosphere="$emit('create-photosphere', file)"
         @delete="$emit('delete', file)"
         @download="$emit('download', file)"
         @file-clicked="$emit('file-clicked', file)"
@@ -165,6 +166,7 @@ export default {
   emits: [
     "back-parent-folder",
     "create-model",
+    "create-photosphere",
     "delete",
     "download",
     "file-clicked",

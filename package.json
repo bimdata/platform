@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@bimdata/bcf-components": "6.4.4",
-    "@bimdata/components": "1.7.1",
-    "@bimdata/design-system": "2.2.1-beta.7",
+    "@bimdata/components": "1.7.2",
+    "@bimdata/design-system": "2.2.1-beta.8",
     "@bimdata/typescript-fetch-api-client": "10.17.2",
-    "@bimdata/viewer": "2.6.1-beta.5",
+    "@bimdata/viewer": "2.7.0-alpha.photosphere.2",
     "@paddle/paddle-js": "^1.3.2",
     "async": "^3.2.6",
     "dms-conversion": "^3.1.3",
