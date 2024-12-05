@@ -141,16 +141,14 @@ export default {
         }
       }
 
-      if (!isFolder(props.file) && isConvertibleToPhotosphere(props.file)) {
-        if (!isModel(props.file)) {
-          menuItems.value.push({
-            key: 3,
-            iconComponent: SetAsModelIcon,
-            text: "FileActionsCell.createPhotosphereButtonText",
-            disabled: !hasAdminPerm(props.project, props.file),
-            action: () => onClick("create-photosphere")
-          });
-        }
+      if (!isFolder(props.file) && isConvertibleToPhotosphere(props.file) && !isModel(props.file)) {
+        menuItems.value.push({
+          key: 3,
+          iconComponent: SetAsModelIcon,
+          text: "FileActionsCell.createPhotosphereButtonText",
+          disabled: !hasAdminPerm(props.project, props.file),
+          action: () => onClick("create-photosphere")
+        });
       }
 
       menuItems.value.push({
