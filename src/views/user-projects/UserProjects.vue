@@ -53,7 +53,6 @@
 import { ref } from "vue";
 import { useListFilter } from "../../composables/list-filter.js";
 import { useListSort } from "../../composables/list-sort.js";
-import { useToggle } from "../../composables/toggle.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useProjects } from "../../state/projects.js";
 
@@ -71,7 +70,6 @@ export default {
     StatusFilterButton
   },
   setup() {
-    const { isOpen, close, toggle } = useToggle();
     const { userProjects } = useProjects();
     const filteredProjects = ref(userProjects.value);
 
@@ -91,10 +89,7 @@ export default {
       filteredProjects,
       projects: displayedProjects,
       searchText,
-      isOpen,
       // Methods
-      close,
-      toggle,
       sortProjects,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
