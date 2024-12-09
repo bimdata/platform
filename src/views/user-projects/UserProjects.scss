@@ -4,17 +4,6 @@
       background-color: var(--color-white);
     }
 
-    .status_filter {
-      position: relative;
-      &-menu {
-        top: calc(32px + 6px);
-        right: 0;
-        position: absolute;
-        background-color: var(--color-white);
-        line-height: 2;
-      }
-    }
-
     &__btn-filter,
     &__btn-sort {
       color: var(--color-granite-light);

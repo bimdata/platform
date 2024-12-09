@@ -25,32 +25,10 @@
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
-          <div class="status_filter" v-click-away="close">
-            <BIMDataButton
-              class="space-board__header__btn"
-              fill
-              squared
-              icon
-              @click="toggle"
-            >
-              <BIMDataIconFilterList size="s" />
-            </BIMDataButton>
-            <transition name="fade">
-              <div v-show="isOpen" class="status_filter-menu p-y-12 p-x-18">
-                <div
-                  v-for="status in computedStatuses"
-                  :key="status"
-                  class="status-filter-menu__item"
-                >
-                  <BIMDataCheckbox
-                    :text="$t(`ProjectStatusBadge.${status}`)"
-                    :modelValue="selectedStatuses.includes(status)"
-                    @update:modelValue="(checked) => onStatusChange(status, checked)"
-                  />
-                </div>
-              </div>
-            </transition>
-          </div>
+          <StatusFilterButton
+            :projects="spaceProjects"
+            @update:filteredProjects="filteredProjects = $event"
+          />
           <BIMDataButton
             v-if="!isLG"
             class="space-board__header__btn"
@@ -100,18 +78,17 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useInterval } from "../../composables/interval.js";
 import { useListFilter } from "../../composables/list-filter.js";
 import { useListSort } from "../../composables/list-sort.js";
-import { useToggle } from "../../composables/toggle.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 import { useUser } from "../../state/user.js";
-import { projectStatus } from "../../utils/projects.js";
+
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppLoading from "../../components/specific/app/app-loading/AppLoading.vue";
@@ -123,6 +100,7 @@ import ProjectCreationCard from "../../components/specific/projects/project-crea
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
 import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 import SpaceUsersManager from "../../components/specific/users/space-users-manager/SpaceUsersManager.vue";
+import StatusFilterButton from "../../components/specific/projects/status-filter-button/StatusFilterButton.vue";
 
 export default {
   components: {
@@ -136,9 +114,9 @@ export default {
     SpaceUsersManager,
     SubscriptionStatusBanner,
     ViewHeader,
+    StatusFilterButton,
   },
   setup() {
-    const { isOpen, close, toggle } = useToggle();
     const { isOpenRight, openSidePanel } = useAppSidePanel();
     const { isSpaceAdmin } = useUser();
     const {
@@ -150,35 +128,7 @@ export default {
       loadSpaceInvitations,
     } = useSpaces();
     const { spaceProjects } = useProjects();
-
-    const selectedStatuses = ref([]);
-
-    const onStatusChange = (status, isChecked) => {
-      if (isChecked) {
-        if (!selectedStatuses.value.includes(status)) {
-          selectedStatuses.value.push(status);
-        }
-      } else {
-        selectedStatuses.value = selectedStatuses.value.filter((s) => s !== status);
-      }
-    };
-
-    const computedStatuses = computed(() => {
-      const statuses = new Set();
-      spaceProjects.value.forEach((project) => {
-        statuses.add(projectStatus(project));
-      });
-      return Array.from(statuses);
-    });
-
-    const filteredProjects = computed(() => {
-      return spaceProjects.value.filter((project) => {
-        if (selectedStatuses.value.length === 0) {
-          return true;
-        }
-        return selectedStatuses.value.includes(projectStatus(project));
-      });
-    });
+    const filteredProjects = ref(spaceProjects.value);
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
       filteredProjects,
@@ -203,13 +153,9 @@ export default {
       space: currentSpace,
       spaceSubInfo,
       users: spaceUsers,
-      selectedStatuses,
-      computedStatuses,
-      isOpen,
+      spaceProjects,
+      filteredProjects,
       // Methods
-      close,
-      toggle, 
-      onStatusChange,
       isSpaceAdmin,
       openUsersManager: openSidePanel,
       sortProjects,
