@@ -46,7 +46,6 @@ export default {
 
     const selectedStatuses = ref([]);
 
-    // Gestion du changement de statut
     const onStatusChange = (status, isChecked) => {
       if (isChecked) {
         if (!selectedStatuses.value.includes(status)) {
@@ -57,7 +56,6 @@ export default {
       }
     };
 
-    // Calcul des statuts uniques
     const computedStatuses = computed(() => {
       const statuses = new Set();
       props.projects.forEach((project) => {
@@ -66,7 +64,6 @@ export default {
       return Array.from(statuses);
     });
 
-    // Liste filtrée en fonction des statuts
     const filteredProjects = computed(() => {
       return props.projects.filter((project) => {
         if (selectedStatuses.value.length === 0) {
@@ -76,7 +73,6 @@ export default {
       });
     });
 
-    // Émettre la liste filtrée à chaque changement
     watch(filteredProjects, (newFilteredProjects) => {
       emit("update:filteredProjects", newFilteredProjects);
     });
