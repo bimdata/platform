@@ -43,6 +43,8 @@
 <script>
 import { computed } from "vue";
 import { useFiles } from "../../../../../state/files.js";
+import { useModels } from "../../../../../state/models.js";
+import { getModels } from "../../../../../utils/file-structure.js";
 
 export default {
   props: {
@@ -61,6 +63,7 @@ export default {
   },
   setup(props) {
     const { deleteFiles, softUpdateFileStructure } = useFiles();
+    const { softDeleteModels } = useModels();
 
     const hasVersions = computed(() => props.files.some((file) => file.history?.length > 1));
 
@@ -71,6 +74,8 @@ export default {
     const submit = () => {
       deleteFiles(props.project, props.files);
       softUpdateFileStructure("delete", props.files);
+      const models = props.files.flatMap(file => getModels(file));
+      softDeleteModels(models);
       close();
     };
 
