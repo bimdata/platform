@@ -137,7 +137,10 @@
     "createModelNotification": "Modèle créé avec succès",
     "structureImport": "Importer une structure GED",
     "gedDownload": "Télécharger la GED",
-    "folderImport": "Importer un dossier"
+    "folderImport": "Importer un dossier",
+    "foldersTab": "Dossiers",
+    "filesTab": "Tous les fichiers",
+    "visasTab": "Mes visas"
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
