@@ -669,17 +669,17 @@ export default {
     const filesTabs = [
       {
         id: "folders",
-        text: "Dossiers",
+        text: t("FilesManager.foldersTab"),
         count: computed(() => props.fileStructure.children.length),
       },
       {
         id: "files",
-        text: "Tous les fichiers",
+        text: t("FilesManager.filesTab"),
         count: computed(() => allFiles.value.length),
       },
       {
         id: "visas",
-        text: "Mes visas",
+        text: t("FilesManager.visasTab"),
         count: computed(() => visasCounter.value),
       },
     ];
