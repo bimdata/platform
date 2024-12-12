@@ -1,3 +1,13 @@
+# [1.1.0](https://github.com/bimdata/platform/compare/v1.0.0...v1.1.0) (2024-12-12)
+
+
+### Bug Fixes
+
+* add french translation of ged tabs ([#489](https://github.com/bimdata/platform/issues/489)) ([62e9b6b](https://github.com/bimdata/platform/commit/62e9b6b142c8d5f31a58a33971008f3add0958db))
+* copy assets from previous build to avoid 404 when deploying a new release on already opened platforms in browsers ([#482](https://github.com/bimdata/platform/issues/482)) ([f58f42d](https://github.com/bimdata/platform/commit/f58f42d667b49b2a13e40e6807d759b8e31ce524))
+* **files:** avoid overflow in access manager when group name is too long ([14c4dd4](https://github.com/bimdata/platform/commit/14c4dd4e9bb811282251f42560699bf82399e817))
+* visas crash when validator is null ([#481](https://github.com/bimdata/platform/issues/481)) ([6652348](https://github.com/bimdata/platform/commit/6652348796727ffd670a9d724d17bbf0033fd051))
+
 # 1.0.0 (2024-10-16)
 
 
