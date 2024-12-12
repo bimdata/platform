@@ -274,6 +274,14 @@ function getAscendants(file, allFolders) {
   return [parent].concat(getAscendants(parent, allFolders));
 }
 
+function getModels(file) {
+  if (file.children?.length > 0) {
+    return file.children.flatMap(child => getModels(child));
+  } else {
+    return file.model_id ? [{ id: file.model_id }] : [];
+  }
+}
+
 function segregate(files) {
   const folders = [];
   const documents = [];
@@ -299,6 +307,7 @@ export {
   FileStructureHandler,
   getAscendants,
   getDescendants,
+  getModels,
   segregate,
   isFolder,
 };
