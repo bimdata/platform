@@ -54,7 +54,7 @@
         width="120px"
         @click="
           fileUploadInput('file', (event) => importBcfTopics(event.target.files), {
-            accept: ['.bcf'],
+            accept: ['.bcf', '.bcfzip'],
             multiple: true,
           })
         "
