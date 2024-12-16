@@ -36,6 +36,7 @@
     "@semantic-release/git": "^10.0.1",
     "@vitejs/plugin-vue": "^5.2.1",
     "babel-jest": "^29.7.0",
+    "conventional-changelog-eslint": "^6.0.0",
     "cypress": "^13.16.0",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
