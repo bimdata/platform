@@ -374,6 +374,7 @@
               <BcfTopicCard
                 v-for="topic in displayedTopics"
                 :key="topic.guid"
+                :project="project"
                 :detailedExtensions="detailedExtensions"
                 :topic="topic"
                 :selectable="true"
