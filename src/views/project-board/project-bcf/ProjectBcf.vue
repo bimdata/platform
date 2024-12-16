@@ -33,6 +33,7 @@
         </template>
       </teleport>
     </template>
+
     <AppSlotContent name="project-board-action">
       <template v-if="isProjectAdmin(project)">
         <BIMDataButton color="primary" outline radius icon @click="openSettings">
