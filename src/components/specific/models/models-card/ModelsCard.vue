@@ -55,7 +55,7 @@ watch(
           }
         }"
       >
-        <BIMDataButton color="primary" fill radius>
+        <BIMDataButton color="primary" fill radius :disabled="currentModel.status !== 'C'">
           <BIMDataIconShow size="xs" margin="0 6px 0 0" />
           <span>{{ $t("t.open") }}</span>
         </BIMDataButton>
