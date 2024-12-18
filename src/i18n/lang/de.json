@@ -75,7 +75,10 @@
     "createModelNotification": "Vorlage erfolgreich erstellt",
     "structureImport": "Eine GED-Struktur importieren",
     "gedDownload": "EDM herunterladen",
-    "folderImport": "Einen Ordner importieren"
+    "folderImport": "Einen Ordner importieren",
+    "foldersTab": "Ordner",
+    "filesTab": "Dateien",
+    "visasTab": "Meine Visum"
   },
   "FilesManagerOnboarding": {
     "text": "Erste Datei hochladen",

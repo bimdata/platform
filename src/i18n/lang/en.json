@@ -75,7 +75,10 @@
     "createModelNotification": "Model successfully created",
     "structureImport": "Import a GED structure",
     "gedDownload": "Download the GED",
-    "folderImport": "Import a folder"
+    "folderImport": "Import a folder",
+    "foldersTab": "Folders",
+    "filesTab": "Documents",
+    "visasTab": "Visas"
   },
   "FilesManagerOnboarding": {
     "text": "Upload your first file",

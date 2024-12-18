@@ -2,6 +2,7 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 export default {
+  preset: "eslint",
   plugins: [
     [
       "@semantic-release/commit-analyzer",
