@@ -1,3 +1,5 @@
+import { UPLOAD_RETRY_STATUS_CODES } from "../config/upload.js";
+
 /**
  * @param {Object} params
  * @param {Object} handlers
@@ -40,7 +42,7 @@ function createFileUploader(
       const uploadId = nextUploadId++;
 
       const handleError = (status, err) => {
-        if (status >= 500 && count < retryCount) {
+        if (UPLOAD_RETRY_STATUS_CODES.includes(status) && count < retryCount) {
           count++;
           onUploadRetry({ id: uploadId, status, error: err, count });
           setTimeout(sendRequest, retryInterval);

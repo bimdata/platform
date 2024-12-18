@@ -64,12 +64,12 @@ describe("Documents import feature", () => {
     cy.deleteGedDoc("terminaux-plafond.dwg");
   });
 
-  it("Should retry upload if it fails", () => {
+  it("Should retry upload if it fails with one of the 'upload retry status code'", () => {
     // Arrange
     // - Simulate an error from the API
     cy.intercept(
       { method: "POST", url: "**/document", times: 1 },
-      { statusCode: 500 }
+      { statusCode: 502 }
     );
     // - Simulate an error from the network connection
     cy.intercept(
@@ -102,7 +102,7 @@ describe("Documents import feature", () => {
       { method: "POST", url: "**/document" },
       req => {
         reqCount += 1;
-        req.continue(res => res.send({ statusCode: 500 }));
+        req.continue(res => res.send({ statusCode: 502 }));
       }
     ).as("uploadRequest");
 
