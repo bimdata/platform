@@ -1,3 +1,71 @@
+<template>
+  <FlippableCard
+    v-if="visible"
+    class="project-card"
+    data-test-id="project-card"
+    :data-test-param="project.id"
+    :flipped="showMenu"
+    v-click-away="closeMenu"
+  >
+    <template #front-face>
+      <AppLink
+        data-guide="dashboard-project"
+        :data-guide-param="project.id"
+        :data-guide-click="
+          isSpaceAdmin(project.cloud) && displayedModels.length > 0
+            ? 'dashboard-project'
+            : ''
+        "
+        :to="{
+          name: routeNames.projectBoard,
+          params: {
+            spaceID: project.cloud.id,
+            projectID: project.id
+          }
+        }"
+      >
+        <BIMDataCard>
+          <template #content>
+            <ProjectCardActionBar
+              class="project-card__action-bar"
+              :actionMenu="actionMenu"
+              :viewerButton="viewerButton"
+              :project="project"
+              :models="displayedModels"
+              @open-viewer="goToModelViewer"
+              @open-menu="openMenu"
+            />
+            <div
+              class="project-card__left-stripe"
+              :class="`project-card__left-stripe--${projectStatus(project)}`"
+            ></div>
+            <FavoriteBadge v-if="isFavoriteProject(project)" />
+            <ProjectStatusBadge :status="projectStatus(project)" />
+            <ProjectCardModelPreview
+              :project="project"
+              :models="displayedModels"
+              @model-changed="onModelChange"
+            />
+          </template>
+          <template #footer>
+            <div class="project-card__title">
+              <BIMDataTextbox :text="project.name" />
+            </div>
+          </template>
+        </BIMDataCard>
+      </AppLink>
+    </template>
+
+    <template #back-face>
+      <ProjectCardActionMenu :project="project" @close="closeMenu" />
+    </template>
+  </FlippableCard>
+
+  <div v-else ref="placeholder" class="project-card-placeholder">
+    <BIMDataSpinner v-if="loading" />
+  </div>
+</template>
+
 <script setup>
 import { inject, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -106,73 +174,5 @@ onUnmounted(() => {
   unwatchModels?.();
 });
 </script>
-
-<template>
-  <FlippableCard
-    v-if="visible"
-    class="project-card"
-    data-test-id="project-card"
-    :data-test-param="project.id"
-    :flipped="showMenu"
-    v-click-away="closeMenu"
-  >
-    <template #front-face>
-      <AppLink
-        data-guide="dashboard-project"
-        :data-guide-param="project.id"
-        :data-guide-click="
-          isSpaceAdmin(project.cloud) && displayedModels.length > 0
-            ? 'dashboard-project'
-            : ''
-        "
-        :to="{
-          name: routeNames.projectBoard,
-          params: {
-            spaceID: project.cloud.id,
-            projectID: project.id
-          }
-        }"
-      >
-        <BIMDataCard>
-          <template #content>
-            <ProjectCardActionBar
-              class="project-card__action-bar"
-              :actionMenu="actionMenu"
-              :viewerButton="viewerButton"
-              :project="project"
-              :models="displayedModels"
-              @open-viewer="goToModelViewer"
-              @open-menu="openMenu"
-            />
-            <div
-              class="project-card__left-stripe"
-              :class="`project-card__left-stripe--${projectStatus(project)}`"
-            ></div>
-            <FavoriteBadge v-if="isFavoriteProject(project)" />
-            <ProjectStatusBadge :status="projectStatus(project)" />
-            <ProjectCardModelPreview
-              :project="project"
-              :models="displayedModels"
-              @model-changed="onModelChange"
-            />
-          </template>
-          <template #footer>
-            <div class="project-card__title">
-              <BIMDataTextbox :text="project.name" />
-            </div>
-          </template>
-        </BIMDataCard>
-      </AppLink>
-    </template>
-
-    <template #back-face>
-      <ProjectCardActionMenu :project="project" @close="closeMenu" />
-    </template>
-  </FlippableCard>
-
-  <div v-else ref="placeholder" class="project-card-placeholder">
-    <BIMDataSpinner v-if="loading" />
-  </div>
-</template>
 
 <style scoped src="./ProjectCard.css"></style>

@@ -1,3 +1,21 @@
+<template>
+  <AppSlotContent name="app-modal">
+    <div class="app-modal__box" :style="boxStyle">
+      <BIMDataButton
+        class="app-modal__box__btn-close"
+        :style="{ color: closeBtnColor }"
+        ghost
+        rounded
+        icon
+        @click="closeModal"
+      >
+        <BIMDataIconClose size="xxs" />
+      </BIMDataButton>
+      <slot></slot>
+    </div>
+  </AppSlotContent>
+</template>
+
 <script setup>
 import { onBeforeRouteLeave } from "vue-router";
 import { useAppModal } from "./app-modal.js";
@@ -19,24 +37,6 @@ const { closeModal } = useAppModal();
 
 onBeforeRouteLeave(() => closeModal());
 </script>
-
-<template>
-  <AppSlotContent name="app-modal">
-    <div class="app-modal__box" :style="boxStyle">
-      <BIMDataButton
-        class="app-modal__box__btn-close"
-        :style="{ color: closeBtnColor }"
-        ghost
-        rounded
-        icon
-        @click="closeModal"
-      >
-        <BIMDataIconClose size="xxs" />
-      </BIMDataButton>
-      <slot></slot>
-    </div>
-  </AppSlotContent>
-</template>
 
 <style scoped lang="scss">
 .app-modal__box {

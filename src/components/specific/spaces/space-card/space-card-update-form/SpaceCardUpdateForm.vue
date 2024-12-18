@@ -1,3 +1,41 @@
+<template>
+  <div class="space-card-update-form">
+    <div class="space-card-update-form__title">
+      <span>{{ $t("SpaceCardUpdateForm.title") }}</span>
+      <BIMDataButton
+        data-test-id="btn-close-update"
+        ghost
+        rounded
+        icon
+        @click="close"
+      >
+        <BIMDataIconClose size="xxxs" />
+      </BIMDataButton>
+    </div>
+    <BIMDataInput
+      ref="nameInput"
+      data-test-id="input-update-name"
+      class="space-card-update-form__input"
+      :placeholder="$t('t.name')"
+      v-model="spaceName"
+      :error="hasError"
+      :errorMessage="$t('t.invalidName')"
+      @keyup.esc.stop="close"
+      @keyup.enter.prevent.stop="submit"
+    />
+    <BIMDataButton
+      data-test-id="btn-submit-update"
+      class="space-card-update-form__btn-submit"
+      fill
+      radius
+      color="primary"
+      @click="submit"
+    >
+      {{ $t("t.rename") }}
+    </BIMDataButton>
+  </div>
+</template>
+
 <script setup>
 import { inject, onMounted, ref } from "vue";
 import { useSpaces } from "../../../../../state/spaces.js";
@@ -44,43 +82,5 @@ onMounted(() => {
   setTimeout(() => nameInput.value.focus(), 200);
 });
 </script>
-
-<template>
-  <div class="space-card-update-form">
-    <div class="space-card-update-form__title">
-      <span>{{ $t("SpaceCardUpdateForm.title") }}</span>
-      <BIMDataButton
-        data-test-id="btn-close-update"
-        ghost
-        rounded
-        icon
-        @click="close"
-      >
-        <BIMDataIconClose size="xxxs" />
-      </BIMDataButton>
-    </div>
-    <BIMDataInput
-      ref="nameInput"
-      data-test-id="input-update-name"
-      class="space-card-update-form__input"
-      :placeholder="$t('t.name')"
-      v-model="spaceName"
-      :error="hasError"
-      :errorMessage="$t('t.invalidName')"
-      @keyup.esc.stop="close"
-      @keyup.enter.prevent.stop="submit"
-    />
-    <BIMDataButton
-      data-test-id="btn-submit-update"
-      class="space-card-update-form__btn-submit"
-      fill
-      radius
-      color="primary"
-      @click="submit"
-    >
-      {{ $t("t.rename") }}
-    </BIMDataButton>
-  </div>
-</template>
 
 <style scoped src="./SpaceCardUpdateForm.css"></style>

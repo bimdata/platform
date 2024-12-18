@@ -1,3 +1,14 @@
+<template>
+  <BIMDataButton
+    class="space-card-image-button"
+    ghost
+    squared
+    @click="selectImage"
+  >
+    {{ $t("SpaceCardImageButton.text") }}
+  </BIMDataButton>
+</template>
+
 <script setup>
 import { inject } from "vue";
 import UploadService from "../../../../../services/UploadService.js";
@@ -46,14 +57,3 @@ const selectImage = () => {
   input.click();
 };
 </script>
-
-<template>
-  <BIMDataButton
-    class="space-card-image-button"
-    ghost
-    squared
-    @click="selectImage"
-  >
-    {{ $t("SpaceCardImageButton.text") }}
-  </BIMDataButton>
-</template>

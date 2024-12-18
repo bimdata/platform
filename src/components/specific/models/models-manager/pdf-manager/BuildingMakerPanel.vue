@@ -1,27 +1,3 @@
-<script setup>
-import apiClient from "../../../../../services/api-client.js";
-import { useModels } from "../../../../../state/models.js";
-
-const { loadProjectModels } = useModels();
-
-defineProps({
-  space: {
-    type: Object,
-    required: true
-  },
-  project: {
-    type: Object,
-    required: true
-  },
-  model: {
-    type: Object,
-    default: null
-  },
-});
-
-defineEmits(["close"]);
-</script>
-
 <template>
   <div class="building-maker-panel">
     <BIMDataButton
@@ -46,6 +22,30 @@ defineEmits(["close"]);
     </div>
   </div>
 </template>
+
+<script setup>
+import apiClient from "../../../../../services/api-client.js";
+import { useModels } from "../../../../../state/models.js";
+
+const { loadProjectModels } = useModels();
+
+defineProps({
+  space: {
+    type: Object,
+    required: true
+  },
+  project: {
+    type: Object,
+    required: true
+  },
+  model: {
+    type: Object,
+    default: null
+  },
+});
+
+defineEmits(["close"]);
+</script>
 
 <style scoped>
 .building-maker-panel {

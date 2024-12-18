@@ -1,19 +1,3 @@
-<script setup>
-import routeNames from "../../../../../router/route-names.js";
-import { useUser } from "../../../../../state/user.js";
-// Components
-import AppLink from "../../../app/app-link/AppLink.vue";
-
-defineProps({
-  project: {
-    type: Object,
-    required: true
-  }
-});
-
-const { removeFavoriteProject } = useUser();
-</script>
-
 <template>
   <div class="favorite-project-card">
     <div class="card__icon">&starf;</div>
@@ -42,6 +26,22 @@ const { removeFavoriteProject } = useUser();
     </BIMDataButton>
   </div>
 </template>
+
+<script setup>
+import routeNames from "../../../../../router/route-names.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import AppLink from "../../../app/app-link/AppLink.vue";
+
+defineProps({
+  project: {
+    type: Object,
+    required: true
+  }
+});
+
+const { removeFavoriteProject } = useUser();
+</script>
 
 <style scoped>
 .favorite-project-card {
