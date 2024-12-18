@@ -109,16 +109,20 @@ This will create a `dist/` directory that contain the bundled application ready 
 
 There are 3 process banches: `develop`, `release` and `master`.
 
-`develop` is the main development branch. All feature branches should be merged into `develop` using pull requests.
-`release` is the pre-production branch. All fix branches should be merged into `release` using pull requests. The release branch must be merged into `develop` once a PR is merged.
-`master` is the production branch. The release branch must be merged into `master` once a release is ready.
+- `develop` is the main development branch. All feature branches should be merged into `develop` using pull requests.
+- `release` is the pre-production branch. All fix branches should be merged into `release` using pull requests. The release branch must be merged into `develop` once a PR is merged.
+- `master` is the production branch. The release branch must be merged into `master` once a release is ready.
 
-This setup allows us to have unstable features in develop while not blocking fix to be shipped in production.
+This setup allows us to have unstable features in `develop` while not blocking fix to be shipped in production.
 
 ### BIMData Viewer
 
 When a new version of the Viewer is released, the `develop` branch is automatically updated to use this version.
 When a new stable version of the Viewer is released, the `release` branch is automatically updated to use this version.
+
+### Internationalization
+
+When adding code in `develop` branch it will trigger an update on POEditor.
 
 ## License
 
