@@ -39,13 +39,13 @@ function createFileUploader(
 
       const uploadId = nextUploadId++;
 
-      const handleError = e => {
-        if (count < retryCount) {
+      const handleError = (status, err) => {
+        if (status >= 500 && count < retryCount) {
           count++;
-          onUploadRetry({ id: uploadId, error: e, count });
+          onUploadRetry({ id: uploadId, status, error: err, count });
           setTimeout(sendRequest, retryInterval);
         } else {
-          onUploadError({ id: uploadId, error: e });
+          onUploadError({ id: uploadId, status, error: err });
         }
       };
 
@@ -78,11 +78,11 @@ function createFileUploader(
               response: request.response
             });
           } else {
-            handleError(e);
+            handleError(request.status, e);
           }
         });
         request.upload.addEventListener("error", e => {
-          handleError(e);
+          handleError(request.status, e);
         });
         request.upload.addEventListener("abort", e => {
           onUploadCancel(e);

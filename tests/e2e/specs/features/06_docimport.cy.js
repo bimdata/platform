@@ -97,9 +97,13 @@ describe("Documents import feature", () => {
 
   it("Should retry upload at most 3 times", () => {
     // Arrange
+    let reqCount = 0;
     cy.intercept(
       { method: "POST", url: "**/document" },
-      { statusCode: 500 }
+      req => {
+        reqCount += 1;
+        req.continue(res => res.send({ statusCode: 500 }));
+      }
     ).as("uploadRequest");
 
     // Act
@@ -110,10 +114,32 @@ describe("Documents import feature", () => {
     );
 
     // Assert
-    for (let i = 0; i < 4; i++) cy.wait("@uploadRequest");
-    cy.hook("files-table").find("thead tr .upload-card.failed");
-    cy.hook("files-table")
-      .contains("tbody tr", "house-plan.pdf")
-      .should("have.length", 0);
+    cy.wait(5000).then(() => {
+      expect(reqCount).to.equal(4);
+    });
+  });
+
+  it("Should not retry upload if it fails with 4XX status code", () => {
+    // Arrange
+    let reqCount = 0;
+    cy.intercept(
+      { method: "POST", url: "**/document" },
+      req => {
+        reqCount += 1;
+        req.continue(res => res.send({ statusCode: 400 }));
+      }
+    ).as("uploadRequest");
+
+    // Act
+    cy.hook("btn-upload-file").click();
+    cy.get("body > input[type=file]").selectFile(
+      { contents: "@housePlan", fileName: "house-plan.pdf" },
+      { force: true }
+    );
+
+    // Assert
+    cy.wait(5000).then(() => {
+      expect(reqCount).to.equal(1);
+    });
   });
 });
