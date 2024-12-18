@@ -29,7 +29,6 @@ const loadBcfTopics = async project => {
     extensions: state.detailedExtensions,
     users: projectUsers.value
   });
-  await service.loadTopicsViewpoints(project, topics);
   state.topics = topics;
   return topics;
 };
