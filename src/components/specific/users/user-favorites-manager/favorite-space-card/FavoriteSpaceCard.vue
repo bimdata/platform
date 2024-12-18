@@ -1,27 +1,3 @@
-<script setup>
-import { computed } from "vue";
-import routeNames from "../../../../../router/route-names.js";
-import { useProjects } from "../../../../../state/projects.js";
-import { useUser } from "../../../../../state/user.js";
-// Components
-import AppLink from "../../../app/app-link/AppLink.vue";
-import SpaceCardImage from "../../../spaces/space-card/space-card-image/SpaceCardImage.vue";
-
-const props = defineProps({
-  space: {
-    type: Object,
-    required: true
-  }
-});
-
-const { removeFavoriteSpace } = useUser();
-const { projectsBySpace } = useProjects();
-
-const nbProjects = computed(
-  () => projectsBySpace.value[props.space.id]?.length ?? 0
-);
-</script>
-
 <template>
   <div class="favorite-space-card">
     <div class="card__icon">&starf;</div>
@@ -49,6 +25,30 @@ const nbProjects = computed(
     </BIMDataButton>
   </div>
 </template>
+
+<script setup>
+import { computed } from "vue";
+import routeNames from "../../../../../router/route-names.js";
+import { useProjects } from "../../../../../state/projects.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import AppLink from "../../../app/app-link/AppLink.vue";
+import SpaceCardImage from "../../../spaces/space-card/space-card-image/SpaceCardImage.vue";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  }
+});
+
+const { removeFavoriteSpace } = useUser();
+const { projectsBySpace } = useProjects();
+
+const nbProjects = computed(
+  () => projectsBySpace.value[props.space.id]?.length ?? 0
+);
+</script>
 
 <style scoped>
 .favorite-space-card {

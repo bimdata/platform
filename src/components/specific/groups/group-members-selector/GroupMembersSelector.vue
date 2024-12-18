@@ -1,44 +1,3 @@
-<script setup>
-import { computed } from "vue";
-import { useListFilter } from "../../../../composables/list-filter.js";
-import { useGroups } from "../../../../state/groups.js";
-import { fullName } from "../../../../utils/users.js";
-// Components
-import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
-
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true
-  },
-  group: {
-    type: Object,
-    required: true
-  },
-  users: {
-    type: Object,
-    required: true
-  }
-});
-
-const { setCurrentGroup, addGroupMembers } = useGroups();
-
-const availableUsers = computed(() => {
-  const memberIDs = props.group.members.map(u => u.id);
-  return props.users.filter(u => !memberIDs.includes(u.id));
-});
-
-const { filteredList: displayedUsers, searchText } = useListFilter(
-  availableUsers,
-  ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
-);
-
-const addMember = async user => {
-  await addGroupMembers(props.project, props.group, [user]);
-  setCurrentGroup(props.group.id); // Needed to reload member list
-};
-</script>
-
 <template>
   <div class="group-members-selector">
     <BIMDataSearch
@@ -81,6 +40,47 @@ const addMember = async user => {
     </div>
   </div>
 </template>
+
+<script setup>
+import { computed } from "vue";
+import { useListFilter } from "../../../../composables/list-filter.js";
+import { useGroups } from "../../../../state/groups.js";
+import { fullName } from "../../../../utils/users.js";
+// Components
+import UserAvatar from "../../users/user-avatar/UserAvatar.vue";
+
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  group: {
+    type: Object,
+    required: true
+  },
+  users: {
+    type: Object,
+    required: true
+  }
+});
+
+const { setCurrentGroup, addGroupMembers } = useGroups();
+
+const availableUsers = computed(() => {
+  const memberIDs = props.group.members.map(u => u.id);
+  return props.users.filter(u => !memberIDs.includes(u.id));
+});
+
+const { filteredList: displayedUsers, searchText } = useListFilter(
+  availableUsers,
+  ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
+);
+
+const addMember = async user => {
+  await addGroupMembers(props.project, props.group, [user]);
+  setCurrentGroup(props.group.id); // Needed to reload member list
+};
+</script>
 
 <style scoped>
 .group-members-selector {

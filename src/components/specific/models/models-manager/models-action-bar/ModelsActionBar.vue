@@ -1,34 +1,3 @@
-<script setup>
-import { computed } from "vue";
-import { MODEL_TYPE } from "../../../../../config/models.js";
-import { useUser } from "../../../../../state/user.js";
-
-const { hasAdminPermModel } = useUser();
-
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true
-  },
-  models: {
-    type: Array,
-    default: () => []
-  }
-});
-
-defineEmits([
-  "archive",
-  "delete",
-  "download",
-  "open",
-  "unarchive",
-]);
-
-const isArchived = computed(() => props.models.every(m => m.archived));
-
-const isIFC = computed(() => props.models.every(m => m.type === MODEL_TYPE.IFC));
-</script>
-
 <template>
   <div class="models-action-bar">
     <BIMDataButton
@@ -84,6 +53,37 @@ const isIFC = computed(() => props.models.every(m => m.type === MODEL_TYPE.IFC))
     </BIMDataButton>
   </div>
 </template>
+
+<script setup>
+import { computed } from "vue";
+import { MODEL_TYPE } from "../../../../../config/models.js";
+import { useUser } from "../../../../../state/user.js";
+
+const { hasAdminPermModel } = useUser();
+
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  models: {
+    type: Array,
+    default: () => []
+  }
+});
+
+defineEmits([
+  "archive",
+  "delete",
+  "download",
+  "open",
+  "unarchive",
+]);
+
+const isArchived = computed(() => props.models.every(m => m.archived));
+
+const isIFC = computed(() => props.models.every(m => m.type === MODEL_TYPE.IFC));
+</script>
 
 <style scoped>
 .models-action-bar {

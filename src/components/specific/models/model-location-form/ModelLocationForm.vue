@@ -1,3 +1,47 @@
+<template>
+  <div class="model-location-form">
+    <MaplibreWrapper
+      containerID="model-location-form"
+      :longitude="inputLongitude"
+      :latitude="inputLatitude"
+    />
+    <div class="model-location-form__form-control">
+      <AddressInput
+        class="model-location-form__form-control__input"
+        :placeholder="$t('ModelLocationForm.addressInputPlaceholder')"
+        :loading="checkLoading"
+        :disabled="isSubmitStep"
+        v-model="inputAddress"
+        @address-selected="checkAddress"
+      />
+
+      <template v-if="!isSubmitStep">
+        <BIMDataButton color="primary" fill radius @click="checkAddress">
+          {{ $t("t.verify") }}
+        </BIMDataButton>
+      </template>
+      <template v-else>
+        <BIMDataButton color="primary" fill radius @click="submitAddress">
+          {{ $t("t.validate") }}
+        </BIMDataButton>
+        <BIMDataButton color="default" outline radius @click="cancel">
+          {{ $t("t.change") }}
+        </BIMDataButton>
+      </template>
+
+      <BIMDataButton
+        class="model-location-form__form-control__close-btn"
+        ghost
+        rounded
+        icon
+        @click="close"
+      >
+        <BIMDataIconClose size="xs" />
+      </BIMDataButton>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { inject, ref, watch } from "vue";
 import { useModels } from "../../../../state/models.js";
@@ -106,49 +150,5 @@ watch(
   { immediate: true }
 );
 </script>
-
-<template>
-  <div class="model-location-form">
-    <MaplibreWrapper
-      containerID="model-location-form"
-      :longitude="inputLongitude"
-      :latitude="inputLatitude"
-    />
-    <div class="model-location-form__form-control">
-      <AddressInput
-        class="model-location-form__form-control__input"
-        :placeholder="$t('ModelLocationForm.addressInputPlaceholder')"
-        :loading="checkLoading"
-        :disabled="isSubmitStep"
-        v-model="inputAddress"
-        @address-selected="checkAddress"
-      />
-
-      <template v-if="!isSubmitStep">
-        <BIMDataButton color="primary" fill radius @click="checkAddress">
-          {{ $t("t.verify") }}
-        </BIMDataButton>
-      </template>
-      <template v-else>
-        <BIMDataButton color="primary" fill radius @click="submitAddress">
-          {{ $t("t.validate") }}
-        </BIMDataButton>
-        <BIMDataButton color="default" outline radius @click="cancel">
-          {{ $t("t.change") }}
-        </BIMDataButton>
-      </template>
-
-      <BIMDataButton
-        class="model-location-form__form-control__close-btn"
-        ghost
-        rounded
-        icon
-        @click="close"
-      >
-        <BIMDataIconClose size="xs" />
-      </BIMDataButton>
-    </div>
-  </div>
-</template>
 
 <style scoped src="./ModelLocationForm.css"></style>

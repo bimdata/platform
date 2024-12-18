@@ -1,3 +1,47 @@
+<template>
+  <div class="folder-permission-selector">
+    <BIMDataTextbox
+      class="folder-permission-selector__label"
+      width="0"
+      :text="group?.name ?? $t('FolderPermissionSelector.label')"
+    />
+
+    <BIMDataDropdownList
+      class="folder-permission-selector__input"
+      width="150px"
+      height="32px"
+      :list="permissionOptions"
+      :closeOnElementClick="true"
+      @element-click="update"
+    >
+      <template #header>
+        {{ $t(`FolderPermissionSelector.options.${selectedPermission.id}`) }}
+      </template>
+      <template #element="{ element }">
+        {{ $t(`FolderPermissionSelector.options.${element.id}`) }}
+      </template>
+    </BIMDataDropdownList>
+
+    <template v-if="group">
+      <UserAvatarList
+        class="folder-permission-selector__users"
+        :users="group.members"
+        itemGap="18"
+      />
+    </template>
+    <template v-else>
+      <div class="folder-permission-selector__blank">
+        <!-- This block is here for alignment purpose -->
+      </div>
+    </template>
+
+    <BIMDataCheckbox
+      class="folder-permission-selector__checkbox"
+      v-model="propagate"
+    />
+  </div>
+</template>
+
 <script setup>
 import { computed, ref, watch } from "vue";
 import { FILE_PERMISSION } from "../../../../config/files.js";
@@ -71,50 +115,6 @@ const update = perm => {
   });
 };
 </script>
-
-<template>
-  <div class="folder-permission-selector">
-    <BIMDataTextbox
-      class="folder-permission-selector__label"
-      width="0"
-      :text="group?.name ?? $t('FolderPermissionSelector.label')"
-    />
-
-    <BIMDataDropdownList
-      class="folder-permission-selector__input"
-      width="150px"
-      height="32px"
-      :list="permissionOptions"
-      :closeOnElementClick="true"
-      @element-click="update"
-    >
-      <template #header>
-        {{ $t(`FolderPermissionSelector.options.${selectedPermission.id}`) }}
-      </template>
-      <template #element="{ element }">
-        {{ $t(`FolderPermissionSelector.options.${element.id}`) }}
-      </template>
-    </BIMDataDropdownList>
-
-    <template v-if="group">
-      <UserAvatarList
-        class="folder-permission-selector__users"
-        :users="group.members"
-        itemGap="18"
-      />
-    </template>
-    <template v-else>
-      <div class="folder-permission-selector__blank">
-        <!-- This block is here for alignment purpose -->
-      </div>
-    </template>
-
-    <BIMDataCheckbox
-      class="folder-permission-selector__checkbox"
-      v-model="propagate"
-    />
-  </div>
-</template>
 
 <style scoped lang="scss">
 .folder-permission-selector {

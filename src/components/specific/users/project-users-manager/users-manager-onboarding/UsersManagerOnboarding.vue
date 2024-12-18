@@ -1,26 +1,3 @@
-<script setup>
-import { useToggle } from "../../../../../composables/toggle.js";
-import { useUser } from "../../../../../state/user.js";
-// Components
-import InvitationForm from "../../invitation-form/InvitationForm.vue";
-import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
-
-defineProps({
-  project: {
-    type: Object,
-    required: true
-  }
-});
-
-const { isProjectAdmin } = useUser();
-
-const {
-  isOpen: showInvitationForm,
-  open: openInvitationForm,
-  close: closeInvitationForm
-} = useToggle();
-</script>
-
 <template>
   <div class="users-manager-onboarding">
     <UsersManagerOnboardingImage />
@@ -56,5 +33,28 @@ const {
     </transition>
   </div>
 </template>
+
+<script setup>
+import { useToggle } from "../../../../../composables/toggle.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import InvitationForm from "../../invitation-form/InvitationForm.vue";
+import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
+
+defineProps({
+  project: {
+    type: Object,
+    required: true
+  }
+});
+
+const { isProjectAdmin } = useUser();
+
+const {
+  isOpen: showInvitationForm,
+  open: openInvitationForm,
+  close: closeInvitationForm
+} = useToggle();
+</script>
 
 <style scoped lang="scss" src="./UsersManagerOnboarding.scss"></style>

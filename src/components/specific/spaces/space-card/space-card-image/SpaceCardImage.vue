@@ -1,3 +1,25 @@
+<template>
+  <div class="space-card-image">
+    <div
+      v-if="topStripe"
+      class="space-card-image__top-stripe"
+      :style="{ backgroundColor: stripeColor }"
+    ></div>
+    <img v-if="space.image" loading="lazy" :src="space.image" />
+    <svg
+      v-else
+      viewBox="-37 -27.5 215 196"
+      :style="{
+        '--color': svg.color,
+        '--dark-color': svg.colorDark,
+        '--light-color': svg.colorLight
+      }"
+    >
+      <component :is="fallbackImage" />
+    </svg>
+  </div>
+</template>
+
 <script setup>
 import seedrandom from "seedrandom";
 import colors from "./colors.js";
@@ -33,27 +55,5 @@ const stripeColor = svgColorCodes[randomNumber(svgColorCodes.length)];
 
 const svg = { ...svgColors };
 </script>
-
-<template>
-  <div class="space-card-image">
-    <div
-      v-if="topStripe"
-      class="space-card-image__top-stripe"
-      :style="{ backgroundColor: stripeColor }"
-    ></div>
-    <img v-if="space.image" loading="lazy" :src="space.image" />
-    <svg
-      v-else
-      viewBox="-37 -27.5 215 196"
-      :style="{
-        '--color': svg.color,
-        '--dark-color': svg.colorDark,
-        '--light-color': svg.colorLight
-      }"
-    >
-      <component :is="fallbackImage" />
-    </svg>
-  </div>
-</template>
 
 <style scoped src="./SpaceCardImage.css"></style>

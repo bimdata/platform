@@ -1,3 +1,12 @@
+<template>
+  <GenericModelsManager
+    :project="project"
+    :types="types"
+    :tabs="tabs"
+    @file-uploaded="emit('file-uploaded')"
+  />
+</template>
+
 <script setup>
 import { ref, watch } from "vue";
 import { segregateBySource } from "../../../../../utils/models.js";
@@ -37,12 +46,3 @@ watch(
   { immediate: true }
 );
 </script>
-
-<template>
-  <GenericModelsManager
-    :project="project"
-    :types="types"
-    :tabs="tabs"
-    @file-uploaded="emit('file-uploaded')"
-  />
-</template>

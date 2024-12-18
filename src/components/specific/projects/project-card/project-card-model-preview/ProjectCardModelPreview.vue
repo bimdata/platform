@@ -1,3 +1,24 @@
+<template>
+  <div class="project-card-model-preview">
+    <div
+      v-if="images.length > 1"
+      class="project-card-model-preview__switcher"
+      @click.prevent.stop="() => {}"
+    >
+      <BIMDataIconChevron size="xs" :rotate="180" @click="previousImage" />
+      <span>{{ `${image.index} / ${images.length}` }}</span>
+      <BIMDataIconChevron size="xs" @click="nextImage" />
+    </div>
+    <BIMDataModelPreview
+      :type="!image.url || image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
+      :previewUrl="image.url"
+      defaultUrl="/static/default-model-preview.png"
+      :width="320"
+      :height="205"
+    />
+  </div>
+</template>
+
 <script setup>
 import { ref, watch } from "vue";
 import { MODEL_TYPE } from "../../../../../config/models.js";
@@ -51,26 +72,5 @@ watch(
   { immediate: true }
 );
 </script>
-
-<template>
-  <div class="project-card-model-preview">
-    <div
-      v-if="images.length > 1"
-      class="project-card-model-preview__switcher"
-      @click.prevent.stop="() => {}"
-    >
-      <BIMDataIconChevron size="xs" :rotate="180" @click="previousImage" />
-      <span>{{ `${image.index} / ${images.length}` }}</span>
-      <BIMDataIconChevron size="xs" @click="nextImage" />
-    </div>
-    <BIMDataModelPreview
-      :type="!image.url || image.type === MODEL_TYPE.IFC ? '3d' : '2d'"
-      :previewUrl="image.url"
-      defaultUrl="/static/default-model-preview.png"
-      :width="320"
-      :height="205"
-    />
-  </div>
-</template>
 
 <style scoped src="./ProjectCardModelPreview.css"></style>
