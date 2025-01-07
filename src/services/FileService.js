@@ -1,3 +1,4 @@
+import eachLimit from "async/eachLimit";
 import { FILE_TYPE } from "../config/files.js";
 import { download } from "../utils/download.js";
 import { segregate } from "../utils/file-structure.js";
@@ -143,13 +144,13 @@ class FileService {
 
   async deleteDocuments(project, documents) {
     try {
-      return await Promise.all(
-        documents.map(document =>
-          apiClient.collaborationApi.deleteAllDocumentHistory(
-            project.cloud.id,
-            document.id,
-            project.id
-          )
+      return await eachLimit(
+        documents,
+        5,
+        document => apiClient.collaborationApi.deleteAllDocumentHistory(
+          project.cloud.id,
+          document.id,
+          project.id
         )
       );
     } catch (error) {
