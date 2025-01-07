@@ -75,7 +75,10 @@
     "createModelNotification": "Modelo creado con éxito",
     "structureImport": "Importar una estructura EDM",
     "gedDownload": "Descargar el EDM",
-    "folderImport": "Importar una carpeta"
+    "folderImport": "Importar una carpeta",
+    "foldersTab": "Archivos",
+    "filesTab": "Documentos",
+    "visasTab": "Confirmaciones"
   },
   "FilesManagerOnboarding": {
     "text": "Suba su primer archivo",
