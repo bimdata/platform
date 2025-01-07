@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/bimdata/platform/compare/v1.1.0...v1.1.1) (2025-01-07)
+
+
+### PATCH
+
+* perf: use async.eachLimit avoid problems when deleting documents (#499) ([fa5b2b4](https://github.com/bimdata/platform/commit/fa5b2b439c2ad6921b53b4e93c611687ab7d98c5)), closes [#499](https://github.com/bimdata/platform/issues/499)
+
 # [1.1.0](https://github.com/bimdata/platform/compare/v1.0.0...v1.1.0) (2024-12-12)
 
 
