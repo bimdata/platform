@@ -1,31 +1,18 @@
 <template>
   <GenericModelsManager
-    class="pdf-manager"
+    class="photosphere-manager"
     :project="project"
     :types="types"
     :tabs="tabs"
     @tab-changed="currentTab = $event"
     @file-uploaded="$emit('file-uploaded')"
-    @edit-metaBuilding="editMetaBuilding"
-    @view-metaBuilding="viewMetaBuilding"
+    @view-photosphereBuilding="viewMetaBuilding"
+    @edit-photosphereBuilding="editMetaBuilding"
   >
-    <template #tablePlaceholder v-if="models.length === 0">
-      <div class="pdf-manager__placeholder">
-        <div
-          class="pdf-manager__placeholder__circle"
-          :style="`background: ${placeholderBackground}`"
-        >
-          <BIMDataFileIcon class="icon" fileName=".pdf" :size="20" />
-        </div>
-        <div class="pdf-manager__placeholder__content">
-          {{ $t("ModelsTable.emptyTablePlaceholder.textPdf") }}
-        </div>
-      </div>
-    </template>
-    <template #content v-if="currentTab?.id === 'metaBuildings'">
+    <template #content v-if="currentTab?.id === 'photosphereBuildings'">
       <BIMDataButton
         v-if="!isProjectGuest(project)"
-        class="pdf-manager__building-maker-btn"
+        class="photosphere-manager__building-maker-btn"
         width="100px"
         color="primary"
         outline
@@ -41,20 +28,19 @@
 </template>
 
 <script>
-import { computed, h, ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
+import { h, ref, watch } from "vue";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import { MODEL_TYPE } from "../../../../../config/models.js";
 import { useUser } from "../../../../../state/user.js";
 import { segregateBySource } from "../../../../../utils/models.js";
 // Components
 import GenericModelsManager from "../generic-models-manager/GenericModelsManager.vue";
-import BuildingMakerPanel from "./BuildingMakerPanel.vue";
-import MetaBuildingStructurePanel from "./MetaBuildingStructurePanel.vue";
+import PhotosphereBuildingMakerPanel from "./PhotosphereBuildingMakerPanel.vue";
+import PhotosphereBuildingPanel from "./PhotosphereBuildingPanel.vue";
 
 const tabsDef = [
   { id: "upload" },
-  { id: "metaBuildings" },
+  { id: "photosphereBuildings" },
   { id: "archive" }
 ];
 
@@ -78,7 +64,6 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props) {
-    const { locale, fallbackLocale } = useI18n();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const { isProjectGuest } = useUser();
 
@@ -89,7 +74,7 @@ export default {
       openSidePanel("right", {
         component: {
           render() {
-            return h(BuildingMakerPanel, {
+            return h(PhotosphereBuildingMakerPanel, {
               onClose: closeSidePanel,
               space: props.project.cloud,
               project: props.project,
@@ -103,7 +88,7 @@ export default {
       openSidePanel("right", {
         component: {
           render() {
-            return h(MetaBuildingStructurePanel, {
+            return h(PhotosphereBuildingPanel, {
               onClose: closeSidePanel,
               space: props.project.cloud,
               project: props.project,
@@ -118,7 +103,7 @@ export default {
       openSidePanel("right", {
         component: {
           render() {
-            return h(BuildingMakerPanel, {
+            return h(PhotosphereBuildingMakerPanel, {
               onClose: closeSidePanel,
               space: props.project.cloud,
               project: props.project,
@@ -133,41 +118,41 @@ export default {
       () => props.models,
       models => {
         const modelsBySource = segregateBySource(
-          models.filter(model => model.type !== MODEL_TYPE.META_BUILDING)
+          models.filter(model => model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING)
         );
         const buildings = models.filter(
-          model => model.type === MODEL_TYPE.META_BUILDING
+          model => model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
         );
         tabs.value = tabs.value.map(tab => ({
           ...tab,
           label: tab.label || tab.id,
           models:
-            tab.id === "metaBuildings" ? buildings : modelsBySource[tab.id]
+            tab.id === "photosphereBuildings" ? buildings : modelsBySource[tab.id]
         }));
       },
       { immediate: true }
     );
 
-    const placeholderBackground = computed(() => {
-      const lang =
-        ["fr", "de", "it", "es", "en"].find(lang => lang === locale.value) ||
-        fallbackLocale.value;
-      return `var(--color-silver-light) url("/static/modelsManager/menuAnimation/${lang}.gif") no-repeat 11% 143% / 79%`;
-    });
-
     return {
       // References
       currentTab,
-      placeholderBackground,
       tabs,
       // Methods
       editMetaBuilding,
       isProjectGuest,
       openBuildingMaker,
-      viewMetaBuilding,
+      viewMetaBuilding
     };
   }
 };
 </script>
 
-<style scoped lang="scss" src="./PDFManager.scss"></style>
+<style scoped>
+.photosphere-manager {
+  .photosphere-manager__building-maker-btn {
+    position: absolute;
+    top: 3px;
+    right: 124px;
+  }
+}
+</style>

@@ -1,7 +1,7 @@
 import queue from "async/queue";
 import apiClient from "./api-client.js";
+import { MODEL_TYPE } from "../config/models.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
-import { isPlan } from "../utils/models.js";
 
 class ModelService {
   callQueue = queue(async task => {
@@ -46,6 +46,20 @@ class ModelService {
     }
   }
 
+  async createPhotosphere(project, file) {
+    try {
+      return await apiClient.modelApi.createPhotosphere(
+        project.cloud.id,
+        project.id,
+        {
+          document_id: file.id
+        }
+      );
+    } catch (error) {
+      throw new RuntimeError(ERRORS.MODEL_CREATE_ERROR, error);
+    }
+  }
+
   async updateModels(project, models) {
     try {
       return await Promise.all(
@@ -67,7 +81,8 @@ class ModelService {
     try {
       return await Promise.all(
         models.map(model => {
-          if (isPlan(model) && !hard) {
+          const { JPEG, PDF, PHOTOSPHERE, PNG } = MODEL_TYPE;
+          if ([JPEG, PDF, PHOTOSPHERE, PNG].includes(model.type) && !hard) {
             return apiClient.modelApi.deleteModelWithoutDoc(
               project.cloud.id,
               model.id,

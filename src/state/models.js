@@ -31,6 +31,8 @@ const createModel = async (project, file) => {
   return newModel;
 };
 
+const createPhotosphere = (project, file) => ModelService.createPhotosphere(project, file);
+
 const updateModels = async (project, models) => {
   const newModels = await ModelService.updateModels(project, models);
   await loadProjectModels(project);
@@ -171,6 +173,7 @@ export function useModels() {
     loadProjectModels,
     fetchModelByID,
     createModel,
+    createPhotosphere,
     updateModels,
     updateModelName,
     mergeModels,

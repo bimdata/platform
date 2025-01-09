@@ -1,6 +1,8 @@
-import { fileExtension } from "../../../../utils/files.js";
 import i18n from "../../../../i18n/index.js";
+import { fileExtension } from "../../../../utils/files.js";
+
 const { t } = i18n.global;
+
 export default [
   {
     id: "type",
