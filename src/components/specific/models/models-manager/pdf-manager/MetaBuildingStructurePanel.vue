@@ -61,5 +61,9 @@ defineEmits(["close"]);
   .content {
     height: 100%;
   }
+
+  &:deep(.bimdata-tree) {
+    height: calc(100% - 44px);
+  }
 }
 </style>

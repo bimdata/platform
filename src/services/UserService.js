@@ -30,8 +30,16 @@ class UserService {
     }
   }
 
-  fetchUserFavorites() {
-    return backendClient.get("/fav/");
+  async fetchUserFavorites() {
+    try {
+      return await backendClient.get("/fav/");
+    } catch (error) {
+      console.error(error);
+      return {
+        cloud_ids: [],
+        project_ids: []
+      };
+    }
   }
 
   addFavoriteSpace(space) {

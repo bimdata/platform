@@ -72,7 +72,7 @@
                 {{ $t("SpaceCardActionMenu.removeImageButtonText") }}
               </BIMDataButton>
               <BIMDataButton
-                v-if="isSpaceAdmin(space)"
+                v-if="IS_SPACE_DELETION_ENABLED && isSpaceAdmin(space)"
                 data-test-id="btn-open-delete"
                 color="high"
                 ghost

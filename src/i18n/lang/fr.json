@@ -898,5 +898,10 @@
   "VisasDeleteModal": {
     "title": "Suppression de {visasCount} visas",
     "message": "Vous êtes sur le point de supprimer les visas sur les fichiers suivants :"
+  },
+  "WarningModal": {
+    "title": "Optimisation en cours",
+    "text1": "Nous travaillons actuellement à optimiser le processus de suppression des données pour garantir une meilleure efficacité et stabilité. Cette fonctionnalité sera remise en service dès que les améliorations auront été finalisées.",
+    "text2": "Si vous souhaitez procéder à la suppression de vos données dans l'immédiat, n'hésitez pas à nous contacter  directement. Merci pour votre patience et votre compréhension."
   }
 }
