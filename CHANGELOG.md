@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/bimdata/platform/compare/v1.1.2...v1.1.3) (2025-01-15)
+
+
+### PATCH
+
+* temporarily disable project deletion (#504) ([d2c8c2f](https://github.com/bimdata/platform/commit/d2c8c2fb4eb58358a105ce626c91effe250dae9b)), closes [#504](https://github.com/bimdata/platform/issues/504)
+
 ## [1.1.2](https://github.com/bimdata/platform/compare/v1.1.1...v1.1.2) (2025-01-15)
 
 
