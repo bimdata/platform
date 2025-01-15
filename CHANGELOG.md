@@ -1,3 +1,13 @@
+## [1.1.2](https://github.com/bimdata/platform/compare/v1.1.1...v1.1.2) (2025-01-15)
+
+
+### PATCH
+
+* add height to bimdata-tree to fix search when there is vertical scroll with many files (#501) ([660b479](https://github.com/bimdata/platform/commit/660b479966b8bc0e659fc2723e749eb85ff93fe3)), closes [#501](https://github.com/bimdata/platform/issues/501)
+* fix: add AVOID_SPACE_DELETION env var (default to false) (#500) ([9daf1be](https://github.com/bimdata/platform/commit/9daf1be2e3e4cd7a3104e75544efd6da0aea0570)), closes [#500](https://github.com/bimdata/platform/issues/500)
+* fix: handle errors when fetching favorites from backend (#502) ([1b4a8b4](https://github.com/bimdata/platform/commit/1b4a8b481356df25c55f6de231863f9ccaaede24)), closes [#502](https://github.com/bimdata/platform/issues/502)
+* temporarily disable bulk delete for models and documents (#503) ([c25f912](https://github.com/bimdata/platform/commit/c25f912ffb005c9cef7b39c1df40257b801dbf2b)), closes [#503](https://github.com/bimdata/platform/issues/503)
+
 ## [1.1.1](https://github.com/bimdata/platform/compare/v1.1.0...v1.1.1) (2025-01-07)
 
 
