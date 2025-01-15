@@ -40,6 +40,7 @@ onBeforeRouteLeave(() => closeModal());
   gap: var(--spacing-unit);
 
   .warning-modal__title {
+    font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-warning);
   }
