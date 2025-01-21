@@ -61,7 +61,7 @@
             color="high"
             ghost
             squared
-            @click="openWarningModal"
+            @click="openDeleteGuard"
           >
             {{ $t("t.delete") }}
           </BIMDataButton>
@@ -82,11 +82,9 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { useUser } from "../../../../../state/user.js";
 // Components
-import WarningModal from "../../../app/warning-modal/WarningModal.vue";
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard.vue";
 import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm.vue";
 import ProjectCardLeaveGuard from "../project-card-leave-guard/ProjectCardLeaveGuard.vue";
@@ -149,11 +147,6 @@ export default {
       emit("close");
     };
 
-    const { openModal } = useAppModal();
-    const openWarningModal = () => {
-      openModal({ component: WarningModal });
-    };
-
     return {
       // References
       loading,
@@ -170,7 +163,6 @@ export default {
       openDeleteGuard,
       openUpdateForm,
       openLeaveGuard,
-      openWarningModal,
       resetMenu,
       toggleFavorite
     };
