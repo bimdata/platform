@@ -39,7 +39,7 @@
               :fileStructure="fileStructure"
               :files="selection"
               :initialFolder="currentFolder"
-              @delete-files="openWarningModal"
+              @delete-files="openFileDeleteModal"
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
               @move="moveFiles"
@@ -209,8 +209,7 @@ import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
 import AllFilesTable from "../all-files-table/AllFilesTable.vue";
-import AppSidePanelContent from "../../app/app-side-panel/AppSidePanelContent.vue";
-import WarningModal from "../../app/warning-modal/WarningModal.vue";
+import AppSidePanelContent from "../../../specific/app/app-side-panel/AppSidePanelContent.vue";
 import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
@@ -461,10 +460,6 @@ export default {
         await fetchVisas();
       }
       closeModal();
-    };
-
-    const openWarningModal = () => {
-      openModal({ component: WarningModal });
     };
 
     const moveFiles = async (event) => {
@@ -795,7 +790,6 @@ export default {
       openVisaDeleteModal,
       openSidePanel,
       openSubscriptionModal,
-      openWarningModal,
       onTabChange,
       openTagManager,
       openVersioningManager,

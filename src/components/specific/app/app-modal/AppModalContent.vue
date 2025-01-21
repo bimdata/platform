@@ -43,7 +43,7 @@ onBeforeRouteLeave(() => closeModal());
   position: relative;
   min-width: 400px;
   min-height: 400px;
-  padding: calc(var(--spacing-unit) * 2);
+  padding: calc(var(--spacing-unit) * 3);
   background-color: var(--color-white);
 
   &__btn-close {

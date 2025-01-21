@@ -897,10 +897,5 @@
   "VisasDeleteModal": {
     "title": "Delete {visasCount} visas",
     "message": "You are about to delete the visas on the following files:"
-  },
-  "WarningModal": {
-    "title": "Ongoing optimisation",
-    "text1": "We are currently working on optimizing the data deletion process to ensure greater efficiency and stability. This feature will be reactivated as soon as the improvements have been finalized.",
-    "text2": "If you wish to delete your data immediately, please contact us directly. Thank you for your patience and understanding."
   }
 }

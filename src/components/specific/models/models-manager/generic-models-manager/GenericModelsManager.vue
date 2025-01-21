@@ -44,7 +44,7 @@
         :project="project"
         :models="selection"
         @archive="archiveModels"
-        @delete="openWarningModal"
+        @delete="openDeleteModal"
         @download="downloadModels"
         @open="openModels"
         @unarchive="unarchiveModels"
@@ -90,7 +90,6 @@
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
 import { useFiles } from "../../../../../state/files.js";
@@ -101,7 +100,6 @@ import { isModel, openInViewer } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
-import WarningModal from "../../../app/warning-modal/WarningModal.vue";
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
 import ModelsTable from "../../models-table/ModelsTable.vue";
@@ -194,11 +192,6 @@ export default {
       showDeleteModal.value = false;
     };
 
-    const { openModal } = useAppModal();
-    const openWarningModal = () => {
-      openModal({ component: WarningModal });
-    };
-
     const downloadModels = async models => {
       await download(
         props.project,
@@ -257,7 +250,6 @@ export default {
       onUploadCanceled,
       openDeleteModal,
       openModels,
-      openWarningModal,
       selectTab,
       unarchiveModels,
       uploadModels
