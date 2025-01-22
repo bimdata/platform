@@ -92,6 +92,7 @@
 <script setup>
 import { provide, ref } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
+import { IS_SPACE_DELETION_ENABLED } from "../../../../../config/spaces.js";
 import { useSpaces } from "../../../../../state/spaces.js";
 import { useUser } from "../../../../../state/user.js";
 // Components
