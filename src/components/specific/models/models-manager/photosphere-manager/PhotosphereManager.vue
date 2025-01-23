@@ -5,6 +5,7 @@
     :types="types"
     :tabs="tabs"
     @tab-changed="currentTab = $event"
+    :file-upload-params="{ processHint: 'PHOTOSPHERE' }"
     @file-uploaded="$emit('file-uploaded')"
     @view-photosphereBuilding="viewMetaBuilding"
     @edit-photosphereBuilding="editMetaBuilding"

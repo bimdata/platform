@@ -123,7 +123,10 @@ export default {
     types: {
       type: Array,
       required: true
-    }
+    },
+    fileUploadParams: {
+      type: Object,
+    },
   },
   emits: [
     "edit-metaBuilding",
@@ -209,7 +212,11 @@ export default {
         event => {
           fileUploads.value = fileUploads.value.concat(
             Array.from(event.target.files)
-              .map((file, i) => (file.key = Math.random() * i, file))
+              .map((file, i) => {
+                file.key = Math.random() * i, file;
+                file.params = props.fileUploadParams;
+                return file;
+              })
           );
         },
         {
