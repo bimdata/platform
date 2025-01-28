@@ -61,7 +61,7 @@
             color="high"
             ghost
             squared
-            @click="openWarningModal"
+            @click="openDeleteGuardOrWarningModal"
           >
             {{ $t("t.delete") }}
           </BIMDataButton>
@@ -84,6 +84,7 @@
 import { provide, ref } from "vue";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useToggle } from "../../../../../composables/toggle.js";
+import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../../config/projects.js";
 import { useUser } from "../../../../../state/user.js";
 // Components
 import WarningModal from "../../../app/warning-modal/WarningModal.vue";
@@ -149,9 +150,13 @@ export default {
       emit("close");
     };
 
-    const { openModal } = useAppModal();
-    const openWarningModal = () => {
-      openModal({ component: WarningModal });
+    const openDeleteGuardOrWarningModal = () => {
+      if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
+        const { openModal } = useAppModal();
+        openModal({ component: WarningModal });
+      } else {
+        openDeleteGuard();
+      }
     };
 
     return {
@@ -167,10 +172,9 @@ export default {
       closeLeaveGuard,
       isProjectAdmin,
       isFavoriteProject,
-      openDeleteGuard,
+      openDeleteGuardOrWarningModal,
       openUpdateForm,
       openLeaveGuard,
-      openWarningModal,
       resetMenu,
       toggleFavorite
     };

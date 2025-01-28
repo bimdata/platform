@@ -44,7 +44,7 @@
         :project="project"
         :models="selection"
         @archive="archiveModels"
-        @delete="openWarningModal"
+        @delete="openDeleteModalOrWarningModal"
         @download="downloadModels"
         @open="openModels"
         @unarchive="unarchiveModels"
@@ -90,6 +90,7 @@ import { computed, ref, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
+import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../../config/projects.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
 import { useFiles } from "../../../../../state/files.js";
 import { useModels } from "../../../../../state/models.js";
@@ -190,9 +191,13 @@ export default {
       showDeleteModal.value = false;
     };
 
-    const { openModal } = useAppModal();
-    const openWarningModal = () => {
-      openModal({ component: WarningModal });
+    const openDeleteModalOrWarningModal = models => {
+      if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
+        const { openModal } = useAppModal();
+        openModal({ component: WarningModal });
+      } else {
+        openDeleteModal(models);
+      }
     };
 
     const downloadModels = async models => {
@@ -252,8 +257,8 @@ export default {
       onFileUploaded,
       onUploadCanceled,
       openDeleteModal,
+      openDeleteModalOrWarningModal,
       openModels,
-      openWarningModal,
       selectTab,
       unarchiveModels,
       uploadModels
