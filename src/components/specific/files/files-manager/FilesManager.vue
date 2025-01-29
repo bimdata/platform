@@ -39,7 +39,7 @@
               :fileStructure="fileStructure"
               :files="selection"
               :initialFolder="currentFolder"
-              @delete-files="openWarningModal"
+              @delete-files="openFileDeleteModalOrWarningModal"
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
               @move="moveFiles"
@@ -191,6 +191,7 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../config/projects.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -418,8 +419,8 @@ export default {
 
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
-    const openFileDeleteModal = (models) => {
-      filesToDelete.value = models;
+    const openFileDeleteModal = files => {
+      filesToDelete.value = files;
       openModal({
         component: FilesDeleteModal,
         props: {
@@ -455,8 +456,12 @@ export default {
       closeModal();
     };
 
-    const openWarningModal = () => {
-      openModal({ component: WarningModal });
+    const openFileDeleteModalOrWarningModal = files => {
+      if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
+        openModal({ component: WarningModal });
+      } else {
+        openFileDeleteModal(files);
+      }
     };
 
     const moveFiles = async (event) => {
@@ -783,10 +788,10 @@ export default {
       onFileSelected,
       openAccessManager,
       openFileDeleteModal,
+      openFileDeleteModalOrWarningModal,
       openVisaDeleteModal,
       openSidePanel,
       openSubscriptionModal,
-      openWarningModal,
       onTabChange,
       openTagManager,
       openVersioningManager,
