@@ -1,3 +1,4 @@
+import { fileExtension } from "../../../../utils/files.js";
 import i18n from "../../../../i18n/index.js";
 import { fullName } from "../../../../utils/users.js";
 
@@ -7,6 +8,20 @@ export default [
   {
     id: "type",
     text: "t.type",
+    sortFunction: (a, b) => {
+      const getFileType = (file) =>  fileExtension(file.name);
+    
+      const fileTypeA = getFileType(a);
+      const fileTypeB = getFileType(b);
+    
+      if (fileTypeA < fileTypeB) {
+        return 1;
+      } else if (fileTypeA > fileTypeB) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
   },
   {
     id: "name",
