@@ -4,7 +4,7 @@
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />
       <span class="model-viewer__header__separator"></span>
-      <span class="p-x-12">{{ currentProject.name }}</span>
+      <BIMDataTextbox class="p-x-12" :text="currentProject.name" maxWidth="250px"/>
     </AppSlotContent>
 
     <div id="viewer"></div>
