@@ -3,6 +3,8 @@
     <AppSlotContent name="app-header-action">
       <span class="model-viewer__header__separator"></span>
       <GoBackButton class="model-viewer__header__btn-back" />
+      <span class="model-viewer__header__separator"></span>
+      <BIMDataTextbox class="p-x-12" :text="currentProject.name" maxWidth="250px"/>
     </AppSlotContent>
 
     <div id="viewer"></div>
@@ -28,6 +30,7 @@ import {
 } from "../../config/viewer.js";
 import { useAuth } from "../../state/auth.js";
 import { useSpaces } from "../../state/spaces.js";
+import { useProjects } from "../../state/projects.js";
 // Components
 import AppSlotContent from "../../components/specific/app/app-slot/AppSlotContent.js";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
@@ -43,6 +46,7 @@ export default {
     const { accessToken } = useAuth();
     const { currentSpace } = useSpaces();
     const loading = ref(false);
+    const { currentProject } = useProjects();
 
     const apiUrl = ENV.VUE_APP_API_BASE_URL;
     const archiveUrl = ENV.VUE_APP_ARCHIVE_BASE_URL;
@@ -143,7 +147,8 @@ export default {
     });
 
     return {
-      loading
+      loading,
+      currentProject,
     };
   }
 };

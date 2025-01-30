@@ -22,6 +22,12 @@
     }
   }
 
+  &__header {
+    &__btn-back {
+      flex-shrink: 0;
+    }
+  }
+
   // This is to adjust model selector styles in viewer.
   // TODO: update design system components to avoid this workaround.
   &:deep() {
