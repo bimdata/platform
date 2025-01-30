@@ -51,15 +51,10 @@
               color="silver-light"
               :disabled="false"
             >
-            <BIMDataButton
-              ghost
-              rounded
-              icon
-              @click="confirmEdit"
-            >
-              <BIMDataIconValidate size="xxs" fill color="granite-light" />
-            </BIMDataButton>
-          </BIMDataTooltip>
+              <BIMDataButton ghost rounded icon @click="confirmEdit">
+                <BIMDataIconValidate size="xxs" fill color="granite-light" />
+              </BIMDataButton>
+            </BIMDataTooltip>
             <BIMDataButton ghost rounded icon @click="onClose">
               <BIMDataIconClose size="xxs" fill color="granite-light" />
             </BIMDataButton>
@@ -157,10 +152,11 @@
         </div>
         <div class="visa-summary__shell__file">
           <div class="visa-summary__shell__file__content">
-            <BIMDataFileIcon :fileName="formatedVisa.document.file_name" :size="20" />
+            <BIMDataFileIcon :fileName="formatedVisa.document.name" :size="20" />
             <BIMDataTextbox
               class="visa-summary__shell__file__content__name"
               :text="formatedVisa.document.name"
+              @click="$emit('preview-visa', formatedVisa.document.file)"
               width="calc(100% - 20px - 12px * 3)"
             />
           </div>
@@ -227,6 +223,7 @@
 import { ref, computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
+import { useFiles } from "../../../../state/files.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useUser } from "../../../../state/user.js";
 import { useVisa } from "../../../../state/visa.js";
@@ -256,7 +253,7 @@ export default {
       required: true,
     },
   },
-  emits: ["close-visa", "fetch-visas", "reach-file"],
+  emits: ["close-visa", "fetch-visas", "preview-visa", "reach-file"],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { isSelf } = useUser();
@@ -272,6 +269,10 @@ export default {
       deleteValidation,
       updateVisa,
     } = useVisa();
+
+    const {
+      fileStructureHandler: handler,
+    } = useFiles();
 
     const isClosed = ref(false);
     const isEditing = ref(false);
@@ -295,6 +296,10 @@ export default {
       creator: {
         ...visa.creator,
         fullName: visa.creator ? fullName(visa.creator) : t("Visa.summary.deletedUser"),
+      },
+      document: {
+        ...visa.document,
+        file: handler.get({ id: visa.document.id, nature: "Document" }),
       },
       validations: visa.validations
         .map((validation) => ({
@@ -339,8 +344,8 @@ export default {
         isAuthor.value = true;
       }
       if (!isAuthor.value) {
-        validationUserId.value = props.visa.validations.find(
-          ({ validator }) => isSelf(validator)
+        validationUserId.value = props.visa.validations.find(({ validator }) =>
+          isSelf(validator)
         ).id;
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;

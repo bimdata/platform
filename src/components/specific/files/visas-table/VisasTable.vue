@@ -27,7 +27,7 @@
       <BIMDataFileIcon :fileName="visa.document.name" :size="21.5" />
     </template>
     <template #cell-file="{ row: visa }">
-      <span class="visas-table__file-name" @click="$emit('file-clicked', visa)">
+      <span class="visas-table__file-name" @click="$emit('file-clicked', visa.document)">
         <BIMDataTextbox :text="visa.document.name" width="auto" maxWidth="100%" />
       </span>
     </template>
@@ -100,6 +100,7 @@ import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
 import { enhanceVisa } from "../../../../utils/visas.js";
+import { useFiles } from "../../../../state/files.js";
 import { useUser } from "../../../../state/user.js";
 import { fullName } from "../../../../utils/users.js";
 import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
@@ -132,8 +133,12 @@ export default {
     const { user } = useUser();
     const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
+    const {
+      fileStructureHandler: handler,
+    } = useFiles();
+
     const enhancedVisas = computed(() =>
-      props.visas.map((visa) => enhanceVisa(visa, user.value, t))
+      props.visas.map((visa) => enhanceVisa(visa, user.value, t, handler))
     );
 
     const columns = computed(() => {

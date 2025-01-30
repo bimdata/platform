@@ -1,7 +1,7 @@
 import { fullName } from "./users.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../config/visa.js";
 
-export const enhanceVisa = (visa, user, t) => {
+export const enhanceVisa = (visa, user, t, handler) => {
   const validationType = () => {
     if (visa.status === VISA_STATUS.CLOSE) {
       return t("Visa.view.visaClosed");
@@ -37,10 +37,18 @@ export const enhanceVisa = (visa, user, t) => {
     return emailValidators;
   };
 
+  const document = handler.get({ id: visa.document.id, nature: "Document"});
+
   return {
     ...visa,
     validationType: validationType(),
     statutType: statutType(),
     validators: getUniqueValidators(),
+    document: {
+      ...visa.document,
+      file: document.file,
+      model_id: document.model_id,
+      model_type: document.model_type,
+    }
   };
 };
