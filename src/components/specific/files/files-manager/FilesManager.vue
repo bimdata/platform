@@ -367,7 +367,7 @@ export default {
       const parentFolder = handler.parent(file);
 
       currentFolder.value = handler.deserialize(parentFolder);
-      if (file.visas) {
+      if (selectedFileTab.value.id === "visas") {
         selectedFileTab.value = filesTabs[0];
       }
     };
