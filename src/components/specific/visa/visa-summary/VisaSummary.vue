@@ -152,7 +152,7 @@
         </div>
         <div class="visa-summary__shell__file">
           <div class="visa-summary__shell__file__content">
-            <BIMDataFileIcon :fileName="formatedVisa.document.name" :size="20" />
+            <BIMDataFileIcon :fileName="formatedVisa.document.file.file_name" :size="20" />
             <BIMDataTextbox
               class="visa-summary__shell__file__content__name"
               :text="formatedVisa.document.name"
