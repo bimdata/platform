@@ -1,3 +1,11 @@
+## [1.1.4](https://github.com/bimdata/platform/compare/v1.1.3...v1.1.4) (2025-02-03)
+
+
+### PATCH
+
+* add sortFunction to sort types by extension name (#508) ([f7053ce](https://github.com/bimdata/platform/commit/f7053cef10fb39790572c7eb6e3dc44b6de6e073)), closes [#508](https://github.com/bimdata/platform/issues/508)
+* fix: add env var to enable/disable deletion temporary workaround (#509) ([48f7a5a](https://github.com/bimdata/platform/commit/48f7a5ad2cab799f8d0414b82a51da4e717ae881)), closes [#509](https://github.com/bimdata/platform/issues/509)
+
 ## [1.1.3](https://github.com/bimdata/platform/compare/v1.1.2...v1.1.3) (2025-01-15)
 
 
