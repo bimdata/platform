@@ -9,16 +9,12 @@
       @tab-click="selectTab"
     />
 
-    <BIMDataSearch
-      width="100%"
-      :placeholder="$t('t.search')"
-      v-model="searchText"
-      clear
-    />
+    <BIMDataSearch width="100%" :placeholder="$t('t.search')" v-model="searchText" clear />
 
-    <transition v-if="showInvitations" name="fade" mode="out-in">
+    <transition name="fade" mode="out-in">
       <template v-if="showInvitationForm">
         <InvitationForm
+          :currentTab="currentTab"
           :space="space"
           @close="closeInvitationForm"
           @success="onInvitationSuccess"
@@ -26,14 +22,9 @@
       </template>
 
       <template v-else>
-        <BIMDataButton
-          outline
-          radius
-          color="primary"
-          @click="openInvitationForm"
-        >
+        <BIMDataButton outline radius color="primary" @click="openInvitationForm">
           <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
-          <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
+          <span>{{ showInvitations ? $t("SpaceUsersManager.addAdminButtonText") : $t("SpaceUsersManager.addUserButtonText") }}</span>
         </BIMDataButton>
       </template>
     </transition>
@@ -47,12 +38,7 @@
             :space="space"
             :invitation="user"
           />
-          <UserCard
-            v-else
-            :key="`user-${user.id}`"
-            :space="space"
-            :user="user"
-          />
+          <UserCard v-else :key="`user-${user.id}`" :space="space" :user="user" />
         </template>
       </transition-group>
     </div>
@@ -78,21 +64,21 @@ export default {
   components: {
     InvitationCard,
     InvitationForm,
-    UserCard
+    UserCard,
   },
   props: {
     space: {
       type: Object,
-      required: true
+      required: true,
     },
     users: {
       type: Array,
-      required: true
+      required: true,
     },
     invitations: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const { locale, t } = useI18n();
@@ -100,13 +86,13 @@ export default {
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
-    const selectTab = tab => (currentTab.value = tab.id);
+    const selectTab = (tab) => (currentTab.value = tab.id);
     watch(
       () => locale.value,
       () => {
-        tabs.value = tabsDef.map(tab => ({
+        tabs.value = tabsDef.map((tab) => ({
           ...tab,
-          label: t(`SpaceUsersManager.tabs.${tab.id}`)
+          label: t(`SpaceUsersManager.tabs.${tab.id}`),
         }));
       },
       { immediate: true }
@@ -117,17 +103,15 @@ export default {
     watch(
       () => props.users,
       () => {
-        admins.value = props.users.filter(
-          user => user.cloud_role === SPACE_ROLE.ADMIN
-        );
-        users.value = props.users.filter(
-          user => user.cloud_role === SPACE_ROLE.USER
-        );
+        admins.value = props.users.filter((user) => user.cloud_role === SPACE_ROLE.ADMIN);
+        users.value = props.users.filter((user) => user.cloud_role === SPACE_ROLE.USER);
       },
       { immediate: true }
     );
 
-    const list = computed(() => currentTab.value === "admins" ? props.invitations.concat(admins.value) : users.value);
+    const list = computed(() =>
+      currentTab.value === "admins" ? props.invitations.concat(admins.value) : users.value
+    );
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
       list,
@@ -139,7 +123,7 @@ export default {
     const {
       isOpen: showInvitationForm,
       open: openInvitationForm,
-      close: closeInvitationForm
+      close: closeInvitationForm,
     } = useToggle();
 
     const onInvitationSuccess = async () => {
@@ -161,9 +145,9 @@ export default {
       closeInvitationForm,
       onInvitationSuccess,
       openInvitationForm,
-      selectTab
+      selectTab,
     };
-  }
+  },
 };
 </script>
 
