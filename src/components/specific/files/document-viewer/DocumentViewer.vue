@@ -164,8 +164,7 @@ const currentDocument = computed(() => {
 
 const fileType = computed(() => {
   const doc = currentDocument.value;
-  let fileName = doc?.file_name || doc?.name || doc.document.name;
-  return doc ? doc.model_type ?? fileExtension(fileName) : null;
+  return doc ? doc.model_type ?? fileExtension(doc.file_name) : null;
 });
 
 const file = ref(null);
