@@ -37,7 +37,7 @@ export const enhanceVisa = (visa, user, t, handler) => {
     return emailValidators;
   };
 
-  const document = handler.get({ id: visa.document.id, nature: "Document"});
+  const document = handler.get({ id: visa.document.id, nature: "Document" });
 
   return {
     ...visa,
@@ -47,8 +47,9 @@ export const enhanceVisa = (visa, user, t, handler) => {
     document: {
       ...visa.document,
       file: document.file,
+      file_name: document.file_name,
       model_id: document.model_id,
       model_type: document.model_type,
-    }
+    },
   };
 };
