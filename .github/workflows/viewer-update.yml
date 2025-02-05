@@ -7,14 +7,20 @@ on:
 env:
   app: platform
 
+permissions: {}
+
 jobs:
   viewer-update:
+    permissions:
+      contents: write  # Required for committing changes
     runs-on: [self-hosted, common]
     if: contains('refs/heads/develop', github.event.client_payload.ref)
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.REPOS_TOKEN }}
+          # Needed for EndBug/add-and-commit
+          persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -22,11 +28,13 @@ jobs:
         id: viewer-install
         timeout-minutes: 2
         run: |
-          while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save-exact; do
+          while ! npm install @bimdata/viewer@${VIEWER_VERSION} --save-exact; do
             sleep 5
           done
           GITDIFF=$(git diff -- package-lock.json | tr '\n' ' ')
           echo "gitdiff=$GITDIFF" >> $GITHUB_OUTPUT
+        env:
+          VIEWER_VERSION: ${{ github.event.client_payload.viewer-version }}
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
         uses: EndBug/add-and-commit@v9
@@ -34,6 +42,8 @@ jobs:
           add: "package-lock.json package.json"
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"
   viewer-stable-update:
+    permissions:
+      contents: write  # Required for committing changes
     runs-on: [self-hosted, common]
     if: contains('
       refs/heads/master
@@ -43,7 +53,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: release
-          token: ${{ secrets.REPOS_TOKEN }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -51,11 +61,13 @@ jobs:
         id: viewer-install
         timeout-minutes: 2
         run: |
-          while ! npm install @bimdata/viewer@${{ github.event.client_payload.viewer-version }} --save-exact; do
+          while ! npm install @bimdata/viewer@${VIEWER_VERSION} --save-exact; do
             sleep 5
           done
           GITDIFF=$(git diff -- package-lock.json | tr '\n' ' ')
           echo "gitdiff=$GITDIFF" >> $GITHUB_OUTPUT
+        env:
+          VIEWER_VERSION: ${{ github.event.client_payload.viewer-version }}
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
         uses: EndBug/add-and-commit@v9

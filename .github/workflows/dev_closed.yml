@@ -12,6 +12,8 @@ concurrency:
 env:
   app: platform
 
+permissions: {}
+
 jobs:
   remove_app_and_deploy:
     runs-on: [self-hosted, common]

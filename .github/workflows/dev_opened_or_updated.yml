@@ -11,13 +11,18 @@ concurrency:
 env:
   app: platform
 
+permissions: {}
+
 jobs:
   build-and-push:
+    permissions:
+      contents: read
     runs-on: [self-hosted, common]
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
+          persist-credentials: false
       - name: Login to BIMData Docker Registry
         uses: docker/login-action@v3
         with:
@@ -40,6 +45,8 @@ jobs:
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.branch.outputs.name }}
 
   e2e-tests:
+    permissions:
+      contents: read
     runs-on: [self-hosted, testendtoend]
     if: ${{ !contains(github.event.pull_request.body , '[ ] I want to run the tests for the commits of this PR') }}
     needs: build-and-push
@@ -49,6 +56,7 @@ jobs:
           repository: bimdata/bimdata-test
           ref: master
           token: ${{ secrets.REPOS_TOKEN }}
+          persist-credentials: false
       - name: Define branch_name var
         id: branch
         run: |
@@ -64,12 +72,16 @@ jobs:
           cypress_version: 13.1.0
 
   deploy:
+    permissions:
+      contents: read
+      pull-requests: write  # Needed for PR title updates
     runs-on: [self-hosted, common]
     needs: build-and-push
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
+          persist-credentials: false
       - name: Login to BIMData Docker Registry
         uses: docker/login-action@v3
         with:
