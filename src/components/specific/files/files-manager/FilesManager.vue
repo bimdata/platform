@@ -144,6 +144,7 @@
             :project="project"
             :document="fileToManage"
             :visa="currentVisa"
+            @preview-visa="onFileSelected"
             @close="closeVisaManager"
             @create-visa="goVisasView"
             @fetch-visas="fetchVisas"
@@ -365,8 +366,9 @@ export default {
 
     const backToParent = (file) => {
       const parentFolder = handler.parent(file);
+
       currentFolder.value = handler.deserialize(parentFolder);
-      if (file.visas) {
+      if (selectedFileTab.value.id === "visas") {
         selectedFileTab.value = filesTabs[0];
       }
     };

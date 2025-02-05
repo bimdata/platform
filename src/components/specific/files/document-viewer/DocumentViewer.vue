@@ -25,7 +25,7 @@
         <BIMDataTextbox :text="currentDocument?.name" />
       </div>
 
-      <div class="btn-box">
+      <div class="btn-box" v-if="selectedFileTab.id !== 'visas'">
         <BIMDataButton
           width="40px"
           height="40px"
@@ -71,7 +71,7 @@
         </div>
       </template>
 
-      <div class="btn-box">
+      <div class="btn-box" v-if="selectedFileTab.id !== 'visas'">
         <BIMDataButton
           width="40px"
           height="40px"
@@ -156,6 +156,9 @@ watch(
 
 const currentDocument = computed(() => {
   if (!documents.value || documents.value.length === 0) return null;
+  if(props.selectedFileTab.id === "visas") {
+    return props.document;
+  }
   return isVisas.value ? documents.value[index.value].document : documents.value[index.value];
 });
 

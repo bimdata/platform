@@ -9,7 +9,11 @@ import { FILE_TYPE } from "../config/files.js";
  * @returns {String}
  */
 function uuid(file) {
-  return `${file.nature}-${file.id}`;
+  let nature = file.nature;
+  if(file.nature !== FILE_TYPE.FOLDER) {
+    nature = FILE_TYPE.DOCUMENT;
+  }
+  return `${nature}-${file.id}`;
 }
 
 /**

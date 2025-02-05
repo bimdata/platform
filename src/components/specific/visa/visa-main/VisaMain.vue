@@ -12,6 +12,7 @@
       <VisaSummary
         :project="project"
         :visa="currentVisa"
+        @preview-visa="$emit('preview-visa', $event)"
         @close-visa="$emit('close')"
         @reach-file="$emit('reach-file', $event)"
         @fetch-visas="$emit('fetch-visas')"
@@ -47,7 +48,7 @@ export default {
       required: false
     },
   },
-  emits: ["create-visa", "fetch-visas", "close", "reach-file"],
+  emits: ["create-visa", "fetch-visas", "close", "preview-visa", "reach-file"],
   setup(props, { emit }) {
     const { fetchVisa } = useVisa();
 
