@@ -1,43 +1,3 @@
-<script setup>
-import { onMounted, reactive, ref } from "vue";
-import { useSpaces } from "../../../../state/spaces.js";
-import { debounce } from "../../../../utils/async.js";
-
-const emit = defineEmits(["close"]);
-
-const { createSpace } = useSpaces();
-
-const loading = ref(false);
-const nameInput = ref(null);
-const newSpace = reactive({ name: "" });
-const hasError = ref(false);
-
-const submit = debounce(async () => {
-  if (newSpace.name) {
-    try {
-      loading.value = true;
-      await createSpace(newSpace);
-      close();
-    } finally {
-      loading.value = false;
-    }
-  } else {
-    nameInput.value.focus();
-    hasError.value = true;
-  }
-}, 500);
-
-const close = () => {
-  newSpace.name = "";
-  hasError.value = false;
-  emit("close");
-};
-
-onMounted(() => {
-  setTimeout(() => nameInput.value.focus(), 400);
-});
-</script>
-
 <template>
   <BIMDataCard
     data-test-id="space-creation-card"
@@ -91,5 +51,45 @@ onMounted(() => {
     </template>
   </BIMDataCard>
 </template>
+
+<script setup>
+import { onMounted, reactive, ref } from "vue";
+import { useSpaces } from "../../../../state/spaces.js";
+import { debounce } from "../../../../utils/async.js";
+
+const emit = defineEmits(["close"]);
+
+const { createSpace } = useSpaces();
+
+const loading = ref(false);
+const nameInput = ref(null);
+const newSpace = reactive({ name: "" });
+const hasError = ref(false);
+
+const submit = debounce(async () => {
+  if (newSpace.name) {
+    try {
+      loading.value = true;
+      await createSpace(newSpace);
+      close();
+    } finally {
+      loading.value = false;
+    }
+  } else {
+    nameInput.value.focus();
+    hasError.value = true;
+  }
+}, 500);
+
+const close = () => {
+  newSpace.name = "";
+  hasError.value = false;
+  emit("close");
+};
+
+onMounted(() => {
+  setTimeout(() => nameInput.value.focus(), 400);
+});
+</script>
 
 <style scoped src="./SpaceCreationCard.css"></style>

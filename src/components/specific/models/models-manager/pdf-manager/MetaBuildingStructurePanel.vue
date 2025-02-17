@@ -1,24 +1,3 @@
-<script setup>
-import apiClient from "../../../../../services/api-client.js";
-
-defineProps({
-  space: {
-    type: Object,
-    required: true
-  },
-  project: {
-    type: Object,
-    required: true
-  },
-  model: {
-    type: Object,
-    required: true
-  },
-});
-
-defineEmits(["close"]);
-</script>
-
 <template>
   <div class="meta-building-structure-panel">
     <BIMDataButton
@@ -41,6 +20,27 @@ defineEmits(["close"]);
     </div>
   </div>
 </template>
+
+<script setup>
+import apiClient from "../../../../../services/api-client.js";
+
+defineProps({
+  space: {
+    type: Object,
+    required: true
+  },
+  project: {
+    type: Object,
+    required: true
+  },
+  model: {
+    type: Object,
+    required: true
+  },
+});
+
+defineEmits(["close"]);
+</script>
 
 <style scoped>
 .meta-building-structure-panel {

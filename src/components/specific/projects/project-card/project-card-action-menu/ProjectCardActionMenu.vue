@@ -82,12 +82,10 @@
 
 <script>
 import { provide, ref } from "vue";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../../config/projects.js";
 import { useUser } from "../../../../../state/user.js";
 // Components
-import WarningModal from "../../../app/warning-modal/WarningModal.vue";
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard.vue";
 import ProjectCardUpdateForm from "../project-card-update-form/ProjectCardUpdateForm.vue";
 import ProjectCardLeaveGuard from "../project-card-leave-guard/ProjectCardLeaveGuard.vue";

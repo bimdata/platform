@@ -84,9 +84,10 @@ import { segregateByType } from "../../../../utils/models.js";
 import DWGManager from "./dwg-manager/DWGManager.vue";
 import IFCManager from "./ifc-manager/IFCManager.vue";
 import PDFManager from "./pdf-manager/PDFManager.vue";
+import PhotosphereManager from "./photosphere-manager/PhotosphereManager.vue";
 import PointCloudManager from "./point-cloud-manager/PointCloudManager.vue";
 
-const { DWG, DXF, IFC, JPEG, META_BUILDING, PDF, PNG, POINT_CLOUD } =
+const { DWG, DXF, IFC, JPEG, META_BUILDING, PDF, PHOTOSPHERE, PHOTOSPHERE_BUILDING, PNG, POINT_CLOUD } =
   MODEL_TYPE;
 
 const tabsDef = [
@@ -129,11 +130,18 @@ const tabsDef = [
     beta: true
   },
   {
-    id: "photos",
-    text: "Photos",
+    id: "images",
+    text: "Images",
     icon: "fileImagePolychrome",
     modelTypes: [JPEG, PNG],
     component: "DWGManager"
+  },
+  {
+    id: "photosphere",
+    text: "Photosphere",
+    icon: "filePhotospherePolychrome",
+    modelTypes: [PHOTOSPHERE, PHOTOSPHERE_BUILDING],
+    component: "PhotosphereManager"
   }
 ];
 
@@ -142,6 +150,7 @@ export default {
     DWGManager,
     IFCManager,
     PDFManager,
+    PhotosphereManager,
     PointCloudManager
   },
   props: {

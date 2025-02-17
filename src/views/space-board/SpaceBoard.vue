@@ -25,6 +25,10 @@
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
+          <StatusFilterButton
+            :projects="spaceProjects"
+            @update:filteredProjects="filteredProjects = $event"
+          />
           <BIMDataButton
             v-if="!isLG"
             class="space-board__header__btn"
@@ -52,11 +56,7 @@
 
     <AppSidePanelContent :title="$t('SpaceUsersManager.title')">
       <AppLoading name="space-users">
-        <SpaceUsersManager
-          :space="space"
-          :users="users"
-          :invitations="invitations"
-        />
+        <SpaceUsersManager :space="space" :users="users" :invitations="invitations" />
       </AppLoading>
     </AppSidePanelContent>
 
@@ -69,15 +69,8 @@
         :style="{ justifyContent: isMD ? 'center' : '' }"
       >
         <transition-group name="grid">
-          <ProjectCreationCard
-            v-if="isSpaceAdmin(space)"
-            :key="-1" :space="space"
-          />
-          <ProjectCard
-            v-for="project in projects"
-            :key="project.id"
-            :project="project"
-          />
+          <ProjectCreationCard v-if="isSpaceAdmin(space)" :key="-1" :space="space" />
+          <ProjectCard v-for="project in projects" :key="project.id" :project="project" />
         </transition-group>
       </BIMDataResponsiveGrid>
     </AppLoading>
@@ -85,6 +78,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useInterval } from "../../composables/interval.js";
 import { useListFilter } from "../../composables/list-filter.js";
@@ -94,6 +88,7 @@ import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 import { useUser } from "../../state/user.js";
+
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import AppLoading from "../../components/specific/app/app-loading/AppLoading.vue";
@@ -105,6 +100,7 @@ import ProjectCreationCard from "../../components/specific/projects/project-crea
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
 import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 import SpaceUsersManager from "../../components/specific/users/space-users-manager/SpaceUsersManager.vue";
+import StatusFilterButton from "../../components/specific/projects/status-filter-button/StatusFilterButton.vue";
 
 export default {
   components: {
@@ -117,33 +113,36 @@ export default {
     SpaceSizeInfo,
     SpaceUsersManager,
     SubscriptionStatusBanner,
-    ViewHeader
+    ViewHeader,
+    StatusFilterButton,
   },
   setup() {
     const { isOpenRight, openSidePanel } = useAppSidePanel();
     const { isSpaceAdmin } = useUser();
-    const { currentSpace, spaceSubInfo, spaceUsers, spaceInvitations, loadSpaceUsers, loadSpaceInvitations } = useSpaces();
+    const {
+      currentSpace,
+      spaceSubInfo,
+      spaceUsers,
+      spaceInvitations,
+      loadSpaceUsers,
+      loadSpaceInvitations,
+    } = useSpaces();
     const { spaceProjects } = useProjects();
+    const filteredProjects = ref(spaceProjects.value);
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
-      spaceProjects,
-      project => project.name + project.description ?? ""
+      filteredProjects,
+      (project) => project.name + project.description ?? ""
     );
 
-    const { sortToggle: sortProjects } = useListSort(
-      displayedProjects,
-      project => project.name
-    );
+    const { sortToggle: sortProjects } = useListSort(displayedProjects, (project) => project.name);
 
-    useInterval(
-      () => {
-        if (isOpenRight.value) {
-          loadSpaceUsers(currentSpace.value);
-          loadSpaceInvitations(currentSpace.value);
-        }
-      },
-      10000
-    );
+    useInterval(() => {
+      if (isOpenRight.value) {
+        loadSpaceUsers(currentSpace.value);
+        loadSpaceInvitations(currentSpace.value);
+      }
+    }, 10000);
 
     return {
       // References
@@ -154,14 +153,16 @@ export default {
       space: currentSpace,
       spaceSubInfo,
       users: spaceUsers,
+      spaceProjects,
+      filteredProjects,
       // Methods
       isSpaceAdmin,
       openUsersManager: openSidePanel,
       sortProjects,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 

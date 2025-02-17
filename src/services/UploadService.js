@@ -65,12 +65,13 @@ class UploadService {
       }
     );
 
-    const upload = (file, { parentId, successorOf }) => {
+    const upload = (file, { parentId, successorOf, processHint }) => {
       const data = new FormData();
       data.append("file", file);
       data.append("name", file.name);
       if (parentId) data.append("parent_id", parentId);
       if (successorOf) data.append("successor_of", successorOf);
+      if (processHint) data.append("process_hint", processHint);
       return uploader.upload(data);
     };
 

@@ -1,32 +1,3 @@
-<script setup>
-import { DEFAULT_WINDOW } from "../../../../../config/viewer.js";
-import routeNames from "../../../../../router/route-names.js";
-// Components
-import AppLink from "../../../app/app-link/AppLink.vue";
-
-defineProps({
-  project: {
-    type: Object,
-    required: true
-  },
-  model: {
-    type: Object,
-    required: true
-  },
-  window: {
-    type: String,
-    default: DEFAULT_WINDOW
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  text: {
-    type: String
-  }
-});
-</script>
-
 <template>
   <AppLink
     data-test-id="btn-open-viewer"
@@ -56,6 +27,35 @@ defineProps({
     </BIMDataButton>
   </AppLink>
 </template>
+
+<script setup>
+import { DEFAULT_WINDOW } from "../../../../../config/viewer.js";
+import routeNames from "../../../../../router/route-names.js";
+// Components
+import AppLink from "../../../app/app-link/AppLink.vue";
+
+defineProps({
+  project: {
+    type: Object,
+    required: true
+  },
+  model: {
+    type: Object,
+    required: true
+  },
+  window: {
+    type: String,
+    default: DEFAULT_WINDOW
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  text: {
+    type: String
+  }
+});
+</script>
 
 <style scoped>
 .viewer-button {

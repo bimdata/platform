@@ -1,15 +1,3 @@
-<script setup>
-import { useProjects } from "../../../../../state/projects.js";
-import { useUser } from "../../../../../state/user.js";
-// Components
-import ModelsOverviewOnboardingImage from "./ModelsOverviewOnboardingImage.vue";
-
-defineEmits(["open-file-uploader"]);
-
-const { isProjectGuest } = useUser();
-const { currentProject: project } = useProjects();
-</script>
-
 <template>
   <div class="models-overview-onboarding">
     <ModelsOverviewOnboardingImage />
@@ -30,5 +18,17 @@ const { currentProject: project } = useProjects();
     </div>
   </div>
 </template>
+
+<script setup>
+import { useProjects } from "../../../../../state/projects.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import ModelsOverviewOnboardingImage from "./ModelsOverviewOnboardingImage.vue";
+
+defineEmits(["open-file-uploader"]);
+
+const { isProjectGuest } = useUser();
+const { currentProject: project } = useProjects();
+</script>
 
 <style scoped lang="scss" src="./ModelsOverviewOnboarding.scss"></style>

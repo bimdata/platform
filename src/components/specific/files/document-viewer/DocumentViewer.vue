@@ -1,3 +1,93 @@
+<template>
+  <div class="document-viewer">
+    <div class="document-viewer__head">
+      <BIMDataButton v-if="currentDocument?.model_id" fill radius @click="openViewer">
+        <BIMDataIcon
+          :name="MODEL_CONFIG[currentDocument.model_type].icon"
+          size="s"
+          margin="0 6px 0 0"
+        />
+        {{ $t("DocumentViewer.viewerButton") }}
+      </BIMDataButton>
+
+      <div class="document-viewer__head__actions">
+        <BIMDataButton ghost rounded icon @click="download">
+          <BIMDataIconDownload size="m" />
+        </BIMDataButton>
+        <BIMDataButton ghost rounded icon @click="closeModal">
+          <BIMDataIconClose size="xxs" />
+        </BIMDataButton>
+      </div>
+    </div>
+
+    <div class="document-viewer__body" @click.self="closeModal">
+      <div class="document-viewer__body__title">
+        <BIMDataTextbox :text="currentDocument?.name" />
+      </div>
+
+      <div class="btn-box" v-if="selectedFileTab.id !== 'visas'">
+        <BIMDataButton
+          width="40px"
+          height="40px"
+          fill
+          rounded
+          icon
+          :disabled="index === 0"
+          @click="index--"
+        >
+          <BIMDataIconChevron size="xs" :rotate="180" />
+        </BIMDataButton>
+      </div>
+
+      <template v-if="file">
+        <template v-if="[DWG, DXF, IFC].includes(fileType)">
+          <div class="preview-container" @click.self="closeModal">
+            <BIMDataModelPreview
+              :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
+              :previewUrl="file"
+              :width="600"
+              :height="600"
+            />
+          </div>
+        </template>
+
+        <template v-else-if="[...OFFICE_FILES, PDF, '.pdf'].includes(fileType)">
+          <div class="pdf-container">
+            <BIMDataPDFViewer :pdf="file" />
+          </div>
+        </template>
+
+        <template v-else>
+          <div class="img-container">
+            <img :src="file" :alt="currentDocument.name" />
+          </div>
+        </template>
+      </template>
+
+      <template v-else>
+        <div class="doc-placeholder">
+          <NoDocPreviewImage style="width: 200px; height: 200px" />
+          <div>{{ $t("DocumentViewer.docPlaceholder") }}</div>
+        </div>
+      </template>
+
+      <div class="btn-box" v-if="selectedFileTab.id !== 'visas'">
+        <BIMDataButton
+          width="40px"
+          height="40px"
+          fill
+          rounded
+          icon
+          :disabled="index === documents.length - 1"
+          @click="index++"
+        >
+          <BIMDataIconChevron size="xs" />
+        </BIMDataButton>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { computed, ref, watch, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRouter } from "vue-router";
@@ -66,6 +156,9 @@ watch(
 
 const currentDocument = computed(() => {
   if (!documents.value || documents.value.length === 0) return null;
+  if(props.selectedFileTab.id === "visas") {
+    return props.document;
+  }
   return isVisas.value ? documents.value[index.value].document : documents.value[index.value];
 });
 
@@ -142,95 +235,5 @@ const download = () => {
   downloadFiles(props.project, [currentDocument.value]);
 };
 </script>
-
-<template>
-  <div class="document-viewer">
-    <div class="document-viewer__head">
-      <BIMDataButton v-if="currentDocument?.model_id" fill radius @click="openViewer">
-        <BIMDataIcon
-          :name="MODEL_CONFIG[currentDocument.model_type].icon"
-          size="s"
-          margin="0 6px 0 0"
-        />
-        {{ $t("DocumentViewer.viewerButton") }}
-      </BIMDataButton>
-
-      <div class="document-viewer__head__actions">
-        <BIMDataButton ghost rounded icon @click="download">
-          <BIMDataIconDownload size="m" />
-        </BIMDataButton>
-        <BIMDataButton ghost rounded icon @click="closeModal">
-          <BIMDataIconClose size="xxs" />
-        </BIMDataButton>
-      </div>
-    </div>
-
-    <div class="document-viewer__body" @click.self="closeModal">
-      <div class="document-viewer__body__title">
-        <BIMDataTextbox :text="currentDocument?.name" />
-      </div>
-
-      <div class="btn-box">
-        <BIMDataButton
-          width="40px"
-          height="40px"
-          fill
-          rounded
-          icon
-          :disabled="index === 0"
-          @click="index--"
-        >
-          <BIMDataIconChevron size="xs" :rotate="180" />
-        </BIMDataButton>
-      </div>
-
-      <template v-if="file">
-        <template v-if="[DWG, DXF, IFC].includes(fileType)">
-          <div class="preview-container" @click.self="closeModal">
-            <BIMDataModelPreview
-              :type="[DWG, DXF].includes(fileType) ? '2d' : '3d'"
-              :previewUrl="file"
-              :width="600"
-              :height="600"
-            />
-          </div>
-        </template>
-
-        <template v-else-if="[...OFFICE_FILES, PDF, '.pdf'].includes(fileType)">
-          <div class="pdf-container">
-            <BIMDataPDFViewer :pdf="file" />
-          </div>
-        </template>
-
-        <template v-else>
-          <div class="img-container">
-            <img :src="file" :alt="currentDocument.name" />
-          </div>
-        </template>
-      </template>
-
-      <template v-else>
-        <div class="doc-placeholder">
-          <NoDocPreviewImage style="width: 200px; height: 200px" />
-          <div>{{ $t("DocumentViewer.docPlaceholder") }}</div>
-        </div>
-      </template>
-
-      <div class="btn-box">
-        <BIMDataButton
-          width="40px"
-          height="40px"
-          fill
-          rounded
-          icon
-          :disabled="index === documents.length - 1"
-          @click="index++"
-        >
-          <BIMDataIconChevron size="xs" />
-        </BIMDataButton>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped lang="scss" src="./DocumentViewer.scss"></style>

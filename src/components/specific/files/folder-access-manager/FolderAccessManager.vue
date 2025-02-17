@@ -1,3 +1,99 @@
+<template>
+  <div class="folder-access-manager" v-if="currentFolder">
+    <div class="folder-access-manager__title">
+      <BIMDataIconKey size="s" />
+      <span class="folder-access-manager__title__text">
+        {{ $t("FolderAccessManager.title") }} -
+        <BIMDataTextbox width="auto" maxWidth="100px" :text="currentFolder.name" />
+      </span>
+      <BIMDataButton ghost rounded icon @click="onCloseClick">
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
+      </BIMDataButton>
+    </div>
+    <div class="folder-access-manager__head">
+      <BIMDataSearch
+        class="folder-access-manager__head__search"
+        width="100%"
+        color="primary"
+        :placeholder="$t('t.search')"
+        v-model="searchText"
+        clear
+      />
+    </div>
+    <div class="folder-access-manager__body">
+      <div class="folder-access-manager__body__head">
+        <span class="folder-access-manager__body__head--name">
+          {{ $t("FolderAccessManager.groupHeader") }}
+        </span>
+        <span class="folder-access-manager__body__head--permissions">
+          {{ $t("FolderAccessManager.rightsHeader") }}
+        </span>
+        <span class="folder-access-manager__body__head--users">
+          {{ $t("FolderAccessManager.membersHeader") }}
+        </span>
+        <span class="folder-access-manager__body__head--propagate">
+          <BIMDataTooltip :text="$t('FolderAccessManager.propagate')" position="bottom" maxWidth="200px">
+            <div class="circle">?</div>
+          </BIMDataTooltip>
+        </span>
+      </div>
+
+      <FolderPermissionSelector
+        :project="project"
+        :folder="currentFolder"
+        @folder-permission-update="onPermissionUpdate"
+      />
+
+      <div class="separator"></div>
+
+      <div class="folder-access-manager__body__list">
+        <transition-group name="list">
+          <FolderPermissionSelector
+            v-for="group of filteredGroupList"
+            :key="group.id"
+            :project="project"
+            :folder="currentFolder"
+            :group="group"
+            @folder-permission-update="onPermissionUpdate"
+          />
+        </transition-group>
+      </div>
+
+      <div class="folder-access-manager__body__tail">
+        <BIMDataInfobox
+          :text="$t('FolderAccessManager.propagate')"
+          color="secondary"
+        />
+        <BIMDataButton fill radius color="primary" @click="submit">
+          {{ $t("t.save") }}
+        </BIMDataButton>
+      </div>
+
+    </div>
+  </div>
+
+  <div v-show="loading" class="loading">
+    <BIMDataSpinner class="spinner" />
+  </div>
+
+  <BIMDataSafeZoneModal v-show="closing">
+    <template #title>
+      {{ $t("FolderAccessManager.safeZoneModal.title") }}
+    </template>
+    <template #text>
+      {{ $t("FolderAccessManager.safeZoneModal.text") }}
+    </template>
+    <template #actions>
+      <BIMDataButton width="120px" ghost radius @click="closing = false">
+        {{ $t("t.cancel") }}
+      </BIMDataButton>
+      <BIMDataButton width="120px" color="high" fill radius @click="close">
+        {{ $t("t.ok") }}
+      </BIMDataButton>
+    </template>
+  </BIMDataSafeZoneModal>
+</template>
+
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useListFilter } from "../../../../composables/list-filter.js";
@@ -97,102 +193,6 @@ watch(
   { immediate: true }
 );
 </script>
-
-<template>
-  <div class="folder-access-manager" v-if="currentFolder">
-    <div class="folder-access-manager__title">
-      <BIMDataIconKey size="s" />
-      <span class="folder-access-manager__title__text">
-        {{ $t("FolderAccessManager.title") }} -
-        <BIMDataTextbox width="auto" maxWidth="100px" :text="currentFolder.name" />
-      </span>
-      <BIMDataButton ghost rounded icon @click="onCloseClick">
-        <BIMDataIconClose size="xxs" fill color="granite-light" />
-      </BIMDataButton>
-    </div>
-    <div class="folder-access-manager__head">
-      <BIMDataSearch
-        class="folder-access-manager__head__search"
-        width="100%"
-        color="primary"
-        :placeholder="$t('t.search')"
-        v-model="searchText"
-        clear
-      />
-    </div>
-    <div class="folder-access-manager__body">
-      <div class="folder-access-manager__body__head">
-        <span class="folder-access-manager__body__head--name">
-          {{ $t("FolderAccessManager.groupHeader") }}
-        </span>
-        <span class="folder-access-manager__body__head--permissions">
-          {{ $t("FolderAccessManager.rightsHeader") }}
-        </span>
-        <span class="folder-access-manager__body__head--users">
-          {{ $t("FolderAccessManager.membersHeader") }}
-        </span>
-        <span class="folder-access-manager__body__head--propagate">
-          <BIMDataTooltip :text="$t('FolderAccessManager.propagate')" position="bottom" maxWidth="200px">
-            <div class="circle">?</div>
-          </BIMDataTooltip>
-        </span>
-      </div>
-
-      <FolderPermissionSelector
-        :project="project"
-        :folder="currentFolder"
-        @folder-permission-update="onPermissionUpdate"
-      />
-
-      <div class="separator"></div>
-
-      <div class="folder-access-manager__body__list">
-        <transition-group name="list">
-          <FolderPermissionSelector
-            v-for="group of filteredGroupList"
-            :key="group.id"
-            :project="project"
-            :folder="currentFolder"
-            :group="group"
-            @folder-permission-update="onPermissionUpdate"
-          />
-        </transition-group>
-      </div>
-
-      <div class="folder-access-manager__body__tail">
-        <BIMDataInfobox
-          :text="$t('FolderAccessManager.propagate')"
-          color="secondary"
-        />
-        <BIMDataButton fill radius color="primary" @click="submit">
-          {{ $t("t.save") }}
-        </BIMDataButton>
-      </div>
-
-    </div>
-  </div>
-
-  <div v-show="loading" class="loading">
-    <BIMDataSpinner class="spinner" />
-  </div>
-
-  <BIMDataSafeZoneModal v-show="closing">
-    <template #title>
-      {{ $t("FolderAccessManager.safeZoneModal.title") }}
-    </template>
-    <template #text>
-      {{ $t("FolderAccessManager.safeZoneModal.text") }}
-    </template>
-    <template #actions>
-      <BIMDataButton width="120px" ghost radius @click="closing = false">
-        {{ $t("t.cancel") }}
-      </BIMDataButton>
-      <BIMDataButton width="120px" color="high" fill radius @click="close">
-        {{ $t("t.ok") }}
-      </BIMDataButton>
-    </template>
-  </BIMDataSafeZoneModal>
-</template>
 
 <style scoped lang="scss">
 .folder-access-manager {

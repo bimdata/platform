@@ -25,7 +25,7 @@
         margin: auto 0;
 
         span {
-          margin: auto 0 auto calc(var(--spacing-unit) * 1.4);
+          margin: auto 0 auto calc(var(--spacing-unit) / 2);
           color: var(--color-primary);
           font-weight: bold;
         }
@@ -124,6 +124,7 @@
         &__name {
           margin-left: var(--spacing-unit);
           color: var(--color-primary);
+          cursor: pointer;
         }
       }
 

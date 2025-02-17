@@ -59,6 +59,8 @@
         @update="nameEditMode[model.id] = true"
         @view-metaBuilding="$emit('view-metaBuilding', $event)"
         @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
+        @view-photosphereBuilding="$emit('view-photosphereBuilding', $event)"
+        @edit-photosphereBuilding="$emit('edit-photosphereBuilding', $event)"
       />
     </template>
 
@@ -107,12 +109,14 @@ export default {
     "delete",
     "download",
     "edit-metaBuilding",
+    "edit-photosphereBuilding",
     "file-uploaded",
     "selection-changed",
     "unarchive",
     "upload-canceled",
     "upload-failed",
     "view-metaBuilding",
+    "view-photosphereBuilding",
   ],
   setup(props) {
     const { t } = useI18n();

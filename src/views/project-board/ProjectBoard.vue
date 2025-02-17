@@ -60,6 +60,7 @@ import { useRoute } from "vue-router";
 import { useInterval } from "../../composables/interval.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useSession } from "../../composables/session.js";
+import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
 import { useProjects } from "../../state/projects.js";
@@ -121,6 +122,8 @@ export default {
     const { currentProject, loadProjectUsers, loadProjectInvitations } = useProjects();
     const { projectView } = useSession();
 
+    const { closeSidePanel } = useAppSidePanel();
+
     const shouldSubscribe = computed(
       () =>
         isFreeSpace(currentSpace.value) &&
@@ -138,6 +141,7 @@ export default {
 
       currentTab.value = { id: viewKey };
       currentView.value = PROJECT_VIEWS[viewKey];
+      closeSidePanel();
     };
 
     onBeforeMount(() => {
@@ -170,6 +174,7 @@ export default {
       // Methods
       changeView,
       isSpaceAdmin,
+      closeSidePanel,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };

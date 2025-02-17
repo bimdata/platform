@@ -1,3 +1,64 @@
+<template>
+  <div class="model-location">
+    <transition name="fade" mode="out-in">
+      <template v-if="isOpenForm">
+        <ModelLocationForm
+          class="model-location__form"
+          :project="project"
+          :model="model"
+          :site="site"
+          :address="address"
+          :longitude="longitude"
+          :latitude="latitude"
+          @location-updated="onLocationUpdated"
+          @close="closeLocationForm"
+        />
+      </template>
+
+      <template v-else-if="longitude && latitude">
+        <div class="model-location__map">
+          <MaplibreWrapper :longitude="longitude" :latitude="latitude" />
+          <BIMDataButton
+            v-if="isProjectAdmin(project)"
+            class="model-location__map__edit-btn"
+            width="36px"
+            height="36px"
+            fill
+            square
+            icon
+            @click="openLocationForm"
+          >
+            <BIMDataIconEdit size="s" />
+          </BIMDataButton>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="model-location__empty">
+          <BIMDataIconLocation size="xxl" />
+          <div>{{ $t("ModelLocation.emptyLocationMessage") }}</div>
+          <BIMDataButton
+            v-if="isProjectAdmin(project)"
+            width="100px"
+            color="primary"
+            fill
+            radius
+            @click="openLocationForm"
+          >
+            {{ $t("ModelLocation.addLocationButtonText") }}
+          </BIMDataButton>
+        </div>
+      </template>
+    </transition>
+
+    <transition name="fade">
+      <div v-show="loading" class="model-location__loader">
+        <BIMDataSpinner />
+      </div>
+    </transition>
+  </div>
+</template>
+
 <script setup>
 import { onActivated, provide, ref, watch } from "vue";
 import { useToggle } from "../../../../composables/toggle.js";
@@ -90,66 +151,5 @@ onActivated(() => {
   if (props.model) setLocation();
 });
 </script>
-
-<template>
-  <div class="model-location">
-    <transition name="fade" mode="out-in">
-      <template v-if="isOpenForm">
-        <ModelLocationForm
-          class="model-location__form"
-          :project="project"
-          :model="model"
-          :site="site"
-          :address="address"
-          :longitude="longitude"
-          :latitude="latitude"
-          @location-updated="onLocationUpdated"
-          @close="closeLocationForm"
-        />
-      </template>
-
-      <template v-else-if="longitude && latitude">
-        <div class="model-location__map">
-          <MaplibreWrapper :longitude="longitude" :latitude="latitude" />
-          <BIMDataButton
-            v-if="isProjectAdmin(project)"
-            class="model-location__map__edit-btn"
-            width="36px"
-            height="36px"
-            fill
-            square
-            icon
-            @click="openLocationForm"
-          >
-            <BIMDataIconEdit size="s" />
-          </BIMDataButton>
-        </div>
-      </template>
-
-      <template v-else>
-        <div class="model-location__empty">
-          <BIMDataIconLocation size="xxl" />
-          <div>{{ $t("ModelLocation.emptyLocationMessage") }}</div>
-          <BIMDataButton
-            v-if="isProjectAdmin(project)"
-            width="100px"
-            color="primary"
-            fill
-            radius
-            @click="openLocationForm"
-          >
-            {{ $t("ModelLocation.addLocationButtonText") }}
-          </BIMDataButton>
-        </div>
-      </template>
-    </transition>
-
-    <transition name="fade">
-      <div v-show="loading" class="model-location__loader">
-        <BIMDataSpinner />
-      </div>
-    </transition>
-  </div>
-</template>
 
 <style scoped src="./ModelLocation.css"></style>

@@ -15,6 +15,10 @@
         />
       </template>
       <template #right>
+        <StatusFilterButton
+          :projects="userProjects"
+          @update:filteredProjects="filteredProjects = $event"
+        />
         <BIMDataButton
           class="user-projects__header__btn-sort"
           fill
@@ -46,44 +50,51 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { useListFilter } from "../../composables/list-filter.js";
 import { useListSort } from "../../composables/list-sort.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
 import { useProjects } from "../../state/projects.js";
+
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import ProjectCard from "../../components/specific/projects/project-card/ProjectCard.vue";
+import StatusFilterButton from "../../components/specific/projects/status-filter-button/StatusFilterButton.vue";
 
 export default {
   components: {
     AppBreadcrumb,
     ViewHeader,
-    ProjectCard
+    ProjectCard,
+    StatusFilterButton
   },
   setup() {
     const { userProjects } = useProjects();
+    const filteredProjects = ref(userProjects.value);
 
     const { filteredList: displayedProjects, searchText } = useListFilter(
-      userProjects,
-      project => project.name + project.description ?? ""
+      filteredProjects,
+      (project) => project.name + project.description ?? ""
     );
 
     const { sortToggle: sortProjects } = useListSort(
       displayedProjects,
-      project => project.name + project.description ?? ""
+      (project) => project.name + project.description ?? ""
     );
 
     return {
       // References
+      userProjects,
+      filteredProjects,
       projects: displayedProjects,
       searchText,
       // Methods
       sortProjects,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 

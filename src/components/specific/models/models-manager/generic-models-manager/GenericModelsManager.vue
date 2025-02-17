@@ -66,6 +66,8 @@
       @download="downloadModels([$event])"
       @view-metaBuilding="$emit('view-metaBuilding', $event)"
       @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
+      @view-photosphereBuilding="$emit('view-photosphereBuilding', $event)"
+      @edit-photosphereBuilding="$emit('edit-photosphereBuilding', $event)"
     >
       <template #placeholder>
         <slot name="tablePlaceholder"></slot>
@@ -88,7 +90,6 @@
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../../config/projects.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
@@ -100,7 +101,6 @@ import { isModel, openInViewer } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
-import WarningModal from "../../../app/warning-modal/WarningModal.vue";
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
 import ModelsTable from "../../models-table/ModelsTable.vue";
@@ -124,13 +124,18 @@ export default {
     types: {
       type: Array,
       required: true
-    }
+    },
+    fileUploadParams: {
+      type: Object,
+    },
   },
   emits: [
     "edit-metaBuilding",
+    "edit-photosphereBuilding",
     "file-uploaded",
     "tab-changed",
-    "view-metaBuilding"
+    "view-metaBuilding",
+    "view-photosphereBuilding",
   ],
   setup(props, { emit }) {
     const router = useRouter();
@@ -217,7 +222,11 @@ export default {
         event => {
           fileUploads.value = fileUploads.value.concat(
             Array.from(event.target.files)
-              .map((file, i) => (file.key = Math.random() * i, file))
+              .map((file, i) => {
+                file.key = Math.random() * i, file;
+                file.params = props.fileUploadParams;
+                return file;
+              })
           );
         },
         {

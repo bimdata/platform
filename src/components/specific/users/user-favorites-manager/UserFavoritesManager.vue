@@ -1,3 +1,50 @@
+<template>
+  <div class="user-favorites-manager">
+    <div class="header">
+      <span class="icon">&starf;</span>
+      <span class="text">{{ $t("UserFavoritesManager.title") }}</span>
+      <BIMDataButton ghost rounded icon @click="closeSidePanel">
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
+      </BIMDataButton>
+    </div>
+
+    <BIMDataTabs
+      :tabs="tabs"
+      width="100%"
+      height="40px"
+      tabSize="50%"
+      :selected="currentTab"
+      @tab-click="selectTab"
+    />
+
+    <BIMDataSearch
+      width="100%"
+      :placeholder="$t('t.search')"
+      v-model="searchText"
+      clear
+    />
+
+    <div class="list-container">
+      <TransitionGroup name="list">
+        <template v-if="currentTab === 'spaces'">
+          <FavoriteSpaceCard
+            v-for="space of displayedList"
+            :key="space.id"
+            :space="space"
+          />
+        </template>
+        <template v-else>
+          <FavoriteProjectCard
+            v-for="project of displayedList"
+            :key="project.id"
+            :project="project"
+          />
+        </template>
+      </TransitionGroup>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -52,53 +99,6 @@ const { filteredList: displayedList, searchText } = useListFilter(
   x => x.name
 );
 </script>
-
-<template>
-  <div class="user-favorites-manager">
-    <div class="header">
-      <span class="icon">&starf;</span>
-      <span class="text">{{ $t("UserFavoritesManager.title") }}</span>
-      <BIMDataButton ghost rounded icon @click="closeSidePanel">
-        <BIMDataIconClose size="xxs" fill color="granite-light" />
-      </BIMDataButton>
-    </div>
-
-    <BIMDataTabs
-      :tabs="tabs"
-      width="100%"
-      height="40px"
-      tabSize="50%"
-      :selected="currentTab"
-      @tab-click="selectTab"
-    />
-
-    <BIMDataSearch
-      width="100%"
-      :placeholder="$t('t.search')"
-      v-model="searchText"
-      clear
-    />
-
-    <div class="list-container">
-      <TransitionGroup name="list">
-        <template v-if="currentTab === 'spaces'">
-          <FavoriteSpaceCard
-            v-for="space of displayedList"
-            :key="space.id"
-            :space="space"
-          />
-        </template>
-        <template v-else>
-          <FavoriteProjectCard
-            v-for="project of displayedList"
-            :key="project.id"
-            :project="project"
-          />
-        </template>
-      </TransitionGroup>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .user-favorites-manager {

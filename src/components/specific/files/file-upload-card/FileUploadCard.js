@@ -86,7 +86,8 @@ export default {
 
     onMounted(() => {
       upload = uploader.upload(props.file, {
-        parentId: props.folder?.id ?? null
+        parentId: props.folder?.id ?? null,
+        processHint: props.file.params?.processHint,
       });
     });
 

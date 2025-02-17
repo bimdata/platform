@@ -76,6 +76,7 @@
             :foldersToUpload="foldersToUpload"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
+            @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @dragover.prevent="() => {}"
@@ -100,6 +101,7 @@
             :loadingFileIds="loadingFileIds"
             :files="displayedFiles"
             @create-model="createModelFromFile"
+            @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @file-clicked="onFileSelected"
@@ -142,6 +144,7 @@
             :project="project"
             :document="fileToManage"
             :visa="currentVisa"
+            @preview-visa="onFileSelected"
             @close="closeVisaManager"
             @create-visa="goVisasView"
             @fetch-visas="fetchVisas"
@@ -191,6 +194,7 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { MODEL_TYPE } from "../../../../config/models.js";
 import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../config/projects.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
@@ -207,8 +211,7 @@ import { fileUploadInput } from "../../../../utils/upload.js";
 
 // Components
 import AllFilesTable from "../all-files-table/AllFilesTable.vue";
-import AppSidePanelContent from "../../app/app-side-panel/AppSidePanelContent.vue";
-import WarningModal from "../../app/warning-modal/WarningModal.vue";
+import AppSidePanelContent from "../../../specific/app/app-side-panel/AppSidePanelContent.vue";
 import DocumentViewer from "../document-viewer/DocumentViewer.vue";
 import FilesActionBar from "./files-action-bar/FilesActionBar.vue";
 import FilesDeleteModal from "./files-delete-modal/FilesDeleteModal.vue";
@@ -273,7 +276,7 @@ export default {
       moveFiles: move,
       downloadFiles: download,
     } = useFiles();
-    const { createModel, deleteModels } = useModels();
+    const { createModel, createPhotosphere, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
 
@@ -363,8 +366,9 @@ export default {
 
     const backToParent = (file) => {
       const parentFolder = handler.parent(file);
+
       currentFolder.value = handler.deserialize(parentFolder);
-      if (file.visas) {
+      if (selectedFileTab.value.id === "visas") {
         selectedFileTab.value = filesTabs[0];
       }
     };
@@ -393,10 +397,15 @@ export default {
 
     const loadingFileIds = ref([]);
 
-    const createModelFromFile = async (file) => {
+    const createModelFromFile = async (file, type) => {
       try {
         loadingFileIds.value.push(file.id);
-        const model = await createModel(props.project, file);
+        let model;
+        if (type === MODEL_TYPE.PHOTOSPHERE) {
+          model = await createPhotosphere(props.project, file);
+        } else {
+          model = await createModel(props.project, file);
+        }
         emit("model-created", model);
         pushNotification({
           type: "success",
@@ -760,6 +769,7 @@ export default {
       folderToManage,
       importFromOtherProjectsActions,
       loadingFileIds,
+      MODEL_TYPE,
       searchText,
       selectedFileTab,
       selection,

@@ -1,74 +1,3 @@
-<script setup>
-import { provide, ref } from "vue";
-import { useToggle } from "../../../../../composables/toggle.js";
-import { IS_SPACE_DELETION_ENABLED } from "../../../../../config/spaces.js";
-import { useSpaces } from "../../../../../state/spaces.js";
-import { useUser } from "../../../../../state/user.js";
-// Components
-import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
-import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
-import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.vue";
-
-const props = defineProps({
-  space: {
-    type: Object,
-    required: true
-  }
-});
-
-const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
-  useUser();
-const { removeSpaceImage } = useSpaces();
-
-const loading = ref(false);
-provide("loading", loading);
-
-const toggleFavorite = async () => {
-  if (isFavoriteSpace(props.space)) {
-    await removeFavoriteSpace(props.space);
-  } else {
-    await addFavoriteSpace(props.space);
-  }
-};
-
-const {
-  isOpen: showUpdateForm,
-  open: openUpdateForm,
-  close: closeUpdateForm
-} = useToggle();
-const {
-  isOpen: showDeleteGuard,
-  open: openDeleteGuard,
-  close: closeDeleteGuard
-} = useToggle();
-
-const reset = () => {
-  closeUpdateForm();
-  closeDeleteGuard();
-  loading.value = false;
-};
-
-const showMenu = ref(false);
-const closeMenu = () => {
-  reset();
-  showMenu.value = false;
-};
-const toggleMenu = () => {
-  reset();
-  showMenu.value = !showMenu.value;
-};
-
-const removeImage = async () => {
-  try {
-    loading.value = true;
-    await removeSpaceImage(props.space);
-    closeMenu();
-  } finally {
-    loading.value = false;
-  }
-};
-</script>
-
 <template>
   <div
     class="space-card-action-menu"
@@ -159,5 +88,76 @@ const removeImage = async () => {
     </transition>
   </div>
 </template>
+
+<script setup>
+import { provide, ref } from "vue";
+import { useToggle } from "../../../../../composables/toggle.js";
+import { IS_SPACE_DELETION_ENABLED } from "../../../../../config/spaces.js";
+import { useSpaces } from "../../../../../state/spaces.js";
+import { useUser } from "../../../../../state/user.js";
+// Components
+import SpaceCardDeleteGuard from "../space-card-delete-guard/SpaceCardDeleteGuard.vue";
+import SpaceCardImageButton from "../space-card-image-button/SpaceCardImageButton.vue";
+import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.vue";
+
+const props = defineProps({
+  space: {
+    type: Object,
+    required: true
+  }
+});
+
+const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
+  useUser();
+const { removeSpaceImage } = useSpaces();
+
+const loading = ref(false);
+provide("loading", loading);
+
+const toggleFavorite = async () => {
+  if (isFavoriteSpace(props.space)) {
+    await removeFavoriteSpace(props.space);
+  } else {
+    await addFavoriteSpace(props.space);
+  }
+};
+
+const {
+  isOpen: showUpdateForm,
+  open: openUpdateForm,
+  close: closeUpdateForm
+} = useToggle();
+const {
+  isOpen: showDeleteGuard,
+  open: openDeleteGuard,
+  close: closeDeleteGuard
+} = useToggle();
+
+const reset = () => {
+  closeUpdateForm();
+  closeDeleteGuard();
+  loading.value = false;
+};
+
+const showMenu = ref(false);
+const closeMenu = () => {
+  reset();
+  showMenu.value = false;
+};
+const toggleMenu = () => {
+  reset();
+  showMenu.value = !showMenu.value;
+};
+
+const removeImage = async () => {
+  try {
+    loading.value = true;
+    await removeSpaceImage(props.space);
+    closeMenu();
+  } finally {
+    loading.value = false;
+  }
+};
+</script>
 
 <style scoped src="./SpaceCardActionMenu.css"></style>

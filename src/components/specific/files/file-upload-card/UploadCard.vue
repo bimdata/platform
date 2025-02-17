@@ -1,53 +1,3 @@
-<script setup>
-import { formatBytes } from "../../../../utils/files.js";
-
-defineProps({
-  type: {
-    type: String,
-    required: true,
-    validator: v => ["file", "folder"].includes(v)
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  total: {
-    type: Number,
-    default: 0
-  },
-  uploaded: {
-    type: Number,
-    default: 0
-  },
-  percentage: {
-    type: Number,
-    default: 0
-  },
-  rate: {
-    type: Number,
-    default: 0
-  },
-  uploading: {
-    type: Boolean,
-    default: false
-  },
-  failed: {
-    type: Boolean,
-    default: false
-  },
-  canceled: {
-    type: Boolean,
-    default: false
-  },
-  condensed: {
-    type: Boolean,
-    default: false
-  }
-});
-
-defineEmits(["cancel"]);
-</script>
-
 <template>
   <div class="upload-card" :class="{ condensed, failed }">
     <div class="upload-card--left">
@@ -109,5 +59,55 @@ defineEmits(["cancel"]);
     </div>
   </div>
 </template>
+
+<script setup>
+import { formatBytes } from "../../../../utils/files.js";
+
+defineProps({
+  type: {
+    type: String,
+    required: true,
+    validator: v => ["file", "folder"].includes(v)
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  total: {
+    type: Number,
+    default: 0
+  },
+  uploaded: {
+    type: Number,
+    default: 0
+  },
+  percentage: {
+    type: Number,
+    default: 0
+  },
+  rate: {
+    type: Number,
+    default: 0
+  },
+  uploading: {
+    type: Boolean,
+    default: false
+  },
+  failed: {
+    type: Boolean,
+    default: false
+  },
+  canceled: {
+    type: Boolean,
+    default: false
+  },
+  condensed: {
+    type: Boolean,
+    default: false
+  }
+});
+
+defineEmits(["cancel"]);
+</script>
 
 <style scoped lang="scss" src="./UploadCard.scss"></style>

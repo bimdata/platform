@@ -1,3 +1,14 @@
+<template>
+  <router-link
+    class="app-link"
+    :class="{ disabled }"
+    :to="disabled ? '' : to"
+    :target="target"
+  >
+    <slot></slot>
+  </router-link>
+</template>
+
 <script setup>
 defineProps({
   to: {
@@ -14,17 +25,6 @@ defineProps({
   }
 });
 </script>
-
-<template>
-  <router-link
-    class="app-link"
-    :class="{ disabled }"
-    :to="disabled ? '' : to"
-    :target="target"
-  >
-    <slot></slot>
-  </router-link>
-</template>
 
 <style scoped>
 .app-link {
