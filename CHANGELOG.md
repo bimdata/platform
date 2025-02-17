@@ -1,3 +1,39 @@
+# [1.2.0](https://github.com/bimdata/platform/compare/v1.1.4...v1.2.0) (2025-02-17)
+
+
+### chore
+
+* add i18n checkbox to PR template [skip ci] ([e5667be](https://github.com/bimdata/platform/commit/e5667be0843b15acecf2487852ff42ca03eed9f9))
+* bump @bimdata/viewer@2.6.2-beta.1 from Github Actions [skip e2e] ([b981835](https://github.com/bimdata/platform/commit/b981835303ea5252d4154495f5619109aaf30c52))
+* bump @bimdata/viewer@2.6.2-beta.2 from Github Actions [skip e2e] ([8401f58](https://github.com/bimdata/platform/commit/8401f5865e7b7582b21ad812daabff1ca3cdbab8))
+* bump @bimdata/viewer@2.6.2-beta.3 from Github Actions [skip e2e] ([191f643](https://github.com/bimdata/platform/commit/191f64392f8cfae6a6ed1f8ada099fc1d1ad8c8d))
+* bump @bimdata/viewer@2.6.2-beta.4 from Github Actions [skip e2e] ([ef54c3b](https://github.com/bimdata/platform/commit/ef54c3b7a4889a51982865a7a55eebba98feb583))
+* bump @bimdata/viewer@2.7.0-beta.1 from Github Actions [skip e2e] ([be219a5](https://github.com/bimdata/platform/commit/be219a5d41dce3939a24aa745df9f4c4cbff1a1a))
+* bump @bimdata/viewer@2.7.0-beta.2 from Github Actions [skip e2e] ([81b6837](https://github.com/bimdata/platform/commit/81b6837226f213480ac273e8320badcec81b16fd))
+* bump @bimdata/viewer@2.7.0-beta.3 from Github Actions [skip e2e] ([9c0659a](https://github.com/bimdata/platform/commit/9c0659a8ffd40630e9708913bb2e0643cb0f1e24))
+* bump @bimdata/viewer@2.7.0-beta.4 from Github Actions [skip e2e] ([0c0c7a2](https://github.com/bimdata/platform/commit/0c0c7a2f46a28c631f5e5213c1f6552683057f88))
+* bump @bimdata/viewer@2.7.0-beta.5 from Github Actions [skip e2e] ([db2f8f3](https://github.com/bimdata/platform/commit/db2f8f39e419c354c9d6808c9ef79664aedf4f5f))
+* bump @bimdata/viewer@2.7.0-beta.6 from Github Actions [skip e2e] ([c9ca344](https://github.com/bimdata/platform/commit/c9ca344c3a5db6568e05db1f7c67171402a99bc9))
+* reformat <script setup> SFCs (#498) ([624d907](https://github.com/bimdata/platform/commit/624d9074454cb975fa25891e1e58d28de5b21618)), closes [#498](https://github.com/bimdata/platform/issues/498)
+* update dependencies ([479bef8](https://github.com/bimdata/platform/commit/479bef844411fd0e4b4a7d610eb3f15b0200a682))
+* update readme [skip ci] ([acea945](https://github.com/bimdata/platform/commit/acea945fae46240183fa1fc0d60315d80bf9d850))
+
+### fix
+
+* space deletion env config ([2ce342b](https://github.com/bimdata/platform/commit/2ce342bd747370825befd23e7f1400b968fa42ec))
+
+### MINOR
+
+* Feature: Photopshere Viewer (#461) ([aa19c10](https://github.com/bimdata/platform/commit/aa19c10f172b38fea82dfc43c15ad5c8b5c5e2c6)), closes [#461](https://github.com/bimdata/platform/issues/461)
+
+### PATCH
+
+* feat: bcf topic card lazy loading (#494) ([221fce2](https://github.com/bimdata/platform/commit/221fce2cf1fe8a666d2b13dbd8ce1dd64c9d69f2)), closes [#494](https://github.com/bimdata/platform/issues/494)
+* Feature/add visa preview (#512) ([d2278f0](https://github.com/bimdata/platform/commit/d2278f03dc09a0f3a2c5c07983885c448d2623bc)), closes [#512](https://github.com/bimdata/platform/issues/512)
+* fix(photosphere): fix photosphere file upload in models-manager (#507) ([9b76a70](https://github.com/bimdata/platform/commit/9b76a705b2e3e30fddcbd8df1fca97501e5637cc)), closes [#507](https://github.com/bimdata/platform/issues/507)
+* fix(upload): do not retry upload for 4XX status code (#497) ([8ea8230](https://github.com/bimdata/platform/commit/8ea82309c7ecb56429ce34b67b269263c67aef18)), closes [#497](https://github.com/bimdata/platform/issues/497)
+* model viewer back arrow project name (#511) ([51daa14](https://github.com/bimdata/platform/commit/51daa14d572a1d46d0ded2cc8b280ec36d07a5e0)), closes [#511](https://github.com/bimdata/platform/issues/511)
+
 ## [1.1.4](https://github.com/bimdata/platform/compare/v1.1.3...v1.1.4) (2025-02-03)
 
 
