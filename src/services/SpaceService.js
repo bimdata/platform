@@ -128,6 +128,9 @@ class SpaceService {
     try {
       return await apiClient.collaborationApi.inviteCloudUser(space.id, {
         email: invitation.email,
+        role: invitation.role,
+        in_all_projects: invitation.in_all_projects,
+        project_role: invitation.project_role,
         redirect_uri: `${ENV.VUE_APP_BASE_URL}/invitations`
       });
     } catch (error) {

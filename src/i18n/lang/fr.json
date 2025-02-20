@@ -341,7 +341,8 @@
       "admins": "Administrateurs",
       "users": "Utilisateurs"
     },
-    "addUserButtonText": "Ajouter un administrateur"
+    "addAdminButtonText": "Ajouter un administrateur",
+    "addUserButtonText": "Ajouter un utilisateur"
   },
   "UserCard": {
     "self": "vous"
