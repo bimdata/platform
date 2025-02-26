@@ -24,7 +24,11 @@
       <template v-else>
         <BIMDataButton outline radius color="primary" @click="openInvitationForm">
           <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
-          <span>{{ showInvitations ? $t("SpaceUsersManager.addAdminButtonText") : $t("SpaceUsersManager.addUserButtonText") }}</span>
+          <span>{{
+            currentTab === "admins"
+              ? $t("SpaceUsersManager.addAdminButtonText")
+              : $t("SpaceUsersManager.addUserButtonText")
+          }}</span>
         </BIMDataButton>
       </template>
     </transition>
@@ -33,7 +37,7 @@
       <transition-group name="list">
         <template v-for="user in displayedUsers">
           <InvitationCard
-            v-if="!user.sub && showInvitations"
+            v-if="!user.sub"
             :key="`invitation-${user.id}`"
             :space="space"
             :invitation="user"
@@ -109,16 +113,29 @@ export default {
       { immediate: true }
     );
 
-    const list = computed(() =>
-      currentTab.value === "admins" ? props.invitations.concat(admins.value) : users.value
-    );
+    const list = computed(() => {
+      if (currentTab.value === "admins") {
+        return props.invitations
+          .filter((invitation) => invitation.role === 100)
+          .concat(admins.value);
+      } else {
+        const usersWithNullSub = users.value.filter((user) => user.sub === null);
+        const invitationsWithRole50 = props.invitations.filter(
+          (invitation) => invitation.role === 50
+        );
+        const otherUsers = users.value.filter((user) => user.sub !== null);
+        return [
+          ...usersWithNullSub,
+          ...invitationsWithRole50,
+          ...otherUsers,
+        ];
+      }
+    });
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
       list,
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
-
-    const showInvitations = computed(() => currentTab.value === "admins");
 
     const {
       isOpen: showInvitationForm,
@@ -139,7 +156,6 @@ export default {
       displayedUsers,
       searchText,
       showInvitationForm,
-      showInvitations,
       tabs,
       // Methods
       closeInvitationForm,
