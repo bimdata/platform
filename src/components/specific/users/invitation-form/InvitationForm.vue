@@ -137,7 +137,7 @@ export default {
                 await sendSpaceInvitation(props.space, {
                   email: email.value,
                   in_all_projects: true,
-                  project_role: 25,
+                  project_role: 50,
                   role: 50,
                 });
               } else {
