@@ -37,7 +37,7 @@
       <transition-group name="list">
         <template v-for="user in displayedUsers">
           <InvitationCard
-            v-if="!user.sub"
+            v-if="user.from === 'invitation'"
             :key="`invitation-${user.id}`"
             :space="space"
             :invitation="user"
@@ -114,21 +114,21 @@ export default {
     );
 
     const list = computed(() => {
+      props.invitations.forEach((invitation) => {
+        invitation.from = "invitation";
+      });
       if (currentTab.value === "admins") {
+        admins.value.forEach((invitation) => {
+          invitation.from = "user";
+        });
         return props.invitations
           .filter((invitation) => invitation.role === 100)
           .concat(admins.value);
       } else {
-        const usersWithNullSub = users.value.filter((user) => user.sub === null);
-        const invitationsWithRole50 = props.invitations.filter(
-          (invitation) => invitation.role === 50
-        );
-        const otherUsers = users.value.filter((user) => user.sub !== null);
-        return [
-          ...usersWithNullSub,
-          ...invitationsWithRole50,
-          ...otherUsers,
-        ];
+        users.value.forEach((invitation) => {
+          invitation.from = "user";
+        });
+        return props.invitations.filter((invitation) => invitation.role === 50).concat(users.value);
       }
     });
 
