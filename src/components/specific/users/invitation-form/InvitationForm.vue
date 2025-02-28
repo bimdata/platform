@@ -26,13 +26,7 @@
         v-model="role"
       />
     </div>
-    <BIMDataButton
-      class="invitation-form__btn-cancel"
-      width="80px"
-      ghost
-      radius
-      @click="close"
-    >
+    <BIMDataButton class="invitation-form__btn-cancel" width="80px" ghost radius @click="close">
       {{ $t("t.cancel") }}
     </BIMDataButton>
     <BIMDataButton
@@ -61,23 +55,27 @@ import { debounce } from "../../../../utils/async.js";
 const roleList = [
   { id: "admin", value: PROJECT_ROLE.ADMIN },
   { id: "user", value: PROJECT_ROLE.USER },
-  { id: "guest", value: PROJECT_ROLE.GUEST }
+  { id: "guest", value: PROJECT_ROLE.GUEST },
 ];
 
 export default {
   props: {
     space: {
       type: Object,
-      default: null
+      default: null,
     },
     project: {
       type: Object,
-      default: null
+      default: null,
     },
     users: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
+    currentTab: {
+      type: String,
+      default: "admins",
+    },
   },
   emits: ["close", "success"],
   setup(props, { emit }) {
@@ -93,9 +91,9 @@ export default {
       () => {
         let availableRoles = roleList;
 
-        roleOptions.value = availableRoles.map(r => ({
+        roleOptions.value = availableRoles.map((r) => ({
           ...r,
-          label: t(`InvitationForm.roles.${r.id}`)
+          label: t(`InvitationForm.roles.${r.id}`),
         }));
 
         role.value = roleOptions.value[0];
@@ -116,7 +114,7 @@ export default {
     const submit = debounce(async () => {
       let currentUser;
       if (email.value) {
-        if (props.users.map(user => user.email).includes(email.value)) {
+        if (props.users.map((user) => user.email).includes(email.value)) {
           emailInput.value.focus();
           hasError.value = true;
           userAlreadyExist.value = true;
@@ -125,21 +123,28 @@ export default {
           if (props.project) {
             await sendProjectInvitation(props.project, {
               email: email.value,
-              role: role.value.value
+              role: role.value.value,
             });
           } else if (props.space) {
-            currentUser = spaceUsers.value.find(
-              user => user.email === email.value
-            );
+            currentUser = spaceUsers.value.find((user) => user.email === email.value);
             if (currentUser) {
               await updateSpaceUser(props.space, {
                 ...currentUser,
-                cloud_role: 100
+                cloud_role: 100,
               });
             } else {
-              await sendSpaceInvitation(props.space, {
-                email: email.value
-              });
+              if (props.currentTab === "users") {
+                await sendSpaceInvitation(props.space, {
+                  email: email.value,
+                  in_all_projects: true,
+                  project_role: 50,
+                  role: 50,
+                });
+              } else {
+                await sendSpaceInvitation(props.space, {
+                  email: email.value,
+                });
+              }
             }
           }
           pushNotification(
@@ -150,7 +155,7 @@ export default {
                 currentUser
                   ? "InvitationForm.successUsertoAdmin"
                   : "InvitationForm.successNotifText"
-              )
+              ),
             },
             2500
           );
@@ -182,9 +187,9 @@ export default {
       roleOptions,
       // Methods
       close,
-      submit
+      submit,
     };
-  }
+  },
 };
 </script>
 

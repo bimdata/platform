@@ -9,16 +9,12 @@
       @tab-click="selectTab"
     />
 
-    <BIMDataSearch
-      width="100%"
-      :placeholder="$t('t.search')"
-      v-model="searchText"
-      clear
-    />
+    <BIMDataSearch width="100%" :placeholder="$t('t.search')" v-model="searchText" clear />
 
-    <transition v-if="showInvitations" name="fade" mode="out-in">
+    <transition name="fade" mode="out-in">
       <template v-if="showInvitationForm">
         <InvitationForm
+          :currentTab="currentTab"
           :space="space"
           @close="closeInvitationForm"
           @success="onInvitationSuccess"
@@ -26,14 +22,13 @@
       </template>
 
       <template v-else>
-        <BIMDataButton
-          outline
-          radius
-          color="primary"
-          @click="openInvitationForm"
-        >
+        <BIMDataButton outline radius color="primary" @click="openInvitationForm">
           <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
-          <span>{{ $t("SpaceUsersManager.addUserButtonText") }}</span>
+          <span>{{
+            currentTab === "admins"
+              ? $t("SpaceUsersManager.addAdminButtonText")
+              : $t("SpaceUsersManager.addUserButtonText")
+          }}</span>
         </BIMDataButton>
       </template>
     </transition>
@@ -42,17 +37,12 @@
       <transition-group name="list">
         <template v-for="user in displayedUsers">
           <InvitationCard
-            v-if="!user.sub && showInvitations"
+            v-if="user.from === 'invitation'"
             :key="`invitation-${user.id}`"
             :space="space"
             :invitation="user"
           />
-          <UserCard
-            v-else
-            :key="`user-${user.id}`"
-            :space="space"
-            :user="user"
-          />
+          <UserCard v-else :key="`user-${user.id}`" :space="space" :user="user" />
         </template>
       </transition-group>
     </div>
@@ -78,21 +68,21 @@ export default {
   components: {
     InvitationCard,
     InvitationForm,
-    UserCard
+    UserCard,
   },
   props: {
     space: {
       type: Object,
-      required: true
+      required: true,
     },
     users: {
       type: Array,
-      required: true
+      required: true,
     },
     invitations: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const { locale, t } = useI18n();
@@ -100,13 +90,13 @@ export default {
 
     const tabs = ref([]);
     const currentTab = ref(tabsDef[0].id);
-    const selectTab = tab => (currentTab.value = tab.id);
+    const selectTab = (tab) => (currentTab.value = tab.id);
     watch(
       () => locale.value,
       () => {
-        tabs.value = tabsDef.map(tab => ({
+        tabs.value = tabsDef.map((tab) => ({
           ...tab,
-          label: t(`SpaceUsersManager.tabs.${tab.id}`)
+          label: t(`SpaceUsersManager.tabs.${tab.id}`),
         }));
       },
       { immediate: true }
@@ -117,29 +107,40 @@ export default {
     watch(
       () => props.users,
       () => {
-        admins.value = props.users.filter(
-          user => user.cloud_role === SPACE_ROLE.ADMIN
-        );
-        users.value = props.users.filter(
-          user => user.cloud_role === SPACE_ROLE.USER
-        );
+        admins.value = props.users.filter((user) => user.cloud_role === SPACE_ROLE.ADMIN);
+        users.value = props.users.filter((user) => user.cloud_role === SPACE_ROLE.USER);
       },
       { immediate: true }
     );
 
-    const list = computed(() => currentTab.value === "admins" ? props.invitations.concat(admins.value) : users.value);
+    const list = computed(() => {
+      props.invitations.forEach((invitation) => {
+        invitation.from = "invitation";
+      });
+      if (currentTab.value === "admins") {
+        admins.value.forEach((invitation) => {
+          invitation.from = "user";
+        });
+        return props.invitations
+          .filter((invitation) => invitation.role === 100)
+          .concat(admins.value);
+      } else {
+        users.value.forEach((invitation) => {
+          invitation.from = "user";
+        });
+        return props.invitations.filter((invitation) => invitation.role === 50).concat(users.value);
+      }
+    });
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
       list,
       ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
     );
 
-    const showInvitations = computed(() => currentTab.value === "admins");
-
     const {
       isOpen: showInvitationForm,
       open: openInvitationForm,
-      close: closeInvitationForm
+      close: closeInvitationForm,
     } = useToggle();
 
     const onInvitationSuccess = async () => {
@@ -155,15 +156,14 @@ export default {
       displayedUsers,
       searchText,
       showInvitationForm,
-      showInvitations,
       tabs,
       // Methods
       closeInvitationForm,
       onInvitationSuccess,
       openInvitationForm,
-      selectTab
+      selectTab,
     };
-  }
+  },
 };
 </script>
 
