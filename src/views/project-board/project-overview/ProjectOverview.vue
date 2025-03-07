@@ -136,7 +136,9 @@ export default {
 
     const modelsPreview = computed(() =>
       projectModels.value.filter(
-        model => !model.archived && model.type !== MODEL_TYPE.META_BUILDING
+        model => !model.archived
+          && model.type !== MODEL_TYPE.META_BUILDING
+          && model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
       )
     );
 
