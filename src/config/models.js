@@ -126,7 +126,7 @@ const MODEL_CONFIG = Object.freeze({
   [MODEL_TYPE.PHOTOSPHERE_BUILDING]: {
     ext: [],
     window: WINDOWS.PHOTOSPHERE,
-    icon: "fileImagePolychrome",
+    icon: "filePhotospherePolychrome",
   },
   [MODEL_TYPE.PNG]: {
     ext: [MODEL_EXTENSIONS.PNG],
