@@ -244,7 +244,8 @@
       "admins": "Administrators",
       "users": "Users"
     },
-    "addUserButtonText": "Add new admin"
+    "addAdminButtonText": "Add new admin",
+    "addUserButtonText": "Add new user"
   },
   "UserCard": {
     "self": "you"
