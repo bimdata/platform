@@ -227,7 +227,7 @@
       "admins": "Beheerders",
       "users": "Gebruikers"
     },
-    "addUserButtonText": "Nieuwe beheerder toevoegen"
+    "addAdminButtonText": "Nieuwe beheerder toevoegen"
   },
   "UserCard": {
     "self": "u"

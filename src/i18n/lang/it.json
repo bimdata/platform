@@ -230,7 +230,7 @@
       "admins": "Amministratori",
       "users": "Utenti"
     },
-    "addUserButtonText": "Aggiungi nuovo amministratore"
+    "addAdminButtonText": "Aggiungi nuovo amministratore"
   },
   "UserCard": {
     "self": "tu"

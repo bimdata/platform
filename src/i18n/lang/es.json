@@ -242,7 +242,8 @@
       "admins": "Administradores",
       "users": "Usuarios"
     },
-    "addUserButtonText": "Agregar un administrador"
+    "addAdminButtonText": "Agregar un administrador",
+    "addUserButtonText": "Agregar un usario"
   },
   "UserCard": {
     "self": "ustedes"
