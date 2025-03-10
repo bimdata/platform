@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASS }}
       - id: tag
         name: Get docker tag
-        uses: bimdata/actions/get-docker-tag@v2
+        uses: bimdata/actions/get-docker-tag@v3
         with:
           branch: ${{ github.ref }}
       - name: Build and push
@@ -81,7 +81,7 @@ jobs:
           persist-credentials: false
       - id: tag
         name: Get docker tag
-        uses: bimdata/actions/get-docker-tag@v2
+        uses: bimdata/actions/get-docker-tag@v3
         with:
           branch: ${{ github.ref }}
       - name: Run e2e tests
@@ -105,11 +105,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASS }}
       - id: tag
         name: Get docker tag
-        uses: bimdata/actions/get-docker-tag@v2
+        uses: bimdata/actions/get-docker-tag@v3
         with:
           branch: ${{ github.ref }}
       - name: Deploy on ${{ env.tag }}
-        uses: bimdata/actions/deployment@v2
+        uses: bimdata/actions/deployment@v3
         with:
           inventory: ${{ env.tag }}
           app: ${{ env.app }}
