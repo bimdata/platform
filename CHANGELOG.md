@@ -1,3 +1,15 @@
+## [1.2.1](https://github.com/bimdata/platform/compare/v1.2.0...v1.2.1) (2025-03-10)
+
+
+### chore
+
+* bump @bimdata/viewer@2.7.0 from Github Actions [skip e2e] ([38f3cf9](https://github.com/bimdata/platform/commit/38f3cf9b7377dffa6463a610f9227101318ac8dc))
+
+### PATCH
+
+* fix modal delete file version (#521) ([4b32813](https://github.com/bimdata/platform/commit/4b328135816554b7021f1431ddf019f9716faa8e)), closes [#521](https://github.com/bimdata/platform/issues/521)
+* fix: do not show photosphere buildings in project models preview (#522) ([cddd465](https://github.com/bimdata/platform/commit/cddd465162619ab7bdb22375bf92011290e702a6)), closes [#522](https://github.com/bimdata/platform/issues/522)
+
 # [1.2.0](https://github.com/bimdata/platform/compare/v1.1.4...v1.2.0) (2025-02-17)
 
 
