@@ -1,3 +1,25 @@
+## [1.2.2](https://github.com/bimdata/platform/compare/v1.2.1...v1.2.2) (2025-03-11)
+
+
+### chore
+
+* bump @bimdata/viewer@2.7.1-beta.1 from Github Actions [skip e2e] ([384a36d](https://github.com/bimdata/platform/commit/384a36dbef3bfca1db3ce85a9066423dd6aecf39))
+* bump @bimdata/viewer@2.8.0 from Github Actions [skip e2e] ([7c467f6](https://github.com/bimdata/platform/commit/7c467f6d540e3a765aecbf20b8705513a61310cd))
+* bump @bimdata/viewer@2.8.0-beta.1 from Github Actions [skip e2e] ([5bed421](https://github.com/bimdata/platform/commit/5bed421583d183d7c7bdf64f7d5222a2a4a1673a))
+* bump @bimdata/viewer@2.8.0-beta.2 from Github Actions [skip e2e] ([3bfad73](https://github.com/bimdata/platform/commit/3bfad7399d8938b5df27613b4d4198df53b7cdda))
+* bump @bimdata/viewer@2.8.0-beta.3 from Github Actions [skip e2e] ([e236af2](https://github.com/bimdata/platform/commit/e236af2353945655bed7c7c2f215ca797db366e6))
+* bump @bimdata/viewer@2.8.0-beta.4 from Github Actions [skip e2e] ([9518080](https://github.com/bimdata/platform/commit/95180800188f25a29c3101ccabefb976986411f5))
+* bump @bimdata/viewer@2.8.0-beta.5 from Github Actions [skip e2e] ([fe1ad75](https://github.com/bimdata/platform/commit/fe1ad75e0981738409a39b24427cbbbbeb49736c))
+* bump @bimdata/viewer@2.8.0-beta.6 from Github Actions [skip e2e] ([d7d2e7a](https://github.com/bimdata/platform/commit/d7d2e7a49955c113b0ee7961863f31531468e07b))
+* bump @bimdata/viewer@2.8.0-beta.7 from Github Actions [skip e2e] ([b291cb0](https://github.com/bimdata/platform/commit/b291cb08fbd39a3244b2d74b9db3392ac8fd9c32))
+* bump @bimdata/viewer@2.8.0-beta.8 from Github Actions [skip e2e] ([4bdb3cb](https://github.com/bimdata/platform/commit/4bdb3cb64775a1b6681af0377fd28ebcc3369611))
+* update dependencies ([7476d05](https://github.com/bimdata/platform/commit/7476d050462dd85cbf75d05a0224374899bf0bb3))
+
+### PATCH
+
+* add users to spaces (#513) ([96c69dd](https://github.com/bimdata/platform/commit/96c69dd408f572425e79f3f9f12cb49592a51572)), closes [#513](https://github.com/bimdata/platform/issues/513)
+* fix: i18n keys 'addAdminButtontext' ([182f26c](https://github.com/bimdata/platform/commit/182f26c2e2c1de466b29006e537691e1da02b68f))
+
 ## [1.2.1](https://github.com/bimdata/platform/compare/v1.2.0...v1.2.1) (2025-03-10)
 
 
