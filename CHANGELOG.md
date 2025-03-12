@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/bimdata/platform/compare/v1.2.2...v1.2.3) (2025-03-12)
+
+
+### PATCH
+
+* fix(css): model manager responsiveness (#525) ([3c5ee3f](https://github.com/bimdata/platform/commit/3c5ee3fe15b59a03d300993a68c62ddd121c417c)), closes [#525](https://github.com/bimdata/platform/issues/525)
+
 ## [1.2.2](https://github.com/bimdata/platform/compare/v1.2.1...v1.2.2) (2025-03-11)
 
 
