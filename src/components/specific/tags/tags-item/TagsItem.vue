@@ -54,7 +54,10 @@
             margin="-12px 0px 0px 0px"
           />
         </template>
-        <div class="tags-item__content__info__action">
+        <div
+          v-if="isProjectAdmin(project)"
+          class="tags-item__content__info__action"
+        >
           <template v-if="!editTagName">
             <BIMDataIconEdit
               data-test-id="btn-edit-tag-name"
@@ -120,6 +123,7 @@ import TagService from "../../../../services/TagService.js";
 import { debounce } from "../../../../utils/async.js";
 import { getBorderColor } from "../../../../utils/colors.js";
 import { dropdownPositioner } from "../../../../utils/positioner.js";
+import { useUser } from "../../../../state/user.js";
 
 export default {
   props: {
@@ -142,6 +146,8 @@ export default {
   },
   emits: ["tag-to-update", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
+    const { isProjectAdmin } = useUser();
+
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);
     const tagContent = ref(null);
@@ -238,7 +244,8 @@ export default {
       onSubmitTagName,
       onColorSelector,
       onDeleteTag,
-      toggle
+      toggle,
+      isProjectAdmin
     };
   }
 };
