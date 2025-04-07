@@ -54,44 +54,43 @@
             margin="-12px 0px 0px 0px"
           />
         </template>
-        <div
-          v-if="isProjectAdmin(project)"
-          class="tags-item__content__info__action"
-        >
-          <template v-if="!editTagName">
-            <BIMDataIconEdit
-              data-test-id="btn-edit-tag-name"
+        <div class="tags-item__content__info__action">
+          <template v-if="isProjectAdmin(project)">
+            <template v-if="!editTagName">
+              <BIMDataIconEdit
+                data-test-id="btn-edit-tag-name"
+                size="xxs"
+                fill
+                color="default"
+                margin="0 12px 0 0"
+                @click="editTagName = true"
+              />
+            </template>
+            <template v-else>
+              <BIMDataIconClose
+                size="xxs"
+                fill
+                color="default"
+                margin="0 12px 0 0"
+                @click="onCancelSubmitTagName"
+              />
+            </template>
+            <BIMDataIconDelete
+              data-test-id="btn-delete-tag"
               size="xxs"
               fill
-              color="default"
+              color="high"
               margin="0 12px 0 0"
-              @click="editTagName = true"
+              @click="isSafeZone = true"
             />
           </template>
-          <template v-else>
-            <BIMDataIconClose
-              size="xxs"
-              fill
-              color="default"
-              margin="0 12px 0 0"
-              @click="onCancelSubmitTagName"
-            />
-          </template>
-          <BIMDataIconDelete
-            data-test-id="btn-delete-tag"
-            size="xxs"
-            fill
-            color="high"
-            margin="0 12px 0 0"
-            @click="isSafeZone = true"
-          />
-
           <div
             class="tags-item__content__info__action__color"
             data-test-id="btn-edit-tag-color"
             :style="{
               'background-color': `#${tagColor}`,
-              'border-color': getBorderColor(`${tagColor}`, -50)
+              'border-color': getBorderColor(`${tagColor}`, -50),
+              cursor: isProjectAdmin(project) ? 'pointer' : 'default'
             }"
             @click="onColorSelector"
           ></div>
@@ -215,13 +214,15 @@ export default {
     };
 
     const onColorSelector = () => {
-      displayColorSelector.value = true;
-      nextTick(() => {
-        colorSelector.value.style.top = dropdownPositioner(
-          props.tagsMain,
-          colorSelector.value
-        );
-      });
+      if (isProjectAdmin(props.project)) {
+        displayColorSelector.value = true;
+        nextTick(() => {
+          colorSelector.value.style.top = dropdownPositioner(
+            props.tagsMain,
+            colorSelector.value
+          );
+        });
+      }
     };
 
     const colorSelector = ref(null);
