@@ -18,9 +18,10 @@
           </BIMDataButton>
         </div>
       </div>
-      <div v-if="isProjectAdmin(project)" class="tags-main__content__list-add">
+      <div class="tags-main__content__list-add">
         <span>{{ $t("Tag.list") }}</span>
         <BIMDataButton
+          v-if="isProjectAdmin(project)"
           data-test-id="btn-create-tag"
           color="primary"
           radius
