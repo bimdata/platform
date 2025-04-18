@@ -50,6 +50,7 @@ export default {
 
     const apiUrl = ENV.VUE_APP_API_BASE_URL;
     const archiveUrl = ENV.VUE_APP_ARCHIVE_BASE_URL;
+    const pdfBackendUrl = ENV.VUE_APP_PDF_BACKEND_BASE_URL;
     const spaceID = +route.params.spaceID;
     const projectID = +route.params.projectID;
     const modelIDs =
@@ -107,6 +108,7 @@ export default {
         api: {
           apiUrl,
           archiveUrl,
+          pdfBackendUrl,
           accessToken: accessToken.value,
           cloudId: spaceID,
           projectId: projectID,
