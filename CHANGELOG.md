@@ -1,3 +1,43 @@
+## [1.2.4](https://github.com/bimdata/platform/compare/v1.2.3...v1.2.4) (2025-04-23)
+
+
+### chore
+
+* bump @bimdata/viewer@2.8.1-beta.1 from Github Actions [skip e2e] ([0db1dde](https://github.com/bimdata/platform/commit/0db1dde8c2a4d33fc76cc9e83a60fbeca8cd9bf7))
+* bump @bimdata/viewer@2.8.1-beta.2 from Github Actions [skip e2e] ([3a604f2](https://github.com/bimdata/platform/commit/3a604f2754c0048794756babf37123fa2cb06a22))
+* bump @bimdata/viewer@2.9.0 from Github Actions [skip e2e] ([10605b0](https://github.com/bimdata/platform/commit/10605b0a9acdcad321ad8f4aee49783ffe0e4d35))
+* bump @bimdata/viewer@2.9.0-beta.1 from Github Actions [skip e2e] ([a7d2cf7](https://github.com/bimdata/platform/commit/a7d2cf7d55600f6f3ec181bb42604ac1824e9e3c))
+* bump @bimdata/viewer@2.9.0-beta.10 from Github Actions [skip e2e] ([a26a102](https://github.com/bimdata/platform/commit/a26a1028dc65b507078869b0e2facb77cc9c7d73))
+* bump @bimdata/viewer@2.9.0-beta.11 from Github Actions [skip e2e] ([e5ed1d7](https://github.com/bimdata/platform/commit/e5ed1d73a74f60c816ca3b98d763eac9716d7490))
+* bump @bimdata/viewer@2.9.0-beta.12 from Github Actions [skip e2e] ([d6126e8](https://github.com/bimdata/platform/commit/d6126e8e194e259d47dea5ceef35e2f0e5e3c813))
+* bump @bimdata/viewer@2.9.0-beta.13 from Github Actions [skip e2e] ([55023dd](https://github.com/bimdata/platform/commit/55023dda597e82fe6e7f832ca5ed9cdbdac9143c))
+* bump @bimdata/viewer@2.9.0-beta.14 from Github Actions [skip e2e] ([0d3a7a4](https://github.com/bimdata/platform/commit/0d3a7a43c17d9f0f62b32e6691056cc2b481d743))
+* bump @bimdata/viewer@2.9.0-beta.15 from Github Actions [skip e2e] ([3d37fe9](https://github.com/bimdata/platform/commit/3d37fe940e6fab0c012b4e3bcf238ac681043fde))
+* bump @bimdata/viewer@2.9.0-beta.16 from Github Actions [skip e2e] ([27ec8a5](https://github.com/bimdata/platform/commit/27ec8a5488b0ab06d2ae24993d9aceec0854ffdc))
+* bump @bimdata/viewer@2.9.0-beta.2 from Github Actions [skip e2e] ([ba03b61](https://github.com/bimdata/platform/commit/ba03b61e85fb78d42a1ab860f0b05dff937bf85b))
+* bump @bimdata/viewer@2.9.0-beta.3 from Github Actions [skip e2e] ([e5c257e](https://github.com/bimdata/platform/commit/e5c257ef832f5f43ed4c1cf3519b6e9592a7f455))
+* bump @bimdata/viewer@2.9.0-beta.4 from Github Actions [skip e2e] ([cf244d0](https://github.com/bimdata/platform/commit/cf244d0eb13f5b61a3fb53131732df2051dbed1d))
+* bump @bimdata/viewer@2.9.0-beta.5 from Github Actions [skip e2e] ([8fb99d5](https://github.com/bimdata/platform/commit/8fb99d54e444baba560b6aa8cd70f4aca6a058f7))
+* bump @bimdata/viewer@2.9.0-beta.6 from Github Actions [skip e2e] ([b631cfe](https://github.com/bimdata/platform/commit/b631cfebfe970b83a85dc6b75e4b7216790d40cc))
+* bump @bimdata/viewer@2.9.0-beta.7 from Github Actions [skip e2e] ([7e85a3d](https://github.com/bimdata/platform/commit/7e85a3da385521e6e6590f09e63d6dc5cf3f68e6))
+* bump @bimdata/viewer@2.9.0-beta.8 from Github Actions [skip e2e] ([4b1a79a](https://github.com/bimdata/platform/commit/4b1a79a6f4b5e3ae0d731c70c543655db92e5a31))
+* bump @bimdata/viewer@2.9.0-beta.9 from Github Actions [skip e2e] ([92afe5a](https://github.com/bimdata/platform/commit/92afe5a517157aff27597b80e4445278470414bc))
+* disable 'pdfExport' viewer plugin ([a985996](https://github.com/bimdata/platform/commit/a98599625b4c35f19dc436335e7806deedc6852d))
+* update dependencies ([6330168](https://github.com/bimdata/platform/commit/633016881c306732c7268ede4d2f706440cdf8af))
+* update dependencies ([ccd80ed](https://github.com/bimdata/platform/commit/ccd80ed589f958cd280348947990752be0fd49f2))
+* update dependencies ([45f6fd7](https://github.com/bimdata/platform/commit/45f6fd7a3b0998ef24a645c785bd7e9e0f92a7b6))
+
+### Fix
+
+* add pdf backend url to env vars (#536) ([122ff4b](https://github.com/bimdata/platform/commit/122ff4bf1a06825d9a0d80f4db72127e98a36a2d)), closes [#536](https://github.com/bimdata/platform/issues/536)
+
+### PATCH
+
+* FIX #527 (#528) ([8de0023](https://github.com/bimdata/platform/commit/8de00231fcb9faf9fee14e3f830dce60a0e4df13)), closes [#527](https://github.com/bimdata/platform/issues/527) [#528](https://github.com/bimdata/platform/issues/528)
+* fix pdf backend url deployement ([ecfa07a](https://github.com/bimdata/platform/commit/ecfa07a10905e082817c20fb903e8b8481bcb2bc))
+* fix: css leaks from design-system (#532) ([40ea898](https://github.com/bimdata/platform/commit/40ea89805aa16d7d76aae424196643853193b174)), closes [#532](https://github.com/bimdata/platform/issues/532)
+* Fix: Hide tag-edit inputs for users (#530) (#534) ([0d00d88](https://github.com/bimdata/platform/commit/0d00d88580ea57ae1c4e6ae8173171908495a0da)), closes [#530](https://github.com/bimdata/platform/issues/530) [#534](https://github.com/bimdata/platform/issues/534)
+
 ## [1.2.3](https://github.com/bimdata/platform/compare/v1.2.2...v1.2.3) (2025-03-12)
 
 
