@@ -34,7 +34,7 @@ const PLUGINS_CONFIG = {
   header: {
     warnings: false
   },
-  pdfExport: true,
+  pdfExport: false,
   properties: {
     editProperties: true,
     translateIfcEntities: translateIfcType,
