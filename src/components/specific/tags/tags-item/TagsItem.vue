@@ -55,40 +55,42 @@
           />
         </template>
         <div class="tags-item__content__info__action">
-          <template v-if="!editTagName">
-            <BIMDataIconEdit
-              data-test-id="btn-edit-tag-name"
+          <template v-if="isProjectAdmin(project)">
+            <template v-if="!editTagName">
+              <BIMDataIconEdit
+                data-test-id="btn-edit-tag-name"
+                size="xxs"
+                fill
+                color="default"
+                margin="0 12px 0 0"
+                @click="editTagName = true"
+              />
+            </template>
+            <template v-else>
+              <BIMDataIconClose
+                size="xxs"
+                fill
+                color="default"
+                margin="0 12px 0 0"
+                @click="onCancelSubmitTagName"
+              />
+            </template>
+            <BIMDataIconDelete
+              data-test-id="btn-delete-tag"
               size="xxs"
               fill
-              color="default"
+              color="high"
               margin="0 12px 0 0"
-              @click="editTagName = true"
+              @click="isSafeZone = true"
             />
           </template>
-          <template v-else>
-            <BIMDataIconClose
-              size="xxs"
-              fill
-              color="default"
-              margin="0 12px 0 0"
-              @click="onCancelSubmitTagName"
-            />
-          </template>
-          <BIMDataIconDelete
-            data-test-id="btn-delete-tag"
-            size="xxs"
-            fill
-            color="high"
-            margin="0 12px 0 0"
-            @click="isSafeZone = true"
-          />
-
           <div
             class="tags-item__content__info__action__color"
             data-test-id="btn-edit-tag-color"
             :style="{
               'background-color': `#${tagColor}`,
-              'border-color': getBorderColor(`${tagColor}`, -50)
+              'border-color': getBorderColor(`${tagColor}`, -50),
+              cursor: isProjectAdmin(project) ? 'pointer' : 'default'
             }"
             @click="onColorSelector"
           ></div>
@@ -120,6 +122,7 @@ import TagService from "../../../../services/TagService.js";
 import { debounce } from "../../../../utils/async.js";
 import { getBorderColor } from "../../../../utils/colors.js";
 import { dropdownPositioner } from "../../../../utils/positioner.js";
+import { useUser } from "../../../../state/user.js";
 
 export default {
   props: {
@@ -142,6 +145,8 @@ export default {
   },
   emits: ["tag-to-update", "fetch-tags", "file-updated"],
   setup(props, { emit }) {
+    const { isProjectAdmin } = useUser();
+
     const tagName = ref(props.tag.name);
     const editTagName = ref(false);
     const tagContent = ref(null);
@@ -209,13 +214,15 @@ export default {
     };
 
     const onColorSelector = () => {
-      displayColorSelector.value = true;
-      nextTick(() => {
-        colorSelector.value.style.top = dropdownPositioner(
-          props.tagsMain,
-          colorSelector.value
-        );
-      });
+      if (isProjectAdmin(props.project)) {
+        displayColorSelector.value = true;
+        nextTick(() => {
+          colorSelector.value.style.top = dropdownPositioner(
+            props.tagsMain,
+            colorSelector.value
+          );
+        });
+      }
     };
 
     const colorSelector = ref(null);
@@ -238,7 +245,8 @@ export default {
       onSubmitTagName,
       onColorSelector,
       onDeleteTag,
-      toggle
+      toggle,
+      isProjectAdmin
     };
   }
 };
