@@ -21,6 +21,7 @@
       <div class="tags-main__content__list-add">
         <span>{{ $t("Tag.list") }}</span>
         <BIMDataButton
+          v-if="isProjectAdmin(project)"
           data-test-id="btn-create-tag"
           color="primary"
           radius
@@ -72,7 +73,7 @@
       </div>
       <div data-test-id="tag-list" class="tags-main__content__tag-list">
         <div v-if="updatedTagList?.length === 0" class="empty">
-         <span> {{ $t("Tag.emptyTag") }} </span>
+          <span> {{ $t("Tag.emptyTag") }} </span>
         </div>
         <template v-else v-for="tag of updatedTagList" :key="tag.id">
           <TagsItem
@@ -97,6 +98,7 @@ import { ref, watch, onMounted } from "vue";
 import { useToggle } from "../../../../composables/toggle.js";
 import TagService from "../../../../services/TagService.js";
 import { useFiles } from "../../../../state/files.js";
+import { useUser } from "../../../../state/user.js";
 import { debounce } from "../../../../utils/async.js";
 import { getRandomHexColor } from "../../../../utils/colors.js";
 // Components
@@ -123,6 +125,7 @@ export default {
   setup(props, { emit }) {
     const { getDocument } = useFiles();
     const { isOpen: showAddTagInput, toggle: toggleAddTagInput } = useToggle();
+    const { isProjectAdmin } = useUser();
 
     const tagsDocument = ref(null);
     const tagsMain = ref({});
@@ -199,6 +202,7 @@ export default {
       updatedTagList,
       showAddTagInput,
       // methods
+      isProjectAdmin,
       toggleAddTagInput,
       addNewTag
     };
