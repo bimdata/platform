@@ -42,6 +42,7 @@
 
 <script>
 import { computed, h, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import { MODEL_TYPE } from "../../../../../config/models.js";
 import { useUser } from "../../../../../state/user.js";
@@ -79,6 +80,7 @@ export default {
   setup(props) {
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const { isProjectGuest } = useUser();
+    const { locale, fallbackLocale } = useI18n();
 
     const tabs = ref(tabsDef);
     const currentTab = ref(null);
