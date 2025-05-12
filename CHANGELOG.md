@@ -1,3 +1,21 @@
+## [1.2.5](https://github.com/bimdata/platform/compare/v1.2.4...v1.2.5) (2025-05-12)
+
+
+### chore
+
+* bump @bimdata/viewer@2.10.0 from Github Actions [skip e2e] ([edd2dcf](https://github.com/bimdata/platform/commit/edd2dcfcac72e29c1d3222aeec809b5ef74b7620))
+* bump @bimdata/viewer@2.10.0-beta.1 from Github Actions [skip e2e] ([67bbe72](https://github.com/bimdata/platform/commit/67bbe728a3f33752c6b071e7d5d7a619c6723e6a))
+* bump @bimdata/viewer@2.10.0-beta.2 from Github Actions [skip e2e] ([03babec](https://github.com/bimdata/platform/commit/03babecb30bf303ae4d8cc11665d52a188b6f67a))
+* bump @bimdata/viewer@2.10.1 from Github Actions [skip e2e] ([31e9c88](https://github.com/bimdata/platform/commit/31e9c88c34a60db490c3263924085500200ae201))
+* bump @bimdata/viewer@2.10.1-beta.1 from Github Actions [skip e2e] ([666e656](https://github.com/bimdata/platform/commit/666e65613311091040fa99d734c34eea883ec2dc))
+* bump @bimdata/viewer@2.10.1-beta.2 from Github Actions [skip e2e] ([d152bc0](https://github.com/bimdata/platform/commit/d152bc04c67e4e0d9ead33f403d050d91b661820))
+
+### PATCH
+
+* fix pdf manager (#541) ([49c01b4](https://github.com/bimdata/platform/commit/49c01b48fce3dacc019eb9f35075ba3696f5a8d9)), closes [#541](https://github.com/bimdata/platform/issues/541)
+* fix(files): display file actions bar on tabs (#540) ([156814e](https://github.com/bimdata/platform/commit/156814ec79ffdb0b27208081cd97d631275400d2)), closes [#540](https://github.com/bimdata/platform/issues/540)
+* set locale in bcf export (#538) ([92a1174](https://github.com/bimdata/platform/commit/92a117453ed285a1c835777e430f716a7eb65390)), closes [#538](https://github.com/bimdata/platform/issues/538)
+
 ## [1.2.4](https://github.com/bimdata/platform/compare/v1.2.3...v1.2.4) (2025-04-23)
 
 
