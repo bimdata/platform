@@ -463,7 +463,7 @@ export default {
     NoSearchResultsImage,
   },
   setup() {
-    const { t } = useI18n();
+    const { t, locale, fallbackLocale } = useI18n();
     const router = useRouter();
     const route = useRoute();
     const { pushNotification } = useAppNotification();
@@ -629,7 +629,8 @@ export default {
 
     const exportBcfXlsxTopics = async () => {
       try {
-        await exportBcfXlsx(currentProject.value, [...selectedTopics.value.values()]);
+        const lang = ["fr", "en"].find(lang => lang === locale.value) || fallbackLocale.value;
+        await exportBcfXlsx(currentProject.value, [...selectedTopics.value.values()], lang);
         pushNotification({
           type: "success",
           title: t("t.success"),
