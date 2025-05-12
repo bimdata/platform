@@ -65,8 +65,8 @@ const exportBcf = (project, topics) => {
   return service.exportBcf(project, topics);
 };
 
-const exportBcfXlsx = (project, topics) => {
-  return service.exportBcfXLSX(project, topics);
+const exportBcfXlsx = (project, topics, lang) => {
+  return service.exportBcfXLSX(project, topics, lang);
 };
 
 export function useBcf() {

@@ -78,9 +78,9 @@ export default {
   },
   emits: ["file-uploaded"],
   setup(props) {
-    const { locale, fallbackLocale } = useI18n();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const { isProjectGuest } = useUser();
+    const { locale, fallbackLocale } = useI18n();
 
     const tabs = ref(tabsDef);
     const currentTab = ref(null);
