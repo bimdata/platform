@@ -530,6 +530,8 @@ export default {
       { immediate: true }
     );
 
+    let openingTopicViewer = false;
+
     onActivated(() => {
       currentPanel.value = "";
       currentTopic.value = null;
@@ -538,7 +540,9 @@ export default {
       currentPanel.value = "";
       currentTopic.value = null;
       closeSidePanel();
-      removeTopicGuidFromUrl();
+      if (!openingTopicViewer) {
+        removeTopicGuidFromUrl();
+      }
     });
 
     const { filteredTopics, apply: applyFilters } = useBcfFilter(topics);
@@ -721,8 +725,8 @@ export default {
     };
 
     const openTopicViewer = (topic) => {
-      let viewpoint = topic.viewpoints[0] ?? {};
-      let window = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
+      const viewpoint = topic.viewpoints[0] ?? {};
+      const win = getViewpointConfig(viewpoint)?.window ?? DEFAULT_WINDOW;
       let modelIDs = viewpoint.model_ids ?? [];
 
       if (modelIDs.length === 0) {
@@ -736,13 +740,15 @@ export default {
         // with respect to the target window
         const models = projectModels.value
           .filter(
-            (m) => m.status === MODEL_STATUS.COMPLETED && MODEL_CONFIG[m.type].window === window
+            (m) => m.status === MODEL_STATUS.COMPLETED && MODEL_CONFIG[m.type].window === win
           )
           .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
         if (models.length > 0) {
           modelIDs.push(models[0].id);
         }
       }
+
+      openingTopicViewer = true;
 
       router.push({
         name: routeNames.modelViewer,
@@ -752,7 +758,6 @@ export default {
           modelIDs: modelIDs.join(","),
         },
         query: {
-          window: topic.bimdata_viewer_layout ? "null" : window,
           topicGuid: topic.guid,
         },
       });
