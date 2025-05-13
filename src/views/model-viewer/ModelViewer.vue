@@ -134,7 +134,7 @@ export default {
       loading.value = false;
 
       if (topicGuid) {
-        bimdataViewer.mount("#viewer"); // The viewer BCFManager plugin is responsible to open the corresponding topic window/layout
+        bimdataViewer.mount("#viewer", null); // The viewer BCFManager plugin is responsible to open the corresponding topic window/layout
       } else {
         bimdataViewer.mount("#viewer", initialWindow);
       }
