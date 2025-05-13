@@ -60,11 +60,13 @@ export default {
 
     // Initial plugins config
     const pluginsConfig = cloneDeep(PLUGINS_CONFIG);
-    merge(pluginsConfig, {
-      bcfManager: {
-        topicGuid
-      }
-    });
+    if (topicGuid) {
+      merge(pluginsConfig, {
+        bcfManager: {
+          topicGuid
+        }
+      });
+    }
 
     // Extract space specific plugins config
     // and merges it into initial config
@@ -131,7 +133,11 @@ export default {
       );
       loading.value = false;
 
-      bimdataViewer.mount("#viewer", initialWindow);
+      if (topicGuid) {
+        bimdataViewer.mount("#viewer"); // The viewer BCFManager plugin is responsible to open the corresponding topic window/layout
+      } else {
+        bimdataViewer.mount("#viewer", initialWindow);
+      }
 
       // Keep viewer access token and locale in sync with application
       unwatchAccessToken = watch(accessToken, token => {
