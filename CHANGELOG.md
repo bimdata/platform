@@ -1,3 +1,34 @@
+## [1.2.6](https://github.com/bimdata/platform/compare/v1.2.5...v1.2.6) (2025-06-11)
+
+
+### BCF
+
+* use topic guid in viewer url instead of window ([d5d11ee](https://github.com/bimdata/platform/commit/d5d11ee28b5ebdbc5bf9b0b5911ecca79b43164b))
+
+### chore
+
+* bump @bimdata/viewer@2.10.2-beta.1 from Github Actions [skip e2e] ([5554ea9](https://github.com/bimdata/platform/commit/5554ea99e14db6f6f00d01e9edbfeed0d0ace4f2))
+* bump @bimdata/viewer@2.11.0 from Github Actions [skip e2e] ([999d470](https://github.com/bimdata/platform/commit/999d47031be2cf272584e790b0cbf26bb7dcfa15))
+* bump @bimdata/viewer@2.11.0-beta.1 from Github Actions [skip e2e] ([67985d8](https://github.com/bimdata/platform/commit/67985d88fa15a66ea3676dd40318050ac046e5eb))
+* bump @bimdata/viewer@2.11.0-beta.10 from Github Actions [skip e2e] ([d15917b](https://github.com/bimdata/platform/commit/d15917b24c7c48d238d541a35b2679e84869a966))
+* bump @bimdata/viewer@2.11.0-beta.11 from Github Actions [skip e2e] ([5fbdb6b](https://github.com/bimdata/platform/commit/5fbdb6bf5e1b3871256c90841bfac2f8b99f3dc7))
+* bump @bimdata/viewer@2.11.0-beta.12 from Github Actions [skip e2e] ([e5ef5bd](https://github.com/bimdata/platform/commit/e5ef5bd4def060c69ff40d933e0172e0c90fcfa8))
+* bump @bimdata/viewer@2.11.0-beta.13 from Github Actions [skip e2e] ([93784c3](https://github.com/bimdata/platform/commit/93784c3790293f250840c54cb6d09bc736af09dd))
+* bump @bimdata/viewer@2.11.0-beta.2 from Github Actions [skip e2e] ([a569f4d](https://github.com/bimdata/platform/commit/a569f4d143d6f2fb93d173ae0cde89a2472d81ba))
+* bump @bimdata/viewer@2.11.0-beta.3 from Github Actions [skip e2e] ([09141ac](https://github.com/bimdata/platform/commit/09141ac3ba9ad1c574220058534c8be15ff77b93))
+* bump @bimdata/viewer@2.11.0-beta.4 from Github Actions [skip e2e] ([470f6e1](https://github.com/bimdata/platform/commit/470f6e1722344bda084542ac2ad31369b181760f))
+* bump @bimdata/viewer@2.11.0-beta.5 from Github Actions [skip e2e] ([fc0a249](https://github.com/bimdata/platform/commit/fc0a249cfad372fbee3c8d6952dfc21c9c37e7ee))
+* bump @bimdata/viewer@2.11.0-beta.6 from Github Actions [skip e2e] ([c887e83](https://github.com/bimdata/platform/commit/c887e831350c3f459b3d5f943c327c530ac72786))
+* bump @bimdata/viewer@2.11.0-beta.7 from Github Actions [skip e2e] ([4be4f1a](https://github.com/bimdata/platform/commit/4be4f1adb08cc7d2226eb7ede6ae735c83e0c99b))
+* bump @bimdata/viewer@2.11.0-beta.8 from Github Actions [skip e2e] ([009358b](https://github.com/bimdata/platform/commit/009358b917503fc86c35b7223f0ac8d12b713359))
+* bump @bimdata/viewer@2.11.0-beta.9 from Github Actions [skip e2e] ([218f922](https://github.com/bimdata/platform/commit/218f92280bb9f98d1bd40d51ab2e9bfc62590316))
+* update dependecies ([e6c1aa8](https://github.com/bimdata/platform/commit/e6c1aa88e282ecffc903cccbee01a15c0af54cf0))
+
+### PATCH
+
+* fix: use topic guid in viewer url instead of window ([e7ab9bd](https://github.com/bimdata/platform/commit/e7ab9bdc08c97921119853732382a3bfc78cbefd))
+* update @bimdata/bcf-components (#545) ([aab52d2](https://github.com/bimdata/platform/commit/aab52d2db8ac3db88a4fbbc27de6c6dc94d3185c)), closes [#545](https://github.com/bimdata/platform/issues/545)
+
 ## [1.2.5](https://github.com/bimdata/platform/compare/v1.2.4...v1.2.5) (2025-05-12)
 
 
