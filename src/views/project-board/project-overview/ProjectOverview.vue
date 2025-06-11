@@ -1,6 +1,9 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
+      <BIMDataButton color="primary" outline radius icon @click="openNotificationsSettings">
+        <BIMDataIconSettings fill color="default" size="xs" />
+      </BIMDataButton>
       <BIMDataTooltip
         v-if="!isProjectGuest(project)"
         class="project-overview__tooltip-upload"
@@ -23,25 +26,24 @@
           radius
           :icon="isLG"
           :disabled="!isUserOrga(space) && isFullTotal(spaceSubInfo)"
-          @click="
-            () =>
-              shouldSubscribe ? openSubscriptionModal() : toggleFileUploader()
-          "
+          @click="() => (shouldSubscribe ? openSubscriptionModal() : toggleFileUploader())"
         >
           <BIMDataIcon
             :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
             :size="isLG ? 'xxs' : 'xxxs'"
           />
           <span v-if="!isLG" style="margin-left: 6px">
-            {{
-              showFileUploader
-                ? $t("t.close")
-                : $t("ProjectOverview.openFileUploadButtonText")
-            }}
+            {{ showFileUploader ? $t("t.close") : $t("ProjectOverview.openFileUploadButtonText") }}
           </span>
         </BIMDataButton>
       </BIMDataTooltip>
     </AppSlotContent>
+
+    <AppSidePanelContent :title="$t('ProjectOverview.notifications.title')">
+      <Transition name="fade" mode="out-in">
+        <ProjectNotificationsSettings />
+      </Transition>
+    </AppSidePanelContent>
 
     <transition name="fade">
       <FileUploader
@@ -96,6 +98,7 @@ import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
+import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "../../../config/models.js";
@@ -108,21 +111,25 @@ import { debounce } from "../../../utils/async.js";
 import { isFullTotal } from "../../../utils/spaces.js";
 // Components
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
+import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
 import FileUploader from "../../../components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "../../../components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
+import ProjectNotificationsSettings from "../../../components/specific/projects/project-notifications-settings/ProjectNotificationsSettings.vue"
 import ProjectUsersManager from "../../../components/specific/users/project-users-manager/ProjectUsersManager.vue";
 import SubscriptionModal from "../../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 
 export default {
   components: {
     AppLoading,
+    AppSidePanelContent,
     AppSlotContent,
     FileUploader,
     ModelsManager,
     ModelsOverview,
-    ProjectUsersManager
+    ProjectUsersManager,
+    ProjectNotificationsSettings,
   },
   setup() {
     const { t } = useI18n();
@@ -134,11 +141,14 @@ export default {
     const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
 
+    const { openSidePanel } = useAppSidePanel();
+
     const modelsPreview = computed(() =>
       projectModels.value.filter(
-        model => !model.archived
-          && model.type !== MODEL_TYPE.META_BUILDING
-          && model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
+        (model) =>
+          !model.archived &&
+          model.type !== MODEL_TYPE.META_BUILDING &&
+          model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
       )
     );
 
@@ -146,14 +156,18 @@ export default {
       isOpen: showFileUploader,
       open: openFileUploader,
       close: closeFileUploader,
-      toggle: toggleFileUploader
+      toggle: toggleFileUploader,
     } = useToggle();
+
+    const openNotificationsSettings = () => {
+      openSidePanel();
+    };
 
     const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
-        loadProjectModels(currentProject.value)
+        loadProjectModels(currentProject.value),
       ]);
     }, 1000);
 
@@ -162,8 +176,8 @@ export default {
         type: "error",
         title: t("t.error"),
         message: t("ProjectOverview.forbiddenUploadNotification", {
-          extensions: UPLOADABLE_EXTENSIONS.join(", ")
-        })
+          extensions: UPLOADABLE_EXTENSIONS.join(", "),
+        }),
       });
     };
 
@@ -192,12 +206,13 @@ export default {
       notifyForbiddenUpload,
       openFileUploader,
       openSubscriptionModal,
+      openNotificationsSettings,
       reloadData,
       toggleFileUploader,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 

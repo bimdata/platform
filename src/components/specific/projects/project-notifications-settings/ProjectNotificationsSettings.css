@@ -1,0 +1,22 @@
+.project-notifications-settings {
+  padding: 0 6px;
+  height: 100%;
+  overflow: auto;
+  .header {
+    color: var(--color-granite);
+    font-size: 12px;
+    text-align: center;
+    line-height: 160%;
+  }
+  .footer {
+    left: 0;
+    bottom: 0;
+    position: sticky;
+    background-color: var(--color-white);
+    height: 58px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
