@@ -85,6 +85,51 @@
     "uploadDisableMessage": {
       "permission": "Vous n'avez pas les droits requis",
       "size": "Vous ne disposez plus assez d'espace de stockage"
+    },
+    "notifications": {
+      "title": "Paramètres notification mail",
+      "headerText": "Les paramètres projet de BIMData permettent de gérer les types et la fréquence des notifications pour un suivi personnalisé.",
+      "validateButton": "Valider les paramètres projet",
+      "settings": {
+        "general": {
+          "sendNever": "Ne jamais envoyer de mail de notification",
+          "sendEventOccurs": "Au moment où l'événement se produit",
+          "sendEvery": "Envoyer un mail tous les :"
+        },
+        "bcf": {
+          "title": "Notifications mail BCF"
+        },
+        "visa": {
+          "title": "Notifications mail VISA"
+        },
+        "activity": {
+          "title": "Notifications activité projet",
+          "ged": {
+            "fileUpload": "Dépôt d'un fichier",
+            "fileDeletion": "Suppression d'un fichier",
+            "newVersion": "Nouvelle version",
+            "folderCreation": "Création dossier",
+            "folderDeletion": "Suppression dossier"
+          },
+          "visa": {
+            "title": "Notifications mail VISA",
+            "visaCreation": "Création de Visa",
+            "visaDeletion": "Suppression Visa",
+            "visaValidation": "Validation Visa",
+            "visaRejection": "Refus Visa"
+          },
+          "bcf": {
+            "bcfCreation": "Création BCF",
+            "bcfDeletion": "Suppression BCF"
+          },
+          "otherEvents": {
+            "acceptInvit": "Acceptation d’invitation",
+            "removeModels": "Retirer des modèles",
+            "createMetaBuilding": "Création méta-building",
+            "deleteMetaBuilding": "Suppression méta-building"
+          }
+        }
+      }
     }
   },
   "LanguageSelector": {
