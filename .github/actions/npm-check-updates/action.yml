@@ -1,0 +1,10 @@
+name: "npm check updates"
+author: "NicolasRichel"
+description: "A GitHub Action that updates dependencies using ncu"
+inputs:
+  base-branch:
+    description: "Pull request base branch"
+    required: true
+runs:
+  using: "node20"
+  main: "main.js"

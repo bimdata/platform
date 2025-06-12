@@ -1,0 +1,28 @@
+name: Update Dependencies
+
+on:
+  workflow_dispatch:
+    inputs:
+      base-branch:
+        description: "Base branch on which updates will be applied."
+        required: true
+        default: "develop"
+
+env:
+  GITHUB_TOKEN: ${{ secrets.REPOS_TOKEN }}
+
+permissions: {}
+
+jobs:
+  update_dependencies:
+    permissions:
+      contents: write # Required for creating tag / release
+      pull-requests: write #
+    runs-on: [self-hosted, common]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "develop"
+      - uses: ./.github/actions/npm-check-updates
+        with:
+          base-branch: ${{ inputs.base-branch }}
