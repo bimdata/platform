@@ -1,5 +1,5 @@
 <template>
-  <BIMDataCard class="project-notiication-card">
+  <BIMDataCard class="project-notification-card">
     <template #content>
       <div class="card-header flex items-center justify-between" @click="toggle">
         <div class="flex items-center">
