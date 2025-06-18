@@ -49,6 +49,9 @@ function createClient(name, url, getHeaders, { credentials } = {}) {
     patch(path, body, { json } = {}) {
       return _fetch({ method: "PATCH", path, body, json });
     },
+    put(path, body, { json } = {}) {
+      return _fetch({ method: "PUT", path, body, json });
+    },
     delete(path) {
       return _fetch({ method: "DELETE", path });
     }
