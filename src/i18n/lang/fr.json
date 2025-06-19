@@ -94,7 +94,16 @@
         "general": {
           "sendNever": "Ne jamais envoyer de mail de notification",
           "sendEventOccurs": "Au moment où l'événement se produit",
-          "sendEvery": "Envoyer un mail tous les :"
+          "sendEvery": "Envoyer un mail tous les :",
+          "monday": "Lundi",
+          "tuesday": "Mardi",
+          "wednesday": "Mercredi",
+          "thursday": "Jeudi",
+          "friday": "Vendredi",
+          "saturday": "Samedi",
+          "sunday": "Dimanche",
+          "successNotifText": "Notifications mises à jour !",
+          "errorNotifText": "Échec de la mise à jour des notifications"
         },
         "bcf": {
           "title": "Notifications mail BCF"

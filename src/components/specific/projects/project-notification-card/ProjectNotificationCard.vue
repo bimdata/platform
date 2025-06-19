@@ -10,44 +10,48 @@
           <BIMDataIconChevron fill color="default" :rotate="open ? 90 : 0" size="xxs" />
         </BIMDataButton>
       </div>
+
       <transition name="slide-fade-up">
         <div v-show="open">
+          <!-- Activité : cases à cocher par catégorie -->
           <div v-if="type === 'activity'">
-            <div v-if="type === 'activity'">
-              <div v-for="(options, section) in activityOptions" :key="section">
-                <h5>{{ section }}</h5>
-                <BIMDataCheckbox
-                  v-for="label in options"
-                  :key="label"
-                  :text="label"
-                  v-model="activityChecked[label]"
-                  margin="6px 0"
-                />
-              </div>
+            <div v-for="(options, section) in activityOptions" :key="section">
+              <h5>{{ section }}</h5>
+              <BIMDataCheckbox
+                v-for="label in options"
+                :key="label"
+                :text="label"
+                v-model="modelActivity[label]"
+                margin="6px 0"
+              />
             </div>
             <div class="separator"></div>
           </div>
+
+          <!-- Radios -->
           <BIMDataRadio
             :text="$t('ProjectOverview.notifications.settings.general.sendNever')"
-            value="v0"
-            v-model="selected"
+            value="disabled"
+            v-model="notificationModeValue"
           />
           <BIMDataRadio
             v-if="type !== 'activity'"
             :text="$t('ProjectOverview.notifications.settings.general.sendEventOccurs')"
-            value="v1"
-            v-model="selected"
+            value="immediate"
+            v-model="notificationModeValue"
           />
           <BIMDataRadio
             :text="$t('ProjectOverview.notifications.settings.general.sendEvery')"
-            value="v2"
-            v-model="selected"
+            value="scheduled"
+            v-model="notificationModeValue"
           />
+
+          <!-- Jours -->
           <BIMDataCheckbox
-            v-for="day in daysOfWeek"
+            v-for="[day, isChecked] in Object.entries(modelDays)"
             :key="`${type}-${day}`"
             :text="day"
-            v-model="checked[day]"
+            v-model="modelDays[day]"
             margin="6px 0 6px 23px"
           />
         </div>
@@ -57,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, defineModel } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -65,20 +69,21 @@ const { t } = useI18n();
 const props = defineProps({
   title: String,
   type: String,
-  modelValue: String,
-  modelChecked: Object,
-  defaultOpen: {
-    type: Boolean,
-    default: false,
-  },
+  defaultOpen: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(["update:modelValue", "update:modelChecked"]);
+const emit = defineEmits([
+  "update:notification-mode-value",
+  "update:model-days",
+  "update:model-activity",
+]);
 
 const open = ref(props.defaultOpen);
 const toggle = () => (open.value = !open.value);
 
-const daysOfWeek = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+const notificationModeValue = defineModel("notificationModeValue");
+const modelDays = defineModel("modelDays");
+const modelActivity = defineModel("modelActivity");
 
 const activityOptions = {
   GED: [
@@ -106,51 +111,6 @@ const activityOptions = {
   ],
 };
 
-const activityChecked = ref(
-  Object.fromEntries(
-    Object.values(activityOptions)
-      .flat()
-      .map((label) => [label, false])
-  )
-);
-
-const selected = ref(props.modelValue);
-const checked = ref({ ...props.modelChecked });
-
-watch(selected, (val) => {
-  emit("update:modelValue", val);
-  if (val !== "v2") {
-    for (const day of daysOfWeek) checked.value[day] = false;
-    emit("update:modelChecked", { ...checked.value });
-  }
-});
-
-watch(
-  checked,
-  (newVal) => {
-    const anyChecked = Object.values(newVal).some(Boolean);
-    if (anyChecked && selected.value !== "v2") {
-      selected.value = "v2";
-      emit("update:modelValue", "v2");
-    }
-    emit("update:modelChecked", { ...newVal });
-  },
-  { deep: true }
-);
-
-if (props.type === "activity") {
-  watch(
-    activityChecked,
-    (newVal) => {
-      const anyChecked = Object.values(newVal).some(Boolean);
-      if (anyChecked && selected.value !== "v2") {
-        selected.value = "v2";
-        emit("update:modelValue", "v2");
-      }
-    },
-    { deep: true }
-  );
-}
 </script>
 
 <style scoped src="./ProjectNotificationCard.css"></style>
