@@ -113,6 +113,7 @@
         },
         "activity": {
           "title": "Notifications activité projet",
+          "recipientsNotificationsButton": "Destinataires des notifications",
           "ged": {
             "fileUpload": "Dépôt d'un fichier",
             "fileDeletion": "Suppression d'un fichier",
@@ -138,6 +139,12 @@
             "deleteMetaBuilding": "Suppression méta-building"
           }
         }
+      },
+      "recipients": {
+        "title": "Destinataires des notifications",
+        "text": "Sélectionnez les groupes utilisateurs qui recevront les notifications par email.",
+        "noGroupsText": "Aucun groupe n'est disponible pour recevoir des notifications.",
+        "validateButtonText": "Valider les destinataires"
       }
     }
   },
