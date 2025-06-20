@@ -6,7 +6,7 @@
         <span style="margin-left: 6px">{{ $t("t.back") }}</span>
       </BIMDataButton>
       <div class="flex items-center">
-        <BIMDataIconKey fill color="default" margin="0 6px 0 0" />
+        <BIMDataIconKey fill color="default" margin="0 6px 0 0" size="xs" />
         <span>{{ $t("ProjectOverview.notifications.recipients.title") }}</span>
       </div>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
@@ -14,9 +14,11 @@
       </BIMDataButton>
     </div>
 
-    <p class="text-center">
-      {{ $t("ProjectOverview.notifications.recipients.text") }}
-    </p>
+    <div class="header m-t-12">
+      <p class="text-center">
+        {{ $t("ProjectOverview.notifications.recipients.text") }}
+      </p>
+    </div>
 
     <div class="m-t-12">
       <GroupCard
@@ -68,3 +70,5 @@ const updateNotifications = () => {
   emit("back-to-settings");
 };
 </script>
+
+<style scoped src="./ProjectNotificationsRecipients.css"></style>
