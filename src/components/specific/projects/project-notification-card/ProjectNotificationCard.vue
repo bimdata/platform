@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, defineModel } from "vue";
+import { ref, defineModel, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -104,6 +104,23 @@ const notificationModeValue = defineModel("notificationModeValue");
 const modelDays = defineModel("modelDays");
 const modelActivity = defineModel("modelActivity");
 
+watch(
+  modelDays,
+  (days) => {
+    const hasCheckedDay = Object.values(days).some(Boolean);
+    if (hasCheckedDay) {
+      notificationModeValue.value = "scheduled";
+    }
+  },
+  { deep: true }
+);
+watch(notificationModeValue, (newValue) => {
+  if (newValue !== "scheduled") {
+    Object.keys(modelDays.value).forEach((day) => {
+      modelDays.value[day] = false;
+    });
+  }
+});
 const activityOptions = {
   GED: [
     t("ProjectOverview.notifications.settings.activity.ged.fileUpload"),
