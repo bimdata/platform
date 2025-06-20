@@ -1,0 +1,70 @@
+<template>
+  <div class="project-notifications-recipients">
+    <div class="flex items-center justify-between">
+      <BIMDataButton color="primary" ghost radius icon @click="$emit('back-to-settings')">
+        <BIMDataIconArrow size="xxs" />
+        <span style="margin-left: 6px">{{ $t("t.back") }}</span>
+      </BIMDataButton>
+      <div class="flex items-center">
+        <BIMDataIconKey fill color="default" margin="0 6px 0 0" />
+        <span>{{ $t("ProjectOverview.notifications.recipients.title") }}</span>
+      </div>
+      <BIMDataButton ghost rounded icon @click="$emit('close')">
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
+      </BIMDataButton>
+    </div>
+
+    <p class="text-center">
+      {{ $t("ProjectOverview.notifications.recipients.text") }}
+    </p>
+
+    <div class="m-t-12">
+      <GroupCard
+        v-for="group in projectGroups"
+        :key="group.id"
+        :group="group"
+        :model-value="selectedGroupIds.includes(group.id)"
+        @update:model-value="(checked) => toggleGroupSelection(group.id, checked)"
+      />
+    </div>
+
+    <div class="footer m-t-18">
+      <BIMDataButton color="primary" fill radius width="100%" @click="updateNotifications">
+        {{ $t("ProjectOverview.notifications.recipients.validateButtonText") }}
+      </BIMDataButton>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useGroups } from "../../../../state/groups.js";
+import GroupCard from "./group-card/GroupCard.vue";
+
+const props = defineProps({
+  selectedRecipientsIds: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const { projectGroups } = useGroups();
+const selectedGroupIds = ref([...props.selectedRecipientsIds]);
+
+const emit = defineEmits(["back-to-settings", "close", "update-recipients"]);
+
+const toggleGroupSelection = (groupId, checked) => {
+  if (checked) {
+    if (!selectedGroupIds.value.includes(groupId)) {
+      selectedGroupIds.value.push(groupId);
+    }
+  } else {
+    selectedGroupIds.value = selectedGroupIds.value.filter(id => id !== groupId);
+  }
+};
+
+const updateNotifications = () => {
+  emit("update-recipients", selectedGroupIds.value);
+  emit("back-to-settings");
+};
+</script>
