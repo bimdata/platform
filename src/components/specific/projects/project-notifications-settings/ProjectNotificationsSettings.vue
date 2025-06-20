@@ -6,15 +6,17 @@
         <span style="margin-left: 6px">{{ $t("t.back") }}</span>
       </BIMDataButton>
       <div class="flex items-center">
-        <BIMDataIconSettings fill color="default" margin="0 6px 0 0" />
+        <BIMDataIconSettings fill color="default" margin="0 6px 0 0" size="xs" />
         <span>{{ $t("ProjectOverview.notifications.title") }}</span>
       </div>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
         <BIMDataIconClose size="xxs" fill color="granite-light" />
       </BIMDataButton>
     </div>
-    <div class="header">
-      {{ $t("ProjectOverview.notifications.headerText") }}
+    <div class="header m-t-12">
+      <p class="text-center">
+        {{ $t("ProjectOverview.notifications.headerText") }}
+      </p>
     </div>
     <div class="m-t-18">
       <ProjectNotificationCard
@@ -34,7 +36,7 @@
     </div>
 
     <div class="footer m-t-18">
-      <BIMDataButton color="primary" fill radius width="100%" @click="updateNotifications">
+      <BIMDataButton color="primary" fill radius width="100%" :disabled="selectedRecipientsIds.length === 0" @click="updateNotifications">
         {{ $t("ProjectOverview.notifications.validateButton") }}
       </BIMDataButton>
     </div>
