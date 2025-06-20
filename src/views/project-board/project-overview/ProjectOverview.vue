@@ -39,9 +39,25 @@
       </BIMDataTooltip>
     </AppSlotContent>
 
-    <AppSidePanelContent :title="$t('ProjectOverview.notifications.title')">
+    <AppSidePanelContent :header="false">
       <Transition name="fade" mode="out-in">
-        <ProjectNotificationsSettings />
+        <ProjectNotificationsSettings
+          v-if="showNotificationsSettings"
+          :selectedRecipientsIds="selectedRecipientsIds"
+          @open-recipients-settings="switchToRecipients"
+          @close="closeSidePanel"
+        />
+        <ProjectNotificationsRecipients
+          v-else-if="showNotificationsRecipients"
+          :selectedRecipientsIds="selectedRecipientsIds"
+          @back-to-settings="switchToSettings"
+          @close="closeProjectNotificationsRecipients"
+          @update-recipients="
+            (groupIds) => {
+              selectedRecipientsIds = groupIds;
+            }
+          "
+        />
       </Transition>
     </AppSidePanelContent>
 
@@ -94,7 +110,7 @@
 </template>
 
 <script>
-import { computed, inject } from "vue";
+import { computed, inject, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
@@ -116,7 +132,8 @@ import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotCon
 import FileUploader from "../../../components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "../../../components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
-import ProjectNotificationsSettings from "../../../components/specific/projects/project-notifications-settings/ProjectNotificationsSettings.vue"
+import ProjectNotificationsSettings from "../../../components/specific/projects/project-notifications-settings/ProjectNotificationsSettings.vue";
+import ProjectNotificationsRecipients from "../../../components/specific/projects/project-notifications-recipients/ProjectNotificationsRecipients.vue";
 import ProjectUsersManager from "../../../components/specific/users/project-users-manager/ProjectUsersManager.vue";
 import SubscriptionModal from "../../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 
@@ -130,18 +147,48 @@ export default {
     ModelsOverview,
     ProjectUsersManager,
     ProjectNotificationsSettings,
+    ProjectNotificationsRecipients,
   },
   setup() {
     const { t } = useI18n();
     const { isUserOrga, isProjectGuest } = useUser();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
-    const { currentProject, projectUsers, projectInvitations } = useProjects();
+    const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
+      useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
     const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
 
-    const { openSidePanel } = useAppSidePanel();
+    const { openSidePanel, closeSidePanel } = useAppSidePanel();
+    const showNotificationsSettings = ref(true);
+    const showNotificationsRecipients = ref(false);
+    const switchToRecipients = () => {
+      showNotificationsSettings.value = false;
+      showNotificationsRecipients.value = true;
+    };
+    const switchToSettings = () => {
+      showNotificationsSettings.value = true;
+      showNotificationsRecipients.value = false;
+    };
+    const closeProjectNotificationsRecipients = () => {
+      showNotificationsSettings.value = true;
+      showNotificationsRecipients.value = false;
+      closeSidePanel();
+    };
+    const selectedRecipientsIds = ref([]);
+    onMounted(async () => {
+      try {
+        const notification = await fetchProjectNotification(
+          currentSpace.value.id,
+          currentProject.value.id
+        );
+        selectedRecipientsIds.value = notification?.recipients_group_ids || [];
+      } catch (e) {
+        console.error("Failed to fetch project notification:", e);
+        selectedRecipientsIds.value = [];
+      }
+    });
 
     const modelsPreview = computed(() =>
       projectModels.value.filter(
@@ -193,13 +240,20 @@ export default {
       models: projectModels,
       modelsPreview,
       project: currentProject,
+      selectedRecipientsIds,
       shouldSubscribe,
       showFileUploader,
+      showNotificationsSettings,
+      showNotificationsRecipients,
       space: currentSpace,
       spaceSubInfo,
+      switchToRecipients,
+      switchToSettings,
       users: projectUsers,
       // Methods
       closeFileUploader,
+      closeProjectNotificationsRecipients,
+      closeSidePanel,
       isFullTotal,
       isProjectGuest,
       isUserOrga,

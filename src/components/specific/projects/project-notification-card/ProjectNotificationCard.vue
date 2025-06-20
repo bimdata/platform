@@ -15,6 +15,20 @@
         <div v-show="open">
           <!-- Activité : cases à cocher par catégorie -->
           <div v-if="type === 'activity'">
+            <span>Qui reçoit les notifications ?</span>
+            <BIMDataButton
+              color="primary"
+              fill
+              radius
+              width="100%"
+              class="m-t-12"
+              @click="$emit('open-recipients-settings')"
+            >
+              {{
+                $t("ProjectOverview.notifications.settings.activity.recipientsNotificationsButton")
+              }}
+              ({{ selectedRecipientsIds.length }})
+            </BIMDataButton>
             <div v-for="(options, section) in activityOptions" :key="section">
               <h5>{{ section }}</h5>
               <BIMDataCheckbox
@@ -70,12 +84,17 @@ const props = defineProps({
   title: String,
   type: String,
   defaultOpen: { type: Boolean, default: false },
+  selectedRecipientsIds: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const emit = defineEmits([
   "update:notification-mode-value",
   "update:model-days",
   "update:model-activity",
+  "open-recipients-settings",
 ]);
 
 const open = ref(props.defaultOpen);
@@ -110,7 +129,6 @@ const activityOptions = {
     t("ProjectOverview.notifications.settings.activity.otherEvents.deleteMetaBuilding"),
   ],
 };
-
 </script>
 
 <style scoped src="./ProjectNotificationCard.css"></style>

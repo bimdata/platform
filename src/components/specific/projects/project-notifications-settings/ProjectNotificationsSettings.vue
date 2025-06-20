@@ -1,5 +1,18 @@
 <template>
   <div class="project-notifications-settings p-b-12">
+    <div class="flex items-center justify-between">
+      <BIMDataButton color="primary" ghost radius icon @click="$emit('close')">
+        <BIMDataIconArrow size="xxs" />
+        <span style="margin-left: 6px">{{ $t("t.back") }}</span>
+      </BIMDataButton>
+      <div class="flex items-center">
+        <BIMDataIconSettings fill color="default" margin="0 6px 0 0" />
+        <span>{{ $t("ProjectOverview.notifications.title") }}</span>
+      </div>
+      <BIMDataButton ghost rounded icon @click="$emit('close')">
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
+      </BIMDataButton>
+    </div>
     <div class="header">
       {{ $t("ProjectOverview.notifications.headerText") }}
     </div>
@@ -7,10 +20,12 @@
       <ProjectNotificationCard
         :title="$t('ProjectOverview.notifications.settings.activity.title')"
         type="activity"
+        :selectedRecipientsIds="selectedRecipientsIds"
         v-model:notification-mode-value="notificationModeActivity"
         v-model:model-days="checkedDaysActivity"
         v-model:model-activity="checkedActivity"
         :defaultOpen="true"
+        @open-recipients-settings="$emit('open-recipients-settings')"
       >
         <template #icon>
           <BIMDataIconProject fill color="default" margin="0 6px 0 0" />
@@ -27,12 +42,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
 import { useAppNotification } from "../../app/app-notification/app-notification.js";
-import { useGroups } from "../../../../state/groups.js";
 import { useProjects } from "../../../../state/projects.js";
 import {
   getActivityMapping,
@@ -42,16 +56,23 @@ import {
 
 import ProjectNotificationCard from "../project-notification-card/ProjectNotificationCard.vue";
 
+const props = defineProps({
+  selectedRecipientsIds: {
+    type: Array,
+    default: () => [],
+  },
+});
+defineEmits(["open-recipients-settings", "close"]);
+
 const { t, locale } = useI18n();
 const route = useRoute();
 const { pushNotification } = useAppNotification();
-const { projectGroups } = useGroups();
 const { notifications, fetchProjectNotification, updateProjectNotification } = useProjects();
 
 const spaceID = +route.params.spaceID;
 const projectID = +route.params.projectID;
 // "disabled", "immediate", "scheduled"
-const notificationModeActivity = ref("disabled"); 
+const notificationModeActivity = ref("disabled");
 const checkedDaysActivity = ref(getDefaultCheckedDays(t));
 const checkedActivity = ref(getDefaultCheckedActivity(t));
 const activityMapping = getActivityMapping(t);
@@ -60,7 +81,6 @@ onMounted(async () => {
   const notification = await fetchProjectNotification(spaceID, projectID);
   initializeStateFromNotification(notification);
 });
-console.log("notifications :", notifications.value);
 
 const updateNotifications = async () => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -88,7 +108,7 @@ const updateNotifications = async () => {
   });
 
   const payload = {
-    recipients_group_ids: [projectGroups.value?.[0]?.id ?? 651],
+    recipients_group_ids: props.selectedRecipientsIds,
     locale: locale.value,
     schedule,
     ...eventFields,
@@ -112,7 +132,6 @@ const updateNotifications = async () => {
       title: t("t.error"),
       message: t("ProjectOverview.notifications.settings.general.errorNotifText"),
     });
-    
   }
 };
 
