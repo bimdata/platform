@@ -30,7 +30,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.27.7",
     "@babel/preset-env": "^7.27.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
@@ -38,14 +38,14 @@
     "babel-jest": "^30.0.2",
     "conventional-changelog-eslint": "^6.0.0",
     "cypress": "^14.5.0",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.5.0",
+    "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-vue": "^10.1.0",
-    "jest": "^30.0.2",
-    "prettier": "^3.6.0",
+    "jest": "^30.0.3",
+    "prettier": "^3.6.2",
     "sass-embedded": "^1.88.0",
-    "semantic-release": "^24.2.3",
+    "semantic-release": "^24.2.6",
     "vite": "^6.3.5",
     "vite-plugin-environment": "^1.1.3"
   }
