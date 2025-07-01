@@ -34,7 +34,7 @@
     "@babel/preset-env": "^7.27.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue": "^6.0.0",
     "babel-jest": "^30.0.2",
     "conventional-changelog-eslint": "^6.0.0",
     "cypress": "^14.5.0",
@@ -46,7 +46,7 @@
     "prettier": "^3.6.2",
     "sass-embedded": "^1.88.0",
     "semantic-release": "^24.2.6",
-    "vite": "^6.3.5",
+    "vite": "^7.0.0",
     "vite-plugin-environment": "^1.1.3"
   }
 }
