@@ -23,4 +23,4 @@ adjusted_timestamp=$(( last_build_timestamp - TIMESTAMP_TOLERANCE ))
 find ${ASSETS_PATH} -type f -exec stat --format="%Y,%n" {} + \
     | awk -v t="${adjusted_timestamp}" '$1 < t' \
     | cut -d ',' -f2- \
-    | xargs -L1 rm
+    | xargs --no-run-if-empty -L1 rm
