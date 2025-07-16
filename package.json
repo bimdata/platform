@@ -26,7 +26,7 @@
     "oidc-client-ts": "^3.3.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.17",
-    "vue-i18n": "^11.1.9",
+    "vue-i18n": "^11.1.10",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
