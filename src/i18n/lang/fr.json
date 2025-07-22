@@ -147,6 +147,10 @@
         "text": "Sélectionnez les groupes utilisateurs qui recevront les notifications par email.",
         "noGroupsText": "Aucun groupe n'est disponible pour recevoir des notifications.",
         "validateButtonText": "Valider les destinataires"
+      },
+      "timezone": {
+        "title": "Choix de la time zone",
+        "validateButtonText": "Valider la time zone"
       }
     }
   },

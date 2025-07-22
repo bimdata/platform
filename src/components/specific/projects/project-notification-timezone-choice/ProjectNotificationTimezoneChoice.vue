@@ -7,7 +7,7 @@
       </BIMDataButton>
       <div class="flex items-center">
         <BIMDataIconKey fill color="default" margin="0 6px 0 0" size="xs" />
-        <span>{{ $t("ProjectOverview.notifications.recipients.title") }}</span>
+        <span>{{ $t("ProjectOverview.notifications.timezone.title") }}</span>
       </div>
       <BIMDataButton ghost rounded icon @click="$emit('close')">
         <BIMDataIconClose size="xxs" fill color="granite-light" />
@@ -29,7 +29,7 @@
           <BIMDataRadio :text="timezone" :value="timezone" v-model="selectedTimezone" />
         </div>
       </div>
-      <BIMDataButton color="primary" fill radius width="100%" class="m-t-12" @click="$emit('back-to-settings')">Valider la time zone</BIMDataButton>
+      <BIMDataButton color="primary" fill radius width="100%" class="m-t-12" @click="$emit('back-to-settings')">{{ $t("ProjectOverview.notifications.timezone.validateButtonText") }}</BIMDataButton>
     </div>
   </div>
 </template>
