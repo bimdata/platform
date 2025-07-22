@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useGroups } from "../../../../state/groups.js";
 import GroupCard from "./group-card/GroupCard.vue";
 
@@ -69,6 +69,14 @@ const updateNotifications = () => {
   emit("update-recipients", selectedGroupIds.value);
   emit("back-to-settings");
 };
+
+watch(
+  () => props.selectedRecipientsIds,
+  (newVal) => {
+    selectedGroupIds.value = [...newVal];
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped src="./ProjectNotificationsRecipients.css"></style>

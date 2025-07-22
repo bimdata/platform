@@ -23,21 +23,21 @@
               class="m-t-12"
               @click="$emit('open-recipients-settings')"
             >
-              {{
-                $t("ProjectOverview.notifications.settings.activity.recipientsNotificationsButton")
-              }}
+              {{ $t("ProjectOverview.notifications.settings.activity.recipientsNotificationsButton") }}
               ({{ selectedRecipientsIds.length }})
             </BIMDataButton>
-            <div v-for="(options, section) in activityOptions" :key="section">
+
+            <div v-for="(labels, section) in activityOptions" :key="section">
               <h5>{{ section }}</h5>
               <BIMDataCheckbox
-                v-for="label in options"
-                :key="label"
+                v-for="(label, index) in labels"
+                :key="`${section}-${index}`"
                 :text="label"
-                v-model="modelActivity[label]"
+                v-model="modelActivity[getActivityKey(section, index)]"
                 margin="6px 0"
               />
             </div>
+
             <div class="separator"></div>
           </div>
 
@@ -61,15 +61,16 @@
 
           <!-- Days -->
           <BIMDataCheckbox
-            v-for="[day, isChecked] in Object.entries(modelDays)"
-            :key="`${type}-${day}`"
-            :text="day"
-            v-model="modelDays[day]"
+            v-for="(label, key) in daysLabels"
+            :key="`${type}-${key}`"
+            :text="label"
+            v-model="modelDays[key]"
             margin="6px 0 6px 23px"
           />
+
           <div class="flex items-center m-l-24 m-t-12">
             <span>À :</span>
-            <TimePicker v-model="selectedTime" class="m-x-12" />
+            <TimePicker v-model="notificationTime" class="m-x-12" />
             <BIMDataButton
               color="primary"
               outline
@@ -79,7 +80,7 @@
               style="flex:1;"
               class="justify-between"
             >
-              {{ selectedTimezone || "Timezone" }}
+              {{ currentTimezone }}
               <BIMDataIconChevron size="xxs" fill color="default" />
             </BIMDataButton>
           </div>
@@ -90,14 +91,15 @@
 </template>
 
 <script setup>
-import { ref, defineModel, watch } from "vue";
+import { ref, defineModel, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
 import { useNotificationSchedule } from "../../../../state/notifications.js";
-
+import {
+  getActivityOptions,
+  getDaysLabels,
+  RAW_ACTIVITY_OPTIONS,
+} from "../../../../utils/notifications.js";
 import TimePicker from "../../../generic/time-picker/TimePicker.vue";
-
-const { t } = useI18n();
 
 const props = defineProps({
   title: String,
@@ -107,12 +109,17 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  notification: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 const emit = defineEmits([
   "update:notification-mode-value",
   "update:model-days",
   "update:model-activity",
+  "update:selected-time",
   "open-recipients-settings",
   "open-timezone-choice",
 ]);
@@ -120,10 +127,29 @@ const emit = defineEmits([
 const open = ref(props.defaultOpen);
 const toggle = () => (open.value = !open.value);
 
-const { selectedTime, selectedTimezone } = useNotificationSchedule();
+const { t } = useI18n();
+const { selectedTimezone } = useNotificationSchedule();
+
 const notificationModeValue = defineModel("notificationModeValue");
 const modelDays = defineModel("modelDays");
 const modelActivity = defineModel("modelActivity");
+const selectedTime = defineModel("selectedTime");
+
+const daysLabels = computed(() => getDaysLabels(t));
+const activityOptions = computed(() => getActivityOptions(t));
+
+const getActivityKey = (section, index) => RAW_ACTIVITY_OPTIONS[section][index];
+
+const notificationTime = computed({
+  get: () => selectedTime.value,
+  set: (val) => {
+    selectedTime.value = val;
+  },
+});
+
+const currentTimezone = computed(() =>
+  props.notification?.schedule?.timezone || selectedTimezone.value || "Timezone"
+);
 
 watch(
   modelDays,
@@ -135,6 +161,7 @@ watch(
   },
   { deep: true }
 );
+
 watch(notificationModeValue, (newValue) => {
   if (newValue !== "scheduled") {
     Object.keys(modelDays.value).forEach((day) => {
@@ -142,31 +169,6 @@ watch(notificationModeValue, (newValue) => {
     });
   }
 });
-const activityOptions = {
-  GED: [
-    t("ProjectOverview.notifications.settings.activity.ged.fileUpload"),
-    t("ProjectOverview.notifications.settings.activity.ged.fileDeletion"),
-    // t("ProjectOverview.notifications.settings.activity.ged.newVersion"),
-    t("ProjectOverview.notifications.settings.activity.ged.folderCreation"),
-    t("ProjectOverview.notifications.settings.activity.ged.folderDeletion"),
-  ],
-  Visa: [
-    t("ProjectOverview.notifications.settings.activity.visa.visaCreation"),
-    t("ProjectOverview.notifications.settings.activity.visa.visaDeletion"),
-    t("ProjectOverview.notifications.settings.activity.visa.visaValidation"),
-    t("ProjectOverview.notifications.settings.activity.visa.visaRejection"),
-  ],
-  BCF: [
-    t("ProjectOverview.notifications.settings.activity.bcf.bcfCreation"),
-    t("ProjectOverview.notifications.settings.activity.bcf.bcfDeletion"),
-  ],
-  "Autres évènements": [
-    t("ProjectOverview.notifications.settings.activity.otherEvents.acceptInvit"),
-    // t("ProjectOverview.notifications.settings.activity.otherEvents.removeModels"),
-    t("ProjectOverview.notifications.settings.activity.otherEvents.createMetaBuilding"),
-    t("ProjectOverview.notifications.settings.activity.otherEvents.deleteMetaBuilding"),
-  ],
-};
 </script>
 
 <style scoped src="./ProjectNotificationCard.css"></style>

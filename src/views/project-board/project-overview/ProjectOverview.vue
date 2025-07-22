@@ -172,7 +172,7 @@ export default {
     const { t } = useI18n();
     const { isUserOrga, isProjectGuest } = useUser();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
-    const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
+    const { currentProject, projectUsers, projectInvitations, fetchProjectNotification, notifications } =
       useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
