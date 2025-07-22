@@ -107,10 +107,6 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  notification: {
-    type: Object,
-    default: () => ({}),
-  },
 });
 
 const emit = defineEmits([
