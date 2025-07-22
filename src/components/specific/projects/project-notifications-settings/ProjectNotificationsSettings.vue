@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -88,12 +88,7 @@ const {
 
 const spaceID = +route.params.spaceID;
 const projectID = +route.params.projectID;
-// "disabled", "immediate", "scheduled"
-// const notificationModeActivity = ref("disabled");
 const { selectedTime, selectedTimezone } = useNotificationSchedule();
-// const selectedTimeActivity = ref("08:00");
-// const checkedDaysActivity = ref(getDefaultCheckedDays(t));
-// const checkedActivity = ref(getDefaultCheckedActivity(t));
 const activityMapping = getActivityMapping(t);
 
 onMounted(async () => {

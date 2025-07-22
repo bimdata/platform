@@ -13,7 +13,6 @@
 
       <transition name="slide-fade-up">
         <div v-show="open">
-          <!-- Activité : cases à cocher par catégorie -->
           <div v-if="type === 'activity'">
             <span>Qui reçoit les notifications ?</span>
             <BIMDataButton
@@ -60,7 +59,7 @@
             v-model="notificationModeValue"
           />
 
-          <!-- Jours -->
+          <!-- Days -->
           <BIMDataCheckbox
             v-for="[day, isChecked] in Object.entries(modelDays)"
             :key="`${type}-${day}`"
