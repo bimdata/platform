@@ -47,7 +47,7 @@ export const getActivityMapping = (t) => ({
     "invitation_accepted",
   [t("ProjectOverview.notifications.settings.activity.otherEvents.removeModels")]: "model_removed",
   [t("ProjectOverview.notifications.settings.activity.otherEvents.createMetaBuilding")]:
-    "meta_building_created",
+    "model_creation",
   [t("ProjectOverview.notifications.settings.activity.otherEvents.deleteMetaBuilding")]:
-    "meta_building_deleted",
+    "model_deletion",
 });

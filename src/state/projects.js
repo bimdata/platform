@@ -171,6 +171,14 @@ const updateProjectNotification = async (space, project, notification) => {
     throw error;
   }
 };
+const deleteProjectNotification = async (space, project) => {
+  try {
+    const res = await ProjectService.deleteProjectNotification(space, project);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export function useProjects() {
   const readonlyState = readonly(state);
@@ -196,5 +204,6 @@ export function useProjects() {
     getProjectFolderTree,
     fetchProjectNotification,
     updateProjectNotification,
+    deleteProjectNotification
   };
 }

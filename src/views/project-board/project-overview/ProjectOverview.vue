@@ -41,23 +41,39 @@
 
     <AppSidePanelContent :header="false">
       <Transition name="fade" mode="out-in">
-        <ProjectNotificationsSettings
-          v-if="showNotificationsSettings"
-          :selectedRecipientsIds="selectedRecipientsIds"
-          @open-recipients-settings="switchToRecipients"
-          @close="closeSidePanel"
-        />
-        <ProjectNotificationsRecipients
-          v-else-if="showNotificationsRecipients"
-          :selectedRecipientsIds="selectedRecipientsIds"
-          @back-to-settings="switchToSettings"
-          @close="closeProjectNotificationsRecipients"
-          @update-recipients="
-            (groupIds) => {
-              selectedRecipientsIds = groupIds;
-            }
-          "
-        />
+        <div style="height: 100%; overflow: auto;">
+          <!-- Notification Settings Panel -->
+          <ProjectNotificationsSettings
+            v-show="showNotificationsSettings"
+            :selectedRecipientsIds="selectedRecipientsIds"
+            v-model:notification-mode-activity="notificationModeActivity"
+            v-model:checked-days-activity="checkedDaysActivity"
+            v-model:checked-activity="checkedActivity"
+            @open-recipients-settings="switchToRecipients"
+            @open-timezone-choice="switchToTimezoneChoice"
+            @close="closeSidePanel"
+          />
+
+          <!-- Recipients Panel -->
+          <ProjectNotificationsRecipients
+            v-show="showNotificationsRecipients"
+            :selectedRecipientsIds="selectedRecipientsIds"
+            @back-to-settings="switchToSettings"
+            @close="closeProjectNotificationsRecipients"
+            @update-recipients="
+              (groupIds) => {
+                selectedRecipientsIds = groupIds;
+              }
+            "
+          />
+
+          <!-- Timezone Panel -->
+          <ProjectNotificationTimezoneChoice
+            v-show="showTimezoneChoice"
+            @close="closeSidePanel"
+            @back-to-settings="switchToSettings"
+          />
+        </div>
       </Transition>
     </AppSidePanelContent>
 
@@ -125,6 +141,7 @@ import { useSpaces } from "../../../state/spaces.js";
 import { useUser } from "../../../state/user.js";
 import { debounce } from "../../../utils/async.js";
 import { isFullTotal } from "../../../utils/spaces.js";
+import { getDefaultCheckedActivity, getDefaultCheckedDays } from "../../../utils/notifications.js";
 // Components
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
@@ -134,6 +151,7 @@ import ModelsManager from "../../../components/specific/models/models-manager/Mo
 import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
 import ProjectNotificationsSettings from "../../../components/specific/projects/project-notifications-settings/ProjectNotificationsSettings.vue";
 import ProjectNotificationsRecipients from "../../../components/specific/projects/project-notifications-recipients/ProjectNotificationsRecipients.vue";
+import ProjectNotificationTimezoneChoice from "../../../components/specific/projects/project-notification-timezone-choice/ProjectNotificationTimezoneChoice.vue";
 import ProjectUsersManager from "../../../components/specific/users/project-users-manager/ProjectUsersManager.vue";
 import SubscriptionModal from "../../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
 
@@ -148,6 +166,7 @@ export default {
     ProjectUsersManager,
     ProjectNotificationsSettings,
     ProjectNotificationsRecipients,
+    ProjectNotificationTimezoneChoice,
   },
   setup() {
     const { t } = useI18n();
@@ -160,9 +179,15 @@ export default {
     const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
 
+    const notificationModeActivity = ref("disabled");
+    const checkedDaysActivity = ref(getDefaultCheckedDays(t));
+    const checkedActivity = ref(getDefaultCheckedActivity(t));
+
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const showNotificationsSettings = ref(true);
     const showNotificationsRecipients = ref(false);
+    const showTimezoneChoice = ref(false);
+
     const switchToRecipients = () => {
       showNotificationsSettings.value = false;
       showNotificationsRecipients.value = true;
@@ -171,9 +196,21 @@ export default {
       showNotificationsSettings.value = true;
       showNotificationsRecipients.value = false;
     };
+    const switchToTimezoneChoice = () => {
+      showNotificationsSettings.value = false;
+      showNotificationsRecipients.value = false;
+      showTimezoneChoice.value = true;
+      openSidePanel();
+    };
     const closeProjectNotificationsRecipients = () => {
       showNotificationsSettings.value = true;
       showNotificationsRecipients.value = false;
+      closeSidePanel();
+    };
+    const closeProjectNotificationTimezoneChoice = () => {
+      showNotificationsSettings.value = true;
+      showNotificationsRecipients.value = false;
+      showTimezoneChoice.value = false;
       closeSidePanel();
     };
     const selectedRecipientsIds = ref([]);
@@ -185,7 +222,6 @@ export default {
         );
         selectedRecipientsIds.value = notification?.recipients_group_ids || [];
       } catch (e) {
-        console.error("Failed to fetch project notification:", e);
         selectedRecipientsIds.value = [];
       }
     });
@@ -245,14 +281,20 @@ export default {
       showFileUploader,
       showNotificationsSettings,
       showNotificationsRecipients,
+      showTimezoneChoice,
       space: currentSpace,
       spaceSubInfo,
+      notificationModeActivity,
+      checkedDaysActivity,
+      checkedActivity,
       switchToRecipients,
       switchToSettings,
+      switchToTimezoneChoice,
       users: projectUsers,
       // Methods
       closeFileUploader,
       closeProjectNotificationsRecipients,
+      closeProjectNotificationTimezoneChoice,
       closeSidePanel,
       isFullTotal,
       isProjectGuest,

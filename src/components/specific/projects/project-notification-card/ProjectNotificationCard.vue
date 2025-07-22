@@ -68,6 +68,22 @@
             v-model="modelDays[day]"
             margin="6px 0 6px 23px"
           />
+          <div class="flex items-center m-l-24 m-t-12">
+            <span>À :</span>
+            <TimePicker v-model="selectedTime" class="m-x-12" />
+            <BIMDataButton
+              color="primary"
+              outline
+              radius
+              @click="$emit('open-timezone-choice')"
+              height="25px"
+              style="flex:1;"
+              class="justify-between"
+            >
+              {{ selectedTimezone || "Timezone" }}
+              <BIMDataIconChevron size="xxs" fill color="default" />
+            </BIMDataButton>
+          </div>
         </div>
       </transition>
     </template>
@@ -77,6 +93,10 @@
 <script setup>
 import { ref, defineModel, watch } from "vue";
 import { useI18n } from "vue-i18n";
+
+import { useNotificationSchedule } from "../../../../state/notifications.js";
+
+import TimePicker from "../../../generic/time-picker/TimePicker.vue";
 
 const { t } = useI18n();
 
@@ -88,6 +108,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  notification: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 const emit = defineEmits([
@@ -95,11 +119,13 @@ const emit = defineEmits([
   "update:model-days",
   "update:model-activity",
   "open-recipients-settings",
+  "open-timezone-choice",
 ]);
 
 const open = ref(props.defaultOpen);
 const toggle = () => (open.value = !open.value);
 
+const { selectedTime, selectedTimezone } = useNotificationSchedule();
 const notificationModeValue = defineModel("notificationModeValue");
 const modelDays = defineModel("modelDays");
 const modelActivity = defineModel("modelActivity");
@@ -125,7 +151,7 @@ const activityOptions = {
   GED: [
     t("ProjectOverview.notifications.settings.activity.ged.fileUpload"),
     t("ProjectOverview.notifications.settings.activity.ged.fileDeletion"),
-    t("ProjectOverview.notifications.settings.activity.ged.newVersion"),
+    // t("ProjectOverview.notifications.settings.activity.ged.newVersion"),
     t("ProjectOverview.notifications.settings.activity.ged.folderCreation"),
     t("ProjectOverview.notifications.settings.activity.ged.folderDeletion"),
   ],
@@ -141,7 +167,7 @@ const activityOptions = {
   ],
   "Autres évènements": [
     t("ProjectOverview.notifications.settings.activity.otherEvents.acceptInvit"),
-    t("ProjectOverview.notifications.settings.activity.otherEvents.removeModels"),
+    // t("ProjectOverview.notifications.settings.activity.otherEvents.removeModels"),
     t("ProjectOverview.notifications.settings.activity.otherEvents.createMetaBuilding"),
     t("ProjectOverview.notifications.settings.activity.otherEvents.deleteMetaBuilding"),
   ],
