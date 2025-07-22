@@ -3,7 +3,7 @@
   & .project-notification-timezone-choice__content {
     height: 100%;
     .timezones {
-      height: calc(100% - 32px - 48px - 12px);
+      height: calc(100% - 32px - 48px - 52px);
       overflow: auto;
     }
   }

@@ -29,6 +29,7 @@
           <BIMDataRadio :text="timezone" :value="timezone" v-model="selectedTimezone" />
         </div>
       </div>
+      <BIMDataButton color="primary" fill radius width="100%" class="m-t-12" @click="$emit('back-to-settings')">Valider la time zone</BIMDataButton>
     </div>
   </div>
 </template>
