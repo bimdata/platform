@@ -41,10 +41,10 @@
 
     <AppSidePanelContent :header="false">
       <Transition name="fade" mode="out-in">
-        <div style="height: 100%; overflow: auto;">
+        <div style="height: 100%;">
           <!-- Notification Settings Panel -->
           <ProjectNotificationsSettings
-            v-show="showNotificationsSettings"
+            v-show="sidePanelView === 'settings'"
             :selectedRecipientsIds="selectedRecipientsIds"
             v-model:notification-mode-activity="notificationModeActivity"
             v-model:checked-days-activity="checkedDaysActivity"
@@ -56,10 +56,10 @@
 
           <!-- Recipients Panel -->
           <ProjectNotificationsRecipients
-            v-show="showNotificationsRecipients"
+            v-show="sidePanelView === 'recipients'"
             :selectedRecipientsIds="selectedRecipientsIds"
             @back-to-settings="switchToSettings"
-            @close="closeProjectNotificationsRecipients"
+            @close="closeNotificationPanel"
             @update-recipients="
               (groupIds) => {
                 selectedRecipientsIds = groupIds;
@@ -69,8 +69,8 @@
 
           <!-- Timezone Panel -->
           <ProjectNotificationTimezoneChoice
-            v-show="showTimezoneChoice"
-            @close="closeSidePanel"
+            v-show="sidePanelView === 'timezone'"
+            @close="closeNotificationPanel"
             @back-to-settings="switchToSettings"
           />
         </div>
@@ -184,33 +184,20 @@ export default {
     const checkedActivity = ref(getDefaultCheckedActivity(t));
 
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const showNotificationsSettings = ref(true);
-    const showNotificationsRecipients = ref(false);
-    const showTimezoneChoice = ref(false);
+    const sidePanelView = ref("settings");
 
     const switchToRecipients = () => {
-      showNotificationsSettings.value = false;
-      showNotificationsRecipients.value = true;
+      sidePanelView.value = "recipients";
     };
     const switchToSettings = () => {
-      showNotificationsSettings.value = true;
-      showNotificationsRecipients.value = false;
+      sidePanelView.value = "settings";
     };
     const switchToTimezoneChoice = () => {
-      showNotificationsSettings.value = false;
-      showNotificationsRecipients.value = false;
-      showTimezoneChoice.value = true;
+      sidePanelView.value = "timezone";
       openSidePanel();
     };
-    const closeProjectNotificationsRecipients = () => {
-      showNotificationsSettings.value = true;
-      showNotificationsRecipients.value = false;
-      closeSidePanel();
-    };
-    const closeProjectNotificationTimezoneChoice = () => {
-      showNotificationsSettings.value = true;
-      showNotificationsRecipients.value = false;
-      showTimezoneChoice.value = false;
+    const closeNotificationPanel = () => {
+      sidePanelView.value = "settings";
       closeSidePanel();
     };
     const selectedRecipientsIds = ref([]);
@@ -279,23 +266,22 @@ export default {
       selectedRecipientsIds,
       shouldSubscribe,
       showFileUploader,
-      showNotificationsSettings,
-      showNotificationsRecipients,
-      showTimezoneChoice,
       space: currentSpace,
       spaceSubInfo,
       notificationModeActivity,
       checkedDaysActivity,
       checkedActivity,
+      sidePanelView,
       switchToRecipients,
       switchToSettings,
       switchToTimezoneChoice,
       users: projectUsers,
       // Methods
       closeFileUploader,
-      closeProjectNotificationsRecipients,
-      closeProjectNotificationTimezoneChoice,
+      // closeProjectNotificationsRecipients,
+      // closeProjectNotificationTimezoneChoice,
       closeSidePanel,
+      closeNotificationPanel,
       isFullTotal,
       isProjectGuest,
       isUserOrga,
