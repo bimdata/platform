@@ -1,0 +1,38 @@
+.time-picker {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  input {
+    padding: 6px;
+    font-size: 13px;
+    text-align: center;
+    border: none;
+    box-sizing: border-box;
+    color: var(--color-primary);
+    &:focus-visible{
+      outline: none;
+    }
+  }
+  .carousel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 3px;
+    background-color: white;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .time-option {
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--color-granite);
+    &.selected {
+      color: var(--color-primary);
+      font-weight: bold;
+    }
+  }
+}
+
