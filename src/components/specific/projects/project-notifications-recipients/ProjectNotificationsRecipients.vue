@@ -1,5 +1,6 @@
 <template>
   <div class="project-notifications-recipients">
+    <!-- header -->
     <div class="flex items-center justify-between">
       <BIMDataButton color="primary" ghost radius icon @click="$emit('back-to-settings')">
         <BIMDataIconArrow size="xxs" />
@@ -14,12 +15,14 @@
       </BIMDataButton>
     </div>
 
+    <!-- info text -->
     <div class="header m-t-12">
       <p class="text-center">
         {{ $t("ProjectOverview.notifications.recipients.text") }}
       </p>
     </div>
 
+    <!-- group list -->
     <div class="m-t-12">
       <GroupCard
         v-for="group in projectGroups"
@@ -30,6 +33,7 @@
       />
     </div>
 
+    <!-- empty group -->
     <div v-if="projectGroups.length === 0" class="empty-group">
       <p class="text-center m-t-12">
         {{ $t("ProjectOverview.notifications.recipients.noGroupsText") }}
@@ -38,6 +42,8 @@
         {{ $t("ProjectOverview.notifications.recipients.createGroupButtonText") }}
       </BIMDataButton>
     </div>
+
+    <!-- validate button -->
     <div v-else class="footer m-t-18">
       <BIMDataButton color="primary" fill radius width="100%" @click="updateNotifications">
         {{ $t("ProjectOverview.notifications.recipients.validateButtonText") }}
@@ -47,10 +53,12 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-import routeNames from "../../../../router/route-names.js";
 import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
 import { useGroups } from "../../../../state/groups.js";
+import routeNames from "../../../../router/route-names.js";
+
 import GroupCard from "./group-card/GroupCard.vue";
 
 const props = defineProps({
@@ -59,14 +67,13 @@ const props = defineProps({
     default: () => [],
   },
 });
+const emit = defineEmits(["back-to-settings", "close", "update-recipients"]);
 
 const { projectGroups } = useGroups();
-const selectedGroupIds = ref([...props.selectedRecipientsIds]);
-
-const emit = defineEmits(["back-to-settings", "close", "update-recipients"]);
 const route = useRoute();
 const router = useRouter();
 
+const selectedGroupIds = ref([...props.selectedRecipientsIds]);
 
 const toggleGroupSelection = (groupId, checked) => {
   if (checked) {
@@ -83,14 +90,12 @@ const updateNotifications = () => {
   emit("back-to-settings");
 };
 
-const spaceID = +route.params.spaceID;
-const projectID = +route.params.projectID;
 const goToProjectGroups = () => {
   router.push({
     name: routeNames.projectGroups,
     params: {
-      spaceID: spaceID,
-      projectID: projectID,
+      spaceID: +route.params.spaceID,
+      projectID: +route.params.projectID,
     },
   });
 };
