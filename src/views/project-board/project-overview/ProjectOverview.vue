@@ -129,20 +129,25 @@
 <script>
 import { computed, inject, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+
 import { useAppModal } from "../../../components/specific/app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../components/specific/app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
-import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "../../../config/models.js";
+
 import { useFiles } from "../../../state/files.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
 import { useUser } from "../../../state/user.js";
+
 import { debounce } from "../../../utils/async.js";
 import { isFullTotal } from "../../../utils/spaces.js";
 import { getDefaultCheckedActivity, getDefaultCheckedDays } from "../../../utils/notifications.js";
+
+import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "../../../config/models.js";
+
 // Components
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
@@ -171,49 +176,31 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const { openModal } = useAppModal();
+    const { pushNotification } = useAppNotification();
+    const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const { isUserOrga, isProjectGuest } = useUser();
+
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
       useProjects();
-    const { loadProjectModels, projectModels } = useModels();
+    const { projectModels, loadProjectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
-    const { openModal } = useAppModal();
-    const { pushNotification } = useAppNotification();
+    notification
 
     const notificationModeActivity = ref("disabled");
     const checkedDaysActivity = ref(getDefaultCheckedDays(t));
     const checkedActivity = ref(getDefaultCheckedActivity(t));
-
-    const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const sidePanelView = ref("settings");
-
-    const switchToRecipients = () => {
-      sidePanelView.value = "recipients";
-    };
-    const switchToSettings = () => {
-      sidePanelView.value = "settings";
-    };
-    const switchToTimezoneChoice = () => {
-      sidePanelView.value = "timezone";
-      openSidePanel();
-    };
-    const closeNotificationPanel = () => {
-      sidePanelView.value = "settings";
-      closeSidePanel();
-    };
     const selectedRecipientsIds = ref([]);
     const notification = ref({});
-    onMounted(async () => {
-      try {
-        notification.value = await fetchProjectNotification(
-          currentSpace.value.id,
-          currentProject.value.id
-        );
-        selectedRecipientsIds.value = notification.value?.recipients_group_ids || [];
-      } catch (e) {
-        selectedRecipientsIds.value = [];
-      }
-    });
+    const sidePanelView = ref("settings");
+
+    const {
+      isOpen: showFileUploader,
+      open: openFileUploader,
+      close: closeFileUploader,
+      toggle: toggleFileUploader,
+    } = useToggle();
 
     const modelsPreview = computed(() =>
       projectModels.value.filter(
@@ -223,17 +210,6 @@ export default {
           model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
       )
     );
-
-    const {
-      isOpen: showFileUploader,
-      open: openFileUploader,
-      close: closeFileUploader,
-      toggle: toggleFileUploader,
-    } = useToggle();
-
-    const openNotificationsSettings = () => {
-      openSidePanel();
-    };
 
     const reloadData = debounce(async () => {
       await Promise.all([
@@ -252,11 +228,34 @@ export default {
         }),
       });
     };
-
     const shouldSubscribe = inject("shouldSubscribe");
     const openSubscriptionModal = () => {
       openModal({ component: SubscriptionModal });
     };
+
+    const openNotificationsSettings = () => openSidePanel();
+    const switchToRecipients = () => (sidePanelView.value = "recipients");
+    const switchToSettings = () => (sidePanelView.value = "settings");
+    const switchToTimezoneChoice = () => {
+      sidePanelView.value = "timezone";
+      openSidePanel();
+    };
+    const closeNotificationPanel = () => {
+      sidePanelView.value = "settings";
+      closeSidePanel();
+    };
+
+    onMounted(async () => {
+      try {
+        notification.value = await fetchProjectNotification(
+          currentSpace.value.id,
+          currentProject.value.id
+        );
+        selectedRecipientsIds.value = notification.value?.recipients_group_ids || [];
+      } catch (e) {
+        selectedRecipientsIds.value = [];
+      }
+    });
 
     return {
       // References
@@ -281,8 +280,6 @@ export default {
       users: projectUsers,
       // Methods
       closeFileUploader,
-      // closeProjectNotificationsRecipients,
-      // closeProjectNotificationTimezoneChoice,
       closeSidePanel,
       closeNotificationPanel,
       isFullTotal,
