@@ -186,7 +186,6 @@ export default {
       useProjects();
     const { projectModels, loadProjectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
-    notification
 
     const notificationModeActivity = ref("disabled");
     const checkedDaysActivity = ref(getDefaultCheckedDays(t));
