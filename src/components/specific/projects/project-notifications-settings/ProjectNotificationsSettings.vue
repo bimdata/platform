@@ -77,21 +77,20 @@ const props = defineProps({
     default: () => [],
   },
 });
+defineEmits(["open-recipients-settings", "close", "open-timezone-choice"]);
 
 const notificationModeActivity = defineModel("notificationModeActivity");
 const checkedDaysActivity = defineModel("checkedDaysActivity");
 const checkedActivity = defineModel("checkedActivity");
-defineEmits(["open-recipients-settings", "close", "open-timezone-choice"]);
 
 const { t, locale } = useI18n();
 const route = useRoute();
 const { pushNotification } = useAppNotification();
-const { fetchProjectNotification, updateProjectNotification, deleteProjectNotification } =
-  useProjects();
+const { updateProjectNotification, deleteProjectNotification } = useProjects();
+const { selectedTime, selectedTimezone } = useNotificationSchedule();
 
 const spaceID = +route.params.spaceID;
 const projectID = +route.params.projectID;
-const { selectedTime, selectedTimezone } = useNotificationSchedule();
 const activityMapping = getActivityMapping(t);
 
 const defaultDays = {
@@ -103,7 +102,6 @@ const defaultDays = {
   saturday: false,
   sunday: false,
 };
-const notification = ref({});
 
 if (
   !checkedDaysActivity.value ||
@@ -111,6 +109,46 @@ if (
 ) {
   checkedDaysActivity.value = { ...defaultDays };
 }
+
+const initializeStateFromNotification = (notification) => {
+  Object.entries(checkedActivity.value).forEach(([label]) => {
+    const key = activityMapping[label];
+    if (key) {
+      checkedActivity.value[label] = !!notification[key];
+    }
+  });
+
+  if (notification.schedule) {
+    Object.assign(checkedDaysActivity.value, {
+      monday: notification.schedule.monday,
+      tuesday: notification.schedule.tuesday,
+      wednesday: notification.schedule.wednesday,
+      thursday: notification.schedule.thursday,
+      friday: notification.schedule.friday,
+      saturday: notification.schedule.saturday,
+      sunday: notification.schedule.sunday,
+    });
+
+    selectedTime.value = notification.schedule.time;
+    selectedTimezone.value = notification.schedule.timezone;
+
+    notificationModeActivity.value = Object.values(checkedDaysActivity.value).some(Boolean)
+      ? "scheduled"
+      : "immediate";
+  } else {
+    notificationModeActivity.value = "disabled";
+  }
+};
+
+watch(
+  () => props.notification,
+  (newNotification) => {
+    if (newNotification && Object.keys(newNotification).length > 0) {
+      initializeStateFromNotification(newNotification);
+    }
+  },
+  { immediate: true }
+);
 
 const handleDeleteNotification = async () => {
   try {
@@ -180,46 +218,6 @@ const updateNotifications = async () => {
     }
   }
 };
-
-const initializeStateFromNotification = (notification) => {
-  Object.entries(checkedActivity.value).forEach(([label]) => {
-    const key = activityMapping[label];
-    if (key) {
-      checkedActivity.value[label] = !!notification[key];
-    }
-  });
-
-  if (notification.schedule) {
-    Object.assign(checkedDaysActivity.value, {
-      monday: notification.schedule.monday,
-      tuesday: notification.schedule.tuesday,
-      wednesday: notification.schedule.wednesday,
-      thursday: notification.schedule.thursday,
-      friday: notification.schedule.friday,
-      saturday: notification.schedule.saturday,
-      sunday: notification.schedule.sunday,
-    });
-
-    selectedTime.value = notification.schedule.time;
-    selectedTimezone.value = notification.schedule.timezone;
-
-    notificationModeActivity.value = Object.values(checkedDaysActivity.value).some(Boolean)
-      ? "scheduled"
-      : "immediate";
-  } else {
-    notificationModeActivity.value = "disabled";
-  }
-};
-
-watch(
-  () => props.notification,
-  (newNotification) => {
-    if (newNotification && Object.keys(newNotification).length > 0) {
-      initializeStateFromNotification(newNotification);
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <style scoped src="./ProjectNotificationsSettings.css"></style>
