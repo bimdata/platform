@@ -1,5 +1,5 @@
 .project-notifications-recipients {
-  .header {
+  .header, .empty-group {
     color: var(--color-granite);
     font-size: 12px;
     text-align: center;

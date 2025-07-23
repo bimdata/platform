@@ -30,7 +30,15 @@
       />
     </div>
 
-    <div class="footer m-t-18">
+    <div v-if="projectGroups.length === 0" class="empty-group">
+      <p class="text-center m-t-12">
+        {{ $t("ProjectOverview.notifications.recipients.noGroupsText") }}
+      </p>
+      <BIMDataButton color="primary" fill radius width="100%" @click="goToProjectGroups">
+        {{ $t("ProjectOverview.notifications.recipients.createGroupButtonText") }}
+      </BIMDataButton>
+    </div>
+    <div v-else class="footer m-t-18">
       <BIMDataButton color="primary" fill radius width="100%" @click="updateNotifications">
         {{ $t("ProjectOverview.notifications.recipients.validateButtonText") }}
       </BIMDataButton>
@@ -39,6 +47,8 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from "vue-router";
+import routeNames from "../../../../router/route-names.js";
 import { ref, watch } from "vue";
 import { useGroups } from "../../../../state/groups.js";
 import GroupCard from "./group-card/GroupCard.vue";
@@ -54,6 +64,9 @@ const { projectGroups } = useGroups();
 const selectedGroupIds = ref([...props.selectedRecipientsIds]);
 
 const emit = defineEmits(["back-to-settings", "close", "update-recipients"]);
+const route = useRoute();
+const router = useRouter();
+
 
 const toggleGroupSelection = (groupId, checked) => {
   if (checked) {
@@ -61,13 +74,25 @@ const toggleGroupSelection = (groupId, checked) => {
       selectedGroupIds.value.push(groupId);
     }
   } else {
-    selectedGroupIds.value = selectedGroupIds.value.filter(id => id !== groupId);
+    selectedGroupIds.value = selectedGroupIds.value.filter((id) => id !== groupId);
   }
 };
 
 const updateNotifications = () => {
   emit("update-recipients", selectedGroupIds.value);
   emit("back-to-settings");
+};
+
+const spaceID = +route.params.spaceID;
+const projectID = +route.params.projectID;
+const goToProjectGroups = () => {
+  router.push({
+    name: routeNames.projectGroups,
+    params: {
+      spaceID: spaceID,
+      projectID: projectID,
+    },
+  });
 };
 
 watch(
