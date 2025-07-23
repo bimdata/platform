@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -68,6 +68,10 @@ import { getActivityMapping } from "../../../../utils/notifications.js";
 import ProjectNotificationCard from "../project-notification-card/ProjectNotificationCard.vue";
 
 const props = defineProps({
+  notification: {
+    type: Object,
+    default: () => ({}),
+  },
   selectedRecipientsIds: {
     type: Array,
     default: () => [],
@@ -107,17 +111,6 @@ if (
 ) {
   checkedDaysActivity.value = { ...defaultDays };
 }
-
-onMounted(async () => {
-  try {
-    notification.value = await fetchProjectNotification(spaceID, projectID);
-    if (notification.value) {
-      initializeStateFromNotification(notification.value);
-    }
-  } catch (error) {
-    console.log("Pas de notification configurée dans le projet");
-  }
-});
 
 const handleDeleteNotification = async () => {
   try {
@@ -217,6 +210,16 @@ const initializeStateFromNotification = (notification) => {
     notificationModeActivity.value = "disabled";
   }
 };
+
+watch(
+  () => props.notification,
+  (newNotification) => {
+    if (newNotification && Object.keys(newNotification).length > 0) {
+      initializeStateFromNotification(newNotification);
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped src="./ProjectNotificationsSettings.css"></style>

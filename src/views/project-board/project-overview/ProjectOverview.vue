@@ -45,6 +45,7 @@
           <!-- Notification Settings Panel -->
           <ProjectNotificationsSettings
             v-show="sidePanelView === 'settings'"
+            :notification="notification"
             :selectedRecipientsIds="selectedRecipientsIds"
             v-model:notification-mode-activity="notificationModeActivity"
             v-model:checked-days-activity="checkedDaysActivity"
@@ -172,7 +173,7 @@ export default {
     const { t } = useI18n();
     const { isUserOrga, isProjectGuest } = useUser();
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
-    const { currentProject, projectUsers, projectInvitations, fetchProjectNotification, notifications } =
+    const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
       useProjects();
     const { loadProjectModels, projectModels } = useModels();
     const { loadProjectFileStructure } = useFiles();
@@ -201,13 +202,14 @@ export default {
       closeSidePanel();
     };
     const selectedRecipientsIds = ref([]);
+    const notification = ref({});
     onMounted(async () => {
       try {
-        const notification = await fetchProjectNotification(
+        notification.value = await fetchProjectNotification(
           currentSpace.value.id,
           currentProject.value.id
         );
-        selectedRecipientsIds.value = notification?.recipients_group_ids || [];
+        selectedRecipientsIds.value = notification.value?.recipients_group_ids || [];
       } catch (e) {
         selectedRecipientsIds.value = [];
       }
@@ -259,19 +261,20 @@ export default {
     return {
       // References
       allowedExtensions: UPLOADABLE_EXTENSIONS,
+      checkedActivity,
+      checkedDaysActivity,
       invitations: projectInvitations,
       models: projectModels,
       modelsPreview,
+      notification,
+      notificationModeActivity,
       project: currentProject,
       selectedRecipientsIds,
       shouldSubscribe,
       showFileUploader,
+      sidePanelView,
       space: currentSpace,
       spaceSubInfo,
-      notificationModeActivity,
-      checkedDaysActivity,
-      checkedActivity,
-      sidePanelView,
       switchToRecipients,
       switchToSettings,
       switchToTimezoneChoice,
