@@ -124,21 +124,19 @@ const emit = defineEmits([
   "open-timezone-choice",
 ]);
 
+const notificationModeValue = defineModel("notificationModeValue");
+const modelDays = defineModel("modelDays");
+const modelActivity = defineModel("modelActivity");
+const selectedTime = defineModel("selectedTime");
+
 const open = ref(props.defaultOpen);
 const toggle = () => (open.value = !open.value);
 
 const { t } = useI18n();
 const { selectedTimezone } = useNotificationSchedule();
 
-const notificationModeValue = defineModel("notificationModeValue");
-const modelDays = defineModel("modelDays");
-const modelActivity = defineModel("modelActivity");
-const selectedTime = defineModel("selectedTime");
-
 const daysLabels = computed(() => getDaysLabels(t));
 const activityOptions = computed(() => getActivityOptions(t));
-
-const getActivityKey = (section, index) => RAW_ACTIVITY_OPTIONS[section][index];
 
 const notificationTime = computed({
   get: () => selectedTime.value,
@@ -150,6 +148,8 @@ const notificationTime = computed({
 const currentTimezone = computed(() =>
   props.notification?.schedule?.timezone || selectedTimezone.value || "Timezone"
 );
+
+const getActivityKey = (section, index) => RAW_ACTIVITY_OPTIONS[section][index];
 
 watch(
   modelDays,
