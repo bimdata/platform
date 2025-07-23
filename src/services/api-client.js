@@ -27,9 +27,11 @@ function createClient(name, url, getHeaders, { credentials } = {}) {
       if (response.headers.get("Content-Type") === "application/json") {
         errorDetails = await response.text();
       }
-      throw new Error(
+      const error = new Error(
         `[${name}] Request error ${response.status}: ${errorDetails}`
       );
+      error.status = response.status;
+      throw error;
     }
     if (response.status === 204) {
       // Do not try to parse response body in case

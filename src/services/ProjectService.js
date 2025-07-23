@@ -152,8 +152,18 @@ class ProjectService {
     }
   }
 
-  fetchProjectNotification(spaceId, projectId) {
-    return backendClient.get(`/cloud/${spaceId}/project/${projectId}/notification`);
+  async fetchProjectNotification(spaceId, projectId) {
+    let res;
+    try {
+      res = await backendClient.get(`/cloud/${spaceId}/project/${projectId}/notification`);
+    } catch (error) {
+      if(error.status === 404) {
+        res = null; // No notification found
+      } else {
+        console.error("Error fetching project notification:", error);
+      }
+    }
+    return res;
   }
   updateProjectNotification(spaceId, projectId, notification) {
     return backendClient.put(`/cloud/${spaceId}/project/${projectId}/notification`, notification);
