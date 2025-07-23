@@ -1,4 +1,5 @@
 .project-notification-card {
+  overflow: initial;
   .card-header {
     color: var(--color-primary);
     cursor: pointer;
