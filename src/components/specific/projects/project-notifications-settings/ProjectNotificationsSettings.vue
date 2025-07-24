@@ -1,6 +1,6 @@
 <template>
   <div class="project-notifications-settings p-b-12">
-    <div class="flex items-center justify-between">
+    <div class="header flex items-center justify-between">
       <BIMDataButton color="primary" ghost radius icon @click="$emit('close')">
         <BIMDataIconArrow size="xxs" />
         <span style="margin-left: 6px">{{ $t("t.back") }}</span>
@@ -14,30 +14,32 @@
       </BIMDataButton>
     </div>
 
-    <div class="header m-t-12">
-      <p class="text-center">
-        {{ $t("ProjectOverview.notifications.headerText") }}
-      </p>
-    </div>
+    <div class="content p-x-6">
+      <div class="content-text m-t-12">
+        <p class="text-center">
+          {{ $t("ProjectOverview.notifications.headerText") }}
+        </p>
+      </div>
 
-    <div class="m-t-18">
-      <ProjectNotificationCard
-        :notification="notification"
-        :title="$t('ProjectOverview.notifications.settings.activity.title')"
-        type="activity"
-        :selectedRecipientsIds="selectedRecipientsIds"
-        v-model:notification-mode-value="notificationModeActivity"
-        v-model:model-days="checkedDaysActivity"
-        v-model:model-activity="checkedActivity"
-        v-model:selected-time="selectedTime"
-        :defaultOpen="true"
-        @open-recipients-settings="$emit('open-recipients-settings')"
-        @open-timezone-choice="$emit('open-timezone-choice')"
-      >
-        <template #icon>
-          <BIMDataIconProject fill color="default" margin="0 6px 0 0" />
-        </template>
-      </ProjectNotificationCard>
+      <div class="m-t-18">
+        <ProjectNotificationCard
+          :notification="notification"
+          :title="$t('ProjectOverview.notifications.settings.activity.title')"
+          type="activity"
+          :selectedRecipientsIds="selectedRecipientsIds"
+          v-model:notification-mode-value="notificationModeActivity"
+          v-model:model-days="checkedDaysActivity"
+          v-model:model-activity="checkedActivity"
+          v-model:selected-time="selectedTime"
+          :defaultOpen="true"
+          @open-recipients-settings="$emit('open-recipients-settings')"
+          @open-timezone-choice="$emit('open-timezone-choice')"
+        >
+          <template #icon>
+            <BIMDataIconProject fill color="default" margin="0 6px 0 0" />
+          </template>
+        </ProjectNotificationCard>
+      </div>
     </div>
 
     <div class="footer m-t-6">
