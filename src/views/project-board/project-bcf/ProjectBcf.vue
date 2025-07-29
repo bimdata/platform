@@ -230,8 +230,8 @@
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
             @view-comment-snapshot="openTopicSnapshot"
-            @topic-deleted="reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl()"
-            @close="closeSidePanel(), removeTopicGuidFromUrl()"
+            @topic-deleted="(reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl())"
+            @close="(closeSidePanel(), removeTopicGuidFromUrl())"
           />
         </template>
         <template v-else-if="currentPanel === sidePanelViews.create">
@@ -242,7 +242,7 @@
             :project="project"
             :extensions="extensions"
             :topics="topics"
-            @topic-created="reloadBcfTopics(), closeSidePanel()"
+            @topic-created="(reloadBcfTopics(), closeSidePanel())"
             @close="closeSidePanel"
           />
         </template>
@@ -633,7 +633,7 @@ export default {
 
     const exportBcfXlsxTopics = async () => {
       try {
-        const lang = ["fr", "en"].find(lang => lang === locale.value) || fallbackLocale.value;
+        const lang = ["fr", "en"].find((lang) => lang === locale.value) || fallbackLocale.value;
         await exportBcfXlsx(currentProject.value, [...selectedTopics.value.values()], lang);
         pushNotification({
           type: "success",

@@ -1,0 +1,28 @@
+.project-notifications-settings {
+  padding: 0 6px;
+  height: 100%;
+  .content {
+    height: calc(100% - 32px - 32px);
+    overflow: auto;
+    .content-text {
+      color: var(--color-granite);
+      font-size: 12px;
+      text-align: center;
+      line-height: 160%;
+    }
+
+  }
+  .header {
+    
+  }
+  .footer {
+    left: 0;
+    bottom: 0;
+    position: sticky;
+    background-color: var(--color-white);
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+  }
+}
