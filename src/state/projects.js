@@ -15,11 +15,12 @@ const state = reactive({
   projectsBySpace: {},
   currentProject: null,
   projectUsers: [],
-  projectInvitations: []
+  projectInvitations: [],
+  notifications: [],
 });
 
-const setCurrentProject = id => {
-  state.currentProject = state.userProjects.find(p => p.id === id) || null;
+const setCurrentProject = (id) => {
+  state.currentProject = state.userProjects.find((p) => p.id === id) || null;
   return readonly(state.currentProject);
 };
 
@@ -39,19 +40,19 @@ const loadUserProjects = async () => {
   return projects;
 };
 
-const loadSpaceProjects = async space => {
+const loadSpaceProjects = async (space) => {
   const projects = await ProjectService.fetchSpaceProjects(space);
   state.spaceProjects = sortProjects(projects);
   return projects;
 };
 
-const loadProjectUsers = async project => {
+const loadProjectUsers = async (project) => {
   const users = await ProjectService.fetchProjectUsers(project);
   state.projectUsers = sortUsers(users);
   return users;
 };
 
-const loadProjectInvitations = async project => {
+const loadProjectInvitations = async (project) => {
   let invitations = [];
   if (isProjectAdmin(project)) {
     invitations = await ProjectService.fetchProjectInvitations(project);
@@ -70,7 +71,7 @@ const createProject = async (space, project) => {
   return newProject;
 };
 
-const updateProject = async project => {
+const updateProject = async (project) => {
   const newProject = await ProjectService.updateProject(project);
 
   if (newProject.id === state.currentProject?.id) {
@@ -82,7 +83,7 @@ const updateProject = async project => {
   return newProject;
 };
 
-const deleteProject = async project => {
+const deleteProject = async (project) => {
   await ProjectService.deleteProject(project);
 
   await loadUser();
@@ -92,7 +93,7 @@ const deleteProject = async project => {
   return project;
 };
 
-const leaveProject = async project => {
+const leaveProject = async (project) => {
   await ProjectService.leaveProject(project);
 
   await loadUser();
@@ -103,10 +104,7 @@ const leaveProject = async project => {
 };
 
 const sendProjectInvitation = async (project, invitation, options = {}) => {
-  const newInvitation = await ProjectService.sendProjectInvitation(
-    project,
-    invitation
-  );
+  const newInvitation = await ProjectService.sendProjectInvitation(project, invitation);
   if (!options.resend) {
     state.projectInvitations = [newInvitation].concat(state.projectInvitations);
   }
@@ -115,23 +113,19 @@ const sendProjectInvitation = async (project, invitation, options = {}) => {
 
 const cancelProjectInvitation = async (project, invitation) => {
   await ProjectService.cancelProjectInvitation(project, invitation);
-  state.projectInvitations = state.projectInvitations.filter(
-    i => i.id !== invitation.id
-  );
+  state.projectInvitations = state.projectInvitations.filter((i) => i.id !== invitation.id);
   return invitation;
 };
 
 const updateProjectUser = async (project, user) => {
   const newUser = await ProjectService.updateProjectUser(project, user);
-  state.projectUsers = state.projectUsers.map(u =>
-    u.id === user.id ? { ...u, ...newUser } : u
-  );
+  state.projectUsers = state.projectUsers.map((u) => (u.id === user.id ? { ...u, ...newUser } : u));
   return newUser;
 };
 
 const deleteProjectUser = async (project, user) => {
   await ProjectService.deleteProjectUser(project, user);
-  state.projectUsers = state.projectUsers.filter(u => u.id !== user.id);
+  state.projectUsers = state.projectUsers.filter((u) => u.id !== user.id);
   return user;
 };
 
@@ -144,22 +138,47 @@ const fetchFolderProjectUsers = async (project, folder) => {
 const getUserProjectList = async (project, folder) => {
   const users = await fetchFolderProjectUsers(project, folder);
   return users
-    .filter(user => !isSelf(user))
-    .map(user => ({
+    .filter((user) => !isSelf(user))
+    .map((user) => ({
       ...user,
       fullName: fullName(user),
       hasAccess: user.permission >= 50,
       isFindable: true,
       searchContent:
-        `${user.firstname || ""} ${user.lastname || ""} ${user.email || ""}`
-        .toLowerCase()
+        `${user.firstname || ""} ${user.lastname || ""} ${user.email || ""}`.toLowerCase(),
     }));
 };
 
-const getProjectFolderTree = async project => {
+const getProjectFolderTree = async (project) => {
   return ProjectService.getProjectFolderTree(project);
 };
 
+const fetchProjectNotification = async (spaceId, projectId) => {
+  try {
+    const res = await ProjectService.fetchProjectNotification(spaceId, projectId);
+    state.notifications = res;
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+const updateProjectNotification = async (space, project, notification) => {
+  try {
+    const res = await ProjectService.updateProjectNotification(space, project, notification);
+    state.notifications = notification;
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+const deleteProjectNotification = async (space, project) => {
+  try {
+    const res = await ProjectService.deleteProjectNotification(space, project);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export function useProjects() {
   const readonlyState = readonly(state);
@@ -183,5 +202,8 @@ export function useProjects() {
     fetchFolderProjectUsers,
     getUserProjectList,
     getProjectFolderTree,
+    fetchProjectNotification,
+    updateProjectNotification,
+    deleteProjectNotification
   };
 }

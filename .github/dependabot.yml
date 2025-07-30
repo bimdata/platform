@@ -1,5 +1,5 @@
 # Config reference:
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 
 version: 2
 updates:
@@ -7,3 +7,17 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      major-updates:
+        applies-to: version-updates
+        update-types:
+          - major
+      minor-updates:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
