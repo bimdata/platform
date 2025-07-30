@@ -27,9 +27,11 @@ function createClient(name, url, getHeaders, { credentials } = {}) {
       if (response.headers.get("Content-Type") === "application/json") {
         errorDetails = await response.text();
       }
-      throw new Error(
+      const error = new Error(
         `[${name}] Request error ${response.status}: ${errorDetails}`
       );
+      error.status = response.status;
+      throw error;
     }
     if (response.status === 204) {
       // Do not try to parse response body in case
@@ -48,6 +50,9 @@ function createClient(name, url, getHeaders, { credentials } = {}) {
     },
     patch(path, body, { json } = {}) {
       return _fetch({ method: "PATCH", path, body, json });
+    },
+    put(path, body, { json } = {}) {
+      return _fetch({ method: "PUT", path, body, json });
     },
     delete(path) {
       return _fetch({ method: "DELETE", path });

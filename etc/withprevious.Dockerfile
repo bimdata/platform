@@ -22,6 +22,8 @@ RUN mv /opt/dist/assets /opt/dist/assets-original
 # When creating a new tag, this will fail.
 # Comment this line and the COPY --from=previous_build line
 FROM ${PREVIOUS_IMAGE}:${PREVIOUS_TAG} AS previous_build
+COPY --chmod=0744 etc/clean-previous-versions.sh /
+RUN /clean-previous-versions.sh
 
 FROM nginx:stable
 RUN rm /etc/nginx/conf.d/default.conf

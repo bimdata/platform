@@ -1,0 +1,8 @@
+.project-notifications-recipients {
+  .header, .empty-group {
+    color: var(--color-granite);
+    font-size: 12px;
+    text-align: center;
+    line-height: 160%;
+  }
+}
