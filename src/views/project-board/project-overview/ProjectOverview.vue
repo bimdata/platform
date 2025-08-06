@@ -41,12 +41,12 @@
 
     <AppSidePanelContent :header="false">
       <Transition name="fade" mode="out-in">
-        <div style="height: 100%;">
+        <div style="height: 100%">
           <!-- Notification Settings Panel -->
           <ProjectNotificationsSettings
             v-show="sidePanelView === 'settings'"
             :notification="notification"
-            :selectedRecipientsIds="selectedRecipientsIds"
+            :selectedRecipientsIds="selectedGroupIds"
             v-model:notification-mode-activity="notificationModeActivity"
             v-model:checked-days-activity="checkedDaysActivity"
             v-model:checked-activity="checkedActivity"
@@ -58,7 +58,7 @@
           <!-- Recipients Panel -->
           <ProjectNotificationsRecipients
             v-show="sidePanelView === 'recipients'"
-            :selectedRecipientsIds="selectedRecipientsIds"
+            :selectedRecipientsIds="selectedGroupIds"
             @back-to-settings="switchToSettings"
             @close="closeNotificationPanel"
             @update-recipients="
@@ -137,6 +137,7 @@ import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
 
 import { useFiles } from "../../../state/files.js";
+import { useGroups } from "../../../state/groups.js";
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
 import { useSpaces } from "../../../state/spaces.js";
@@ -180,6 +181,7 @@ export default {
     const { pushNotification } = useAppNotification();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const { isUserOrga, isProjectGuest } = useUser();
+    const { projectGroups } = useGroups();
 
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
@@ -243,6 +245,10 @@ export default {
       sidePanelView.value = "settings";
       closeSidePanel();
     };
+    const selectedGroupIds = computed(() => {
+      const validIds = projectGroups.value.map((group) => group.id);
+      return selectedRecipientsIds.value.filter((id) => validIds.includes(id));
+    });
 
     onMounted(async () => {
       try {
@@ -267,6 +273,7 @@ export default {
       notification,
       notificationModeActivity,
       project: currentProject,
+      selectedGroupIds,
       selectedRecipientsIds,
       shouldSubscribe,
       showFileUploader,
