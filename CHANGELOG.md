@@ -1,3 +1,32 @@
+## [1.2.7](https://github.com/bimdata/platform/compare/v1.2.6...v1.2.7) (2025-07-30)
+
+
+### chore
+
+* add dependabot config for npm version updates ([b5e5804](https://github.com/bimdata/platform/commit/b5e580418f44fc084c57f41bb0e1c8c0a6cf360b))
+* bump @bimdata/viewer@2.11.1-beta.1 from Github Actions [skip e2e] ([ede47c4](https://github.com/bimdata/platform/commit/ede47c44deeda7b20186353eb17013b8c37f39be))
+* bump @bimdata/viewer@2.12.0 from Github Actions [skip e2e] ([422e558](https://github.com/bimdata/platform/commit/422e5585634a772763b0afc701c39db3ce4acd76))
+* bump @bimdata/viewer@2.12.0-beta.1 from Github Actions [skip e2e] ([60d966e](https://github.com/bimdata/platform/commit/60d966ebc2d7ce39ff57a7224ed209fcfe35e28a))
+* bump @bimdata/viewer@2.12.0-beta.10 from Github Actions [skip e2e] ([d026dd1](https://github.com/bimdata/platform/commit/d026dd1afa5a15ee2546525ffa486bd69ee2d037))
+* bump @bimdata/viewer@2.12.0-beta.11 from Github Actions [skip e2e] ([37c5375](https://github.com/bimdata/platform/commit/37c53755ae2d9411f32f3d07b937b4fb4caf1569))
+* bump @bimdata/viewer@2.12.0-beta.12 from Github Actions [skip e2e] ([c228882](https://github.com/bimdata/platform/commit/c22888244e9c47c059a0990d96fa9b67a3c5bc6e))
+* bump @bimdata/viewer@2.12.0-beta.14 from Github Actions [skip e2e] ([27f3953](https://github.com/bimdata/platform/commit/27f3953113e463be87cb2c34c8ec58b86f6372e7))
+* bump @bimdata/viewer@2.12.0-beta.15 from Github Actions [skip e2e] ([0c72d4e](https://github.com/bimdata/platform/commit/0c72d4e9e7084043789ddc365f82104561c9e20b))
+* bump @bimdata/viewer@2.12.0-beta.16 from Github Actions [skip e2e] ([26e38b9](https://github.com/bimdata/platform/commit/26e38b9db7f3132b5aa3f9fd738a1259145f38f4))
+* bump @bimdata/viewer@2.12.0-beta.17 from Github Actions [skip e2e] ([d4da908](https://github.com/bimdata/platform/commit/d4da908403b847ad7f5f2525d5e9cc98bc85eb6b))
+* bump @bimdata/viewer@2.12.0-beta.2 from Github Actions [skip e2e] ([cf9b061](https://github.com/bimdata/platform/commit/cf9b06120ddedc403ffdebd105dea88078cd7523))
+* bump @bimdata/viewer@2.12.0-beta.3 from Github Actions [skip e2e] ([c2b3ecf](https://github.com/bimdata/platform/commit/c2b3ecf160b7ab43e4c7c72690defdbc981053fe))
+* bump @bimdata/viewer@2.12.0-beta.4 from Github Actions [skip e2e] ([526e998](https://github.com/bimdata/platform/commit/526e998546643b0f6f953ec740b4ab2b3aac47ac))
+* bump @bimdata/viewer@2.12.0-beta.5 from Github Actions [skip e2e] ([c589249](https://github.com/bimdata/platform/commit/c589249d7c2103a674d95580d699c7913fb81607))
+* bump @bimdata/viewer@2.12.0-beta.6 from Github Actions [skip e2e] ([7bb5fb1](https://github.com/bimdata/platform/commit/7bb5fb1e6a74c001ca76bc477c7f94b24e57f277))
+* bump @bimdata/viewer@2.12.0-beta.7 from Github Actions [skip e2e] ([1b1563e](https://github.com/bimdata/platform/commit/1b1563e399e212ce5cdbf335c8ed9b701e0685ea))
+* bump @bimdata/viewer@2.12.0-beta.8 from Github Actions [skip e2e] ([cb60ab6](https://github.com/bimdata/platform/commit/cb60ab6d383a2ee637baaf4f9654b4564fb34793))
+* bump @bimdata/viewer@2.12.0-beta.9 from Github Actions [skip e2e] ([dd2978e](https://github.com/bimdata/platform/commit/dd2978ee199317e3869153986d6ddb6836cd5004))
+
+### PATCH
+
+* fix(visa): always use head version for visa.document ([6559fa6](https://github.com/bimdata/platform/commit/6559fa64b73df38a5d8e3bfa1df22fca7399fe61))
+
 ## [1.2.6](https://github.com/bimdata/platform/compare/v1.2.5...v1.2.6) (2025-06-11)
 
 
