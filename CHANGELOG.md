@@ -1,3 +1,14 @@
+## [1.2.8](https://github.com/bimdata/platform/compare/v1.2.7...v1.2.8) (2025-08-22)
+
+
+### chore
+
+* bump @bimdata/viewer@2.12.1 from Github Actions [skip e2e] ([f0db13c](https://github.com/bimdata/platform/commit/f0db13c4c1159ce757d985249df9150b5857d056))
+
+### PATCH
+
+* fix(building-maker): fix bug with uppercase file extensions (#561) ([fc10f2c](https://github.com/bimdata/platform/commit/fc10f2cbd864565c66a11887613c0735ffce210d)), closes [#561](https://github.com/bimdata/platform/issues/561)
+
 ## [1.2.7](https://github.com/bimdata/platform/compare/v1.2.6...v1.2.7) (2025-07-30)
 
 
