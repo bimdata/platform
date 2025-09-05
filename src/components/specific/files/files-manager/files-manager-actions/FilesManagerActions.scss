@@ -8,6 +8,7 @@
     align-items: center;
     grid-area: actions-start;
     gap: 10px;
+    z-index: 10;
   }
   &__dropdown {
     &:deep() .bimdata-dropdown__content {
