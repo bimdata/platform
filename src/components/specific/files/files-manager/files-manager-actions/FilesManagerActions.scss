@@ -8,6 +8,7 @@
     align-items: center;
     grid-area: actions-start;
     gap: 10px;
+    z-index: 10;
   }
   &__dropdown {
     &:deep() .bimdata-dropdown__content {
@@ -28,6 +29,9 @@
         &__item {
           font-size: calc(var(--font-size) / 1.1);
           padding-left: var(--spacing-unit);
+          &__children {
+            max-height: 60vh;
+          }
         }
       }
     }
