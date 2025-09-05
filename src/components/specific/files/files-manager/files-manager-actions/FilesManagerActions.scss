@@ -29,6 +29,9 @@
         &__item {
           font-size: calc(var(--font-size) / 1.1);
           padding-left: var(--spacing-unit);
+          &__children {
+            max-height: 60vh;
+          }
         }
       }
     }
