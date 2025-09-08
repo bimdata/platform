@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.REPOS_TOKEN }}
           # Needed for EndBug/add-and-commit
           persist-credentials: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "20"
       - name: Wait for npm package
@@ -54,7 +54,7 @@ jobs:
         with:
           ref: release
           persist-credentials: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "20"
       - name: Wait for npm package
