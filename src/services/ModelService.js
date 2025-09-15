@@ -101,7 +101,6 @@ class ModelService {
       throw new RuntimeError(ERRORS.MODEL_DELETE_ERROR, error);
     }
   }
-
   fetchModelElements(project, model, params = {}) {
     return apiClient.modelApi.getElements(
       project.cloud.id,
@@ -109,6 +108,7 @@ class ModelService {
       project.id,
       params.classification,
       params.classificationNotation,
+      undefined, // property_filter
       params.type
     );
   }
