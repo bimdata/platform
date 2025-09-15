@@ -23,6 +23,74 @@
     "uploadDisableMessage": {
       "permission": "No tiene los derechos requeridos",
       "size": "Ya no tiene suficiente espacio de almacenamiento"
+    },
+    "notifications": {
+      "title": "Ajustes de notificaciones por correo electrónico",
+      "headerText": "Los ajustes del proyecto de BIMData permiten gestionar los tipos y la frecuencia de las notificaciones para un seguimiento personalizado.",
+      "validateButton": "Validar los ajustes del proyecto",
+      "settings": {
+        "general": {
+          "sendNever": "Nunca enviar correos electrónicos de notificación",
+          "sendEventOccurs": "En el momento en que ocurre el evento",
+          "sendEvery": "Enviar un correo electrónico cada:",
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado",
+          "sunday": "Domingo",
+          "successNotifText": "¡Notificaciones actualizadas!",
+          "errorNotifText": "Error al actualizar las notificaciones",
+          "successDeleteNotifText": "Se han desactivado las notificaciones.",
+          "errorDeleteNotifText": "Se ha producido un error al desactivar las notificaciones."
+        },
+        "bcf": {
+          "title": "Notificaciones por correo electrónico de BCF"
+        },
+        "visa": {
+          "title": "Notificaciones por correo electrónico de VISA"
+        },
+        "activity": {
+          "title": "Notificaciones de actividad del proyecto",
+          "recipientsNotificationsButton": "Destinatarios de las notificaciones",
+          "ged": {
+            "fileUpload": "Enviar un archivo",
+            "fileDeletion": "Eliminar un archivo",
+            "newVersion": "Versión nueva",
+            "folderCreation": "Crear carpeta",
+            "folderDeletion": "Eliminar carpeta"
+          },
+          "visa": {
+            "title": "Notificaciones por correo electrónico de VISA",
+            "visaCreation": "Crear Visa",
+            "visaDeletion": "Eliminar Visa",
+            "visaValidation": "Validar Visa",
+            "visaRejection": "Denegación de Visa"
+          },
+          "bcf": {
+            "bcfCreation": "Crear BCF",
+            "bcfDeletion": "Eliminar BCF"
+          },
+          "otherEvents": {
+            "acceptInvit": "Aceptar invitación",
+            "removeModels": "Eliminar plantillas",
+            "createMetaBuilding": "Crear meta-building",
+            "deleteMetaBuilding": "Eliminar meta-building"
+          }
+        }
+      },
+      "recipients": {
+        "title": "Destinatarios de las notificaciones",
+        "text": "Seleccione los grupos de usuarios que recibirán notificaciones por correo electrónico.",
+        "noGroupsText": "No hay ningún grupo disponible para recibir notificaciones.",
+        "validateButtonText": "Validar los destinatarios",
+        "createGroupButtonText": "Crear un grupo"
+      },
+      "timezone": {
+        "title": "Seleccionar la zona horaria",
+        "validateButtonText": "Validar la zona horaria"
+      }
     }
   },
   "LanguageSelector": {
@@ -60,7 +128,8 @@
     "removeModelButtonText": "Eliminar modelos",
     "versioningButtonText": "Añadir una versión",
     "visaButtonText": "Solicitud de aprobación",
-    "previewModelButtonText": "Vista previa"
+    "previewModelButtonText": "Vista previa",
+    "createPhotosphereButtonText": "Definir como Photosphere"
   },
   "FilesActionBar": {
     "moveButtonText": "Moverse hacia"
@@ -78,7 +147,8 @@
     "folderImport": "Importar una carpeta",
     "foldersTab": "Archivos",
     "filesTab": "Documentos",
-    "visasTab": "Confirmaciones"
+    "visasTab": "Confirmaciones",
+    "createPhotosphereNotification": "Photosphere creada con éxito"
   },
   "FilesManagerOnboarding": {
     "text": "Suba su primer archivo",
@@ -180,7 +250,8 @@
       "archive": "Archivos",
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
-      "upload": "Upload"
+      "upload": "Upload",
+      "photosphereBuildings": "Photosphere Buildings"
     }
   },
   "ModelsMergeModal": {
@@ -242,8 +313,8 @@
       "admins": "Administradores",
       "users": "Usuarios"
     },
-    "addAdminButtonText": "Agregar un administrador",
-    "addUserButtonText": "Agregar un usario"
+    "addUserButtonText": "Agregar un usario",
+    "addAdminButtonText": "Agregar un administrador"
   },
   "UserCard": {
     "self": "ustedes"
