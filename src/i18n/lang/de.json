@@ -23,6 +23,74 @@
     "uploadDisableMessage": {
       "permission": "Sie haben die erforderlichen Rechte nicht.",
       "size": "Sie haben nicht mehr genug Speicherplatz."
+    },
+    "notifications": {
+      "title": "Einstellungen Benachrichtigung per Email",
+      "headerText": "Die Projektkonfiguration auf BIMData ermöglicht die Anpassung der Art und Häufigkeit der Benachrichtigungen für eine personalisierte Nachbearbeitung",
+      "validateButton": "Projektkonfiguration bestätigen",
+      "settings": {
+        "general": {
+          "sendNever": "nie Benachrichtigungsmail senden",
+          "sendEventOccurs": "ereignisaktuell versenden",
+          "sendEvery": "eine Mail immer versenden am :",
+          "monday": "Montag",
+          "tuesday": "Dienstag",
+          "wednesday": "Mittwoch",
+          "thursday": "Donnerstag",
+          "friday": "Freitag",
+          "saturday": "Samstag",
+          "sunday": "Sonntag",
+          "successNotifText": "Benachrichtigungen aktualisiert!",
+          "errorNotifText": "Aktualisierung der Benachrichtigungen fehlgeschlagen",
+          "successDeleteNotifText": "Benachrichtigungen wurden deaktiviert.",
+          "errorDeleteNotifText": "Bei der Deaktivierung der Benachrichtigungen ist ein Fehler aufgetreten."
+        },
+        "bcf": {
+          "title": "Benachrichtigungen per Mail BCF"
+        },
+        "visa": {
+          "title": "Benachrichtigungen per Mail VISA"
+        },
+        "activity": {
+          "title": "Benachrichtigungen Projektaktivität",
+          "recipientsNotificationsButton": "Empfänger der Benachrichtigungen",
+          "ged": {
+            "fileUpload": "eine Datei ablegen",
+            "fileDeletion": "eine Datei löschen",
+            "newVersion": "neue Version",
+            "folderCreation": "Ordner erstellen",
+            "folderDeletion": "Ordner löschen"
+          },
+          "visa": {
+            "title": "Benachrichtigungen per Mail VISA",
+            "visaCreation": "Visa erstellen",
+            "visaDeletion": "Visa löschen",
+            "visaValidation": "Visa bestätigen",
+            "visaRejection": "Visa ablehnen"
+          },
+          "bcf": {
+            "bcfCreation": "BCF erstellen",
+            "bcfDeletion": "BCF löschen"
+          },
+          "otherEvents": {
+            "acceptInvit": "Einladung annehmen",
+            "removeModels": "Aus den Projektvorlagen löschen",
+            "createMetaBuilding": "meta-building erstellen",
+            "deleteMetaBuilding": "meta-building löschen"
+          }
+        }
+      },
+      "recipients": {
+        "title": "Empfänger der Benachrichtigungen",
+        "text": "Wählen Sie die Benutzergruppen aus, die Benachrichtigungen per Email erhalten werden",
+        "noGroupsText": "Keine Gruppe für Empfang von Benachrichtigungen auswählbar",
+        "validateButtonText": "Empfänger bestätigen",
+        "createGroupButtonText": "Gruppe erstellen"
+      },
+      "timezone": {
+        "title": "Zeitzone auswählen",
+        "validateButtonText": "Zeitzone bestätigen"
+      }
     }
   },
   "LanguageSelector": {
@@ -60,7 +128,8 @@
     "removeModelButtonText": "Modelle entfernen",
     "versioningButtonText": "Eine Version hinzufügen",
     "visaButtonText": "Bestätigungsantrag",
-    "previewModelButtonText": "Vorschau"
+    "previewModelButtonText": "Vorschau",
+    "createPhotosphereButtonText": "Als Photosphere festlegen"
   },
   "FilesActionBar": {
     "moveButtonText": "Verschieben nach"
@@ -78,7 +147,8 @@
     "folderImport": "Einen Ordner importieren",
     "foldersTab": "Ordner",
     "filesTab": "Dateien",
-    "visasTab": "Meine Visum"
+    "visasTab": "Meine Visum",
+    "createPhotosphereNotification": "Photosphere erfolgreich erstellt"
   },
   "FilesManagerOnboarding": {
     "text": "Erste Datei hochladen",
@@ -180,7 +250,8 @@
       "archive": "Archiv",
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
-      "upload": "Hochladen"
+      "upload": "Hochladen",
+      "photosphereBuildings": "Photosphere Buildings"
     }
   },
   "ModelsMergeModal": {
@@ -242,7 +313,8 @@
       "admins": "Administratoren",
       "users": "Nutzer"
     },
-    "addUserButtonText": "Einen Administratoren hinzufügen"
+    "addUserButtonText": "Einen Nutzer hinzufügen",
+    "addAdminButtonText": "Einen Administratoren hinzufügen"
   },
   "UserCard": {
     "self": "Sie"

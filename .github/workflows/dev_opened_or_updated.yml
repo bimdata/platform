@@ -19,7 +19,7 @@ jobs:
       contents: read
     runs-on: [self-hosted, common]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
@@ -51,7 +51,7 @@ jobs:
     if: ${{ !contains(github.event.pull_request.body , '[ ] I want to run the tests for the commits of this PR') }}
     needs: build-and-push
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: bimdata/bimdata-test
           ref: master
@@ -78,7 +78,7 @@ jobs:
     runs-on: [self-hosted, common]
     needs: build-and-push
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
           persist-credentials: false

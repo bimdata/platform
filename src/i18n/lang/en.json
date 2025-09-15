@@ -23,6 +23,74 @@
     "uploadDisableMessage": {
       "permission": "You don't have the required rights",
       "size": "You don't have enough storage space"
+    },
+    "notifications": {
+      "title": "Email notification settings",
+      "headerText": "The BIMData project settings allow you to manage the types and frequency of notifications to create a personalized follow-up experience.",
+      "validateButton": "Validate your project settings",
+      "settings": {
+        "general": {
+          "sendNever": "Never send notification emails",
+          "sendEventOccurs": "When the event occurs",
+          "sendEvery": "Send an email every:",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday",
+          "successNotifText": "Notifications updated!",
+          "errorNotifText": "Failed to update notifications.",
+          "successDeleteNotifText": "Notifications have been disabled.",
+          "errorDeleteNotifText": "An error occurred while disabling notifications."
+        },
+        "bcf": {
+          "title": "BCF Email Notifications"
+        },
+        "visa": {
+          "title": "VISA Email Notifications"
+        },
+        "activity": {
+          "title": "Project activity notifications",
+          "recipientsNotificationsButton": "Notification recipients",
+          "ged": {
+            "fileUpload": "File upload",
+            "fileDeletion": "File deletion",
+            "newVersion": "New version",
+            "folderCreation": "Folder creation",
+            "folderDeletion": "Folder deletion"
+          },
+          "visa": {
+            "title": "Visa email notifications",
+            "visaCreation": "Visa creation",
+            "visaDeletion": "Visa deletion",
+            "visaValidation": "Visa approval",
+            "visaRejection": "Visa rejection"
+          },
+          "bcf": {
+            "bcfCreation": "BCF creation",
+            "bcfDeletion": "BCF deletion"
+          },
+          "otherEvents": {
+            "acceptInvit": "Invitation acceptance",
+            "removeModels": "Remove models",
+            "createMetaBuilding": "Meta-building creation",
+            "deleteMetaBuilding": "Meta-building deletion"
+          }
+        }
+      },
+      "recipients": {
+        "title": "Notification recipients",
+        "text": "Select the user groups that will receive email notifications.",
+        "noGroupsText": "No group is currently set up to receive notifications.",
+        "validateButtonText": "Validate recipients",
+        "createGroupButtonText": "Create a group"
+      },
+      "timezone": {
+        "title": "Time zone selection",
+        "validateButtonText": "Validate the time zone"
+      }
     }
   },
   "LanguageSelector": {
@@ -57,11 +125,11 @@
     "addVersionButtonText": "Add version",
     "manageAccessButtonText": "Manage access",
     "createModelButtonText": "Define as model",
-    "createPhotosphereButtonText": "Define as photosphere",
     "removeModelButtonText": "Remove from models",
     "versioningButtonText": "Add a version",
     "visaButtonText": "Validation request",
-    "previewModelButtonText": "Preview"
+    "previewModelButtonText": "Preview",
+    "createPhotosphereButtonText": "Define as photosphere"
   },
   "FilesActionBar": {
     "moveButtonText": "Move to"
@@ -79,7 +147,8 @@
     "folderImport": "Import a folder",
     "foldersTab": "Folders",
     "filesTab": "Documents",
-    "visasTab": "Visas"
+    "visasTab": "Visas",
+    "createPhotosphereNotification": "Photosphere created successfully"
   },
   "FilesManagerOnboarding": {
     "text": "Upload your first file",
@@ -181,8 +250,8 @@
       "archive": "Archives",
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
-      "photosphereBuildings": "Photosphere Buildings",
-      "upload": "Upload"
+      "upload": "Upload",
+      "photosphereBuildings": "Photosphere Buildings"
     }
   },
   "ModelsMergeModal": {
@@ -244,8 +313,8 @@
       "admins": "Administrators",
       "users": "Users"
     },
-    "addAdminButtonText": "Add new admin",
-    "addUserButtonText": "Add new user"
+    "addUserButtonText": "Add new user",
+    "addAdminButtonText": "Add new admin"
   },
   "UserCard": {
     "self": "you"
