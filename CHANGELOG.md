@@ -1,3 +1,23 @@
+## [1.2.9](https://github.com/bimdata/platform/compare/v1.2.8...v1.2.9) (2025-09-15)
+
+
+### chore
+
+* bump @bimdata/viewer@2.12.1-beta.1 from Github Actions [skip e2e] ([6a872dc](https://github.com/bimdata/platform/commit/6a872dcc581695019989634a6ba0ab07c89b344d))
+* bump @bimdata/viewer@2.12.1-beta.2 from Github Actions [skip e2e] ([a7cbb16](https://github.com/bimdata/platform/commit/a7cbb1654e53ee75f325f2de28e9b5a62be8e5d8))
+* bump @bimdata/viewer@2.12.2 from Github Actions [skip e2e] ([455a716](https://github.com/bimdata/platform/commit/455a716a45abd22ee0bea3c29b9c68bc57534475))
+* bump @bimdata/viewer@2.12.2-beta.1 from Github Actions [skip e2e] ([96fa4df](https://github.com/bimdata/platform/commit/96fa4dfec6ad2e93e8cdca503130081d1617936e))
+* bump @bimdata/viewer@2.12.2-beta.2 from Github Actions [skip e2e] ([a6249ee](https://github.com/bimdata/platform/commit/a6249ee37f8d24cc3e9acb85059c552f9d08d67e))
+* bump @bimdata/viewer@2.12.3-beta.1 from Github Actions [skip e2e] ([20f6c81](https://github.com/bimdata/platform/commit/20f6c812e1a33a63461e22aef6607531e3696c87))
+
+### FIX
+
+* notifications if a group is deleted (#564) ([d8213d4](https://github.com/bimdata/platform/commit/d8213d43e4c613d40b7fe7e4f8195535b50baddf)), closes [#564](https://github.com/bimdata/platform/issues/564)
+
+### PATCH
+
+* Fix/ged import structure (#571) ([0238322](https://github.com/bimdata/platform/commit/0238322ff2d5b98cabff7cc371f37ce261f41d89)), closes [#571](https://github.com/bimdata/platform/issues/571)
+
 ## [1.2.8](https://github.com/bimdata/platform/compare/v1.2.7...v1.2.8) (2025-08-22)
 
 
