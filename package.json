@@ -22,7 +22,7 @@
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
     "lodash": "^4.17.21",
-    "maplibre-gl": "^5.7.1",
+    "maplibre-gl": "^5.7.3",
     "oidc-client-ts": "^3.3.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.21",
