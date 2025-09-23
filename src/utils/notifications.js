@@ -9,24 +9,24 @@ export const WEEK_DAYS = [
 ];
 
 export const RAW_ACTIVITY_OPTIONS = {
-  GED: [
+  ged: [
     "ged.fileUpload",
     "ged.fileDeletion",
     // "ged.newVersion",
     "ged.folderCreation",
     "ged.folderDeletion",
   ],
-  Visa: [
+  visa: [
     "visa.visaCreation",
     "visa.visaDeletion",
     "visa.visaValidation",
     "visa.visaRejection",
   ],
-  BCF: [
+  bcf: [
     "bcf.bcfCreation",
     "bcf.bcfDeletion",
   ],
-  "Autres évènements": [
+  otherEvents: [
     "otherEvents.acceptInvit",
     // "otherEvents.removeModels",
     "otherEvents.createMetaBuilding",
