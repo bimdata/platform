@@ -95,6 +95,7 @@
           "sendNever": "Ne jamais envoyer de mail de notification",
           "sendEventOccurs": "Au moment où l'événement se produit",
           "sendEvery": "Envoyer un mail tous les :",
+          "sendAt": "À:",
           "monday": "Lundi",
           "tuesday": "Mardi",
           "wednesday": "Mercredi",
@@ -107,16 +108,12 @@
           "successDeleteNotifText": "Les notifications ont été désactivées.",
           "errorDeleteNotifText": "Une erreur est survenue lors de la désactivation des notifications."
         },
-        "bcf": {
-          "title": "Notifications mail BCF"
-        },
-        "visa": {
-          "title": "Notifications mail VISA"
-        },
         "activity": {
           "title": "Notifications activité projet",
+          "recipientsNotificationsText": "Qui reçoit les notifications?",
           "recipientsNotificationsButton": "Destinataires des notifications",
           "ged": {
+            "title": "GED",
             "fileUpload": "Dépôt d'un fichier",
             "fileDeletion": "Suppression d'un fichier",
             "newVersion": "Nouvelle version",
@@ -124,17 +121,19 @@
             "folderDeletion": "Suppression dossier"
           },
           "visa": {
-            "title": "Notifications mail VISA",
+            "title": "VISA",
             "visaCreation": "Création de Visa",
             "visaDeletion": "Suppression Visa",
             "visaValidation": "Validation Visa",
             "visaRejection": "Refus Visa"
           },
           "bcf": {
+            "title": "BCF",
             "bcfCreation": "Création BCF",
             "bcfDeletion": "Suppression BCF"
           },
           "otherEvents": {
+            "title": "Autres évènements",
             "acceptInvit": "Acceptation d’invitation",
             "removeModels": "Retirer des modèles",
             "createMetaBuilding": "Création méta-building",

@@ -25,14 +25,15 @@
       "size": "Sie haben nicht mehr genug Speicherplatz."
     },
     "notifications": {
-      "title": "Einstellungen Benachrichtigung per Email",
-      "headerText": "Die Projektkonfiguration auf BIMData ermöglicht die Anpassung der Art und Häufigkeit der Benachrichtigungen für eine personalisierte Nachbearbeitung",
+      "title": "E-Mail-Benachrichtigungseinstellungen",
+      "headerText": "Passen Sie hier die Art und Häufigkeit der E-Mail-Benachrichtigungen an",
       "validateButton": "Projektkonfiguration bestätigen",
       "settings": {
         "general": {
-          "sendNever": "nie Benachrichtigungsmail senden",
-          "sendEventOccurs": "ereignisaktuell versenden",
-          "sendEvery": "eine Mail immer versenden am :",
+          "sendNever": "Keine Benachrichtigungsmails versenden",
+          "sendEventOccurs": "Sofort versenden",
+          "sendEvery": "E-Mail versenden am:",
+          "sendAt": "um:",
           "monday": "Montag",
           "tuesday": "Dienstag",
           "wednesday": "Mittwoch",
@@ -45,38 +46,36 @@
           "successDeleteNotifText": "Benachrichtigungen wurden deaktiviert.",
           "errorDeleteNotifText": "Bei der Deaktivierung der Benachrichtigungen ist ein Fehler aufgetreten."
         },
-        "bcf": {
-          "title": "Benachrichtigungen per Mail BCF"
-        },
-        "visa": {
-          "title": "Benachrichtigungen per Mail VISA"
-        },
         "activity": {
-          "title": "Benachrichtigungen Projektaktivität",
-          "recipientsNotificationsButton": "Empfänger der Benachrichtigungen",
+          "title": "Projektaktivität",
+          "recipientsNotificationsText": "Wer erhält die Benachrichtigungen?",
+          "recipientsNotificationsButton": "Empfänger",
           "ged": {
-            "fileUpload": "eine Datei ablegen",
-            "fileDeletion": "eine Datei löschen",
-            "newVersion": "neue Version",
-            "folderCreation": "Ordner erstellen",
-            "folderDeletion": "Ordner löschen"
+            "title": "Dateisystem",
+            "fileUpload": "Datei abgelegt",
+            "fileDeletion": "Datei gelöscht",
+            "newVersion": "Neue Version",
+            "folderCreation": "Ordner erstellt",
+            "folderDeletion": "Ordner gelöscht"
           },
           "visa": {
-            "title": "Benachrichtigungen per Mail VISA",
-            "visaCreation": "Visa erstellen",
-            "visaDeletion": "Visa löschen",
-            "visaValidation": "Visa bestätigen",
-            "visaRejection": "Visa ablehnen"
+            "title": "VISA",
+            "visaCreation": "Visa erstellt",
+            "visaDeletion": "Visa gelöscht",
+            "visaValidation": "Visa bestätigt",
+            "visaRejection": "Visa abgelehnt"
           },
           "bcf": {
-            "bcfCreation": "BCF erstellen",
-            "bcfDeletion": "BCF löschen"
+            "title": "BCF",
+            "bcfCreation": "BCF erstellt",
+            "bcfDeletion": "BCF gelöscht"
           },
           "otherEvents": {
-            "acceptInvit": "Einladung annehmen",
-            "removeModels": "Aus den Projektvorlagen löschen",
-            "createMetaBuilding": "meta-building erstellen",
-            "deleteMetaBuilding": "meta-building löschen"
+            "title": "Sonstige Ereignisse",
+            "acceptInvit": "Einladung angenommen",
+            "removeModels": "Modell entfernt",
+            "createMetaBuilding": "meta-building erstellt",
+            "deleteMetaBuilding": "meta-building gelöscht"
           }
         }
       },

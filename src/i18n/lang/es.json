@@ -33,6 +33,7 @@
           "sendNever": "Nunca enviar correos electrónicos de notificación",
           "sendEventOccurs": "En el momento en que ocurre el evento",
           "sendEvery": "Enviar un correo electrónico cada:",
+          "sendAt": "a las:",
           "monday": "Lunes",
           "tuesday": "Martes",
           "wednesday": "Miércoles",
@@ -45,16 +46,12 @@
           "successDeleteNotifText": "Se han desactivado las notificaciones.",
           "errorDeleteNotifText": "Se ha producido un error al desactivar las notificaciones."
         },
-        "bcf": {
-          "title": "Notificaciones por correo electrónico de BCF"
-        },
-        "visa": {
-          "title": "Notificaciones por correo electrónico de VISA"
-        },
         "activity": {
           "title": "Notificaciones de actividad del proyecto",
+          "recipientsNotificationsText": "¿Quién recibe las notificaciones?",
           "recipientsNotificationsButton": "Destinatarios de las notificaciones",
           "ged": {
+            "title": "Sistema de archivos",
             "fileUpload": "Enviar un archivo",
             "fileDeletion": "Eliminar un archivo",
             "newVersion": "Versión nueva",
@@ -62,17 +59,19 @@
             "folderDeletion": "Eliminar carpeta"
           },
           "visa": {
-            "title": "Notificaciones por correo electrónico de VISA",
+            "title": "VISA",
             "visaCreation": "Crear Visa",
             "visaDeletion": "Eliminar Visa",
             "visaValidation": "Validar Visa",
             "visaRejection": "Denegación de Visa"
           },
           "bcf": {
+            "title": "BCF",
             "bcfCreation": "Crear BCF",
             "bcfDeletion": "Eliminar BCF"
           },
           "otherEvents": {
+            "title": "Otros eventos",
             "acceptInvit": "Aceptar invitación",
             "removeModels": "Eliminar plantillas",
             "createMetaBuilding": "Crear meta-building",

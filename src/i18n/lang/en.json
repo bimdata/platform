@@ -33,6 +33,7 @@
           "sendNever": "Never send notification emails",
           "sendEventOccurs": "When the event occurs",
           "sendEvery": "Send an email every:",
+          "sendAt": "at:",
           "monday": "Monday",
           "tuesday": "Tuesday",
           "wednesday": "Wednesday",
@@ -45,16 +46,12 @@
           "successDeleteNotifText": "Notifications have been disabled.",
           "errorDeleteNotifText": "An error occurred while disabling notifications."
         },
-        "bcf": {
-          "title": "BCF Email Notifications"
-        },
-        "visa": {
-          "title": "VISA Email Notifications"
-        },
         "activity": {
           "title": "Project activity notifications",
+          "recipientsNotificationsText": "Who receives notifications?",
           "recipientsNotificationsButton": "Notification recipients",
           "ged": {
+            "title": "File system",
             "fileUpload": "File upload",
             "fileDeletion": "File deletion",
             "newVersion": "New version",
@@ -62,19 +59,21 @@
             "folderDeletion": "Folder deletion"
           },
           "visa": {
-            "title": "Visa email notifications",
+            "title": "Visa",
             "visaCreation": "Visa creation",
             "visaDeletion": "Visa deletion",
             "visaValidation": "Visa approval",
             "visaRejection": "Visa rejection"
           },
           "bcf": {
+            "title": "BCF",
             "bcfCreation": "BCF creation",
             "bcfDeletion": "BCF deletion"
           },
           "otherEvents": {
+            "title": "Other events",
             "acceptInvit": "Invitation acceptance",
-            "removeModels": "Remove models",
+            "removeModels": "Models removed",
             "createMetaBuilding": "Meta-building creation",
             "deleteMetaBuilding": "Meta-building deletion"
           }

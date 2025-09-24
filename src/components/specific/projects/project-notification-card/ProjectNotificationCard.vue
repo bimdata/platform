@@ -14,7 +14,9 @@
       <transition name="slide-fade-up">
         <div v-show="open">
           <div v-if="type === 'activity'">
-            <span>Qui reçoit les notifications ?</span>
+            <span>
+              {{ $t("ProjectOverview.notifications.settings.activity.recipientsNotificationsText") }}
+            </span>
             <BIMDataButton
               color="primary"
               fill
@@ -28,7 +30,9 @@
             </BIMDataButton>
 
             <div v-for="(labels, section) in activityOptions" :key="section">
-              <h5>{{ section }}</h5>
+              <h5>
+                {{ t(`ProjectOverview.notifications.settings.activity.${section}.title`, section) }}
+              </h5>
               <BIMDataCheckbox
                 v-for="(label, index) in labels"
                 :key="`${section}-${index}`"
@@ -69,7 +73,9 @@
           />
 
           <div class="flex items-center m-l-24 m-t-12">
-            <span>À :</span>
+            <span>
+              {{ $t("ProjectOverview.notifications.settings.general.sendAt") }}
+            </span>
             <TimePicker v-model="notificationTime" class="m-x-12" />
             <BIMDataButton
               color="primary"
