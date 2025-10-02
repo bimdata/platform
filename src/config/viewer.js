@@ -52,7 +52,7 @@ const PLUGINS_CONFIG = {
   },
   "viewer2d-background": true,
   viewer3d: {
-    enableDynamicLOD: true
+    enableDTX: true,
   },
   "zone-editor": true,
   "zone-editor-button": true
