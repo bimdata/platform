@@ -16,13 +16,13 @@
     "@bimdata/bcf-components": "6.5.3",
     "@bimdata/components": "1.7.7",
     "@bimdata/design-system": "2.3.0",
-    "@bimdata/typescript-fetch-api-client": "10.29.0",
+    "@bimdata/typescript-fetch-api-client": "10.29.1",
     "@bimdata/viewer": "2.12.3-beta.7",
     "@paddle/paddle-js": "^1.4.2",
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
     "lodash": "^4.17.21",
-    "maplibre-gl": "^5.7.3",
+    "maplibre-gl": "^5.8.0",
     "oidc-client-ts": "^3.3.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.21",
@@ -38,7 +38,7 @@
     "babel-jest": "^30.2.0",
     "conventional-changelog-eslint": "^6.0.0",
     "cypress": "^15.2.0",
-    "eslint": "^9.36.0",
+    "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-vue": "^10.5.0",
@@ -46,7 +46,7 @@
     "prettier": "^3.6.2",
     "sass-embedded": "^1.93.2",
     "semantic-release": "^24.2.8",
-    "vite": "^7.1.7",
+    "vite": "^7.1.9",
     "vite-plugin-environment": "^1.1.3"
   }
 }
