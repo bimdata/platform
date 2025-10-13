@@ -17,7 +17,7 @@
     "@bimdata/components": "1.7.9",
     "@bimdata/design-system": "2.3.0",
     "@bimdata/typescript-fetch-api-client": "10.29.1",
-    "@bimdata/viewer": "2.12.3-beta.10",
+    "@bimdata/viewer": "2.12.3-beta.11",
     "@paddle/paddle-js": "^1.4.2",
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
