@@ -13,8 +13,8 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "6.5.3",
-    "@bimdata/components": "1.7.7",
+    "@bimdata/bcf-components": "6.6.0",
+    "@bimdata/components": "1.7.9",
     "@bimdata/design-system": "2.3.0",
     "@bimdata/typescript-fetch-api-client": "10.29.1",
     "@bimdata/viewer": "2.12.3-beta.9",
@@ -22,7 +22,7 @@
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
     "lodash": "^4.17.21",
-    "maplibre-gl": "^5.8.0",
+    "maplibre-gl": "^5.9.0",
     "oidc-client-ts": "^3.3.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.21",
@@ -37,7 +37,7 @@
     "@vitejs/plugin-vue": "^6.0.1",
     "babel-jest": "^30.2.0",
     "conventional-changelog-eslint": "^6.0.0",
-    "cypress": "^15.2.0",
+    "cypress": "^15.4.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
