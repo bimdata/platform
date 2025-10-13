@@ -229,6 +229,7 @@
             @edit-topic="openTopicUpdate(currentTopic)"
             @view-topic="openTopicViewer(currentTopic)"
             @view-topic-viewpoint="openTopicSnapshot"
+            @view-topic-document="openTopicDocument"
             @view-comment-snapshot="openTopicSnapshot"
             @topic-deleted="(reloadBcfTopics(), closeSidePanel(), removeTopicGuidFromUrl())"
             @close="(closeSidePanel(), removeTopicGuidFromUrl())"
@@ -256,7 +257,7 @@
             :extensions="extensions"
             :topics="topics"
             :topic="currentTopic"
-            @topic-updated="reloadBcfTopics"
+            @topic-updated="(reloadBcfTopics(), openTopicOverview(currentTopic))"
             @back="openTopicOverview(currentTopic)"
             @close="closeSidePanel"
           />
@@ -431,13 +432,15 @@ import { useAppNotification } from "../../../components/specific/app/app-notific
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
+import { FILE_TYPE } from "../../../config/files.js";
 import { MODEL_CONFIG, MODEL_STATUS } from "../../../config/models.js";
 import { DEFAULT_WINDOW } from "../../../config/viewer.js";
 import routeNames from "../../../router/route-names.js";
 import { useBcf } from "../../../state/bcf.js";
-import { useUser } from "../../../state/user.js";
+import { useFiles } from "../../../state/files.js"; 
 import { useModels } from "../../../state/models.js";
 import { useProjects } from "../../../state/projects.js";
+import { useUser } from "../../../state/user.js";
 import { fileUploadInput } from "../../../utils/upload.js";
 
 // Components
@@ -446,6 +449,7 @@ import NoSearchResultsImage from "../../../components/images/NoSearchResultsImag
 import AppModalContent from "../../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSidePanelContent from "../../../components/specific/app/app-side-panel/AppSidePanelContent.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
+import DocumentViewer from "../../../components/specific/files/document-viewer/DocumentViewer.vue";
 
 const sidePanelViews = {
   settings: "settings",
@@ -469,6 +473,7 @@ export default {
     const { pushNotification } = useAppNotification();
     const { user, isProjectAdmin } = useUser();
     const { currentProject } = useProjects();
+    const { fileStructureHandler } = useFiles();
     const { projectModels } = useModels();
 
     const {
@@ -704,14 +709,32 @@ export default {
     };
 
     const { openModal, closeModal } = useAppModal();
+
     const topicSnapshot = ref(null);
-    const openTopicSnapshot = (topic) => {
+    const openTopicSnapshot = (viewpoint) => {
       openModal();
-      topicSnapshot.value = topic.snapshot.snapshot_data;
+      topicSnapshot.value = viewpoint.snapshot.snapshot_data;
     };
     const closeTopicSnapshot = () => {
       closeModal();
       topicSnapshot.value = null;
+    };
+
+    const openTopicDocument = (document) => {
+      const file = fileStructureHandler.get({
+        nature: FILE_TYPE.DOCUMENT,
+        id: document.guid
+      });
+      openModal({
+        component: DocumentViewer,
+        props: {
+          project: currentProject.value,
+          folder: {},
+          document: file,
+          currentView: [file],
+          selectedFileTab: {},
+        },
+      });
     };
 
     const removeTopicGuidFromUrl = () => {
@@ -809,6 +832,7 @@ export default {
       openTopicUpdate,
       openTopicOverview,
       openTopicSnapshot,
+      openTopicDocument,
       openTopicViewer,
       reloadBcfTopics,
       reloadExtensions,
