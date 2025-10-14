@@ -721,6 +721,12 @@ export default {
     };
 
     const openTopicDocument = (document) => {
+      const files = currentTopic.value.documents.map(doc =>
+        fileStructureHandler.get({
+          nature: FILE_TYPE.DOCUMENT,
+          id: doc.guid
+        })
+      );
       const file = fileStructureHandler.get({
         nature: FILE_TYPE.DOCUMENT,
         id: document.guid
@@ -731,7 +737,7 @@ export default {
           project: currentProject.value,
           folder: {},
           document: file,
-          currentView: [file],
+          currentView: files,
           selectedFileTab: {},
         },
       });
