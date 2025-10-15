@@ -61,7 +61,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
       - name: Run unit tests
         run: npm install && npm run test:unit
 
@@ -117,9 +117,9 @@ jobs:
 
   release:
     permissions:
-      contents: write       # Required for creating tag / release
-      pull-requests: write  # Required to add the comment on the PR to tell it's in the releases
-      issues: write         # Required to add a comment to an issue fixed in a release
+      contents: write # Required for creating tag / release
+      pull-requests: write # Required to add the comment on the PR to tell it's in the releases
+      issues: write # Required to add a comment to an issue fixed in a release
     runs-on: [self-hosted, common]
     needs: build-and-push
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
@@ -129,7 +129,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
           check-latest: true
       - run: npm install -g npm@latest
       - run: npm ci

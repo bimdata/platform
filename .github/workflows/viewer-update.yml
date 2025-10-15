@@ -12,7 +12,7 @@ permissions: {}
 jobs:
   viewer-update:
     permissions:
-      contents: write  # Required for committing changes
+      contents: write # Required for committing changes
     runs-on: [self-hosted, common]
     if: contains('refs/heads/develop', github.event.client_payload.ref)
     steps:
@@ -23,7 +23,7 @@ jobs:
           persist-credentials: true
       - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 2
@@ -43,7 +43,7 @@ jobs:
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"
   viewer-stable-update:
     permissions:
-      contents: write  # Required for committing changes
+      contents: write # Required for committing changes
     runs-on: [self-hosted, common]
     if: contains('
       refs/heads/master
@@ -56,7 +56,7 @@ jobs:
           persist-credentials: true
       - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 2
