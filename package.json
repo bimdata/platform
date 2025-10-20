@@ -13,8 +13,8 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "6.6.0",
-    "@bimdata/components": "1.7.9",
+    "@bimdata/bcf-components": "6.6.1",
+    "@bimdata/components": "1.7.11",
     "@bimdata/design-system": "2.3.0",
     "@bimdata/typescript-fetch-api-client": "10.29.1",
     "@bimdata/viewer": "2.13.0-beta.3",
@@ -27,7 +27,7 @@
     "seedrandom": "^3.0.5",
     "vue": "^3.5.21",
     "vue-i18n": "^11.1.12",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
@@ -37,16 +37,16 @@
     "@vitejs/plugin-vue": "^6.0.1",
     "babel-jest": "^30.2.0",
     "conventional-changelog-eslint": "^6.0.0",
-    "cypress": "^15.4.0",
-    "eslint": "^9.37.0",
+    "cypress": "^15.5.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-vue": "^10.5.0",
+    "eslint-plugin-vue": "^10.5.1",
     "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "sass-embedded": "^1.93.2",
     "semantic-release": "^24.2.8",
-    "vite": "^7.1.9",
+    "vite": "^7.1.11",
     "vite-plugin-environment": "^1.1.3"
   }
 }
