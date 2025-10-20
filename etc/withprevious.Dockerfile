@@ -1,6 +1,6 @@
 ARG PREVIOUS_IMAGE=docker-registry.bimdata.io/bimdata/platform
 ARG PREVIOUS_TAG=staging
-FROM node:20 AS node
+FROM node:24 AS node
 
 WORKDIR /opt
 
