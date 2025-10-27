@@ -22,7 +22,7 @@
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
     "lodash": "^4.17.21",
-    "maplibre-gl": "^5.9.0",
+    "maplibre-gl": "^5.10.0",
     "oidc-client-ts": "^3.3.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.22",
@@ -30,8 +30,8 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.4",
-    "@babel/preset-env": "^7.28.3",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@vitejs/plugin-vue": "^6.0.1",
@@ -46,7 +46,7 @@
     "prettier": "^3.6.2",
     "sass-embedded": "^1.93.2",
     "semantic-release": "^25.0.1",
-    "vite": "^7.1.11",
+    "vite": "^7.1.12",
     "vite-plugin-environment": "^1.1.3"
   }
 }
