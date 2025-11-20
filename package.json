@@ -13,7 +13,7 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@bimdata/bcf-components": "6.7.4",
+    "@bimdata/bcf-components": "6.7.5",
     "@bimdata/components": "1.9.2",
     "@bimdata/design-system": "2.3.0",
     "@bimdata/typescript-fetch-api-client": "10.30.3",
