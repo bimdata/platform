@@ -26,7 +26,7 @@
     "oidc-client-ts": "^3.4.1",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.25",
-    "vue-i18n": "^11.2.1",
+    "vue-i18n": "^11.2.2",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
@@ -41,12 +41,12 @@
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-vue": "^10.6.0",
+    "eslint-plugin-vue": "^10.6.2",
     "jest": "^30.2.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.3",
     "sass-embedded": "^1.93.3",
     "semantic-release": "^25.0.2",
-    "vite": "^7.2.4",
+    "vite": "^7.2.6",
     "vite-plugin-environment": "^1.1.3"
   }
 }
