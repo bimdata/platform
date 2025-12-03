@@ -1,6 +1,20 @@
 <template>
   <span class="user-role-badge" :class="`user-role-badge--${roleName}`">
-    {{ $t(`UserRoleBadge.${roleName}`) }}
+    <template v-if="roleName === 'guest'">
+      {{ $t("UserRoleBadge.guest") }}
+    </template>
+    <template v-if="isSpaceRole && roleName === 'spaceAdmin'">
+      {{ $t(`UserRoleBadge.spaceAdmin`) }}
+    </template>
+    <template v-if="!isSpaceRole && roleName === 'projectAdmin'">
+      {{ $t(`UserRoleBadge.projectAdmin`) }}
+    </template>
+    <template v-if="isSpaceRole && roleName === 'spaceUser'">
+      {{ $t(`UserRoleBadge.spaceUser`) }}
+    </template>
+    <template v-if="!isSpaceRole && roleName === 'projectUser'">
+      {{ $t(`UserRoleBadge.projectUser`) }}
+    </template>
   </span>
 </template>
 
@@ -13,18 +27,20 @@ export default {
   props: {
     role: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
+    isSpaceRole: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const roleName = computed(() => {
       switch (props.role) {
         case SPACE_ROLE.ADMIN:
-        case PROJECT_ROLE.ADMIN:
-          return "admin";
+          return props.isSpaceRole ? "spaceAdmin" : "projectAdmin";
         case SPACE_ROLE.USER:
-        case PROJECT_ROLE.USER:
-          return "user";
+          return props.isSpaceRole ? "spaceUser" : "projectUser";
         case PROJECT_ROLE.GUEST:
         default:
           return "guest";
@@ -32,9 +48,9 @@ export default {
     });
 
     return {
-      roleName
+      roleName,
     };
-  }
+  },
 };
 </script>
 
