@@ -3,11 +3,8 @@
     <template v-if="roleName === 'guest'">
       {{ $t("UserRoleBadge.guest") }}
     </template>
-    <template v-if="isSpaceRole && roleName === 'spaceAdmin'">
+    <template v-if="role === 100">
       {{ $t(`UserRoleBadge.spaceAdmin`) }}
-    </template>
-    <template v-if="!isSpaceRole && roleName === 'projectAdmin'">
-      {{ $t(`UserRoleBadge.projectAdmin`) }}
     </template>
     <template v-if="isSpaceRole && roleName === 'spaceUser'">
       {{ $t(`UserRoleBadge.spaceUser`) }}

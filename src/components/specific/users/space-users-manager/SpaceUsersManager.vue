@@ -37,7 +37,7 @@
       <transition-group name="list">
         <template v-for="user in displayedUsers">
           <InvitationCard
-            v-if="user.from === 'invitation'"
+            v-if="user.redirect_uri"
             :key="`invitation-${user.id}`"
             :space="space"
             :invitation="user"
@@ -115,19 +115,13 @@ export default {
 
     const list = computed(() => {
       props.invitations.forEach((invitation) => {
-        invitation.from = "invitation";
+        invitation.redirect_uri.includes("invitation");
       });
       if (currentTab.value === "admins") {
-        admins.value.forEach((invitation) => {
-          invitation.from = "user";
-        });
         return props.invitations
           .filter((invitation) => invitation.role === 100)
           .concat(admins.value);
       } else {
-        users.value.forEach((invitation) => {
-          invitation.from = "user";
-        });
         return props.invitations.filter((invitation) => invitation.role === 50).concat(users.value);
       }
     });
