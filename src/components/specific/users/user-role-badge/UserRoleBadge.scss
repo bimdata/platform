@@ -4,20 +4,16 @@
   font-size: 12px;
   font-weight: normal;
 
-  &--spaceAdmin {
-    background-color: #fe4a23;
-    color: var(--color-white);
-  }
-  &--projectAdmin {
+  &--space-admin {
     background-color: var(--color-primary);
     color: var(--color-white);
   }
 
-  &--spaceUser {
+  &--space-user {
     background-color: #a375ff;
     color: var(--color-white);
   }
-  &--projectUser {
+  &--project-user {
     background-color: var(--color-success);
     color: var(--color-white);
   }

@@ -1,5 +1,5 @@
 <template>
-  <span class="user-role-badge" :class="`user-role-badge--${roleName}`">
+  <span class="user-role-badge" :class="`user-role-badge--${roleClass}`">
     <template v-if="roleName === 'guest'">
       {{ $t("UserRoleBadge.guest") }}
     </template>
@@ -35,7 +35,7 @@ export default {
     const roleName = computed(() => {
       switch (props.role) {
         case SPACE_ROLE.ADMIN:
-          return props.isSpaceRole ? "spaceAdmin" : "projectAdmin";
+          return "spaceAdmin";
         case SPACE_ROLE.USER:
           return props.isSpaceRole ? "spaceUser" : "projectUser";
         case PROJECT_ROLE.GUEST:
@@ -44,8 +44,13 @@ export default {
       }
     });
 
+    const roleClass = computed(() => {
+      return roleName.value.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+    });
+
     return {
       roleName,
+      roleClass,
     };
   },
 };
