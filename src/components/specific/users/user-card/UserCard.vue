@@ -33,11 +33,9 @@
               <BIMDataTextbox
                 width="auto"
                 maxWidth="220px"
-                :text="
-                  fullName(user) + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')
-                "
+                :text="fullName(user) + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')"
               />
-              <UserRoleBadge :role="role" />
+              <UserRoleBadge :role="role" :isSpaceRole="user.in_all_projects" />
             </div>
             <div class="user-card__content__info__email">
               {{ user.email }}
@@ -72,47 +70,35 @@ export default {
     UserRoleBadge,
     UserCardActionMenu,
     UserCardDeleteGuard,
-    UserCardUpdateForm
+    UserCardUpdateForm,
   },
   props: {
     user: {
       type: Object,
-      required: true
+      required: true,
     },
     space: {
       type: Object,
-      default: null
+      default: null,
     },
     project: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props) {
     const { isSelf, isSpaceAdmin, isProjectAdmin } = useUser();
 
     const showActionMenu = computed(
-      () =>
-        !isSelf(props.user) &&
-        (isSpaceAdmin(props.space) || isProjectAdmin(props.project))
+      () => !isSelf(props.user) && (isSpaceAdmin(props.space) || isProjectAdmin(props.project))
     );
-    const role = computed(() =>
-      props.project ? props.user.role : props.user.cloud_role
-    );
+    const role = computed(() => (props.project ? props.user.role : props.user.cloud_role));
 
     const loading = ref(false);
     provide("loading", loading);
 
-    const {
-      isOpen: showUpdateForm,
-      open: openUpdateForm,
-      close: closeUpdateForm
-    } = useToggle();
-    const {
-      isOpen: showDeleteGuard,
-      open: openDeleteGuard,
-      close: closeDeleteGuard
-    } = useToggle();
+    const { isOpen: showUpdateForm, open: openUpdateForm, close: closeUpdateForm } = useToggle();
+    const { isOpen: showDeleteGuard, open: openDeleteGuard, close: closeDeleteGuard } = useToggle();
 
     const resetCard = () => {
       loading.value = false;
@@ -134,9 +120,9 @@ export default {
       isSelf,
       openDeleteGuard,
       openUpdateForm,
-      resetCard
+      resetCard,
     };
-  }
+  },
 };
 </script>
 

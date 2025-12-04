@@ -421,8 +421,9 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Admin",
-    "user": "Utilisateur",
+    "spaceAdmin": "Admin espace",
+    "spaceUser": "Utilisateur espace",
+    "projectUser": "Utilisateur projet",
     "guest": "Invité"
   },
   "UsersManagerOnboarding": {
