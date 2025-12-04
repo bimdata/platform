@@ -3,8 +3,11 @@
     <template v-if="roleName === 'guest'">
       {{ $t("UserRoleBadge.guest") }}
     </template>
-    <template v-if="role === 100">
+    <template v-if="cloudRole === 100 && projectRole === 100">
       {{ $t(`UserRoleBadge.spaceAdmin`) }}
+    </template>
+    <template v-if="cloudRole !== 100 && projectRole === 100">
+      {{ $t(`UserRoleBadge.projectAdmin`) }}
     </template>
     <template v-if="isSpaceRole && roleName === 'spaceUser'">
       {{ $t(`UserRoleBadge.spaceUser`) }}
@@ -26,6 +29,14 @@ export default {
       type: Number,
       required: true,
     },
+    cloudRole: {
+      type: Number,
+      default: null,
+    },
+    projectRole: {
+      type: Number,
+      default: null,
+    },
     isSpaceRole: {
       type: Boolean,
       default: false,
@@ -35,7 +46,7 @@ export default {
     const roleName = computed(() => {
       switch (props.role) {
         case SPACE_ROLE.ADMIN:
-          return "spaceAdmin";
+          return props.cloudRole === 100 ? "spaceAdmin" : "projectAdmin";
         case SPACE_ROLE.USER:
           return props.isSpaceRole ? "spaceUser" : "projectUser";
         case PROJECT_ROLE.GUEST:

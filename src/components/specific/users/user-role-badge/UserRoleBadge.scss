@@ -8,10 +8,13 @@
     background-color: var(--color-primary);
     color: var(--color-white);
   }
-
   &--space-user {
     background-color: #a375ff;
     color: var(--color-white);
+  }
+  &--project-admin {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
   }
   &--project-user {
     background-color: var(--color-success);
