@@ -35,7 +35,12 @@
                 maxWidth="220px"
                 :text="fullName(user) + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')"
               />
-              <UserRoleBadge :role="role" :cloudRole="cloudRole" :projectRole="projectRole" :isSpaceRole="user.in_all_projects" />
+              <UserRoleBadge
+                :role="role"
+                :cloudRole="cloudRole"
+                :projectRole="projectRole"
+                :isSpaceRole="user.in_all_projects"
+              />
             </div>
             <div class="user-card__content__info__email">
               {{ user.email }}
@@ -89,9 +94,9 @@ export default {
   setup(props) {
     const { isSelf, isSpaceAdmin, isProjectAdmin } = useUser();
 
-    const showActionMenu = computed(
-      () => !isSelf(props.user) && (isSpaceAdmin(props.space) || isProjectAdmin(props.project))
-    );
+    const showActionMenu = computed(() => {
+      return !isSelf(props.user) && !isSpaceAdmin(props.space) && isProjectAdmin(props.project) && props.user.cloud_role !== 100;
+    });
     const role = computed(() => (props.project ? props.user.role : props.user.cloud_role));
     const cloudRole = computed(() => props.user.cloud_role);
     const projectRole = computed(() => props.user.role);
