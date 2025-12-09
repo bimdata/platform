@@ -36,8 +36,9 @@
     <div class="list-container">
       <transition-group name="list">
         <template v-for="user in displayedUsers">
+          <!-- Render only pending invitations (those with redirect_uri because only not-yet-accepted invitations have this field) -->
           <InvitationCard
-            v-if="user.from === 'invitation'"
+            v-if="user.redirect_uri"
             :key="`invitation-${user.id}`"
             :space="space"
             :invitation="user"
@@ -114,20 +115,11 @@ export default {
     );
 
     const list = computed(() => {
-      props.invitations.forEach((invitation) => {
-        invitation.from = "invitation";
-      });
       if (currentTab.value === "admins") {
-        admins.value.forEach((invitation) => {
-          invitation.from = "user";
-        });
         return props.invitations
           .filter((invitation) => invitation.role === 100)
           .concat(admins.value);
       } else {
-        users.value.forEach((invitation) => {
-          invitation.from = "user";
-        });
         return props.invitations.filter((invitation) => invitation.role === 50).concat(users.value);
       }
     });

@@ -621,7 +621,12 @@ export default {
 
     const exportBcfTopics = async () => {
       try {
-        await exportBcf(currentProject.value, [...selectedTopics.value.values()]);
+        const topicsToExport =
+          selectedTopics.value.size < topics.value.length
+            ? [...selectedTopics.value.values()]
+            : undefined // All topics will be exported
+
+        await exportBcf(currentProject.value, topicsToExport);
         pushNotification({
           type: "success",
           title: t("t.success"),
@@ -638,8 +643,14 @@ export default {
 
     const exportBcfXlsxTopics = async () => {
       try {
+        const topicsToExport =
+          selectedTopics.value.size < topics.value.length
+            ? [...selectedTopics.value.values()]
+            : undefined // All topics will be exported
+
         const lang = ["fr", "en"].find((lang) => lang === locale.value) || fallbackLocale.value;
-        await exportBcfXlsx(currentProject.value, [...selectedTopics.value.values()], lang);
+
+        await exportBcfXlsx(currentProject.value, topicsToExport, lang);
         pushNotification({
           type: "success",
           title: t("t.success"),

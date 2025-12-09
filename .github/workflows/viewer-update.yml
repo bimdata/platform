@@ -16,7 +16,7 @@ jobs:
     runs-on: [self-hosted, common]
     if: contains('refs/heads/develop', github.event.client_payload.ref)
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.REPOS_TOKEN }}
           # Needed for EndBug/add-and-commit
@@ -50,7 +50,7 @@ jobs:
       refs/heads/main'
       , github.event.client_payload.ref)
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: release
           persist-credentials: true

@@ -325,8 +325,10 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Admin",
-    "user": "User",
+    "spaceAdmin": "Space admin",
+    "projectAdmin": "Project admin",
+    "spaceUser": "Space user",
+    "projectUser": "Project user",
     "guest": "Guest"
   },
   "UsersManagerOnboarding": {
