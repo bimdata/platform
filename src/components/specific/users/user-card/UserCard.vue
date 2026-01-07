@@ -95,7 +95,7 @@ export default {
     const { isSelf, isSpaceAdmin, isProjectAdmin } = useUser();
 
     const showActionMenu = computed(() => {
-      return !isSelf(props.user) && !isSpaceAdmin(props.space) && isProjectAdmin(props.project) && props.user.cloud_role !== 100;
+      return !isSelf(props.user) && isSpaceAdmin(props.space) || !isSelf(props.user) && isProjectAdmin(props.project) && props.user.cloud_role !== 100;
     });
     const role = computed(() => (props.project ? props.user.role : props.user.cloud_role));
     const cloudRole = computed(() => props.user.cloud_role);
