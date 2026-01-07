@@ -1,3 +1,37 @@
+## [1.3.1](https://github.com/bimdata/platform/compare/v1.3.0...v1.3.1) (2026-01-07)
+
+
+### chore
+
+* bump @bimdata/viewer@2.14.1-beta.1 from Github Actions [skip e2e] ([e5b05ba](https://github.com/bimdata/platform/commit/e5b05baea568415850ec8c697b5d8dabe12858e4))
+* bump @bimdata/viewer@2.14.1-beta.3 from Github Actions [skip e2e] ([e206a86](https://github.com/bimdata/platform/commit/e206a86e9cda1f9a6a3e2b32d0644ce70eff72cb))
+* bump @bimdata/viewer@2.14.1-beta.4 from Github Actions [skip e2e] ([ef9c985](https://github.com/bimdata/platform/commit/ef9c98576690aa0d4a28bf422fd677b19b5823c6))
+* bump @bimdata/viewer@2.14.1-beta.5 from Github Actions [skip e2e] ([b67a3b3](https://github.com/bimdata/platform/commit/b67a3b339cbb4260b9030196a6d75e16ddfb047c))
+* bump @bimdata/viewer@2.14.1-beta.6 from Github Actions [skip e2e] ([5f05cb5](https://github.com/bimdata/platform/commit/5f05cb51887bfaed2479866384ee53d3b8d83d6e))
+* bump @bimdata/viewer@2.14.1-beta.7 from Github Actions [skip e2e] ([2d23510](https://github.com/bimdata/platform/commit/2d23510e32e44cc5497c786a8c473122cd42bd79))
+* bump @bimdata/viewer@2.15.0 from Github Actions [skip e2e] ([4fc8aaf](https://github.com/bimdata/platform/commit/4fc8aafebd43f01674ad727742d52faa7448dd5b))
+* bump @bimdata/viewer@2.15.0-beta.1 from Github Actions [skip e2e] ([41f7f1e](https://github.com/bimdata/platform/commit/41f7f1e6ff12c9bcca738155cbf687e8719a8b37))
+* bump @bimdata/viewer@2.15.0-beta.10 from Github Actions [skip e2e] ([5793226](https://github.com/bimdata/platform/commit/57932260a954a4baa2409272c2adf035d761cd22))
+* bump @bimdata/viewer@2.15.0-beta.2 from Github Actions [skip e2e] ([57aa113](https://github.com/bimdata/platform/commit/57aa113f8ed7a3be987e0ef2248700563bb818c1))
+* bump @bimdata/viewer@2.15.0-beta.4 from Github Actions [skip e2e] ([6b21cc9](https://github.com/bimdata/platform/commit/6b21cc9a7355374502e95bfbd5bfd076504cee1a))
+* bump @bimdata/viewer@2.15.0-beta.5 from Github Actions [skip e2e] ([1d0a7fe](https://github.com/bimdata/platform/commit/1d0a7fe5363f23fc35ef0027b01dd31b6932d78f))
+* bump @bimdata/viewer@2.15.0-beta.6 from Github Actions [skip e2e] ([21f0bdd](https://github.com/bimdata/platform/commit/21f0bddb468341fe4f73657703c74a15e30eaf6c))
+* bump @bimdata/viewer@2.15.0-beta.7 from Github Actions [skip e2e] ([1966892](https://github.com/bimdata/platform/commit/19668922cc0a84fb76e9c137769658b8955c48f4))
+* bump @bimdata/viewer@2.15.0-beta.8 from Github Actions [skip e2e] ([9e97aec](https://github.com/bimdata/platform/commit/9e97aec0a1010107724090d2e5fd32c7c064ca58))
+* bump @bimdata/viewer@2.15.0-beta.9 from Github Actions [skip e2e] ([0347b00](https://github.com/bimdata/platform/commit/0347b0042832c12c1b285d4d21f01ac8154d9ad3))
+* bump @bimdata/viewer@2.15.1 from Github Actions [skip e2e] ([86939e3](https://github.com/bimdata/platform/commit/86939e3035d678cbf9c5f098e04c11ffa6342a8f))
+* bump @bimdata/viewer@2.15.1-beta.1 from Github Actions [skip e2e] ([0b97e36](https://github.com/bimdata/platform/commit/0b97e36c0d68f8fd14ce500d81e5b20e2ac9d179))
+* bump @bimdata/viewer@2.15.1-beta.2 from Github Actions [skip e2e] ([df11104](https://github.com/bimdata/platform/commit/df1110465ffdc34e8275631df1240404740b122f))
+* bump @bimdata/viewer@2.15.1-beta.3 from Github Actions [skip e2e] ([a4ab27f](https://github.com/bimdata/platform/commit/a4ab27f3e105a8dea324eb6ca577c1c15479fcd3))
+* bump @bimdata/viewer@2.15.1-beta.4 from Github Actions [skip e2e] ([f9e9b70](https://github.com/bimdata/platform/commit/f9e9b7087f67e900101be177ab42c5db2b8ea583))
+* update dependencies ([6c2bcc3](https://github.com/bimdata/platform/commit/6c2bcc3d28a9a9fd4931b1518e1392d0c5859bde))
+* update dependencies ([c742fab](https://github.com/bimdata/platform/commit/c742fabd60be16deaa03e8e7235bce2094b7dd9c))
+
+### PATCH
+
+* fix plan measurement plugin ([8e27659](https://github.com/bimdata/platform/commit/8e276592e5a94d648d5b618fd4b7adae2417fab7))
+* fix user role badge & show action menu (#611) ([1429fcd](https://github.com/bimdata/platform/commit/1429fcdd1336106fc0a8b51fadf16d6b7b1fc222)), closes [#611](https://github.com/bimdata/platform/issues/611)
+
 # [1.3.0](https://github.com/bimdata/platform/compare/v1.2.9...v1.3.0) (2025-11-14)
 
 
