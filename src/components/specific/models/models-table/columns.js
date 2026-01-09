@@ -38,7 +38,7 @@ export default [
   {
     id: "status",
     text: "t.status",
-    width: "80px",
+    width: "120px",
     align: "center"
   },
   {
