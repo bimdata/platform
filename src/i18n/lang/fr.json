@@ -359,6 +359,7 @@
   },
   "ModelsTable": {
     "headers": {
+      "tags": "Tags",
       "version": "Version"
     },
     "emptyTablePlaceholder": {

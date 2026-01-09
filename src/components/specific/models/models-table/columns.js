@@ -10,6 +10,14 @@ export default [
     text: "t.name"
   },
   {
+    id: "tags",
+    text: "ModelsTable.headers.tags",
+    filter: true,
+    filterKey: "name",
+    width: "100px",
+    align: "center"
+  },
+  {
     id: "version",
     text: "ModelsTable.headers.version",
     width: "100px",
