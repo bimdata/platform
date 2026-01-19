@@ -35,6 +35,9 @@
         @close="nameEditMode[model.id] = false"
       />
     </template>
+    <template #column-filter-empty>
+      <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
+    </template>
     <template #cell-tags="{ row: model }">
       <ModelTagsCell :model="model" :parent="modelsTable" />
     </template>
@@ -231,6 +234,7 @@ export default {
 
 <style scoped>
 .models-table {
+  height: 100%;
   max-height: 460px;
   overflow: auto;
   .file-uploads {
