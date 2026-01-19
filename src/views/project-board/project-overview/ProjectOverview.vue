@@ -121,7 +121,6 @@
           :models="models"
           @file-uploaded="reloadData"
           @go-folders-view="goToGEDView($event)"
-          @file-clicked="$emit('file-clicked', $event)"
         />
       </AppLoading>
     </div>
@@ -178,7 +177,7 @@ export default {
     ProjectNotificationsRecipients,
     ProjectNotificationTimezoneChoice,
   },
-  emits: ["go-folders-view", "file-clicked"],
+  emits: ["go-folders-view"],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { openModal } = useAppModal();

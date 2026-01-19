@@ -3,7 +3,7 @@
     <div class="model-path-cell__last-folder" v-click-away="() => (showFullPath = false)">
       <BIMDataIconFolderLocation fill color="primary" margin="0 12px 0 0" />
       <BIMDataTextbox
-        :text="lastFolderLocation(model)"
+        :text="lastFolderLocation(model.document)"
         cutPosition="middle"
         :tooltip="false"
         width="auto"
@@ -13,9 +13,9 @@
     <transition name="fade">
       <div v-if="hovering || showFullPath" class="model-path-cell__location">
         <div
-          v-if="truncatedFolderLocation(model).length > 0"
+          v-if="truncatedFolderLocation(model.document).length > 0"
           class="flex items-center"
-          v-for="(folder, index) in truncatedFolderLocation(model)"
+          v-for="(folder, index) in truncatedFolderLocation(model.document)"
           :key="folder.id"
         >
           <div
@@ -24,7 +24,7 @@
             v-if="folder.id !== 'ellipsis'"
           >
             <BIMDataIconFolderLocation
-              v-if="index === truncatedFolderLocation(model).length - 1"
+              v-if="index === truncatedFolderLocation(model.document).length - 1"
               fill
               color="primary"
               margin="0 6px 0 0"
@@ -51,7 +51,7 @@
             >
             </BIMDataTextbox>
           </div>
-          <div v-if="showChevron(folder, index, model)" class="m-x-6">
+          <div v-if="showChevron(folder, index, model.document)" class="m-x-6">
             <BIMDataIconChevron size="xxxs" fill color="default" />
           </div>
         </div>
@@ -84,7 +84,7 @@ export default {
       required: true,
     },
   },
-  emits: ["model-clicked", "go-folders-view"],
+  emits: ["go-folders-view"],
   setup(props, { emit }) {
     const { t } = useI18n();
 
@@ -122,7 +122,6 @@ export default {
 
     const selectFile = (folder) => {
       const selectedFolder = props.allFolders.find((f) => f.id === folder.id);
-      emit("model-clicked", selectedFolder);
       emit("go-folders-view", selectedFolder);
     };
 

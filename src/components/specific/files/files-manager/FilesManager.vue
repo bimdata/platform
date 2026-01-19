@@ -203,6 +203,7 @@ import { useModels } from "../../../../state/models.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
+import { collectDescendants } from "../../../../utils/file-tree.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { getFilesFromEvent } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
@@ -283,28 +284,6 @@ export default {
     const hasFiles = computed(() => props.fileStructure.children.length > 0);
 
     const sortByName = (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-
-    watch(
-      () => props.fileStructure,
-      (struct) => {
-        if (!currentFolder.value || !handler.exists(currentFolder.value)) {
-          currentFolder.value = struct;
-        } else {
-          currentFolder.value = handler.deserialize(currentFolder.value);
-        }
-      },
-      { immediate: true }
-    );
-    watch(
-      () => currentFolder.value,
-      (folder) => {
-        const childrenFolders = folder.children.filter(isFolder).sort(sortByName);
-        const childrenFiles = folder.children.filter((c) => !isFolder(c)).sort(sortByName);
-        currentFiles.value = childrenFolders.concat(childrenFiles);
-        gedTargetFolder.set(folder.id);
-      },
-      { immediate: true }
-    );
 
     const filesTable = ref(null);
     const documentViewerFilesList = computed(() => {
@@ -638,17 +617,11 @@ export default {
       openModal({ component: SubscriptionModal });
     };
 
-    const collectDescendants = (folder, predicate) => {
-      const result = [];
-      folder.children.forEach((child) => {
-        if (predicate(child)) result.push(child);
-        if (isFolder(child)) result.push(...collectDescendants(child, predicate));
-      });
-      return result;
-    };
-    const allFiles = computed(() => collectDescendants(props.fileStructure, (f) => !isFolder(f)));
+    const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
+    const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
 
-    const allFolders = computed(() => collectDescendants(props.fileStructure, isFolder));
+    const allFiles = computed(() => getFilesInFolder(props.fileStructure));
+    const allFolders = computed(() => getFoldersInFolder(props.fileStructure));
 
     const filesTabs = [
       {
@@ -707,17 +680,43 @@ export default {
       (visa) => visa.document.name
     );
 
+    const jumpToTargetFolder = (folderId) => {
+      selectedFileTab.value = filesTabs[0];
+      const folder = handler.get({ nature: FILE_TYPE.FOLDER, id: folderId });
+      currentFolder.value = handler.deserialize(folder);
+    };
+
     watch(searchText, (newValue) => {
       filterFilesSearchText.value = newValue;
       filterAllFilesSearchText.value = newValue;
       filterVisasSearchText.value = newValue;
     });
 
-    const jumpToTargetFolder = (folderId) => {
-      selectedFileTab.value = filesTabs[0];
-      const folder = handler.get({ nature: FILE_TYPE.FOLDER, id: folderId });
-      currentFolder.value = handler.deserialize(folder);
-    };
+    watch(
+      () => props.fileStructure,
+      (struct) => {
+        const folderId = gedTargetFolder.get();
+
+        if (folderId) {
+          jumpToTargetFolder(folderId);
+          gedTargetFolder.clear();
+        } else {
+          currentFolder.value = struct;
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => currentFolder.value,
+      (folder) => {
+        const childrenFolders = folder.children.filter(isFolder).sort(sortByName);
+        const childrenFiles = folder.children.filter((c) => !isFolder(c)).sort(sortByName);
+        currentFiles.value = childrenFolders.concat(childrenFiles);
+        gedTargetFolder.set(folder.id);
+      },
+      { immediate: true }
+    );
 
     return {
       // References

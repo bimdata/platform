@@ -41,13 +41,12 @@
     <template #cell-location="{ row: model }">
       <div class="visas-table__location">
         <ModelPathCell
-          :model="model.document"
+          :model="model"
           :allFolders="allFolders"
           @go-folders-view="$emit('go-folders-view', $event)"
-          @file-clicked="$emit('model-clicked', $event)"
         />
       </div>
-    </template> 
+    </template>
     <template #cell-version="{ row: { version } }">
       {{ version ?? "-" }}
     </template>
@@ -90,6 +89,7 @@ import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { useFiles } from "../../../../state/files.js";
+import { collectDescendants } from "../../../../utils/file-tree.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 // Components
 import FileUploadCard from "../../files/file-upload-card/FileUploadCard.js";
@@ -97,7 +97,7 @@ import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
 import ModelTagsCell from "./model-tags-cell/ModelTagsCell.vue";
- import ModelPathCell from "./model-path-cell/ModelPathCell.vue";
+import ModelPathCell from "./model-path-cell/ModelPathCell.vue";
 
 export default {
   components: {
@@ -128,7 +128,6 @@ export default {
     "download",
     "edit-metaBuilding",
     "edit-photosphereBuilding",
-    "file-clicked",
     "file-uploaded",
     "go-folders-view",
     "selection-changed",
@@ -171,27 +170,9 @@ export default {
       { immediate: true }
     );
 
-    const getFoldersInFolder = (folder) => {
-      const folders = [];
-      folder.children.forEach((child) => {
-        if (isFolder(child)) {
-          folders.push(child);
-          folders.push(...getFoldersInFolder(child));
-        }
-      });
-      return folders;
-    };
-    const getFilesInFolder = (folder) => {
-      const files = [];
-      folder.children.forEach((child) => {
-        if (isFolder(child)) {
-          files.push(...getFilesInFolder(child));
-        } else {
-          files.push(child);
-        }
-      });
-      return files;
-    };
+    const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
+    const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
+
     const allFolders = computed(() =>
       projectFileStructure.value.children.flatMap((file) => {
         if (isFolder(file)) {
@@ -222,13 +203,7 @@ export default {
           map[modelId] = [];
         }
 
-        Object.entries(file.tags).forEach(([key, value]) => {
-          map[modelId].push({
-            id: key,
-            name: value.name,
-            color: value.color,
-          });
-        });
+        map[modelId].push(...file.tags);
       });
 
       return map;
@@ -237,13 +212,12 @@ export default {
     const modelsWithTags = computed(() =>
       props.models.map((model) => ({
         ...model,
-        tags: tagsByModelId.value[model.id] ?? {},
+        tags: tagsByModelId.value[model.id] ?? [],
       }))
     );
 
     return {
       // References
-      allFiles,
       allFolders,
       columns,
       modelsTable,
