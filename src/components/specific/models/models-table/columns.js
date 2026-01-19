@@ -18,6 +18,12 @@ export default [
     align: "center"
   },
   {
+    id: "location",
+    text: "ModelsTable.headers.location",
+    width: "200px",
+    align: "left"
+  },
+  {
     id: "version",
     text: "ModelsTable.headers.version",
     width: "100px",

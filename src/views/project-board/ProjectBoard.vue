@@ -47,7 +47,7 @@
     <div class="project-board__body">
       <Transition name="fade" mode="out-in">
         <KeepAlive>
-          <component :is="currentView" />
+          <component :is="currentView" @go-folders-view="changeView('files')" @file-clicked="$emit('file-clicked', $event)" />
         </KeepAlive>
       </Transition>
     </div>
@@ -115,6 +115,7 @@ export default {
     SubscriptionStatusBanner,
     ViewHeader
   },
+  emits: ["file-clicked"],
   setup() {
     const route = useRoute();
     const { isUserOrga, isSpaceAdmin } = useUser();

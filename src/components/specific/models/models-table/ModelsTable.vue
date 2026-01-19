@@ -38,6 +38,16 @@
     <template #cell-tags="{ row: model }">
       <ModelTagsCell :model="model" :parent="modelsTable" />
     </template>
+    <template #cell-location="{ row: model }">
+      <div class="visas-table__location">
+        <ModelPathCell
+          :model="model.document"
+          :allFolders="allFolders"
+          @go-folders-view="$emit('go-folders-view', $event)"
+          @file-clicked="$emit('model-clicked', $event)"
+        />
+      </div>
+    </template> 
     <template #cell-version="{ row: { version } }">
       {{ version ?? "-" }}
     </template>
@@ -87,6 +97,7 @@ import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
 import ModelTagsCell from "./model-tags-cell/ModelTagsCell.vue";
+ import ModelPathCell from "./model-path-cell/ModelPathCell.vue";
 
 export default {
   components: {
@@ -95,6 +106,7 @@ export default {
     ModelStatusCell,
     FileUploadCard,
     ModelTagsCell,
+    ModelPathCell,
   },
   props: {
     project: {

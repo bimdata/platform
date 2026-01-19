@@ -120,6 +120,8 @@
           :project="project"
           :models="models"
           @file-uploaded="reloadData"
+          @go-folders-view="goToGEDView($event)"
+          @file-clicked="$emit('file-clicked', $event)"
         />
       </AppLoading>
     </div>
@@ -135,6 +137,7 @@ import { useAppNotification } from "../../../components/specific/app/app-notific
 import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useStandardBreakpoints } from "../../../composables/responsive.js";
 import { useToggle } from "../../../composables/toggle.js";
+import { useSession } from "../../../composables/session.js";
 
 import { useFiles } from "../../../state/files.js";
 import { useGroups } from "../../../state/groups.js";
@@ -175,13 +178,15 @@ export default {
     ProjectNotificationsRecipients,
     ProjectNotificationTimezoneChoice,
   },
-  setup() {
+  emits: ["go-folders-view", "file-clicked"],
+  setup(props, { emit }) {
     const { t } = useI18n();
     const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
     const { isUserOrga, isProjectGuest } = useUser();
     const { projectGroups } = useGroups();
+    const { gedTargetFolder } = useSession();
 
     const { currentSpace, spaceSubInfo, loadSpaceSubInfo } = useSpaces();
     const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
@@ -202,6 +207,16 @@ export default {
       close: closeFileUploader,
       toggle: toggleFileUploader,
     } = useToggle();
+
+    const goToGEDView = (folder) => {
+      if (folder?.id) {
+        gedTargetFolder.set(folder.id);
+      } else {
+        gedTargetFolder.clear();
+      }
+
+      emit("go-folders-view");
+    };
 
     const modelsPreview = computed(() =>
       projectModels.value.filter(
@@ -288,6 +303,7 @@ export default {
       closeFileUploader,
       closeSidePanel,
       closeNotificationPanel,
+      goToGEDView,
       isFullTotal,
       isProjectGuest,
       isUserOrga,
