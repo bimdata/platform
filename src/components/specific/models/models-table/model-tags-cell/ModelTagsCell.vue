@@ -3,7 +3,7 @@
     <div
       ref="cellPills"
       class="model-tags-cell-pills"
-      @mouseenter="onHover"
+      @mouseenter="hasTags && onHover"
       @mouseleave="isOver = false"
     >
       <template v-for="(tag, index) in model.tags.slice(0, 9)" :key="tag.id">
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
+import { nextTick, onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 
 export default {
@@ -94,6 +94,7 @@ export default {
     const cellWidth = ref(0);
     const maxCellHeight = 43; // stand for two lines of tags
     const isPillsMod = ref(false);
+    const hasTags = computed(() => props.model.tags?.length > 0);
 
     const onResize = entries => {
       entries.forEach(entry => {
@@ -131,6 +132,7 @@ export default {
     const isOver = ref(false);
 
     const onHover = () => {
+      if (!hasTags.value) return;
       isOver.value = true;
       nextTick(() => {
         tagList.value.$el.style.top = dropdownPositioner(
@@ -145,6 +147,7 @@ export default {
       // references
       cell,
       isOver,
+      hasTags,
       tagList,
       cellPills,
       cellWidth,
