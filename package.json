@@ -21,7 +21,7 @@
     "@paddle/paddle-js": "^1.6.1",
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "maplibre-gl": "^5.16.0",
     "oidc-client-ts": "^3.4.1",
     "seedrandom": "^3.0.5",
