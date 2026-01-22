@@ -1,3 +1,26 @@
+## [1.3.2](https://github.com/bimdata/platform/compare/v1.3.1...v1.3.2) (2026-01-22)
+
+
+### chore
+
+* bump @bimdata/viewer@2.15.2-beta.1 from Github Actions [skip e2e] ([50924e2](https://github.com/bimdata/platform/commit/50924e28ae45e41f686690cbc16d38e8adc1b1e5))
+* bump @bimdata/viewer@2.16.0 from Github Actions [skip e2e] ([2b0b86d](https://github.com/bimdata/platform/commit/2b0b86d888513586084d6c81d626e44263b74483))
+* bump @bimdata/viewer@2.16.0-beta.1 from Github Actions [skip e2e] ([0a3cd27](https://github.com/bimdata/platform/commit/0a3cd2779b81cb78bf8566cea06644ebc1e19e0f))
+* bump @bimdata/viewer@2.16.0-beta.2 from Github Actions [skip e2e] ([ca432a2](https://github.com/bimdata/platform/commit/ca432a267991cc33466c49ca13ee078138558be7))
+* bump @bimdata/viewer@2.16.0-beta.3 from Github Actions [skip e2e] ([4e7cb98](https://github.com/bimdata/platform/commit/4e7cb985fdd08b22c962063c6573dddb3077c582))
+* bump @bimdata/viewer@2.16.1 from Github Actions [skip e2e] ([d560803](https://github.com/bimdata/platform/commit/d560803ff44f985fdd9945b5804d29c62edc437d))
+* bump @bimdata/viewer@2.16.1-beta.1 from Github Actions [skip e2e] ([d780152](https://github.com/bimdata/platform/commit/d780152e1f65468d5ca222c67c67496f21981295))
+* bump @bimdata/viewer@2.16.1-beta.2 from Github Actions [skip e2e] ([cc4953f](https://github.com/bimdata/platform/commit/cc4953fc467ad1ffac78ba450a4bed334a8cc911))
+* bump @bimdata/viewer@2.16.1-beta.3 from Github Actions [skip e2e] ([029e2a7](https://github.com/bimdata/platform/commit/029e2a7e48a7997a97a3eeb5400c9b52c7ff90bd))
+
+### fix
+
+* rollback to viewer v2.15.1 ([361ebe7](https://github.com/bimdata/platform/commit/361ebe7da7437a5314588848e1451a55e92f91d5))
+
+### PATCH
+
+* New Engine 2D for DWG ([367976f](https://github.com/bimdata/platform/commit/367976f3a89685235cc0817bd00daf2605e49dbd))
+
 ## [1.3.1](https://github.com/bimdata/platform/compare/v1.3.0...v1.3.1) (2026-01-07)
 
 
