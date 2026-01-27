@@ -3,7 +3,7 @@
     <div
       ref="cellPills"
       class="model-tags-cell-pills"
-      @mouseenter="hasTags && onHover"
+      @mouseenter="hasTags && onHover()"
       @mouseleave="isOver = false"
     >
       <template v-for="(tag, index) in model.tags.slice(0, 9)" :key="tag.id">
@@ -22,17 +22,12 @@
             class="model-tags-cell-pills__pill"
             :style="{
               backgroundColor: `#${tag.color}40`,
-              border: `1px solid #${tag.color}`
+              border: `1px solid #${tag.color}`,
             }"
           ></div>
         </template>
       </template>
-      <BIMDataCard
-        v-show="isOver"
-        ref="tagList"
-        class="model-tags-cell-pills__over"
-        width="150px"
-      >
+      <BIMDataCard v-show="isOver" ref="tagList" class="model-tags-cell-pills__over" width="150px">
         <template #content>
           <div class="model-tags-cell-pills__over__list">
             <template v-for="tag in model.tags" :key="tag.id">
@@ -40,7 +35,7 @@
                 class="model-tags-cell-pills__over__list__tag"
                 :style="{
                   color: `#${tag.color}`,
-                  border: `1px solid #${tag.color}`
+                  border: `1px solid #${tag.color}`,
                 }"
               >
                 <BIMDataTextbox
@@ -62,7 +57,7 @@
           class="model-tags-cell__tag"
           :style="{
             color: `#${tag.color}`,
-            border: `1px solid #${tag.color}`
+            border: `1px solid #${tag.color}`,
           }"
         >
           <BIMDataTextbox
@@ -84,11 +79,11 @@ export default {
   props: {
     model: {
       type: Object,
-      required: true
+      required: true,
     },
     parent: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   setup(props) {
     const cellWidth = ref(0);
@@ -96,8 +91,8 @@ export default {
     const isPillsMod = ref(false);
     const hasTags = computed(() => props.model.tags?.length > 0);
 
-    const onResize = entries => {
-      entries.forEach(entry => {
+    const onResize = (entries) => {
+      entries.forEach((entry) => {
         cellWidth.value = entry.contentRect.width;
         const height = entry.target.scrollHeight;
         isPillsMod.value = height > maxCellHeight;
@@ -117,7 +112,7 @@ export default {
           isPillsMod.value = false;
           nextTick(() => cellObserver.observe(cell.value));
         }
-      }
+      },
     );
 
     const cell = ref(null);
@@ -135,11 +130,7 @@ export default {
       if (!hasTags.value) return;
       isOver.value = true;
       nextTick(() => {
-        tagList.value.$el.style.top = dropdownPositioner(
-          props.parent.$el,
-          tagList.value.$el,
-          9
-        );
+        tagList.value.$el.style.top = dropdownPositioner(props.parent.$el, tagList.value.$el, 9);
       });
     };
 
@@ -154,9 +145,9 @@ export default {
       maxCellHeight,
       isPillsMod,
       // methods
-      onHover
+      onHover,
     };
-  }
+  },
 };
 </script>
 
