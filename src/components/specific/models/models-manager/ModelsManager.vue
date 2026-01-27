@@ -66,6 +66,7 @@
             :types="currentTab.modelTypes"
             :models="currentTab.models"
             @file-uploaded="$emit('file-uploaded')"
+            @go-folders-view="$emit('go-folders-view', $event)"
           />
         </keep-alive>
       </transition>
@@ -163,7 +164,7 @@ export default {
       required: true
     }
   },
-  emits: ["file-uploaded"],
+  emits: ["file-uploaded", "go-folders-view"],
   setup(props) {
     const { projectModelTab } = useSession();
     const {

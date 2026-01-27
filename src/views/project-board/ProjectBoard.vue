@@ -47,7 +47,7 @@
     <div class="project-board__body">
       <Transition name="fade" mode="out-in">
         <KeepAlive>
-          <component :is="currentView" />
+          <component :is="currentView" @go-folders-view="changeView('files')"  />
         </KeepAlive>
       </Transition>
     </div>

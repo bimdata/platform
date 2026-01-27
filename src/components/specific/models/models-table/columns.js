@@ -10,6 +10,20 @@ export default [
     text: "t.name"
   },
   {
+    id: "tags",
+    text: "ModelsTable.headers.tags",
+    filter: true,
+    filterKey: "name",
+    width: "100px",
+    align: "center"
+  },
+  {
+    id: "location",
+    text: "ModelsTable.headers.location",
+    width: "200px",
+    align: "left"
+  },
+  {
     id: "version",
     text: "ModelsTable.headers.version",
     width: "100px",
@@ -30,7 +44,7 @@ export default [
   {
     id: "status",
     text: "t.status",
-    width: "80px",
+    width: "120px",
     align: "center"
   },
   {

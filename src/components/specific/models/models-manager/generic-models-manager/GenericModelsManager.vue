@@ -59,6 +59,7 @@
       @file-uploaded="onFileUploaded"
       @upload-canceled="onUploadCanceled"
       @upload-failed="onUploadCanceled"
+      @go-folders-view="$emit('go-folders-view', $event)"
       @selection-changed="selection = $event"
       @archive="archiveModels([$event])"
       @unarchive="unarchiveModels([$event])"
@@ -133,6 +134,7 @@ export default {
     "edit-metaBuilding",
     "edit-photosphereBuilding",
     "file-uploaded",
+    "go-folders-view",
     "tab-changed",
     "view-metaBuilding",
     "view-photosphereBuilding",

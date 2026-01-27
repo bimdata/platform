@@ -1,13 +1,12 @@
 <template>
   <BIMDataTable
+    ref="modelsTable"
     class="models-table"
     data-test-id="models-table"
     tableLayout="fixed"
     :columns="columns"
-    :rows="models"
+    :rows="modelsWithTags"
     rowKey="id"
-    :paginated="true"
-    :perPage="7"
     :selectable="true"
     @selection-changed="$emit('selection-changed', $event)"
   >
@@ -35,6 +34,21 @@
         :editMode="nameEditMode[model.id]"
         @close="nameEditMode[model.id] = false"
       />
+    </template>
+    <template #column-filter-empty>
+      <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
+    </template>
+    <template #cell-tags="{ row: model }">
+      <ModelTagsCell :model="model" :parent="modelsTable" />
+    </template>
+    <template #cell-location="{ row: model }">
+      <div class="visas-table__location">
+        <ModelPathCell
+          :model="model"
+          :allFolders="allFolders"
+          @go-folders-view="$emit('go-folders-view', $event)"
+        />
+      </div>
     </template>
     <template #cell-version="{ row: { version } }">
       {{ version ?? "-" }}
@@ -73,36 +87,43 @@
 </template>
 
 <script>
-import { computed, reactive, watch } from "vue";
+import { ref, computed, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useFiles } from "../../../../state/files.js";
+import { collectDescendants } from "../../../../utils/file-tree.js";
+import { isFolder } from "../../../../utils/file-structure.js";
 // Components
 import FileUploadCard from "../../files/file-upload-card/FileUploadCard.js";
 import ModelActionsCell from "./model-actions-cell/ModelActionsCell.vue";
 import ModelNameCell from "./model-name-cell/ModelNameCell.vue";
 import ModelStatusCell from "./model-status-cell/ModelStatusCell.vue";
+import ModelTagsCell from "./model-tags-cell/ModelTagsCell.vue";
+import ModelPathCell from "./model-path-cell/ModelPathCell.vue";
 
 export default {
   components: {
     ModelActionsCell,
     ModelNameCell,
     ModelStatusCell,
-    FileUploadCard
+    FileUploadCard,
+    ModelTagsCell,
+    ModelPathCell,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     models: {
       type: Array,
-      required: true
+      required: true,
     },
     fileUploads: {
       type: Array,
       default: () => [],
-    }
+    },
   },
   emits: [
     "archive",
@@ -111,6 +132,7 @@ export default {
     "edit-metaBuilding",
     "edit-photosphereBuilding",
     "file-uploaded",
+    "go-folders-view",
     "selection-changed",
     "unarchive",
     "upload-canceled",
@@ -121,23 +143,23 @@ export default {
   setup(props) {
     const { t } = useI18n();
     const { isLG, isXL } = useStandardBreakpoints();
+    const { projectFileStructure } = useFiles();
 
+    const modelsTable = ref(null);
     const columns = computed(() => {
       let filteredColumns = columnsDef;
       if (isLG.value) {
-        filteredColumns = filteredColumns.filter(col =>
+        filteredColumns = filteredColumns.filter((col) =>
           ["name", "status", "actions"].includes(col.id)
         );
       } else if (isXL.value) {
-        filteredColumns = filteredColumns.filter(col =>
-          ["name", "creator", "lastupdate", "status", "actions"].includes(
-            col.id
-          )
+        filteredColumns = filteredColumns.filter((col) =>
+          ["name", "creator", "lastupdate", "status", "actions"].includes(col.id)
         );
       }
-      return filteredColumns.map(col => ({
+      return filteredColumns.map((col) => ({
         ...col,
-        label: col.label ?? t(col.text)
+        label: col.label ?? t(col.text),
       }));
     });
 
@@ -146,22 +168,75 @@ export default {
       () => props.models,
       () => {
         nameEditMode = reactive({});
-        props.models.forEach(model => (nameEditMode[model.id] = false));
+        props.models.forEach((model) => (nameEditMode[model.id] = false));
       },
       { immediate: true }
     );
 
+    const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
+    const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
+
+    const allFolders = computed(() =>
+      projectFileStructure.value.children.flatMap((file) => {
+        if (isFolder(file)) {
+          return [file, ...getFoldersInFolder(file)];
+        } else {
+          return [];
+        }
+      })
+    );
+    const allFiles = computed(() =>
+      projectFileStructure.value.children.flatMap((file) => {
+        if (isFolder(file)) {
+          return getFilesInFolder(file);
+        } else {
+          return file;
+        }
+      })
+    );
+
+    const tagsByModelId = computed(() => {
+      const map = {};
+
+      allFiles.value.forEach((file) => {
+        const modelId = file.model_id;
+        if (!modelId || !file.tags) return;
+
+        if (!map[modelId]) {
+          map[modelId] = [];
+        }
+
+        map[modelId].push(...file.tags);
+      });
+
+      return map;
+    });
+
+    const modelsWithTags = computed(() =>
+      props.models.map((model) => ({
+        ...model,
+        tags: tagsByModelId.value[model.id] ?? [],
+      }))
+    );
+
     return {
       // References
+      allFolders,
       columns,
+      modelsTable,
+      modelsWithTags,
       nameEditMode,
+      fileStructure: projectFileStructure,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
 .models-table {
+  height: 100%;
+  max-height: 460px;
+  overflow: auto;
   .file-uploads {
     position: absolute;
     z-index: 1;
