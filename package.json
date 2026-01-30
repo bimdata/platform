@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@bimdata/bcf-components": "6.7.6",
-    "@bimdata/components": "1.10.0",
+    "@bimdata/components": "1.10.1",
     "@bimdata/design-system": "2.3.0",
     "@bimdata/typescript-fetch-api-client": "10.31.1",
     "@bimdata/viewer": "2.16.2-beta.1",
@@ -22,12 +22,12 @@
     "async": "^3.2.6",
     "dms-conversion": "^3.1.4",
     "lodash": "^4.17.23",
-    "maplibre-gl": "^5.16.0",
+    "maplibre-gl": "^5.17.0",
     "oidc-client-ts": "^3.4.1",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.27",
     "vue-i18n": "^11.2.8",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.6",
