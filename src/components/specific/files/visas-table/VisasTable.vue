@@ -34,9 +34,10 @@
     <template #cell-validators="{ row: visa }">
       <UserAvatarList
         class="group-card__avatars"
-        :users="visa.validations.map((validation) => validation.validator).filter(Boolean)"
+        :users="validatorsForVisa(visa)"
         itemSize="28"
         itemGap="18"
+        :itemClass="(validator) => avatarStatusClass(visa, validator)"
       />
     </template>
     <template #cell-due_date="{ row: visa }">
@@ -134,12 +135,10 @@ export default {
     const { user } = useUser();
     const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
-    const {
-      fileStructureHandler: handler,
-    } = useFiles();
+    const { fileStructureHandler: handler } = useFiles();
 
     const enhancedVisas = computed(() =>
-      props.visas.map((visa) => enhanceVisa(visa, user.value, t, handler))
+      props.visas.map((visa) => enhanceVisa(visa, user.value, t, handler)),
     );
 
     const columns = computed(() => {
@@ -157,6 +156,13 @@ export default {
       }));
     });
 
+    const validatorsForVisa = (visa) =>
+      visa.validations
+        .filter((v) => v.validator)
+        .map((v) => ({
+          ...v.validator,
+          validationStatus: v.status,
+        }));
 
     const isCreator = (visa) =>
       user.value && visa.creator && fullName(user.value) === fullName(visa.creator);
@@ -205,6 +211,18 @@ export default {
         return statusIcon(visa);
       }
     };
+    const avatarStatusClass = (visa, validator) => {
+      switch (validator?.validationStatus) {
+        case VALIDATION_STATUS.DENY:
+          return "avatar--deny";
+        case VALIDATION_STATUS.ACCEPT:
+          return "avatar--accept";
+        case VALIDATION_STATUS.PENDING:
+          return isDelay(visa) ? "avatar--delay" : "avatar--pending";
+        default:
+          return "avatar--pending";
+      }
+    };
 
     return {
       columns,
@@ -214,8 +232,10 @@ export default {
       isCreator,
       isDelay,
       statusClasses,
+      avatarStatusClass,
       statusIcon,
       validationClasses,
+      validatorsForVisa,
       validationIcon,
     };
   },

@@ -68,6 +68,20 @@
       }
     }
   }
+  &:deep(.user-avatar-list) {
+    .avatar--deny {
+      border-color: var(--color-high);
+    }
+    .avatar--accept {
+      border-color: var(--color-success);
+    }
+    .avatar--delay {
+      border-color: var(--color-warning);
+    }
+    .avatar--pending {
+      border-color: var(--color-white);
+    }
+  }
   .bimdata-btn {
     margin: auto;
   }

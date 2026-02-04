@@ -3,15 +3,17 @@
     class="user-avatar-list"
     :style="{
       width: `${listWidth}px`,
-      gridTemplateColumns: `repeat(${listLength}, ${itemGap}px)`
+      gridTemplateColumns: `repeat(${listLength}, ${itemGap}px)`,
     }"
   >
     <UserAvatar
-      class="user-avatar-list__item"
       v-for="user of displayedUsers"
       :key="user.id"
+      class="user-avatar-list__item"
       :user="user"
       :size="itemSize"
+      :class="itemClass ? itemClass(user) : null"
+      :style="{ 'border-color': borderColor }"
     />
     <template v-if="users.length > length">
       <div
@@ -31,31 +33,39 @@ import UserAvatar from "../user-avatar/UserAvatar.vue";
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
   },
   props: {
     users: {
       type: Array,
-      required: true
+      required: true,
     },
     length: {
       type: Number,
-      default: 4
+      default: 4,
     },
     itemSize: {
       type: [Number, String],
       default: 32,
-      validate: value => value >= 32
+      validate: (value) => value >= 32,
     },
     itemGap: {
       type: [Number, String],
       default: 24,
-      validate: value => value > 0
+      validate: (value) => value > 0,
+    },
+    itemClass: {
+      type: Function,
+      default: null,
+    },
+    borderColor: {
+      type: String,
+      default: null,
     },
     fixedWidth: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props) {
     const displayedUsers = computed(() => {
@@ -81,9 +91,9 @@ export default {
       // References
       displayedUsers,
       listLength,
-      listWidth
+      listWidth,
     };
-  }
+  },
 };
 </script>
 

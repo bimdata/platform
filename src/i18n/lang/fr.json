@@ -790,6 +790,7 @@
       "deletedUser": " Utilisateur supprimé",
       "validatorList": {
         "accept": "Validé",
+        "delayed": "En retard",
         "deny": "Refusé",
         "commented": "Commenté",
         "pending": "En attente",
