@@ -60,7 +60,7 @@
     </template>
     <template #cell-buttons="{ row: visa }">
       <BIMDataButton
-        v-if="fullName(user) === fullName(visa.creator)"
+        v-if="isCreator(visa)"
         color="default"
         outline
         radius
@@ -85,7 +85,7 @@
     </template>
     <template #cell-actions="{ row: visa }">
       <VisaActionsCell
-        v-if="fullName(user) === fullName(visa.creator)"
+        v-if="isCreator(visa)"
         :visa="visa"
         @delete="$emit('delete', visa)"
         @edit-visa="$emit('reach-visa', visa)"
@@ -121,6 +121,7 @@ export default {
     },
     visas: {
       type: Array,
+      default: () => [],
       required: true,
     },
     selection: {
@@ -156,11 +157,15 @@ export default {
       }));
     });
 
+
+    const isCreator = (visa) =>
+      user.value && visa.creator && fullName(user.value) === fullName(visa.creator);
+
     const validationClasses = (visa) => {
       if (visa.status === VISA_STATUS.CLOSE) {
         return "closed-visa";
       }
-      if (fullName(user.value) === fullName(visa.creator)) {
+      if (isCreator(visa)) {
         return "ask-visa";
       } else {
         return "waiting-visa";
@@ -170,7 +175,7 @@ export default {
       if (visa.status === VISA_STATUS.CLOSE) {
         return "visa";
       }
-      if (fullName(user.value) === fullName(visa.creator)) {
+      if (isCreator(visa)) {
         return "unknownFile";
       } else {
         return "visa";
@@ -206,6 +211,7 @@ export default {
       user,
       fullName,
       enhancedVisas,
+      isCreator,
       isDelay,
       statusClasses,
       statusIcon,

@@ -1,12 +1,14 @@
 import { fullName } from "./users.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../config/visa.js";
 
+const safeFullName = (user) => (user ? fullName(user) : "");
+
 export const enhanceVisa = (visa, user, t, handler) => {
   const validationType = () => {
     if (visa.status === VISA_STATUS.CLOSE) {
       return t("Visa.view.visaClosed");
     }
-    if (fullName(user) === fullName(visa.creator)) {
+    if (user && visa.creator && safeFullName(user) === safeFullName(visa.creator)) {
       return t("Visa.view.myRequests");
     } else {
       return t("Visa.view.visaPending");
@@ -37,7 +39,10 @@ export const enhanceVisa = (visa, user, t, handler) => {
     return emailValidators;
   };
 
-  const document = handler.get({ id: visa.document.head_id ?? visa.document.id, nature: "Document" });
+  const document = handler.get({
+    id: visa.document.head_id ?? visa.document.id,
+    nature: "Document",
+  });
 
   return {
     ...visa,
