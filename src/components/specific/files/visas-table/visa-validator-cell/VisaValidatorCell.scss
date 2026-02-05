@@ -1,0 +1,81 @@
+.visa-validator-cell {
+  position: relative;
+
+  &__details {
+    width: max-content;
+    max-width: 500px;
+    padding: var(--spacing-unit);
+    position: absolute;
+    background-color: var(--color-white);
+    z-index: 10;
+    top: -6px;
+    left: -12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .validator-title {
+      color: var(--color-primary);
+      font-size: 16px;
+      display: block;
+      border-bottom: 1px solid var(--color-silver);
+      line-height: 1.5;
+    }
+    .validator-details {
+      gap: var(--spacing-unit);
+      display: grid;
+      grid-template-columns: 3fr 2fr 1fr;
+      .user-avatar {
+        border: 2px solid transparent;
+        &.avatar--deny {
+          border-color: var(--color-high);
+        }
+        &.avatar--accept {
+          border-color: var(--color-success);
+        }
+        &.avatar--delay {
+          border-color: var(--color-warning);
+        }
+        &.avatar--pending {
+          border-color: var(--color-white);
+        }
+      }
+      .validator-name,
+      .validator-email {
+        color: var(--color-primary);
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .validator-groups {
+        font-size: 14px;
+      }
+      .validator-info {
+        gap: calc(var(--spacing-unit) / 2);
+      }
+      .validator-status {
+        padding: 0 var(--spacing-unit);
+        height: 26px;
+        width: max-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50px;
+        &.success {
+          background-color: #e5f7ed;
+          color: var(--color-success);
+        }
+        &.failed {
+          background-color: var(--color-high-lighter);
+          color: var(--color-high);
+        }
+        &.delay {
+          background-color: #fff4e5;
+          color: var(--color-warning);
+        }
+        &.pending {
+          background-color: rgba(47, 55, 75, 0.05);
+          color: var(--color-primary);
+        }
+      }
+    }
+  }
+}

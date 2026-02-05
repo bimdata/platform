@@ -32,13 +32,7 @@
       </span>
     </template>
     <template #cell-validators="{ row: visa }">
-      <UserAvatarList
-        class="group-card__avatars"
-        :users="validatorsForVisa(visa)"
-        itemSize="28"
-        itemGap="18"
-        :itemClass="(validator) => avatarStatusClass(visa, validator)"
-      />
+      <VisaValidatorCell :visa="visa" />
     </template>
     <template #cell-due_date="{ row: visa }">
       {{ $d(visa.deadline, "short") }}
@@ -102,6 +96,7 @@ import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
 import { enhanceVisa } from "../../../../utils/visas.js";
 import { useFiles } from "../../../../state/files.js";
+
 import { useUser } from "../../../../state/user.js";
 import { fullName } from "../../../../utils/users.js";
 import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
@@ -109,12 +104,13 @@ import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
 import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
 import VisaActionsCell from "./visa-actions-cell/VisaActionsCell.vue";
 import FilePathCell from "../files-table/file-path-cell/FilePathCell.vue";
-
+import VisaValidatorCell from "./visa-validator-cell/VisaValidatorCell.vue";
 export default {
   components: {
     UserAvatarList,
     VisaActionsCell,
     FilePathCell,
+    VisaValidatorCell,
   },
   props: {
     allFolders: {
@@ -155,14 +151,6 @@ export default {
         label: col.label || t(col.text),
       }));
     });
-
-    const validatorsForVisa = (visa) =>
-      visa.validations
-        .filter((v) => v.validator)
-        .map((v) => ({
-          ...v.validator,
-          validationStatus: v.status,
-        }));
 
     const isCreator = (visa) =>
       user.value && visa.creator && fullName(user.value) === fullName(visa.creator);
@@ -211,31 +199,21 @@ export default {
         return statusIcon(visa);
       }
     };
-    const avatarStatusClass = (visa, validator) => {
-      switch (validator?.validationStatus) {
-        case VALIDATION_STATUS.DENY:
-          return "avatar--deny";
-        case VALIDATION_STATUS.ACCEPT:
-          return "avatar--accept";
-        case VALIDATION_STATUS.PENDING:
-          return isDelay(visa) ? "avatar--delay" : "avatar--pending";
-        default:
-          return "avatar--pending";
-      }
-    };
 
     return {
       columns,
       user,
       fullName,
       enhancedVisas,
+      //groupsForVisa,
+      // groupDisplayForVisa,
       isCreator,
       isDelay,
       statusClasses,
-      avatarStatusClass,
+      // avatarStatusClass,
       statusIcon,
       validationClasses,
-      validatorsForVisa,
+      // validatorsForVisa,
       validationIcon,
     };
   },
