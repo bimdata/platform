@@ -32,20 +32,20 @@ import VisaSummary from "../visa-summary/VisaSummary.vue";
 export default {
   components: {
     VisaAdd,
-    VisaSummary
+    VisaSummary,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     document: {
       type: Object,
-      required: true
+      required: true,
     },
     visa: {
       type: Object,
-      required: false
+      required: false,
     },
   },
   emits: ["create-visa", "fetch-visas", "close", "preview-visa", "reach-file"],
@@ -56,14 +56,14 @@ export default {
 
     const currentView = ref(currentVisa.value.document ? "visaSummary" : "visaAdd");
 
-    const createVisa = async visa => {
+    const createVisa = async (visa) => {
       currentVisa.value = await fetchVisa(props.project, visa);
       currentView.value = "visaSummary";
-      emit('fetch-visas');
-      emit('create-visa');
+      emit("fetch-visas");
+      emit("create-visa");
     };
 
-    const reachVisa = visa => {
+    const reachVisa = (visa) => {
       currentVisa.value = visa;
       currentView.value = "visaSummary";
     };
@@ -80,9 +80,9 @@ export default {
       // methods
       createVisa,
       reachVisa,
-      closeVisa
+      closeVisa,
     };
-  }
+  },
 };
 </script>
 

@@ -349,7 +349,8 @@ export default {
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;
       userProjectList.value = await fetchDocumentUsers(props.visa);
-      formatedVisa.value = formatVisa(props.visa);
+      const visa = await fetchVisa(props.project, props.visa);
+      formatedVisa.value = formatVisa(visa);
     });
 
     const reloadVisa = async () => {

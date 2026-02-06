@@ -118,7 +118,6 @@ export default {
 
     const validationStatus = (user) => {
       const { hasCommented, status } = user;
-
       if (hasCommented && status === VALIDATION_STATUS.PENDING) {
         return "commented";
       } else if (
