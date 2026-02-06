@@ -23,7 +23,7 @@
     .validator-details {
       gap: var(--spacing-unit);
       display: grid;
-      grid-template-columns: 3fr 2fr 1fr;
+      grid-template-columns: minmax(200px, 1fr) minmax(150px, 1fr) minmax(100px, 1fr);
       .user-avatar {
         border: 2px solid transparent;
         &.avatar--deny {
