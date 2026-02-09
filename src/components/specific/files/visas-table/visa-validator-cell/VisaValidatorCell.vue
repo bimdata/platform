@@ -20,7 +20,7 @@
         class="visa-validator-cell__details"
         :class="openDirection"
       >
-        <span class="validator-title m-b-6">Détails des validants</span>
+        <span class="validator-title m-b-6">{{ $t("Visa.VisaValidatorCell.title") }}</span>
 
         <div
           v-for="validator in validatorsForVisa(visa)"
@@ -36,12 +36,20 @@
           </div>
 
           <div class="validator-groups">
-            <span v-if="groupLabelForValidator(validator)" class="validator-group-label">
-              {{ groupLabelForValidator(validator) }}
+            <span
+              v-if="validator.groups.length > 1"
+              class="validator-group validator-group--multiple"
+            >
+              {{ $t("Visa.VisaValidatorCell.multipleGroups", { count: validator.groups.length }) }}
             </span>
-
-            <span v-if="!validator.groups.length" class="validator-group validator-group--none">
-              Sans groupe
+            <span
+              v-else-if="!validator.groups.length"
+              class="validator-group validator-group--none"
+            >
+              {{ $t("Visa.VisaValidatorCell.noGroup") }}
+            </span>
+            <span v-else class="validator-group-label">
+              {{ groupLabelForValidator(validator) }}
             </span>
           </div>
 
@@ -53,7 +61,7 @@
               color="default"
               margin="0 6px 0 0"
             />
-            <span>{{ statusLabel(validator) }}</span>
+            <span>{{ $t(`Visa.VisaValidatorCell.${statusLabel(validator)}`) }}</span>
           </div>
         </div>
       </div>
@@ -145,17 +153,11 @@ export default {
     };
 
     const groupLabelForValidator = (validator) => {
-      const groups = validator.groups || [];
-
-      if (!groups.length) {
-        return null;
-      }
+      const groups = validator.groups;
 
       if (groups.length === 1) {
         return groups[0].name;
       }
-
-      return `${groups.length} groupes`;
     };
 
     const statusIcon = (validator) => {
@@ -186,13 +188,13 @@ export default {
     const statusLabel = (validator) => {
       switch (validator?.validationStatus) {
         case VALIDATION_STATUS.DENY:
-          return "Refusé";
+          return "deny";
         case VALIDATION_STATUS.ACCEPT:
-          return "Accepté";
+          return "accept";
         case VALIDATION_STATUS.PENDING:
-          return isDelay(props.visa) ? "En  retard" : "En attente";
+          return isDelay(props.visa) ? "delayed" : "pending";
         default:
-          return "En attente";
+          return "pending";
       }
     };
 
