@@ -8,10 +8,19 @@
     position: absolute;
     background-color: var(--color-white);
     z-index: 10;
-    top: -6px;
     left: -12px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &.open-top {
+      top: auto;
+      bottom: -6px;
+    }
+
+    &.open-bottom {
+      top: -6px;
+      bottom: auto;
+    }
 
     .validator-title {
       color: var(--color-primary);

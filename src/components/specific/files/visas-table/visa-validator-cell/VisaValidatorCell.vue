@@ -1,5 +1,10 @@
 <template>
-  <div class="visa-validator-cell" @mouseenter="hovering = true" @mouseleave="hovering = false">
+  <div
+    class="visa-validator-cell"
+    ref="cellRef"
+    @mouseenter="hovering = true"
+    @mouseleave="hovering = false"
+  >
     <UserAvatarList
       class="group-card__avatars"
       :users="validatorsForVisa(visa)"
@@ -9,7 +14,12 @@
     />
 
     <transition name="fade">
-      <div v-show="hovering || showFullValidator" class="visa-validator-cell__details">
+      <div
+        v-if="hovering || showFullValidator"
+        ref="detailsRef"
+        class="visa-validator-cell__details"
+        :class="openDirection"
+      >
         <span class="validator-title m-b-6">Détails des validants</span>
 
         <div
@@ -52,7 +62,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, nextTick, watch } from "vue";
 import UserAvatarList from "../../../users/user-avatar-list/UserAvatarList.vue";
 import UserAvatar from "../../../users/user-avatar/UserAvatar.vue";
 import { VALIDATION_STATUS } from "../../../../../config/visa.js";
@@ -76,12 +86,13 @@ export default {
   setup(props) {
     const { projectGroups } = useGroups();
 
+    const openDirection = ref("open-bottom");
     const hovering = ref(false);
     const showFullValidator = ref(false);
 
-    /**
-     * Map userId -> [groups]
-     */
+    const cellRef = ref(null);
+    const detailsRef = ref(null);
+
     const userIdToGroupsMap = computed(() => {
       const map = new Map();
 
@@ -185,9 +196,28 @@ export default {
       }
     };
 
+    watch(hovering, async (isHovering) => {
+      if (!isHovering) return;
+
+      await nextTick();
+
+      if (!cellRef.value || !detailsRef.value) return;
+
+      const cellRect = cellRef.value.getBoundingClientRect();
+      const detailsHeight = detailsRef.value.offsetHeight;
+      const viewportHeight = window.innerHeight;
+
+      const spaceBelow = viewportHeight - cellRect.bottom;
+
+      openDirection.value = spaceBelow >= detailsHeight ? "open-bottom" : "open-top";
+    });
+
     return {
       hovering,
+      openDirection,
       showFullValidator,
+      cellRef,
+      detailsRef,
       avatarStatusClass,
       groupLabelForValidator,
       validatorsForVisa,
