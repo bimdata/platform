@@ -13,7 +13,6 @@
       :user="user"
       :size="itemSize"
       :class="itemClass ? itemClass(user) : null"
-      :style="{ 'border-color': borderColor }"
     />
     <template v-if="users.length > length">
       <div
@@ -56,10 +55,6 @@ export default {
     },
     itemClass: {
       type: Function,
-      default: null,
-    },
-    borderColor: {
-      type: String,
       default: null,
     },
     fixedWidth: {
