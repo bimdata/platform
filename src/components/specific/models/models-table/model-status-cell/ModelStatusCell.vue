@@ -1,7 +1,9 @@
 <template>
   <span class="model-status-cell" :class="`model-status-cell--${statusName}`">
-    <BIMDataSpinner v-if="['pending', 'in-progress'].includes(statusName)" />
-    <BIMDataIcon v-else :name="statusIcon" size="s" />
+    <div class="status-icon"></div>
+    <span>
+      {{ statusName === "completed" ? "ok" : statusName }}
+    </span>
   </span>
 </template>
 
@@ -14,12 +16,12 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     model: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const { fetchModelByID, loadProjectModels } = useModels();
@@ -27,7 +29,7 @@ export default {
     const statusName = ref("");
     const statusIcon = ref("");
 
-    const setStatus = status => {
+    const setStatus = (status) => {
       switch (status) {
         case MODEL_STATUS.PENDING:
           statusName.value = "pending";
@@ -80,9 +82,9 @@ export default {
 
     return {
       statusIcon,
-      statusName
+      statusName,
     };
-  }
+  },
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="files-manager">
-    <template v-if="fileStructure.children.length > 0">
+    <template v-if="hasFiles">
       <FilesManagerActions
         :currentFolder="currentFolder"
         :currentSpace="currentSpace"
@@ -12,8 +12,6 @@
         @update:searchText="searchText = $event"
         @upload-files="uploadFiles"
       />
-    </template>
-    <template v-if="fileStructure.children.length > 0">
       <div class="files-manager__content">
         <transition name="slide-fade-left">
           <FileTree
@@ -29,7 +27,7 @@
 
         <div
           class="files-manager__files"
-          :class="selectedFileTab.id !== 'folders' ? `without-tree` : ''"
+          :class="{ 'without-tree': selectedFileTab.id !== 'folders' }"
         >
           <transition name="fade">
             <FilesActionBar
@@ -185,7 +183,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
+import { computed, onActivated, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
@@ -194,6 +192,7 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { FILE_TYPE } from "../../../../config/files.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
 import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../config/projects.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
@@ -204,6 +203,7 @@ import { useModels } from "../../../../state/models.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
+import { collectDescendants } from "../../../../utils/file-tree.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { getFilesFromEvent } from "../../../../utils/files.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
@@ -269,13 +269,9 @@ export default {
     const { openModal, closeModal } = useAppModal();
 
     const { spaceProjects } = useProjects();
-    const { gedFilesTab } = useSession();
+    const { gedFilesTab, gedTargetFolder } = useSession();
 
-    const {
-      fileStructureHandler: handler,
-      moveFiles: move,
-      downloadFiles: download,
-    } = useFiles();
+    const { fileStructureHandler: handler, moveFiles: move, downloadFiles: download } = useFiles();
     const { createModel, createPhotosphere, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
@@ -285,52 +281,9 @@ export default {
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
     const allTags = ref([]);
+    const hasFiles = computed(() => props.fileStructure.children.length > 0);
 
-    const getFilesInFolder = (folder) => {
-      const files = [];
-      folder.children.forEach((child) => {
-        if (isFolder(child)) {
-          files.push(...getFilesInFolder(child));
-        } else {
-          files.push(child);
-        }
-      });
-      return files;
-    };
-    const allFiles = computed(() =>
-      props.fileStructure.children.flatMap((file) => {
-        if (isFolder(file)) {
-          return getFilesInFolder(file);
-        } else {
-          return file;
-        }
-      })
-    );
-
-    watch(
-      () => props.fileStructure,
-      (struct) => {
-        if (!currentFolder.value || !handler.exists(currentFolder.value)) {
-          currentFolder.value = struct;
-        } else {
-          currentFolder.value = handler.deserialize(currentFolder.value);
-        }
-      },
-      { immediate: true }
-    );
-    watch(
-      () => currentFolder.value,
-      (folder) => {
-        const childrenFolders = folder.children
-          .filter((child) => isFolder(child))
-          .sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
-        const childrenFiles = folder.children
-          .filter((child) => !isFolder(child))
-          .sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
-        currentFiles.value = childrenFolders.concat(childrenFiles);
-      },
-      { immediate: true }
-    );
+    const sortByName = (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 
     const filesTable = ref(null);
     const documentViewerFilesList = computed(() => {
@@ -428,7 +381,7 @@ export default {
 
     const filesToDelete = ref([]);
     const showDeleteModal = ref(false);
-    const openFileDeleteModal = files => {
+    const openFileDeleteModal = (files) => {
       filesToDelete.value = files;
       openModal({
         component: FilesDeleteModal,
@@ -465,7 +418,7 @@ export default {
       closeModal();
     };
 
-    const openFileDeleteModalOrWarningModal = files => {
+    const openFileDeleteModalOrWarningModal = (files) => {
       if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
         openModal({ component: WarningModal });
       } else {
@@ -487,27 +440,16 @@ export default {
     const showVersioningManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
-    const setManagerVisibility = (manager, visibility) => {
-      showVisaManager.value = false;
-      showVersioningManager.value = false;
-      showAccessManager.value = false;
-      showTagManager.value = false;
-
-      switch (manager) {
-        case "visa":
-          showVisaManager.value = visibility;
-          break;
-        case "versioning":
-          showVersioningManager.value = visibility;
-          break;
-        case "access":
-          showAccessManager.value = visibility;
-          break;
-        case "tag":
-          showTagManager.value = visibility;
-          break;
-        default:
-          break;
+    const managers = {
+      visa: showVisaManager,
+      versioning: showVersioningManager,
+      access: showAccessManager,
+      tag: showTagManager,
+    };
+    const setManagerVisibility = (manager, value) => {
+      Object.values(managers).forEach((ref) => (ref.value = false));
+      if (managers[manager]) {
+        managers[manager].value = value;
       }
     };
 
@@ -545,13 +487,13 @@ export default {
     };
 
     const visasLoading = ref(false);
-    const openVisaManager = file => {
+    const openVisaManager = (file) => {
       onTabChange(filesTabs[2]);
       openSidePanel();
       try {
         visasLoading.value = true;
         fileToManage.value = file;
-        currentVisa.value = file
+        currentVisa.value = file;
         setManagerVisibility("visa", true);
       } finally {
         visasLoading.value = false;
@@ -656,34 +598,30 @@ export default {
       });
     });
 
-    onMounted(async () => {
+    onMounted(() => {
       fetchVisas();
       fetchTags();
+    });
+
+    onActivated(() => {
+      const folderId = gedTargetFolder.get();
+      if (folderId) {
+        jumpToTargetFolder(folderId);
+      } else {
+        jumpToTargetFolder(props.fileStructure.id);
+      }
+      gedTargetFolder.clear();
     });
 
     const openSubscriptionModal = () => {
       openModal({ component: SubscriptionModal });
     };
 
-    const getFoldersInFolder = (folder) => {
-      const folders = [];
-      folder.children.forEach((child) => {
-        if (isFolder(child)) {
-          folders.push(child);
-          folders.push(...getFoldersInFolder(child));
-        }
-      });
-      return folders;
-    };
-    const allFolders = computed(() =>
-      props.fileStructure.children.flatMap((file) => {
-        if (isFolder(file)) {
-          return [file, ...getFoldersInFolder(file)];
-        } else {
-          return [];
-        }
-      })
-    );
+    const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
+    const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
+
+    const allFiles = computed(() => getFilesInFolder(props.fileStructure));
+    const allFolders = computed(() => getFoldersInFolder(props.fileStructure));
 
     const filesTabs = [
       {
@@ -742,11 +680,43 @@ export default {
       (visa) => visa.document.name
     );
 
+    const jumpToTargetFolder = (folderId) => {
+      selectedFileTab.value = filesTabs[0];
+      const folder = handler.get({ nature: FILE_TYPE.FOLDER, id: folderId });
+      currentFolder.value = handler.deserialize(folder);
+    };
+
     watch(searchText, (newValue) => {
       filterFilesSearchText.value = newValue;
       filterAllFilesSearchText.value = newValue;
       filterVisasSearchText.value = newValue;
     });
+
+    watch(
+      () => props.fileStructure,
+      (struct) => {
+        const folderId = gedTargetFolder.get();
+
+        if (folderId) {
+          jumpToTargetFolder(folderId);
+          gedTargetFolder.clear();
+        } else {
+          currentFolder.value = struct;
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => currentFolder.value,
+      (folder) => {
+        const childrenFolders = folder.children.filter(isFolder).sort(sortByName);
+        const childrenFiles = folder.children.filter((c) => !isFolder(c)).sort(sortByName);
+        currentFiles.value = childrenFolders.concat(childrenFiles);
+        gedTargetFolder.set(folder.id);
+      },
+      { immediate: true }
+    );
 
     return {
       // References
@@ -767,6 +737,7 @@ export default {
       filesToUpload,
       foldersToUpload,
       folderToManage,
+      hasFiles,
       importFromOtherProjectsActions,
       loadingFileIds,
       MODEL_TYPE,
