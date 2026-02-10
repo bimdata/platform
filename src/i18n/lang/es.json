@@ -33,7 +33,6 @@
           "sendNever": "Nunca enviar correos electrónicos de notificación",
           "sendEventOccurs": "En el momento en que ocurre el evento",
           "sendEvery": "Enviar un correo electrónico cada:",
-          "sendAt": "a las:",
           "monday": "Lunes",
           "tuesday": "Martes",
           "wednesday": "Miércoles",
@@ -44,39 +43,40 @@
           "successNotifText": "¡Notificaciones actualizadas!",
           "errorNotifText": "Error al actualizar las notificaciones",
           "successDeleteNotifText": "Se han desactivado las notificaciones.",
-          "errorDeleteNotifText": "Se ha producido un error al desactivar las notificaciones."
+          "errorDeleteNotifText": "Se ha producido un error al desactivar las notificaciones.",
+          "sendAt": ""
         },
         "activity": {
           "title": "Notificaciones de actividad del proyecto",
-          "recipientsNotificationsText": "¿Quién recibe las notificaciones?",
           "recipientsNotificationsButton": "Destinatarios de las notificaciones",
           "ged": {
-            "title": "Sistema de archivos",
             "fileUpload": "Enviar un archivo",
             "fileDeletion": "Eliminar un archivo",
             "newVersion": "Versión nueva",
             "folderCreation": "Crear carpeta",
-            "folderDeletion": "Eliminar carpeta"
+            "folderDeletion": "Eliminar carpeta",
+            "title": "Archivos"
           },
           "visa": {
-            "title": "VISA",
+            "title": "Notificaciones por correo electrónico de VISA",
             "visaCreation": "Crear Visa",
             "visaDeletion": "Eliminar Visa",
             "visaValidation": "Validar Visa",
             "visaRejection": "Denegación de Visa"
           },
           "bcf": {
-            "title": "BCF",
             "bcfCreation": "Crear BCF",
-            "bcfDeletion": "Eliminar BCF"
+            "bcfDeletion": "Eliminar BCF",
+            "title": "BCF"
           },
           "otherEvents": {
-            "title": "Otros eventos",
             "acceptInvit": "Aceptar invitación",
             "removeModels": "Eliminar plantillas",
             "createMetaBuilding": "Crear meta-building",
-            "deleteMetaBuilding": "Eliminar meta-building"
-          }
+            "deleteMetaBuilding": "Eliminar meta-building",
+            "title": ""
+          },
+          "recipientsNotificationsText": ""
         }
       },
       "recipients": {
@@ -266,7 +266,9 @@
   },
   "ModelsTable": {
     "headers": {
-      "version": "Versión"
+      "version": "Versión",
+      "tags": "Etiquetas",
+      "location": "Ubicación"
     },
     "emptyTablePlaceholder": {
       "text": "Sin modelo",
@@ -325,9 +327,11 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Admin",
-    "user": "Usuario",
-    "guest": "Invitado"
+    "guest": "Invitado",
+    "spaceAdmin": "",
+    "spaceUser": "",
+    "projectUser": "",
+    "projectAdmin": ""
   },
   "UsersManagerOnboarding": {
     "text": "Invitar a su primer colaborador",

@@ -33,7 +33,6 @@
           "sendNever": "Never send notification emails",
           "sendEventOccurs": "When the event occurs",
           "sendEvery": "Send an email every:",
-          "sendAt": "at:",
           "monday": "Monday",
           "tuesday": "Tuesday",
           "wednesday": "Wednesday",
@@ -44,39 +43,40 @@
           "successNotifText": "Notifications updated!",
           "errorNotifText": "Failed to update notifications.",
           "successDeleteNotifText": "Notifications have been disabled.",
-          "errorDeleteNotifText": "An error occurred while disabling notifications."
+          "errorDeleteNotifText": "An error occurred while disabling notifications.",
+          "sendAt": "To:"
         },
         "activity": {
           "title": "Project activity notifications",
-          "recipientsNotificationsText": "Who receives notifications?",
           "recipientsNotificationsButton": "Notification recipients",
           "ged": {
-            "title": "File system",
             "fileUpload": "File upload",
             "fileDeletion": "File deletion",
             "newVersion": "New version",
             "folderCreation": "Folder creation",
-            "folderDeletion": "Folder deletion"
+            "folderDeletion": "Folder deletion",
+            "title": "Files"
           },
           "visa": {
-            "title": "Visa",
+            "title": "VISA",
             "visaCreation": "Visa creation",
             "visaDeletion": "Visa deletion",
             "visaValidation": "Visa approval",
             "visaRejection": "Visa rejection"
           },
           "bcf": {
-            "title": "BCF",
             "bcfCreation": "BCF creation",
-            "bcfDeletion": "BCF deletion"
+            "bcfDeletion": "BCF deletion",
+            "title": "BCF"
           },
           "otherEvents": {
-            "title": "Other events",
             "acceptInvit": "Invitation acceptance",
-            "removeModels": "Models removed",
+            "removeModels": "Remove models",
             "createMetaBuilding": "Meta-building creation",
-            "deleteMetaBuilding": "Meta-building deletion"
-          }
+            "deleteMetaBuilding": "Meta-building deletion",
+            "title": "Other events"
+          },
+          "recipientsNotificationsText": "Recipients"
         }
       },
       "recipients": {
@@ -266,7 +266,9 @@
   },
   "ModelsTable": {
     "headers": {
-      "version": "Version"
+      "version": "Version",
+      "tags": "Tags",
+      "location": "Location"
     },
     "emptyTablePlaceholder": {
       "text": "No template",
@@ -325,11 +327,11 @@
     }
   },
   "UserRoleBadge": {
-    "spaceAdmin": "Space admin",
-    "projectAdmin": "Project admin",
-    "spaceUser": "Space user",
-    "projectUser": "Project user",
-    "guest": "Guest"
+    "guest": "Guest",
+    "spaceAdmin": "Space Admin",
+    "spaceUser": "Space User",
+    "projectUser": "Project User",
+    "projectAdmin": "Project Admin"
   },
   "UsersManagerOnboarding": {
     "text": "Invite your first collaborator",

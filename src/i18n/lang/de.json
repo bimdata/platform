@@ -25,15 +25,14 @@
       "size": "Sie haben nicht mehr genug Speicherplatz."
     },
     "notifications": {
-      "title": "E-Mail-Benachrichtigungseinstellungen",
-      "headerText": "Passen Sie hier die Art und Häufigkeit der E-Mail-Benachrichtigungen an",
+      "title": "Einstellungen Benachrichtigung per Email",
+      "headerText": "Die Projektkonfiguration auf BIMData ermöglicht die Anpassung der Art und Häufigkeit der Benachrichtigungen für eine personalisierte Nachbearbeitung",
       "validateButton": "Projektkonfiguration bestätigen",
       "settings": {
         "general": {
-          "sendNever": "Keine Benachrichtigungsmails versenden",
-          "sendEventOccurs": "Sofort versenden",
-          "sendEvery": "E-Mail versenden am:",
-          "sendAt": "um:",
+          "sendNever": "nie Benachrichtigungsmail senden",
+          "sendEventOccurs": "ereignisaktuell versenden",
+          "sendEvery": "eine Mail immer versenden am :",
           "monday": "Montag",
           "tuesday": "Dienstag",
           "wednesday": "Mittwoch",
@@ -44,39 +43,40 @@
           "successNotifText": "Benachrichtigungen aktualisiert!",
           "errorNotifText": "Aktualisierung der Benachrichtigungen fehlgeschlagen",
           "successDeleteNotifText": "Benachrichtigungen wurden deaktiviert.",
-          "errorDeleteNotifText": "Bei der Deaktivierung der Benachrichtigungen ist ein Fehler aufgetreten."
+          "errorDeleteNotifText": "Bei der Deaktivierung der Benachrichtigungen ist ein Fehler aufgetreten.",
+          "sendAt": "An:"
         },
         "activity": {
-          "title": "Projektaktivität",
-          "recipientsNotificationsText": "Wer erhält die Benachrichtigungen?",
-          "recipientsNotificationsButton": "Empfänger",
+          "title": "Benachrichtigungen Projektaktivität",
+          "recipientsNotificationsButton": "Empfänger der Benachrichtigungen",
           "ged": {
-            "title": "Dateisystem",
-            "fileUpload": "Datei abgelegt",
-            "fileDeletion": "Datei gelöscht",
-            "newVersion": "Neue Version",
-            "folderCreation": "Ordner erstellt",
-            "folderDeletion": "Ordner gelöscht"
+            "fileUpload": "eine Datei ablegen",
+            "fileDeletion": "eine Datei löschen",
+            "newVersion": "neue Version",
+            "folderCreation": "Ordner erstellen",
+            "folderDeletion": "Ordner löschen",
+            "title": "Dateisystem"
           },
           "visa": {
             "title": "VISA",
-            "visaCreation": "Visa erstellt",
-            "visaDeletion": "Visa gelöscht",
-            "visaValidation": "Visa bestätigt",
-            "visaRejection": "Visa abgelehnt"
+            "visaCreation": "Visa erstellen",
+            "visaDeletion": "Visa löschen",
+            "visaValidation": "Visa bestätigen",
+            "visaRejection": "Visa ablehnen"
           },
           "bcf": {
-            "title": "BCF",
-            "bcfCreation": "BCF erstellt",
-            "bcfDeletion": "BCF gelöscht"
+            "bcfCreation": "BCF erstellen",
+            "bcfDeletion": "BCF löschen",
+            "title": "BCF"
           },
           "otherEvents": {
-            "title": "Sonstige Ereignisse",
-            "acceptInvit": "Einladung angenommen",
-            "removeModels": "Modell entfernt",
-            "createMetaBuilding": "meta-building erstellt",
-            "deleteMetaBuilding": "meta-building gelöscht"
-          }
+            "acceptInvit": "Einladung annehmen",
+            "removeModels": "Aus den Projektvorlagen löschen",
+            "createMetaBuilding": "meta-building erstellen",
+            "deleteMetaBuilding": "meta-building löschen",
+            "title": "Weitere Veranstaltungen"
+          },
+          "recipientsNotificationsText": "Wer erhält die Benachrichtigungen?"
         }
       },
       "recipients": {
@@ -266,7 +266,9 @@
   },
   "ModelsTable": {
     "headers": {
-      "version": "Version"
+      "version": "Version",
+      "tags": "Tags",
+      "location": "Speicherort"
     },
     "emptyTablePlaceholder": {
       "text": "Keine Vorlage",
@@ -325,9 +327,11 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Admin",
-    "user": "User",
-    "guest": "Gast"
+    "guest": "Gast",
+    "spaceAdmin": "Raumverwaltung",
+    "spaceUser": "Raumnutzer",
+    "projectUser": "Projektnutzer",
+    "projectAdmin": "Projektverwaltung"
   },
   "UsersManagerOnboarding": {
     "text": "Ihren ersten Mitarbeiter einladen",
