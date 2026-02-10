@@ -1,3 +1,21 @@
+## [1.3.3](https://github.com/bimdata/platform/compare/v1.3.2...v1.3.3) (2026-02-10)
+
+
+### chore
+
+* bump @bimdata/viewer@2.16.2 from Github Actions [skip e2e] ([77aefd3](https://github.com/bimdata/platform/commit/77aefd3173f45601d8e55bc680dbbb9392e30eda))
+* bump @bimdata/viewer@2.16.2-beta.1 from Github Actions [skip e2e] ([9a37d39](https://github.com/bimdata/platform/commit/9a37d393b9804ff33d01c5b7392a26e9cc333bdc))
+* bump @bimdata/viewer@2.16.2-beta.2 from Github Actions [skip e2e] ([36dcd7a](https://github.com/bimdata/platform/commit/36dcd7ae00057d4925d1f060bf4b7985dec6f5a9))
+* bump @bimdata/viewer@2.16.2-beta.3 from Github Actions [skip e2e] ([4718ce9](https://github.com/bimdata/platform/commit/4718ce95a5d90b1d3fc2eab6bca835104a9a8912))
+* bump @bimdata/viewer@2.16.2-beta.4 from Github Actions [skip e2e] ([d4b74a4](https://github.com/bimdata/platform/commit/d4b74a4b057ba1fe10adfc7c7d17223e7b2ae168))
+* bump @bimdata/viewer@2.16.2-beta.5 from Github Actions [skip e2e] ([ee1911f](https://github.com/bimdata/platform/commit/ee1911f3a7179446f40cff45ec65db6e28a482d6))
+* update dependencies ([e15ae00](https://github.com/bimdata/platform/commit/e15ae00ad68e6154d8c5220e3479f08492e77775))
+* update dependencies ([729b7d2](https://github.com/bimdata/platform/commit/729b7d2cb3d0970f21e6869075f75698a4ca263b))
+
+### PATCH
+
+* New Models Manager UI ([2b88754](https://github.com/bimdata/platform/commit/2b88754e97e2b3115f97131c63d659acdd67ffdd))
+
 ## [1.3.2](https://github.com/bimdata/platform/compare/v1.3.1...v1.3.2) (2026-01-22)
 
 
