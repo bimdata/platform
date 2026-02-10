@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/bimdata/platform/compare/v1.3.3...v1.3.4) (2026-02-10)
+
+
+### PATCH
+
+* i18n: Update en, de and es translations ([8a54825](https://github.com/bimdata/platform/commit/8a54825ac44038333760b16cf2d3624c01b573c1))
+
 ## [1.3.3](https://github.com/bimdata/platform/compare/v1.3.2...v1.3.3) (2026-02-10)
 
 
