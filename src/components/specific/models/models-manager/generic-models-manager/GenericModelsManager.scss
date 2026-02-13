@@ -21,11 +21,11 @@
     color: var(--color-white);
   }
 
-  &__btn-add {
-    position: absolute;
-    right: 12px;
-    top: 3px;
+  &__search {
+    position: relative;
+  }
 
+  &__btn-add {
     span {
       margin-right: var(--spacing-unit);
     }

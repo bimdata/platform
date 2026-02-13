@@ -1,39 +1,55 @@
 <template>
   <div class="generic-models-manager">
-    <BIMDataTabs
-      width="100%"
-      height="38px"
-      tabSize="120px"
-      :tabs="tabs"
-      :selected="currentTab.id"
-      @tab-click="selectTab"
-    >
-      <template #tab="{ tab }">
-        <span class="generic-models-manager__tab-label">
-          {{ $t(`ModelsManager.tabs.${tab.label}`) }}
-        </span>
-        <span
-          class="generic-models-manager__tab-count"
-          v-if="tab.models.length > 0"
-        >
-          {{ tab.models.length }}
-        </span>
-      </template>
-    </BIMDataTabs>
+    <div class="flex items-center justify-between">
+      <BIMDataTabs
+        width="100%"
+        height="38px"
+        tabSize="120px"
+        :tabs="tabs"
+        :selected="currentTab.id"
+        @tab-click="selectTab"
+      >
+        <template #tab="{ tab }">
+          <span class="generic-models-manager__tab-label">
+            {{ $t(`ModelsManager.tabs.${tab.label}`) }}
+          </span>
+          <span class="generic-models-manager__tab-count" v-if="tab.models.length > 0">
+            {{ tab.models.length }}
+          </span>
+        </template>
+      </BIMDataTabs>
 
-    <BIMDataButton
-      v-if="!isProjectGuest(project)"
-      class="generic-models-manager__btn-add"
-      color="primary"
-      width="100px"
-      fill
-      radius
-      icon
-      @click="uploadModels"
-    >
-      <BIMDataIconExport margin="0 12px" />
-      <span> {{ $t("t.add") }}</span>
-    </BIMDataButton>
+      <BIMDataSearch
+        :placeholder="$t('t.search')"
+        v-model="searchText"
+        color="primary"
+        radius
+        clear
+        width="200px"
+        height="32px"
+        class="generic-models-manager__search m-r-12"
+        :style="{
+          right:
+            currentTab?.id === 'photosphereBuildings' || currentTab?.id === 'metaBuildings'
+              ? '112px'
+              : '0',
+        }"
+      />
+
+      <BIMDataButton
+        v-if="!isProjectGuest(project)"
+        class="generic-models-manager__btn-add m-r-12"
+        color="primary"
+        width="100px"
+        fill
+        radius
+        icon
+        @click="uploadModels"
+      >
+        <BIMDataIconExport margin="0 12px" />
+        <span> {{ $t("t.add") }}</span>
+      </BIMDataButton>
+    </div>
 
     <div class="generic-models-manager__separator"></div>
 
@@ -54,7 +70,7 @@
     <ModelsTable
       class="generic-models-manager__table"
       :project="project"
-      :models="displayedModels"
+      :models="displayedModelsFiltered"
       :fileUploads="fileUploads"
       @file-uploaded="onFileUploaded"
       @upload-canceled="onUploadCanceled"
@@ -90,6 +106,7 @@
 
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
+import { useListFilter } from "../../../../../composables/list-filter.js";
 import { useRouter } from "vue-router";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../../config/projects.js";
@@ -110,21 +127,21 @@ export default {
   components: {
     ModelsActionBar,
     ModelsDeleteModal,
-    ModelsTable
+    ModelsTable,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     tabs: {
       type: Array,
       required: true,
-      validator: value => value.length > 0
+      validator: (value) => value.length > 0,
     },
     types: {
       type: Array,
-      required: true
+      required: true,
     },
     fileUploadParams: {
       type: Object,
@@ -147,11 +164,11 @@ export default {
 
     const fileUploads = ref([]);
     const fileExtensions = computed(() =>
-      props.types.reduce((ext, t) => ext.concat(MODEL_CONFIG[t].ext), [])
+      props.types.reduce((ext, t) => ext.concat(MODEL_CONFIG[t].ext), []),
     );
 
     const currentTab = ref({});
-    const selectTab = tab => {
+    const selectTab = (tab) => {
       currentTab.value = tab;
       emit("tab-changed", tab);
     };
@@ -160,36 +177,39 @@ export default {
       () => props.tabs,
       () => {
         currentTab.value =
-          props.tabs.find(tab => tab.id === currentTab.value?.id) ||
-          props.tabs[0];
+          props.tabs.find((tab) => tab.id === currentTab.value?.id) || props.tabs[0];
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const displayedModels = ref([]);
     watchEffect(() => {
       displayedModels.value = currentTab.value.models;
     });
+    const { filteredList: displayedModelsFiltered, searchText } = useListFilter(
+      displayedModels,
+      ({ name }) => [name].join(" "),
+    );
 
     const selection = ref([]);
 
-    const archiveModels = async models => {
+    const archiveModels = async (models) => {
       await updateModels(
         props.project,
-        models.map(model => ({ ...model, archived: true }))
+        models.map((model) => ({ ...model, archived: true })),
       );
     };
 
-    const unarchiveModels = async models => {
+    const unarchiveModels = async (models) => {
       await updateModels(
         props.project,
-        models.map(model => ({ ...model, archived: false }))
+        models.map((model) => ({ ...model, archived: false })),
       );
     };
 
     const modelsToDelete = ref([]);
     const showDeleteModal = ref(false);
-    const openDeleteModal = models => {
+    const openDeleteModal = (models) => {
       modelsToDelete.value = models;
       showDeleteModal.value = true;
     };
@@ -198,7 +218,7 @@ export default {
       showDeleteModal.value = false;
     };
 
-    const openDeleteModalOrWarningModal = models => {
+    const openDeleteModalOrWarningModal = (models) => {
       if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
         const { openModal } = useAppModal();
         openModal({ component: WarningModal });
@@ -207,34 +227,33 @@ export default {
       }
     };
 
-    const downloadModels = async models => {
+    const downloadModels = async (models) => {
       await download(
         props.project,
-        models.map(({ document }) => document)
+        models.map(({ document }) => document),
       );
     };
 
-    const openModels = models => {
+    const openModels = (models) => {
       openInViewer(router, props.project, models, WINDOWS.IFC3D);
     };
 
     const uploadModels = () => {
       fileUploadInput(
         "file",
-        event => {
+        (event) => {
           fileUploads.value = fileUploads.value.concat(
-            Array.from(event.target.files)
-              .map((file, i) => {
-                file.key = Math.random() * i, file;
-                file.params = props.fileUploadParams;
-                return file;
-              })
+            Array.from(event.target.files).map((file, i) => {
+              ((file.key = Math.random() * i), file);
+              file.params = props.fileUploadParams;
+              return file;
+            }),
           );
         },
         {
           accept: fileExtensions.value,
-          multiple: true
-        }
+          multiple: true,
+        },
       );
     };
 
@@ -242,13 +261,13 @@ export default {
       if (!isModel(file)) {
         await createModel(props.project, file);
       }
-      const index = fileUploads.value.findIndex(f => f.key === key);
+      const index = fileUploads.value.findIndex((f) => f.key === key);
       fileUploads.value.splice(index, 1);
       emit("file-uploaded");
     };
     const onUploadCanceled = async ({ key }) => {
       await wait(3000);
-      const index = fileUploads.value.findIndex(f => f.key === key);
+      const index = fileUploads.value.findIndex((f) => f.key === key);
       fileUploads.value.splice(index, 1);
     };
 
@@ -256,6 +275,8 @@ export default {
       // References
       currentTab,
       displayedModels,
+      displayedModelsFiltered,
+      searchText,
       fileUploads,
       modelsToDelete,
       selection,
@@ -272,9 +293,9 @@ export default {
       openModels,
       selectTab,
       unarchiveModels,
-      uploadModels
+      uploadModels,
     };
-  }
+  },
 };
 </script>
 

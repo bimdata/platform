@@ -39,29 +39,25 @@ import GenericModelsManager from "../generic-models-manager/GenericModelsManager
 import PhotosphereBuildingMakerPanel from "./PhotosphereBuildingMakerPanel.vue";
 import PhotosphereBuildingPanel from "./PhotosphereBuildingPanel.vue";
 
-const tabsDef = [
-  { id: "upload" },
-  { id: "photosphereBuildings" },
-  { id: "archive" }
-];
+const tabsDef = [{ id: "upload" }, { id: "photosphereBuildings" }, { id: "archive" }];
 
 export default {
   components: {
-    GenericModelsManager
+    GenericModelsManager,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     models: {
       type: Array,
-      required: true
+      required: true,
     },
     types: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["file-uploaded"],
   setup(props) {
@@ -79,13 +75,13 @@ export default {
               onClose: closeSidePanel,
               space: props.project.cloud,
               project: props.project,
-            })
-          }
-        }
+            });
+          },
+        },
       });
     };
 
-    const viewMetaBuilding = model => {
+    const viewMetaBuilding = (model) => {
       openSidePanel("right", {
         component: {
           render() {
@@ -94,13 +90,13 @@ export default {
               space: props.project.cloud,
               project: props.project,
               model,
-            })
-          }
-        }
+            });
+          },
+        },
       });
     };
 
-    const editMetaBuilding = model => {
+    const editMetaBuilding = (model) => {
       openSidePanel("right", {
         component: {
           render() {
@@ -109,29 +105,26 @@ export default {
               space: props.project.cloud,
               project: props.project,
               model,
-            })
-          }
-        }
+            });
+          },
+        },
       });
     };
 
     watch(
       () => props.models,
-      models => {
+      (models) => {
         const modelsBySource = segregateBySource(
-          models.filter(model => model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING)
+          models.filter((model) => model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING),
         );
-        const buildings = models.filter(
-          model => model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
-        );
-        tabs.value = tabs.value.map(tab => ({
+        const buildings = models.filter((model) => model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING);
+        tabs.value = tabs.value.map((tab) => ({
           ...tab,
           label: tab.label || tab.id,
-          models:
-            tab.id === "photosphereBuildings" ? buildings : modelsBySource[tab.id]
+          models: tab.id === "photosphereBuildings" ? buildings : modelsBySource[tab.id],
         }));
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
@@ -142,9 +135,9 @@ export default {
       editMetaBuilding,
       isProjectGuest,
       openBuildingMaker,
-      viewMetaBuilding
+      viewMetaBuilding,
     };
-  }
+  },
 };
 </script>
 
