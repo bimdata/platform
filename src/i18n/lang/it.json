@@ -594,6 +594,7 @@
       "deletedUser": "Utente eliminato",
       "validatorList": {
         "accept": "Convalidato",
+        "delegate": "Delegato",
         "deny": "Respinto",
         "commented": "Commentato",
         "pending": "In attesa",

@@ -790,12 +790,22 @@
       "deletedUser": " Utilisateur supprimé",
       "validatorList": {
         "accept": "Validé",
+        "delayed": "En retard",
         "deny": "Refusé",
         "commented": "Commenté",
         "pending": "En attente",
         "getRidOfValidator": "Retirer le validant",
         "refresh": "Réinitialiser la validation"
       }
+    },
+    "VisaValidatorCell": {
+      "title": "Détails des validants",
+      "noGroup": "Sans groupe",
+      "accept": "Validé",
+      "delayed": "En retard",
+      "deny": "Refusé",
+      "pending": "En attente",
+      "multipleGroups": "{count} groupes"
     },
     "comments": {
       "commentary": "Commentaire",

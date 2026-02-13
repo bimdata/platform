@@ -32,12 +32,7 @@
       </span>
     </template>
     <template #cell-validators="{ row: visa }">
-      <UserAvatarList
-        class="group-card__avatars"
-        :users="visa.validations.map((validation) => validation.validator).filter(Boolean)"
-        itemSize="28"
-        itemGap="18"
-      />
+      <VisaValidatorCell :visa="visa" />
     </template>
     <template #cell-due_date="{ row: visa }">
       {{ $d(visa.deadline, "short") }}
@@ -60,7 +55,7 @@
     </template>
     <template #cell-buttons="{ row: visa }">
       <BIMDataButton
-        v-if="fullName(user) === fullName(visa.creator)"
+        v-if="isCreator(visa)"
         color="default"
         outline
         radius
@@ -85,7 +80,7 @@
     </template>
     <template #cell-actions="{ row: visa }">
       <VisaActionsCell
-        v-if="fullName(user) === fullName(visa.creator)"
+        v-if="isCreator(visa)"
         :visa="visa"
         @delete="$emit('delete', visa)"
         @edit-visa="$emit('reach-visa', visa)"
@@ -101,6 +96,7 @@ import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
 import { enhanceVisa } from "../../../../utils/visas.js";
 import { useFiles } from "../../../../state/files.js";
+
 import { useUser } from "../../../../state/user.js";
 import { fullName } from "../../../../utils/users.js";
 import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
@@ -108,12 +104,13 @@ import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
 import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
 import VisaActionsCell from "./visa-actions-cell/VisaActionsCell.vue";
 import FilePathCell from "../files-table/file-path-cell/FilePathCell.vue";
-
+import VisaValidatorCell from "./visa-validator-cell/VisaValidatorCell.vue";
 export default {
   components: {
     UserAvatarList,
     VisaActionsCell,
     FilePathCell,
+    VisaValidatorCell,
   },
   props: {
     allFolders: {
@@ -121,6 +118,7 @@ export default {
     },
     visas: {
       type: Array,
+      default: () => [],
       required: true,
     },
     selection: {
@@ -133,12 +131,10 @@ export default {
     const { user } = useUser();
     const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
-    const {
-      fileStructureHandler: handler,
-    } = useFiles();
+    const { fileStructureHandler: handler } = useFiles();
 
     const enhancedVisas = computed(() =>
-      props.visas.map((visa) => enhanceVisa(visa, user.value, t, handler))
+      props.visas.map((visa) => enhanceVisa(visa, user.value, t, handler)),
     );
 
     const columns = computed(() => {
@@ -156,11 +152,14 @@ export default {
       }));
     });
 
+    const isCreator = (visa) =>
+      user.value && visa.creator && fullName(user.value) === fullName(visa.creator);
+
     const validationClasses = (visa) => {
       if (visa.status === VISA_STATUS.CLOSE) {
         return "closed-visa";
       }
-      if (fullName(user.value) === fullName(visa.creator)) {
+      if (isCreator(visa)) {
         return "ask-visa";
       } else {
         return "waiting-visa";
@@ -170,7 +169,7 @@ export default {
       if (visa.status === VISA_STATUS.CLOSE) {
         return "visa";
       }
-      if (fullName(user.value) === fullName(visa.creator)) {
+      if (isCreator(visa)) {
         return "unknownFile";
       } else {
         return "visa";
@@ -206,6 +205,7 @@ export default {
       user,
       fullName,
       enhancedVisas,
+      isCreator,
       isDelay,
       statusClasses,
       statusIcon,

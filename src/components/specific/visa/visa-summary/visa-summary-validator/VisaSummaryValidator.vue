@@ -24,11 +24,7 @@
       </div>
     </div>
     <div class="visa-summary-validator__right-side">
-      <template
-        v-if="
-          !isClosed && user.isSelf && user.status != VALIDATION_STATUS.PENDING
-        "
-      >
+      <template v-if="!isClosed && user.isSelf && user.status != VALIDATION_STATUS.PENDING">
         <BIMDataButton
           data-test-id="btn-refresh-validation"
           radius
@@ -40,15 +36,16 @@
         </BIMDataButton>
       </template>
       <template v-if="user.hasAccess">
-        <div :class="`visa-summary-validator__right-side__${user.status}`">
+        <div
+          :class="{
+            [`visa-summary-validator__right-side__${user.status}`]: true,
+            delayed: validationStatus(user) === 'delayed',
+          }"
+        >
           <span>
             {{ $t(`Visa.summary.validatorList.${validationStatus(user)}`) }}
           </span>
-          <BIMDataIcon
-            :name="iconStatus(user)"
-            size="xs"
-            style="margin-top: 2px"
-          />
+          <BIMDataIcon :name="iconStatus(user)" size="xs" style="margin-top: 2px" />
         </div>
       </template>
       <template v-else>
@@ -92,34 +89,43 @@ import VisaSummaryValidatorActions from "./visa-summary-validator-actions/VisaSu
 export default {
   components: {
     UserAvatar,
-    VisaSummaryValidatorActions
+    VisaSummaryValidatorActions,
   },
   props: {
     userList: {
       type: Object,
-      required: true
+      required: true,
     },
     isAuthor: {
       type: Boolean,
-      required: true
+      required: true,
     },
     isClosed: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
+    visaDeadline: {
+      type: Date,
+      required: false,
+    },
   },
   emits: ["reset-validation", "delete-validation"],
-  setup() {
+  setup(props) {
     const currentPeopleId = ref(null);
     const isWarningHover = ref(false);
 
-    const hasVoted = user => user.status !== VALIDATION_STATUS.PENDING;
+    const hasVoted = (user) => user.status !== VALIDATION_STATUS.PENDING;
 
-    const validationStatus = user => {
+    const validationStatus = (user) => {
       const { hasCommented, status } = user;
-
       if (hasCommented && status === VALIDATION_STATUS.PENDING) {
         return "commented";
+      } else if (
+        props.visaDeadline &&
+        new Date() > new Date(props.visaDeadline) &&
+        status === VALIDATION_STATUS.PENDING
+      ) {
+        return "delayed";
       } else if (user.status === VALIDATION_STATUS.PENDING) {
         return "pending";
       } else if (user.status === VALIDATION_STATUS.ACCEPT) {
@@ -129,7 +135,7 @@ export default {
       }
     };
 
-    const iconStatus = user => {
+    const iconStatus = (user) => {
       const { hasCommented, status } = user;
 
       if (hasCommented && status === VALIDATION_STATUS.PENDING) {
@@ -143,7 +149,7 @@ export default {
       }
     };
 
-    const hoveringValidator = peopleId => {
+    const hoveringValidator = (peopleId) => {
       if (peopleId) {
         isWarningHover.value = true;
         currentPeopleId.value = peopleId;
@@ -162,9 +168,9 @@ export default {
       hoveringValidator,
       validationStatus,
       iconStatus,
-      hasVoted
+      hasVoted,
     };
-  }
+  },
 };
 </script>
 
