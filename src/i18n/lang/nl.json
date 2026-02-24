@@ -591,6 +591,7 @@
       "deletedUser": "Gebruiker verwijderd",
       "validatorList": {
         "accept": "Gevalideerd",
+        "delayed": "Uitgesteld",
         "deny": "Geweigerd",
         "commented": "Becommentarieerd",
         "pending": "In afwachting van",

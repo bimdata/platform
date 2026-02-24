@@ -35,12 +35,15 @@
     align-items: center;
 
     span {
-      margin: auto var(--spacing-unit) auto 0;
+      margin: auto calc(var(--spacing-unit) / 2) auto 0;
     }
 
     &__P {
       display: flex;
       color: var(--color-primary);
+      &.delayed {
+        color: var(--color-warning);
+      }
     }
     &__A {
       display: flex;

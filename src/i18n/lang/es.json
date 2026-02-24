@@ -673,6 +673,7 @@
       "deletedUser": "Usuario eliminado",
       "validatorList": {
         "accept": "Confirmado",
+        "delayed": "Retrasado",
         "deny": "Rechazado",
         "commented": "Comentado",
         "pending": "En espera",

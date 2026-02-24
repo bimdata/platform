@@ -201,6 +201,7 @@
               :isAuthor="isAuthor"
               :userList="formatedVisa.validations"
               :isClosed="isClosed"
+              :visaDeadline="formatedVisa.deadline"
               @reset-validation="onResetValidation"
               @delete-validation="onDeleteValidation"
             />
@@ -270,9 +271,7 @@ export default {
       updateVisa,
     } = useVisa();
 
-    const {
-      fileStructureHandler: handler,
-    } = useFiles();
+    const { fileStructureHandler: handler } = useFiles();
 
     const isClosed = ref(false);
     const isEditing = ref(false);
@@ -311,7 +310,7 @@ export default {
           isSelf: isSelf(validation.validator),
           hasAccess: visa.validations_in_error.length
             ? !visa.validations_in_error.some(
-                (validationInErrorId) => validationInErrorId === validation.id
+                (validationInErrorId) => validationInErrorId === validation.id,
               )
             : true,
         }))
@@ -330,10 +329,10 @@ export default {
         return {
           ...user,
           isSelected: visa.validations.some(
-            ({ validator }) => validator && validator.id === user.id
+            ({ validator }) => validator && validator.id === user.id,
           ),
           validation: visa.validations.find(
-            ({ validator }) => validator && validator.id === user.id
+            ({ validator }) => validator && validator.id === user.id,
           ),
         };
       });
@@ -345,12 +344,13 @@ export default {
       }
       if (!isAuthor.value) {
         validationUserId.value = props.visa.validations.find(({ validator }) =>
-          isSelf(validator)
+          isSelf(validator),
         ).id;
       }
       isClosed.value = props.visa.status === VISA_STATUS.CLOSE;
       userProjectList.value = await fetchDocumentUsers(props.visa);
-      formatedVisa.value = formatVisa(props.visa);
+      const visa = await fetchVisa(props.project, props.visa);
+      formatedVisa.value = formatVisa(visa);
     });
 
     const reloadVisa = async () => {
@@ -371,7 +371,7 @@ export default {
     const userValidationStatus = computed(() => {
       if (!isAuthor.value) {
         const status = formatedVisa.value.validations.find(
-          ({ id: validationId }) => validationId === validationUserId.value
+          ({ id: validationId }) => validationId === validationUserId.value,
         ).status;
 
         return {
@@ -390,7 +390,7 @@ export default {
           props.project,
           props.visa.document,
           props.visa,
-          validationUserId.value
+          validationUserId.value,
         );
         await reloadVisa();
       }
@@ -404,7 +404,7 @@ export default {
           props.project,
           props.visa.document,
           props.visa,
-          validationUserId.value
+          validationUserId.value,
         );
         await reloadVisa();
       }
@@ -415,7 +415,7 @@ export default {
         props.project,
         props.visa.document,
         props.visa,
-        (validationId = validationId || validationUserId.value)
+        (validationId = validationId || validationUserId.value),
       );
       await reloadVisa();
     };
@@ -491,7 +491,7 @@ export default {
             } else if (isToDel) {
               await onDeleteValidation(validationId);
             }
-          })
+          }),
       );
       await reloadVisa();
     });

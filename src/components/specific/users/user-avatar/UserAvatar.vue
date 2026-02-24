@@ -5,7 +5,7 @@
     :style="{
       width: `${size}px`,
       height: `${size}px`,
-      fontSize: `${initialsSize ? initialsSize : +size * 0.382}px`
+      fontSize: `${initialsSize ? initialsSize : +size * 0.382}px`,
     }"
   >
     <template v-if="user.profile_picture">
@@ -27,37 +27,36 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
+      required: true,
     },
     size: {
       type: [Number, String],
       default: 32,
-      validate: value => value >= 32
+      validate: (value) => value >= 32,
     },
     initialsSize: {
-      type: [Number, String]
+      type: [Number, String],
     },
     color: {
       type: String,
       default: "primary",
-      validate: value =>
-        ["primary", "secondary", "silver-light"].includes(value)
-    }
+      validate: (value) => ["primary", "secondary", "silver-light"].includes(value),
+    },
   },
   setup(props) {
     /* eslint-disable */
-    const initials = computed(
-      () => (
-        `${props.user.firstname && props.user.firstname[0] || ""}`
-        + `${props.user.lastname && props.user.lastname[0] || ""}`
-      ).toUpperCase()
+    const initials = computed(() =>
+      (
+        `${(props.user.firstname && props.user.firstname[0]) || ""}` +
+        `${(props.user.lastname && props.user.lastname[0]) || ""}`
+      ).toUpperCase(),
     );
     /* eslint-enable */
 
     return {
-      initials
+      initials,
     };
-  }
+  },
 };
 </script>
 

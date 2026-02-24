@@ -673,6 +673,7 @@
       "deletedUser": "User removed",
       "validatorList": {
         "accept": "Validated",
+        "delayed": "Delayed",
         "deny": "Refused",
         "commented": "Commented",
         "pending": "Awaiting",
@@ -688,6 +689,15 @@
     },
     "selectionValidator": {
       "warning": "This user cannot access the file."
+    },
+    "VisaValidatorCell": {
+      "title": "Visa details",
+      "noGroup": "No group",
+      "accept": "Accepted",
+      "delayed": "Delayed",
+      "deny": "Denied",
+      "pending": "Pending",
+      "multipleGroups": "{count} groups"
     },
     "noVisa": "A VISA has not yet been created",
     "accept": "Accept",

@@ -591,6 +591,7 @@
       "deletedUser": "Brukeren er fjernet",
       "validatorList": {
         "accept": "Verifisert",
+        "delayed": "Forsinket",
         "deny": "Avslått",
         "commented": "Kommentert",
         "pending": "Avventer",
