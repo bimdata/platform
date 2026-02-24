@@ -3,11 +3,11 @@ export default [
     id: "id",
     label: "ID",
     width: "100px",
-    align: "center"
+    align: "center",
   },
   {
     id: "name",
-    text: "t.name"
+    text: "t.name",
   },
   {
     id: "tags",
@@ -15,41 +15,41 @@ export default [
     filter: true,
     filterKey: "name",
     width: "100px",
-    align: "center"
+    align: "center",
   },
   {
     id: "location",
     text: "ModelsTable.headers.location",
-    width: "200px",
-    align: "left"
+    width: "150px",
+    align: "left",
   },
   {
     id: "version",
     text: "ModelsTable.headers.version",
     width: "100px",
-    align: "center"
+    align: "center",
   },
   {
     id: "creator",
     text: "t.createdBy",
     width: "160px",
-    align: "center"
+    align: "center",
   },
   {
     id: "lastupdate",
     text: "t.modifiedOn",
     width: "160px",
-    align: "center"
+    align: "center",
   },
   {
     id: "status",
     text: "t.status",
     width: "120px",
-    align: "center"
+    align: "center",
   },
   {
     id: "actions",
     label: " ",
-    width: "200px"
-  }
+    width: "200px",
+  },
 ];

@@ -142,7 +142,7 @@ export default {
   ],
   setup(props) {
     const { t } = useI18n();
-    const { isLG, isXL } = useStandardBreakpoints();
+    const { isLG, isXL, isXXL } = useStandardBreakpoints();
     const { projectFileStructure } = useFiles();
 
     const modelsTable = ref(null);
@@ -150,11 +150,17 @@ export default {
       let filteredColumns = columnsDef;
       if (isLG.value) {
         filteredColumns = filteredColumns.filter((col) =>
-          ["name", "status", "actions"].includes(col.id)
+          ["name", "status", "actions"].includes(col.id),
         );
       } else if (isXL.value) {
         filteredColumns = filteredColumns.filter((col) =>
-          ["name", "creator", "lastupdate", "status", "actions"].includes(col.id)
+          ["name", "tags", "creator", "lastupdate", "status", "actions"].includes(col.id),
+        );
+      } else if (isXXL.value) {
+        filteredColumns = filteredColumns.filter((col) =>
+          ["name", "tags", "location", "creator", "lastupdate", "status", "actions"].includes(
+            col.id,
+          ),
         );
       }
       return filteredColumns.map((col) => ({
@@ -170,7 +176,7 @@ export default {
         nameEditMode = reactive({});
         props.models.forEach((model) => (nameEditMode[model.id] = false));
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
@@ -183,7 +189,7 @@ export default {
         } else {
           return [];
         }
-      })
+      }),
     );
     const allFiles = computed(() =>
       projectFileStructure.value.children.flatMap((file) => {
@@ -192,7 +198,7 @@ export default {
         } else {
           return file;
         }
-      })
+      }),
     );
 
     const tagsByModelId = computed(() => {
@@ -216,7 +222,7 @@ export default {
       props.models.map((model) => ({
         ...model,
         tags: tagsByModelId.value[model.id] ?? [],
-      }))
+      })),
     );
 
     return {
