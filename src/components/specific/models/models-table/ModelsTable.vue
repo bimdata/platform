@@ -64,6 +64,7 @@
     </template>
     <template #cell-actions="{ row: model }">
       <ModelActionsCell
+        :parent="modelsTable"
         :project="project"
         :model="model"
         @archive="$emit('archive', $event)"

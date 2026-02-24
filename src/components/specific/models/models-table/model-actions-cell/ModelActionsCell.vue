@@ -1,13 +1,7 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
     <template v-if="model.type === MODEL_TYPE.META_BUILDING">
-      <BIMDataButton
-        color="primary"
-        outline
-        radius
-        icon
-        @click="onClick('view-metaBuilding')"
-      >
+      <BIMDataButton color="primary" outline radius icon @click="onClick('view-metaBuilding')">
         <BIMDataIconStructure size="s" />
       </BIMDataButton>
     </template>
@@ -84,8 +78,7 @@
 
     <template
       v-else-if="
-        model.type === MODEL_TYPE.PHOTOSPHERE ||
-        model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
+        model.type === MODEL_TYPE.PHOTOSPHERE || model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
       "
     >
       <ViewerButton
@@ -118,52 +111,54 @@
         ripple
         rounded
         icon
-        @click="toggleMenu"
+        @click="() => (isOpen ? closeMenu() : openMenu())"
       >
         <BIMDataIconEllipsis size="l" />
       </BIMDataButton>
 
-      <transition name="fade">
-        <BIMDataMenu
-          :menuItems="menuItems"
-          class="model-actions-cell__menu"
-          v-show="showMenu"
-          width="180px"
-        >
-          <template #item="{ item }">
-            <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
-            <span :data-test-id="item.dataTestId">
-              {{ $t(item.text) }}
-            </span>
-          </template>
-        </BIMDataMenu>
-      </transition>
+      <BIMDataMenu
+        ref="menu"
+        :menuItems="menuItems"
+        class="model-actions-cell__menu"
+        v-show="isOpen"
+        width="180px"
+      >
+        <template #item="{ item }">
+          <BIMDataIcon :name="item.icon" size="xs" margin="0 12px 0 0" />
+          <span :data-test-id="item.dataTestId">
+            {{ $t(item.text) }}
+          </span>
+        </template>
+      </BIMDataMenu>
     </template>
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
-import { useToggle } from "../../../../../composables/toggle.js";
+import { ref, computed, nextTick } from "vue";
 import { MODEL_STATUS, MODEL_TYPE } from "../../../../../config/models.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
 import { useUser } from "../../../../../state/user.js";
+import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
 import ViewerButton from "./ViewerButton.vue";
 
 export default {
   components: {
-    ViewerButton
+    ViewerButton,
   },
   props: {
+    parent: {
+      type: Object,
+    },
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     model: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: [
     "archive",
@@ -178,91 +173,103 @@ export default {
   setup(props, { emit }) {
     const { isProjectGuest, hasAdminPerm } = useUser();
 
-    const {
-      isOpen: showMenu,
-      close: closeMenu,
-      toggle: toggleMenu
-    } = useToggle();
+    const menu = ref(null);
+    const isOpen = ref(false);
+    const isModelReady = computed(() => MODEL_STATUS.COMPLETED === props.model.status);
 
-    const isModelReady = computed(
-      () => MODEL_STATUS.COMPLETED === props.model.status
-    );
+    const menuItems = ref([]);
+    const openMenu = () => {
+      if (!props.parent) return;
 
-    const onClick = event => {
+      isOpen.value = true;
+      if (props.model.document) {
+        menuItems.value.push({
+          key: 1,
+          text: "t.rename",
+          icon: "edit",
+          action: () => onClick("update"),
+          color: "var(--color-primary)",
+          dataTestId: "btn-update-model",
+        });
+      }
+
+      if (props.model.type === MODEL_TYPE.META_BUILDING) {
+        menuItems.value.push({
+          key: 3,
+          text: "t.edit",
+          icon: "edit",
+          action: () => onClick("edit-metaBuilding"),
+          color: "var(--color-primary)",
+        });
+      }
+
+      if (props.model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING) {
+        menuItems.value.push({
+          key: 3,
+          text: "t.edit",
+          icon: "edit",
+          action: () => onClick("edit-photosphereBuilding"),
+          color: "var(--color-primary)",
+        });
+      }
+
+      menuItems.value.push({
+        key: 2,
+        text: props.model.archived ? "t.unarchive" : "t.archive",
+        icon: props.model.archived ? "unarchive" : "archive",
+        action: () => onClick(props.model.archived ? "unarchive" : "archive"),
+        color: "var(--color-primary)",
+        dataTestId: "btn-archive-model",
+      });
+
+      menuItems.value.push({
+        divider: true,
+      });
+
+      menuItems.value.push({
+        key: 4,
+        text: "t.delete",
+        icon: "delete",
+        action: () => onClick("delete"),
+        color: "var(--color-high)",
+        background: "var(--color-high-lighter)",
+        dataTestId: "btn-delete-model",
+      });
+
+      nextTick(() => {
+        if (props.parent) {
+          menu.value.$el.style.top = dropdownPositioner(props.parent.$el, menu.value.$el);
+        }
+      });
+    };
+
+    const closeMenu = () => {
+      isOpen.value = false;
+      menuItems.value = [];
+      nextTick(() => (menu.value.$el.style.top = ""));
+    };
+
+    const onClick = (event) => {
       closeMenu();
       emit(event, props.model);
     };
 
-    const menuItems = [];
-    if (props.model.document) {
-      menuItems.push({
-        key: 1,
-        text: "t.rename",
-        icon: "edit",
-        action: () => onClick("update"),
-        color: "var(--color-primary)",
-        dataTestId: "btn-update-model"
-      });
-    }
-
-    if (props.model.type === MODEL_TYPE.META_BUILDING) {
-      menuItems.push({
-        key: 3,
-        text: "t.edit",
-        icon: "edit",
-        action: () => onClick("edit-metaBuilding"),
-        color: "var(--color-primary)"
-      });
-    }
-
-    if (props.model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING) {
-      menuItems.push({
-        key: 3,
-        text: "t.edit",
-        icon: "edit",
-        action: () => onClick("edit-photosphereBuilding"),
-        color: "var(--color-primary)"
-      });
-    }
-
-    menuItems.push({
-      key: 2,
-      text: props.model.archived ? "t.unarchive" : "t.archive",
-      icon: props.model.archived ? "unarchive" : "archive",
-      action: () => onClick(props.model.archived ? "unarchive" : "archive"),
-      color: "var(--color-primary)",
-      dataTestId: "btn-archive-model"
-    });
-
-    menuItems.push({
-      divider: true
-    });
-
-    menuItems.push({
-      key: 4,
-      text: "t.delete",
-      icon: "delete",
-      action: () => onClick("delete"),
-      color: "var(--color-high)",
-      background: "var(--color-high-lighter)",
-      dataTestId: "btn-delete-model"
-    });
-
     return {
       // References
+      menu,
+      isOpen,
       hasAdminPerm,
       isModelReady,
       menuItems,
       MODEL_TYPE,
-      showMenu,
       WINDOWS,
       // Methods
       closeMenu,
       isProjectGuest,
       onClick,
-      toggleMenu
+      openMenu,
     };
-  }
+  },
 };
 </script>
 
