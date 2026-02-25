@@ -7,17 +7,36 @@
           @update:modelValue="onMainSelectionCheckboxClick"
         />
       </div>
-      <div class="files-list__header__type" v-if="columns.some((column) => column.id === 'type')">
-        {{ $t(columnsDef[0].text) }}
-        <ColumnSorting
-          :sortOrder="
-            !sortObject.order || sortObject.column !== columnsDef[0] ? 'asc' : sortObject.order
-          "
-          :index="0"
-          :active="activeHeadercolumnKey === 0"
-          @click="toggleSorting(columnsDef[0])"
-          @set-active="activeHeadercolumnKey = $event"
-        />
+      <div class="files-list__header__type" v-if="visibleColumnIds.includes('type')">
+        <span>
+          {{ $t(columnsDef[0].text) }}
+        </span>
+
+        <div v-if="columnsDef[0].filter" v-click-away="() => awayFromFilter(columnsDef[0])">
+          <BIMDataButton
+            color="primary"
+            ghost
+            rounded
+            icon
+            class="m-l-6"
+            :class="{
+              active: filters.some((filter) => filter.columnKey === columnsDef[0].id),
+            }"
+            @click.stop="toggleFiltersMenu(columnsDef[0])"
+          >
+            <BIMDataIconCaret size="xxxs" fill color="default" />
+          </BIMDataButton>
+
+          <ColumnFilters
+            v-if="displayedColumnFilterId === columnsDef[0].id"
+            :column="columnsDef[0]"
+            :columnData="formattedAllFiles.map((file) => file[columnsDef[0].id])"
+            :filters="
+              filters.find((filter) => filter.columnKey === columnsDef[0].id)?.columnFilters ?? []
+            "
+            @filter="updateFilters(columnsDef[0], $event)"
+          />
+        </div>
       </div>
       <div class="files-list__header__name">
         {{ $t(columnsDef[1].text) }}
@@ -31,10 +50,7 @@
           @set-active="activeHeadercolumnKey = $event"
         />
       </div>
-      <div
-        class="files-list__header__created-by"
-        v-if="columns.some((column) => column.id === 'created_by')"
-      >
+      <div class="files-list__header__created-by" v-if="visibleColumnIds.includes('created_by')">
         {{ $t(columnsDef[2].text) }}
         <div v-if="columnsDef[2].filter" v-click-away="() => awayFromFilter(columnsDef[2])">
           <BIMDataButton
@@ -53,7 +69,7 @@
           <ColumnFilters
             v-if="displayedColumnFilterId === columnsDef[2].id"
             :column="columnsDef[2]"
-            :columnData="allFiles.map((file) => file[columnsDef[2].id])"
+            :columnData="formattedAllFiles.map((file) => file[columnsDef[2].id])"
             :filters="
               filters.find((filter) => filter.columnKey === columnsDef[2].id)?.columnFilters ?? []
             "
@@ -65,10 +81,7 @@
           </ColumnFilters>
         </div>
       </div>
-      <div
-        class="files-list__header__last-update"
-        v-if="columns.some((column) => column.id === 'lastupdate')"
-      >
+      <div class="files-list__header__last-update" v-if="visibleColumnIds.includes('lastupdate')">
         {{ $t(columnsDef[3].text) }}
         <ColumnSorting
           :sortOrder="
@@ -80,13 +93,10 @@
           @set-active="activeHeadercolumnKey = $event"
         />
       </div>
-      <div
-        class="files-list__header__location"
-        v-if="columns.some((column) => column.id === 'location')"
-      >
-      {{ $t(columnsDef[4].text) }}
+      <div class="files-list__header__location" v-if="visibleColumnIds.includes('location')">
+        {{ $t(columnsDef[4].text) }}
       </div>
-      <div class="files-list__header__size" v-if="columns.some((column) => column.id === 'size')">
+      <div class="files-list__header__size" v-if="visibleColumnIds.includes('size')">
         {{ $t(columnsDef[5].text) }}
         <ColumnSorting
           :sortOrder="
@@ -98,7 +108,7 @@
           @set-active="activeHeadercolumnKey = $event"
         />
       </div>
-      <div class="files-list__header__tags" v-if="columns.some((column) => column.id === 'tags')">
+      <div class="files-list__header__tags" v-if="visibleColumnIds.includes('tags')">
         {{ $t(columnsDef[6].text) }}
         <div v-if="columnsDef[6].filter" v-click-away="() => awayFromFilter(columnsDef[6])">
           <BIMDataButton
@@ -117,7 +127,7 @@
           <ColumnFilters
             v-if="displayedColumnFilterId === columnsDef[6].id"
             :column="columnsDef[6]"
-            :columnData="allFiles.map((file) => file[columnsDef[6].id])"
+            :columnData="formattedAllFiles.map((file) => file[columnsDef[6].id])"
             :filters="
               filters.find((filter) => filter.columnKey === columnsDef[6].id)?.columnFilters ?? []
             "
@@ -153,10 +163,7 @@
               @update:modelValue="onFileSelectionChange(file)"
             />
           </div>
-          <div
-            class="files-list__element__type"
-            v-if="columns.some((column) => column.id === 'type')"
-          >
+          <div class="files-list__element__type" v-if="visibleColumnIds.includes('type')">
             <FileTypeCell :project="project" :file="file" />
           </div>
           <div class="files-list__element__name">
@@ -171,7 +178,7 @@
           </div>
           <div
             class="files-list__element__created-by"
-            v-if="columns.some((column) => column.id === 'created_by')"
+            v-if="visibleColumnIds.includes('created_by')"
           >
             {{
               file.created_by ? `${file.created_by.firstname} ${file.created_by.lastname[0]}.` : "?"
@@ -179,14 +186,11 @@
           </div>
           <div
             class="files-list__element__last-update"
-            v-if="columns.some((column) => column.id === 'lastupdate')"
+            v-if="visibleColumnIds.includes('lastupdate')"
           >
             {{ $d(file.updated_at, "long") }}
           </div>
-          <div
-            class="files-list__element__location"
-            v-if="columns.some((column) => column.id === 'location')"
-          >
+          <div class="files-list__element__location" v-if="visibleColumnIds.includes('location')">
             <FilePathCell
               :file="file"
               :allFolders="allFolders"
@@ -194,16 +198,10 @@
               @file-clicked="$emit('file-clicked', $event)"
             />
           </div>
-          <div
-            class="files-list__element__size"
-            v-if="columns.some((column) => column.id === 'size')"
-          >
+          <div class="files-list__element__size" v-if="visibleColumnIds.includes('size')">
             {{ formatBytes(file.size) }}
           </div>
-          <div
-            class="files-list__element__tags"
-            v-if="columns.some((column) => column.id === 'tags')"
-          >
+          <div class="files-list__element__tags" v-if="visibleColumnIds.includes('tags')">
             <div>
               <FileTagsCell :file="file" :parent="filesList" />
             </div>
@@ -237,7 +235,7 @@ import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef, { columnsMD, columnsLG, columnsXL, columnsXXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
-import { formatBytes } from "../../../../utils/files.js";
+import { formatBytes, fileExtension } from "../../../../utils/files.js";
 import useSortAndFilter from "./sortAndFilter.js";
 
 // Components
@@ -301,9 +299,10 @@ export default {
     const { isMD, isLG, isXL, isXXL } = useStandardBreakpoints();
 
     const filesList = ref(null);
+    const visibleColumnIds = computed(() => columns.value.map((col) => col.id));
 
     const columns = computed(() => {
-      let filteredColumns = columnsDef;
+      let filteredColumns = [...columnsDef];
       if (isMD.value) {
         filteredColumns = columnsMD.map((id) => filteredColumns.find((col) => col.id === id));
       } else if (isLG.value) {
@@ -318,6 +317,20 @@ export default {
       }));
     });
 
+    const formattedAllFiles = computed(() => {
+      if (!Array.isArray(props.allFiles)) return [];
+
+      return props.allFiles.map((file) => ({
+        ...file,
+        type:
+          file.nature === "folder"
+            ? t("t.folder")
+            : file.name
+              ? fileExtension(file.name)?.replace(".", "").toUpperCase()
+              : t("t.file"),
+      }));
+    });
+
     let nameEditMode;
     watch(
       () => props.files,
@@ -325,7 +338,7 @@ export default {
         nameEditMode = reactive({});
         files.forEach((row) => (nameEditMode[row.id] = false));
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const {
@@ -338,7 +351,7 @@ export default {
       updateFilters,
       activeHeadercolumnKey,
       filters,
-    } = useSortAndFilter(computed(() => props.allFiles));
+    } = useSortAndFilter(formattedAllFiles);
 
     const onFileSelectionChange = (file) => {
       let newSelection = null;
@@ -354,7 +367,7 @@ export default {
     const mainSelectionCheckboxValue = computed(() => {
       if (props.selection.length === 0) {
         return false;
-      } else if (props.selection.length === props.allFiles.length) {
+      } else if (props.selection.length === displayedListFiles.value.length) {
         return true;
       } else {
         return null;
@@ -363,7 +376,7 @@ export default {
     const onMainSelectionCheckboxClick = (value) => {
       let newSelection = null;
       if (value) {
-        newSelection = props.allFiles;
+        newSelection = formattedAllFiles.value;
       } else {
         newSelection = [];
       }
@@ -376,6 +389,8 @@ export default {
       columns,
       mainSelectionCheckboxValue,
       nameEditMode,
+      formattedAllFiles,
+      visibleColumnIds,
       // Methods
       formatBytes,
       updateFilters,
@@ -383,7 +398,6 @@ export default {
       // List
       filesList,
       sortObject,
-      mainSelectionCheckboxValue,
       onMainSelectionCheckboxClick,
       activeHeadercolumnKey,
       toggleSorting,

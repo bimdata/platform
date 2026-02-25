@@ -1,4 +1,3 @@
-import { fileExtension } from "../../../../utils/files.js";
 import i18n from "../../../../i18n/index.js";
 import { fullName } from "../../../../utils/users.js";
 
@@ -8,20 +7,7 @@ export default [
   {
     id: "type",
     text: "t.type",
-    sortFunction: (a, b) => {
-      const getFileType = (file) =>  fileExtension(file.name);
-    
-      const fileTypeA = getFileType(a);
-      const fileTypeB = getFileType(b);
-    
-      if (fileTypeA < fileTypeB) {
-        return 1;
-      } else if (fileTypeA > fileTypeB) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
+    filter: true,
   },
   {
     id: "name",
@@ -31,7 +17,7 @@ export default [
     id: "created_by",
     text: "t.createdBy",
     filter: true,
-    filterFunction: rowData => rowData ? fullName(rowData) : t("t.notSpecified"),
+    filterFunction: (rowData) => (rowData ? fullName(rowData) : t("t.notSpecified")),
   },
   {
     id: "lastupdate",
@@ -52,7 +38,7 @@ export default [
     id: "size",
     text: "t.size",
     sortable: true,
-    defaultSortOrder: "asc"
+    defaultSortOrder: "asc",
   },
   {
     id: "tags",
@@ -63,7 +49,7 @@ export default [
   {
     id: "actions",
     label: " ",
-  }
+  },
 ];
 
 export const columnsXXL = ["type", "name", "created_by", "lastupdate", "size", "actions"];
