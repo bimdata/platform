@@ -141,6 +141,7 @@
   "FilesManager": {
     "title": "Project Files",
     "createModelNotification": "Model successfully created",
+    "createModelsNotification": "Models successfully created",
     "structureImport": "Import a GED structure",
     "gedDownload": "Download the GED",
     "folderImport": "Import a folder",

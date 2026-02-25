@@ -41,6 +41,9 @@
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
               @move="moveFiles"
+              @create-models="createModelFromFiles"
+              @create-photospheres="createModelFromFiles($event, MODEL_TYPE.PHOTOSPHERE)"
+              @remove-models="removeModels"
             />
           </transition>
 
@@ -75,6 +78,8 @@
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
+            @create-models="createModelFromFiles"
+            @create-photospheres="createModelFromFiles($event, MODEL_TYPE.PHOTOSPHERE)"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @dragover.prevent="() => {}"
@@ -338,7 +343,7 @@ export default {
 
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
-        folders.map((f) => FileService.createFolderStructure(props.project, folder, f))
+        folders.map((f) => FileService.createFolderStructure(props.project, folder, f)),
       );
 
       setTimeout(() => {
@@ -369,12 +374,64 @@ export default {
       }
     };
 
+    const createModelFromFiles = async (files, type) => {
+      if (!files?.length) return;
+
+      try {
+        loadingFileIds.value.push(...files.map((f) => f.id));
+
+        const createdModels = await Promise.all(
+          files.map((file) =>
+            type === MODEL_TYPE.PHOTOSPHERE
+              ? createPhotosphere(props.project, file)
+              : createModel(props.project, file),
+          ),
+        );
+
+        createdModels.forEach((model) => {
+          emit("model-created", model);
+        });
+
+        pushNotification({
+          type: "success",
+          title: t("t.success"),
+          message: t("FilesManager.createModelsNotification"),
+        });
+      } finally {
+        const ids = files.map((f) => f.id);
+        loadingFileIds.value = loadingFileIds.value.filter((id) => !ids.includes(id));
+      }
+    };
+
     const removeModel = async (file) => {
       try {
         loadingFileIds.value.push(file.id);
         await deleteModels(props.project, [{ id: file.model_id, type: file.model_type }]);
       } finally {
         loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
+      }
+    };
+
+    const removeModels = async (files) => {
+      console.log({ files });
+      if (!files?.length) return;
+
+      try {
+        loadingFileIds.value.push(...files.map((f) => f.id));
+
+        const modelsToDelete = files
+          .filter((file) => file.model_id && file.model_type)
+          .map((file) => ({
+            id: file.model_id,
+            type: file.model_type,
+          }));
+
+        if (!modelsToDelete.length) return;
+
+        await deleteModels(props.project, modelsToDelete);
+      } finally {
+        const ids = files.map((f) => f.id);
+        loadingFileIds.value = loadingFileIds.value.filter((id) => !ids.includes(id));
       }
     };
 
@@ -465,7 +522,7 @@ export default {
           } else {
             closeAccessManager();
           }
-        }
+        },
       );
     };
     const closeAccessManager = () => {
@@ -543,7 +600,7 @@ export default {
       createdVisas.value = createdResponse;
       if (route.query.visaId) {
         currentVisa.value = toValidateVisas.value.find(
-          (v) => v.id === parseInt(route.query.visaId)
+          (v) => v.id === parseInt(route.query.visaId),
         );
         if (currentVisa.value) {
           openVisaManager(currentVisa.value);
@@ -554,7 +611,7 @@ export default {
     const visasCounter = computed(
       () =>
         toValidateVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length +
-        createdVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length
+        createdVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length,
     );
 
     const fetchTags = async () => {
@@ -660,15 +717,15 @@ export default {
     const searchText = ref("");
     const { filteredList: displayedFiles, searchText: filterFilesSearchText } = useListFilter(
       currentFiles,
-      (file) => file.name
+      (file) => file.name,
     );
     const { filteredList: displayedAllFiles, searchText: filterAllFilesSearchText } = useListFilter(
       allFiles,
-      (file) => file.name
+      (file) => file.name,
     );
     const { filteredList: displayedVisas, searchText: filterVisasSearchText } = useListFilter(
       allVisas,
-      (visa) => visa.document.name
+      (visa) => visa.document.name,
     );
 
     const jumpToTargetFolder = (folderId) => {
@@ -695,7 +752,7 @@ export default {
           currentFolder.value = struct;
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     watch(
@@ -706,7 +763,7 @@ export default {
         currentFiles.value = childrenFolders.concat(childrenFiles);
         gedTargetFolder.set(folder.id);
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
@@ -749,6 +806,7 @@ export default {
       closeVersioningManager,
       closeVisaManager,
       createModelFromFile,
+      createModelFromFiles,
       downloadFiles,
       fetchTags,
       fetchVisas,
@@ -768,6 +826,7 @@ export default {
       openVersioningManager,
       openVisaManager,
       removeModel,
+      removeModels,
       setSelection,
       uploadFiles,
       visasLoading,

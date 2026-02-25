@@ -34,6 +34,37 @@
       <span>{{ $t("t.download") }}</span>
     </BIMDataButton>
 
+    <template v-if="canConvertAllToModel(files) || canConvertAllToPhotosphere(files)">
+      <BIMDataButton
+        v-if="canConvertAllToModel(files)"
+        width="120px"
+        ghost
+        squared
+        @click="$emit('create-models', files)"
+      >
+        <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
+        <span>{{ $t("FileActionsCell.createModelButtonText") }}</span>
+      </BIMDataButton>
+
+      <BIMDataButton
+        v-if="canConvertAllToPhotosphere(files)"
+        width="120px"
+        ghost
+        squared
+        @click="$emit('create-photospheres', files)"
+      >
+        <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
+        <span>{{ $t("FileActionsCell.createPhotosphereButtonText") }}</span>
+      </BIMDataButton>
+    </template>
+
+    <template v-else-if="canRemoveAllModels(files)">
+      <BIMDataButton width="120px" ghost squared @click="$emit('remove-models', files)">
+        <BIMDataIconRemoveModel size="s" margin="0 6px 0 0" />
+        <span>{{ $t("FileActionsCell.removeModelButtonText") }}</span>
+      </BIMDataButton>
+    </template>
+
     <transition name="fade">
       <FolderSelector
         v-show="showFolderSelector"
@@ -52,6 +83,8 @@
 <script>
 import { useToggle } from "../../../../../composables/toggle.js";
 import { useUser } from "../../../../../state/user.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { isConvertible, isConvertibleToPhotosphere, isModel } from "../../../../../utils/models.js";
 // Components
 import FolderSelector from "../../folder-selector/FolderSelector.vue";
 
@@ -77,7 +110,15 @@ export default {
       required: true,
     },
   },
-  emits: ["delete-files", "delete-visas", "download", "move"],
+  emits: [
+    "delete-files",
+    "delete-visas",
+    "download",
+    "move",
+    "create-models",
+    "create-photospheres",
+    "remove-models",
+  ],
   setup(props, { emit }) {
     const { hasAdminPerm } = useUser();
 
@@ -87,13 +128,21 @@ export default {
       toggle: toggleFolderSelector,
     } = useToggle();
 
-    const isFilesOrFolder = files => files.some(
-      f => f.nature === "Document" || f.nature === "Model" || f.nature === "Folder"
-    );
+    const isFilesOrFolder = (files) =>
+      files.some((f) => f.nature === "Document" || f.nature === "Model" || f.nature === "Folder");
 
-    const onDeleteClick = files => {
+    const onDeleteClick = (files) => {
       emit(isFilesOrFolder(files) ? "delete-files" : "delete-visas", files);
     };
+
+    const canConvertAllToModel = (files) =>
+      files.every((file) => !isFolder(file) && isConvertible(file) && !isModel(file));
+
+    const canConvertAllToPhotosphere = (files) =>
+      files.every((file) => !isFolder(file) && isConvertibleToPhotosphere(file) && !isModel(file));
+
+    const canRemoveAllModels = (files) =>
+      files.length > 0 && files.every((file) => !isFolder(file) && isModel(file));
 
     return {
       // References
@@ -104,6 +153,9 @@ export default {
       isFilesOrFolder,
       onDeleteClick,
       toggleFolderSelector,
+      canConvertAllToModel,
+      canConvertAllToPhotosphere,
+      canRemoveAllModels,
     };
   },
 };

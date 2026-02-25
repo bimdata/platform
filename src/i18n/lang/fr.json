@@ -203,6 +203,7 @@
   "FilesManager": {
     "title": "Documents du projet",
     "createModelNotification": "Modèle créé avec succès",
+    "createModelsNotification": "Modèles créés avec succès",
     "createPhotosphereNotification": "Photosphère créée avec succès",
     "structureImport": "Importer une structure GED",
     "gedDownload": "Télécharger la GED",
