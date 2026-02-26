@@ -98,6 +98,7 @@ class FileService {
   }
 
   async deleteFolders(project, folders) {
+    if (folders.length === 0) return;
     try {
       return await apiClient.collaborationApi.bulkDeleteFolders(
         project.cloud.id,
@@ -139,6 +140,7 @@ class FileService {
   }
 
   async deleteDocuments(project, documents) {
+    if (documents.length === 0) return;
     try {
       return await apiClient.collaborationApi.bulkDeleteDocumentHistory(
         project.cloud.id,
