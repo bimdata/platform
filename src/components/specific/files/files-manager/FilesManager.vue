@@ -37,7 +37,7 @@
               :fileStructure="fileStructure"
               :files="selection"
               :initialFolder="currentFolder"
-              @delete-files="openFileDeleteModalOrWarningModal"
+              @delete-files="openFileDeleteModal"
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
               @move="moveFiles"
@@ -194,7 +194,6 @@ import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { FILE_TYPE } from "../../../../config/files.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
-import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../config/projects.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
 import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
@@ -416,14 +415,6 @@ export default {
         await fetchVisas();
       }
       closeModal();
-    };
-
-    const openFileDeleteModalOrWarningModal = (files) => {
-      if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
-        openModal({ component: WarningModal });
-      } else {
-        openFileDeleteModal(files);
-      }
     };
 
     const moveFiles = async (event) => {
@@ -769,7 +760,6 @@ export default {
       onFileSelected,
       openAccessManager,
       openFileDeleteModal,
-      openFileDeleteModalOrWarningModal,
       openVisaDeleteModal,
       openSidePanel,
       openSubscriptionModal,

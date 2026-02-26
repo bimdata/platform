@@ -99,14 +99,10 @@ class FileService {
 
   async deleteFolders(project, folders) {
     try {
-      return await Promise.all(
-        folders.map(folder =>
-          apiClient.collaborationApi.deleteFolder(
-            project.cloud.id,
-            folder.id,
-            project.id
-          )
-        )
+      return await apiClient.collaborationApi.bulkDeleteFolders(
+        project.cloud.id,
+        project.id,
+        folders.map(folder => folder.id)
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.FILE_DELETE_ERROR, error);
@@ -144,14 +140,10 @@ class FileService {
 
   async deleteDocuments(project, documents) {
     try {
-      return await eachLimit(
-        documents,
-        5,
-        document => apiClient.collaborationApi.deleteAllDocumentHistory(
-          project.cloud.id,
-          document.id,
-          project.id
-        )
+      return await apiClient.collaborationApi.bulkDeleteDocumentHistory(
+        project.cloud.id,
+        project.id,
+        documents.map(doc => doc.id)
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.FILE_DELETE_ERROR, error);
