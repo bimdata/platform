@@ -142,7 +142,8 @@ export default {
       files.every((file) => !isFolder(file) && isConvertibleToPhotosphere(file) && !isModel(file));
 
     const canRemoveAllModels = (files) =>
-      files.length > 0 && files.every((file) => !isFolder(file) && isModel(file));
+      files.length > 0 &&
+      files.every((file) => !isFolder(file) && isModel(file) && isConvertible(file));
 
     return {
       // References
