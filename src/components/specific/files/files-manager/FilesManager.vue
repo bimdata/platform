@@ -37,6 +37,7 @@
               :fileStructure="fileStructure"
               :files="selection"
               :initialFolder="currentFolder"
+              :loadingFileIds="loadingFileIds"
               @delete-files="openFileDeleteModal"
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
@@ -353,7 +354,6 @@ export default {
     };
 
     const loadingFileIds = ref([]);
-
     const createModelFromFile = async (file, type) => {
       try {
         loadingFileIds.value.push(file.id);
@@ -373,11 +373,14 @@ export default {
         loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
       }
     };
-
     const createModelFromFiles = async (files, type) => {
       if (!files?.length) return;
-
       try {
+        selection.value = selection.value.map((f) => {
+          if (files.includes(f)) return { ...f, nature: "Model" };
+          return f;
+        });
+
         loadingFileIds.value.push(...files.map((f) => f.id));
 
         const createdModels = await Promise.all(
@@ -413,10 +416,13 @@ export default {
     };
 
     const removeModels = async (files) => {
-      console.log({ files });
       if (!files?.length) return;
 
       try {
+        selection.value = selection.value.map((f) => {
+          if (files.includes(f)) return { ...f, nature: "Document" };
+          return f;
+        });
         loadingFileIds.value.push(...files.map((f) => f.id));
 
         const modelsToDelete = files
@@ -728,8 +734,11 @@ export default {
       (visa) => visa.document.name,
     );
 
-    const jumpToTargetFolder = (folderId) => {
-      selectedFileTab.value = filesTabs[0];
+    const jumpToTargetFolder = (folderId, forceFoldersTab = false) => {
+      if (forceFoldersTab) {
+        selectedFileTab.value = filesTabs[0];
+      }
+
       const folder = handler.get({ nature: FILE_TYPE.FOLDER, id: folderId });
       currentFolder.value = handler.deserialize(folder);
     };

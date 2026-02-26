@@ -159,7 +159,7 @@
         <div class="files-list__element" :class="{ 'files-list__element--even': index % 2 === 0 }">
           <div class="files-list__element__select">
             <BIMDataCheckbox
-              :modelValue="selection.includes(file)"
+              :modelValue="selection.some((f) => f.id === file.id)"
               @update:modelValue="onFileSelectionChange(file)"
             />
           </div>
@@ -376,7 +376,7 @@ export default {
     const onMainSelectionCheckboxClick = (value) => {
       let newSelection = null;
       if (value) {
-        newSelection = formattedAllFiles.value;
+        newSelection = [...displayedListFiles.value];
       } else {
         newSelection = [];
       }

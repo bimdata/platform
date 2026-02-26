@@ -34,32 +34,40 @@
       <span>{{ $t("t.download") }}</span>
     </BIMDataButton>
 
-    <template v-if="canConvertAllToModel(files) || canConvertAllToPhotosphere(files)">
+    <template v-if="canConvertAllToModel || canConvertAllToPhotosphere">
       <BIMDataButton
-        v-if="canConvertAllToModel(files)"
+        v-if="canConvertAllToModel"
         width="120px"
         ghost
         squared
-        @click="$emit('create-models', files)"
+        @click="handleCreateModels(files)"
+        :disabled="files.some((f) => loadingFileIds.includes(f.id))"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
         <span>{{ $t("FileActionsCell.createModelButtonText") }}</span>
       </BIMDataButton>
 
       <BIMDataButton
-        v-if="canConvertAllToPhotosphere(files)"
+        v-if="canConvertAllToPhotosphere"
         width="120px"
         ghost
         squared
-        @click="$emit('create-photospheres', files)"
+        @click="handleCreatePhotospheres(files)"
+        :disabled="files.some((f) => loadingFileIds.includes(f.id))"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
         <span>{{ $t("FileActionsCell.createPhotosphereButtonText") }}</span>
       </BIMDataButton>
     </template>
 
-    <template v-else-if="canRemoveAllModels(files)">
-      <BIMDataButton width="120px" ghost squared @click="$emit('remove-models', files)">
+    <template v-else-if="canRemoveAllModels">
+      <BIMDataButton
+        width="120px"
+        ghost
+        squared
+        @click="handleRemoveModels(files)"
+        :disabled="files.some((f) => loadingFileIds.includes(f.id))"
+      >
         <BIMDataIconRemoveModel size="s" margin="0 6px 0 0" />
         <span>{{ $t("FileActionsCell.removeModelButtonText") }}</span>
       </BIMDataButton>
@@ -81,6 +89,7 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { useUser } from "../../../../../state/user.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
@@ -109,6 +118,10 @@ export default {
       type: Object,
       required: true,
     },
+    loadingFileIds: {
+      type: Array,
+      default: () => [],
+    },
   },
   emits: [
     "delete-files",
@@ -135,15 +148,27 @@ export default {
       emit(isFilesOrFolder(files) ? "delete-files" : "delete-visas", files);
     };
 
-    const canConvertAllToModel = (files) =>
-      files.every((file) => !isFolder(file) && isConvertible(file) && !isModel(file));
+    const canConvertAllToModel = computed(() =>
+      props.files.every(
+        (file) => !isFolder(file) && isConvertible(file) && file.nature === "Document",
+      ),
+    );
+    const canConvertAllToPhotosphere = computed(() =>
+      props.files.every(
+        (file) => !isFolder(file) && isConvertibleToPhotosphere(file) && file.nature === "Document",
+      ),
+    );
+    const canRemoveAllModels = computed(
+      () =>
+        props.files.length > 0 &&
+        props.files.every(
+          (file) => !isFolder(file) && isConvertible(file) && file.nature === "Model",
+        ),
+    );
 
-    const canConvertAllToPhotosphere = (files) =>
-      files.every((file) => !isFolder(file) && isConvertibleToPhotosphere(file) && !isModel(file));
-
-    const canRemoveAllModels = (files) =>
-      files.length > 0 &&
-      files.every((file) => !isFolder(file) && isModel(file) && isConvertible(file));
+    const handleCreateModels = (files) => emit("create-models", files);
+    const handleCreatePhotospheres = (files) => emit("create-photospheres", files);
+    const handleRemoveModels = (files) => emit("remove-models", files);
 
     return {
       // References
@@ -157,6 +182,9 @@ export default {
       canConvertAllToModel,
       canConvertAllToPhotosphere,
       canRemoveAllModels,
+      handleCreateModels,
+      handleCreatePhotospheres,
+      handleRemoveModels,
     };
   },
 };

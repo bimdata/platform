@@ -36,12 +36,9 @@
         </BIMDataButton>
       </div>
 
-      <div
-        v-else
-        class="file-name-cell__content"
-        @click="$emit('file-clicked', file)"
-      >
+      <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="100%" />
+        <BIMDataIconSetAsModel v-if="file.nature === 'Model' || file.type === 'PHOTOSPHERE'" />
         <BIMDataIconVersioning
           v-if="hasHistory"
           margin="0px 0px 0px 4px"
@@ -65,16 +62,16 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     file: {
       type: Object,
-      required: true
+      required: true,
     },
     editMode: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ["close", "file-clicked", "open-versioning-manager", "success"],
   setup(props, { emit }) {
@@ -95,8 +92,8 @@ export default {
           await updateFiles(props.project, [
             {
               ...props.file,
-              name: fileName.value
-            }
+              name: fileName.value,
+            },
           ]);
           closeUpdateForm();
           emit("success");
@@ -124,18 +121,18 @@ export default {
 
     watch(
       () => props.file,
-      file => (fileName.value = file.name),
-      { immediate: true }
+      (file) => (fileName.value = file.name),
+      { immediate: true },
     );
     watch(
       () => props.editMode,
-      value => {
+      (value) => {
         if (value) {
           openUpdateForm();
         } else {
           closeUpdateForm();
         }
-      }
+      },
     );
 
     return {
@@ -150,9 +147,9 @@ export default {
       hasHistory,
       isFolder,
       openUpdateForm,
-      renameFile
+      renameFile,
     };
-  }
+  },
 };
 </script>
 
