@@ -37,8 +37,25 @@
       </div>
 
       <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
-        <BIMDataTextbox :text="file.name" width="auto" maxWidth="100%" />
-        <BIMDataIconSetAsModel v-if="file.nature === 'Model' || file.type === 'PHOTOSPHERE'" />
+        <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
+        <div
+          v-if="isConvertible(file) || isConvertibleToPhotosphere(file)"
+          class="flex items-center"
+        >
+          <BIMDataTooltip
+            :text="
+              file.model_type === 'PHOTOSPHERE'
+                ? $t('FileNameCell.photosphereFile')
+                : file.nature === 'Model'
+                  ? $t('FileNameCell.modelFile')
+                  : ''
+            "
+            position="right"
+            class="flex items-center"
+          >
+            <BIMDataIconSetAsModel v-if="file.nature === 'Model' || file.type === 'PHOTOSPHERE'" />
+          </BIMDataTooltip>
+        </div>
         <BIMDataIconVersioning
           v-if="hasHistory"
           margin="0px 0px 0px 4px"
@@ -57,6 +74,7 @@ import { ref, watch, computed } from "vue";
 import { useFiles } from "../../../../../state/files.js";
 import { debounce } from "../../../../../utils/async.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
+import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
 
 export default {
   props: {
@@ -145,6 +163,8 @@ export default {
       // Methods
       closeUpdateForm,
       hasHistory,
+      isConvertible,
+      isConvertibleToPhotosphere,
       isFolder,
       openUpdateForm,
       renameFile,

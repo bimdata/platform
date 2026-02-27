@@ -192,6 +192,10 @@
     "versioningButtonText": "Ajouter une version",
     "visaButtonText": "Demande de validation"
   },
+  "FileNameCell": {
+    "modelFile": "Modèle",
+    "photosphereFile": "Photosphère"
+  },
   "FilesActionBar": {
     "moveButtonText": "Déplacer vers"
   },

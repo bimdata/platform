@@ -130,6 +130,10 @@
     "previewModelButtonText": "Preview",
     "createPhotosphereButtonText": "Define as photosphere"
   },
+  "FileNameCell": {
+    "modelFile": "Model",
+    "photosphereFile": "Photosphere"
+  },
   "FilesActionBar": {
     "moveButtonText": "Move to"
   },
