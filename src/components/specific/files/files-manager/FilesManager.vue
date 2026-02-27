@@ -398,7 +398,10 @@ export default {
         pushNotification({
           type: "success",
           title: t("t.success"),
-          message: t("FilesManager.createModelsNotification"),
+          message:
+            type === MODEL_TYPE.PHOTOSPHERE
+              ? t("FilesManager.createPhotospheresNotification")
+              : t("FilesManager.createModelsNotification"),
         });
       } finally {
         const ids = files.map((f) => f.id);
@@ -435,6 +438,11 @@ export default {
         if (!modelsToDelete.length) return;
 
         await deleteModels(props.project, modelsToDelete);
+        pushNotification({
+          type: "success",
+          title: t("t.success"),
+          message: t("FilesManager.removeModelsNotification"),
+        });
       } finally {
         const ids = files.map((f) => f.id);
         loadingFileIds.value = loadingFileIds.value.filter((id) => !ids.includes(id));
