@@ -1,3 +1,15 @@
+## [1.3.5](https://github.com/bimdata/platform/compare/v1.3.4...v1.3.5) (2026-02-27)
+
+
+### chore
+
+* bump @bimdata/viewer@2.16.3 from Github Actions [skip e2e] ([7fedf5c](https://github.com/bimdata/platform/commit/7fedf5c37053fe37696ddf3d95379d3b7af500dc))
+
+### PATCH
+
+* fix(bcf): use new post method for topics export ([eb8830f](https://github.com/bimdata/platform/commit/eb8830f1cee8f1982e9efea74cd1b92703c5d3a2))
+* fix(files): use bulk delete methods for documents and folders (#627) ([868df69](https://github.com/bimdata/platform/commit/868df695bccd3bcb806046067036412eaf7b203f)), closes [#627](https://github.com/bimdata/platform/issues/627)
+
 ## [1.3.4](https://github.com/bimdata/platform/compare/v1.3.3...v1.3.4) (2026-02-10)
 
 

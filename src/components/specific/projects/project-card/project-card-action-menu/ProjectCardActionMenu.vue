@@ -61,7 +61,7 @@
             color="high"
             ghost
             squared
-            @click="openDeleteGuardOrWarningModal"
+            @click="openDeleteGuard"
           >
             {{ $t("t.delete") }}
           </BIMDataButton>
@@ -83,7 +83,6 @@
 <script>
 import { provide, ref } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
-import { IS_DELETION_TEMP_WORKAROUND_ENABLED } from "../../../../../config/projects.js";
 import { useUser } from "../../../../../state/user.js";
 // Components
 import ProjectCardDeleteGuard from "../project-card-delete-guard/ProjectCardDeleteGuard.vue";
@@ -148,15 +147,6 @@ export default {
       emit("close");
     };
 
-    const openDeleteGuardOrWarningModal = () => {
-      if (IS_DELETION_TEMP_WORKAROUND_ENABLED) {
-        const { openModal } = useAppModal();
-        openModal({ component: WarningModal });
-      } else {
-        openDeleteGuard();
-      }
-    };
-
     return {
       // References
       loading,
@@ -170,7 +160,7 @@ export default {
       closeLeaveGuard,
       isProjectAdmin,
       isFavoriteProject,
-      openDeleteGuardOrWarningModal,
+      openDeleteGuard,
       openUpdateForm,
       openLeaveGuard,
       resetMenu,
