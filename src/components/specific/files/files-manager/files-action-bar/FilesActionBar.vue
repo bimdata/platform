@@ -41,7 +41,7 @@
         ghost
         squared
         @click="handleCreateModels(files)"
-        :disabled="files.some((f) => loadingFileIds.includes(f.id))"
+        :disabled="disabledModelsButton"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
         <span>{{ $t("FileActionsCell.createModelButtonText") }}</span>
@@ -53,7 +53,7 @@
         ghost
         squared
         @click="handleCreatePhotospheres(files)"
-        :disabled="files.some((f) => loadingFileIds.includes(f.id))"
+        :disabled="disabledModelsButton"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
         <span>{{ $t("FileActionsCell.createPhotosphereButtonText") }}</span>
@@ -66,7 +66,7 @@
         ghost
         squared
         @click="handleRemoveModels(files)"
-        :disabled="files.some((f) => loadingFileIds.includes(f.id))"
+        :disabled="disabledModelsButton"
       >
         <BIMDataIconRemoveModel size="s" margin="0 6px 0 0" />
         <span>{{ $t("FileActionsCell.removeModelButtonText") }}</span>
@@ -141,8 +141,14 @@ export default {
       toggle: toggleFolderSelector,
     } = useToggle();
 
+    const filesIds = props.files.map((f) => f.id);
+    const filesInBoth = new Set(filesIds).intersection(new Set(props.loadingFileIds));
+    const disabledModelsButton = filesInBoth.size > 0;
+
     const isFilesOrFolder = (files) =>
-      files.some((f) => f.nature === "Document" || f.nature === "Model" || f.nature === "Folder");
+      files.some(
+        (file) => file.nature === "Document" || file.nature === "Model" || file.nature === "Folder",
+      );
 
     const onDeleteClick = (files) => {
       emit(isFilesOrFolder(files) ? "delete-files" : "delete-visas", files);
@@ -173,6 +179,7 @@ export default {
     return {
       // References
       showFolderSelector,
+      disabledModelsButton,
       // Methods
       closeFolderSelector,
       hasAdminPerm,
