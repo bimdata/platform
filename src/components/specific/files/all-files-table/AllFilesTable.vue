@@ -325,9 +325,7 @@ export default {
         type:
           file.nature === "folder"
             ? t("t.folder")
-            : file.name
-              ? fileExtension(file.name)?.replace(".", "").toUpperCase()
-              : t("t.file"),
+            : file.name && fileExtension(file.name)?.replace(".", "").toUpperCase(),
       }));
     });
 
