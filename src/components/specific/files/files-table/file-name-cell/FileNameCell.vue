@@ -38,10 +38,7 @@
 
       <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
-        <div
-          v-if="isConvertible(file) || isConvertibleToPhotosphere(file)"
-          class="flex items-center"
-        >
+        <div v-if="displayModelInfo(file)" class="flex items-center">
           <BIMDataTooltip
             :text="
               file.model_type === 'PHOTOSPHERE'
@@ -153,6 +150,12 @@ export default {
       },
     );
 
+    const displayModelInfo = (file) => {
+      if (!isFolder(file)) {
+        return isConvertible(file) || isConvertibleToPhotosphere(file);
+      }
+    };
+
     return {
       // References
       fileName,
@@ -163,8 +166,7 @@ export default {
       // Methods
       closeUpdateForm,
       hasHistory,
-      isConvertible,
-      isConvertibleToPhotosphere,
+      displayModelInfo,
       isFolder,
       openUpdateForm,
       renameFile,
