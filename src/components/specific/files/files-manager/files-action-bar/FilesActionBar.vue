@@ -152,15 +152,20 @@ export default {
       emit(isFilesOrFolder(files) ? "delete-files" : "delete-visas", files);
     };
 
-    const canConvertAllToModel = computed(() =>
-      props.files.every(
-        (file) => !isFolder(file) && isConvertible(file) && file.nature === "Document",
-      ),
+    const canConvertAllToModel = computed(
+      () =>
+        props.files.length > 0 &&
+        props.files.every(
+          (file) => !isFolder(file) && isConvertible(file) && file.nature === "Document",
+        ),
     );
-    const canConvertAllToPhotosphere = computed(() =>
-      props.files.every(
-        (file) => !isFolder(file) && isConvertibleToPhotosphere(file) && file.nature === "Document",
-      ),
+    const canConvertAllToPhotosphere = computed(
+      () =>
+        props.files.length > 0 &&
+        props.files.every(
+          (file) =>
+            !isFolder(file) && isConvertibleToPhotosphere(file) && file.nature === "Document",
+        ),
     );
     const canRemoveAllModels = computed(
       () =>
