@@ -30,7 +30,7 @@
           <ColumnFilters
             v-if="displayedColumnFilterId === columnsDef[0].id"
             :column="columnsDef[0]"
-            :columnData="formattedAllFiles.map((file) => file[columnsDef[0].id])"
+            :columnData="sortedTypeColumnData"
             :filters="
               filters.find((filter) => filter.columnKey === columnsDef[0].id)?.columnFilters ?? []
             "
@@ -323,10 +323,17 @@ export default {
       return props.allFiles.map((file) => ({
         ...file,
         type:
-          file.nature === "folder"
+          file.nature === "Folder"
             ? t("t.folder")
             : file.name && fileExtension(file.name)?.replace(".", "").toUpperCase(),
       }));
+    });
+
+    const sortedTypeColumnData = computed(() => {
+      return formattedAllFiles.value
+        .map((file) => file[columnsDef[0].id])
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
     });
 
     let nameEditMode;
@@ -388,6 +395,7 @@ export default {
       mainSelectionCheckboxValue,
       nameEditMode,
       formattedAllFiles,
+      sortedTypeColumnData,
       visibleColumnIds,
       // Methods
       formatBytes,
