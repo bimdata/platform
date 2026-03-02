@@ -50,7 +50,9 @@
             position="right"
             class="flex items-center"
           >
-            <BIMDataIconSetAsModel v-if="file.nature === 'Model' || file.type === 'PHOTOSPHERE'" />
+            <BIMDataIconSetAsModel
+              v-if="file.nature === 'Model' || file.model_type === 'PHOTOSPHERE'"
+            />
           </BIMDataTooltip>
         </div>
         <BIMDataIconVersioning
