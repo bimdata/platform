@@ -40,7 +40,7 @@
         width="120px"
         ghost
         squared
-        @click="handleCreateModels"
+        @click="handleCreateModels(files)"
         :disabled="disabledModelsButton"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
@@ -52,7 +52,7 @@
         width="120px"
         ghost
         squared
-        @click="handleCreatePhotospheres"
+        @click="handleCreatePhotospheres(files)"
         :disabled="disabledModelsButton"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
@@ -65,7 +65,7 @@
         width="120px"
         ghost
         squared
-        @click="handleRemoveModels"
+        @click="handleRemoveModels(files)"
         :disabled="disabledModelsButton"
       >
         <BIMDataIconRemoveModel size="s" margin="0 6px 0 0" />
@@ -175,9 +175,9 @@ export default {
         ),
     );
 
-    const handleCreateModels = () => emit("create-models");
-    const handleCreatePhotospheres = () => emit("create-photospheres");
-    const handleRemoveModels = () => emit("remove-models");
+    const handleCreateModels = (files) => emit("create-models", files);
+    const handleCreatePhotospheres = (files) => emit("create-photospheres", files);
+    const handleRemoveModels = (files) => emit("remove-models", files);
 
     return {
       // References

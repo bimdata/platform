@@ -374,7 +374,7 @@ export default {
         loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
       }
     };
-    const createModelFromFiles = async (type) => {
+    const createModelFromFiles = async (files, type) => {
       if (!selection.value?.length || isCreatingModels.value) return;
 
       isCreatingModels.value = true;
