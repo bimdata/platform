@@ -40,7 +40,7 @@
         width="120px"
         ghost
         squared
-        @click="handleCreateModels(files)"
+        @click="handleCreateModels"
         :disabled="disabledModelsButton"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
@@ -52,7 +52,7 @@
         width="120px"
         ghost
         squared
-        @click="handleCreatePhotospheres(files)"
+        @click="handleCreatePhotospheres"
         :disabled="disabledModelsButton"
       >
         <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
@@ -65,7 +65,7 @@
         width="120px"
         ghost
         squared
-        @click="handleRemoveModels(files)"
+        @click="handleRemoveModels"
         :disabled="disabledModelsButton"
       >
         <BIMDataIconRemoveModel size="s" margin="0 6px 0 0" />
@@ -118,9 +118,9 @@ export default {
       type: Object,
       required: true,
     },
-    loadingFileIds: {
-      type: Array,
-      default: () => [],
+    isCreatingModels: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: [
@@ -141,9 +141,7 @@ export default {
       toggle: toggleFolderSelector,
     } = useToggle();
 
-    const filesIds = props.files.map((f) => f.id);
-    const filesInBoth = new Set(filesIds).intersection(new Set(props.loadingFileIds));
-    const disabledModelsButton = filesInBoth.size > 0;
+    const disabledModelsButton = computed(() => props.isCreatingModels);
 
     const isFilesOrFolder = (files) =>
       files.some(
@@ -172,9 +170,9 @@ export default {
         ),
     );
 
-    const handleCreateModels = (files) => emit("create-models", files);
-    const handleCreatePhotospheres = (files) => emit("create-photospheres", files);
-    const handleRemoveModels = (files) => emit("remove-models", files);
+    const handleCreateModels = () => emit("create-models");
+    const handleCreatePhotospheres = () => emit("create-photospheres");
+    const handleRemoveModels = () => emit("remove-models");
 
     return {
       // References

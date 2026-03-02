@@ -37,7 +37,7 @@
               :fileStructure="fileStructure"
               :files="selection"
               :initialFolder="currentFolder"
-              :loadingFileIds="loadingFileIds"
+              :isCreatingModels="isCreatingModels"
               @delete-files="openFileDeleteModal"
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
@@ -354,6 +354,7 @@ export default {
     };
 
     const loadingFileIds = ref([]);
+    const isCreatingModels = ref(false);
     const createModelFromFile = async (file, type) => {
       try {
         loadingFileIds.value.push(file.id);
@@ -373,18 +374,19 @@ export default {
         loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
       }
     };
-    const createModelFromFiles = async (files, type) => {
-      if (!files?.length) return;
+    const createModelFromFiles = async (type) => {
+      if (!selection.value?.length || isCreatingModels.value) return;
+
+      isCreatingModels.value = true;
+
       try {
         selection.value = selection.value.map((f) => {
-          if (files.includes(f)) return { ...f, nature: "Model" };
+          f.nature = "Model";
           return f;
         });
 
-        loadingFileIds.value.push(...files.map((f) => f.id));
-
         const createdModels = await Promise.all(
-          files.map((file) =>
+          selection.value.map((file) =>
             type === MODEL_TYPE.PHOTOSPHERE
               ? createPhotosphere(props.project, file)
               : createModel(props.project, file),
@@ -404,8 +406,7 @@ export default {
               : t("FilesManager.createModelsNotification"),
         });
       } finally {
-        const ids = files.map((f) => f.id);
-        loadingFileIds.value = loadingFileIds.value.filter((id) => !ids.includes(id));
+        isCreatingModels.value = false;
       }
     };
 
@@ -418,17 +419,17 @@ export default {
       }
     };
 
-    const removeModels = async (files) => {
-      if (!files?.length) return;
+    const removeModels = async () => {
+      if (!selection.value?.length) return;
+      isCreatingModels.value = true;
 
       try {
         selection.value = selection.value.map((f) => {
-          if (files.includes(f)) return { ...f, nature: "Document" };
+          f.nature = "Document";
           return f;
         });
-        loadingFileIds.value.push(...files.map((f) => f.id));
 
-        const modelsToDelete = files
+        const modelsToDelete = selection.value
           .filter((file) => file.model_id && file.model_type)
           .map((file) => ({
             id: file.model_id,
@@ -444,8 +445,7 @@ export default {
           message: t("FilesManager.removeModelsNotification"),
         });
       } finally {
-        const ids = files.map((f) => f.id);
-        loadingFileIds.value = loadingFileIds.value.filter((id) => !ids.includes(id));
+        isCreatingModels.value = false;
       }
     };
 
@@ -804,6 +804,7 @@ export default {
       folderToManage,
       hasFiles,
       importFromOtherProjectsActions,
+      isCreatingModels,
       loadingFileIds,
       MODEL_TYPE,
       searchText,
