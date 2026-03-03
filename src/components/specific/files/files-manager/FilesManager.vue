@@ -380,10 +380,7 @@ export default {
       isCreatingModels.value = true;
 
       try {
-        selection.value = selection.value.map((f) => {
-          f.nature = "Model";
-          return f;
-        });
+        selection.value.forEach((f) => (f.nature = "Model"));
 
         const createdModels = await Promise.all(
           selection.value.map((file) =>
