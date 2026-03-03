@@ -13,10 +13,11 @@
   &.bimdata-card:deep() {
     --header-height: 38px;
 
-    & > .bimdata-card__header {
+    &>.bimdata-card__header {
       height: var(--header-height);
     }
-    & > .bimdata-card__content {
+
+    &>.bimdata-card__content {
       height: calc(100% - var(--header-height));
       padding: $padding;
     }
@@ -44,12 +45,15 @@ $breakpoints: (
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name) {
   $max: map.get($breakpoints, $name);
-  $max: if($max and $max > 0, $max - 0.02, null);
+  $max: if(sass($max and $max > 0): $max - 0.02);
+
   @if $max {
     @media (max-width: $max) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @content;
   }
 }

@@ -4,7 +4,7 @@
   position: relative;
   width: var(--card-width);
   height: var(--card-height);
-  box-shadow: bvar(--box-shadow);
+  box-shadow: var(--box-shadow);
   color: var(--color-primary);
 
   &:deep() {
@@ -24,6 +24,7 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+
         .bimdata-spinner {
           transform: scale(2);
         }
