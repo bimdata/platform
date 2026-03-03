@@ -5,7 +5,7 @@
       :longitude="inputLongitude"
       :latitude="inputLatitude"
     />
-    <div class="model-location-form__form-control">
+    <div class="model-location-form__form-control" :class="{ submit: isSubmitStep }">
       <AddressInput
         class="model-location-form__form-control__input"
         :placeholder="$t('ModelLocationForm.addressInputPlaceholder')"
@@ -21,10 +21,18 @@
         </BIMDataButton>
       </template>
       <template v-else>
-        <BIMDataButton color="primary" fill radius @click="submitAddress">
-          {{ $t("t.validate") }}
-        </BIMDataButton>
-        <BIMDataButton color="default" outline radius @click="cancel">
+        <div style="position: relative">
+          <BIMDataCheckbox
+            v-show="isSubmitStep"
+            class="model-location-form__form-control__checkbox"
+            v-model="applyToAllModels"
+            :text="$t('ModelLocationForm.applyToAllModels')"
+          />
+          <BIMDataButton color="primary" fill radius @click="submitAddress">
+            {{ $t("t.validate") }}
+          </BIMDataButton>
+        </div>
+        <BIMDataButton color="default" outline radius @click="changeAddress">
           {{ $t("t.change") }}
         </BIMDataButton>
       </template>
@@ -90,6 +98,7 @@ const submitLoading = inject("loading", false);
 const inputAddress = ref("");
 const inputLongitude = ref(0);
 const inputLatitude = ref(0);
+const applyToAllModels = ref(false);
 
 const checkAddress = async () => {
   if (inputAddress.value) {
@@ -127,9 +136,10 @@ const submitAddress = async () => {
   }
 };
 
-const cancel = () => {
+const changeAddress = () => {
   isSubmitStep.value = false;
 };
+
 const close = () => {
   inputAddress.value = "";
   isSubmitStep.value = false;

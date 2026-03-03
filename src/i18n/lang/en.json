@@ -228,7 +228,8 @@
     "addLocationButtonText": "Fill in"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Enter address"
+    "addressInputPlaceholder": "Enter address",
+    "applyToAllModels": "Apply to all models"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Merge"
