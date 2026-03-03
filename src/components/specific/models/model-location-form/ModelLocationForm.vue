@@ -106,14 +106,14 @@ const checkAddress = async () => {
 
 const submitAddress = async () => {
   const [latDMS, longDMS] = DD2DMS(inputLatitude.value, inputLongitude.value)
-  console.log([inputLatitude.value, inputLongitude.value])
-  console.log([latDMS, longDMS])
+
   const location = {
     site: props.site,
     address: inputAddress.value,
     longitude: longDMS,
     latitude: latDMS
   };
+
   try {
     submitLoading.value = true;
     if (props.site) {

@@ -80,18 +80,12 @@ const fetchModelLocation = async (project, model) => {
   );
   let siteAddressValue, refLongitudeValue, refLatitudeValue;
   if (site && site.attributes) {
-    // Extract SiteAddress, RefLongitude and RefLatitude
-    // values from model site attributes.
+    // Extract SiteAddress, RefLongitude and RefLatitude values from model site attributes.
     const { properties } = site.attributes;
-    siteAddressValue = (
-      properties.find(p => p.definition.name === "SiteAddress") || {}
-    ).value;
-    refLongitudeValue = (
-      properties.find(p => p.definition.name === "RefLongitude") || {}
-    ).value;
-    refLatitudeValue = (
-      properties.find(p => p.definition.name === "RefLatitude") || {}
-    ).value;
+    const prop = name => properties.find(p => p.definition.name === name);
+    siteAddressValue = prop("SiteAddress")?.value;
+    refLongitudeValue = prop("RefLongitude")?.value;
+    refLatitudeValue = prop("RefLatitude")?.value;
   }
   return {
     site,
@@ -138,18 +132,14 @@ const updateModelLocation = async (
   { site, address, longitude, latitude }
 ) => {
   let siteAddressID, refLongitudeID, refLatitudeID;
-  // Extract SiteAddress, RefLongitude and RefLatitude
-  // IDs from model site attributes.
+
+  // Extract SiteAddress, RefLongitude and RefLatitude IDs from model site attributes.
   const { properties } = site.attributes;
-  siteAddressID = (
-    properties.find(p => p.definition.name === "SiteAddress") || {}
-  ).id;
-  refLongitudeID = (
-    properties.find(p => p.definition.name === "RefLongitude") || {}
-  ).id;
-  refLatitudeID = (
-    properties.find(p => p.definition.name === "RefLatitude") || {}
-  ).id;
+  const prop = name => properties.find(p => p.definition.name === name);
+  siteAddressID = prop("SiteAddress")?.id;
+  refLongitudeID = prop("RefLongitude")?.id;
+  refLatitudeID = prop("RefLatitude")?.id;
+
   const props = [
     { id: siteAddressID, name: "SiteAddress", value: address },
     { id: refLongitudeID, name: "RefLongitude", value: longitude },

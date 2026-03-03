@@ -138,4 +138,41 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./AddressInput.scss"></style>
+<style scoped lang="css">
+.address-input {
+  position: relative;
+  display: inline-block;
+
+  .address-input__suggestions {
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: calc(var(--spacing-unit) / 2);
+    padding: calc(var(--spacing-unit) / 2) 0;
+    border-radius: 2px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--color-white);
+
+    .address-input__suggestions__item {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) / 2);
+      padding: var(--spacing-unit);
+      cursor: pointer;
+
+      &.hovered,
+      &:hover {
+        background-color: var(--color-silver-light);
+      }
+
+      .address-input__suggestions__item__icon {
+        width: 16px;
+        height: 16px;
+        color: var(--color-primary);
+      }
+    }
+  }
+}
+</style>
