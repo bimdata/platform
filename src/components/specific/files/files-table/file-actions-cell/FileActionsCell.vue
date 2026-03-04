@@ -225,7 +225,9 @@ export default {
     const closeMenu = () => {
       isOpen.value = false;
       menuItems.value = [];
-      nextTick(() => (menu.value.$el.style.top = ""));
+      nextTick(() => {
+        if (menu.value) menu.value.$el.style.top = "";
+      });
     };
 
     const onClick = event => {
