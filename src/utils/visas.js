@@ -1,9 +1,10 @@
-import { fullName } from "./users.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../config/visa.js";
+import FileService from "../services/FileService.js";
+import { fullName } from "./users.js";
 
 const safeFullName = (user) => (user ? fullName(user) : "");
 
-export const enhanceVisa = (visa, user, t, handler) => {
+export const enhanceVisa = async (visa, user, project, t, handler) => {
   const validationType = () => {
     if (visa.status === VISA_STATUS.CLOSE) {
       return t("Visa.view.visaClosed");
@@ -39,10 +40,19 @@ export const enhanceVisa = (visa, user, t, handler) => {
     return emailValidators;
   };
 
-  const document = handler.get({
-    id: visa.document.head_id ?? visa.document.id,
-    nature: "Document",
-  });
+  let document
+  try {
+    document = handler.get({
+      id: visa.document.id,
+      nature: "Document",
+    });
+    if (!document) {
+      document = await FileService.getDocument(project, { id: visa.document_id });
+    }
+  } catch (error) {
+    console.error("[Visa Utils]", error);
+  }
+  if (!document) return;
 
   return {
     ...visa,

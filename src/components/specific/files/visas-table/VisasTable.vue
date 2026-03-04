@@ -94,11 +94,11 @@ import { computed, watch, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { VISA_STATUS, VALIDATION_STATUS } from "../../../../config/visa.js";
-import { enhanceVisa } from "../../../../utils/visas.js";
 import { useFiles } from "../../../../state/files.js";
-
+import { useProjects } from "../../../../state/projects.js";
 import { useUser } from "../../../../state/user.js";
 import { fullName } from "../../../../utils/users.js";
+import { enhanceVisa } from "../../../../utils/visas.js";
 import columnsDef, { columnsLG, columnsXL, columnsXXL } from "./columns.js";
 
 import UserAvatarList from "../../users/user-avatar-list/UserAvatarList.vue";
@@ -128,13 +128,23 @@ export default {
   emits: ["delete", "file-clicked", "go-folders-view", "reach-visa", "selection-changed"],
   setup(props) {
     const { t } = useI18n();
-    const { user } = useUser();
     const { isLG, isXL, isXXL } = useStandardBreakpoints();
 
+    const { user } = useUser();
+    const { currentProject } = useProjects();
     const { fileStructureHandler: handler } = useFiles();
 
-    const enhancedVisas = computed(() =>
-      props.visas.map((visa) => enhanceVisa(visa, user.value, t, handler)),
+    const enhancedVisas = ref([]);
+    watch(
+      () => props.visas,
+      async () => {
+        enhancedVisas.value = await Promise.all(
+          props.visas.map((visa) => enhanceVisa(visa, user.value, currentProject.value, t, handler))
+        ).then(
+          visas => visas.filter(visa => !!visa)
+        );
+      },
+      { immediate: true }
     );
 
     const columns = computed(() => {
@@ -202,9 +212,9 @@ export default {
 
     return {
       columns,
+      enhancedVisas,
       user,
       fullName,
-      enhancedVisas,
       isCreator,
       isDelay,
       statusClasses,

@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/bimdata/platform/compare/v1.3.5...v1.3.6) (2026-03-04)
+
+
+### PATCH
+
+* fix(visa): properly handle visa on document with history (#629) ([e7e0464](https://github.com/bimdata/platform/commit/e7e0464241f9a9fc9990253b02f95fa9933d7697)), closes [#629](https://github.com/bimdata/platform/issues/629)
+
 ## [1.3.5](https://github.com/bimdata/platform/compare/v1.3.4...v1.3.5) (2026-02-27)
 
 

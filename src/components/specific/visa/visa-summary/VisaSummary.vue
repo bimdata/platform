@@ -156,7 +156,7 @@
             <BIMDataTextbox
               class="visa-summary__shell__file__content__name"
               :text="formatedVisa.document.name"
-              @click="$emit('preview-visa', formatedVisa.document.file)"
+              @click="$emit('preview-visa', formatedVisa.document)"
               width="calc(100% - 20px - 12px * 3)"
             />
           </div>
@@ -169,8 +169,8 @@
               height="40px"
               @click="
                 $emit('reach-file', {
-                  ...formatedVisa.document,
-                  nature: formatedVisa.document.model_id ? 'Model' : 'Document',
+                  id: formatedVisa.document.head_id ?? formatedVisa.document.id,
+                  nature: 'Document',
                 })
               "
             >
@@ -295,10 +295,6 @@ export default {
       creator: {
         ...visa.creator,
         fullName: visa.creator ? fullName(visa.creator) : t("Visa.summary.deletedUser"),
-      },
-      document: {
-        ...visa.document,
-        file: handler.get({ id: visa.document.id, nature: "Document" }),
       },
       validations: visa.validations
         .map((validation) => ({
