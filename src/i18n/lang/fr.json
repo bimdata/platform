@@ -321,7 +321,8 @@
     "addLocationButtonText": "Renseigner"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Entrer une adresse"
+    "addressInputPlaceholder": "Entrer une adresse",
+    "applyToAllModels": "Appliquer à tous les modèles"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Fusionner"

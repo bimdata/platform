@@ -19,9 +19,21 @@
     gap: var(--spacing-unit);
     padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
 
+    transition: padding-bottom 0.3s ease-out;
+
+    &.submit {
+      padding-bottom: calc(var(--spacing-unit) * 2);
+    }
+
     .model-location-form__form-control__input {
       flex-grow: 1;
       font-size: 1rem;
+    }
+
+    .model-location-form__form-control__checkbox {
+      position: absolute;
+      bottom: calc(0px - var(--spacing-unit) * 2);
+      text-wrap: nowrap;
     }
 
     .model-location-form__form-control__close-btn {

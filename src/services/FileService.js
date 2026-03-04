@@ -1,4 +1,3 @@
-import eachLimit from "async/eachLimit";
 import { FILE_TYPE } from "../config/files.js";
 import { download } from "../utils/download.js";
 import { segregate } from "../utils/file-structure.js";
