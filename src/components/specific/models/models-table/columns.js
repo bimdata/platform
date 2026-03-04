@@ -20,14 +20,8 @@ export default [
   {
     id: "location",
     text: "ModelsTable.headers.location",
-    width: "150px",
+    width: "230px",
     align: "left",
-  },
-  {
-    id: "version",
-    text: "ModelsTable.headers.version",
-    width: "100px",
-    align: "center",
   },
   {
     id: "creator",
