@@ -89,7 +89,7 @@ const props = defineProps({
 
 const emit = defineEmits(["close", "location-updated"]);
 
-const { createModelLocation, updateModelLocation } = useModels();
+const { createModelLocation, updateModelLocation, updateProjectModelsLocation } = useModels();
 
 const isSubmitStep = ref(false);
 const checkLoading = ref(false);
@@ -125,7 +125,9 @@ const submitAddress = async () => {
 
   try {
     submitLoading.value = true;
-    if (props.site) {
+    if (applyToAllModels.value) {
+      await updateProjectModelsLocation(props.project, location);
+    } else if (props.site) {
       await updateModelLocation(props.project, props.model, location);
     } else {
       await createModelLocation(props.project, props.model, location);

@@ -1,3 +1,4 @@
+import eachLimit from "async/eachLimit";
 import { reactive, readonly, toRefs } from "vue";
 import ModelService from "../services/ModelService.js";
 
@@ -154,6 +155,25 @@ const updateModelLocation = async (
   return newProperties;
 };
 
+const updateProjectModelsLocation = (project, location) => {
+  return eachLimit(
+    state.projectModels,
+    5,
+    async model => {
+      const [site] = await ModelService.fetchModelElementsByType(
+        project,
+        model,
+        "IfcSite"
+      );
+      if (site) {
+        await updateModelLocation(project, model, { ...location, site });
+      } else {
+        await createModelLocation(project, model, location);
+      }
+    }
+  );
+};
+
 export function useModels() {
   const readonlyState = readonly(state);
   return {
@@ -171,6 +191,7 @@ export function useModels() {
     softDeleteModels,
     fetchModelLocation,
     createModelLocation,
-    updateModelLocation
+    updateModelLocation,
+    updateProjectModelsLocation,
   };
 }
