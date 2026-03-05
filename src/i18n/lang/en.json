@@ -130,6 +130,10 @@
     "previewModelButtonText": "Preview",
     "createPhotosphereButtonText": "Define as photosphere"
   },
+  "FileNameCell": {
+    "modelFile": "Model",
+    "photosphereFile": "Photosphere"
+  },
   "FilesActionBar": {
     "moveButtonText": "Move to"
   },
@@ -141,7 +145,10 @@
   "FilesManager": {
     "title": "Project Files",
     "createModelNotification": "Model successfully created",
+    "createModelsNotification": "Models successfully created",
+    "createPhotospheresNotification": "Photospheres successfully created",
     "structureImport": "Import a GED structure",
+    "removeModelsNotification": "Models successfully removed",
     "gedDownload": "Download the GED",
     "folderImport": "Import a folder",
     "foldersTab": "Folders",

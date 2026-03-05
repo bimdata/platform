@@ -37,10 +37,14 @@
               :fileStructure="fileStructure"
               :files="selection"
               :initialFolder="currentFolder"
+              :isCreatingModels="isCreatingModels"
               @delete-files="openFileDeleteModal"
               @delete-visas="openVisaDeleteModal"
               @download="downloadFiles"
               @move="moveFiles"
+              @create-models="createModelFromFiles"
+              @create-photospheres="createModelFromFiles($event, MODEL_TYPE.PHOTOSPHERE)"
+              @remove-models="removeModels"
             />
           </transition>
 
@@ -75,6 +79,8 @@
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
+            @create-models="createModelFromFiles"
+            @create-photospheres="createModelFromFiles($event, MODEL_TYPE.PHOTOSPHERE)"
             @delete="openFileDeleteModal([$event])"
             @download="downloadFiles([$event])"
             @dragover.prevent="() => {}"
@@ -338,7 +344,7 @@ export default {
 
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
-        folders.map((f) => FileService.createFolderStructure(props.project, folder, f))
+        folders.map((f) => FileService.createFolderStructure(props.project, folder, f)),
       );
 
       setTimeout(() => {
@@ -348,7 +354,7 @@ export default {
     };
 
     const loadingFileIds = ref([]);
-
+    const isCreatingModels = ref(false);
     const createModelFromFile = async (file, type) => {
       try {
         loadingFileIds.value.push(file.id);
@@ -368,6 +374,38 @@ export default {
         loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
       }
     };
+    const createModelFromFiles = async (files, type) => {
+      if (!selection.value?.length || isCreatingModels.value) return;
+
+      isCreatingModels.value = true;
+
+      try {
+        selection.value.forEach((f) => (f.nature = "Model"));
+
+        const createdModels = await Promise.all(
+          selection.value.map((file) =>
+            type === MODEL_TYPE.PHOTOSPHERE
+              ? createPhotosphere(props.project, file)
+              : createModel(props.project, file),
+          ),
+        );
+
+        createdModels.forEach((model) => {
+          emit("model-created", model);
+        });
+
+        pushNotification({
+          type: "success",
+          title: t("t.success"),
+          message:
+            type === MODEL_TYPE.PHOTOSPHERE
+              ? t("FilesManager.createPhotospheresNotification")
+              : t("FilesManager.createModelsNotification"),
+        });
+      } finally {
+        isCreatingModels.value = false;
+      }
+    };
 
     const removeModel = async (file) => {
       try {
@@ -375,6 +413,36 @@ export default {
         await deleteModels(props.project, [{ id: file.model_id, type: file.model_type }]);
       } finally {
         loadingFileIds.value = loadingFileIds.value.filter((id) => id !== file.id);
+      }
+    };
+
+    const removeModels = async () => {
+      if (!selection.value?.length) return;
+      isCreatingModels.value = true;
+
+      try {
+        selection.value = selection.value.map((f) => {
+          f.nature = "Document";
+          return f;
+        });
+
+        const modelsToDelete = selection.value
+          .filter((file) => file.model_id && file.model_type)
+          .map((file) => ({
+            id: file.model_id,
+            type: file.model_type,
+          }));
+
+        if (!modelsToDelete.length) return;
+
+        await deleteModels(props.project, modelsToDelete);
+        pushNotification({
+          type: "success",
+          title: t("t.success"),
+          message: t("FilesManager.removeModelsNotification"),
+        });
+      } finally {
+        isCreatingModels.value = false;
       }
     };
 
@@ -465,7 +533,7 @@ export default {
           } else {
             closeAccessManager();
           }
-        }
+        },
       );
     };
     const closeAccessManager = () => {
@@ -543,7 +611,7 @@ export default {
       createdVisas.value = createdResponse;
       if (route.query.visaId) {
         currentVisa.value = toValidateVisas.value.find(
-          (v) => v.id === parseInt(route.query.visaId)
+          (v) => v.id === parseInt(route.query.visaId),
         );
         if (currentVisa.value) {
           openVisaManager(currentVisa.value);
@@ -554,7 +622,7 @@ export default {
     const visasCounter = computed(
       () =>
         toValidateVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length +
-        createdVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length
+        createdVisas.value.filter((v) => v.status !== VISA_STATUS.CLOSE).length,
     );
 
     const fetchTags = async () => {
@@ -660,19 +728,22 @@ export default {
     const searchText = ref("");
     const { filteredList: displayedFiles, searchText: filterFilesSearchText } = useListFilter(
       currentFiles,
-      (file) => file.name
+      (file) => file.name,
     );
     const { filteredList: displayedAllFiles, searchText: filterAllFilesSearchText } = useListFilter(
       allFiles,
-      (file) => file.name
+      (file) => file.name,
     );
     const { filteredList: displayedVisas, searchText: filterVisasSearchText } = useListFilter(
       allVisas,
-      (visa) => visa.document.name
+      (visa) => visa.document.name,
     );
 
-    const jumpToTargetFolder = (folderId) => {
-      selectedFileTab.value = filesTabs[0];
+    const jumpToTargetFolder = (folderId, forceFoldersTab = false) => {
+      if (forceFoldersTab) {
+        selectedFileTab.value = filesTabs[0];
+      }
+
       const folder = handler.get({ nature: FILE_TYPE.FOLDER, id: folderId });
       currentFolder.value = handler.deserialize(folder);
     };
@@ -695,7 +766,7 @@ export default {
           currentFolder.value = struct;
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     watch(
@@ -706,7 +777,7 @@ export default {
         currentFiles.value = childrenFolders.concat(childrenFiles);
         gedTargetFolder.set(folder.id);
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
@@ -730,6 +801,7 @@ export default {
       folderToManage,
       hasFiles,
       importFromOtherProjectsActions,
+      isCreatingModels,
       loadingFileIds,
       MODEL_TYPE,
       searchText,
@@ -749,6 +821,7 @@ export default {
       closeVersioningManager,
       closeVisaManager,
       createModelFromFile,
+      createModelFromFiles,
       downloadFiles,
       fetchTags,
       fetchVisas,
@@ -768,6 +841,7 @@ export default {
       openVersioningManager,
       openVisaManager,
       removeModel,
+      removeModels,
       setSelection,
       uploadFiles,
       visasLoading,

@@ -1,5 +1,4 @@
 import i18n from "../../../../i18n/index.js";
-import { fileExtension } from "../../../../utils/files.js";
 
 const { t } = i18n.global;
 
@@ -9,34 +8,13 @@ export default [
     text: "t.type",
     width: "80px",
     align: "center",
-    sortable: true,
-    defaultSortOrder: "asc",
-    sortFunction: (a, b) => {
-      const getFileType = (file) => {
-        if (file.nature === 'folder') {
-          return 'Folder';
-        } else {
-          return fileExtension(file.name);
-        }
-      };
-    
-      const fileTypeA = getFileType(a);
-      const fileTypeB = getFileType(b);
-    
-      if (fileTypeA < fileTypeB) {
-        return 1;
-      } else if (fileTypeA > fileTypeB) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
+    filter: true,
   },
   {
     id: "name",
     text: "t.name",
     sortable: true,
-    defaultSortOrder: "desc"
+    defaultSortOrder: "desc",
   },
   {
     id: "created_by",
@@ -44,7 +22,8 @@ export default [
     width: "160px",
     align: "center",
     filter: true,
-    filterFunction: rowData => rowData ? `${rowData.lastname} ${rowData.firstname}` : t("t.notSpecified"),
+    filterFunction: (rowData) =>
+      rowData ? `${rowData.lastname} ${rowData.firstname}` : t("t.notSpecified"),
   },
   {
     id: "lastupdate",
@@ -65,7 +44,7 @@ export default [
     width: "100px",
     align: "center",
     sortable: true,
-    defaultSortOrder: "asc"
+    defaultSortOrder: "asc",
   },
   {
     id: "tags",
@@ -80,7 +59,7 @@ export default [
     label: " ",
     width: "50px",
     align: "center",
-  }
+  },
 ];
 
 export const columnsXL = ["name", "lastupdate", "size", "actions"];

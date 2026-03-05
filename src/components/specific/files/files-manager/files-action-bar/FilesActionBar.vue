@@ -34,6 +34,45 @@
       <span>{{ $t("t.download") }}</span>
     </BIMDataButton>
 
+    <template v-if="canConvertAllToModel || canConvertAllToPhotosphere">
+      <BIMDataButton
+        v-if="canConvertAllToModel"
+        width="120px"
+        ghost
+        squared
+        @click="handleCreateModels(files)"
+        :disabled="disabledModelsButton"
+      >
+        <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
+        <span>{{ $t("FileActionsCell.createModelButtonText") }}</span>
+      </BIMDataButton>
+
+      <BIMDataButton
+        v-if="canConvertAllToPhotosphere"
+        width="120px"
+        ghost
+        squared
+        @click="handleCreatePhotospheres(files)"
+        :disabled="disabledModelsButton"
+      >
+        <BIMDataIconSetAsModel size="s" margin="0 6px 0 0" />
+        <span>{{ $t("FileActionsCell.createPhotosphereButtonText") }}</span>
+      </BIMDataButton>
+    </template>
+
+    <template v-else-if="canRemoveAllModels">
+      <BIMDataButton
+        width="120px"
+        ghost
+        squared
+        @click="handleRemoveModels(files)"
+        :disabled="disabledModelsButton"
+      >
+        <BIMDataIconRemoveModel size="s" margin="0 6px 0 0" />
+        <span>{{ $t("FileActionsCell.removeModelButtonText") }}</span>
+      </BIMDataButton>
+    </template>
+
     <transition name="fade">
       <FolderSelector
         v-show="showFolderSelector"
@@ -50,8 +89,11 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useToggle } from "../../../../../composables/toggle.js";
 import { useUser } from "../../../../../state/user.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { isConvertible, isConvertibleToPhotosphere, isModel } from "../../../../../utils/models.js";
 // Components
 import FolderSelector from "../../folder-selector/FolderSelector.vue";
 
@@ -76,8 +118,20 @@ export default {
       type: Object,
       required: true,
     },
+    isCreatingModels: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ["delete-files", "delete-visas", "download", "move"],
+  emits: [
+    "delete-files",
+    "delete-visas",
+    "download",
+    "move",
+    "create-models",
+    "create-photospheres",
+    "remove-models",
+  ],
   setup(props, { emit }) {
     const { hasAdminPerm } = useUser();
 
@@ -87,23 +141,60 @@ export default {
       toggle: toggleFolderSelector,
     } = useToggle();
 
-    const isFilesOrFolder = files => files.some(
-      f => f.nature === "Document" || f.nature === "Model" || f.nature === "Folder"
-    );
+    const disabledModelsButton = computed(() => props.isCreatingModels);
 
-    const onDeleteClick = files => {
+    const isFilesOrFolder = (files) =>
+      files.some(
+        (file) => file.nature === "Document" || file.nature === "Model" || file.nature === "Folder",
+      );
+
+    const onDeleteClick = (files) => {
       emit(isFilesOrFolder(files) ? "delete-files" : "delete-visas", files);
     };
+
+    const canConvertAllToModel = computed(
+      () =>
+        props.files.length > 0 &&
+        props.files.every(
+          (file) => !isFolder(file) && isConvertible(file) && file.nature === "Document",
+        ),
+    );
+    const canConvertAllToPhotosphere = computed(
+      () =>
+        props.files.length > 0 &&
+        props.files.every(
+          (file) =>
+            !isFolder(file) && isConvertibleToPhotosphere(file) && file.nature === "Document",
+        ),
+    );
+    const canRemoveAllModels = computed(
+      () =>
+        props.files.length > 0 &&
+        props.files.every(
+          (file) => !isFolder(file) && isConvertible(file) && file.nature === "Model",
+        ),
+    );
+
+    const handleCreateModels = (files) => emit("create-models", files);
+    const handleCreatePhotospheres = (files) => emit("create-photospheres", files);
+    const handleRemoveModels = (files) => emit("remove-models", files);
 
     return {
       // References
       showFolderSelector,
+      disabledModelsButton,
       // Methods
       closeFolderSelector,
       hasAdminPerm,
       isFilesOrFolder,
       onDeleteClick,
       toggleFolderSelector,
+      canConvertAllToModel,
+      canConvertAllToPhotosphere,
+      canRemoveAllModels,
+      handleCreateModels,
+      handleCreatePhotospheres,
+      handleRemoveModels,
     };
   },
 };

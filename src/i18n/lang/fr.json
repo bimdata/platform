@@ -192,6 +192,10 @@
     "versioningButtonText": "Ajouter une version",
     "visaButtonText": "Demande de validation"
   },
+  "FileNameCell": {
+    "modelFile": "Modèle",
+    "photosphereFile": "Photosphère"
+  },
   "FilesActionBar": {
     "moveButtonText": "Déplacer vers"
   },
@@ -203,8 +207,11 @@
   "FilesManager": {
     "title": "Documents du projet",
     "createModelNotification": "Modèle créé avec succès",
+    "createModelsNotification": "Modèles créés avec succès",
     "createPhotosphereNotification": "Photosphère créée avec succès",
+    "createPhotospheresNotification": "Photosphères créées avec succès",
     "structureImport": "Importer une structure GED",
+    "removeModelsNotification": "Modèles retirés avec succès",
     "gedDownload": "Télécharger la GED",
     "folderImport": "Importer un dossier",
     "foldersTab": "Dossiers",

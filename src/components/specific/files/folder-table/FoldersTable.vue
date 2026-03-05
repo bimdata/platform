@@ -5,7 +5,7 @@
     data-test-id="files-table"
     tableLayout="fixed"
     :columns="columns"
-    :rows="files"
+    :rows="formattedFiles"
     rowKey="id"
     :rowHeight="48"
     :selectable="true"
@@ -112,7 +112,7 @@ import { useI18n } from "vue-i18n";
 import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
 import { isFolder } from "../../../../utils/file-structure.js";
-import { formatBytes, generateFileKey } from "../../../../utils/files.js";
+import { formatBytes, generateFileKey, fileExtension } from "../../../../utils/files.js";
 
 // Components
 import FilesManagerBreadcrumb from "../files-manager/files-manager-breadcrumb/FilesManagerBreadcrumb.vue";
@@ -132,7 +132,7 @@ export default {
     FileTagsCell,
     FileTypeCell,
     FileUploadCard,
-    FilesManagerBreadcrumb
+    FilesManagerBreadcrumb,
   },
   props: {
     selection: {
@@ -198,6 +198,20 @@ export default {
       }));
     });
 
+    const formatExtension = (name) => {
+      const ext = fileExtension(name);
+
+      if (!ext) return t("t.file");
+
+      return ext.replace(".", "").toUpperCase();
+    };
+    const formattedFiles = computed(() =>
+      props.files.map((file) => ({
+        ...file,
+        type: isFolder(file) ? t("t.folder") : file.name ? formatExtension(file.name) : t("t.file"),
+      })),
+    );
+
     const onRowDrop = ({ event, data }) => {
       event.preventDefault();
       event.stopPropagation();
@@ -211,7 +225,7 @@ export default {
         nameEditMode = reactive({});
         files.forEach((row) => (nameEditMode[row.id] = false));
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const fileUploads = ref([]);
@@ -219,9 +233,9 @@ export default {
       () => props.filesToUpload,
       (files) => {
         fileUploads.value = fileUploads.value.concat(
-          files.map((f) => Object.assign(f, { key: generateFileKey(f) }))
+          files.map((f) => Object.assign(f, { key: generateFileKey(f) })),
         );
-      }
+      },
     );
 
     const folderUploads = ref([]);
@@ -229,9 +243,9 @@ export default {
       () => props.foldersToUpload,
       (folders) => {
         folderUploads.value = folderUploads.value.concat(
-          folders.map((f) => Object.assign(f, { key: generateFileKey(f) }))
+          folders.map((f) => Object.assign(f, { key: generateFileKey(f) })),
         );
-      }
+      },
     );
 
     const onUploadCompleted = (key, file) => {
@@ -260,6 +274,7 @@ export default {
       filesTable,
       fileUploads,
       folderUploads,
+      formattedFiles,
       nameEditMode,
       // Methods
       cleanUpload,
@@ -267,7 +282,7 @@ export default {
       isFolder,
       onRowDrop,
       onUploadCompleted,
-    }
-  }
-}
+    };
+  },
+};
 </script>

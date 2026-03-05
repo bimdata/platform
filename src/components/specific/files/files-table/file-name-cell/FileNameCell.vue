@@ -36,12 +36,25 @@
         </BIMDataButton>
       </div>
 
-      <div
-        v-else
-        class="file-name-cell__content"
-        @click="$emit('file-clicked', file)"
-      >
-        <BIMDataTextbox :text="file.name" width="auto" maxWidth="100%" />
+      <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
+        <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
+        <div v-if="displayModelInfo(file)" class="flex items-center">
+          <BIMDataTooltip
+            :text="
+              file.model_type === 'PHOTOSPHERE'
+                ? $t('FileNameCell.photosphereFile')
+                : file.nature === 'Model'
+                  ? $t('FileNameCell.modelFile')
+                  : ''
+            "
+            position="right"
+            class="flex items-center"
+          >
+            <BIMDataIconSetAsModel
+              v-if="file.nature === 'Model' || file.model_type === 'PHOTOSPHERE'"
+            />
+          </BIMDataTooltip>
+        </div>
         <BIMDataIconVersioning
           v-if="hasHistory"
           margin="0px 0px 0px 4px"
@@ -60,21 +73,22 @@ import { ref, watch, computed } from "vue";
 import { useFiles } from "../../../../../state/files.js";
 import { debounce } from "../../../../../utils/async.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
+import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
 
 export default {
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     file: {
       type: Object,
-      required: true
+      required: true,
     },
     editMode: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ["close", "file-clicked", "open-versioning-manager", "success"],
   setup(props, { emit }) {
@@ -95,8 +109,8 @@ export default {
           await updateFiles(props.project, [
             {
               ...props.file,
-              name: fileName.value
-            }
+              name: fileName.value,
+            },
           ]);
           closeUpdateForm();
           emit("success");
@@ -124,19 +138,25 @@ export default {
 
     watch(
       () => props.file,
-      file => (fileName.value = file.name),
-      { immediate: true }
+      (file) => (fileName.value = file.name),
+      { immediate: true },
     );
     watch(
       () => props.editMode,
-      value => {
+      (value) => {
         if (value) {
           openUpdateForm();
         } else {
           closeUpdateForm();
         }
-      }
+      },
     );
+
+    const displayModelInfo = (file) => {
+      if (!isFolder(file)) {
+        return isConvertible(file) || isConvertibleToPhotosphere(file);
+      }
+    };
 
     return {
       // References
@@ -148,11 +168,12 @@ export default {
       // Methods
       closeUpdateForm,
       hasHistory,
+      displayModelInfo,
       isFolder,
       openUpdateForm,
-      renameFile
+      renameFile,
     };
-  }
+  },
 };
 </script>
 
