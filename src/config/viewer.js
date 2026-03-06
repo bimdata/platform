@@ -28,6 +28,8 @@ const translateIfcType = ENV.VUE_APP_TRANSLATE_IFC_TYPE === "true";
 
 const PLUGINS_CONFIG = {
   accessMarketplace: true,
+  "anchor-synchronization-window": false,
+  "anchor-synchronization": false,
   bcfManager: true,
   buildingMaker: true,
   "drawing-tools" : true,
@@ -50,6 +52,7 @@ const PLUGINS_CONFIG = {
     merge: true,
     translateIfcEntities: translateIfcType,
   },
+  "viewer2d-background": true,
   viewer3d: {
     enableDTX: true,
   },
