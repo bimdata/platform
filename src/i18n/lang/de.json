@@ -673,7 +673,6 @@
       "deletedUser": "Gelöschter Nutzer",
       "validatorList": {
         "accept": "Bestätigt",
-        "delayed": "Verzögert",
         "deny": "Abgelehnt",
         "commented": "Kommentiert",
         "pending": "Ausstehend",

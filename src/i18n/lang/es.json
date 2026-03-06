@@ -44,7 +44,7 @@
           "errorNotifText": "Error al actualizar las notificaciones",
           "successDeleteNotifText": "Se han desactivado las notificaciones.",
           "errorDeleteNotifText": "Se ha producido un error al desactivar las notificaciones.",
-          "sendAt": ""
+          "sendAt": "A:"
         },
         "activity": {
           "title": "Notificaciones de actividad del proyecto",
@@ -74,9 +74,9 @@
             "removeModels": "Eliminar plantillas",
             "createMetaBuilding": "Crear meta-building",
             "deleteMetaBuilding": "Eliminar meta-building",
-            "title": ""
+            "title": "Otros eventos"
           },
-          "recipientsNotificationsText": ""
+          "recipientsNotificationsText": "¿Quién recibe las notificaciones?"
         }
       },
       "recipients": {
@@ -328,10 +328,10 @@
   },
   "UserRoleBadge": {
     "guest": "Invitado",
-    "spaceAdmin": "",
-    "spaceUser": "",
-    "projectUser": "",
-    "projectAdmin": ""
+    "spaceAdmin": "Admin espacio",
+    "spaceUser": "Usuario espacio",
+    "projectUser": "Usuario proyecto",
+    "projectAdmin": "Admin proyecto"
   },
   "UsersManagerOnboarding": {
     "text": "Invitar a su primer colaborador",
@@ -673,7 +673,6 @@
       "deletedUser": "Usuario eliminado",
       "validatorList": {
         "accept": "Confirmado",
-        "delayed": "Retrasado",
         "deny": "Rechazado",
         "commented": "Comentado",
         "pending": "En espera",

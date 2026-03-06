@@ -130,10 +130,6 @@
     "previewModelButtonText": "Preview",
     "createPhotosphereButtonText": "Define as photosphere"
   },
-  "FileNameCell": {
-    "modelFile": "Model",
-    "photosphereFile": "Photosphere"
-  },
   "FilesActionBar": {
     "moveButtonText": "Move to"
   },
@@ -145,10 +141,7 @@
   "FilesManager": {
     "title": "Project Files",
     "createModelNotification": "Model successfully created",
-    "createModelsNotification": "Models successfully created",
-    "createPhotospheresNotification": "Photospheres successfully created",
     "structureImport": "Import a GED structure",
-    "removeModelsNotification": "Models successfully removed",
     "gedDownload": "Download the GED",
     "folderImport": "Import a folder",
     "foldersTab": "Folders",
@@ -235,8 +228,7 @@
     "addLocationButtonText": "Fill in"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Enter address",
-    "applyToAllModels": "Apply to all models"
+    "addressInputPlaceholder": "Enter address"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Merge"
@@ -669,7 +661,7 @@
     "add": {
       "title": "Validation request",
       "errorDate": "Date invalid",
-      "errorValidator": "You must add at least 1 validator",
+      "errorValidator": "You must add at least 1 confirmer",
       "dateInputPlaceholder": "To be validated before"
     },
     "summary": {
@@ -681,7 +673,6 @@
       "deletedUser": "User removed",
       "validatorList": {
         "accept": "Validated",
-        "delayed": "Delayed",
         "deny": "Refused",
         "commented": "Commented",
         "pending": "Awaiting",
@@ -697,15 +688,6 @@
     },
     "selectionValidator": {
       "warning": "This user cannot access the file."
-    },
-    "VisaValidatorCell": {
-      "title": "Visa details",
-      "noGroup": "No group",
-      "accept": "Accepted",
-      "delayed": "Delayed",
-      "deny": "Denied",
-      "pending": "Pending",
-      "multipleGroups": "{count} groups"
     },
     "noVisa": "A VISA has not yet been created",
     "accept": "Accept",
