@@ -1,3 +1,39 @@
+# [1.4.0](https://github.com/bimdata/platform/compare/v1.3.6...v1.4.0) (2026-03-06)
+
+
+### chore
+
+* bump @bimdata/viewer@2.16.3-beta.1 from Github Actions [skip e2e] ([1a80ee4](https://github.com/bimdata/platform/commit/1a80ee489f27adae21bc793029dc42756e9b29c5))
+* bump @bimdata/viewer@2.16.3-beta.2 from Github Actions [skip e2e] ([b7505c7](https://github.com/bimdata/platform/commit/b7505c708eb6d79f0705bd92873d08bc361aaf28))
+* bump @bimdata/viewer@2.16.3-beta.3 from Github Actions [skip e2e] ([5316501](https://github.com/bimdata/platform/commit/53165010290d8258cdb75d5a8ed9e289e3145cef))
+* bump @bimdata/viewer@2.16.3-beta.4 from Github Actions [skip e2e] ([cafba52](https://github.com/bimdata/platform/commit/cafba52ee2bf1468c1a4cf2a6a5f10d4a9fb643e))
+* bump @bimdata/viewer@2.16.4-beta.1 from Github Actions [skip e2e] ([2ef994e](https://github.com/bimdata/platform/commit/2ef994ec784282afe85b2351c076ec40cd79a62c))
+* bump @bimdata/viewer@2.16.4-beta.2 from Github Actions [skip e2e] ([b3384c9](https://github.com/bimdata/platform/commit/b3384c9ceeb3860beb9ee685757b97ae9cd19027))
+* bump @bimdata/viewer@2.17.0-beta.1 from Github Actions [skip e2e] ([64cb7ff](https://github.com/bimdata/platform/commit/64cb7ffcd4682317089e6af399f3b4b2a0fbc1e5))
+* bump @bimdata/viewer@2.17.0-beta.2 from Github Actions [skip e2e] ([260c300](https://github.com/bimdata/platform/commit/260c30063ceba12be81958decb180e391c33d5be))
+* fix sass warnings + fix a typo ([f2b272f](https://github.com/bimdata/platform/commit/f2b272ffeab57b21fff2c8f45dd3fd8b9cd4febd))
+* restore viewer v2.16.3 after merge ([51f2ee5](https://github.com/bimdata/platform/commit/51f2ee5925001c90add4b9d893cd7672e6fb9446))
+* update dependencies ([9b6d343](https://github.com/bimdata/platform/commit/9b6d34323c12061ce0f56a96920082fb0f400bab))
+* update package-lock.json ([5b61695](https://github.com/bimdata/platform/commit/5b616950df5f26bfa55e1472e4c65eb9f8a9ba1c))
+
+### FEAT
+
+* add searchbar in GenericModelsManager & fix position when metabuilding (#617) ([e7bd86a](https://github.com/bimdata/platform/commit/e7bd86a2a8a1106785fe20a91b9999b1367d0f68)), closes [#617](https://github.com/bimdata/platform/issues/617)
+
+### MINOR
+
+* Feature: set all models location at once (#630) ([d1efe96](https://github.com/bimdata/platform/commit/d1efe96894a53ce8457f0b01f61d1eb8f25869ab)), closes [#630](https://github.com/bimdata/platform/issues/630)
+* Feature/model ged (#625) ([6d2388e](https://github.com/bimdata/platform/commit/6d2388e9ff79b88a4913bf2ea5bc1e321933faf6)), closes [#625](https://github.com/bimdata/platform/issues/625)
+* Feature/visas statuts (#618) ([dd5f370](https://github.com/bimdata/platform/commit/dd5f370cd061233517e7a709843a581e421d6345)), closes [#618](https://github.com/bimdata/platform/issues/618)
+
+### PATCH
+
+* feat(viewer config): Remove viewer2d-background (#628) ([04c0c02](https://github.com/bimdata/platform/commit/04c0c02067739f0579433eb3890ed96bba58624e)), closes [#628](https://github.com/bimdata/platform/issues/628)
+* fix responsive in modelsTableManager (#623) ([4964f0b](https://github.com/bimdata/platform/commit/4964f0bfccdd9c7d3087308cc00d694a3005f647)), closes [#623](https://github.com/bimdata/platform/issues/623)
+* fix the opening of modelActionsCell (#624) ([ae4f6fc](https://github.com/bimdata/platform/commit/ae4f6fcaaad744f67a5cee666848adf52e88bbe1)), closes [#624](https://github.com/bimdata/platform/issues/624)
+* fix(i18n): update en, de and es translations ([2e246ae](https://github.com/bimdata/platform/commit/2e246aea3c8fe4774d9a750050b8e02c3daf9d8c))
+* Fix/models manager responsive (#631) ([4b47580](https://github.com/bimdata/platform/commit/4b47580214665af0e86b5dffa16c8400e48c6efc)), closes [#631](https://github.com/bimdata/platform/issues/631)
+
 ## [1.3.6](https://github.com/bimdata/platform/compare/v1.3.5...v1.3.6) (2026-03-04)
 
 
