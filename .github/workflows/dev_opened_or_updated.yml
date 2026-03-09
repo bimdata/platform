@@ -24,7 +24,7 @@ jobs:
           ref: ${{ github.ref }}
           persist-credentials: false
       - name: Login to BIMData Docker Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: docker-registry.bimdata.io
           username: ${{ secrets.DOCKER_USER }}
@@ -83,7 +83,7 @@ jobs:
           ref: ${{ github.ref }}
           persist-credentials: false
       - name: Login to BIMData Docker Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: docker-registry.bimdata.io
           username: ${{ secrets.DOCKER_USER }}
