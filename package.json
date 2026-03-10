@@ -26,7 +26,7 @@
     "oidc-client-ts": "^3.4.1",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.29",
-    "vue-i18n": "^11.2.8",
+    "vue-i18n": "^11.3.0",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
@@ -36,9 +36,9 @@
     "@semantic-release/git": "^10.0.1",
     "@vitejs/plugin-vue": "^6.0.4",
     "babel-jest": "^30.2.0",
-    "conventional-changelog-eslint": "^6.0.0",
+    "conventional-changelog-eslint": "^6.1.0",
     "cypress": "^15.11.0",
-    "eslint": "^10.0.2",
+    "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-vue": "^10.8.0",
