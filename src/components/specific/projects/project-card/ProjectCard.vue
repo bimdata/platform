@@ -86,6 +86,23 @@ import ProjectCardActionMenu from "./project-card-action-menu/ProjectCardActionM
 import ProjectCardModelPreview from "./project-card-model-preview/ProjectCardModelPreview.vue";
 import ProjectStatusBadge from "../project-status-badge/ProjectStatusBadge.vue";
 
+const LOADING_DELAY = 500; // milliseconds
+
+/**
+ * source: https://stackoverflow.com/a/7557433/8298197
+ */
+function isElementInViewport(el, margin) {
+  const { left, top, right, bottom } = el.getBoundingClientRect();
+  const W = window.innerWidth || document.documentElement.clientWidth;
+  const H = window.innerHeight || document.documentElement.clientHeight;
+  return (
+    left + margin >= 0 &&
+    top + margin >= 0 &&
+    right - margin <= W &&
+    bottom - margin <= H
+  );
+}
+
 const props = defineProps({
   project: {
     type: Object,
@@ -127,42 +144,51 @@ onMounted(() => {
     ([{ isIntersecting }]) => {
       if (!isIntersecting) return;
 
-      unwatchProject = watch(
-        () => props.project,
-        async () => {
-          loading.value = true;
-          const models = await ModelService.fetchModels(props.project);
-          displayedModels.value = models
-            .filter(
-              model =>
-                !model.archived && model.type !== MODEL_TYPE.META_BUILDING
-            )
-            .reduce(
-              (acc, model) =>
-                model.id === props.project.main_model_id
-                  ? [model, ...acc]
-                  : [...acc, model],
+      setTimeout(() => {
+        // Do not load card if it is not in the viewport
+        if (!isElementInViewport(placeholder.value, viewContainer.value.clientHeight)) return;
+
+        unwatchProject = watch(
+          () => props.project,
+          async () => {
+            loading.value = true;
+            const models = await ModelService.fetchModels(props.project);
+            displayedModels.value = models.reduce(
+              (acc, model) => {
+                if (
+                  !model.archived &&
+                  model.type !== MODEL_TYPE.META_BUILDING &&
+                  model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
+                ) {
+                  if (model.id === props.project.main_model_id) {
+                    acc.unshift(model);
+                  } else {
+                    acc.push(model);
+                  }
+                }
+                return acc;
+              },
               []
             );
-          loading.value = false;
-          visible.value = true;
-        },
-        { immediate: true }
-      );
+            loading.value = false;
+            visible.value = true;
+          },
+          { immediate: true }
+        );
+  
+        unwatchModels = watch(
+          displayedModels,
+          () => {
+            currentModel.value = displayedModels.value[0];
+          },
+          { immediate: true }
+        );
 
-      unwatchModels = watch(
-        displayedModels,
-        () => {
-          currentModel.value = displayedModels.value[0];
-        },
-        { immediate: true }
-      );
-
-      observer.disconnect();
+        observer.disconnect();
+      }, LOADING_DELAY);
     },
     {
       root: viewContainer.value,
-      rootMargin: `${viewContainer.value.clientHeight}px`
     }
   );
 
