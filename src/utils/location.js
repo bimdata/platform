@@ -10,14 +10,68 @@
  *  DD is negative if South or West
  */
 
-import DmsCoordinates, { parseDms } from "dms-conversion";
+
+// ---
+
+/**
+ * The DMS_REGEX and parseDMS/parseDD utils function are extracted from "dms-conversion" package.
+ * Source: https://github.com/WSDOT-GIS/dms-js
+ */
+
+// Matches DMS DmsCoordinates
+const DMS_REGEX = /^(-?\d+(?:\.\d+)?)[°:d]?\s?(?:(\d+(?:\.\d+)?)['′ʹ:]?\s?(?:(\d+(?:\.\d+)?)["″ʺ]?)?)?\s?([NSEW])?/i;
+
+const truncate = n => n > 0 ? Math.floor(n) : Math.ceil(n);
+
+/**
+ * Parses a Degrees Minutes Seconds string into a Decimal Degrees number.
+ *
+ * @param {string} dmsStr A string containing a coordinate in either DMS or DD format.
+ * @return {Number} If dmsStr is a valid coordinate string, the value in decimal degrees will be returned. Otherwise NaN will be returned.
+ */
+function parseDMS(dmsStr) {
+    let output = NaN;
+    const dmsMatch = DMS_REGEX.exec(dmsStr);
+    if (dmsMatch) {
+        const degrees = Number(dmsMatch[1]);
+        const minutes = typeof (dmsMatch[2]) !== "undefined" ? Number(dmsMatch[2]) / 60 : 0;
+        const seconds = typeof (dmsMatch[3]) !== "undefined" ? Number(dmsMatch[3]) / 3600 : 0;
+        const hemisphere = dmsMatch[4] || null;
+        if (hemisphere !== null && /[SW]/i.test(hemisphere)) {
+            output = -Math.abs(degrees) - minutes - seconds;
+        }
+        else {
+            output = degrees + minutes + seconds;
+        }
+    }
+    return output;
+}
+
+ /**
+  * 
+  * @param {Number} ddValue A number (coordinate) in decimal degrees
+  * @param {String} type Either "latitude" or "longitude"
+  * @returns {Array} DMS array
+  */
+function parseDD(ddValue, type) {
+  const direction = type === "longitude"
+    ? ddValue < 0 ? "W" : "E"
+    : ddValue < 0 ? "S" : "N";
+  const absDD = Math.abs(ddValue);
+  const degrees = truncate(absDD);
+  const minutes = truncate((absDD - degrees) * 60);
+  const seconds = (absDD - degrees - minutes / 60) * Math.pow(60, 2);
+  return [degrees, minutes, seconds, direction];
+}
+
+// ---
 
 
 /**
  * Convert an array of DMS coordinate values into DD system equivalent.
  *
  * @param {Array} param DMS coordinate
- * @param {String} param either latitude or longitude
+ * @param {String} type either "latitude" or "longitude"
  * @returns {Number} DD coordinate
  */
 function DMS2DD([degrees, minutes, seconds, secondsFraction = 0], type) {
@@ -44,7 +98,7 @@ function DMS2DD([degrees, minutes, seconds, secondsFraction = 0], type) {
   }
   seconds += secondsFraction/1000000;
   const dmsString = `${degrees}°${minutes}′${seconds}″ ${direction}`;
-  return parseDms(dmsString);
+  return parseDMS(dmsString);
 }
 
 /**
@@ -55,16 +109,14 @@ function DMS2DD([degrees, minutes, seconds, secondsFraction = 0], type) {
  * @returns {[Array, Array]} latitude and longitude DMS coordinate
  */
 function DD2DMS(lat, long) {
-  const dmsCoords = new DmsCoordinates(lat, long);
-  const { longitude, latitude } = dmsCoords.dmsArrays;
-  let [latD, latM, latS, latDir] = latitude;
+  let [latD, latM, latS, latDir] = parseDD(lat, "latitude");
   if (latDir == "S") {
     latD *= -1;
     latM *= -1;
     latS *= -1;
   }
 
-  let [longD, longM, longS, longDir] = longitude;
+  let [longD, longM, longS, longDir] = parseDD(long, "longitude");
   if (longDir == "W") {
     longD *= -1;
     longM *= -1;

@@ -20,7 +20,6 @@
     "@bimdata/viewer": "2.17.0-beta.4",
     "@paddle/paddle-js": "^1.6.2",
     "async": "^3.2.6",
-    "dms-conversion": "^3.1.4",
     "lodash": "^4.17.23",
     "maplibre-gl": "^5.20.1",
     "oidc-client-ts": "^3.5.0",
