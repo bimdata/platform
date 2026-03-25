@@ -3,7 +3,7 @@
     <div class="model-path-cell__last-folder" v-click-away="() => (showFullPath = false)">
       <BIMDataIconFolderLocation fill color="primary" margin="0 12px 0 0" />
       <BIMDataTextbox
-        :text="lastFolderLocation(model.document)"
+        :text="lastFolderLocation(model.document_id)"
         cutPosition="middle"
         :tooltip="false"
         width="auto"
@@ -13,9 +13,9 @@
     <transition name="fade">
       <div v-if="hovering || showFullPath" class="model-path-cell__location">
         <div
-          v-if="truncatedFolderLocation(model.document).length > 0"
+          v-if="truncatedFolderLocation(model.document_id).length > 0"
           class="flex items-center"
-          v-for="(folder, index) in truncatedFolderLocation(model.document)"
+          v-for="(folder, index) in truncatedFolderLocation(model.document_id)"
           :key="folder.id"
         >
           <div
@@ -24,7 +24,7 @@
             v-if="folder.id !== 'ellipsis'"
           >
             <BIMDataIconFolderLocation
-              v-if="index === truncatedFolderLocation(model.document).length - 1"
+              v-if="index === truncatedFolderLocation(model.document_id).length - 1"
               fill
               color="primary"
               margin="0 6px 0 0"
@@ -51,7 +51,7 @@
             >
             </BIMDataTextbox>
           </div>
-          <div v-if="showChevron(folder, index, model.document)" class="m-x-6">
+          <div v-if="showChevron(folder, index, model.document_id)" class="m-x-6">
             <BIMDataIconChevron size="xxxs" fill color="default" />
           </div>
         </div>
@@ -72,7 +72,10 @@
 <script>
 import { ref, onDeactivated, onActivated } from "vue";
 import { useI18n } from "vue-i18n";
+import { FILE_TYPE } from "../../../../../config/files.js";
+import { useFiles } from "../../../../../state/files.js";
 import { getAscendants } from "../../../../../utils/file-structure.js";
+
 export default {
   props: {
     model: {
@@ -87,6 +90,7 @@ export default {
   emits: ["go-folders-view"],
   setup(props, { emit }) {
     const { t } = useI18n();
+    const { fileStructureHandler: handler } = useFiles();
 
     const folderLocation = (model) => {
       const parentFolders = getAscendants(model, props.allFolders)
@@ -98,8 +102,10 @@ export default {
       return parentFolders;
     };
 
-    const truncatedFolderLocation = (model) => {
-      const parentFolders = folderLocation(model);
+    const truncatedFolderLocation = (docId) => {
+      const doc = handler.get({ nature: FILE_TYPE.DOCUMENT, id: docId });
+
+      const parentFolders = folderLocation(doc);
       const maxFoldersToShow = 4;
 
       if (parentFolders.length > maxFoldersToShow) {
@@ -112,8 +118,10 @@ export default {
       return parentFolders;
     };
 
-    const lastFolderLocation = (model) => {
-      const parentFolders = getAscendants(model, props.allFolders);
+    const lastFolderLocation = (docId) => {
+      const doc = handler.get({ nature: FILE_TYPE.DOCUMENT, id: docId });
+
+      const parentFolders = getAscendants(doc, props.allFolders);
       return parentFolders[0]?.name ?? t("t.rootFolder");
     };
 
@@ -125,11 +133,12 @@ export default {
       emit("go-folders-view", selectedFolder);
     };
 
-    const showChevron = (folder, index, model) => {
+    const showChevron = (folder, index, docId) => {
+      const folderLocation = truncatedFolderLocation(docId);
       return (
-        index < truncatedFolderLocation(model).length - 1 &&
+        index < folderLocation.length - 1 &&
         folder.id !== "ellipsis" &&
-        truncatedFolderLocation(model)[index + 1].id !== "ellipsis"
+        folderLocation[index + 1].id !== "ellipsis"
       );
     };
 
