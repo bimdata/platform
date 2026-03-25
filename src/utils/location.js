@@ -14,8 +14,8 @@
 // ---
 
 /**
- * The DMS_REGEX and parseDMS/parseDD utils function are extracted from "dms-conversion" package.
- * Source: https://github.com/WSDOT-GIS/dms-js
+ * The DMS_REGEX and parseDMS/parseDD utils function are extracted from "dms-conversion" package (https://github.com/WSDOT-GIS/dms-js).
+ * We had to do this because vite 8 doesn't seem to handle `import DmsCoordinates, { parseDms } from "dms-conversion"` properly... 
  */
 
 // Matches DMS DmsCoordinates
