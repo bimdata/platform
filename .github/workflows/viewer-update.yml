@@ -37,7 +37,7 @@ jobs:
           VIEWER_VERSION: ${{ github.event.client_payload.viewer-version }}
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           add: "package-lock.json package.json"
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"
@@ -70,7 +70,7 @@ jobs:
           VIEWER_VERSION: ${{ github.event.client_payload.viewer-version }}
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           add: "package-lock.json package.json"
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"
