@@ -160,16 +160,12 @@ watchEffect(async () => {
       model.preview_file = (await ModelService.fetchModelByID(props.project, model.id)).preview_file;
     }
     file.value = model.preview_file;
-  }
-
-  if ([PDF, ".pdf", JPEG, PNG, ...IMAGE_FILES].includes(fileType.value)) {
+  } else if ([PDF, ".pdf", JPEG, PNG, ...IMAGE_FILES].includes(fileType.value)) {
     if (!doc.file) {
       doc.file = (await FileService.getDocument(props.project, { id: doc.id })).file;
     }
     file.value = doc.file;
-  }
-
-  if (OFFICE_FILES.includes(fileType.value)) {
+  } else if (OFFICE_FILES.includes(fileType.value)) {
     if (!doc.office_preview) {
       doc.office_preview = (await FileService.getDocument(props.project, { id: doc.id })).office_preview;
     }
