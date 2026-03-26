@@ -10,7 +10,7 @@ class ModelService {
 
   async fetchModels(project) {
     try {
-      return await this.callQueue.push(() => apiClient.modelApi.getModels(project.cloud.id, project.id));
+      return await this.callQueue.push(() => apiClient.modelApi.getModelsSummary(project.cloud.id, project.id));
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)

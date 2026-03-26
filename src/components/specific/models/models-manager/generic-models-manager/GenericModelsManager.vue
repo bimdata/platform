@@ -121,6 +121,7 @@ import { fileUploadInput } from "../../../../../utils/upload.js";
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
 import ModelsTable from "../../models-table/ModelsTable.vue";
+import { FILE_TYPE } from "../../../../../config/files.js";
 
 export default {
   components: {
@@ -159,7 +160,7 @@ export default {
     const router = useRouter();
     const { isProjectGuest } = useUser();
     const { createModel, updateModels } = useModels();
-    const { downloadFiles: download } = useFiles();
+    const { fileStructureHandler: handler, downloadFiles: download } = useFiles();
 
     const fileUploads = ref([]);
     const fileExtensions = computed(() =>
@@ -220,7 +221,7 @@ export default {
     const downloadModels = async (models) => {
       await download(
         props.project,
-        models.map(({ document }) => document),
+        models.map(m => handler.get({ nature: FILE_TYPE.DOCUMENT, id: m.document_id })),
       );
     };
 

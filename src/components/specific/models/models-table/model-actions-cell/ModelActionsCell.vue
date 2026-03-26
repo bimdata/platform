@@ -90,7 +90,7 @@
       />
     </template>
 
-    <template v-if="model.document">
+    <template v-if="model.document_id">
       <BIMDataButton
         class="model-actions-cell__btn"
         data-test-id="btn-download-model"
@@ -107,7 +107,7 @@
       <BIMDataButton
         class="model-actions-cell__btn"
         data-test-id="btn-toggle-menu"
-        :disabled="!hasAdminPerm(project, model.document)"
+        :disabled="!hasAdminPerm(project, modelDocument)"
         ripple
         rounded
         icon
@@ -137,7 +137,9 @@
 <script>
 import { ref, computed, nextTick } from "vue";
 import { MODEL_STATUS, MODEL_TYPE } from "../../../../../config/models.js";
+import { FILE_TYPE } from "../../../../../config/files.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
+import { useFiles } from "../../../../../state/files.js";
 import { useUser } from "../../../../../state/user.js";
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
@@ -171,18 +173,21 @@ export default {
     "view-photosphereBuilding",
   ],
   setup(props, { emit }) {
-    const { isProjectGuest, hasAdminPerm } = useUser();
+    const { fileStructureHandler: handler } = useFiles();
+    const { hasAdminPerm, isProjectGuest } = useUser();
 
     const menu = ref(null);
     const isOpen = ref(false);
     const isModelReady = computed(() => MODEL_STATUS.COMPLETED === props.model.status);
+
+    const modelDocument = computed(() => handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }));
 
     const menuItems = ref([]);
     const openMenu = () => {
       if (!props.parent) return;
 
       isOpen.value = true;
-      if (props.model.document) {
+      if (props.model.document_id) {
         menuItems.value.push({
           key: 1,
           text: "t.rename",
@@ -258,13 +263,14 @@ export default {
       // References
       menu,
       isOpen,
-      hasAdminPerm,
       isModelReady,
       menuItems,
+      modelDocument,
       MODEL_TYPE,
       WINDOWS,
       // Methods
       closeMenu,
+      hasAdminPerm,
       isProjectGuest,
       onClick,
       openMenu,

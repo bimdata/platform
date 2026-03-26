@@ -114,11 +114,6 @@ function hasAdminPerm(project, file) {
     (isProjectAdmin(project) || files.every(f => f?.user_permission === FILE_PERMISSION.READ_WRITE));
 }
 
-function hasAdminPermModel(project, model) {
-  const models = [].concat(model);
-  return hasAdminPerm(project, models.map(m => m.document));
-}
-
 export function useUser() {
   const readonlyState = readonly(state);
   return {
@@ -142,6 +137,5 @@ export function useUser() {
     isFavoriteProject,
     isGuidedTourComplete,
     hasAdminPerm,
-    hasAdminPermModel,
   };
 }

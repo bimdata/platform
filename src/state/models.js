@@ -41,14 +41,11 @@ const updateModels = async (project, models) => {
 };
 
 const updateModelName = async (project, model, name) => {
-  // In order to update a model name we have to update the name
-  // of its assiociated document.
+  // In order to update a model name we have to update the name of its assiociated document.
   const { updateFiles } = useFiles();
-  const [newDocument] = await updateFiles(project, [
-    { ...model.document, name }
-  ]);
+  await updateFiles(project, [{ id: model.document_id, name }]);
 
-  return { ...model, name, document: newDocument };
+  return { ...model, name };
 };
 
 const mergeModels = async (project, models, name) => {

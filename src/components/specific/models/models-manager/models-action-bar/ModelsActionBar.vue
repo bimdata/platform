@@ -1,7 +1,7 @@
 <template>
   <div class="models-action-bar">
     <BIMDataButton
-      :disabled="!hasAdminPermModel(project, models)"
+      :disabled="!hasAdminPerm(project, modelDocument)"
       width="120px"
       color="high"
       ghost
@@ -13,7 +13,7 @@
     </BIMDataButton>
 
     <BIMDataButton
-      :disabled="!hasAdminPermModel(project, models)"
+      :disabled="!hasAdminPerm(project, modelDocument)"
       width="120px"
       ghost
       squared
@@ -56,10 +56,13 @@
 
 <script setup>
 import { computed } from "vue";
+import { FILE_TYPE } from "../../../../../config/files.js";
 import { MODEL_TYPE } from "../../../../../config/models.js";
+import { useFiles } from "../../../../../state/files.js";
 import { useUser } from "../../../../../state/user.js";
 
-const { hasAdminPermModel } = useUser();
+const { hasAdminPerm } = useUser();
+const { fileStructureHandler: handler } = useFiles();
 
 const props = defineProps({
   project: {
@@ -79,6 +82,8 @@ defineEmits([
   "open",
   "unarchive",
 ]);
+
+const modelDocument = computed(() => handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }));
 
 const isArchived = computed(() => props.models.every(m => m.archived));
 
