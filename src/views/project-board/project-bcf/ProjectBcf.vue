@@ -746,10 +746,8 @@ export default {
         component: DocumentViewer,
         props: {
           project: currentProject.value,
-          folder: {},
+          documentList: files,
           document: file,
-          currentView: files,
-          selectedFileTab: {},
         },
       });
     };

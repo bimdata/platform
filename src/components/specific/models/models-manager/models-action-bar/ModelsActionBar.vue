@@ -1,7 +1,7 @@
 <template>
   <div class="models-action-bar">
     <BIMDataButton
-      :disabled="!hasAdminPerm(project, modelDocument)"
+      :disabled="!hasAdminPerm(project, modelDocuments)"
       width="120px"
       color="high"
       ghost
@@ -13,7 +13,7 @@
     </BIMDataButton>
 
     <BIMDataButton
-      :disabled="!hasAdminPerm(project, modelDocument)"
+      :disabled="!hasAdminPerm(project, modelDocuments)"
       width="120px"
       ghost
       squared
@@ -83,7 +83,9 @@ defineEmits([
   "unarchive",
 ]);
 
-const modelDocument = computed(() => handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }));
+const modelDocuments = computed(() =>
+  props.models.map(m => handler.get({ nature: FILE_TYPE.DOCUMENT, id: m.document_id }))
+);
 
 const isArchived = computed(() => props.models.every(m => m.archived));
 

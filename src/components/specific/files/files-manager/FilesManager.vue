@@ -291,34 +291,33 @@ export default {
     const sortByName = (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 
     const filesTable = ref(null);
-    const documentViewerFilesList = computed(() => {
-      if (!filesTable.value) return [];
-
-      if (selectedFileTab.value.id === "folders") {
-        // WARNING displayedRows is name from DS, may change
-        return filesTable.value.filesTable.displayedRows.map((row) => row.data);
-      }
-      if (selectedFileTab.value.id === "files") {
-        return filesTable.value.displayedListFiles;
-      } else {
-        return filesTable.value.enhancedVisas;
-      }
-    });
 
     const onFileSelected = (file) => {
       if (isFolder(file)) {
         currentFolder.value = handler.deserialize(file);
       } else {
-        openModal({
-          component: DocumentViewer,
-          props: {
-            project: props.project,
-            folder: currentFolder.value,
-            document: file,
-            currentView: documentViewerFilesList.value,
-            selectedFileTab: selectedFileTab.value,
-          },
-        });
+        if (filesTable.value) {
+          let documentList = [];
+          if (selectedFileTab.value.id === "folders") {
+            // WARNING displayedRows is name from DS, may change
+            const folderFiles = filesTable.value.filesTable.displayedRows.map((row) => row.data);
+            documentList = folderFiles.filter(f => !isFolder(f));
+          }
+          if (selectedFileTab.value.id === "files") {
+            documentList = filesTable.value.displayedListFiles;
+          }
+          if (selectedFileTab.value.id === "visas") {
+            documentList = [file];
+          }
+          openModal({
+            component: DocumentViewer,
+            props: {
+              project: props.project,
+              documentList,
+              document: file,
+            },
+          });
+        }
       }
     };
 

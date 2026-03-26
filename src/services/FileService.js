@@ -158,8 +158,12 @@ class FileService {
         return;
       }
       if (files.length === 1 && files[0].nature !== FILE_TYPE.FOLDER) {
-        downloadName = files[0].file_name;
-        downloadUrl = files[0].file;
+        const document = files[0];
+        if (!document.file) {
+          document.file = (await this.getDocument(project, document)).file;
+        }
+        downloadName = document.file_name;
+        downloadUrl = document.file;
       } else {
         downloadName = project.name;
         downloadUrl = this.getArchiveUrl(project, files, accessToken);

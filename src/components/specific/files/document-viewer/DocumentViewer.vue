@@ -25,7 +25,7 @@
         <BIMDataTextbox :text="currentDocument?.name" />
       </div>
 
-      <div class="btn-box" v-if="selectedFileTab.id !== 'visas'">
+      <div class="btn-box" v-if="documentList.length > 1">
         <BIMDataButton
           width="40px"
           height="40px"
@@ -53,7 +53,7 @@
 
         <template v-else-if="[...OFFICE_FILES, PDF, '.pdf'].includes(fileType)">
           <div class="pdf-container">
-            <BIMDataPDFViewer :pdf="file" />
+            <BIMDataPDFViewer :pdf="{ file }" />
           </div>
         </template>
 
@@ -71,14 +71,14 @@
         </div>
       </template>
 
-      <div class="btn-box" v-if="selectedFileTab.id !== 'visas'">
+      <div class="btn-box" v-if="documentList.length > 1">
         <BIMDataButton
           width="40px"
           height="40px"
           fill
           rounded
           icon
-          :disabled="index === documents.length - 1"
+          :disabled="index === documentList.length - 1"
           @click="index++"
         >
           <BIMDataIconChevron size="xs" />
@@ -89,17 +89,17 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted, onUnmounted, watchEffect } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useAppModal } from "../../app/app-modal/app-modal.js";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../config/models.js";
-import { OFFICE_FILES, IMAGE_PREVIEW_FILES } from "../../../../config/files.js";
+import { OFFICE_FILES, IMAGE_FILES } from "../../../../config/files.js";
+import FileService from "../../../../services/FileService.js";
+import ModelService from "../../../../services/ModelService.js";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
-import { isFolder } from "../../../../utils/file-structure.js";
 import { fileExtension } from "../../../../utils/files.js";
 import { openInViewer } from "../../../../utils/models.js";
-import FileService from "../../../../services/FileService.js";
 
 // Components
 import NoDocPreviewImage from "../../../images/NoDocPreviewImage.vue";
@@ -111,21 +111,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  folder: {
-    type: Object,
+  documentList: {
+    type: Array,
     required: true,
   },
   document: {
     type: Object,
     default: null,
-  },
-  currentView: {
-    type: Array,
-    required: true,
-  },
-  selectedFileTab: {
-    type: Object,
-    required: true,
   },
 });
 
@@ -133,20 +125,12 @@ const router = useRouter();
 const { closeModal } = useAppModal();
 const { projectModels } = useModels();
 
-const isVisas = computed(() => {
-  return props.selectedFileTab.id === "visas";
-});
-
-const documents = computed(() => {
-  return isVisas.value ? props.currentView : props.currentView.filter((f) => !isFolder(f));
-});
-
 const index = ref(0);
 
 watch(
   () => props.document,
   (newDocument) => {
-    const docIndex = documents.value.findIndex((d) => d.id === newDocument.id);
+    const docIndex = props.documentList.findIndex((d) => d.id === newDocument.id);
     index.value = docIndex !== -1 ? docIndex : 0;
   },
   {
@@ -155,11 +139,8 @@ watch(
 );
 
 const currentDocument = computed(() => {
-  if (!documents.value || documents.value.length === 0) return null;
-  if(props.selectedFileTab.id === "visas") {
-    return props.document;
-  }
-  return isVisas.value ? documents.value[index.value].document : documents.value[index.value];
+  if (!props.documentList || props.documentList.length === 0) return null;
+  return props.documentList[index.value];
 });
 
 const fileType = computed(() => {
@@ -172,35 +153,23 @@ const file = ref(null);
 watchEffect(async () => {
   const doc = currentDocument.value;
   if (!doc) return;
-  const models = projectModels.value;
-  switch (fileType.value) {
-    case IFC:
-    case DWG:
-    case DXF:
-      file.value = models.find((m) => m.id === doc.model_id)?.preview_file;
-      break;
-    case PDF:
-    case ".pdf":
-      file.value = { file: doc.file };
-      break;
-    case JPEG:
-    case PNG:
-      file.value = doc.file;
-      break;
-    default:
-      if (OFFICE_FILES.includes(fileType.value)) {
-        if (doc.office_preview) {
-          file.value = { file: doc.office_preview };
-        } else {
-          const newDoc = await FileService.getDocument(props.project, { id: doc.id });
-          if (newDoc.office_preview) {
-            currentDocument.value.office_preview = newDoc.office_preview;
-            file.value = { file: newDoc.office_preview };
-          }
-        }
-      } else if (IMAGE_PREVIEW_FILES.includes(fileType.value)) {
-        file.value = doc.file;
-      }
+
+  if ([DWG, DXF, IFC].includes(fileType.value)) {
+    const model = projectModels.value.find(m => m.id === doc.model_id);
+    if (!model.preview_file) {
+      model.preview_file = (await ModelService.fetchModelByID(props.project, model.id)).preview_file;
+    }
+    file.value = model.preview_file;
+  } else if ([PDF, ".pdf", JPEG, PNG, ...IMAGE_FILES].includes(fileType.value)) {
+    if (!doc.file) {
+      doc.file = (await FileService.getDocument(props.project, { id: doc.id })).file;
+    }
+    file.value = doc.file;
+  } else if (OFFICE_FILES.includes(fileType.value)) {
+    if (!doc.office_preview) {
+      doc.office_preview = (await FileService.getDocument(props.project, { id: doc.id })).office_preview;
+    }
+    file.value = doc.office_preview;
   }
 });
 
@@ -210,7 +179,7 @@ const onKeyUp = ({ key }) => {
       if (index.value > 0) index.value--;
       break;
     case "ArrowRight":
-      if (index.value < documents.value.length - 1) index.value++;
+      if (index.value < props.documentList.length - 1) index.value++;
       break;
     case "Escape":
       closeModal();
@@ -219,7 +188,7 @@ const onKeyUp = ({ key }) => {
 };
 
 onMounted(() => document.addEventListener("keyup", onKeyUp));
-onUnmounted(() => document.removeEventListener("keyup", onKeyUp));
+onBeforeUnmount(() => document.removeEventListener("keyup", onKeyUp));
 
 const openViewer = () => {
   closeModal();

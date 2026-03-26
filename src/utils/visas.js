@@ -46,7 +46,7 @@ export const enhanceVisa = async (visa, user, project, t, handler) => {
       id: visa.document.id,
       nature: "Document",
     });
-    if (!document) {
+    if (!document?.file) {
       document = await FileService.getDocument(project, { id: visa.document_id });
     }
   } catch (error) {
