@@ -24,8 +24,8 @@ const setCurrentProject = (id) => {
   return readonly(state.currentProject);
 };
 
-const loadUserProjects = async () => {
-  const projects = await ProjectService.fetchUserProjects();
+const loadUserProjects = async options => {
+  const projects = await ProjectService.fetchUserProjects(options);
 
   state.userProjects = sortProjects(projects);
 
@@ -40,8 +40,8 @@ const loadUserProjects = async () => {
   return projects;
 };
 
-const loadSpaceProjects = async (space) => {
-  const projects = await ProjectService.fetchSpaceProjects(space);
+const loadSpaceProjects = async (space, options) => {
+  const projects = await ProjectService.fetchSpaceProjects(space, options);
   state.spaceProjects = sortProjects(projects);
   return projects;
 };

@@ -17,14 +17,14 @@ export default function projectBoardResolver(route) {
   const project = projects.setCurrentProject(+route.params.projectID);
 
   spaces.loadSpaceSubInfo(space);
-  projects.loadSpaceProjects(space);
+  projects.loadSpaceProjects(space, { cache: true });
 
   load("project-users", [
     projects.loadProjectUsers(project),
     projects.loadProjectInvitations(project)
   ]);
   load("project-models", [
-    models.loadProjectModels(project)
+    models.loadProjectModels(project, { cache: true })
   ]);
   load("project-files", [
     files.loadProjectFileStructure(project),

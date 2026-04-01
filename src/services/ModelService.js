@@ -4,13 +4,23 @@ import { MODEL_TYPE } from "../config/models.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 class ModelService {
-  callQueue = queue(async task => {
-    return await task();
-  }, 40);
+  constructor() {
+    this.cache = new Map();
+    this.callQueue = queue(async task => {
+      return await task();
+    }, 40);
+  }
 
-  async fetchModels(project) {
+  async fetchModels(project, { cache } = {}) {
     try {
-      return await this.callQueue.push(() => apiClient.modelApi.getModelsSummary(project.cloud.id, project.id));
+      const key = `project-models-${project.id}`;
+      if (cache && this.cache.has(key)) {
+        return this.cache.get(key);
+      } else {
+        const models = await this.callQueue.push(() => apiClient.modelApi.getModelsSummary(project.cloud.id, project.id));
+        this.cache.set(key, models);
+        return models;
+      }
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.MODELS_FETCH_ERROR, error)
@@ -101,6 +111,7 @@ class ModelService {
       throw new RuntimeError(ERRORS.MODEL_DELETE_ERROR, error);
     }
   }
+
   fetchModelElements(project, model, params = {}) {
     return apiClient.modelApi.getElements(
       project.cloud.id,

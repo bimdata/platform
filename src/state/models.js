@@ -8,8 +8,8 @@ const state = reactive({
   projectModels: []
 });
 
-const loadProjectModels = async project => {
-  const models = await ModelService.fetchModels(project);
+const loadProjectModels = async (project, options) => {
+  const models = await ModelService.fetchModels(project, options);
   const projectModels = [];
   for (const model of models) {
     if (model.id === project.main_model_id) {
