@@ -25,7 +25,7 @@
             {{ $t("SpaceCard.projects") }}
           </div>
           <div class="space-card__sub-title__number">
-            {{ nbProjects }}
+            {{ projectsCount[space.id] }}
           </div>
         </div>
       </template>
@@ -34,7 +34,6 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
 import routeNames from "../../../../router/route-names.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
@@ -58,11 +57,7 @@ const props = defineProps({
 
 const { isFavoriteSpace } = useUser();
 const { isFreeSpace } = useSpaces();
-const { projectsBySpace } = useProjects();
-
-const nbProjects = computed(
-  () => projectsBySpace.value[props.space.id]?.length ?? 0
-);
+const { projectsCount } = useProjects();
 </script>
 
 <style scoped src="./SpaceCard.css"></style>

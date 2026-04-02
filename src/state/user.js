@@ -41,6 +41,14 @@ const setIsNew = value => {
   state.isNew = value;
 };
 
+const setSpaceRole = (space, value) => {
+  state.spaceRoles[space.id] = value;
+};
+
+const setProjectRole = (project, value) => {
+  state.projectRoles[project.id] = value;
+};
+
 const addFavoriteSpace = async space => {
   const res = await UserService.addFavoriteSpace(space);
   state.favorites = await UserService.fetchUserFavorites();
@@ -122,6 +130,8 @@ export function useUser() {
     // Methods
     loadUser,
     setIsNew,
+    setSpaceRole,
+    setProjectRole,
     addFavoriteSpace,
     removeFavoriteSpace,
     addFavoriteProject,

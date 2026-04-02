@@ -3,9 +3,20 @@ import { IS_NOTIFICATION_ENABLED } from "../config/notification.js";
 import { ERRORS, ErrorService, RuntimeError } from "./ErrorService.js";
 
 class SpaceService {
-  async fetchUserSpaces() {
+  constructor() {
+    this.cache = new Map();
+  }
+
+  async fetchUserSpaces({ cache } = {}) {
     try {
-      return await apiClient.collaborationApi.getClouds();
+      const key = "user-spaces";
+      if (cache && this.cache.has(key)) {
+        return this.cache.get(key);
+      } else {
+        const spaces = await apiClient.collaborationApi.getClouds();
+        this.cache.set(key, spaces);
+        return spaces;
+      }
     } catch (error) {
       ErrorService.handleError(
         new RuntimeError(ERRORS.SPACES_FETCH_ERROR, error)

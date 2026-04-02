@@ -32,8 +32,11 @@ const acceptInvitations = async invitations => {
     UserService.acceptInvitation
   );
   await loadUser();
-  await Promise.all([loadUserSpaces(), loadUserProjects()]);
-  await loadUserInvitations();
+  await Promise.all([
+    loadUserSpaces(),
+    loadUserProjects(),
+    loadUserInvitations()
+  ]);
 };
 
 const declineInvitation = async invitation => {
