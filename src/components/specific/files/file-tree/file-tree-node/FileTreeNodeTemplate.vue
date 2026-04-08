@@ -28,7 +28,7 @@
       />
     </div>
     <transition name="fade">
-      <div class="file-tree-node__children" v-show="showChildren">
+      <div class="file-tree-node__children" v-if="showChildren">
         <slot></slot>
       </div>
     </transition>
