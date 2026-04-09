@@ -8,6 +8,7 @@ export default [
   {
     id: "name",
     text: "t.name",
+    sortable: true,
   },
   {
     id: "tags",

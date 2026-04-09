@@ -28,7 +28,8 @@ class FileService {
     try {
       return await apiClient.collaborationApi.getProjectDMSTree(
         project.cloud.id,
-        project.id
+        project.id,
+        true, // without_urls
       );
     } catch (error) {
       ErrorService.handleError(
