@@ -1,3 +1,28 @@
+## [1.4.1](https://github.com/bimdata/platform/compare/v1.4.0...v1.4.1) (2026-04-09)
+
+
+### chore
+
+* bump @bimdata/viewer@2.17.0 from Github Actions [skip e2e] ([914ec6f](https://github.com/bimdata/platform/commit/914ec6f4d0d3dc87e81dd89c06e6d7bfeb6cbe86))
+* bump @bimdata/viewer@2.17.0-beta.3 from Github Actions [skip e2e] ([1f33522](https://github.com/bimdata/platform/commit/1f3352270dc577feba835a969554f9e71cc179f2))
+* bump @bimdata/viewer@2.17.0-beta.4 from Github Actions [skip e2e] ([0723617](https://github.com/bimdata/platform/commit/0723617d44e53be35d97a3bfeab6950b10db75d6))
+* bump @bimdata/viewer@2.17.0-beta.5 from Github Actions [skip e2e] ([5824d9b](https://github.com/bimdata/platform/commit/5824d9b538de9a2c0b308014c7e362bd9a668c2a))
+* bump @bimdata/viewer@2.17.0-beta.6 from Github Actions [skip e2e] ([7231708](https://github.com/bimdata/platform/commit/723170886ae97713ff0f90ad039516afa36aaf59))
+* bump @bimdata/viewer@2.17.0-beta.7 from Github Actions [skip e2e] ([7fe30b3](https://github.com/bimdata/platform/commit/7fe30b31b44ef5cbce764d23f42e4fc9458d7bea))
+* bump @bimdata/viewer@2.17.0-beta.8 from Github Actions [skip e2e] ([180d9d0](https://github.com/bimdata/platform/commit/180d9d04957fc784b92995f0e3a967f828967235))
+* bump @bimdata/viewer@2.17.0-beta.9 from Github Actions [skip e2e] ([574ff7f](https://github.com/bimdata/platform/commit/574ff7fbcaa9b3ef7ad0e479ae23fb35f107b1ae))
+* restore viewer v2.17.0-beta.2 and anchor-synchro plugin ([74cca7b](https://github.com/bimdata/platform/commit/74cca7bcbaa4ef9afe6917396a92aa6cb027604e))
+
+### PATCH
+
+* feat(models): add 'sort by name' feature to model manager ([f631076](https://github.com/bimdata/platform/commit/f631076719db1737756afcc9acd9a136cf9f19b4))
+* fix folder-tree performances (#660) ([737fc67](https://github.com/bimdata/platform/commit/737fc67152d5a81ef7829c21b37a4f6a08341a49)), closes [#660](https://github.com/bimdata/platform/issues/660)
+* fix: make everything works without file in dms-tree (#652) ([fd0cdf3](https://github.com/bimdata/platform/commit/fd0cdf3f905f4535557b5a3a809ade5c0de28ea4)), closes [#652](https://github.com/bimdata/platform/issues/652)
+* fix(models-manager): avoid error on Meta-Buildings tab ([7b165fd](https://github.com/bimdata/platform/commit/7b165fd4e30a09198165ea29d7f54094fbea1809))
+* fix(models): use getModelsSummary API route (#649) ([233652f](https://github.com/bimdata/platform/commit/233652f1c196c9cbfc5bf815b3780be1f16f242d)), closes [#649](https://github.com/bimdata/platform/issues/649)
+* fix(perf): use without_urls=true when fetching DMS tree ([070bafa](https://github.com/bimdata/platform/commit/070bafa18af02f99a04749a6c1b6da04bea1f599))
+* perf: add project card loading delay when entering into viewport (#636) ([821426e](https://github.com/bimdata/platform/commit/821426eccc42d181b265ac08532652665e206619)), closes [#636](https://github.com/bimdata/platform/issues/636)
+
 # [1.4.0](https://github.com/bimdata/platform/compare/v1.3.6...v1.4.0) (2026-03-06)
 
 
