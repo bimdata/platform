@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
+          check-latest: true
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 2
@@ -57,6 +58,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
+          check-latest: true
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 2
