@@ -17,7 +17,7 @@
         <BIMDataTextbox maxWidth="260px" :text="space.name" />
       </div>
       <div class="card__info__data">
-        {{ nbProjects + " " + $t("t.projects") }}
+        {{ projectsCount[space.id] + " " + $t("t.projects") }}
       </div>
     </AppLink>
     <BIMDataButton ghost rounded icon @click.stop="removeFavoriteSpace(space)">
@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
 import routeNames from "../../../../../router/route-names.js";
 import { useProjects } from "../../../../../state/projects.js";
 import { useUser } from "../../../../../state/user.js";
@@ -43,11 +42,7 @@ const props = defineProps({
 });
 
 const { removeFavoriteSpace } = useUser();
-const { projectsBySpace } = useProjects();
-
-const nbProjects = computed(
-  () => projectsBySpace.value[props.space.id]?.length ?? 0
-);
+const { projectsCount } = useProjects();
 </script>
 
 <style scoped>

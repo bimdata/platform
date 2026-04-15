@@ -78,13 +78,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { inject, onMounted, ref } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
 import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
 import { useInterval } from "../../composables/interval.js";
 import { useListFilter } from "../../composables/list-filter.js";
 import { useListSort } from "../../composables/list-sort.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { useSession } from "../../composables/session.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
+import routeNames from "../../router/route-names.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 import { useUser } from "../../state/user.js";
@@ -117,6 +120,8 @@ export default {
     StatusFilterButton,
   },
   setup() {
+    const viewContainer = inject("viewContainer");
+    const { spaceBoardViewScroll } = useSession();
     const { isOpenRight, openSidePanel } = useAppSidePanel();
     const { isSpaceAdmin } = useUser();
     const {
@@ -143,6 +148,21 @@ export default {
         loadSpaceInvitations(currentSpace.value);
       }
     }, 10000);
+
+    onMounted(() => {
+      const scroll = spaceBoardViewScroll.get(currentSpace.value.id);
+      if (scroll) {
+        viewContainer.value.scrollTo({ top: scroll, behavior: "instant" });
+      }
+    });
+
+    onBeforeRouteLeave((to) => {
+      if (to.name === routeNames.projectBoard) {
+        spaceBoardViewScroll.set(currentSpace.value.id, viewContainer.value.scrollTop);
+      } else {
+        spaceBoardViewScroll.clear(currentSpace.value.id);
+      }
+    });
 
     return {
       // References

@@ -152,7 +152,7 @@ onMounted(() => {
           () => props.project,
           async () => {
             loading.value = true;
-            const models = await ModelService.fetchModels(props.project);
+            const models = await ModelService.fetchModels(props.project, { cache: true });
             displayedModels.value = models.reduce(
               (acc, model) => {
                 if (

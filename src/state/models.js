@@ -8,8 +8,8 @@ const state = reactive({
   projectModels: []
 });
 
-const loadProjectModels = async project => {
-  const models = await ModelService.fetchModels(project);
+const loadProjectModels = async (project, options) => {
+  const models = await ModelService.fetchModels(project, options);
   const projectModels = [];
   for (const model of models) {
     if (model.id === project.main_model_id) {
@@ -22,17 +22,13 @@ const loadProjectModels = async project => {
   return models;
 };
 
-const fetchModelByID = async (project, id) => {
-  const model = await ModelService.fetchModelByID(project, id);
-  return model;
-};
+const fetchModelByID = (project, id) => ModelService.fetchModelByID(project, id);
 
-const createModel = async (project, file) => {
-  const newModel = await ModelService.createModel(project, file);
-  return newModel;
-};
+const createModel = (project, file) => ModelService.createModel(project, file);
 
 const createPhotosphere = (project, file) => ModelService.createPhotosphere(project, file);
+
+const mergeModels = (project, models, name) => ModelService.mergeModels(project, models, name);
 
 const updateModels = async (project, models) => {
   const newModels = await ModelService.updateModels(project, models);
@@ -46,10 +42,6 @@ const updateModelName = async (project, model, name) => {
   await updateFiles(project, [{ id: model.document_id, name }]);
 
   return { ...model, name };
-};
-
-const mergeModels = async (project, models, name) => {
-  await ModelService.mergeModels(project, models, name);
 };
 
 const deleteModels = async (project, models, options) => {

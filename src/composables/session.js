@@ -7,6 +7,8 @@ const STORAGE_KEYS = Object.freeze({
   PROJECT_MODEL_TAB: `${KEY_PREFIX}:project-model-tab`,
   GED_FILES_TAB: `${KEY_PREFIX}:ged-files-tab`,
   GED_TARGET_FOLDER: `${KEY_PREFIX}:ged-target-folder`,
+  SPACE_BOARD_VIEW_SCROLL: `${KEY_PREFIX}:space-board-view-scroll`,
+  USER_PROJECTS_VIEW_SCROLL: `${KEY_PREFIX}:user-projects-view-scroll`,
 });
 
 const getEntry = (key) => JSON.parse(sessionStorage.getItem(key));
@@ -70,6 +72,30 @@ const gedTargetFolder = {
   },
 };
 
+const spaceBoardViewScroll = {
+  get(spaceId) {
+    return getEntry(`${STORAGE_KEYS.SPACE_BOARD_VIEW_SCROLL}:${spaceId}`);
+  },
+  set(spaceId, value) {
+    setEntry(`${STORAGE_KEYS.SPACE_BOARD_VIEW_SCROLL}:${spaceId}`, value);
+  },
+  clear(spaceId) {
+    sessionStorage.removeItem(`${STORAGE_KEYS.SPACE_BOARD_VIEW_SCROLL}:${spaceId}`);
+  },
+};
+
+const userProjectsViewScroll = {
+  get() {
+    return getEntry(`${STORAGE_KEYS.USER_PROJECTS_VIEW_SCROLL}`);
+  },
+  set(value) {
+    setEntry(`${STORAGE_KEYS.USER_PROJECTS_VIEW_SCROLL}`, value);
+  },
+  clear() {
+    sessionStorage.removeItem(`${STORAGE_KEYS.USER_PROJECTS_VIEW_SCROLL}`);
+  },
+};
+
 export function useSession() {
   return {
     currentView,
@@ -78,5 +104,7 @@ export function useSession() {
     gedFilesTab,
     gedTargetFolder,
     projectModelTab,
+    spaceBoardViewScroll,
+    userProjectsViewScroll,
   };
 }

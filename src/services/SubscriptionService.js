@@ -53,7 +53,7 @@ class SubscriptionService {
       return [];
     }
     try {
-      return await privateApiClient.get(`/payment/free-cloud`);
+      return await privateApiClient.get("/payment/free-cloud");
     } catch (error) {
       ErrorService.handleError(error);
       return [];
@@ -66,7 +66,6 @@ class SubscriptionService {
     }
 
     let subInfo;
-
     try {
       subInfo = await apiClient.collaborationApi.getCloudSize(space.id);
     } catch (error) {

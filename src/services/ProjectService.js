@@ -2,18 +2,36 @@ import { apiClient, backendClient } from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
 class ProjectService {
-  async fetchUserProjects() {
+  constructor() {
+    this.cache = new Map();
+  }
+
+  async fetchUserProjects({ cache } = {}) {
     try {
-      return await apiClient.collaborationApi.getSelfProjects();
+      const key = "user-projects";
+      if (cache && this.cache.has(key)) {
+        return this.cache.get(key);
+      } else {
+        const projects = await apiClient.collaborationApi.getSelfProjects();
+        this.cache.set(key, projects);
+        return projects;
+      }
     } catch (error) {
       ErrorService.handleError(new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error));
       return [];
     }
   }
 
-  async fetchSpaceProjects(space) {
+  async fetchSpaceProjects(space, { cache } = {}) {
     try {
-      return await apiClient.collaborationApi.getProjects(space.id);
+      const key = `space-projects-${space.id}`;
+      if (cache && this.cache.has(key)) {
+        return this.cache.get(key);
+      } else {
+        const projects = await apiClient.collaborationApi.getProjects(space.id);
+        this.cache.set(key, projects);
+        return projects;
+      }
     } catch (error) {
       ErrorService.handleError(new RuntimeError(ERRORS.PROJECTS_FETCH_ERROR, error));
       return [];
@@ -165,9 +183,11 @@ class ProjectService {
     }
     return res;
   }
+
   updateProjectNotification(spaceId, projectId, notification) {
     return backendClient.put(`/cloud/${spaceId}/project/${projectId}/notification`, notification);
   }
+
   deleteProjectNotification(spaceId, projectId) {
     return backendClient.delete(`/cloud/${spaceId}/project/${projectId}/notification`);
   }

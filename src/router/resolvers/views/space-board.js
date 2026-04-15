@@ -16,6 +16,6 @@ export default async function spaceBoardResolver(route) {
     spaces.loadSpaceInvitations(space)
   ]);
   load("space-projects", [
-    projects.loadSpaceProjects(space)
+    projects.loadSpaceProjects(space, { cache: true })
   ]);
 }

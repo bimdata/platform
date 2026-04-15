@@ -50,10 +50,13 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { inject, onMounted, ref } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
 import { useListFilter } from "../../composables/list-filter.js";
 import { useListSort } from "../../composables/list-sort.js";
+import { useSession } from "../../composables/session.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
+import routeNames from "../../router/route-names.js";
 import { useProjects } from "../../state/projects.js";
 
 // Components
@@ -70,6 +73,8 @@ export default {
     StatusFilterButton
   },
   setup() {
+    const viewContainer = inject("viewContainer");
+    const { userProjectsViewScroll } = useSession();
     const { userProjects } = useProjects();
     const filteredProjects = ref(userProjects.value);
 
@@ -82,6 +87,21 @@ export default {
       displayedProjects,
       (project) => project.name + project.description ?? ""
     );
+
+    onMounted(() => {
+      const scroll = userProjectsViewScroll.get();
+      if (scroll) {
+        viewContainer.value.scrollTo({ top: scroll, behavior: "instant" });
+      }
+    });
+
+    onBeforeRouteLeave((to) => {
+      if (to.name === routeNames.userProjects) {
+        userProjectsViewScroll.set(viewContainer.value.scrollTop);
+      } else {
+        userProjectsViewScroll.clear();
+      }
+    });
 
     return {
       // References
