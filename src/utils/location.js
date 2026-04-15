@@ -96,7 +96,7 @@ function DMS2DD([degrees, minutes, seconds, secondsFraction = 0], type) {
     seconds *= -1;
     secondsFraction *= -1;
   }
-  seconds += secondsFraction/1000000;
+  seconds += secondsFraction / 1_000_000;
   const dmsString = `${degrees}°${minutes}′${seconds}″ ${direction}`;
   return parseDMS(dmsString);
 }
@@ -132,7 +132,7 @@ function DD2DMS(lat, long) {
 const MAP_TILER_TOKEN = ENV.VUE_APP_MAPTILER_TOKEN;
 
 /**
- * Get the DD coordinates of a given address using OpenStreetMapAPI.
+ * Get the DD coordinates of a given address using Maptiler API.
  * The returned value is an object with a "longitude" and "latitude" fields.
  * If no coordinates are found, "longitude" and "latitude" will be null.
  *
