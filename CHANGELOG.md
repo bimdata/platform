@@ -1,3 +1,17 @@
+## [1.4.2](https://github.com/bimdata/platform/compare/v1.4.1...v1.4.2) (2026-05-04)
+
+
+### chore
+
+* bump @bimdata/viewer@2.17.1 from Github Actions [skip e2e] ([0b0f79d](https://github.com/bimdata/platform/commit/0b0f79d7e6839d792e1f1c0ae4a1528934141266))
+* bump @bimdata/viewer@2.17.1-beta.1 from Github Actions [skip e2e] ([048e3f3](https://github.com/bimdata/platform/commit/048e3f3be37f47173da1094ae24745201bdcf480))
+* bump @bimdata/viewer@2.17.1-beta.2 from Github Actions [skip e2e] ([1cd903f](https://github.com/bimdata/platform/commit/1cd903f68e9f704fa53f7d29f9079281f7a38c78))
+* update dependencies ([39e7850](https://github.com/bimdata/platform/commit/39e7850f52e37395b0530a189f4ffba36ccbd1ba))
+
+### PATCH
+
+* Fix: perf space board (#656) ([632cc72](https://github.com/bimdata/platform/commit/632cc723dfff05ff0be931cd7e9b126000120a00)), closes [#656](https://github.com/bimdata/platform/issues/656)
+
 ## [1.4.1](https://github.com/bimdata/platform/compare/v1.4.0...v1.4.1) (2026-04-09)
 
 
