@@ -2,6 +2,7 @@ import { useAppNotification } from "../components/specific/app/app-notification/
 import i18n from "../i18n/index.js";
 
 const ERRORS = Object.freeze({
+  LOGS_FETCH_ERROR: "logsFetchError",
   ORGANIZATIONS_FETCH_ERROR: "organizationsFetchError",
   ORGANIZATION_CREATE_ERROR: "organizationCreateError",
   ORGANIZATION_UPDATE_ERROR: "organizationUpdateError",
@@ -85,7 +86,7 @@ const ERRORS = Object.freeze({
   DATAPACK_UPDATE_ERROR: "datapackUpdateError",
   BCF_IMPORT_ERROR: "bcfImportError",
   BCF_EXPORT_ERROR: "bcfExportError",
-  BCF_DELETE_ERROR: "bcfDeleteError"
+  BCF_DELETE_ERROR: "bcfDeleteError",
 });
 
 class RuntimeError {
@@ -112,7 +113,7 @@ class ErrorService {
     this.notify({
       type: "error",
       title: this.t("t.error"),
-      message: this.t(`Errors.${errorId}`)
+      message: this.t(`Errors.${errorId}`),
     });
   }
 }

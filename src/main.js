@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { createApp } from "vue";
+import { createApp, ref } from "vue";
 import BcfComponents from "@bimdata/bcf-components/vue3-plugin.js";
 import BIMDataComponents from "@bimdata/components/vue3-plugin.js";
 import DesignSystem from "@bimdata/design-system/vue3-plugin.js";
@@ -10,7 +10,6 @@ import apiClient from "./services/api-client.js";
 import ErrorService from "./services/ErrorService.js";
 
 import App from "./App.vue";
-
 
 const app = createApp(App)
   .use(i18n)
@@ -25,8 +24,11 @@ for (const [name, component] of Object.entries(globalComponents)) {
 }
 
 // Setup global error handler
-app.config.errorHandler = error => {
+app.config.errorHandler = (error) => {
   ErrorService.handleError(error);
 };
 
+const darkTheme = ref(false);
+
+app.provide("BIMDATA_DESIGN_SYSTEM_DARK_THEME", darkTheme);
 app.mount("#app");

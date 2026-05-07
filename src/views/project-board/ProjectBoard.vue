@@ -15,12 +15,10 @@
           :tabs="tabs"
           :selected="currentTab.id"
           @tab-click="changeView($event.id)"
+          :dark="false"
         >
           <template #tab="{ tab }">
-            <span
-              :data-test-id="`project-tab-${tab.id}`"
-              class="flex item-center"
-            >
+            <span :data-test-id="`project-tab-${tab.id}`" class="flex item-center">
               <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
               <span v-else>
                 {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
@@ -33,9 +31,7 @@
       <template #right>
         <div class="project-board__header__actions">
           <SpaceSizeInfo
-            v-if="
-              IS_SUBSCRIPTION_ENABLED && isSpaceAdmin(space) && currentTab.id !== 'bcf'
-            "
+            v-if="IS_SUBSCRIPTION_ENABLED && isSpaceAdmin(space) && currentTab.id !== 'bcf'"
             :space="space"
             :spaceSubInfo="spaceSubInfo"
           />
@@ -47,7 +43,7 @@
     <div class="project-board__body">
       <Transition name="fade" mode="out-in">
         <KeepAlive>
-          <component :is="currentView" @go-folders-view="changeView('files')"  />
+          <component :is="currentView" @go-folders-view="changeView('files')" />
         </KeepAlive>
       </Transition>
     </div>
@@ -84,22 +80,22 @@ import ProjectOverview from "./project-overview/ProjectOverview.vue";
 const PROJECT_VIEWS = {
   overview: "ProjectOverview",
   files: "ProjectFiles",
-  bcf: "ProjectBcf"
+  bcf: "ProjectBcf",
 };
 
 const tabsDef = [
   {
     id: "overview",
-    icon: "ifcFile"
+    icon: "ifcFile",
   },
   {
     id: "files",
-    icon: "folder"
+    icon: "folder",
   },
   {
     id: "bcf",
-    icon: "bcf"
-  }
+    icon: "bcf",
+  },
 ];
 
 export default {
@@ -113,7 +109,7 @@ export default {
     ProjectOverview,
     SpaceSizeInfo,
     SubscriptionStatusBanner,
-    ViewHeader
+    ViewHeader,
   },
   setup() {
     const route = useRoute();
@@ -128,13 +124,13 @@ export default {
       () =>
         isFreeSpace(currentSpace.value) &&
         isUserOrga(currentSpace.value) &&
-        isFullTotal(spaceSubInfo.value)
+        isFullTotal(spaceSubInfo.value),
     );
     provide("shouldSubscribe", shouldSubscribe);
 
     const currentTab = ref(tabsDef[0]);
     const currentView = ref(PROJECT_VIEWS[DEFAULT_PROJECT_VIEW]);
-    const changeView = key => {
+    const changeView = (key) => {
       const viewKey = PROJECT_VIEWS[key] ? key : DEFAULT_PROJECT_VIEW;
 
       projectView.set(currentProject.value.id, viewKey);
@@ -147,21 +143,17 @@ export default {
     onBeforeMount(() => {
       // Look for current project view in route hash.
       // Otherwise get current view from session storage.
-      const viewKey =
-        route.hash.slice(1) || projectView.get(currentProject.value.id);
+      const viewKey = route.hash.slice(1) || projectView.get(currentProject.value.id);
       // Restore current project view for this project.
       changeView(viewKey);
     });
 
-    useInterval(
-      () => {
-        if (currentView.value === PROJECT_VIEWS.overview) {
-          loadProjectUsers(currentProject.value);
-          loadProjectInvitations(currentProject.value);
-        }
-      },
-      10000
-    );
+    useInterval(() => {
+      if (currentView.value === PROJECT_VIEWS.overview) {
+        loadProjectUsers(currentProject.value);
+        loadProjectInvitations(currentProject.value);
+      }
+    }, 10000);
 
     return {
       // References
@@ -176,9 +168,9 @@ export default {
       isSpaceAdmin,
       closeSidePanel,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 

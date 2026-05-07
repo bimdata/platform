@@ -1,0 +1,22 @@
+.history-activity-panel {
+  height: calc(100vh - 44px - 40px - 12px - 12px);
+  overflow: auto;
+  .header {
+    h3 {
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+  }
+  .day-group {
+    margin-top: 20px;
+    .day-title {
+      font-size: 13px;
+      color: var(--color-granite);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+  }
+  
+}
+

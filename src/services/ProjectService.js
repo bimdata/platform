@@ -110,7 +110,7 @@ class ProjectService {
       return await apiClient.collaborationApi.cancelProjectUserInvitation(
         project.cloud.id,
         invitation.id,
-        project.id
+        project.id,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.INVITATION_CANCEL_ERROR, error);
@@ -123,7 +123,7 @@ class ProjectService {
         project.cloud.id,
         user.id,
         project.id,
-        { role: user.role }
+        { role: user.role },
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_UPDATE_ERROR, error);
@@ -135,7 +135,7 @@ class ProjectService {
       return await apiClient.collaborationApi.deleteProjectUser(
         project.cloud.id,
         user.id,
-        project.id
+        project.id,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.USER_DELETE_ERROR, error);
@@ -155,7 +155,7 @@ class ProjectService {
       return await apiClient.collaborationApi.getFolderProjectUsers(
         project.cloud.id,
         folder.id,
-        project.id
+        project.id,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.USERS_PROJECT_FETCH_ERROR, error);
@@ -175,7 +175,7 @@ class ProjectService {
     try {
       res = await backendClient.get(`/cloud/${spaceId}/project/${projectId}/notification`);
     } catch (error) {
-      if(error.status === 404) {
+      if (error.status === 404) {
         res = null; // No notification found
       } else {
         console.error("Error fetching project notification:", error);
@@ -190,6 +190,14 @@ class ProjectService {
 
   deleteProjectNotification(spaceId, projectId) {
     return backendClient.delete(`/cloud/${spaceId}/project/${projectId}/notification`);
+  }
+
+  async fetchLogs(project) {
+    try {
+      return await apiClient.collaborationApi.getLogs(project.cloud.id, project.id);
+    } catch (error) {
+      throw new RuntimeError(ERRORS.LOGS_FETCH_ERROR, error);
+    }
   }
 }
 
