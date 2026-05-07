@@ -58,7 +58,11 @@
           <transition name="fade" mode="out-in">
             <div style="height: 100%">
               <!-- HISTORY -->
-              <ProjectHistoryActivity v-if="currentTab === 'history'" :project="project" />
+              <ProjectHistoryActivity
+                v-if="currentTab === 'history'"
+                :project="project"
+                @go-folder="goToGEDView"
+              />
 
               <!-- SETTINGS -->
               <ProjectNotificationsSettings

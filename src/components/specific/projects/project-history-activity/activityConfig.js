@@ -1,10 +1,18 @@
 import { PROJECT_ROLE } from "../../../../config/projects.js";
+import { FILE_PERMISSION } from "../../../../config/files.js";
 
-const roleMap = {
+const roleList = {
   [PROJECT_ROLE.ADMIN]: "admin",
   [PROJECT_ROLE.USER]: "user",
   [PROJECT_ROLE.GUEST]: "guest",
 };
+
+const PERMISSION_LIST = [
+  { id: "default", value: FILE_PERMISSION.DEFAULT },
+  { id: "accessDenied", value: FILE_PERMISSION.ACCESS_DENIED },
+  { id: "readOnly", value: FILE_PERMISSION.READ_ONLY },
+  { id: "readWrite", value: FILE_PERMISSION.READ_WRITE },
+];
 
 const getFileName = (path) => path?.split("/").pop() || "";
 
@@ -171,7 +179,17 @@ export const getActivityFromLog = (log) => {
     return null;
   }
 
-  const roleKey = roleMap[log.description?.project_role];
+  const roleKey = roleList[log.description?.project_role];
+
+  const newPermissionEntry = PERMISSION_LIST.find(
+    (entry) => entry.value === log.description?.new_permission,
+  );
+  const oldPermissionEntry = PERMISSION_LIST.find(
+    (entry) => entry.value === log.description?.old_permission,
+  );
+
+  const newPermissionKey = newPermissionEntry ? newPermissionEntry.id : null;
+  const oldPermissionKey = oldPermissionEntry ? oldPermissionEntry.id : null;
 
   return {
     actionKey: config.actionKey,
@@ -184,7 +202,10 @@ export const getActivityFromLog = (log) => {
 
     details: {
       path: log.description?.path,
+      folderId: log.description?.folder_id,
       roleKey,
+      newPermissionKey,
+      oldPermissionKey,
       oldName: getFileName(log.description?.old_path),
       newName: getFileName(log.description?.new_path),
       oldPath: log.description?.old_path,
