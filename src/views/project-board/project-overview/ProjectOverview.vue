@@ -228,11 +228,11 @@ export default {
       currentTab.value = tab.id;
     };
     const tabs = computed(() => [
-      { id: "history", label: t("ProjectOverview.historyActivityTab"), icon: "description" },
+      { id: "history", label: t("ProjectOverview.historyActivityTab"), icon: "HistoryActivity" },
       {
         id: "settings",
         label: t("ProjectOverview.notificationSettingsTab"),
-        icon: "notifications",
+        icon: "MarkEmail",
       },
     ]);
 
