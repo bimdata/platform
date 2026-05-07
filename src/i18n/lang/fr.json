@@ -97,6 +97,12 @@
     "notificationSettingsTab": "Notifications mail",
     "activity": {
       "title": "Activité récente",
+      "folderTitle": "Dossier :",
+      "roleTitle": "Rôle :",
+      "newPermissionTitle": "Nouveaux droits :",
+      "oldPermissionTitle": "Anciens droits :",
+      "oldNameTitle": "Ancien nom :",
+      "newNameTitle": "Nouveau nom :",
       "document_created": "Dépôt du fichier :",
       "document_deleted": "Suppression du fichier :",
       "document_renamed": "Renommage du fichier :",
