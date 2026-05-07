@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { createApp, ref } from "vue";
+import { createApp } from "vue";
 import BcfComponents from "@bimdata/bcf-components/vue3-plugin.js";
 import BIMDataComponents from "@bimdata/components/vue3-plugin.js";
 import DesignSystem from "@bimdata/design-system/vue3-plugin.js";
@@ -28,7 +28,4 @@ app.config.errorHandler = (error) => {
   ErrorService.handleError(error);
 };
 
-const darkTheme = ref(false);
-
-app.provide("BIMDATA_DESIGN_SYSTEM_DARK_THEME", darkTheme);
 app.mount("#app");
