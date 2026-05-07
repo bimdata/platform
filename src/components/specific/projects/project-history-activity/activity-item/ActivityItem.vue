@@ -18,7 +18,7 @@
 
       <transition name="expand">
         <div v-if="isOpen" class="details">
-          <div v-if="log.activity.details.path" class="detail flex items-center">
+          <div v-if="log.activity.details.path" class="detail detail-path flex items-center">
             {{ $t("ProjectOverview.activity.folderTitle") }}
             <span>{{ log.activity.details.path }}</span>
             <BIMDataButton
