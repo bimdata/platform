@@ -122,6 +122,12 @@
         "user": "Utilisateur",
         "guest": "Invité"
       },
+      "permissions": {
+        "default": "Par défaut",
+        "accessDenied": "Accès refusé",
+        "readOnly": "Lecture seule",
+        "readWrite": "Lecture / Écriture"
+      },
       "badge": {
         "document_created": "Dépôt du fichier ",
         "document_deleted": "Suppression du fichier ",

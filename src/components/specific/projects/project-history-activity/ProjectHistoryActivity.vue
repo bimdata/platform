@@ -6,7 +6,13 @@
 
     <div v-for="(logs, day) in groupedLogs" :key="day" class="day-group">
       <div class="day-title">{{ day }}</div>
-      <ActivityItem v-for="log in logs" :key="log.id" :log="log" :formatTimeAgo="formatTimeAgo" />
+      <ActivityItem
+        v-for="log in logs"
+        :key="log.id"
+        :log="log"
+        :formatTimeAgo="formatTimeAgo"
+        @go-folder="$emit('go-folder', $event)"
+      />
     </div>
   </div>
 </template>
