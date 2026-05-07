@@ -39,7 +39,9 @@
       font-size: 11px;
       color: var(--color-granite-light);
       .detail {
-        min-height: 32px;
+        &.detail-path {
+          min-height: 32px;
+        }
         span {
           color: var(--color-primary);
           font-weight: 500;
