@@ -11,7 +11,7 @@
           maxWidth="200px"
         />
       </div>
-  
+
       <transition name="fade">
         <div v-if="hovering || showFullPath" class="model-path-cell__location">
           <div
@@ -57,21 +57,15 @@
               <BIMDataIconChevron size="xxxs" fill color="default" />
             </div>
           </div>
-  
-          <span
-            v-else
-            class="folder-name flex items-center"
-            @click.stop="goToGedRoot"
-          >
+
+          <span v-else class="folder-name flex items-center" @click.stop="goToGedRoot">
             <BIMDataIconFolderLocation fill color="primary" margin="0 6px 0 0" />
             {{ $t("t.rootFolder") }}
           </span>
         </div>
       </transition>
     </template>
-    <template v-else>
-      -
-    </template>
+    <template v-else> - </template>
   </div>
 </template>
 
@@ -102,7 +96,7 @@ export default {
     const hovering = ref(false);
     const showFullPath = ref(false);
     const hasLocation = computed(
-      () => ![MODEL_TYPE.META_BUILDING, MODEL_TYPE.PHOTOSPHERE_BUILDING].includes(props.model.type)
+      () => ![MODEL_TYPE.META_BUILDING, MODEL_TYPE.PHOTOSPHERE_BUILDING].includes(props.model.type),
     );
 
     const folderLocation = (model) => {
