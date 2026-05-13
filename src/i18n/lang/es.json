@@ -217,7 +217,7 @@
     },
     "submitButtonText": "Invitar",
     "successNotifText": "Invitación enviada",
-    "successUsertoAdmin": "El usuario ha sido ascendido a administrador",
+    "successUserToAdmin": "El usuario ha sido ascendido a administrador",
     "userAlreadyExistInputErrorMessage": "El usuario ya está en su proyecto"
   },
   "ModelActionsCell": {
