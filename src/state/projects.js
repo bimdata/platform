@@ -149,11 +149,11 @@ const getUserProjectList = async (project, folder) => {
   }));
 };
 
-const getProjectFolderTree = async (project) => {
+const getProjectFolderTree = (project) => {
   return ProjectService.getProjectFolderTree(project);
 };
 
-const fetchLogs = async (project) => {
+const fetchLogs = (project) => {
   return ProjectService.fetchLogs(project);
 };
 
