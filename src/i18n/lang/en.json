@@ -24,6 +24,69 @@
       "permission": "You don't have the required rights",
       "size": "You don't have enough storage space"
     },
+    "historyActivityTab": "Activity History",
+    "notificationSettingsTab": "Email Notifications",
+    "activity": {
+      "title": "Activity history",
+      "folderTitle": "Folder:",
+      "roleTitle": "Role:",
+      "newPermissionTitle": "New rights:",
+      "oldPermissionTitle": "Old rights:",
+      "oldNameTitle": "Old name:",
+      "newNameTitle": "New name:",
+      "document_created": "File uploaded:",
+      "document_deleted": "File deleted:",
+      "document_renamed": "File renamed:",
+      "document_moved": "File moved:",
+
+      "folder_created": "Folder created:",
+      "folder_deleted": "Folder deleted:",
+      "folder_permissions_updated": "Folder permissions updated:",
+      "folder_renamed": "Folder renamed:",
+      "folder_moved": "Folder moved:",
+
+      "cloud_invitation_sent": "Invitation sent to:",
+      "cloud_invitation_canceled": "Invitation canceled for:",
+      "cloud_invitation_accepted": "Invitation accepted by:",
+      "cloud_invitation_denied": "Invitation denied by:",
+
+      "project_invitation_sent": "Project invitation sent to:",
+      "project_invitation_canceled": "Project invitation canceled for:",
+      "project_invitation_accepted": "Project invitation accepted by:",
+      "project_invitation_denied": "Project invitation denied by:",
+      "roles": {
+        "admin": "Administrator",
+        "user": "User",
+        "guest": "Guest"
+      },
+      "permissions": {
+        "default": "Default",
+        "accessDenied": "Access denied",
+        "readOnly": "Read only",
+        "readWrite": "Read / Write"
+      },
+      "badge": {
+        "document_created": "File uploaded ",
+        "document_deleted": "File deleted ",
+        "document_renamed": "File renamed ",
+        "document_moved": "File moved ",
+        "folder_created": "Folder created ",
+        "folder_deleted": "Folder deleted ",
+        "folder_permissions_updated": "Folder permissions updated",
+        "folder_renamed": "Folder renamed",
+        "folder_moved": "Folder moved",
+
+        "cloud_invitation_sent": "Invitation sent",
+        "cloud_invitation_canceled": "Invitation canceled",
+        "cloud_invitation_accepted": "Invitation accepted",
+        "cloud_invitation_denied": "Invitation denied",
+
+        "project_invitation_sent": "Project invitation sent",
+        "project_invitation_canceled": "Project invitation canceled",
+        "project_invitation_accepted": "Project invitation accepted",
+        "project_invitation_denied": "Project invitation denied"
+      }
+    },
     "notifications": {
       "title": "Email notification settings",
       "headerText": "The BIMData project settings allow you to manage the types and frequency of notifications to create a personalized follow-up experience.",
