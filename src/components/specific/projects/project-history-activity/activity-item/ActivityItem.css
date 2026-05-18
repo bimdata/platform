@@ -41,8 +41,9 @@
       .detail {
         &.detail-path {
           min-height: 32px;
+          gap: 6px;
         }
-        span {
+        strong {
           color: var(--color-primary);
           font-weight: 500;
         }
