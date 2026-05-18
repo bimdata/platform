@@ -86,7 +86,6 @@
     "groupsButtonText": "Gestion des groupes"
   },
   "ProjectOverview": {
-    "title": "",
     "openFileUploadButtonText": "Ajouter un modèle",
     "forbiddenUploadNotification": "Veuillez sélectionner un fichier de modèle: {extensions}",
     "uploadDisableMessage": {
