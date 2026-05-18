@@ -1,5 +1,5 @@
-import { PROJECT_ROLE } from "../../../../config/projects.js";
-import { FILE_PERMISSION } from "../../../../config/files.js";
+import { PROJECT_ROLE } from "./projects.js";
+import { FILE_PERMISSION } from "./files.js";
 
 const roleList = {
   [PROJECT_ROLE.ADMIN]: "admin",

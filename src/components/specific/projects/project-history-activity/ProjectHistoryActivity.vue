@@ -20,7 +20,7 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { getActivityFromLog } from "./activityConfig";
+import { getActivityFromLog } from "../../../../config/activity-config.js";
 
 import { useTimeAgo } from "../../../../composables/time.js";
 import ProjectService from "../../../../services/ProjectService.js";
