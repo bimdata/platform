@@ -19,14 +19,13 @@
       <transition name="expand">
         <div v-if="isOpen" class="details">
           <div v-if="log.activity.details.path" class="detail detail-path flex items-center">
-            {{ $t("ProjectOverview.activity.folderTitle") }}
-            <span>{{ log.activity.details.path }}</span>
+            <span>{{ $t("ProjectOverview.activity.folderTitle") }}</span>
+            <strong>{{ log.activity.details.path }}</strong>
             <BIMDataButton
               color="default"
               fill
               radius
               icon
-              class="m-l-6"
               @click.stop="
                 $emit('go-folder', {
                   id: log.activity.details.folderId,
