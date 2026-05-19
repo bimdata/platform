@@ -217,7 +217,7 @@
     },
     "submitButtonText": "Einladen",
     "successNotifText": "Einladung versendet",
-    "successUsertoAdmin": "Der Nutzer wurde zum Administrator befördert.",
+    "successUserToAdmin": "Der Nutzer wurde zum Administrator befördert.",
     "userAlreadyExistInputErrorMessage": "Der Nutzer ist bereits in Ihren Projekt."
   },
   "ModelActionsCell": {

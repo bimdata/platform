@@ -217,7 +217,7 @@
     },
     "submitButtonText": "Send invitation",
     "successNotifText": "Invitation sent",
-    "successUsertoAdmin": "The user has now admin role",
+    "successUserToAdmin": "The user has now admin role",
     "userAlreadyExistInputErrorMessage": "User is already in the project"
   },
   "ModelActionsCell": {
