@@ -92,6 +92,7 @@
       "permission": "Vous n'avez pas les droits requis",
       "size": "Vous ne disposez plus assez d'espace de stockage"
     },
+    "title": "Activité projet",
     "historyActivityTab": "Historique d'activité",
     "notificationSettingsTab": "Notifications mail",
     "activity": {

@@ -39,7 +39,7 @@
       </BIMDataTooltip>
     </AppSlotContent>
 
-    <AppSidePanelContent>
+    <AppSidePanelContent :title="$t('ProjectOverview.title')">
       <Transition name="fade" mode="out-in">
         <div style="height: 100%">
           <BIMDataTabs

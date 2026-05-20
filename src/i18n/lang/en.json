@@ -24,6 +24,7 @@
       "permission": "You don't have the required rights",
       "size": "You don't have enough storage space"
     },
+    "title": "Project Activity",
     "historyActivityTab": "Activity History",
     "notificationSettingsTab": "Email Notifications",
     "activity": {
