@@ -14,7 +14,7 @@
           $t(
             `ProjectOverview.uploadDisableMessage.${
               isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-            }`
+            }`,
           )
         "
       >
@@ -39,21 +39,45 @@
       </BIMDataTooltip>
     </AppSlotContent>
 
-    <AppSidePanelContent :header="false">
+    <AppSidePanelContent>
       <Transition name="fade" mode="out-in">
         <div style="height: 100%">
-          <!-- Notification Settings Panel -->
-          <ProjectNotificationsSettings
-            v-show="sidePanelView === 'settings'"
-            :notification="notification"
-            :selectedRecipientsIds="selectedGroupIds"
-            v-model:notification-mode-activity="notificationModeActivity"
-            v-model:checked-days-activity="checkedDaysActivity"
-            v-model:checked-activity="checkedActivity"
-            @open-recipients-settings="switchToRecipients"
-            @open-timezone-choice="switchToTimezoneChoice"
-            @close="closeSidePanel"
-          />
+          <BIMDataTabs
+            width="100%"
+            height="40px"
+            :tabs="tabs"
+            tabSize="50%"
+            :selected="currentTab"
+            @tab-click="selectTab"
+          >
+            <template #tab="{ tab }">
+              <BIMDataIcon :name="tab.icon" size="xs" margin="0 6px 0 0" />
+              <span>{{ tab.label }}</span>
+            </template>
+          </BIMDataTabs>
+          <transition name="fade" mode="out-in">
+            <div style="height: 100%">
+              <!-- HISTORY -->
+              <ProjectHistoryActivity
+                v-if="currentTab === 'history'"
+                :project="project"
+                @go-folder="goToGEDView"
+              />
+
+              <!-- SETTINGS -->
+              <ProjectNotificationsSettings
+                v-else-if="currentTab === 'settings'"
+                :notification="notification"
+                :selectedRecipientsIds="selectedGroupIds"
+                v-model:notification-mode-activity="notificationModeActivity"
+                v-model:checked-days-activity="checkedDaysActivity"
+                v-model:checked-activity="checkedActivity"
+                @open-recipients-settings="switchToRecipients"
+                @open-timezone-choice="switchToTimezoneChoice"
+                @close="closeSidePanel"
+              />
+            </div>
+          </transition>
 
           <!-- Recipients Panel -->
           <ProjectNotificationsRecipients
@@ -158,6 +182,7 @@ import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotCon
 import FileUploader from "../../../components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "../../../components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
+import ProjectHistoryActivity from "../../../components/specific/projects/project-history-activity/ProjectHistoryActivity.vue";
 import ProjectNotificationsSettings from "../../../components/specific/projects/project-notifications-settings/ProjectNotificationsSettings.vue";
 import ProjectNotificationsRecipients from "../../../components/specific/projects/project-notifications-recipients/ProjectNotificationsRecipients.vue";
 import ProjectNotificationTimezoneChoice from "../../../components/specific/projects/project-notification-timezone-choice/ProjectNotificationTimezoneChoice.vue";
@@ -173,6 +198,7 @@ export default {
     ModelsManager,
     ModelsOverview,
     ProjectUsersManager,
+    ProjectHistoryActivity,
     ProjectNotificationsSettings,
     ProjectNotificationsRecipients,
     ProjectNotificationTimezoneChoice,
@@ -200,6 +226,20 @@ export default {
     const notification = ref({});
     const sidePanelView = ref("settings");
 
+    const currentTab = ref("history");
+
+    const selectTab = (tab) => {
+      currentTab.value = tab.id;
+    };
+    const tabs = computed(() => [
+      { id: "history", label: t("ProjectOverview.historyActivityTab"), icon: "HistoryActivity" },
+      {
+        id: "settings",
+        label: t("ProjectOverview.notificationSettingsTab"),
+        icon: "MarkEmail",
+      },
+    ]);
+
     const {
       isOpen: showFileUploader,
       open: openFileUploader,
@@ -222,8 +262,8 @@ export default {
         (model) =>
           !model.archived &&
           model.type !== MODEL_TYPE.META_BUILDING &&
-          model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
-      )
+          model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING,
+      ),
     );
 
     const reloadData = debounce(async () => {
@@ -268,7 +308,7 @@ export default {
       try {
         notification.value = await fetchProjectNotification(
           currentSpace.value.id,
-          currentProject.value.id
+          currentProject.value.id,
         );
         selectedRecipientsIds.value = notification.value?.recipients_group_ids || [];
       } catch (e) {
@@ -298,6 +338,9 @@ export default {
       switchToSettings,
       switchToTimezoneChoice,
       users: projectUsers,
+      currentTab,
+      selectTab,
+      tabs,
       // Methods
       closeFileUploader,
       closeSidePanel,

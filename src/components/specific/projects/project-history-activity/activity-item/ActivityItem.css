@@ -1,0 +1,123 @@
+.activity-item {
+  display: flex;
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 6px;
+  border: 1px solid var(--color-silver-light);
+  transition: 0.2s;
+  cursor: pointer;
+  &:hover {
+    background: #f9fafb;
+  }
+  .icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 14px;
+  }
+  .content {
+    flex: 1;
+    .title {
+      font-size: 14px;
+      color: var(--color-granite);
+      .primary {
+        color: var(--color-primary);
+        font-weight: 500;
+      }
+    }
+    .date {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    .details {
+      margin: 6px 0;
+      font-size: 11px;
+      color: var(--color-granite-light);
+      .detail {
+        &.detail-path {
+          min-height: 32px;
+          gap: 6px;
+        }
+        strong {
+          color: var(--color-primary);
+          font-weight: 500;
+        }
+      }
+    }
+    .meta {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      .badge {
+        padding: 3px 8px;
+        border-radius: 50px;
+        font-size: 10px;
+      }
+
+      .user {
+        background: #f3f4f6;
+        padding: 2px 6px;
+        border-radius: 999px;
+        font-size: 10px;
+      }
+    }
+  }
+  .arrow {
+    color: #9ca3af;
+    font-size: 18px;
+  }
+  .blue {
+    background: rgba(32, 93, 189, 0.1);
+    color: var(--color-neutral);
+  }
+  .flame {
+    background: rgba(255, 61, 30, .1);
+    color: var(--color-high);
+  }
+  .green {
+    background: rgba(0, 175, 80, .1);
+    color: var(--color-success);
+  }
+  .middle-blue {
+    background: rgba(0, 136, 224, 0.1);
+    color: #0088E0;
+  }
+  .orange {
+    background: rgba(255, 145, 0, 0.1);
+    color: var(--color-warning);
+  }
+  .pink {
+    background: rgba(227,85,119, 0.1);
+    color: #E35577;
+  }
+  .purple {
+    background: rgba(162,89,234, 0.1);
+    color: #A259EA;
+  }
+  .red {
+    background: rgba(188, 0, 10, 0.1);
+    color: var(--color-danger);
+  }
+  .teal {
+    background: rgba(27, 155, 162, 0.1);
+    color: #1B9BA2;
+  }
+  .expand-enter-active,
+  .expand-leave-active {
+    transition: all 0.2s ease;
+  }
+
+  .expand-enter-from,
+  .expand-leave-to {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}

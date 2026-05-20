@@ -12,6 +12,7 @@
     "createdBy": "Créé par",
     "close": "Fermer",
     "date": "Date",
+    "days_ago": "il y a {count} jour | il y a {count} jours",
     "delete": "Supprimer",
     "description": "Description",
     "download": "Télécharger",
@@ -25,10 +26,13 @@
     "exportXlsx": "Exporter en Excel",
     "file": "Fichier",
     "folder": "Dossier",
+    "hours_ago": "il y a {count} heure | il y a {count} heures",
     "import": "Importer",
     "invalidName": "Nom invalide",
+    "just_now": "À l'instant",
     "leave": "Quitter",
     "location": "Emplacement",
+    "minutes_ago": "il y a {count} minute | il y a {count} minutes",
     "modifiedOn": "Modifié le",
     "modify": "Modifier",
     "name": "Nom",
@@ -47,12 +51,14 @@
     "spaces": "Espaces",
     "status": "Statut",
     "success": "Succès",
+    "today": "Aujourd’hui",
     "type": "Type",
     "unarchive": "Désarchiver",
     "validate": "Valider",
     "validation": "Validations",
     "validator": "Validants",
-    "verify": "Vérifier"
+    "verify": "Vérifier",
+    "yesterday": "Hier"
   },
   "OidcCallbackError": {
     "message": "Une erreur s'est produite lors de l'authentification...",
@@ -85,6 +91,69 @@
     "uploadDisableMessage": {
       "permission": "Vous n'avez pas les droits requis",
       "size": "Vous ne disposez plus assez d'espace de stockage"
+    },
+    "historyActivityTab": "Historique d'activité",
+    "notificationSettingsTab": "Notifications mail",
+    "activity": {
+      "title": "Historique d’activité",
+      "folderTitle": "Dossier :",
+      "roleTitle": "Rôle :",
+      "newPermissionTitle": "Nouveaux droits :",
+      "oldPermissionTitle": "Anciens droits :",
+      "oldNameTitle": "Ancien nom :",
+      "newNameTitle": "Nouveau nom :",
+      "document_created": "Dépôt du fichier :",
+      "document_deleted": "Suppression du fichier :",
+      "document_renamed": "Renommage du fichier :",
+      "document_moved": "Déplacement du fichier :",
+
+      "folder_created": "Création du dossier :",
+      "folder_deleted": "Suppression du dossier :",
+      "folder_permissions_updated": "Modification des permissions du dossier :",
+      "folder_renamed": "Renommage du dossier :",
+      "folder_moved": "Déplacement du dossier :",
+
+      "cloud_invitation_sent": "Invitation envoyée à :",
+      "cloud_invitation_canceled": "Invitation annulée pour :",
+      "cloud_invitation_accepted": "Invitation acceptée par :",
+      "cloud_invitation_denied": "Invitation refusée par :",
+
+      "project_invitation_sent": "Invitation projet envoyée à :",
+      "project_invitation_canceled": "Invitation projet annulée pour :",
+      "project_invitation_accepted": "Invitation projet acceptée par :",
+      "project_invitation_denied": "Invitation projet refusée par :",
+      "roles": {
+        "admin": "Administrateur",
+        "user": "Utilisateur",
+        "guest": "Invité"
+      },
+      "permissions": {
+        "default": "Par défaut",
+        "accessDenied": "Accès refusé",
+        "readOnly": "Lecture seule",
+        "readWrite": "Lecture / Écriture"
+      },
+      "badge": {
+        "document_created": "Dépôt du fichier ",
+        "document_deleted": "Suppression du fichier ",
+        "document_renamed": "Renommage du fichier ",
+        "document_moved": "Déplacement du fichier ",
+        "folder_created": "Création du dossier ",
+        "folder_deleted": "Suppression du dossier ",
+        "folder_permissions_updated": "Modification des droits d’accès",
+        "folder_renamed": "Renommage du dossier",
+        "folder_moved": "Déplacement du dossier",
+
+        "cloud_invitation_sent": "Invitation envoyée",
+        "cloud_invitation_canceled": "Invitation annulée",
+        "cloud_invitation_accepted": "Invitation acceptée",
+        "cloud_invitation_denied": "Invitation refusée",
+
+        "project_invitation_sent": "Invitation projet envoyée",
+        "project_invitation_canceled": "Invitation projet annulée",
+        "project_invitation_accepted": "Invitation projet acceptée",
+        "project_invitation_denied": "Invitation projet refusée"
+      }
     },
     "notifications": {
       "title": "Paramètres notification mail",
@@ -462,6 +531,7 @@
     "title": "Gestion des membres du groupe"
   },
   "Errors": {
+    "logsFetchError": "Impossible de récupérer les logs du projet",
     "spacesFetchError": "Impossible de récupérer la liste des espaces",
     "spaceCreateError": "Erreur lors de la création de l'espace",
     "spaceUpdateError": "Erreur de mise à jour de l'espace",

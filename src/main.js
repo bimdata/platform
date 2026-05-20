@@ -11,7 +11,6 @@ import ErrorService from "./services/ErrorService.js";
 
 import App from "./App.vue";
 
-
 const app = createApp(App)
   .use(i18n)
   .use(router)
@@ -25,7 +24,7 @@ for (const [name, component] of Object.entries(globalComponents)) {
 }
 
 // Setup global error handler
-app.config.errorHandler = error => {
+app.config.errorHandler = (error) => {
   ErrorService.handleError(error);
 };
 
