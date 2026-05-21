@@ -93,17 +93,6 @@ const ACTION_CONFIG = {
     badgeKey: "ProjectOverview.activity.badge.folder_moved",
   },
 
-  folder_permissions_updated: {
-    actionKey: "ProjectOverview.activity.folder_permissions_updated",
-    getTarget: (log) => getFileName(log.description?.path),
-    params: (log) => ({
-      folderName: getFileName(log.description?.path),
-    }),
-    icon: "FolderPermissionsUpdated",
-    class: "pink",
-    badgeKey: "ProjectOverview.activity.badge.folder_permissions_updated",
-  },
-
   cloud_invitation_sent: {
     actionKey: "ProjectOverview.activity.cloud_invitation_sent",
     getTarget: (log) => log.description?.email,
