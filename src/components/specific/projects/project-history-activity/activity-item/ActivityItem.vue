@@ -6,14 +6,20 @@
 
     <div class="content">
       <div class="title">
-        {{ $t(log.activity.actionKey, log.activity.params) }}
-        <span v-if="log.activity.target" class="primary">
-          {{ log.activity.target }}
+        <span class="title-label">
+          {{ $t(log.activity.actionKey, log.activity.params) }}
         </span>
+
+        <BIMDataTextbox
+          v-if="log.activity.target"
+          class="primary target-text"
+          :text="log.activity.target"
+        />
       </div>
 
       <div class="date">
         {{ formatTimeAgo(log.dateObj) }}
+        -
       </div>
 
       <transition name="expand">
