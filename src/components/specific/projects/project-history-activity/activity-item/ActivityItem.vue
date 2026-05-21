@@ -19,63 +19,58 @@
 
       <div class="date">
         {{ formatTimeAgo(log.dateObj) }}
-        -
+        - {{ $d(log.dateObj, "long") }}
       </div>
 
       <transition name="expand">
         <div v-if="isOpen" class="details">
           <div v-if="log.activity.details.path" class="detail detail-path flex items-center">
             <span>{{ $t("ProjectOverview.activity.folderTitle") }}</span>
-            <strong>{{ log.activity.details.path }}</strong>
-            <BIMDataButton
-              color="default"
-              fill
-              radius
-              icon
+            <strong
               @click.stop="
                 $emit('go-folder', {
                   id: log.activity.details.folderId,
                   path: log.activity.details.path,
                 })
               "
+              >{{ log.activity.details.path }}</strong
             >
-              <BIMDataIconFolderLocation fill color="primary" />
-            </BIMDataButton>
+            <BIMDataIconFolderLocation fill color="primary" />
           </div>
 
           <div v-if="log.activity.details.roleKey" class="detail">
-            {{ $t("ProjectOverview.activity.roleTitle") }}:
-            <span>
+            {{ $t("ProjectOverview.activity.roleTitle") }}
+            <strong>
               {{ $t(`ProjectOverview.activity.roles.${log.activity.details.roleKey}`) }}
-            </span>
+            </strong>
           </div>
 
           <div v-if="log.activity.details.oldPermissionKey" class="detail">
             {{ $t("ProjectOverview.activity.oldPermissionTitle") }}
-            <span>
+            <strong>
               {{
                 $t(`ProjectOverview.activity.permissions.${log.activity.details.oldPermissionKey}`)
               }}
-            </span>
+            </strong>
           </div>
 
           <div v-if="log.activity.details.newPermissionKey" class="detail">
             {{ $t("ProjectOverview.activity.newPermissionTitle") }}
-            <span>
+            <strong>
               {{
                 $t(`ProjectOverview.activity.permissions.${log.activity.details.newPermissionKey}`)
               }}
-            </span>
+            </strong>
           </div>
 
           <div v-if="log.activity.details.oldName" class="detail">
             {{ $t("ProjectOverview.activity.oldNameTitle") }}
-            <span>{{ log.activity.details.oldName }}</span>
+            <strong>{{ log.activity.details.oldName }}</strong>
           </div>
 
           <div v-if="log.activity.details.newName" class="detail">
             {{ $t("ProjectOverview.activity.newNameTitle") }}
-            <span>{{ log.activity.details.newName }}</span>
+            <strong>{{ log.activity.details.newName }}</strong>
           </div>
         </div>
       </transition>
