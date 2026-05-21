@@ -14,27 +14,22 @@
       <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
 
-    <BIMDataMenu
-      ref="menu"
-      class="file-actions-cell__menu"
-      v-show="isOpen"
-      :menuItems="menuItems"
-    >
+    <BIMDataMenu ref="menu" class="file-actions-cell__menu" v-show="isOpen" :menuItems="menuItems">
       <template #item="{ item }">
-          <BIMDataButton
-            :data-test-id="item.dataTestId"
-            width="100%"
-            :color="item.color"
-            ghost
-            squared
-            :disabled="item.disabled"
-          >
-            <div v-if="item.iconComponent" class="m-r-12">
-              <component :is="item.iconComponent" width="16px" height="14px" />
-            </div>
-            <BIMDataIcon v-else :name="item.icon" size="xs" margin="0 12px 0 0" />
-            <span>{{ $t(item.text) }}</span>
-          </BIMDataButton>
+        <BIMDataButton
+          :data-test-id="item.dataTestId"
+          width="100%"
+          :color="item.color"
+          ghost
+          squared
+          :disabled="item.disabled"
+        >
+          <div v-if="item.iconComponent" class="m-r-12">
+            <component :is="item.iconComponent" width="16px" height="14px" />
+          </div>
+          <BIMDataIcon v-else :name="item.icon" size="xs" margin="0 12px 0 0" />
+          <span>{{ $t(item.text) }}</span>
+        </BIMDataButton>
       </template>
     </BIMDataMenu>
   </div>
@@ -50,7 +45,7 @@ import {
   isConvertibleToPhotosphere,
   isModel,
   isViewable,
-  openInViewer
+  openInViewer,
 } from "../../../../../utils/models.js";
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
@@ -60,19 +55,19 @@ import SetAsModelIcon from "../../../../../components/images/SetAsModelIcon.vue"
 export default {
   props: {
     parent: {
-      type: Object
+      type: Object,
     },
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     file: {
       type: Object,
-      required: true
+      required: true,
     },
     loading: {
       type: Boolean,
-      required: true
+      required: true,
     },
   },
   emits: [
@@ -85,6 +80,7 @@ export default {
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
+    "open-naming-template",
     "remove-model",
     "update",
   ],
@@ -129,7 +125,7 @@ export default {
             iconComponent: SetAsModelIcon,
             text: "FileActionsCell.createModelButtonText",
             disabled: !hasAdminPerm(props.project, props.file),
-            action: () => onClick("create-model")
+            action: () => onClick("create-model"),
           });
         } else {
           menuItems.value.push({
@@ -147,7 +143,7 @@ export default {
           iconComponent: SetAsModelIcon,
           text: "FileActionsCell.createPhotosphereButtonText",
           disabled: !hasAdminPerm(props.project, props.file),
-          action: () => onClick("create-photosphere")
+          action: () => onClick("create-photosphere"),
         });
       }
 
@@ -169,6 +165,16 @@ export default {
       if (isFolder(props.file) && isProjectAdmin(props.project)) {
         menuItems.value.push({
           key: 7,
+          icon: "eye",
+          text: "FileActionsCell.manageNamingTemplateButtonText",
+          action: () => onClick("open-naming-template", props.file),
+          divider: true,
+        });
+      }
+
+      if (isFolder(props.file) && isProjectAdmin(props.project)) {
+        menuItems.value.push({
+          key: 8,
           icon: "key",
           text: "FileActionsCell.manageAccessButtonText",
           action: () => onClick("manage-access"),
@@ -178,21 +184,21 @@ export default {
 
       if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
         menuItems.value.push({
-          key: 8,
+          key: 9,
           icon: "visa",
           text: "FileActionsCell.visaButtonText",
           action: () => onClick("open-visa-manager"),
           dataTestId: "btn-open-visa-manager",
         });
         menuItems.value.push({
-          key: 9,
+          key: 10,
           icon: "tag",
           text: "FileActionsCell.addTagsButtonText",
           action: () => onClick("open-tag-manager"),
           dataTestId: "btn-open-tag-manager",
         });
         menuItems.value.push({
-          key: 10,
+          key: 11,
           icon: "versioning",
           text: "FileActionsCell.versioningButtonText",
           action: () => onClick("open-versioning-manager"),
@@ -202,7 +208,7 @@ export default {
       }
 
       menuItems.value.push({
-        key: 11,
+        key: 12,
         icon: "delete",
         text: "t.delete",
         color: "high",
@@ -214,10 +220,7 @@ export default {
 
       nextTick(() => {
         if (props.parent) {
-          menu.value.$el.style.top = dropdownPositioner(
-            props.parent.$el,
-            menu.value.$el
-          );
+          menu.value.$el.style.top = dropdownPositioner(props.parent.$el, menu.value.$el);
         }
       });
     };
@@ -230,9 +233,9 @@ export default {
       });
     };
 
-    const onClick = event => {
+    const onClick = (event, payload) => {
       closeMenu();
-      emit(event);
+      emit(event, payload);
     };
 
     return {
@@ -242,9 +245,9 @@ export default {
       menuItems,
       // Methods
       closeMenu,
-      openMenu
+      openMenu,
     };
-  }
+  },
 };
 </script>
 
