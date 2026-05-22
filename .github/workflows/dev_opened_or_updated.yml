@@ -112,7 +112,7 @@ jobs:
         run: |
           echo "url=https://platform-dev-$(echo ${GITHUB_HEAD_REF##*/} | tr ' ._' - | tr '[:upper:]' '[:lower:]').bimdata.io" >> $GITHUB_OUTPUT
       - name: Edit PR title with ${{ steps.platform.outputs.url }}
-        uses: ./.github/actions/pr-title-update
+        uses: bimdata/actions/platform-dev-link@v6
         with:
           platform_url: ${{ steps.platform.outputs.url }}
         env:
