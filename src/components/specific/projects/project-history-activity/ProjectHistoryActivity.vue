@@ -4,7 +4,7 @@
       <h3>{{ $t("ProjectOverview.activity.title") }}</h3>
     </div>
 
-    <template v-if="displayedGroupedLogs.length">
+    <template v-if="hasDisplayedLogs">
       <BIMDataSearch
         class="input-search"
         width="95%"
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { getActivityFromLog } from "../../../../config/activity-config.js";
@@ -58,7 +58,9 @@ export default {
 
     const { formatTimeAgo } = useTimeAgo();
 
-    onMounted(async () => {
+    const fetchLogs = async () => {
+      logs.value = [];
+
       const fetchedLogs = await ProjectService.fetchLogs(props.project);
 
       logs.value = fetchedLogs
@@ -86,7 +88,11 @@ export default {
           };
         })
         .filter(Boolean);
-    });
+    };
+
+    onMounted(fetchLogs);
+
+    watch(() => props.project, fetchLogs);
 
     const formatDay = (date) => {
       const today = new Date();
@@ -125,10 +131,12 @@ export default {
           return groups;
         }, {});
     });
+    const hasDisplayedLogs = computed(() => Object.keys(displayedGroupedLogs.value).length > 0);
 
     return {
-      searchText,
       displayedGroupedLogs,
+      hasDisplayedLogs,
+      searchText,
       formatTimeAgo,
     };
   },
