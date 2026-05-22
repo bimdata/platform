@@ -96,6 +96,7 @@
     "historyActivityTab": "Historique d'activité",
     "notificationSettingsTab": "Notifications mail",
     "activity": {
+      "empty": "Aucune activité récente",
       "title": "Historique d’activité",
       "folderTitle": "Dossier :",
       "roleTitle": "Rôle :",

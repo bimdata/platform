@@ -4,25 +4,30 @@
       <h3>{{ $t("ProjectOverview.activity.title") }}</h3>
     </div>
 
-    <BIMDataSearch
-      class="input-search"
-      width="95%"
-      :placeholder="$t('t.search')"
-      v-model="searchText"
-      clear
-      color="primary"
-    />
-
-    <div v-for="(logs, day) in displayedGroupedLogs" :key="day" class="day-group">
-      <div class="day-title">{{ day }}</div>
-      <ActivityItem
-        v-for="log in logs"
-        :key="log.id"
-        :log="log"
-        :formatTimeAgo="formatTimeAgo"
-        @go-folder="$emit('go-folder', $event)"
+    <template v-if="displayedGroupedLogs.length">
+      <BIMDataSearch
+        class="input-search"
+        width="95%"
+        :placeholder="$t('t.search')"
+        v-model="searchText"
+        clear
+        color="primary"
       />
-    </div>
+
+      <div v-for="(logs, day) in displayedGroupedLogs" :key="day" class="day-group">
+        <div class="day-title">{{ day }}</div>
+        <ActivityItem
+          v-for="log in logs"
+          :key="log.id"
+          :log="log"
+          :formatTimeAgo="formatTimeAgo"
+          @go-folder="$emit('go-folder', $event)"
+        />
+      </div>
+    </template>
+    <template v-else>
+      <p>{{ $t("ProjectOverview.activity.empty") }}</p>
+    </template>
   </div>
 </template>
 

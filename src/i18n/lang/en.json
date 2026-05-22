@@ -28,6 +28,7 @@
     "historyActivityTab": "Activity History",
     "notificationSettingsTab": "Email Notifications",
     "activity": {
+      "empty": "No recent activity",
       "title": "Activity history",
       "folderTitle": "Folder:",
       "roleTitle": "Role:",
