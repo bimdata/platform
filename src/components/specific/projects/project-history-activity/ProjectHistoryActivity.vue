@@ -4,16 +4,16 @@
       <h3>{{ $t("ProjectOverview.activity.title") }}</h3>
     </div>
 
-    <template v-if="hasDisplayedLogs">
-      <BIMDataSearch
-        class="input-search"
-        width="95%"
-        :placeholder="$t('t.search')"
-        v-model="searchText"
-        clear
-        color="primary"
-      />
+    <BIMDataSearch
+      class="input-search"
+      width="95%"
+      :placeholder="$t('t.search')"
+      v-model="searchText"
+      clear
+      color="primary"
+    />
 
+    <template v-if="hasDisplayedLogs">
       <div v-for="(logs, day) in displayedGroupedLogs" :key="day" class="day-group">
         <div class="day-title">{{ day }}</div>
         <ActivityItem

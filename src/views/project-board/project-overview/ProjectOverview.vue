@@ -260,7 +260,6 @@ export default {
       } else {
         gedTargetFolder.clear();
       }
-
       emit("go-folders-view");
     };
 

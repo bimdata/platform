@@ -25,17 +25,19 @@
       <transition name="expand">
         <div v-if="isOpen" class="details">
           <div v-if="log.activity.details.path" class="detail detail-path flex items-center">
+            <BIMDataIconFolderLocation fill color="primary" />
             <span>{{ $t("ProjectOverview.activity.folderTitle") }}</span>
-            <strong
+            <BIMDataTextbox
+              class="primary"
+              :text="log.activity.details.path"
+              width="80%"
               @click.stop="
                 $emit('go-folder', {
                   id: log.activity.details.folderId,
                   path: log.activity.details.path,
                 })
               "
-              >{{ log.activity.details.path }}</strong
-            >
-            <BIMDataIconFolderLocation fill color="primary" />
+            />
           </div>
 
           <div v-if="log.activity.details.roleKey" class="detail">

@@ -65,7 +65,7 @@
           min-height: 32px;
           gap: 6px;
         }
-        strong {
+        strong, .primary {
           color: var(--color-primary);
           font-weight: 500;
         }
