@@ -1,7 +1,14 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
-      <BIMDataButton color="primary" outline radius icon @click="openNotificationsSettings">
+      <BIMDataButton
+        v-if="isProjectAdmin(project)"
+        color="primary"
+        outline
+        radius
+        icon
+        @click="openNotificationsSettings"
+      >
         <BIMDataIconSettings fill color="default" size="xs" />
       </BIMDataButton>
       <BIMDataTooltip
@@ -56,7 +63,7 @@
             </template>
           </BIMDataTabs>
           <transition name="fade" mode="out-in">
-            <div style="height: 100%">
+            <div style="height: 100%" v-if="isProjectAdmin(project)">
               <!-- HISTORY -->
               <ProjectHistoryActivity
                 v-if="currentTab === 'history'"
@@ -209,7 +216,7 @@ export default {
     const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const { isUserOrga, isProjectGuest } = useUser();
+    const { isUserOrga, isProjectGuest, isProjectAdmin } = useUser();
     const { projectGroups } = useGroups();
     const { gedTargetFolder } = useSession();
 
@@ -348,6 +355,7 @@ export default {
       goToGEDView,
       isFullTotal,
       isProjectGuest,
+      isProjectAdmin,
       isUserOrga,
       notifyForbiddenUpload,
       openFileUploader,
