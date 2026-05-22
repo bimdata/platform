@@ -1,8 +1,7 @@
 .project-notifications-settings {
-  padding: 0 6px;
-  height: 100%;
+  height: calc(100% - var(--spacing-unit) - 12px);
   .content {
-    height: calc(100% - 32px - 32px);
+    height: calc(100% - 32px - 6px);
     overflow: auto;
     .content-text {
       color: var(--color-granite);
@@ -11,9 +10,6 @@
       line-height: 160%;
     }
 
-  }
-  .header {
-    
   }
   .footer {
     left: 0;
