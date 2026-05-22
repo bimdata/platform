@@ -65,7 +65,12 @@
           min-height: 32px;
           gap: 6px;
         }
+        span {
+          flex-shrink: 0;
+        }
         strong, .primary {
+          flex: 1 1 auto;
+          min-width: 0;
           color: var(--color-primary);
           font-weight: 500;
         }
