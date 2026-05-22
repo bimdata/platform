@@ -135,8 +135,7 @@
       "guest": "Gast"
     },
     "submitButtonText": "Uitnodiging versturen",
-    "successNotifText": "Uitnodiging verzonden",
-    "successUsertoAdmin": ""
+    "successNotifText": "Uitnodiging verzonden"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Labels toevoegen"

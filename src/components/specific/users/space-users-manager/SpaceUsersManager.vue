@@ -13,9 +13,10 @@
 
     <transition name="fade" mode="out-in">
       <template v-if="showInvitationForm">
-        <InvitationForm
-          :currentTab="currentTab"
+        <SpaceInvitationForm
           :space="space"
+          :users="users"
+          :admin="currentTab === 'admins'"
           @close="closeInvitationForm"
           @success="onInvitationSuccess"
         />
@@ -60,7 +61,7 @@ import { useSpaces } from "../../../../state/spaces.js";
 import { wait } from "../../../../utils/async.js";
 // Components
 import InvitationCard from "../invitation-card/InvitationCard.vue";
-import InvitationForm from "../invitation-form/InvitationForm.vue";
+import SpaceInvitationForm from "../invitation-form/SpaceInvitationForm.vue";
 import UserCard from "../user-card/UserCard.vue";
 
 const tabsDef = [{ id: "admins" }, { id: "users" }];
@@ -68,7 +69,7 @@ const tabsDef = [{ id: "admins" }, { id: "users" }];
 export default {
   components: {
     InvitationCard,
-    InvitationForm,
+    SpaceInvitationForm,
     UserCard,
   },
   props: {
@@ -116,9 +117,7 @@ export default {
 
     const list = computed(() => {
       if (currentTab.value === "admins") {
-        return props.invitations
-          .filter((invitation) => invitation.role === 100)
-          .concat(admins.value);
+        return props.invitations.filter((invitation) => invitation.role === 100).concat(admins.value);
       } else {
         return props.invitations.filter((invitation) => invitation.role === 50).concat(users.value);
       }

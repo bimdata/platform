@@ -135,8 +135,7 @@
       "guest": "Gjest"
     },
     "submitButtonText": "Send invitasjon",
-    "successNotifText": "Invitasjon sendt",
-    "successUsertoAdmin": ""
+    "successNotifText": "Invitasjon sendt"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Legg til tags"

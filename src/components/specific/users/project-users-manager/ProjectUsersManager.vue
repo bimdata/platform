@@ -33,7 +33,7 @@
                   clear
                 />
 
-                <InvitationForm
+                <ProjectInvitationForm
                   v-if="showInvitationForm"
                   key="invitation-form"
                   :project="project"
@@ -78,14 +78,14 @@ import { useUser } from "../../../../state/user.js";
 import { wait } from "../../../../utils/async.js";
 // Components
 import InvitationCard from "../invitation-card/InvitationCard.vue";
-import InvitationForm from "../invitation-form/InvitationForm.vue";
+import ProjectInvitationForm from "../invitation-form/ProjectInvitationForm.vue";
 import UserCard from "../user-card/UserCard.vue";
 import UsersManagerOnboarding from "./users-manager-onboarding/UsersManagerOnboarding.vue";
 
 export default {
   components: {
     InvitationCard,
-    InvitationForm,
+    ProjectInvitationForm,
     UserCard,
     UsersManagerOnboarding
   },
