@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, onUnmounted, ref, watch } from "vue";
+import { inject, onMounted, onUnmounted, ref, toRaw } from "vue";
 import { useRouter } from "vue-router";
 import { useToggle } from "../../../../composables/toggle.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
@@ -118,6 +118,8 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(["loaded"]);
+
 const router = useRouter();
 const { isSpaceAdmin, isFavoriteProject } = useUser();
 const { isOpen: showMenu, open: openMenu, close: closeMenu } = useToggle();
@@ -144,47 +146,36 @@ onMounted(() => {
     ([{ isIntersecting }]) => {
       if (!isIntersecting) return;
 
-      setTimeout(() => {
+      setTimeout(async () => {
         // Do not load card if it is not in the viewport
         if (!isElementInViewport(placeholder.value, viewContainer.value.clientHeight)) return;
 
-        unwatchProject = watch(
-          () => props.project,
-          async () => {
-            loading.value = true;
-            const models = await ModelService.fetchModels(props.project, { cache: true });
-            displayedModels.value = models.reduce(
-              (acc, model) => {
-                if (
-                  !model.archived &&
-                  model.type !== MODEL_TYPE.META_BUILDING &&
-                  model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
-                ) {
-                  if (model.id === props.project.main_model_id) {
-                    acc.unshift(model);
-                  } else {
-                    acc.push(model);
-                  }
-                }
-                return acc;
-              },
-              []
-            );
-            loading.value = false;
-            visible.value = true;
+        loading.value = true;
+        const models = await ModelService.fetchModels(props.project);
+        displayedModels.value = models.reduce(
+          (acc, model) => {
+            if (
+              !model.archived &&
+              model.type !== MODEL_TYPE.META_BUILDING &&
+              model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
+            ) {
+              if (model.id === props.project.main_model_id) {
+                acc.unshift(model);
+              } else {
+                acc.push(model);
+              }
+            }
+            return acc;
           },
-          { immediate: true }
+          []
         );
-  
-        unwatchModels = watch(
-          displayedModels,
-          () => {
-            currentModel.value = displayedModels.value[0];
-          },
-          { immediate: true }
-        );
+        currentModel.value = displayedModels.value[0];
+        loading.value = false;
+        visible.value = true;
 
         observer.disconnect();
+
+        emit("loaded", { project: toRaw(props.project), models: displayedModels.value });
       }, LOADING_DELAY);
     },
     {
