@@ -139,7 +139,7 @@
     },
     "submitButtonText": "Invia invito",
     "successNotifText": "Invito spedito",
-    "successUsertoAdmin": "L'utente è stato promosso ad amministratore"
+    "successUserToAdmin": "L'utente è stato promosso ad amministratore"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Aggiungi tag"

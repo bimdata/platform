@@ -116,7 +116,7 @@ export default {
         newSpaceLoading.value = true;
 
         // TODO: Try to fix/improve
-        // Here we set both `organizationId` and `organization.id`
+        // Here we set both `organization_id` and `organization.id`
         // because they are both used elsewhere in the code.
         // Setting only one of the two would break in some cases.
         // More specifically:
@@ -144,10 +144,10 @@ export default {
       // References
       newSpace,
       newSpaceLoading,
-      openBillingAccountModal,
       orga,
       spaceNameInput,
       // Methods
+      openBillingAccountModal,
       submit,
       updateOrga
     };

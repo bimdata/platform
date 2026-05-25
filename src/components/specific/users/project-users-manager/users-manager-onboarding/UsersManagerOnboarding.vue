@@ -23,7 +23,7 @@
         v-show="showInvitationForm"
         class="users-manager-onboarding__overlay"
       >
-        <InvitationForm
+        <ProjectInvitationForm
           class="users-manager-onboarding__overlay__invitation-form"
           :project="project"
           @close="closeInvitationForm"
@@ -38,7 +38,7 @@
 import { useToggle } from "../../../../../composables/toggle.js";
 import { useUser } from "../../../../../state/user.js";
 // Components
-import InvitationForm from "../../invitation-form/InvitationForm.vue";
+import ProjectInvitationForm from "../../invitation-form/ProjectInvitationForm.vue";
 import UsersManagerOnboardingImage from "./UsersManagerOnboardingImage.vue";
 
 defineProps({
