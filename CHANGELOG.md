@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/bimdata/platform/compare/v1.4.2...v1.5.0) (2026-05-25)
+
+
+### chore
+
+* bump @bimdata/viewer@2.17.2 from Github Actions [skip e2e] ([60a063a](https://github.com/bimdata/platform/commit/60a063a74ffa580ebdfadfd701b0d1abdb20f095))
+* bump @bimdata/viewer@2.17.2-beta.1 from Github Actions [skip e2e] ([30283b8](https://github.com/bimdata/platform/commit/30283b8f99889e1a4438a663a348c3591d6b81be))
+* bump @bimdata/viewer@2.17.2-beta.2 from Github Actions [skip e2e] ([926b710](https://github.com/bimdata/platform/commit/926b71082c022b2da94408a2d9854fe2160a6d21))
+
+### MINOR
+
+* feat(invitation): send multiple invitation at once (#669) ([cdf0f54](https://github.com/bimdata/platform/commit/cdf0f545076a3f9abd4b1ab5eb2167d19d1f6af6)), closes [#669](https://github.com/bimdata/platform/issues/669)
+
 ## [1.4.2](https://github.com/bimdata/platform/compare/v1.4.1...v1.4.2) (2026-05-04)
 
 
