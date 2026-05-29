@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-filters">
+  <div class="activity-filters" v-click-away="close">
     <BIMDataButton
       color="primary"
       outline
