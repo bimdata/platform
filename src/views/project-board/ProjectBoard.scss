@@ -20,7 +20,6 @@
       align-items: center;
       gap: var(--spacing-unit);
     }
-
     &:deep() {
       .bimdata-tabs__container__tab.active {
         background-color: rgba(47, 55, 74, 0.1);

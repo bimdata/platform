@@ -1,19 +1,5 @@
 <template>
   <div class="project-notifications-settings p-b-12">
-    <div class="header flex items-center justify-between">
-      <BIMDataButton color="primary" ghost radius icon @click="$emit('close')">
-        <BIMDataIconArrow size="xxs" />
-        <span style="margin-left: 6px">{{ $t("t.back") }}</span>
-      </BIMDataButton>
-      <div class="flex items-center">
-        <BIMDataIconSettings fill color="default" margin="0 6px 0 0" size="xs" />
-        <span>{{ $t("ProjectOverview.notifications.title") }}</span>
-      </div>
-      <BIMDataButton ghost rounded icon @click="$emit('close')">
-        <BIMDataIconClose size="xxs" fill color="granite-light" />
-      </BIMDataButton>
-    </div>
-
     <div class="content p-x-6">
       <div class="content-text m-t-12">
         <p class="text-center">
@@ -149,7 +135,7 @@ watch(
       initializeStateFromNotification(newNotification);
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const handleDeleteNotification = async () => {

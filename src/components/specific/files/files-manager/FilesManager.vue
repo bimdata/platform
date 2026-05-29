@@ -301,7 +301,7 @@ export default {
           if (selectedFileTab.value.id === "folders") {
             // WARNING displayedRows is name from DS, may change
             const folderFiles = filesTable.value.filesTable.displayedRows.map((row) => row.data);
-            documentList = folderFiles.filter(f => !isFolder(f));
+            documentList = folderFiles.filter((f) => !isFolder(f));
           }
           if (selectedFileTab.value.id === "files") {
             documentList = filesTable.value.displayedListFiles;
@@ -663,11 +663,13 @@ export default {
 
     onActivated(() => {
       const folderId = gedTargetFolder.get();
+
       if (folderId) {
-        jumpToTargetFolder(folderId);
+        jumpToTargetFolder(folderId, true);
       } else {
         jumpToTargetFolder(props.fileStructure.id);
       }
+
       gedTargetFolder.clear();
     });
 

@@ -25,7 +25,7 @@ const setCurrentProject = (id) => {
   return readonly(state.currentProject);
 };
 
-const loadUserProjects = async options => {
+const loadUserProjects = async (options) => {
   const projects = await ProjectService.fetchUserProjects(options);
 
   state.userProjects = sortProjects(projects);
@@ -80,7 +80,7 @@ const updateProject = async (project) => {
     state.currentProject = newProject;
   }
 
-  let i = state.userProjects.findIndex(p => p.id === newProject.id);
+  let i = state.userProjects.findIndex((p) => p.id === newProject.id);
   state.userProjects.splice(i, 1, newProject);
   state.spaceProjects.splice(i, 1, newProject);
 
@@ -90,7 +90,7 @@ const updateProject = async (project) => {
 const deleteProject = async (project) => {
   await ProjectService.deleteProject(project);
 
-  let i = state.userProjects.findIndex(p => p.id === project.id);
+  let i = state.userProjects.findIndex((p) => p.id === project.id);
   state.userProjects.splice(i, 1);
   state.spaceProjects.splice(i, 1);
   state.projectsCount[project.cloud.id] -= 1;
@@ -101,7 +101,7 @@ const deleteProject = async (project) => {
 const leaveProject = async (project) => {
   await ProjectService.leaveProject(project);
 
-  let i = state.userProjects.findIndex(p => p.id === project.id);
+  let i = state.userProjects.findIndex((p) => p.id === project.id);
   state.userProjects.splice(i, 1);
   state.spaceProjects.splice(i, 1);
   state.projectsCount[project.cloud.id] -= 1;
@@ -140,17 +140,21 @@ const getUserProjectList = async (project, folder) => {
   users = sortUsers(users).filter((user) => !isSelf(user));
 
   return users.map((user) => ({
-      ...user,
-      fullName: fullName(user),
-      hasAccess: user.permission >= 50,
-      isFindable: true,
-      searchContent:
-        `${user.firstname || ""} ${user.lastname || ""} ${user.email || ""}`.toLowerCase(),
-    }));
+    ...user,
+    fullName: fullName(user),
+    hasAccess: user.permission >= 50,
+    isFindable: true,
+    searchContent:
+      `${user.firstname || ""} ${user.lastname || ""} ${user.email || ""}`.toLowerCase(),
+  }));
 };
 
-const getProjectFolderTree = async (project) => {
+const getProjectFolderTree = (project) => {
   return ProjectService.getProjectFolderTree(project);
+};
+
+const fetchLogs = (project) => {
+  return ProjectService.fetchLogs(project);
 };
 
 const fetchProjectNotification = async (spaceId, projectId) => {
@@ -203,6 +207,6 @@ export function useProjects() {
     getProjectFolderTree,
     fetchProjectNotification,
     updateProjectNotification,
-    deleteProjectNotification
+    deleteProjectNotification,
   };
 }

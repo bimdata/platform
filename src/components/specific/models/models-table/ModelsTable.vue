@@ -42,7 +42,7 @@
       <ModelTagsCell :model="model" :parent="modelsTable" />
     </template>
     <template #cell-location="{ row: model }">
-      <div class="visas-table__location">
+      <div class="models-table__location">
         <ModelPathCell
           :model="model"
           :allFolders="allFolders"
