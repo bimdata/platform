@@ -16,7 +16,7 @@ const PERMISSION_LIST = [
 
 const getFileName = (path) => path?.split("/").pop() || "";
 
-const ACTION_CONFIG = {
+export const ACTION_CONFIG = {
   document_created: {
     actionKey: "ProjectOverview.activity.document_created",
     getTarget: (log) => getFileName(log.description?.path),

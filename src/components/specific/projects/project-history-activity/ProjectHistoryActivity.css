@@ -7,13 +7,16 @@
       font-size: 18px;
     }
   }
-  .input-search {
-    border: 1px solid transparent;
-    border-radius: 3px;
-    &.focus {
-      background-color: var(--color-silver-light);
-      box-shadow: none;
-      border: 1px solid #efefef;
+  .actions {
+    gap: 6px;
+    .input-search {
+      border: 1px solid transparent;
+      border-radius: 3px;
+      &.focus {
+        background-color: var(--color-silver-light);
+        box-shadow: none;
+        border: 1px solid #efefef;
+      }
     }
   }
   .day-group {

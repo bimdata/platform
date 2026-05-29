@@ -2,6 +2,7 @@
   "t": {
     "add": "Ajouter",
     "amount": "Montant",
+    "apply": "Appliquer",
     "archive": "Archiver",
     "back": "Retour",
     "cancel": "Annuler",
@@ -25,6 +26,7 @@
     "export": "Exporter en BCF",
     "exportXlsx": "Exporter en Excel",
     "file": "Fichier",
+    "filters": "Filtres",
     "folder": "Dossier",
     "hours_ago": "il y a {count} heure | il y a {count} heures",
     "import": "Importer",
@@ -43,6 +45,7 @@
     "project": "Projet",
     "projects": "Projets",
     "rename": "Renommer",
+    "reset": "Réinitialiser",
     "rootFolder": "Dossier racine",
     "save": "Sauvegarder",
     "search": "Rechercher",
@@ -108,22 +111,25 @@
       "document_deleted": "Suppression du fichier :",
       "document_renamed": "Renommage du fichier :",
       "document_moved": "Déplacement du fichier :",
-
       "folder_created": "Création du dossier :",
       "folder_deleted": "Suppression du dossier :",
       "folder_permissions_updated": "Modification des permissions du dossier :",
       "folder_renamed": "Renommage du dossier :",
       "folder_moved": "Déplacement du dossier :",
-
       "cloud_invitation_sent": "Invitation envoyée à :",
       "cloud_invitation_canceled": "Invitation annulée pour :",
       "cloud_invitation_accepted": "Invitation acceptée par :",
       "cloud_invitation_denied": "Invitation refusée par :",
-
       "project_invitation_sent": "Invitation projet envoyée à :",
       "project_invitation_canceled": "Invitation projet annulée pour :",
       "project_invitation_accepted": "Invitation projet acceptée par :",
       "project_invitation_denied": "Invitation projet refusée par :",
+      "filters": {
+        "title": "Filtres",
+        "types": "Types",
+        "users": "Utilisateurs",
+        "period": "Période"
+      },
       "roles": {
         "admin": "Administrateur",
         "user": "Utilisateur",

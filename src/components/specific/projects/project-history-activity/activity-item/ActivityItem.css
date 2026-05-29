@@ -131,7 +131,7 @@
   }
   .red {
     background: rgba(188, 0, 10, 0.1);
-    color: var(--color-danger);
+    color: rgba(188, 0, 10, 1);
   }
   .teal {
     background: rgba(27, 155, 162, 0.1);

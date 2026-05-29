@@ -40,22 +40,25 @@
       "document_deleted": "File deleted:",
       "document_renamed": "File renamed:",
       "document_moved": "File moved:",
-
       "folder_created": "Folder created:",
       "folder_deleted": "Folder deleted:",
       "folder_permissions_updated": "Folder permissions updated:",
       "folder_renamed": "Folder renamed:",
       "folder_moved": "Folder moved:",
-
       "cloud_invitation_sent": "Invitation sent to:",
       "cloud_invitation_canceled": "Invitation canceled for:",
       "cloud_invitation_accepted": "Invitation accepted by:",
       "cloud_invitation_denied": "Invitation denied by:",
-
       "project_invitation_sent": "Project invitation sent to:",
       "project_invitation_canceled": "Project invitation canceled for:",
       "project_invitation_accepted": "Project invitation accepted by:",
       "project_invitation_denied": "Project invitation denied by:",
+      "filters": {
+        "title": "Filters",
+        "types": "Types",
+        "users": "Users",
+        "period": "Period"
+      },
       "roles": {
         "admin": "Administrator",
         "user": "User",
@@ -954,6 +957,7 @@
   "t": {
     "add": "Add",
     "amount": "Amount",
+    "apply": "Apply",
     "archive": "Archive",
     "back": "Back",
     "cancel": "Cancel",
@@ -972,6 +976,7 @@
     "error": "Error",
     "export": "Export",
     "file": "File",
+    "filters": "Filters",
     "folder": "Folder",
     "import": "Import",
     "invalidName": "Invalid name",
@@ -983,6 +988,7 @@
     "open": "Open",
     "or": "or",
     "rename": "Rename",
+    "reset": "Reset",
     "search": "Search",
     "size": "Size",
     "space": "Space",
