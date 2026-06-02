@@ -31,6 +31,8 @@
       "empty": "No recent activity",
       "title": "Activity history",
       "folderTitle": "Folder:",
+      "newPathTitle": "New path:",
+      "oldPathTitle": "Old path:",
       "roleTitle": "Role:",
       "newPermissionTitle": "New rights:",
       "oldPermissionTitle": "Old rights:",

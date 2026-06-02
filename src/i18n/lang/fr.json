@@ -102,6 +102,8 @@
       "empty": "Aucune activité récente",
       "title": "Historique d’activité",
       "folderTitle": "Dossier :",
+      "newPathTitle": "Nouveau chemin :",
+      "oldPathTitle": "Ancien chemin :",
       "roleTitle": "Rôle :",
       "newPermissionTitle": "Nouveaux droits :",
       "oldPermissionTitle": "Anciens droits :",

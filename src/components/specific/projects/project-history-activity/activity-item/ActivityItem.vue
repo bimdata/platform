@@ -74,6 +74,28 @@
             {{ $t("ProjectOverview.activity.newNameTitle") }}
             <strong>{{ log.activity.details.newName }}</strong>
           </div>
+
+          <div v-if="log.activity.details.newPath" class="">
+            <div class="detail detail-path flex items-center">
+              <span>{{ $t("ProjectOverview.activity.oldPathTitle") }}</span>
+              <BIMDataTextbox class="primary" :text="log.activity.details.oldPath" width="80%" />
+            </div>
+            <div class="detail detail-path flex items-center mt-2">
+              <BIMDataIconFolderLocation fill color="primary" />
+              <span>{{ $t("ProjectOverview.activity.newPathTitle") }}</span>
+              <BIMDataTextbox
+                class="primary"
+                :text="log.activity.details.newPath"
+                width="80%"
+                @click.stop="
+                  $emit('go-folder', {
+                    id: log.activity.details.folderId,
+                    path: log.activity.details.newPath,
+                  })
+                "
+              />
+            </div>
+          </div>
         </div>
       </transition>
 
