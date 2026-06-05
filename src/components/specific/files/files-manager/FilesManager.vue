@@ -145,7 +145,7 @@
             :folder="folderToManage"
             @close="closeSidePanel"
           />
-          <NamingTemplate
+          <FilesNamingPanel
             v-else-if="showNamingTemplateManager"
             :cloudPk="currentSpace.id"
             :projectPk="project.id"
@@ -153,16 +153,6 @@
             @close="closeNamingTemplateManager"
             @file-uploaded="$emit('upload-files', $event)"
           />
-          <!-- <NamingRulesList
-            v-else-if="showNamingTemplateManager"
-            :rules="rules"
-            :currentFolder="currentFolder"
-            :projectPk="projectPk"
-            @assignment-saved="onAssignmentSaved"
-            @create="panelMode = 'create'"
-            @edit="startEditRule"
-            @close="closeNamingTemplateManager"
-          /> -->
           <VisaMain
             v-else-if="showVisaManager"
             :project="project"
@@ -251,12 +241,11 @@ import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
 
-import NamingTemplate from "./files-naming-template/NamingTemplate.vue";
-import NamingRulesList from "./files-naming-template/NamingRulesList.vue";
+import FilesNamingPanel from "./files-naming-panel/FilesNamingPanel.vue";
 import VisasDeleteModal from "./visas-delete-modal/VisasDeleteModal.vue";
 import VisasTable from "../visas-table/VisasTable.vue";
 
-import { useNamingConventionStore } from "./files-naming-template/namingConventionStore.js";
+import { useNamingConventionStore } from "../../../../state/naming-convention.js";
 
 export default {
   components: {
@@ -275,8 +264,7 @@ export default {
     VisaMain,
     VisasTable,
     VisasDeleteModal,
-    NamingTemplate,
-    NamingRulesList,
+    FilesNamingPanel,
   },
   props: {
     spaceSubInfo: {

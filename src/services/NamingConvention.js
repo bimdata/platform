@@ -1,9 +1,3 @@
-/**
- * Naming Convention Service
- * Handles rule creation, validation, and enforcement logic
- * for BIMData GED file naming conventions.
- */
-
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 export const SEPARATOR_TYPES = {
@@ -19,7 +13,7 @@ export const SEGMENT_TYPES = {
 };
 
 export const RULE_MODES = {
-  SOFT: "soft",   // warn but allow
+  SOFT: "soft", // warn but allow
   STRICT: "strict", // block until renamed
 };
 
@@ -157,17 +151,17 @@ export function suggestRenames(fileName, rule) {
 
   // Strategy 2: insert index
   if (rule.segments.length > 1) {
-    const variant = [...suggestions[0]
-      ? suggestions[0].replace(ext ? `.${ext}` : "", "").split(sep)
-      : rule.segments.map((s) => getDefaultValue(s))];
+    const variant = [
+      ...(suggestions[0]
+        ? suggestions[0].replace(ext ? `.${ext}` : "", "").split(sep)
+        : rule.segments.map((s) => getDefaultValue(s))),
+    ];
     variant[0] = (variant[0] || "A") + "2";
     suggestions.push(variant.join(sep) + (ext ? `.${ext}` : ""));
   }
 
   // Deduplicate & filter valid
-  return [...new Set(suggestions)].filter(
-    (s) => s !== fileName && s.trim() !== ""
-  );
+  return [...new Set(suggestions)].filter((s) => s !== fileName && s.trim() !== "");
 }
 
 function conformPart(part, segment) {
@@ -230,9 +224,7 @@ export function getExtension(fileName) {
  */
 export function getActiveRuleForFolder(folder, rules) {
   // Direct assignment
-  const direct = rules.find(
-    (r) => r.folder_ids?.includes(folder.id) && r.active
-  );
+  const direct = rules.find((r) => r.folder_ids?.includes(folder.id) && r.active);
   if (direct) return direct;
 
   // Recursive rules from parent folders
@@ -240,7 +232,7 @@ export function getActiveRuleForFolder(folder, rules) {
     (r) =>
       r.recursive &&
       r.active &&
-      r.folder_ids?.some((fid) => isAncestor(fid, folder, /* tree */ []))
+      r.folder_ids?.some((fid) => isAncestor(fid, folder, /* tree */ [])),
   );
   return recursive || null;
 }

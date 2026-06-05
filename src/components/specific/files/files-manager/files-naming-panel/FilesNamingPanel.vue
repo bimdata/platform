@@ -1,12 +1,5 @@
-<!-- 
-  GedFileUpload.vue — Integration example
-  Shows how to wire naming convention check into the existing upload flow.
-  
-  This is NOT a full replacement of your existing upload component.
-  Copy the relevant sections into your actual GedView or FileUpload component.
--->
 <template>
-  <div class="ged-upload-example">
+  <div class="files-naming-panel">
     <!-- ① Soft-mode banner (non-blocking) -->
     <NamingViolationBanner
       v-if="showBanner"
@@ -15,13 +8,6 @@
       @apply-renames="onBannerApplyRenames"
       @rename="handleSoftRename"
     />
-
-    <!-- ② Your existing upload trigger (unchanged) -->
-    <!-- <BIMDataButton @click="triggerUpload">
-      <BIMDataIcon name="upload" />
-      Charger un fichier
-    </BIMDataButton>
-    <input ref="fileInput" type="file" multiple hidden @change="onFilesSelected" /> -->
 
     <!-- ③ Strict-mode blocking modal -->
     <NamingViolationModal
@@ -32,16 +18,16 @@
     />
 
     <!-- ④ Naming convention panel (side panel) -->
-    <div v-if="showNamingPanel" class="naming-side-panel" style="position: absolute; z-index: 10">
+    <div class="naming-side-panel">
       <!-- Toggle between list and create/edit -->
-      <NamingConventionPanel
+      <FilesNamingConvention
         v-if="panelMode === 'create' || panelMode === 'edit'"
         :editing-rule="editingRule"
         :cloud-pk="cloudPk"
         :project-pk="projectPk"
         @close="closeNamingPanel"
-        @saved="onRuleSaved"
         @go-back="panelMode = 'list'"
+        @saved="onRuleSaved"
       />
       <NamingRulesList
         v-else
@@ -54,23 +40,17 @@
         @assignment-saved="onAssignmentSaved"
       />
     </div>
-
-    <!-- ⑤ Trigger for naming panel (place this in your GED toolbar) -->
-    <BIMDataButton ghost @click="showNamingPanel = !showNamingPanel">
-      <BIMDataIcon name="convention" />
-      Gestion des conventions de nommage
-    </BIMDataButton>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { useNamingConventionStore } from "./namingConventionStore.js";
-import { useNamingConvention } from "./useNamingConvention.js";
-import NamingViolationBanner from "./NamingViolationBanner.vue";
-import NamingViolationModal from "./NamingViolationModal.vue";
-import NamingConventionPanel from "./NamingConventionPanel.vue";
-import NamingRulesList from "./NamingRulesList.vue";
+import { useNamingConventionStore } from "../../../../../state/naming-convention.js";
+import { useNamingConvention } from "../../../../../composables/naming-convention.js";
+import NamingViolationBanner from "./naming-violation-banner/NamingViolationBanner.vue";
+import NamingViolationModal from "./naming-violation-modal/NamingViolationModal.vue";
+import FilesNamingConvention from "./files-naming-convention/FilesNamingConvention.vue";
+import NamingRulesList from "./naming-rules-list/NamingRulesList.vue";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -79,6 +59,8 @@ const props = defineProps({
   projectPk: { type: [String, Number], required: true },
   currentFolder: { type: Object, default: null },
 });
+
+const emit = defineEmits(["close"]);
 
 // ─── Store ────────────────────────────────────────────────────────────────────
 
@@ -144,16 +126,20 @@ function handleSoftRename({ item, newName }) {
 }
 
 // ─── Naming panel ─────────────────────────────────────────────────────────────
-
-const showNamingPanel = ref(false);
 const panelMode = ref("list"); // 'list' | 'create' | 'edit'
 const editingRule = ref(null);
+const closing = ref(false);
 
 function closeNamingPanel() {
-  showNamingPanel.value = false;
   panelMode.value = "list";
   editingRule.value = null;
+  close();
 }
+
+const close = () => {
+  closing.value = false;
+  emit("close");
+};
 
 function startEditRule(rule) {
   editingRule.value = rule;
@@ -170,3 +156,9 @@ function onAssignmentSaved(rule) {
   console.log("Assignment saved:", rule);
 }
 </script>
+
+<style lang="scss" scoped>
+.naming-side-panel {
+  height: 97vh;
+}
+</style>

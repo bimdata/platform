@@ -1,25 +1,6 @@
-/**
- * useNamingConvention composable
- *
- * Plug this into any GED upload flow to intercept files, check naming rules,
- * and surface the right UI (banner or blocking modal) depending on rule mode.
- *
- * Usage example (in a GED upload component):
- *
- *   const { checkBeforeUpload, violations, strictViolations, clearViolations } =
- *     useNamingConvention(currentFolder);
- *
- *   // In your upload handler:
- *   async function handleFiles(files) {
- *     const result = await checkBeforeUpload(files);
- *     if (result.blocked) return; // user must resolve strict violations first
- *     // proceed with upload
- *   }
- */
-
 import { ref, computed } from "vue";
-import { useNamingConventionStore } from "./namingConventionStore.js";
-import { RULE_MODES } from "./namingConventionService.js";
+import { useNamingConventionStore } from "../state/naming-convention.js";
+import { RULE_MODES } from "../services/NamingConvention.js";
 
 export function useNamingConvention(currentFolder) {
   const store = useNamingConventionStore();

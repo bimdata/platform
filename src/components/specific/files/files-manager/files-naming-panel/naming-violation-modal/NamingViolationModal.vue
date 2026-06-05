@@ -2,7 +2,7 @@
   <BIMDataModal class="violation-modal" :title="null" :width="600" :closable="false">
     <template #header>
       <div class="violation-modal__header">
-        <BIMDataIcon name="convention" class="violation-modal__icon" />
+        <BIMDataIcon name="NamingConvention" class="violation-modal__icon" />
         <span>Convention de nommage</span>
       </div>
     </template>
@@ -130,7 +130,11 @@
 
 <script setup>
 import { ref, computed, reactive, nextTick } from "vue";
-import { validateFileName, suggestRenames, getExtension } from "./namingConventionService.js";
+import {
+  validateFileName,
+  suggestRenames,
+  getExtension,
+} from "../../../../../../services/NamingConvention.js";
 
 // ─── Props / Emits ────────────────────────────────────────────────────────────
 
@@ -249,210 +253,4 @@ function getFileIcon(fileName) {
 }
 </script>
 
-<style lang="scss" scoped>
-.violation-modal {
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    font-size: var(--font-size-m);
-  }
-
-  &__body {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 8px 0;
-  }
-
-  &__illustration {
-    display: flex;
-    justify-content: center;
-    padding: 16px 0 8px;
-  }
-
-  &__file-icon {
-    position: relative;
-    color: var(--color-granite-light);
-
-    .violation-modal__warning-badge {
-      position: absolute;
-      bottom: -4px;
-      right: -4px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--color-warning);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  &__message {
-    text-align: center;
-    font-size: var(--font-size-s);
-    color: var(--color-granite-dark);
-    line-height: 1.6;
-  }
-
-  &__warning {
-    color: var(--color-granite);
-    font-size: 13px;
-  }
-
-  &__rule-group {
-    border: 1px solid var(--color-silver-light);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  &__rule-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: var(--color-silver-lighter);
-    border-bottom: 1px solid var(--color-silver-light);
-  }
-
-  &__rule-name {
-    font-weight: 600;
-    font-size: var(--font-size-s);
-    color: var(--color-granite-dark);
-  }
-
-  &__rule-pattern {
-    font-family: monospace;
-    font-size: 12px;
-    color: var(--color-primary);
-    background: var(--color-primary-lighter);
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-
-  &__files {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-}
-
-.file-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--color-silver-lighter);
-  transition: background 0.1s;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &--valid {
-    background: var(--color-success-lighter);
-  }
-
-  &--invalid {
-    background: var(--color-red-lighter);
-  }
-
-  &--editing {
-    background: var(--color-silver-lighter);
-  }
-
-  &__icon {
-    flex-shrink: 0;
-    color: var(--color-granite);
-  }
-
-  &__name {
-    flex: 1;
-    font-size: var(--font-size-s);
-    color: var(--color-granite-dark);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__status {
-    flex-shrink: 0;
-
-    &--ok {
-      color: var(--color-success);
-    }
-    &--warn {
-      color: var(--color-warning);
-    }
-  }
-
-  &__edit-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-granite-light);
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    opacity: 0;
-    transition: opacity 0.1s;
-    border-radius: 4px;
-
-    .file-row:hover & {
-      opacity: 1;
-    }
-    &:hover {
-      color: var(--color-primary);
-      background: var(--color-primary-lighter);
-    }
-  }
-
-  &__edit-area {
-    flex: 1;
-  }
-
-  &__confirm {
-    padding: 5px 12px;
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    flex-shrink: 0;
-    font-weight: 500;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    &:not(:disabled):hover {
-      background: var(--color-primary-dark);
-    }
-  }
-
-  &__cancel-edit {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-granite);
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-
-    &:hover {
-      color: var(--color-red);
-    }
-  }
-}
-</style>
+<style lang="scss" scoped src="./NamingViolationModal.scss"></style>

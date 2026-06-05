@@ -1,33 +1,51 @@
 <template>
   <div class="naming-panel">
     <!-- Header -->
-    <div class="naming-panel__header">
-      <BIMDataButton @click="$emit('go-back')">
-        <BIMDataIcon name="arrow" size="xs" />
+    <div class="naming-panel__header flex items-center justify-between">
+      <div class="flex items-center">
+        <BIMDataButton
+          color="default"
+          ghost
+          rounded
+          icon
+          class="go-back"
+          @click="$emit('go-back')"
+          width="30px"
+          height="30px"
+        >
+          <BIMDataIcon name="arrow" size="xxs" />
+        </BIMDataButton>
+        <strong>{{ editingRule ? "Modifier la règle" : "Convention de nommage" }}</strong>
+      </div>
+      <BIMDataButton
+        color="default"
+        ghost
+        rounded
+        icon
+        class="naming-panel__close"
+        @click="$emit('close')"
+      >
+        <BIMDataIcon name="close" size="xxs" />
       </BIMDataButton>
-      <span>{{ editingRule ? "Modifier la règle" : "Convention de nommage" }}</span>
-      <button class="naming-panel__close" @click="$emit('close')">
-        <BIMDataIcon name="close" size="xs" />
-      </button>
     </div>
 
     <div class="naming-panel__body">
       <!-- ① Nom de la règle -->
       <section class="naming-panel__section">
         <div class="naming-panel__step">
-          <span class="naming-panel__step-num">1</span>
-          <span class="naming-panel__step-label">Nom de la règle</span>
+          <strong class="naming-panel__step-num">1</strong>
+          <strong class="naming-panel__step-label">Nom de la règle*</strong>
         </div>
-        <BIMDataInput v-model="form.name" placeholder="Nom" :error="errors.name" />
+        <BIMDataInput v-model="form.name" placeholder="Nom*" :error="errors.name" />
       </section>
 
       <!-- ② Type de séparateur -->
       <section class="naming-panel__section">
         <div class="naming-panel__step">
-          <span class="naming-panel__step-num">2</span>
-          <span class="naming-panel__step-label">Type de séparateur</span>
+          <strong class="naming-panel__step-num">2</strong>
+          <strong class="naming-panel__step-label">Type de séparateur</strong>
         </div>
-        <div class="naming-panel__separators">
+        <div class="naming-panel__separators flex">
           <label
             v-for="sep in SEPARATOR_TYPES"
             :key="sep.value"
@@ -43,8 +61,8 @@
       <!-- ③ Structure de la règle -->
       <section class="naming-panel__section">
         <div class="naming-panel__step">
-          <span class="naming-panel__step-num">3</span>
-          <span class="naming-panel__step-label">Structure de la règle</span>
+          <strong class="naming-panel__step-num">3</strong>
+          <strong class="naming-panel__step-label">Structure de la règle</strong>
         </div>
 
         <!-- Live preview -->
@@ -54,7 +72,7 @@
         </div>
 
         <!-- Segment list -->
-        <div class="naming-panel__segments">
+        <div class="naming-panel__segments" v-if="form.segments.length">
           <NamingSegmentRow
             v-for="(seg, idx) in form.segments"
             :key="seg._id"
@@ -97,22 +115,31 @@
         </div>
 
         <!-- Recursive option -->
-        <label class="naming-panel__checkbox-label naming-panel__checkbox-label--sub">
-          <BIMDataCheckbox v-model="form.recursive" />
-          <span>Règle récursive</span>
-        </label>
-        <p class="naming-panel__mode-hint naming-panel__mode-hint--sub">
-          Si vous cochez cette case, cette règle s'appliquera également aux fichiers contenus dans
-          les sous-dossiers de votre dossier principal.
-        </p>
+        <div class="naming-panel__mode-toggle">
+          <label class="naming-panel__checkbox-label naming-panel__checkbox-label--sub">
+            <BIMDataCheckbox v-model="form.recursive" />
+            <span>Règle récursive</span>
+          </label>
+          <p class="naming-panel__mode-hint naming-panel__mode-hint--sub">
+            Si vous cochez cette case, cette règle s'appliquera également aux fichiers contenus dans
+            les sous-dossiers de votre dossier principal.
+          </p>
+        </div>
       </section>
     </div>
 
     <!-- Footer -->
     <div class="naming-panel__footer">
       <BIMDataButton ghost color="secondary" @click="$emit('close')"> Annuler </BIMDataButton>
-      <BIMDataButton fill color="primary" :loading="saving" :disabled="!isFormValid" @click="save">
-        <BIMDataIcon name="save" size="xs" />
+      <BIMDataButton
+        fill
+        color="primary"
+        radius
+        :loading="saving"
+        :disabled="!isFormValid"
+        @click="save"
+      >
+        <BIMDataIcon name="save" size="xxs" margin="0 6px 0 0" />
         Enregistrer la règle
       </BIMDataButton>
     </div>
@@ -121,14 +148,14 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useNamingConventionStore } from "./namingConventionStore.js";
+import { useNamingConventionStore } from "../../../../../../state/naming-convention.js";
 import {
   SEPARATOR_TYPES,
   SEGMENT_TYPES,
   RULE_MODES,
   buildHumanReadablePattern,
-} from "./namingConventionService.js";
-import NamingSegmentRow from "./NamingSegmentRow.vue";
+} from "../../../../../../services/NamingConvention.js";
+import NamingSegmentRow from "../naming-segment-row/NamingSegmentRow.vue";
 
 // ─── Props / Emits ────────────────────────────────────────────────────────────
 
@@ -263,187 +290,4 @@ function uid() {
 }
 </script>
 
-<style lang="scss" scoped>
-.naming-panel {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: var(--color-white);
-  font-size: var(--font-size-s);
-
-  &__header {
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-unit);
-    font-weight: 600;
-    font-size: var(--font-size-m);
-
-    .naming-panel__close {
-      margin-left: auto;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--color-granite);
-      display: flex;
-      align-items: center;
-
-      &:hover {
-        color: var(--color-primary);
-      }
-    }
-  }
-
-  &__body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  &__section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  &__step {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  &__step-label {
-    font-weight: 600;
-    color: var(--color-granite-dark);
-  }
-
-  &__separators {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  &__sep-option {
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: 1px solid var(--color-silver);
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.15s ease;
-    font-family: monospace;
-    font-size: var(--font-size-s);
-    color: var(--color-granite);
-
-    &.active {
-      border-color: var(--color-primary);
-      background: var(--color-primary-lighter);
-      color: var(--color-primary);
-      font-weight: 600;
-    }
-
-    &:hover:not(.active) {
-      border-color: var(--color-granite-light);
-    }
-  }
-
-  &__preview {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: var(--color-silver-lighter);
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--color-granite);
-
-    code {
-      font-family: monospace;
-      font-weight: 600;
-      color: var(--color-primary);
-      font-size: 13px;
-    }
-  }
-
-  &__segments {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  &__add-btns {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  &__mode-toggle {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  &__checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-weight: 500;
-
-    &--sub {
-      margin-top: 8px;
-    }
-  }
-
-  &__mode-hint {
-    font-size: 12px;
-    color: var(--color-granite);
-    line-height: 1.5;
-    padding-left: 28px;
-
-    &--sub {
-      margin-top: -4px;
-    }
-  }
-
-  &__footer {
-    padding: 12px 16px;
-    border-top: 1px solid var(--color-silver-light);
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-}
-
-.btn-add-seg {
-  padding: 5px 10px;
-  border-radius: 4px;
-  border: 1px dashed var(--color-silver);
-  background: transparent;
-  color: var(--color-primary);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.15s;
-
-  &:hover {
-    border-color: var(--color-primary);
-    background: var(--color-primary-lighter);
-  }
-}
-</style>
+<style lang="scss" scoped src="./FilesNamingConvention.scss"></style>

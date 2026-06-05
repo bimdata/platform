@@ -7,8 +7,13 @@
  */
 
 // import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-import { validateFiles, buildHumanReadablePattern, RULE_MODES } from "./namingConventionService.js";
+import { ref, computed, toRaw } from "vue";
+import {
+  validateFiles,
+  buildHumanReadablePattern,
+  RULE_MODES,
+} from "../services/NamingConvention.js";
+import { useUser } from "./user.js";
 
 // ─── Store ────────────────────────────────────────────────────────────────────
 
@@ -68,6 +73,7 @@ async function fetchRules(cloudPk, projectPk, apiClient) {
     const key = `naming_rules_${projectPk}`;
     const stored = localStorage.getItem(key);
     rules.value = stored ? JSON.parse(stored) : [];
+    console.log("fetchRules →", rules.value);
   } catch (e) {
     error.value = e.message;
   } finally {
@@ -80,11 +86,20 @@ async function fetchRules(cloudPk, projectPk, apiClient) {
  * Route: POST /cloud/:cloudPk/project/:projectPk/naming-rules
  */
 async function saveRule(cloudPk, projectPk, ruleData, apiClient) {
+  const { user } = useUser();
   loading.value = true;
   try {
+    const id = ruleData.id || crypto.randomUUID();
     const rule = {
-      id: ruleData.id || crypto.randomUUID(),
-      ...ruleData,
+      ...toRaw(ruleData),
+      id,
+      folder_ids: toRaw(ruleData.folder_ids) || [],
+      segments: toRaw(ruleData.segments) || [],
+      creator_id: ruleData.creator_id || user.value?.id,
+      creator_name:
+        ruleData.creator_name || `${user.value?.firstname} ${user.value?.lastname}`.trim(),
+      creator_email: ruleData.creator_email || user.value?.email,
+      creator_picture: ruleData.creator_picture || user.value?.profile_picture,
       created_at: ruleData.created_at || new Date().toISOString(),
       updated_at: new Date().toISOString(),
       pattern: buildHumanReadablePattern(ruleData),
