@@ -1,40 +1,44 @@
 <template>
   <div class="history-activity-panel">
-    <div class="header">
-      <h3>{{ $t("ProjectOverview.activity.title") }}</h3>
-    </div>
+    <div class="m-b-12">
+      <div class="header">
+        <h3>{{ $t("ProjectOverview.activity.title") }}</h3>
+      </div>
 
-    <div class="actions flex">
-      <BIMDataSearch
-        class="input-search"
-        width="95%"
-        :placeholder="$t('t.search')"
-        v-model="searchText"
-        clear
-        color="primary"
-      />
-      <ActivityFilters
-        v-model="filters"
-        :availableUsers="availableUsers"
-        :availableActions="availableActions"
-      />
-    </div>
-
-    <template v-if="hasDisplayedLogs">
-      <div v-for="(logs, day) in displayedGroupedLogs" :key="day" class="day-group">
-        <div class="day-title">{{ day }}</div>
-        <ActivityItem
-          v-for="log in logs"
-          :key="log.id"
-          :log="log"
-          :formatTimeAgo="formatTimeAgo"
-          @go-folder="$emit('go-folder', $event)"
+      <div class="actions flex">
+        <BIMDataSearch
+          class="input-search"
+          width="95%"
+          :placeholder="$t('t.search')"
+          v-model="searchText"
+          clear
+          color="primary"
+        />
+        <ActivityFilters
+          v-model="filters"
+          :availableUsers="availableUsers"
+          :availableActions="availableActions"
         />
       </div>
-    </template>
-    <template v-else>
-      <p>{{ $t("ProjectOverview.activity.empty") }}</p>
-    </template>
+    </div>
+
+    <div class="content">
+      <template v-if="hasDisplayedLogs">
+        <div v-for="(logs, day) in displayedGroupedLogs" :key="day" class="day-group">
+          <div class="day-title">{{ day }}</div>
+          <ActivityItem
+            v-for="log in logs"
+            :key="log.id"
+            :log="log"
+            :formatTimeAgo="formatTimeAgo"
+            @go-folder="$emit('go-folder', $event)"
+          />
+        </div>
+      </template>
+      <template v-else>
+        <p>{{ $t("ProjectOverview.activity.empty") }}</p>
+      </template>
+    </div>
   </div>
 </template>
 
