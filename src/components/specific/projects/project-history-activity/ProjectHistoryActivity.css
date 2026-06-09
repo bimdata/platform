@@ -1,23 +1,31 @@
 .history-activity-panel {
-  height: calc(100vh - 44px - 40px - 12px - 12px);
-  overflow: auto;
+  height: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
   .header {
     h3 {
       margin-bottom: 12px;
       font-size: 18px;
     }
   }
-  .input-search {
-    border: 1px solid transparent;
-    border-radius: 3px;
-    &.focus {
-      background-color: var(--color-silver-light);
-      box-shadow: none;
-      border: 1px solid #efefef;
+  .actions {
+    gap: 6px;
+    .input-search {
+      border: 1px solid transparent;
+      border-radius: 3px;
+      &.focus {
+        background-color: var(--color-silver-light);
+        box-shadow: none;
+        border: 1px solid #efefef;
+      }
     }
   }
+  .content {
+    flex: 1;
+    overflow: auto;
+  }
   .day-group {
-    margin-top: 20px;
+    margin-top: var(--spacing-unit);
     .day-title {
       font-size: 13px;
       color: var(--color-granite);

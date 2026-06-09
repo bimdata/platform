@@ -16,7 +16,7 @@ const PERMISSION_LIST = [
 
 const getFileName = (path) => path?.split("/").pop() || "";
 
-const ACTION_CONFIG = {
+export const ACTION_CONFIG = {
   document_created: {
     actionKey: "ProjectOverview.activity.document_created",
     getTarget: (log) => getFileName(log.description?.path),
@@ -170,6 +170,14 @@ export const getActivityFromLog = (log) => {
 
   const roleKey = roleList[log.description?.project_role];
 
+  const getParentPath = (path) => path?.split("/").slice(0, -1).join("/") || "";
+
+  const oldPath = log.description?.old_path;
+  const newPath = log.description?.new_path;
+
+  const isMoved = oldPath && newPath && getParentPath(oldPath) !== getParentPath(newPath);
+  const isRenamed = oldPath && newPath && getFileName(oldPath) !== getFileName(newPath);
+
   const newPermissionEntry = PERMISSION_LIST.find(
     (entry) => entry.value === log.description?.new_permission,
   );
@@ -195,10 +203,10 @@ export const getActivityFromLog = (log) => {
       roleKey,
       newPermissionKey,
       oldPermissionKey,
-      oldName: getFileName(log.description?.old_path),
-      newName: getFileName(log.description?.new_path),
-      oldPath: log.description?.old_path,
-      newPath: log.description?.new_path,
+      oldName: !isMoved && isRenamed ? getFileName(oldPath) : null,
+      newName: !isMoved && isRenamed ? getFileName(newPath) : null,
+      oldPath: isMoved ? oldPath : null,
+      newPath: isMoved ? newPath : null,
     },
   };
 };
