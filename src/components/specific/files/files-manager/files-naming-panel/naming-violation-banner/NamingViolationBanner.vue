@@ -57,8 +57,8 @@
           <BIMDataInput
             v-model="renameValue"
             placeholder="Nouveau nom"
-            size="s"
-            :error="renameError"
+            :error="isError"
+            :errorMessage="renameError"
             autofocus
             @keyup.enter="confirmRename"
             @keyup.escape="cancelRename"
@@ -103,6 +103,7 @@ const emit = defineEmits(["dismiss", "apply-renames", "rename"]);
 const isExpanded = ref(false);
 const renamingItem = ref(null);
 const renameValue = ref("");
+const isError = ref(false);
 const renameError = ref("");
 
 const items = reactive(props.violations.map((v) => ({ ...v, renamed: false, newName: null })));
@@ -136,6 +137,7 @@ function confirmRename() {
 
   const { valid, reason } = validateFileName(name, renamingItem.value.rule);
   if (!valid) {
+    isError.value = true;
     renameError.value = reason;
     return;
   }

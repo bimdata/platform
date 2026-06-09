@@ -142,6 +142,25 @@ export function useNamingConvention(currentFolder) {
     strictViolations.value = [];
   }
 
+  /**
+   * Déclenche l'affichage des violations depuis une source externe
+   * (ex: vérification post-assignment-saved).
+   */
+  function triggerViolations(newViolations) {
+    if (!newViolations.length) return;
+
+    violations.value = newViolations;
+
+    const hasStrict = newViolations.some((v) => v.rule?.mode === RULE_MODES.STRICT);
+
+    if (hasStrict) {
+      strictViolations.value = newViolations.filter((v) => v.rule?.mode === RULE_MODES.STRICT);
+      showModal.value = true;
+    } else {
+      showBanner.value = true;
+    }
+  }
+
   return {
     // State
     violations,
@@ -160,5 +179,6 @@ export function useNamingConvention(currentFolder) {
     onBannerApplyRenames,
     // Utils
     clearViolations,
+    triggerViolations,
   };
 }

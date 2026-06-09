@@ -107,9 +107,21 @@
 
       <!-- Folder assignment (shown when a rule is selected) -->
       <transition name="slide-up">
-        <div v-if="selectedRule" class="rules-list__assign m-t-12">
-          <label class="rules-list__checkbox-label">
-            <BIMDataCheckbox v-model="selectedRule.recursive" @change="saveRecursive" />
+        <div v-if="localRule" class="rules-list__assign m-t-12">
+          <!-- Folder selector -->
+          <label class="rules-list__assign-label">Appliquer aux dossiers</label>
+          <BIMDataSelect
+            v-model="assignedFolderIds"
+            :options="folderOptions"
+            optionKey="id"
+            optionLabelKey="name"
+            :multi="true"
+            label="Sélectionner des dossiers…"
+            class="m-t-6"
+          />
+
+          <label class="rules-list__checkbox-label m-t-12">
+            <BIMDataCheckbox v-model="localRule.recursive" @change="saveRecursive" />
             <span class="rules-list__recursive-label">Règle récursive</span>
           </label>
           <p class="rules-list__recursive-hint">
@@ -133,8 +145,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useNamingConventionStore } from "../../../../../../state/naming-convention.js";
+import { useFiles } from "../../../../../../state/files.js";
+import { collectDescendants } from "../../../../../../utils/file-tree.js";
+import { isFolder } from "../../../../../../utils/file-structure.js";
 
 import UserAvatar from "../../../../users/user-avatar/UserAvatar.vue";
 
@@ -152,6 +167,28 @@ const store = useNamingConventionStore();
 
 const search = ref("");
 const selectedRuleId = ref(null);
+const localRule = ref(null);
+const { projectFileStructure } = useFiles();
+
+// ─── Watchers ─────────────────────────────────────────────────────────────────
+watch(selectedRuleId, (id) => {
+  const rule = props.rules.find((r) => r.id === id);
+  if (!rule) {
+    localRule.value = null;
+    return;
+  }
+
+  const raw = rule.folder_ids ?? [];
+
+  // Gère : undefined, objet seul, tableau d'objets, tableau d'ids
+  const normalized = Array.isArray(raw)
+    ? raw.map((f) => (typeof f === "object" ? f.id : f))
+    : typeof raw === "object"
+      ? [raw.id]
+      : [];
+
+  localRule.value = { ...rule, folder_ids: normalized };
+});
 
 // ─── Computed ─────────────────────────────────────────────────────────────────
 
@@ -170,6 +207,26 @@ const isAssignedToCurrentFolder = computed(() => {
   return selectedRule.value.folder_ids?.includes(props.currentFolder.id);
 });
 
+const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
+const allFolders = computed(() => getFoldersInFolder(projectFileStructure.value));
+const folderOptions = computed(() => allFolders.value.map((f) => ({ id: f.id, name: f.name })));
+
+const assignedFolderIds = computed({
+  get() {
+    if (!localRule.value?.folder_ids?.length) return [];
+    // Retrouve les objets complets depuis folderOptions
+    return localRule.value.folder_ids
+      .map((id) => folderOptions.value.find((f) => f.id === id))
+      .filter(Boolean); // élimine les dossiers supprimés éventuels
+  },
+  set(selectedFolders) {
+    if (localRule.value) {
+      // Stocke uniquement les IDs en interne
+      localRule.value.folder_ids = selectedFolders.map((f) => f.id);
+    }
+  },
+});
+
 // ─── Actions ──────────────────────────────────────────────────────────────────
 
 function toggleAssignment(val) {
@@ -182,14 +239,14 @@ function toggleAssignment(val) {
 }
 
 async function saveAssignment() {
-  if (!selectedRule.value) return;
-  await store.saveRule(null, props.projectPk, selectedRule.value);
-  emit("assignment-saved", selectedRule.value);
+  if (!localRule.value) return;
+  await store.saveRule(null, props.projectPk, localRule.value);
+  emit("assignment-saved", localRule.value);
 }
 
 async function saveRecursive() {
-  if (!selectedRule.value) return;
-  await store.saveRule(null, props.projectPk, selectedRule.value);
+  if (!localRule.value) return;
+  await store.saveRule(null, props.projectPk, localRule.value);
 }
 </script>
 

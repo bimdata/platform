@@ -45,8 +45,17 @@
 
 <script setup>
 import { ref } from "vue";
+
+import { useFiles } from "../../../../../state/files.js";
 import { useNamingConventionStore } from "../../../../../state/naming-convention.js";
+
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+
+import { validateFileName } from "../../../../../services/NamingConvention.js";
+
 import { useNamingConvention } from "../../../../../composables/naming-convention.js";
+
 import NamingViolationBanner from "./naming-violation-banner/NamingViolationBanner.vue";
 import NamingViolationModal from "./naming-violation-modal/NamingViolationModal.vue";
 import FilesNamingConvention from "./files-naming-convention/FilesNamingConvention.vue";
@@ -65,7 +74,9 @@ const emit = defineEmits(["close"]);
 // ─── Store ────────────────────────────────────────────────────────────────────
 
 const store = useNamingConventionStore();
+const { projectFileStructure } = useFiles();
 const { rules } = store;
+const isFile = (node) => !isFolder(node);
 
 // Load rules on mount
 store.fetchRules(props.cloudPk, props.projectPk);
@@ -82,6 +93,7 @@ const {
   onModalCancel,
   onBannerDismiss,
   onBannerApplyRenames,
+  triggerViolations,
 } = useNamingConvention(() => props.currentFolder);
 
 // ─── Upload flow ──────────────────────────────────────────────────────────────
@@ -153,7 +165,38 @@ function onRuleSaved(rule) {
 }
 
 function onAssignmentSaved(rule) {
-  console.log("Assignment saved:", rule);
+  if (!rule.folder_ids?.length) return;
+
+  const allFolders = collectDescendants(projectFileStructure.value, isFolder);
+  const targetFolders = allFolders.filter((f) => rule.folder_ids.includes(f.id));
+
+  const seen = new Set();
+  const files = [];
+
+  for (const folder of targetFolders) {
+    const candidates = rule.recursive
+      ? collectDescendants(folder, isFile)
+      : (folder.children ?? []).filter(isFile);
+
+    for (const file of candidates) {
+      if (!seen.has(file.id)) {
+        seen.add(file.id);
+        files.push(file);
+      }
+    }
+  }
+
+  if (!files.length) return;
+
+  const newViolations = files
+    .map((file) => {
+      const name = file.name ?? file.file_name;
+      const { valid, reason } = validateFileName(name, rule);
+      return valid ? null : { file, rule, reason };
+    })
+    .filter(Boolean);
+
+  triggerViolations(newViolations); // ← le composable gère strict vs soft
 }
 </script>
 
