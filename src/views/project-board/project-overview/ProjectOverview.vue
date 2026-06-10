@@ -50,6 +50,7 @@
       <Transition name="fade" mode="out-in">
         <div style="height: 100%">
           <BIMDataTabs
+            v-if="sidePanelView === 'settings'"
             width="100%"
             height="40px"
             :tabs="tabs"
@@ -62,33 +63,28 @@
               <span>{{ tab.label }}</span>
             </template>
           </BIMDataTabs>
-          <transition name="fade" mode="out-in">
-            <div style="height: 100%" v-if="isProjectAdmin(project)">
-              <!-- HISTORY -->
-              <ProjectHistoryActivity
-                v-if="currentTab === 'history'"
-                :project="project"
-                @go-folder="goToGEDView"
-              />
 
-              <!-- SETTINGS -->
-              <ProjectNotificationsSettings
-                v-else-if="currentTab === 'settings'"
-                :notification="notification"
-                :selectedRecipientsIds="selectedGroupIds"
-                v-model:notification-mode-activity="notificationModeActivity"
-                v-model:checked-days-activity="checkedDaysActivity"
-                v-model:checked-activity="checkedActivity"
-                @open-recipients-settings="switchToRecipients"
-                @open-timezone-choice="switchToTimezoneChoice"
-                @close="closeSidePanel"
-              />
-            </div>
-          </transition>
+          <template v-if="sidePanelView === 'settings' && isProjectAdmin(project)">
+            <ProjectHistoryActivity
+              v-if="currentTab === 'history'"
+              :project="project"
+              @go-folder="goToGEDView"
+            />
+            <ProjectNotificationsSettings
+              v-else-if="currentTab === 'settings'"
+              :notification="notification"
+              :selectedRecipientsIds="selectedGroupIds"
+              v-model:notification-mode-activity="notificationModeActivity"
+              v-model:checked-days-activity="checkedDaysActivity"
+              v-model:checked-activity="checkedActivity"
+              @open-recipients-settings="switchToRecipients"
+              @open-timezone-choice="switchToTimezoneChoice"
+              @close="closeSidePanel"
+            />
+          </template>
 
-          <!-- Recipients Panel -->
           <ProjectNotificationsRecipients
-            v-show="sidePanelView === 'recipients'"
+            v-if="sidePanelView === 'recipients'"
             :selectedRecipientsIds="selectedGroupIds"
             @back-to-settings="switchToSettings"
             @close="closeNotificationPanel"
@@ -99,9 +95,8 @@
             "
           />
 
-          <!-- Timezone Panel -->
           <ProjectNotificationTimezoneChoice
-            v-show="sidePanelView === 'timezone'"
+            v-if="sidePanelView === 'timezone'"
             @close="closeNotificationPanel"
             @back-to-settings="switchToSettings"
           />
