@@ -65,11 +65,13 @@
           </BIMDataTabs>
 
           <template v-if="sidePanelView === 'settings' && isProjectAdmin(project)">
+            <!-- HISTORY -->
             <ProjectHistoryActivity
               v-if="currentTab === 'history'"
               :project="project"
               @go-folder="goToGEDView"
             />
+            <!-- SETTINGS -->
             <ProjectNotificationsSettings
               v-else-if="currentTab === 'settings'"
               :notification="notification"
@@ -83,6 +85,7 @@
             />
           </template>
 
+          <!-- Recipients Panel -->
           <ProjectNotificationsRecipients
             v-if="sidePanelView === 'recipients'"
             :selectedRecipientsIds="selectedGroupIds"
@@ -95,6 +98,7 @@
             "
           />
 
+          <!-- Timezone Choice Panel -->
           <ProjectNotificationTimezoneChoice
             v-if="sidePanelView === 'timezone'"
             @close="closeNotificationPanel"
