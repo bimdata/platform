@@ -23,7 +23,10 @@
     </div>
 
     <div class="content">
-      <template v-if="hasDisplayedLogs">
+      <template v-if="loading">
+        <BIMDataSpinner class="flex items-center justify-center" style="height: 100%" />
+      </template>
+      <template v-else-if="hasDisplayedLogs">
         <div v-for="(logs, day) in displayedGroupedLogs" :key="day" class="day-group">
           <div class="day-title">{{ day }}</div>
           <ActivityItem
@@ -70,37 +73,40 @@ export default {
     const searchText = ref("");
 
     const { formatTimeAgo } = useTimeAgo();
-
+    const loading = ref(false);
     const fetchLogs = async () => {
+      loading.value = true;
       logs.value = [];
+      try {
+        const fetchedLogs = await ProjectService.fetchLogs(props.project);
+        logs.value = fetchedLogs
+          .map((log) => {
+            const activity = getActivityFromLog(log);
 
-      const fetchedLogs = await ProjectService.fetchLogs(props.project);
+            if (!activity) return null;
 
-      logs.value = fetchedLogs
-        .map((log) => {
-          const activity = getActivityFromLog(log);
+            return {
+              ...log,
+              activity,
+              dateObj: new Date(log.date),
 
-          if (!activity) return null;
-
-          return {
-            ...log,
-            activity,
-            dateObj: new Date(log.date),
-
-            _search: [
-              log.action,
-              log.user_email,
-              log.project_name,
-              activity?.target,
-              log.path,
-              t(activity?.actionKey ?? ""),
-            ]
-              .filter(Boolean)
-              .join(" ")
-              .toLowerCase(),
-          };
-        })
-        .filter(Boolean);
+              _search: [
+                log.action,
+                log.user_email,
+                log.project_name,
+                activity?.target,
+                log.path,
+                t(activity?.actionKey ?? ""),
+              ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase(),
+            };
+          })
+          .filter(Boolean);
+      } finally {
+        loading.value = false;
+      }
     };
 
     onMounted(fetchLogs);
@@ -178,6 +184,7 @@ export default {
     const availableActions = computed(() => new Set(logs.value.map((l) => l.action)));
 
     return {
+      loading,
       displayedGroupedLogs,
       hasDisplayedLogs,
       searchText,
