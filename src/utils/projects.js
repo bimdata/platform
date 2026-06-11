@@ -35,4 +35,20 @@ function sortProjects(projects) {
   return projects.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
 }
 
-export { projectStatus, sortProjects };
+function updateProjectInList(projects, project) {
+  let i = projects.findIndex((p) => p.id === project.id);
+  if (i >= 0) {
+    projects.splice(i, 1, project);
+  }
+  return projects;
+}
+
+function removeProjectInList(projects, project) {
+  let i = projects.findIndex((p) => p.id === project.id);
+  if (i >= 0) {
+    projects.splice(i, 1);
+  }
+  return projects;
+}
+
+export { projectStatus, sortProjects, updateProjectInList, removeProjectInList };
