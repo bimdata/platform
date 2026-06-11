@@ -1,7 +1,7 @@
 import { reactive, readonly, toRefs } from "vue";
 import { PROJECT_ROLE } from "../config/projects.js";
 import ProjectService from "../services/ProjectService.js";
-import { sortProjects } from "../utils/projects.js";
+import { removeProjectInList, sortProjects, updateProjectInList } from "../utils/projects.js";
 import { fullName, sortUsers } from "../utils/users.js";
 
 import { useUser } from "./user.js";
@@ -80,9 +80,8 @@ const updateProject = async (project) => {
     state.currentProject = newProject;
   }
 
-  let i = state.userProjects.findIndex((p) => p.id === newProject.id);
-  state.userProjects.splice(i, 1, newProject);
-  state.spaceProjects.splice(i, 1, newProject);
+  updateProjectInList(state.userProjects, newProject);
+  updateProjectInList(state.spaceProjects, newProject);
 
   return newProject;
 };
@@ -90,9 +89,8 @@ const updateProject = async (project) => {
 const deleteProject = async (project) => {
   await ProjectService.deleteProject(project);
 
-  let i = state.userProjects.findIndex((p) => p.id === project.id);
-  state.userProjects.splice(i, 1);
-  state.spaceProjects.splice(i, 1);
+  removeProjectInList(state.userProjects, project);
+  removeProjectInList(state.spaceProjects, project);
   state.projectsCount[project.cloud.id] -= 1;
 
   return project;
@@ -101,9 +99,8 @@ const deleteProject = async (project) => {
 const leaveProject = async (project) => {
   await ProjectService.leaveProject(project);
 
-  let i = state.userProjects.findIndex((p) => p.id === project.id);
-  state.userProjects.splice(i, 1);
-  state.spaceProjects.splice(i, 1);
+  removeProjectInList(state.userProjects, project);
+  removeProjectInList(state.spaceProjects, project);
   state.projectsCount[project.cloud.id] -= 1;
 
   return project;
