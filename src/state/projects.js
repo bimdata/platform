@@ -80,9 +80,13 @@ const updateProject = async (project) => {
     state.currentProject = newProject;
   }
 
-  let i = state.userProjects.findIndex(p => p.id === newProject.id);
-  state.userProjects.splice(i, 1, newProject);
-  state.spaceProjects.splice(i, 1, newProject);
+  let i = state.userProjects.findIndex((p) => p.id === newProject.id);
+  if (i >= 0)
+    state.userProjects.splice(i, 1, newProject);
+
+  i = state.spaceProjects.findIndex((p) => p.id === newProject.id);
+  if (i >= 0)
+    state.spaceProjects.splice(i, 1, newProject);
 
   return newProject;
 };
@@ -90,9 +94,14 @@ const updateProject = async (project) => {
 const deleteProject = async (project) => {
   await ProjectService.deleteProject(project);
 
-  let i = state.userProjects.findIndex(p => p.id === project.id);
-  state.userProjects.splice(i, 1);
-  state.spaceProjects.splice(i, 1);
+  let i = state.userProjects.findIndex((p) => p.id === project.id);
+  if (i >= 0)
+    state.userProjects.splice(i, 1);
+
+  i = state.spaceProjects.findIndex((p) => p.id === project.id);
+  if (i >= 0)
+    state.spaceProjects.splice(i, 1);
+
   state.projectsCount[project.cloud.id] -= 1;
 
   return project;
@@ -101,9 +110,14 @@ const deleteProject = async (project) => {
 const leaveProject = async (project) => {
   await ProjectService.leaveProject(project);
 
-  let i = state.userProjects.findIndex(p => p.id === project.id);
-  state.userProjects.splice(i, 1);
-  state.spaceProjects.splice(i, 1);
+  let i = state.userProjects.findIndex((p) => p.id === project.id);
+  if (i >= 0)
+    state.userProjects.splice(i, 1);
+
+  i = state.spaceProjects.findIndex((p) => p.id === project.id);
+  if (i >= 0)
+    state.spaceProjects.splice(i, 1);
+
   state.projectsCount[project.cloud.id] -= 1;
 
   return project;
