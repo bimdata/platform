@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/bimdata/platform/compare/v1.5.0...v1.5.1) (2026-06-11)
+
+
+### PATCH
+
+* fix(projects): properly update state on project update/delete (#681) ([95f276c](https://github.com/bimdata/platform/commit/95f276c6effcf352b1f57ac5bfae89671721f737)), closes [#681](https://github.com/bimdata/platform/issues/681)
+
 # [1.5.0](https://github.com/bimdata/platform/compare/v1.4.2...v1.5.0) (2026-05-25)
 
 
