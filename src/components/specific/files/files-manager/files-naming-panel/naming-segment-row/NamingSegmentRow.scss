@@ -1,0 +1,109 @@
+.seg-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  background: rgb(252, 252, 252);
+  border-radius: 6px;
+  border: 1px solid var(--color-silver-light);
+
+  &__drag {
+    cursor: grab;
+    color: var(--color-granite-light);
+    flex-shrink: 0;
+  }
+
+  &__sep {
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-granite);
+    flex-shrink: 0;
+    min-width: 14px;
+    text-align: center;
+  }
+
+  &__type {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    &--n_chars {
+      background: var(--color-neutral-lighter);
+      color: var(--color-neutral);
+    }
+    &--bounded {
+      background: var(--color-warning-lighter);
+      color: var(--color-warning);
+    }
+    &--list {
+      background: var(--color-success-lighter);
+      color: var(--color-success);
+    }
+  }
+
+  &__config {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    &--sm {
+      width: auto;
+    }
+  }
+
+  &__range-sep {
+    color: var(--color-granite);
+    font-size: 12px;
+  }
+
+  &__select {
+    flex: 1;
+    padding: 5px 8px;
+    border: 1px solid var(--color-silver);
+    border-radius: 4px;
+    font-size: 12px;
+    background: white;
+    color: var(--color-granite-dark);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  }
+
+  &__manage-list {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-granite);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  &__action {
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  }
+}

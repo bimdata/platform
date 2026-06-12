@@ -16,6 +16,7 @@
           </template>
         </BIMDataDropdownMenu>
       </template>
+
       <FolderCreationButton
         data-guide="btn-new-folder"
         class="files-manager__actions__btn-new-folder"
@@ -42,7 +43,7 @@
           $t(
             `ProjectOverview.uploadDisableMessage.${
               isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-            }`
+            }`,
           )
         "
       >
@@ -157,7 +158,7 @@ export default {
       required: true,
     },
   },
-  emits: ["open-subscription-modal", "update:searchText", "upload-files"],
+  emits: ["open-subscription-modal", "update:searchText", "upload-files", "open-naming-template"],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { isUserOrga, isProjectAdmin, isProjectGuest, hasAdminPerm } = useUser();
@@ -165,11 +166,7 @@ export default {
 
     const shouldSubscribe = inject("shouldSubscribe");
 
-
-    const {
-      downloadFiles: download,
-      projectFileStructure,
-    } = useFiles();
+    const { downloadFiles: download, projectFileStructure } = useFiles();
 
     const downloadFiles = async (files) => {
       await download(props.project, files);
@@ -188,7 +185,14 @@ export default {
           {
             name: t("FilesManager.gedDownload"),
             action: () => downloadFiles([projectFileStructure.value]),
-          }
+          },
+          {
+            name: t("FilesManager.namingConvention"),
+            action: () => {
+              emit("open-naming-template", props.currentFolder);
+              dropdown.value.displayed = false;
+            },
+          },
         );
       }
 
@@ -228,17 +232,17 @@ export default {
     const isLargeLayout = computed(
       () =>
         (isProjectAdmin(props.project) && !isXXXL.value) ||
-        (!isProjectAdmin(props.project) && !isMidXXL.value)
+        (!isProjectAdmin(props.project) && !isMidXXL.value),
     );
     const isMediumLayout = computed(
       () =>
         (isProjectAdmin(props.project) && !isXL.value && isXXXL.value) ||
-        (!isProjectAdmin(props.project) && !isMD.value && isMidXXL.value)
+        (!isProjectAdmin(props.project) && !isMD.value && isMidXXL.value),
     );
 
-    const searchText = ref(props.initialSearchText || '');
+    const searchText = ref(props.initialSearchText || "");
     watch(searchText, (newValue) => {
-      emit('update:searchText', newValue);
+      emit("update:searchText", newValue);
     });
 
     return {
