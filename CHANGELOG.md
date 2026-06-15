@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/bimdata/platform/compare/v1.5.1...v1.6.0) (2026-06-15)
+
+
+### chore
+
+* bump @bimdata/viewer@2.18.0-beta.1 from Github Actions [skip e2e] ([e5336a9](https://github.com/bimdata/platform/commit/e5336a925e6190c87b358ae1c1cd6add42e8a5fb))
+
+### MINOR
+
+* Add project activity history panel (#666) ([e18cb60](https://github.com/bimdata/platform/commit/e18cb60096fc04dc47cc651fdebc1b6fe3058d6a)), closes [#666](https://github.com/bimdata/platform/issues/666)
+* feat(activity): add types, users, and date range filters to activity history (#677) ([b4a37af](https://github.com/bimdata/platform/commit/b4a37af7059fcc7d446b38f722121ac000dc073c)), closes [#677](https://github.com/bimdata/platform/issues/677)
+* Fix/notifications settings panel (#680) ([28b82e8](https://github.com/bimdata/platform/commit/28b82e8863e1baccfe2767ea46a93d0ff880583d)), closes [#680](https://github.com/bimdata/platform/issues/680)
+
 ## [1.5.1](https://github.com/bimdata/platform/compare/v1.5.0...v1.5.1) (2026-06-11)
 
 
