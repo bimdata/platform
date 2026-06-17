@@ -3,7 +3,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: var(--spacing-unit);
+  gap: calc(var(--spacing-unit) / 2);
+
+  .actions-btn {
+    gap: var(--spacing-unit);
+  }
 
   .separator {
     width: 1px;
