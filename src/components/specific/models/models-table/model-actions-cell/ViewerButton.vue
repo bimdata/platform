@@ -8,22 +8,18 @@
       params: {
         spaceID: project.cloud.id,
         projectID: project.id,
-        modelIDs: model.id
+        modelIDs: model.id,
       },
       query: {
-        window
-      }
+        window,
+      },
     }"
   >
-    <BIMDataButton
-      :disabled="disabled"
-      class="viewer-button"
-      color="granite"
-      outline
-      radius
-      icon
-    >
-      {{ text || window.toUpperCase() }}
+    <BIMDataButton :disabled="disabled" class="viewer-button" :color="color" outline radius icon>
+      <span>
+        {{ text || window.toUpperCase() }}
+      </span>
+      <slot name="subtext"> </slot>
     </BIMDataButton>
   </AppLink>
 </template>
@@ -37,23 +33,27 @@ import AppLink from "../../../app/app-link/AppLink.vue";
 defineProps({
   project: {
     type: Object,
-    required: true
+    required: true,
   },
   model: {
     type: Object,
-    required: true
+    required: true,
   },
   window: {
     type: String,
-    default: DEFAULT_WINDOW
+    default: DEFAULT_WINDOW,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   text: {
-    type: String
-  }
+    type: String,
+  },
+  color: {
+    type: String,
+    default: "granite",
+  },
 });
 </script>
 
