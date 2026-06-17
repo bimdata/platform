@@ -90,6 +90,23 @@
       />
     </template>
 
+    <template v-if="model.type === MODEL_TYPE.IFC">
+      <div class="separator"></div>
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.FRAGMENTS"
+        color="secondary"
+        text="3D"
+        class="viewer-fragments"
+      >
+        <template #subtext>
+          <span class="beta-label">Bêta</span>
+        </template>
+      </ViewerButton>
+    </template>
+
     <template v-if="model.document_id">
       <BIMDataButton
         class="model-actions-cell__btn"
@@ -180,7 +197,9 @@ export default {
     const isOpen = ref(false);
     const isModelReady = computed(() => MODEL_STATUS.COMPLETED === props.model.status);
 
-    const modelDocument = computed(() => handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }));
+    const modelDocument = computed(() =>
+      handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }),
+    );
 
     const menuItems = ref([]);
     const openMenu = () => {

@@ -16,7 +16,8 @@ const WINDOWS = Object.freeze({
   IFC3D: "3d",
   PHOTOSPHERE: "photosphere",
   PLAN: "plan",
-  POINT_CLOUD: "pointCloud"
+  POINT_CLOUD: "pointCloud",
+  FRAGMENTS: "3d-fragments",
 });
 
 /**
@@ -32,9 +33,9 @@ const PLUGINS_CONFIG = {
   "anchor-synchronization": false,
   bcfManager: true,
   buildingMaker: true,
-  "drawing-tools" : true,
+  "drawing-tools": true,
   header: {
-    warnings: false
+    warnings: false,
   },
   pdfExport: false,
   properties: {
@@ -44,7 +45,7 @@ const PLUGINS_CONFIG = {
   split: true,
   structure: {
     export: true,
-    merge: true
+    merge: true,
   },
   "structure-properties": {
     editProperties: true,
@@ -56,8 +57,9 @@ const PLUGINS_CONFIG = {
   viewer3d: {
     enableDTX: true,
   },
+  "viewer3d-fragments": true,
   "zone-editor": true,
-  "zone-editor-button": true
+  "zone-editor-button": true,
 };
 
 export { AVAILABLE_PLUGINS, DEFAULT_WINDOW, PLUGINS_CONFIG, WINDOWS };

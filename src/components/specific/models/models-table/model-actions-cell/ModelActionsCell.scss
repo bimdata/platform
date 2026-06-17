@@ -3,7 +3,39 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: calc(var(--spacing-unit) * 3 / 2);
+  gap: var(--spacing-unit);
+
+  .separator {
+    width: 1px;
+    height: 30px;
+    background-color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .viewer-fragments {
+    position: relative;
+    &:deep(.bimdata-btn) {
+      display: flex;
+      flex-direction: column;
+      background-color: #fef6df;
+      & > span {
+        line-height: 1;
+      }
+    }
+    .beta-label {
+      font-size: 8px;
+    }
+    ::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--color-secondary);
+      clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+      position: absolute;
+      left: 4%;
+      top: 20%;
+    }
+  }
 
   &__btn {
     color: var(--color-granite-light);
