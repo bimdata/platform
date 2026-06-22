@@ -16,7 +16,7 @@
     "@bimdata/bcf-components": "6.7.7",
     "@bimdata/components": "1.10.1",
     "@bimdata/design-system": "2.4.2",
-    "@bimdata/typescript-fetch-api-client": "10.40.0",
+    "@bimdata/typescript-fetch-api-client": "10.41.0",
     "@bimdata/viewer": "2.18.0-beta.1",
     "@paddle/paddle-js": "^1.6.4",
     "async": "^3.2.6",
@@ -25,7 +25,7 @@
     "oidc-client-ts": "^3.5.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.38",
-    "vue-i18n": "^11.4.5",
+    "vue-i18n": "^11.4.6",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
