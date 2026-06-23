@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/bimdata/platform/compare/v1.6.0...v1.6.1) (2026-06-23)
+
+
+### PATCH
+
+* fix: folder default permission propagation (#689) ([3c40b54](https://github.com/bimdata/platform/commit/3c40b547c742b184cc2a000800c1e2886d33b463)), closes [#689](https://github.com/bimdata/platform/issues/689)
+
 # [1.6.0](https://github.com/bimdata/platform/compare/v1.5.1...v1.6.0) (2026-06-15)
 
 
