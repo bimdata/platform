@@ -160,7 +160,7 @@ const submit = async () => {
           );
         } else {
           await updateFiles(props.project, [
-            { ...folder, default_permission: permission }
+            { ...folder, default_permission: permission, propagate }
           ]);
         }
       }
