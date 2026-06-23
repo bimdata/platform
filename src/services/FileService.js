@@ -6,7 +6,7 @@ import { getFilesWithParentIds } from "../utils/files.js";
 import apiClient from "./api-client.js";
 import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 
-const FOLDER_UPDATABLE_FIELDS = ["name", "parent_id", "default_permission"];
+const FOLDER_UPDATABLE_FIELDS = ["name", "parent_id", "default_permission", "propagate"];
 const DOCUMENT_UPDATABLE_FIELDS = ["name", "parent_id"];
 
 function createPayload(object, allowedFields) {
