@@ -26,6 +26,23 @@
           </span>
         </BIMDataButton>
       </AppLink>
+
+      <BIMDataButton
+        v-if="isProjectAdmin(project)"
+        data-test-id="btn-manage-naming-constraints"
+        class="m-l-12"
+        :width="isXXL ? undefined : '120px'"
+        color="default"
+        outline
+        radius
+        :icon="isXXL"
+        @click="openNamingConstraintsManager"
+      >
+        <BIMDataIconRules size="s" />
+        <span v-if="!isXXL" style="margin-left: 6px">
+          {{ $t("NamingConstraint.managerTitle") }}
+        </span>
+      </BIMDataButton>
     </AppSlotContent>
 
     <div class="project-files__content">
@@ -57,6 +74,8 @@ import AppLink from "../../../components/specific/app/app-link/AppLink.vue";
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
 import FilesManager from "../../../components/specific/files/files-manager/FilesManager.vue";
+import NamingConstraintsManager from "../../../components/specific/files/naming-constraint/NamingConstraintsManager.vue";
+import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 
 export default {
   components: {
@@ -71,6 +90,7 @@ export default {
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
+    const { openSidePanel } = useAppSidePanel();
 
     const reloadData = debounce(async () => {
       await Promise.all([
@@ -79,6 +99,15 @@ export default {
         loadProjectModels(currentProject.value)
       ]);
     }, 1000);
+
+    const openNamingConstraintsManager = () => {
+      openSidePanel("right", {
+        component: NamingConstraintsManager,
+        props: {
+          project: currentProject.value
+        }
+      });
+    };
 
     return {
       // References
@@ -89,6 +118,7 @@ export default {
       // Methods
       isProjectAdmin,
       reloadData,
+      openNamingConstraintsManager,
       // Responsive breakpoints
       ...useStandardBreakpoints()
     };
