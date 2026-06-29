@@ -121,13 +121,16 @@ import {
   NamingConstraintConflictError
 } from "../../../../../state/naming-constraints.js";
 import { buildExample } from "../../../../../utils/naming-constraint.js";
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
+import NamingConflictModal from "../NamingConflictModal.vue";
 
 export default {
   setup() {
     const { t } = useI18n();
     const { setFolderNamingConstraint } = useNamingConstraints();
+    const { openModal, closeModal } = useAppModal();
     const { pushNotification } = useAppNotification();
     const { closeSidePanel } = useAppSidePanel();
 
@@ -182,12 +185,21 @@ export default {
         );
         const conflicts = result?.conflicting_documents ?? [];
         if (conflicts.length > 0) {
-          pushNotification({
-            type: "warning",
-            title: t("NamingConstraint.applyRuleConflictTitle"),
-            message: t("NamingConstraint.applyRuleConflictMessage", {
-              count: conflicts.length
-            })
+          const rule = constraints.value.find(
+            c => c.id === localState.selectedConstraintId
+          );
+          openModal({
+            component: NamingConflictModal,
+            props: {
+              project: localState.project,
+              documents: conflicts,
+              rule,
+              onClose: closeModal,
+              onConfirm: () => {
+                closeModal();
+                closeSidePanel();
+              }
+            }
           });
         } else {
           pushNotification({
@@ -195,16 +207,25 @@ export default {
             title: t("NamingConstraint.applyRuleSuccessTitle"),
             message: t("NamingConstraint.applyRuleSuccessMessage")
           });
+          closeSidePanel();
         }
-        closeSidePanel();
       } catch (error) {
         if (error instanceof NamingConstraintConflictError) {
-          pushNotification({
-            type: "error",
-            title: t("NamingConstraint.applyRuleBlockedTitle"),
-            message: t("NamingConstraint.applyRuleBlockedMessage", {
-              count: error.documents?.length ?? 0
-            })
+          const rule = constraints.value.find(
+            c => c.id === localState.selectedConstraintId
+          );
+          openModal({
+            component: NamingConflictModal,
+            props: {
+              project: localState.project,
+              documents: error.documents ?? [],
+              rule,
+              onClose: closeModal,
+              onConfirm: () => {
+                closeModal();
+                apply();
+              }
+            }
           });
         } else {
           pushNotification({

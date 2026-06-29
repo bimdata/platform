@@ -157,7 +157,7 @@ export default {
       required: true,
     },
   },
-  emits: ["open-subscription-modal", "update:searchText", "upload-files"],
+  emits: ["open-subscription-modal", "update:searchText", "upload-files", "manage-naming-conflicts"],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { isUserOrga, isProjectAdmin, isProjectGuest, hasAdminPerm } = useUser();
@@ -190,6 +190,16 @@ export default {
             action: () => downloadFiles([projectFileStructure.value]),
           }
         );
+      }
+
+      if (isProjectAdmin(props.project)) {
+        items.push({
+          name: t("NamingConstraint.renameConflictsMenuItem"),
+          action: () => {
+            emit("manage-naming-conflicts");
+            dropdown.value.displayed = false;
+          },
+        });
       }
 
       if (hasAdminPerm(props.project, props.currentFolder)) {
