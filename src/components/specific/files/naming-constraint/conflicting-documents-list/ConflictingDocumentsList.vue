@@ -33,8 +33,16 @@
           <span class="conflicting-documents-list__item__name">
             {{ names[doc.id] ?? doc.name }}
           </span>
-          <span v-if="rule" class="conflicting-documents-list__item__example">
-            {{ buildExample(rule) }}
+          <FilePathCell
+            class="conflicting-documents-list__item__path"
+            :file="doc"
+            :allFolders="allFolders"
+          />
+          <span
+            v-if="!rule && effectiveRule(doc)"
+            class="conflicting-documents-list__item__example"
+          >
+            {{ buildExample(effectiveRule(doc)) }}
           </span>
         </div>
         <BIMDataIconValidate
@@ -62,8 +70,12 @@
 <script>
 import { computed, nextTick, reactive, ref } from "vue";
 import { buildExample, matchName } from "../../../../../utils/naming-constraint.js";
+import FilePathCell from "../../files-table/file-path-cell/FilePathCell.vue";
 
 export default {
+  components: {
+    FilePathCell,
+  },
   props: {
     project: {
       type: Object,
@@ -72,6 +84,10 @@ export default {
     documents: {
       type: Array,
       required: true,
+    },
+    allFolders: {
+      type: Array,
+      default: () => [],
     },
     rule: {
       type: Object,
@@ -88,7 +104,10 @@ export default {
     );
     const toDelete = reactive({});
 
-    const isValid = (doc) => matchName(names[doc.id] ?? doc.name, props.rule);
+    const isValid = (doc) =>
+      matchName(names[doc.id] ?? doc.name, props.rule ?? doc.namingRule);
+
+    const effectiveRule = (doc) => props.rule ?? doc.namingRule ?? null;
 
     const allValid = computed(() =>
       props.documents.every((doc) => toDelete[doc.id] || isValid(doc)),
@@ -140,6 +159,7 @@ export default {
       confirmRename,
       toggleDelete,
       buildExample,
+      effectiveRule,
     };
   },
 };
