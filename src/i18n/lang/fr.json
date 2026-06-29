@@ -62,7 +62,18 @@
     "emptyElementsError": "Indiquez au moins une valeur.",
     "invalidBoundsError": "Le max doit être supérieur ou égal au min.",
     "deleteConstraintConfirm": "Supprimer cette règle de nommage ?",
-    "deleteTemplateConfirm": "Supprimer cette liste ?"
+    "deleteTemplateConfirm": "Supprimer cette liste ?",
+    "folderRuleMenuItem": "Convention de nommage",
+    "recursiveLabel": "Règle récursive",
+    "recursiveHelp": "Si vous cochez cette case, cette règle s'appliquera également aux fichiers contenus dans les sous-dossiers de votre dossier principal.",
+    "applyRuleSuccessTitle": "Règle de nommage appliquée",
+    "applyRuleSuccessMessage": "La convention de nommage a été appliquée au dossier.",
+    "applyRuleConflictTitle": "Certains fichiers ne correspondent pas",
+    "applyRuleConflictMessage": "La règle a été appliquée mais {count} fichier(s) existant(s) ne la respectent pas.",
+    "applyRuleBlockedTitle": "Règle stricte non applicable",
+    "applyRuleBlockedMessage": "{count} fichier(s) existant(s) ne respectent pas cette règle stricte. Renommez-les d'abord.",
+    "applyRuleError": "La convention de nommage n'a pas pu être appliquée.",
+    "noFolderRuleSelection": "Sélectionnez une règle à appliquer."
   },
   "t": {
     "add": "Ajouter",

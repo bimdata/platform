@@ -177,7 +177,7 @@ export default {
 
     const cancel = () => {
       localState.constraint = null;
-      localState.currentView = "constraints-list";
+      localState.currentView = localState.listView ?? "constraints-list";
     };
 
     const submit = debounce(async () => {

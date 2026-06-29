@@ -96,6 +96,7 @@
         @download="$emit('download', file)"
         @file-clicked="$emit('file-clicked', file)"
         @manage-access="$emit('manage-access', file)"
+        @manage-naming-rule="$emit('manage-naming-rule', file)"
         @open-tag-manager="$emit('open-tag-manager', file)"
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"
@@ -172,6 +173,7 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "manage-naming-rule",
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",

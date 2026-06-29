@@ -82,6 +82,7 @@ export default {
     "download",
     "file-clicked",
     "manage-access",
+    "manage-naming-rule",
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
@@ -96,6 +97,8 @@ export default {
     const isOpen = ref(false);
     const menuItems = shallowRef([]);
 
+    let current_key = 0;
+
     const openMenu = () => {
       if (!props.parent) return;
 
@@ -103,7 +106,7 @@ export default {
 
       if (!isFolder(props.file)) {
         menuItems.value.push({
-          key: 1,
+          key: current_key++,
           icon: "preview",
           text: "FileActionsCell.previewModelButtonText",
           color: "primary",
@@ -114,7 +117,7 @@ export default {
       if (isViewable(props.file)) {
         const { model_id: id, model_type: type } = props.file;
         menuItems.value.push({
-          key: 2,
+          key: current_key++,
           icon: "show",
           text: "FileActionsCell.openViewerButtonText",
           color: "primary",
@@ -125,7 +128,7 @@ export default {
       if (!isFolder(props.file) && isConvertible(props.file)) {
         if (!isModel(props.file)) {
           menuItems.value.push({
-            key: 3,
+            key: current_key++,
             iconComponent: SetAsModelIcon,
             text: "FileActionsCell.createModelButtonText",
             disabled: !hasAdminPerm(props.project, props.file),
@@ -133,7 +136,7 @@ export default {
           });
         } else {
           menuItems.value.push({
-            key: 4,
+            key: current_key++,
             iconComponent: RemoveModelsIcon,
             text: "FileActionsCell.removeModelButtonText",
             action: () => onClick("remove-model"),
@@ -143,7 +146,7 @@ export default {
 
       if (!isFolder(props.file) && isConvertibleToPhotosphere(props.file) && !isModel(props.file)) {
         menuItems.value.push({
-          key: 3,
+          key: current_key++,
           iconComponent: SetAsModelIcon,
           text: "FileActionsCell.createPhotosphereButtonText",
           disabled: !hasAdminPerm(props.project, props.file),
@@ -152,7 +155,7 @@ export default {
       }
 
       menuItems.value.push({
-        key: 5,
+        key: current_key++,
         icon: "edit",
         text: "t.rename",
         disabled: !hasAdminPerm(props.project, props.file),
@@ -168,31 +171,38 @@ export default {
 
       if (isFolder(props.file) && isProjectAdmin(props.project)) {
         menuItems.value.push({
-          key: 7,
+          key: current_key++,
           icon: "key",
           text: "FileActionsCell.manageAccessButtonText",
           action: () => onClick("manage-access"),
           divider: true,
         });
+        menuItems.value.push({
+          key: current_key++,
+          iconComponent: "BIMDataIconLock",
+          text: "NamingConstraint.folderRuleMenuItem",
+          action: () => onClick("manage-naming-rule"),
+          dataTestId: "btn-manage-naming-rule",
+        });
       }
 
       if (!isFolder(props.file) && hasAdminPerm(props.project, props.file)) {
         menuItems.value.push({
-          key: 8,
+          key: current_key++,
           icon: "visa",
           text: "FileActionsCell.visaButtonText",
           action: () => onClick("open-visa-manager"),
           dataTestId: "btn-open-visa-manager",
         });
         menuItems.value.push({
-          key: 9,
+          key: current_key++,
           icon: "tag",
           text: "FileActionsCell.addTagsButtonText",
           action: () => onClick("open-tag-manager"),
           dataTestId: "btn-open-tag-manager",
         });
         menuItems.value.push({
-          key: 10,
+          key: current_key++,
           icon: "versioning",
           text: "FileActionsCell.versioningButtonText",
           action: () => onClick("open-versioning-manager"),
@@ -202,7 +212,7 @@ export default {
       }
 
       menuItems.value.push({
-        key: 11,
+        key: current_key++,
         icon: "delete",
         text: "t.delete",
         color: "high",
