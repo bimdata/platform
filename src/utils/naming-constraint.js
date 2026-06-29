@@ -115,7 +115,7 @@ function buildExample(rule) {
     return "";
   }
   const separator = rule.separator ?? "";
-  return rule.parts.map(buildPartExample).join(separator);
+  return rule.parts.map(buildPartExample).join(separator) + ".ext";
 }
 
 export { PART_TYPES, matchName, matchPart, buildExample, buildPartExample, stripExtension };
