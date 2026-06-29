@@ -73,7 +73,18 @@
     "applyRuleBlockedTitle": "Règle stricte non applicable",
     "applyRuleBlockedMessage": "{count} fichier(s) existant(s) ne respectent pas cette règle stricte. Renommez-les d'abord.",
     "applyRuleError": "La convention de nommage n'a pas pu être appliquée.",
-    "noFolderRuleSelection": "Sélectionnez une règle à appliquer."
+    "noFolderRuleSelection": "Sélectionnez une règle à appliquer.",
+    "applyRuleWarningTitle": "Le nom ne respecte pas la règle",
+    "uploadBlocked": "{count} fichier(s) n'ont pas été importés car leur nom ne respecte pas la règle (ex. {example}).",
+    "uploadWarning": "{count} fichier(s) ne respectent pas la convention de nommage (ex. {example}).",
+    "conflictTooltip": "Ce fichier ne respecte pas la convention de nommage du dossier.",
+    "conflictModalIntro": "Renommez ici les fichiers qui ne correspondent pas à la règle stricte que vous avez programmé.",
+    "conflictModalWarning": "Renommez ou supprimez les documents en conflit pour continuer",
+    "renameButton": "Renommer",
+    "renameFilePlaceholder": "Renommer le fichier",
+    "renameConflictsMenuItem": "Renommer les fichiers en conflit",
+    "noConflictsTitle": "Aucun fichier en conflit",
+    "noConflictsMessage": "Tous les fichiers respectent la convention de nommage de leur dossier."
   },
   "t": {
     "add": "Ajouter",
@@ -107,6 +118,7 @@
     "hours_ago": "il y a {count} heure | il y a {count} heures",
     "import": "Importer",
     "invalidName": "Nom invalide",
+    "invalidNameFormat": "Le nom ne respecte pas la convention de nommage (ex. {example}).",
     "just_now": "À l'instant",
     "leave": "Quitter",
     "location": "Emplacement",
