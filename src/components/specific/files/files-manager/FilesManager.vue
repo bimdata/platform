@@ -88,6 +88,7 @@
             @file-clicked="onFileSelected"
             @file-uploaded="$emit('file-uploaded')"
             @manage-access="openAccessManager"
+            @manage-naming-rule="openFolderNamingConstraintManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
             @open-visa-manager="openVisaManager"
@@ -111,6 +112,7 @@
             @file-clicked="onFileSelected"
             @go-folders-view="goFoldersView"
             @manage-access="openAccessManager"
+            @manage-naming-rule="openFolderNamingConstraintManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
             @open-visa-manager="openVisaManager"
@@ -225,6 +227,7 @@ import FilesManagerOnboarding from "./files-manager-onboarding/FilesManagerOnboa
 import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
+import FolderNamingConstraintManager from "../naming-constraint/FolderNamingConstraintManager.vue";
 import FoldersTable from "../folder-table/FoldersTable.vue";
 import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
@@ -544,6 +547,16 @@ export default {
       }, 100);
     };
 
+    const openFolderNamingConstraintManager = (folder) => {
+      openSidePanel("right", {
+        component: FolderNamingConstraintManager,
+        props: {
+          project: props.project,
+          folder,
+        },
+      });
+    };
+
     const visasLoading = ref(false);
     const openVisaManager = (file) => {
       onTabChange(filesTabs[2]);
@@ -833,6 +846,7 @@ export default {
       moveFiles,
       onFileSelected,
       openAccessManager,
+      openFolderNamingConstraintManager,
       openFileDeleteModal,
       openVisaDeleteModal,
       openSidePanel,
