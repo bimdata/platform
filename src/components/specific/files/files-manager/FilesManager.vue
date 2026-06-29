@@ -287,7 +287,7 @@ export default {
     const { createModel, createPhotosphere, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
-    const { getEffectiveFolderRule, fetchConflictingDocuments } =
+    const { getEffectiveFolderRule } =
       useNamingConstraints();
     const currentFolder = ref(null);
     const currentFiles = ref([]);
@@ -600,8 +600,10 @@ export default {
     };
 
     const openNamingConflictsModal = async () => {
-      const documents = await fetchConflictingDocuments(props.project);
-      if (documents.length === 0) {
+      const conflicting = allFiles.value.filter(
+        (file) => file.naming_constraint_conflict,
+      );
+      if (conflicting.length === 0) {
         pushNotification({
           type: "success",
           title: t("NamingConstraint.noConflictsTitle"),
@@ -609,11 +611,21 @@ export default {
         });
         return;
       }
+      const documents = await Promise.all(
+        conflicting.map(async (file) => {
+          const folder = allFolders.value.find((f) => f.id === file.parent_id);
+          const effective = folder
+            ? await getEffectiveFolderRule(props.project, folder)
+            : null;
+          return { ...file, namingRule: effective?.rule ?? null };
+        }),
+      );
       openModal({
         component: NamingConflictModal,
         props: {
           project: props.project,
           documents,
+          allFolders: allFolders.value,
           rule: null,
           onClose: closeModal,
           onConfirm: () => emit("file-updated"),
