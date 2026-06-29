@@ -21,6 +21,7 @@
         <ConflictingDocumentsList
           :project="project"
           :documents="documents"
+          :allFolders="allFolders"
           :rule="rule?.rule"
           @valid-change="allValid = $event"
           @change="pending = $event"
@@ -63,6 +64,10 @@ export default {
     documents: {
       type: Array,
       required: true,
+    },
+    allFolders: {
+      type: Array,
+      default: () => [],
     },
     rule: {
       type: Object,

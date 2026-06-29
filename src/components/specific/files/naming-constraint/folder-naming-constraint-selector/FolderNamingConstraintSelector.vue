@@ -121,6 +121,9 @@ import {
   NamingConstraintConflictError
 } from "../../../../../state/naming-constraints.js";
 import { buildExample } from "../../../../../utils/naming-constraint.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { useFiles } from "../../../../../state/files.js";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
@@ -130,12 +133,19 @@ export default {
   setup() {
     const { t } = useI18n();
     const { setFolderNamingConstraint } = useNamingConstraints();
+    const { projectFileStructure } = useFiles();
     const { openModal, closeModal } = useAppModal();
     const { pushNotification } = useAppNotification();
     const { closeSidePanel } = useAppSidePanel();
 
     const localState = inject("localState");
     const searchText = ref("");
+
+    const allFolders = computed(() =>
+      projectFileStructure.value
+        ? collectDescendants(projectFileStructure.value, isFolder)
+        : []
+    );
 
     const constraints = computed(() => localState.constraints ?? []);
 
@@ -193,6 +203,7 @@ export default {
             props: {
               project: localState.project,
               documents: conflicts,
+              allFolders: allFolders.value,
               rule,
               onClose: closeModal,
               onConfirm: () => {
@@ -219,6 +230,7 @@ export default {
             props: {
               project: localState.project,
               documents: error.documents ?? [],
+              allFolders: allFolders.value,
               rule,
               onClose: closeModal,
               onConfirm: () => {
