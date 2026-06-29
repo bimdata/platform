@@ -11,6 +11,7 @@
         :initialSearchText="searchText"
         @update:searchText="searchText = $event"
         @upload-files="uploadFiles"
+        @manage-naming-conflicts="openNamingConflictsModal"
       />
       <div class="files-manager__content">
         <transition name="slide-fade-left">
@@ -207,12 +208,14 @@ import FileService from "../../../../services/FileService.js";
 import TagService from "../../../../services/TagService";
 import { useFiles } from "../../../../state/files.js";
 import { useModels } from "../../../../state/models.js";
+import { useNamingConstraints } from "../../../../state/naming-constraints.js";
 import { useProjects } from "../../../../state/projects.js";
 import { useSpaces } from "../../../../state/spaces.js";
 import { useVisa } from "../../../../state/visa.js";
 import { collectDescendants } from "../../../../utils/file-tree.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { getFilesFromEvent } from "../../../../utils/files.js";
+import { matchName } from "../../../../utils/naming-constraint.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -228,6 +231,7 @@ import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
 import FolderNamingConstraintManager from "../naming-constraint/FolderNamingConstraintManager.vue";
+import NamingConflictModal from "../naming-constraint/NamingConflictModal.vue";
 import FoldersTable from "../folder-table/FoldersTable.vue";
 import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
@@ -283,7 +287,8 @@ export default {
     const { createModel, createPhotosphere, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
-
+    const { getEffectiveFolderRule, fetchConflictingDocuments } =
+      useNamingConstraints();
     const currentFolder = ref(null);
     const currentFiles = ref([]);
     const toValidateVisas = ref([]);
@@ -340,19 +345,56 @@ export default {
 
     const filesToUpload = ref([]);
     const foldersToUpload = ref([]);
-    const uploadFiles = async (event, folder = currentFolder.value) => {
-      const { files, folders } = await getFilesFromEvent(event);
+    const proceedUpload = async (files, folder) => {
       files.forEach((file) => (file.folder = folder));
-
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
         folders.map((f) => FileService.createFolderStructure(props.project, folder, f)),
       );
-
       setTimeout(() => {
         filesToUpload.value = [];
         foldersToUpload.value = [];
       }, 10);
+    };
+    let folders = [];
+    const uploadFiles = async (event, folder = currentFolder.value) => {
+      const fromEvent = await getFilesFromEvent(event);
+      const files = fromEvent.files;
+      folders = fromEvent.folders;
+
+      const rule = await getEffectiveFolderRule(props.project, folder);
+      const invalidFiles = rule?.rule
+        ? files.filter((file) => !matchName(file.name, rule.rule))
+        : [];
+
+      if (invalidFiles.length > 0) {
+        openModal({
+          component: NamingConflictModal,
+          props: {
+            project: props.project,
+            documents: invalidFiles.map((file, i) => ({ id: `upload-${i}`, name: file.name })),
+            rule,
+            persistChanges: false,
+            onClose: closeModal,
+            onConfirm: ({ renamed, deleted }) => {
+              const deletedIds = new Set(deleted.map((d) => d.id));
+              const renamedById = new Map(renamed.map((r) => [r.id, r.name]));
+              const finalFiles = invalidFiles
+                .map((file, i) => ({ file, id: `upload-${i}` }))
+                .filter(({ id }) => !deletedIds.has(id))
+                .map(({ file, id }) => {
+                  const name = renamedById.get(id);
+                  return name ? new File([file], name, { type: file.type }) : file;
+                });
+              const validFiles = files.filter((file) => matchName(file.name, rule.rule));
+              proceedUpload([...validFiles, ...finalFiles], folder);
+            },
+          },
+        });
+        return;
+      }
+
+      proceedUpload(files, folder);
     };
 
     const loadingFileIds = ref([]);
@@ -553,6 +595,28 @@ export default {
         props: {
           project: props.project,
           folder,
+        },
+      });
+    };
+
+    const openNamingConflictsModal = async () => {
+      const documents = await fetchConflictingDocuments(props.project);
+      if (documents.length === 0) {
+        pushNotification({
+          type: "success",
+          title: t("NamingConstraint.noConflictsTitle"),
+          message: t("NamingConstraint.noConflictsMessage"),
+        });
+        return;
+      }
+      openModal({
+        component: NamingConflictModal,
+        props: {
+          project: props.project,
+          documents,
+          rule: null,
+          onClose: closeModal,
+          onConfirm: () => emit("file-updated"),
         },
       });
     };
@@ -847,6 +911,7 @@ export default {
       onFileSelected,
       openAccessManager,
       openFolderNamingConstraintManager,
+      openNamingConflictsModal,
       openFileDeleteModal,
       openVisaDeleteModal,
       openSidePanel,

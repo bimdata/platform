@@ -73,7 +73,18 @@
     "applyRuleBlockedTitle": "Strict rule cannot be applied",
     "applyRuleBlockedMessage": "{count} existing file(s) do not match this strict rule. Rename them first.",
     "applyRuleError": "The naming convention could not be applied.",
-    "noFolderRuleSelection": "Select a rule to apply."
+    "noFolderRuleSelection": "Select a rule to apply.",
+    "applyRuleWarningTitle": "Name does not match the rule",
+    "uploadBlocked": "{count} file(s) were not uploaded because their name does not match the rule (e.g. {example}).",
+    "uploadWarning": "{count} file(s) do not match the naming rule (e.g. {example}).",
+    "conflictTooltip": "This file does not match the folder naming convention.",
+    "conflictModalIntro": "Rename here the files that do not match the strict rule you set.",
+    "conflictModalWarning": "Rename or delete the conflicting documents to continue",
+    "renameButton": "Rename",
+    "renameFilePlaceholder": "Rename the file",
+    "renameConflictsMenuItem": "Rename conflicting files",
+    "noConflictsTitle": "No conflicting files",
+    "noConflictsMessage": "All files match their folder naming convention."
   },
   "OidcCallbackError": {
     "message": "An error occured during authentication...",
@@ -1071,6 +1082,7 @@
     "folder": "Folder",
     "import": "Import",
     "invalidName": "Invalid name",
+    "invalidNameFormat": "Name does not match the naming rule (e.g. {example}).",
     "leave": "Leave",
     "modifiedOn": "Last modified",
     "modify": "Edit",

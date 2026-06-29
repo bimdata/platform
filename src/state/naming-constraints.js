@@ -8,6 +8,10 @@ const state = reactive({
   namingPartsTemplates: []
 });
 
+// In-memory cache of effective folder rules, keyed by folder id, to avoid
+// re-fetching the rule on every rename/upload within the same folder.
+const folderRuleCache = new Map();
+
 // --- Naming constraints catalog --------------------------------------------
 
 const loadNamingConstraints = async project => {
@@ -91,15 +95,41 @@ const fetchFolderNamingConstraint = async (project, folder) => {
 };
 
 const setFolderNamingConstraint = async (project, folder, payload) => {
-  return NamingConstraintService.setFolderNamingConstraint(
+  const result = await NamingConstraintService.setFolderNamingConstraint(
     project,
     folder,
     payload
   );
+  folderRuleCache.clear();
+  return result;
 };
 
 const deleteFolderNamingConstraint = async (project, folder) => {
-  return NamingConstraintService.deleteFolderNamingConstraint(project, folder);
+  const result = await NamingConstraintService.deleteFolderNamingConstraint(
+    project,
+    folder
+  );
+  folderRuleCache.clear();
+  return result;
+};
+
+// Resolve the effective naming rule applying to a folder, with its `strict`
+// flag. Returns null when no rule applies. Results are cached per folder id.
+const getEffectiveFolderRule = async (project, folder) => {
+  if (!folder?.id) return null;
+  if (folderRuleCache.has(folder.id)) {
+    return folderRuleCache.get(folder.id);
+  }
+  const folderConstraint = await NamingConstraintService.fetchFolderNamingConstraint(
+    project,
+    folder
+  );
+  const constraint = folderConstraint?.constraint ?? null;
+  const effective = constraint
+    ? { rule: constraint.rule, strict: constraint.strict, name: constraint.name }
+    : null;
+  folderRuleCache.set(folder.id, effective);
+  return effective;
 };
 
 // --- Conflicting documents -------------------------------------------------
@@ -127,6 +157,7 @@ export function useNamingConstraints() {
     fetchFolderNamingConstraint,
     setFolderNamingConstraint,
     deleteFolderNamingConstraint,
+    getEffectiveFolderRule,
     fetchConflictingDocuments
   };
 }
