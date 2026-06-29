@@ -202,7 +202,7 @@ class NamingConstraintService {
   // --- Conflicting documents -----------------------------------------------
 
   /**
-   * Lists documents flagged with `naming_constraint_conflit = true`.
+   * Lists documents flagged with `naming_constraint_conflict = true`.
    */
   async fetchConflictingDocuments(project) {
     try {
@@ -227,7 +227,7 @@ class NamingConstraintService {
         undefined, // name__contains
         undefined, // name__endswith
         undefined, // name__startswith
-        true // naming_constraint_conflit
+        true // naming_constraint_conflict
       );
     } catch (error) {
       ErrorService.handleError(

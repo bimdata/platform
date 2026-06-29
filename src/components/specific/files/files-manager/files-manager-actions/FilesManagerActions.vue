@@ -118,6 +118,8 @@ import {
 import { useFiles } from "../../../../../state/files.js";
 import { useUser } from "../../../../../state/user.js";
 import { isFullTotal } from "../../../../../utils/spaces.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
@@ -176,6 +178,14 @@ export default {
     };
 
     const dropdown = ref(null);
+    const conflictCount = computed(() => {
+      const root = projectFileStructure.value;
+      if (!root) return 0;
+      return collectDescendants(
+        root,
+        (child) => !isFolder(child) && child.naming_constraint_conflict,
+      ).length;
+    });
     const menuItems = computed(() => {
       const items = [];
 
@@ -194,7 +204,8 @@ export default {
 
       if (isProjectAdmin(props.project)) {
         items.push({
-          name: t("NamingConstraint.renameConflictsMenuItem"),
+          name: t("NamingConstraint.renameConflictsMenuItem") +
+            (conflictCount.value > 0 ? ` (${conflictCount.value})` : ""),
           action: () => {
             emit("manage-naming-conflicts");
             dropdown.value.displayed = false;
