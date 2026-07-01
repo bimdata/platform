@@ -100,11 +100,19 @@
 <script>
 import { computed, inject, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
+import {
+  useNamingConstraints,
+  NamingConstraintConflictError
+} from "../../../../../state/naming-constraints.js";
 import { buildExample } from "../../../../../utils/naming-constraint.js";
 import { debounce } from "../../../../../utils/async.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { useFiles } from "../../../../../state/files.js";
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 // Components
 import RuleBuilder from "./RuleBuilder.vue";
+import NamingConflictModal from "../NamingConflictModal.vue";
 
 export default {
   components: {
@@ -114,6 +122,14 @@ export default {
     const { t } = useI18n();
     const { createNamingConstraint, updateNamingConstraint } =
       useNamingConstraints();
+    const { projectFileStructure } = useFiles();
+    const { openModal, closeModal } = useAppModal();
+
+    const allFolders = computed(() =>
+      projectFileStructure.value
+        ? collectDescendants(projectFileStructure.value, isFolder)
+        : []
+    );
 
     const localState = inject("localState");
 
@@ -185,13 +201,13 @@ export default {
       if (hasInvalidName.value || hasEmptyRule.value || hasInvalidBounds.value) {
         return;
       }
+      const payload = {
+        name: name.value,
+        strict: strict.value,
+        rule: rule.value
+      };
       try {
         localState.loading = true;
-        const payload = {
-          name: name.value,
-          strict: strict.value,
-          rule: rule.value
-        };
         if (isUpdate.value) {
           const updated = await updateNamingConstraint(
             localState.project,
@@ -201,6 +217,24 @@ export default {
           localState.constraints = localState.constraints.map(item =>
             item.id === updated.id ? updated : item
           );
+          const conflicts = updated?.conflicting_documents ?? [];
+          if (conflicts.length > 0) {
+            openModal({
+              component: NamingConflictModal,
+              props: {
+                project: localState.project,
+                documents: conflicts,
+                allFolders: allFolders.value,
+                rule: updated,
+                onClose: closeModal,
+                onConfirm: () => {
+                  closeModal();
+                  cancel();
+                }
+              }
+            });
+            return;
+          }
         } else {
           const constraint = await createNamingConstraint(
             localState.project,
@@ -209,6 +243,29 @@ export default {
           localState.constraints = [...localState.constraints, constraint];
         }
         cancel();
+      } catch (error) {
+        if (error instanceof NamingConstraintConflictError) {
+          openModal({
+            component: NamingConflictModal,
+            props: {
+              project: localState.project,
+              documents: error.documents ?? [],
+              allFolders: allFolders.value,
+              rule: {
+                name: payload.name,
+                rule: payload.rule,
+                strict: payload.strict
+              },
+              onClose: closeModal,
+              onConfirm: () => {
+                closeModal();
+                submit();
+              }
+            }
+          });
+        } else {
+          throw error;
+        }
       } finally {
         localState.loading = false;
       }
