@@ -56,6 +56,13 @@ class NamingConstraintService {
     }
   }
 
+  /**
+   * Updates a naming constraint.
+   * Resolves with the `NamingConstraint` (its `conflicting_documents` lists
+   * the non-blocking conflicts for non-strict rules).
+   * Throws `NamingConstraintConflictError` (with `documents`) when a strict
+   * rule conflicts with existing documents (API responds 409).
+   */
   async updateNamingConstraint(project, constraint, payload) {
     try {
       return await apiClient.collaborationApi.updateNamingConstraint(
@@ -65,6 +72,10 @@ class NamingConstraintService {
         payload
       );
     } catch (error) {
+      if (isResponse(error) && error.status === 409) {
+        const documents = await error.json();
+        throw new NamingConstraintConflictError(documents);
+      }
       throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_UPDATE_ERROR, error);
     }
   }
