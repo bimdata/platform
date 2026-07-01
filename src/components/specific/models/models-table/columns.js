@@ -33,7 +33,7 @@ export default [
   {
     id: "lastupdate",
     text: "t.modifiedOn",
-    width: "140px",
+    width: "160px",
     align: "center",
   },
   {
@@ -45,6 +45,6 @@ export default [
   {
     id: "actions",
     label: " ",
-    width: "220px",
+    width: "200px",
   },
 ];

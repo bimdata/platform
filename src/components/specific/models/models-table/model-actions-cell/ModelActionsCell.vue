@@ -1,113 +1,94 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
-    <div v-if="isModelReady" class="actions-btn flex items-center">
-      <template v-if="model.type === MODEL_TYPE.META_BUILDING">
-        <BIMDataButton color="primary" outline radius icon @click="onClick('view-metaBuilding')">
-          <BIMDataIconStructure size="s" />
-        </BIMDataButton>
-      </template>
+    <template v-if="model.type === MODEL_TYPE.META_BUILDING">
+      <BIMDataButton color="primary" outline radius icon @click="onClick('view-metaBuilding')">
+        <BIMDataIconStructure size="s" />
+      </BIMDataButton>
+    </template>
 
-      <template v-if="model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING">
-        <BIMDataButton
-          color="primary"
-          outline
-          radius
-          icon
-          @click="onClick('view-photosphereBuilding')"
-        >
-          <BIMDataIconStructure size="s" />
-        </BIMDataButton>
-      </template>
-
-      <template v-if="model.type === MODEL_TYPE.IFC">
-        <template v-for="window of [WINDOWS.IFC2D, WINDOWS.IFC3D]" :key="window">
-          <ViewerButton
-            :disabled="!isModelReady"
-            :project="project"
-            :model="model"
-            :window="window"
-          />
-        </template>
-      </template>
-
-      <template v-else-if="model.type === MODEL_TYPE.DWG">
-        <ViewerButton
-          :disabled="!isModelReady"
-          :project="project"
-          :model="model"
-          :window="WINDOWS.DWG"
-          text="2D"
-        />
-      </template>
-
-      <template v-else-if="model.type === MODEL_TYPE.DXF">
-        <ViewerButton
-          :disabled="!isModelReady"
-          :project="project"
-          :model="model"
-          :window="WINDOWS.DXF"
-          text="2D"
-        />
-      </template>
-
-      <template
-        v-else-if="
-          model.type === MODEL_TYPE.JPEG ||
-          model.type === MODEL_TYPE.META_BUILDING ||
-          model.type === MODEL_TYPE.PDF ||
-          model.type === MODEL_TYPE.PNG
-        "
+    <template v-if="model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING">
+      <BIMDataButton
+        color="primary"
+        outline
+        radius
+        icon
+        @click="onClick('view-photosphereBuilding')"
       >
+        <BIMDataIconStructure size="s" />
+      </BIMDataButton>
+    </template>
+
+    <template v-if="model.type === MODEL_TYPE.IFC">
+      <template v-for="window of [WINDOWS.IFC2D, WINDOWS.IFC3D]" :key="window">
         <ViewerButton
           :disabled="!isModelReady"
           :project="project"
           :model="model"
-          :window="WINDOWS.PLAN"
-          text="2D"
+          :window="window"
         />
       </template>
+    </template>
 
-      <template v-else-if="model.type === MODEL_TYPE.POINT_CLOUD">
-        <ViewerButton
-          :disabled="!isModelReady"
-          :project="project"
-          :model="model"
-          :window="WINDOWS.POINT_CLOUD"
-          text="3D"
-        />
-      </template>
+    <template v-else-if="model.type === MODEL_TYPE.DWG">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DWG"
+        text="2D"
+      />
+    </template>
 
-      <template
-        v-else-if="
-          model.type === MODEL_TYPE.PHOTOSPHERE || model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
-        "
-      >
-        <ViewerButton
-          :disabled="!isModelReady"
-          :project="project"
-          :model="model"
-          :window="WINDOWS.PHOTOSPHERE"
-          text="2D"
-        />
-      </template>
+    <template v-else-if="model.type === MODEL_TYPE.DXF">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.DXF"
+        text="2D"
+      />
+    </template>
 
-      <template v-if="model.type === MODEL_TYPE.IFC">
-        <div class="separator"></div>
-        <ViewerButton
-          :disabled="!isModelReady"
-          :project="project"
-          :model="model"
-          :window="WINDOWS.FRAGMENTS"
-          color="secondary"
-          text="3D"
-          class="viewer-fragments"
-        >
-          <template #subtext>
-            <span class="beta-label">Bêta</span>
-          </template>
-        </ViewerButton>
-      </template>
-    </div>
+    <template
+      v-else-if="
+        model.type === MODEL_TYPE.JPEG ||
+        model.type === MODEL_TYPE.META_BUILDING ||
+        model.type === MODEL_TYPE.PDF ||
+        model.type === MODEL_TYPE.PNG
+      "
+    >
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.PLAN"
+        text="2D"
+      />
+    </template>
+
+    <template v-else-if="model.type === MODEL_TYPE.POINT_CLOUD">
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.POINT_CLOUD"
+        text="3D"
+      />
+    </template>
+
+    <template
+      v-else-if="
+        model.type === MODEL_TYPE.PHOTOSPHERE || model.type === MODEL_TYPE.PHOTOSPHERE_BUILDING
+      "
+    >
+      <ViewerButton
+        :disabled="!isModelReady"
+        :project="project"
+        :model="model"
+        :window="WINDOWS.PHOTOSPHERE"
+        text="2D"
+      />
+    </template>
 
     <template v-if="model.document_id">
       <BIMDataButton
@@ -199,9 +180,7 @@ export default {
     const isOpen = ref(false);
     const isModelReady = computed(() => MODEL_STATUS.COMPLETED === props.model.status);
 
-    const modelDocument = computed(() =>
-      handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }),
-    );
+    const modelDocument = computed(() => handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }));
 
     const menuItems = ref([]);
     const openMenu = () => {
