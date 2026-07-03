@@ -1,29 +1,39 @@
 <template>
   <div class="naming-constraints-list">
-    <div class="naming-constraints-list__head">
+    <div v-if="constraints.length > 0" class="naming-constraints-list__head flex flex-col m-t-24">
       <span class="naming-constraints-list__head__title">
         {{ $t("NamingConstraint.rulesSectionTitle") }}
       </span>
-      <BIMDataButton color="primary" fill radius @click="create">
-        <BIMDataIconRules size="xs" margin="0 6px 0 0" />
-        {{ $t("NamingConstraint.addRuleButton") }}
-      </BIMDataButton>
+      <div class="naming-constraints-list__head__actions flex items-center m-t-6">
+        <BIMDataButton color="primary" fill radius @click="create">
+          <BIMDataIconAddGavel size="xs" margin="0 6px 0 0" />
+          {{ $t("NamingConstraint.addRuleButton") }}
+        </BIMDataButton>
+        <BIMDataButton
+          class="naming-constraints-list__manage"
+          color="default"
+          fill
+          radius
+          @click="openLists"
+        >
+          <BIMDataIconList size="xs" margin="0 6px 0 0" />
+          {{ $t("NamingConstraint.manageListsButton") }}
+        </BIMDataButton>
+      </div>
     </div>
 
     <BIMDataSearch
       v-if="constraints.length > 0"
       class="naming-constraints-list__search"
       width="100%"
+      color="primary"
       radius
       clear
       :placeholder="$t('NamingConstraint.searchPlaceholder')"
       v-model="searchText"
     />
 
-    <div
-      v-if="constraints.length === 0"
-      class="naming-constraints-list__empty"
-    >
+    <div v-if="constraints.length === 0" class="naming-constraints-list__empty">
       <BIMDataIllustration
         name="emptyNamingConvention"
         :x="90"
@@ -38,7 +48,7 @@
         {{ $t("NamingConstraint.rulesEmptyText") }}
       </span>
       <BIMDataButton color="primary" fill radius @click="create">
-        <BIMDataIconRules size="xs" margin="0 6px 0 0" />
+        <BIMDataIconAddGavel size="xs" margin="0 6px 0 0" />
         {{ $t("NamingConstraint.addRuleButton") }}
       </BIMDataButton>
     </div>
@@ -50,9 +60,12 @@
         class="naming-constraints-list__item"
       >
         <div class="naming-constraints-list__item__main">
-          <span class="naming-constraints-list__item__name">
-            {{ constraint.name }}
-          </span>
+          <div class="naming-constraints-list__item__name flex items-center">
+            <BIMDataIconNamingConvention size="xs" margin="0 6px 0 0" />
+            <span>
+              {{ constraint.name }}
+            </span>
+          </div>
           <div class="naming-constraints-list__item__badges">
             <span class="naming-constraints-list__item__chip">
               {{ buildExample(constraint.rule) }}
@@ -84,28 +97,12 @@
               {{ $t("t.cancel") }}
             </BIMDataButton>
           </template>
-          <BIMDataButton
-            v-else
-            ghost
-            rounded
-            icon
-            @click="confirmId = constraint.id"
-          >
+          <BIMDataButton v-else ghost rounded icon @click="confirmId = constraint.id">
             <BIMDataIconDelete fill color="high" size="xs" />
           </BIMDataButton>
         </div>
       </li>
     </ul>
-
-    <BIMDataButton
-      class="naming-constraints-list__manage"
-      ghost
-      radius
-      @click="openLists"
-    >
-      <BIMDataIconList size="xs" margin="0 6px 0 0" />
-      {{ $t("NamingConstraint.manageListsButton") }}
-    </BIMDataButton>
   </div>
 </template>
 
@@ -127,8 +124,8 @@ export default {
     const filteredConstraints = computed(() => {
       const search = searchText.value.trim().toLowerCase();
       if (!search) return constraints.value;
-      return constraints.value.filter(constraint =>
-        (constraint.name ?? "").toLowerCase().includes(search)
+      return constraints.value.filter((constraint) =>
+        (constraint.name ?? "").toLowerCase().includes(search),
       );
     });
 
@@ -137,7 +134,7 @@ export default {
       localState.currentView = "constraint-form";
     };
 
-    const edit = constraint => {
+    const edit = (constraint) => {
       localState.constraint = constraint;
       localState.currentView = "constraint-form";
     };
@@ -146,13 +143,11 @@ export default {
       localState.currentView = "templates-list";
     };
 
-    const remove = async constraint => {
+    const remove = async (constraint) => {
       try {
         localState.loading = true;
         await deleteNamingConstraint(localState.project, constraint);
-        localState.constraints = localState.constraints.filter(
-          item => item.id !== constraint.id
-        );
+        localState.constraints = localState.constraints.filter((item) => item.id !== constraint.id);
       } finally {
         confirmId.value = null;
         localState.loading = false;
@@ -171,123 +166,10 @@ export default {
       create,
       edit,
       openLists,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 
-<style scoped lang="scss">
-.naming-constraints-list {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  height: 100%;
-  padding: 18px;
-
-  &__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-
-    &__title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--color-primary);
-    }
-  }
-
-  &__empty {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 24px 12px;
-    text-align: center;
-
-    &__title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--color-primary);
-    }
-
-    &__text {
-      max-width: 280px;
-      font-size: 13px;
-      line-height: 18px;
-      color: var(--color-granite);
-    }
-  }
-
-  &__items {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 6px;
-    background-color: var(--color-white);
-    box-shadow: var(--box-shadow);
-
-    &__main {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
-      flex-grow: 1;
-    }
-
-    &__name {
-      font-weight: 600;
-      color: var(--color-primary);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    &__badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    &__chip {
-      padding: 2px 8px;
-      border-radius: 6px;
-      background-color: var(--color-tertiary-lightest, var(--color-silver-light));
-      color: var(--color-granite);
-      font-family: monospace;
-      font-size: 12px;
-
-      &--strict {
-        background-color: var(--color-warning-lightest, var(--color-silver-light));
-        color: var(--color-warning);
-        font-family: inherit;
-      }
-    }
-
-    &__actions {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-  }
-
-  &__manage {
-    margin-top: auto;
-    align-self: flex-start;
-  }
-}
-</style>
+<style scoped src="./NamingConstraintsList.css"></style>

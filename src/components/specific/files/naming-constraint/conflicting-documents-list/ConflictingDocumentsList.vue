@@ -99,13 +99,10 @@ export default {
     const editingId = ref(null);
     const draftName = ref("");
     const nameInput = ref(null);
-    const names = reactive(
-      Object.fromEntries(props.documents.map((doc) => [doc.id, doc.name])),
-    );
+    const names = reactive(Object.fromEntries(props.documents.map((doc) => [doc.id, doc.name])));
     const toDelete = reactive({});
 
-    const isValid = (doc) =>
-      matchName(names[doc.id] ?? doc.name, props.rule ?? doc.namingRule);
+    const isValid = (doc) => matchName(names[doc.id] ?? doc.name, props.rule ?? doc.namingRule);
 
     const effectiveRule = (doc) => props.rule ?? doc.namingRule ?? null;
 
@@ -165,4 +162,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ConflictingDocumentsList.scss"></style>
+<style scoped src="./ConflictingDocumentsList.scss"></style>
