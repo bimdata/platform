@@ -89,9 +89,7 @@ export default {
   setup(props) {
     const { updateFiles, deleteFiles } = useFiles();
 
-    const allValid = ref(
-      props.documents.every((doc) => matchName(doc.name, props.rule?.rule)),
-    );
+    const allValid = ref(props.documents.every((doc) => matchName(doc.name, props.rule?.rule)));
     const pending = ref({ renamed: [], deleted: [] });
 
     const close = () => props.onClose();
@@ -120,4 +118,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./NamingConflictModal.scss"></style>
+<style scoped src="./NamingConflictModal.css"></style>

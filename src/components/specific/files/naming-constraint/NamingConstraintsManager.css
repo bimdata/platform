@@ -1,0 +1,48 @@
+.naming-constraints-manager {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-white);
+
+  & .naming-constraints-manager__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 34px;
+
+    & .naming-constraints-manager__header__back {
+      margin-left: -6px;
+    }
+
+    & .naming-constraints-manager__header__title {
+      flex-grow: 1;
+      font-size: 12px;
+      color: var(--color-primary);
+    }
+  }
+
+  & .naming-constraints-manager__content {
+    height: calc(100% - 34px);
+    position: relative;
+    flex: 1;
+  }
+
+  & .naming-constraints-manager__loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 1;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

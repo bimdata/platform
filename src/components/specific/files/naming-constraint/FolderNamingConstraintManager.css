@@ -1,0 +1,46 @@
+.folder-naming-constraint-manager {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-white);
+}
+.folder-naming-constraint-manager__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--color-silver-light);
+}
+.folder-naming-constraint-manager__header__back {
+  margin-left: -6px;
+}
+.folder-naming-constraint-manager__header__title {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+.folder-naming-constraint-manager__content {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+}
+.folder-naming-constraint-manager__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

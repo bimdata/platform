@@ -10,9 +10,9 @@
         :disabled="localState.loading"
         @click="back"
       >
-        <BIMDataIconChevron :rotate="270" size="xxs" fill color="granite" />
+        <BIMDataIconChevron :rotate="180" size="xxs" fill color="granite" />
       </BIMDataButton>
-      <BIMDataIconLock v-else size="s" fill color="primary" />
+      <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
 
       <span class="naming-constraints-manager__header__title">
         {{ $t("NamingConstraint.managerTitle") }}
@@ -25,10 +25,7 @@
 
     <div class="naming-constraints-manager__content">
       <transition name="fade">
-        <div
-          v-show="localState.loading"
-          class="naming-constraints-manager__loader"
-        >
+        <div v-show="localState.loading" class="naming-constraints-manager__loader">
           <BIMDataSpinner />
         </div>
       </transition>
@@ -54,7 +51,7 @@ const components = {
   "constraints-list": "NamingConstraintsList",
   "constraint-form": "NamingConstraintForm",
   "templates-list": "NamingPartsTemplatesList",
-  "template-form": "NamingPartsTemplateForm"
+  "template-form": "NamingPartsTemplateForm",
 };
 
 export default {
@@ -62,18 +59,17 @@ export default {
     NamingConstraintForm,
     NamingConstraintsList,
     NamingPartsTemplateForm,
-    NamingPartsTemplatesList
+    NamingPartsTemplatesList,
   },
   props: {
     project: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const { closeSidePanel } = useAppSidePanel();
-    const { loadNamingConstraints, loadNamingPartsTemplates } =
-      useNamingConstraints();
+    const { loadNamingConstraints, loadNamingPartsTemplates } = useNamingConstraints();
 
     const localState = reactive({
       project: props.project,
@@ -82,16 +78,14 @@ export default {
       constraint: null,
       template: null,
       currentView: "constraints-list",
-      loading: false
+      loading: false,
     });
 
     provide("localState", localState);
 
     const currentComponent = computed(() => components[localState.currentView]);
 
-    const showBack = computed(
-      () => localState.currentView !== "constraints-list"
-    );
+    const showBack = computed(() => localState.currentView !== "constraints-list");
 
     const back = () => {
       if (localState.currentView === "constraint-form") {
@@ -110,7 +104,7 @@ export default {
         localState.loading = true;
         const [constraints, templates] = await Promise.all([
           loadNamingConstraints(props.project),
-          loadNamingPartsTemplates(props.project)
+          loadNamingPartsTemplates(props.project),
         ]);
         localState.constraints = constraints;
         localState.templates = templates;
@@ -126,62 +120,10 @@ export default {
       showBack,
       // Methods
       back,
-      closeSidePanel
+      closeSidePanel,
     };
-  }
+  },
 };
 </script>
 
-<style scoped lang="scss">
-.naming-constraints-manager {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background-color: var(--color-white);
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-height: 52px;
-    padding: 0 18px;
-    border-bottom: 1px solid var(--color-silver-light);
-
-    &__back {
-      margin-left: -6px;
-    }
-
-    &__title {
-      flex-grow: 1;
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--color-primary);
-    }
-  }
-
-  &__content {
-    position: relative;
-    flex: 1;
-    overflow-y: auto;
-  }
-
-  &__loader {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.6);
-    z-index: 1;
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
+<style scoped src="./NamingConstraintsManager.css"></style>

@@ -1,0 +1,85 @@
+.naming-constraint-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.naming-constraint-form__title {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-primary);
+}
+.naming-constraint-form__step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background-color: var(--color-silver-light);
+}
+.naming-constraint-form__step__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.naming-constraint-form__step__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 12px;
+}
+.naming-constraint-form__step__label {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.naming-constraint-form__radios {
+  display: flex;
+  gap: var(--spacing-unit);
+  .bimdata-radio {
+    flex: auto;
+  }
+}
+.naming-constraint-form__strict {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.naming-constraint-form__help {
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--color-granite);
+}
+.naming-constraint-form__error {
+  font-size: 12px;
+  color: var(--color-high);
+}
+.naming-constraint-form__preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--color-tertiary-lightest, var(--color-silver-light));
+}
+.naming-constraint-form__preview__label {
+  font-size: 12px;
+  color: var(--color-granite);
+}
+.naming-constraint-form__preview__value {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--color-primary);
+}
+.naming-constraint-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  .bimdata-btn { 
+    flex: auto;
+  }
+}
