@@ -162,4 +162,4 @@ export default {
 };
 </script>
 
-<style scoped src="./ConflictingDocumentsList.scss"></style>
+<style scoped src="./ConflictingDocumentsList.css"></style>
