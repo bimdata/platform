@@ -1,9 +1,9 @@
 {
   "NamingConstraint": {
-    "managerTitle": "Gestion des conventions de nommage",
+    "managerTitle": "Conventions de nommage",
     "constraintsTab": "Règles de nommage",
     "templatesTab": "Listes de valeurs",
-    "rulesSectionTitle": "Liste des règles",
+    "rulesSectionTitle": "Liste des règles du projet",
     "addRuleButton": "ajouter une règle",
     "searchPlaceholder": "Rechercher",
     "rulesEmptyTitle": "Pas de règle ajoutée",
@@ -36,6 +36,7 @@
     "previewLabel": "Aperçu",
     "ruleSectionTitle": "Règle",
     "separatorLabel": "Séparateur",
+    "emptyStateHelp": "Ajoutez votre premier élément, pour commencer à établir votre règle.",
     "addPartButton": "Ajouter un élément",
     "emptyParts": "Ajoutez au moins un élément pour définir la règle.",
     "partTypeLabel": "Type",

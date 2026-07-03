@@ -1,33 +1,16 @@
 <template>
   <div class="rule-builder">
     <ul class="rule-builder__parts" v-if="parts.length > 0">
-      <li
-        v-for="(part, index) in parts"
-        :key="index"
-        class="rule-builder__part"
-      >
+      <li v-for="(part, index) in parts" :key="index" class="rule-builder__part">
         <div class="rule-builder__part__grip">
           <span v-for="dot in 6" :key="dot" class="rule-builder__part__dot" />
         </div>
 
         <div class="rule-builder__part__body">
           <div class="rule-builder__part__row">
-            <select
-              class="rule-builder__select rule-builder__select--type"
-              :value="part.type"
-              @change="onTypeChange(index, $event.target.value)"
-            >
-              <option value="n_chars">
-                {{ $t("NamingConstraint.partTypeNChars") }}
-              </option>
-              <option value="bounded">
-                {{ $t("NamingConstraint.partTypeBounded") }}
-              </option>
-              <option value="values_in">
-                {{ $t("NamingConstraint.partTypeValuesIn") }}
-              </option>
-            </select>
-
+            <div class="rule-builder__part__type">
+              {{ $t(partTypeLabel(part.type)) }}
+            </div>
             <template v-if="part.type === 'n_chars'">
               <input
                 class="rule-builder__number"
@@ -66,11 +49,7 @@
                 <option value="">
                   {{ $t("NamingConstraint.selectListPlaceholder") }}
                 </option>
-                <option
-                  v-for="template in templates"
-                  :key="template.id"
-                  :value="template.id"
-                >
+                <option v-for="template in templates" :key="template.id" :value="template.id">
                   {{ template.name }}
                 </option>
               </select>
@@ -88,13 +67,7 @@
         </div>
 
         <div class="rule-builder__part__actions">
-          <BIMDataButton
-            ghost
-            rounded
-            icon
-            :disabled="index === 0"
-            @click="move(index, -1)"
-          >
+          <BIMDataButton ghost rounded icon :disabled="index === 0" @click="move(index, -1)">
             <BIMDataIconChevron fill color="granite" :rotate="0" size="xxs" />
           </BIMDataButton>
           <BIMDataButton
@@ -113,23 +86,52 @@
       </li>
     </ul>
 
-    <BIMDataButton
-      class="rule-builder__add"
-      color="primary"
-      ghost
-      radius
-      @click="addPart"
-    >
-      <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
+    <p v-else class="rule-builder__empty-text">
+      {{ $t("NamingConstraint.emptyStateHelp") }}
+    </p>
+
+    <p class="rule-builder__add-label">
       {{ $t("NamingConstraint.addPartButton") }}
-    </BIMDataButton>
+    </p>
+
+    <div class="rule-builder__add-buttons flex">
+      <BIMDataButton
+        fill
+        color="default"
+        radius
+        class="rule-builder__add-button"
+        @click="addPart('n_chars')"
+      >
+        + {{ $t("NamingConstraint.partTypeNChars") }}
+      </BIMDataButton>
+
+      <BIMDataButton
+        fill
+        color="default"
+        radius
+        class="rule-builder__add-button"
+        @click="addPart('bounded')"
+      >
+        + {{ $t("NamingConstraint.partTypeBounded") }}
+      </BIMDataButton>
+
+      <BIMDataButton
+        fill
+        color="default"
+        radius
+        class="rule-builder__add-button"
+        @click="addPart('values_in')"
+      >
+        + {{ $t("NamingConstraint.partTypeValuesIn") }}
+      </BIMDataButton>
+    </div>
   </div>
 </template>
 
 <script>
 import { computed } from "vue";
 
-const defaultPart = type => {
+const defaultPart = (type) => {
   switch (type) {
     case "bounded":
       return { type: "bounded", min_value: 1, max_value: 99 };
@@ -145,12 +147,12 @@ export default {
   props: {
     modelValue: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     templates: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
@@ -158,15 +160,15 @@ export default {
 
     const clone = () => JSON.parse(JSON.stringify(parts.value));
 
-    const emitChange = next => {
+    const emitChange = (next) => {
       emit("update:modelValue", next);
     };
 
-    const addPart = () => {
-      emitChange([...clone(), defaultPart("n_chars")]);
+    const addPart = (type) => {
+      emitChange([...clone(), defaultPart(type)]);
     };
 
-    const removePart = index => {
+    const removePart = (index) => {
       const next = clone();
       next.splice(index, 1);
       emitChange(next);
@@ -187,13 +189,13 @@ export default {
       emitChange(next);
     };
 
-    const elementsText = part => (part.elements ?? []).join(", ");
+    const elementsText = (part) => (part.elements ?? []).join(", ");
 
     const onElementsInput = (index, value) => {
       const next = clone();
       next[index].elements = value
         .split(",")
-        .map(element => element.trim())
+        .map((element) => element.trim())
         .filter(Boolean);
       emitChange(next);
     };
@@ -205,22 +207,35 @@ export default {
       emitChange(next);
     };
 
-    const selectedTemplateId = part => {
+    const selectedTemplateId = (part) => {
       const elements = part.elements ?? [];
       const template = props.templates.find(
-        item =>
+        (item) =>
           (item.elements ?? []).length === elements.length &&
-          (item.elements ?? []).every((value, i) => value === elements[i])
+          (item.elements ?? []).every((value, i) => value === elements[i]),
       );
       return template ? template.id : "";
     };
 
     const onLoadTemplate = (index, event) => {
       const templateId = Number(event.target.value);
-      const template = props.templates.find(item => item.id === templateId);
+      const template = props.templates.find((item) => item.id === templateId);
       const next = clone();
       next[index].elements = template ? [...(template.elements ?? [])] : [];
       emitChange(next);
+    };
+
+    const partTypeLabel = (type) => {
+      switch (type) {
+        case "n_chars":
+          return "NamingConstraint.partTypeNChars";
+        case "bounded":
+          return "NamingConstraint.partTypeBounded";
+        case "values_in":
+          return "NamingConstraint.partTypeValuesIn";
+        default:
+          return "";
+      }
     };
 
     return {
@@ -230,109 +245,16 @@ export default {
       addPart,
       removePart,
       onTypeChange,
+      partTypeLabel,
       move,
       elementsText,
       onElementsInput,
       onNumberInput,
       selectedTemplateId,
-      onLoadTemplate
+      onLoadTemplate,
     };
-  }
+  },
 };
 </script>
 
-<style scoped lang="scss">
-.rule-builder {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  &__parts {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  &__part {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 10px;
-    border-radius: 6px;
-    background-color: var(--color-silver-light);
-
-    &__grip {
-      display: grid;
-      grid-template-columns: repeat(2, 4px);
-      gap: 3px;
-      margin-top: 8px;
-    }
-
-    &__dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background-color: var(--color-granite-light);
-    }
-
-    &__body {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    &__row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    &__actions {
-      display: flex;
-      gap: 2px;
-    }
-  }
-
-  &__select,
-  &__number,
-  &__elements {
-    height: 32px;
-    padding: 0 8px;
-    border: 1px solid var(--color-silver);
-    border-radius: 4px;
-    background-color: var(--color-white);
-    color: var(--color-primary);
-    font-size: 13px;
-  }
-
-  &__select--type {
-    flex-shrink: 0;
-    min-width: 120px;
-  }
-
-  &__select--list {
-    flex-grow: 1;
-  }
-
-  &__number {
-    width: 72px;
-  }
-
-  &__dash {
-    color: var(--color-granite);
-  }
-
-  &__elements {
-    width: 100%;
-  }
-
-  &__add {
-    align-self: flex-start;
-  }
-}
-</style>
+<style scoped src="./RuleBuilder.css"></style>

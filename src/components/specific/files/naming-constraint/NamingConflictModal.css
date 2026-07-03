@@ -1,0 +1,31 @@
+.naming-conflict-modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+.naming-conflict-modal__rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.naming-conflict-modal__rule__name {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--color-primary);
+}
+.naming-conflict-modal__rule__chip {
+  padding: 3px 7px;
+  background-color: #f0f5ff;
+  color: #205dbd;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.naming-conflict-modal__intro, .naming-conflict-modal__warning {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-granite);
+}
+.naming-conflict-modal__warning {
+  font-weight: 700;
+}
