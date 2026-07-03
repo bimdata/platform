@@ -25,10 +25,7 @@
 
     <div class="folder-naming-constraint-manager__content">
       <transition name="fade">
-        <div
-          v-show="localState.loading"
-          class="folder-naming-constraint-manager__loader"
-        >
+        <div v-show="localState.loading" class="folder-naming-constraint-manager__loader">
           <BIMDataSpinner />
         </div>
       </transition>
@@ -50,31 +47,28 @@ import NamingConstraintForm from "./naming-constraint-form/NamingConstraintForm.
 
 const components = {
   "folder-rule": "FolderNamingConstraintSelector",
-  "constraint-form": "NamingConstraintForm"
+  "constraint-form": "NamingConstraintForm",
 };
 
 export default {
   components: {
     FolderNamingConstraintSelector,
-    NamingConstraintForm
+    NamingConstraintForm,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     folder: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const { closeSidePanel } = useAppSidePanel();
-    const {
-      loadNamingConstraints,
-      loadNamingPartsTemplates,
-      fetchFolderNamingConstraint
-    } = useNamingConstraints();
+    const { loadNamingConstraints, loadNamingPartsTemplates, fetchFolderNamingConstraint } =
+      useNamingConstraints();
 
     const localState = reactive({
       project: props.project,
@@ -86,7 +80,7 @@ export default {
       listView: "folder-rule",
       selectedConstraintId: null,
       recursive: false,
-      loading: false
+      loading: false,
     });
 
     provide("localState", localState);
@@ -106,7 +100,7 @@ export default {
         const [constraints, templates, folderRule] = await Promise.all([
           loadNamingConstraints(props.project),
           loadNamingPartsTemplates(props.project),
-          fetchFolderNamingConstraint(props.project, props.folder)
+          fetchFolderNamingConstraint(props.project, props.folder),
         ]);
         localState.constraints = constraints;
         localState.templates = templates;
@@ -126,62 +120,10 @@ export default {
       showBack,
       // Methods
       back,
-      closeSidePanel
+      closeSidePanel,
     };
-  }
+  },
 };
 </script>
 
-<style scoped lang="scss">
-.folder-naming-constraint-manager {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background-color: var(--color-white);
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-height: 52px;
-    padding: 0 18px;
-    border-bottom: 1px solid var(--color-silver-light);
-
-    &__back {
-      margin-left: -6px;
-    }
-
-    &__title {
-      flex-grow: 1;
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--color-primary);
-    }
-  }
-
-  &__content {
-    position: relative;
-    flex: 1;
-    overflow-y: auto;
-  }
-
-  &__loader {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.6);
-    z-index: 1;
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
+<style scoped src="./FolderNamingConstraintManager.css"></style>

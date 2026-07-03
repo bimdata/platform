@@ -6,8 +6,8 @@
           name: routeNames.projectGroups,
           params: {
             spaceID: project.cloud.id,
-            projectID: project.id
-          }
+            projectID: project.id,
+          },
         }"
       >
         <BIMDataButton
@@ -26,23 +26,6 @@
           </span>
         </BIMDataButton>
       </AppLink>
-
-      <BIMDataButton
-        v-if="isProjectAdmin(project)"
-        data-test-id="btn-manage-naming-constraints"
-        class="m-l-12"
-        :width="isXXL ? undefined : '120px'"
-        color="default"
-        outline
-        radius
-        :icon="isXXL"
-        @click="openNamingConstraintsManager"
-      >
-        <BIMDataIconRules size="s" />
-        <span v-if="!isXXL" style="margin-left: 6px">
-          {{ $t("NamingConstraint.managerTitle") }}
-        </span>
-      </BIMDataButton>
     </AppSlotContent>
 
     <div class="project-files__content">
@@ -82,7 +65,7 @@ export default {
     AppLink,
     AppLoading,
     AppSlotContent,
-    FilesManager
+    FilesManager,
   },
   setup() {
     const { isProjectAdmin } = useUser();
@@ -96,18 +79,9 @@ export default {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
-        loadProjectModels(currentProject.value)
+        loadProjectModels(currentProject.value),
       ]);
     }, 1000);
-
-    const openNamingConstraintsManager = () => {
-      openSidePanel("right", {
-        component: NamingConstraintsManager,
-        props: {
-          project: currentProject.value
-        }
-      });
-    };
 
     return {
       // References
@@ -118,11 +92,10 @@ export default {
       // Methods
       isProjectAdmin,
       reloadData,
-      openNamingConstraintsManager,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 

@@ -1,0 +1,108 @@
+.folder-naming-constraint-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+}
+.folder-naming-constraint-selector__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.folder-naming-constraint-selector__head__title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+.folder-naming-constraint-selector__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 12px;
+  text-align: center;
+}
+.folder-naming-constraint-selector__empty__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.folder-naming-constraint-selector__empty__text {
+  max-width: 280px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-granite);
+}
+.folder-naming-constraint-selector__items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.folder-naming-constraint-selector__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+}
+.folder-naming-constraint-selector__item--selected {
+  border-color: var(--color-primary);
+}
+.folder-naming-constraint-selector__item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  flex-grow: 1;
+}
+.folder-naming-constraint-selector__item__name {
+  font-weight: 600;
+  color: var(--color-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.folder-naming-constraint-selector__item__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.folder-naming-constraint-selector__item__chip {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: #F0F5FF;
+  color: var(--color-neutral);
+  font-family: monospace;
+  font-size: 12px;
+}
+.folder-naming-constraint-selector__item__chip--strict {
+  background-color: var(--color-warning-lightest, var(--color-silver-light));
+  color: var(--color-warning);
+  font-family: inherit;
+}
+.folder-naming-constraint-selector__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-silver-light);
+}
+.folder-naming-constraint-selector__footer__help {
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--color-granite);
+}
+.folder-naming-constraint-selector__footer__save {
+  margin-top: 6px;
+}
