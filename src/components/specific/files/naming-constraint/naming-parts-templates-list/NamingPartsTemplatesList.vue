@@ -1,5 +1,5 @@
 <template>
-  <div class="naming-parts-templates-list">
+  <div class="naming-parts-templates-list m-t-18">
     <div class="naming-parts-templates-list__head">
       <span class="naming-parts-templates-list__head__title">
         {{ $t("NamingConstraint.listsSectionTitle") }}
