@@ -1,18 +1,21 @@
 <template>
   <div class="naming-constraints-manager">
     <div class="naming-constraints-manager__header">
-      <BIMDataButton
-        v-if="showBack"
-        class="naming-constraints-manager__header__back"
-        ghost
-        rounded
-        icon
-        :disabled="localState.loading"
-        @click="back"
-      >
-        <BIMDataIconChevron :rotate="180" size="xxs" fill color="granite" />
-      </BIMDataButton>
-      <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
+      <div class="naming-constraints-manager__header__icon">
+        <BIMDataButton
+          v-if="showBack"
+          class="naming-constraints-manager__header__back"
+          ghost
+          radius
+          icon
+          :disabled="localState.loading"
+          @click="back"
+        >
+          <BIMDataIconChevron :rotate="180" size="xxs" fill color="granite" margin="0 6px 0 0" />
+          {{ $t("t.back") }}
+        </BIMDataButton>
+        <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
+      </div>
 
       <span class="naming-constraints-manager__header__title">
         {{ $t("NamingConstraint.managerTitle") }}

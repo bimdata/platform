@@ -79,9 +79,19 @@
   white-space: nowrap;
 }
 .naming-constraints-list__item__badges {
-  display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+.naming-constraints-list__item__avatar {
+  padding: 2px 4px;
+  border-radius: 6px;
+  background-color: #F0F5FF;
+  color: var(--color-neutral);
+  font-size: 12px;
+  &:deep(.user-avatar ) {
+    min-width: 16px;
+    min-height: 16px;
+  }
 }
 .naming-constraints-list__item__chip {
   padding: 2px 8px;
@@ -99,7 +109,6 @@
 .naming-constraints-list__item__actions {
   display: flex;
   align-items: center;
-  gap: 4px;
   flex-shrink: 0;
 }
 .naming-constraints-list__manage {
