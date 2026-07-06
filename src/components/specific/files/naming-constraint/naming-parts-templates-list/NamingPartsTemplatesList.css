@@ -79,8 +79,8 @@
 .naming-parts-templates-list__item__chip {
   padding: 2px 8px;
   border-radius: 6px;
-  background-color: var(--color-tertiary-lightest, var(--color-silver-light));
-  color: var(--color-granite);
+  background-color: var(--color-neutral-lighter);
+  color: var(--color-neutral);
   font-size: 12px;
 }
 .naming-parts-templates-list__item__actions {

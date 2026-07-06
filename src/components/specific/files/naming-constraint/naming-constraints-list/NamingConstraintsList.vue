@@ -62,12 +62,42 @@
         <div class="naming-constraints-list__item__main">
           <div class="naming-constraints-list__item__name flex items-center">
             <BIMDataIconNamingConvention size="xs" margin="0 6px 0 0" />
-            <span>
-              {{ constraint.name }}
-            </span>
+            <BIMDataTextbox :text="constraint.name" />
+            <div class="flex">
+              <BIMDataButton ghost rounded icon @click="edit(constraint)">
+                <BIMDataIconEdit size="xs" />
+              </BIMDataButton>
+              <template v-if="confirmId === constraint.id">
+                <BIMDataButton
+                  color="high"
+                  fill
+                  radius
+                  width="70px"
+                  :disabled="localState.loading"
+                  @click="remove(constraint)"
+                >
+                  {{ $t("t.confirm") }}
+                </BIMDataButton>
+                <BIMDataButton ghost radius width="70px" @click="confirmId = null">
+                  {{ $t("t.cancel") }}
+                </BIMDataButton>
+              </template>
+              <BIMDataButton v-else ghost rounded icon @click="confirmId = constraint.id">
+                <BIMDataIconDelete fill color="high" size="xs" />
+              </BIMDataButton>
+            </div>
           </div>
-          <div class="naming-constraints-list__item__badges">
-            <span class="naming-constraints-list__item__chip">
+          <div class="naming-constraints-list__item__badges flex items-center">
+            <div
+              v-if="constraint.creator"
+              class="naming-constraints-list__item__avatar flex items-center"
+            >
+              <UserAvatar :user="constraint.creator" size="16" />
+              <span class="m-l-6">
+                {{ constraint?.creator?.email }}
+              </span>
+            </div>
+            <span class="naming-constraints-list__item__chip flex items-center">
               {{ buildExample(constraint.rule) }}
             </span>
             <span
@@ -78,7 +108,7 @@
             </span>
           </div>
         </div>
-        <div class="naming-constraints-list__item__actions">
+        <!-- <div class="naming-constraints-list__item__actions">
           <BIMDataButton ghost rounded icon @click="edit(constraint)">
             <BIMDataIconEdit size="xs" />
           </BIMDataButton>
@@ -100,7 +130,7 @@
           <BIMDataButton v-else ghost rounded icon @click="confirmId = constraint.id">
             <BIMDataIconDelete fill color="high" size="xs" />
           </BIMDataButton>
-        </div>
+        </div> -->
       </li>
     </ul>
   </div>
@@ -110,8 +140,14 @@
 import { computed, inject, ref } from "vue";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { buildExample } from "../../../../../utils/naming-constraint.js";
+import { User } from "oidc-client-ts";
+
+import UserAvatar from "../../../users/user-avatar/UserAvatar.vue";
 
 export default {
+  components: {
+    UserAvatar,
+  },
   setup() {
     const { deleteNamingConstraint } = useNamingConstraints();
 

@@ -16,8 +16,8 @@
 }
 .naming-conflict-modal__rule__chip {
   padding: 3px 7px;
-  background-color: #f0f5ff;
-  color: #205dbd;
+  background-color: var(--color-neutral-lighter);
+  color: var(--color-neutral);
   border-radius: 6px;
   font-size: 12px;
 }
