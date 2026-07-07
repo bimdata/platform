@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Startseite",
+    "spaces": "Bereiche",
+    "projects": "Projekte",
+    "invitations": "Einladungen",
+    "favorites": "Favoriten",
+    "subscription": "Abonnement"
+  },
   "OidcCallbackError": {
     "message": "Bei der Authentifizierung ist ein Fehler aufgetreten...",
     "retryButtonText": "Nochmals versuchen"
@@ -109,10 +117,10 @@
     "placeholder": "( Kein Projekt )"
   },
   "DashboardProjectList": {
-    "title": "Neueste Projekte"
+    "title": "Alle aktuellen Projekte anzeigen"
   },
   "DashboardSpaceList": {
-    "title": "Neueste Bereiche"
+    "title": "Alle aktuellen Räume anzeigen"
   },
   "DashboardWelcomeTile": {
     "title": "Dashboard",
@@ -455,7 +463,15 @@
     "projectsTileBottomText": "Meine Projekte",
     "subscriptionsTileTitle": "Abonnements",
     "subscriptionsTileText": "Hier finden Sie alle Ihre Rechnungen und Ihre aktuellen Zahlungsinformationen.",
-    "subscriptionsTileBottomText": "Meine Abonnements verwalten"
+    "subscriptionsTileBottomText": "Meine Abonnements verwalten",
+    "welcome": "Guten Tag {name}, schön, Sie wiederzusehen!",
+    "spacesTileLabel": "aktive Räume",
+    "spacesTileButton": "Alle Räume anzeigen",
+    "projectsTileLabel": "aktive Projekte",
+    "projectsTileButton": "Alle Projekte anzeigen",
+    "createSpaceTitle": "Erstellen Sie Ihren neuen Raum",
+    "createSpaceText": "Organisieren Sie Ihre Projekte und arbeiten Sie mit Ihrem Team in einem neuen Raum zusammen.",
+    "createSpaceButton": "Raum erstellen"
   },
   "Subscribe": {
     "title": "Wählen Sie Ihr Abonnement",

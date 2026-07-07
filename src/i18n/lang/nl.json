@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Home",
+    "spaces": "Ruimtes",
+    "projects": "Projecten",
+    "invitations": "Uitnodigingen",
+    "favorites": "Favorieten",
+    "subscription": "Abonnement"
+  },
   "OidcCallbackError": {
     "message": "Er heeft zich een fout voorgedaan bij de authenticatie",
     "retryButtonText": ""
@@ -38,10 +46,10 @@
     "placeholder": "<Geen project>"
   },
   "DashboardProjectList": {
-    "title": "Recente projecten"
+    "title": "Alle recente projecten bekijken"
   },
   "DashboardSpaceList": {
-    "title": "Recente ruimtes"
+    "title": "Alle recente ruimtes bekijken"
   },
   "DashboardWelcomeTile": {
     "title": "Dashboard",
@@ -372,7 +380,15 @@
     "projectsTileBottomText": "Projecten bekeken",
     "subscriptionsTileTitle": "Facturering en facturen",
     "subscriptionsTileText": "Vind hier al je rekeningen en de laatste betalingsinformatie.",
-    "subscriptionsTileBottomText": "Abonnementen beheren"
+    "subscriptionsTileBottomText": "Abonnementen beheren",
+    "welcome": "Hoi {name}, het is goed je weer te zien!",
+    "spacesTileLabel": "actieve ruimtes",
+    "spacesTileButton": "Alle ruimtes bekijken",
+    "projectsTileLabel": "actieve projecten",
+    "projectsTileButton": "Alle projecten bekijken",
+    "createSpaceTitle": "Maak uw nieuwe ruimte",
+    "createSpaceText": "Organiseer uw projecten en werk samen met uw team in een nieuwe ruimte.",
+    "createSpaceButton": "Ruimte maken"
   },
   "Subscribe": {
     "title": "Je abonnement kiezen",

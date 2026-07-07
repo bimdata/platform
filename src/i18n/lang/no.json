@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Hjem",
+    "spaces": "Områder",
+    "projects": "Prosjekter",
+    "invitations": "Invitasjoner",
+    "favorites": "Favoritter",
+    "subscription": "Abonnement"
+  },
   "OidcCallbackError": {
     "message": "En feil oppsto under autentiseringen...",
     "retryButtonText": ""
@@ -38,10 +46,10 @@
     "placeholder": "< Ingen prosjekt >"
   },
   "DashboardProjectList": {
-    "title": "Nylige prosjekter"
+    "title": "Se alle nylige prosjekter"
   },
   "DashboardSpaceList": {
-    "title": "Nylige rom"
+    "title": "Se alle nylige områder"
   },
   "DashboardWelcomeTile": {
     "title": "Dashbord",
@@ -372,7 +380,15 @@
     "projectsTileBottomText": "Se prosjekter",
     "subscriptionsTileTitle": "Fakturahåndtering",
     "subscriptionsTileText": "Finn alle dine fakturaer og informasjon om dine siste betalinger her.",
-    "subscriptionsTileBottomText": "Administrer abonnementer"
+    "subscriptionsTileBottomText": "Administrer abonnementer",
+    "welcome": "Hei, {name}, fint å se deg igjen!",
+    "spacesTileLabel": "aktive områder",
+    "spacesTileButton": "Se alle områder",
+    "projectsTileLabel": "aktive prosjekter",
+    "projectsTileButton": "Se alle prosjekter",
+    "createSpaceTitle": "Opprett ditt nye område",
+    "createSpaceText": "Organiser prosjektene dine og samarbeid med teamet ditt i et nytt område.",
+    "createSpaceButton": "Opprett område"
   },
   "Subscribe": {
     "title": "Velg din plan",

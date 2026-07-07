@@ -1,10 +1,5 @@
 <template>
   <div class="space-card-image">
-    <div
-      v-if="topStripe"
-      class="space-card-image__top-stripe"
-      :style="{ backgroundColor: stripeColor }"
-    ></div>
     <img v-if="space.image" loading="lazy" :src="space.image" />
     <svg
       v-else
@@ -12,7 +7,7 @@
       :style="{
         '--color': svg.color,
         '--dark-color': svg.colorDark,
-        '--light-color': svg.colorLight
+        '--light-color': svg.colorLight,
       }"
     >
       <component :is="fallbackImage" />
@@ -27,23 +22,23 @@ import fallbackImages from "./fallback-images/index.js";
 
 defineOptions({
   components: {
-    ...fallbackImages
+    ...fallbackImages,
   },
 });
 
 const props = defineProps({
   space: {
     type: Object,
-    required: true
+    required: true,
   },
   topStripe: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const rng = seedrandom(props.space.id.toString());
-const randomNumber = n => Math.abs(rng.int32()) % n;
+const randomNumber = (n) => Math.abs(rng.int32()) % n;
 
 const fallbackImageNames = Object.keys(fallbackImages);
 const fallbackImage = fallbackImageNames[randomNumber(fallbackImageNames.length)];

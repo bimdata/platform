@@ -1,122 +1,128 @@
 <template>
   <div data-test-id="view-dashboard" class="view dashboard">
-    <div class="dashboard__head">
-      <DashboardWelcomeTile data-guide="welcome-title" />
+    <h1 class="dashboard__welcome" data-guide="welcome-title">
+      {{ $t("Dashboard.welcome", { name: user.firstname }) }}
+    </h1>
+
+    <div class="dashboard__tiles">
       <AppLink
         data-test-id="btn-spaces"
         data-guide="btn-spaces"
         :to="{ name: routeNames.userSpaces }"
       >
-        <DashboardButtonTile color="primary">
-          <template #title>
-            {{ $t("t.spaces") }}
+        <DashboardButtonTile
+          color="spaces"
+          :buttonText="$t('Dashboard.spacesTileButton')"
+        >
+          <template #icon>
+            <BIMDataIconSpace size="l" />
           </template>
-          <template #content>
-            <span style="font-size: 3rem; font-weight: bold">
-              {{ spaces.length }}
-            </span>
+          <template #count>
+            {{ spaces.length }}
           </template>
-          <template #bottom-text>
-            {{ $t("Dashboard.spacesTileBottomText") }}
+          <template #label>
+            {{ $t("Dashboard.spacesTileLabel") }}
           </template>
         </DashboardButtonTile>
       </AppLink>
+
       <AppLink
         data-test-id="btn-projects"
         data-guide="btn-projects"
         :to="{ name: routeNames.userProjects }"
       >
-        <DashboardButtonTile color="secondary">
-          <template #title>
-            {{ $t("t.projects") }}
+        <DashboardButtonTile
+          color="projects"
+          :buttonText="$t('Dashboard.projectsTileButton')"
+        >
+          <template #icon>
+            <BIMDataIconProject size="l" />
           </template>
-          <template #content>
-            <span style="font-size: 3rem; font-weight: bold">
-              {{ projects.length }}
-            </span>
+          <template #count>
+            {{ projects.length }}
           </template>
-          <template #bottom-text>
-            {{ $t("Dashboard.projectsTileBottomText") }}
+          <template #label>
+            {{ $t("Dashboard.projectsTileLabel") }}
           </template>
         </DashboardButtonTile>
       </AppLink>
-      <AppLink
+
+      <DashboardActionTile
         v-if="isSubscriptionEnabled"
         data-test-id="btn-subscriptions"
         data-guide="btn-subscriptions"
         :to="{ name: routeNames.userSubscriptions }"
+        :title="$t('Dashboard.subscriptionsTileTitle')"
+        :text="$t('Dashboard.subscriptionsTileText')"
+        :buttonText="$t('Dashboard.subscriptionsTileBottomText')"
       >
-        <DashboardButtonTile>
-          <template #title>
-            {{ $t("Dashboard.subscriptionsTileTitle") }}
-          </template>
-          <template #content>
-            {{ $t("Dashboard.subscriptionsTileText") }}
-          </template>
-          <template #bottom-text>
-            {{ $t("Dashboard.subscriptionsTileBottomText") }}
-          </template>
-        </DashboardButtonTile>
-      </AppLink>
+        <template #icon>
+          <BIMDataIconPlan size="s" />
+        </template>
+      </DashboardActionTile>
+
+      <DashboardActionTile
+        data-test-id="btn-create-space"
+        :title="$t('Dashboard.createSpaceTitle')"
+        :text="$t('Dashboard.createSpaceText')"
+        :buttonText="$t('Dashboard.createSpaceButton')"
+        @click="openCreationForm"
+      >
+        <template #icon>
+          <BIMDataIconPlus size="xs" />
+        </template>
+      </DashboardActionTile>
     </div>
-    <div class="dashboard__body" :class="{ isSubscribeHorizontal }">
-      <template v-if="isSubscribeHorizontal">
-        <div>
-          <SubscribeCard v-if="isSubscriptionEnabled" layout="horizontal" />
-        </div>
-        <div class="dashboard__body__down">
-          <DashboardSpaceList :spaces="spaces" />
-          <DashboardProjectList :projects="projects" />
-        </div>
-      </template>
-      <template v-else>
-        <div class="dashboard__body__left">
-          <DashboardSpaceList :spaces="spaces" isCarousel />
-          <DashboardProjectList :projects="projects" isCarousel />
-        </div>
-        <div class="dashboard__body__right">
-          <SubscribeCard
-            v-if="isSubscriptionEnabled"
-            :layout="isXL ? 'horizontal' : 'vertical'"
-          />
-        </div>
-      </template>
+
+    <div class="dashboard__body">
+      <section class="dashboard__body__section">
+        <DashboardSpaceList
+          :spaces="spaces"
+          isCarousel
+          :creating="showCreationForm"
+          @close-creation="closeCreationForm"
+        />
+      </section>
+      <section class="dashboard__body__section">
+        <DashboardProjectList :projects="projects" isCarousel />
+      </section>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStandardBreakpoints } from "../../composables/responsive.js";
+import { useToggle } from "../../composables/toggle.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import routeNames from "../../router/route-names.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
+import { useUser } from "../../state/user.js";
 
 // Components
 import AppLink from "../../components/specific/app/app-link/AppLink.vue";
+import DashboardActionTile from "../../components/specific/dashboard/dashboard-action-tile/DashboardActionTile.vue";
 import DashboardButtonTile from "../../components/specific/dashboard/dashboard-button-tile/DashboardButtonTile.vue";
 import DashboardProjectList from "../../components/specific/dashboard/dashboard-project-list/DashboardProjectList.vue";
 import DashboardSpaceList from "../../components/specific/dashboard/dashboard-space-list/DashboardSpaceList.vue";
-import DashboardWelcomeTile from "../../components/specific/dashboard/dashboard-welcome-tile/DashboardWelcomeTile.vue";
-import SubscribeCard from "../../components/specific/subscriptions/subscribe-card/SubscribeCard.vue";
 
 export default {
   components: {
     AppLink,
+    DashboardActionTile,
     DashboardButtonTile,
     DashboardProjectList,
-    DashboardSpaceList,
-    DashboardWelcomeTile,
-    SubscribeCard
+    DashboardSpaceList
   },
   setup() {
     const { userSpaces } = useSpaces();
     const { userProjects } = useProjects();
+    const { user } = useUser();
 
-    const isSubscribeHorizontal = computed(
-      () => userSpaces.value.length + userProjects.value.length <= 4
-    );
+    const {
+      isOpen: showCreationForm,
+      open: openCreationForm,
+      close: closeCreationForm
+    } = useToggle();
 
     return {
       // References
@@ -124,12 +130,15 @@ export default {
       projects: userProjects,
       routeNames,
       spaces: userSpaces,
-      isSubscribeHorizontal,
-      // Responsive breakpoints
-      ...useStandardBreakpoints()
+      user,
+      showCreationForm,
+      // Methods
+      openCreationForm,
+      closeCreationForm
     };
   }
 };
 </script>
 
 <style scoped lang="scss" src="./Dashboard.scss"></style>
+

@@ -1,81 +1,51 @@
 @use "/src/styles/mixins.scss";
 
 .dashboard {
-  --tile-width: 300px; // miminum tile width
-  --tile-height: 240px;
+  --tile-width: 300px; // minimum tile width
 
-  &__head {
+  &__welcome {
+    margin: 0 0 calc(var(--spacing-unit) * 3);
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  &__tiles {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--tile-width), 1fr));
-    grid-template-rows: repeat(auto-fit, var(--tile-height));
     gap: calc(var(--spacing-unit) * 2);
 
-    .app-link > .dashboard-button-tile {
+    .app-link {
       height: 100%;
     }
   }
 
   &__body {
-    margin: calc(var(--spacing-unit) * 3) 0;
+    margin: calc(var(--spacing-unit) * 4) 0 calc(var(--spacing-unit) * 2);
 
     display: flex;
+    flex-wrap: wrap;
     gap: calc(var(--spacing-unit) * 2);
 
-    &__left {
-      flex-grow: 1;
+    &__section {
+      flex: 1 1 420px;
+      min-width: 0;
     }
-
-    &__right {
-      padding-top: calc(var(--spacing-unit) * 4.5);
-      padding-bottom: calc(var(--spacing-unit) * 2);
-    }
-
-    &__down {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 2);
-    }
-  }
-  .isSubscribeHorizontal {
-    flex-direction: column;
   }
 }
 
 @include mixins.media-breakpoint-down(xxl) {
   .dashboard {
-    --tile-height: 200px;
-
-    &__head {
+    &__tiles {
       grid-template-columns: repeat(2, minmax(var(--tile-width), 1fr));
-    }
-  }
-}
-
-@include mixins.media-breakpoint-down(xl) {
-  .dashboard {
-    &__body {
-      flex-direction: column-reverse;
-
-      &__right {
-        padding: var(--spacing-unit) 0;
-      }
     }
   }
 }
 
 @include mixins.media-breakpoint-down(lg) {
   .dashboard {
-    &__head {
+    &__tiles {
       grid-template-columns: 1fr;
-
-      &:deep() {
-        .dashboard-info-tile {
-          height: var(--tile-height);
-        }
-
-        .app-link > .dashboard-button-tile {
-          height: var(--tile-height);
-        }
-      }
     }
   }
 }

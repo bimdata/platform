@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Home",
+    "spaces": "Spaces",
+    "projects": "Projects",
+    "invitations": "Invitations",
+    "favorites": "Favorites",
+    "subscription": "Subscription"
+  },
   "OidcCallbackError": {
     "message": "An error occured during authentication...",
     "retryButtonText": "Try Again"
@@ -179,10 +187,10 @@
     "placeholder": "( No project )"
   },
   "DashboardProjectList": {
-    "title": "Recent projects"
+    "title": "View all recent projects"
   },
   "DashboardSpaceList": {
-    "title": "Recent spaces"
+    "title": "View all recent spaces"
   },
   "DashboardWelcomeTile": {
     "title": "Dashboard",
@@ -525,7 +533,15 @@
     "projectsTileBottomText": "View projects",
     "subscriptionsTileTitle": "Billing & Invoices",
     "subscriptionsTileText": "Find all your invoices and your latest payment information here.",
-    "subscriptionsTileBottomText": "Manage subscriptions"
+    "subscriptionsTileBottomText": "Manage subscriptions",
+    "welcome": "Hi {name}, it's great to see you again !",
+    "spacesTileLabel": "active spaces",
+    "spacesTileButton": "View all spaces",
+    "projectsTileLabel": "active projects",
+    "projectsTileButton": "View all projects",
+    "createSpaceTitle": "Create your new space",
+    "createSpaceText": "Organize your projects and collaborate with your team in a new space.",
+    "createSpaceButton": "Create a space"
   },
   "Subscribe": {
     "title": "Choose your plan",

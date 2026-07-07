@@ -1,14 +1,16 @@
 <template>
   <div class="dashboard-button-tile" :class="color">
-    <span class="dashboard-button-tile__title">
-      <slot name="title"></slot>
+    <span class="dashboard-button-tile__icon">
+      <slot name="icon"></slot>
     </span>
-    <span class="dashboard-button-tile__content">
-      <slot name="content"></slot>
+    <span class="dashboard-button-tile__count">
+      <slot name="count"></slot>
     </span>
-    <span class="dashboard-button-tile__bottom-text">
-      <slot name="bottom-text"></slot>
-      <BIMDataIconArrow size="xs" margin="0 0 0 12px" :rotate="180" />
+    <span class="dashboard-button-tile__label">
+      <slot name="label"></slot>
+    </span>
+    <span class="dashboard-button-tile__button">
+      {{ buttonText }}
     </span>
   </div>
 </template>
@@ -17,6 +19,10 @@
 export default {
   props: {
     color: {
+      type: String,
+      default: ""
+    },
+    buttonText: {
       type: String,
       default: ""
     }
