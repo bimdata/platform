@@ -1,12 +1,12 @@
 .project-status-badge {
-  min-width: 58px;
-  height: 24px;
+  min-width: 46px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 calc(var(--spacing-unit) / 2);
-  text-transform: uppercase;
   color: var(--color-white);
+  border-radius: 50px;
 
   &--new {
     background-color: var(--color-primary);

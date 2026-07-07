@@ -14,24 +14,29 @@
     <AppNotification />
     <AppSidePanel />
 
-    <AppHeader />
-    <div
-      ref="viewContainer"
-      class="app-layout__view-container"
-      :class="{ loading }"
-    >
-      <router-view></router-view>
-    </div>
-    <transition name="fade">
-      <div class="app-layout__overlay" v-show="loading">
-        <BIMDataSpinner class="app-layout__loader" />
+    <AppSidebar />
+    <div class="app-layout__main">
+      <div v-if="hasHeaderAction" class="app-layout__header-action">
+        <AppSlot name="app-header-action" />
       </div>
-    </transition>
+      <div
+        ref="viewContainer"
+        class="app-layout__view-container"
+        :class="{ loading }"
+      >
+        <router-view></router-view>
+      </div>
+      <transition name="fade">
+        <div class="app-layout__overlay" v-show="loading">
+          <BIMDataSpinner class="app-layout__loader" />
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
-import { onMounted, provide, ref, watch } from "vue";
+import { computed, onMounted, provide, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { contexts, useLoadingContext } from "./composables/loading.js";
 import {
@@ -43,17 +48,20 @@ import routeNames from "./router/route-names.js";
 import { useUser } from "./state/user.js";
 
 // Components
-import AppHeader from "./components/specific/app/app-header/AppHeader.vue";
+import AppSidebar from "./components/specific/app/app-sidebar/AppSidebar.vue";
 import AppModal from "./components/specific/app/app-modal/AppModal.vue";
 import AppNotification from "./components/specific/app/app-notification/AppNotification.vue";
 import AppSidePanel from "./components/specific/app/app-side-panel/AppSidePanel.vue";
+import AppSlot from "./components/specific/app/app-slot/AppSlot.js";
+import { useAppSlot } from "./components/specific/app/app-slot/app-slot.js";
 
 export default {
   components: {
-    AppHeader,
+    AppSidebar,
     AppModal,
     AppNotification,
-    AppSidePanel
+    AppSidePanel,
+    AppSlot
   },
   setup() {
     const router = useRouter();
@@ -63,6 +71,9 @@ export default {
 
     const viewContainer = ref(null);
     provide("viewContainer", viewContainer);
+
+    const headerActionSlot = useAppSlot("app-header-action");
+    const hasHeaderAction = computed(() => Boolean(headerActionSlot.value));
 
     const tourToDisplay = ref(null);
 
@@ -86,6 +97,7 @@ export default {
     return {
       // References
       isGuidedTourEnabled: IS_GUIDED_TOUR_ENABLED,
+      hasHeaderAction,
       loading,
       tours,
       tourToDisplay,

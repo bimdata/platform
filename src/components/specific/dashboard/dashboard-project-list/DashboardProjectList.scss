@@ -2,17 +2,33 @@
   padding: var(--spacing-unit);
 
   &__title {
-    margin-bottom: var(--spacing-unit);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    color: var(--color-primary);
     font-size: 1.2rem;
     font-weight: bold;
+    text-decoration: none;
 
-    :not(.isCarousel) {
-      padding-left: var(--spacing-unit);
+    :deep(.bimdata-icon) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: var(--color-tertiary-lightest, #f7f7f7);
+    }
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 
   &__content {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
   }
 }
