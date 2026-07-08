@@ -72,11 +72,10 @@
   flex-grow: 1;
 }
 .naming-constraints-list__item__name {
-  font-weight: 600;
-  color: var(--color-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  .bimdata-textbox {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
 }
 .naming-constraints-list__item__badges {
   flex-wrap: wrap;

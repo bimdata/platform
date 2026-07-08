@@ -1,16 +1,35 @@
 <template>
   <div class="rule-builder">
     <ul class="rule-builder__parts" v-if="parts.length > 0">
-      <li v-for="(part, index) in parts" :key="index" class="rule-builder__part">
-        <div class="rule-builder__part__grip">
-          <span v-for="dot in 6" :key="dot" class="rule-builder__part__dot" />
-        </div>
+      <li
+        v-for="(part, index) in parts"
+        :key="index"
+        class="rule-builder__part"
+        :class="{
+          'rule-builder__part--dragging': draggingIndex === index,
+          'rule-builder__part--drag-over-top': dragOverIndex === index && dragPosition === 'before',
+          'rule-builder__part--drag-over-bottom':
+            dragOverIndex === index && dragPosition === 'after',
+        }"
+        @dragover.prevent="onDragOver(index, $event)"
+        @dragleave="onDragLeave(index)"
+        @drop.prevent="onDrop(index)"
+      >
+        <div class="rule-builder__part__main flex items-center">
+          <div
+            class="rule-builder__part__grip"
+            draggable="true"
+            @dragstart="onDragStart(index, $event)"
+            @dragend="onDragEnd"
+          >
+            <BIMDataIconDrag fill color="default" />
+          </div>
 
-        <div class="rule-builder__part__body">
-          <div class="rule-builder__part__row">
-            <div class="rule-builder__part__type">
-              {{ $t(partTypeLabel(part.type)) }}
-            </div>
+          <div class="rule-builder__part__type">
+            {{ $t(partTypeLabel(part.type)) }}
+          </div>
+
+          <div class="rule-builder__part__value">
             <template v-if="part.type === 'n_chars'">
               <input
                 class="rule-builder__number"
@@ -41,47 +60,81 @@
             </template>
 
             <template v-else-if="part.type === 'values_in'">
-              <select
-                class="rule-builder__select rule-builder__select--list"
-                :value="selectedTemplateId(part)"
-                @change="onLoadTemplate(index, $event)"
-              >
-                <option value="">
-                  {{ $t("NamingConstraint.selectListPlaceholder") }}
-                </option>
-                <option v-for="template in templates" :key="template.id" :value="template.id">
-                  {{ template.name }}
-                </option>
-              </select>
+              <BIMDataDropdownMenu class="rule-builder__select" :header="true" width="100%">
+                <template #header="{ isOpen }">
+                  <span
+                    class="rule-builder__select__label"
+                    :class="{
+                      'rule-builder__select__label--placeholder': !selectedTemplateLabel(part),
+                    }"
+                    >{{
+                      selectedTemplateLabel(part) || $t("NamingConstraint.selectListPlaceholder")
+                    }}</span
+                  >
+                  <BIMDataIconChevron :rotate="isOpen ? 90 : 0" size="xxs" />
+                </template>
+                <template #element>
+                  <ul class="bimdata-list">
+                    <li
+                      v-for="template of templates"
+                      :key="template.id"
+                      :class="{
+                        'bimdata-list__item--selected': selectedTemplateId(part) === template.id,
+                      }"
+                      @click="onLoadTemplate(index, template.id)"
+                    >
+                      {{ template.name }}
+                    </li>
+                  </ul>
+                </template>
+              </BIMDataDropdownMenu>
             </template>
           </div>
 
-          <input
-            v-if="part.type === 'values_in'"
-            class="rule-builder__elements"
-            type="text"
-            :placeholder="$t('NamingConstraint.elementsHelp')"
-            :value="elementsText(part)"
-            @input="onElementsInput(index, $event.target.value)"
-          />
+          <div class="rule-builder__part__actions">
+            <BIMDataButton
+              v-if="part.type === 'values_in'"
+              ghost
+              rounded
+              icon
+              color="default"
+              class="rule-builder__create-list-btn"
+              :class="{ 'rule-builder__create-list-btn--active': creatingIndex === index }"
+              :title="$t('NamingConstraint.createListButton')"
+              @click="toggleCreateForm(index)"
+            >
+              <BIMDataIconAddList fill color="default" size="xxs" />
+            </BIMDataButton>
+            <BIMDataButton ghost rounded icon color="high" @click="removePart(index)">
+              <BIMDataIconDelete fill size="xs" />
+            </BIMDataButton>
+          </div>
         </div>
 
-        <div class="rule-builder__part__actions">
-          <BIMDataButton ghost rounded icon :disabled="index === 0" @click="move(index, -1)">
-            <BIMDataIconChevron fill color="granite" :rotate="0" size="xxs" />
-          </BIMDataButton>
-          <BIMDataButton
-            ghost
-            rounded
-            icon
-            :disabled="index === parts.length - 1"
-            @click="move(index, 1)"
-          >
-            <BIMDataIconChevron fill color="granite" :rotate="180" size="xxs" />
-          </BIMDataButton>
-          <BIMDataButton ghost rounded icon @click="removePart(index)">
-            <BIMDataIconDelete fill color="high" size="xs" />
-          </BIMDataButton>
+        <div
+          v-if="part.type === 'values_in' && creatingIndex === index"
+          class="rule-builder__create-panel"
+        >
+          <input
+            class="rule-builder__create-panel__input"
+            type="text"
+            :placeholder="$t('NamingConstraint.listNamePlaceholder')"
+            v-model="newTemplateName"
+          />
+          <input
+            class="rule-builder__create-panel__input"
+            type="text"
+            :placeholder="$t('NamingConstraint.elementsHelp')"
+            v-model="newTemplateElementsText"
+          />
+          <div class="rule-builder__create-panel__actions">
+            <BIMDataButton ghost radius @click="cancelCreateForm">
+              {{ $t("t.cancel") }}
+            </BIMDataButton>
+            <BIMDataButton color="primary" fill radius @click="confirmCreateTemplate(index)">
+              {{ $t("NamingConstraint.createListButton") }}
+            </BIMDataButton>
+          </div>
         </div>
       </li>
     </ul>
@@ -129,7 +182,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const defaultPart = (type) => {
   switch (type) {
@@ -154,9 +207,16 @@ export default {
       default: () => [],
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "create-template"],
   setup(props, { emit }) {
     const parts = computed(() => props.modelValue ?? []);
+    const draggingIndex = ref(null);
+    const dragOverIndex = ref(null);
+    const dragPosition = ref(null); // 'before' | 'after'
+
+    const creatingIndex = ref(null);
+    const newTemplateName = ref("");
+    const newTemplateElementsText = ref("");
 
     const clone = () => JSON.parse(JSON.stringify(parts.value));
 
@@ -180,26 +240,56 @@ export default {
       emitChange(next);
     };
 
-    const move = (index, offset) => {
-      const target = index + offset;
-      if (target < 0 || target >= parts.value.length) return;
-      const next = clone();
-      const [part] = next.splice(index, 1);
-      next.splice(target, 0, part);
-      emitChange(next);
+    // --- Drag & drop ---
+    const onDragStart = (index, event) => {
+      draggingIndex.value = index;
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", String(index));
     };
 
-    const elementsText = (part) => (part.elements ?? []).join(", ");
-
-    const onElementsInput = (index, value) => {
-      const next = clone();
-      next[index].elements = value
-        .split(",")
-        .map((element) => element.trim())
-        .filter(Boolean);
-      emitChange(next);
+    const onDragOver = (index, event) => {
+      if (draggingIndex.value === null || draggingIndex.value === index) {
+        dragOverIndex.value = null;
+        dragPosition.value = null;
+        return;
+      }
+      const rect = event.currentTarget.getBoundingClientRect();
+      const midpoint = rect.top + rect.height / 2;
+      dragOverIndex.value = index;
+      dragPosition.value = event.clientY < midpoint ? "before" : "after";
     };
 
+    const onDragLeave = (index) => {
+      if (dragOverIndex.value === index) {
+        dragOverIndex.value = null;
+        dragPosition.value = null;
+      }
+    };
+
+    const onDrop = (index) => {
+      if (draggingIndex.value === null || draggingIndex.value === index) {
+        onDragEnd();
+        return;
+      }
+      const next = clone();
+      const [moved] = next.splice(draggingIndex.value, 1);
+
+      let targetIndex = index;
+      if (draggingIndex.value < index) targetIndex -= 1;
+      if (dragPosition.value === "after") targetIndex += 1;
+
+      next.splice(targetIndex, 0, moved);
+      emitChange(next);
+      onDragEnd();
+    };
+
+    const onDragEnd = () => {
+      draggingIndex.value = null;
+      dragOverIndex.value = null;
+      dragPosition.value = null;
+    };
+
+    // --- Values / templates ---
     const onNumberInput = (index, field, event) => {
       const value = parseInt(event.target.value, 10);
       const next = clone();
@@ -217,12 +307,18 @@ export default {
       return template ? template.id : "";
     };
 
-    const onLoadTemplate = (index, event) => {
-      const templateId = Number(event.target.value);
+    const onLoadTemplate = (index, templateId) => {
       const template = props.templates.find((item) => item.id === templateId);
       const next = clone();
       next[index].elements = template ? [...(template.elements ?? [])] : [];
       emitChange(next);
+    };
+
+    const selectedTemplateLabel = (part) => {
+      const id = selectedTemplateId(part);
+      if (!id) return null;
+      const template = props.templates.find((item) => item.id === id);
+      return template ? template.name : null;
     };
 
     const partTypeLabel = (type) => {
@@ -238,20 +334,67 @@ export default {
       }
     };
 
+    // --- Création de liste inline ---
+    const toggleCreateForm = (index) => {
+      if (creatingIndex.value === index) {
+        cancelCreateForm();
+        return;
+      }
+      creatingIndex.value = index;
+      newTemplateName.value = "";
+      newTemplateElementsText.value = "";
+    };
+
+    const cancelCreateForm = () => {
+      creatingIndex.value = null;
+      newTemplateName.value = "";
+      newTemplateElementsText.value = "";
+    };
+
+    const confirmCreateTemplate = (index) => {
+      const elements = newTemplateElementsText.value
+        .split(",")
+        .map((el) => el.trim())
+        .filter(Boolean);
+
+      if (elements.length === 0) return;
+
+      const next = clone();
+      next[index].elements = elements;
+      emitChange(next);
+
+      emit("create-template", {
+        name: newTemplateName.value || elements.join(", "),
+        elements,
+      });
+
+      cancelCreateForm();
+    };
+
     return {
-      // References
       parts,
-      // Methods
+      draggingIndex,
+      dragOverIndex,
+      dragPosition,
+      creatingIndex,
+      newTemplateName,
+      newTemplateElementsText,
       addPart,
       removePart,
       onTypeChange,
       partTypeLabel,
-      move,
-      elementsText,
-      onElementsInput,
+      onDragStart,
+      onDragOver,
+      onDragLeave,
+      onDrop,
+      onDragEnd,
       onNumberInput,
       selectedTemplateId,
       onLoadTemplate,
+      selectedTemplateLabel,
+      toggleCreateForm,
+      cancelCreateForm,
+      confirmCreateTemplate,
     };
   },
 };
