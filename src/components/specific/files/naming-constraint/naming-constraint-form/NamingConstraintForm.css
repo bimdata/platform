@@ -1,7 +1,9 @@
 .naming-constraint-form {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  overflow: auto;
 }
 .naming-constraint-form__title {
   font-size: 16px;
@@ -13,7 +15,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 14px;
+  padding: 12px;
   border-radius: 8px;
   background-color: var(--color-silver-light);
 }
@@ -64,7 +66,7 @@
   gap: 8px;
   padding: 8px 12px;
   border-radius: 6px;
-  background-color: var(--color-tertiary-lightest, var(--color-silver-light));
+  background-color: var(--color-neutral-lighter);
 }
 .naming-constraint-form__preview__label {
   font-size: 12px;
@@ -73,7 +75,7 @@
 .naming-constraint-form__preview__value {
   font-family: monospace;
   font-size: 13px;
-  color: var(--color-primary);
+  color: var(--color-neutral);
 }
 .naming-constraint-form__actions {
   display: flex;
