@@ -47,7 +47,7 @@
           {{ $t("NamingConstraint.structureSectionTitle") }}
         </span>
       </div>
-      <RuleBuilder v-model="parts" :templates="templates" />
+      <RuleBuilder v-model="parts" :templates="templates" @create-template="onCreateTemplate" />
       <!-- <div v-if="hasEmptyRule" class="naming-constraint-form__error">
         {{ $t("NamingConstraint.emptyParts") }}
       </div> -->
@@ -105,7 +105,8 @@ export default {
   },
   setup() {
     const { t } = useI18n();
-    const { createNamingConstraint, updateNamingConstraint } = useNamingConstraints();
+    const { createNamingConstraint, updateNamingConstraint, createNamingPartsTemplate } =
+      useNamingConstraints();
     const { projectFileStructure } = useFiles();
     const { openModal, closeModal } = useAppModal();
 
@@ -248,6 +249,21 @@ export default {
       }
     }, 500);
 
+    const onCreateTemplate = async ({ name, elements }) => {
+      try {
+        localState.loading = true;
+
+        const template = await createNamingPartsTemplate(localState.project, {
+          name,
+          elements,
+        });
+
+        localState.templates = [...localState.templates, template];
+      } finally {
+        localState.loading = false;
+      }
+    };
+
     return {
       // References
       localState,
@@ -265,6 +281,7 @@ export default {
       // Methods
       cancel,
       submit,
+      onCreateTemplate,
     };
   },
 };
