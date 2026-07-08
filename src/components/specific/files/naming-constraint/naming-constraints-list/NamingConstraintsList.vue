@@ -60,12 +60,20 @@
         class="naming-constraints-list__item"
       >
         <div class="naming-constraints-list__item__main">
-          <div class="naming-constraints-list__item__name flex items-center">
-            <BIMDataIconNamingConvention size="xs" margin="0 6px 0 0" />
-            <BIMDataTextbox :text="constraint.name" />
-            <div class="flex">
-              <BIMDataButton ghost rounded icon @click="edit(constraint)">
-                <BIMDataIconEdit size="xs" />
+          <div class="naming-constraints-list__item__name flex items-center justify-between">
+            <div class="flex items-center">
+              <BIMDataIconNamingConvention size="xs" margin="0 6px 0 0" />
+              <BIMDataTextbox :text="constraint.name" width="195px" />
+            </div>
+            <div class="flex items-center">
+              <span
+                v-if="constraint.strict"
+                class="naming-constraints-list__item__chip naming-constraints-list__item__chip--strict m-x-6"
+              >
+                {{ $t("NamingConstraint.strictBadge") }}
+              </span>
+              <BIMDataButton color="default" ghost rounded icon @click="edit(constraint)">
+                <BIMDataIconEdit size="xxs" />
               </BIMDataButton>
               <template v-if="confirmId === constraint.id">
                 <BIMDataButton
@@ -82,8 +90,15 @@
                   {{ $t("t.cancel") }}
                 </BIMDataButton>
               </template>
-              <BIMDataButton v-else ghost rounded icon @click="confirmId = constraint.id">
-                <BIMDataIconDelete fill color="high" size="xs" />
+              <BIMDataButton
+                v-else
+                ghost
+                color="high"
+                rounded
+                icon
+                @click="confirmId = constraint.id"
+              >
+                <BIMDataIconDelete fill size="xxs" />
               </BIMDataButton>
             </div>
           </div>
@@ -99,12 +114,6 @@
             </div>
             <span class="naming-constraints-list__item__chip flex items-center">
               {{ buildExample(constraint.rule) }}
-            </span>
-            <span
-              v-if="constraint.strict"
-              class="naming-constraints-list__item__chip naming-constraints-list__item__chip--strict"
-            >
-              {{ $t("NamingConstraint.strictBadge") }}
             </span>
           </div>
         </div>
