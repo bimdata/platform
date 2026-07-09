@@ -1,7 +1,7 @@
 .naming-parts-templates-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
   height: 100%;
 }
 .naming-parts-templates-list__head {
