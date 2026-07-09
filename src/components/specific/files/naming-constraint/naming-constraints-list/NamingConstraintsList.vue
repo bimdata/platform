@@ -1,25 +1,16 @@
 <template>
   <div class="naming-constraints-list">
-    <div v-if="constraints.length > 0" class="naming-constraints-list__head flex flex-col m-t-24">
+    <div
+      v-if="constraints.length > 0"
+      class="naming-constraints-list__head flex items-center m-t-18"
+    >
       <span class="naming-constraints-list__head__title">
         {{ $t("NamingConstraint.rulesSectionTitle") }}
       </span>
-      <div class="naming-constraints-list__head__actions flex items-center m-t-6">
-        <BIMDataButton color="primary" fill radius @click="create">
-          <BIMDataIconAddGavel size="xs" margin="0 6px 0 0" />
-          {{ $t("NamingConstraint.addRuleButton") }}
-        </BIMDataButton>
-        <BIMDataButton
-          class="naming-constraints-list__manage"
-          color="default"
-          fill
-          radius
-          @click="openLists"
-        >
-          <BIMDataIconList size="xs" margin="0 6px 0 0" />
-          {{ $t("NamingConstraint.manageListsButton") }}
-        </BIMDataButton>
-      </div>
+      <BIMDataButton color="primary" fill radius @click="create">
+        <BIMDataIconAddGavel size="xs" margin="0 6px 0 0" />
+        {{ $t("NamingConstraint.addRuleButton") }}
+      </BIMDataButton>
     </div>
 
     <BIMDataSearch
@@ -29,7 +20,7 @@
       color="primary"
       radius
       clear
-      :placeholder="$t('NamingConstraint.searchPlaceholder')"
+      :placeholder="$t('NamingConstraint.searchConstraintPlaceholder')"
       v-model="searchText"
     />
 
@@ -121,29 +112,6 @@
             </span>
           </div>
         </div>
-        <!-- <div class="naming-constraints-list__item__actions">
-          <BIMDataButton ghost rounded icon @click="edit(constraint)">
-            <BIMDataIconEdit size="xs" />
-          </BIMDataButton>
-          <template v-if="confirmId === constraint.id">
-            <BIMDataButton
-              color="high"
-              fill
-              radius
-              width="70px"
-              :disabled="localState.loading"
-              @click="remove(constraint)"
-            >
-              {{ $t("t.confirm") }}
-            </BIMDataButton>
-            <BIMDataButton ghost radius width="70px" @click="confirmId = null">
-              {{ $t("t.cancel") }}
-            </BIMDataButton>
-          </template>
-          <BIMDataButton v-else ghost rounded icon @click="confirmId = constraint.id">
-            <BIMDataIconDelete fill color="high" size="xs" />
-          </BIMDataButton>
-        </div> -->
       </li>
     </ul>
   </div>
@@ -180,12 +148,15 @@ export default {
 
     const create = () => {
       localState.constraint = null;
-      localState.currentView = "constraint-form";
+      localState.currentTab = "constraints";
+      localState.currentView = "form";
     };
 
     const edit = (constraint) => {
       localState.constraint = constraint;
-      localState.currentView = "constraint-form";
+      localState.currentTab = "constraints";
+      localState.constraint = constraint;
+      localState.currentView = "form";
     };
 
     const openLists = () => {
