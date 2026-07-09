@@ -140,7 +140,7 @@ export default {
 
     const cancel = () => {
       localState.template = null;
-      localState.currentView = "templates-list";
+      localState.currentView = "list";
     };
 
     const submit = debounce(async () => {

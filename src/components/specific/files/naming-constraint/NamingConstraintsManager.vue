@@ -26,6 +26,22 @@
       </BIMDataButton>
     </div>
 
+    <BIMDataTabs
+      class="m-t-24"
+      v-if="localState.currentView === 'list'"
+      :tabs="tabs"
+      width="100%"
+      tabSize="50%"
+      height="40px"
+      :selected="localState.currentTab"
+      @tab-selected="localState.currentTab = $event.id"
+    >
+      <template #tab="{ tab }">
+        <BIMDataIcon :name="tab.icon" size="xs" margin="0 6px 0 0" />
+        <span>{{ tab.label }}</span>
+      </template>
+    </BIMDataTabs>
+
     <div class="naming-constraints-manager__content">
       <transition name="fade">
         <div v-show="localState.loading" class="naming-constraints-manager__loader">
@@ -41,6 +57,7 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { computed, onMounted, provide, reactive } from "vue";
 import { useNamingConstraints } from "../../../../state/naming-constraints.js";
 import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
@@ -71,6 +88,7 @@ export default {
     },
   },
   setup(props) {
+    const { t } = useI18n();
     const { closeSidePanel } = useAppSidePanel();
     const { loadNamingConstraints, loadNamingPartsTemplates } = useNamingConstraints();
 
@@ -80,27 +98,45 @@ export default {
       templates: [],
       constraint: null,
       template: null,
-      currentView: "constraints-list",
+      currentTab: "constraints", // constraints | templates
+      currentView: "list", // list | form
       loading: false,
     });
 
     provide("localState", localState);
 
-    const currentComponent = computed(() => components[localState.currentView]);
+    const currentComponent = computed(() => {
+      if (localState.currentView === "form") {
+        return localState.currentTab === "constraints"
+          ? "NamingConstraintForm"
+          : "NamingPartsTemplateForm";
+      }
+
+      return localState.currentTab === "constraints"
+        ? "NamingConstraintsList"
+        : "NamingPartsTemplatesList";
+    });
 
     const showBack = computed(() => localState.currentView !== "constraints-list");
 
     const back = () => {
-      if (localState.currentView === "constraint-form") {
-        localState.constraint = null;
-        localState.currentView = "constraints-list";
-      } else if (localState.currentView === "template-form") {
-        localState.template = null;
-        localState.currentView = "templates-list";
-      } else {
-        localState.currentView = "constraints-list";
-      }
+      localState.constraint = null;
+      localState.template = null;
+      localState.currentView = "list";
     };
+
+    const tabs = computed(() => [
+      {
+        id: "constraints",
+        label: t("NamingConstraint.constraintsTab"),
+        icon: "Gavel",
+      },
+      {
+        id: "templates",
+        label: t("NamingConstraint.listsTab"),
+        icon: "List",
+      },
+    ]);
 
     onMounted(async () => {
       try {
@@ -121,6 +157,7 @@ export default {
       localState,
       currentComponent,
       showBack,
+      tabs,
       // Methods
       back,
       closeSidePanel,
