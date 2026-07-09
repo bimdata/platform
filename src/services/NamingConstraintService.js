@@ -12,22 +12,16 @@ class NamingConstraintConflictError {
   }
 }
 
-const isResponse = error =>
-  typeof Response !== "undefined" && error instanceof Response;
+const isResponse = (error) => typeof Response !== "undefined" && error instanceof Response;
 
 class NamingConstraintService {
   // --- Naming constraints catalog ------------------------------------------
 
   async fetchNamingConstraints(project) {
     try {
-      return await apiClient.collaborationApi.getNamingConstraints(
-        project.cloud.id,
-        project.id
-      );
+      return await apiClient.collaborationApi.getNamingConstraints(project.cloud.id, project.id);
     } catch (error) {
-      ErrorService.handleError(
-        new RuntimeError(ERRORS.NAMING_CONSTRAINTS_FETCH_ERROR, error)
-      );
+      ErrorService.handleError(new RuntimeError(ERRORS.NAMING_CONSTRAINTS_FETCH_ERROR, error));
       return [];
     }
   }
@@ -37,7 +31,7 @@ class NamingConstraintService {
       return await apiClient.collaborationApi.getNamingConstraint(
         project.cloud.id,
         constraint.id,
-        project.id
+        project.id,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_FETCH_ERROR, error);
@@ -49,7 +43,7 @@ class NamingConstraintService {
       return await apiClient.collaborationApi.createNamingConstraint(
         project.cloud.id,
         project.id,
-        payload
+        payload,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_CREATE_ERROR, error);
@@ -69,7 +63,7 @@ class NamingConstraintService {
         project.cloud.id,
         constraint.id,
         project.id,
-        payload
+        payload,
       );
     } catch (error) {
       if (isResponse(error) && error.status === 409) {
@@ -82,11 +76,23 @@ class NamingConstraintService {
 
   async deleteNamingConstraint(project, constraint) {
     try {
-      return await apiClient.collaborationApi.deleteNamingConstraint(
-        project.cloud.id,
-        constraint.id,
-        project.id
+      const response = await fetch(
+        `${ENV.VUE_APP_API_BASE_URL}/cloud/${project.cloud.id}/project/${project.id}/naming-constraint/${constraint.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            ...apiClient.authHeader,
+          },
+        },
       );
+      if (response.status === 200) {
+        const documents = await response.json();
+        throw new NamingConstraintConflictError(documents);
+      }
+      if (response.status !== 204) {
+        throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_DELETE_ERROR, await response.text());
+      }
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_DELETE_ERROR, error);
     }
@@ -96,14 +102,9 @@ class NamingConstraintService {
 
   async fetchNamingPartsTemplates(project) {
     try {
-      return await apiClient.collaborationApi.getNamingPartsTemplates(
-        project.cloud.id,
-        project.id
-      );
+      return await apiClient.collaborationApi.getNamingPartsTemplates(project.cloud.id, project.id);
     } catch (error) {
-      ErrorService.handleError(
-        new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATES_FETCH_ERROR, error)
-      );
+      ErrorService.handleError(new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATES_FETCH_ERROR, error));
       return [];
     }
   }
@@ -113,7 +114,7 @@ class NamingConstraintService {
       return await apiClient.collaborationApi.createNamingPartsTemplate(
         project.cloud.id,
         project.id,
-        payload
+        payload,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATE_CREATE_ERROR, error);
@@ -126,7 +127,7 @@ class NamingConstraintService {
         project.cloud.id,
         template.id,
         project.id,
-        payload
+        payload,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATE_UPDATE_ERROR, error);
@@ -138,7 +139,7 @@ class NamingConstraintService {
       return await apiClient.collaborationApi.deleteNamingPartsTemplate(
         project.cloud.id,
         template.id,
-        project.id
+        project.id,
       );
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATE_DELETE_ERROR, error);
@@ -157,7 +158,7 @@ class NamingConstraintService {
       return await apiClient.collaborationApi.getFolderNamingConstraint(
         project.cloud.id,
         folder.id,
-        project.id
+        project.id,
       );
     } catch (error) {
       if (isResponse(error) && error.status === 404) {
@@ -180,7 +181,7 @@ class NamingConstraintService {
         project.cloud.id,
         folder.id,
         project.id,
-        { constraint_id, recursive }
+        { constraint_id, recursive },
       );
     } catch (error) {
       if (isResponse(error) && error.status === 409) {
@@ -202,7 +203,7 @@ class NamingConstraintService {
       const documents = await apiClient.collaborationApi.deleteFolderNamingConstraint(
         project.cloud.id,
         folder.id,
-        project.id
+        project.id,
       );
       return documents ?? [];
     } catch (error) {
@@ -238,12 +239,10 @@ class NamingConstraintService {
         undefined, // name__contains
         undefined, // name__endswith
         undefined, // name__startswith
-        true // naming_constraint_conflict
+        true, // naming_constraint_conflict
       );
     } catch (error) {
-      ErrorService.handleError(
-        new RuntimeError(ERRORS.CONFLICTING_DOCUMENTS_FETCH_ERROR, error)
-      );
+      ErrorService.handleError(new RuntimeError(ERRORS.CONFLICTING_DOCUMENTS_FETCH_ERROR, error));
       return [];
     }
   }
