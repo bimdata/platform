@@ -109,6 +109,13 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  .delete-actions {
+    position: absolute;
+    right: 9px;
+    background-color: var(--color-white);
+    gap: 3px;
+    z-index: 1;
+  }
 }
 .naming-constraints-list__manage {
   margin-top: auto;
