@@ -96,11 +96,19 @@ export default {
       project: props.project,
       constraints: [],
       templates: [],
+
       constraint: null,
       template: null,
-      currentTab: "constraints", // constraints | templates
-      currentView: "list", // list | form
+
+      currentTab: "constraints",
+      currentView: "list",
+
       loading: false,
+
+      pendingTemplatePartIndex: null,
+      newlyCreatedTemplate: null,
+
+      ruleDraft: null,
     });
 
     provide("localState", localState);
