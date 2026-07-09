@@ -1,73 +1,75 @@
 <template>
-  <div class="naming-constraint-form m-t-24">
+  <div class="naming-constraint-form m-t-18">
     <div class="naming-constraint-form__title">
       {{ $t(`NamingConstraint.${isUpdate ? "updateConstraintTitle" : "createConstraintTitle"}`) }}
     </div>
 
-    <section class="naming-constraint-form__step">
-      <div class="naming-constraint-form__step__head">
-        <span class="naming-constraint-form__step__num">1</span>
-        <span class="naming-constraint-form__step__label">
-          {{ $t("NamingConstraint.ruleNameStep") }}
-        </span>
-      </div>
-      <BIMDataInput
-        width="100%"
-        margin="0"
-        :placeholder="$t('NamingConstraint.ruleNamePlaceholder')"
-        :error="hasInvalidName"
-        :errorMessage="$t('t.invalidName')"
-        v-model="name"
-      />
-    </section>
-
-    <section class="naming-constraint-form__step">
-      <div class="naming-constraint-form__step__head">
-        <span class="naming-constraint-form__step__num">2</span>
-        <span class="naming-constraint-form__step__label">
-          {{ $t("NamingConstraint.separatorStep") }}
-        </span>
-      </div>
-      <div class="naming-constraint-form__radios">
-        <BIMDataRadio
-          v-for="option in separatorOptions"
-          :key="option.value"
-          :modelValue="separator"
-          :value="option.value"
-          :text="option.label"
-          @update:modelValue="separator = $event"
+    <div class="naming-constraint-form__content">
+      <section class="naming-constraint-form__step">
+        <div class="naming-constraint-form__step__head">
+          <span class="naming-constraint-form__step__num">1</span>
+          <span class="naming-constraint-form__step__label">
+            {{ $t("NamingConstraint.ruleNameStep") }}
+          </span>
+        </div>
+        <BIMDataInput
+          width="100%"
+          margin="0"
+          :placeholder="$t('NamingConstraint.ruleNamePlaceholder')"
+          :error="hasInvalidName"
+          :errorMessage="$t('t.invalidName')"
+          v-model="name"
         />
-      </div>
-    </section>
+      </section>
 
-    <section class="naming-constraint-form__step">
-      <div class="naming-constraint-form__step__head">
-        <span class="naming-constraint-form__step__num">3</span>
-        <span class="naming-constraint-form__step__label">
-          {{ $t("NamingConstraint.structureSectionTitle") }}
-        </span>
-      </div>
-      <RuleBuilder v-model="parts" :templates="templates" @create-template="onCreateTemplate" />
-      <!-- <div v-if="hasEmptyRule" class="naming-constraint-form__error">
+      <section class="naming-constraint-form__step">
+        <div class="naming-constraint-form__step__head">
+          <span class="naming-constraint-form__step__num">2</span>
+          <span class="naming-constraint-form__step__label">
+            {{ $t("NamingConstraint.separatorStep") }}
+          </span>
+        </div>
+        <div class="naming-constraint-form__radios">
+          <BIMDataRadio
+            v-for="option in separatorOptions"
+            :key="option.value"
+            :modelValue="separator"
+            :value="option.value"
+            :text="option.label"
+            @update:modelValue="separator = $event"
+          />
+        </div>
+      </section>
+
+      <section class="naming-constraint-form__step">
+        <div class="naming-constraint-form__step__head">
+          <span class="naming-constraint-form__step__num">3</span>
+          <span class="naming-constraint-form__step__label">
+            {{ $t("NamingConstraint.structureSectionTitle") }}
+          </span>
+        </div>
+        <RuleBuilder v-model="parts" :templates="templates" @create-template="onCreateTemplate" />
+        <!-- <div v-if="hasEmptyRule" class="naming-constraint-form__error">
         {{ $t("NamingConstraint.emptyParts") }}
       </div> -->
-      <div v-if="hasInvalidBounds" class="naming-constraint-form__error">
-        {{ $t("NamingConstraint.invalidBoundsError") }}
+        <div v-if="hasInvalidBounds" class="naming-constraint-form__error">
+          {{ $t("NamingConstraint.invalidBoundsError") }}
+        </div>
+      </section>
+
+      <div class="naming-constraint-form__strict">
+        <BIMDataCheckbox v-model="strict" :text="$t('NamingConstraint.strictLabel')" />
+        <span class="naming-constraint-form__help">
+          {{ $t("NamingConstraint.strictHelp") }}
+        </span>
       </div>
-    </section>
 
-    <div class="naming-constraint-form__strict">
-      <BIMDataCheckbox v-model="strict" :text="$t('NamingConstraint.strictLabel')" />
-      <span class="naming-constraint-form__help">
-        {{ $t("NamingConstraint.strictHelp") }}
-      </span>
-    </div>
-
-    <div class="naming-constraint-form__preview" v-if="example">
-      <span class="naming-constraint-form__preview__label">
-        {{ $t("NamingConstraint.previewLabel") }}
-      </span>
-      <code class="naming-constraint-form__preview__value">{{ example }}</code>
+      <div class="naming-constraint-form__preview" v-if="example">
+        <span class="naming-constraint-form__preview__label">
+          {{ $t("NamingConstraint.previewLabel") }}
+        </span>
+        <code class="naming-constraint-form__preview__value">{{ example }}</code>
+      </div>
     </div>
 
     <div class="naming-constraint-form__actions">
