@@ -1,74 +1,83 @@
 <template>
   <div class="naming-constraint-form m-t-18">
-    <div class="naming-constraint-form__title">
-      {{ $t(`NamingConstraint.${isUpdate ? "updateConstraintTitle" : "createConstraintTitle"}`) }}
-    </div>
-
-    <div class="naming-constraint-form__content">
-      <section class="naming-constraint-form__step">
-        <div class="naming-constraint-form__step__head">
-          <span class="naming-constraint-form__step__num">1</span>
-          <span class="naming-constraint-form__step__label">
-            {{ $t("NamingConstraint.ruleNameStep") }}
-          </span>
-        </div>
-        <BIMDataInput
-          width="100%"
-          margin="0"
-          :placeholder="$t('NamingConstraint.ruleNamePlaceholder')"
-          :error="hasInvalidName"
-          :errorMessage="$t('t.invalidName')"
-          v-model="name"
-        />
-      </section>
-
-      <section class="naming-constraint-form__step">
-        <div class="naming-constraint-form__step__head">
-          <span class="naming-constraint-form__step__num">2</span>
-          <span class="naming-constraint-form__step__label">
-            {{ $t("NamingConstraint.separatorStep") }}
-          </span>
-        </div>
-        <div class="naming-constraint-form__radios">
-          <BIMDataRadio
-            v-for="option in separatorOptions"
-            :key="option.value"
-            :modelValue="separator"
-            :value="option.value"
-            :text="option.label"
-            @update:modelValue="separator = $event"
-          />
-        </div>
-      </section>
-
-      <section class="naming-constraint-form__step">
-        <div class="naming-constraint-form__step__head">
-          <span class="naming-constraint-form__step__num">3</span>
-          <span class="naming-constraint-form__step__label">
-            {{ $t("NamingConstraint.structureSectionTitle") }}
-          </span>
-        </div>
-        <RuleBuilder v-model="parts" :templates="templates" @create-template="onCreateTemplate" />
-        <!-- <div v-if="hasEmptyRule" class="naming-constraint-form__error">
-        {{ $t("NamingConstraint.emptyParts") }}
-      </div> -->
-        <div v-if="hasInvalidBounds" class="naming-constraint-form__error">
-          {{ $t("NamingConstraint.invalidBoundsError") }}
-        </div>
-      </section>
-
-      <div class="naming-constraint-form__strict">
-        <BIMDataCheckbox v-model="strict" :text="$t('NamingConstraint.strictLabel')" />
-        <span class="naming-constraint-form__help">
-          {{ $t("NamingConstraint.strictHelp") }}
-        </span>
+    <div class="naming-constraint-form__body">
+      <div class="naming-constraint-form__title m-b-12">
+        {{ $t(`NamingConstraint.${isUpdate ? "updateConstraintTitle" : "createConstraintTitle"}`) }}
       </div>
 
-      <div class="naming-constraint-form__preview" v-if="example">
-        <span class="naming-constraint-form__preview__label">
-          {{ $t("NamingConstraint.previewLabel") }}
-        </span>
-        <code class="naming-constraint-form__preview__value">{{ example }}</code>
+      <div class="naming-constraint-form__content">
+        <section class="naming-constraint-form__step">
+          <div class="naming-constraint-form__step__head">
+            <span class="naming-constraint-form__step__num">1</span>
+            <span class="naming-constraint-form__step__label">
+              {{ $t("NamingConstraint.ruleNameStep") }}
+            </span>
+          </div>
+          <BIMDataInput
+            width="100%"
+            margin="0"
+            :placeholder="$t('NamingConstraint.ruleNamePlaceholder')"
+            :error="hasInvalidName"
+            :errorMessage="$t('t.invalidName')"
+            v-model="localState.ruleDraft.name"
+          />
+        </section>
+
+        <section class="naming-constraint-form__step">
+          <div class="naming-constraint-form__step__head">
+            <span class="naming-constraint-form__step__num">2</span>
+            <span class="naming-constraint-form__step__label">
+              {{ $t("NamingConstraint.separatorStep") }}
+            </span>
+          </div>
+          <div class="naming-constraint-form__radios">
+            <BIMDataRadio
+              v-for="option in separatorOptions"
+              :key="option.value"
+              :modelValue="localState.ruleDraft.separator"
+              :value="option.value"
+              :text="option.label"
+              @update:modelValue="localState.ruleDraft.separator = $event"
+            />
+          </div>
+        </section>
+
+        <section class="naming-constraint-form__step">
+          <div class="naming-constraint-form__step__head">
+            <span class="naming-constraint-form__step__num">3</span>
+            <span class="naming-constraint-form__step__label">
+              {{ $t("NamingConstraint.structureSectionTitle") }}
+            </span>
+          </div>
+          <RuleBuilder
+            v-model="localState.ruleDraft.parts"
+            :templates="templates"
+            @go-to-template="goToTemplate"
+          />
+          <!-- <div v-if="hasEmptyRule" class="naming-constraint-form__error">
+        {{ $t("NamingConstraint.emptyParts") }}
+      </div> -->
+          <div v-if="hasInvalidBounds" class="naming-constraint-form__error">
+            {{ $t("NamingConstraint.invalidBoundsError") }}
+          </div>
+        </section>
+
+        <div class="naming-constraint-form__strict">
+          <BIMDataCheckbox
+            v-model="localState.ruleDraft.strict"
+            :text="$t('NamingConstraint.strictLabel')"
+          />
+          <span class="naming-constraint-form__help">
+            {{ $t("NamingConstraint.strictHelp") }}
+          </span>
+        </div>
+
+        <div class="naming-constraint-form__preview" v-if="example">
+          <span class="naming-constraint-form__preview__label">
+            {{ $t("NamingConstraint.previewLabel") }}
+          </span>
+          <code class="naming-constraint-form__preview__value">{{ example }}</code>
+        </div>
       </div>
     </div>
 
@@ -97,7 +106,7 @@ import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { useFiles } from "../../../../../state/files.js";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
-// Components
+
 import RuleBuilder from "./RuleBuilder.vue";
 import NamingConflictModal from "../NamingConflictModal.vue";
 
@@ -105,67 +114,52 @@ export default {
   components: {
     RuleBuilder,
   },
+
   setup() {
     const { t } = useI18n();
-    const { createNamingConstraint, updateNamingConstraint, createNamingPartsTemplate } =
-      useNamingConstraints();
+
+    const { createNamingConstraint, updateNamingConstraint } = useNamingConstraints();
+
     const { projectFileStructure } = useFiles();
     const { openModal, closeModal } = useAppModal();
+
+    const localState = inject("localState");
+
+    const hasInvalidName = ref(false);
+
+    /*
+     * Computed
+     */
+
+    const isUpdate = computed(() => !!localState.constraint);
+
+    const templates = computed(() => localState.templates ?? []);
 
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
     );
 
-    const localState = inject("localState");
-
-    const isUpdate = computed(() => !!localState.constraint);
-    const templates = computed(() => localState.templates ?? []);
-
     const separatorOptions = computed(() => [
-      { value: "-", label: t("NamingConstraint.separatorDashOption") },
-      { value: ".", label: t("NamingConstraint.separatorDotOption") },
-      { value: "_", label: t("NamingConstraint.separatorUnderscoreOption") },
+      {
+        value: "-",
+        label: t("NamingConstraint.separatorDashOption"),
+      },
+      {
+        value: ".",
+        label: t("NamingConstraint.separatorDotOption"),
+      },
+      {
+        value: "_",
+        label: t("NamingConstraint.separatorUnderscoreOption"),
+      },
     ]);
 
-    const name = ref("");
-    const strict = ref(false);
-    const separator = ref("_");
-    const parts = ref([]);
-    const hasInvalidName = ref(false);
+    const example = computed(() => buildExample(localState.ruleDraft));
 
-    watch(
-      () => localState.constraint,
-      (constraint) => {
-        if (constraint) {
-          name.value = constraint.name ?? "";
-          strict.value = !!constraint.strict;
-          const rule = constraint.rule
-            ? JSON.parse(JSON.stringify(constraint.rule))
-            : { separator: "_", parts: [] };
-          separator.value = rule.separator ?? "_";
-          parts.value = rule.parts ?? [];
-        } else {
-          name.value = "";
-          strict.value = false;
-          separator.value = "_";
-          parts.value = [];
-        }
-        hasInvalidName.value = false;
-      },
-      { immediate: true },
-    );
-
-    const rule = computed(() => ({
-      separator: separator.value,
-      parts: parts.value,
-    }));
-
-    const example = computed(() => buildExample(rule.value));
-
-    const hasEmptyRule = computed(() => !parts.value || parts.value.length === 0);
+    const hasEmptyRule = computed(() => !localState.ruleDraft?.parts?.length);
 
     const hasInvalidBounds = computed(() =>
-      (parts.value ?? []).some(
+      (localState.ruleDraft?.parts ?? []).some(
         (part) =>
           part.type === "bounded" &&
           part.min_value != null &&
@@ -174,34 +168,107 @@ export default {
       ),
     );
 
+    /*
+     * Initialisation du draft
+     */
+
+    const createEmptyDraft = () => ({
+      name: "",
+      strict: false,
+      separator: "_",
+      parts: [],
+    });
+
+    if (!localState.ruleDraft) {
+      if (localState.constraint) {
+        const rule = localState.constraint.rule ?? {};
+
+        localState.ruleDraft = {
+          name: localState.constraint.name ?? "",
+          strict: !!localState.constraint.strict,
+          separator: rule.separator ?? "_",
+          parts: JSON.parse(JSON.stringify(rule.parts ?? [])),
+        };
+      } else {
+        localState.ruleDraft = createEmptyDraft();
+      }
+    }
+
+    /*
+     * Navigation
+     */
+
+    const goToTemplate = (index) => {
+      localState.pendingTemplatePartIndex = index;
+      localState.currentTab = "templates";
+      localState.currentView = "form";
+    };
+
+    /*
+     * Retour depuis la création d'une liste
+     */
+
+    watch(
+      () => localState.newlyCreatedTemplate,
+      (template) => {
+        if (!template) return;
+
+        const index = localState.pendingTemplatePartIndex;
+
+        if (index == null) return;
+
+        localState.ruleDraft.parts[index].elements = [...template.elements];
+
+        localState.newlyCreatedTemplate = null;
+        localState.pendingTemplatePartIndex = null;
+      },
+    );
+
+    /*
+     * Actions
+     */
+
     const cancel = () => {
+      localState.ruleDraft = null;
       localState.constraint = null;
+      localState.pendingTemplatePartIndex = null;
+      localState.newlyCreatedTemplate = null;
       localState.currentView = "list";
     };
 
     const submit = debounce(async () => {
-      hasInvalidName.value = !name.value;
+      hasInvalidName.value = !localState.ruleDraft.name;
+
       if (hasInvalidName.value || hasEmptyRule.value || hasInvalidBounds.value) {
         return;
       }
+
       const payload = {
-        name: name.value,
-        strict: strict.value,
-        rule: rule.value,
+        name: localState.ruleDraft.name,
+        strict: localState.ruleDraft.strict,
+        rule: {
+          separator: localState.ruleDraft.separator,
+          parts: localState.ruleDraft.parts,
+        },
       };
+
       try {
         localState.loading = true;
+
         if (isUpdate.value) {
           const updated = await updateNamingConstraint(
             localState.project,
             localState.constraint,
             payload,
           );
+
           localState.constraints = localState.constraints.map((item) =>
             item.id === updated.id ? updated : item,
           );
+
           const conflicts = updated?.conflicting_documents ?? [];
-          if (conflicts.length > 0) {
+
+          if (conflicts.length) {
             openModal({
               component: NamingConflictModal,
               props: {
@@ -216,12 +283,15 @@ export default {
                 },
               },
             });
+
             return;
           }
         } else {
           const constraint = await createNamingConstraint(localState.project, payload);
+
           localState.constraints = [...localState.constraints, constraint];
         }
+
         cancel();
       } catch (error) {
         if (error instanceof NamingConstraintConflictError) {
@@ -231,11 +301,7 @@ export default {
               project: localState.project,
               documents: error.documents ?? [],
               allFolders: allFolders.value,
-              rule: {
-                name: payload.name,
-                rule: payload.rule,
-                strict: payload.strict,
-              },
+              rule: payload,
               onClose: closeModal,
               onConfirm: () => {
                 closeModal();
@@ -251,39 +317,23 @@ export default {
       }
     }, 500);
 
-    const onCreateTemplate = async ({ name, elements }) => {
-      try {
-        localState.loading = true;
-
-        const template = await createNamingPartsTemplate(localState.project, {
-          name,
-          elements,
-        });
-
-        localState.templates = [...localState.templates, template];
-      } finally {
-        localState.loading = false;
-      }
-    };
-
     return {
-      // References
+      // State
       localState,
+
+      // Computed
       isUpdate,
       templates,
       separatorOptions,
-      name,
-      strict,
-      separator,
-      parts,
+      example,
       hasInvalidName,
       hasEmptyRule,
       hasInvalidBounds,
-      example,
+
       // Methods
       cancel,
       submit,
-      onCreateTemplate,
+      goToTemplate,
     };
   },
 };
