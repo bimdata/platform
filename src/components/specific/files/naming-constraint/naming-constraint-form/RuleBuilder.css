@@ -125,14 +125,18 @@
   color: var(--color-granite);
 }
 
-/* --- Select redessiné --- */
+/* --- Select --- */
 .rule-builder__select {
   flex: 1;
-  min-width: 0;
-  font-size: 11px;
-  transition: all 0.15s ease;
   &:deep(.bimdata-dropdown__content) {
-    padding: 0 8px;
+    padding: 0 6px;
+    font-size: 11px;
+    svg {
+      min-height: 11px!important;
+      height: 11px!important;
+      width: 11px!important;
+      min-width: 11px!important;
+    }
   }
 }
 .rule-builder__select:hover {
