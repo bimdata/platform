@@ -17,7 +17,7 @@
       width="100%"
       radius
       clear
-      :placeholder="$t('NamingConstraint.searchPlaceholder')"
+      :placeholder="$t('NamingConstraint.searchListPlaceholder')"
       v-model="searchText"
     />
 
@@ -116,12 +116,14 @@ export default {
 
     const create = () => {
       localState.template = null;
-      localState.currentView = "template-form";
+      localState.currentTab = "templates";
+      localState.currentView = "form";
     };
 
     const edit = (template) => {
       localState.template = template;
-      localState.currentView = "template-form";
+      localState.currentTab = "templates";
+      localState.currentView = "form";
     };
 
     const remove = async (template) => {
