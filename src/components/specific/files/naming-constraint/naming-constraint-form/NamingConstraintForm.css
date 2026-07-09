@@ -2,7 +2,12 @@
   height: calc(100% - 12px);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 12px;
+}
+.naming-constraint-form__body {
+      height: calc(100% - 32px - 12px);
+    overflow: auto;
 }
 .naming-constraint-form__title {
   font-size: 16px;

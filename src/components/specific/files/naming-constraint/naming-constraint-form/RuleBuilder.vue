@@ -98,10 +98,7 @@
               rounded
               icon
               color="default"
-              class="rule-builder__create-list-btn"
-              :class="{ 'rule-builder__create-list-btn--active': creatingIndex === index }"
-              :title="$t('NamingConstraint.createListButton')"
-              @click="toggleCreateForm(index)"
+              @click="goToTemplate(index)"
             >
               <BIMDataIconAddList fill color="default" size="xxs" />
             </BIMDataButton>
@@ -111,7 +108,7 @@
           </div>
         </div>
 
-        <div
+        <!-- <div
           v-if="part.type === 'values_in' && creatingIndex === index"
           class="rule-builder__create-panel"
         >
@@ -135,7 +132,7 @@
               {{ $t("NamingConstraint.createListButton") }}
             </BIMDataButton>
           </div>
-        </div>
+        </div> -->
       </li>
     </ul>
 
@@ -207,21 +204,20 @@ export default {
       default: () => [],
     },
   },
-  emits: ["update:modelValue", "create-template"],
+  emits: ["update:modelValue", "go-to-template"],
   setup(props, { emit }) {
     const parts = computed(() => props.modelValue ?? []);
     const draggingIndex = ref(null);
     const dragOverIndex = ref(null);
     const dragPosition = ref(null); // 'before' | 'after'
 
-    const creatingIndex = ref(null);
-    const newTemplateName = ref("");
-    const newTemplateElementsText = ref("");
-
     const clone = () => JSON.parse(JSON.stringify(parts.value));
 
     const emitChange = (next) => {
       emit("update:modelValue", next);
+    };
+    const goToTemplate = (index) => {
+      emit("go-to-template", index);
     };
 
     const addPart = (type) => {
@@ -334,51 +330,11 @@ export default {
       }
     };
 
-    // --- Création de liste inline ---
-    const toggleCreateForm = (index) => {
-      if (creatingIndex.value === index) {
-        cancelCreateForm();
-        return;
-      }
-      creatingIndex.value = index;
-      newTemplateName.value = "";
-      newTemplateElementsText.value = "";
-    };
-
-    const cancelCreateForm = () => {
-      creatingIndex.value = null;
-      newTemplateName.value = "";
-      newTemplateElementsText.value = "";
-    };
-
-    const confirmCreateTemplate = (index) => {
-      const elements = newTemplateElementsText.value
-        .split(",")
-        .map((el) => el.trim())
-        .filter(Boolean);
-
-      if (elements.length === 0) return;
-
-      const next = clone();
-      next[index].elements = elements;
-      emitChange(next);
-
-      emit("create-template", {
-        name: newTemplateName.value || elements.join(", "),
-        elements,
-      });
-
-      cancelCreateForm();
-    };
-
     return {
       parts,
       draggingIndex,
       dragOverIndex,
       dragPosition,
-      creatingIndex,
-      newTemplateName,
-      newTemplateElementsText,
       addPart,
       removePart,
       onTypeChange,
@@ -392,9 +348,7 @@ export default {
       selectedTemplateId,
       onLoadTemplate,
       selectedTemplateLabel,
-      toggleCreateForm,
-      cancelCreateForm,
-      confirmCreateTemplate,
+      goToTemplate,
     };
   },
 };

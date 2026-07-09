@@ -167,7 +167,13 @@ export default {
           template = await createNamingPartsTemplate(localState.project, payload);
           localState.templates = [...localState.templates, template];
         }
-        cancel();
+        if (localState.pendingTemplatePartIndex !== null) {
+          localState.newlyCreatedTemplate = template;
+          localState.currentTab = "constraints";
+          localState.currentView = "form";
+        } else {
+          cancel();
+        }
       } finally {
         localState.loading = false;
       }
