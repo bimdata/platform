@@ -1,6 +1,6 @@
 <template>
   <div class="naming-parts-templates-list m-t-18">
-    <div class="naming-parts-templates-list__head">
+    <div class="naming-parts-templates-list__head" v-if="templates.length > 0">
       <span class="naming-parts-templates-list__head__title">
         {{ $t("NamingConstraint.listsSectionTitle") }}
       </span>
@@ -36,7 +36,7 @@
         {{ $t("NamingConstraint.listsEmptyText") }}
       </span>
       <BIMDataButton color="primary" fill radius @click="create">
-        <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
+        <BIMDataIconAddList size="xs" margin="0 6px 0 0" />
         {{ $t("NamingConstraint.createListButton") }}
       </BIMDataButton>
     </div>
