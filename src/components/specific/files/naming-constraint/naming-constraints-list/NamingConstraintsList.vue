@@ -72,34 +72,38 @@
               >
                 {{ $t("NamingConstraint.strictBadge") }}
               </span>
-              <BIMDataButton color="default" ghost rounded icon @click="edit(constraint)">
-                <BIMDataIconEdit size="xxs" />
-              </BIMDataButton>
-              <template v-if="confirmId === constraint.id">
+              <div class="naming-constraints-list__item__actions">
+                <BIMDataButton color="default" ghost rounded icon @click="edit(constraint)">
+                  <BIMDataIconEdit size="xxs" />
+                </BIMDataButton>
+                <template v-if="confirmId === constraint.id">
+                  <div class="delete-actions flex items-center">
+                    <BIMDataButton
+                      color="high"
+                      fill
+                      radius
+                      width="70px"
+                      :disabled="localState.loading"
+                      @click="remove(constraint)"
+                    >
+                      {{ $t("t.confirm") }}
+                    </BIMDataButton>
+                    <BIMDataButton ghost radius width="70px" @click="confirmId = null">
+                      {{ $t("t.cancel") }}
+                    </BIMDataButton>
+                  </div>
+                </template>
                 <BIMDataButton
+                  v-else
+                  ghost
                   color="high"
-                  fill
-                  radius
-                  width="70px"
-                  :disabled="localState.loading"
-                  @click="remove(constraint)"
+                  rounded
+                  icon
+                  @click="confirmId = constraint.id"
                 >
-                  {{ $t("t.confirm") }}
+                  <BIMDataIconDelete fill size="xxs" />
                 </BIMDataButton>
-                <BIMDataButton ghost radius width="70px" @click="confirmId = null">
-                  {{ $t("t.cancel") }}
-                </BIMDataButton>
-              </template>
-              <BIMDataButton
-                v-else
-                ghost
-                color="high"
-                rounded
-                icon
-                @click="confirmId = constraint.id"
-              >
-                <BIMDataIconDelete fill size="xxs" />
-              </BIMDataButton>
+              </div>
             </div>
           </div>
           <div class="naming-constraints-list__item__badges flex items-center">
