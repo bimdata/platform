@@ -54,7 +54,7 @@
           <div class="naming-constraints-list__item__name flex items-center justify-between">
             <div class="flex items-center">
               <BIMDataIconNamingConvention size="xs" margin="0 6px 0 0" />
-              <BIMDataTextbox :text="constraint.name" width="195px" />
+              <BIMDataTextbox :text="constraint.name" width="180px" />
             </div>
             <div class="flex items-center">
               <span

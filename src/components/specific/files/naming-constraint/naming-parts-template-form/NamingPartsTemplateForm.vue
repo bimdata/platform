@@ -139,7 +139,11 @@ export default {
     };
 
     const cancel = () => {
-      localState.template = null;
+      localState.ruleDraft = null;
+      localState.constraint = null;
+      localState.pendingTemplatePartIndex = null;
+      localState.newlyCreatedTemplate = null;
+      localState.previousView = null;
       localState.currentView = "list";
     };
 
@@ -168,11 +172,11 @@ export default {
           localState.templates = [...localState.templates, template];
         }
         if (localState.pendingTemplatePartIndex !== null) {
-          localState.newlyCreatedTemplate = template;
+          localState.currentTab = localState.previousView.tab;
+          localState.currentView = localState.previousView.view;
+        } else {
           localState.currentTab = "constraints";
           localState.currentView = "form";
-        } else {
-          cancel();
         }
       } finally {
         localState.loading = false;
