@@ -54,9 +54,9 @@
             :templates="templates"
             @go-to-template="goToTemplate"
           />
-          <!-- <div v-if="hasEmptyRule" class="naming-constraint-form__error">
-        {{ $t("NamingConstraint.emptyParts") }}
-      </div> -->
+          <div v-if="hasEmptyRule" class="naming-constraint-form__error">
+            {{ $t("NamingConstraint.emptyParts") }}
+          </div>
           <div v-if="hasInvalidBounds" class="naming-constraint-form__error">
             {{ $t("NamingConstraint.invalidBoundsError") }}
           </div>
@@ -119,59 +119,12 @@ export default {
     const { t } = useI18n();
 
     const { createNamingConstraint, updateNamingConstraint } = useNamingConstraints();
-
     const { projectFileStructure } = useFiles();
     const { openModal, closeModal } = useAppModal();
 
     const localState = inject("localState");
 
-    const hasInvalidName = ref(false);
-
-    /*
-     * Computed
-     */
-
-    const isUpdate = computed(() => !!localState.constraint);
-
-    const templates = computed(() => localState.templates ?? []);
-
-    const allFolders = computed(() =>
-      projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
-    );
-
-    const separatorOptions = computed(() => [
-      {
-        value: "-",
-        label: t("NamingConstraint.separatorDashOption"),
-      },
-      {
-        value: ".",
-        label: t("NamingConstraint.separatorDotOption"),
-      },
-      {
-        value: "_",
-        label: t("NamingConstraint.separatorUnderscoreOption"),
-      },
-    ]);
-
-    const example = computed(() => buildExample(localState.ruleDraft));
-
-    const hasEmptyRule = computed(() => !localState.ruleDraft?.parts?.length);
-
-    const hasInvalidBounds = computed(() =>
-      (localState.ruleDraft?.parts ?? []).some(
-        (part) =>
-          part.type === "bounded" &&
-          part.min_value != null &&
-          part.max_value != null &&
-          part.max_value < part.min_value,
-      ),
-    );
-
-    /*
-     * Initialisation du draft
-     */
-
+    /** Draft initialization */
     const createEmptyDraft = () => ({
       name: "",
       strict: false,
@@ -194,20 +147,58 @@ export default {
       }
     }
 
-    /*
-     * Navigation
-     */
+    /** Computed */
+    const isUpdate = computed(() => !!localState.constraint);
+    const templates = computed(() => localState.templates ?? []);
+    const allFolders = computed(() =>
+      projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
+    );
+    const example = computed(() => buildExample(localState.ruleDraft));
 
+    const separatorOptions = computed(() => [
+      {
+        value: "-",
+        label: t("NamingConstraint.separatorDashOption"),
+      },
+      {
+        value: ".",
+        label: t("NamingConstraint.separatorDotOption"),
+      },
+      {
+        value: "_",
+        label: t("NamingConstraint.separatorUnderscoreOption"),
+      },
+    ]);
+
+    /** Form validation */
+    const submitted = ref(false);
+    const hasInvalidName = computed(() => submitted.value && !localState.ruleDraft.name?.trim());
+    const hasEmptyRule = computed(() => submitted.value && !localState.ruleDraft?.parts?.length);
+    const hasInvalidBounds = computed(() =>
+      (localState.ruleDraft?.parts ?? []).some(
+        (part) =>
+          part.type === "bounded" &&
+          part.min_value != null &&
+          part.max_value != null &&
+          part.max_value < part.min_value,
+      ),
+    );
+
+    /** Navigation */
     const goToTemplate = (index) => {
       localState.pendingTemplatePartIndex = index;
+      localState.previousView = {
+        tab: localState.currentTab,
+        view: localState.currentView,
+      };
+
       localState.currentTab = "templates";
       localState.currentView = "form";
     };
 
-    /*
-     * Retour depuis la création d'une liste
+    /** Watchers
+     * Sync the rule when a new template has been created.
      */
-
     watch(
       () => localState.newlyCreatedTemplate,
       (template) => {
@@ -224,22 +215,24 @@ export default {
       },
     );
 
-    /*
-     * Actions
-     */
-
+    /** Actions */
     const cancel = () => {
       localState.ruleDraft = null;
       localState.constraint = null;
       localState.pendingTemplatePartIndex = null;
       localState.newlyCreatedTemplate = null;
       localState.currentView = "list";
+      submitted.value = false;
     };
 
     const submit = debounce(async () => {
-      hasInvalidName.value = !localState.ruleDraft.name;
-
-      if (hasInvalidName.value || hasEmptyRule.value || hasInvalidBounds.value) {
+      submitted.value = true;
+      if (
+        hasInvalidName.value ||
+        hasInvalidSeparator.value ||
+        hasEmptyRule.value ||
+        hasInvalidBounds.value
+      ) {
         return;
       }
 
