@@ -1,10 +1,10 @@
 <template>
-  <div class="naming-constraints-manager">
-    <div class="naming-constraints-manager__header">
-      <div class="naming-constraints-manager__header__icon">
+  <div class="naming-constraint-manager">
+    <div class="naming-constraint-manager__header">
+      <div class="naming-constraint-manager__header__icon">
         <BIMDataButton
           v-if="showBack"
-          class="naming-constraints-manager__header__back"
+          class="naming-constraint-manager__header__back"
           ghost
           radius
           icon
@@ -17,7 +17,7 @@
         <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
       </div>
 
-      <span class="naming-constraints-manager__header__title">
+      <span class="naming-constraint-manager__header__title">
         {{ $t("NamingConstraint.managerTitle") }}
       </span>
 
@@ -27,7 +27,7 @@
     </div>
 
     <BIMDataTabs
-      class="m-t-24"
+      class="m-t-12"
       v-if="localState.currentView === 'list'"
       :tabs="tabs"
       width="100%"
@@ -42,9 +42,9 @@
       </template>
     </BIMDataTabs>
 
-    <div class="naming-constraints-manager__content">
+    <div class="naming-constraint-manager__content">
       <transition name="fade">
-        <div v-show="localState.loading" class="naming-constraints-manager__loader">
+        <div v-show="localState.loading" class="naming-constraint-manager__loader">
           <BIMDataSpinner />
         </div>
       </transition>
@@ -174,4 +174,4 @@ export default {
 };
 </script>
 
-<style scoped src="./NamingConstraintsManager.css"></style>
+<style scoped src="./NamingConstraintManagerCommon.css"></style>

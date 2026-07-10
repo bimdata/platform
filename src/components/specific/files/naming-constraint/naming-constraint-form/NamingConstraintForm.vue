@@ -132,21 +132,6 @@ export default {
       parts: [],
     });
 
-    if (!localState.ruleDraft) {
-      if (localState.constraint) {
-        const rule = localState.constraint.rule ?? {};
-
-        localState.ruleDraft = {
-          name: localState.constraint.name ?? "",
-          strict: !!localState.constraint.strict,
-          separator: rule.separator ?? "_",
-          parts: JSON.parse(JSON.stringify(rule.parts ?? [])),
-        };
-      } else {
-        localState.ruleDraft = createEmptyDraft();
-      }
-    }
-
     /** Computed */
     const isUpdate = computed(() => !!localState.constraint);
     const templates = computed(() => localState.templates ?? []);
@@ -215,6 +200,25 @@ export default {
       },
     );
 
+    watch(
+      () => localState.constraint,
+      (constraint) => {
+        if (constraint) {
+          const rule = constraint.rule ?? {};
+
+          localState.ruleDraft = {
+            name: constraint.name ?? "",
+            strict: !!constraint.strict,
+            separator: rule.separator ?? "_",
+            parts: JSON.parse(JSON.stringify(rule.parts ?? [])),
+          };
+        } else {
+          localState.ruleDraft = createEmptyDraft();
+        }
+      },
+      { immediate: true },
+    );
+
     /** Actions */
     const cancel = () => {
       localState.ruleDraft = null;
@@ -227,12 +231,7 @@ export default {
 
     const submit = debounce(async () => {
       submitted.value = true;
-      if (
-        hasInvalidName.value ||
-        hasInvalidSeparator.value ||
-        hasEmptyRule.value ||
-        hasInvalidBounds.value
-      ) {
+      if (hasInvalidName.value || hasEmptyRule.value || hasInvalidBounds.value) {
         return;
       }
 

@@ -1,9 +1,9 @@
 <template>
-  <div class="folder-naming-constraint-manager">
-    <div class="folder-naming-constraint-manager__header">
+  <div class="naming-constraint-manager">
+    <div class="naming-constraint-manager__header">
       <BIMDataButton
         v-if="showBack"
-        class="folder-naming-constraint-manager__header__back"
+        class="naming-constraint-manager__header__back"
         ghost
         rounded
         icon
@@ -12,9 +12,9 @@
       >
         <BIMDataIconChevron :rotate="270" size="xxs" fill color="granite" />
       </BIMDataButton>
-      <BIMDataIconLock v-else size="s" fill color="primary" />
+      <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
 
-      <span class="folder-naming-constraint-manager__header__title">
+      <span class="naming-constraint-manager__header__title">
         {{ $t("NamingConstraint.managerTitle") }}
       </span>
 
@@ -23,9 +23,9 @@
       </BIMDataButton>
     </div>
 
-    <div class="folder-naming-constraint-manager__content">
+    <div class="naming-constraint-manager__content m-t-12">
       <transition name="fade">
-        <div v-show="localState.loading" class="folder-naming-constraint-manager__loader">
+        <div v-show="localState.loading" class="naming-constraint-manager__loader">
           <BIMDataSpinner />
         </div>
       </transition>
@@ -126,4 +126,4 @@ export default {
 };
 </script>
 
-<style scoped src="./FolderNamingConstraintManager.css"></style>
+<style scoped src="./NamingConstraintManagerCommon.css"></style>

@@ -14,27 +14,22 @@
       <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
 
-    <BIMDataMenu
-      ref="menu"
-      class="file-actions-cell__menu"
-      v-show="isOpen"
-      :menuItems="menuItems"
-    >
+    <BIMDataMenu ref="menu" class="file-actions-cell__menu" v-show="isOpen" :menuItems="menuItems">
       <template #item="{ item }">
-          <BIMDataButton
-            :data-test-id="item.dataTestId"
-            width="100%"
-            :color="item.color"
-            ghost
-            squared
-            :disabled="item.disabled"
-          >
-            <div v-if="item.iconComponent" class="m-r-12">
-              <component :is="item.iconComponent" width="16px" height="14px" />
-            </div>
-            <BIMDataIcon v-else :name="item.icon" size="xs" margin="0 12px 0 0" />
-            <span>{{ $t(item.text) }}</span>
-          </BIMDataButton>
+        <BIMDataButton
+          :data-test-id="item.dataTestId"
+          width="100%"
+          :color="item.color"
+          ghost
+          squared
+          :disabled="item.disabled"
+        >
+          <div v-if="item.iconComponent" class="m-r-12">
+            <component :is="item.iconComponent" width="16px" height="14px" />
+          </div>
+          <BIMDataIcon v-else :name="item.icon" size="xs" margin="0 12px 0 0" />
+          <span>{{ $t(item.text) }}</span>
+        </BIMDataButton>
       </template>
     </BIMDataMenu>
   </div>
@@ -50,7 +45,7 @@ import {
   isConvertibleToPhotosphere,
   isModel,
   isViewable,
-  openInViewer
+  openInViewer,
 } from "../../../../../utils/models.js";
 import { dropdownPositioner } from "../../../../../utils/positioner.js";
 // Components
@@ -60,19 +55,19 @@ import SetAsModelIcon from "../../../../../components/images/SetAsModelIcon.vue"
 export default {
   props: {
     parent: {
-      type: Object
+      type: Object,
     },
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     file: {
       type: Object,
-      required: true
+      required: true,
     },
     loading: {
       type: Boolean,
-      required: true
+      required: true,
     },
   },
   emits: [
@@ -132,7 +127,7 @@ export default {
             iconComponent: SetAsModelIcon,
             text: "FileActionsCell.createModelButtonText",
             disabled: !hasAdminPerm(props.project, props.file),
-            action: () => onClick("create-model")
+            action: () => onClick("create-model"),
           });
         } else {
           menuItems.value.push({
@@ -150,7 +145,7 @@ export default {
           iconComponent: SetAsModelIcon,
           text: "FileActionsCell.createPhotosphereButtonText",
           disabled: !hasAdminPerm(props.project, props.file),
-          action: () => onClick("create-photosphere")
+          action: () => onClick("create-photosphere"),
         });
       }
 
@@ -172,17 +167,17 @@ export default {
       if (isFolder(props.file) && isProjectAdmin(props.project)) {
         menuItems.value.push({
           key: current_key++,
+          iconComponent: "BIMDataIconNamingConvention",
+          text: "NamingConstraint.folderRuleMenuItem",
+          action: () => onClick("manage-naming-rule"),
+          dataTestId: "btn-manage-naming-rule",
+        });
+        menuItems.value.push({
+          key: current_key++,
           icon: "key",
           text: "FileActionsCell.manageAccessButtonText",
           action: () => onClick("manage-access"),
           divider: true,
-        });
-        menuItems.value.push({
-          key: current_key++,
-          iconComponent: "BIMDataIconLock",
-          text: "NamingConstraint.folderRuleMenuItem",
-          action: () => onClick("manage-naming-rule"),
-          dataTestId: "btn-manage-naming-rule",
         });
       }
 
@@ -224,10 +219,7 @@ export default {
 
       nextTick(() => {
         if (props.parent) {
-          menu.value.$el.style.top = dropdownPositioner(
-            props.parent.$el,
-            menu.value.$el
-          );
+          menu.value.$el.style.top = dropdownPositioner(props.parent.$el, menu.value.$el);
         }
       });
     };
@@ -240,7 +232,7 @@ export default {
       });
     };
 
-    const onClick = event => {
+    const onClick = (event) => {
       closeMenu();
       emit(event);
     };
@@ -252,9 +244,9 @@ export default {
       menuItems,
       // Methods
       closeMenu,
-      openMenu
+      openMenu,
     };
-  }
+  },
 };
 </script>
 
