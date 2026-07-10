@@ -1,5 +1,5 @@
 .naming-constraint-form {
-  height: calc(100% - 12px);
+  height: calc(100% - 18px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
