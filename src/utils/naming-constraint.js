@@ -19,7 +19,7 @@
 const PART_TYPES = Object.freeze({
   VALUES_IN: "values_in",
   BOUNDED: "bounded",
-  N_CHARS: "n_chars"
+  N_CHARS: "n_chars",
 });
 
 /**

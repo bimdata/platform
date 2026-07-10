@@ -14,8 +14,10 @@
       v-if="constraints.length > 0"
       class="folder-naming-constraint-selector__search"
       width="100%"
+      height="32px"
       radius
       clear
+      color="primary"
       :placeholder="$t('NamingConstraint.searchPlaceholder')"
       v-model="searchText"
     />
