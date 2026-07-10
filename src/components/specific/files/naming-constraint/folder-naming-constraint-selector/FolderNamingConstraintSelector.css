@@ -1,7 +1,7 @@
 .folder-naming-constraint-selector {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
   height: 100%;
 }
 .folder-naming-constraint-selector__head {
@@ -41,8 +41,9 @@
   flex-direction: column;
   gap: 8px;
   margin: 0;
-  padding: 0;
+  padding: 0 6px;
   list-style: none;
+  overflow-y: auto;
 }
 .folder-naming-constraint-selector__item {
   display: flex;
@@ -96,7 +97,6 @@
   flex-direction: column;
   gap: 8px;
   padding-top: 12px;
-  border-top: 1px solid var(--color-silver-light);
 }
 .folder-naming-constraint-selector__footer__help {
   font-size: 12px;

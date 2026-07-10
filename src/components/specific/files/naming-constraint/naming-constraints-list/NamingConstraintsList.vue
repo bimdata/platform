@@ -1,9 +1,6 @@
 <template>
   <div class="naming-constraints-list">
-    <div
-      v-if="constraints.length > 0"
-      class="naming-constraints-list__head flex items-center m-t-18"
-    >
+    <div v-if="constraints.length > 0" class="naming-constraints-list__head m-t-18">
       <span class="naming-constraints-list__head__title">
         {{ $t("NamingConstraint.rulesSectionTitle") }}
       </span>
@@ -155,7 +152,6 @@ export default {
     const edit = (constraint) => {
       localState.constraint = constraint;
       localState.currentTab = "constraints";
-      localState.constraint = constraint;
       localState.currentView = "form";
     };
 
