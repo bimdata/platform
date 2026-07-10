@@ -125,7 +125,7 @@ export default {
         : "NamingPartsTemplatesList";
     });
 
-    const showBack = computed(() => localState.currentView !== "constraints-list");
+    const showBack = computed(() => localState.currentView !== "list");
 
     const back = () => {
       localState.constraint = null;
