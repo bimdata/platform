@@ -264,6 +264,7 @@
     "addVersionButtonText": "Ajouter une version",
     "createModelButtonText": "Définir comme modèle",
     "createPhotosphereButtonText": "Définir comme photosphère",
+    "manageNamingTemplateButtonText": "Convention de nommage",
     "manageAccessButtonText": "Gérer les accès",
     "openViewerButtonText": "Ouvrir",
     "previewModelButtonText": "Prévisualiser",
@@ -295,7 +296,8 @@
     "folderImport": "Importer un dossier",
     "foldersTab": "Dossiers",
     "filesTab": "Tous les fichiers",
-    "visasTab": "Mes visas"
+    "visasTab": "Mes visas",
+    "namingConvention": "Convention de nommage"
   },
   "FilesManagerOnboarding": {
     "text": "Téléverser votre premier fichier",
