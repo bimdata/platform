@@ -6,9 +6,7 @@ import { ERRORS, RuntimeError, ErrorService } from "./ErrorService.js";
 class ModelService {
   constructor() {
     this.cache = new Map();
-    this.callQueue = queue(async task => {
-      return await task();
-    }, 40);
+    this.callQueue = queue(async task => { return await task(); }, 40);
   }
 
   async fetchModels(project, { cache } = {}) {
@@ -113,14 +111,16 @@ class ModelService {
   }
 
   fetchModelElements(project, model, params = {}) {
-    return apiClient.modelApi.getElements(
-      project.cloud.id,
-      model.id,
-      project.id,
-      params.classification,
-      params.classificationNotation,
-      undefined, // property_filter
-      params.type
+    return this.callQueue.push(() =>
+      apiClient.modelApi.getElements(
+        project.cloud.id,
+        model.id,
+        project.id,
+        params.classification,
+        params.classificationNotation,
+        undefined, // property_filter
+        params.type
+      )
     );
   }
 

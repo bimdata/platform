@@ -61,18 +61,22 @@
     </AppSidePanelContent>
 
     <AppLoading name="space-projects">
-      <BIMDataResponsiveGrid
-        class="space-board__body"
-        itemWidth="320px"
-        rowGap="36px"
-        columnGap="36px"
-        :style="{ justifyContent: isMD ? 'center' : '' }"
-      >
-        <transition-group name="grid">
-          <ProjectCreationCard v-if="isSpaceAdmin(space)" :key="-1" :space="space" />
-          <ProjectCard v-for="project in projects" :key="project.id" :project="project" />
-        </transition-group>
-      </BIMDataResponsiveGrid>
+      <div class="space-board__body">
+        <div class="models-map-container">
+          <ProjectsMap ref="map" />
+        </div>
+        <BIMDataResponsiveGrid
+          itemWidth="320px"
+          rowGap="36px"
+          columnGap="36px"
+          :style="{ justifyContent: isMD ? 'center' : '' }"
+        >
+          <transition-group name="grid">
+            <ProjectCreationCard v-if="isSpaceAdmin(space)" :key="-1" :space="space" />
+            <ProjectCard v-for="project in projects" :key="project.id" :project="project" @loaded="onProjectLoaded" />
+          </transition-group>
+        </BIMDataResponsiveGrid>
+      </div>
     </AppLoading>
   </div>
 </template>
@@ -100,10 +104,11 @@ import GoBackButton from "../../components/specific/app/go-back-button/GoBackBut
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
 import ProjectCard from "../../components/specific/projects/project-card/ProjectCard.vue";
 import ProjectCreationCard from "../../components/specific/projects/project-creation-card/ProjectCreationCard.vue";
+import ProjectsMap from "../../components/specific/projects/projects-map/ProjectsMap.vue";
+import StatusFilterButton from "../../components/specific/projects/status-filter-button/StatusFilterButton.vue";
 import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
 import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 import SpaceUsersManager from "../../components/specific/users/space-users-manager/SpaceUsersManager.vue";
-import StatusFilterButton from "../../components/specific/projects/status-filter-button/StatusFilterButton.vue";
 
 export default {
   components: {
@@ -113,11 +118,12 @@ export default {
     GoBackButton,
     ProjectCard,
     ProjectCreationCard,
+    ProjectsMap,
     SpaceSizeInfo,
     SpaceUsersManager,
+    StatusFilterButton,
     SubscriptionStatusBanner,
     ViewHeader,
-    StatusFilterButton,
   },
   setup() {
     const viewContainer = inject("viewContainer");
@@ -141,6 +147,12 @@ export default {
     );
 
     const { sortToggle: sortProjects } = useListSort(displayedProjects, (project) => project.name);
+
+    const map = ref(null);
+    const onProjectLoaded = ({ project, models }) => {
+      project.models = models;
+      map.value.addProject(project);
+    };
 
     useInterval(() => {
       if (isOpenRight.value) {
@@ -168,6 +180,7 @@ export default {
       // References
       invitations: spaceInvitations,
       IS_SUBSCRIPTION_ENABLED,
+      map,
       projects: displayedProjects,
       searchText,
       space: currentSpace,
@@ -177,6 +190,7 @@ export default {
       filteredProjects,
       // Methods
       isSpaceAdmin,
+      onProjectLoaded,
       openUsersManager: openSidePanel,
       sortProjects,
       // Responsive breakpoints
@@ -186,4 +200,47 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./SpaceBoard.scss"></style>
+<style scoped>
+.space-board {
+  height: 100%;
+
+  .space-board__banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Add top padding to header when banner is displayed */
+  .space-board__banner.visible + .space-board__header {
+    padding-top: var(--spacing-unit);
+  }
+
+  .space-board__header {
+    .space-board__header__search {
+      background-color: var(--color-white);
+    }
+
+    .space-board__header__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-unit);
+    }
+
+    .space-board__header__btn {
+      color: var(--color-granite-light);
+    }
+  }
+
+  
+  .space-board__body {
+    padding: calc(var(--spacing-unit) * 2) 0;
+
+    .models-map-container {
+      height: 300px;
+      padding: calc(var(--spacing-unit) * 2);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+      background-color: var(--color-white);
+    }
+  }
+}
+</style>
