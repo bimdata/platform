@@ -1,49 +1,103 @@
 <template>
-  <BIMDataSafeZoneModal width="868px">
-    <template #title>
-      <BIMDataIconLock size="s" margin="0 8px 0 0" />
-      {{ $t("NamingConstraint.managerTitle") }}
-    </template>
-    <template #text>
-      <div class="naming-conflict-modal__content">
-        <div v-if="rule" class="naming-conflict-modal__rule">
-          <span class="naming-conflict-modal__rule__name">{{ rule.name }}</span>
-          <span class="naming-conflict-modal__rule__chip">
-            {{ buildExample(rule.rule) }}
-          </span>
+  <template v-if="rule.strict">
+    <BIMDataSafeZoneModal class="naming-conflict-modal--strict" width="868px">
+      <template #title>
+        <BIMDataIconLock size="s" margin="0 8px 0 0" />
+        {{ $t("NamingConstraint.managerTitle") }}
+      </template>
+      <template #text>
+        <div class="naming-conflict-modal__content">
+          <div v-if="rule" class="naming-conflict-modal__rule">
+            <span class="naming-conflict-modal__rule__name">{{ rule.name }}</span>
+            <span class="naming-conflict-modal__rule__chip">
+              {{ buildExample(rule.rule) }}
+            </span>
+          </div>
+          <p class="naming-conflict-modal__intro">
+            {{ $t("NamingConstraint.conflictModalIntro") }}
+          </p>
+          <p class="naming-conflict-modal__warning">
+            {{ $t("NamingConstraint.conflictModalWarning") }}
+          </p>
+          <ConflictingDocumentsList
+            :project="project"
+            :documents="documents"
+            :allFolders="allFolders"
+            :rule="rule?.rule"
+            @valid-change="allValid = $event"
+            @change="pending = $event"
+          />
         </div>
-        <p class="naming-conflict-modal__intro">
-          {{ $t("NamingConstraint.conflictModalIntro") }}
-        </p>
-        <p class="naming-conflict-modal__warning">
-          {{ $t("NamingConstraint.conflictModalWarning") }}
-        </p>
-        <ConflictingDocumentsList
-          :project="project"
-          :documents="documents"
-          :allFolders="allFolders"
-          :rule="rule?.rule"
-          @valid-change="allValid = $event"
-          @change="pending = $event"
-        />
-      </div>
-    </template>
-    <template #actions>
-      <BIMDataButton color="high" ghost radius width="120px" @click="close">
-        {{ $t("t.cancel") }}
-      </BIMDataButton>
-      <BIMDataButton
-        color="primary"
-        fill
-        radius
-        width="120px"
-        :disabled="rule?.strict && !allValid"
-        @click="confirm"
-      >
-        {{ $t("t.confirm") }}
-      </BIMDataButton>
-    </template>
-  </BIMDataSafeZoneModal>
+      </template>
+      <template #actions>
+        <BIMDataButton color="high" ghost radius width="120px" @click="close">
+          {{ $t("t.cancel") }}
+        </BIMDataButton>
+        <BIMDataButton
+          color="primary"
+          fill
+          radius
+          width="120px"
+          :disabled="rule?.strict && !allValid"
+          @click="confirm"
+        >
+          {{ $t("t.confirm") }}
+        </BIMDataButton>
+      </template>
+    </BIMDataSafeZoneModal>
+  </template>
+  <template v-else>
+    <BIMDataSafeZoneModal class="naming-conflict-modal--no-strict" width="868px">
+      <template #icon>
+        <div class="header flex items-start">
+          <div class="icon flex items-center m-r-12">
+            <BIMDataIconWarning fill color="warning" />
+          </div>
+          <div class="flex flex-col">
+            <strong>{{ $t("NamingConstraint.modal.noStrictTitle") }}</strong>
+            <span
+              >Construisez le nouveau nom à partir des listes autorisées. Les champs libres sont
+              contrôlés et l’aperçu est généré automatiquement.</span
+            >
+          </div>
+        </div>
+      </template>
+      <template #title> </template>
+      <template #text>
+        <div class="naming-conflict-modal__content">
+          <div v-if="rule" class="naming-conflict-modal__rule">
+            <span class="naming-conflict-modal__rule__name">{{ rule.name }}</span>
+            <span class="naming-conflict-modal__rule__chip">
+              {{ buildExample(rule.rule) }}
+            </span>
+          </div>
+          <ConflictingDocumentsList
+            :project="project"
+            :documents="documents"
+            :allFolders="allFolders"
+            :rule="rule?.rule"
+            @valid-change="allValid = $event"
+            @change="pending = $event"
+          />
+        </div>
+      </template>
+      <template #actions>
+        <BIMDataButton color="granite" ghost radius width="120px" @click="close">
+          {{ $t("t.cancel") }}
+        </BIMDataButton>
+        <BIMDataButton
+          color="primary"
+          fill
+          radius
+          width="120px"
+          :disabled="rule?.strict && !allValid"
+          @click="confirm"
+        >
+          {{ $t("t.confirm") }}
+        </BIMDataButton>
+      </template>
+    </BIMDataSafeZoneModal>
+  </template>
 </template>
 
 <script>

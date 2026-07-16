@@ -1,3 +1,28 @@
+.naming-conflict-modal--strict {
+
+}
+
+.naming-conflict-modal--no-strict {
+  .header {
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50px;
+      background-color: var(--color-warning-lighter);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    strong {
+      margin-bottom: 3px;
+      font-size: 22px;
+    }
+    span {
+      color: var(--color-granite);
+    }
+  }
+}
+
 .naming-conflict-modal__content {
   display: flex;
   flex-direction: column;

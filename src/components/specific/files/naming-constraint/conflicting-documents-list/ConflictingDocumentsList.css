@@ -9,13 +9,12 @@
   list-style: none;
 }
 .conflicting-documents-list__item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background-color: var(--color-tertiary-lightest);
-  border-radius: 6px;
-  box-shadow: var(--box-shadow);
+  /* display: flex;
+  align-items: center; */
+  /* gap: 12px;
+  background-color: var(--color-primary-lighter); */
+  /* border-radius: 6px;
+  box-shadow: var(--box-shadow); */
 }
 .conflicting-documents-list__item__name {
   flex: 1;

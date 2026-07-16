@@ -10,7 +10,7 @@
         :disabled="localState.loading"
         @click="back"
       >
-        <BIMDataIconChevron :rotate="270" size="xxs" fill color="granite" />
+        <BIMDataIconChevron :rotate="-180" size="xxs" fill color="granite" />
       </BIMDataButton>
       <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
 
