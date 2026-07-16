@@ -2,7 +2,8 @@
   <div class="folder-naming-constraint-selector">
     <div class="folder-naming-constraint-selector__head">
       <span class="folder-naming-constraint-selector__head__title">
-        {{ $t("NamingConstraint.rulesSectionTitle") }}
+        {{ $t("FolderNamingConstraint.ruleSectionTitle") }}
+        <strong>{{ localState.folder.name }}</strong>
       </span>
       <BIMDataButton color="primary" fill radius @click="create">
         <BIMDataIconRules size="xs" margin="0 6px 0 0" />
@@ -45,6 +46,25 @@
     <template v-else>
       <ul class="folder-naming-constraint-selector__items">
         <li
+          class="folder-naming-constraint-selector__item folder-naming-constraint-selector__item--none"
+          :class="{
+            'folder-naming-constraint-selector__item--selected': selectedId === NONE_OPTION_ID,
+          }"
+          @click="select(NONE_OPTION_ID)"
+        >
+          <BIMDataRadio
+            :modelValue="selectedId"
+            :value="NONE_OPTION_ID"
+            @update:modelValue="select(NONE_OPTION_ID)"
+          />
+          <div class="folder-naming-constraint-selector__item__main">
+            <div class="folder-naming-constraint-selector__item__name flex items-center">
+              <BIMDataIconClose size="xxs" fill color="granite" margin="0 6px 0 0" />
+              <span>{{ $t("NamingConstraint.noRuleOption") }}</span>
+            </div>
+          </div>
+        </li>
+        <li
           v-for="constraint in filteredConstraints"
           :key="constraint.id"
           class="folder-naming-constraint-selector__item"
@@ -59,10 +79,13 @@
             @update:modelValue="select(constraint.id)"
           />
           <div class="folder-naming-constraint-selector__item__main">
-            <BIMDataIconNamingConvention size="xs" fill color="granite" />
-            <span class="folder-naming-constraint-selector__item__name">
-              {{ constraint.name }}
-            </span>
+            <div class="folder-naming-constraint-selector__item__name flex items-center">
+              <BIMDataIconNamingConvention size="xs" fill color="granite" margin="0 6px 0 0" />
+              <BIMDataTextbox :text="constraint.name" width="90%" />
+              <!-- <span>
+                
+              </span> -->
+            </div>
             <div class="folder-naming-constraint-selector__item__badges">
               <span class="folder-naming-constraint-selector__item__chip">
                 {{ buildExample(constraint.rule) }}
@@ -76,7 +99,7 @@
             </div>
           </div>
           <BIMDataButton ghost rounded icon @click.stop="edit(constraint)">
-            <BIMDataIconEdit size="xs" />
+            <BIMDataIconEdit size="xxs" />
           </BIMDataButton>
         </li>
       </ul>
@@ -118,11 +141,12 @@ import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import NamingConflictModal from "../NamingConflictModal.vue";
+import { BIMDataTextbox } from "@bimdata/design-system";
 
 export default {
   setup() {
     const { t } = useI18n();
-    const { setFolderNamingConstraint } = useNamingConstraints();
+    const { setFolderNamingConstraint, deleteFolderNamingConstraint } = useNamingConstraints();
     const { projectFileStructure } = useFiles();
     const { openModal, closeModal } = useAppModal();
     const { pushNotification } = useAppNotification();
@@ -130,6 +154,7 @@ export default {
 
     const localState = inject("localState");
     const searchText = ref("");
+    const NONE_OPTION_ID = "__none__";
 
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
@@ -171,6 +196,49 @@ export default {
       if (!localState.selectedConstraintId) {
         return;
       }
+
+      if (localState.selectedConstraintId === NONE_OPTION_ID) {
+        try {
+          localState.loading = true;
+          const conflicts = await deleteFolderNamingConstraint(
+            localState.project,
+            localState.folder,
+          );
+          if (conflicts.length > 0) {
+            openModal({
+              component: NamingConflictModal,
+              props: {
+                project: localState.project,
+                documents: conflicts,
+                allFolders: allFolders.value,
+                rule: null, // pas de règle appliquée, potentiellement héritée du parent
+                onClose: closeModal,
+                onConfirm: () => {
+                  closeModal();
+                  closeSidePanel();
+                },
+              },
+            });
+          } else {
+            pushNotification({
+              type: "success",
+              title: t("NamingConstraint.removeRuleSuccessTitle"),
+              message: t("NamingConstraint.removeRuleSuccessMessage"),
+            });
+            closeSidePanel();
+          }
+        } catch (error) {
+          pushNotification({
+            type: "error",
+            title: t("NamingConstraint.removeRuleError"),
+            message: "",
+          });
+        } finally {
+          localState.loading = false;
+        }
+        return;
+      }
+
       try {
         localState.loading = true;
         const result = await setFolderNamingConstraint(localState.project, localState.folder, {
@@ -239,6 +307,7 @@ export default {
       selectedId,
       recursive,
       searchText,
+      NONE_OPTION_ID,
       // Methods
       buildExample,
       select,
