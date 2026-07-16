@@ -207,6 +207,12 @@ class NamingConstraintService {
       );
       return documents ?? [];
     } catch (error) {
+      if (isResponse(error) && error.status === 404) {
+        return [];
+      }
+      if (error instanceof SyntaxError) {
+        return [];
+      }
       throw new RuntimeError(ERRORS.FOLDER_NAMING_CONSTRAINT_DELETE_ERROR, error);
     }
   }

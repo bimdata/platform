@@ -12,7 +12,7 @@
 }
 .folder-naming-constraint-selector__head__title {
   font-size: 16px;
-  font-weight: 500;
+  /* font-weight: 500; */
   color: var(--color-primary);
 }
 .folder-naming-constraint-selector__empty {
@@ -36,19 +36,22 @@
   line-height: 18px;
   color: var(--color-granite);
 }
+.folder-naming-constraint-selector__search {
+  min-height: 32px;
+}
 .folder-naming-constraint-selector__items {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
-  padding: 0 6px;
+  padding: 6px 6px 12px 6px;
   list-style: none;
   overflow-y: auto;
 }
 .folder-naming-constraint-selector__item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   padding: 12px;
   border: 1px solid transparent;
   border-radius: 6px;
@@ -69,9 +72,9 @@
 .folder-naming-constraint-selector__item__name {
   font-weight: 600;
   color: var(--color-primary);
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
 }
 .folder-naming-constraint-selector__item__badges {
   display: flex;
@@ -87,7 +90,7 @@
   font-size: 12px;
 }
 .folder-naming-constraint-selector__item__chip--strict {
-  background-color: var(--color-warning-lightest, var(--color-silver-light));
+  background-color: var(--color-secondary-lighter);
   color: var(--color-warning);
   font-family: inherit;
 }
@@ -96,7 +99,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-top: 12px;
 }
 .folder-naming-constraint-selector__footer__help {
   font-size: 12px;

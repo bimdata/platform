@@ -321,7 +321,18 @@
     "renameFilePlaceholder": "Renommer le fichier",
     "renameConflictsMenuItem": "Renommer les fichiers en conflit",
     "noConflictsTitle": "Aucun fichier en conflit",
-    "noConflictsMessage": "Tous les fichiers respectent la convention de nommage de leur dossier."
+    "noConflictsMessage": "Tous les fichiers respectent la convention de nommage de leur dossier.",
+    "noRuleOption": "Appliquer aucune règle",
+    "searchPlaceholder": "Rechercher une règle",
+    "removeRuleError": "La règle de nommage n'a pas pu être supprimée.",
+    "removeRuleSuccessTitle": "Règle de nommage supprimée",
+    "removeRuleSuccessMessage": "La règle de nommage a été supprimée avec succès.",
+    "modal": {
+      "noStrictTitle": "Renommer les fichiers non conformes"
+    }
+  },
+  "FolderNamingConstraint": {
+    "ruleSectionTitle": "Règles du projet à appliquer au dossier : "
   },
   "LanguageSelector": {
     "title": "Choix de la langue"
