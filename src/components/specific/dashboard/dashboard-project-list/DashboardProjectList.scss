@@ -1,6 +1,4 @@
 .dashboard-project-list {
-  padding: var(--spacing-unit);
-
   &__title {
     display: inline-flex;
     align-items: center;
@@ -28,7 +26,8 @@
 
   &__content {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: var(--spacing-unit);
   }
 }

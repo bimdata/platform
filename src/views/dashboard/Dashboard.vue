@@ -75,16 +75,15 @@
     </div>
 
     <div class="dashboard__body">
-      <section class="dashboard__body__section">
+      <section class="dashboard__body__section dashboard__body__section--spaces">
         <DashboardSpaceList
           :spaces="spaces"
-          isCarousel
           :creating="showCreationForm"
           @close-creation="closeCreationForm"
         />
       </section>
-      <section class="dashboard__body__section">
-        <DashboardProjectList :projects="projects" isCarousel />
+      <section class="dashboard__body__section dashboard__body__section--projects">
+        <DashboardProjectList :projects="projects" />
       </section>
     </div>
   </div>

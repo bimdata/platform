@@ -59,6 +59,7 @@
       }
 
       .bimdata-card__footer {
+        position: relative;
         height: calc(100% - var(--card-content-height));
         padding: 0;
         display: flex;
