@@ -232,6 +232,7 @@
     "addTagsButtonText": "Tags hinzufügen"
   },
   "ModelLocation": {
+    "title": "Standort & Grundfläche",
     "emptyLocationMessage": "Keine Ortungsdaten verfügbar",
     "addLocationButtonText": "Nachfragen"
   },
@@ -266,7 +267,7 @@
     "inputPlaceholder": "Name Ihrer IFC-Zusammenführung"
   },
   "ModelsOverview": {
-    "title": "Projektübersicht"
+    "title": "Immersive 3D-Modellierung"
   },
   "ModelsOverviewOnboarding": {
     "text": "Ihr erstes Modell hochladen",
@@ -627,6 +628,11 @@
     "selectedOrga": "Ausgewählte Organisation:",
     "selectedSpace": "Ausgewählter Raum:"
   },
+    "ProjectStorageInfo": {
+    "title": "Speicher",
+    "usage": "{used} / {total}"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Zur Pro-Plattform wechseln",
     "usage": "{used} verwendet auf {total}"

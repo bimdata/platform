@@ -1,6 +1,7 @@
 .project-board {
   display: grid;
-  grid-template-rows: 32px calc(100% - 32px);
+  grid-template-rows: auto 1fr;
+  gap: calc(var(--spacing-unit) * 2);
   min-height: 100%;
 
   &__banner {
@@ -15,19 +16,106 @@
   }
 
   &__header {
+    // Let the header adapt: left/right shrink to their content, center stays centered.
+    &:deep(.view-header__slot) {
+      width: auto;
+    }
+    &:deep(.view-header__slot--left) {
+      flex: 0 0 auto;
+    }
+    &:deep(.view-header__slot--center) {
+      flex: 1 1 auto;
+    }
+    &:deep(.view-header__slot--right) {
+      flex: 0 0 auto;
+    }
+
     &__actions {
       display: flex;
       align-items: center;
-      gap: var(--spacing-unit);
+      gap: calc(var(--spacing-unit) * 2);
     }
-    &:deep() {
-      .bimdata-tabs__container__tab.active {
-        background-color: rgba(47, 55, 74, 0.1);
+
+    &__storage {
+      // Slightly wider than a single button so the progress bar is readable.
+      width: 240px;
+    }
+  }
+
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--spacing-unit);
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: var(--box-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    &--tabs {
+      gap: 2px;
+      padding: 4px;
+    }
+  }
+
+  &__breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    color: var(--color-primary);
+    font-weight: bold;
+
+    // Turn the "back" button into an icon-only circular white button with a shadow.
+    :deep(.go-back-button) {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      background-color: var(--color-white);
+      box-shadow: var(--box-shadow);
+
+      // Hide the "Back" text label — keep the arrow icon only.
+      & > span {
+        display: none;
       }
 
-      .bimdata-tabs__container__tab:hover {
-        background-color: rgba(47, 55, 74, 0.03);
+      .go-back-button__icon {
+        margin: 0;
       }
+    }
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--spacing-unit) / 2);
+    height: 32px;
+    min-width: 77px;
+    padding: 0 calc(var(--spacing-unit) * 2);
+    border: none;
+    border-radius: 50px;
+    background-color: transparent;
+    color: var(--color-granite, #606060);
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover:not(.project-board__tab--active) {
+      background-color: rgba(47, 55, 74, 0.06);
+      color: var(--color-primary);
+    }
+
+    &--active {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      font-weight: bold;
     }
 
     .beta-badge {
@@ -43,6 +131,6 @@
   }
 
   &__body {
-    padding: calc(var(--spacing-unit) * 2) 0 0;
+    min-height: 0;
   }
 }

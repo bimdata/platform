@@ -149,6 +149,7 @@
     "addTagsButtonText": "Labels toevoegen"
   },
   "ModelLocation": {
+    "title": "Locatie & Voetafdruk",
     "emptyLocationMessage": "Geen locatiegegevens beschikbaar",
     "addLocationButtonText": "Invullen"
   },
@@ -182,7 +183,7 @@
     "inputPlaceholder": "Naam van uw samenvoeging"
   },
   "ModelsOverview": {
-    "title": "Overzicht projectmodellen"
+    "title": "Immersieve 3D-modellering"
   },
   "ModelsOverviewOnboarding": {
     "text": "Upload uw eerste model",
@@ -544,6 +545,11 @@
     "selectedOrga": "Factureringsaccount:",
     "selectedSpace": "Geselecteerde ruimte:"
   },
+    "ProjectStorageInfo": {
+    "title": "Opslag",
+    "usage": "{used} / {total}"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Upgrade naar pro-abonnement",
     "usage": "{gebruikt} gebruikt van {totaal}"

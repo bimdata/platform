@@ -149,6 +149,7 @@
     "addTagsButtonText": "Legg til tags"
   },
   "ModelLocation": {
+    "title": "Plassering & Fotavtrykk",
     "emptyLocationMessage": "Ingen plasseringsdata tilgjengelig",
     "addLocationButtonText": "Fyll ut"
   },
@@ -182,7 +183,7 @@
     "inputPlaceholder": "Navn på sammenslåingen"
   },
   "ModelsOverview": {
-    "title": "Oversikt over prosjektmodeller"
+    "title": "Immersiv 3D-modellering"
   },
   "ModelsOverviewOnboarding": {
     "text": "Last opp den første modellen din",
@@ -544,6 +545,11 @@
     "selectedOrga": "Faktureringskonto:",
     "selectedSpace": "Valgt område:"
   },
+    "ProjectStorageInfo": {
+    "title": "Lagring",
+    "usage": "{used} / {total}"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Oppgrader til pro-abonnement",
     "usage": "{used} benyttet av {total}"

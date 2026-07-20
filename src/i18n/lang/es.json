@@ -232,6 +232,7 @@
     "addTagsButtonText": "Añadir etiquetas"
   },
   "ModelLocation": {
+    "title": "Ubicación y Huella",
     "emptyLocationMessage": "Datos de seguimiento no disponibles",
     "addLocationButtonText": "Infórmese"
   },
@@ -266,7 +267,7 @@
     "inputPlaceholder": "Nombre de vuestra fusión del IFC"
   },
   "ModelsOverview": {
-    "title": "Visión del proyecto"
+    "title": "Modelado 3D Inmersivo"
   },
   "ModelsOverviewOnboarding": {
     "text": "Transferir vuestro primer modelo",
@@ -627,6 +628,11 @@
     "selectedOrga": "Cuenta de facturación:",
     "selectedSpace": "Espacio seleccionado:"
   },
+    "ProjectStorageInfo": {
+    "title": "Almacenamiento",
+    "usage": "{used} / {total}"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Pasar a la plataforma pro",
     "usage": "{used} utilizado en {total}"

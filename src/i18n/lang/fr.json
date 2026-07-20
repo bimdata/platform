@@ -411,6 +411,7 @@
     "addTagsButtonText": "Ajouter des tags"
   },
   "ModelLocation": {
+    "title": "Localisation & Emprise",
     "emptyLocationMessage": "Aucune données de localisation disponible",
     "addLocationButtonText": "Renseigner"
   },
@@ -446,7 +447,7 @@
     "inputPlaceholder": "Nom de votre fusion d'IFC"
   },
   "ModelsOverview": {
-    "title": "Aperçu du projet"
+    "title": "Modélisation 3D Immersive"
   },
   "ModelsOverviewOnboarding": {
     "text": "Téléverser votre premier modèle",
@@ -811,6 +812,11 @@
     "selectedOrga": "Compte de facturation:",
     "selectedSpace": "Espace sélectionné:"
   },
+    "ProjectStorageInfo": {
+    "title": "Stockage",
+    "usage": "{used} / {total}"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Upgrade",
     "usage": "{used} utilisé sur {total}"
