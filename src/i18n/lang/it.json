@@ -155,6 +155,7 @@
     "view3dUnavailable": "La vista 3D non è disponibile, prova la beta"
   },
   "ModelLocation": {
+    "title": "Localizzazione ed Impronta",
     "emptyLocationMessage": "Nessun dato di localizzazione disponibile",
     "addLocationButtonText": "Riempi"
   },
@@ -188,7 +189,7 @@
     "inputPlaceholder": "Nome della tua unione"
   },
   "ModelsOverview": {
-    "title": "Panoramica dei modelli di progetto"
+    "title": "Modellazione 3D Immersiva"
   },
   "ModelsOverviewOnboarding": {
     "text": "Carica il tuo primo modello",
@@ -550,6 +551,11 @@
     "selectedOrga": "Conto di fatturazione:",
     "selectedSpace": "Spazio selezionato:"
   },
+    "ProjectStorageInfo": {
+    "title": "Archiviazione",
+    "usage": "{used} / {total}"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Passa alla piattaforma pro",
     "usage": "{used} usato su {total}"

@@ -1,11 +1,15 @@
 .models-manager {
   box-shadow: var(--box-shadow);
-  background-color: var(--color-silver-light);
+  background-color: var(--color-white);
+  border-radius: 20px;
+  overflow: hidden;
 
   &__head {
     height: 44px;
     display: flex;
     align-items: center;
+    padding: 0 var(--spacing-unit);
+    background-color: var(--color-silver-light);
   }
 
   &__body {
@@ -25,6 +29,7 @@
 
     opacity: 0.6;
     background-color: transparent;
+    border-radius: 12px 12px 0 0;
 
     &.selected {
       opacity: 1;

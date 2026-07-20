@@ -1,0 +1,40 @@
+.project-storage-info {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 3 / 2);
+  min-width: 240px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-unit);
+    color: var(--color-primary);
+    font-size: 12px;
+    line-height: 1;
+
+    &__label {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 3 / 4);
+      font-weight: 600;
+    }
+
+    &__values {
+      color: var(--color-granite-light);
+      font-weight: 500;
+    }
+  }
+
+  &__bar {
+    :deep(.progress-bar__content) {
+      height: 6px;
+      border-radius: 3px;
+      background-color: var(--color-silver);
+    }
+    :deep(.progress-bar__content__bar) {
+      height: 100%;
+      border-radius: 3px;
+    }
+  }
+}

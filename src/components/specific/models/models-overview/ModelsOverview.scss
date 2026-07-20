@@ -1,25 +1,42 @@
-@use "/src/styles/mixins.scss";
-
 .models-overview {
-  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 20px;
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
 
-  @include mixins.block-card($padding: calc(var(--spacing-unit) * 2));
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) / 2);
+    height: 50px;
+    padding: 0 calc(var(--spacing-unit) * 2);
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 500;
 
-  &.bimdata-card {
-    &:deep() > .bimdata-card__content {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    &__title {
+      line-height: 1;
     }
   }
-}
 
-@include mixins.media-breakpoint-down(lg) {
-  .models-overview {
-    &.bimdata-card {
-      &:deep() > .bimdata-card__content .models-card {
-        flex-grow: 1;
-      }
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--spacing-unit) * 2);
+
+    :deep(.models-card) {
+      width: 100%;
+    }
+
+    :deep(.models-overview-onboarding) {
+      width: 100%;
+      height: 100%;
     }
   }
 }
