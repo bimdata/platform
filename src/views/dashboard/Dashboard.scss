@@ -2,9 +2,17 @@
 
 .dashboard {
   --tile-width: 300px; // minimum tile width
+  // Minimum width to hold exactly 3 cards with a small gap between them.
+  --spaces-min-width: calc(215px * 3 + var(--spacing-unit) * 2);
+  --projects-min-width: calc(320px * 3 + var(--spacing-unit) * 2);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  gap: calc(var(--spacing-unit) * 3);
 
   &__welcome {
-    margin: 0 0 calc(var(--spacing-unit) * 3);
+    margin: 0;
     color: var(--color-primary);
     font-size: 2rem;
     font-weight: bold;
@@ -21,15 +29,27 @@
   }
 
   &__body {
-    margin: calc(var(--spacing-unit) * 4) 0 calc(var(--spacing-unit) * 2);
+    flex: 1;
 
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
     gap: calc(var(--spacing-unit) * 2);
 
     &__section {
-      flex: 1 1 420px;
       min-width: 0;
+
+      // Proportional flex-grow (215*3 : 320*3) so section widths follow their content ratio.
+      // Right edge of the projects section aligns with the right edge of the tiles above.
+      &--spaces {
+        flex: 645 1 0;
+        min-width: min(100%, var(--spaces-min-width));
+      }
+
+      &--projects {
+        flex: 960 1 0;
+        min-width: min(100%, var(--projects-min-width));
+      }
     }
   }
 }
