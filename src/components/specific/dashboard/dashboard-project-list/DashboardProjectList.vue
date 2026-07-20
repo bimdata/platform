@@ -1,9 +1,6 @@
 <template>
   <div class="dashboard-project-list">
-    <AppLink
-      class="dashboard-project-list__title"
-      :to="{ name: routeNames.userProjects }"
-    >
+    <AppLink class="dashboard-project-list__title" :to="{ name: routeNames.userProjects }">
       <span>{{ $t("DashboardProjectList.title") }}</span>
       <BIMDataIconChevron size="xxs" />
     </AppLink>
@@ -41,7 +38,7 @@ export default {
     const maxCards = ref(MIN_CARDS);
     const displayedProjects = ref([]);
 
-    const computeMaxCards = width => {
+    const computeMaxCards = (width) => {
       if (!width) return;
       const fit = Math.floor((width + CARD_GAP) / (CARD_WIDTH + CARD_GAP));
       maxCards.value = Math.max(MIN_CARDS, fit);
@@ -49,7 +46,7 @@ export default {
 
     let observer;
     onMounted(() => {
-      observer = new ResizeObserver(entries => {
+      observer = new ResizeObserver((entries) => {
         computeMaxCards(entries[0].contentRect.width);
       });
       if (contentEl.value) {
@@ -78,4 +75,3 @@ export default {
 </script>
 
 <style scoped lang="scss" src="./DashboardProjectList.scss"></style>
-
