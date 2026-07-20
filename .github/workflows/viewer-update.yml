@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.REPOS_TOKEN }}
           # Needed for EndBug/add-and-commit
           persist-credentials: true
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           check-latest: true
@@ -55,7 +55,7 @@ jobs:
         with:
           ref: release
           persist-credentials: true
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           check-latest: true
