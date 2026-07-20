@@ -10,10 +10,7 @@
         data-guide="btn-spaces"
         :to="{ name: routeNames.userSpaces }"
       >
-        <DashboardButtonTile
-          color="spaces"
-          :buttonText="$t('Dashboard.spacesTileButton')"
-        >
+        <DashboardButtonTile color="spaces" :buttonText="$t('Dashboard.spacesTileButton')">
           <template #icon>
             <BIMDataIconSpace size="l" />
           </template>
@@ -31,10 +28,7 @@
         data-guide="btn-projects"
         :to="{ name: routeNames.userProjects }"
       >
-        <DashboardButtonTile
-          color="projects"
-          :buttonText="$t('Dashboard.projectsTileButton')"
-        >
+        <DashboardButtonTile color="projects" :buttonText="$t('Dashboard.projectsTileButton')">
           <template #icon>
             <BIMDataIconProject size="l" />
           </template>
@@ -110,7 +104,7 @@ export default {
     DashboardActionTile,
     DashboardButtonTile,
     DashboardProjectList,
-    DashboardSpaceList
+    DashboardSpaceList,
   },
   setup() {
     const { userSpaces } = useSpaces();
@@ -120,7 +114,7 @@ export default {
     const {
       isOpen: showCreationForm,
       open: openCreationForm,
-      close: closeCreationForm
+      close: closeCreationForm,
     } = useToggle();
 
     return {
@@ -133,11 +127,10 @@ export default {
       showCreationForm,
       // Methods
       openCreationForm,
-      closeCreationForm
+      closeCreationForm,
     };
-  }
+  },
 };
 </script>
 
 <style scoped lang="scss" src="./Dashboard.scss"></style>
-
