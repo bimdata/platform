@@ -1,0 +1,20 @@
+.naming-constraint-preview {
+   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.naming-constraint-preview__chip {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background-color: #F0F5FF;
+  color: var(--color-neutral);
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.naming-constraint-preview__separator, .naming-constraint-preview__extension {
+  color: #64748b;
+  font-weight: 700;
+}

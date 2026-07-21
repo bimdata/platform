@@ -5,23 +5,25 @@
         {{ $t("FolderNamingConstraint.ruleSectionTitle") }}
         <strong>{{ localState.folder.name }}</strong>
       </span>
+    </div>
+
+    <div class="flex items-center justify-between folder-naming-constraint-selector__head__actions">
+      <BIMDataSearch
+        v-if="constraints.length > 0"
+        class="folder-naming-constraint-selector__search"
+        width="60%"
+        height="32px"
+        radius
+        clear
+        color="primary"
+        :placeholder="$t('NamingConstraint.searchPlaceholder')"
+        v-model="searchText"
+      />
       <BIMDataButton color="primary" fill radius @click="create">
         <BIMDataIconRules size="xs" margin="0 6px 0 0" />
         {{ $t("NamingConstraint.addRuleButton") }}
       </BIMDataButton>
     </div>
-
-    <BIMDataSearch
-      v-if="constraints.length > 0"
-      class="folder-naming-constraint-selector__search"
-      width="100%"
-      height="32px"
-      radius
-      clear
-      color="primary"
-      :placeholder="$t('NamingConstraint.searchPlaceholder')"
-      v-model="searchText"
-    />
 
     <div v-if="constraints.length === 0" class="folder-naming-constraint-selector__empty">
       <BIMDataIllustration
@@ -81,14 +83,12 @@
             <div class="folder-naming-constraint-selector__item__name flex items-center">
               <BIMDataIconNamingConvention size="xs" fill color="granite" margin="0 6px 0 0" />
               <BIMDataTextbox :text="constraint.name" width="90%" />
-              <!-- <span>
-                
-              </span> -->
             </div>
             <div class="folder-naming-constraint-selector__item__badges">
-              <span class="folder-naming-constraint-selector__item__chip">
-                {{ buildExample(constraint.rule) }}
-              </span>
+              <div class="folder-naming-constraint-selector__item__preview">
+                <NamingConstraintPreview :rule="constraint.rule" />
+              </div>
+
               <span
                 v-if="constraint.strict"
                 class="folder-naming-constraint-selector__item__chip folder-naming-constraint-selector__item__chip--strict"
@@ -132,7 +132,8 @@ import {
   useNamingConstraints,
   NamingConstraintConflictError,
 } from "../../../../../state/naming-constraints.js";
-import { buildExample } from "../../../../../utils/naming-constraint.js";
+
+import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { useFiles } from "../../../../../state/files.js";
@@ -140,9 +141,11 @@ import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 import NamingConflictModal from "../NamingConflictModal.vue";
-import { BIMDataTextbox } from "@bimdata/design-system";
 
 export default {
+  components: {
+    NamingConstraintPreview,
+  },
   setup() {
     const { t } = useI18n();
     const { setFolderNamingConstraint, deleteFolderNamingConstraint } = useNamingConstraints();
@@ -308,7 +311,6 @@ export default {
       searchText,
       NONE_OPTION_ID,
       // Methods
-      buildExample,
       select,
       create,
       edit,

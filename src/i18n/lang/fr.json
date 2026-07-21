@@ -332,7 +332,7 @@
     }
   },
   "FolderNamingConstraint": {
-    "ruleSectionTitle": "Règles du projet à appliquer au dossier : "
+    "ruleSectionTitle": "Règles appliquées au dossier : "
   },
   "LanguageSelector": {
     "title": "Choix de la langue"

@@ -77,6 +77,7 @@
             :filesToUpload="filesToUpload"
             :folder="currentFolder"
             :foldersToUpload="foldersToUpload"
+            :hasNamingConflict="hasNamingConflict"
             @back-parent-folder="backToParent"
             @create-model="createModelFromFile"
             @create-photosphere="createModelFromFile($event, MODEL_TYPE.PHOTOSPHERE)"
@@ -287,8 +288,7 @@ export default {
     const { createModel, createPhotosphere, deleteModels } = useModels();
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
-    const { getEffectiveFolderRule } =
-      useNamingConstraints();
+    const { getEffectiveFolderRule } = useNamingConstraints();
     const currentFolder = ref(null);
     const currentFiles = ref([]);
     const toValidateVisas = ref([]);
@@ -600,9 +600,7 @@ export default {
     };
 
     const openNamingConflictsModal = async () => {
-      const conflicting = allFiles.value.filter(
-        (file) => file.naming_constraint_conflict,
-      );
+      const conflicting = allFiles.value.filter((file) => file.naming_constraint_conflict);
       if (conflicting.length === 0) {
         pushNotification({
           type: "success",
@@ -614,9 +612,7 @@ export default {
       const documents = await Promise.all(
         conflicting.map(async (file) => {
           const folder = allFolders.value.find((f) => f.id === file.parent_id);
-          const effective = folder
-            ? await getEffectiveFolderRule(props.project, folder)
-            : null;
+          const effective = folder ? await getEffectiveFolderRule(props.project, folder) : null;
           return { ...file, namingRule: effective?.rule ?? null };
         }),
       );
@@ -772,6 +768,20 @@ export default {
     const allFiles = computed(() => getFilesInFolder(props.fileStructure));
     const allFolders = computed(() => getFoldersInFolder(props.fileStructure));
 
+    const hasNamingConflict = (folder) => {
+      if (!folder?.children?.length) {
+        return false;
+      }
+
+      return folder.children.some((child) => {
+        if (isFolder(child)) {
+          return hasNamingConflict(child);
+        }
+
+        return child.naming_constraint_conflict;
+      });
+    };
+
     const filesTabs = [
       {
         id: "folders",
@@ -918,6 +928,7 @@ export default {
       fileUploadInput,
       goFoldersView,
       goVisasView,
+      hasNamingConflict,
       isFullTotal,
       moveFiles,
       onFileSelected,
