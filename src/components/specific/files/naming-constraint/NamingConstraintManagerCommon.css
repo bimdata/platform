@@ -8,21 +8,26 @@
 .naming-constraint-manager__header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   min-height: 34px;
 }
 
 .naming-constraint-manager__header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
 }
 
-.naming-constraint-manager__header__back {
+/*.naming-constraint-manager__header__back {
   margin-left: -6px;
-}
+  
+} */
 
 .naming-constraint-manager__header__title {
   flex-grow: 1;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--color-primary);
   text-align: center;
 }

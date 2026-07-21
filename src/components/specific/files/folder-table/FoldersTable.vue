@@ -163,6 +163,10 @@ export default {
       type: Array,
       required: true,
     },
+    hasNamingConflict: {
+      type: Function,
+      required: true,
+    },
   },
   emits: [
     "back-parent-folder",
@@ -208,26 +212,28 @@ export default {
       return ext.replace(".", "").toUpperCase();
     };
 
-    const folderHasConflict = (folder) => {
-      if (!folder.children?.length) {
-        return false;
-      }
+    // const folderHasConflict = (folder) => {
+    //   console.log("checking", folder.name, folder.children);
+    //   if (!folder.children?.length) {
+    //     return false;
+    //   }
 
-      return folder.children.some((child) => {
-        if (isFolder(child)) {
-          return folderHasConflict(child);
-        }
+    //   return folder.children.some((child) => {
+    //     console.log("child", child.name, child.naming_constraint_conflict);
+    //     if (isFolder(child)) {
+    //       return folderHasConflict(child);
+    //     }
 
-        return child.naming_constraint_conflict;
-      });
-    };
+    //     return child.naming_constraint_conflict;
+    //   });
+    // };
 
     const formattedFiles = computed(() =>
       props.files.map((file) => ({
         ...file,
         type: isFolder(file) ? t("t.folder") : file.name ? formatExtension(file.name) : t("t.file"),
         hasNamingConflict: isFolder(file)
-          ? folderHasConflict(file)
+          ? props.hasNamingConflict(file)
           : file.naming_constraint_conflict,
       })),
     );
@@ -297,6 +303,7 @@ export default {
       formattedFiles,
       nameEditMode,
       // Methods
+      // folderHasConflict,
       cleanUpload,
       formatBytes,
       isFolder,

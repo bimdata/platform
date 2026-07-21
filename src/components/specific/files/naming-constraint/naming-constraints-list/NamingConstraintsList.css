@@ -93,6 +93,10 @@
     min-height: 16px;
   }
 }
+.naming-constraints-list__item__preview {
+  gap: 6px;
+  flex-wrap: wrap;
+}
 .naming-constraints-list__item__chip {
   padding: 2px 8px;
   border-radius: 6px;
@@ -101,6 +105,11 @@
   font-family: monospace;
   font-size: 12px;
 }
+.naming-constraints-list__item__separator, .naming-constraints-list__item__extension {
+  color: #64748b;
+  font-weight: 600;
+}
+
 .naming-constraints-list__item__chip--strict {
   background-color: var(--color-secondary-lighter);
   color: var(--color-warning);

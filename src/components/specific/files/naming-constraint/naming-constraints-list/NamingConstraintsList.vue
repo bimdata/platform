@@ -104,9 +104,9 @@
                 {{ constraint?.creator?.email }}
               </span>
             </div>
-            <span class="naming-constraints-list__item__chip flex items-center">
-              {{ buildExample(constraint.rule) }}
-            </span>
+            <div class="naming-constraints-list__item__preview flex items-center">
+              <NamingConstraintPreview :rule="constraint.rule" />
+            </div>
           </div>
         </div>
       </li>
@@ -117,14 +117,14 @@
 <script>
 import { computed, inject, ref } from "vue";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
-import { buildExample } from "../../../../../utils/naming-constraint.js";
-import { User } from "oidc-client-ts";
 
+import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 import UserAvatar from "../../../users/user-avatar/UserAvatar.vue";
 
 export default {
   components: {
     UserAvatar,
+    NamingConstraintPreview,
   },
   setup() {
     const { deleteNamingConstraint } = useNamingConstraints();
@@ -178,7 +178,6 @@ export default {
       confirmId,
       searchText,
       // Methods
-      buildExample,
       create,
       edit,
       openLists,

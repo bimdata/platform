@@ -1,25 +1,25 @@
 <template>
   <div class="naming-constraint-manager">
     <div class="naming-constraint-manager__header">
-      <div class="naming-constraint-manager__header__icon">
-        <BIMDataButton
-          v-if="showBack"
-          class="naming-constraint-manager__header__back"
-          ghost
-          radius
-          icon
-          :disabled="localState.loading"
-          @click="back"
-        >
-          <BIMDataIconChevron :rotate="180" size="xxs" fill color="granite" margin="0 6px 0 0" />
-          {{ $t("t.back") }}
-        </BIMDataButton>
-        <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
+      <div class="flex items-center">
+        <div class="naming-constraint-manager__header__icon">
+          <BIMDataButton
+            v-if="showBack"
+            class="naming-constraint-manager__header__back m-r-6"
+            ghost
+            rounded
+            icon
+            :disabled="localState.loading"
+            @click="back"
+          >
+            <BIMDataIconChevron :rotate="180" size="xxs" fill color="granite" />
+          </BIMDataButton>
+          <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
+        </div>
+        <span class="naming-constraint-manager__header__title">
+          {{ $t("NamingConstraint.managerTitle") }}
+        </span>
       </div>
-
-      <span class="naming-constraint-manager__header__title">
-        {{ $t("NamingConstraint.managerTitle") }}
-      </span>
 
       <BIMDataButton ghost rounded icon @click="closeSidePanel()">
         <BIMDataIconClose size="xxs" fill color="granite-light" />

@@ -44,7 +44,7 @@
           position="right"
           class="flex items-center"
         >
-          <BIMDataIconWarning margin="0 0 0 4px" size="xxs" fill color="high" />
+          <BIMDataIconWarning margin="0 0 0 4px" size="xxs" fill color="warning" />
         </BIMDataTooltip>
         <div v-if="displayModelInfo(file)" class="flex items-center">
           <BIMDataTooltip
