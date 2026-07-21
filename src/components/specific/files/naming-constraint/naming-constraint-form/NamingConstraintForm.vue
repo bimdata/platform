@@ -72,11 +72,12 @@
           </span>
         </div>
 
-        <div class="naming-constraint-form__preview" v-if="example">
+        <div class="naming-constraint-form__preview flex flex-col">
           <span class="naming-constraint-form__preview__label">
             {{ $t("NamingConstraint.previewLabel") }}
           </span>
-          <code class="naming-constraint-form__preview__value">{{ example }}</code>
+
+          <NamingConstraintPreview :rule="localState.ruleDraft" />
         </div>
       </div>
     </div>
@@ -109,10 +110,13 @@ import { useAppModal } from "../../../app/app-modal/app-modal.js";
 
 import RuleBuilder from "./RuleBuilder.vue";
 import NamingConflictModal from "../NamingConflictModal.vue";
+import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 
 export default {
   components: {
     RuleBuilder,
+    NamingConstraintPreview,
+    NamingConflictModal,
   },
 
   setup() {
@@ -138,7 +142,9 @@ export default {
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
     );
-    const example = computed(() => buildExample(localState.ruleDraft));
+    // const exampleParts = computed(() =>
+    //   (localState.ruleDraft?.parts ?? []).map((part) => part.name).filter(Boolean),
+    // );
 
     const separatorOptions = computed(() => [
       {
@@ -279,6 +285,7 @@ export default {
             return;
           }
         } else {
+          console.log("Naming constraint payload", JSON.stringify(payload, null, 2));
           const constraint = await createNamingConstraint(localState.project, payload);
 
           localState.constraints = [...localState.constraints, constraint];
@@ -286,6 +293,11 @@ export default {
 
         cancel();
       } catch (error) {
+        console.error("Naming constraint error:", error);
+        if (error?.error) {
+          console.error(await error.error.json());
+        }
+
         if (error instanceof NamingConstraintConflictError) {
           openModal({
             component: NamingConflictModal,
@@ -317,7 +329,7 @@ export default {
       isUpdate,
       templates,
       separatorOptions,
-      example,
+      // exampleParts,
       hasInvalidName,
       hasEmptyRule,
       hasInvalidBounds,

@@ -22,9 +22,7 @@
           </p>
           <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
             <div>Convention attendue dans ce dossier</div>
-            <span class="naming-conflict-modal__rule__chip">
-              {{ buildExample(rule.rule) }}
-            </span>
+            <NamingConstraintPreview :rule="rule" />
           </div>
 
           <ConflictingDocumentsList
@@ -78,9 +76,8 @@
         <div class="naming-conflict-modal__content">
           <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
             <div>Convention attendue dans ce dossier</div>
-            <span class="naming-conflict-modal__rule__chip">
-              {{ buildExample(rule.rule) }}
-            </span>
+
+            <NamingConstraintPreview :rule="rule" />
           </div>
           <ConflictingDocumentsList
             :project="project"
@@ -114,12 +111,14 @@
 <script>
 import { ref } from "vue";
 import { useFiles } from "../../../../state/files.js";
-import { buildExample, matchName } from "../../../../utils/naming-constraint.js";
+import { matchName } from "../../../../utils/naming-constraint.js";
 import ConflictingDocumentsList from "./conflicting-documents-list/ConflictingDocumentsList.vue";
+import NamingConstraintPreview from "./naming-constraint-preview/NamingConstraintPreview.vue";
 
 export default {
   components: {
     ConflictingDocumentsList,
+    NamingConstraintPreview,
   },
   props: {
     project: {
@@ -175,7 +174,6 @@ export default {
     return {
       allValid,
       pending,
-      buildExample,
       close,
       confirm,
     };

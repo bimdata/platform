@@ -184,12 +184,12 @@ import { computed, ref } from "vue";
 const defaultPart = (type) => {
   switch (type) {
     case "bounded":
-      return { type: "bounded", min_value: 1, max_value: 99 };
+      return { type: "bounded", name: "BOUNDED VALUES", min_value: 1, max_value: 99 };
     case "n_chars":
-      return { type: "n_chars", max_length: 10 };
+      return { type: "n_chars", name: "N CHARS", max_length: 10 };
     case "values_in":
     default:
-      return { type: "values_in", elements: [] };
+      return { type: "values_in", name: "", elements: [] };
   }
 };
 
@@ -306,7 +306,13 @@ export default {
     const onLoadTemplate = (index, templateId) => {
       const template = props.templates.find((item) => item.id === templateId);
       const next = clone();
-      next[index].elements = template ? [...(template.elements ?? [])] : [];
+      if (template) {
+        next[index].name = template.name;
+        next[index].elements = [...(template.elements ?? [])];
+      } else {
+        next[index].name = "";
+        next[index].elements = [];
+      }
       emitChange(next);
     };
 
