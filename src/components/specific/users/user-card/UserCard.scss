@@ -1,7 +1,7 @@
 .user-card {
   position: relative;
-  min-height: 64px;
-  height: 64px;
+  min-height: 60px;
+  height: 60px;
   font-size: 1rem;
   color: var(--color-primary);
 
@@ -16,20 +16,17 @@
   &__content {
     display: flex;
     align-items: center;
+    gap: calc(var(--spacing-unit) * 3 / 2);
     width: 100%;
     height: 100%;
 
     &__info {
-      flex-grow: 1;
-      padding: 0 var(--spacing-unit);
+      flex: 1 1 auto;
+      min-width: 0;
       line-height: 18px;
 
       &__name {
         font-weight: bold;
-
-        .user-role-badge {
-          margin-left: var(--spacing-unit);
-        }
       }
 
       &__email {
@@ -37,5 +34,47 @@
         color: var(--color-granite-light);
       }
     }
+
+    &__aside {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) / 2);
+      flex: 0 0 auto;
+    }
+
+    &__badge {
+      flex: 0 0 auto;
+    }
+
+    // Reserve a fixed slot for the kebab menu so every badge shares the same
+    // right edge, whether the current user has admin actions or not.
+    &__menu-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      .user-card__content__menu {
+        &:deep(.bimdata-btn.ghost.quaternary) {
+          .icon-fill.icon-fill--white.dark {
+            fill: var(--color-granite);
+          }
+        }
+      }
+    }
+
+    // Kebab menu appears only when the user hovers on the card.
+    &__menu {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+  }
+
+  &:hover .user-card__content__menu,
+  &:focus-within .user-card__content__menu {
+    opacity: 1;
+    pointer-events: auto;
   }
 }

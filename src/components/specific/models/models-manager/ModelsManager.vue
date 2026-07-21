@@ -1,36 +1,34 @@
 <template>
   <div class="models-manager">
     <div class="models-manager__head">
-      <template v-for="tab of tabs" :key="tab.id">
-        <div
-          v-if="tab.displayed"
-          class="models-manager__tab"
-          :class="{ selected: tab.id === currentTab.id }"
-          :style="{ width: isLG ? 'auto' : '' }"
-          @click="selectTab(tab)"
-        >
-          <span class="models-manager__tab__icon">
-            <BIMDataIcon :name="tab.icon" size="m" />
-          </span>
-          <span v-if="!isMD" class="models-manager__tab__text">
-            {{ tab.text }}
-          </span>
-          <span v-if="tab.beta" class="beta-badge">BETA</span>
-          <span class="models-manager__tab__count" v-if="tab.models.length > 0">
-            {{ tab.models.length }}
-          </span>
-        </div>
-      </template>
+      <div class="models-manager__tabs">
+        <template v-for="tab of tabs" :key="tab.id">
+          <button
+            v-if="tab.displayed"
+            type="button"
+            class="models-manager__tab"
+            :class="{ 'models-manager__tab--active': tab.id === currentTab.id }"
+            @click="selectTab(tab)"
+          >
+            <BIMDataIcon
+              class="models-manager__tab__icon"
+              :name="tab.icon"
+              size="m"
+            />
+            <span v-if="!isMD" class="models-manager__tab__text">
+              {{ tab.text }}
+            </span>
+            <span v-if="tab.beta" class="beta-badge">BETA</span>
+            <span v-if="tab.models.length > 0" class="models-manager__tab__count">
+              {{ tab.models.length }}
+            </span>
+          </button>
+        </template>
+      </div>
 
       <div class="models-manager__menu" v-click-away="closeMenu">
-        <BIMDataButton>
-          <BIMDataIconEllipsis
-            color="granite-light"
-            size="l"
-            fill
-            :rotate="90"
-            @click="toggleMenu"
-          />
+        <BIMDataButton ghost rounded icon @click="toggleMenu">
+          <BIMDataIconEllipsis color="granite-light" size="m" :rotate="90" />
         </BIMDataButton>
 
         <BIMDataMenu

@@ -15,7 +15,7 @@
   "dependencies": {
     "@bimdata/bcf-components": "6.7.8",
     "@bimdata/components": "1.10.3",
-    "@bimdata/design-system": "3.0.0-beta.46",
+    "@bimdata/design-system": "3.0.0-beta.47",
     "@bimdata/typescript-fetch-api-client": "10.48.0",
     "@bimdata/viewer": "2.20.2-beta.7",
     "@paddle/paddle-js": "^1.6.5",

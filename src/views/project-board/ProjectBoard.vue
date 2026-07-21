@@ -30,11 +30,17 @@
             v-if="showStorageInfo"
             class="project-board__header__storage"
             :spaceSubInfo="spaceSubInfo"
+            :currentProjectSize="currentProjectSize"
           />
           <AppLink v-if="showDatapackButton" :to="datapackRoute">
-            <BIMDataButton color="secondary" fill radius>
-              <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
-              <span>{{ datapackLabel }}</span>
+            <BIMDataButton
+              class="project-board__header__datapack"
+              color="secondary"
+              fill
+              rounded
+              icon
+            >
+              <BIMDataIconPlus size="xxs" />
             </BIMDataButton>
           </AppLink>
           <AppSlot name="project-board-action" />
@@ -54,7 +60,6 @@
 
 <script>
 import { onBeforeMount, ref, provide, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { useInterval } from "../../composables/interval.js";
 import { useStandardBreakpoints } from "../../composables/responsive.js";
@@ -63,6 +68,7 @@ import { useAppSidePanel } from "../../components/specific/app/app-side-panel/ap
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
 import routeNames from "../../router/route-names.js";
+import { useFiles } from "../../state/files.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 import { useUser } from "../../state/user.js";
@@ -119,10 +125,10 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const { t } = useI18n();
     const { isUserOrga, isSpaceAdmin } = useUser();
     const { currentSpace, spaceSubInfo, isFreeSpace } = useSpaces();
     const { currentProject, loadProjectUsers, loadProjectInvitations } = useProjects();
+    const { projectFileStructure } = useFiles();
     const { projectView } = useSession();
 
     const { closeSidePanel } = useAppSidePanel();
@@ -186,12 +192,21 @@ export default {
       query: { space: currentSpace.value?.id },
     }));
 
-    const datapackLabel = computed(() =>
-      spaceSubInfo.value?.isPlatformPro ? "DataPack" : t("SpaceSizeInfo.subscribePlatformButton"),
-    );
+    // Sum sizes of all files in the current project's file structure to display the
+    // "this project" segment of the storage widget.
+    const sumFileSizes = (node) => {
+      if (!node) return 0;
+      let total = Number(node.size) || 0;
+      for (const child of node.children || []) {
+        total += sumFileSizes(child);
+      }
+      return total;
+    };
+    const currentProjectSize = computed(() => sumFileSizes(projectFileStructure.value));
 
     return {
       // References
+      currentProjectSize,
       currentTab,
       currentView,
       IS_SUBSCRIPTION_ENABLED,
@@ -201,7 +216,6 @@ export default {
       showStorageInfo,
       showDatapackButton,
       datapackRoute,
-      datapackLabel,
       // Methods
       changeView,
       isSpaceAdmin,
@@ -209,13 +223,6 @@ export default {
       // Responsive breakpoints
       ...useStandardBreakpoints(),
     };
-  },
-  computed: {
-    datapackLabel() {
-      return this.spaceSubInfo?.isPlatformPro
-        ? "DataPack"
-        : this.$t("SpaceSizeInfo.subscribePlatformButton");
-    },
   },
 };
 </script>

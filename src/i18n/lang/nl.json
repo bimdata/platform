@@ -185,7 +185,8 @@
     "inputPlaceholder": "Naam van uw samenvoeging"
   },
   "ModelsOverview": {
-    "title": "Immersieve 3D-modellering"
+    "title": "Immersieve 3D-modellering",
+    "selectPreviewButton": "Voorbeeld kiezen"
   },
   "ModelsOverviewOnboarding": {
     "text": "Upload uw eerste model",
@@ -549,7 +550,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Opslag",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "Dit project",
+    "otherProjects": "Andere projecten"
   },
 
   "SpaceSizeInfo": {

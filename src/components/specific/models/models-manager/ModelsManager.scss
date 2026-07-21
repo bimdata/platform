@@ -1,39 +1,64 @@
 .models-manager {
+  display: flex;
+  flex-direction: column;
   box-shadow: var(--box-shadow);
   background-color: var(--color-white);
   border-radius: 20px;
   overflow: hidden;
 
   &__head {
-    height: 44px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
-    padding: 0 var(--spacing-unit);
-    background-color: var(--color-silver-light);
-  }
-
-  &__body {
-    height: calc(100% - 44px);
+    gap: var(--spacing-unit);
+    padding: var(--spacing-unit);
     background-color: var(--color-white);
   }
 
-  &__tab {
-    width: 215px;
-    height: 100%;
-    padding: 0 var(--spacing-unit);
+  &__tabs {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: calc(var(--spacing-unit) * 0.5);
-    cursor: pointer;
+    gap: calc(var(--spacing-unit) / 2);
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 
-    opacity: 0.6;
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--spacing-unit) / 2);
+    height: 40px;
+    padding: 0 calc(var(--spacing-unit) * 3 / 2);
+    border: none;
+    border-radius: 50px;
     background-color: transparent;
-    border-radius: 12px 12px 0 0;
+    color: var(--color-granite-light);
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
 
-    &.selected {
-      opacity: 1;
-      background-color: var(--color-white);
+    &:hover:not(.models-manager__tab--active) {
+      background-color: rgba(47, 55, 74, 0.04);
+    }
+
+    &--active {
+      background-color: var(--color-neutral-lighter);
+      color: var(--color-primary);
+      font-weight: bold;
     }
 
     &__text {
@@ -41,8 +66,10 @@
     }
 
     &__icon {
-      width: 22px;
-      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
     }
 
     .beta-badge {
@@ -56,26 +83,30 @@
     }
 
     &__count {
-      min-width: 18px;
-      height: 18px;
-      padding: 0 4px;
-      line-height: 16px;
-      text-align: center;
-      border-radius: calc(18px / 2);
-      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
       background-color: var(--color-primary);
       color: var(--color-white);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
     }
   }
 
   &__menu {
     position: relative;
     margin-left: auto;
+    flex: 0 0 auto;
 
     &__container {
       position: absolute;
       z-index: 5;
-      top: 30px;
+      top: calc(100% + var(--spacing-unit) / 2);
       right: 0;
       padding: calc(var(--spacing-unit) / 2) 0;
     }
@@ -86,6 +117,7 @@
       align-items: center;
       gap: var(--spacing-unit);
       white-space: nowrap;
+      padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
 
       .bimdata-checkbox {
         width: 100%;
