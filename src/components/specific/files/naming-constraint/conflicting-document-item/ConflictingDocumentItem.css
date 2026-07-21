@@ -7,9 +7,8 @@
 }
 
 .conflicting-document-item__summary {
+  background: var(--color-silver-light);
   display: grid;
-  /* grid-template-columns: 1fr 180px 32px;
-  grid-template-rows: 1fr 1fr; */
   gap: 24px;
   align-items: center;
   padding: 12px;
@@ -64,10 +63,18 @@
 
 .conflicting-document-item__content {
   padding: 12px;
+  text-align: left;
 }
 
 .conflicting-document-item__info {
-  margin-bottom: 12px;
+  .file-path {
+    font-size: 12px;
+    color: var(--color-granite);
+    span {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+  }
 }
 
 .conflicting-document-item__example {
@@ -78,7 +85,7 @@
 .conflicting-document-item__rename {
   display: flex;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   .bimdata-input { 
     width: 100%;
   }
