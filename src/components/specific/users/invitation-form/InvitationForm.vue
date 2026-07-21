@@ -22,7 +22,7 @@
         v-model="role"
       />
     </div>
-    <BIMDataButton class="invitation-form__btn-cancel" width="80px" ghost radius @click="cancel">
+    <BIMDataButton class="invitation-form__btn-cancel" width="80px" ghost rounded @click="cancel">
       {{ $t("t.cancel") }}
     </BIMDataButton>
     <BIMDataButton
@@ -31,7 +31,7 @@
       width="80px"
       color="primary"
       fill
-      radius
+      rounded
       @click="submit"
     >
       {{ $t("InvitationForm.submitButtonText") }}
@@ -60,8 +60,8 @@ export default {
     },
     error: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   emits: ["cancel", "submit"],
   setup(props, { emit }) {
@@ -84,16 +84,16 @@ export default {
 
         role.value = roleOptions.value[0];
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const errorMessage = ref("");
     watch(
       () => props.error,
-      msg => {
+      (msg) => {
         errorMessage.value = msg;
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const reset = () => {

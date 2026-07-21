@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Accueil",
+    "spaces": "Espaces",
+    "projects": "Projets",
+    "invitations": "Invitations",
+    "favorites": "Favoris",
+    "subscription": "Abonnement"
+  },
   "t": {
     "add": "Ajouter",
     "amount": "Montant",
@@ -250,10 +258,10 @@
     "placeholder": "( Aucun projet )"
   },
   "DashboardProjectList": {
-    "title": "Projets récents"
+    "title": "Voir tous les projets récents"
   },
   "DashboardSpaceList": {
-    "title": "Espaces récents"
+    "title": "Voir tous les espaces récents"
   },
   "DashboardWelcomeTile": {
     "title": "Dashboard",
@@ -403,6 +411,7 @@
     "addTagsButtonText": "Ajouter des tags"
   },
   "ModelLocation": {
+    "title": "Localisation & Emprise",
     "emptyLocationMessage": "Aucune données de localisation disponible",
     "addLocationButtonText": "Renseigner"
   },
@@ -438,7 +447,8 @@
     "inputPlaceholder": "Nom de votre fusion d'IFC"
   },
   "ModelsOverview": {
-    "title": "Aperçu du projet"
+    "title": "Modélisation 3D Immersive",
+    "selectPreviewButton": "Choisir la prévisualisation"
   },
   "ModelsOverviewOnboarding": {
     "text": "Téléverser votre premier modèle",
@@ -629,17 +639,25 @@
     "documentCreateError": "Impossible de télécharger ce document"
   },
   "ProjectStatusBadge": {
-    "new": "NOUVEAU",
-    "active": "ACTIF",
-    "inactive": "INACTIF",
-    "paused": "PAUSE"
+    "new": "nouveau",
+    "active": "actif",
+    "inactive": "inactif",
+    "paused": "pause"
   },
   "Dashboard": {
     "spacesTileBottomText": "Mes espaces",
     "projectsTileBottomText": "Mes projets",
     "subscriptionsTileTitle": "Abonnements",
     "subscriptionsTileText": "Retrouvez toutes vos factures et vos dernières informations de paiement ici.",
-    "subscriptionsTileBottomText": "Gérer mes abonnements"
+    "subscriptionsTileBottomText": "Gérer mes abonnements",
+    "welcome": "Bonjour {name}, content de vous revoir !",
+    "spacesTileLabel": "espaces activés",
+    "spacesTileButton": "Voir tous les espaces",
+    "projectsTileLabel": "projets activés",
+    "projectsTileButton": "Voir tous les projets",
+    "createSpaceTitle": "Créez votre nouvel espace",
+    "createSpaceText": "Organisez vos projets et collaborez avec votre équipe dans un nouvel espace.",
+    "createSpaceButton": "Créer un espace"
   },
   "Subscribe": {
     "title": "Choisissez votre abonnement",
@@ -795,6 +813,13 @@
     "selectedOrga": "Compte de facturation:",
     "selectedSpace": "Espace sélectionné:"
   },
+    "ProjectStorageInfo": {
+    "title": "Stockage",
+    "usage": "{used} / {total}",
+    "currentProject": "Ce projet",
+    "otherProjects": "Autres projets"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Upgrade",
     "usage": "{used} utilisé sur {total}"

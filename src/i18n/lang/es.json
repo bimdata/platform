@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Inicio",
+    "spaces": "Espacios",
+    "projects": "Proyectos",
+    "invitations": "Invitaciones",
+    "favorites": "Favoritos",
+    "subscription": "Suscripción"
+  },
   "OidcCallbackError": {
     "message": "Ha ocurrido un error de autenticación...",
     "retryButtonText": "Intente de nuevo"
@@ -109,10 +117,10 @@
     "placeholder": "( Sin proyectos )"
   },
   "DashboardProjectList": {
-    "title": "Proyectos recientes"
+    "title": "Ver todos los proyectos recientes"
   },
   "DashboardSpaceList": {
-    "title": "Espacios recientes"
+    "title": "Ver todos los espacios recientes"
   },
   "DashboardWelcomeTile": {
     "title": "Dashboard",
@@ -224,6 +232,7 @@
     "addTagsButtonText": "Añadir etiquetas"
   },
   "ModelLocation": {
+    "title": "Ubicación y Huella",
     "emptyLocationMessage": "Datos de seguimiento no disponibles",
     "addLocationButtonText": "Infórmese"
   },
@@ -258,7 +267,8 @@
     "inputPlaceholder": "Nombre de vuestra fusión del IFC"
   },
   "ModelsOverview": {
-    "title": "Visión del proyecto"
+    "title": "Modelado 3D Inmersivo",
+    "selectPreviewButton": "Elegir vista previa"
   },
   "ModelsOverviewOnboarding": {
     "text": "Transferir vuestro primer modelo",
@@ -455,7 +465,15 @@
     "projectsTileBottomText": "Mis proyectos",
     "subscriptionsTileTitle": "Suscripciones",
     "subscriptionsTileText": "Acceda a todas sus facturas y la última información de pago aquí.",
-    "subscriptionsTileBottomText": "Administrar mis suscripciones"
+    "subscriptionsTileBottomText": "Administrar mis suscripciones",
+    "welcome": "Hola {name}, me alegro verte de nuevo !",
+    "spacesTileLabel": "espacios activados",
+    "spacesTileButton": "Ver todos los espacios",
+    "projectsTileLabel": "proyectos activados",
+    "projectsTileButton": "Ver todos los proyectos",
+    "createSpaceTitle": "Cree su nuevo espacio",
+    "createSpaceText": "Organice sus proyectos y colabore con su equipo en un nuevo espacio.",
+    "createSpaceButton": "Crear un espacio"
   },
   "Subscribe": {
     "title": "Elija su suscripción",
@@ -611,6 +629,13 @@
     "selectedOrga": "Cuenta de facturación:",
     "selectedSpace": "Espacio seleccionado:"
   },
+    "ProjectStorageInfo": {
+    "title": "Almacenamiento",
+    "usage": "{used} / {total}",
+    "currentProject": "Este proyecto",
+    "otherProjects": "Otros proyectos"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Pasar a la plataforma pro",
     "usage": "{used} utilizado en {total}"

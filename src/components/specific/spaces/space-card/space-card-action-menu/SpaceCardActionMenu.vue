@@ -1,15 +1,14 @@
 <template>
-  <div
-    class="space-card-action-menu"
-    @click.prevent.stop="() => {}"
-    v-click-away="closeMenu"
-  >
+  <div class="space-card-action-menu" @click.prevent.stop="() => {}" v-click-away="closeMenu">
     <BIMDataButton
       data-test-id="btn-toggle-menu"
       class="space-card-action-menu__btn"
-      ripple
+      color="white"
+      fill
       rounded
+      normal
       icon
+      padding="0"
       @click="toggleMenu"
     >
       <BIMDataIconEllipsis size="l" />
@@ -23,11 +22,7 @@
 
         <transition name="fade" mode="out-in">
           <template v-if="showUpdateForm">
-            <SpaceCardUpdateForm
-              :space="space"
-              @close="closeUpdateForm"
-              @success="closeMenu"
-            />
+            <SpaceCardUpdateForm :space="space" @close="closeUpdateForm" @success="closeMenu" />
           </template>
 
           <template v-else-if="showDeleteGuard">
@@ -40,10 +35,8 @@
                 {{
                   $t(
                     `SpaceCardActionMenu.${
-                      isFavoriteSpace(space)
-                        ? "removeFavorite"
-                        : "addToFavorite"
-                    }`
+                      isFavoriteSpace(space) ? "removeFavorite" : "addToFavorite"
+                    }`,
                   )
                 }}
               </BIMDataButton>
@@ -103,12 +96,11 @@ import SpaceCardUpdateForm from "../space-card-update-form/SpaceCardUpdateForm.v
 const props = defineProps({
   space: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } =
-  useUser();
+const { isSpaceAdmin, isFavoriteSpace, addFavoriteSpace, removeFavoriteSpace } = useUser();
 const { removeSpaceImage } = useSpaces();
 
 const loading = ref(false);
@@ -122,16 +114,8 @@ const toggleFavorite = async () => {
   }
 };
 
-const {
-  isOpen: showUpdateForm,
-  open: openUpdateForm,
-  close: closeUpdateForm
-} = useToggle();
-const {
-  isOpen: showDeleteGuard,
-  open: openDeleteGuard,
-  close: closeDeleteGuard
-} = useToggle();
+const { isOpen: showUpdateForm, open: openUpdateForm, close: closeUpdateForm } = useToggle();
+const { isOpen: showDeleteGuard, open: openDeleteGuard, close: closeDeleteGuard } = useToggle();
 
 const reset = () => {
   closeUpdateForm();

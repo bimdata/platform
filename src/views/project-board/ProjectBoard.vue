@@ -3,38 +3,46 @@
     <SubscriptionStatusBanner class="project-board__banner" :space="space" />
     <ViewHeader class="project-board__header">
       <template #left>
-        <GoBackButton v-if="isMidXL" data-guide="btn-change-space" />
-        <AppBreadcrumb v-else data-guide="btn-change-space" />
+        <div class="project-board__breadcrumb">
+          <GoBackButton v-if="isMidXL" data-guide="btn-change-space" />
+          <AppBreadcrumb v-else data-guide="btn-change-space" />
+        </div>
       </template>
       <template #center>
-        <BIMDataTabs
-          data-guide="project-tabs"
-          width="300px"
-          height="32px"
-          :tabSize="isMD ? '64px' : '100px'"
-          :tabs="tabs"
-          :selected="currentTab.id"
-          @tab-click="changeView($event.id)"
-          :dark="false"
-        >
-          <template #tab="{ tab }">
-            <span :data-test-id="`project-tab-${tab.id}`" class="flex item-center">
-              <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
-              <span v-else>
-                {{ $t(`ProjectBoard.tabs.${tab.id}`) }}
-              </span>
-              <span v-if="tab.beta" class="beta-badge">BETA</span>
-            </span>
-          </template>
-        </BIMDataTabs>
+        <div class="project-board__pill project-board__pill--tabs">
+          <button
+            v-for="tab in tabs"
+            :key="tab.id"
+            :data-test-id="`project-tab-${tab.id}`"
+            class="project-board__tab"
+            :class="{ 'project-board__tab--active': tab.id === currentTab.id }"
+            @click="changeView(tab.id)"
+          >
+            <BIMDataIcon v-if="isMD" :name="tab.icon" size="xs" />
+            <span v-else>{{ $t(`ProjectBoard.tabs.${tab.id}`) }}</span>
+            <span v-if="tab.beta" class="beta-badge">BETA</span>
+          </button>
+        </div>
       </template>
       <template #right>
         <div class="project-board__header__actions">
-          <SpaceSizeInfo
-            v-if="IS_SUBSCRIPTION_ENABLED && isSpaceAdmin(space) && currentTab.id !== 'bcf'"
-            :space="space"
+          <ProjectStorageInfo
+            v-if="showStorageInfo"
+            class="project-board__header__storage"
             :spaceSubInfo="spaceSubInfo"
+            :currentProjectSize="currentProjectSize"
           />
+          <AppLink v-if="showDatapackButton" :to="datapackRoute">
+            <BIMDataButton
+              class="project-board__header__datapack"
+              color="secondary"
+              fill
+              rounded
+              icon
+            >
+              <BIMDataIconPlus size="xxs" />
+            </BIMDataButton>
+          </AppLink>
           <AppSlot name="project-board-action" />
         </div>
       </template>
@@ -59,6 +67,8 @@ import { useSession } from "../../composables/session.js";
 import { useAppSidePanel } from "../../components/specific/app/app-side-panel/app-side-panel.js";
 import { IS_SUBSCRIPTION_ENABLED } from "../../config/subscription.js";
 import { DEFAULT_PROJECT_VIEW } from "../../config/projects.js";
+import routeNames from "../../router/route-names.js";
+import { useFiles } from "../../state/files.js";
 import { useProjects } from "../../state/projects.js";
 import { useSpaces } from "../../state/spaces.js";
 import { useUser } from "../../state/user.js";
@@ -66,11 +76,12 @@ import { isFullTotal } from "../../utils/spaces.js";
 
 // Components
 import AppBreadcrumb from "../../components/specific/app/app-breadcrumb/AppBreadcrumb.vue";
+import AppLink from "../../components/specific/app/app-link/AppLink.vue";
 import AppModalContent from "../../components/specific/app/app-modal/AppModalContent.vue";
 import AppSlot from "../../components/specific/app/app-slot/AppSlot.js";
 import GoBackButton from "../../components/specific/app/go-back-button/GoBackButton.vue";
 import ViewHeader from "../../components/specific/app/view-header/ViewHeader.vue";
-import SpaceSizeInfo from "../../components/specific/subscriptions/space-size-info/SpaceSizeInfo.vue";
+import ProjectStorageInfo from "../../components/specific/subscriptions/project-storage-info/ProjectStorageInfo.vue";
 import SubscriptionStatusBanner from "../../components/specific/subscriptions/subscription-status-banner/SubscriptionStatusBanner.vue";
 
 import ProjectBcf from "./project-bcf/ProjectBcf.vue";
@@ -101,13 +112,14 @@ const tabsDef = [
 export default {
   components: {
     AppBreadcrumb,
+    AppLink,
     AppModalContent,
     AppSlot,
     GoBackButton,
     ProjectBcf,
     ProjectFiles,
     ProjectOverview,
-    SpaceSizeInfo,
+    ProjectStorageInfo,
     SubscriptionStatusBanner,
     ViewHeader,
   },
@@ -116,6 +128,7 @@ export default {
     const { isUserOrga, isSpaceAdmin } = useUser();
     const { currentSpace, spaceSubInfo, isFreeSpace } = useSpaces();
     const { currentProject, loadProjectUsers, loadProjectInvitations } = useProjects();
+    const { projectFileStructure } = useFiles();
     const { projectView } = useSession();
 
     const { closeSidePanel } = useAppSidePanel();
@@ -155,14 +168,54 @@ export default {
       }
     }, 10000);
 
+    const showStorageInfo = computed(
+      () =>
+        IS_SUBSCRIPTION_ENABLED &&
+        isSpaceAdmin(currentSpace.value) &&
+        currentTab.value.id !== "bcf",
+    );
+
+    // Same conditions as SpaceSizeInfo Datapack/Subscribe button, kept aligned
+    // with the existing subscription business rules.
+    const showDatapackButton = computed(
+      () =>
+        showStorageInfo.value &&
+        spaceSubInfo.value?.isPlatformSubscription &&
+        spaceSubInfo.value?.isOrganizationMember &&
+        !spaceSubInfo.value?.isCustomSubscription,
+    );
+
+    const datapackRoute = computed(() => ({
+      name: spaceSubInfo.value?.isPlatformPro
+        ? routeNames.subscriptionDatapack
+        : routeNames.subscriptionPro,
+      query: { space: currentSpace.value?.id },
+    }));
+
+    // Sum sizes of all files in the current project's file structure to display the
+    // "this project" segment of the storage widget.
+    const sumFileSizes = (node) => {
+      if (!node) return 0;
+      let total = Number(node.size) || 0;
+      for (const child of node.children || []) {
+        total += sumFileSizes(child);
+      }
+      return total;
+    };
+    const currentProjectSize = computed(() => sumFileSizes(projectFileStructure.value));
+
     return {
       // References
+      currentProjectSize,
       currentTab,
       currentView,
       IS_SUBSCRIPTION_ENABLED,
       space: currentSpace,
       spaceSubInfo,
       tabs: tabsDef,
+      showStorageInfo,
+      showDatapackButton,
+      datapackRoute,
       // Methods
       changeView,
       isSpaceAdmin,

@@ -1,16 +1,6 @@
 <template>
-  <BIMDataButton
-    data-test-id="go-back-button"
-    class="go-back-button"
-    ghost
-    radius
-    @click="goBack"
-  >
-    <BIMDataIconArrow
-      class="go-back-button__icon"
-      size="xxs"
-      margin="0 6px 0 0"
-    />
+  <BIMDataButton data-test-id="go-back-button" class="go-back-button" ghost radius @click="goBack">
+    <BIMDataIconChevron class="go-back-button__icon" size="xxs" :rotate="180" />
     <span>
       {{ $t("t.back") }}
     </span>
@@ -58,9 +48,9 @@ export default {
     };
 
     return {
-      goBack
+      goBack,
     };
-  }
+  },
 };
 </script>
 
