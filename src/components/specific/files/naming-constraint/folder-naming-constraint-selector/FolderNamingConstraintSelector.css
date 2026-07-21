@@ -72,9 +72,6 @@
 .folder-naming-constraint-selector__item__name {
   font-weight: 600;
   color: var(--color-primary);
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; */
 }
 .folder-naming-constraint-selector__item__badges {
   display: flex;

@@ -38,14 +38,16 @@
     </summary>
 
     <div class="conflicting-document-item__content">
-      <div class="conflicting-document-item__info">
-        <FilePathCell :file="doc" :allFolders="allFolders" />
-
-        <div v-if="!rule && doc.namingRule" class="conflicting-document-item__example">
-          Format attendu :
-          <strong>
-            {{ buildExample(doc.namingRule) }}
-          </strong>
+      <div class="conflicting-document-item__info m-b-36">
+        <div class="file-path flex items-center m-b-12">
+          <BIMDataIconFolderLocation fill color="default" margin="0 6px 0 0" />
+          Dossier source :
+          <span v-if="folderPath.length" class="m-l-6">
+            {{ folderPath.map((folder) => folder.name).join(" / ") }}
+          </span>
+          <span v-else>
+            {{ $t("t.rootFolder") }}
+          </span>
         </div>
       </div>
 
@@ -77,15 +79,11 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { buildExample } from "../../../../../utils/naming-constraint";
-import FilePathCell from "../../files-table/file-path-cell/FilePathCell.vue";
+import { getAscendants } from "../../../../../utils/file-structure.js";
 
 export default {
-  components: {
-    FilePathCell,
-  },
-
   props: {
     doc: {
       type: Object,
@@ -93,13 +91,9 @@ export default {
     },
     rule: Object,
     allFolders: Array,
-
     opened: Boolean,
-
     currentName: String,
-
     valid: Boolean,
-
     deleted: Boolean,
   },
 
@@ -107,6 +101,9 @@ export default {
 
   setup(props, { emit }) {
     const draftName = ref(props.currentName);
+    const folderPath = computed(() => {
+      return getAscendants(props.doc, props.allFolders).reverse();
+    });
 
     watch(
       () => props.currentName,
@@ -125,6 +122,7 @@ export default {
 
     return {
       draftName,
+      folderPath,
       confirmRename,
       buildExample,
     };
