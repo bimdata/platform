@@ -54,12 +54,25 @@
 }
 .naming-conflict-modal__rule__chip {
   width: fit-content;
-  padding: 3px 7px;
+  padding: 3px 6px;
   background-color: var(--color-neutral-lighter);
   color: var(--color-neutral);
-  border-radius: 12px;
+  border-radius: 6px;
   font-size: 12px;
 }
+.naming-conflict-modal__rule__preview {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+.naming-conflict-modal__rule__separator, .naming-conflict-modal__rule__extension {
+  color: #64748b;
+  font-weight: 700;
+}
+
 .naming-conflict-modal__intro, .naming-conflict-modal__warning {
   margin: 0;
   font-size: 14px;

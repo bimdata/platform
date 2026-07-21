@@ -83,24 +83,13 @@ function matchName(name, rule) {
 /**
  * Build a human-friendly example segment for a single rule part.
  *
- * - values_in -> first element if defined, otherwise "..."
- * - n_chars   -> "XXX"
- * - bounded   -> "[MIN-MAX]"
+ * Uses the part name when available.
  *
  * @param {Object} part
  * @returns {String}
  */
 function buildPartExample(part) {
-  switch (part?.type) {
-    case PART_TYPES.VALUES_IN:
-      return part.elements?.[0] ?? "...";
-    case PART_TYPES.BOUNDED:
-      return `[${part.min_value}-${part.max_value}]`;
-    case PART_TYPES.N_CHARS:
-      return "XXX";
-    default:
-      return "";
-  }
+  return part?.name ?? "";
 }
 
 /**
