@@ -59,7 +59,6 @@
           />
           <div class="folder-naming-constraint-selector__item__main">
             <div class="folder-naming-constraint-selector__item__name flex items-center">
-              <BIMDataIconClose size="xxs" fill color="granite" margin="0 6px 0 0" />
               <span>{{ $t("NamingConstraint.noRuleOption") }}</span>
             </div>
           </div>

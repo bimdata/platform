@@ -315,20 +315,20 @@
     "uploadBlocked": "{count} fichier(s) n'ont pas été importés car leur nom ne respecte pas la règle (ex. {example}).",
     "uploadWarning": "{count} fichier(s) ne respectent pas la convention de nommage (ex. {example}).",
     "conflictTooltip": "Ce fichier ne respecte pas la convention de nommage du dossier.",
-    "conflictModalIntro": "Renommez ici les fichiers qui ne correspondent pas à la règle stricte que vous avez programmé.",
-    "conflictModalWarning": "Renommez ou supprimez les documents en conflit pour continuer",
+    "conflictModalWarning": "Ce dossier applique une convention de nommage stricte. Les fichiers ci-dessous doivent être renommés ou supprimés avant de pouvoir la sauvegarder.",
     "renameButton": "Renommer",
     "renameFilePlaceholder": "Renommer le fichier",
     "renameConflictsMenuItem": "Renommer les fichiers en conflit",
     "noConflictsTitle": "Aucun fichier en conflit",
     "noConflictsMessage": "Tous les fichiers respectent la convention de nommage de leur dossier.",
-    "noRuleOption": "Appliquer aucune règle",
+    "noRuleOption": "Ne pas appliquer de règle",
     "searchPlaceholder": "Rechercher une règle",
     "removeRuleError": "La règle de nommage n'a pas pu être supprimée.",
     "removeRuleSuccessTitle": "Règle de nommage supprimée",
     "removeRuleSuccessMessage": "La règle de nommage a été supprimée avec succès.",
     "modal": {
-      "noStrictTitle": "Renommer les fichiers non conformes"
+      "noStrictTitle": "Renommer les fichiers non conformes",
+      "strictTitle": "Renommer les fichiers non conformes"
     }
   },
   "FolderNamingConstraint": {

@@ -207,10 +207,28 @@ export default {
 
       return ext.replace(".", "").toUpperCase();
     };
+
+    const folderHasConflict = (folder) => {
+      if (!folder.children?.length) {
+        return false;
+      }
+
+      return folder.children.some((child) => {
+        if (isFolder(child)) {
+          return folderHasConflict(child);
+        }
+
+        return child.naming_constraint_conflict;
+      });
+    };
+
     const formattedFiles = computed(() =>
       props.files.map((file) => ({
         ...file,
         type: isFolder(file) ? t("t.folder") : file.name ? formatExtension(file.name) : t("t.file"),
+        hasNamingConflict: isFolder(file)
+          ? folderHasConflict(file)
+          : file.naming_constraint_conflict,
       })),
     );
 
