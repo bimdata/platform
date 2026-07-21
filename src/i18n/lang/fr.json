@@ -447,7 +447,8 @@
     "inputPlaceholder": "Nom de votre fusion d'IFC"
   },
   "ModelsOverview": {
-    "title": "Modélisation 3D Immersive"
+    "title": "Modélisation 3D Immersive",
+    "selectPreviewButton": "Choisir la prévisualisation"
   },
   "ModelsOverviewOnboarding": {
     "text": "Téléverser votre premier modèle",
@@ -814,7 +815,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Stockage",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "Ce projet",
+    "otherProjects": "Autres projets"
   },
 
   "SpaceSizeInfo": {

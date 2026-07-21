@@ -1,28 +1,33 @@
 .user-role-badge {
-  border-radius: 4px;
-  padding: 2px 6px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: normal;
+  line-height: 1;
+  white-space: nowrap;
 
   &--space-admin {
-    background-color: var(--color-primary);
-    color: var(--color-white);
-  }
-  &--space-user {
-    background-color: #a375ff;
-    color: var(--color-white);
-  }
-  &--project-admin {
     background-color: var(--color-secondary);
     color: var(--color-primary);
   }
+
+  &--space-user,
   &--project-user {
-    background-color: var(--color-success);
+    background-color: #b4e5cc;
+    color: var(--color-primary);
+  }
+
+  &--project-admin {
+    background-color: var(--color-primary);
     color: var(--color-white);
   }
 
   &--guest {
-    background-color: var(--color-granite-light);
-    color: var(--color-white);
+    background-color: var(--color-silver);
+    color: var(--color-primary);
   }
 }

@@ -24,8 +24,9 @@
             width="36px"
             height="36px"
             fill
-            square
+            radius
             icon
+            color="white"
             @click="openLocationForm"
           >
             <BIMDataIconEdit size="s" />
@@ -64,10 +65,7 @@ import { onActivated, provide, ref, watch } from "vue";
 import { useToggle } from "../../../../composables/toggle.js";
 import { useModels } from "../../../../state/models.js";
 import { useUser } from "../../../../state/user.js";
-import {
-  DMS2DD,
-  getCoordinatesFromAddress
-} from "../../../../utils/location.js";
+import { DMS2DD, getCoordinatesFromAddress } from "../../../../utils/location.js";
 // Components
 import MaplibreWrapper from "../../../generic/maplibre-wrapper/MaplibreWrapper.vue";
 import ModelLocationForm from "../model-location-form/ModelLocationForm.vue";
@@ -75,11 +73,11 @@ import ModelLocationForm from "../model-location-form/ModelLocationForm.vue";
 const props = defineProps({
   project: {
     type: Object,
-    required: true
+    required: true,
   },
   model: {
-    type: Object
-  }
+    type: Object,
+  },
 });
 
 const { isProjectAdmin } = useUser();
@@ -88,11 +86,7 @@ const { fetchModelLocation } = useModels();
 const loading = ref(false);
 provide("loading", loading);
 
-const {
-  isOpen: isOpenForm,
-  open: openLocationForm,
-  close: closeLocationForm
-} = useToggle();
+const { isOpen: isOpenForm, open: openLocationForm, close: closeLocationForm } = useToggle();
 
 const site = ref(null);
 const address = ref("");
@@ -144,7 +138,7 @@ watch(
     reset();
     if (props.model) setLocation();
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 onActivated(() => {

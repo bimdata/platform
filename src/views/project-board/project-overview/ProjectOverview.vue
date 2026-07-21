@@ -1,16 +1,6 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
-      <BIMDataButton
-        v-if="isProjectAdmin(project)"
-        color="primary"
-        outline
-        radius
-        icon
-        @click="openNotificationsSettings"
-      >
-        <BIMDataIconSettings fill color="default" size="xs" />
-      </BIMDataButton>
       <BIMDataTooltip
         v-if="!isProjectGuest(project)"
         class="project-overview__tooltip-upload"
@@ -26,11 +16,13 @@
         "
       >
         <BIMDataButton
+          padding="0 12px"
           data-test-id="btn-toggle-upload"
           :width="isLG ? undefined : '120px'"
+          height="36px"
           :color="showFileUploader ? 'granite' : 'primary'"
           fill
-          radius
+          rounded
           :icon="isLG"
           :disabled="!isUserOrga(space) && isFullTotal(spaceSubInfo)"
           @click="() => (shouldSubscribe ? openSubscriptionModal() : toggleFileUploader())"
@@ -44,6 +36,18 @@
           </span>
         </BIMDataButton>
       </BIMDataTooltip>
+      <BIMDataButton
+        v-if="isProjectAdmin(project)"
+        height="36px"
+        width="36px"
+        color="primary"
+        outline
+        rounded
+        icon
+        @click="openNotificationsSettings"
+      >
+        <BIMDataIconSettings fill color="default" size="xs" />
+      </BIMDataButton>
     </AppSlotContent>
 
     <AppSidePanelContent :title="$t('ProjectOverview.title')">

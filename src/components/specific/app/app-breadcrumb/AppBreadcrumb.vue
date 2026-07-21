@@ -1,8 +1,7 @@
 <template>
   <div class="app-breadcrumb">
-    <GoBackButton />
+    <GoBackButton class="m-r-6" />
     <template v-if="breadcrumb">
-      <div class="breadcrumb-separator"></div>
       <component :is="breadcrumb" />
     </template>
   </div>
@@ -20,7 +19,7 @@ import BreadcrumbSpaceSelector from "./breadcrumb-space-selector/BreadcrumbSpace
 const BREADCRUMB_COMPONENTS = {
   [routeNames.spaceBoard]: "BreadcrumbSpaceSelector",
   [routeNames.projectBoard]: "BreadcrumbProjectSelector",
-  [routeNames.groupBoard]: "BreadcrumbGroupSelector"
+  [routeNames.groupBoard]: "BreadcrumbGroupSelector",
 };
 
 export default {
@@ -28,15 +27,15 @@ export default {
     GoBackButton,
     BreadcrumbGroupSelector,
     BreadcrumbProjectSelector,
-    BreadcrumbSpaceSelector
+    BreadcrumbSpaceSelector,
   },
   setup() {
     const route = useRoute();
 
     return {
-      breadcrumb: BREADCRUMB_COMPONENTS[route.name]
+      breadcrumb: BREADCRUMB_COMPONENTS[route.name],
     };
-  }
+  },
 };
 </script>
 

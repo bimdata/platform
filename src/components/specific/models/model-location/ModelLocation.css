@@ -13,8 +13,8 @@
     .model-location__map__edit-btn {
       position: absolute;
       z-index: 1;
-      top: 0;
-      right: 0;
+      top: var(--spacing-unit);
+      right: var(--spacing-unit);
     }
   }
 

@@ -35,22 +35,28 @@
                 maxWidth="220px"
                 :text="fullName(user) + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')"
               />
-              <UserRoleBadge
-                :role="role"
-                :cloudRole="cloudRole"
-                :projectRole="projectRole"
-                :isSpaceRole="user.in_all_projects"
-              />
             </div>
             <div class="user-card__content__info__email">
               {{ user.email }}
             </div>
           </div>
-          <UserCardActionMenu
-            v-if="showActionMenu"
-            @open-update="openUpdateForm"
-            @open-delete="openDeleteGuard"
-          />
+          <div class="user-card__content__aside">
+            <UserRoleBadge
+              class="user-card__content__badge"
+              :role="role"
+              :cloudRole="cloudRole"
+              :projectRole="projectRole"
+              :isSpaceRole="user.in_all_projects"
+            />
+            <div class="user-card__content__menu-slot">
+              <UserCardActionMenu
+                v-if="showActionMenu"
+                class="user-card__content__menu"
+                @open-update="openUpdateForm"
+                @open-delete="openDeleteGuard"
+              />
+            </div>
+          </div>
         </div>
       </template>
     </transition>
@@ -95,7 +101,10 @@ export default {
     const { isSelf, isSpaceAdmin, isProjectAdmin } = useUser();
 
     const showActionMenu = computed(() => {
-      return !isSelf(props.user) && isSpaceAdmin(props.space) || !isSelf(props.user) && isProjectAdmin(props.project) && props.user.cloud_role !== 100;
+      return (
+        (!isSelf(props.user) && isSpaceAdmin(props.space)) ||
+        (!isSelf(props.user) && isProjectAdmin(props.project) && props.user.cloud_role !== 100)
+      );
     });
     const role = computed(() => (props.project ? props.user.role : props.user.cloud_role));
     const cloudRole = computed(() => props.user.cloud_role);

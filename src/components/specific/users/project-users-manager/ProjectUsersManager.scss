@@ -1,21 +1,19 @@
 .project-users-manager {
   display: flex;
   flex-direction: column;
-  height: 100%;
   border-radius: 20px;
   background-color: var(--color-white);
-  box-shadow: var(--box-shadow);
   overflow: hidden;
 
   &__header {
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);
-    height: 50px;
+    height: 64px;
     padding: 0 calc(var(--spacing-unit) * 2);
     color: var(--color-primary);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: bold;
 
     &__title {
       line-height: 1;
@@ -37,7 +35,6 @@
   &__list-container {
     flex: 1 1 auto;
     min-height: 0;
-    padding-bottom: calc(var(--spacing-unit) / 2);
     overflow-x: hidden;
     overflow-y: auto;
 
@@ -54,7 +51,6 @@
 
     .invitation-form {
       padding: var(--spacing-unit);
-      padding-top: calc(var(--spacing-unit) * 2);
     }
 
     .invitation-card {
@@ -63,10 +59,7 @@
     }
 
     .user-card {
-      padding: 0 calc(var(--spacing-unit) * 2);
-      margin-bottom: calc(var(--spacing-unit) / 4);
-      border-bottom: 1px solid var(--color-silver-light);
-
+      padding: 0 var(--spacing-unit);
       &:hover {
         background-color: var(--color-silver-light);
       }

@@ -267,7 +267,8 @@
     "inputPlaceholder": "Name Ihrer IFC-Zusammenführung"
   },
   "ModelsOverview": {
-    "title": "Immersive 3D-Modellierung"
+    "title": "Immersive 3D-Modellierung",
+    "selectPreviewButton": "Vorschau auswählen"
   },
   "ModelsOverviewOnboarding": {
     "text": "Ihr erstes Modell hochladen",
@@ -630,7 +631,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Speicher",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "Dieses Projekt",
+    "otherProjects": "Andere Projekte"
   },
 
   "SpaceSizeInfo": {

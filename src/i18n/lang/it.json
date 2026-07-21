@@ -187,7 +187,8 @@
     "inputPlaceholder": "Nome della tua unione"
   },
   "ModelsOverview": {
-    "title": "Modellazione 3D Immersiva"
+    "title": "Modellazione 3D Immersiva",
+    "selectPreviewButton": "Scegli anteprima"
   },
   "ModelsOverviewOnboarding": {
     "text": "Carica il tuo primo modello",
@@ -551,7 +552,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Archiviazione",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "Questo progetto",
+    "otherProjects": "Altri progetti"
   },
 
   "SpaceSizeInfo": {

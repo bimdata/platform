@@ -337,7 +337,8 @@
     "inputPlaceholder": "Name of your merge"
   },
   "ModelsOverview": {
-    "title": "Immersive 3D Modeling"
+    "title": "Immersive 3D Modeling",
+    "selectPreviewButton": "Select preview"
   },
   "ModelsOverviewOnboarding": {
     "text": "Upload your first model",
@@ -700,7 +701,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Storage",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "This project",
+    "otherProjects": "Other projects"
   },
 
   "SpaceSizeInfo": {

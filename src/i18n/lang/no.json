@@ -183,7 +183,8 @@
     "inputPlaceholder": "Navn på sammenslåingen"
   },
   "ModelsOverview": {
-    "title": "Immersiv 3D-modellering"
+    "title": "Immersiv 3D-modellering",
+    "selectPreviewButton": "Velg forhåndsvisning"
   },
   "ModelsOverviewOnboarding": {
     "text": "Last opp den første modellen din",
@@ -547,7 +548,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Lagring",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "Dette prosjektet",
+    "otherProjects": "Andre prosjekter"
   },
 
   "SpaceSizeInfo": {

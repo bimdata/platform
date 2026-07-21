@@ -2,7 +2,7 @@
   <section class="project-users-manager">
     <template v-if="users.length > 1 || invitations.length > 0">
       <header class="project-users-manager__header">
-        <BIMDataIconUsers size="xs" color="primary" />
+        <BIMDataIconUser size="xxs" color="primary" class="m-r-6" />
         <span class="project-users-manager__header__title">
           {{ $t("ProjectUsersManager.title") }}
         </span>
@@ -29,7 +29,8 @@
             v-if="showUserSearch"
             ref="searchInput"
             key="user-search"
-            :placeholder="$t('t.search')"
+            :placeholde`="$t('t.search')"
+            `
             v-model="searchText"
             clear
           />

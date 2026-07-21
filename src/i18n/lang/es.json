@@ -267,7 +267,8 @@
     "inputPlaceholder": "Nombre de vuestra fusión del IFC"
   },
   "ModelsOverview": {
-    "title": "Modelado 3D Inmersivo"
+    "title": "Modelado 3D Inmersivo",
+    "selectPreviewButton": "Elegir vista previa"
   },
   "ModelsOverviewOnboarding": {
     "text": "Transferir vuestro primer modelo",
@@ -630,7 +631,9 @@
   },
     "ProjectStorageInfo": {
     "title": "Almacenamiento",
-    "usage": "{used} / {total}"
+    "usage": "{used} / {total}",
+    "currentProject": "Este proyecto",
+    "otherProjects": "Otros proyectos"
   },
 
   "SpaceSizeInfo": {
