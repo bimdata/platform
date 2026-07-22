@@ -1,0 +1,128 @@
+.folder-naming-constraint-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+.folder-naming-constraint-selector__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.folder-naming-constraint-selector__head__title {
+  font-size: 16px;
+  color: var(--color-granite);
+  strong {
+    color: var(--color-primary);
+  }
+}
+.folder-naming-constraint-selector__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 12px;
+  text-align: center;
+}
+.folder-naming-constraint-selector__empty__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.folder-naming-constraint-selector__empty__text {
+  max-width: 280px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-granite);
+}
+.folder-naming-constraint-selector__head__actions {
+  gap: calc(var(--spacing-unit) / 2);
+  width: 100%;
+  .folder-naming-constraint-selector__search {
+    min-height: 32px;
+  }
+  .bimdata-btn {
+    flex: 1;
+  }
+}
+.folder-naming-constraint-selector__items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 6px 12px 6px;
+  list-style: none;
+  overflow-y: auto;
+}
+.folder-naming-constraint-selector__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: var(--color-white);
+  border: 1px solid #eceff3;
+  cursor: pointer;
+}
+.folder-naming-constraint-selector__item--selected {
+  border-color: var(--color-primary);
+}
+.folder-naming-constraint-selector__item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  flex-grow: 1;
+}
+.folder-naming-constraint-selector__item__name {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.folder-naming-constraint-selector__item__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.folder-naming-constraint-selector__item__chip {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background-color: #F0F5FF;
+  color: var(--color-neutral);
+  font-family: monospace;
+  font-size: 12px;
+}
+.folder-naming-constraint-selector__item__preview {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.folder-naming-constraint-selector__item__separator, .folder-naming-constraint-selector__item__extension {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.folder-naming-constraint-selector__item__chip--strict {
+  background-color: var(--color-secondary-lighter);
+  color: var(--color-warning);
+  font-family: inherit;
+}
+.folder-naming-constraint-selector__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.folder-naming-constraint-selector__footer__help {
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--color-granite);
+}
+.folder-naming-constraint-selector__footer__save {
+  margin-top: 6px;
+}

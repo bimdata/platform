@@ -96,6 +96,7 @@
         @download="$emit('download', file)"
         @file-clicked="$emit('file-clicked', file)"
         @manage-access="$emit('manage-access', file)"
+        @manage-naming-rule="$emit('manage-naming-rule', file)"
         @open-tag-manager="$emit('open-tag-manager', file)"
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"
@@ -162,6 +163,10 @@ export default {
       type: Array,
       required: true,
     },
+    hasNamingConflict: {
+      type: Function,
+      required: true,
+    },
   },
   emits: [
     "back-parent-folder",
@@ -172,6 +177,7 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "manage-naming-rule",
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
@@ -205,10 +211,30 @@ export default {
 
       return ext.replace(".", "").toUpperCase();
     };
+
+    // const folderHasConflict = (folder) => {
+    //   console.log("checking", folder.name, folder.children);
+    //   if (!folder.children?.length) {
+    //     return false;
+    //   }
+
+    //   return folder.children.some((child) => {
+    //     console.log("child", child.name, child.naming_constraint_conflict);
+    //     if (isFolder(child)) {
+    //       return folderHasConflict(child);
+    //     }
+
+    //     return child.naming_constraint_conflict;
+    //   });
+    // };
+
     const formattedFiles = computed(() =>
       props.files.map((file) => ({
         ...file,
         type: isFolder(file) ? t("t.folder") : file.name ? formatExtension(file.name) : t("t.file"),
+        hasNamingConflict: isFolder(file)
+          ? props.hasNamingConflict(file)
+          : file.naming_constraint_conflict,
       })),
     );
 
@@ -277,6 +303,7 @@ export default {
       formattedFiles,
       nameEditMode,
       // Methods
+      // folderHasConflict,
       cleanUpload,
       formatBytes,
       isFolder,

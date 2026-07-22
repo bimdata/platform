@@ -42,7 +42,7 @@
           $t(
             `ProjectOverview.uploadDisableMessage.${
               isFullTotal(spaceSubInfo) ? 'size' : 'permission'
-            }`
+            }`,
           )
         "
       >
@@ -104,6 +104,23 @@
         clear
       />
     </div>
+
+    <div class="end flex justify-end">
+      <BIMDataButton
+        v-if="isProjectAdmin(project)"
+        :width="isXXL ? undefined : '160px'"
+        color="default"
+        fill
+        radius
+        :icon="isXXL"
+        @click="openNamingConstraintsManager"
+      >
+        <BIMDataIconNamingConvention size="xs" />
+        <span v-if="!isXXL" style="margin-left: 6px">
+          {{ $t("NamingConstraint.managerTitle") }}
+        </span>
+      </BIMDataButton>
+    </div>
   </div>
 </template>
 
@@ -111,18 +128,23 @@
 import { computed, ref, inject, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
+import { useAppSidePanel } from "../../../../../components/specific/app/app-side-panel/app-side-panel.js";
 import {
   useStandardBreakpoints,
   useCustomBreakpoints,
 } from "../../../../../composables/responsive.js";
 import { useFiles } from "../../../../../state/files.js";
+import { useProjects } from "../../../../../state/projects.js";
 import { useUser } from "../../../../../state/user.js";
 import { isFullTotal } from "../../../../../utils/spaces.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
 import FileDragAndDropModal from "../file-drag-and-drop-modal/FileDragAndDropModal.vue";
 import FolderCreationButton from "../../folder-creation-button/FolderCreationButton.vue";
+import NamingConstraintsManager from "../../../../../components/specific/files/naming-constraint/NamingConstraintsManager.vue";
 
 export default {
   components: {
@@ -157,25 +179,36 @@ export default {
       required: true,
     },
   },
-  emits: ["open-subscription-modal", "update:searchText", "upload-files"],
+  emits: [
+    "open-subscription-modal",
+    "update:searchText",
+    "upload-files",
+    "manage-naming-conflicts",
+  ],
   setup(props, { emit }) {
     const { t } = useI18n();
     const { isUserOrga, isProjectAdmin, isProjectGuest, hasAdminPerm } = useUser();
     const { openModal } = useAppModal();
+    const { openSidePanel } = useAppSidePanel();
+    const { currentProject } = useProjects();
 
     const shouldSubscribe = inject("shouldSubscribe");
 
-
-    const {
-      downloadFiles: download,
-      projectFileStructure,
-    } = useFiles();
+    const { downloadFiles: download, projectFileStructure } = useFiles();
 
     const downloadFiles = async (files) => {
       await download(props.project, files);
     };
 
     const dropdown = ref(null);
+    const conflictCount = computed(() => {
+      const root = projectFileStructure.value;
+      if (!root) return 0;
+      return collectDescendants(
+        root,
+        (child) => !isFolder(child) && child.naming_constraint_conflict,
+      ).length;
+    });
     const menuItems = computed(() => {
       const items = [];
 
@@ -188,8 +221,20 @@ export default {
           {
             name: t("FilesManager.gedDownload"),
             action: () => downloadFiles([projectFileStructure.value]),
-          }
+          },
         );
+      }
+
+      if (isProjectAdmin(props.project)) {
+        items.push({
+          name:
+            t("NamingConstraint.renameConflictsMenuItem") +
+            (conflictCount.value > 0 ? ` (${conflictCount.value})` : ""),
+          action: () => {
+            emit("manage-naming-conflicts");
+            dropdown.value.displayed = false;
+          },
+        });
       }
 
       if (hasAdminPerm(props.project, props.currentFolder)) {
@@ -219,7 +264,7 @@ export default {
       return `${fileManager.value?.$el?.getBoundingClientRect().height - H - y}px`;
     });
 
-    const { isMD, isLG, isXL } = useStandardBreakpoints();
+    const { isMD, isLG, isXL, isXXL } = useStandardBreakpoints();
     const { isMidXXL, isXXXL } = useCustomBreakpoints({
       isMidXXL: ({ width }) => width <= 1277 - 0.02,
       isXXXL: ({ width }) => width <= 1521 - 0.02,
@@ -228,18 +273,27 @@ export default {
     const isLargeLayout = computed(
       () =>
         (isProjectAdmin(props.project) && !isXXXL.value) ||
-        (!isProjectAdmin(props.project) && !isMidXXL.value)
+        (!isProjectAdmin(props.project) && !isMidXXL.value),
     );
     const isMediumLayout = computed(
       () =>
         (isProjectAdmin(props.project) && !isXL.value && isXXXL.value) ||
-        (!isProjectAdmin(props.project) && !isMD.value && isMidXXL.value)
+        (!isProjectAdmin(props.project) && !isMD.value && isMidXXL.value),
     );
 
-    const searchText = ref(props.initialSearchText || '');
+    const searchText = ref(props.initialSearchText || "");
     watch(searchText, (newValue) => {
-      emit('update:searchText', newValue);
+      emit("update:searchText", newValue);
     });
+
+    const openNamingConstraintsManager = () => {
+      openSidePanel("right", {
+        component: NamingConstraintsManager,
+        props: {
+          project: currentProject.value,
+        },
+      });
+    };
 
     return {
       // References
@@ -255,11 +309,14 @@ export default {
       downloadFiles,
       hasAdminPerm,
       isFullTotal,
+      isProjectAdmin,
       isUserOrga,
       fileUploadInput,
+      openNamingConstraintsManager,
       // Responsive breakpoints
       isMD,
       isLG,
+      isXXL,
     };
   },
 };

@@ -1,0 +1,55 @@
+.conflicting-documents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.conflicting-documents-list__item {
+  /* display: flex;
+  align-items: center; */
+  /* gap: 12px;
+  background-color: var(--color-primary-lighter); */
+  /* border-radius: 6px;
+  box-shadow: var(--box-shadow); */
+}
+.conflicting-documents-list__item__name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--color-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.conflicting-documents-list__item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.conflicting-documents-list__item__example {
+  font-size: 11px;
+  color: var(--color-granite-light);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.conflicting-documents-list__item__path {
+  font-size: 11px;
+}
+.conflicting-documents-list__item__input {
+  flex: 1;
+}
+.conflicting-documents-list__item--editing {
+  background-color: var(--color-white);
+}
+.conflicting-documents-list__item--invalid .conflicting-documents-list__item__name {
+  color: var(--color-high);
+}
+.conflicting-documents-list__item--deleted .conflicting-documents-list__item__name {
+  color: var(--color-granite-light);
+  text-decoration: line-through;
+}

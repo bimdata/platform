@@ -6,8 +6,8 @@
           name: routeNames.projectGroups,
           params: {
             spaceID: project.cloud.id,
-            projectID: project.id
-          }
+            projectID: project.id,
+          },
         }"
       >
         <BIMDataButton
@@ -57,13 +57,15 @@ import AppLink from "../../../components/specific/app/app-link/AppLink.vue";
 import AppLoading from "../../../components/specific/app/app-loading/AppLoading.vue";
 import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotContent.js";
 import FilesManager from "../../../components/specific/files/files-manager/FilesManager.vue";
+import NamingConstraintsManager from "../../../components/specific/files/naming-constraint/NamingConstraintsManager.vue";
+import { useAppSidePanel } from "../../../components/specific/app/app-side-panel/app-side-panel.js";
 
 export default {
   components: {
     AppLink,
     AppLoading,
     AppSlotContent,
-    FilesManager
+    FilesManager,
   },
   setup() {
     const { isProjectAdmin } = useUser();
@@ -71,12 +73,13 @@ export default {
     const { currentProject } = useProjects();
     const { loadProjectModels } = useModels();
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
+    const { openSidePanel } = useAppSidePanel();
 
     const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
-        loadProjectModels(currentProject.value)
+        loadProjectModels(currentProject.value),
       ]);
     }, 1000);
 
@@ -90,9 +93,9 @@ export default {
       isProjectAdmin,
       reloadData,
       // Responsive breakpoints
-      ...useStandardBreakpoints()
+      ...useStandardBreakpoints(),
     };
-  }
+  },
 };
 </script>
 
