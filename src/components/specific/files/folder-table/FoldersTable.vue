@@ -212,22 +212,6 @@ export default {
       return ext.replace(".", "").toUpperCase();
     };
 
-    // const folderHasConflict = (folder) => {
-    //   console.log("checking", folder.name, folder.children);
-    //   if (!folder.children?.length) {
-    //     return false;
-    //   }
-
-    //   return folder.children.some((child) => {
-    //     console.log("child", child.name, child.naming_constraint_conflict);
-    //     if (isFolder(child)) {
-    //       return folderHasConflict(child);
-    //     }
-
-    //     return child.naming_constraint_conflict;
-    //   });
-    // };
-
     const formattedFiles = computed(() =>
       props.files.map((file) => ({
         ...file,
