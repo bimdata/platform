@@ -50,7 +50,7 @@
       </transition>
 
       <transition name="fade" mode="out-in">
-        <component :is="currentComponent" />
+        <component :is="currentComponent" @close="back" />
       </transition>
     </div>
   </div>
@@ -102,6 +102,7 @@ export default {
 
       currentTab: "constraints",
       currentView: "list",
+      returnTo: null,
 
       loading: false,
 
@@ -128,8 +129,19 @@ export default {
     const showBack = computed(() => localState.currentView !== "list");
 
     const back = () => {
+      localState.ruleDraft = null;
       localState.constraint = null;
       localState.template = null;
+      localState.pendingTemplatePartIndex = null;
+      localState.newlyCreatedTemplate = null;
+
+      if (localState.returnTo) {
+        localState.currentTab = localState.returnTo.tab;
+        localState.currentView = localState.returnTo.view;
+        localState.returnTo = null;
+        return;
+      }
+
       localState.currentView = "list";
     };
 

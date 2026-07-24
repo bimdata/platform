@@ -34,7 +34,7 @@
       </transition>
 
       <transition name="fade" mode="out-in">
-        <component :is="currentComponent" />
+        <component :is="currentComponent" @close="back" />
       </transition>
     </div>
   </div>
@@ -82,6 +82,7 @@ export default {
       currentView: "folder-rule",
       listView: "folder-rule",
       selectedConstraintId: null,
+      initialConstraintId: null,
       recursive: false,
       loading: false,
     });
@@ -93,7 +94,11 @@ export default {
     const showBack = computed(() => localState.currentView !== "folder-rule");
 
     const back = () => {
+      localState.ruleDraft = null;
       localState.constraint = null;
+      localState.pendingTemplatePartIndex = null;
+      localState.newlyCreatedTemplate = null;
+
       localState.currentView = "folder-rule";
     };
 
@@ -108,8 +113,9 @@ export default {
         localState.constraints = constraints;
         localState.templates = templates;
         if (folderRule) {
-          localState.selectedConstraintId = folderRule.constraint?.id ?? null;
-          localState.recursive = !!folderRule.recursive;
+          localState.initialConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
+          localState.selectedConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
+          localState.recursive = !!folderRule?.recursive;
         }
       } finally {
         localState.loading = false;

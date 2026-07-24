@@ -1,5 +1,5 @@
 <template>
-  <div class="naming-parts-templates-list m-t-18">
+  <div class="naming-parts-templates-list">
     <div class="naming-parts-templates-list__head m-t-18" v-if="templates.length > 0">
       <span class="naming-parts-templates-list__head__title">
         {{ $t("NamingConstraint.listsSectionTitle") }}
@@ -117,6 +117,10 @@ export default {
     const create = () => {
       localState.template = null;
       localState.currentTab = "templates";
+      localState.returnTo = {
+        tab: "templates",
+        view: "list",
+      };
       localState.currentView = "form";
     };
 

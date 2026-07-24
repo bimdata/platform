@@ -119,7 +119,9 @@ export default {
     NamingConflictModal,
   },
 
-  setup() {
+  emits: ["close"],
+
+  setup(props, { emit }) {
     const { t } = useI18n();
 
     const { createNamingConstraint, updateNamingConstraint } = useNamingConstraints();
@@ -142,9 +144,6 @@ export default {
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
     );
-    // const exampleParts = computed(() =>
-    //   (localState.ruleDraft?.parts ?? []).map((part) => part.name).filter(Boolean),
-    // );
 
     const separatorOptions = computed(() => [
       {
@@ -178,9 +177,9 @@ export default {
     /** Navigation */
     const goToTemplate = (index) => {
       localState.pendingTemplatePartIndex = index;
-      localState.previousView = {
-        tab: localState.currentTab,
-        view: localState.currentView,
+      localState.returnTo = {
+        tab: "constraints",
+        view: "form",
       };
 
       localState.currentTab = "templates";
@@ -227,12 +226,8 @@ export default {
 
     /** Actions */
     const cancel = () => {
-      localState.ruleDraft = null;
-      localState.constraint = null;
-      localState.pendingTemplatePartIndex = null;
-      localState.newlyCreatedTemplate = null;
-      localState.currentView = "list";
       submitted.value = false;
+      emit("close");
     };
 
     const submit = debounce(async () => {
@@ -285,9 +280,7 @@ export default {
             return;
           }
         } else {
-          console.log("Naming constraint payload", JSON.stringify(payload, null, 2));
           const constraint = await createNamingConstraint(localState.project, payload);
-
           localState.constraints = [...localState.constraints, constraint];
         }
 

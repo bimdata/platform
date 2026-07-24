@@ -80,26 +80,29 @@
             @update:modelValue="select(constraint.id)"
           />
           <div class="folder-naming-constraint-selector__item__main">
-            <div class="folder-naming-constraint-selector__item__name flex items-center">
-              <BIMDataIconNamingConvention size="xs" fill color="granite" margin="0 6px 0 0" />
-              <BIMDataTextbox :text="constraint.name" width="90%" />
+            <div class="flex items-center justify-between">
+              <div class="folder-naming-constraint-selector__item__name flex items-center">
+                <BIMDataIconNamingConvention size="xs" fill color="granite" margin="0 6px 0 0" />
+                <BIMDataTextbox :text="constraint.name" width="80%" />
+              </div>
+              <div class="flex items-center">
+                <span
+                  v-if="constraint.strict"
+                  class="folder-naming-constraint-selector__item__chip folder-naming-constraint-selector__item__chip--strict"
+                >
+                  {{ $t("NamingConstraint.strictBadge") }}
+                </span>
+                <BIMDataButton ghost rounded icon @click.stop="edit(constraint)">
+                  <BIMDataIconEdit size="xxs" />
+                </BIMDataButton>
+              </div>
             </div>
             <div class="folder-naming-constraint-selector__item__badges">
               <div class="folder-naming-constraint-selector__item__preview">
                 <NamingConstraintPreview :rule="constraint.rule" />
               </div>
-
-              <span
-                v-if="constraint.strict"
-                class="folder-naming-constraint-selector__item__chip folder-naming-constraint-selector__item__chip--strict"
-              >
-                {{ $t("NamingConstraint.strictBadge") }}
-              </span>
             </div>
           </div>
-          <BIMDataButton ghost rounded icon @click.stop="edit(constraint)">
-            <BIMDataIconEdit size="xxs" />
-          </BIMDataButton>
         </li>
       </ul>
 
@@ -200,6 +203,13 @@ export default {
       }
 
       if (localState.selectedConstraintId === NONE_OPTION_ID) {
+        if (
+          localState.selectedConstraintId === NONE_OPTION_ID &&
+          localState.initialConstraintId === NONE_OPTION_ID
+        ) {
+          closeSidePanel();
+          return;
+        }
         try {
           localState.loading = true;
           const conflicts = await deleteFolderNamingConstraint(
