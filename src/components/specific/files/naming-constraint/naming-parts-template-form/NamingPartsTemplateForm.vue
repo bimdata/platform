@@ -45,11 +45,19 @@
           class="naming-parts-template-form__element"
         >
           <BIMDataInput
+            :ref="
+              (el) => {
+                if (index === elements.length - 1) {
+                  lastInput = el;
+                }
+              }
+            "
             width="100%"
             margin="0"
             :placeholder="$t('NamingConstraint.elementNamePlaceholder')"
             :modelValue="element"
             @update:modelValue="(value) => updateElement(index, value)"
+            @keyup.enter="index === elements.length - 1 && addElement()"
           />
           <BIMDataButton
             color="high"
@@ -92,7 +100,7 @@
 </template>
 
 <script>
-import { computed, inject, ref, watch } from "vue";
+import { computed, inject, ref, watch, nextTick } from "vue";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { debounce } from "../../../../../utils/async.js";
 
@@ -108,6 +116,8 @@ export default {
     const elements = ref([""]);
     const hasInvalidName = ref(false);
     const hasInvalidElements = ref(false);
+
+    const lastInput = ref(null);
 
     watch(
       () => localState.template,
@@ -127,8 +137,14 @@ export default {
       elements.value.splice(index, 1, value);
     };
 
-    const addElement = () => {
+    const focusLastInput = async () => {
+      await nextTick();
+      lastInput.value?.focus();
+    };
+
+    const addElement = async () => {
       elements.value.push("");
+      await focusLastInput();
     };
 
     const removeElement = (index) => {
@@ -191,6 +207,7 @@ export default {
       elements,
       hasInvalidName,
       hasInvalidElements,
+      lastInput,
       // Methods
       updateElement,
       addElement,

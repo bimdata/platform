@@ -7,9 +7,11 @@
       </span>
     </div>
 
-    <div class="flex items-center justify-between folder-naming-constraint-selector__head__actions">
+    <div
+      v-if="constraints.length > 0"
+      class="flex items-center justify-between folder-naming-constraint-selector__head__actions"
+    >
       <BIMDataSearch
-        v-if="constraints.length > 0"
         class="folder-naming-constraint-selector__search"
         width="60%"
         height="32px"
