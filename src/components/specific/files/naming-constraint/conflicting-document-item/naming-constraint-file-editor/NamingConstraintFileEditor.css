@@ -1,0 +1,8 @@
+.naming-constraint-file-editor {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  .naming-constraint-file-editor__field {
+    min-width: 0;
+  }
+}

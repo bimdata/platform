@@ -630,11 +630,7 @@ export default {
           rule: null,
           onClose: closeModal,
           onConfirm: async () => {
-            console.log("FileManager onConfirm");
-            console.log("refreshFiles =", props.refreshFiles);
             await props.refreshFiles();
-
-            console.log("refresh terminé");
           },
         },
       });
