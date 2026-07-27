@@ -15,7 +15,7 @@
           <span class="summary__label"> Nouveau nom </span>
 
           <div class="summary__value">
-            {{ currentName }}
+            {{ generatedName }}
           </div>
         </div>
         <div class="summary__actions flex items-center">
@@ -52,13 +52,28 @@
       </div>
 
       <div class="conflicting-document-item__rename">
-        <BIMDataInput
-          v-model="draftName"
-          margin="0"
-          :placeholder="$t('NamingConstraint.renameFilePlaceholder')"
-          @keyup.enter="confirmRename"
-          width="100%"
+        <NamingConstraintFileEditor
+          :rule="rule"
+          :filename="doc.name"
+          @change="updateGeneratedName"
         />
+        <!-- <div v-for="part in rule.parts" :key="part.name" class="field">
+          <label>{{ part.name }}</label>
+
+          <BIMDataSelect
+            v-if="part.type === 'values_in'"
+            v-model="values[part.name]"
+            :options="part.elements"
+          />
+
+          <BIMDataInput
+            v-else-if="part.type === 'bounded'"
+            v-model="values[part.name]"
+            type="number"
+          />
+
+          <BIMDataInput v-else v-model="values[part.name]" />
+        </div> -->
 
         <BIMDataButton color="primary" fill @click="confirmRename"> Renommer </BIMDataButton>
       </div>
@@ -79,9 +94,11 @@
 </template>
 
 <script>
-import { ref, watch, computed } from "vue";
+import { ref, reactive, watch, computed } from "vue";
 import { buildExample } from "../../../../../utils/naming-constraint";
 import { getAscendants } from "../../../../../utils/file-structure.js";
+
+import NamingConstraintFileEditor from "./naming-constraint-file-editor/NamingConstraintFileEditor.vue";
 
 export default {
   props: {
@@ -97,12 +114,30 @@ export default {
     deleted: Boolean,
   },
 
+  components: {
+    NamingConstraintFileEditor,
+  },
+
   emits: ["toggle", "rename", "delete"],
 
   setup(props, { emit }) {
+    const values = reactive({});
+    // const draftName = ref(props.currentName);
     const draftName = ref(props.currentName);
+    const generatedName = ref(props.currentName || props.doc.name);
+
+    const updateGeneratedName = (name) => {
+      generatedName.value = name;
+    };
     const folderPath = computed(() => {
       return getAscendants(props.doc, props.allFolders).reverse();
+    });
+    const currentName = computed(() => {
+      const filename = props.rule.parts
+        .map((part) => values[part.name] ?? "")
+        .join(props.rule.separator);
+
+      return `${filename}.${extension.value}`;
     });
 
     watch(
@@ -113,18 +148,18 @@ export default {
     );
 
     const confirmRename = () => {
-      const value = draftName.value.trim();
+      if (!generatedName.value) return;
 
-      if (!value) return;
-
-      emit("rename", value);
+      emit("rename", generatedName.value);
     };
 
     return {
-      draftName,
+      // draftName,
       folderPath,
       confirmRename,
       buildExample,
+      generatedName,
+      updateGeneratedName,
     };
   },
 };
