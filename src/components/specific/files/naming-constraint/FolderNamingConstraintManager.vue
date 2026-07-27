@@ -67,6 +67,10 @@ export default {
       type: Object,
       required: true,
     },
+    refreshFiles: {
+      type: Function,
+      required: true,
+    },
   },
   setup(props) {
     const { closeSidePanel } = useAppSidePanel();
@@ -88,6 +92,7 @@ export default {
     });
 
     provide("localState", localState);
+    provide("refreshFiles", props.refreshFiles);
 
     const currentComponent = computed(() => components[localState.currentView]);
 

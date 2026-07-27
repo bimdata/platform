@@ -160,6 +160,7 @@ export default {
     const { closeSidePanel } = useAppSidePanel();
 
     const localState = inject("localState");
+    const refreshFiles = inject("refreshFiles");
     const searchText = ref("");
     const NONE_OPTION_ID = "__none__";
 
@@ -209,6 +210,7 @@ export default {
           localState.selectedConstraintId === NONE_OPTION_ID &&
           localState.initialConstraintId === NONE_OPTION_ID
         ) {
+          await refreshFiles?.();
           closeSidePanel();
           return;
         }
@@ -227,7 +229,8 @@ export default {
                 allFolders: allFolders.value,
                 rule: null, // pas de règle appliquée, potentiellement héritée du parent
                 onClose: closeModal,
-                onConfirm: () => {
+                onConfirm: async () => {
+                  await refreshFiles?.();
                   closeModal();
                   closeSidePanel();
                 },
@@ -239,6 +242,7 @@ export default {
               title: t("NamingConstraint.removeRuleSuccessTitle"),
               message: t("NamingConstraint.removeRuleSuccessMessage"),
             });
+            await refreshFiles?.();
             closeSidePanel();
           }
         } catch (error) {
@@ -270,7 +274,8 @@ export default {
               allFolders: allFolders.value,
               rule,
               onClose: closeModal,
-              onConfirm: () => {
+              onConfirm: async () => {
+                await refreshFiles?.();
                 closeModal();
                 closeSidePanel();
               },
@@ -295,9 +300,10 @@ export default {
               allFolders: allFolders.value,
               rule,
               onClose: closeModal,
-              onConfirm: () => {
+              onConfirm: async () => {
+                await refreshFiles?.();
                 closeModal();
-                apply();
+                await apply();
               },
             },
           });

@@ -272,6 +272,10 @@ export default {
       type: Object,
       required: true,
     },
+    refreshFiles: {
+      type: Function,
+      required: true,
+    },
   },
   emits: ["file-uploaded", "file-updated", "model-created"],
   setup(props, { emit }) {
@@ -595,6 +599,7 @@ export default {
         props: {
           project: props.project,
           folder,
+          refreshFiles: props.refreshFiles,
         },
       });
     };
@@ -624,7 +629,13 @@ export default {
           allFolders: allFolders.value,
           rule: null,
           onClose: closeModal,
-          onConfirm: () => emit("file-updated"),
+          onConfirm: async () => {
+            console.log("FileManager onConfirm");
+            console.log("refreshFiles =", props.refreshFiles);
+            await props.refreshFiles();
+
+            console.log("refresh terminé");
+          },
         },
       });
     };
