@@ -110,7 +110,6 @@ export default {
           loadNamingPartsTemplates(props.project),
           fetchFolderNamingConstraint(props.project, props.folder),
         ]);
-        console.log("HERE :", await fetchFolderNamingConstraint(props.project, props.folder));
         localState.constraints = constraints;
         localState.templates = templates;
         if (folderRule) {
