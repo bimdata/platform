@@ -769,10 +769,6 @@ export default {
     const allFolders = computed(() => getFoldersInFolder(props.fileStructure));
 
     const hasNamingConflict = (folder) => {
-      console.log("folder", folder);
-      if (!folder.naming_constraint_conflict) {
-        return false;
-      }
       if (!folder?.children?.length) {
         return false;
       }
@@ -781,7 +777,6 @@ export default {
         if (isFolder(child)) {
           return hasNamingConflict(child);
         }
-
         return child.naming_constraint_conflict;
       });
     };
