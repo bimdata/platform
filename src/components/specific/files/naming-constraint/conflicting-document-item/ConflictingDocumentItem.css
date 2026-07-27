@@ -2,7 +2,7 @@
   width: 100%;
   border: 1px solid var(--color-silver);
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: hidden; */
   background: white;
 }
 

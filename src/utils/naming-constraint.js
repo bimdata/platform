@@ -107,4 +107,104 @@ function buildExample(rule) {
   return rule.parts.map(buildPartExample).join(separator) + ".ext";
 }
 
-export { PART_TYPES, matchName, matchPart, buildExample, buildPartExample, stripExtension };
+/**
+ * Split a filename into editable values and extension.
+ *
+ * @param {String} name
+ * @param {Object} rule
+ * @returns {{values: String[], extension: String}}
+ */
+function splitName(name, rule) {
+  if (!rule) {
+    return {
+      values: [],
+      extension: "",
+    };
+  }
+
+  const dot = name.lastIndexOf(".");
+  const extension = dot > 0 ? name.slice(dot) : "";
+
+  const basename = stripExtension(name);
+
+  // Si le nom est déjà conforme, on le découpe normalement
+  if (matchName(name, rule)) {
+    return {
+      extension,
+      values: rule.separator === "" ? [basename] : basename.split(rule.separator),
+    };
+  }
+
+  // Sinon on construit un formulaire par défaut
+  const values = rule.parts.map((part) => {
+    switch (part.type) {
+      case PART_TYPES.VALUES_IN:
+        return part.elements?.[0] ?? "";
+
+      case PART_TYPES.BOUNDED:
+        return part.min_value;
+
+      case PART_TYPES.N_CHARS:
+        return basename;
+
+      default:
+        return "";
+    }
+  });
+
+  return {
+    values,
+    extension,
+  };
+}
+
+/**
+ * Left-pad a bounded value according to its max_value.
+ *
+ * max_value=999 -> 001
+ * max_value=99 -> 01
+ */
+function padBoundedValue(value, part) {
+  if (value === "" || value === null || value === undefined) {
+    return "";
+  }
+
+  const digits = String(part.max_value).length;
+
+  return String(value).padStart(digits, "0");
+}
+
+/**
+ * Build a filename from rule values.
+ */
+function buildName(values, rule, extension = "") {
+  if (!rule) return "";
+
+  const separator = rule.separator ?? "";
+
+  const result = values
+    .map((value, index) => {
+      const part = rule.parts[index];
+
+      if (part.type === PART_TYPES.BOUNDED) {
+        return padBoundedValue(value, part);
+      }
+
+      return value;
+    })
+    .join(separator);
+
+  return result + extension;
+}
+
+export {
+  PART_TYPES,
+  matchName,
+  matchPart,
+  buildExample,
+  buildPartExample,
+  stripExtension,
+  splitName,
+  padBoundedValue,
+  buildName,
+};
