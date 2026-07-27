@@ -158,15 +158,17 @@ export default {
 
     const close = () => props.onClose();
 
+    const saveChanges = async () => {
+      if (!props.persistChanges) return;
+
+      await Promise.all([
+        updateFiles(props.project, pending.value.renamed),
+        deleteFiles(props.project, pending.value.deleted),
+      ]);
+    };
+
     const confirm = async () => {
-      if (props.persistChanges) {
-        if (pending.value.renamed.length) {
-          await updateFiles(props.project, pending.value.renamed);
-        }
-        if (pending.value.deleted.length) {
-          await deleteFiles(props.project, pending.value.deleted);
-        }
-      }
+      await saveChanges();
       await props.onConfirm?.(pending.value);
       close();
     };

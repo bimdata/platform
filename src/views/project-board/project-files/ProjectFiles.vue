@@ -34,9 +34,9 @@
           :spaceSubInfo="spaceSubInfo"
           :project="project"
           :fileStructure="fileStructure"
-          @file-uploaded="reloadData"
-          @file-updated="reloadData"
-          @model-created="reloadData"
+          :refreshFiles="reloadData"
+          @file-uploaded="reloadDataDebounced"
+          @model-created="reloadDataDebounced"
         />
       </AppLoading>
     </div>
@@ -75,13 +75,17 @@ export default {
     const { projectFileStructure, loadProjectFileStructure } = useFiles();
     const { openSidePanel } = useAppSidePanel();
 
-    const reloadData = debounce(async () => {
+    const reloadData = async () => {
+      console.log("reload");
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
         loadProjectModels(currentProject.value),
       ]);
-    }, 1000);
+      console.log(projectFileStructure.value);
+    };
+
+    const reloadDataDebounced = debounce(reloadData, 1000);
 
     return {
       // References
@@ -92,6 +96,7 @@ export default {
       // Methods
       isProjectAdmin,
       reloadData,
+      reloadDataDebounced,
       // Responsive breakpoints
       ...useStandardBreakpoints(),
     };
