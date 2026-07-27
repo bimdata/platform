@@ -159,7 +159,7 @@ export default {
       localState.constraint = null;
       localState.pendingTemplatePartIndex = null;
       localState.newlyCreatedTemplate = null;
-      localState.previousView = null;
+      localState.returnTo = null;
       localState.currentView = "list";
     };
 
@@ -186,13 +186,17 @@ export default {
         } else {
           template = await createNamingPartsTemplate(localState.project, payload);
           localState.templates = [...localState.templates, template];
+          if (localState.pendingTemplatePartIndex !== null) {
+            localState.newlyCreatedTemplate = template;
+          }
         }
-        if (localState.pendingTemplatePartIndex !== null) {
-          localState.currentTab = localState.previousView.tab;
-          localState.currentView = localState.previousView.view;
+        if (localState.returnTo) {
+          localState.currentTab = localState.returnTo.tab;
+          localState.currentView = localState.returnTo.view;
+          localState.returnTo = null;
         } else {
-          localState.currentTab = "constraints";
-          localState.currentView = "form";
+          localState.currentTab = "templates";
+          localState.currentView = "list";
         }
       } finally {
         localState.loading = false;
