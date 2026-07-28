@@ -1,14 +1,13 @@
 <template>
   <details class="conflicting-document-item" :open="opened">
     <summary class="conflicting-document-item__summary" @click.prevent="$emit('toggle')">
-      <div class="summary__row flex items-center">
+      <div class="summary__row flex">
         <div class="summary__column">
           <span class="summary__label"> Nom actuel </span>
 
           <div class="summary__value">
             <BIMDataFileIcon :fileName="doc.name" :size="12" />
-
-            <span>{{ doc.name }}</span>
+            <BIMDataTextbox :text="doc.name" width="100%" maxWidth="300px" />
           </div>
         </div>
         <div class="summary__column">
@@ -81,6 +80,7 @@ import { buildExample } from "../../../../../utils/naming-constraint";
 import { getAscendants } from "../../../../../utils/file-structure.js";
 
 import NamingConstraintFileEditor from "./naming-constraint-file-editor/NamingConstraintFileEditor.vue";
+import { BIMDataTextbox } from "@bimdata/design-system";
 
 export default {
   props: {
@@ -104,7 +104,6 @@ export default {
 
   setup(props, { emit }) {
     const values = reactive({});
-    // const draftName = ref(props.currentName);
     const draftName = ref(props.currentName);
     const generatedName = ref(props.currentName || props.doc.name);
 

@@ -75,7 +75,7 @@ export default {
         }
 
         if (part.type === PART_TYPES.N_CHARS) {
-          return "";
+          return "?";
         }
 
         return "";
