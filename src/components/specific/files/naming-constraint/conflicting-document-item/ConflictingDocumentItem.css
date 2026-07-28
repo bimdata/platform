@@ -19,17 +19,16 @@
 }
 .summary__actions {
   gap: 12px;
+  justify-content: end;
 }
 
 .summary__row {
-  flex: 1;
-    width: 100%;
-    gap: 12px;
-    justify-content: space-between;
+  gap: 12px;
 }
 .summary__column {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .summary__label {
