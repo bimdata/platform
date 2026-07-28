@@ -80,11 +80,27 @@
     "conflictTooltip": "This file does not match the folder naming convention.",
     "conflictModalIntro": "Rename here the files that do not match the strict rule you set.",
     "conflictModalWarning": "Rename or delete the conflicting documents to continue",
+    "conflictCurrentNameLabel": "Current name",
+    "conflictNewNameLabel": "New name",
+    "conflictStatusDeleted": "Deleted",
+    "conflictStatusValid": "Compliant",
+    "conflictStatusInvalid": "Non-compliant",
+    "conflictSourceFolderLabel": "Source folder:",
+    "conflictDeleteFileButton": "Delete file",
+    "conflictRestoreFileButton": "Restore",
+    "maxCharsHint": "Maximum {count} characters",
     "renameButton": "Rename",
     "renameFilePlaceholder": "Rename the file",
     "renameConflictsMenuItem": "Rename conflicting files",
     "noConflictsTitle": "No conflicting files",
-    "noConflictsMessage": "All files match their folder naming convention."
+    "noConflictsMessage": "All files match their folder naming convention.",
+    "modal": {
+      "noStrictTitle": "Rename non-compliant files",
+      "strictTitle": "Rename non-compliant files",
+      "strictDescription": "This folder enforces a strict naming convention. Upload cannot be completed until the files below match the expected rule.",
+      "noStrictDescription": "Build the new name from allowed lists. Free-text fields are validated and preview is generated automatically.",
+      "expectedConventionLabel": "Expected convention in this folder"
+    }
   },
   "OidcCallbackError": {
     "message": "An error occured during authentication...",

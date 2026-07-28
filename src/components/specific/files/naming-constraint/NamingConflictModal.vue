@@ -8,10 +8,7 @@
           </div>
           <div class="flex flex-col">
             <strong>{{ $t("NamingConstraint.modal.strictTitle") }}</strong>
-            <span
-              >Ce dossier applique une convention de nommage stricte. L’upload ne peut pas être
-              finalisé tant que les fichiers ci-dessous ne respectent pas la règle attendue.</span
-            >
+            <span>{{ $t("NamingConstraint.modal.strictDescription") }}</span>
           </div>
         </div>
       </template>
@@ -21,7 +18,7 @@
             {{ $t("NamingConstraint.conflictModalWarning") }}
           </p>
           <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
-            <div>Convention attendue dans ce dossier</div>
+            <div>{{ $t("NamingConstraint.modal.expectedConventionLabel") }}</div>
             <NamingConstraintPreview :rule="rule" />
           </div>
 
@@ -64,10 +61,7 @@
           </div>
           <div class="flex flex-col">
             <strong>{{ $t("NamingConstraint.modal.noStrictTitle") }}</strong>
-            <span
-              >Construisez le nouveau nom à partir des listes autorisées. Les champs libres sont
-              contrôlés et l’aperçu est généré automatiquement.</span
-            >
+            <span>{{ $t("NamingConstraint.modal.noStrictDescription") }}</span>
           </div>
         </div>
       </template>
@@ -75,7 +69,7 @@
       <template #text>
         <div class="naming-conflict-modal__content">
           <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
-            <div>Convention attendue dans ce dossier</div>
+            <div>{{ $t("NamingConstraint.modal.expectedConventionLabel") }}</div>
 
             <NamingConstraintPreview :rule="rule" />
           </div>
