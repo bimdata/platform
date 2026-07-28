@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/bimdata/platform/compare/v1.6.1...v1.6.2) (2026-07-28)
+
+
+### PATCH
+
+* fix prevent duplicate role badges (#705) ([1cda4f4](https://github.com/bimdata/platform/commit/1cda4f4d18e5b423c1795b3a9d8c330161767b98)), closes [#705](https://github.com/bimdata/platform/issues/705)
+
 ## [1.6.1](https://github.com/bimdata/platform/compare/v1.6.0...v1.6.1) (2026-06-23)
 
 
