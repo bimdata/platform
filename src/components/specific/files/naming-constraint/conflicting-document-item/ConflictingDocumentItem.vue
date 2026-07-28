@@ -38,7 +38,7 @@
     </summary>
 
     <div class="conflicting-document-item__content">
-      <div class="conflicting-document-item__info m-b-36">
+      <div class="conflicting-document-item__info m-b-18">
         <div class="file-path flex items-center m-b-12">
           <BIMDataIconFolderLocation fill color="default" margin="0 6px 0 0" />
           Dossier source :
@@ -57,12 +57,10 @@
           :filename="doc.name"
           @change="updateGeneratedName"
         />
-
-        <BIMDataButton color="primary" fill @click="confirmRename"> Renommer </BIMDataButton>
       </div>
 
       <div class="conflicting-document-item__actions">
-        <BIMDataButton v-if="!deleted" ghost color="high" @click="$emit('delete')">
+        <BIMDataButton v-if="!deleted" ghost radius color="high" @click="$emit('delete')">
           <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
           Supprimer le fichier
         </BIMDataButton>
@@ -71,6 +69,7 @@
           <BIMDataIconClose size="xxs" margin="0 6px 0 0" />
           Restaurer
         </BIMDataButton>
+        <BIMDataButton color="primary" fill radius @click="confirmRename"> Renommer </BIMDataButton>
       </div>
     </div>
   </details>

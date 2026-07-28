@@ -45,7 +45,7 @@
   gap: 6px;
     padding: 12px;
     border-radius: 6px;
-    background: var(--color-neutral-lighter);
+    background: var(--color-primary-lighter);
     border: 1px solid #dbe4f0;
 }
 .naming-conflict-modal__rule__name {
@@ -87,5 +87,5 @@
   background-color: var(--color-high-lighter);
   border: 1px solid #fecdd3;
   color: #991b1b;
-  border-radius: 12px;
+  border-radius: 6px;
 }
