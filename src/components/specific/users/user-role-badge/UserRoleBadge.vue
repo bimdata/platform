@@ -1,20 +1,6 @@
 <template>
   <span class="user-role-badge" :class="`user-role-badge--${roleClass}`">
-    <template v-if="roleName === 'guest'">
-      {{ $t("UserRoleBadge.guest") }}
-    </template>
-    <template v-if="cloudRole === 100">
-      {{ $t(`UserRoleBadge.spaceAdmin`) }}
-    </template>
-    <template v-if="cloudRole !== 100 && projectRole === 100">
-      {{ $t(`UserRoleBadge.projectAdmin`) }}
-    </template>
-    <template v-if="isSpaceRole && roleName === 'spaceUser'">
-      {{ $t(`UserRoleBadge.spaceUser`) }}
-    </template>
-    <template v-if="!isSpaceRole && roleName === 'projectUser'">
-      {{ $t(`UserRoleBadge.projectUser`) }}
-    </template>
+    {{ $t(`UserRoleBadge.${badgeKey}`) }}
   </span>
 </template>
 
@@ -25,10 +11,6 @@ import { SPACE_ROLE } from "../../../../config/spaces.js";
 
 export default {
   props: {
-    role: {
-      type: Number,
-      required: true,
-    },
     cloudRole: {
       type: Number,
       default: null,
@@ -43,24 +25,31 @@ export default {
     },
   },
   setup(props) {
-    const roleName = computed(() => {
-      switch (props.role) {
-        case SPACE_ROLE.ADMIN:
-          return props.cloudRole === 100 ? "spaceAdmin" : "projectAdmin";
-        case SPACE_ROLE.USER:
-          return props.isSpaceRole ? "spaceUser" : "projectUser";
-        case PROJECT_ROLE.GUEST:
-        default:
-          return "guest";
-      }
-    });
+    const roleClass = computed(() =>
+      badgeKey.value.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
+    );
 
-    const roleClass = computed(() => {
-      return roleName.value.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+    const badgeKey = computed(() => {
+      if (props.cloudRole === SPACE_ROLE.ADMIN) {
+        return "spaceAdmin";
+      }
+
+      if (props.projectRole === PROJECT_ROLE.ADMIN) {
+        return "projectAdmin";
+      }
+
+      if (props.isSpaceRole) {
+        return "spaceUser";
+      }
+
+      if (props.projectRole === PROJECT_ROLE.GUEST) {
+        return "guest";
+      }
+      return "projectUser";
     });
 
     return {
-      roleName,
+      badgeKey,
       roleClass,
     };
   },

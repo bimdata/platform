@@ -36,9 +36,8 @@
                 :text="fullName(user) + (isSelf(user) ? ` (${$t('UserCard.self')})` : '')"
               />
               <UserRoleBadge
-                :role="role"
-                :cloudRole="cloudRole"
-                :projectRole="projectRole"
+                :cloudRole="user.cloud_role"
+                :projectRole="user.role"
                 :isSpaceRole="user.in_all_projects"
               />
             </div>
@@ -95,11 +94,11 @@ export default {
     const { isSelf, isSpaceAdmin, isProjectAdmin } = useUser();
 
     const showActionMenu = computed(() => {
-      return !isSelf(props.user) && isSpaceAdmin(props.space) || !isSelf(props.user) && isProjectAdmin(props.project) && props.user.cloud_role !== 100;
+      return (
+        (!isSelf(props.user) && isSpaceAdmin(props.space)) ||
+        (!isSelf(props.user) && isProjectAdmin(props.project) && props.user.cloud_role !== 100)
+      );
     });
-    const role = computed(() => (props.project ? props.user.role : props.user.cloud_role));
-    const cloudRole = computed(() => props.user.cloud_role);
-    const projectRole = computed(() => props.user.role);
 
     const loading = ref(false);
     provide("loading", loading);
@@ -116,9 +115,6 @@ export default {
     return {
       // References
       loading,
-      role,
-      cloudRole,
-      projectRole,
       showActionMenu,
       showDeleteGuard,
       showUpdateForm,
