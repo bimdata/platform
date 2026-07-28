@@ -23,7 +23,7 @@
           @update:modelValue="updateBounded(index, $event, part)"
         />
         <span class="naming-constraint-file-editor__field__placeholder">
-          {{ `Maximum ${part.max_value} caractères` }}
+          {{ $t("NamingConstraint.maxCharsHint", { count: part.max_value }) }}
         </span>
       </div>
 
@@ -34,7 +34,7 @@
           @update:modelValue="updateSegment(index, $event.slice(0, part.max_length))"
         />
         <span class="naming-constraint-file-editor__field__placeholder">
-          {{ `Maximum ${part.max_length} caractères` }}
+          {{ $t("NamingConstraint.maxCharsHint", { count: part.max_length }) }}
         </span>
       </div>
     </div>

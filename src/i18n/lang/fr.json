@@ -316,6 +316,15 @@
     "uploadWarning": "{count} fichier(s) ne respectent pas la convention de nommage (ex. {example}).",
     "conflictTooltip": "Ce fichier ne respecte pas la convention de nommage du dossier.",
     "conflictModalWarning": "Ce dossier applique une convention de nommage stricte. Les fichiers ci-dessous doivent être renommés ou supprimés avant de pouvoir la sauvegarder.",
+    "conflictCurrentNameLabel": "Nom actuel",
+    "conflictNewNameLabel": "Nouveau nom",
+    "conflictStatusDeleted": "Supprimé",
+    "conflictStatusValid": "Conforme",
+    "conflictStatusInvalid": "Non conforme",
+    "conflictSourceFolderLabel": "Dossier source :",
+    "conflictDeleteFileButton": "Supprimer le fichier",
+    "conflictRestoreFileButton": "Restaurer",
+    "maxCharsHint": "Maximum {count} caractères",
     "renameButton": "Renommer",
     "renameFilePlaceholder": "Renommer le fichier",
     "renameConflictsMenuItem": "Renommer les fichiers en conflit",
@@ -328,7 +337,10 @@
     "removeRuleSuccessMessage": "La règle de nommage a été supprimée avec succès.",
     "modal": {
       "noStrictTitle": "Renommer les fichiers non conformes",
-      "strictTitle": "Renommer les fichiers non conformes"
+      "strictTitle": "Renommer les fichiers non conformes",
+      "strictDescription": "Ce dossier applique une convention de nommage stricte. L'upload ne peut pas être finalisé tant que les fichiers ci-dessous ne respectent pas la règle attendue.",
+      "noStrictDescription": "Construisez le nouveau nom à partir des listes autorisées. Les champs libres sont contrôlés et l'aperçu est généré automatiquement.",
+      "expectedConventionLabel": "Convention attendue dans ce dossier"
     }
   },
   "FolderNamingConstraint": {

@@ -3,7 +3,9 @@
     <summary class="conflicting-document-item__summary" @click.prevent="$emit('toggle')">
       <div class="summary__row flex">
         <div class="summary__column">
-          <span class="summary__label"> Nom actuel </span>
+          <span class="summary__label">
+            {{ $t("NamingConstraint.conflictCurrentNameLabel") }}
+          </span>
 
           <div class="summary__value">
             <BIMDataFileIcon :fileName="doc.name" :size="12" />
@@ -11,7 +13,7 @@
           </div>
         </div>
         <div class="summary__column">
-          <span class="summary__label"> Nouveau nom </span>
+          <span class="summary__label"> {{ $t("NamingConstraint.conflictNewNameLabel") }} </span>
 
           <div class="summary__value">
             {{ generatedName }}
@@ -19,7 +21,7 @@
         </div>
         <div class="summary__actions flex items-center">
           <div class="summary__column">
-            <span class="summary__label"> Statut </span>
+            <span class="summary__label"> {{ $t("t.status") }} </span>
 
             <span
               class="summary__status"
@@ -28,7 +30,13 @@
                 'summary__status--invalid': !valid,
               }"
             >
-              {{ deleted ? "Supprimé" : valid ? "Conforme" : "Non conforme" }}
+              {{
+                deleted
+                  ? $t("NamingConstraint.conflictStatusDeleted")
+                  : valid
+                    ? $t("NamingConstraint.conflictStatusValid")
+                    : $t("NamingConstraint.conflictStatusInvalid")
+              }}
             </span>
           </div>
           <BIMDataIconChevron class="summary__chevron" :rotate="opened ? 90 : 0" size="xxs" />
@@ -40,7 +48,7 @@
       <div class="conflicting-document-item__info m-b-18">
         <div class="file-path flex items-center m-b-12">
           <BIMDataIconFolderLocation fill color="default" margin="0 6px 0 0" />
-          Dossier source :
+          {{ $t("NamingConstraint.conflictSourceFolderLabel") }}
           <span v-if="folderPath.length" class="m-l-6">
             {{ folderPath.map((folder) => folder.name).join(" / ") }}
           </span>
@@ -61,14 +69,16 @@
       <div class="conflicting-document-item__actions">
         <BIMDataButton v-if="!deleted" ghost radius color="high" @click="$emit('delete')">
           <BIMDataIconDelete size="xs" margin="0 6px 0 0" />
-          Supprimer le fichier
+          {{ $t("NamingConstraint.conflictDeleteFileButton") }}
         </BIMDataButton>
 
         <BIMDataButton v-else ghost @click="$emit('delete')">
           <BIMDataIconClose size="xxs" margin="0 6px 0 0" />
-          Restaurer
+          {{ $t("NamingConstraint.conflictRestoreFileButton") }}
         </BIMDataButton>
-        <BIMDataButton color="primary" fill radius @click="confirmRename"> Renommer </BIMDataButton>
+        <BIMDataButton color="primary" fill radius @click="confirmRename">
+          {{ $t("NamingConstraint.renameButton") }}
+        </BIMDataButton>
       </div>
     </div>
   </details>
@@ -135,11 +145,10 @@ export default {
     };
 
     return {
-      // draftName,
       folderPath,
+      generatedName,
       confirmRename,
       buildExample,
-      generatedName,
       updateGeneratedName,
     };
   },
