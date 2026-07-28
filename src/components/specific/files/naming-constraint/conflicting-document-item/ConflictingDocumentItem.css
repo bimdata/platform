@@ -8,12 +8,10 @@
 
 .conflicting-document-item__summary {
   background: var(--color-silver-light);
-  display: grid;
-  gap: 24px;
-  align-items: center;
   padding: 12px;
   cursor: pointer;
   list-style: none;
+  border-radius: 8px;
 }
 
 .conflicting-document-item__summary::-webkit-details-marker {
@@ -94,4 +92,5 @@
 .conflicting-document-item__actions {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
 }

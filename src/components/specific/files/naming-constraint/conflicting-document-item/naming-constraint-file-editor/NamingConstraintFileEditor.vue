@@ -16,19 +16,27 @@
         @update:modelValue="updateSegment(index, $event)"
       />
 
-      <BIMDataInput
-        v-else-if="part.type === PART_TYPES.BOUNDED"
-        type="number"
-        :modelValue="segments[index]"
-        @update:modelValue="updateBounded(index, $event, part)"
-      />
+      <div v-else-if="part.type === PART_TYPES.BOUNDED">
+        <BIMDataInput
+          type="number"
+          :modelValue="segments[index]"
+          @update:modelValue="updateBounded(index, $event, part)"
+        />
+        <span class="naming-constraint-file-editor__field__placeholder">
+          {{ `Maximum ${part.max_value} caractères` }}
+        </span>
+      </div>
 
-      <BIMDataInput
-        v-else
-        :maxlength="part.max_length"
-        :modelValue="segments[index]"
-        @update:modelValue="updateSegment(index, $event.slice(0, part.max_length))"
-      />
+      <div v-else>
+        <BIMDataInput
+          :maxlength="part.max_length"
+          :modelValue="segments[index]"
+          @update:modelValue="updateSegment(index, $event.slice(0, part.max_length))"
+        />
+        <span class="naming-constraint-file-editor__field__placeholder">
+          {{ `Maximum ${part.max_length} caractères` }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
