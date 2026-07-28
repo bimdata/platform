@@ -57,23 +57,6 @@
           :filename="doc.name"
           @change="updateGeneratedName"
         />
-        <!-- <div v-for="part in rule.parts" :key="part.name" class="field">
-          <label>{{ part.name }}</label>
-
-          <BIMDataSelect
-            v-if="part.type === 'values_in'"
-            v-model="values[part.name]"
-            :options="part.elements"
-          />
-
-          <BIMDataInput
-            v-else-if="part.type === 'bounded'"
-            v-model="values[part.name]"
-            type="number"
-          />
-
-          <BIMDataInput v-else v-model="values[part.name]" />
-        </div> -->
 
         <BIMDataButton color="primary" fill @click="confirmRename"> Renommer </BIMDataButton>
       </div>
