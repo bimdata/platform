@@ -55,6 +55,31 @@
     flex: 1;
   }
 }
+.naming-parts-template-form__element__label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.naming-parts-template-form__bulk-import {
+  .naming-parts-template-form__bulk-import__toggle {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    cursor: pointer;
+  }
+  .naming-parts-template-form__bulk-import__hint {
+    color: var(--color-granite-light);
+    font-size: 11px;
+  }
+  &:deep(.bimdata-textarea) {
+    margin-bottom: 0;
+    textarea {
+      padding: 6px;
+      font-size: 12px;
+    }
+  }
+}
+
 .naming-parts-template-form__add {
   align-self: flex-start;
 }
