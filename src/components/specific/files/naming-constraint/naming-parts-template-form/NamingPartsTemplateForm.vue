@@ -39,6 +39,9 @@
           </span>
         </div>
 
+        <span class="naming-parts-template-form__element__label">
+          {{ $t("NamingConstraint.addOneElementLabel") }}
+        </span>
         <div
           v-for="(element, index) in elements"
           :key="index"
@@ -79,11 +82,54 @@
           color="primary"
           fill
           radius
+          width="100%"
+          :disabled="!elements[elements.length - 1]"
           @click="addElement"
         >
           <BIMDataIconPlus size="xxxs" margin="0 6px 0 0" />
           {{ $t("NamingConstraint.addElementButton") }}
         </BIMDataButton>
+
+        <div class="naming-parts-template-form__bulk-import m-t-12">
+          <div
+            class="naming-parts-template-form__bulk-import__toggle flex items-center justify-between"
+            @click="toggleBulkImport"
+          >
+            <span>{{ $t("NamingConstraint.bulkImportLabel") }}</span>
+
+            <BIMDataIconChevron size="xxxs" :rotate="bulkImportOpen ? 90 : 0" />
+          </div>
+
+          <transition name="fade-slide">
+            <div v-if="bulkImportOpen" class="naming-parts-template-form__bulk-import__content">
+              <BIMDataTextarea
+                v-model="bulkElements"
+                :placeholder="$t('NamingConstraint.bulkImportPlaceholder')"
+                width="100%"
+              />
+
+              <span class="naming-parts-template-form__bulk-import__hint">
+                {{ $t("NamingConstraint.bulkImportHint") }}
+              </span>
+
+              <div class="flex gap-12 m-t-12">
+                <BIMDataButton color="primary" fill radius width="50%" @click="importElements">
+                  {{ $t("NamingConstraint.importButton") }}
+                </BIMDataButton>
+
+                <BIMDataButton
+                  ghost
+                  radius
+                  width="50%"
+                  :disabled="!bulkElements"
+                  @click="bulkElements = ''"
+                >
+                  {{ $t("t.clear") }}
+                </BIMDataButton>
+              </div>
+            </div>
+          </transition>
+        </div>
       </section>
     </div>
 
@@ -116,6 +162,11 @@ export default {
     const elements = ref([""]);
     const hasInvalidName = ref(false);
     const hasInvalidElements = ref(false);
+    const bulkElements = ref("");
+    const bulkImportOpen = ref(false);
+    const toggleBulkImport = () => {
+      bulkImportOpen.value = !bulkImportOpen.value;
+    };
 
     const lastInput = ref(null);
 
@@ -152,6 +203,25 @@ export default {
       if (elements.value.length === 0) {
         elements.value.push("");
       }
+    };
+
+    const importElements = () => {
+      const imported = bulkElements.value
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean);
+
+      if (!imported.length) {
+        return;
+      }
+
+      const current = elements.value.map((e) => e.trim()).filter(Boolean);
+
+      const merged = [...new Set([...current, ...imported])];
+
+      elements.value = merged.length ? merged : [""];
+
+      bulkElements.value = "";
     };
 
     const cancel = () => {
@@ -205,19 +275,23 @@ export default {
 
     return {
       // References
-      localState,
-      isUpdate,
-      name,
+      bulkElements,
+      bulkImportOpen,
       elements,
-      hasInvalidName,
       hasInvalidElements,
+      hasInvalidName,
+      isUpdate,
       lastInput,
+      localState,
+      name,
       // Methods
-      updateElement,
       addElement,
-      removeElement,
       cancel,
+      importElements,
+      removeElement,
       submit,
+      toggleBulkImport,
+      updateElement,
     };
   },
 };
