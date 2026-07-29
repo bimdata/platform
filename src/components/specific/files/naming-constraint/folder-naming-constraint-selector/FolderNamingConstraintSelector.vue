@@ -133,19 +133,19 @@
 <script>
 import { computed, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import {
-  useNamingConstraints,
-  NamingConstraintConflictError,
-} from "../../../../../state/naming-constraints.js";
 
-import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
-import { collectDescendants } from "../../../../../utils/file-tree.js";
-import { isFolder } from "../../../../../utils/file-structure.js";
+import { NamingConstraintConflictError } from "../../../../../services/NamingConstraintService.js";
 import { useFiles } from "../../../../../state/files.js";
+import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
+
 import NamingConflictModal from "../NamingConflictModal.vue";
+import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 
 export default {
   components: {

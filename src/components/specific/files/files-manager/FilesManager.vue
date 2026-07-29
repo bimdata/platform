@@ -349,7 +349,7 @@ export default {
 
     const filesToUpload = ref([]);
     const foldersToUpload = ref([]);
-    const proceedUpload = async (files, folder) => {
+    const proceedUpload = async ({ files, folders }, folder) => {
       files.forEach((file) => (file.folder = folder));
       filesToUpload.value = files;
       foldersToUpload.value = await Promise.all(
@@ -362,9 +362,7 @@ export default {
     };
     let folders = [];
     const uploadFiles = async (event, folder = currentFolder.value) => {
-      const fromEvent = await getFilesFromEvent(event);
-      const files = fromEvent.files;
-      folders = fromEvent.folders;
+      const { files, folders } = await getFilesFromEvent(event);
 
       const rule = await getEffectiveFolderRule(props.project, folder);
       const invalidFiles = rule?.rule
@@ -391,14 +389,14 @@ export default {
                   return name ? new File([file], name, { type: file.type }) : file;
                 });
               const validFiles = files.filter((file) => matchName(file.name, rule.rule));
-              proceedUpload([...validFiles, ...finalFiles], folder);
+              proceedUpload({ files: [...validFiles, ...finalFiles], folders }, folder);
             },
           },
         });
         return;
       }
 
-      proceedUpload(files, folder);
+      proceedUpload({ files, folders }, folder);
     };
 
     const loadingFileIds = ref([]);
