@@ -341,6 +341,10 @@
       "strictDescription": "Ce dossier applique une convention de nommage stricte. L'upload ne peut pas être finalisé tant que les fichiers ci-dessous ne respectent pas la règle attendue.",
       "noStrictDescription": "Construisez le nouveau nom à partir des listes autorisées. Les champs libres sont contrôlés et l'aperçu est généré automatiquement.",
       "expectedConventionLabel": "Convention attendue dans ce dossier"
+    },
+    "safeZoneModal": {
+      "title": "Attention !",
+      "text": "La règle de nommage a été modifiée mais n'a pas été enregistrée, êtes-vous sûr de vouloir fermer le gestionnaire de règles ? (les modifications seront perdues)"
     }
   },
   "FolderNamingConstraint": {

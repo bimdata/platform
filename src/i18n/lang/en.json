@@ -100,6 +100,10 @@
       "strictDescription": "This folder enforces a strict naming convention. Upload cannot be completed until the files below match the expected rule.",
       "noStrictDescription": "Build the new name from allowed lists. Free-text fields are validated and preview is generated automatically.",
       "expectedConventionLabel": "Expected convention in this folder"
+    },
+    "safeZoneModal": {
+      "title": "Warning!",
+      "text": "The naming rule has been modified but not saved. Are you sure you want to close the rule manager? (Changes will be lost)"
     }
   },
   "OidcCallbackError": {

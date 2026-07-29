@@ -53,6 +53,25 @@
         <component :is="currentComponent" @close="back" />
       </transition>
     </div>
+    <BIMDataSafeZoneModal v-show="localState.showLeaveModal">
+      <template #title>
+        {{ $t("NamingConstraint.safeZoneModal.title") }}
+      </template>
+
+      <template #text>
+        {{ $t("NamingConstraint.safeZoneModal.text") }}
+      </template>
+
+      <template #actions>
+        <BIMDataButton width="120px" ghost radius @click="localState.showLeaveModal = false">
+          {{ $t("t.cancel") }}
+        </BIMDataButton>
+
+        <BIMDataButton width="120px" color="high" fill radius @click="confirmBack">
+          {{ $t("t.ok") }}
+        </BIMDataButton>
+      </template>
+    </BIMDataSafeZoneModal>
   </div>
 </template>
 
@@ -106,6 +125,8 @@ export default {
 
       loading: false,
 
+      showLeaveModal: false,
+
       pendingTemplatePartIndex: null,
       newlyCreatedTemplate: null,
 
@@ -128,7 +149,7 @@ export default {
 
     const showBack = computed(() => localState.currentView !== "list");
 
-    const back = () => {
+    const doBack = () => {
       localState.ruleDraft = null;
       localState.constraint = null;
       localState.template = null;
@@ -143,6 +164,20 @@ export default {
       }
 
       localState.currentView = "list";
+    };
+
+    const back = () => {
+      if (localState.currentTab === "constraints" && localState.currentView === "form") {
+        localState.showLeaveModal = true;
+        return;
+      }
+
+      doBack();
+    };
+
+    const confirmBack = () => {
+      localState.showLeaveModal = false;
+      doBack();
     };
 
     const tabs = computed(() => [
@@ -181,6 +216,7 @@ export default {
       // Methods
       back,
       closeSidePanel,
+      confirmBack,
     };
   },
 };
