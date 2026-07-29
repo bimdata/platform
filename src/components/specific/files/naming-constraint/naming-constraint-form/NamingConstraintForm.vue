@@ -97,17 +97,16 @@
 <script>
 import { computed, inject, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import {
-  useNamingConstraints,
-  NamingConstraintConflictError,
-} from "../../../../../state/naming-constraints.js";
-import { buildExample } from "../../../../../utils/naming-constraint.js";
-import { debounce } from "../../../../../utils/async.js";
-import { collectDescendants } from "../../../../../utils/file-tree.js";
-import { isFolder } from "../../../../../utils/file-structure.js";
-import { useFiles } from "../../../../../state/files.js";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
 
+import { NamingConstraintConflictError } from "../../../../../services/NamingConstraintService.js";
+import { useFiles } from "../../../../../state/files.js";
+import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
+import { debounce } from "../../../../../utils/async.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { buildExample } from "../../../../../utils/naming-constraint.js";
+
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import RuleBuilder from "./RuleBuilder.vue";
 import NamingConflictModal from "../NamingConflictModal.vue";
 import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";

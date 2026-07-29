@@ -14,6 +14,10 @@ class NamingConstraintConflictError {
 
 const isResponse = (error) => typeof Response !== "undefined" && error instanceof Response;
 
+// In-memory cache of effective folder rules, keyed by folder id, to avoid
+// re-fetching the rule on every rename/upload within the same folder.
+const folderRuleCache = new Map();
+
 class NamingConstraintService {
   // --- Naming constraints catalog ------------------------------------------
 
@@ -48,6 +52,32 @@ class NamingConstraintService {
     } catch (error) {
       throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_CREATE_ERROR, error);
     }
+  }
+
+  // Resolve the effective naming rule applying to a folder, with its `strict`
+  // flag. Returns null when no rule applies. Results are cached per folder id.
+  async getEffectiveFolderRule(project, folder) {
+    if (!folder?.id) return null;
+
+    if (folderRuleCache.has(folder.id)) {
+      return folderRuleCache.get(folder.id);
+    }
+
+    const folderConstraint = await this.fetchFolderNamingConstraint(project, folder);
+
+    const constraint = folderConstraint?.constraint ?? null;
+
+    const effective = constraint
+      ? {
+          rule: constraint.rule,
+          strict: constraint.strict,
+          name: constraint.name,
+        }
+      : null;
+
+    folderRuleCache.set(folder.id, effective);
+
+    return effective;
   }
 
   /**
@@ -177,12 +207,14 @@ class NamingConstraintService {
    */
   async setFolderNamingConstraint(project, folder, { constraint_id, recursive }) {
     try {
-      return await apiClient.collaborationApi.setFolderNamingConstraint(
+      const result = await apiClient.collaborationApi.setFolderNamingConstraint(
         project.cloud.id,
         folder.id,
         project.id,
         { constraint_id, recursive },
       );
+      this.clearFolderRuleCache();
+      return result;
     } catch (error) {
       if (isResponse(error) && error.status === 409) {
         const documents = await error.json();
@@ -205,6 +237,7 @@ class NamingConstraintService {
         folder.id,
         project.id,
       );
+      this.clearFolderRuleCache();
       return documents ?? [];
     } catch (error) {
       if (isResponse(error) && error.status === 404) {
@@ -251,6 +284,10 @@ class NamingConstraintService {
       ErrorService.handleError(new RuntimeError(ERRORS.CONFLICTING_DOCUMENTS_FETCH_ERROR, error));
       return [];
     }
+  }
+
+  clearFolderRuleCache() {
+    folderRuleCache.clear();
   }
 }
 
