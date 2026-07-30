@@ -60,7 +60,9 @@
             <BIMDataIconWarning fill color="warning" />
           </div>
           <div class="flex flex-col">
-            <strong>{{ $t("NamingConstraint.modal.noStrictTitle") }}</strong>
+            <strong>{{
+              $t("NamingConstraint.modal.noStrictTitle", { count: documents.length })
+            }}</strong>
             <span>{{ $t("NamingConstraint.modal.noStrictDescription") }}</span>
           </div>
         </div>
