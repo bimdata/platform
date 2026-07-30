@@ -108,6 +108,7 @@
     <div class="end flex justify-end">
       <BIMDataButton
         v-if="isProjectAdmin(project)"
+        v-show="selectedFileTab.id === 'folders'"
         :width="isXXL ? undefined : '160px'"
         color="default"
         fill
