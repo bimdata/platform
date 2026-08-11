@@ -2,7 +2,7 @@
    display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 1px;
 }
 
 .naming-constraint-preview__chip {
