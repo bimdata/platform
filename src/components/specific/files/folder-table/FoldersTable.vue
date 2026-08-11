@@ -63,6 +63,7 @@
       <FileNameCell
         :project="project"
         :file="file"
+        :namingConstraintPreview="folder.namingConstraintPreview"
         @file-clicked="$emit('file-clicked', $event)"
         @open-versioning-manager="$emit('open-versioning-manager', $event)"
         :editMode="nameEditMode[file.id]"

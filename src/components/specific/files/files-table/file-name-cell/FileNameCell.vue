@@ -5,35 +5,41 @@
         <BIMDataSpinner />
       </div>
 
-      <div v-else-if="showUpdateForm" class="file-name-cell__update-form">
-        <BIMDataInput
-          ref="nameInput"
-          class="file-name-cell__update-form__input"
-          v-model="fileName"
-          @keyup.esc.stop="closeUpdateForm"
-          @keyup.enter.stop="renameFile"
-          :error="hasError"
-          :errorMessage="errorMessage"
-          margin="0"
+      <div v-else-if="showUpdateForm" class="file-name-cell__update-form flex flex-col">
+        <div class="flex">
+          <BIMDataInput
+            ref="nameInput"
+            class="file-name-cell__update-form__input"
+            v-model="fileName"
+            @keyup.esc.stop="closeUpdateForm"
+            @keyup.enter.stop="renameFile"
+            :error="hasError"
+            :errorMessage="errorMessage"
+            margin="0"
+          />
+          <BIMDataButton
+            class="file-name-cell__update-form__btn-submit"
+            color="primary"
+            fill
+            radius
+            @click="renameFile"
+          >
+            {{ $t("t.validate") }}
+          </BIMDataButton>
+          <BIMDataButton
+            class="file-name-cell__update-form__btn-close"
+            ghost
+            rounded
+            icon
+            @click="closeUpdateForm"
+          >
+            <BIMDataIconClose size="xxs" />
+          </BIMDataButton>
+        </div>
+        <NamingConstraintPreview
+          v-if="!isFolder(file) && namingConstraintPreview"
+          :rule="namingConstraintPreview"
         />
-        <BIMDataButton
-          class="file-name-cell__update-form__btn-submit"
-          color="primary"
-          fill
-          radius
-          @click="renameFile"
-        >
-          {{ $t("t.validate") }}
-        </BIMDataButton>
-        <BIMDataButton
-          class="file-name-cell__update-form__btn-close"
-          ghost
-          rounded
-          icon
-          @click="closeUpdateForm"
-        >
-          <BIMDataIconClose size="xxs" />
-        </BIMDataButton>
       </div>
 
       <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
@@ -87,7 +93,12 @@ import { isFolder } from "../../../../../utils/file-structure.js";
 import { matchName, buildExample } from "../../../../../utils/naming-constraint.js";
 import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
 
+import NamingConstraintPreview from "../../naming-constraint/naming-constraint-preview/NamingConstraintPreview.vue";
+
 export default {
+  components: {
+    NamingConstraintPreview,
+  },
   props: {
     project: {
       type: Object,
@@ -96,6 +107,10 @@ export default {
     file: {
       type: Object,
       required: true,
+    },
+    namingConstraintPreview: {
+      type: Object,
+      default: null,
     },
     editMode: {
       type: Boolean,

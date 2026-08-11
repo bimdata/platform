@@ -75,7 +75,7 @@
             :loadingFileIds="loadingFileIds"
             :selection="selection"
             :filesToUpload="filesToUpload"
-            :folder="currentFolder"
+            :folder="folderWithNamingPreview"
             :foldersToUpload="foldersToUpload"
             :hasNamingConflict="hasNamingConflict"
             @back-parent-folder="backToParent"
@@ -294,6 +294,12 @@ export default {
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
     const { getEffectiveFolderRule } = useNamingConstraints();
     const currentFolder = ref(null);
+    const currentFolderNamingRule = ref(null);
+    const folderWithNamingPreview = computed(() =>
+      currentFolder.value
+        ? { ...currentFolder.value, namingConstraintPreview: currentFolderNamingRule.value }
+        : currentFolder.value,
+    );
     const currentFiles = ref([]);
     const toValidateVisas = ref([]);
     const createdVisas = ref([]);
@@ -875,11 +881,12 @@ export default {
 
     watch(
       () => currentFolder.value,
-      (folder) => {
+      async (folder) => {
         const childrenFolders = folder.children.filter(isFolder).sort(sortByName);
         const childrenFiles = folder.children.filter((c) => !isFolder(c)).sort(sortByName);
         currentFiles.value = childrenFolders.concat(childrenFiles);
         gedTargetFolder.set(folder.id);
+        currentFolderNamingRule.value = await getEffectiveFolderRule(props.project, folder);
       },
       { immediate: true },
     );
@@ -891,6 +898,7 @@ export default {
       allTags,
       allVisas,
       currentFolder,
+      folderWithNamingPreview,
       currentSpace,
       currentVisa,
       displayedFiles,
