@@ -1,27 +1,29 @@
 <template>
-  <AppLink
-    data-test-id="btn-open-viewer"
-    :data-test-param="window"
-    :disabled="disabled"
-    :to="{
-      name: routeNames.modelViewer,
-      params: {
-        spaceID: project.cloud.id,
-        projectID: project.id,
-        modelIDs: model.id,
-      },
-      query: {
-        window,
-      },
-    }"
-  >
-    <BIMDataButton :disabled="disabled" class="viewer-button" :color="color" outline radius icon>
-      <span>
-        {{ text || window.toUpperCase() }}
-      </span>
-      <slot name="subtext"> </slot>
-    </BIMDataButton>
-  </AppLink>
+  <BIMDataTooltip :text="disabled ? tooltip : ''" position="bottom">
+    <AppLink
+      data-test-id="btn-open-viewer"
+      :data-test-param="window"
+      :disabled="disabled"
+      :to="{
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: project.cloud.id,
+          projectID: project.id,
+          modelIDs: model.id,
+        },
+        query: {
+          window,
+        },
+      }"
+    >
+      <BIMDataButton :disabled="disabled" class="viewer-button" :color="color" outline radius icon>
+        <span>
+          {{ text || window.toUpperCase() }}
+        </span>
+        <slot name="subtext"> </slot>
+      </BIMDataButton>
+    </AppLink>
+  </BIMDataTooltip>
 </template>
 
 <script setup>
@@ -50,6 +52,10 @@ defineProps({
   text: {
     type: String,
   },
+  tooltip: {
+    type: String,
+    default: "",
+  },
   color: {
     type: String,
     default: "granite",
@@ -62,7 +68,7 @@ defineProps({
   color: var(--color-granite-light);
 
   &:disabled {
-    visibility: hidden;
+    opacity: 0.4;
   }
 }
 </style>

@@ -221,7 +221,9 @@
     "userAlreadyExistInputErrorMessage": "El usuario ya está en su proyecto"
   },
   "ModelActionsCell": {
-    "addTagsButtonText": "Añadir etiquetas"
+    "addTagsButtonText": "Añadir etiquetas",
+    "view2dUnavailable": "La vista 2D no está disponible",
+    "view3dUnavailable": "La vista 3D no está disponible, pruebe la beta"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Datos de seguimiento no disponibles",
