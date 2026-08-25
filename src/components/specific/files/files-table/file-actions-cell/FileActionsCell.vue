@@ -158,7 +158,7 @@ export default {
       });
 
       menuItems.value.push({
-        key: 6,
+        key: current_key++,
         icon: "download",
         text: "t.download",
         action: () => onClick("download"),
