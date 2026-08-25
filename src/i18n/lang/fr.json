@@ -314,6 +314,7 @@
     "conflictDeleteFileButton": "Supprimer le fichier",
     "conflictRestoreFileButton": "Restaurer",
     "maxCharsHint": "Maximum {count} caractères",
+    "errorMessage": "Le nombre de caractères dépasse la limite autorisée.",
     "renameButton": "Renommer",
     "renameConflictsMenuItem": "Renommer les fichiers en conflit",
     "noConflictsTitle": "Aucun fichier en conflit",

@@ -134,7 +134,17 @@ export default {
     const hasHistory = computed(() => props.file?.history_count > 0);
 
     const isConflictFile = computed(() => {
-      return !isFolder(props.file) && props.file.naming_constraint_conflict;
+      if (isFolder(props.file)) {
+        return false;
+      }
+
+      const rule = props.namingConstraintPreview?.rule;
+
+      if (!rule) {
+        return false;
+      }
+
+      return !matchName(props.file.name, rule);
     });
 
     const renameFile = debounce(async () => {

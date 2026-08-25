@@ -867,11 +867,15 @@ export default {
     watch(
       () => props.fileStructure,
       (struct) => {
-        const folderId = gedTargetFolder.get();
+        const currentFolderId = currentFolder.value?.id;
 
-        if (folderId) {
-          jumpToTargetFolder(folderId);
-          gedTargetFolder.clear();
+        if (currentFolderId) {
+          const folder = handler.get({
+            nature: FILE_TYPE.FOLDER,
+            id: currentFolderId,
+          });
+
+          currentFolder.value = folder ? handler.deserialize(folder) : struct;
         } else {
           currentFolder.value = struct;
         }
@@ -882,8 +886,11 @@ export default {
     watch(
       () => currentFolder.value,
       async (folder) => {
+        if (!folder) return;
+
         const childrenFolders = folder.children.filter(isFolder).sort(sortByName);
         const childrenFiles = folder.children.filter((c) => !isFolder(c)).sort(sortByName);
+
         currentFiles.value = childrenFolders.concat(childrenFiles);
         gedTargetFolder.set(folder.id);
         currentFolderNamingRule.value = await getEffectiveFolderRule(props.project, folder);

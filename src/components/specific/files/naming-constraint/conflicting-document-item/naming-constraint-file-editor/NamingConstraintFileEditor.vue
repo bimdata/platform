@@ -32,6 +32,8 @@
           :maxlength="part.max_length"
           :modelValue="segments[index]"
           @update:modelValue="updateSegment(index, $event.slice(0, part.max_length))"
+          :error="segments[index].length > part.max_length"
+          :errorMessage="$t('NamingConstraint.errorMessage')"
         />
         <span class="naming-constraint-file-editor__field__placeholder">
           {{ $t("NamingConstraint.maxCharsHint", { count: part.max_length }) }}
@@ -58,14 +60,19 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const { values, extension } = splitName(props.filename, props.rule);
-
     const segments = ref([]);
+    const extension = ref("");
 
     const initSegments = () => {
-      const { values } = splitName(props.filename, props.rule);
+      const result = splitName(props.filename, props.rule);
+
+      extension.value = result.extension;
 
       segments.value = props.rule.parts.map((part, index) => {
+        if (result.values[index] !== undefined) {
+          return result.values[index];
+        }
+
         if (part.type === PART_TYPES.VALUES_IN) {
           return part.elements?.[0] ?? "";
         }
@@ -89,11 +96,12 @@ export default {
       (name) => {
         const result = splitName(name, props.rule);
 
+        extension.value = result.extension;
         segments.value = [...result.values];
       },
     );
 
-    const generatedName = computed(() => buildName(segments.value, props.rule, extension));
+    const generatedName = computed(() => buildName(segments.value, props.rule, extension.value));
 
     watch(
       generatedName,
