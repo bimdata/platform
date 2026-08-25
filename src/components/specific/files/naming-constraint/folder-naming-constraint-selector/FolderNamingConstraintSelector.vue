@@ -134,6 +134,7 @@
 import { computed, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { NONE_OPTION_ID } from "../../../../../config/naming-constraints.js";
 import { NamingConstraintConflictError } from "../../../../../services/NamingConstraintService.js";
 import { useFiles } from "../../../../../state/files.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
@@ -162,7 +163,6 @@ export default {
     const localState = inject("localState");
     const refreshFiles = inject("refreshFiles");
     const searchText = ref("");
-    const NONE_OPTION_ID = "__none__";
 
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
@@ -276,6 +276,15 @@ export default {
               onClose: closeModal,
               onConfirm: async () => {
                 await refreshFiles?.();
+
+                pushNotification({
+                  type: "success",
+                  title: t("NamingConstraint.applyRuleWithConflictsSuccessTitle"),
+                  message: t("NamingConstraint.applyRuleWithConflictsSuccessMessage", {
+                    folder: localState.folder.name,
+                  }),
+                });
+
                 closeModal();
                 closeSidePanel();
               },
@@ -285,7 +294,9 @@ export default {
           pushNotification({
             type: "success",
             title: t("NamingConstraint.applyRuleSuccessTitle"),
-            message: t("NamingConstraint.applyRuleSuccessMessage"),
+            message: t("NamingConstraint.applyRuleSuccessMessage", {
+              folder: localState.folder.name,
+            }),
           });
           closeSidePanel();
         }

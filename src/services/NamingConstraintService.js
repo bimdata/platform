@@ -69,9 +69,11 @@ class NamingConstraintService {
 
     const effective = constraint
       ? {
+          id: constraint.id,
           rule: constraint.rule,
           strict: constraint.strict,
           name: constraint.name,
+          recursive: !!folderConstraint.recursive,
         }
       : null;
 

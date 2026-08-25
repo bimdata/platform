@@ -42,6 +42,8 @@
 
 <script>
 import { computed, onMounted, provide, reactive } from "vue";
+
+import { NONE_OPTION_ID } from "../../../../config/naming-constraints.js";
 import { useNamingConstraints } from "../../../../state/naming-constraints.js";
 import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 // Components
@@ -110,18 +112,19 @@ export default {
     onMounted(async () => {
       try {
         localState.loading = true;
+
         const [constraints, templates, folderRule] = await Promise.all([
           loadNamingConstraints(props.project),
           loadNamingPartsTemplates(props.project),
           fetchFolderNamingConstraint(props.project, props.folder),
         ]);
+
         localState.constraints = constraints;
         localState.templates = templates;
-        if (folderRule) {
-          localState.initialConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
-          localState.selectedConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
-          localState.recursive = !!folderRule?.recursive;
-        }
+
+        localState.initialConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
+        localState.selectedConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
+        localState.recursive = !!folderRule?.recursive;
       } finally {
         localState.loading = false;
       }

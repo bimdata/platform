@@ -59,7 +59,7 @@
     "recursiveLabel": "Recursive rule",
     "recursiveHelp": "If you check this box, this rule will also apply to files contained in the subfolders of your main folder.",
     "applyRuleSuccessTitle": "Naming rule applied",
-    "applyRuleSuccessMessage": "The naming convention has been applied to the folder.",
+    "applyRuleSuccessMessage": "The naming convention has been applied to the folder \"{folder}\".",
     "applyRuleError": "The naming convention could not be applied.",
     "applyRuleWarningTitle": "Name does not match the rule",
     "conflictTooltip": "This file does not match the folder naming convention.",
