@@ -23,8 +23,7 @@ const PART_TYPES = Object.freeze({
 });
 
 /**
- * Strip the extension from a file name (e.g. "ARC_01.ifc" -> "ARC_01").
- * Names without an extension are returned unchanged.
+ * Strip the extension from a file name.
  *
  * @param {String} name
  * @returns {String}
@@ -32,6 +31,17 @@ const PART_TYPES = Object.freeze({
 function stripExtension(name) {
   const dotIndex = name.lastIndexOf(".");
   return dotIndex > 0 ? name.slice(0, dotIndex) : name;
+}
+
+/**
+ * Get the file extension.
+ *
+ * @param {String} name
+ * @returns {String}
+ */
+function getExtension(name) {
+  const dotIndex = name.lastIndexOf(".");
+  return dotIndex > 0 ? name.slice(dotIndex) : "";
 }
 
 /**
@@ -45,39 +55,105 @@ function matchPart(part, segment) {
   switch (part?.type) {
     case PART_TYPES.VALUES_IN:
       return Array.isArray(part.elements) && part.elements.includes(segment);
+
     case PART_TYPES.BOUNDED: {
-      if (!/^\d+$/.test(segment)) return false;
+      if (!/^\d+$/.test(segment)) {
+        return false;
+      }
+
       const value = Number(segment);
+
       return value >= part.min_value && value <= part.max_value;
     }
+
     case PART_TYPES.N_CHARS:
       return segment.length > 0 && segment.length <= part.max_length;
+
     default:
       return false;
   }
 }
 
 /**
- * Check whether a file name matches a naming-constraint rule.
- * Returns `true` when there is no rule (nothing to enforce).
+ * Parse a filename according to a naming constraint rule.
  *
- * @param {String} name file name (with or without extension)
- * @param {Object|null} rule naming-constraint rule
- * @returns {Boolean}
+ * This cannot rely on String.split() because the separator can also be part
+ * of a valid value. For example, with "-" as separator:
+ *
+ *   rule.parts[0] = { type: "values_in", elements: ["A-B"] }
+ *
+ * The parser therefore tries valid values for each part and only treats the
+ * separator as a delimiter when the remaining parts can also be matched.
+ *
+ * @param {String} name
+ * @param {Object|null} rule
+ * @returns {String[]|null}
  */
-function matchName(name, rule) {
-  if (!rule || !Array.isArray(rule.parts) || rule.parts.length === 0) {
-    return true;
+function parseNameParts(name, rule) {
+  if (!rule?.parts?.length || typeof name !== "string" || !name.length) {
+    return null;
   }
-  if (typeof name !== "string" || name.length === 0) return false;
 
   const baseName = stripExtension(name);
   const separator = rule.separator ?? "";
-  const segments = separator === "" ? [baseName] : baseName.split(separator);
 
-  if (segments.length !== rule.parts.length) return false;
+  if (!separator) {
+    return rule.parts.length === 1 ? [baseName] : null;
+  }
 
-  return rule.parts.every((part, index) => matchPart(part, segments[index]));
+  const parsePart = (value, partIndex) => {
+    const part = rule.parts[partIndex];
+    const isLastPart = partIndex === rule.parts.length - 1;
+
+    for (let end = 1; end <= value.length; end++) {
+      const candidate = value.slice(0, end);
+
+      if (!matchPart(part, candidate)) {
+        continue;
+      }
+
+      const remaining = value.slice(end);
+
+      if (isLastPart) {
+        if (!remaining) {
+          return [candidate];
+        }
+
+        continue;
+      }
+
+      if (!remaining.startsWith(separator)) {
+        continue;
+      }
+
+      const parsedRemaining = parsePart(remaining.slice(separator.length), partIndex + 1);
+
+      if (parsedRemaining) {
+        return [candidate, ...parsedRemaining];
+      }
+    }
+
+    return null;
+  };
+
+  return parsePart(baseName, 0);
+}
+
+/**
+ * Check whether a file name matches a naming-constraint rule.
+ *
+ * Returns true when there is no rule (nothing to enforce).
+ *
+ * @param {String} name
+ * @param {Object|null} rule
+ * @returns {Boolean}
+ */
+function matchName(name, rule) {
+  if (!rule?.parts?.length) {
+    return true;
+  }
+
+  return parseNameParts(name, rule) !== null;
 }
 
 /**
@@ -93,18 +169,44 @@ function buildPartExample(part) {
 }
 
 /**
- * Build a human-friendly example name from a rule, to preview the expected
- * format in the UI (e.g. "ARC_[1-99]_XXX").
+ * Build a human-friendly example name from a rule.
  *
  * @param {Object|null} rule
  * @returns {String}
  */
 function buildExample(rule) {
-  if (!rule || !Array.isArray(rule.parts) || rule.parts.length === 0) {
+  if (!rule?.parts?.length) {
     return "";
   }
+
   const separator = rule.separator ?? "";
-  return rule.parts.map(buildPartExample).join(separator) + ".ext";
+
+  return `${rule.parts.map(buildPartExample).join(separator)}.ext`;
+}
+
+/**
+ * Build default editable values for a rule.
+ *
+ * @param {String} basename
+ * @param {Object} rule
+ * @returns {String[]}
+ */
+function buildDefaultValues(basename, rule) {
+  return rule.parts.map((part) => {
+    switch (part.type) {
+      case PART_TYPES.VALUES_IN:
+        return part.elements?.[0] ?? "";
+
+      case PART_TYPES.BOUNDED:
+        return part.min_value ?? "";
+
+      case PART_TYPES.N_CHARS:
+        return basename;
+
+      default:
+        return "";
+    }
+  });
 }
 
 /**
@@ -122,38 +224,18 @@ function splitName(name, rule) {
     };
   }
 
-  const dot = name.lastIndexOf(".");
-  const extension = dot > 0 ? name.slice(dot) : "";
+  const extension = getExtension(name);
+  const parsedValues = parseNameParts(name, rule);
 
-  const basename = stripExtension(name);
-
-  // Si le nom est déjà conforme, on le découpe normalement
-  if (matchName(name, rule)) {
+  if (parsedValues) {
     return {
+      values: parsedValues,
       extension,
-      values: rule.separator === "" ? [basename] : basename.split(rule.separator),
     };
   }
 
-  // Sinon on construit un formulaire par défaut
-  const values = rule.parts.map((part) => {
-    switch (part.type) {
-      case PART_TYPES.VALUES_IN:
-        return part.elements?.[0] ?? "";
-
-      case PART_TYPES.BOUNDED:
-        return part.min_value;
-
-      case PART_TYPES.N_CHARS:
-        return basename;
-
-      default:
-        return "";
-    }
-  });
-
   return {
-    values,
+    values: buildDefaultValues(stripExtension(name), rule),
     extension,
   };
 }
@@ -163,6 +245,10 @@ function splitName(name, rule) {
  *
  * max_value=999 -> 001
  * max_value=99 -> 01
+ *
+ * @param {String|Number} value
+ * @param {Object} part
+ * @returns {String}
  */
 function padBoundedValue(value, part) {
   if (value === "" || value === null || value === undefined) {
@@ -176,17 +262,24 @@ function padBoundedValue(value, part) {
 
 /**
  * Build a filename from rule values.
+ *
+ * @param {String[]} values
+ * @param {Object} rule
+ * @param {String} extension
+ * @returns {String}
  */
 function buildName(values, rule, extension = "") {
-  if (!rule) return "";
+  if (!rule) {
+    return "";
+  }
 
   const separator = rule.separator ?? "";
 
-  const result = values
+  const name = values
     .map((value, index) => {
       const part = rule.parts[index];
 
-      if (part.type === PART_TYPES.BOUNDED) {
+      if (part?.type === PART_TYPES.BOUNDED) {
         return padBoundedValue(value, part);
       }
 
@@ -194,13 +287,14 @@ function buildName(values, rule, extension = "") {
     })
     .join(separator);
 
-  return result + extension;
+  return name + extension;
 }
 
 export {
   PART_TYPES,
   matchName,
   matchPart,
+  parseNameParts,
   buildExample,
   buildPartExample,
   stripExtension,

@@ -74,6 +74,7 @@
     "conflictDeleteFileButton": "Delete file",
     "conflictRestoreFileButton": "Restore",
     "maxCharsHint": "Maximum {count} characters",
+    "errorMessage": "The number of characters exceeds the allowed limit.",
     "renameButton": "Rename",
     "renameFilePlaceholder": "Rename the file",
     "renameConflictsMenuItem": "Rename conflicting files",
