@@ -22,7 +22,7 @@
         v-model="searchText"
       />
       <BIMDataButton color="primary" fill radius @click="create">
-        <BIMDataIconRules size="xs" margin="0 6px 0 0" />
+        <BIMDataIconAddGavel size="xs" margin="0 6px 0 0" />
         {{ $t("NamingConstraint.addRuleButton") }}
       </BIMDataButton>
     </div>
