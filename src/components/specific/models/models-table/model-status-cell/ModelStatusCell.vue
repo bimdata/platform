@@ -29,6 +29,17 @@ export default {
     const statusName = ref("");
     const statusIcon = ref("");
 
+    // A model is considered completed as soon as one of its two
+    // status (status and fragments_status) is completed.
+    const globalStatus = (model) =>
+      MODEL_STATUS.COMPLETED === model.status || MODEL_STATUS.COMPLETED === model.fragments_status
+        ? MODEL_STATUS.COMPLETED
+        : model.status;
+
+    const isProcessing = (model) =>
+      [MODEL_STATUS.PENDING, MODEL_STATUS.IN_PROGRESS].includes(model.status) ||
+      [MODEL_STATUS.PENDING, MODEL_STATUS.IN_PROGRESS].includes(model.fragments_status);
+
     const setStatus = (status) => {
       switch (status) {
         case MODEL_STATUS.PENDING:
@@ -53,20 +64,14 @@ export default {
       () => props.model,
       () => {
         clearInterval(checkStatusInterval);
-        setStatus(props.model.status);
+        setStatus(globalStatus(props.model));
 
-        if (
-          MODEL_STATUS.PENDING === props.model.status ||
-          MODEL_STATUS.IN_PROGRESS === props.model.status
-        ) {
+        if (isProcessing(props.model)) {
           // If model status is PENDING or IN_PROGRESS then check for status
           // every 2 seconds until it's neither PENDING nor IN_PROGRESS.
           checkStatusInterval = setInterval(async () => {
             const model = await fetchModelByID(props.project, props.model.id);
-            if (
-              MODEL_STATUS.PENDING !== model.status &&
-              MODEL_STATUS.IN_PROGRESS !== model.status
-            ) {
+            if (!isProcessing(model)) {
               clearInterval(checkStatusInterval);
               loadProjectModels(props.project);
             }

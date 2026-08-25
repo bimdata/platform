@@ -1,6 +1,6 @@
 <template>
   <div class="model-actions-cell" v-click-away="closeMenu">
-    <div v-if="isModelReady" class="actions-btn flex items-center">
+    <div v-if="isModelReady || isModelFragmentsReady" class="actions-btn flex items-center">
       <template v-if="model.type === MODEL_TYPE.META_BUILDING">
         <BIMDataButton color="primary" outline radius icon @click="onClick('view-metaBuilding')">
           <BIMDataIconStructure size="s" />
@@ -26,6 +26,11 @@
             :project="project"
             :model="model"
             :window="window"
+            :tooltip="
+              window === WINDOWS.IFC2D
+                ? $t('ModelActionsCell.view2dUnavailable')
+                : $t('ModelActionsCell.view3dUnavailable')
+            "
           />
         </template>
       </template>
@@ -91,10 +96,9 @@
         />
       </template>
 
-      <template v-if="model.type === MODEL_TYPE.IFC">
+      <template v-if="model.type === MODEL_TYPE.IFC && isModelFragmentsReady">
         <div class="separator"></div>
         <ViewerButton
-          :disabled="!isModelReady"
           :project="project"
           :model="model"
           :window="WINDOWS.FRAGMENTS"
@@ -198,6 +202,7 @@ export default {
     const menu = ref(null);
     const isOpen = ref(false);
     const isModelReady = computed(() => MODEL_STATUS.COMPLETED === props.model.status);
+    const isModelFragmentsReady = computed(() => MODEL_STATUS.COMPLETED === props.model.fragments_status);
 
     const modelDocument = computed(() =>
       handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }),
@@ -285,6 +290,7 @@ export default {
       menu,
       isOpen,
       isModelReady,
+      isModelFragmentsReady,
       menuItems,
       modelDocument,
       MODEL_TYPE,
