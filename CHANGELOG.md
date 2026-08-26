@@ -1,3 +1,48 @@
+# [1.7.0](https://github.com/bimdata/platform/compare/v1.6.2...v1.7.0) (2026-08-26)
+
+
+### chore
+
+* bump @bimdata/viewer@2.18.0 from Github Actions [skip e2e] ([b4ceb22](https://github.com/bimdata/platform/commit/b4ceb22b927518e342699bcedae5b490bdc69925))
+* bump @bimdata/viewer@2.18.0-beta.10 from Github Actions [skip e2e] ([ceafd0b](https://github.com/bimdata/platform/commit/ceafd0bfe0e2c46aba668b26d7051c36849c5375))
+* bump @bimdata/viewer@2.18.0-beta.11 from Github Actions [skip e2e] ([d990d57](https://github.com/bimdata/platform/commit/d990d57e44479ab5de335e1dfe8cb5fcb065df15))
+* bump @bimdata/viewer@2.18.0-beta.12 from Github Actions [skip e2e] ([b7c4359](https://github.com/bimdata/platform/commit/b7c4359367f3ca449a65aa73efa85c99f99095cc))
+* bump @bimdata/viewer@2.18.0-beta.13 from Github Actions [skip e2e] ([d960f0e](https://github.com/bimdata/platform/commit/d960f0efa9f7cb93726a947acbbf8db6f4ef5e94))
+* bump @bimdata/viewer@2.18.0-beta.14 from Github Actions [skip e2e] ([44b538f](https://github.com/bimdata/platform/commit/44b538fc01bae202780e07b5009940abe2576e69))
+* bump @bimdata/viewer@2.18.0-beta.15 from Github Actions [skip e2e] ([88ee797](https://github.com/bimdata/platform/commit/88ee7973fc942bcf78e0f7d6ec32777d929b713d))
+* bump @bimdata/viewer@2.18.0-beta.16 from Github Actions [skip e2e] ([82e5572](https://github.com/bimdata/platform/commit/82e5572807b3e58485e5445ddae73d844fdc893b))
+* bump @bimdata/viewer@2.18.0-beta.17 from Github Actions [skip e2e] ([c3671d0](https://github.com/bimdata/platform/commit/c3671d0585c970fbed12bef7b47fcdcff83b5940))
+* bump @bimdata/viewer@2.18.0-beta.18 from Github Actions [skip e2e] ([609375e](https://github.com/bimdata/platform/commit/609375e4be1635b69950342a1f2be440218c3189))
+* bump @bimdata/viewer@2.18.0-beta.19 from Github Actions [skip e2e] ([5f8e5a5](https://github.com/bimdata/platform/commit/5f8e5a57fbfc0f2ff007a99a8cf56453de733a8b))
+* bump @bimdata/viewer@2.18.0-beta.2 from Github Actions [skip e2e] ([d3d7404](https://github.com/bimdata/platform/commit/d3d740416f2f9f031aedf9d40bc85bf1863be082))
+* bump @bimdata/viewer@2.18.0-beta.20 from Github Actions [skip e2e] ([bf8836e](https://github.com/bimdata/platform/commit/bf8836eb1ac51fa5f50503314e0bb6927d316f10))
+* bump @bimdata/viewer@2.18.0-beta.21 from Github Actions [skip e2e] ([291bc6b](https://github.com/bimdata/platform/commit/291bc6b53f921cc51fbf12c0aa053a5f2a6eb2dd))
+* bump @bimdata/viewer@2.18.0-beta.22 from Github Actions [skip e2e] ([bff0b1e](https://github.com/bimdata/platform/commit/bff0b1e297b0ad72db6eabceccc65f1afaebac04))
+* bump @bimdata/viewer@2.18.0-beta.23 from Github Actions [skip e2e] ([7ebc2f9](https://github.com/bimdata/platform/commit/7ebc2f91dd16e3e100b8bab0134956ebb26fefd2))
+* bump @bimdata/viewer@2.18.0-beta.3 from Github Actions [skip e2e] ([afdb68c](https://github.com/bimdata/platform/commit/afdb68c847c93fc74049a398fe1f216c60b57583))
+* bump @bimdata/viewer@2.18.0-beta.4 from Github Actions [skip e2e] ([a6eb1f0](https://github.com/bimdata/platform/commit/a6eb1f0863bd0778d1670a692365cfd4079922ce))
+* bump @bimdata/viewer@2.18.0-beta.5 from Github Actions [skip e2e] ([3f945b5](https://github.com/bimdata/platform/commit/3f945b557267d8d4ed53c72e56c51500bb97c011))
+* bump @bimdata/viewer@2.18.0-beta.6 from Github Actions [skip e2e] ([5846b48](https://github.com/bimdata/platform/commit/5846b48d486d314faa339ec7f4d271db15188014))
+* bump @bimdata/viewer@2.18.0-beta.7 from Github Actions [skip e2e] ([ff30c20](https://github.com/bimdata/platform/commit/ff30c20afd2f154be4a1668b336ddca29541414c))
+* bump @bimdata/viewer@2.18.0-beta.8 from Github Actions [skip e2e] ([fab0244](https://github.com/bimdata/platform/commit/fab0244efbccf89c16cd0ab28cd8bf895878addb))
+* bump @bimdata/viewer@2.18.0-beta.9 from Github Actions [skip e2e] ([44c1404](https://github.com/bimdata/platform/commit/44c1404ad0c52802bddfbd085c945ada148c305c))
+* update dependencies ([9f480c3](https://github.com/bimdata/platform/commit/9f480c3fde8b39eae0456c5ae31ad002823a68ec))
+* update deps and add .npmrc ([9388a8b](https://github.com/bimdata/platform/commit/9388a8b1345b9e9b047b8c26f38891ac8fdfedad))
+
+### feat
+
+* allow to load 2D/3D or 3D beta if at least one is C (#707) ([da71bd2](https://github.com/bimdata/platform/commit/da71bd2f2cea7491ee50600c5b0caaabd58aebcc)), closes [#707](https://github.com/bimdata/platform/issues/707)
+
+### MINOR
+
+* add scrollbar to content & fix header / footer into panel (#690) ([e073b5a](https://github.com/bimdata/platform/commit/e073b5af093752e28fcf149b6caaaedaaad1aa2e)), closes [#690](https://github.com/bimdata/platform/issues/690)
+* feat: Fragments viewer ! ([ae66b2b](https://github.com/bimdata/platform/commit/ae66b2b453a164558f788218d329890f66292417))
+* Feature/btn viewer framents (#692) ([c995640](https://github.com/bimdata/platform/commit/c99564089f76d7b4c0e8e5a60f2fa35fedae27c2)), closes [#692](https://github.com/bimdata/platform/issues/692)
+
+### PATCH
+
+* (folders table): select all handles visible rows only (#700) ([12a9b8b](https://github.com/bimdata/platform/commit/12a9b8b4da307960458caad5538f9a015bd803d2)), closes [#700](https://github.com/bimdata/platform/issues/700) [#697](https://github.com/bimdata/platform/issues/697)
+
 ## [1.6.2](https://github.com/bimdata/platform/compare/v1.6.1...v1.6.2) (2026-07-28)
 
 
