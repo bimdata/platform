@@ -138,7 +138,9 @@
     "successNotifText": "Invitasjon sendt"
   },
   "ModelActionsCell": {
-    "addTagsButtonText": "Legg til tags"
+    "addTagsButtonText": "Legg til tags",
+    "view2dUnavailable": "2D-visningen er ikke tilgjengelig",
+    "view3dUnavailable": "3D-visningen er ikke tilgjengelig, prøv betaen"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Ingen plasseringsdata tilgjengelig",

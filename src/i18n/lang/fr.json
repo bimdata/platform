@@ -400,7 +400,9 @@
     "successUserToAdmin": "L'utilisateur a été promu administrateur"
   },
   "ModelActionsCell": {
-    "addTagsButtonText": "Ajouter des tags"
+    "addTagsButtonText": "Ajouter des tags",
+    "view2dUnavailable": "La vue 2D n'est pas disponible",
+    "view3dUnavailable": "La vue 3D n'est pas disponible, essayez la bêta"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Aucune données de localisation disponible",

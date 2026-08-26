@@ -16,12 +16,12 @@ jobs:
     runs-on: [self-hosted, common]
     if: contains('refs/heads/develop', github.event.client_payload.ref)
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           token: ${{ secrets.REPOS_TOKEN }}
           # Needed for EndBug/add-and-commit
           persist-credentials: true
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           check-latest: true
@@ -38,7 +38,7 @@ jobs:
           VIEWER_VERSION: ${{ github.event.client_payload.viewer-version }}
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
-        uses: EndBug/add-and-commit@v10
+        uses: EndBug/add-and-commit@v11
         with:
           add: "package-lock.json package.json"
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"
@@ -51,11 +51,11 @@ jobs:
       refs/heads/main'
       , github.event.client_payload.ref)
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: release
           persist-credentials: true
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           check-latest: true
@@ -72,7 +72,7 @@ jobs:
           VIEWER_VERSION: ${{ github.event.client_payload.viewer-version }}
       - name: Commit diff
         if: steps.viewer-install.outputs.gitdiff
-        uses: EndBug/add-and-commit@v10
+        uses: EndBug/add-and-commit@v11
         with:
           add: "package-lock.json package.json"
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"

@@ -22,80 +22,82 @@
           <span>{{ $t("ProjectOverview.activity.filters.title") }}</span>
         </div>
 
-        <!-- Types -->
-        <div class="activity-filters__section">
-          <div class="activity-filters__title">
-            {{ $t("ProjectOverview.activity.filters.types") }}
+        <div class="activity-filters__content">
+          <!-- Types -->
+          <div class="activity-filters__section">
+            <div class="activity-filters__title">
+              {{ $t("ProjectOverview.activity.filters.types") }}
+            </div>
+            <div class="activity-filters__types">
+              <label
+                v-for="type in availableTypes"
+                :key="type.action"
+                class="activity-filters__row flex"
+                :class="{
+                  'is-checked': localFilters.types.includes(type.action),
+                  'is-disabled': type.disabled,
+                }"
+                @click="!type.disabled && toggleItem(localFilters.types, type.action)"
+              >
+                <BIMDataCheckbox
+                  :modelValue="localFilters.types.includes(type.action)"
+                  :disabled="type.disabled"
+                  @update:modelValue="!type.disabled && toggleItem(localFilters.types, type.action)"
+                  margin="0 6px 0 0"
+                  @click.stop
+                />
+                <span>{{ $t(type.badgeKey) }}</span>
+              </label>
+            </div>
           </div>
-          <div class="activity-filters__types">
-            <label
-              v-for="type in availableTypes"
-              :key="type.action"
-              class="activity-filters__row flex"
-              :class="{
-                'is-checked': localFilters.types.includes(type.action),
-                'is-disabled': type.disabled,
-              }"
-              @click="!type.disabled && toggleItem(localFilters.types, type.action)"
-            >
-              <BIMDataCheckbox
-                :modelValue="localFilters.types.includes(type.action)"
-                :disabled="type.disabled"
-                @update:modelValue="!type.disabled && toggleItem(localFilters.types, type.action)"
-                margin="0 6px 0 0"
-                @click.stop
-              />
-              <span>{{ $t(type.badgeKey) }}</span>
-            </label>
-          </div>
-        </div>
 
-        <!-- Users -->
-        <div class="activity-filters__section">
-          <div class="activity-filters__title">
-            {{ $t("ProjectOverview.activity.filters.users") }}
+          <!-- Users -->
+          <div class="activity-filters__section">
+            <div class="activity-filters__title">
+              {{ $t("ProjectOverview.activity.filters.users") }}
+            </div>
+            <div class="activity-filters__users">
+              <label
+                v-for="user in availableUsers"
+                :key="user"
+                class="activity-filters__row flex"
+                @click="toggleItem(localFilters.users, user)"
+              >
+                <BIMDataCheckbox
+                  :modelValue="localFilters.users.includes(user)"
+                  @update:modelValue="toggleItem(localFilters.users, user)"
+                  margin="0 6px 0 0"
+                  @click.stop
+                />
+                <span>{{ user }}</span>
+              </label>
+            </div>
           </div>
-          <div class="activity-filters__users">
-            <label
-              v-for="user in availableUsers"
-              :key="user"
-              class="activity-filters__row flex"
-              @click="toggleItem(localFilters.users, user)"
-            >
-              <BIMDataCheckbox
-                :modelValue="localFilters.users.includes(user)"
-                @update:modelValue="toggleItem(localFilters.users, user)"
-                margin="0 6px 0 0"
-                @click.stop
-              />
-              <span>{{ user }}</span>
-            </label>
-          </div>
-        </div>
 
-        <!-- Date -->
-        <div class="activity-filters__section">
-          <div class="activity-filters__title">
-            {{ $t("ProjectOverview.activity.filters.period") }}
-          </div>
-          <div class="activity-filters__date-range">
-            <BIMDataDatePicker
-              :placeholder="$t('ProjectOverview.activity.filters.period')"
-              :isDateRange="true"
-              :autoCloseRange="true"
-              :clearButton="true"
-              :modelValue="localFilters.dateFrom"
-              :toDate="localFilters.dateTo"
-              :language="locale"
-              fixedPosition="bottom-left"
-              width="100%"
-              @update:modelValue="localFilters.dateFrom = $event"
-              @to-date-change="localFilters.dateTo = $event"
-              @cleared="
-                localFilters.dateFrom = null;
-                localFilters.dateTo = null;
-              "
-            />
+          <!-- Date -->
+          <div class="activity-filters__section">
+            <div class="activity-filters__title">
+              {{ $t("ProjectOverview.activity.filters.period") }}
+            </div>
+            <div class="activity-filters__date-range">
+              <BIMDataDatePicker
+                :placeholder="$t('ProjectOverview.activity.filters.period')"
+                :isDateRange="true"
+                :autoCloseRange="true"
+                :clearButton="true"
+                :modelValue="localFilters.dateFrom"
+                :toDate="localFilters.dateTo"
+                :language="locale"
+                fixedPosition="bottom-left"
+                width="100%"
+                @update:modelValue="localFilters.dateFrom = $event"
+                @to-date-change="localFilters.dateTo = $event"
+                @cleared="
+                  localFilters.dateFrom = null;
+                  localFilters.dateTo = null;
+                "
+              />
+            </div>
           </div>
         </div>
 

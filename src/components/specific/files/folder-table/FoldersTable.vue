@@ -9,7 +9,7 @@
     rowKey="id"
     :rowHeight="48"
     :selectable="true"
-    @selection-changed="$emit('selection-changed', $event)"
+    @selection-changed="onSelectionChanged"
     :canDragOverRow="isFolder"
     @row-drop="onRowDrop"
     :placeholder="$t('t.emptyFolder')"
@@ -218,6 +218,18 @@ export default {
       emit("row-drop", { event, data });
     };
 
+    const onSelectionChanged = (selection) => {
+      const displayedRows = filesTable.value?.filesTable?.displayedRows;
+      if (!Array.isArray(displayedRows)) {
+        emit("selection-changed", selection);
+        return;
+      }
+
+      const displayedIds = new Set(displayedRows.map((row) => row?.data?.id).filter(Boolean));
+      const visibleSelection = selection.filter((file) => displayedIds.has(file.id));
+      emit("selection-changed", visibleSelection);
+    };
+
     let nameEditMode;
     watch(
       () => props.files,
@@ -281,6 +293,7 @@ export default {
       formatBytes,
       isFolder,
       onRowDrop,
+      onSelectionChanged,
       onUploadCompleted,
     };
   },

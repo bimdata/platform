@@ -138,7 +138,9 @@
     "successNotifText": "Uitnodiging verzonden"
   },
   "ModelActionsCell": {
-    "addTagsButtonText": "Labels toevoegen"
+    "addTagsButtonText": "Labels toevoegen",
+    "view2dUnavailable": "De 2D-weergave is niet beschikbaar",
+    "view3dUnavailable": "De 3D-weergave is niet beschikbaar, probeer de bèta"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Geen locatiegegevens beschikbaar",

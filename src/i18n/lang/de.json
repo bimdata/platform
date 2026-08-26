@@ -221,7 +221,9 @@
     "userAlreadyExistInputErrorMessage": "Der Nutzer ist bereits in Ihren Projekt."
   },
   "ModelActionsCell": {
-    "addTagsButtonText": "Tags hinzufügen"
+    "addTagsButtonText": "Tags hinzufügen",
+    "view2dUnavailable": "Die 2D-Ansicht ist nicht verfügbar",
+    "view3dUnavailable": "Die 3D-Ansicht ist nicht verfügbar, probieren Sie die Beta"
   },
   "ModelLocation": {
     "emptyLocationMessage": "Keine Ortungsdaten verfügbar",

@@ -1,31 +1,29 @@
 <template>
-  <AppLink
-    data-test-id="btn-open-viewer"
-    :data-test-param="window"
-    :disabled="disabled"
-    :to="{
-      name: routeNames.modelViewer,
-      params: {
-        spaceID: project.cloud.id,
-        projectID: project.id,
-        modelIDs: model.id
-      },
-      query: {
-        window
-      }
-    }"
-  >
-    <BIMDataButton
+  <BIMDataTooltip :text="disabled ? tooltip : ''" position="bottom">
+    <AppLink
+      data-test-id="btn-open-viewer"
+      :data-test-param="window"
       :disabled="disabled"
-      class="viewer-button"
-      color="granite"
-      outline
-      radius
-      icon
+      :to="{
+        name: routeNames.modelViewer,
+        params: {
+          spaceID: project.cloud.id,
+          projectID: project.id,
+          modelIDs: model.id,
+        },
+        query: {
+          window,
+        },
+      }"
     >
-      {{ text || window.toUpperCase() }}
-    </BIMDataButton>
-  </AppLink>
+      <BIMDataButton :disabled="disabled" class="viewer-button" :color="color" outline radius icon>
+        <span>
+          {{ text || window.toUpperCase() }}
+        </span>
+        <slot name="subtext"> </slot>
+      </BIMDataButton>
+    </AppLink>
+  </BIMDataTooltip>
 </template>
 
 <script setup>
@@ -37,23 +35,31 @@ import AppLink from "../../../app/app-link/AppLink.vue";
 defineProps({
   project: {
     type: Object,
-    required: true
+    required: true,
   },
   model: {
     type: Object,
-    required: true
+    required: true,
   },
   window: {
     type: String,
-    default: DEFAULT_WINDOW
+    default: DEFAULT_WINDOW,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   text: {
-    type: String
-  }
+    type: String,
+  },
+  tooltip: {
+    type: String,
+    default: "",
+  },
+  color: {
+    type: String,
+    default: "granite",
+  },
 });
 </script>
 
@@ -62,7 +68,7 @@ defineProps({
   color: var(--color-granite-light);
 
   &:disabled {
-    visibility: hidden;
+    opacity: 0.4;
   }
 }
 </style>
