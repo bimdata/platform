@@ -1,0 +1,182 @@
+<template>
+  <template v-if="rule.strict">
+    <BIMDataSafeZoneModal class="naming-conflict-modal naming-conflict-modal--strict" width="868px">
+      <template #icon>
+        <div class="header flex items-start">
+          <div class="icon flex items-center m-r-12">
+            <BIMDataIconWarning fill color="high" />
+          </div>
+          <div class="flex flex-col">
+            <strong>{{ $t("NamingConstraint.modal.strictTitle") }}</strong>
+            <span>{{ $t("NamingConstraint.modal.strictDescription") }}</span>
+          </div>
+        </div>
+      </template>
+      <template #text>
+        <div class="naming-conflict-modal__content">
+          <p class="naming-conflict-modal__warning">
+            {{ $t("NamingConstraint.conflictModalWarning") }}
+          </p>
+          <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
+            <div>{{ $t("NamingConstraint.modal.expectedConventionLabel") }}</div>
+            <NamingConstraintPreview :rule="rule" />
+          </div>
+
+          <ConflictingDocumentsList
+            :project="project"
+            :documents="documents"
+            :allFolders="allFolders"
+            :rule="rule?.rule"
+            @valid-change="allValid = $event"
+            @change="pending = $event"
+          />
+        </div>
+      </template>
+      <template #actions>
+        <BIMDataButton color="granite" ghost radius width="120px" @click="close">
+          {{ $t("t.cancel") }}
+        </BIMDataButton>
+        <BIMDataButton
+          color="primary"
+          fill
+          radius
+          width="120px"
+          :disabled="rule?.strict && !allValid"
+          @click="confirm"
+        >
+          {{ $t("t.confirm") }}
+        </BIMDataButton>
+      </template>
+    </BIMDataSafeZoneModal>
+  </template>
+  <template v-else>
+    <BIMDataSafeZoneModal
+      class="naming-conflict-modal naming-conflict-modal--no-strict"
+      width="868px"
+    >
+      <template #icon>
+        <div class="header flex items-start">
+          <div class="icon flex items-center m-r-12">
+            <BIMDataIconWarning fill color="warning" />
+          </div>
+          <div class="flex flex-col">
+            <strong>{{
+              $t("NamingConstraint.modal.noStrictTitle", { count: documents.length })
+            }}</strong>
+            <span>{{ $t("NamingConstraint.modal.noStrictDescription") }}</span>
+          </div>
+        </div>
+      </template>
+      <template #title> </template>
+      <template #text>
+        <div class="naming-conflict-modal__content">
+          <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
+            <div>{{ $t("NamingConstraint.modal.expectedConventionLabel") }}</div>
+
+            <NamingConstraintPreview :rule="rule" />
+          </div>
+          <ConflictingDocumentsList
+            :project="project"
+            :documents="documents"
+            :allFolders="allFolders"
+            :rule="rule?.rule"
+            @valid-change="allValid = $event"
+            @change="pending = $event"
+          />
+        </div>
+      </template>
+      <template #actions>
+        <BIMDataButton color="granite" ghost radius width="120px" @click="close">
+          {{ $t("t.cancel") }}
+        </BIMDataButton>
+        <BIMDataButton
+          color="primary"
+          fill
+          radius
+          width="120px"
+          :disabled="rule?.strict && !allValid"
+          @click="confirm"
+        >
+          {{ $t("t.confirm") }}
+        </BIMDataButton>
+      </template>
+    </BIMDataSafeZoneModal>
+  </template>
+</template>
+
+<script>
+import { ref } from "vue";
+import { useFiles } from "../../../../state/files.js";
+import { matchName } from "../../../../utils/naming-constraint.js";
+import ConflictingDocumentsList from "./conflicting-documents-list/ConflictingDocumentsList.vue";
+import NamingConstraintPreview from "./naming-constraint-preview/NamingConstraintPreview.vue";
+
+export default {
+  components: {
+    ConflictingDocumentsList,
+    NamingConstraintPreview,
+  },
+  props: {
+    project: {
+      type: Object,
+      required: true,
+    },
+    documents: {
+      type: Array,
+      required: true,
+    },
+    allFolders: {
+      type: Array,
+      default: () => [],
+    },
+    rule: {
+      type: Object,
+      default: null,
+    },
+    onClose: {
+      type: Function,
+      required: true,
+    },
+    onConfirm: {
+      type: Function,
+      default: null,
+    },
+    persistChanges: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  setup(props) {
+    const { updateFiles, deleteFiles } = useFiles();
+
+    const allValid = ref(props.documents.every((doc) => matchName(doc.name, props.rule?.rule)));
+    const pending = ref({ renamed: [], deleted: [] });
+
+    const close = () => props.onClose();
+
+    const saveChanges = async () => {
+      if (!props.persistChanges) return;
+
+      await Promise.all([
+        updateFiles(props.project, pending.value.renamed),
+        deleteFiles(props.project, pending.value.deleted),
+      ]);
+    };
+
+    const confirm = async () => {
+      await saveChanges();
+      await props.onConfirm?.(pending.value);
+      close();
+    };
+
+    return {
+      allValid,
+      pending,
+      close,
+      confirm,
+    };
+  },
+};
+</script>
+
+<style scoped src="./NamingConflictModal.css"></style>

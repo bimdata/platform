@@ -1,0 +1,186 @@
+.rule-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rule-builder__empty-text {
+  margin: 0;
+  color: var(--color-granite);
+  font-size: 13px;
+}
+.rule-builder__add-label {
+  margin: 0;
+  color: var(--color-granite-light);
+  font-size: 10px;
+}
+.rule-builder__add-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  .rule-builder__add-button {
+    flex: auto;
+  }
+}
+
+.rule-builder__parts {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rule-builder__part {
+  position: relative;
+  border-radius: 6px;
+  background-color: var(--color-white);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.15s ease, opacity 0.15s ease;
+
+  &.rule-builder__part--dragging {
+    opacity: 0.4;
+  }
+
+  &.rule-builder__part--drag-over-top::before,
+  &.rule-builder__part--drag-over-bottom::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 1px;
+    background-color: var(--color-primary);
+    border-radius: 1px;
+  }
+  &.rule-builder__part--drag-over-top::before {
+    top: 0;
+  }
+  &.rule-builder__part--drag-over-bottom::after {
+    bottom: 0;
+  }
+
+  .rule-builder__part__main {
+    padding: 6px;
+    gap: 3px;
+  }
+
+  .rule-builder__part__grip {
+    cursor: grab;
+    color: var(--color-granite-light);
+    display: flex;
+    align-items: center;
+  }
+  .rule-builder__part__grip:active {
+    cursor: grabbing;
+  }
+
+  .rule-builder__part__type {
+    flex-shrink: 0;
+    min-width: 90px;
+    font-size: 12px;
+    color: var(--color-primary);
+  }
+
+  .rule-builder__part__value {
+    flex: 1 1 auto;
+    width: 140px;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .rule-builder__part__actions {
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+}
+
+/* --- Champs --- */
+.rule-builder__number {
+  flex: 1;
+  height: 36px;
+  min-width: 0;
+  padding: 0 8px;
+  border: 1px solid var(--color-silver);
+  border-radius: 6px;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+.rule-builder__number:hover {
+  border-color: var(--color-silver-dark);
+  transition: all 0.15s ease;
+}
+.rule-builder__number:focus {
+  outline: none;
+}
+
+.rule-builder__dash {
+  flex-shrink: 0;
+  color: var(--color-granite);
+}
+
+/* --- Select --- */
+.rule-builder__select {
+  flex: 1;
+  &:deep(.bimdata-dropdown__content) {
+    padding: 0 6px;
+    font-size: 11px;
+    svg {
+      min-height: 11px!important;
+      height: 11px!important;
+      width: 11px!important;
+      min-width: 11px!important;
+    }
+  }
+}
+.rule-builder__select:hover {
+  border-color: var(--color-silver-dark);
+  transition: all 0.15s ease;
+}
+.rule-builder__select:focus {
+  outline: none;
+}
+
+/* --- Bouton "créer une liste" --- */
+.rule-builder__create-list-btn--active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  &:hover {
+    background-color: var(--color-primary-light);
+  }
+}
+
+/* --- Panneau de création inline --- */
+.rule-builder__create-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 14px 12px 14px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background-color: var(--color-silver-light, #f5f6f8);
+}
+.rule-builder__create-panel__input {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--color-silver);
+  border-radius: 6px;
+  background-color: var(--color-white);
+  font-size: 13px;
+  color: var(--color-primary);
+}
+.rule-builder__create-panel__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.rule-builder__create-panel__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

@@ -5,39 +5,53 @@
         <BIMDataSpinner />
       </div>
 
-      <div v-else-if="showUpdateForm" class="file-name-cell__update-form">
-        <BIMDataInput
-          ref="nameInput"
-          class="file-name-cell__update-form__input"
-          v-model="fileName"
-          @keyup.esc.stop="closeUpdateForm"
-          @keyup.enter.stop="renameFile"
-          :error="hasError"
-          :errorMessage="$t('t.invalidName')"
-          margin="0"
+      <div v-else-if="showUpdateForm" class="file-name-cell__update-form flex flex-col">
+        <div class="flex">
+          <BIMDataInput
+            ref="nameInput"
+            class="file-name-cell__update-form__input"
+            v-model="fileName"
+            @keyup.esc.stop="closeUpdateForm"
+            @keyup.enter.stop="renameFile"
+            :error="hasError"
+            :errorMessage="errorMessage"
+            margin="0"
+          />
+          <BIMDataButton
+            class="file-name-cell__update-form__btn-submit"
+            color="primary"
+            fill
+            radius
+            @click="renameFile"
+          >
+            {{ $t("t.validate") }}
+          </BIMDataButton>
+          <BIMDataButton
+            class="file-name-cell__update-form__btn-close"
+            ghost
+            rounded
+            icon
+            @click="closeUpdateForm"
+          >
+            <BIMDataIconClose size="xxs" />
+          </BIMDataButton>
+        </div>
+        <NamingConstraintPreview
+          v-if="!isFolder(file) && namingConstraintPreview"
+          :rule="namingConstraintPreview"
         />
-        <BIMDataButton
-          class="file-name-cell__update-form__btn-submit"
-          color="primary"
-          fill
-          radius
-          @click="renameFile"
-        >
-          {{ $t("t.validate") }}
-        </BIMDataButton>
-        <BIMDataButton
-          class="file-name-cell__update-form__btn-close"
-          ghost
-          rounded
-          icon
-          @click="closeUpdateForm"
-        >
-          <BIMDataIconClose size="xxs" />
-        </BIMDataButton>
       </div>
 
       <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
+        <BIMDataTooltip
+          v-if="isConflictFile"
+          :text="$t('NamingConstraint.conflictTooltip')"
+          position="right"
+          class="flex items-center"
+        >
+          <BIMDataIconWarning margin="0 0 0 4px" size="xxs" fill color="warning" />
+        </BIMDataTooltip>
         <div v-if="displayModelInfo(file)" class="flex items-center">
           <BIMDataTooltip
             :text="
@@ -70,12 +84,21 @@
 
 <script>
 import { ref, watch, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { useFiles } from "../../../../../state/files.js";
+import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
+import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { debounce } from "../../../../../utils/async.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
+import { matchName, buildExample } from "../../../../../utils/naming-constraint.js";
 import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
 
+import NamingConstraintPreview from "../../naming-constraint/naming-constraint-preview/NamingConstraintPreview.vue";
+
 export default {
+  components: {
+    NamingConstraintPreview,
+  },
   props: {
     project: {
       type: Object,
@@ -85,6 +108,10 @@ export default {
       type: Object,
       required: true,
     },
+    namingConstraintPreview: {
+      type: Object,
+      default: null,
+    },
     editMode: {
       type: Boolean,
       default: false,
@@ -92,18 +119,58 @@ export default {
   },
   emits: ["close", "file-clicked", "open-versioning-manager", "success"],
   setup(props, { emit }) {
+    const { t } = useI18n();
     const { updateFiles } = useFiles();
+    const { getEffectiveFolderRule } = useNamingConstraints();
+    const { pushNotification } = useAppNotification();
 
     const loading = ref(false);
 
     const nameInput = ref(null);
     const fileName = ref("");
     const hasError = ref(false);
+    const errorMessage = ref("");
 
     const hasHistory = computed(() => props.file?.history_count > 0);
 
+    const isConflictFile = computed(() => {
+      if (isFolder(props.file)) {
+        return false;
+      }
+
+      const rule = props.namingConstraintPreview?.rule;
+
+      if (!rule) {
+        return false;
+      }
+
+      return !matchName(props.file.name, rule);
+    });
+
     const renameFile = debounce(async () => {
       if (fileName.value) {
+        const rule = isFolder(props.file)
+          ? null
+          : await getEffectiveFolderRule(props.project, {
+              id: props.file.parent_id,
+            });
+        if (rule?.rule && !matchName(fileName.value, rule.rule)) {
+          if (rule.strict) {
+            hasError.value = true;
+            errorMessage.value = t("t.invalidNameFormat", {
+              example: buildExample(rule.rule),
+            });
+            nameInput.value.focus();
+            return;
+          }
+          pushNotification({
+            type: "warning",
+            title: t("NamingConstraint.applyRuleWarningTitle"),
+            message: t("t.invalidNameFormat", {
+              example: buildExample(rule.rule),
+            }),
+          });
+        }
         try {
           loading.value = true;
           await updateFiles(props.project, [
@@ -119,6 +186,7 @@ export default {
         }
       } else {
         hasError.value = true;
+        errorMessage.value = t("t.invalidName");
         nameInput.value.focus();
       }
     }, 500);
@@ -132,6 +200,7 @@ export default {
     const closeUpdateForm = () => {
       loading.value = false;
       hasError.value = false;
+      errorMessage.value = "";
       showUpdateForm.value = false;
       emit("close");
     };
@@ -162,9 +231,11 @@ export default {
       // References
       fileName,
       hasError,
+      errorMessage,
       loading,
       nameInput,
       showUpdateForm,
+      isConflictFile,
       // Methods
       closeUpdateForm,
       hasHistory,

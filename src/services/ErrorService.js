@@ -87,6 +87,19 @@ const ERRORS = Object.freeze({
   BCF_IMPORT_ERROR: "bcfImportError",
   BCF_EXPORT_ERROR: "bcfExportError",
   BCF_DELETE_ERROR: "bcfDeleteError",
+  NAMING_CONSTRAINTS_FETCH_ERROR: "namingConstraintsFetchError",
+  NAMING_CONSTRAINT_FETCH_ERROR: "namingConstraintFetchError",
+  NAMING_CONSTRAINT_CREATE_ERROR: "namingConstraintCreateError",
+  NAMING_CONSTRAINT_UPDATE_ERROR: "namingConstraintUpdateError",
+  NAMING_CONSTRAINT_DELETE_ERROR: "namingConstraintDeleteError",
+  NAMING_PARTS_TEMPLATES_FETCH_ERROR: "namingPartsTemplatesFetchError",
+  NAMING_PARTS_TEMPLATE_CREATE_ERROR: "namingPartsTemplateCreateError",
+  NAMING_PARTS_TEMPLATE_UPDATE_ERROR: "namingPartsTemplateUpdateError",
+  NAMING_PARTS_TEMPLATE_DELETE_ERROR: "namingPartsTemplateDeleteError",
+  FOLDER_NAMING_CONSTRAINT_FETCH_ERROR: "folderNamingConstraintFetchError",
+  FOLDER_NAMING_CONSTRAINT_SET_ERROR: "folderNamingConstraintSetError",
+  FOLDER_NAMING_CONSTRAINT_DELETE_ERROR: "folderNamingConstraintDeleteError",
+  CONFLICTING_DOCUMENTS_FETCH_ERROR: "conflictingDocumentsFetchError",
 });
 
 class RuntimeError {
