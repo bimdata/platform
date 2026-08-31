@@ -11,6 +11,7 @@
         :initialSearchText="searchText"
         @update:searchText="searchText = $event"
         @upload-files="uploadFiles"
+        @open-naming-template="openNamingTemplateManager"
       />
       <div class="files-manager__content">
         <transition name="slide-fade-left">
@@ -90,6 +91,7 @@
             @manage-access="openAccessManager"
             @open-tag-manager="openTagManager"
             @open-versioning-manager="openVersioningManager"
+            @open-naming-template="openNamingTemplateManager"
             @open-visa-manager="openVisaManager"
             @remove-model="removeModel"
             @row-drop="({ event, data }) => uploadFiles(event, data)"
@@ -142,6 +144,14 @@
             :project="project"
             :folder="folderToManage"
             @close="closeSidePanel"
+          />
+          <FilesNamingPanel
+            v-else-if="showNamingTemplateManager"
+            :cloudPk="currentSpace.id"
+            :projectPk="project.id"
+            :currentFolder="folderToManage"
+            @close="closeNamingTemplateManager"
+            @file-uploaded="$emit('upload-files', $event)"
           />
           <VisaMain
             v-else-if="showVisaManager"
@@ -230,8 +240,12 @@ import SubscriptionModal from "../../subscriptions/subscription-modal/Subscripti
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
 import VersioningMain from "../../versioning/versioning-main/VersioningMain.vue";
 import VisaMain from "../../visa/visa-main/VisaMain.vue";
+
+import FilesNamingPanel from "./files-naming-panel/FilesNamingPanel.vue";
 import VisasDeleteModal from "./visas-delete-modal/VisasDeleteModal.vue";
 import VisasTable from "../visas-table/VisasTable.vue";
+
+import { useNamingConventionStore } from "../../../../state/naming-convention.js";
 
 export default {
   components: {
@@ -250,6 +264,7 @@ export default {
     VisaMain,
     VisasTable,
     VisasDeleteModal,
+    FilesNamingPanel,
   },
   props: {
     spaceSubInfo: {
@@ -272,6 +287,23 @@ export default {
     const { pushNotification } = useAppNotification();
     const { currentSpace } = useSpaces();
     const { openModal, closeModal } = useAppModal();
+
+    const cloudPk = props.project.cloud.id;
+    const projectPk = props.project.id;
+    const panelMode = ref("list"); // 'list' | 'create' | 'edit'
+
+    const store = useNamingConventionStore();
+    const { rules } = store;
+    store.fetchRules(cloudPk.value, projectPk.value);
+
+    function startEditRule(rule) {
+      editingRule.value = rule;
+      panelMode.value = "edit";
+    }
+
+    function onAssignmentSaved(rule) {
+      console.log("Assignment saved:", rule);
+    }
 
     const { spaceProjects } = useProjects();
     const { gedFilesTab, gedTargetFolder } = useSession();
@@ -498,11 +530,13 @@ export default {
     const showVersioningManager = ref(false);
     const showVisaManager = ref(false);
     const showTagManager = ref(false);
+    const showNamingTemplateManager = ref(false);
     const managers = {
       visa: showVisaManager,
       versioning: showVersioningManager,
       access: showAccessManager,
       tag: showTagManager,
+      namingTemplate: showNamingTemplateManager,
     };
     const setManagerVisibility = (manager, value) => {
       Object.values(managers).forEach((ref) => (ref.value = false));
@@ -567,6 +601,33 @@ export default {
       }, 100);
     };
 
+    const openNamingTemplateManager = (folder) => {
+      folderToManage.value = folder;
+      setManagerVisibility("namingTemplate", true);
+      console.log("Opening naming template manager for folder:", folder);
+      console.log(folderToManage.value);
+      openSidePanel();
+      stopCurrentFilesWatcher = watch(
+        () => currentFiles.value,
+        (files) => {
+          const newFolder = files.find((file) => file.id === folder.id);
+          if (newFolder) {
+            folderToManage.value = newFolder;
+          } else {
+            closeNamingTemplateManager();
+          }
+        },
+      );
+    };
+    const closeNamingTemplateManager = () => {
+      stopCurrentFilesWatcher();
+      closeSidePanel();
+      setTimeout(() => {
+        showNamingTemplateManager.value = false;
+        folderToManage.value = null;
+      }, 100);
+    };
+
     const openTagManager = (file) => {
       openSidePanel();
       if (file.file_name) {
@@ -575,6 +636,7 @@ export default {
         showAccessManager.value = false;
         showVisaManager.value = false;
         showVersioningManager.value = false;
+        showNamingTemplateManager.value = false;
       }
     };
     const closeTagManager = () => {
@@ -808,7 +870,10 @@ export default {
       searchText,
       selectedFileTab,
       selection,
+      rules,
+      projectPk,
       showAccessManager,
+      showNamingTemplateManager,
       showDeleteModal,
       showTagManager,
       showVersioningManager,
@@ -818,6 +883,7 @@ export default {
       closeAccessManager,
       closeDeleteModal,
       closeSidePanel,
+      closeNamingTemplateManager,
       closeTagManager,
       closeVersioningManager,
       closeVisaManager,
@@ -831,6 +897,8 @@ export default {
       goVisasView,
       isFullTotal,
       moveFiles,
+      onAssignmentSaved,
+      startEditRule,
       onFileSelected,
       openAccessManager,
       openFileDeleteModal,
@@ -840,6 +908,7 @@ export default {
       onTabChange,
       openTagManager,
       openVersioningManager,
+      openNamingTemplateManager,
       openVisaManager,
       removeModel,
       removeModels,
