@@ -1,4 +1,8 @@
-import maplibregl from "maplibre-gl";
+import {Map, Marker, setWorkerUrl} from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+
+setWorkerUrl(workerUrl);
 
 const MAP_TILER_TOKEN = ENV.VUE_APP_MAPTILER_TOKEN;
 
@@ -11,7 +15,7 @@ export function useMaplibre(containerID) {
 
     if (longitude && latitude) {
       try {
-        const map = new maplibregl.Map({
+        const map = new Map({
           container: containerID,
           style: `https://api.maptiler.com/maps/streets/style.json?key=${MAP_TILER_TOKEN}`,
           center: [longitude, latitude],
@@ -63,7 +67,7 @@ export function useMaplibre(containerID) {
             labelsLayer ? labelsLayer.id : undefined
           );
 
-          new maplibregl.Marker({ color: "#2F374A" /* color primary */ })
+          new Marker({ color: "#2F374A" /* color primary */ })
             .setLngLat([longitude, latitude])
             .addTo(map);
         });
