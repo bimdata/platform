@@ -27,6 +27,12 @@
       </div>
     </template>
 
+    <template #column-filter-empty>
+      <span class="color-granite" style="font-weight: 400">
+        {{ $t("Tag.emptyTag") }}
+      </span>
+    </template>
+
     <template #cell-name="{ row: model }">
       <ModelNameCell
         :project="project"
@@ -34,9 +40,6 @@
         :editMode="nameEditMode[model.id]"
         @close="nameEditMode[model.id] = false"
       />
-    </template>
-    <template #column-filter-empty>
-      <span class="color-granite" style="font-weight: 400">{{ $t("Tag.emptyTag") }}</span>
     </template>
     <template #cell-tags="{ row: model }">
       <ModelTagsCell :model="model" :parent="modelsTable" />
@@ -181,22 +184,22 @@ export default {
     const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
 
     const allFolders = computed(() =>
-      projectFileStructure.value.children.flatMap((file) => {
+      projectFileStructure.value.children?.flatMap((file) => {
         if (isFolder(file)) {
           return [file, ...getFoldersInFolder(file)];
         } else {
           return [];
         }
-      }),
+      }) ?? []
     );
     const allFiles = computed(() =>
-      projectFileStructure.value.children.flatMap((file) => {
+      projectFileStructure.value.children?.flatMap((file) => {
         if (isFolder(file)) {
           return getFilesInFolder(file);
         } else {
           return file;
         }
-      }),
+      }) ?? []
     );
 
     const tagsByModelId = computed(() => {
