@@ -27,12 +27,16 @@ export default [
   {
     id: "creator",
     text: "t.createdBy",
+    filter: true,
+    filterFunction: data => `${data.firstname} ${data.lastname}`,
     width: "160px",
     align: "center",
   },
   {
     id: "lastupdate",
     text: "t.modifiedOn",
+    sortable: true,
+    sortFunction: (a, b) => b.updated_at - a.updated_at,
     width: "140px",
     align: "center",
   },
