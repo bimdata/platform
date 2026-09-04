@@ -21,7 +21,7 @@
     "@paddle/paddle-js": "^1.6.4",
     "async": "^3.2.6",
     "lodash": "^4.18.1",
-    "maplibre-gl": "^5.24.0",
+    "maplibre-gl": "^6.6.0",
     "oidc-client-ts": "^3.5.0",
     "seedrandom": "^3.0.5",
     "vue": "^3.5.41",
