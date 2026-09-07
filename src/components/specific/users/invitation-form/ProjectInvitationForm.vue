@@ -30,7 +30,7 @@ const submit = async ({ emails, role }) => {
   const existingEmails = props.users.map(user => user.email);
 
   if (emails.some(eml => existingEmails.includes(eml))) {
-    errorMessage.value = t("InvitationForm.userAlreadyExistInputErrorMessage");
+    errorMessage.value = t("InvitationForm.projectUserAlreadyExistError");
     return;
   }
 

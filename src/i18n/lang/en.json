@@ -82,12 +82,10 @@
         "folder_permissions_updated": "Folder permissions updated",
         "folder_renamed": "Folder renamed",
         "folder_moved": "Folder moved",
-
         "cloud_invitation_sent": "Invitation sent",
         "cloud_invitation_canceled": "Invitation canceled",
         "cloud_invitation_accepted": "Invitation accepted",
         "cloud_invitation_denied": "Invitation denied",
-
         "project_invitation_sent": "Project invitation sent",
         "project_invitation_canceled": "Project invitation canceled",
         "project_invitation_accepted": "Project invitation accepted",
@@ -288,7 +286,7 @@
     "submitButtonText": "Send invitation",
     "successNotifText": "Invitation sent",
     "successUserToAdmin": "The user has now admin role",
-    "userAlreadyExistInputErrorMessage": "User is already in the project"
+    "projectUserAlreadyExistError": "User is already in the project"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Add tags",

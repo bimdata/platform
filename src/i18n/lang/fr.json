@@ -153,12 +153,10 @@
         "folder_permissions_updated": "Modification des droits d’accès",
         "folder_renamed": "Renommage du dossier",
         "folder_moved": "Déplacement du dossier",
-
         "cloud_invitation_sent": "Invitation envoyée",
         "cloud_invitation_canceled": "Invitation annulée",
         "cloud_invitation_accepted": "Invitation acceptée",
         "cloud_invitation_denied": "Invitation refusée",
-
         "project_invitation_sent": "Invitation projet envoyée",
         "project_invitation_canceled": "Invitation projet annulée",
         "project_invitation_accepted": "Invitation projet acceptée",
@@ -388,7 +386,9 @@
   "InvitationForm": {
     "emailInputPlaceholder": "Email de l'utilisateur",
     "emailInputErrorMessage": "Email invalide",
-    "userAlreadyExistInputErrorMessage": "L'utilisateur est déjà dans votre projet",
+    "projectUserAlreadyExistError": "L'utilisateur est déjà dans votre projet",
+    "spaceUserAlreadyExistError": "L'utilisateur est déjà dans votre espace",
+    "spaceAdminAlreadyExistError": "Cet utilisateur est déjà admin dans votre espace",
     "roleInputLabel": "Rôle",
     "roles": {
       "admin": "Administrateur",

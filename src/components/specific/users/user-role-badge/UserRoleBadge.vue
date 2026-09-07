@@ -45,6 +45,7 @@ export default {
       if (props.projectRole === PROJECT_ROLE.GUEST) {
         return "guest";
       }
+
       return "projectUser";
     });
 

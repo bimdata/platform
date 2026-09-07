@@ -218,7 +218,7 @@
     "submitButtonText": "Einladen",
     "successNotifText": "Einladung versendet",
     "successUserToAdmin": "Der Nutzer wurde zum Administrator befördert.",
-    "userAlreadyExistInputErrorMessage": "Der Nutzer ist bereits in Ihren Projekt."
+    "projectUserAlreadyExistError": "Der Nutzer ist bereits in Ihren Projekt."
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Tags hinzufügen",
