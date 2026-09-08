@@ -218,7 +218,7 @@
     "submitButtonText": "Invitar",
     "successNotifText": "Invitación enviada",
     "successUserToAdmin": "El usuario ha sido ascendido a administrador",
-    "userAlreadyExistInputErrorMessage": "El usuario ya está en su proyecto"
+    "projectUserAlreadyExistError": "El usuario ya está en su proyecto"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Añadir etiquetas",
