@@ -386,9 +386,9 @@
   "InvitationForm": {
     "emailInputPlaceholder": "Email de l'utilisateur",
     "emailInputErrorMessage": "Email invalide",
-    "projectUserAlreadyExistError": "L'utilisateur est déjà dans votre projet",
-    "spaceUserAlreadyExistError": "L'utilisateur est déjà dans votre espace",
-    "spaceAdminAlreadyExistError": "Cet utilisateur est déjà admin dans votre espace",
+    "projectUserAlreadyExistError": "L'utilisateur {email} est déjà dans votre projet",
+    "spaceUserAlreadyExistError": "L'utilisateur {email} est déjà dans votre espace",
+    "spaceAdminAlreadyExistError": "L'utilisateur {email} est déjà admin dans votre espace",
     "roleInputLabel": "Rôle",
     "roles": {
       "admin": "Administrateur",

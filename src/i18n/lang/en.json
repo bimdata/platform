@@ -286,7 +286,9 @@
     "submitButtonText": "Send invitation",
     "successNotifText": "Invitation sent",
     "successUserToAdmin": "The user has now admin role",
-    "projectUserAlreadyExistError": "User is already in the project"
+    "projectUserAlreadyExistError": "User {email} is already in the project",
+    "spaceUserAlreadyExistError": "User {email} is already in the space",
+    "spaceAdminAlreadyExistError": "User {email} is already an admin of the space"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Add tags",

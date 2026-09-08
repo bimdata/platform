@@ -40,7 +40,7 @@ const submit = async ({ emails }) => {
     if (props.admin) {
       if (user) {
         if (user.cloud_role === SPACE_ROLE.ADMIN) {
-          errorMessage.value = t("InvitationForm.spaceAdminAlreadyExistError");
+          errorMessage.value = t("InvitationForm.spaceAdminAlreadyExistError", { email: eml });
         } else {
           await updateSpaceUser(props.space, { ...user, cloud_role: 100 });
         }
@@ -51,9 +51,9 @@ const submit = async ({ emails }) => {
     } else {
       if (user) {
         if (user.cloud_role === SPACE_ROLE.ADMIN) {
-          errorMessage.value = t("InvitationForm.spaceAdminAlreadyExistError");
+          errorMessage.value = t("InvitationForm.spaceAdminAlreadyExistError", { email: eml });
         } else {
-          errorMessage.value = t("InvitationForm.spaceUserAlreadyExistError");
+          errorMessage.value = t("InvitationForm.spaceUserAlreadyExistError", { email: eml });
         }
       } else {
         isExistingUsersOnly = false;
@@ -66,6 +66,8 @@ const submit = async ({ emails }) => {
       }
     }
   });
+
+  if (errorMessage.value) return;
 
   pushNotification(
     {
