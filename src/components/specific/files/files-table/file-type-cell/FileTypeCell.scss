@@ -23,4 +23,18 @@
       border: 1px solid var(--color-white);
     }
   }
+  .info {
+    height: 9px;
+    width: 9px;
+    position: absolute;
+    top: 0;
+    right: 12px;
+    .round {
+      width: 9px;
+      height: 9px;
+      border: 1px solid white;
+      background-color: var(--color-warning);
+      border-radius: 50%;
+    }
+  }
 }
