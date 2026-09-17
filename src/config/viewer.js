@@ -16,6 +16,7 @@ const WINDOWS = Object.freeze({
   IFC3D: "3d",
   PHOTOSPHERE: "photosphere",
   PLAN: "plan",
+  METABUILDING: "metabuilding",
   POINT_CLOUD: "pointCloud",
   FRAGMENTS: "3d-fragments",
 });
