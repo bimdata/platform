@@ -96,7 +96,7 @@
         />
       </template>
 
-      <template v-if="model.type === MODEL_TYPE.IFC && isModelFragmentsReady">
+      <template v-if="isModelFragmentsReady">
         <div class="separator"></div>
         <ViewerButton
           :project="project"
@@ -202,7 +202,10 @@ export default {
     const menu = ref(null);
     const isOpen = ref(false);
     const isModelReady = computed(() => MODEL_STATUS.COMPLETED === props.model.status);
-    const isModelFragmentsReady = computed(() => MODEL_STATUS.COMPLETED === props.model.fragments_status);
+    const isModelFragmentsReady = computed(() =>
+      MODEL_TYPE.IFC === props.model.type &&
+      MODEL_STATUS.COMPLETED === props.model.fragments_status
+    );
 
     const modelDocument = computed(() =>
       handler.get({ nature: FILE_TYPE.DOCUMENT, id: props.model.document_id }),

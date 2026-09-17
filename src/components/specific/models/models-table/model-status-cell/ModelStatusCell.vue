@@ -9,7 +9,7 @@
 
 <script>
 import { onUnmounted, ref, watch } from "vue";
-import { MODEL_STATUS } from "../../../../../config/models.js";
+import { MODEL_STATUS, MODEL_TYPE } from "../../../../../config/models.js";
 import { useModels } from "../../../../../state/models.js";
 
 export default {
@@ -30,9 +30,9 @@ export default {
     const statusIcon = ref("");
 
     // A model is considered completed as soon as one of its two
-    // status (status and fragments_status) is completed.
+    // status (status and fragments_status (only for ifc models)) is completed.
     const globalStatus = (model) =>
-      MODEL_STATUS.COMPLETED === model.status || MODEL_STATUS.COMPLETED === model.fragments_status
+      MODEL_STATUS.COMPLETED === model.status || (MODEL_TYPE.IFC === model.type && MODEL_STATUS.COMPLETED === model.fragments_status)
         ? MODEL_STATUS.COMPLETED
         : model.status;
 
