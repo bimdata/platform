@@ -1,3 +1,14 @@
+## [1.7.1](https://github.com/bimdata/platform/compare/v1.7.0...v1.7.1) (2026-09-18)
+
+
+### chore
+
+* bump @bimdata/viewer@2.19.0 from Github Actions [skip e2e] ([0cfcf60](https://github.com/bimdata/platform/commit/0cfcf6028b5feca7ecbdce7bbcc816d434a550c8))
+
+### PATCH
+
+* hot fix model viewer + minor fixes ([44df5c6](https://github.com/bimdata/platform/commit/44df5c6dc56c1aab5a7fcdb19bf4242bd7cc0c1d))
+
 # [1.7.0](https://github.com/bimdata/platform/compare/v1.6.2...v1.7.0) (2026-08-26)
 
 
