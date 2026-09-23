@@ -58,7 +58,6 @@
       <template
         v-else-if="
           model.type === MODEL_TYPE.JPEG ||
-          model.type === MODEL_TYPE.META_BUILDING ||
           model.type === MODEL_TYPE.PDF ||
           model.type === MODEL_TYPE.PNG
         "
@@ -68,6 +67,20 @@
           :project="project"
           :model="model"
           :window="WINDOWS.PLAN"
+          text="2D"
+        />
+      </template>
+
+      <template
+        v-else-if="
+          model.type === MODEL_TYPE.META_BUILDING
+        "
+      >
+        <ViewerButton
+          :disabled="!isModelReady"
+          :project="project"
+          :model="model"
+          :window="WINDOWS.METABUILDING"
           text="2D"
         />
       </template>
