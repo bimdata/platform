@@ -27,6 +27,7 @@
             :documents="documents"
             :all-folders="allFolders"
             :rule="rule?.rule"
+            :show-rules-by-group="showRulesByGroup"
             @valid-change="allValid = $event"
             @change="pending = $event"
           />
@@ -79,6 +80,7 @@
             :documents="documents"
             :allFolders="allFolders"
             :rule="rule?.rule"
+            :show-rules-by-group="showRulesByGroup"
             @valid-change="allValid = $event"
             @change="pending = $event"
           />
@@ -143,6 +145,10 @@ export default {
     persistChanges: {
       type: Boolean,
       default: true,
+    },
+    showRulesByGroup: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {

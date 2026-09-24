@@ -632,6 +632,7 @@ export default {
           documents,
           allFolders: allFolders.value,
           rule: null,
+          showRulesByGroup: true,
           onClose: closeModal,
           onConfirm: async () => {
             await props.refreshFiles();
