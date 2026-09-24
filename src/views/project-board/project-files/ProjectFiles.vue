@@ -76,11 +76,13 @@ export default {
     const { openSidePanel } = useAppSidePanel();
 
     const reloadData = async () => {
-      await Promise.all([
+      const [, fileStructure] = await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
         loadProjectFileStructure(currentProject.value),
         loadProjectModels(currentProject.value),
       ]);
+
+      return fileStructure;
     };
 
     const reloadDataDebounced = debounce(reloadData, 1000);

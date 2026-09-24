@@ -60,10 +60,14 @@
 
       <div class="conflicting-document-item__rename">
         <NamingConstraintFileEditor
+          v-if="rule"
           :rule="rule"
           :filename="doc.name"
           @change="updateGeneratedName"
         />
+        <div v-else>
+          {{ doc.name }}
+        </div>
       </div>
 
       <div class="conflicting-document-item__actions">
@@ -113,8 +117,6 @@ export default {
   emits: ["toggle", "rename", "delete"],
 
   setup(props, { emit }) {
-    const values = reactive({});
-    const draftName = ref(props.currentName);
     const generatedName = ref(props.currentName || props.doc.name);
 
     const updateGeneratedName = (name) => {
@@ -123,20 +125,6 @@ export default {
     const folderPath = computed(() => {
       return getAscendants(props.doc, props.allFolders).reverse();
     });
-    const currentName = computed(() => {
-      const filename = props.rule.parts
-        .map((part) => values[part.name] ?? "")
-        .join(props.rule.separator);
-
-      return `${filename}.${extension.value}`;
-    });
-
-    watch(
-      () => props.currentName,
-      (value) => {
-        draftName.value = value;
-      },
-    );
 
     const confirmRename = () => {
       if (!generatedName.value) return;
