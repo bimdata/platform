@@ -1,8 +1,7 @@
 .conflicting-document-item {
   width: 100%;
-  border: 1px solid var(--color-silver);
-  border-radius: 8px;
-  /* overflow: hidden; */
+  border-top: 1px solid var(--color-silver);
+  border-radius: 0 0 8px 8px;
   background: white;
 }
 
