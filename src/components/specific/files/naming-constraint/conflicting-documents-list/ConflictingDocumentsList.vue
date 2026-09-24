@@ -1,30 +1,48 @@
 <template>
-  <ul class="conflicting-documents-list">
-    <li v-for="doc in documents" :key="doc.id" class="conflicting-documents-list__item">
-      <ConflictingDocumentItem
-        :doc="doc"
-        :rule="rule"
-        :all-folders="allFolders"
-        :opened="openedId === doc.id"
-        :current-name="names[doc.id]"
-        :deleted="!!toDelete[doc.id]"
-        :valid="isValid(doc)"
-        @toggle="toggleOpen(doc.id)"
-        @rename="renameDocument(doc, $event)"
-        @delete="toggleDelete(doc)"
-      />
-    </li>
-  </ul>
+  <div class="conflicting-documents-list">
+    <div
+      v-for="group in groupedDocuments"
+      :key="group.key"
+      class="conflicting-documents-list__group"
+    >
+      <div class="conflicting-documents-list__group__header">
+        <span class="conflicting-documents-list__group__label">
+          {{ $t("NamingConstraint.modal.expectedConventionLabel") }}
+        </span>
+
+        <NamingConstraintPreview v-if="group.rule" :rule="group.rule" />
+      </div>
+
+      <ul>
+        <li v-for="doc in group.documents" :key="doc.id" class="conflicting-documents-list__item">
+          <ConflictingDocumentItem
+            :doc="doc"
+            :rule="effectiveRule(doc)"
+            :all-folders="allFolders"
+            :opened="openedId === doc.id"
+            :current-name="names[doc.id]"
+            :deleted="!!toDelete[doc.id]"
+            :valid="isValid(doc)"
+            @toggle="toggleOpen(doc.id)"
+            @rename="renameDocument(doc, $event)"
+            @delete="toggleDelete(doc)"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
 import { computed, reactive, ref } from "vue";
 import { matchName } from "../../../../../utils/naming-constraint.js";
 import ConflictingDocumentItem from "../conflicting-document-item/ConflictingDocumentItem.vue";
+import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 
 export default {
   components: {
     ConflictingDocumentItem,
+    NamingConstraintPreview,
   },
 
   props: {
@@ -55,7 +73,7 @@ export default {
 
     const toDelete = reactive({});
 
-    const effectiveRule = (doc) => props.rule ?? doc.namingRule ?? null;
+    const effectiveRule = (doc) => doc.namingRule ?? props.rule ?? null;
 
     const isValid = (doc) => {
       return matchName(names[doc.id], effectiveRule(doc));
@@ -97,10 +115,39 @@ export default {
       emitChange();
     };
 
+    const getRuleKey = (rule) => {
+      if (!rule) return "no-rule";
+
+      return JSON.stringify(rule);
+    };
+
+    const groupedDocuments = computed(() => {
+      const groups = new Map();
+
+      props.documents.forEach((doc) => {
+        const rule = doc.namingRule ?? null;
+        const key = getRuleKey(rule);
+
+        if (!groups.has(key)) {
+          groups.set(key, {
+            key,
+            rule,
+            documents: [],
+          });
+        }
+
+        groups.get(key).documents.push(doc);
+      });
+
+      return Array.from(groups.values());
+    });
+
     return {
       openedId,
       names,
       toDelete,
+      groupedDocuments,
+      effectiveRule,
       toggleOpen,
       renameDocument,
       toggleDelete,

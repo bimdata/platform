@@ -1,5 +1,5 @@
 <template>
-  <template v-if="rule.strict">
+  <template v-if="rule?.strict">
     <BIMDataSafeZoneModal class="naming-conflict-modal naming-conflict-modal--strict" width="868px">
       <template #icon>
         <div class="header flex items-start">
@@ -25,7 +25,7 @@
           <ConflictingDocumentsList
             :project="project"
             :documents="documents"
-            :allFolders="allFolders"
+            :all-folders="allFolders"
             :rule="rule?.rule"
             @valid-change="allValid = $event"
             @change="pending = $event"
@@ -67,7 +67,6 @@
           </div>
         </div>
       </template>
-      <template #title> </template>
       <template #text>
         <div class="naming-conflict-modal__content">
           <div v-if="rule" class="naming-conflict-modal__rule flex flex-col">
