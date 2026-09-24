@@ -3,9 +3,13 @@
     <div
       v-for="group in groupedDocuments"
       :key="group.key"
-      class="conflicting-documents-list__group"
+      :class="
+        showRulesByGroup
+          ? 'conflicting-documents-list__group'
+          : 'conflicting-documents-list__ungrouped'
+      "
     >
-      <div class="conflicting-documents-list__group__header">
+      <div v-if="showRulesByGroup" class="conflicting-documents-list__group__header">
         <span class="conflicting-documents-list__group__label">
           {{ $t("NamingConstraint.modal.expectedConventionLabel") }}
         </span>
@@ -61,6 +65,10 @@ export default {
     rule: {
       type: Object,
       default: null,
+    },
+    showRulesByGroup: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -125,7 +133,7 @@ export default {
       const groups = new Map();
 
       props.documents.forEach((doc) => {
-        const rule = doc.namingRule ?? null;
+        const rule = effectiveRule(doc);
         const key = getRuleKey(rule);
 
         if (!groups.has(key)) {
