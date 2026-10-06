@@ -30,8 +30,6 @@ const translateIfcType = ENV.VUE_APP_TRANSLATE_IFC_TYPE === "true";
 
 const PLUGINS_CONFIG = {
   accessMarketplace: true,
-  "anchor-synchronization-window": false,
-  "anchor-synchronization": false,
   bcfManager: true,
   buildingMaker: true,
   "drawing-tools": true,
