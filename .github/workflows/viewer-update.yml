@@ -27,10 +27,10 @@ jobs:
           check-latest: true
       - name: Wait for npm package
         id: viewer-install
-        timeout-minutes: 2
+        timeout-minutes: 10
         run: |
           while ! npm install @bimdata/viewer@${VIEWER_VERSION} --save-exact; do
-            sleep 5
+            sleep 10
           done
           GITDIFF=$(git diff -- package-lock.json | tr '\n' ' ')
           echo "gitdiff=$GITDIFF" >> $GITHUB_OUTPUT
