@@ -1,3 +1,30 @@
+## [1.7.2](https://github.com/bimdata/platform/compare/v1.7.1...v1.7.2) (2026-10-06)
+
+
+### chore
+
+* bump @bimdata/viewer@2.18.1-beta.1 from Github Actions [skip e2e] ([7b2d8dd](https://github.com/bimdata/platform/commit/7b2d8ddd26b18974e421b2824c8bc781e42fa022))
+* bump @bimdata/viewer@2.18.1-beta.2 from Github Actions [skip e2e] ([d0c1169](https://github.com/bimdata/platform/commit/d0c1169cbb2871b00ebd20bf34fd3ca864dfcd7c))
+* bump @bimdata/viewer@2.18.1-beta.3 from Github Actions [skip e2e] ([8968fcb](https://github.com/bimdata/platform/commit/8968fcbb9c714553cf925dfa3c763dfc743e88ab))
+* bump @bimdata/viewer@2.18.1-beta.4 from Github Actions [skip e2e] ([d384394](https://github.com/bimdata/platform/commit/d384394aa2cc222d183b323535b0aaa36e3dd203))
+* bump @bimdata/viewer@2.19.0-beta.1 from Github Actions [skip e2e] ([115eadd](https://github.com/bimdata/platform/commit/115eadd849dc5408e7f5fba5c2d71f0aeb3a822c))
+* bump @bimdata/viewer@2.19.0-beta.3 from Github Actions [skip e2e] ([a5d3166](https://github.com/bimdata/platform/commit/a5d3166c5d42892a065d70a8401edc2962326319))
+* bump @bimdata/viewer@2.20.0 from Github Actions [skip e2e] ([543dfd8](https://github.com/bimdata/platform/commit/543dfd8a5cfeeee8602dbd0e46aab585ca176c3d))
+* bump @bimdata/viewer@2.20.0-beta.1 from Github Actions [skip e2e] ([7130b39](https://github.com/bimdata/platform/commit/7130b3916450dea068fc4ddf386137564e7d7430))
+* bump @bimdata/viewer@2.20.0-beta.2 from Github Actions [skip e2e] ([1dd1c99](https://github.com/bimdata/platform/commit/1dd1c99bdb73ccc3ff9576c125bc2915d846b90e))
+* update dependencies ([011ff64](https://github.com/bimdata/platform/commit/011ff64a44b171e3c340786f2a4f71e1234bc0b5))
+
+### fix
+
+* model status fragments only for IFCs (#717) ([808bced](https://github.com/bimdata/platform/commit/808bceddba72e9801b4c787044adb4fe9f304633)), closes [#717](https://github.com/bimdata/platform/issues/717)
+
+### PATCH
+
+* feat(models): add creator filter and lastupdate sort to models manager (#709) ([5ff4fb8](https://github.com/bimdata/platform/commit/5ff4fb878a748d2a57f8b749b8adf5bbd45ab70e)), closes [#709](https://github.com/bimdata/platform/issues/709)
+* feat(viewer): handle new metabuilding viewer window (#716) ([1482bac](https://github.com/bimdata/platform/commit/1482bace1018608ebe2649bc326d7cff78e860a8)), closes [#716](https://github.com/bimdata/platform/issues/716)
+* fix(invitations): fix space invitation behavior (#712) ([50684e6](https://github.com/bimdata/platform/commit/50684e6bdb52e32c9110e78c9eb7160a9f626a39)), closes [#712](https://github.com/bimdata/platform/issues/712)
+* handle meta building viewer (#719) ([01ec515](https://github.com/bimdata/platform/commit/01ec5152089f5609b00ed3ce406821d2993eb304)), closes [#719](https://github.com/bimdata/platform/issues/719)
+
 ## [1.7.1](https://github.com/bimdata/platform/compare/v1.7.0...v1.7.1) (2026-09-18)
 
 
