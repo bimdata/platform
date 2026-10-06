@@ -52,7 +52,6 @@ const PLUGINS_CONFIG = {
     merge: true,
     translateIfcEntities: translateIfcType,
   },
-  "viewer2d-background": true,
   viewer3d: {
     enableDTX: true,
   },
