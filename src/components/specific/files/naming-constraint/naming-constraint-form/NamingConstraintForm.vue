@@ -194,10 +194,16 @@ export default {
         if (!template) return;
 
         const index = localState.pendingTemplatePartIndex;
+        const part = localState.ruleDraft?.parts?.[index];
 
-        if (index == null) return;
+        if (index == null || !part) {
+          localState.newlyCreatedTemplate = null;
+          localState.pendingTemplatePartIndex = null;
+          return;
+        }
 
-        localState.ruleDraft.parts[index].elements = [...template.elements];
+        part.name = template.name;
+        part.elements = [...(template.elements ?? [])];
 
         localState.newlyCreatedTemplate = null;
         localState.pendingTemplatePartIndex = null;
@@ -207,6 +213,10 @@ export default {
     watch(
       () => localState.constraint,
       (constraint) => {
+        if (localState.ruleDraft !== null) {
+          return;
+        }
+
         if (constraint) {
           const rule = constraint.rule ?? {};
 
