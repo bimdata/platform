@@ -213,7 +213,7 @@ export default {
     watch(
       () => localState.constraint,
       (constraint) => {
-        if (localState.ruleDraft !== null) {
+        if (localState.ruleDraft != null) {
           return;
         }
 

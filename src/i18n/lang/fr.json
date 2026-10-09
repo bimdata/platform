@@ -245,6 +245,7 @@
     "searchListPlaceholder": "Rechercher une liste",
     "rulesEmptyTitle": "Pas de règle ajoutée",
     "rulesEmptyText": "Vous n'avez aucune règle pour l'instant, commencez par en ajouter une.",
+    "rulesEmptyPrerequisitesText": "Les règles de nommage s’appliquent uniquement aux fichiers à l'intérieur d'un dossier.",
     "manageListsButton": "Gérer les listes",
     "listsSectionTitle": "Toutes les listes du projet",
     "createListButton": "Créer une liste",

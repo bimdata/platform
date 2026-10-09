@@ -35,6 +35,12 @@
       <span class="naming-constraints-list__empty__text">
         {{ $t("NamingConstraint.rulesEmptyText") }}
       </span>
+      <div class="naming-constraints-list__empty__warning flex flex-col items-center">
+        <BIMDataIconWarning fill color="warning" size="xs" />
+        <span class="folder-naming-constraint-selector__empty__text">
+          {{ $t("NamingConstraint.rulesEmptyPrerequisitesText") }}
+        </span>
+      </div>
       <BIMDataButton color="primary" fill radius @click="create">
         <BIMDataIconAddGavel size="xs" margin="0 6px 0 0" />
         {{ $t("NamingConstraint.addRuleButton") }}
@@ -144,13 +150,19 @@ export default {
     });
 
     const create = () => {
+      localState.ruleDraft = null;
       localState.constraint = null;
+      localState.resetInitialRuleDraft(null);
+
       localState.currentTab = "constraints";
       localState.currentView = "form";
     };
 
     const edit = (constraint) => {
+      localState.ruleDraft = null;
       localState.constraint = constraint;
+      localState.resetInitialRuleDraft(constraint);
+
       localState.currentTab = "constraints";
       localState.currentView = "form";
     };

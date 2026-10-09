@@ -39,6 +39,9 @@
         {{ $t("NamingConstraint.rulesEmptyTitle") }}
       </span>
       <span class="folder-naming-constraint-selector__empty__text">
+        {{ $t("NamingConstraint.rulesEmptyPrerequisitesText") }}
+      </span>
+      <span class="folder-naming-constraint-selector__empty__text">
         {{ $t("NamingConstraint.rulesEmptyText") }}
       </span>
       <BIMDataButton color="primary" fill radius @click="create">

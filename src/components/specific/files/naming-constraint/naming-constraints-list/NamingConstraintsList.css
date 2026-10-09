@@ -40,6 +40,14 @@
 .naming-constraints-list__empty__text {
   max-width: 280px;
   font-size: 13px;
+  color: var(--color-granite);
+}
+.naming-constraints-list__empty__warning {
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+  gap: 6px;
+  background-color: var(--color-warning-lighter);
+  border-radius: 8px;
+  font-size: 12px;
   line-height: 18px;
   color: var(--color-granite);
 }
