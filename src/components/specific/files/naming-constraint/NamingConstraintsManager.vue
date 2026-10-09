@@ -77,7 +77,7 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { computed, onMounted, provide, reactive } from "vue";
+import { computed, onMounted, provide, reactive, ref, watch } from "vue";
 import { useNamingConstraints } from "../../../../state/naming-constraints.js";
 import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 // Components
@@ -132,8 +132,47 @@ export default {
 
       ruleDraft: null,
     });
+    const markRuleDraftAsSaved = () => {
+      initialRuleDraft.value = JSON.parse(JSON.stringify(localState.ruleDraft));
+    };
+
+    localState.markRuleDraftAsSaved = markRuleDraftAsSaved;
 
     provide("localState", localState);
+
+    const initialRuleDraft = ref(null);
+    const clone = (value) => JSON.parse(JSON.stringify(value));
+    watch(
+      () => localState.constraint,
+      (constraint) => {
+        if (constraint) {
+          const rule = constraint.rule ?? {};
+
+          initialRuleDraft.value = {
+            name: constraint.name ?? "",
+            strict: !!constraint.strict,
+            separator: rule.separator ?? "_",
+            parts: clone(rule.parts ?? []),
+          };
+        } else {
+          initialRuleDraft.value = {
+            name: "",
+            strict: false,
+            separator: "_",
+            parts: [],
+          };
+        }
+      },
+      { immediate: true },
+    );
+
+    const hasUnsavedChanges = computed(() => {
+      if (!localState.ruleDraft || !initialRuleDraft.value) {
+        return false;
+      }
+
+      return JSON.stringify(localState.ruleDraft) !== JSON.stringify(initialRuleDraft.value);
+    });
 
     const currentComponent = computed(() => {
       if (localState.currentView === "form") {
@@ -166,7 +205,10 @@ export default {
     };
 
     const back = () => {
-      if (localState.currentTab === "constraints" && localState.currentView === "form") {
+      const isRuleForm =
+        localState.currentTab === "constraints" && localState.currentView === "form";
+
+      if (isRuleForm && hasUnsavedChanges.value) {
         localState.showLeaveModal = true;
         return;
       }

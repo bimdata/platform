@@ -239,82 +239,90 @@ export default {
       emit("close");
     };
 
+    const buildPayload = () => ({
+      name: localState.ruleDraft.name,
+      strict: localState.ruleDraft.strict,
+      rule: {
+        separator: localState.ruleDraft.separator,
+        parts: localState.ruleDraft.parts,
+      },
+    });
+
+    const saveConstraint = async (payload) => {
+      if (isUpdate.value) {
+        const updated = await updateNamingConstraint(
+          localState.project,
+          localState.constraint,
+          payload,
+        );
+
+        localState.constraints = localState.constraints.map((item) =>
+          item.id === updated.id ? updated : item,
+        );
+
+        return updated;
+      }
+
+      const created = await createNamingConstraint(localState.project, payload);
+      localState.constraints = [...localState.constraints, created];
+
+      return created;
+    };
+
+    const showConflicts = (rule, documents, onConfirm) => {
+      openModal({
+        component: NamingConflictModal,
+        props: {
+          project: localState.project,
+          documents,
+          allFolders: allFolders.value,
+          rule,
+          onClose: closeModal,
+          onConfirm,
+        },
+      });
+    };
+
+    const handleConflictError = (error, payload) => {
+      showConflicts(payload, error.documents ?? [], () => {
+        closeModal();
+        submit();
+      });
+    };
+
     const submit = debounce(async () => {
       submitted.value = true;
+
       if (hasInvalidName.value || hasEmptyRule.value || hasInvalidBounds.value) {
         return;
       }
 
-      const payload = {
-        name: localState.ruleDraft.name,
-        strict: localState.ruleDraft.strict,
-        rule: {
-          separator: localState.ruleDraft.separator,
-          parts: localState.ruleDraft.parts,
-        },
-      };
+      const payload = buildPayload();
 
       try {
         localState.loading = true;
+        const savedConstraint = await saveConstraint(payload);
+        localState.markRuleDraftAsSaved?.();
+        const conflicts = savedConstraint?.conflicting_documents ?? [];
 
-        if (isUpdate.value) {
-          const updated = await updateNamingConstraint(
-            localState.project,
-            localState.constraint,
-            payload,
-          );
-
-          localState.constraints = localState.constraints.map((item) =>
-            item.id === updated.id ? updated : item,
-          );
-
-          const conflicts = updated?.conflicting_documents ?? [];
-
-          if (conflicts.length) {
-            openModal({
-              component: NamingConflictModal,
-              props: {
-                project: localState.project,
-                documents: conflicts,
-                allFolders: allFolders.value,
-                rule: updated,
-                onClose: closeModal,
-                onConfirm: () => {
-                  closeModal();
-                  cancel();
-                },
-              },
-            });
-
-            return;
-          }
-        } else {
-          const constraint = await createNamingConstraint(localState.project, payload);
-          localState.constraints = [...localState.constraints, constraint];
+        if (conflicts.length) {
+          showConflicts(savedConstraint, conflicts, () => {
+            closeModal();
+            cancel();
+          });
+          return;
         }
 
         cancel();
       } catch (error) {
         console.error("Naming constraint error:", error);
+
         if (error?.error) {
           console.error(await error.error.json());
         }
 
         if (error instanceof NamingConstraintConflictError) {
-          openModal({
-            component: NamingConflictModal,
-            props: {
-              project: localState.project,
-              documents: error.documents ?? [],
-              allFolders: allFolders.value,
-              rule: payload,
-              onClose: closeModal,
-              onConfirm: () => {
-                closeModal();
-                submit();
-              },
-            },
-          });
+          handleConflictError(error, payload);
         } else {
           throw error;
         }
@@ -324,18 +332,13 @@ export default {
     }, 500);
 
     return {
-      // State
       localState,
-
-      // Computed
       isUpdate,
       templates,
       separatorOptions,
-      // exampleParts,
       hasInvalidName,
       hasEmptyRule,
       hasInvalidBounds,
-
       // Methods
       cancel,
       submit,
