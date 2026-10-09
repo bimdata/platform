@@ -225,11 +225,18 @@ export default {
     };
 
     const cancel = () => {
+      if (localState.returnTo) {
+        localState.currentTab = localState.returnTo.tab;
+        localState.currentView = localState.returnTo.view;
+        localState.returnTo = null;
+        return;
+      }
+
       localState.ruleDraft = null;
       localState.constraint = null;
+      localState.template = null;
       localState.pendingTemplatePartIndex = null;
       localState.newlyCreatedTemplate = null;
-      localState.returnTo = null;
       localState.currentView = "list";
     };
 

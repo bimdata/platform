@@ -150,12 +150,6 @@ export default {
     const showBack = computed(() => localState.currentView !== "list");
 
     const doBack = () => {
-      localState.ruleDraft = null;
-      localState.constraint = null;
-      localState.template = null;
-      localState.pendingTemplatePartIndex = null;
-      localState.newlyCreatedTemplate = null;
-
       if (localState.returnTo) {
         localState.currentTab = localState.returnTo.tab;
         localState.currentView = localState.returnTo.view;
@@ -163,6 +157,11 @@ export default {
         return;
       }
 
+      localState.ruleDraft = null;
+      localState.constraint = null;
+      localState.template = null;
+      localState.pendingTemplatePartIndex = null;
+      localState.newlyCreatedTemplate = null;
       localState.currentView = "list";
     };
 
