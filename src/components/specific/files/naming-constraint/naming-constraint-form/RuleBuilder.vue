@@ -112,32 +112,6 @@
             </BIMDataButton>
           </div>
         </div>
-
-        <!-- <div
-          v-if="part.type === 'values_in' && creatingIndex === index"
-          class="rule-builder__create-panel"
-        >
-          <input
-            class="rule-builder__create-panel__input"
-            type="text"
-            :placeholder="$t('NamingConstraint.listNamePlaceholder')"
-            v-model="newTemplateName"
-          />
-          <input
-            class="rule-builder__create-panel__input"
-            type="text"
-            :placeholder="$t('NamingConstraint.elementsHelp')"
-            v-model="newTemplateElementsText"
-          />
-          <div class="rule-builder__create-panel__actions">
-            <BIMDataButton ghost radius @click="cancelCreateForm">
-              {{ $t("t.cancel") }}
-            </BIMDataButton>
-            <BIMDataButton color="primary" fill radius @click="confirmCreateTemplate(index)">
-              {{ $t("NamingConstraint.createListButton") }}
-            </BIMDataButton>
-          </div>
-        </div> -->
       </li>
     </ul>
 

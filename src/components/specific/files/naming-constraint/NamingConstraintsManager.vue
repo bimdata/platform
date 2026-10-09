@@ -132,40 +132,31 @@ export default {
 
       ruleDraft: null,
     });
-    const markRuleDraftAsSaved = () => {
-      initialRuleDraft.value = JSON.parse(JSON.stringify(localState.ruleDraft));
-    };
 
-    localState.markRuleDraftAsSaved = markRuleDraftAsSaved;
-
-    provide("localState", localState);
-
-    const initialRuleDraft = ref(null);
     const clone = (value) => JSON.parse(JSON.stringify(value));
-    watch(
-      () => localState.constraint,
-      (constraint) => {
-        if (constraint) {
-          const rule = constraint.rule ?? {};
+    const initialRuleDraft = ref(null);
+    const resetInitialRuleDraft = (constraint) => {
+      if (constraint) {
+        const rule = constraint.rule ?? {};
 
-          initialRuleDraft.value = {
-            name: constraint.name ?? "",
-            strict: !!constraint.strict,
-            separator: rule.separator ?? "_",
-            parts: clone(rule.parts ?? []),
-          };
-        } else {
-          initialRuleDraft.value = {
-            name: "",
-            strict: false,
-            separator: "_",
-            parts: [],
-          };
-        }
-      },
-      { immediate: true },
-    );
-
+        initialRuleDraft.value = {
+          name: constraint.name ?? "",
+          strict: !!constraint.strict,
+          separator: rule.separator ?? "_",
+          parts: clone(rule.parts ?? []),
+        };
+      } else {
+        initialRuleDraft.value = {
+          name: "",
+          strict: false,
+          separator: "_",
+          parts: [],
+        };
+      }
+    };
+    const markRuleDraftAsSaved = () => {
+      initialRuleDraft.value = clone(localState.ruleDraft);
+    };
     const hasUnsavedChanges = computed(() => {
       if (!localState.ruleDraft || !initialRuleDraft.value) {
         return false;
@@ -173,6 +164,11 @@ export default {
 
       return JSON.stringify(localState.ruleDraft) !== JSON.stringify(initialRuleDraft.value);
     });
+
+    localState.resetInitialRuleDraft = resetInitialRuleDraft;
+    localState.markRuleDraftAsSaved = markRuleDraftAsSaved;
+
+    provide("localState", localState);
 
     const currentComponent = computed(() => {
       if (localState.currentView === "form") {
