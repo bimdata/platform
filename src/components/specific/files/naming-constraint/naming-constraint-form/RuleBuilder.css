@@ -128,9 +128,16 @@
 /* --- Select --- */
 .rule-builder__select {
   flex: 1;
+  &__label {
+    max-width: 85%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   &:deep(.bimdata-dropdown__content) {
     padding: 0 6px;
     font-size: 11px;
+    max-width: 140px;
+    overflow: hidden;
     svg {
       min-height: 11px!important;
       height: 11px!important;

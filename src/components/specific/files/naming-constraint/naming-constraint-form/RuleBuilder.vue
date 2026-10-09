@@ -83,7 +83,12 @@
                       }"
                       @click="onLoadTemplate(index, template.id)"
                     >
-                      {{ template.name }}
+                      <BIMDataTextbox
+                        :text="template.name"
+                        cutPosition="middle"
+                        tooltipPosition="bottom"
+                        tooltipColor="primary"
+                      />
                     </li>
                   </ul>
                 </template>
