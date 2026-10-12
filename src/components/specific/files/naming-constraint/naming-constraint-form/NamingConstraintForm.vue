@@ -176,6 +176,16 @@ export default {
     /** Navigation */
     const goToTemplate = (index) => {
       localState.pendingTemplatePartIndex = index;
+
+      if (localState.managerType === "folder") {
+        localState.returnTo = {
+          view: "constraint-form",
+        };
+
+        localState.currentView = "template-form";
+        return;
+      }
+
       localState.returnTo = {
         tab: "constraints",
         view: "form",
