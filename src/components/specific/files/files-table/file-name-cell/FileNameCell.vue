@@ -42,13 +42,14 @@
         />
       </div>
 
-      <div v-else class="file-name-cell__content" @click="$emit('file-clicked', file)">
+      <div v-else class="file-name-cell__content" @click.stop="$emit('file-clicked', file)">
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
         <BIMDataTooltip
           v-if="isConflictFile"
           :text="$t('NamingConstraint.conflictTooltip')"
           position="right"
           class="flex items-center"
+          @click.stop="openNamingConflictModal"
         >
           <BIMDataIconWarning margin="0 0 0 4px" size="xxs" fill color="warning" />
         </BIMDataTooltip>
@@ -63,6 +64,7 @@
             "
             position="right"
             class="flex items-center"
+            @click.stop="openNamingConflictModal"
           >
             <BIMDataIconSetAsModel
               v-if="file.nature === 'Model' || file.model_type === 'PHOTOSPHERE'"
@@ -92,8 +94,10 @@ import { debounce } from "../../../../../utils/async.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { matchName, buildExample } from "../../../../../utils/naming-constraint.js";
 import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
 
 import NamingConstraintPreview from "../../naming-constraint/naming-constraint-preview/NamingConstraintPreview.vue";
+import NamingConflictModal from "../../naming-constraint/NamingConflictModal.vue";
 
 export default {
   components: {
@@ -123,6 +127,7 @@ export default {
     const { updateFiles } = useFiles();
     const { getEffectiveFolderRule } = useNamingConstraints();
     const { pushNotification } = useAppNotification();
+    const { openModal, closeModal } = useAppModal();
 
     const loading = ref(false);
 
@@ -237,6 +242,24 @@ export default {
       }
     };
 
+    const openNamingConflictModal = async () => {
+      const rule = await getEffectiveFolderRule(props.project, {
+        id: props.file.parent_id,
+      });
+
+      openModal({
+        component: NamingConflictModal,
+        props: {
+          project: props.project,
+          documents: [props.file],
+          allFolders: [],
+          rule,
+          onClose: closeModal,
+          onConfirm: closeModal,
+        },
+      });
+    };
+
     return {
       // References
       fileName,
@@ -253,6 +276,7 @@ export default {
       isFolder,
       openUpdateForm,
       renameFile,
+      openNamingConflictModal,
     };
   },
 };
