@@ -192,6 +192,10 @@ function buildExample(rule) {
  * @returns {String[]}
  */
 function buildDefaultValues(basename, rule) {
+  if (!Array.isArray(rule?.parts)) {
+    return [];
+  }
+
   return rule.parts.map((part) => {
     switch (part.type) {
       case PART_TYPES.VALUES_IN:
@@ -201,7 +205,7 @@ function buildDefaultValues(basename, rule) {
         return part.min_value ?? "";
 
       case PART_TYPES.N_CHARS:
-        return basename;
+        return basename.slice(0, part.max_length);
 
       default:
         return "";
@@ -213,18 +217,19 @@ function buildDefaultValues(basename, rule) {
  * Split a filename into editable values and extension.
  *
  * @param {String} name
- * @param {Object} rule
+ * @param {Object|null} rule
  * @returns {{values: String[], extension: String}}
  */
 function splitName(name, rule) {
-  if (!rule) {
+  const extension = typeof name === "string" ? getExtension(name) : "";
+
+  if (!Array.isArray(rule?.parts) || rule.parts.length === 0) {
     return {
       values: [],
-      extension: "",
+      extension,
     };
   }
 
-  const extension = getExtension(name);
   const parsedValues = parseNameParts(name, rule);
 
   if (parsedValues) {
