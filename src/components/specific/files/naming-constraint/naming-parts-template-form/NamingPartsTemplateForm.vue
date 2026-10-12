@@ -224,54 +224,98 @@ export default {
       bulkElements.value = "";
     };
 
+    const returnFromTemplateForm = () => {
+      if (localState.returnTo) {
+        const destination = localState.returnTo;
+
+        if (destination.tab) {
+          localState.currentTab = destination.tab;
+        }
+
+        localState.currentView = destination.view;
+        localState.returnTo = null;
+        return;
+      }
+
+      // Comportement existant du manager général.
+      localState.currentTab = "templates";
+      localState.currentView = "list";
+    };
+
     const cancel = () => {
       if (localState.returnTo) {
-        localState.currentTab = localState.returnTo.tab;
-        localState.currentView = localState.returnTo.view;
-        localState.returnTo = null;
+        returnFromTemplateForm();
         return;
       }
 
       localState.ruleDraft = null;
       localState.constraint = null;
-      localState.template = null;
       localState.pendingTemplatePartIndex = null;
       localState.newlyCreatedTemplate = null;
+
       localState.currentView = "list";
     };
 
     const submit = debounce(async () => {
       const values = cleanElements();
-      hasInvalidName.value = !name.value;
+
+      hasInvalidName.value = !name.value.trim();
       hasInvalidElements.value = values.length === 0;
+
       if (hasInvalidName.value || hasInvalidElements.value) {
         return;
       }
+
       try {
         localState.loading = true;
-        const payload = { name: name.value, elements: values };
+
+        const payload = {
+          name: name.value.trim(),
+          elements: values,
+        };
+
         let template;
+
         if (isUpdate.value) {
           template = await updateNamingPartsTemplate(
             localState.project,
             localState.template,
             payload,
           );
+
           localState.templates = localState.templates.map((item) =>
             item.id === template.id ? template : item,
           );
         } else {
           template = await createNamingPartsTemplate(localState.project, payload);
+
           localState.templates = [...localState.templates, template];
-          if (localState.pendingTemplatePartIndex !== null) {
-            localState.newlyCreatedTemplate = template;
-          }
         }
+
+        // Si le template a été créé depuis le RuleBuilder,
+        // on le transmet au formulaire de règle pour mettre à jour
+        // la partie concernée du ruleDraft.
+        if (!isUpdate.value && localState.pendingTemplatePartIndex !== null) {
+          localState.newlyCreatedTemplate = template;
+        }
+
+        // Retour vers le formulaire d'origine si une navigation
+        // vers le formulaire de template était en cours.
         if (localState.returnTo) {
-          localState.currentTab = localState.returnTo.tab;
-          localState.currentView = localState.returnTo.view;
+          const destination = localState.returnTo;
+
+          if (destination.tab) {
+            localState.currentTab = destination.tab;
+          }
+
+          localState.currentView = destination.view;
           localState.returnTo = null;
+        } else if (localState.managerType === "folder") {
+          // Depuis le manager de dossier, revenir à la sélection
+          // uniquement si aucun formulaire parent n'attend le retour.
+          localState.currentView = "folder-rule";
         } else {
+          // Comportement du manager général conservé.
           localState.currentTab = "templates";
           localState.currentView = "list";
         }
