@@ -194,11 +194,13 @@ export default {
     };
 
     const create = () => {
+      localState.ruleDraft = null;
       localState.constraint = null;
       localState.currentView = "constraint-form";
     };
 
     const edit = (constraint) => {
+      localState.ruleDraft = null;
       localState.constraint = constraint;
       localState.currentView = "constraint-form";
     };

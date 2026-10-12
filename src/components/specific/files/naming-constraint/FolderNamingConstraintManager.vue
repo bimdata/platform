@@ -49,16 +49,19 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 // Components
 import FolderNamingConstraintSelector from "./folder-naming-constraint-selector/FolderNamingConstraintSelector.vue";
 import NamingConstraintForm from "./naming-constraint-form/NamingConstraintForm.vue";
+import NamingPartsTemplateForm from "./naming-parts-template-form/NamingPartsTemplateForm.vue";
 
 const components = {
   "folder-rule": "FolderNamingConstraintSelector",
   "constraint-form": "NamingConstraintForm",
+  "template-form": "NamingPartsTemplateForm",
 };
 
 export default {
   components: {
     FolderNamingConstraintSelector,
     NamingConstraintForm,
+    NamingPartsTemplateForm,
   },
   props: {
     project: {
@@ -83,13 +86,24 @@ export default {
       project: props.project,
       folder: props.folder,
       constraints: [],
+      managerType: "folder",
       templates: [],
+
       constraint: null,
+      template: null,
+      ruleDraft: null,
+
       currentView: "folder-rule",
       listView: "folder-rule",
+
       selectedConstraintId: null,
       initialConstraintId: null,
       recursive: false,
+
+      returnTo: null,
+      pendingTemplatePartIndex: null,
+      newlyCreatedTemplate: null,
+
       loading: false,
     });
 
@@ -101,6 +115,12 @@ export default {
     const showBack = computed(() => localState.currentView !== "folder-rule");
 
     const back = () => {
+      if (localState.returnTo) {
+        localState.currentView = localState.returnTo.view;
+        localState.returnTo = null;
+        return;
+      }
+
       localState.ruleDraft = null;
       localState.constraint = null;
       localState.pendingTemplatePartIndex = null;
