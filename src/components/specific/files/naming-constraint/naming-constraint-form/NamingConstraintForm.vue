@@ -13,13 +13,16 @@
               {{ $t("NamingConstraint.ruleNameStep") }}
             </span>
           </div>
-          <BIMDataInput
+
+          <BIMDataInputOutlined
             width="100%"
             margin="0"
             :placeholder="$t('NamingConstraint.ruleNamePlaceholder')"
             :error="hasInvalidName"
             :errorMessage="$t('t.invalidName')"
             v-model="localState.ruleDraft.name"
+            :counter="true"
+            :maxLength="255"
           />
         </section>
 
@@ -161,7 +164,11 @@ export default {
 
     /** Form validation */
     const submitted = ref(false);
-    const hasInvalidName = computed(() => submitted.value && !localState.ruleDraft.name?.trim());
+    const hasInvalidName = computed(() => {
+      const name = localState.ruleDraft.name ?? "";
+
+      return submitted.value && (!name.trim() || name.length > 255);
+    });
     const hasEmptyRule = computed(() => submitted.value && !localState.ruleDraft?.parts?.length);
     const hasInvalidBounds = computed(() =>
       (localState.ruleDraft?.parts ?? []).some(

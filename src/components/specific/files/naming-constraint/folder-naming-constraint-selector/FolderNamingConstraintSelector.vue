@@ -66,7 +66,7 @@
           />
           <div class="folder-naming-constraint-selector__item__main">
             <div class="folder-naming-constraint-selector__item__name flex items-center">
-              <span>{{ $t("NamingConstraint.noRuleOption") }}</span>
+              <span>{{ $t("NamingConstraint.noDirectRuleOption") }}</span>
             </div>
           </div>
         </li>
@@ -111,6 +111,24 @@
         </li>
       </ul>
 
+      <div
+        v-if="inheritedRule || showInheritedRuleWarning"
+        class="folder-naming-constraint-selector__inheritance-info flex flex-col"
+      >
+        <strong class="flex items-center">
+          <BIMDataIconInformation size="xxs" fill color="primary" margin="0 6px 0 0" />
+          {{ $t("NamingConstraint.inheritedRuleTitle") }}
+        </strong>
+        <p>
+          {{
+            $t("NamingConstraint.inheritedRuleDescription", {
+              rule: inheritedRule.name,
+              folder: inheritedRule.folderName,
+            })
+          }}
+        </p>
+      </div>
+
       <div class="folder-naming-constraint-selector__footer">
         <BIMDataCheckbox v-model="recursive" :text="$t('NamingConstraint.recursiveLabel')" />
         <span class="folder-naming-constraint-selector__footer__help">
@@ -134,7 +152,7 @@
 </template>
 
 <script>
-import { computed, inject, ref } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { NONE_OPTION_ID } from "../../../../../config/naming-constraints.js";
@@ -155,9 +173,13 @@ export default {
   components: {
     NamingConstraintPreview,
   },
+
   setup() {
     const { t } = useI18n();
-    const { setFolderNamingConstraint, deleteFolderNamingConstraint } = useNamingConstraints();
+
+    const { setFolderNamingConstraint, deleteFolderNamingConstraint, fetchFolderNamingConstraint } =
+      useNamingConstraints();
+
     const { projectFileStructure } = useFiles();
     const { openModal, closeModal } = useAppModal();
     const { pushNotification } = useAppNotification();
@@ -165,7 +187,9 @@ export default {
 
     const localState = inject("localState");
     const refreshFiles = inject("refreshFiles");
+
     const searchText = ref("");
+    const inheritedRule = ref(null);
 
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
@@ -175,13 +199,18 @@ export default {
 
     const filteredConstraints = computed(() => {
       const search = searchText.value.trim().toLowerCase();
-      if (!search) return constraints.value;
+
+      if (!search) {
+        return constraints.value;
+      }
+
       return constraints.value.filter((constraint) =>
         (constraint.name ?? "").toLowerCase().includes(search),
       );
     });
 
     const selectedId = computed(() => localState.selectedConstraintId);
+
     const recursive = computed({
       get: () => localState.recursive,
       set: (value) => {
@@ -189,8 +218,57 @@ export default {
       },
     });
 
-    const select = (id) => {
+    /**
+     * Finds the closest ancestor with a directly applied recursive rule.
+     * The current folder's own rule is deliberately excluded.
+     */
+    const findInheritedRecursiveRule = async () => {
+      inheritedRule.value = null;
+
+      let parentId = localState.folder.parent_id;
+
+      while (parentId) {
+        const parent = allFolders.value.find((folder) => folder.id === parentId);
+
+        if (!parent) {
+          break;
+        }
+
+        const folderConstraint = await fetchFolderNamingConstraint(localState.project, parent);
+
+        // Only a rule directly applied to this ancestor can be inherited.
+        if (folderConstraint?.recursive && folderConstraint.applied_on_folder_id === parent.id) {
+          inheritedRule.value = {
+            name: folderConstraint.constraint.name,
+            folderName: parent.name,
+          };
+
+          return;
+        }
+
+        parentId = parent.parent_id;
+      }
+    };
+
+    const showInheritedRuleWarning = computed(
+      () => selectedId.value === NONE_OPTION_ID && inheritedRule.value !== null,
+    );
+
+    const loadInheritedRule = async () => {
+      await findInheritedRecursiveRule();
+    };
+
+    onMounted(loadInheritedRule);
+
+    const select = async (id) => {
       localState.selectedConstraintId = id;
+
+      if (id === NONE_OPTION_ID) {
+        await findInheritedRecursiveRule();
+        return;
+      }
+
+      inheritedRule.value = null;
     };
 
     const create = () => {
@@ -205,138 +283,166 @@ export default {
       localState.currentView = "constraint-form";
     };
 
-    const apply = async () => {
-      if (!localState.selectedConstraintId) {
+    const notifySuccess = (title, message) => {
+      pushNotification({
+        type: "success",
+        title,
+        message,
+      });
+    };
+
+    const notifyError = (title) => {
+      pushNotification({
+        type: "error",
+        title,
+        message: "",
+      });
+    };
+
+    const openConflictModal = ({ documents, rule, onConfirm }) => {
+      openModal({
+        component: NamingConflictModal,
+        props: {
+          project: localState.project,
+          documents,
+          allFolders: allFolders.value,
+          rule,
+          onClose: closeModal,
+          onConfirm,
+        },
+      });
+    };
+
+    const removeDirectRule = async () => {
+      // Nothing has changed if the folder already has no direct rule.
+      if (localState.initialConstraintId === NONE_OPTION_ID) {
+        await refreshFiles?.();
+        closeSidePanel();
         return;
       }
 
-      if (localState.selectedConstraintId === NONE_OPTION_ID) {
-        if (
-          localState.selectedConstraintId === NONE_OPTION_ID &&
-          localState.initialConstraintId === NONE_OPTION_ID
-        ) {
-          await refreshFiles?.();
-          closeSidePanel();
-          return;
-        }
-        try {
-          localState.loading = true;
-          const conflicts = await deleteFolderNamingConstraint(
-            localState.project,
-            localState.folder,
-          );
-          if (conflicts.length > 0) {
-            openModal({
-              component: NamingConflictModal,
-              props: {
-                project: localState.project,
-                documents: conflicts,
-                allFolders: allFolders.value,
-                rule: null, // pas de règle appliquée, potentiellement héritée du parent
-                onClose: closeModal,
-                onConfirm: async () => {
-                  await refreshFiles?.();
-                  closeModal();
-                  closeSidePanel();
-                },
-              },
-            });
-          } else {
-            pushNotification({
-              type: "success",
-              title: t("NamingConstraint.removeRuleSuccessTitle"),
-              message: t("NamingConstraint.removeRuleSuccessMessage"),
-            });
+      const conflicts = await deleteFolderNamingConstraint(localState.project, localState.folder);
+
+      // The API handles inheritance after removing the direct rule.
+      localState.initialConstraintId = NONE_OPTION_ID;
+      localState.selectedConstraintId = NONE_OPTION_ID;
+      localState.recursive = false;
+
+      await refreshFiles?.();
+
+      if (conflicts.length > 0) {
+        openConflictModal({
+          documents: conflicts,
+          rule: null,
+          onConfirm: async () => {
             await refreshFiles?.();
+            closeModal();
             closeSidePanel();
-          }
-        } catch (error) {
-          pushNotification({
-            type: "error",
-            title: t("NamingConstraint.removeRuleError"),
-            message: "",
-          });
-        } finally {
-          localState.loading = false;
-        }
+          },
+        });
+
         return;
       }
+
+      notifySuccess(
+        t("NamingConstraint.removeRuleSuccessTitle"),
+        t("NamingConstraint.removeRuleSuccessMessage"),
+      );
+
+      closeSidePanel();
+    };
+
+    const applyDirectRule = async (constraintId) => {
+      const result = await setFolderNamingConstraint(localState.project, localState.folder, {
+        constraint_id: constraintId,
+        recursive: localState.recursive,
+      });
+
+      const conflicts = result?.conflicting_documents ?? [];
+      const rule = constraints.value.find((constraint) => constraint.id === constraintId);
+
+      if (conflicts.length > 0) {
+        openConflictModal({
+          documents: conflicts,
+          rule,
+          onConfirm: async () => {
+            await refreshFiles?.();
+
+            notifySuccess(
+              t("NamingConstraint.applyRuleWithConflictsSuccessTitle"),
+              t("NamingConstraint.applyRuleWithConflictsSuccessMessage", {
+                folder: localState.folder.name,
+              }),
+            );
+
+            closeModal();
+            closeSidePanel();
+          },
+        });
+
+        return;
+      }
+
+      notifySuccess(
+        t("NamingConstraint.applyRuleSuccessTitle"),
+        t("NamingConstraint.applyRuleSuccessMessage", {
+          folder: localState.folder.name,
+        }),
+      );
+
+      await refreshFiles?.();
+      closeSidePanel();
+    };
+
+    const apply = async () => {
+      const constraintId = localState.selectedConstraintId;
+
+      if (!constraintId || localState.loading) {
+        return;
+      }
+
+      localState.loading = true;
 
       try {
-        localState.loading = true;
-        const result = await setFolderNamingConstraint(localState.project, localState.folder, {
-          constraint_id: localState.selectedConstraintId,
-          recursive: localState.recursive,
-        });
-        const conflicts = result?.conflicting_documents ?? [];
-        if (conflicts.length > 0) {
-          const rule = constraints.value.find((c) => c.id === localState.selectedConstraintId);
-          openModal({
-            component: NamingConflictModal,
-            props: {
-              project: localState.project,
-              documents: conflicts,
-              allFolders: allFolders.value,
-              rule,
-              onClose: closeModal,
-              onConfirm: async () => {
-                await refreshFiles?.();
-
-                pushNotification({
-                  type: "success",
-                  title: t("NamingConstraint.applyRuleWithConflictsSuccessTitle"),
-                  message: t("NamingConstraint.applyRuleWithConflictsSuccessMessage", {
-                    folder: localState.folder.name,
-                  }),
-                });
-
-                closeModal();
-                closeSidePanel();
-              },
-            },
-          });
-        } else {
-          pushNotification({
-            type: "success",
-            title: t("NamingConstraint.applyRuleSuccessTitle"),
-            message: t("NamingConstraint.applyRuleSuccessMessage", {
-              folder: localState.folder.name,
-            }),
-          });
-          closeSidePanel();
+        if (constraintId === NONE_OPTION_ID) {
+          await removeDirectRule();
+          return;
         }
+
+        await applyDirectRule(constraintId);
       } catch (error) {
         if (error instanceof NamingConstraintConflictError) {
-          const rule = constraints.value.find((c) => c.id === localState.selectedConstraintId);
-          openModal({
-            component: NamingConflictModal,
-            props: {
-              project: localState.project,
-              documents: error.documents ?? [],
-              allFolders: allFolders.value,
-              rule,
-              onClose: closeModal,
-              onConfirm: async () => {
-                await refreshFiles?.();
-                closeModal();
-                await apply();
-              },
+          const rule = constraints.value.find((constraint) => constraint.id === constraintId);
+
+          openConflictModal({
+            documents: error.documents ?? [],
+            rule,
+            onConfirm: async () => {
+              await refreshFiles?.();
+              closeModal();
+              await apply();
             },
           });
-        } else {
-          pushNotification({
-            type: "error",
-            title: t("NamingConstraint.applyRuleError"),
-            message: "",
-          });
+
+          return;
         }
+
+        const isRemovingRule = constraintId === NONE_OPTION_ID;
+
+        notifyError(
+          t(
+            isRemovingRule ? "NamingConstraint.removeRuleError" : "NamingConstraint.applyRuleError",
+          ),
+        );
       } finally {
         localState.loading = false;
       }
     };
 
     return {
-      // References
+      // State
+      inheritedRule,
+      showInheritedRuleWarning,
       localState,
       constraints,
       filteredConstraints,
@@ -344,7 +450,8 @@ export default {
       recursive,
       searchText,
       NONE_OPTION_ID,
-      // Methods
+
+      // Actions
       select,
       create,
       edit,

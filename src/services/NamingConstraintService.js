@@ -74,6 +74,7 @@ class NamingConstraintService {
           strict: constraint.strict,
           name: constraint.name,
           recursive: !!folderConstraint.recursive,
+          applied_on_folder_id: folderConstraint.applied_on_folder_id,
         }
       : null;
 
