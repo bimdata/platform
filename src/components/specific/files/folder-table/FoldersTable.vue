@@ -99,6 +99,7 @@
         @open-tag-manager="$emit('open-tag-manager', file)"
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"
+        @open-naming-template="$emit('open-naming-template', file)"
         @remove-model="$emit('remove-model', file)"
         @update="nameEditMode[file.id] = true"
       />
@@ -175,6 +176,7 @@ export default {
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
+    "open-naming-template",
     "remove-model",
     "row-drop",
     "selection-changed",
