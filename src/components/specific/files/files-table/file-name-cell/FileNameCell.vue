@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onBeforeUnmount } from "vue";
 import { useFiles } from "../../../../../state/files.js";
 import { debounce } from "../../../../../utils/async.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
@@ -151,6 +151,12 @@ export default {
         }
       },
     );
+
+    onBeforeUnmount(() => {
+      if (props.editMode) {
+        emit("close");
+      }
+    });
 
     const displayModelInfo = (file) => {
       if (!isFolder(file)) {

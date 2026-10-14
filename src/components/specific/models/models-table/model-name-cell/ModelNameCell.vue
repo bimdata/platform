@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeUnmount } from "vue";
 import { MODEL_CONFIG, MODEL_TYPE } from "../../../../../config/models.js";
 import { useModels } from "../../../../../state/models.js";
 import { debounce } from "../../../../../utils/async.js";
@@ -133,6 +133,12 @@ export default {
         }
       }
     );
+
+    onBeforeUnmount(() => {
+      if (props.editMode) {
+        emit("close");
+      }
+    });
 
     return {
       // References
