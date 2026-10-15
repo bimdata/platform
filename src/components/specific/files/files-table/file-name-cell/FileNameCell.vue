@@ -124,12 +124,15 @@ export default {
     }, 500);
 
     const showUpdateForm = ref(false);
+    let focusTimeout;
     const openUpdateForm = () => {
       showUpdateForm.value = true;
       fileName.value = props.file.name;
-      setTimeout(() => nameInput.value.focus(), 200);
+      clearTimeout(focusTimeout);
+      focusTimeout = setTimeout(() => nameInput.value?.focus(), 200);
     };
     const closeUpdateForm = () => {
+      clearTimeout(focusTimeout);
       loading.value = false;
       hasError.value = false;
       showUpdateForm.value = false;
@@ -153,6 +156,7 @@ export default {
     );
 
     onBeforeUnmount(() => {
+      clearTimeout(focusTimeout);
       if (props.editMode) {
         emit("close");
       }
