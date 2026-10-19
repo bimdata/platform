@@ -3,7 +3,7 @@ import NamingConstraintService from "../services/NamingConstraintService.js";
 
 const state = reactive({
   namingConstraints: [],
-  namingPartsTemplates: [],
+  namingPartLists: [],
 });
 
 // --- Naming constraints catalog --------------------------------------------
@@ -37,35 +37,31 @@ const deleteNamingConstraint = async (project, constraint) => {
   state.namingConstraints = state.namingConstraints.filter((item) => item.id !== constraint.id);
 };
 
-// --- Naming parts templates ------------------------------------------------
+// --- Naming part lists (value lists) ---------------------------------------
 
-const loadNamingPartsTemplates = async (project) => {
-  const templates = await NamingConstraintService.fetchNamingPartsTemplates(project);
-  state.namingPartsTemplates = templates;
-  return templates;
+const loadNamingPartLists = async (project) => {
+  const partLists = await NamingConstraintService.fetchNamingPartLists(project);
+  state.namingPartLists = partLists;
+  return partLists;
 };
 
-const createNamingPartsTemplate = async (project, payload) => {
-  const template = await NamingConstraintService.createNamingPartsTemplate(project, payload);
-  state.namingPartsTemplates = [...state.namingPartsTemplates, template];
-  return template;
+const createNamingPartList = async (project, payload) => {
+  const partList = await NamingConstraintService.createNamingPartList(project, payload);
+  state.namingPartLists = [...state.namingPartLists, partList];
+  return partList;
 };
 
-const updateNamingPartsTemplate = async (project, template, payload) => {
-  const updated = await NamingConstraintService.updateNamingPartsTemplate(
-    project,
-    template,
-    payload,
-  );
-  state.namingPartsTemplates = state.namingPartsTemplates.map((item) =>
+const updateNamingPartList = async (project, partList, payload) => {
+  const updated = await NamingConstraintService.updateNamingPartList(project, partList, payload);
+  state.namingPartLists = state.namingPartLists.map((item) =>
     item.id === updated.id ? updated : item,
   );
   return updated;
 };
 
-const deleteNamingPartsTemplate = async (project, template) => {
-  await NamingConstraintService.deleteNamingPartsTemplate(project, template);
-  state.namingPartsTemplates = state.namingPartsTemplates.filter((item) => item.id !== template.id);
+const deleteNamingPartList = async (project, partList) => {
+  await NamingConstraintService.deleteNamingPartList(project, partList);
+  state.namingPartLists = state.namingPartLists.filter((item) => item.id !== partList.id);
 };
 
 // --- Folder naming constraint ----------------------------------------------
@@ -101,10 +97,10 @@ export function useNamingConstraints() {
     createNamingConstraint,
     updateNamingConstraint,
     deleteNamingConstraint,
-    loadNamingPartsTemplates,
-    createNamingPartsTemplate,
-    updateNamingPartsTemplate,
-    deleteNamingPartsTemplate,
+    loadNamingPartLists,
+    createNamingPartList,
+    updateNamingPartList,
+    deleteNamingPartList,
     fetchFolderNamingConstraint,
     setFolderNamingConstraint,
     deleteFolderNamingConstraint,

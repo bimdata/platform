@@ -27,31 +27,16 @@ export default {
   },
 
   setup(props) {
-    const normalizedRule = computed(() => {
-      if (!props.rule) {
-        return null;
-      }
-
-      // Accepte :
-      // { separator, parts }
-      // ou :
-      // { name, strict, rule: { separator, parts } }
-
-      return props.rule.rule ?? props.rule;
-    });
-
     const parts = computed(() => {
-      const rule = normalizedRule.value;
-
-      if (!rule?.parts?.length) {
+      if (!props.rule?.parts?.length) {
         return [];
       }
 
-      return rule.parts.map((part) => part.name || buildPartExample(part)).filter(Boolean);
+      return props.rule.parts.map((part) => part.name || buildPartExample(part)).filter(Boolean);
     });
 
     const separator = computed(() => {
-      return normalizedRule.value?.separator ?? "";
+      return props.rule?.separator ?? "";
     });
 
     return {

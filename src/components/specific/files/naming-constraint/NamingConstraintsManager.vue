@@ -83,41 +83,45 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 // Components
 import NamingConstraintForm from "./naming-constraint-form/NamingConstraintForm.vue";
 import NamingConstraintsList from "./naming-constraints-list/NamingConstraintsList.vue";
-import NamingPartsTemplateForm from "./naming-parts-template-form/NamingPartsTemplateForm.vue";
-import NamingPartsTemplatesList from "./naming-parts-templates-list/NamingPartsTemplatesList.vue";
+import NamingPartListForm from "./naming-part-list-form/NamingPartListForm.vue";
+import NamingPartListsList from "./naming-part-lists-list/NamingPartListsList.vue";
 
 const components = {
   "constraints-list": "NamingConstraintsList",
   "constraint-form": "NamingConstraintForm",
-  "templates-list": "NamingPartsTemplatesList",
-  "template-form": "NamingPartsTemplateForm",
+  "part-lists-list": "NamingPartListsList",
+  "part-list-form": "NamingPartListForm",
 };
 
 export default {
   components: {
     NamingConstraintForm,
     NamingConstraintsList,
-    NamingPartsTemplateForm,
-    NamingPartsTemplatesList,
+    NamingPartListForm,
+    NamingPartListsList,
   },
   props: {
     project: {
       type: Object,
       required: true,
     },
+    refreshFiles: {
+      type: Function,
+      default: null,
+    },
   },
   setup(props) {
     const { t } = useI18n();
     const { closeSidePanel } = useAppSidePanel();
-    const { loadNamingConstraints, loadNamingPartsTemplates } = useNamingConstraints();
+    const { loadNamingConstraints, loadNamingPartLists } = useNamingConstraints();
 
     const localState = reactive({
       project: props.project,
       constraints: [],
-      templates: [],
+      partLists: [],
 
       constraint: null,
-      template: null,
+      partList: null,
 
       currentTab: "constraints",
       currentView: "list",
@@ -127,8 +131,8 @@ export default {
 
       showLeaveModal: false,
 
-      pendingTemplatePartIndex: null,
-      newlyCreatedTemplate: null,
+      pendingPartListPartIndex: null,
+      newlyCreatedPartList: null,
 
       ruleDraft: null,
     });
@@ -137,13 +141,11 @@ export default {
     const initialRuleDraft = ref(null);
     const resetInitialRuleDraft = (constraint) => {
       if (constraint) {
-        const rule = constraint.rule ?? {};
-
         initialRuleDraft.value = {
           name: constraint.name ?? "",
           strict: !!constraint.strict,
-          separator: rule.separator ?? "_",
-          parts: clone(rule.parts ?? []),
+          separator: constraint.separator ?? "_",
+          parts: clone(constraint.parts ?? []),
         };
       } else {
         initialRuleDraft.value = {
@@ -169,17 +171,18 @@ export default {
     localState.markRuleDraftAsSaved = markRuleDraftAsSaved;
 
     provide("localState", localState);
+    provide("refreshFiles", props.refreshFiles);
 
     const currentComponent = computed(() => {
       if (localState.currentView === "form") {
         return localState.currentTab === "constraints"
           ? "NamingConstraintForm"
-          : "NamingPartsTemplateForm";
+          : "NamingPartListForm";
       }
 
       return localState.currentTab === "constraints"
         ? "NamingConstraintsList"
-        : "NamingPartsTemplatesList";
+        : "NamingPartListsList";
     });
 
     const showBack = computed(() => localState.currentView !== "list");
@@ -194,9 +197,9 @@ export default {
 
       localState.ruleDraft = null;
       localState.constraint = null;
-      localState.template = null;
-      localState.pendingTemplatePartIndex = null;
-      localState.newlyCreatedTemplate = null;
+      localState.partList = null;
+      localState.pendingPartListPartIndex = null;
+      localState.newlyCreatedPartList = null;
       localState.currentView = "list";
     };
 
@@ -224,7 +227,7 @@ export default {
         icon: "Gavel",
       },
       {
-        id: "templates",
+        id: "part-lists",
         label: t("NamingConstraint.listsTab"),
         icon: "List",
       },
@@ -233,12 +236,12 @@ export default {
     onMounted(async () => {
       try {
         localState.loading = true;
-        const [constraints, templates] = await Promise.all([
+        const [constraints, partLists] = await Promise.all([
           loadNamingConstraints(props.project),
-          loadNamingPartsTemplates(props.project),
+          loadNamingPartLists(props.project),
         ]);
         localState.constraints = constraints;
-        localState.templates = templates;
+        localState.partLists = partLists;
       } finally {
         localState.loading = false;
       }

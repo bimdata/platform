@@ -143,7 +143,7 @@ export default {
         return false;
       }
 
-      const rule = props.namingConstraintPreview?.rule;
+      const rule = props.namingConstraintPreview;
 
       if (!rule) {
         return false;
@@ -159,11 +159,11 @@ export default {
           : await getEffectiveFolderRule(props.project, {
               id: props.file.parent_id,
             });
-        if (rule?.rule && !matchName(fileName.value, rule.rule)) {
+        if (rule && !matchName(fileName.value, rule)) {
           if (rule.strict) {
             hasError.value = true;
             errorMessage.value = t("t.invalidNameFormat", {
-              example: buildExample(rule.rule),
+              example: buildExample(rule),
             });
             nameInput.value.focus();
             return;
@@ -172,7 +172,7 @@ export default {
             type: "warning",
             title: t("NamingConstraint.applyRuleWarningTitle"),
             message: t("t.invalidNameFormat", {
-              example: buildExample(rule.rule),
+              example: buildExample(rule),
             }),
           });
         }

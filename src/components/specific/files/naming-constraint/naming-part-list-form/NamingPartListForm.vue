@@ -1,7 +1,7 @@
 <template>
-  <div class="naming-parts-template-form__container flex flex-col justify-between">
-    <div class="naming-parts-template-form flex flex-col items-center justify-between">
-      <div class="naming-parts-template-form__header">
+  <div class="naming-part-list-form__container flex flex-col justify-between">
+    <div class="naming-part-list-form flex flex-col items-center justify-between">
+      <div class="naming-part-list-form__header">
         <BIMDataIllustration
           name="createList"
           :x="115"
@@ -9,15 +9,15 @@
           :customWidth="110"
           :customHeight="110"
         />
-        <span class="naming-parts-template-form__header__title">
-          {{ $t(`NamingConstraint.${isUpdate ? "updateTemplateTitle" : "createTemplateTitle"}`) }}
+        <span class="naming-part-list-form__header__title">
+          {{ $t(`NamingConstraint.${isUpdate ? "updateListTitle" : "createListTitle"}`) }}
         </span>
       </div>
 
-      <section class="naming-parts-template-form__step">
-        <div class="naming-parts-template-form__step__head">
-          <span class="naming-parts-template-form__step__num">1</span>
-          <span class="naming-parts-template-form__step__label">
+      <section class="naming-part-list-form__step">
+        <div class="naming-part-list-form__step__head">
+          <span class="naming-part-list-form__step__num">1</span>
+          <span class="naming-part-list-form__step__label">
             {{ $t("NamingConstraint.listNameStep") }}
           </span>
         </div>
@@ -31,21 +31,21 @@
         />
       </section>
 
-      <section class="naming-parts-template-form__step">
-        <div class="naming-parts-template-form__step__head">
-          <span class="naming-parts-template-form__step__num">2</span>
-          <span class="naming-parts-template-form__step__label">
+      <section class="naming-part-list-form__step">
+        <div class="naming-part-list-form__step__head">
+          <span class="naming-part-list-form__step__num">2</span>
+          <span class="naming-part-list-form__step__label">
             {{ $t("NamingConstraint.addElementsStep") }}
           </span>
         </div>
 
-        <span class="naming-parts-template-form__element__label">
+        <span class="naming-part-list-form__element__label">
           {{ $t("NamingConstraint.addOneElementLabel") }}
         </span>
         <div
           v-for="(element, index) in elements"
           :key="index"
-          class="naming-parts-template-form__element"
+          class="naming-part-list-form__element"
         >
           <BIMDataInput
             :ref="
@@ -73,12 +73,12 @@
           </BIMDataButton>
         </div>
 
-        <div v-if="hasInvalidElements" class="naming-parts-template-form__error">
+        <div v-if="hasInvalidElements" class="naming-part-list-form__error">
           {{ $t("NamingConstraint.emptyElementsError") }}
         </div>
 
         <BIMDataButton
-          class="naming-parts-template-form__add"
+          class="naming-part-list-form__add"
           color="primary"
           fill
           radius
@@ -90,9 +90,9 @@
           {{ $t("NamingConstraint.addElementButton") }}
         </BIMDataButton>
 
-        <div class="naming-parts-template-form__bulk-import m-t-12">
+        <div class="naming-part-list-form__bulk-import m-t-12">
           <div
-            class="naming-parts-template-form__bulk-import__toggle flex items-center justify-between"
+            class="naming-part-list-form__bulk-import__toggle flex items-center justify-between"
             @click="toggleBulkImport"
           >
             <span>{{ $t("NamingConstraint.bulkImportLabel") }}</span>
@@ -101,14 +101,14 @@
           </div>
 
           <transition name="fade-slide">
-            <div v-if="bulkImportOpen" class="naming-parts-template-form__bulk-import__content">
+            <div v-if="bulkImportOpen" class="naming-part-list-form__bulk-import__content">
               <BIMDataTextarea
                 v-model="bulkElements"
                 :placeholder="$t('NamingConstraint.bulkImportPlaceholder')"
                 width="100%"
               />
 
-              <span class="naming-parts-template-form__bulk-import__hint">
+              <span class="naming-part-list-form__bulk-import__hint">
                 {{ $t("NamingConstraint.bulkImportHint") }}
               </span>
 
@@ -133,7 +133,7 @@
       </section>
     </div>
 
-    <div class="naming-parts-template-form__actions">
+    <div class="naming-part-list-form__actions">
       <BIMDataButton ghost radius @click="cancel">
         {{ $t("t.cancel") }}
       </BIMDataButton>
@@ -147,16 +147,30 @@
 
 <script>
 import { computed, inject, ref, watch, nextTick } from "vue";
+import { useFiles } from "../../../../../state/files.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { debounce } from "../../../../../utils/async.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
+
+import { useAppModal } from "../../../app/app-modal/app-modal.js";
+import NamingConflictModal from "../NamingConflictModal.vue";
 
 export default {
   setup() {
-    const { createNamingPartsTemplate, updateNamingPartsTemplate } = useNamingConstraints();
+    const {
+      createNamingPartList,
+      updateNamingPartList,
+      loadNamingConstraints,
+      getEffectiveFolderRule,
+    } = useNamingConstraints();
+    const { projectFileStructure } = useFiles();
+    const { openModal, closeModal } = useAppModal();
 
     const localState = inject("localState");
+    const refreshFiles = inject("refreshFiles", null);
 
-    const isUpdate = computed(() => !!localState.template);
+    const isUpdate = computed(() => !!localState.partList);
 
     const name = ref("");
     const elements = ref([""]);
@@ -171,10 +185,10 @@ export default {
     const lastInput = ref(null);
 
     watch(
-      () => localState.template,
-      (template) => {
-        name.value = template?.name ?? "";
-        const values = template?.elements ?? [];
+      () => localState.partList,
+      (partList) => {
+        name.value = partList?.name ?? "";
+        const values = partList?.elements ?? [];
         elements.value = values.length > 0 ? [...values] : [""];
         hasInvalidName.value = false;
         hasInvalidElements.value = false;
@@ -224,7 +238,7 @@ export default {
       bulkElements.value = "";
     };
 
-    const returnFromTemplateForm = () => {
+    const returnFromPartListForm = () => {
       if (localState.returnTo) {
         const destination = localState.returnTo;
 
@@ -238,22 +252,49 @@ export default {
       }
 
       // Comportement existant du manager général.
-      localState.currentTab = "templates";
+      localState.currentTab = "part-lists";
       localState.currentView = "list";
     };
 
     const cancel = () => {
       if (localState.returnTo) {
-        returnFromTemplateForm();
+        returnFromPartListForm();
         return;
       }
 
       localState.ruleDraft = null;
       localState.constraint = null;
-      localState.pendingTemplatePartIndex = null;
-      localState.newlyCreatedTemplate = null;
+      localState.pendingPartListPartIndex = null;
+      localState.newlyCreatedPartList = null;
 
       localState.currentView = "list";
+    };
+
+    const showConflicts = async (documents) => {
+      const allFolders = projectFileStructure.value
+        ? collectDescendants(projectFileStructure.value, isFolder)
+        : [];
+      const documentsWithRule = await Promise.all(
+        documents.map(async (doc) => ({
+          ...doc,
+          namingRule: await getEffectiveFolderRule(localState.project, { id: doc.parent_id }),
+        })),
+      );
+
+      openModal({
+        component: NamingConflictModal,
+        props: {
+          project: localState.project,
+          documents: documentsWithRule,
+          allFolders,
+          rule: null,
+          showRulesByGroup: true,
+          onClose: closeModal,
+          onConfirm: async () => {
+            await refreshFiles?.();
+          },
+        },
+      });
     };
 
     const submit = debounce(async () => {
@@ -274,33 +315,40 @@ export default {
           elements: values,
         };
 
-        let template;
+        let partList;
 
         if (isUpdate.value) {
-          template = await updateNamingPartsTemplate(
+          partList = await updateNamingPartList(
             localState.project,
-            localState.template,
+            localState.partList,
             payload,
           );
 
-          localState.templates = localState.templates.map((item) =>
-            item.id === template.id ? template : item,
+          localState.partLists = localState.partLists.map((item) =>
+            item.id === partList.id ? partList : item,
           );
-        } else {
-          template = await createNamingPartsTemplate(localState.project, payload);
+          // Constraints embed the list values in their parts `elements`.
+          localState.constraints = await loadNamingConstraints(localState.project);
+          await refreshFiles?.();
 
-          localState.templates = [...localState.templates, template];
+          if (partList.conflicting_documents?.length) {
+            await showConflicts(partList.conflicting_documents);
+          }
+        } else {
+          partList = await createNamingPartList(localState.project, payload);
+
+          localState.partLists = [...localState.partLists, partList];
         }
 
-        // Si le template a été créé depuis le RuleBuilder,
-        // on le transmet au formulaire de règle pour mettre à jour
+        // Si la liste a été créée depuis le RuleBuilder,
+        // on la transmet au formulaire de règle pour mettre à jour
         // la partie concernée du ruleDraft.
-        if (!isUpdate.value && localState.pendingTemplatePartIndex !== null) {
-          localState.newlyCreatedTemplate = template;
+        if (!isUpdate.value && localState.pendingPartListPartIndex !== null) {
+          localState.newlyCreatedPartList = partList;
         }
 
         // Retour vers le formulaire d'origine si une navigation
-        // vers le formulaire de template était en cours.
+        // vers le formulaire de liste était en cours.
         if (localState.returnTo) {
           const destination = localState.returnTo;
 
@@ -316,7 +364,7 @@ export default {
           localState.currentView = "folder-rule";
         } else {
           // Comportement du manager général conservé.
-          localState.currentTab = "templates";
+          localState.currentTab = "part-lists";
           localState.currentView = "list";
         }
       } finally {
@@ -348,4 +396,4 @@ export default {
 };
 </script>
 
-<style scoped src="./NamingPartsTemplateForm.css"></style>
+<style scoped src="./NamingPartListForm.css"></style>

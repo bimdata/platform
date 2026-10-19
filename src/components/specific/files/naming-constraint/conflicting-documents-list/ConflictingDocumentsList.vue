@@ -126,7 +126,7 @@ export default {
     const getRuleKey = (rule) => {
       if (!rule) return "no-rule";
 
-      return JSON.stringify(rule);
+      return JSON.stringify({ separator: rule.separator, parts: rule.parts });
     };
 
     const groupedDocuments = computed(() => {
