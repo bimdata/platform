@@ -104,7 +104,7 @@
             </div>
             <div class="folder-naming-constraint-selector__item__badges">
               <div class="folder-naming-constraint-selector__item__preview">
-                <NamingConstraintPreview :rule="constraint.rule" />
+                <NamingConstraintPreview :rule="constraint" />
               </div>
             </div>
           </div>

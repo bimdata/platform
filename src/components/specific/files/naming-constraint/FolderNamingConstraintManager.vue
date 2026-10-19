@@ -49,19 +49,19 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 // Components
 import FolderNamingConstraintSelector from "./folder-naming-constraint-selector/FolderNamingConstraintSelector.vue";
 import NamingConstraintForm from "./naming-constraint-form/NamingConstraintForm.vue";
-import NamingPartsTemplateForm from "./naming-parts-template-form/NamingPartsTemplateForm.vue";
+import NamingPartListForm from "./naming-part-list-form/NamingPartListForm.vue";
 
 const components = {
   "folder-rule": "FolderNamingConstraintSelector",
   "constraint-form": "NamingConstraintForm",
-  "template-form": "NamingPartsTemplateForm",
+  "part-list-form": "NamingPartListForm",
 };
 
 export default {
   components: {
     FolderNamingConstraintSelector,
     NamingConstraintForm,
-    NamingPartsTemplateForm,
+    NamingPartListForm,
   },
   props: {
     project: {
@@ -79,7 +79,7 @@ export default {
   },
   setup(props) {
     const { closeSidePanel } = useAppSidePanel();
-    const { loadNamingConstraints, loadNamingPartsTemplates, fetchFolderNamingConstraint } =
+    const { loadNamingConstraints, loadNamingPartLists, fetchFolderNamingConstraint } =
       useNamingConstraints();
 
     const localState = reactive({
@@ -87,10 +87,10 @@ export default {
       folder: props.folder,
       constraints: [],
       managerType: "folder",
-      templates: [],
+      partLists: [],
 
       constraint: null,
-      template: null,
+      partList: null,
       ruleDraft: null,
 
       currentView: "folder-rule",
@@ -101,8 +101,8 @@ export default {
       recursive: false,
 
       returnTo: null,
-      pendingTemplatePartIndex: null,
-      newlyCreatedTemplate: null,
+      pendingPartListPartIndex: null,
+      newlyCreatedPartList: null,
 
       loading: false,
     });
@@ -123,8 +123,8 @@ export default {
 
       localState.ruleDraft = null;
       localState.constraint = null;
-      localState.pendingTemplatePartIndex = null;
-      localState.newlyCreatedTemplate = null;
+      localState.pendingPartListPartIndex = null;
+      localState.newlyCreatedPartList = null;
 
       localState.currentView = "folder-rule";
     };
@@ -133,14 +133,14 @@ export default {
       try {
         localState.loading = true;
 
-        const [constraints, templates, folderRule] = await Promise.all([
+        const [constraints, partLists, folderRule] = await Promise.all([
           loadNamingConstraints(props.project),
-          loadNamingPartsTemplates(props.project),
+          loadNamingPartLists(props.project),
           fetchFolderNamingConstraint(props.project, props.folder),
         ]);
 
         localState.constraints = constraints;
-        localState.templates = templates;
+        localState.partLists = partLists;
 
         localState.initialConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;
         localState.selectedConstraintId = folderRule?.constraint?.id ?? NONE_OPTION_ID;

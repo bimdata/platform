@@ -12,6 +12,16 @@ class NamingConstraintConflictError {
   }
 }
 
+/**
+ * Thrown when a value list cannot be deleted because constraints use it (API responds 409).
+ * `constraints` holds the `NamingConstraint[]` returned by the API.
+ */
+class NamingPartListInUseError {
+  constructor(constraints) {
+    this.constraints = constraints;
+  }
+}
+
 const isResponse = (error) => typeof Response !== "undefined" && error instanceof Response;
 
 // In-memory cache of effective folder rules, keyed by folder id, to avoid
@@ -70,7 +80,8 @@ class NamingConstraintService {
     const effective = constraint
       ? {
           id: constraint.id,
-          rule: constraint.rule,
+          separator: constraint.separator,
+          parts: constraint.parts,
           strict: constraint.strict,
           name: constraint.name,
           recursive: !!folderConstraint.recursive,
@@ -84,25 +95,20 @@ class NamingConstraintService {
   }
 
   /**
-   * Updates a naming constraint.
-   * Resolves with the `NamingConstraint` (its `conflicting_documents` lists
-   * the non-blocking conflicts for non-strict rules).
-   * Throws `NamingConstraintConflictError` (with `documents`) when a strict
-   * rule conflicts with existing documents (API responds 409).
+   * Updates a naming constraint. Never blocking: its `conflicting_documents`
+   * lists the documents now in conflict.
    */
   async updateNamingConstraint(project, constraint, payload) {
     try {
-      return await apiClient.collaborationApi.updateNamingConstraint(
+      const result = await apiClient.collaborationApi.updateNamingConstraint(
         project.cloud.id,
         constraint.id,
         project.id,
         payload,
       );
+      this.clearFolderRuleCache();
+      return result;
     } catch (error) {
-      if (isResponse(error) && error.status === 409) {
-        const documents = await error.json();
-        throw new NamingConstraintConflictError(documents);
-      }
       throw new RuntimeError(ERRORS.NAMING_CONSTRAINT_UPDATE_ERROR, error);
     }
   }
@@ -119,6 +125,7 @@ class NamingConstraintService {
           },
         },
       );
+      this.clearFolderRuleCache();
       if (response.status === 200) {
         const documents = await response.json();
         throw new NamingConstraintConflictError(documents);
@@ -131,51 +138,68 @@ class NamingConstraintService {
     }
   }
 
-  // --- Naming parts templates ----------------------------------------------
+  // --- Naming part lists (value lists) -------------------------------------
 
-  async fetchNamingPartsTemplates(project) {
+  async fetchNamingPartLists(project) {
     try {
-      return await apiClient.collaborationApi.getNamingPartsTemplates(project.cloud.id, project.id);
+      return await apiClient.collaborationApi.getNamingConstraintPartLists(
+        project.cloud.id,
+        project.id,
+      );
     } catch (error) {
-      ErrorService.handleError(new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATES_FETCH_ERROR, error));
+      ErrorService.handleError(new RuntimeError(ERRORS.NAMING_PART_LISTS_FETCH_ERROR, error));
       return [];
     }
   }
 
-  async createNamingPartsTemplate(project, payload) {
+  async createNamingPartList(project, payload) {
     try {
-      return await apiClient.collaborationApi.createNamingPartsTemplate(
+      return await apiClient.collaborationApi.createNamingConstraintPartList(
         project.cloud.id,
         project.id,
         payload,
       );
     } catch (error) {
-      throw new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATE_CREATE_ERROR, error);
+      throw new RuntimeError(ERRORS.NAMING_PART_LIST_CREATE_ERROR, error);
     }
   }
 
-  async updateNamingPartsTemplate(project, template, payload) {
+  /**
+   * Updates a value list. Never blocking: its `conflicting_documents` lists
+   * the documents now in conflict.
+   */
+  async updateNamingPartList(project, partList, payload) {
     try {
-      return await apiClient.collaborationApi.updateNamingPartsTemplate(
+      const result = await apiClient.collaborationApi.updateNamingConstraintPartList(
         project.cloud.id,
-        template.id,
+        partList.id,
         project.id,
         payload,
       );
+      this.clearFolderRuleCache();
+      return result;
     } catch (error) {
-      throw new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATE_UPDATE_ERROR, error);
+      throw new RuntimeError(ERRORS.NAMING_PART_LIST_UPDATE_ERROR, error);
     }
   }
 
-  async deleteNamingPartsTemplate(project, template) {
+  /**
+   * Throws `NamingPartListInUseError` (with `constraints`) when the list is
+   * used by constraints (API responds 409).
+   */
+  async deleteNamingPartList(project, partList) {
     try {
-      return await apiClient.collaborationApi.deleteNamingPartsTemplate(
+      return await apiClient.collaborationApi.deleteNamingConstraintPartList(
         project.cloud.id,
-        template.id,
+        partList.id,
         project.id,
       );
     } catch (error) {
-      throw new RuntimeError(ERRORS.NAMING_PARTS_TEMPLATE_DELETE_ERROR, error);
+      if (isResponse(error) && error.status === 409) {
+        const constraints = await error.json();
+        throw new NamingPartListInUseError(constraints);
+      }
+      throw new RuntimeError(ERRORS.NAMING_PART_LIST_DELETE_ERROR, error);
     }
   }
 
@@ -296,6 +320,6 @@ class NamingConstraintService {
 
 const service = new NamingConstraintService();
 
-export { NamingConstraintConflictError };
+export { NamingConstraintConflictError, NamingPartListInUseError };
 
 export default service;

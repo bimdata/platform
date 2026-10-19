@@ -54,14 +54,23 @@
           </div>
           <RuleBuilder
             v-model="localState.ruleDraft.parts"
-            :templates="templates"
-            @go-to-template="goToTemplate"
+            :partLists="partLists"
+            @go-to-part-list="goToPartList"
           />
           <div v-if="hasEmptyRule" class="naming-constraint-form__error">
             {{ $t("NamingConstraint.emptyParts") }}
           </div>
           <div v-if="hasInvalidBounds" class="naming-constraint-form__error">
             {{ $t("NamingConstraint.invalidBoundsError") }}
+          </div>
+          <div v-if="hasMissingBounds" class="naming-constraint-form__error">
+            {{ $t("NamingConstraint.missingBoundsError") }}
+          </div>
+          <div v-if="hasInvalidMaxLength" class="naming-constraint-form__error">
+            {{ $t("NamingConstraint.invalidMaxLengthError") }}
+          </div>
+          <div v-if="hasMissingList" class="naming-constraint-form__error">
+            {{ $t("NamingConstraint.missingListError") }}
           </div>
         </section>
 
@@ -101,13 +110,12 @@
 import { computed, inject, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { NamingConstraintConflictError } from "../../../../../services/NamingConstraintService.js";
 import { useFiles } from "../../../../../state/files.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { debounce } from "../../../../../utils/async.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { collectDescendants } from "../../../../../utils/file-tree.js";
-import { buildExample } from "../../../../../utils/naming-constraint.js";
+import { PART_TYPES } from "../../../../../utils/naming-constraint.js";
 
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import RuleBuilder from "./RuleBuilder.vue";
@@ -131,6 +139,7 @@ export default {
     const { openModal, closeModal } = useAppModal();
 
     const localState = inject("localState");
+    const refreshFiles = inject("refreshFiles", null);
 
     /** Draft initialization */
     const createEmptyDraft = () => ({
@@ -142,7 +151,7 @@ export default {
 
     /** Computed */
     const isUpdate = computed(() => !!localState.constraint);
-    const templates = computed(() => localState.templates ?? []);
+    const partLists = computed(() => localState.partLists ?? []);
     const allFolders = computed(() =>
       projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
     );
@@ -170,26 +179,48 @@ export default {
       return submitted.value && (!name.trim() || name.length > 255);
     });
     const hasEmptyRule = computed(() => submitted.value && !localState.ruleDraft?.parts?.length);
+    const draftParts = computed(() => localState.ruleDraft?.parts ?? []);
     const hasInvalidBounds = computed(() =>
-      (localState.ruleDraft?.parts ?? []).some(
+      draftParts.value.some(
         (part) =>
-          part.type === "bounded" &&
+          part.type === PART_TYPES.BOUNDED &&
           part.min_value != null &&
           part.max_value != null &&
           part.max_value < part.min_value,
       ),
     );
+    const hasMissingBounds = computed(
+      () =>
+        submitted.value &&
+        draftParts.value.some(
+          (part) =>
+            part.type === PART_TYPES.BOUNDED && (part.min_value == null || part.max_value == null),
+        ),
+    );
+    const hasInvalidMaxLength = computed(() =>
+      draftParts.value.some(
+        (part) =>
+          part.type === PART_TYPES.N_CHARS && (part.max_length == null || part.max_length < 1),
+      ),
+    );
+    const hasMissingList = computed(
+      () =>
+        submitted.value &&
+        draftParts.value.some(
+          (part) => part.type === PART_TYPES.VALUES_IN && part.value_list_id == null,
+        ),
+    );
 
     /** Navigation */
-    const goToTemplate = (index) => {
-      localState.pendingTemplatePartIndex = index;
+    const goToPartList = (index) => {
+      localState.pendingPartListPartIndex = index;
 
       if (localState.managerType === "folder") {
         localState.returnTo = {
           view: "constraint-form",
         };
 
-        localState.currentView = "template-form";
+        localState.currentView = "part-list-form";
         return;
       }
 
@@ -198,32 +229,29 @@ export default {
         view: "form",
       };
 
-      localState.currentTab = "templates";
+      localState.currentTab = "part-lists";
       localState.currentView = "form";
     };
 
     /** Watchers
-     * Sync the rule when a new template has been created.
+     * Select the newly created part list on the pending part.
      */
     watch(
-      () => localState.newlyCreatedTemplate,
-      (template) => {
-        if (!template) return;
+      () => localState.newlyCreatedPartList,
+      (partList) => {
+        if (!partList) return;
 
-        const index = localState.pendingTemplatePartIndex;
+        const index = localState.pendingPartListPartIndex;
         const part = localState.ruleDraft?.parts?.[index];
 
-        if (index == null || !part) {
-          localState.newlyCreatedTemplate = null;
-          localState.pendingTemplatePartIndex = null;
-          return;
+        if (index != null && part) {
+          part.value_list_id = partList.id;
+          part.name = partList.name;
+          part.elements = [...(partList.elements ?? [])];
         }
 
-        part.name = template.name;
-        part.elements = [...(template.elements ?? [])];
-
-        localState.newlyCreatedTemplate = null;
-        localState.pendingTemplatePartIndex = null;
+        localState.newlyCreatedPartList = null;
+        localState.pendingPartListPartIndex = null;
       },
     );
 
@@ -235,13 +263,11 @@ export default {
         }
 
         if (constraint) {
-          const rule = constraint.rule ?? {};
-
           localState.ruleDraft = {
             name: constraint.name ?? "",
             strict: !!constraint.strict,
-            separator: rule.separator ?? "_",
-            parts: JSON.parse(JSON.stringify(rule.parts ?? [])),
+            separator: constraint.separator ?? "_",
+            parts: JSON.parse(JSON.stringify(constraint.parts ?? [])),
           };
         } else {
           localState.ruleDraft = createEmptyDraft();
@@ -259,10 +285,15 @@ export default {
     const buildPayload = () => ({
       name: localState.ruleDraft.name,
       strict: localState.ruleDraft.strict,
-      rule: {
-        separator: localState.ruleDraft.separator,
-        parts: localState.ruleDraft.parts,
-      },
+      separator: localState.ruleDraft.separator,
+      parts: localState.ruleDraft.parts.map((part) => ({
+        type: part.type,
+        name: part.name,
+        max_length: part.type === PART_TYPES.N_CHARS ? part.max_length : null,
+        min_value: part.type === PART_TYPES.BOUNDED ? part.min_value : null,
+        max_value: part.type === PART_TYPES.BOUNDED ? part.max_value : null,
+        value_list_id: part.type === PART_TYPES.VALUES_IN ? part.value_list_id : null,
+      })),
     });
 
     const saveConstraint = async (payload) => {
@@ -300,17 +331,17 @@ export default {
       });
     };
 
-    const handleConflictError = (error, payload) => {
-      showConflicts(payload, error.documents ?? [], () => {
-        closeModal();
-        submit();
-      });
-    };
-
     const submit = debounce(async () => {
       submitted.value = true;
 
-      if (hasInvalidName.value || hasEmptyRule.value || hasInvalidBounds.value) {
+      if (
+        hasInvalidName.value ||
+        hasEmptyRule.value ||
+        hasInvalidBounds.value ||
+        hasMissingBounds.value ||
+        hasInvalidMaxLength.value ||
+        hasMissingList.value
+      ) {
         return;
       }
 
@@ -322,8 +353,16 @@ export default {
         localState.markRuleDraftAsSaved?.();
         const conflicts = savedConstraint?.conflicting_documents ?? [];
 
+        if (isUpdate.value) {
+          await refreshFiles?.();
+        }
+
         if (conflicts.length) {
-          showConflicts(savedConstraint, conflicts, () => {
+          // TODO: on edite une règle pour qu'elle deviennent strict, les documents invalides sont proposés au renommage et on peut valdier sans avoir fixé tous les documents
+          // Does it comes from here?
+          // Already saved: always show the non-blocking variant of the modal.
+          showConflicts({ ...savedConstraint, strict: false }, conflicts, async () => {
+            await refreshFiles?.();
             closeModal();
             cancel();
           });
@@ -331,18 +370,6 @@ export default {
         }
 
         cancel();
-      } catch (error) {
-        console.error("Naming constraint error:", error);
-
-        if (error?.error) {
-          console.error(await error.error.json());
-        }
-
-        if (error instanceof NamingConstraintConflictError) {
-          handleConflictError(error, payload);
-        } else {
-          throw error;
-        }
       } finally {
         localState.loading = false;
       }
@@ -351,15 +378,18 @@ export default {
     return {
       localState,
       isUpdate,
-      templates,
+      partLists,
       separatorOptions,
       hasInvalidName,
       hasEmptyRule,
       hasInvalidBounds,
+      hasMissingBounds,
+      hasInvalidMaxLength,
+      hasMissingList,
       // Methods
       cancel,
       submit,
-      goToTemplate,
+      goToPartList,
     };
   },
 };

@@ -9,6 +9,7 @@
         :spaceSubInfo="spaceSubInfo"
         :importFromOtherProjectsActions="importFromOtherProjectsActions"
         :initialSearchText="searchText"
+        :refreshFiles="refreshFiles"
         @update:searchText="searchText = $event"
         @upload-files="uploadFiles"
         @manage-naming-conflicts="openNamingConflictsModal"
@@ -371,9 +372,7 @@ export default {
       const { files, folders } = await getFilesFromEvent(event);
 
       const rule = await getEffectiveFolderRule(props.project, folder);
-      const invalidFiles = rule?.rule
-        ? files.filter((file) => !matchName(file.name, rule.rule))
-        : [];
+      const invalidFiles = rule ? files.filter((file) => !matchName(file.name, rule)) : [];
 
       if (invalidFiles.length > 0) {
         openModal({
@@ -394,7 +393,7 @@ export default {
                   const name = renamedById.get(id);
                   return name ? new File([file], name, { type: file.type }) : file;
                 });
-              const validFiles = files.filter((file) => matchName(file.name, rule.rule));
+              const validFiles = files.filter((file) => matchName(file.name, rule));
               proceedUpload({ files: [...validFiles, ...finalFiles], folders }, folder);
             },
           },
@@ -622,7 +621,7 @@ export default {
         conflicting.map(async (file) => {
           const folder = allFolders.value.find((f) => f.id === file.parent_id);
           const effective = folder ? await getEffectiveFolderRule(props.project, folder) : null;
-          return { ...file, namingRule: effective?.rule ?? null };
+          return { ...file, namingRule: effective };
         }),
       );
       openModal({

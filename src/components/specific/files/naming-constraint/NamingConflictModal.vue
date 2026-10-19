@@ -26,7 +26,7 @@
             :project="project"
             :documents="documents"
             :all-folders="allFolders"
-            :rule="rule?.rule"
+            :rule="rule"
             :show-rules-by-group="showRulesByGroup"
             @valid-change="allValid = $event"
             @change="pending = $event"
@@ -79,7 +79,7 @@
             :project="project"
             :documents="documents"
             :allFolders="allFolders"
-            :rule="rule?.rule"
+            :rule="rule"
             :show-rules-by-group="showRulesByGroup"
             @valid-change="allValid = $event"
             @change="pending = $event"
@@ -154,7 +154,7 @@ export default {
   setup(props) {
     const { updateFiles, deleteFiles } = useFiles();
 
-    const allValid = ref(props.documents.every((doc) => matchName(doc.name, props.rule?.rule)));
+    const allValid = ref(props.documents.every((doc) => matchName(doc.name, props.rule)));
     const pending = ref({ renamed: [], deleted: [] });
 
     const close = () => props.onClose();
