@@ -171,6 +171,10 @@ export default {
       type: Object,
       required: true,
     },
+    refreshFiles: {
+      type: Function,
+      default: null,
+    },
     selectedFileTab: {
       type: Object,
       required: true,
@@ -292,6 +296,7 @@ export default {
         component: NamingConstraintsManager,
         props: {
           project: currentProject.value,
+          refreshFiles: props.refreshFiles,
         },
       });
     };

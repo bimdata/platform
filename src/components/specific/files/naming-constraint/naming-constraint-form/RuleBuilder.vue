@@ -65,10 +65,10 @@
                   <span
                     class="rule-builder__select__label"
                     :class="{
-                      'rule-builder__select__label--placeholder': !selectedTemplateLabel(part),
+                      'rule-builder__select__label--placeholder': !selectedPartListLabel(part),
                     }"
                     >{{
-                      selectedTemplateLabel(part) || $t("NamingConstraint.selectListPlaceholder")
+                      selectedPartListLabel(part) || $t("NamingConstraint.selectListPlaceholder")
                     }}</span
                   >
                   <BIMDataIconChevron :rotate="isOpen ? 90 : 0" size="xxs" />
@@ -76,15 +76,15 @@
                 <template #element>
                   <ul class="bimdata-list">
                     <li
-                      v-for="template of templates"
-                      :key="template.id"
+                      v-for="partList of partLists"
+                      :key="partList.id"
                       :class="{
-                        'bimdata-list__item--selected': selectedTemplateId(part) === template.id,
+                        'bimdata-list__item--selected': part.value_list_id === partList.id,
                       }"
-                      @click="onLoadTemplate(index, template.id)"
+                      @click="onSelectPartList(index, partList.id)"
                     >
                       <BIMDataTextbox
-                        :text="template.name"
+                        :text="partList.name"
                         cutPosition="middle"
                         tooltipPosition="bottom"
                         tooltipColor="primary"
@@ -103,7 +103,7 @@
               rounded
               icon
               color="default"
-              @click="goToTemplate(index)"
+              @click="goToPartList(index)"
             >
               <BIMDataIconAddList fill color="default" size="xxs" />
             </BIMDataButton>
@@ -168,7 +168,7 @@ const defaultPart = (type) => {
       return { type: "n_chars", name: "N CHARS", max_length: 10 };
     case "values_in":
     default:
-      return { type: "values_in", name: "", elements: [] };
+      return { type: "values_in", name: "", value_list_id: null };
   }
 };
 
@@ -178,12 +178,12 @@ export default {
       type: Array,
       default: () => [],
     },
-    templates: {
+    partLists: {
       type: Array,
       default: () => [],
     },
   },
-  emits: ["update:modelValue", "go-to-template"],
+  emits: ["update:modelValue", "go-to-part-list"],
   setup(props, { emit }) {
     const parts = computed(() => props.modelValue ?? []);
     const draggingIndex = ref(null);
@@ -195,8 +195,8 @@ export default {
     const emitChange = (next) => {
       emit("update:modelValue", next);
     };
-    const goToTemplate = (index) => {
-      emit("go-to-template", index);
+    const goToPartList = (index) => {
+      emit("go-to-part-list", index);
     };
 
     const addPart = (type) => {
@@ -264,7 +264,7 @@ export default {
       dragPosition.value = null;
     };
 
-    // --- Values / templates ---
+    // --- Values / part lists ---
     const onNumberInput = (index, field, event) => {
       const value = parseInt(event.target.value, 10);
       const next = clone();
@@ -272,34 +272,18 @@ export default {
       emitChange(next);
     };
 
-    const selectedTemplateId = (part) => {
-      const elements = part.elements ?? [];
-      const template = props.templates.find(
-        (item) =>
-          (item.elements ?? []).length === elements.length &&
-          (item.elements ?? []).every((value, i) => value === elements[i]),
-      );
-      return template ? template.id : "";
-    };
-
-    const onLoadTemplate = (index, templateId) => {
-      const template = props.templates.find((item) => item.id === templateId);
+    const onSelectPartList = (index, partListId) => {
+      const partList = props.partLists.find((item) => item.id === partListId);
       const next = clone();
-      if (template) {
-        next[index].name = template.name;
-        next[index].elements = [...(template.elements ?? [])];
-      } else {
-        next[index].name = "";
-        next[index].elements = [];
-      }
+      next[index].value_list_id = partList?.id ?? null;
+      next[index].name = partList?.name ?? "";
+      next[index].elements = partList ? [...(partList.elements ?? [])] : null;
       emitChange(next);
     };
 
-    const selectedTemplateLabel = (part) => {
-      const id = selectedTemplateId(part);
-      if (!id) return null;
-      const template = props.templates.find((item) => item.id === id);
-      return template ? template.name : null;
+    const selectedPartListLabel = (part) => {
+      const partList = props.partLists.find((item) => item.id === part.value_list_id);
+      return partList?.name ?? null;
     };
 
     const partTypeLabel = (type) => {
@@ -330,10 +314,9 @@ export default {
       onDrop,
       onDragEnd,
       onNumberInput,
-      selectedTemplateId,
-      onLoadTemplate,
-      selectedTemplateLabel,
-      goToTemplate,
+      onSelectPartList,
+      selectedPartListLabel,
+      goToPartList,
     };
   },
 };

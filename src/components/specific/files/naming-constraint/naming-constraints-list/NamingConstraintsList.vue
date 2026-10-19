@@ -111,7 +111,7 @@
               </span>
             </div>
             <div class="naming-constraints-list__item__preview flex items-center">
-              <NamingConstraintPreview :rule="constraint.rule" />
+              <NamingConstraintPreview :rule="constraint" />
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default {
     };
 
     const openLists = () => {
-      localState.currentView = "templates-list";
+      localState.currentView = "part-lists-list";
     };
 
     const remove = async (constraint) => {

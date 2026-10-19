@@ -1,24 +1,24 @@
-.naming-parts-templates-list {
+.naming-part-lists-list {
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.naming-parts-templates-list__head {
+.naming-part-lists-list__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  .naming-parts-templates-list__head__title {
+  .naming-part-lists-list__head__title {
     font-size: 16px;
     font-weight: 500;
     color: var(--color-primary);
   }
 }
-.naming-parts-templates-list__search {
+.naming-part-lists-list__search {
   min-height: 32px;
 }
-.naming-parts-templates-list__empty {
+.naming-part-lists-list__empty {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -27,19 +27,19 @@
   gap: 12px;
   padding: 24px 12px;
   text-align: center;
-  .naming-parts-templates-list__empty__title {
+  .naming-part-lists-list__empty__title {
     font-size: 16px;
     font-weight: 600;
     color: var(--color-primary);
   }
-  .naming-parts-templates-list__empty__text {
+  .naming-part-lists-list__empty__text {
     max-width: 280px;
     font-size: 13px;
     line-height: 18px;
     color: var(--color-granite);
   }
 }
-.naming-parts-templates-list__items {
+.naming-part-lists-list__items {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@
   list-style: none;
   overflow: auto;
 }
-.naming-parts-templates-list__item {
+.naming-part-lists-list__item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -58,33 +58,33 @@
   background-color: var(--color-white);
   box-shadow: var(--box-shadow);
 }
-.naming-parts-templates-list__item__main {
+.naming-part-lists-list__item__main {
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 0;
   flex-grow: 1;
 }
-.naming-parts-templates-list__item__name {
+.naming-part-lists-list__item__name {
   font-weight: 600;
   color: var(--color-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.naming-parts-templates-list__item__badges {
+.naming-part-lists-list__item__badges {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
-.naming-parts-templates-list__item__chip {
+.naming-part-lists-list__item__chip {
   padding: 2px 8px;
   border-radius: 6px;
   background-color: var(--color-neutral-lighter);
   color: var(--color-neutral);
   font-size: 12px;
 }
-.naming-parts-templates-list__item__actions {
+.naming-part-lists-list__item__actions {
   display: flex;
   align-items: center;
   gap: 4px;
