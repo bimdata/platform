@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { matchName } from "../../../../../utils/naming-constraint.js";
 import ConflictingDocumentItem from "../conflicting-document-item/ConflictingDocumentItem.vue";
 import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
@@ -91,6 +91,14 @@ export default {
       props.documents.every((doc) => toDelete[doc.id] || isValid(doc)),
     );
 
+    watch(
+      allValid,
+      (valid) => {
+        emit("valid-change", valid);
+      },
+      { immediate: true },
+    );
+
     const emitChange = () => {
       const renamed = props.documents
         .filter((doc) => !toDelete[doc.id] && names[doc.id] !== doc.name)
@@ -105,8 +113,6 @@ export default {
         renamed,
         deleted,
       });
-
-      emit("valid-change", allValid.value);
     };
 
     const toggleOpen = (id) => {

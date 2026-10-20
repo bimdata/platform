@@ -154,7 +154,7 @@ export default {
   setup(props) {
     const { updateFiles, deleteFiles } = useFiles();
 
-    const allValid = ref(props.documents.every((doc) => matchName(doc.name, props.rule)));
+    const allValid = ref(false);
     const pending = ref({ renamed: [], deleted: [] });
 
     const close = () => props.onClose();
