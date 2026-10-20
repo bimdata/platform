@@ -358,10 +358,7 @@ export default {
         }
 
         if (conflicts.length) {
-          // TODO: on edite une règle pour qu'elle deviennent strict, les documents invalides sont proposés au renommage et on peut valdier sans avoir fixé tous les documents
-          // Does it comes from here?
-          // Already saved: always show the non-blocking variant of the modal.
-          showConflicts({ ...savedConstraint, strict: false }, conflicts, async () => {
+          showConflicts({ ...savedConstraint }, conflicts, async () => {
             await refreshFiles?.();
             closeModal();
             cancel();
