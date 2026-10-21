@@ -278,6 +278,8 @@
     "minLabel": "Min",
     "maxLabel": "Max",
     "maxLengthLabel": "Longueur max",
+    "partNameLabel": "Nom du champ (facultatif)",
+    "partNamePlaceholder": "Saisir un nom",
     "saveRuleButton": "Enregistrer la règle",
     "listNameStep": "Nom de la liste",
     "listNamePlaceholder": "Nom de la liste",

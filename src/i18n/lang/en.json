@@ -42,6 +42,8 @@
     "minLabel": "Min",
     "maxLabel": "Max",
     "maxLengthLabel": "Max length",
+    "partNameLabel": "Field name (optional)",
+    "partNamePlaceholder": "Enter a name",
     "saveRuleButton": "Save the rule",
     "listNameStep": "List name",
     "listNamePlaceholder": "List name",

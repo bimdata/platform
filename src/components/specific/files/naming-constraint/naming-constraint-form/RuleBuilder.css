@@ -97,12 +97,37 @@
     align-items: center;
     justify-content: end;
   }
+
+  .rule-builder__part__description {
+    padding: 3px var(--spacing-unit) calc(var(--spacing-unit) / 2) var(--spacing-unit);
+    width: calc(100% - (90px + 18px));
+    display: flex;
+    justify-self: flex-end;
+    .bimdata-input-outlined {
+      &:deep(fieldset) {
+        label {
+          margin-bottom: 3px;
+          font-size: 9px;
+          text-transform: none;
+          font-weight: 400;
+        }
+      } 
+      &:deep(.bimdata-input-outlined__container){
+        height: 30px;
+        min-height: 30px;
+        input {
+          min-height: auto;
+          font-size: 11px;
+        }
+      }
+    }
+  }
 }
 
 /* --- Champs --- */
 .rule-builder__number {
   flex: 1;
-  height: 36px;
+  height: 30px;
   min-width: 0;
   padding: 0 8px;
   border: 1px solid var(--color-silver);
