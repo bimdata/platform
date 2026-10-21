@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 0 6px 6px;
+  padding: 0 6px 6px 0;
   .naming-constraint-form__step {
     display: flex;
     flex-direction: column;

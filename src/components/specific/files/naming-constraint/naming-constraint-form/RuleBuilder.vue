@@ -112,6 +112,23 @@
             </BIMDataButton>
           </div>
         </div>
+        <div
+          v-if="part.type === 'n_chars' || part.type === 'bounded'"
+          class="rule-builder__part__description"
+        >
+          <BIMDataInputOutlined
+            :modelValue="part.name"
+            :label="true"
+            :placeholder="$t('NamingConstraint.partNamePlaceholder')"
+            @update:modelValue="onNameInput(index, $event)"
+            width="100%"
+            margin="0px 0px"
+          >
+            <template #label>
+              {{ $t("NamingConstraint.partNameLabel") }}
+            </template>
+          </BIMDataInputOutlined>
+        </div>
       </li>
     </ul>
 
@@ -215,6 +232,12 @@ export default {
       emitChange(next);
     };
 
+    const onNameInput = (index, name) => {
+      const next = clone();
+      next[index].name = name;
+      emitChange(next);
+    };
+
     // --- Drag & drop ---
     const onDragStart = (index, event) => {
       draggingIndex.value = index;
@@ -313,6 +336,7 @@ export default {
       onDragLeave,
       onDrop,
       onDragEnd,
+      onNameInput,
       onNumberInput,
       onSelectPartList,
       selectedPartListLabel,
