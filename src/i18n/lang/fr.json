@@ -342,6 +342,13 @@
     "safeZoneModal": {
       "title": "Attention !",
       "text": "La règle de nommage a été modifiée mais n'a pas été enregistrée, êtes-vous sûr de vouloir fermer le gestionnaire de règles ? (les modifications seront perdues)"
+    },
+    "partListInUseModal": {
+      "title": "Suppression impossible",
+      "description": "Cette liste ne peut pas être supprimée.",
+      "listLabel": "Liste concernée :",
+      "rulesDescription": "Cette liste est utilisée par les règles de nommage suivantes :",
+      "resolution": "Pour supprimer cette liste, modifiez d'abord les règles concernées afin qu'elles ne l'utilisent plus."
     }
   },
   "FolderNamingConstraint": {
