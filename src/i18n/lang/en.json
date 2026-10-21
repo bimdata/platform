@@ -106,6 +106,13 @@
     "safeZoneModal": {
       "title": "Warning!",
       "text": "The naming rule has been modified but not saved. Are you sure you want to close the rule manager? (Changes will be lost)"
+    },
+    "partListInUseModal": {
+      "title": "Unable to delete",
+      "description": "This list cannot be deleted.",
+      "listLabel": "List concerned:",
+      "rulesDescription": "This list is used by the following naming rules:",
+      "resolution": "To delete this list, first update the affected rules so that they no longer use it."
     }
   },
   "OidcCallbackError": {

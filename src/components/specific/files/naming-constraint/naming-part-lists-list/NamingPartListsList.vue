@@ -89,6 +89,12 @@
         </div>
       </li>
     </ul>
+    <NamingPartListInUseModal
+      v-if="inUseModal.open"
+      :part-list="inUseModal.partList"
+      :constraints="inUseModal.constraints"
+      :on-close="closeInUseModal"
+    />
   </div>
 </template>
 
@@ -97,13 +103,16 @@ import { computed, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { NamingPartListInUseError } from "../../../../../services/NamingConstraintService.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
-import { useAppNotification } from "../../../app/app-notification/app-notification.js";
+
+import NamingPartListInUseModal from "./naming-part-list-in-use-modal/NamingPartListInUseModal.vue";
 
 export default {
+  components: {
+    NamingPartListInUseModal,
+  },
   setup() {
     const { t } = useI18n();
     const { deleteNamingPartList } = useNamingConstraints();
-    const { pushNotification } = useAppNotification();
 
     const localState = inject("localState");
     const confirmId = ref(null);
@@ -135,22 +144,37 @@ export default {
       localState.currentView = "form";
     };
 
+    const inUseModal = ref({
+      open: false,
+      partList: null,
+      constraints: [],
+    });
+
+    const closeInUseModal = () => {
+      inUseModal.value = {
+        open: false,
+        partList: null,
+        constraints: [],
+      };
+    };
+
     const remove = async (partList) => {
       try {
         localState.loading = true;
+
         await deleteNamingPartList(localState.project, partList);
+
         localState.partLists = localState.partLists.filter((item) => item.id !== partList.id);
       } catch (error) {
         if (!(error instanceof NamingPartListInUseError)) {
           throw error;
         }
-        pushNotification({
-          type: "error",
-          title: t("NamingConstraint.listInUseErrorTitle"),
-          message: t("NamingConstraint.listInUseErrorMessage", {
-            constraints: error.constraints.map((constraint) => constraint.name).join(", "),
-          }),
-        });
+
+        inUseModal.value = {
+          open: true,
+          partList,
+          constraints: error.constraints,
+        };
       } finally {
         confirmId.value = null;
         localState.loading = false;
@@ -164,7 +188,9 @@ export default {
       filteredPartLists,
       confirmId,
       searchText,
+      inUseModal,
       // Methods
+      closeInUseModal,
       create,
       edit,
       remove,
