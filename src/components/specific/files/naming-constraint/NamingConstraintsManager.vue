@@ -164,7 +164,24 @@ export default {
         return false;
       }
 
-      return JSON.stringify(localState.ruleDraft) !== JSON.stringify(initialRuleDraft.value);
+      const normalize = (draft) => ({
+        name: draft.name ?? "",
+        strict: !!draft.strict,
+        separator: draft.separator ?? "_",
+        parts: (draft.parts ?? []).map((part) => ({
+          type: part.type,
+          name: part.name ?? "",
+          max_length: part.max_length ?? null,
+          min_value: part.min_value ?? null,
+          max_value: part.max_value ?? null,
+          value_list_id: part.value_list_id ?? null,
+        })),
+      });
+
+      return (
+        JSON.stringify(normalize(localState.ruleDraft)) !==
+        JSON.stringify(normalize(initialRuleDraft.value))
+      );
     });
 
     localState.resetInitialRuleDraft = resetInitialRuleDraft;

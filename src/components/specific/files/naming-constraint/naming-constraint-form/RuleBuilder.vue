@@ -119,7 +119,7 @@
           <BIMDataInputOutlined
             :modelValue="part.name"
             :label="true"
-            :placeholder="part.type === 'n_chars' ? 'N CHARS' : 'BOUNDED VALUES'"
+            :placeholder="part.name"
             @update:modelValue="onNameInput(index, $event)"
             width="100%"
             margin="0px 0px"
@@ -180,12 +180,30 @@ import { computed, ref } from "vue";
 const defaultPart = (type) => {
   switch (type) {
     case "bounded":
-      return { type: "bounded", name: "BOUNDED VALUES", min_value: 1, max_value: 99 };
+      return {
+        type: "bounded",
+        name: "BOUNDED VALUES",
+        default_name: "BOUNDED VALUES",
+        min_value: 1,
+        max_value: 99,
+      };
+
     case "n_chars":
-      return { type: "n_chars", name: "N CHARS", max_length: 10 };
+      return {
+        type: "n_chars",
+        name: "N CHARS",
+        default_name: "N CHARS",
+        max_length: 10,
+      };
+
     case "values_in":
     default:
-      return { type: "values_in", name: "", value_list_id: null };
+      return {
+        type: "values_in",
+        name: "",
+        default_name: "",
+        value_list_id: null,
+      };
   }
 };
 
@@ -234,16 +252,16 @@ export default {
 
     const onNameInput = (index, name) => {
       const next = clone();
-      const part = next[index];
-
-      const defaultName = {
-        n_chars: "N CHARS",
-        bounded: "BOUNDED VALUES",
-      };
-
-      part.name = name.trim() === "" ? defaultName[part.type] : name;
-
+      next[index].name = name ?? "";
       emitChange(next);
+    };
+
+    const getPartName = (part) => {
+      if (part.name?.trim()) {
+        return part.name;
+      }
+
+      return defaultPart(part.type).name;
     };
 
     // --- Drag & drop ---
@@ -306,9 +324,12 @@ export default {
     const onSelectPartList = (index, partListId) => {
       const partList = props.partLists.find((item) => item.id === partListId);
       const next = clone();
+
       next[index].value_list_id = partList?.id ?? null;
       next[index].name = partList?.name ?? "";
+      next[index].default_name = partList?.name ?? "";
       next[index].elements = partList ? [...(partList.elements ?? [])] : null;
+
       emitChange(next);
     };
 
@@ -338,6 +359,7 @@ export default {
       addPart,
       removePart,
       onTypeChange,
+      getPartName,
       partTypeLabel,
       onDragStart,
       onDragOver,

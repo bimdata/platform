@@ -98,7 +98,11 @@
           :disabled="rule?.strict && !allValid"
           @click="confirm"
         >
-          {{ $t("t.confirm") }}
+          {{
+            allValid
+              ? $t("NamingConstraint.applyRenameButton")
+              : $t("NamingConstraint.confirmRenameButton")
+          }}
         </BIMDataButton>
       </template>
     </BIMDataSafeZoneModal>
