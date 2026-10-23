@@ -89,7 +89,7 @@
             {{ $t("NamingConstraint.previewLabel") }}
           </span>
 
-          <NamingConstraintPreview :rule="localState.ruleDraft" />
+          <NamingConstraintPreview :rule="previewRule" />
         </div>
       </div>
     </div>
@@ -267,7 +267,10 @@ export default {
             name: constraint.name ?? "",
             strict: !!constraint.strict,
             separator: constraint.separator ?? "_",
-            parts: JSON.parse(JSON.stringify(constraint.parts ?? [])),
+            parts: (constraint.parts ?? []).map((part) => ({
+              ...JSON.parse(JSON.stringify(part)),
+              default_name: part.name ?? "",
+            })),
           };
         } else {
           localState.ruleDraft = createEmptyDraft();
@@ -282,13 +285,44 @@ export default {
       emit("close");
     };
 
+    const getEffectivePartName = (part) => {
+      if (part.name?.trim()) {
+        return part.name;
+      }
+
+      switch (part.type) {
+        case PART_TYPES.N_CHARS:
+          return "N CHARS";
+
+        case PART_TYPES.BOUNDED:
+          return "BOUNDED VALUES";
+
+        case PART_TYPES.VALUES_IN: {
+          const partList = partLists.value.find((item) => item.id === part.value_list_id);
+
+          return partList?.name ?? "";
+        }
+
+        default:
+          return "";
+      }
+    };
+
+    const previewRule = computed(() => ({
+      ...localState.ruleDraft,
+      parts: localState.ruleDraft.parts.map((part) => ({
+        ...part,
+        name: getEffectivePartName(part),
+      })),
+    }));
+
     const buildPayload = () => ({
       name: localState.ruleDraft.name,
       strict: localState.ruleDraft.strict,
       separator: localState.ruleDraft.separator,
       parts: localState.ruleDraft.parts.map((part) => ({
         type: part.type,
-        name: part.name,
+        name: getEffectivePartName(part),
         max_length: part.type === PART_TYPES.N_CHARS ? part.max_length : null,
         min_value: part.type === PART_TYPES.BOUNDED ? part.min_value : null,
         max_value: part.type === PART_TYPES.BOUNDED ? part.max_value : null,
@@ -383,10 +417,12 @@ export default {
       hasMissingBounds,
       hasInvalidMaxLength,
       hasMissingList,
+      previewRule,
       // Methods
       cancel,
       submit,
       goToPartList,
+      getEffectivePartName,
     };
   },
 };

@@ -45,7 +45,7 @@
       <div v-else class="file-name-cell__content" @click.stop="$emit('file-clicked', file)">
         <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
         <BIMDataTooltip
-          v-if="isConflictFile"
+          v-if="file.naming_constraint_conflict"
           :text="$t('NamingConstraint.conflictTooltip')"
           position="right"
           class="flex items-center"
@@ -137,20 +137,6 @@ export default {
     const errorMessage = ref("");
 
     const hasHistory = computed(() => props.file?.history_count > 0);
-
-    const isConflictFile = computed(() => {
-      if (isFolder(props.file)) {
-        return false;
-      }
-
-      const rule = props.namingConstraintPreview;
-
-      if (!rule) {
-        return false;
-      }
-
-      return !matchName(props.file.name, rule);
-    });
 
     const renameFile = debounce(async () => {
       if (fileName.value) {
@@ -268,7 +254,6 @@ export default {
       loading,
       nameInput,
       showUpdateForm,
-      isConflictFile,
       // Methods
       closeUpdateForm,
       hasHistory,
