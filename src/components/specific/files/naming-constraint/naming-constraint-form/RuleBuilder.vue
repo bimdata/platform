@@ -119,7 +119,7 @@
           <BIMDataInputOutlined
             :modelValue="part.name"
             :label="true"
-            :placeholder="$t('NamingConstraint.partNamePlaceholder')"
+            :placeholder="part.type === 'n_chars' ? 'N CHARS' : 'BOUNDED VALUES'"
             @update:modelValue="onNameInput(index, $event)"
             width="100%"
             margin="0px 0px"
@@ -234,7 +234,15 @@ export default {
 
     const onNameInput = (index, name) => {
       const next = clone();
-      next[index].name = name;
+      const part = next[index];
+
+      const defaultName = {
+        n_chars: "N CHARS",
+        bounded: "BOUNDED VALUES",
+      };
+
+      part.name = name.trim() === "" ? defaultName[part.type] : name;
+
       emitChange(next);
     };
 
