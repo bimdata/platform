@@ -1,0 +1,59 @@
+.naming-constraint-manager {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-white);
+}
+
+.naming-constraint-manager__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+}
+
+.naming-constraint-manager__header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+}
+
+/*.naming-constraint-manager__header__back {
+  margin-left: -6px;
+  
+} */
+
+.naming-constraint-manager__header__title {
+  flex-grow: 1;
+  font-size: 14px;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.naming-constraint-manager__content {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.naming-constraint-manager__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
