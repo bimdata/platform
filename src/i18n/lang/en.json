@@ -65,7 +65,7 @@
     "listInUseErrorTitle": "List in use",
     "listInUseErrorMessage": "This list is used by the following rules: {constraints}. Edit them before deleting the list.",
     "folderRuleMenuItem": "Naming convention",
-    "recursiveLabel": "Recursive rule",
+    "recursiveLabel": "Include subfolders",
     "recursiveHelp": "If you check this box, this rule will also apply to files contained in the subfolders of your main folder.",
     "applyRuleSuccessTitle": "Naming rule applied",
     "applyRuleSuccessMessage": "The naming convention has been applied to the folder \"{folder}\".",

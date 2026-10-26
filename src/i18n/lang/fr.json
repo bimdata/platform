@@ -301,7 +301,7 @@
     "listInUseErrorTitle": "Liste utilisée",
     "listInUseErrorMessage": "Cette liste est utilisée par les règles suivantes : {constraints}. Modifiez-les avant de supprimer la liste.",
     "folderRuleMenuItem": "Convention de nommage",
-    "recursiveLabel": "Règle récursive",
+    "recursiveLabel": "Inclure les sous-dossiers",
     "recursiveHelp": "Si vous cochez cette case, cette règle s'appliquera également aux fichiers contenus dans les sous-dossiers de votre dossier principal.",
     "applyRuleSuccessTitle": "Règle de nommage appliquée",
     "applyRuleSuccessMessage": "La règle de nommage a bien été appliquée au dossier \"{folder}\".",
