@@ -23,6 +23,7 @@
   }
 
   &__content {
+    width: max-content;
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);
