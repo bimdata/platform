@@ -90,6 +90,13 @@
     align-items: center;
     gap: 6px;
   }
+  .rule-builder__part__value__empty {
+    padding: 0 6px;
+    color: var(--color-granite-light);
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 800;
+  }
 
   .rule-builder__part__actions {
     width: 64px;

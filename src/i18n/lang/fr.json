@@ -274,6 +274,7 @@
     "partTypeBounded": "Valeurs bornées",
     "partTypeNChars": "N caractères",
     "selectListPlaceholder": "Sélectionner une liste",
+    "noList": "Pas de liste créée",
     "elementsHelp": "Liste de valeurs autorisées séparées par des virgules.",
     "minLabel": "Min",
     "maxLabel": "Max",

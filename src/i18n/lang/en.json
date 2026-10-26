@@ -38,6 +38,7 @@
     "partTypeBounded": "Bounded values",
     "partTypeNChars": "N characters",
     "selectListPlaceholder": "Select a list",
+    "noList": "No list created",
     "elementsHelp": "Comma-separated list of allowed values.",
     "minLabel": "Min",
     "maxLabel": "Max",

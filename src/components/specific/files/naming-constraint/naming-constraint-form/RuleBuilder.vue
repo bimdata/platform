@@ -74,23 +74,28 @@
                   <BIMDataIconChevron :rotate="isOpen ? 90 : 0" size="xxs" />
                 </template>
                 <template #element>
-                  <ul class="bimdata-list">
-                    <li
-                      v-for="partList of partLists"
-                      :key="partList.id"
-                      :class="{
-                        'bimdata-list__item--selected': part.value_list_id === partList.id,
-                      }"
-                      @click="onSelectPartList(index, partList.id)"
-                    >
-                      <BIMDataTextbox
-                        :text="partList.name"
-                        cutPosition="middle"
-                        tooltipPosition="bottom"
-                        tooltipColor="primary"
-                      />
-                    </li>
-                  </ul>
+                  <template v-if="partLists.length">
+                    <ul class="bimdata-list">
+                      <li
+                        v-for="partList of partLists"
+                        :key="partList.id"
+                        :class="{
+                          'bimdata-list__item--selected': part.value_list_id === partList.id,
+                        }"
+                        @click="onSelectPartList(index, partList.id)"
+                      >
+                        <BIMDataTextbox
+                          :text="partList.name"
+                          cutPosition="middle"
+                          tooltipPosition="bottom"
+                          tooltipColor="primary"
+                        />
+                      </li>
+                    </ul>
+                  </template>
+                  <span v-else class="rule-builder__part__value__empty">{{
+                    $t("NamingConstraint.noList")
+                  }}</span>
                 </template>
               </BIMDataDropdownMenu>
             </template>
