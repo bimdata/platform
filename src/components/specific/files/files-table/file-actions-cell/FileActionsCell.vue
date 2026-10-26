@@ -14,7 +14,13 @@
       <BIMDataIconEllipsis size="l" />
     </BIMDataButton>
 
-    <BIMDataMenu ref="menu" class="file-actions-cell__menu" v-show="isOpen" :menuItems="menuItems">
+    <BIMDataMenu
+      ref="menu"
+      class="file-actions-cell__menu"
+      v-show="isOpen"
+      :menuItems="menuItems"
+      width="210px"
+    >
       <template #item="{ item }">
         <BIMDataButton
           :data-test-id="item.dataTestId"
