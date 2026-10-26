@@ -16,7 +16,7 @@
     "@bimdata/bcf-components": "6.7.8",
     "@bimdata/components": "1.10.3",
     "@bimdata/design-system": "2.4.4",
-    "@bimdata/typescript-fetch-api-client": "10.48.0",
+    "@bimdata/typescript-fetch-api-client": "10.48.1",
     "@bimdata/viewer": "2.20.2-beta.4",
     "@paddle/paddle-js": "^1.6.5",
     "async": "^3.2.6",
@@ -43,9 +43,9 @@
     "eslint-plugin-vue": "^10.11.1",
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
-    "sass-embedded": "^1.105.2",
+    "sass-embedded": "^1.106.1",
     "semantic-release": "^25.0.9",
-    "vite": "^8.3.4",
+    "vite": "^8.3.5",
     "vite-plugin-environment": "^1.1.4"
   }
 }
