@@ -381,6 +381,7 @@ export default {
             project: props.project,
             documents: invalidFiles.map((file, i) => ({ id: `upload-${i}`, name: file.name })),
             rule,
+            allFolders: allFolders.value,
             persistChanges: false,
             onClose: closeModal,
             onConfirm: ({ renamed, deleted }) => {

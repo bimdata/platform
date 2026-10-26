@@ -91,6 +91,7 @@ import { useFiles } from "../../../../../state/files.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { debounce } from "../../../../../utils/async.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { matchName, buildExample } from "../../../../../utils/naming-constraint.js";
 import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
@@ -124,7 +125,7 @@ export default {
   emits: ["close", "file-clicked", "open-versioning-manager", "success"],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const { updateFiles } = useFiles();
+    const { updateFiles, projectFileStructure } = useFiles();
     const { getEffectiveFolderRule } = useNamingConstraints();
     const { pushNotification } = useAppNotification();
     const { openModal, closeModal } = useAppModal();
@@ -137,6 +138,10 @@ export default {
     const errorMessage = ref("");
 
     const hasHistory = computed(() => props.file?.history_count > 0);
+
+    const allFolders = computed(() =>
+      projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
+    );
 
     const renameFile = debounce(async () => {
       if (fileName.value) {
@@ -238,7 +243,7 @@ export default {
         props: {
           project: props.project,
           documents: [props.file],
-          allFolders: [],
+          allFolders: allFolders.value,
           rule,
           onClose: closeModal,
           onConfirm: closeModal,

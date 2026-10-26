@@ -32,9 +32,12 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useFiles } from "../../../../../state/files.js";
 import { useUser } from "../../../../../state/user.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
+import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { matchName } from "../../../../../utils/naming-constraint.js";
 
@@ -54,6 +57,12 @@ const props = defineProps({
     required: true,
   },
 });
+
+const { projectFileStructure } = useFiles();
+
+const allFolders = computed(() =>
+  projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
+);
 
 const openNamingConflictModal = async () => {
   if (!props.file.hasNamingConflict) {
@@ -77,7 +86,7 @@ const openNamingConflictModal = async () => {
     props: {
       project: props.project,
       documents: conflictingDocuments,
-      allFolders: [],
+      allFolders: allFolders.value,
       rule,
       onClose: closeModal,
       onConfirm: closeModal,

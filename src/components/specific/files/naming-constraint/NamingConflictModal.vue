@@ -25,7 +25,7 @@
           <ConflictingDocumentsList
             :project="project"
             :documents="documents"
-            :all-folders="allFolders"
+            :allFolders="allFolders"
             :rule="rule"
             :show-rules-by-group="showRulesByGroup"
             @valid-change="allValid = $event"
