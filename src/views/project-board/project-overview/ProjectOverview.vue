@@ -111,6 +111,7 @@
     <transition name="fade">
       <FolderSelector
         v-if="showFolderSelector"
+        context="upload"
         :project="project"
         :file-structure="projectFileStructure"
         :files="[]"

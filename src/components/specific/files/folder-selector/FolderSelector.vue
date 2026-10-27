@@ -77,7 +77,13 @@
         @click="submit"
         :disabled="isAllowedToMoveFile"
       >
-        {{ selectedFolder ? $t("t.validate") : $t("FolderSelector.moveHere") }}
+        {{
+          context === "upload"
+            ? $t("FolderSelector.uploadHere")
+            : selectedFolder
+              ? $t("t.validate")
+              : $t("FolderSelector.moveHere")
+        }}
       </BIMDataButton>
     </div>
   </div>
@@ -106,6 +112,11 @@ export default {
     initialFolder: {
       type: Object,
       required: true,
+    },
+    context: {
+      type: String,
+      default: "move",
+      validator: (value) => ["move", "upload"].includes(value),
     },
   },
   emits: ["close", "folder-selected"],
