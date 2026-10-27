@@ -42,8 +42,13 @@
         />
       </div>
 
-      <div v-else class="file-name-cell__content" @click.stop="$emit('file-clicked', file)">
-        <BIMDataTextbox :text="file.name" width="auto" maxWidth="94%" />
+      <div v-else class="file-name-cell__content">
+        <BIMDataTextbox
+          :text="file.name"
+          width="auto"
+          maxWidth="94%"
+          @click.stop="$emit('file-clicked', file)"
+        />
         <BIMDataTooltip
           v-if="file.naming_constraint_conflict"
           :text="$t('NamingConstraint.conflictTooltip')"

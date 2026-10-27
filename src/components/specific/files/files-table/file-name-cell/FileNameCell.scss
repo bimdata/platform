@@ -23,10 +23,12 @@
   }
 
   &__content {
-    width: max-content;
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);
-    cursor: pointer;
+    .bimdata-textbox,
+    .bimdata-tooltip {
+      cursor: pointer;
+    }
   }
 }
