@@ -338,7 +338,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Dossier sélectionné",
-    "moveHere": "Déplacer ici"
+    "moveHere": "Déplacer ici",
+    "uploadHere": "Télécharger ici"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Modifier la couleur"
