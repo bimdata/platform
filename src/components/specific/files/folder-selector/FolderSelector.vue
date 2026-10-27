@@ -2,29 +2,27 @@
   <div class="folder-selector">
     <div class="folder-selector__head">
       <BIMDataButton
+        v-show="currentFolder.id !== fileStructure.id"
         class="folder-selector__head__btn-back"
         ghost
         rounded
         icon
         :disabled="currentFolder.id === fileStructure.id"
         @click="exitFolder"
+        width="13px"
       >
-        <BIMDataIconArrow size="xs" />
+        <BIMDataIconArrow size="xxs" />
       </BIMDataButton>
 
-      <BIMDataIconFolder size="xs" />
-      <BIMDataTextbox
-        class="folder-selector__head__name"
-        maxWidth="120px"
-        :text="currentFolder.name"
-      />
-      <BIMDataButton
-        class="folder-selector__head__btn-close"
-        ghost
-        rounded
-        icon
-        @click="close"
-      >
+      <div class="flex items-center">
+        <BIMDataIconFolder size="xs" margin="0 6px 0 0" />
+        <BIMDataTextbox
+          class="folder-selector__head__name"
+          maxWidth="180px"
+          :text="currentFolder.name"
+        />
+      </div>
+      <BIMDataButton class="folder-selector__head__btn-close" ghost rounded icon @click="close">
         <BIMDataIconClose size="xxs" />
       </BIMDataButton>
     </div>
@@ -35,7 +33,7 @@
         :key="file.id"
         :class="{
           folder: isFolder(file),
-          selected: selectedFolder && selectedFolder.id === file.id
+          selected: selectedFolder && selectedFolder.id === file.id,
         }"
         @click="selectFolder(file)"
         @dblclick="enterFolder(file)"
@@ -49,16 +47,9 @@
           :text="file.name"
           :tooltip="false"
         />
-        <BIMDataIconChevron
-          v-if="isFolder(file)"
-          size="xxs"
-          @click.stop="enterFolder(file)"
-        />
+        <BIMDataIconChevron v-if="isFolder(file)" size="xxs" @click.stop="enterFolder(file)" />
       </div>
-      <div
-        v-show="displayedFiles.length === 0"
-        class="folder-selector__body__placeholder"
-      >
+      <div v-show="displayedFiles.length === 0" class="folder-selector__body__placeholder">
         <BIMDataIconFolderOpen
           class="folder-selector__body__placeholder__icon"
           size="xxxl"
@@ -68,15 +59,12 @@
       </div>
     </div>
     <div class="folder-selector__footer">
-      <div
-        class="folder-selector__footer__text"
-        :class="{ visibility: selectedFolder }"
-      >
+      <div class="folder-selector__footer__text" :class="{ visibility: selectedFolder }">
         {{ $t("FolderSelector.selectedFolder") }}:
         <BIMDataTextbox
           style="font-weight: bold"
           width="auto"
-          maxWidth="100px"
+          maxWidth="calc(100% - 130px)"
           :text="selectedFolder ? selectedFolder.name : ''"
         />
       </div>
@@ -105,20 +93,20 @@ export default {
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     fileStructure: {
       type: Object,
-      required: true
+      required: true,
     },
     files: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     initialFolder: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ["close", "folder-selected"],
   setup(props, { emit }) {
@@ -133,21 +121,20 @@ export default {
       handler
         .children(currentFolder.value)
         .filter(
-          child =>
-            !props.files.some(f => child.id === f.id) &&
-            hasAdminPerm(props.project, child)
+          (child) =>
+            !props.files.some((f) => child.id === f.id) && hasAdminPerm(props.project, child),
         )
         .sort((a, b) => {
           if (isFolder(a) && !isFolder(b)) return -1;
           if (!isFolder(a) && isFolder(b)) return 1;
 
           return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
-        })
+        }),
     );
 
     const isAllowedToMoveFile = computed(() => {
       const activeFolder = (selectedFolder.value || currentFolder.value).id;
-      return props.files.some(f => activeFolder === f.parent_id);
+      return props.files.some((f) => activeFolder === f.parent_id);
     });
 
     const set = () => {
@@ -170,7 +157,7 @@ export default {
       close();
     };
 
-    const enterFolder = folder => {
+    const enterFolder = (folder) => {
       if (!isFolder(folder)) return;
 
       folderPath.value.push(currentFolder.value);
@@ -182,7 +169,7 @@ export default {
       currentFolder.value = folderPath.value.pop();
     };
 
-    const selectFolder = folder => {
+    const selectFolder = (folder) => {
       if (!isFolder(folder)) return;
 
       if (selectedFolder.value && selectedFolder.value.id === folder.id) {
@@ -195,7 +182,7 @@ export default {
     watch(
       () => props.initialFolder,
       () => set(),
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
@@ -211,9 +198,9 @@ export default {
       selectFolder,
       submit,
       isAllowedToMoveFile,
-      isFolder
+      isFolder,
     };
-  }
+  },
 };
 </script>
 

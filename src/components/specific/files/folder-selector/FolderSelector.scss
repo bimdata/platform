@@ -9,6 +9,7 @@
   color: var(--color-primary);
 
   &__head {
+    padding: 0 10px;
     display: flex;
     align-items: center;
     gap: var(--spacing-unit);
@@ -34,13 +35,17 @@
   &__body {
     flex-grow: 1;
     overflow-y: auto;
-    padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
+    padding: calc(var(--spacing-unit) / 2) 0;
 
     &__item {
       display: flex;
       align-items: center;
-      padding: calc(var(--spacing-unit) / 2);
+      padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
       cursor: pointer;
+
+      &__content {
+        width: inherit;
+      }
 
       &.selected {
         background-color: var(--color-silver);
@@ -61,7 +66,7 @@
 
       &__name {
         flex-grow: 1;
-        max-width: calc(100% - 50px);
+        max-width: calc(100% - 30px);
         padding: 0 calc(var(--spacing-unit) / 2);
       }
     }
@@ -83,7 +88,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
+    padding: calc(var(--spacing-unit) / 2);
 
     &__text {
       width: 100%;
