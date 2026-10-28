@@ -8,7 +8,7 @@
     "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "serve": "vite preview",
     "lint": "eslint --fix",
-    "test:unit": "jest",
+    "test:unit": "vitest run",
     "test:e2e": "cypress open",
     "release": "semantic-release"
   },
@@ -29,23 +29,20 @@
     "vue-router": "^5.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^8.0.7",
-    "@babel/preset-env": "^8.0.7",
     "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/git": "^11.0.1",
     "@vitejs/plugin-vue": "^6.0.10",
-    "babel-jest": "^30.5.2",
     "conventional-changelog-eslint": "^6.1.0",
     "cypress": "^16.2.0",
     "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-vue": "^10.11.1",
-    "jest": "^30.5.2",
     "prettier": "^3.9.10",
     "sass-embedded": "^1.105.2",
     "semantic-release": "^25.0.9",
-    "vite": "^8.3.4",
-    "vite-plugin-environment": "^1.1.4"
+    "vite": "8.3.2",
+    "vite-plugin-environment": "^1.1.4",
+    "vitest": "^5.0.5"
   }
 }
