@@ -65,8 +65,8 @@
         :file="file"
         @file-clicked="$emit('file-clicked', $event)"
         @open-versioning-manager="$emit('open-versioning-manager', $event)"
-        :editMode="nameEditMode[file.id]"
-        @close="nameEditMode[file.id] = false"
+        :editMode="editedNameId === file.id"
+        @close="closeNameEditor(file.id)"
       />
     </template>
     <template #column-filter-empty>
@@ -100,17 +100,18 @@
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"
         @remove-model="$emit('remove-model', file)"
-        @update="nameEditMode[file.id] = true"
+        @update="editedNameId = file.id"
       />
     </template>
   </BIMDataTable>
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useNameEditing } from "../../../../composables/name-editing.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey, fileExtension } from "../../../../utils/files.js";
 
@@ -230,15 +231,7 @@ export default {
       emit("selection-changed", visibleSelection);
     };
 
-    let nameEditMode;
-    watch(
-      () => props.files,
-      (files) => {
-        nameEditMode = reactive({});
-        files.forEach((row) => (nameEditMode[row.id] = false));
-      },
-      { immediate: true },
-    );
+    const { editedNameId, closeNameEditor } = useNameEditing(() => props.files);
 
     const fileUploads = ref([]);
     watch(
@@ -287,8 +280,9 @@ export default {
       fileUploads,
       folderUploads,
       formattedFiles,
-      nameEditMode,
+      editedNameId,
       // Methods
+      closeNameEditor,
       cleanUpload,
       formatBytes,
       isFolder,
