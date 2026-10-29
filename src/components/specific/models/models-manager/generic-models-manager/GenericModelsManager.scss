@@ -31,6 +31,13 @@
     }
   }
 
+  .folder-selector {
+    position: absolute;
+    top: 48px;
+    right: 6px;
+    z-index: 10;
+  }
+
   &__separator {
     width: 100%;
     height: 1px;
