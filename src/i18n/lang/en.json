@@ -249,7 +249,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Selected folder",
-    "moveHere": "Move here"
+    "moveHere": "Move here",
+    "uploadHere": "Upload here"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Change color"

@@ -19,6 +19,7 @@
             condensed
             :project="project"
             :file="file"
+            :folder="uploadFolder"
             @upload-completed="$emit('file-uploaded', { key: file.key, file: $event })"
             @upload-canceled="$emit('upload-canceled', { key: file.key })"
             @upload-failed="$emit('upload-failed', { key: file.key })"
@@ -125,6 +126,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    uploadFolder: {
+      type: Object,
+      default: null,
+    },
   },
   emits: [
     "archive",
@@ -183,23 +188,25 @@ export default {
     const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
     const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
 
-    const allFolders = computed(() =>
-      projectFileStructure.value.children?.flatMap((file) => {
-        if (isFolder(file)) {
-          return [file, ...getFoldersInFolder(file)];
-        } else {
-          return [];
-        }
-      }) ?? []
+    const allFolders = computed(
+      () =>
+        projectFileStructure.value.children?.flatMap((file) => {
+          if (isFolder(file)) {
+            return [file, ...getFoldersInFolder(file)];
+          } else {
+            return [];
+          }
+        }) ?? [],
     );
-    const allFiles = computed(() =>
-      projectFileStructure.value.children?.flatMap((file) => {
-        if (isFolder(file)) {
-          return getFilesInFolder(file);
-        } else {
-          return file;
-        }
-      }) ?? []
+    const allFiles = computed(
+      () =>
+        projectFileStructure.value.children?.flatMap((file) => {
+          if (isFolder(file)) {
+            return getFilesInFolder(file);
+          } else {
+            return file;
+          }
+        }) ?? [],
     );
 
     const tagsByModelId = computed(() => {
