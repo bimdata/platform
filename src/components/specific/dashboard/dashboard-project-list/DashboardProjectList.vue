@@ -1,56 +1,76 @@
 <template>
   <div class="dashboard-project-list">
-    <div class="dashboard-project-list__title" :class="{ isCarousel }">
-      {{ $t("DashboardProjectList.title") }}
+    <AppLink class="dashboard-project-list__title" :to="{ name: routeNames.userProjects }">
+      <span>{{ $t("DashboardProjectList.title") }}</span>
+      <BIMDataIconChevron size="xxs" />
+    </AppLink>
+    <div ref="contentEl" class="dashboard-project-list__content">
+      <ProjectCard v-for="project in displayedProjects" :key="project.id" :project="project" />
     </div>
-    <component
-      :class="isCarousel ? '' : 'dashboard-project-list__content'"
-      :is="isCarousel ? 'BIMDataCarousel' : 'div'"
-    >
-      <ProjectCard
-        v-for="project in displayedProjects"
-        :key="project.id"
-        :project="project"
-      />
-    </component>
   </div>
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { onMounted, onUnmounted, ref, watchEffect } from "vue";
+import routeNames from "../../../../router/route-names.js";
 // Components
+import AppLink from "../../app/app-link/AppLink.vue";
 import ProjectCard from "../../projects/project-card/ProjectCard.vue";
+
+// Keep in sync with ProjectCard --card-width and DashboardProjectList.scss content gap.
+const CARD_WIDTH = 320;
+const CARD_GAP = 8;
+const MIN_CARDS = 1;
 
 export default {
   components: {
-    ProjectCard
+    AppLink,
+    ProjectCard,
   },
   props: {
     projects: {
       type: Array,
-      required: true
+      required: true,
     },
-    isCarousel: {
-      type: Boolean,
-      default: false
-    }
   },
   setup(props) {
+    const contentEl = ref(null);
+    const maxCards = ref(MIN_CARDS);
     const displayedProjects = ref([]);
+
+    const computeMaxCards = (width) => {
+      if (!width) return;
+      const fit = Math.floor((width + CARD_GAP) / (CARD_WIDTH + CARD_GAP));
+      maxCards.value = Math.max(MIN_CARDS, fit);
+    };
+
+    let observer;
+    onMounted(() => {
+      observer = new ResizeObserver((entries) => {
+        computeMaxCards(entries[0].contentRect.width);
+      });
+      if (contentEl.value) {
+        observer.observe(contentEl.value);
+        computeMaxCards(contentEl.value.clientWidth);
+      }
+    });
+    onUnmounted(() => observer && observer.disconnect());
 
     watchEffect(() => {
       if (props.projects) {
         displayedProjects.value = props.projects
           .slice()
           .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1))
-          .slice(0, 10);
+          .slice(0, maxCards.value);
       }
     });
 
     return {
-      displayedProjects
+      contentEl,
+      displayedProjects,
+      routeNames,
     };
-  }
+  },
 };
 </script>
 

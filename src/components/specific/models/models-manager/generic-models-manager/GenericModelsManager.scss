@@ -2,36 +2,78 @@
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
-  :deep(.bimdata-tabs) {
-    .bimdata-tabs__container__tab {
-      margin: 0 calc(var(--spacing-unit) * 3);
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+    padding: 0 var(--spacing-unit) var(--spacing-unit);
+    flex: 0 0 auto;
+  }
+
+  &__tabs {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    // The DS applies a `.dark` class by default (regression, no `dark` prop anymore).
+    // Force the light pill style by targeting both `.dark` and non-`.dark` states.
+    :deep(.bimdata-tabs__container),
+    :deep(.bimdata-tabs__container.dark) {
+      background-color: var(--color-white);
+      border-radius: 50px;
     }
-    .bimdata-tabs__container__tab.active {
-      background-color: transparent;
+
+    :deep(.bimdata-tabs__container .bimdata-tabs__container__tab),
+    :deep(.bimdata-tabs__container.dark .bimdata-tabs__container__tab) {
+      border-radius: 50px;
+      color: var(--color-granite);
+      font-size: 13px;
+      font-weight: 400;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+      width: fit-content;
+      padding: 0 12px;
+
+      &:hover:not(.active) {
+        background-color: rgba(47, 55, 74, 0.04);
+        color: var(--color-primary);
+      }
+
+      &.active {
+        background-color: var(--color-silver-light);
+        color: var(--color-primary);
+        font-weight: bold;
+      }
     }
   }
 
   &__tab-count {
-    margin-left: var(--spacing-unit);
-    padding: 0 4px;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    margin-left: calc(var(--spacing-unit) / 2);
+    padding: 0 6px;
+    border-radius: 9px;
+    font-size: 11px;
     background-color: var(--color-primary);
     color: var(--color-white);
   }
 
   &__search {
-    position: relative;
+    flex: 0 0 auto;
   }
 
   &__btn-add {
-    span {
-      margin-right: var(--spacing-unit);
-    }
+    flex: 0 0 auto;
   }
 
   &__separator {
+    flex: 0 0 auto;
     width: 100%;
     height: 1px;
     background-color: var(--color-silver-light);
@@ -45,6 +87,9 @@
   }
 
   &__table {
+    flex: 1 1 auto;
+    min-height: 0;
     padding: 0 var(--spacing-unit);
+    overflow: auto;
   }
 }

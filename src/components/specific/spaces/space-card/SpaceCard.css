@@ -5,6 +5,8 @@
   height: var(--card-height);
   transition-duration: 0.35s;
   overflow: visible;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.07);
+  padding: 6px;
 
   &:deep() {
     .bimdata-card__submenu {
@@ -20,6 +22,7 @@
       overflow: hidden;
       height: var(--card-content-height);
       padding: 0;
+      border-radius: 13px;
 
       .free-badge {
         position: absolute;
@@ -46,6 +49,7 @@
     }
 
     .bimdata-card__footer {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -78,6 +82,11 @@
           font-size: 14px;
           font-weight: bold;
         }
+      }
+      .stripe {
+        position: absolute;
+        right: 6px;
+        bottom: 6px;
       }
     }
   }

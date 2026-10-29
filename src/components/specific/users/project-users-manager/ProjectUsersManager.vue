@@ -1,72 +1,66 @@
 <template>
-  <BIMDataCard
-    class="project-users-manager"
-    :titleHeader="$t('ProjectUsersManager.title')"
-  >
-    <template #content>
-      <template v-if="users.length > 1 || invitations.length > 0">
-        <BIMDataCard class="project-users-manager__manager">
-          <template #right>
-            <BIMDataButton
-              data-test-id="btn-invit"
-              v-if="isProjectAdmin(project)"
-              ghost
-              rounded
-              icon
-              @click="toggleInvitationForm"
-            >
-              <BIMDataIconAddUser size="xs" />
-            </BIMDataButton>
-            <BIMDataButton ghost rounded icon @click="toggleUserSearch">
-              <BIMDataIconSearch size="xs" />
-            </BIMDataButton>
+  <section class="project-users-manager">
+    <template v-if="users.length > 1 || invitations.length > 0">
+      <header class="project-users-manager__header">
+        <BIMDataIconUser size="xxs" color="primary" class="m-r-6" />
+        <span class="project-users-manager__header__title">
+          {{ $t("ProjectUsersManager.title") }}
+        </span>
+        <span class="project-users-manager__header__count"> ({{ totalCount }}) </span>
+        <div class="project-users-manager__header__actions">
+          <BIMDataButton
+            data-test-id="btn-invit"
+            v-if="isProjectAdmin(project)"
+            ghost
+            rounded
+            icon
+            @click="toggleInvitationForm"
+          >
+            <BIMDataIconAddUser size="xs" />
+          </BIMDataButton>
+          <BIMDataButton ghost rounded icon @click="toggleUserSearch">
+            <BIMDataIconSearch size="xs" />
+          </BIMDataButton>
+        </div>
+      </header>
+      <div class="project-users-manager__list-container">
+        <transition-group name="list">
+          <BIMDataSearch
+            v-if="showUserSearch"
+            ref="searchInput"
+            key="user-search"
+            :placeholde`="$t('t.search')"
+            `
+            v-model="searchText"
+            clear
+          />
+
+          <ProjectInvitationForm
+            v-if="showInvitationForm"
+            key="invitation-form"
+            :project="project"
+            :users="users"
+            @close="closeInvitationForm"
+            @success="onInvitationSuccess"
+          />
+
+          <template v-for="user in displayedUsers">
+            <InvitationCard
+              v-if="!user.sub"
+              :key="`invitation-${user.id}`"
+              :project="project"
+              :invitation="user"
+            />
+            <UserCard v-else :key="`user-${user.id}`" :project="project" :user="user" />
           </template>
-          <template #content>
-            <div class="project-users-manager__list-container">
-              <transition-group name="list">
-                <BIMDataSearch
-                  v-if="showUserSearch"
-                  ref="searchInput"
-                  key="user-search"
-                  :placeholder="$t('t.search')"
-                  v-model="searchText"
-                  clear
-                />
-
-                <ProjectInvitationForm
-                  v-if="showInvitationForm"
-                  key="invitation-form"
-                  :project="project"
-                  :users="users"
-                  @close="closeInvitationForm"
-                  @success="onInvitationSuccess"
-                />
-
-                <template v-for="user in displayedUsers">
-                  <InvitationCard
-                    v-if="!user.sub"
-                    :key="`invitation-${user.id}`"
-                    :project="project"
-                    :invitation="user"
-                  />
-                  <UserCard
-                    v-else
-                    :key="`user-${user.id}`"
-                    :project="project"
-                    :user="user"
-                  />
-                </template>
-              </transition-group>
-            </div>
-          </template>
-        </BIMDataCard>
-      </template>
-
-      <template v-else>
-        <UsersManagerOnboarding :project="project" />
-      </template>
+        </transition-group>
+      </div>
     </template>
-  </BIMDataCard>
+
+    <template v-else>
+      <UsersManagerOnboarding :project="project" />
+    </template>
+  </section>
 </template>
 
 <script>
@@ -87,35 +81,39 @@ export default {
     InvitationCard,
     ProjectInvitationForm,
     UserCard,
-    UsersManagerOnboarding
+    UsersManagerOnboarding,
   },
   props: {
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     users: {
       type: Array,
-      required: true
+      required: true,
     },
     invitations: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const { isProjectAdmin } = useUser();
     const { loadProjectUsers, loadProjectInvitations } = useProjects();
 
     const { filteredList: displayedUsers, searchText } = useListFilter(
-      computed(() => props.invitations.concat(props.users.filter(user => user.user_id))),
-      ({ firstname, lastname, email }) => [firstname, lastname, email].join(" ")
+      computed(() => props.invitations.concat(props.users.filter((user) => user.user_id))),
+      ({ firstname, lastname, email }) => [firstname, lastname, email].join(" "),
+    );
+
+    const totalCount = computed(
+      () => props.users.filter((user) => user.user_id).length + props.invitations.length,
     );
 
     const {
       isOpen: showInvitationForm,
       close: closeInvitationForm,
-      toggle: toggleInvitationForm
+      toggle: toggleInvitationForm,
     } = useToggle();
 
     const searchInput = ref(null);
@@ -140,14 +138,15 @@ export default {
       searchText,
       showInvitationForm,
       showUserSearch,
+      totalCount,
       // Methods
       closeInvitationForm,
       isProjectAdmin,
       onInvitationSuccess,
       toggleInvitationForm,
-      toggleUserSearch
+      toggleUserSearch,
     };
-  }
+  },
 };
 </script>
 

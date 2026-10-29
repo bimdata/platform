@@ -1,4 +1,12 @@
 {
+  "AppSidebar": {
+    "home": "Home",
+    "spaces": "Spazi",
+    "projects": "Progetti",
+    "invitations": "Inviti",
+    "favorites": "Preferiti",
+    "subscription": "Abbonamento"
+  },
   "OidcCallbackError": {
     "message": "Si è verificato un errore durante l'autenticazione...",
     "retryButtonText": "Riprova"
@@ -42,10 +50,10 @@
     "placeholder": "< Nessun progetto >"
   },
   "DashboardProjectList": {
-    "title": "Progetti recenti"
+    "title": "Vedi tutti i progetti recenti"
   },
   "DashboardSpaceList": {
-    "title": "Spazi recenti"
+    "title": "Vedi tutti gli spazi recenti"
   },
   "DashboardWelcomeTile": {
     "title": "Dashboard",
@@ -147,6 +155,7 @@
     "view3dUnavailable": "La vista 3D non è disponibile, prova la beta"
   },
   "ModelLocation": {
+    "title": "Localizzazione ed Impronta",
     "emptyLocationMessage": "Nessun dato di localizzazione disponibile",
     "addLocationButtonText": "Riempi"
   },
@@ -180,7 +189,8 @@
     "inputPlaceholder": "Nome della tua unione"
   },
   "ModelsOverview": {
-    "title": "Panoramica dei modelli di progetto"
+    "title": "Modellazione 3D Immersiva",
+    "selectPreviewButton": "Scegli anteprima"
   },
   "ModelsOverviewOnboarding": {
     "text": "Carica il tuo primo modello",
@@ -378,7 +388,15 @@
     "projectsTileBottomText": "Vedi i progetti",
     "subscriptionsTileTitle": "Fatturazione",
     "subscriptionsTileText": "Qui trovi tutte le tue fatture e i tuoi ultimi dati di pagamento.",
-    "subscriptionsTileBottomText": "Gestisci gli abbonamenti"
+    "subscriptionsTileBottomText": "Gestisci gli abbonamenti",
+    "welcome": "Ciao {name}, è un piacere rivederti!",
+    "spacesTileLabel": "spazi attivi",
+    "spacesTileButton": "Vedi tutti gli spazi",
+    "projectsTileLabel": "progetti attivi",
+    "projectsTileButton": "Vedi tutti i progetti",
+    "createSpaceTitle": "Crea il tuo nuovo spazio",
+    "createSpaceText": "Organizza i tuoi progetti e collabora con il tuo team in un nuovo spazio.",
+    "createSpaceButton": "Crea uno spazio"
   },
   "Subscribe": {
     "title": "Scegli il tuo piano",
@@ -534,6 +552,13 @@
     "selectedOrga": "Conto di fatturazione:",
     "selectedSpace": "Spazio selezionato:"
   },
+    "ProjectStorageInfo": {
+    "title": "Archiviazione",
+    "usage": "{used} / {total}",
+    "currentProject": "Questo progetto",
+    "otherProjects": "Altri progetti"
+  },
+
   "SpaceSizeInfo": {
     "subscribePlatformButton": "Passa alla piattaforma pro",
     "usage": "{used} usato su {total}"

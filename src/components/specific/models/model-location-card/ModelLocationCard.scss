@@ -1,0 +1,33 @@
+.model-location-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 20px;
+  background-color: var(--color-white);
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) / 2);
+    height: 50px;
+    padding: 0 calc(var(--spacing-unit) * 2);
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 500;
+
+    &__title {
+      line-height: 1;
+    }
+  }
+
+  &__body {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+
+    :deep(.model-location) {
+      height: 100%;
+    }
+  }
+}

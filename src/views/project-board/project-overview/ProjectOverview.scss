@@ -1,37 +1,42 @@
+@use "/src/styles/mixins.scss";
+
 .project-overview {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: calc(var(--spacing-unit) * 2);
 
   &__tooltip-upload {
-    font-size: calc(var(--font-size) / 1.2)
+    font-size: calc(var(--font-size) / 1.2);
+  }
+
+  &__row {
+    display: grid;
+    // Figma ratios: 415 (preview) / 770 (map) / 550 (users) → approx 23 / 42 / 30
+    grid-template-columns: 23fr 42fr 30fr;
+    gap: calc(var(--spacing-unit) * 2);
   }
 
   &__block {
+    min-width: 0;
+
     &--upload {
       width: 100%;
     }
 
-    &--overview {
-      flex-grow: 1;
-      height: 480px;
-      background-color: var(--color-white);
-    }
-
+    &--overview,
+    &--location,
     &--users {
-      width: 560px;
-      height: 480px;
-      background-color: var(--color-white);
+      height: 432px;
     }
 
     &--models {
-      width: calc(100vw - var(--spacing-unit) * 7);
+      width: 100%;
       height: 540px;
-      background-color: var(--color-white);
     }
   }
 
   .models-overview,
+  .model-location-card,
   .models-manager,
   .project-users-manager {
     width: 100%;
@@ -39,15 +44,29 @@
   }
 }
 
-@media only screen and (max-width: 1600px) {
+@include mixins.media-breakpoint-down(xxl) {
   .project-overview {
-    &__block {
-      &--overview {
-        width: 100%;
-      }
+    &__row {
+      grid-template-columns: 1fr 1fr;
+    }
 
+    &__block {
       &--users {
-        width: 100%;
+        grid-column: 1 / span 2;
+      }
+    }
+  }
+}
+
+@include mixins.media-breakpoint-down(lg) {
+  .project-overview {
+    &__row {
+      grid-template-columns: 1fr;
+    }
+
+    &__block {
+      &--users {
+        grid-column: 1;
       }
     }
   }

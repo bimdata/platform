@@ -1,115 +1,105 @@
 <template>
-  <div class="app-header-menu">
-    <BIMDataDropdownMenu width="0">
-      <template #header>
-        <div data-test-id="btn-toggle-app-menu" class="app-header-menu__btn">
-          <UserAvatar
-            class="app-header-menu__btn__avatar"
-            :user="user"
-            size="34"
-          />
-          <BIMDataTextbox
-            data-test-id="user-name"
-            class="app-header-menu__btn__fullname"
-            :tooltip="false"
-            :text="fullName(user)"
-          />
-          <BIMDataTextbox
-            class="app-header-menu__btn__email"
-            :tooltip="false"
-            :text="user.email"
-          />
-        </div>
-      </template>
-      <template #element>
-        <div class="app-header-menu__container">
-          <div class="user-info">
-            <UserAvatar class="user-avatar" :user="user" size="50" />
-            <div class="user-content">
-              <BIMDataTextbox
-                class="user-name"
-                width="calc(100% - var(--spacing-unit) * 2)"
-                :tooltip="false"
-                :text="fullName(user)"
-              />
-              <BIMDataTextbox
-                class="user-email"
-                width="calc(100% - var(--spacing-unit) * 2)"
-                :tooltip="false"
-                :text="user.email"
-              />
-            </div>
-          </div>
-          <div class="separator"></div>
-          <template v-if="userIframeProfile">
-            <BIMDataButton
-              width="100%"
-              height="40px"
-              ghost
-              squared
-              @click="router.push({ name: routeNames.userProfile })"
-            >
-              {{ $t("AppHeaderMenu.entrySettings") }}
-            </BIMDataButton>
-          </template>
-          <template v-else>
-            <a
-              class="external-link"
-              :href="bimdataConnectProfileUrl"
-              target="blank"
-            >
-              <BIMDataButton width="100%" height="40px" ghost squared>
-                {{ $t("AppHeaderMenu.entrySettings") }}
-              </BIMDataButton>
-            </a>
-          </template>
-          <a class="external-link" :href="documentationUrl" target="blank">
-            <BIMDataButton width="100%" height="40px" ghost squared>
-              {{ $t("AppHeaderMenu.entryDocumentation") }}
-            </BIMDataButton>
-          </a>
-          <a
-            v-if="marketPlaceUrl"
-            class="external-link"
-            :href="marketPlaceUrl"
-            target="blank"
-          >
-            <BIMDataButton width="100%" height="40px" ghost squared>
-              {{ $t("AppHeaderMenu.entryMarketplace") }}
-            </BIMDataButton>
-          </a>
-          <div class="separator"></div>
-          <BIMDataButton
-            class="btn-language"
-            ghost
-            squared
-            height="40px"
-            @click.stop="openLanguageSelector"
-          >
-            <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
-            <span class="lang-badge">{{ $i18n.locale }}</span>
-          </BIMDataButton>
-          <BIMDataButton
-            data-test-id="btn-logout"
-            class="btn-logout"
-            color="primary"
-            fill
-            radius
-            @click="signOut"
-          >
-            <span>{{ $t("AppHeaderMenu.logoutButtonText") }}</span>
-          </BIMDataButton>
+  <div class="app-header-menu" v-click-away="close">
+    <button
+      type="button"
+      data-test-id="btn-toggle-app-menu"
+      class="app-header-menu__trigger"
+      :class="{ active: isOpen }"
+      @click="toggle"
+    >
+      <UserAvatar :user="user" size="38" />
+    </button>
 
-          <transition name="fade">
-            <LanguageSelector
-              v-show="showLanguageSelector"
-              v-click-away="closeLanguageSelector"
-              @close="closeLanguageSelector"
+    <transition name="fade">
+      <div v-show="isOpen" class="app-header-menu__popover">
+        <div class="app-header-menu__user">
+          <UserAvatar
+            class="app-header-menu__user__avatar"
+            :user="user"
+            size="44"
+          />
+          <div class="app-header-menu__user__content">
+            <BIMDataTextbox
+              data-test-id="user-name"
+              class="app-header-menu__user__name"
+              :tooltip="false"
+              :text="fullName(user)"
             />
-          </transition>
+            <BIMDataTextbox
+              class="app-header-menu__user__email"
+              :tooltip="false"
+              :text="user.email"
+            />
+          </div>
         </div>
-      </template>
-    </BIMDataDropdownMenu>
+
+        <div class="app-header-menu__divider"></div>
+
+        <button
+          v-if="userIframeProfile"
+          type="button"
+          class="app-header-menu__item"
+          @click="goToProfile"
+        >
+          <BIMDataIconAccountSettings size="s" />
+          <span>{{ $t("AppHeaderMenu.entrySettings") }}</span>
+        </button>
+        <a
+          v-else
+          class="app-header-menu__item"
+          :href="bimdataConnectProfileUrl"
+          target="blank"
+        >
+          <BIMDataIconAccountSettings size="s" />
+          <span>{{ $t("AppHeaderMenu.entrySettings") }}</span>
+        </a>
+
+        <a class="app-header-menu__item" :href="documentationUrl" target="blank">
+          <BIMDataIconLinkedDocument size="s" />
+          <span>{{ $t("AppHeaderMenu.entryDocumentation") }}</span>
+        </a>
+
+        <a
+          v-if="marketPlaceUrl"
+          class="app-header-menu__item"
+          :href="marketPlaceUrl"
+          target="blank"
+        >
+          <BIMDataIconMarketplace size="s" />
+          <span>{{ $t("AppHeaderMenu.entryMarketplace") }}</span>
+        </a>
+
+        <div class="app-header-menu__divider"></div>
+
+        <button
+          type="button"
+          class="app-header-menu__item app-header-menu__item--language"
+          @click.stop="openLanguageSelector"
+        >
+          <span>{{ $t("AppHeaderMenu.entryLanguage") }}</span>
+          <span class="app-header-menu__lang-badge">{{ $i18n.locale }}</span>
+        </button>
+
+        <BIMDataButton
+          data-test-id="btn-logout"
+          class="app-header-menu__logout"
+          color="primary"
+          fill
+          radius
+          @click="signOut"
+        >
+          {{ $t("AppHeaderMenu.logoutButtonText") }}
+        </BIMDataButton>
+
+        <transition name="fade">
+          <LanguageSelector
+            v-show="showLanguageSelector"
+            v-click-away="closeLanguageSelector"
+            @close="closeLanguageSelector"
+          />
+        </transition>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -133,15 +123,23 @@ export default {
     UserAvatar
   },
   setup() {
+    const router = useRouter();
     const { signOut } = useAuth();
     const { currentSpace } = useSpaces();
     const { user } = useUser();
+
+    const { isOpen, close, toggle } = useToggle();
 
     const {
       isOpen: showLanguageSelector,
       open: openLanguageSelector,
       close: closeLanguageSelector
     } = useToggle();
+
+    const goToProfile = () => {
+      close();
+      router.push({ name: routeNames.userProfile });
+    };
 
     const bimdataConnectProfileUrl =
       ENV.VUE_APP_URL_BIMDATACONNECT + "/profile/";
@@ -155,15 +153,19 @@ export default {
       documentationUrl,
       marketPlaceUrl,
       isSubscriptionEnabled: IS_SUBSCRIPTION_ENABLED,
+      isOpen,
       routeNames,
       showLanguageSelector,
       space: currentSpace,
       user,
       userIframeProfile,
       // Methods
+      close,
+      toggle,
+      goToProfile,
       closeLanguageSelector,
       openLanguageSelector,
-      router: useRouter(),
+      router,
       fullName,
       signOut
     };

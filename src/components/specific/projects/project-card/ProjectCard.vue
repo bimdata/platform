@@ -12,19 +12,17 @@
         data-guide="dashboard-project"
         :data-guide-param="project.id"
         :data-guide-click="
-          isSpaceAdmin(project.cloud) && displayedModels.length > 0
-            ? 'dashboard-project'
-            : ''
+          isSpaceAdmin(project.cloud) && displayedModels.length > 0 ? 'dashboard-project' : ''
         "
         :to="{
           name: routeNames.projectBoard,
           params: {
             spaceID: project.cloud.id,
-            projectID: project.id
-          }
+            projectID: project.id,
+          },
         }"
       >
-        <BIMDataCard>
+        <BIMDataCard border-radius="13px">
           <template #content>
             <ProjectCardActionBar
               class="project-card__action-bar"
@@ -35,12 +33,11 @@
               @open-viewer="goToModelViewer"
               @open-menu="openMenu"
             />
-            <div
+            <!-- <div
               class="project-card__left-stripe"
               :class="`project-card__left-stripe--${projectStatus(project)}`"
-            ></div>
+            ></div> -->
             <FavoriteBadge v-if="isFavoriteProject(project)" />
-            <ProjectStatusBadge :status="projectStatus(project)" />
             <ProjectCardModelPreview
               :project="project"
               :models="displayedModels"
@@ -48,8 +45,9 @@
             />
           </template>
           <template #footer>
-            <div class="project-card__title">
+            <div class="project-card__title flex items-center">
               <BIMDataTextbox :text="project.name" />
+              <ProjectStatusBadge :status="projectStatus(project)" />
             </div>
           </template>
         </BIMDataCard>
@@ -75,7 +73,7 @@ import routeNames from "../../../../router/route-names.js";
 import ModelService from "../../../../services/ModelService.js";
 import { useUser } from "../../../../state/user.js";
 import { openInViewer } from "../../../../utils/models.js";
-import { projectStatus } from "../../../../utils/projects.js"
+import { projectStatus } from "../../../../utils/projects.js";
 
 // Components
 import AppLink from "../../app/app-link/AppLink.vue";
@@ -95,27 +93,22 @@ function isElementInViewport(el, margin) {
   const { left, top, right, bottom } = el.getBoundingClientRect();
   const W = window.innerWidth || document.documentElement.clientWidth;
   const H = window.innerHeight || document.documentElement.clientHeight;
-  return (
-    left + margin >= 0 &&
-    top + margin >= 0 &&
-    right - margin <= W &&
-    bottom - margin <= H
-  );
+  return left + margin >= 0 && top + margin >= 0 && right - margin <= W && bottom - margin <= H;
 }
 
 const props = defineProps({
   project: {
     type: Object,
-    required: true
+    required: true,
   },
   actionMenu: {
     type: Boolean,
-    default: true
+    default: true,
   },
   viewerButton: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
 
 const router = useRouter();
@@ -129,7 +122,7 @@ const placeholder = ref(null);
 const displayedModels = ref([]);
 const currentModel = ref(null);
 
-const onModelChange = model => {
+const onModelChange = (model) => {
   currentModel.value = model;
 };
 
@@ -153,35 +146,32 @@ onMounted(() => {
           async () => {
             loading.value = true;
             const models = await ModelService.fetchModels(props.project, { cache: true });
-            displayedModels.value = models.reduce(
-              (acc, model) => {
-                if (
-                  !model.archived &&
-                  model.type !== MODEL_TYPE.META_BUILDING &&
-                  model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
-                ) {
-                  if (model.id === props.project.main_model_id) {
-                    acc.unshift(model);
-                  } else {
-                    acc.push(model);
-                  }
+            displayedModels.value = models.reduce((acc, model) => {
+              if (
+                !model.archived &&
+                model.type !== MODEL_TYPE.META_BUILDING &&
+                model.type !== MODEL_TYPE.PHOTOSPHERE_BUILDING
+              ) {
+                if (model.id === props.project.main_model_id) {
+                  acc.unshift(model);
+                } else {
+                  acc.push(model);
                 }
-                return acc;
-              },
-              []
-            );
+              }
+              return acc;
+            }, []);
             loading.value = false;
             visible.value = true;
           },
-          { immediate: true }
+          { immediate: true },
         );
-  
+
         unwatchModels = watch(
           displayedModels,
           () => {
             currentModel.value = displayedModels.value[0];
           },
-          { immediate: true }
+          { immediate: true },
         );
 
         observer.disconnect();
@@ -189,7 +179,7 @@ onMounted(() => {
     },
     {
       root: viewContainer.value,
-    }
+    },
   );
 
   observer.observe(placeholder.value);

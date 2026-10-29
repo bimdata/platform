@@ -1,81 +1,71 @@
 @use "/src/styles/mixins.scss";
 
 .dashboard {
-  --tile-width: 300px; // miminum tile width
-  --tile-height: 240px;
+  --tile-width: 300px; // minimum tile width
+  // Minimum width to hold exactly 3 cards with a small gap between them.
+  --spaces-min-width: calc(215px * 3 + var(--spacing-unit) * 2);
+  --projects-min-width: calc(320px * 3 + var(--spacing-unit) * 2);
 
-  &__head {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  gap: calc(var(--spacing-unit) * 3);
+
+  &__welcome {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  &__tiles {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--tile-width), 1fr));
-    grid-template-rows: repeat(auto-fit, var(--tile-height));
     gap: calc(var(--spacing-unit) * 2);
 
-    .app-link > .dashboard-button-tile {
+    .app-link {
       height: 100%;
     }
   }
 
   &__body {
-    margin: calc(var(--spacing-unit) * 3) 0;
+    flex: 1;
 
     display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
     gap: calc(var(--spacing-unit) * 2);
 
-    &__left {
-      flex-grow: 1;
-    }
+    &__section {
+      min-width: 0;
 
-    &__right {
-      padding-top: calc(var(--spacing-unit) * 4.5);
-      padding-bottom: calc(var(--spacing-unit) * 2);
-    }
+      // Proportional flex-grow (215*3 : 320*3) so section widths follow their content ratio.
+      // Right edge of the projects section aligns with the right edge of the tiles above.
+      &--spaces {
+        flex: 645 1 0;
+        min-width: min(100%, var(--spaces-min-width));
+      }
 
-    &__down {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 2);
+      &--projects {
+        flex: 960 1 0;
+        min-width: min(100%, var(--projects-min-width));
+      }
     }
-  }
-  .isSubscribeHorizontal {
-    flex-direction: column;
   }
 }
 
 @include mixins.media-breakpoint-down(xxl) {
   .dashboard {
-    --tile-height: 200px;
-
-    &__head {
+    &__tiles {
       grid-template-columns: repeat(2, minmax(var(--tile-width), 1fr));
-    }
-  }
-}
-
-@include mixins.media-breakpoint-down(xl) {
-  .dashboard {
-    &__body {
-      flex-direction: column-reverse;
-
-      &__right {
-        padding: var(--spacing-unit) 0;
-      }
     }
   }
 }
 
 @include mixins.media-breakpoint-down(lg) {
   .dashboard {
-    &__head {
+    &__tiles {
       grid-template-columns: 1fr;
-
-      &:deep() {
-        .dashboard-info-tile {
-          height: var(--tile-height);
-        }
-
-        .app-link > .dashboard-button-tile {
-          height: var(--tile-height);
-        }
-      }
     }
   }
 }

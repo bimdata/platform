@@ -1,9 +1,10 @@
 <template>
   <div class="generic-models-manager">
-    <div class="flex items-center justify-between">
+    <div class="generic-models-manager__toolbar">
       <BIMDataTabs
-        width="100%"
-        height="38px"
+        class="generic-models-manager__tabs"
+        width="auto"
+        height="36px"
         tabSize="120px"
         :tabs="tabs"
         :selected="currentTab.id"
@@ -27,27 +28,21 @@
         clear
         width="200px"
         height="32px"
-        class="generic-models-manager__search m-r-12"
-        :style="{
-          right:
-            currentTab?.id === 'photosphereBuildings' || currentTab?.id === 'metaBuildings'
-              ? '112px'
-              : '0',
-        }"
+        class="generic-models-manager__search"
       />
 
       <BIMDataButton
         v-if="!isProjectGuest(project)"
-        class="generic-models-manager__btn-add m-r-12"
+        class="generic-models-manager__btn-add"
         color="primary"
-        width="100px"
+        height="36px"
+        padding="0 var(--spacing-unit)"
         fill
-        radius
-        icon
+        rounded
         @click="uploadModels"
       >
-        <BIMDataIconExport margin="0 12px" />
-        <span> {{ $t("t.add") }}</span>
+        <BIMDataIconExport margin="0 8px 0 0" size="xxs" />
+        <span>{{ $t("t.add") }}</span>
       </BIMDataButton>
     </div>
 

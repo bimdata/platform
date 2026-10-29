@@ -1,16 +1,6 @@
 <template>
   <div class="project-overview">
     <AppSlotContent name="project-board-action">
-      <BIMDataButton
-        v-if="isProjectAdmin(project)"
-        color="primary"
-        outline
-        radius
-        icon
-        @click="openNotificationsSettings"
-      >
-        <BIMDataIconSettings fill color="default" size="xs" />
-      </BIMDataButton>
       <BIMDataTooltip
         v-if="!isProjectGuest(project)"
         class="project-overview__tooltip-upload"
@@ -26,11 +16,13 @@
         "
       >
         <BIMDataButton
+          padding="0 12px"
           data-test-id="btn-toggle-upload"
           :width="isLG ? undefined : '120px'"
+          height="36px"
           :color="showFileUploader ? 'granite' : 'primary'"
           fill
-          radius
+          rounded
           :icon="isLG"
           :disabled="!isUserOrga(space) && isFullTotal(spaceSubInfo)"
           @click="() => (shouldSubscribe ? openSubscriptionModal() : toggleFileUploader())"
@@ -44,6 +36,18 @@
           </span>
         </BIMDataButton>
       </BIMDataTooltip>
+      <BIMDataButton
+        v-if="isProjectAdmin(project)"
+        height="36px"
+        width="36px"
+        color="primary"
+        outline
+        rounded
+        icon
+        @click="openNotificationsSettings"
+      >
+        <BIMDataIconSettings fill color="default" size="xs" />
+      </BIMDataButton>
     </AppSlotContent>
 
     <AppSidePanelContent :title="$t('ProjectOverview.title')">
@@ -122,28 +126,37 @@
       />
     </transition>
 
-    <div class="project-overview__block--overview">
-      <AppLoading name="project-models">
-        <ModelsOverview
-          :project="project"
-          :models="modelsPreview"
-          @open-file-uploader="openFileUploader"
-        />
-      </AppLoading>
+    <div class="project-overview__row">
+      <div class="project-overview__block project-overview__block--overview">
+        <AppLoading name="project-models">
+          <ModelsOverview
+            :project="project"
+            :models="modelsPreview"
+            @model-changed="onModelChange"
+            @open-file-uploader="openFileUploader"
+          />
+        </AppLoading>
+      </div>
+
+      <div class="project-overview__block project-overview__block--location">
+        <AppLoading name="project-models">
+          <ModelLocationCard :project="project" :model="currentModel" />
+        </AppLoading>
+      </div>
+
+      <div class="project-overview__block project-overview__block--users">
+        <AppLoading name="project-users">
+          <ProjectUsersManager
+            data-guide="users-manager"
+            :project="project"
+            :users="users"
+            :invitations="invitations"
+          />
+        </AppLoading>
+      </div>
     </div>
 
-    <div class="project-overview__block--users">
-      <AppLoading name="project-users">
-        <ProjectUsersManager
-          data-guide="users-manager"
-          :project="project"
-          :users="users"
-          :invitations="invitations"
-        />
-      </AppLoading>
-    </div>
-
-    <div class="project-overview__block--models">
+    <div class="project-overview__block project-overview__block--models">
       <AppLoading name="project-models">
         <ModelsManager
           data-guide="models-manager"
@@ -188,6 +201,7 @@ import AppSlotContent from "../../../components/specific/app/app-slot/AppSlotCon
 import FileUploader from "../../../components/specific/files/file-uploader/FileUploader.vue";
 import ModelsManager from "../../../components/specific/models/models-manager/ModelsManager.vue";
 import ModelsOverview from "../../../components/specific/models/models-overview/ModelsOverview.vue";
+import ModelLocationCard from "../../../components/specific/models/model-location-card/ModelLocationCard.vue";
 import ProjectHistoryActivity from "../../../components/specific/projects/project-history-activity/ProjectHistoryActivity.vue";
 import ProjectNotificationsSettings from "../../../components/specific/projects/project-notifications-settings/ProjectNotificationsSettings.vue";
 import ProjectNotificationsRecipients from "../../../components/specific/projects/project-notifications-recipients/ProjectNotificationsRecipients.vue";
@@ -203,6 +217,7 @@ export default {
     FileUploader,
     ModelsManager,
     ModelsOverview,
+    ModelLocationCard,
     ProjectUsersManager,
     ProjectHistoryActivity,
     ProjectNotificationsSettings,
@@ -271,6 +286,13 @@ export default {
       ),
     );
 
+    // Currently selected model in the 3D preview card. Shared with the location card
+    // so the map reflects the model displayed in the preview.
+    const currentModel = ref(null);
+    const onModelChange = (model) => {
+      currentModel.value = model;
+    };
+
     const reloadData = debounce(async () => {
       await Promise.all([
         loadSpaceSubInfo(currentSpace.value),
@@ -326,6 +348,7 @@ export default {
       allowedExtensions: UPLOADABLE_EXTENSIONS,
       checkedActivity,
       checkedDaysActivity,
+      currentModel,
       invitations: projectInvitations,
       models: projectModels,
       modelsPreview,
@@ -356,6 +379,7 @@ export default {
       isProjectAdmin,
       isUserOrga,
       notifyForbiddenUpload,
+      onModelChange,
       openFileUploader,
       openSubscriptionModal,
       openNotificationsSettings,
