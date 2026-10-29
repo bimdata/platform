@@ -1,0 +1,107 @@
+.conflicting-documents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 450px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.conflicting-documents-list__group {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-silver);
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.conflicting-documents-list__group__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-silver);
+}
+
+.conflicting-documents-list__group__label {
+  color: var(--color-granite-light);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.conflicting-documents-list__group > ul,
+.conflicting-documents-list__ungrouped > ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.conflicting-documents-list__group .conflicting-documents-list__item {
+  border-bottom: 1px solid var(--color-silver);
+  background: var(--color-silver-light);
+}
+
+.conflicting-documents-list__group .conflicting-documents-list__item:last-child {
+  border-bottom: none;
+}
+
+.conflicting-documents-list__ungrouped > ul {
+  gap: 8px;
+}
+
+.conflicting-documents-list__ungrouped .conflicting-documents-list__item {
+  background-color: var(--color-silver-light);
+  border: 1px solid var(--color-silver);
+  border-radius: 8px;
+}
+
+.conflicting-documents-list__item__name {
+  flex: 1;
+  overflow: hidden;
+  color: var(--color-primary);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conflicting-documents-list__item__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.conflicting-documents-list__item__example {
+  overflow: hidden;
+  color: var(--color-granite-light);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conflicting-documents-list__item__path {
+  font-size: 11px;
+}
+
+.conflicting-documents-list__item__input {
+  flex: 1;
+}
+
+.conflicting-documents-list__item--editing {
+  background-color: var(--color-white);
+}
+
+.conflicting-documents-list__item--invalid .conflicting-documents-list__item__name {
+  color: var(--color-high);
+}
+
+.conflicting-documents-list__item--deleted .conflicting-documents-list__item__name {
+  color: var(--color-granite-light);
+  text-decoration: line-through;
+}

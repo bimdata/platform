@@ -6,9 +6,12 @@
   }
 
   &__update-form {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-unit);
+    padding: calc(var(--spacing-unit) / 2) 0;
+    gap: calc(var(--spacing-unit) / 2);
+
+    & > .flex {
+      gap: calc(var(--spacing-unit) / 2);
+    }
 
     &__input {
       flex-grow: 1;
@@ -23,6 +26,9 @@
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) / 2);
-    cursor: pointer;
+    .bimdata-textbox,
+    .bimdata-tooltip {
+      cursor: pointer;
+    }
   }
 }
