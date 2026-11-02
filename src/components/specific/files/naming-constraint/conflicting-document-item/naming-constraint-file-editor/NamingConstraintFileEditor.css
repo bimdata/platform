@@ -1,0 +1,20 @@
+.naming-constraint-file-editor {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px 12px;
+  flex: 1;
+  .naming-constraint-file-editor__field {
+    min-width: 0;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    &:deep(.bimdata-select), &:deep(.bimdata-input) {
+      margin: 12px 0px 6px !important;
+    }
+    span {
+      font-size: 11px;
+      color: var(--color-granite-light);
+    }
+  }
+}
