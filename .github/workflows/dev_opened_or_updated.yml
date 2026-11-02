@@ -44,6 +44,21 @@ jobs:
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.branch.outputs.name }}
 
+  unit-tests:
+    permissions:
+      contents: read
+    runs-on: [self-hosted, common]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          check-latest: true
+      - name: Run unit tests
+        run: npm ci && npm run test:unit
+
   # e2e-tests:
   #   permissions:
   #     contents: read
