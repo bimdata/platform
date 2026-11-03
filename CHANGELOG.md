@@ -1,3 +1,27 @@
+# [1.8.0](https://github.com/bimdata/platform/compare/v1.7.2...v1.8.0) (2026-11-03)
+
+
+### chore
+
+* bump @bimdata/viewer@2.20.1 from Github Actions [skip e2e] ([96f411e](https://github.com/bimdata/platform/commit/96f411e326989eda9326c0c5216338fdecfa64ec))
+* bump @bimdata/viewer@2.20.1-beta.1 from Github Actions [skip e2e] ([2c19278](https://github.com/bimdata/platform/commit/2c192787c3c0f9a6b735b3368d5b933cce0ba751))
+* bump @bimdata/viewer@2.20.2-beta.1 from Github Actions [skip e2e] ([7961345](https://github.com/bimdata/platform/commit/7961345dd3cee6a0d10d4f1eb414b86a872dbc54))
+* bump @bimdata/viewer@2.20.2-beta.2 from Github Actions [skip e2e] ([215b810](https://github.com/bimdata/platform/commit/215b8104690e7f5ad47a98a03beeccf13fef43e6))
+* bump @bimdata/viewer@2.20.2-beta.4 from Github Actions [skip e2e] ([9b2d11d](https://github.com/bimdata/platform/commit/9b2d11dc6ed104e1f10dcca282cd880726f27341))
+* bump @bimdata/viewer@2.20.2-beta.5 from Github Actions [skip e2e] ([b61a1ce](https://github.com/bimdata/platform/commit/b61a1ce50cb1978f9810390e581bd939bf3407f9))
+* bump @bimdata/viewer@2.20.2-beta.6 from Github Actions [skip e2e] ([f55531d](https://github.com/bimdata/platform/commit/f55531d3f129eb50621bb3faf71a801d4433fcc9))
+* bump @bimdata/viewer@2.20.2-beta.7 from Github Actions [skip e2e] ([9738468](https://github.com/bimdata/platform/commit/973846860ad0b10cdedef1b49ae80ecbb51ee4c3))
+
+### MINOR
+
+* Naming templates (#691) ([27ffcd0](https://github.com/bimdata/platform/commit/27ffcd08a4b807052ff3708028cdde4782a80aaf)), closes [#691](https://github.com/bimdata/platform/issues/691)
+
+### PATCH
+
+* fix: model and file edit mode stuck (#727) ([8018d78](https://github.com/bimdata/platform/commit/8018d7883d17db1b639508e7d58f3e99dd1226b6)), closes [#727](https://github.com/bimdata/platform/issues/727)
+* Re-enable anchor sychronization plugins ([82100ef](https://github.com/bimdata/platform/commit/82100efd096f9401a1e34c127c1420e128591af9))
+* Remove viewer2d-background in viewer configuration ([4c62d44](https://github.com/bimdata/platform/commit/4c62d4426cb8f2b2c8b386cd5926b6fd2ce03d54))
+
 ## [1.7.2](https://github.com/bimdata/platform/compare/v1.7.1...v1.7.2) (2026-10-06)
 
 
