@@ -63,10 +63,11 @@
       <FileNameCell
         :project="project"
         :file="file"
+        :namingConstraintPreview="folder.namingConstraintPreview"
         @file-clicked="$emit('file-clicked', $event)"
         @open-versioning-manager="$emit('open-versioning-manager', $event)"
-        :editMode="nameEditMode[file.id]"
-        @close="nameEditMode[file.id] = false"
+        :editMode="editedNameId === file.id"
+        @close="closeNameEditor(file.id)"
       />
     </template>
     <template #column-filter-empty>
@@ -96,21 +97,23 @@
         @download="$emit('download', file)"
         @file-clicked="$emit('file-clicked', file)"
         @manage-access="$emit('manage-access', file)"
+        @manage-naming-rule="$emit('manage-naming-rule', file)"
         @open-tag-manager="$emit('open-tag-manager', file)"
         @open-versioning-manager="$emit('open-versioning-manager', file)"
         @open-visa-manager="$emit('open-visa-manager', file)"
         @remove-model="$emit('remove-model', file)"
-        @update="nameEditMode[file.id] = true"
+        @update="editedNameId = file.id"
       />
     </template>
   </BIMDataTable>
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef, { columnsLG, columnsXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useNameEditing } from "../../../../composables/name-editing.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { formatBytes, generateFileKey, fileExtension } from "../../../../utils/files.js";
 
@@ -162,6 +165,10 @@ export default {
       type: Array,
       required: true,
     },
+    hasNamingConflict: {
+      type: Function,
+      required: true,
+    },
   },
   emits: [
     "back-parent-folder",
@@ -172,6 +179,7 @@ export default {
     "file-clicked",
     "file-uploaded",
     "manage-access",
+    "manage-naming-rule",
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
@@ -205,10 +213,14 @@ export default {
 
       return ext.replace(".", "").toUpperCase();
     };
+
     const formattedFiles = computed(() =>
       props.files.map((file) => ({
         ...file,
         type: isFolder(file) ? t("t.folder") : file.name ? formatExtension(file.name) : t("t.file"),
+        hasNamingConflict: isFolder(file)
+          ? props.hasNamingConflict(file)
+          : file.naming_constraint_conflict,
       })),
     );
 
@@ -230,15 +242,7 @@ export default {
       emit("selection-changed", visibleSelection);
     };
 
-    let nameEditMode;
-    watch(
-      () => props.files,
-      (files) => {
-        nameEditMode = reactive({});
-        files.forEach((row) => (nameEditMode[row.id] = false));
-      },
-      { immediate: true },
-    );
+    const { editedNameId, closeNameEditor } = useNameEditing(() => props.files);
 
     const fileUploads = ref([]);
     watch(
@@ -287,8 +291,9 @@ export default {
       fileUploads,
       folderUploads,
       formattedFiles,
-      nameEditMode,
+      editedNameId,
       // Methods
+      closeNameEditor,
       cleanUpload,
       formatBytes,
       isFolder,
