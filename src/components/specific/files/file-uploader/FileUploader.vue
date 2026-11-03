@@ -8,6 +8,7 @@
           :key="file.key"
           :project="project"
           :file="file"
+          :folder="folder"
           @upload-completed="onUploadCompleted(file.key, $event)"
           @upload-canceled="cleanUpload(file.key, 6000)"
           @upload-failed="cleanUpload(file.key, 12000)"
@@ -43,9 +44,9 @@
         radius
         color="primary"
         @click="
-          fileUploadInput('file', event => uploadFiles(event), {
+          fileUploadInput('file', (event) => uploadFiles(event), {
             accept: allowedFileTypes,
-            multiple: true
+            multiple: true,
           })
         "
       >
@@ -65,35 +66,39 @@ import FileUploadCard from "../file-upload-card/FileUploadCard.js";
 
 export default {
   components: {
-    FileUploadCard
+    FileUploadCard,
   },
   props: {
     isModelUploader: {
       type: Boolean,
-      default: false
+      default: false,
     },
     autoclose: {
       type: Boolean,
-      default: false
+      default: false,
     },
     project: {
       type: Object,
-      required: true
+      required: true,
     },
     allowedFileTypes: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     forbiddenFileTypes: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
+    folder: {
+      type: Object,
+      default: null,
+    },
   },
   emits: ["close", "file-uploaded", "forbidden-upload-attempt"],
   setup(props, { emit }) {
     const fileUploads = ref([]);
 
-    const uploadFiles = event => {
+    const uploadFiles = (event) => {
       let files = null;
       if (event.dataTransfer) {
         // Files from drag & drop
@@ -103,7 +108,7 @@ export default {
         files = Array.from(event.target.files);
       }
       const forbiddenUploads = [];
-      files = files.filter(file => {
+      files = files.filter((file) => {
         let shouldUpload = true;
         let fileType = file.type.toLowerCase();
         let fileExt = fileExtension(file.name).toLowerCase();
@@ -111,14 +116,14 @@ export default {
         if (props.allowedFileTypes.length > 0) {
           // Only keep allowed files
           shouldUpload = props.allowedFileTypes
-            .map(type => type.toLowerCase())
-            .some(type => type === fileType || type === fileExt);
+            .map((type) => type.toLowerCase())
+            .some((type) => type === fileType || type === fileExt);
         }
         if (props.forbiddenFileTypes.length > 0) {
           // Discard forbidden files
           shouldUpload = !props.forbiddenFileTypes
-            .map(type => type.toLowerCase())
-            .some(type => type === fileType || type === fileExt);
+            .map((type) => type.toLowerCase())
+            .some((type) => type === fileType || type === fileExt);
         }
         if (!shouldUpload) {
           forbiddenUploads.push(file);
@@ -129,9 +134,7 @@ export default {
       if (forbiddenUploads.length > 0) {
         emit("forbidden-upload-attempt", forbiddenUploads);
       }
-      files = files.map(file =>
-        Object.assign(file, { key: generateFileKey(file) })
-      );
+      files = files.map((file) => Object.assign(file, { key: generateFileKey(file) }));
       fileUploads.value = fileUploads.value.concat(files);
     };
 
@@ -142,7 +145,7 @@ export default {
 
     const cleanUpload = (key, delay = 100) => {
       setTimeout(() => {
-        const index = fileUploads.value.findIndex(f => f.key === key);
+        const index = fileUploads.value.findIndex((f) => f.key === key);
         fileUploads.value.splice(index, 1);
         if (props.autoclose && fileUploads.value.length === 0) {
           setTimeout(() => close(), 800);
@@ -163,9 +166,9 @@ export default {
       close,
       onUploadCompleted,
       uploadFiles,
-      fileUploadInput
+      fileUploadInput,
     };
-  }
+  },
 };
 </script>
 
