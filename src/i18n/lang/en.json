@@ -2,6 +2,7 @@
   "NamingConstraint": {
     "managerTitle": "Naming convention management",
     "constraintsTab": "Naming rules",
+    "listsTab": "Lists management",
     "rulesSectionTitle": "Rules list",
     "addRuleButton": "add a rule",
     "searchConstraintPlaceholder": "Search for a rule",
@@ -31,6 +32,7 @@
     "strictHelp": "If you check this box, you will have to rename every file that does not match this new rule.",
     "previewLabel": "Preview",
     "ruleSectionTitle": "Rule",
+    "emptyStateHelp": "Add your first element to start building your rule.",
     "addPartButton": "Add an element",
     "emptyParts": "Add at least one element to define the rule.",
     "partTypeLabel": "Type",
@@ -70,10 +72,11 @@
     "recursiveHelp": "If you check this box, this rule will also apply to files contained in the subfolders of your main folder.",
     "applyRuleSuccessTitle": "Naming rule applied",
     "applyRuleSuccessMessage": "The naming convention has been applied to the folder \"{folder}\".",
+    "applyRuleWithConflictsSuccessTitle": "Rule applied with conflicts",
+    "applyRuleWithConflictsSuccessMessage": "The naming rule has been applied to the folder \"{folder}\". Some files may still be in conflict.",
     "applyRuleError": "The naming convention could not be applied.",
     "applyRuleWarningTitle": "Name does not match the rule",
     "conflictTooltip": "This file does not match the folder naming convention.",
-    "conflictModalIntro": "Rename here the files that do not match the strict rule you set.",
     "conflictModalWarning": "Rename or delete the conflicting documents to continue",
     "conflictCurrentNameLabel": "Current name",
     "conflictNewNameLabel": "New name",
@@ -88,7 +91,6 @@
     "renameButton": "Confirm new name",
     "applyRenameButton": "Apply new names",
     "confirmRenameButton": "Accept names",
-    "renameFilePlaceholder": "Rename the file",
     "renameConflictsMenuItem": "Rename conflicting files",
     "noConflictsTitle": "No conflicting files",
     "noConflictsMessage": "All files match their folder naming convention.",
@@ -117,6 +119,9 @@
       "rulesDescription": "This list is used by the following naming rules:",
       "resolution": "To delete this list, first update the affected rules so that they no longer use it."
     }
+  },
+  "FolderNamingConstraint": {
+    "ruleSectionTitle": "Rules applied to the folder: "
   },
   "OidcCallbackError": {
     "message": "An error occured during authentication...",
