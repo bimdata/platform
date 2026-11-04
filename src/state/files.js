@@ -1,6 +1,9 @@
 import { reactive, readonly, toRefs } from "vue";
 import FileService from "../services/FileService.js";
-import { FileStructureHandler, segregate } from "../utils/file-structure.js";
+import NamingConstraintService from "../services/NamingConstraintService.js";
+import { collectDescendants } from "../utils/file-tree.js";
+import { FileStructureHandler, isFolder, segregate } from "../utils/file-structure.js";
+import { matchName } from "../utils/naming-constraint.js";
 
 import { useAuth } from "./auth.js";
 import { useModels } from "./models.js";
@@ -11,8 +14,41 @@ const state = reactive({
 
 let fileStructureHandler = new FileStructureHandler();
 
+/**
+ * The API flags `naming_constraint_conflict` with a naive split on the rule
+ * separator, so a name whose values contain the separator (e.g. "." as
+ * separator and a value ending with ".") is wrongly reported as conflicting.
+ * Re-check flagged documents with the client-side parser to stay consistent
+ * with the naming conflict modal.
+ */
+const fixNamingConflicts = async (project, fileStructure) => {
+  if (!Array.isArray(fileStructure?.children)) return;
+
+  const flagged = collectDescendants(
+    fileStructure,
+    file => !isFolder(file) && file.naming_constraint_conflict
+  );
+  const parentIds = [...new Set(flagged.map(file => file.parent_id))];
+  const rules = new Map(
+    await Promise.all(
+      parentIds.map(async id => [
+        id,
+        await NamingConstraintService.getEffectiveFolderRule(project, { id })
+      ])
+    )
+  );
+
+  for (const file of flagged) {
+    const rule = rules.get(file.parent_id);
+    if (rule && matchName(file.name, rule)) {
+      file.naming_constraint_conflict = false;
+    }
+  }
+};
+
 const loadProjectFileStructure = async project => {
   const fileStructure = await FileService.fetchFileStructure(project);
+  await fixNamingConflicts(project, fileStructure);
   state.projectFileStructure = fileStructure;
   fileStructureHandler.serialize(fileStructure);
   return fileStructure;

@@ -5,5 +5,5 @@ tests
 .dockerignore
 node_modules
 cypress.json
-jest.config.js
+vitest.config.js
 README.md

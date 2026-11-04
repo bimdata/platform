@@ -8,7 +8,7 @@
     "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "serve": "vite preview",
     "lint": "eslint --fix",
-    "test:unit": "jest",
+    "test:unit": "vitest run",
     "test:e2e": "cypress open",
     "i18n:check": "node scripts/i18n-check.mjs",
     "release": "semantic-release"
@@ -17,7 +17,7 @@
     "@bimdata/bcf-components": "6.7.8",
     "@bimdata/components": "1.10.3",
     "@bimdata/design-system": "2.4.4",
-    "@bimdata/typescript-fetch-api-client": "10.48.0",
+    "@bimdata/typescript-fetch-api-client": "10.48.1",
     "@bimdata/viewer": "2.20.2-beta.7",
     "@paddle/paddle-js": "^1.6.5",
     "async": "^3.2.6",
@@ -30,23 +30,20 @@
     "vue-router": "^5.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^8.0.7",
-    "@babel/preset-env": "^8.0.7",
     "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/git": "^11.0.1",
     "@vitejs/plugin-vue": "^6.0.10",
-    "babel-jest": "^30.5.2",
     "conventional-changelog-eslint": "^6.1.0",
     "cypress": "^16.2.0",
     "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-vue": "^10.11.1",
-    "jest": "^30.5.2",
     "prettier": "^3.9.10",
     "sass-embedded": "^1.105.2",
     "semantic-release": "^25.0.9",
-    "vite": "^8.3.4",
-    "vite-plugin-environment": "^1.1.4"
+    "vite": "8.3.2",
+    "vite-plugin-environment": "^1.1.4",
+    "vitest": "^5.0.5"
   }
 }

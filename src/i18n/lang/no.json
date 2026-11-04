@@ -1,4 +1,35 @@
 {
+  "NamingConstraint": {
+    "managerTitle": "Administrasjon av navnekonvensjoner",
+    "constraintsTab": "Navneregler",
+    "strictBadge": "Streng",
+    "createConstraintTitle": "Opprette en regel",
+    "updateConstraintTitle": "Redigere en regel",
+    "createListTitle": "Opprette listen min",
+    "updateListTitle": "Redigere listen min",
+    "nameLabel": "Navn",
+    "strictLabel": "Streng regel",
+    "strictHelp": "Hvis du krysser av i denne boksen, må du gi nytt navn til alle filer som ikke samsvarer med denne nye regelen.",
+    "previewLabel": "Forhåndsvisning",
+    "ruleSectionTitle": "Regel",
+    "addPartButton": "Legg til et element",
+    "emptyParts": "Legg til minst ett element for å definere regelen.",
+    "partTypeLabel": "Type",
+    "partTypeValuesIn": "Liste",
+    "partTypeBounded": "Avgrensede verdier",
+    "partTypeNChars": "N tegn",
+    "elementsHelp": "Kommaseparert liste over tillatte verdier.",
+    "minLabel": "Min",
+    "maxLabel": "Maks",
+    "maxLengthLabel": "Maks lengde",
+    "emptyElementsError": "Oppgi minst én verdi.",
+    "invalidBoundsError": "Maks må være større enn eller lik min.",
+    "missingBoundsError": "Min og maks er påkrevd for avgrensede verdier.",
+    "invalidMaxLengthError": "Maks lengde må være minst 1.",
+    "missingListError": "Velg en liste for hvert listeelement.",
+    "listInUseErrorTitle": "Liste i bruk",
+    "listInUseErrorMessage": "Denne listen brukes av følgende regler: {constraints}. Rediger dem før du sletter listen."
+  },
   "OidcCallbackError": {
     "message": "En feil oppsto under autentiseringen...",
     "retryButtonText": "Prøv igjen"
@@ -188,19 +219,15 @@
   },
   "FileActionsCell": {
     "openViewerButtonText": "Åpne i fremviser",
-    "previewModelButtonText": "Forhåndsvis",
     "addTagsButtonText": "Legg til tags",
     "addVersionButtonText": "Legg til versjon",
     "manageAccessButtonText": "Administrer tilgang",
     "createModelButtonText": "Definer som modell",
-    "createPhotosphereButtonText": "Definer som fotosfære",
     "removeModelButtonText": "Fjern modeller",
     "versioningButtonText": "Legg til en versjon",
-    "visaButtonText": "Forespørsel om godkjenning"
-  },
-  "FileNameCell": {
-    "modelFile": "Modell",
-    "photosphereFile": "Fotosfære"
+    "visaButtonText": "Valideringsforespørsel",
+    "previewModelButtonText": "Forhåndsvis",
+    "createPhotosphereButtonText": "Definer som fotosfære"
   },
   "FilesActionBar": {
     "moveButtonText": "Flytt til"
@@ -213,13 +240,13 @@
   "FilesManager": {
     "title": "Prosjektfiler",
     "createModelNotification": "Modell opprettet",
+    "structureImport": "Importer en DMS-struktur",
+    "gedDownload": "Last ned DMS",
+    "folderImport": "Importer en mappe",
     "createModelsNotification": "Modeller opprettet",
     "createPhotosphereNotification": "Fotosfære opprettet",
     "createPhotospheresNotification": "Fotosfærer opprettet",
-    "structureImport": "Importer en DMS-struktur",
     "removeModelsNotification": "Modeller fjernet",
-    "gedDownload": "Last ned DMS",
-    "folderImport": "Importer en mappe",
     "foldersTab": "Mapper",
     "filesTab": "Dokumenter",
     "visasTab": "Visum"
@@ -229,7 +256,7 @@
     "uploadFileButtonText": "Last opp en fil",
     "createFolderButtonText": "Opprett en mappe",
     "GEDStructureImport": "Importer en DMS-struktur",
-    "folderImport": "Importer en mappe"
+    "folderImport": "Importer en fil"
   },
   "FilesTable": {
     "headers": {
@@ -248,7 +275,7 @@
     "rightsHeader": "Rettigheter",
     "membersHeader": "Medlemmer",
     "groupHeader": "Gruppe",
-    "propagate": "For å overføre rettighetene til undermapper (rekursivt), merk av i boksen før du bekrefter skjemaet.",
+    "propagate": "For å overføre rettighetene til undermapper (rekursivt), kryss av i boksen før du validerer skjemaet.",
     "safeZoneModal": {
       "title": "Advarsel!",
       "text": "Tilgangsrettighetene er endret, men ikke lagret. Er du sikker på at du vil lukke rettighetsbehandleren? (Endringene vil gå tapt)"
@@ -284,9 +311,6 @@
   "InvitationForm": {
     "emailInputPlaceholder": "E-postadresse",
     "emailInputErrorMessage": "Ugyldig e-post",
-    "projectUserAlreadyExistError": "Brukeren {email} er allerede med i prosjektet",
-    "spaceUserAlreadyExistError": "Brukeren {email} er allerede med i området",
-    "spaceAdminAlreadyExistError": "Brukeren {email} er allerede administrator for området",
     "roleInputLabel": "Rolle",
     "roles": {
       "admin": "Administrator",
@@ -295,6 +319,9 @@
     },
     "submitButtonText": "Send invitasjon",
     "successNotifText": "Invitasjon sendt",
+    "projectUserAlreadyExistError": "Brukeren {email} er allerede med i prosjektet",
+    "spaceUserAlreadyExistError": "Brukeren {email} er allerede med i området",
+    "spaceAdminAlreadyExistError": "Brukeren {email} er allerede administrator for området",
     "successUserToAdmin": "Brukeren er nå administrator"
   },
   "ModelActionsCell": {
@@ -329,8 +356,8 @@
       "archive": "Arkiver",
       "dwg": "DWG",
       "metaBuildings": "Meta-bygninger",
-      "photosphereBuildings": "Fotosfærebygninger",
-      "upload": "Last opp"
+      "upload": "Last opp",
+      "photosphereBuildings": "Fotosfærebygninger"
     }
   },
   "ModelsMergeModal": {
@@ -346,13 +373,13 @@
   },
   "ModelsTable": {
     "headers": {
+      "version": "Versjon",
       "tags": "Tagger",
-      "location": "Plassering",
-      "version": "Versjon"
+      "location": "Plassering"
     },
     "emptyTablePlaceholder": {
       "text": "Ingen modell",
-      "textPdf": "Klikk på «Definer som modell» i «fil»-menyen i DMS for å gjøre pdf-tegningene dine tilgjengelige i modellbehandleren."
+      "textPdf": "Fra «fil»-menyen i filbehandleren klikker du på «Definer som modell» for å gjøre pdf-tegningene dine tilgjengelige i modellbehandleren."
     }
   },
   "ProjectCardDeleteGuard": {
@@ -374,9 +401,9 @@
     "free": "Gratis"
   },
   "SpaceCardActionMenu": {
+    "removeImageButtonText": "Fjern bilde",
     "addToFavorite": "Legg til i favoritter",
-    "removeFavorite": "Fjern fra favoritter",
-    "removeImageButtonText": "Fjern bilde"
+    "removeFavorite": "Fjern fra favoritter"
   },
   "SpaceCardDeleteGuard": {
     "title": "Slett område",
@@ -407,11 +434,11 @@
     }
   },
   "UserRoleBadge": {
+    "guest": "Gjest",
     "spaceAdmin": "Områdeadministrator",
     "projectAdmin": "Prosjektadministrator",
     "spaceUser": "Områdebruker",
-    "projectUser": "Prosjektbruker",
-    "guest": "Gjest"
+    "projectUser": "Prosjektbruker"
   },
   "UsersManagerOnboarding": {
     "text": "Inviter den første samarbeidspartneren din",
@@ -428,17 +455,16 @@
   "FolderPermissionSelector": {
     "label": "Alle",
     "options": {
-      "default": "Standard",
       "accessDenied": "Ingen tilgang",
       "readOnly": "Skrivebeskyttet",
-      "readWrite": "Lese-/skrivetilgang"
+      "readWrite": "Lese-/skrivetilgang",
+      "default": "Standard"
     }
   },
   "GroupMembersSelector": {
     "title": "Administrer gruppemedlemmer"
   },
   "Errors": {
-    "logsFetchError": "Kunne ikke hente prosjektloggene",
     "spacesFetchError": "Kunne ikke hente frem områder",
     "spaceCreateError": "Kunne ikke opprette område",
     "spaceUpdateError": "Kunne ikke oppdatere område",
@@ -502,17 +528,16 @@
     "fileFetchError": "Feil ved gjenoppretting av mappe/fil",
     "bcfImportError": "Det oppstod en feil ved importering",
     "bcfExportError": "Eksportering feilet...",
-    "bcfExportXlsxError": "Xlsx-eksport mislyktes...",
     "fileVersionsFetchError": "Denne versjonen av dokumentet kan ikke gjenopprettes.",
     "fileVersionsMakeHeadError": "Bytte av dokument til nåværende versjon feilet.",
     "fileVersionDelete": "Sletting av dokumentet feilet",
     "userAlreadyExistsError": "Brukeren er allerede medlem av dette området/prosjektet.",
     "tagsFetchError": "Kunne ikke hente tagger",
-    "tagsCreateError": "Feil ved oppretting av taggen",
-    "tagsUpdateError": "Feil ved endring av taggen",
-    "tagsDeleteError": "Feil ved sletting av taggen",
-    "tagsAddDocumentError": "Feil ved tilknytning av taggen til dokumentet",
-    "tagsDeleteDocumentError": "Feil ved fjerning av taggen fra dokumentet",
+    "tagsCreateError": "Feil under opprettelse av taggen",
+    "tagsUpdateError": "Feil under endring av taggen",
+    "tagsDeleteError": "Feil under sletting av taggen",
+    "tagsAddDocumentError": "Feil under tilknytning av taggen til dokumentet",
+    "tagsDeleteDocumentError": "Feil under fjerning av taggen fra dokumentet",
     "spaceSizeFullError": "Lagringsplassen din er full",
     "spaceFetchError": "Kunne ikke hente informasjon om området",
     "projectFolderTreeFetchError": "Kunne ikke hente prosjektlisten",
@@ -523,7 +548,22 @@
     "invitationViewDeclineError": "Kunne ikke avslå invitasjonen",
     "folderFetchFolder": "Kunne ikke hente mappedata",
     "bcfDeleteError": "Sletting mislyktes",
-    "groupImportError": "Import av grupper mislyktes"
+    "namingConstraintsFetchError": "Kunne ikke hente navneregler",
+    "namingConstraintFetchError": "Kunne ikke hente denne navneregelen",
+    "namingConstraintCreateError": "Kunne ikke opprette denne navneregelen",
+    "namingConstraintUpdateError": "Kunne ikke oppdatere denne navneregelen",
+    "namingConstraintDeleteError": "Kunne ikke slette denne navneregelen",
+    "namingPartListsFetchError": "Kunne ikke hente navnelister",
+    "namingPartListCreateError": "Kunne ikke opprette denne navnelisten",
+    "namingPartListUpdateError": "Kunne ikke oppdatere denne navnelisten",
+    "namingPartListDeleteError": "Kunne ikke slette denne navnelisten",
+    "folderNamingConstraintFetchError": "Kunne ikke hente navneregelen for mappen",
+    "folderNamingConstraintSetError": "Kunne ikke bruke navneregelen på denne mappen",
+    "folderNamingConstraintDeleteError": "Kunne ikke fjerne navneregelen fra denne mappen",
+    "conflictingDocumentsFetchError": "Kunne ikke hente dokumenter i konflikt",
+    "groupImportError": "Import av gruppe mislyktes",
+    "logsFetchError": "Kunne ikke hente prosjektloggene",
+    "bcfExportXlsxError": "Xlsx-eksport mislyktes..."
   },
   "ProjectStatusBadge": {
     "new": "NY",
@@ -762,15 +802,6 @@
         "refresh": "Reinitialiser verifisering"
       }
     },
-    "VisaValidatorCell": {
-      "title": "Detaljer om verifiserere",
-      "noGroup": "Ingen gruppe",
-      "accept": "Verifisert",
-      "delayed": "Forsinket",
-      "deny": "Avslått",
-      "pending": "Avventer",
-      "multipleGroups": "{count} grupper"
-    },
     "comments": {
       "commentary": "Kommentar",
       "publish": "Publiser",
@@ -779,17 +810,6 @@
     },
     "selectionValidator": {
       "warning": "Brukeren kan ikke åpne denne filen."
-    },
-    "view": {
-      "visaPending": "Visum venter",
-      "visaClosed": "Visum lukket",
-      "myRequests": "Mine forespørsler",
-      "valid": "Godkjent",
-      "pending": "Venter",
-      "denied": "Avslått",
-      "overdue": "Forsinket",
-      "openVisaBtn": "Åpne visum",
-      "validateVisaBtn": "Godkjenn visum"
     },
     "noVisa": "Et visum har ikke blitt opprettet enda",
     "accept": "Aksepter",
@@ -811,6 +831,26 @@
       "deleteComment": {
         "text": "Er du sikker på at du vil fjerne denne kommentaren ?"
       }
+    },
+    "VisaValidatorCell": {
+      "title": "Detaljer om verifiserere",
+      "noGroup": "Ingen gruppe",
+      "accept": "Verifisert",
+      "delayed": "Forsinket",
+      "deny": "Avslått",
+      "pending": "Avventer",
+      "multipleGroups": "{count} grupper"
+    },
+    "view": {
+      "visaPending": "Visum venter",
+      "visaClosed": "Visum lukket",
+      "myRequests": "Mine forespørsler",
+      "valid": "Godkjent",
+      "pending": "Venter",
+      "denied": "Avslått",
+      "overdue": "Forsinket",
+      "openVisaBtn": "Åpne visum",
+      "validateVisaBtn": "Godkjenn visum"
     }
   },
   "ProjectBcf": {
@@ -832,18 +872,18 @@
     "noSearchResultsTitle": "Ingen resultater",
     "noSearchResultsText": "Søket ditt ga ingen resultater, vennligst sjekk filter eller nøkkelord",
     "importBcfNotificationSuccess": "BCF-filen ble importert",
-    "importBcfNotificationError": "Feil ved import av BCF-filen",
-    "deleteBcfTitle": "Slett {bcfCount} BCF",
+    "importBcfNotificationError": "Feil under import av BCF-filen",
     "exportBcfNotificationSuccess": "BCF ble eksportert",
-    "exportBcfXlsxNotificationSuccess": "Xlsx-eksport fullført!",
-    "exportBcfNotificationError": "Feil ved eksport av BCF til xlsx",
-    "selectedTopicCount": "Antall valgte saker",
-    "deleteBcfText": "Du er i ferd med å slette alle valgte saker",
+    "exportBcfNotificationError": "Feil under eksport av BCF til Xlsx",
+    "selectedTopicCount": "Antall valgte emner",
+    "deleteBcfText": "Du er i ferd med å slette alle valgte emner",
     "deleteInProgress": "Sletting pågår",
     "deleteInProgressSub": "Denne prosessen kan ta en liten stund.",
-    "deleteBcfNotificationSuccess": "Saker slettet",
-    "deleteBcfNotificationError": "Feil ved sletting av saker",
-    "onlyAdminParameters": "Du må være prosjektadministrator"
+    "deleteBcfNotificationSuccess": "Emner slettet",
+    "deleteBcfNotificationError": "Feil under sletting av emner",
+    "onlyAdminParameters": "Du må være prosjektadministrator",
+    "deleteBcfTitle": "Slett {bcfCount} BCF",
+    "exportBcfXlsxNotificationSuccess": "Xlsx-eksport fullført!"
   },
   "GuidedTour": {
     "platform": {
@@ -952,7 +992,7 @@
     "title": "Profilinnstillinger",
     "loading": {
       "message": "Sletting pågår.",
-      "subMessage": "Denne prosessen kan ta litt tid. Ikke forlat siden."
+      "subMessage": "Denne prosessen kan ta litt tid, ikke forlat siden."
     }
   },
   "Invitations": {
@@ -971,21 +1011,11 @@
     "viewerButton": "Åpne i visningsprogrammet",
     "docPlaceholder": "Ingen forhåndsvisning for dette dokumentet"
   },
-  "MainModelSelector": {
-    "title": "Velg forhåndsvisning av prosjektet"
-  },
-  "UserFavoritesManager": {
-    "title": "Favorittområder / -prosjekter"
-  },
-  "VisasDeleteModal": {
-    "title": "Slett {visasCount} visum",
-    "message": "Du er i ferd med å slette visumene på følgende filer:"
-  },
   "GroupImport": {
     "title": "Importer en gruppe",
     "selectAll": "Velg alle",
     "notAdmin": "Du må være prosjektadministrator",
-    "noGroup": "Det finnes ingen grupper for dette prosjektet",
+    "noGroup": "Det finnes ingen gruppe for dette prosjektet",
     "noProject": "Det finnes ingen andre prosjekter",
     "noResult": "Ingen prosjekter med dette navnet"
   },
@@ -997,7 +1027,6 @@
   "t": {
     "add": "Legg til",
     "amount": "Mengde",
-    "apply": "Bruk",
     "archive": "Arkiv",
     "back": "Tilbake",
     "cancel": "Avbryt",
@@ -1008,54 +1037,55 @@
     "createdBy": "Laget av",
     "close": "Lukk",
     "date": "Dato",
-    "days_ago": "for {count} dag siden | for {count} dager siden",
     "delete": "Slett",
     "description": "Beskrivelse",
     "download": "Last ned",
-    "dueDate": "Frist",
     "edit": "Rediger",
-    "emptyFile": "Ingen fil",
     "emptyFolder": "Tom mappe",
-    "emptyVisa": "Ingen visum",
     "error": "Feil",
     "export": "Eksporter",
-    "exportXlsx": "Eksporter som xlsx",
     "file": "Fil",
-    "filters": "Filtre",
     "folder": "Mappe",
-    "hours_ago": "for {count} time siden | for {count} timer siden",
     "import": "Importer",
     "invalidName": "Ugyldig navn",
-    "just_now": "Akkurat nå",
     "leave": "Forlat",
-    "location": "Plassering",
-    "minutes_ago": "for {count} minutt siden | for {count} minutter siden",
     "modifiedOn": "Sist endret",
     "modify": "Rediger",
     "name": "Navn",
-    "notSpecified": "Ikke angitt",
     "ok": "OK",
     "open": "Åpne",
     "or": "eller",
-    "project": "Prosjekt",
-    "projects": "Prosjekter",
     "rename": "Gi nytt navn",
-    "reset": "Tilbakestill",
-    "rootFolder": "Rotmappe",
-    "save": "Lagre",
     "search": "Søk",
     "size": "Størrelse",
     "space": "Område",
-    "spaces": "Områder",
     "status": "Status",
     "success": "Vellykket",
-    "today": "I dag",
     "type": "Type",
     "unarchive": "Gjenopprett fra arkiv",
-    "validate": "Godkjenn",
+    "validate": "Valider",
+    "verify": "Kontroller",
+    "apply": "Bruk",
+    "days_ago": "for {count} dag siden | for {count} dager siden",
+    "dueDate": "Frist",
+    "emptyFile": "Ingen fil",
+    "emptyVisa": "Ingen visum",
+    "exportXlsx": "Eksporter som xlsx",
+    "filters": "Filtre",
+    "hours_ago": "for {count} time siden | for {count} timer siden",
+    "just_now": "Akkurat nå",
+    "location": "Plassering",
+    "minutes_ago": "for {count} minutt siden | for {count} minutter siden",
+    "notSpecified": "Ikke angitt",
+    "project": "Prosjekt",
+    "projects": "Prosjekter",
+    "reset": "Tilbakestill",
+    "rootFolder": "Rotmappe",
+    "save": "Lagre",
+    "spaces": "Områder",
+    "today": "I dag",
     "validation": "Godkjenninger",
     "validator": "Verifiserere",
-    "verify": "Kontroller",
     "yesterday": "I går"
   },
   "FolderCreationButton": {
@@ -1070,5 +1100,19 @@
   "FileTreePreviewModal": {
     "title": "Importer DMS-struktur fra",
     "emptySource": "Dette prosjektet har ingen mapper"
+  },
+  "FileNameCell": {
+    "modelFile": "Modell",
+    "photosphereFile": "Fotosfære"
+  },
+  "MainModelSelector": {
+    "title": "Velg forhåndsvisning av prosjektet"
+  },
+  "UserFavoritesManager": {
+    "title": "Favorittområder / -prosjekter"
+  },
+  "VisasDeleteModal": {
+    "title": "Slett {visasCount} visum",
+    "message": "Du er i ferd med å slette visumene på følgende filer:"
   }
 }

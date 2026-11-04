@@ -1,0 +1,33 @@
+.naming-part-list-in-use-modal {
+  padding: 0 var(--spacing-unit);
+}
+.naming-part-list-in-use-modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.naming-part-list-in-use-modal__content p {
+  margin: 0;
+}
+
+.naming-part-list-in-use-modal__rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 12px;
+  li {
+    list-style-type: decimal;
+    overflow-wrap: anywhere;
+  }
+}
+
+.naming-part-list-in-use-modal__hint {
+  padding: 6px 12px;
+  background-color: var(--color-silver-light);
+  color: var(--color-granite-light);
+  border-radius: 6px;
+}
