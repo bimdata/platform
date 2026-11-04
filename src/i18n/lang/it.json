@@ -23,6 +23,141 @@
     "uploadDisableMessage": {
       "permission": "Non avete i diritti richiesti.",
       "size": "Non avete più spazio sufficiente di salvataggio a disposizione."
+    },
+    "title": "Attività del progetto",
+    "historyActivityTab": "Cronologia delle attività",
+    "notificationSettingsTab": "Notifiche e-mail",
+    "activity": {
+      "empty": "Nessuna attività recente",
+      "title": "Cronologia delle attività",
+      "folderTitle": "Cartella:",
+      "newPathTitle": "Nuovo percorso:",
+      "oldPathTitle": "Percorso precedente:",
+      "roleTitle": "Ruolo:",
+      "newPermissionTitle": "Nuovi diritti:",
+      "oldPermissionTitle": "Diritti precedenti:",
+      "oldNameTitle": "Nome precedente:",
+      "newNameTitle": "Nuovo nome:",
+      "document_created": "File caricato:",
+      "document_deleted": "File eliminato:",
+      "document_renamed": "File rinominato:",
+      "document_moved": "File spostato:",
+      "folder_created": "Cartella creata:",
+      "folder_deleted": "Cartella eliminata:",
+      "folder_permissions_updated": "Permessi della cartella modificati:",
+      "folder_renamed": "Cartella rinominata:",
+      "folder_moved": "Cartella spostata:",
+      "cloud_invitation_sent": "Invito inviato a:",
+      "cloud_invitation_canceled": "Invito annullato per:",
+      "cloud_invitation_accepted": "Invito accettato da:",
+      "cloud_invitation_denied": "Invito rifiutato da:",
+      "project_invitation_sent": "Invito al progetto inviato a:",
+      "project_invitation_canceled": "Invito al progetto annullato per:",
+      "project_invitation_accepted": "Invito al progetto accettato da:",
+      "project_invitation_denied": "Invito al progetto rifiutato da:",
+      "filters": {
+        "title": "Filtri",
+        "types": "Tipi",
+        "users": "Utenti",
+        "period": "Periodo"
+      },
+      "roles": {
+        "admin": "Amministratore",
+        "user": "Utente",
+        "guest": "Ospite"
+      },
+      "permissions": {
+        "default": "Predefinito",
+        "accessDenied": "Accesso negato",
+        "readOnly": "Sola lettura",
+        "readWrite": "Lettura/Scrittura"
+      },
+      "badge": {
+        "document_created": "File caricato ",
+        "document_deleted": "File eliminato ",
+        "document_renamed": "File rinominato ",
+        "document_moved": "File spostato ",
+        "folder_created": "Cartella creata ",
+        "folder_deleted": "Cartella eliminata ",
+        "folder_permissions_updated": "Permessi della cartella modificati",
+        "folder_renamed": "Cartella rinominata",
+        "folder_moved": "Cartella spostata",
+        "cloud_invitation_sent": "Invito inviato",
+        "cloud_invitation_canceled": "Invito annullato",
+        "cloud_invitation_accepted": "Invito accettato",
+        "cloud_invitation_denied": "Invito rifiutato",
+        "project_invitation_sent": "Invito al progetto inviato",
+        "project_invitation_canceled": "Invito al progetto annullato",
+        "project_invitation_accepted": "Invito al progetto accettato",
+        "project_invitation_denied": "Invito al progetto rifiutato"
+      }
+    },
+    "notifications": {
+      "title": "Impostazioni delle notifiche e-mail",
+      "headerText": "Le impostazioni del progetto BIMData consentono di gestire i tipi e la frequenza delle notifiche per un monitoraggio personalizzato.",
+      "validateButton": "Conferma le impostazioni del progetto",
+      "settings": {
+        "general": {
+          "sendNever": "Non inviare mai e-mail di notifica",
+          "sendEventOccurs": "Quando si verifica l'evento",
+          "sendEvery": "Invia un'e-mail ogni:",
+          "sendAt": "Alle:",
+          "monday": "Lunedì",
+          "tuesday": "Martedì",
+          "wednesday": "Mercoledì",
+          "thursday": "Giovedì",
+          "friday": "Venerdì",
+          "saturday": "Sabato",
+          "sunday": "Domenica",
+          "successNotifText": "Notifiche aggiornate!",
+          "errorNotifText": "Aggiornamento delle notifiche non riuscito.",
+          "successDeleteNotifText": "Le notifiche sono state disattivate.",
+          "errorDeleteNotifText": "Si è verificato un errore durante la disattivazione delle notifiche."
+        },
+        "activity": {
+          "title": "Notifiche sull'attività del progetto",
+          "recipientsNotificationsText": "Destinatari",
+          "recipientsNotificationsButton": "Destinatari delle notifiche",
+          "ged": {
+            "title": "File",
+            "fileUpload": "Caricamento di un file",
+            "fileDeletion": "Eliminazione di un file",
+            "newVersion": "Nuova versione",
+            "folderCreation": "Creazione di una cartella",
+            "folderDeletion": "Eliminazione di una cartella"
+          },
+          "visa": {
+            "title": "VISA",
+            "visaCreation": "Creazione di un visto",
+            "visaDeletion": "Eliminazione di un visto",
+            "visaValidation": "Approvazione di un visto",
+            "visaRejection": "Rifiuto di un visto"
+          },
+          "bcf": {
+            "title": "BCF",
+            "bcfCreation": "Creazione BCF",
+            "bcfDeletion": "Eliminazione BCF"
+          },
+          "otherEvents": {
+            "title": "Altri eventi",
+            "acceptInvit": "Accettazione di un invito",
+            "removeModels": "Rimozione di modelli",
+            "createMetaBuilding": "Creazione di un meta-building",
+            "deleteMetaBuilding": "Eliminazione di un meta-building"
+          }
+        }
+      },
+      "recipients": {
+        "title": "Destinatari delle notifiche",
+        "text": "Seleziona i gruppi di utenti che riceveranno le notifiche via e-mail.",
+        "noGroupsText": "Nessun gruppo è attualmente configurato per ricevere notifiche.",
+        "validateButtonText": "Conferma i destinatari",
+        "createGroupButtonText": "Crea un gruppo"
+      },
+      "timezone": {
+        "title": "Selezione del fuso orario",
+        "validateButtonText": "Conferma il fuso orario"
+      }
     }
   },
   "LanguageSelector": {
@@ -53,13 +188,19 @@
   },
   "FileActionsCell": {
     "openViewerButtonText": "Apri nel visualizzatore",
+    "previewModelButtonText": "Anteprima",
     "addTagsButtonText": "Aggiungi tag",
     "addVersionButtonText": "Aggiungi versione",
     "manageAccessButtonText": "Gestisci l'accesso",
     "createModelButtonText": "Definire come modello",
+    "createPhotosphereButtonText": "Definire come fotosfera",
     "removeModelButtonText": "Rimuovi dai modelli",
     "versioningButtonText": "Aggiungi una versione",
     "visaButtonText": "Richiesta di convalida"
+  },
+  "FileNameCell": {
+    "modelFile": "Modello",
+    "photosphereFile": "Fotosfera"
   },
   "FilesActionBar": {
     "moveButtonText": "Sposta in"
@@ -72,9 +213,16 @@
   "FilesManager": {
     "title": "File del progetto",
     "createModelNotification": "Modello creato correttamente",
+    "createModelsNotification": "Modelli creati correttamente",
+    "createPhotosphereNotification": "Fotosfera creata correttamente",
+    "createPhotospheresNotification": "Fotosfere create correttamente",
     "structureImport": "Importare una struttura GED",
+    "removeModelsNotification": "Modelli rimossi correttamente",
     "gedDownload": "Scaricare la GED",
-    "folderImport": "Importare una cartella"
+    "folderImport": "Importare una cartella",
+    "foldersTab": "Cartelle",
+    "filesTab": "Documenti",
+    "visasTab": "Visti"
   },
   "FilesManagerOnboarding": {
     "text": "Carica il tuo primo file",
@@ -99,7 +247,12 @@
     "title": "Gestisci i diritti di accesso",
     "rightsHeader": "Diritti",
     "membersHeader": "Membri",
-    "groupHeader": "Gruppo"
+    "groupHeader": "Gruppo",
+    "propagate": "Per propagare i diritti alle sottocartelle (in modo ricorsivo), seleziona la casella prima di confermare il modulo.",
+    "safeZoneModal": {
+      "title": "Attenzione!",
+      "text": "I diritti di accesso sono stati modificati ma non salvati; sei sicuro di voler chiudere il gestore dei diritti? (Le modifiche andranno perse)"
+    }
   },
   "FolderSelector": {
     "selectedFolder": "Cartella selezionata",
@@ -131,6 +284,9 @@
   "InvitationForm": {
     "emailInputPlaceholder": "Indirizzo e-mail",
     "emailInputErrorMessage": "E-mail non valida",
+    "projectUserAlreadyExistError": "L'utente {email} è già nel progetto",
+    "spaceUserAlreadyExistError": "L'utente {email} è già nello spazio",
+    "spaceAdminAlreadyExistError": "L'utente {email} è già amministratore dello spazio",
     "roleInputLabel": "Ruolo",
     "roles": {
       "admin": "Amministratore",
@@ -151,7 +307,8 @@
     "addLocationButtonText": "Riempi"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Inserisci l'indirizzo"
+    "addressInputPlaceholder": "Inserisci l'indirizzo",
+    "applyToAllModels": "Applica a tutti i modelli"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Unisci"
@@ -172,6 +329,7 @@
       "archive": "Archivia",
       "dwg": "DWG",
       "metaBuildings": "Meta Buildings",
+      "photosphereBuildings": "Edifici fotosfera",
       "upload": "Upload"
     }
   },
@@ -188,6 +346,8 @@
   },
   "ModelsTable": {
     "headers": {
+      "tags": "Tag",
+      "location": "Posizione",
       "version": "Versione"
     },
     "emptyTablePlaceholder": {
@@ -214,6 +374,8 @@
     "free": "Gratuito"
   },
   "SpaceCardActionMenu": {
+    "addToFavorite": "Aggiungi ai preferiti",
+    "removeFavorite": "Rimuovi dai preferiti",
     "removeImageButtonText": "Rimuovi immagine"
   },
   "SpaceCardDeleteGuard": {
@@ -232,7 +394,8 @@
       "admins": "Amministratori",
       "users": "Utenti"
     },
-    "addAdminButtonText": "Aggiungi nuovo amministratore"
+    "addAdminButtonText": "Aggiungi nuovo amministratore",
+    "addUserButtonText": "Aggiungi un utente"
   },
   "UserCard": {
     "self": "tu"
@@ -244,8 +407,10 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Amministratore",
-    "user": "Utente",
+    "spaceAdmin": "Admin spazio",
+    "projectAdmin": "Admin progetto",
+    "spaceUser": "Utente spazio",
+    "projectUser": "Utente progetto",
     "guest": "Ospite"
   },
   "UsersManagerOnboarding": {
@@ -263,6 +428,7 @@
   "FolderPermissionSelector": {
     "label": "Tutti",
     "options": {
+      "default": "Predefinito",
       "accessDenied": "Accesso negato",
       "readOnly": "Sola lettura",
       "readWrite": "Lettura/Scrittura"
@@ -271,15 +437,8 @@
   "GroupMembersSelector": {
     "title": "Gestisci membri del gruppo"
   },
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Accesso negato",
-      "readOnly": "Sola lettura",
-      "readWrite": "Lettura/scrittura",
-      "default": "Predefinito"
-    }
-  },
   "Errors": {
+    "logsFetchError": "Impossibile recuperare i log del progetto",
     "spacesFetchError": "Impossibile recuperare gli spazi",
     "spaceCreateError": "Impossibile creare spazio",
     "spaceUpdateError": "Impossibile caricare spazio",
@@ -343,6 +502,7 @@
     "fileFetchError": "Si è verificato un errore durante il recupero di questo file/cartella",
     "bcfImportError": "Si è verificato un errore durante l'importazione",
     "bcfExportError": "L'esportazione non è riuscita...",
+    "bcfExportXlsxError": "Esportazione xlsx non riuscita...",
     "fileVersionsFetchError": "Impossibile recuperare le versioni di questo documento",
     "fileVersionsMakeHeadError": "Aggiornamento del documento alla versione attuale non riuscito",
     "fileVersionDelete": "Eliminazione del documento non riuscita",
@@ -372,9 +532,7 @@
     "paused": "IN PAUSA"
   },
   "Dashboard": {
-    "spacesTileTitle": "Spazi attivi",
     "spacesTileBottomText": "Vedi gli spazi",
-    "projectsTileTitle": "Progetti attivi",
     "projectsTileBottomText": "Vedi i progetti",
     "subscriptionsTileTitle": "Fatturazione",
     "subscriptionsTileText": "Qui trovi tutte le tue fatture e i tuoi ultimi dati di pagamento.",
@@ -596,13 +754,22 @@
       "deletedUser": "Utente eliminato",
       "validatorList": {
         "accept": "Convalidato",
-        "delegate": "Delegato",
+        "delayed": "In ritardo",
         "deny": "Respinto",
         "commented": "Commentato",
         "pending": "In attesa",
         "getRidOfValidator": "Rimuovi il revisore",
         "refresh": "Ripristina la convalida"
       }
+    },
+    "VisaValidatorCell": {
+      "title": "Dettagli dei revisori",
+      "noGroup": "Nessun gruppo",
+      "accept": "Convalidato",
+      "delayed": "In ritardo",
+      "deny": "Respinto",
+      "pending": "In attesa",
+      "multipleGroups": "{count} gruppi"
     },
     "comments": {
       "commentary": "Commento",
@@ -612,6 +779,17 @@
     },
     "selectionValidator": {
       "warning": "Questo utente non dispone dell'autorizzazione per accedere al file."
+    },
+    "view": {
+      "visaPending": "Visto in attesa",
+      "visaClosed": "Visto chiuso",
+      "myRequests": "Le mie richieste",
+      "valid": "Convalidato",
+      "pending": "In attesa",
+      "denied": "Respinto",
+      "overdue": "In ritardo",
+      "openVisaBtn": "Apri il visto",
+      "validateVisaBtn": "Convalida il visto"
     },
     "noVisa": "Nessun VISA creato",
     "accept": "Accetta",
@@ -655,7 +833,9 @@
     "noSearchResultsText": "La tua ricerca non ha restituito nessun risultato. Verifica i filtri o le parole chiave.",
     "importBcfNotificationSuccess": "File BCF importato correttamente",
     "importBcfNotificationError": "Errore durante l'importazione del file BCF",
+    "deleteBcfTitle": "Elimina {bcfCount} BCF",
     "exportBcfNotificationSuccess": "File BCF esportato correttamente",
+    "exportBcfXlsxNotificationSuccess": "Esportazione xlsx riuscita!",
     "exportBcfNotificationError": "Errore durante l'esportazione del file BCF",
     "selectedTopicCount": "Numero di BCF selezionati",
     "deleteBcfText": "Stai per eliminare la selezione da BCF",
@@ -745,7 +925,8 @@
     "list": "Lista dei tag",
     "addTag": "aggiungere un tag",
     "addNewTag": "Aggiungere un nuovo tag",
-    "deleteTag": "Cancellare questo tag"
+    "deleteTag": "Cancellare questo tag",
+    "emptyTag": "Nessun tag"
   },
   "SubscriptionModal": {
     "title": "Ottenere più spazio",
@@ -783,20 +964,30 @@
     "invitAccepted": "Invito accetato",
     "invitDenied": "Invito rifiutato",
     "invitPending": "Invito in sospeso",
-    "goToProjectLong": "Accedi al progetto",
-    "goToProjectShort": "Progetto",
-    "goToSpaceLong": "Accedi allo spazio",
-    "goToSpaceShort": "Spazio"
+    "goToProject": "Apri il progetto",
+    "goToSpace": "Apri lo spazio"
   },
   "DocumentViewer": {
     "viewerButton": "Apri nel visualizzatore",
     "docPlaceholder": "Nessuna anteprima per questo documento"
   },
+  "MainModelSelector": {
+    "title": "Scegli l'anteprima del progetto"
+  },
+  "UserFavoritesManager": {
+    "title": "Spazi / Progetti preferiti"
+  },
+  "VisasDeleteModal": {
+    "title": "Elimina {visasCount} visti",
+    "message": "Stai per eliminare i visti dei seguenti file:"
+  },
   "GroupImport": {
     "title": "Importare un gruppo",
     "selectAll": "Seleziona tutto",
     "notAdmin": "Devi essere un amministratore del progetto",
-    "noGroup": "Non ci sono gruppi in questo progetto"
+    "noGroup": "Non ci sono gruppi in questo progetto",
+    "noProject": "Non ci sono altri progetti",
+    "noResult": "Nessun progetto con questo nome"
   },
   "UploadCard": {
     "cancelMessage": "Annullato",
@@ -806,6 +997,7 @@
   "t": {
     "add": "Aggiungi",
     "amount": "Importo",
+    "apply": "Applica",
     "archive": "Archivia",
     "back": "Indietro",
     "cancel": "Annulla",
@@ -816,34 +1008,55 @@
     "createdBy": "Creato da",
     "close": "Chiudi",
     "date": "Data",
+    "days_ago": "{count} giorno fa | {count} giorni fa",
     "delete": "Elimina",
     "description": "Descrizione",
     "download": "Scarica",
+    "dueDate": "Scadenza",
     "edit": "Modifica",
+    "emptyFile": "Nessun file",
     "emptyFolder": "Cartella vuota",
+    "emptyVisa": "Nessun visto",
     "error": "Errore",
     "export": "Esporta",
+    "exportXlsx": "Esporta in xlsx",
     "file": "File",
+    "filters": "Filtri",
     "folder": "Cartella",
+    "hours_ago": "{count} ora fa | {count} ore fa",
     "import": "Importa",
     "invalidName": "Nome non valido",
+    "just_now": "Proprio ora",
     "leave": "Esci",
+    "location": "Posizione",
+    "minutes_ago": "{count} minuto fa | {count} minuti fa",
     "modifiedOn": "Ultima modifica",
     "modify": "Modifica",
     "name": "Nome",
+    "notSpecified": "Non specificato",
     "ok": "OK",
     "open": "Apri",
     "or": "o",
+    "project": "Progetto",
+    "projects": "Progetti",
     "rename": "Rinomina",
+    "reset": "Reimposta",
+    "rootFolder": "Cartella principale",
+    "save": "Salva",
     "search": "Cerca",
     "size": "Dimensione",
     "space": "Spazio",
+    "spaces": "Spazi",
     "status": "Stato",
     "success": "Riuscito",
+    "today": "Oggi",
     "type": "Tipo",
     "unarchive": "Dearchivia",
     "validate": "﻿Convalida",
-    "verify": "Controlla"
+    "validation": "Convalide",
+    "validator": "Revisori",
+    "verify": "Controlla",
+    "yesterday": "Ieri"
   },
   "FolderCreationButton": {
     "text": "Nuova cartella"
@@ -855,6 +1068,7 @@
     "text": "Cambiare l'imagine"
   },
   "FileTreePreviewModal": {
-    "title": "Importa la struttura del file da"
+    "title": "Importa la struttura del file da",
+    "emptySource": "Questo progetto non ha cartelle"
   }
 }

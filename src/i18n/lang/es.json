@@ -24,6 +24,74 @@
       "permission": "No tiene los derechos requeridos",
       "size": "Ya no tiene suficiente espacio de almacenamiento"
     },
+    "title": "Actividad del proyecto",
+    "historyActivityTab": "Historial de actividad",
+    "notificationSettingsTab": "Notificaciones por correo",
+    "activity": {
+      "empty": "No hay actividad reciente",
+      "title": "Historial de actividad",
+      "folderTitle": "Carpeta:",
+      "newPathTitle": "Nueva ruta:",
+      "oldPathTitle": "Ruta anterior:",
+      "roleTitle": "Rol:",
+      "newPermissionTitle": "Nuevos derechos:",
+      "oldPermissionTitle": "Derechos anteriores:",
+      "oldNameTitle": "Nombre anterior:",
+      "newNameTitle": "Nuevo nombre:",
+      "document_created": "Archivo subido:",
+      "document_deleted": "Archivo eliminado:",
+      "document_renamed": "Archivo renombrado:",
+      "document_moved": "Archivo movido:",
+      "folder_created": "Carpeta creada:",
+      "folder_deleted": "Carpeta eliminada:",
+      "folder_permissions_updated": "Permisos de la carpeta modificados:",
+      "folder_renamed": "Carpeta renombrada:",
+      "folder_moved": "Carpeta movida:",
+      "cloud_invitation_sent": "Invitación enviada a:",
+      "cloud_invitation_canceled": "Invitación cancelada para:",
+      "cloud_invitation_accepted": "Invitación aceptada por:",
+      "cloud_invitation_denied": "Invitación rechazada por:",
+      "project_invitation_sent": "Invitación al proyecto enviada a:",
+      "project_invitation_canceled": "Invitación al proyecto cancelada para:",
+      "project_invitation_accepted": "Invitación al proyecto aceptada por:",
+      "project_invitation_denied": "Invitación al proyecto rechazada por:",
+      "filters": {
+        "title": "Filtros",
+        "types": "Tipos",
+        "users": "Usuarios",
+        "period": "Periodo"
+      },
+      "roles": {
+        "admin": "Administrador",
+        "user": "Usuario",
+        "guest": "Invitado"
+      },
+      "permissions": {
+        "default": "Por defecto",
+        "accessDenied": "Acceso denegado",
+        "readOnly": "Solo lectura",
+        "readWrite": "Lectura / Escritura"
+      },
+      "badge": {
+        "document_created": "Archivo subido ",
+        "document_deleted": "Archivo eliminado ",
+        "document_renamed": "Archivo renombrado ",
+        "document_moved": "Archivo movido ",
+        "folder_created": "Carpeta creada ",
+        "folder_deleted": "Carpeta eliminada ",
+        "folder_permissions_updated": "Permisos de la carpeta modificados",
+        "folder_renamed": "Carpeta renombrada",
+        "folder_moved": "Carpeta movida",
+        "cloud_invitation_sent": "Invitación enviada",
+        "cloud_invitation_canceled": "Invitación cancelada",
+        "cloud_invitation_accepted": "Invitación aceptada",
+        "cloud_invitation_denied": "Invitación rechazada",
+        "project_invitation_sent": "Invitación al proyecto enviada",
+        "project_invitation_canceled": "Invitación al proyecto cancelada",
+        "project_invitation_accepted": "Invitación al proyecto aceptada",
+        "project_invitation_denied": "Invitación al proyecto rechazada"
+      }
+    },
     "notifications": {
       "title": "Ajustes de notificaciones por correo electrónico",
       "headerText": "Los ajustes del proyecto de BIMData permiten gestionar los tipos y la frecuencia de las notificaciones para un seguimiento personalizado.",
@@ -130,6 +198,10 @@
     "previewModelButtonText": "Vista previa",
     "createPhotosphereButtonText": "Definir como Photosphere"
   },
+  "FileNameCell": {
+    "modelFile": "Modelo",
+    "photosphereFile": "Fotosfera"
+  },
   "FilesActionBar": {
     "moveButtonText": "Moverse hacia"
   },
@@ -141,13 +213,16 @@
   "FilesManager": {
     "title": "Documentos del proyecto",
     "createModelNotification": "Modelo creado con éxito",
+    "createModelsNotification": "Modelos creados con éxito",
     "structureImport": "Importar una estructura EDM",
+    "removeModelsNotification": "Modelos retirados con éxito",
     "gedDownload": "Descargar el EDM",
     "folderImport": "Importar una carpeta",
     "foldersTab": "Archivos",
     "filesTab": "Documentos",
     "visasTab": "Confirmaciones",
-    "createPhotosphereNotification": "Photosphere creada con éxito"
+    "createPhotosphereNotification": "Photosphere creada con éxito",
+    "createPhotospheresNotification": "Fotosferas creadas con éxito"
   },
   "FilesManagerOnboarding": {
     "text": "Suba su primer archivo",
@@ -218,7 +293,9 @@
     "submitButtonText": "Invitar",
     "successNotifText": "Invitación enviada",
     "successUserToAdmin": "El usuario ha sido ascendido a administrador",
-    "projectUserAlreadyExistError": "El usuario ya está en su proyecto"
+    "projectUserAlreadyExistError": "El usuario ya está en su proyecto",
+    "spaceUserAlreadyExistError": "El usuario {email} ya está en el espacio",
+    "spaceAdminAlreadyExistError": "El usuario {email} ya es administrador del espacio"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Añadir etiquetas",
@@ -230,7 +307,8 @@
     "addLocationButtonText": "Infórmese"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Introduzca una dirección"
+    "addressInputPlaceholder": "Introduzca una dirección",
+    "applyToAllModels": "Aplicar a todos los modelos"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Fusionar"
@@ -360,6 +438,7 @@
     "title": "Gestión de los miembros del grupo"
   },
   "Errors": {
+    "logsFetchError": "Imposible recuperar los registros del proyecto",
     "spacesFetchError": "Imposible recuperar la lista de espacios",
     "spaceCreateError": "Error durante la creación del espacio",
     "spaceUpdateError": "Error de puesta en marcha del espacio",
@@ -675,12 +754,22 @@
       "deletedUser": "Usuario eliminado",
       "validatorList": {
         "accept": "Confirmado",
+        "delayed": "Con retraso",
         "deny": "Rechazado",
         "commented": "Comentado",
         "pending": "En espera",
         "getRidOfValidator": "Eliminar el usuario autorizado a confirmar",
         "refresh": "Reiniciar la confirmación"
       }
+    },
+    "VisaValidatorCell": {
+      "title": "Detalles de los validadores",
+      "noGroup": "Sin grupo",
+      "accept": "Confirmado",
+      "delayed": "Con retraso",
+      "deny": "Rechazado",
+      "pending": "En espera",
+      "multipleGroups": "{count} grupos"
     },
     "comments": {
       "commentary": "Comentario",
@@ -891,6 +980,7 @@
   "t": {
     "add": "Añadir",
     "amount": "Monto",
+    "apply": "Aplicar",
     "archive": "Archivar",
     "back": "Retorno",
     "cancel": "Cancelar",
@@ -901,6 +991,7 @@
     "createdBy": "Creado por",
     "close": "Cerrar",
     "date": "Fecha",
+    "days_ago": "hace {count} día | hace {count} días",
     "delete": "Eliminar",
     "description": "Descripción",
     "download": "Descargar",
@@ -909,9 +1000,12 @@
     "error": "Error",
     "export": "Exportar",
     "file": "Archivo",
+    "filters": "Filtros",
     "folder": "Carpeta",
+    "hours_ago": "hace {count} hora | hace {count} horas",
     "import": "Importar",
     "invalidName": "﻿Nombre no válido",
+    "just_now": "Justo ahora",
     "leave": "Salir",
     "modifiedOn": "Modificado el",
     "modify": "Editar",
@@ -920,21 +1014,25 @@
     "open": "Abrir",
     "or": "o",
     "rename": "Renombrar",
+    "reset": "Restablecer",
     "search": "Buscar",
     "size": "Tamaño",
     "space": "Espacio",
     "status": "Estado",
     "success": "Éxito",
+    "today": "Hoy",
     "type": "Tipo",
     "unarchive": "Desarchivar",
     "validate": "Validar",
     "verify": "Verificar",
+    "yesterday": "Ayer",
     "exportXlsx": "Exportar en Excél",
     "project": "Proyecto",
     "projects": "Proyectos",
     "spaces": "Espacios",
     "notSpecified": "No especificado",
     "location": "Ubicación",
+    "minutes_ago": "hace {count} minuto | hace {count} minutos",
     "rootFolder": "Carpeta raíz",
     "dueDate": "Fecha de vencimiento",
     "emptyFile": "Sin archivo",

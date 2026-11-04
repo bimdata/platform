@@ -198,6 +198,10 @@
     "previewModelButtonText": "Preview",
     "createPhotosphereButtonText": "Define as photosphere"
   },
+  "FileNameCell": {
+    "modelFile": "Model",
+    "photosphereFile": "Photosphere"
+  },
   "FilesActionBar": {
     "moveButtonText": "Move to"
   },
@@ -209,13 +213,16 @@
   "FilesManager": {
     "title": "Project Files",
     "createModelNotification": "Model successfully created",
+    "createModelsNotification": "Models created successfully",
     "structureImport": "Import a GED structure",
+    "removeModelsNotification": "Models removed successfully",
     "gedDownload": "Download the GED",
     "folderImport": "Import a folder",
     "foldersTab": "Folders",
     "filesTab": "Documents",
     "visasTab": "Visas",
-    "createPhotosphereNotification": "Photosphere created successfully"
+    "createPhotosphereNotification": "Photosphere created successfully",
+    "createPhotospheresNotification": "Photospheres created successfully"
   },
   "FilesManagerOnboarding": {
     "text": "Upload your first file",
@@ -300,7 +307,8 @@
     "addLocationButtonText": "Fill in"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Enter address"
+    "addressInputPlaceholder": "Enter address",
+    "applyToAllModels": "Apply to all models"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Merge"
@@ -430,6 +438,7 @@
     "title": "Manage group members"
   },
   "Errors": {
+    "logsFetchError": "Unable to retrieve project logs",
     "spacesFetchError": "Fail to fetch spaces",
     "spaceCreateError": "Fail to create space",
     "spaceUpdateError": "Fail to update space",
@@ -745,12 +754,22 @@
       "deletedUser": "User removed",
       "validatorList": {
         "accept": "Validated",
+        "delayed": "Overdue",
         "deny": "Refused",
         "commented": "Commented",
         "pending": "Awaiting",
         "getRidOfValidator": "Remove validator",
         "refresh": "Reset validation"
       }
+    },
+    "VisaValidatorCell": {
+      "title": "Validator details",
+      "noGroup": "No group",
+      "accept": "Validated",
+      "delayed": "Overdue",
+      "deny": "Refused",
+      "pending": "Pending",
+      "multipleGroups": "{count} groups"
     },
     "comments": {
       "commentary": "Commentry",
@@ -972,6 +991,7 @@
     "createdBy": "Created by",
     "close": "Close",
     "date": "Date",
+    "days_ago": "{count} day ago | {count} days ago",
     "delete": "Delete",
     "description": "Description",
     "download": "Download",
@@ -982,8 +1002,10 @@
     "file": "File",
     "filters": "Filters",
     "folder": "Folder",
+    "hours_ago": "{count} hour ago | {count} hours ago",
     "import": "Import",
     "invalidName": "Invalid name",
+    "just_now": "Just now",
     "leave": "Leave",
     "modifiedOn": "Last modified",
     "modify": "Edit",
@@ -998,16 +1020,19 @@
     "space": "Space",
     "status": "Status",
     "success": "Success",
+    "today": "Today",
     "type": "Type",
     "unarchive": "Unarchive",
     "validate": "Validate",
     "verify": "Check",
+    "yesterday": "Yesterday",
     "exportXlsx": "Export as xlsx",
     "project": "Project",
     "projects": "Projects",
     "spaces": "Spaces",
     "notSpecified": "Not specified",
     "location": "Location",
+    "minutes_ago": "{count} minute ago | {count} minutes ago",
     "rootFolder": "Root folder",
     "dueDate": "Due date",
     "emptyFile": "No file",

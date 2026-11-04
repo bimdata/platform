@@ -1,7 +1,7 @@
 {
   "OidcCallbackError": {
     "message": "En feil oppsto under autentiseringen...",
-    "retryButtonText": ""
+    "retryButtonText": "Prøv igjen"
   },
   "ProjectBoard": {
     "tabs": {
@@ -19,7 +19,146 @@
   },
   "ProjectOverview": {
     "openFileUploadButtonText": "Legg til en modell",
-    "forbiddenUploadNotification": ""
+    "forbiddenUploadNotification": "Velg en modellfil: {extensions}",
+    "uploadDisableMessage": {
+      "permission": "Du har ikke de nødvendige rettighetene",
+      "size": "Du har ikke nok lagringsplass"
+    },
+    "title": "Prosjektaktivitet",
+    "historyActivityTab": "Aktivitetshistorikk",
+    "notificationSettingsTab": "E-postvarsler",
+    "activity": {
+      "empty": "Ingen nylig aktivitet",
+      "title": "Aktivitetshistorikk",
+      "folderTitle": "Mappe:",
+      "newPathTitle": "Ny bane:",
+      "oldPathTitle": "Gammel bane:",
+      "roleTitle": "Rolle:",
+      "newPermissionTitle": "Nye rettigheter:",
+      "oldPermissionTitle": "Gamle rettigheter:",
+      "oldNameTitle": "Gammelt navn:",
+      "newNameTitle": "Nytt navn:",
+      "document_created": "Fil lastet opp:",
+      "document_deleted": "Fil slettet:",
+      "document_renamed": "Fil omdøpt:",
+      "document_moved": "Fil flyttet:",
+      "folder_created": "Mappe opprettet:",
+      "folder_deleted": "Mappe slettet:",
+      "folder_permissions_updated": "Mappetillatelser endret:",
+      "folder_renamed": "Mappe omdøpt:",
+      "folder_moved": "Mappe flyttet:",
+      "cloud_invitation_sent": "Invitasjon sendt til:",
+      "cloud_invitation_canceled": "Invitasjon kansellert for:",
+      "cloud_invitation_accepted": "Invitasjon godtatt av:",
+      "cloud_invitation_denied": "Invitasjon avslått av:",
+      "project_invitation_sent": "Prosjektinvitasjon sendt til:",
+      "project_invitation_canceled": "Prosjektinvitasjon kansellert for:",
+      "project_invitation_accepted": "Prosjektinvitasjon godtatt av:",
+      "project_invitation_denied": "Prosjektinvitasjon avslått av:",
+      "filters": {
+        "title": "Filtre",
+        "types": "Typer",
+        "users": "Brukere",
+        "period": "Periode"
+      },
+      "roles": {
+        "admin": "Administrator",
+        "user": "Bruker",
+        "guest": "Gjest"
+      },
+      "permissions": {
+        "default": "Standard",
+        "accessDenied": "Ingen tilgang",
+        "readOnly": "Skrivebeskyttet",
+        "readWrite": "Lese-/skrivetilgang"
+      },
+      "badge": {
+        "document_created": "Fil lastet opp ",
+        "document_deleted": "Fil slettet ",
+        "document_renamed": "Fil omdøpt ",
+        "document_moved": "Fil flyttet ",
+        "folder_created": "Mappe opprettet ",
+        "folder_deleted": "Mappe slettet ",
+        "folder_permissions_updated": "Mappetillatelser endret",
+        "folder_renamed": "Mappe omdøpt",
+        "folder_moved": "Mappe flyttet",
+        "cloud_invitation_sent": "Invitasjon sendt",
+        "cloud_invitation_canceled": "Invitasjon kansellert",
+        "cloud_invitation_accepted": "Invitasjon godtatt",
+        "cloud_invitation_denied": "Invitasjon avslått",
+        "project_invitation_sent": "Prosjektinvitasjon sendt",
+        "project_invitation_canceled": "Prosjektinvitasjon kansellert",
+        "project_invitation_accepted": "Prosjektinvitasjon godtatt",
+        "project_invitation_denied": "Prosjektinvitasjon avslått"
+      }
+    },
+    "notifications": {
+      "title": "Innstillinger for e-postvarsler",
+      "headerText": "BIMData-prosjektinnstillingene lar deg administrere typer og hyppighet for varsler for en tilpasset oppfølging.",
+      "validateButton": "Bekreft prosjektinnstillingene",
+      "settings": {
+        "general": {
+          "sendNever": "Aldri send varslings-e-post",
+          "sendEventOccurs": "Når hendelsen inntreffer",
+          "sendEvery": "Send en e-post hver:",
+          "sendAt": "Kl.:",
+          "monday": "Mandag",
+          "tuesday": "Tirsdag",
+          "wednesday": "Onsdag",
+          "thursday": "Torsdag",
+          "friday": "Fredag",
+          "saturday": "Lørdag",
+          "sunday": "Søndag",
+          "successNotifText": "Varsler oppdatert!",
+          "errorNotifText": "Kunne ikke oppdatere varsler.",
+          "successDeleteNotifText": "Varsler er deaktivert.",
+          "errorDeleteNotifText": "Det oppstod en feil under deaktivering av varsler."
+        },
+        "activity": {
+          "title": "Varsler om prosjektaktivitet",
+          "recipientsNotificationsText": "Mottakere",
+          "recipientsNotificationsButton": "Mottakere av varsler",
+          "ged": {
+            "title": "Filer",
+            "fileUpload": "Opplasting av fil",
+            "fileDeletion": "Sletting av fil",
+            "newVersion": "Ny versjon",
+            "folderCreation": "Oppretting av mappe",
+            "folderDeletion": "Sletting av mappe"
+          },
+          "visa": {
+            "title": "VISA",
+            "visaCreation": "Oppretting av visum",
+            "visaDeletion": "Sletting av visum",
+            "visaValidation": "Godkjenning av visum",
+            "visaRejection": "Avslag på visum"
+          },
+          "bcf": {
+            "title": "BCF",
+            "bcfCreation": "Oppretting av BCF",
+            "bcfDeletion": "Sletting av BCF"
+          },
+          "otherEvents": {
+            "title": "Andre hendelser",
+            "acceptInvit": "Godtatt invitasjon",
+            "removeModels": "Fjerning av modeller",
+            "createMetaBuilding": "Oppretting av meta-bygning",
+            "deleteMetaBuilding": "Sletting av meta-bygning"
+          }
+        }
+      },
+      "recipients": {
+        "title": "Mottakere av varsler",
+        "text": "Velg brukergruppene som skal motta e-postvarsler.",
+        "noGroupsText": "Ingen gruppe er for øyeblikket satt opp til å motta varsler.",
+        "validateButtonText": "Bekreft mottakere",
+        "createGroupButtonText": "Opprett en gruppe"
+      },
+      "timezone": {
+        "title": "Valg av tidssone",
+        "validateButtonText": "Bekreft tidssonen"
+      }
+    }
   },
   "LanguageSelector": {
     "title": "Velg et språk"
@@ -49,13 +188,19 @@
   },
   "FileActionsCell": {
     "openViewerButtonText": "Åpne i fremviser",
+    "previewModelButtonText": "Forhåndsvis",
     "addTagsButtonText": "Legg til tags",
     "addVersionButtonText": "Legg til versjon",
     "manageAccessButtonText": "Administrer tilgang",
     "createModelButtonText": "Definer som modell",
+    "createPhotosphereButtonText": "Definer som fotosfære",
     "removeModelButtonText": "Fjern modeller",
-    "versioningButtonText": "",
-    "visaButtonText": ""
+    "versioningButtonText": "Legg til en versjon",
+    "visaButtonText": "Forespørsel om godkjenning"
+  },
+  "FileNameCell": {
+    "modelFile": "Modell",
+    "photosphereFile": "Fotosfære"
   },
   "FilesActionBar": {
     "moveButtonText": "Flytt til"
@@ -68,16 +213,23 @@
   "FilesManager": {
     "title": "Prosjektfiler",
     "createModelNotification": "Modell opprettet",
-    "structureImport": "",
-    "gedDownload": "",
-    "folderImport": ""
+    "createModelsNotification": "Modeller opprettet",
+    "createPhotosphereNotification": "Fotosfære opprettet",
+    "createPhotospheresNotification": "Fotosfærer opprettet",
+    "structureImport": "Importer en DMS-struktur",
+    "removeModelsNotification": "Modeller fjernet",
+    "gedDownload": "Last ned DMS",
+    "folderImport": "Importer en mappe",
+    "foldersTab": "Mapper",
+    "filesTab": "Dokumenter",
+    "visasTab": "Visum"
   },
   "FilesManagerOnboarding": {
     "text": "Last opp din første fil",
     "uploadFileButtonText": "Last opp en fil",
     "createFolderButtonText": "Opprett en mappe",
-    "GEDStructureImport": "",
-    "folderImport": ""
+    "GEDStructureImport": "Importer en DMS-struktur",
+    "folderImport": "Importer en mappe"
   },
   "FilesTable": {
     "headers": {
@@ -96,11 +248,15 @@
     "rightsHeader": "Rettigheter",
     "membersHeader": "Medlemmer",
     "groupHeader": "Gruppe",
-    "propagate": ""
+    "propagate": "For å overføre rettighetene til undermapper (rekursivt), merk av i boksen før du bekrefter skjemaet.",
+    "safeZoneModal": {
+      "title": "Advarsel!",
+      "text": "Tilgangsrettighetene er endret, men ikke lagret. Er du sikker på at du vil lukke rettighetsbehandleren? (Endringene vil gå tapt)"
+    }
   },
   "FolderSelector": {
     "selectedFolder": "Valgt mappe",
-    "moveHere": ""
+    "moveHere": "Flytt hit"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Endre farge"
@@ -128,6 +284,9 @@
   "InvitationForm": {
     "emailInputPlaceholder": "E-postadresse",
     "emailInputErrorMessage": "Ugyldig e-post",
+    "projectUserAlreadyExistError": "Brukeren {email} er allerede med i prosjektet",
+    "spaceUserAlreadyExistError": "Brukeren {email} er allerede med i området",
+    "spaceAdminAlreadyExistError": "Brukeren {email} er allerede administrator for området",
     "roleInputLabel": "Rolle",
     "roles": {
       "admin": "Administrator",
@@ -135,7 +294,8 @@
       "guest": "Gjest"
     },
     "submitButtonText": "Send invitasjon",
-    "successNotifText": "Invitasjon sendt"
+    "successNotifText": "Invitasjon sendt",
+    "successUserToAdmin": "Brukeren er nå administrator"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Legg til tags",
@@ -147,7 +307,8 @@
     "addLocationButtonText": "Fyll ut"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Skriv inn adresse"
+    "addressInputPlaceholder": "Skriv inn adresse",
+    "applyToAllModels": "Bruk på alle modeller"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Slå sammen"
@@ -168,6 +329,7 @@
       "archive": "Arkiver",
       "dwg": "DWG",
       "metaBuildings": "Meta-bygninger",
+      "photosphereBuildings": "Fotosfærebygninger",
       "upload": "Last opp"
     }
   },
@@ -184,11 +346,13 @@
   },
   "ModelsTable": {
     "headers": {
+      "tags": "Tagger",
+      "location": "Plassering",
       "version": "Versjon"
     },
     "emptyTablePlaceholder": {
-      "text": "",
-      "textPdf": ""
+      "text": "Ingen modell",
+      "textPdf": "Klikk på «Definer som modell» i «fil»-menyen i DMS for å gjøre pdf-tegningene dine tilgjengelige i modellbehandleren."
     }
   },
   "ProjectCardDeleteGuard": {
@@ -210,6 +374,8 @@
     "free": "Gratis"
   },
   "SpaceCardActionMenu": {
+    "addToFavorite": "Legg til i favoritter",
+    "removeFavorite": "Fjern fra favoritter",
     "removeImageButtonText": "Fjern bilde"
   },
   "SpaceCardDeleteGuard": {
@@ -228,7 +394,8 @@
       "admins": "Administratorer",
       "users": "Brukere"
     },
-    "addAdminButtonText": "Legg til ny administrator"
+    "addAdminButtonText": "Legg til ny administrator",
+    "addUserButtonText": "Legg til bruker"
   },
   "UserCard": {
     "self": "deg"
@@ -240,8 +407,10 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Administrator",
-    "user": "Bruker",
+    "spaceAdmin": "Områdeadministrator",
+    "projectAdmin": "Prosjektadministrator",
+    "spaceUser": "Områdebruker",
+    "projectUser": "Prosjektbruker",
     "guest": "Gjest"
   },
   "UsersManagerOnboarding": {
@@ -259,6 +428,7 @@
   "FolderPermissionSelector": {
     "label": "Alle",
     "options": {
+      "default": "Standard",
       "accessDenied": "Ingen tilgang",
       "readOnly": "Skrivebeskyttet",
       "readWrite": "Lese-/skrivetilgang"
@@ -267,15 +437,8 @@
   "GroupMembersSelector": {
     "title": "Administrer gruppemedlemmer"
   },
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Ingen tilgang",
-      "readOnly": "Skrivebeskyttet",
-      "readWrite": "Lese-/skrivetilgang",
-      "default": "som standard"
-    }
-  },
   "Errors": {
+    "logsFetchError": "Kunne ikke hente prosjektloggene",
     "spacesFetchError": "Kunne ikke hente frem områder",
     "spaceCreateError": "Kunne ikke opprette område",
     "spaceUpdateError": "Kunne ikke oppdatere område",
@@ -339,27 +502,28 @@
     "fileFetchError": "Feil ved gjenoppretting av mappe/fil",
     "bcfImportError": "Det oppstod en feil ved importering",
     "bcfExportError": "Eksportering feilet...",
+    "bcfExportXlsxError": "Xlsx-eksport mislyktes...",
     "fileVersionsFetchError": "Denne versjonen av dokumentet kan ikke gjenopprettes.",
     "fileVersionsMakeHeadError": "Bytte av dokument til nåværende versjon feilet.",
     "fileVersionDelete": "Sletting av dokumentet feilet",
     "userAlreadyExistsError": "Brukeren er allerede medlem av dette området/prosjektet.",
-    "tagsFetchError": "",
-    "tagsCreateError": "",
-    "tagsUpdateError": "",
-    "tagsDeleteError": "",
-    "tagsAddDocumentError": "",
-    "tagsDeleteDocumentError": "",
-    "spaceSizeFullError": "",
-    "spaceFetchError": "",
-    "projectFolderTreeFetchError": "",
-    "fileStructureCreateError": "",
-    "documentCreateError": "",
+    "tagsFetchError": "Kunne ikke hente tagger",
+    "tagsCreateError": "Feil ved oppretting av taggen",
+    "tagsUpdateError": "Feil ved endring av taggen",
+    "tagsDeleteError": "Feil ved sletting av taggen",
+    "tagsAddDocumentError": "Feil ved tilknytning av taggen til dokumentet",
+    "tagsDeleteDocumentError": "Feil ved fjerning av taggen fra dokumentet",
+    "spaceSizeFullError": "Lagringsplassen din er full",
+    "spaceFetchError": "Kunne ikke hente informasjon om området",
+    "projectFolderTreeFetchError": "Kunne ikke hente prosjektlisten",
+    "fileStructureCreateError": "Kunne ikke opprette filstrukturen",
+    "documentCreateError": "Kunne ikke laste opp dette dokumentet",
     "invitationViewFetchError": "Kunne ikke hente frem invitasjoner",
-    "invitationViewAcceptError": "",
-    "invitationViewDeclineError": "",
-    "folderFetchFolder": "",
-    "bcfDeleteError": "",
-    "groupImportError": ""
+    "invitationViewAcceptError": "Kunne ikke godta invitasjonen",
+    "invitationViewDeclineError": "Kunne ikke avslå invitasjonen",
+    "folderFetchFolder": "Kunne ikke hente mappedata",
+    "bcfDeleteError": "Sletting mislyktes",
+    "groupImportError": "Import av grupper mislyktes"
   },
   "ProjectStatusBadge": {
     "new": "NY",
@@ -368,9 +532,7 @@
     "paused": "SATT PÅ PAUSE"
   },
   "Dashboard": {
-    "spacesTileTitle": "Aktive områder",
     "spacesTileBottomText": "Vis områder",
-    "projectsTileTitle": "Aktive prosjekter",
     "projectsTileBottomText": "Se prosjekter",
     "subscriptionsTileTitle": "Fakturahåndtering",
     "subscriptionsTileText": "Finn alle dine fakturaer og informasjon om dine siste betalinger her.",
@@ -424,7 +586,7 @@
       "deleted": "Slettet",
       "paused": "Satt på pause",
       "custom": "Administrert av BIMData.io",
-      "past_due": ""
+      "past_due": "Suspendert"
     }
   },
   "DatapackForm": {
@@ -600,6 +762,15 @@
         "refresh": "Reinitialiser verifisering"
       }
     },
+    "VisaValidatorCell": {
+      "title": "Detaljer om verifiserere",
+      "noGroup": "Ingen gruppe",
+      "accept": "Verifisert",
+      "delayed": "Forsinket",
+      "deny": "Avslått",
+      "pending": "Avventer",
+      "multipleGroups": "{count} grupper"
+    },
     "comments": {
       "commentary": "Kommentar",
       "publish": "Publiser",
@@ -608,6 +779,17 @@
     },
     "selectionValidator": {
       "warning": "Brukeren kan ikke åpne denne filen."
+    },
+    "view": {
+      "visaPending": "Visum venter",
+      "visaClosed": "Visum lukket",
+      "myRequests": "Mine forespørsler",
+      "valid": "Godkjent",
+      "pending": "Venter",
+      "denied": "Avslått",
+      "overdue": "Forsinket",
+      "openVisaBtn": "Åpne visum",
+      "validateVisaBtn": "Godkjenn visum"
     },
     "noVisa": "Et visum har ikke blitt opprettet enda",
     "accept": "Aksepter",
@@ -649,17 +831,19 @@
     "metricsEmptyText": "Legg til problemer for å se assosiert statistikk her.",
     "noSearchResultsTitle": "Ingen resultater",
     "noSearchResultsText": "Søket ditt ga ingen resultater, vennligst sjekk filter eller nøkkelord",
-    "importBcfNotificationSuccess": "",
-    "importBcfNotificationError": "",
-    "exportBcfNotificationSuccess": "",
-    "exportBcfNotificationError": "",
-    "selectedTopicCount": "",
-    "deleteBcfText": "",
-    "deleteInProgress": "",
+    "importBcfNotificationSuccess": "BCF-filen ble importert",
+    "importBcfNotificationError": "Feil ved import av BCF-filen",
+    "deleteBcfTitle": "Slett {bcfCount} BCF",
+    "exportBcfNotificationSuccess": "BCF ble eksportert",
+    "exportBcfXlsxNotificationSuccess": "Xlsx-eksport fullført!",
+    "exportBcfNotificationError": "Feil ved eksport av BCF til xlsx",
+    "selectedTopicCount": "Antall valgte saker",
+    "deleteBcfText": "Du er i ferd med å slette alle valgte saker",
+    "deleteInProgress": "Sletting pågår",
     "deleteInProgressSub": "Denne prosessen kan ta en liten stund.",
-    "deleteBcfNotificationSuccess": "",
-    "deleteBcfNotificationError": "",
-    "onlyAdminParameters": ""
+    "deleteBcfNotificationSuccess": "Saker slettet",
+    "deleteBcfNotificationError": "Feil ved sletting av saker",
+    "onlyAdminParameters": "Du må være prosjektadministrator"
   },
   "GuidedTour": {
     "platform": {
@@ -723,8 +907,8 @@
     "AddVersion": "Legg til ny versjon",
     "loading": {
       "subMessage": "Denne prosessen kan ta en liten stund.",
-      "downloadMessage": "",
-      "deleteMessage": ""
+      "downloadMessage": "Lasting pågår.",
+      "deleteMessage": "Sletting pågår."
     },
     "getToHead": "Bytt til nåværende versjon",
     "show": "Se",
@@ -737,71 +921,83 @@
     "emptyArea": "Du har for øyeblikket ingen versjonshistorikk for denne filen."
   },
   "Tag": {
-    "title": "",
-    "list": "",
-    "addTag": "",
-    "addNewTag": "",
-    "deleteTag": ""
+    "title": "Administrasjon av tagger",
+    "list": "Liste over tagger",
+    "addTag": "legg til en tagg",
+    "addNewTag": "Legg til en ny tagg",
+    "deleteTag": "Slett denne taggen",
+    "emptyTag": "Ingen tagg"
   },
   "SubscriptionModal": {
-    "title": "",
-    "subtitle": "",
+    "title": "Få mer plass",
+    "subtitle": "Du har for øyeblikket {size} lagringskapasitet",
     "soon": "SOON",
     "upgrade": {
-      "title": "",
-      "subtitle": ""
+      "title": "Oppgrader til pro-plattformen",
+      "subtitle": "Abonner på BIMData Pro for å få mer plass."
     },
     "referal": {
-      "title": "",
-      "subtitle": ""
+      "title": "Bli med i vervingsprogrammet vårt!",
+      "subtitle": "Del vervekoden din for å tjene plass."
     },
     "linkedin": {
-      "title": "",
-      "subtitle": ""
+      "title": "Koble til LinkedIn-kontoen din",
+      "subtitle": "Følg BIMData-siden for å tjene plass."
     }
   },
   "GroupMemberCard": {
-    "pending": ""
+    "pending": "Invitasjon venter"
   },
   "UserProfile": {
-    "title": "",
+    "title": "Profilinnstillinger",
     "loading": {
-      "message": "",
-      "subMessage": ""
+      "message": "Sletting pågår.",
+      "subMessage": "Denne prosessen kan ta litt tid. Ikke forlat siden."
     }
   },
   "Invitations": {
-    "title": "",
-    "invitCounter": "",
-    "acceptAll": "",
-    "invitedInProject": "",
-    "invitedInSpace": "",
-    "invitAccepted": "",
-    "invitDenied": "",
-    "invitPending": "",
-    "goToProjectLong": "Prosjekt",
-    "goToProjectShort": "Prosjekt",
-    "goToSpaceLong": "Område",
-    "goToSpaceShort": "Område"
+    "title": "Mine invitasjoner",
+    "invitCounter": "Ventende invitasjoner -",
+    "acceptAll": "Godta alle",
+    "invitedInProject": "Du er invitert av {sender} til å bli med i prosjektet {project} i området {cloud}",
+    "invitedInSpace": "Du er invitert av {sender} til å bli med i området {cloud}",
+    "invitAccepted": "Invitasjon godtatt",
+    "invitDenied": "Invitasjon avslått",
+    "invitPending": "Invitasjon venter",
+    "goToProject": "Åpne prosjekt",
+    "goToSpace": "Åpne område"
   },
   "DocumentViewer": {
-    "viewerButton": "",
-    "docPlaceholder": ""
+    "viewerButton": "Åpne i visningsprogrammet",
+    "docPlaceholder": "Ingen forhåndsvisning for dette dokumentet"
+  },
+  "MainModelSelector": {
+    "title": "Velg forhåndsvisning av prosjektet"
+  },
+  "UserFavoritesManager": {
+    "title": "Favorittområder / -prosjekter"
+  },
+  "VisasDeleteModal": {
+    "title": "Slett {visasCount} visum",
+    "message": "Du er i ferd med å slette visumene på følgende filer:"
   },
   "GroupImport": {
-    "title": "",
+    "title": "Importer en gruppe",
     "selectAll": "Velg alle",
-    "notAdmin": "",
-    "noGroup": ""
+    "notAdmin": "Du må være prosjektadministrator",
+    "noGroup": "Det finnes ingen grupper for dette prosjektet",
+    "noProject": "Det finnes ingen andre prosjekter",
+    "noResult": "Ingen prosjekter med dette navnet"
   },
   "UploadCard": {
     "cancelMessage": "Avbrutt",
     "errorMessage": "Opplasting feilet",
-    "upload": ""
+    "upload": "{uploaded} av {total} ({percentage}% lastet opp)"
   },
   "t": {
     "add": "Legg til",
     "amount": "Mengde",
+    "apply": "Bruk",
     "archive": "Arkiv",
     "back": "Tilbake",
     "cancel": "Avbryt",
@@ -812,45 +1008,67 @@
     "createdBy": "Laget av",
     "close": "Lukk",
     "date": "Dato",
+    "days_ago": "for {count} dag siden | for {count} dager siden",
     "delete": "Slett",
     "description": "Beskrivelse",
     "download": "Last ned",
+    "dueDate": "Frist",
     "edit": "Rediger",
+    "emptyFile": "Ingen fil",
     "emptyFolder": "Tom mappe",
+    "emptyVisa": "Ingen visum",
     "error": "Feil",
-    "export": "",
-    "file": "",
-    "folder": "",
-    "import": "",
-    "invalidName": "",
-    "leave": "",
-    "modifiedOn": "",
-    "modify": "",
-    "name": "",
-    "ok": "",
-    "open": "",
-    "or": "",
-    "rename": "",
-    "search": "",
-    "size": "",
-    "space": "",
-    "status": "",
-    "success": "",
-    "type": "",
-    "unarchive": "",
-    "validate": "",
-    "verify": ""
+    "export": "Eksporter",
+    "exportXlsx": "Eksporter som xlsx",
+    "file": "Fil",
+    "filters": "Filtre",
+    "folder": "Mappe",
+    "hours_ago": "for {count} time siden | for {count} timer siden",
+    "import": "Importer",
+    "invalidName": "Ugyldig navn",
+    "just_now": "Akkurat nå",
+    "leave": "Forlat",
+    "location": "Plassering",
+    "minutes_ago": "for {count} minutt siden | for {count} minutter siden",
+    "modifiedOn": "Sist endret",
+    "modify": "Rediger",
+    "name": "Navn",
+    "notSpecified": "Ikke angitt",
+    "ok": "OK",
+    "open": "Åpne",
+    "or": "eller",
+    "project": "Prosjekt",
+    "projects": "Prosjekter",
+    "rename": "Gi nytt navn",
+    "reset": "Tilbakestill",
+    "rootFolder": "Rotmappe",
+    "save": "Lagre",
+    "search": "Søk",
+    "size": "Størrelse",
+    "space": "Område",
+    "spaces": "Områder",
+    "status": "Status",
+    "success": "Vellykket",
+    "today": "I dag",
+    "type": "Type",
+    "unarchive": "Gjenopprett fra arkiv",
+    "validate": "Godkjenn",
+    "validation": "Godkjenninger",
+    "validator": "Verifiserere",
+    "verify": "Kontroller",
+    "yesterday": "I går"
   },
   "FolderCreationButton": {
-    "text": ""
+    "text": "Ny mappe"
   },
   "FolderCreationForm": {
-    "title": ""
+    "title": "Opprett mappe"
   },
   "SpaceCardImageButton": {
     "text": "Last opp bilde"
   },
   "FileTreePreviewModal": {
-    "title": ""
+    "title": "Importer DMS-struktur fra",
+    "emptySource": "Dette prosjektet har ingen mapper"
   }
 }

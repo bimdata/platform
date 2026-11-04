@@ -10,6 +10,7 @@
     "lint": "eslint --fix",
     "test:unit": "jest",
     "test:e2e": "cypress open",
+    "i18n:check": "node scripts/i18n-check.mjs",
     "release": "semantic-release"
   },
   "dependencies": {

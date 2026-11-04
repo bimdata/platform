@@ -1,7 +1,7 @@
 {
   "OidcCallbackError": {
     "message": "Er heeft zich een fout voorgedaan bij de authenticatie",
-    "retryButtonText": ""
+    "retryButtonText": "Opnieuw proberen"
   },
   "ProjectBoard": {
     "tabs": {
@@ -19,7 +19,146 @@
   },
   "ProjectOverview": {
     "openFileUploadButtonText": "Voeg een model toe",
-    "forbiddenUploadNotification": ""
+    "forbiddenUploadNotification": "Selecteer een modelbestand: {extensions}",
+    "uploadDisableMessage": {
+      "permission": "U heeft niet de vereiste rechten",
+      "size": "U heeft niet genoeg opslagruimte"
+    },
+    "title": "Projectactiviteit",
+    "historyActivityTab": "Activiteitengeschiedenis",
+    "notificationSettingsTab": "E-mailmeldingen",
+    "activity": {
+      "empty": "Geen recente activiteit",
+      "title": "Activiteitengeschiedenis",
+      "folderTitle": "Map:",
+      "newPathTitle": "Nieuw pad:",
+      "oldPathTitle": "Oud pad:",
+      "roleTitle": "Rol:",
+      "newPermissionTitle": "Nieuwe rechten:",
+      "oldPermissionTitle": "Oude rechten:",
+      "oldNameTitle": "Oude naam:",
+      "newNameTitle": "Nieuwe naam:",
+      "document_created": "Bestand geüpload:",
+      "document_deleted": "Bestand verwijderd:",
+      "document_renamed": "Bestand hernoemd:",
+      "document_moved": "Bestand verplaatst:",
+      "folder_created": "Map aangemaakt:",
+      "folder_deleted": "Map verwijderd:",
+      "folder_permissions_updated": "Maprechten gewijzigd:",
+      "folder_renamed": "Map hernoemd:",
+      "folder_moved": "Map verplaatst:",
+      "cloud_invitation_sent": "Uitnodiging verzonden naar:",
+      "cloud_invitation_canceled": "Uitnodiging geannuleerd voor:",
+      "cloud_invitation_accepted": "Uitnodiging geaccepteerd door:",
+      "cloud_invitation_denied": "Uitnodiging geweigerd door:",
+      "project_invitation_sent": "Projectuitnodiging verzonden naar:",
+      "project_invitation_canceled": "Projectuitnodiging geannuleerd voor:",
+      "project_invitation_accepted": "Projectuitnodiging geaccepteerd door:",
+      "project_invitation_denied": "Projectuitnodiging geweigerd door:",
+      "filters": {
+        "title": "Filters",
+        "types": "Types",
+        "users": "Gebruikers",
+        "period": "Periode"
+      },
+      "roles": {
+        "admin": "Beheerder",
+        "user": "Gebruiker",
+        "guest": "Gast"
+      },
+      "permissions": {
+        "default": "Standaard",
+        "accessDenied": "Toegang geweigerd",
+        "readOnly": "Alleen lezen",
+        "readWrite": "Lezen / schrijven"
+      },
+      "badge": {
+        "document_created": "Bestand geüpload ",
+        "document_deleted": "Bestand verwijderd ",
+        "document_renamed": "Bestand hernoemd ",
+        "document_moved": "Bestand verplaatst ",
+        "folder_created": "Map aangemaakt ",
+        "folder_deleted": "Map verwijderd ",
+        "folder_permissions_updated": "Maprechten gewijzigd",
+        "folder_renamed": "Map hernoemd",
+        "folder_moved": "Map verplaatst",
+        "cloud_invitation_sent": "Uitnodiging verzonden",
+        "cloud_invitation_canceled": "Uitnodiging geannuleerd",
+        "cloud_invitation_accepted": "Uitnodiging geaccepteerd",
+        "cloud_invitation_denied": "Uitnodiging geweigerd",
+        "project_invitation_sent": "Projectuitnodiging verzonden",
+        "project_invitation_canceled": "Projectuitnodiging geannuleerd",
+        "project_invitation_accepted": "Projectuitnodiging geaccepteerd",
+        "project_invitation_denied": "Projectuitnodiging geweigerd"
+      }
+    },
+    "notifications": {
+      "title": "Instellingen e-mailmeldingen",
+      "headerText": "Met de BIMData-projectinstellingen beheert u de soorten en de frequentie van meldingen voor een persoonlijke opvolging.",
+      "validateButton": "Projectinstellingen bevestigen",
+      "settings": {
+        "general": {
+          "sendNever": "Nooit meldingsmails versturen",
+          "sendEventOccurs": "Wanneer de gebeurtenis plaatsvindt",
+          "sendEvery": "Een e-mail versturen elke:",
+          "sendAt": "Om:",
+          "monday": "Maandag",
+          "tuesday": "Dinsdag",
+          "wednesday": "Woensdag",
+          "thursday": "Donderdag",
+          "friday": "Vrijdag",
+          "saturday": "Zaterdag",
+          "sunday": "Zondag",
+          "successNotifText": "Meldingen bijgewerkt!",
+          "errorNotifText": "Bijwerken van meldingen mislukt.",
+          "successDeleteNotifText": "Meldingen zijn uitgeschakeld.",
+          "errorDeleteNotifText": "Er is een fout opgetreden bij het uitschakelen van meldingen."
+        },
+        "activity": {
+          "title": "Meldingen over projectactiviteit",
+          "recipientsNotificationsText": "Ontvangers",
+          "recipientsNotificationsButton": "Ontvangers van meldingen",
+          "ged": {
+            "title": "Bestanden",
+            "fileUpload": "Bestand geüpload",
+            "fileDeletion": "Bestand verwijderd",
+            "newVersion": "Nieuwe versie",
+            "folderCreation": "Map aangemaakt",
+            "folderDeletion": "Map verwijderd"
+          },
+          "visa": {
+            "title": "VISA",
+            "visaCreation": "Visum aangemaakt",
+            "visaDeletion": "Visum verwijderd",
+            "visaValidation": "Visum goedgekeurd",
+            "visaRejection": "Visum afgewezen"
+          },
+          "bcf": {
+            "title": "BCF",
+            "bcfCreation": "BCF aangemaakt",
+            "bcfDeletion": "BCF verwijderd"
+          },
+          "otherEvents": {
+            "title": "Andere gebeurtenissen",
+            "acceptInvit": "Uitnodiging geaccepteerd",
+            "removeModels": "Modellen verwijderd",
+            "createMetaBuilding": "Meta-building aangemaakt",
+            "deleteMetaBuilding": "Meta-building verwijderd"
+          }
+        }
+      },
+      "recipients": {
+        "title": "Ontvangers van meldingen",
+        "text": "Selecteer de gebruikersgroepen die e-mailmeldingen ontvangen.",
+        "noGroupsText": "Er is momenteel geen groep ingesteld om meldingen te ontvangen.",
+        "validateButtonText": "Ontvangers bevestigen",
+        "createGroupButtonText": "Een groep aanmaken"
+      },
+      "timezone": {
+        "title": "Tijdzone kiezen",
+        "validateButtonText": "Tijdzone bevestigen"
+      }
+    }
   },
   "LanguageSelector": {
     "title": "Kies een taal"
@@ -49,13 +188,19 @@
   },
   "FileActionsCell": {
     "openViewerButtonText": "In viewer openen",
+    "previewModelButtonText": "Voorbeeld",
     "addTagsButtonText": "Labels toevoegen",
     "addVersionButtonText": "Versie toevoegen",
     "manageAccessButtonText": "Toegang beheren",
     "createModelButtonText": "Aanmerken als model",
+    "createPhotosphereButtonText": "Aanmerken als fotosfeer",
     "removeModelButtonText": "Modellen verwijderen",
-    "versioningButtonText": "",
-    "visaButtonText": ""
+    "versioningButtonText": "Een versie toevoegen",
+    "visaButtonText": "Validatieverzoek"
+  },
+  "FileNameCell": {
+    "modelFile": "Model",
+    "photosphereFile": "Fotosfeer"
   },
   "FilesActionBar": {
     "moveButtonText": "Verplaatsen naar"
@@ -68,16 +213,23 @@
   "FilesManager": {
     "title": "Projectbestanden",
     "createModelNotification": "Model succesvol aangemaakt",
-    "structureImport": "",
-    "gedDownload": "",
-    "folderImport": ""
+    "createModelsNotification": "Modellen succesvol aangemaakt",
+    "createPhotosphereNotification": "Fotosfeer succesvol aangemaakt",
+    "createPhotospheresNotification": "Fotosferen succesvol aangemaakt",
+    "structureImport": "Een DMS-structuur importeren",
+    "removeModelsNotification": "Modellen succesvol verwijderd",
+    "gedDownload": "Het DMS downloaden",
+    "folderImport": "Een map importeren",
+    "foldersTab": "Mappen",
+    "filesTab": "Documenten",
+    "visasTab": "Visums"
   },
   "FilesManagerOnboarding": {
     "text": "Upload uw eerste bestand",
     "uploadFileButtonText": "Upload een bestand",
     "createFolderButtonText": "Maak een map aan",
-    "GEDStructureImport": "",
-    "folderImport": ""
+    "GEDStructureImport": "Een DMS-structuur importeren",
+    "folderImport": "Een map importeren"
   },
   "FilesTable": {
     "headers": {
@@ -96,11 +248,15 @@
     "rightsHeader": "Rechten",
     "membersHeader": "Leden",
     "groupHeader": "Groep",
-    "propagate": ""
+    "propagate": "Vink het vakje aan voordat u het formulier bevestigt om de rechten (recursief) door te geven aan submappen.",
+    "safeZoneModal": {
+      "title": "Let op!",
+      "text": "De toegangsrechten zijn gewijzigd maar niet opgeslagen; weet u zeker dat u de rechtenbeheerder wilt sluiten? (De wijzigingen gaan verloren)"
+    }
   },
   "FolderSelector": {
     "selectedFolder": "Geselecteerde map",
-    "moveHere": ""
+    "moveHere": "Hierheen verplaatsen"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Kleur veranderen"
@@ -128,6 +284,9 @@
   "InvitationForm": {
     "emailInputPlaceholder": "E-mailadres",
     "emailInputErrorMessage": "Ongeldig e-mailadres",
+    "projectUserAlreadyExistError": "Gebruiker {email} maakt al deel uit van het project",
+    "spaceUserAlreadyExistError": "Gebruiker {email} maakt al deel uit van de ruimte",
+    "spaceAdminAlreadyExistError": "Gebruiker {email} is al beheerder van de ruimte",
     "roleInputLabel": "Rol",
     "roles": {
       "admin": "Beheerder",
@@ -135,7 +294,8 @@
       "guest": "Gast"
     },
     "submitButtonText": "Uitnodiging versturen",
-    "successNotifText": "Uitnodiging verzonden"
+    "successNotifText": "Uitnodiging verzonden",
+    "successUserToAdmin": "De gebruiker is nu beheerder"
   },
   "ModelActionsCell": {
     "addTagsButtonText": "Labels toevoegen",
@@ -147,7 +307,8 @@
     "addLocationButtonText": "Invullen"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Voer het adres in"
+    "addressInputPlaceholder": "Voer het adres in",
+    "applyToAllModels": "Toepassen op alle modellen"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Samenvoegen"
@@ -168,6 +329,7 @@
       "archive": "Archieven",
       "dwg": "DWG",
       "metaBuildings": "Meta-gebouwen",
+      "photosphereBuildings": "Fotosfeer-gebouwen",
       "upload": "Uploaden"
     }
   },
@@ -184,11 +346,13 @@
   },
   "ModelsTable": {
     "headers": {
+      "tags": "Tags",
+      "location": "Locatie",
       "version": "Versie"
     },
     "emptyTablePlaceholder": {
-      "text": "",
-      "textPdf": ""
+      "text": "Geen model",
+      "textPdf": "Klik in het menu \"bestand\" van het DMS op \"Aanmerken als model\" om uw pdf-plannen beschikbaar te maken in het modellenbeheer."
     }
   },
   "ProjectCardDeleteGuard": {
@@ -210,6 +374,8 @@
     "free": "Gratis"
   },
   "SpaceCardActionMenu": {
+    "addToFavorite": "Toevoegen aan favorieten",
+    "removeFavorite": "Verwijderen uit favorieten",
     "removeImageButtonText": "Afbeelding verwijderen"
   },
   "SpaceCardDeleteGuard": {
@@ -228,7 +394,8 @@
       "admins": "Beheerders",
       "users": "Gebruikers"
     },
-    "addAdminButtonText": "Nieuwe beheerder toevoegen"
+    "addAdminButtonText": "Nieuwe beheerder toevoegen",
+    "addUserButtonText": "Gebruiker toevoegen"
   },
   "UserCard": {
     "self": "u"
@@ -240,8 +407,10 @@
     }
   },
   "UserRoleBadge": {
-    "admin": "Beheerder",
-    "user": "Gebruiker",
+    "spaceAdmin": "Beheerder ruimte",
+    "projectAdmin": "Projectbeheerder",
+    "spaceUser": "Gebruiker ruimte",
+    "projectUser": "Projectgebruiker",
     "guest": "Gast"
   },
   "UsersManagerOnboarding": {
@@ -259,6 +428,7 @@
   "FolderPermissionSelector": {
     "label": "Alle",
     "options": {
+      "default": "Standaard",
       "accessDenied": "Toegang geweigerd",
       "readOnly": "Alleen lezen",
       "readWrite": "Lezen / schrijven"
@@ -267,15 +437,8 @@
   "GroupMembersSelector": {
     "title": "Groepsleden beheren"
   },
-  "GroupPermissionSelector": {
-    "options": {
-      "accessDenied": "Toegang geweigerd",
-      "readOnly": "Alleen lezen",
-      "readWrite": "Lezen / schrijven",
-      "default": "Standaard"
-    }
-  },
   "Errors": {
+    "logsFetchError": "Kan de projectlogboeken niet ophalen",
     "spacesFetchError": "Ophalen van ruimtes mislukt",
     "spaceCreateError": "Aanmaken van ruimte mislukt",
     "spaceUpdateError": "Bijwerken van ruimte mislukt",
@@ -339,27 +502,28 @@
     "fileFetchError": "Fout tijdens het ophalen van deze map/dit bestand",
     "bcfImportError": "Er is een fout opgetreden bij het importeren",
     "bcfExportError": "Exporteren mislukt...",
+    "bcfExportXlsxError": "Xlsx-export mislukt...",
     "fileVersionsFetchError": "De versies van dit document kunnen niet worden opgehaald.",
     "fileVersionsMakeHeadError": "Naar huidige versie gaan niet gelukt.",
     "fileVersionDelete": "Document verwijderen mislukt",
     "userAlreadyExistsError": "Deze gebruiker is al een lid van de ruimte/het project.",
-    "tagsFetchError": "",
-    "tagsCreateError": "",
-    "tagsUpdateError": "",
-    "tagsDeleteError": "",
-    "tagsAddDocumentError": "",
-    "tagsDeleteDocumentError": "",
-    "spaceSizeFullError": "",
-    "spaceFetchError": "",
-    "projectFolderTreeFetchError": "",
-    "fileStructureCreateError": "",
-    "documentCreateError": "",
+    "tagsFetchError": "Kan tags niet ophalen",
+    "tagsCreateError": "Fout bij het aanmaken van de tag",
+    "tagsUpdateError": "Fout bij het wijzigen van de tag",
+    "tagsDeleteError": "Fout bij het verwijderen van de tag",
+    "tagsAddDocumentError": "Fout bij het koppelen van de tag aan het document",
+    "tagsDeleteDocumentError": "Fout bij het ontkoppelen van de tag van het document",
+    "spaceSizeFullError": "Uw opslagruimte is vol",
+    "spaceFetchError": "Kan de gegevens van de ruimte niet ophalen",
+    "projectFolderTreeFetchError": "Kan de projectlijst niet ophalen",
+    "fileStructureCreateError": "Kan de bestandsstructuur niet aanmaken",
+    "documentCreateError": "Kan dit document niet uploaden",
     "invitationViewFetchError": "Ophalen van uitnodigingen mislukt",
-    "invitationViewAcceptError": "",
-    "invitationViewDeclineError": "",
-    "folderFetchFolder": "",
-    "bcfDeleteError": "",
-    "groupImportError": ""
+    "invitationViewAcceptError": "Kan de uitnodiging niet accepteren",
+    "invitationViewDeclineError": "Kan de uitnodiging niet weigeren",
+    "folderFetchFolder": "Ophalen van mapgegevens mislukt",
+    "bcfDeleteError": "Verwijderen mislukt",
+    "groupImportError": "Importeren van groepen mislukt"
   },
   "ProjectStatusBadge": {
     "new": "NIEUW",
@@ -368,9 +532,7 @@
     "paused": "GEPAUZEERD"
   },
   "Dashboard": {
-    "spacesTileTitle": "Actieve ruimtes",
     "spacesTileBottomText": "Ruimtes bekijken",
-    "projectsTileTitle": "Actieve projecten",
     "projectsTileBottomText": "Projecten bekeken",
     "subscriptionsTileTitle": "Facturering en facturen",
     "subscriptionsTileText": "Vind hier al je rekeningen en de laatste betalingsinformatie.",
@@ -424,7 +586,7 @@
       "deleted": "Verwijderd",
       "paused": "Gepauzeerd",
       "custom": "Beheerd door BIMData.io",
-      "past_due": ""
+      "past_due": "Opgeschort"
     }
   },
   "DatapackForm": {
@@ -600,34 +762,54 @@
         "refresh": "Verificatie opnieuw initialiseren"
       }
     },
+    "VisaValidatorCell": {
+      "title": "Details van de validators",
+      "noGroup": "Geen groep",
+      "accept": "Gevalideerd",
+      "delayed": "Te laat",
+      "deny": "Geweigerd",
+      "pending": "In afwachting",
+      "multipleGroups": "{count} groepen"
+    },
     "comments": {
       "commentary": "Toelichting",
       "publish": "Publiceren",
-      "commentInputPlaceholder": "",
-      "confirmDelete": ""
+      "commentInputPlaceholder": "Een reactie plaatsen",
+      "confirmDelete": "Deze reactie verwijderen?"
     },
     "selectionValidator": {
       "warning": "Deze gebruiker heeft geen toegang tot het bestand."
     },
+    "view": {
+      "visaPending": "Visum in afwachting",
+      "visaClosed": "Visum afgesloten",
+      "myRequests": "Mijn verzoeken",
+      "valid": "Gevalideerd",
+      "pending": "In afwachting",
+      "denied": "Geweigerd",
+      "overdue": "Te laat",
+      "openVisaBtn": "Visum openen",
+      "validateVisaBtn": "Visum valideren"
+    },
     "noVisa": "Er is nog geen VISA aangemaakt",
-    "accept": "",
-    "close": "",
+    "accept": "Accepteren",
+    "close": "Afsluiten",
     "deny": "Weigeren",
     "term": "Vervaldatum",
-    "validator": "",
-    "validators": "",
+    "validator": "Validator",
+    "validators": "Validators",
     "safeZone": {
       "add": {
-        "text": ""
+        "text": "Weet u zeker dat u deze pagina wilt verlaten? Er kunnen niet-gevalideerde gegevens zijn."
       },
       "delete": {
-        "text": ""
+        "text": "Weet u zeker dat u dit visum wilt verwijderen?"
       },
       "close": {
-        "text": ""
+        "text": "Weet u zeker dat u dit visum wilt afsluiten?"
       },
       "deleteComment": {
-        "text": ""
+        "text": "Weet u zeker dat u deze reactie wilt verwijderen?"
       }
     }
   },
@@ -649,17 +831,19 @@
     "metricsEmptyText": "Voeg problemen toe om hier de bijbehorende statistieken te bekijken.",
     "noSearchResultsTitle": "Geen resultaten",
     "noSearchResultsText": "Je zoekopdracht heeft geen resultaten opgeleverd, bekijk nog een keer je filters en zoekwoorden.",
-    "importBcfNotificationSuccess": "",
-    "importBcfNotificationError": "",
-    "exportBcfNotificationSuccess": "",
-    "exportBcfNotificationError": "",
-    "selectedTopicCount": "",
-    "deleteBcfText": "",
-    "deleteInProgress": "",
+    "importBcfNotificationSuccess": "BCF-bestand succesvol geïmporteerd",
+    "importBcfNotificationError": "Fout bij het importeren van het BCF-bestand",
+    "deleteBcfTitle": "{bcfCount} BCF verwijderen",
+    "exportBcfNotificationSuccess": "BCF succesvol geëxporteerd",
+    "exportBcfXlsxNotificationSuccess": "Xlsx-export geslaagd!",
+    "exportBcfNotificationError": "Fout bij het exporteren van de BCF naar xlsx",
+    "selectedTopicCount": "Aantal geselecteerde topics",
+    "deleteBcfText": "U staat op het punt alle geselecteerde topics te verwijderen",
+    "deleteInProgress": "Bezig met verwijderen",
     "deleteInProgressSub": "Dit kan even duren.",
-    "deleteBcfNotificationSuccess": "",
-    "deleteBcfNotificationError": "",
-    "onlyAdminParameters": ""
+    "deleteBcfNotificationSuccess": "Topics verwijderd",
+    "deleteBcfNotificationError": "Fout bij het verwijderen van topics",
+    "onlyAdminParameters": "U moet projectbeheerder zijn"
   },
   "GuidedTour": {
     "platform": {
@@ -723,7 +907,7 @@
     "AddVersion": "Voeg een nieuwe versie toe",
     "loading": {
       "subMessage": "Dit kan even duren.",
-      "downloadMessage": "",
+      "downloadMessage": "Bezig met laden.",
       "deleteMessage": "Verwijdering bezig."
     },
     "getToHead": "Ga naar de huidige versie",
@@ -737,34 +921,35 @@
     "emptyArea": "Je hebt momenteel geen versiegeschiedenis voor dit bestand."
   },
   "Tag": {
-    "title": "",
-    "list": "",
-    "addTag": "",
-    "addNewTag": "",
-    "deleteTag": ""
+    "title": "Tags beheren",
+    "list": "Lijst met tags",
+    "addTag": "een tag toevoegen",
+    "addNewTag": "Een nieuwe tag toevoegen",
+    "deleteTag": "Deze tag verwijderen",
+    "emptyTag": "Geen tag"
   },
   "SubscriptionModal": {
-    "title": "",
-    "subtitle": "",
+    "title": "Meer ruimte krijgen",
+    "subtitle": "U heeft momenteel {size} opslagcapaciteit",
     "soon": "SOON",
     "upgrade": {
-      "title": "",
-      "subtitle": ""
+      "title": "Upgraden naar het pro-platform",
+      "subtitle": "Abonneer u op BIMData Pro om meer ruimte te krijgen."
     },
     "referal": {
-      "title": "",
-      "subtitle": ""
+      "title": "Doe mee aan ons verwijzingsprogramma!",
+      "subtitle": "Deel uw verwijzingscode om ruimte te verdienen."
     },
     "linkedin": {
-      "title": "",
-      "subtitle": ""
+      "title": "Koppel uw LinkedIn-account",
+      "subtitle": "Volg de BIMData-pagina om ruimte te verdienen."
     }
   },
   "GroupMemberCard": {
-    "pending": ""
+    "pending": "Uitnodiging in behandeling"
   },
   "UserProfile": {
-    "title": "",
+    "title": "Profielinstellingen",
     "loading": {
       "message": "Verwijdering bezig.",
       "subMessage": "Dit kan even duren."
@@ -772,36 +957,47 @@
   },
   "Invitations": {
     "title": "Mijn uitnodigingen",
-    "invitCounter": "",
-    "acceptAll": "",
-    "invitedInProject": "",
-    "invitedInSpace": "",
-    "invitAccepted": "",
-    "invitDenied": "",
-    "invitPending": "",
-    "goToProjectLong": "Project",
-    "goToProjectShort": "Project",
-    "goToSpaceLong": "Ruimte",
-    "goToSpaceShort": "Ruimte"
+    "invitCounter": "Openstaande uitnodigingen -",
+    "acceptAll": "Alles accepteren",
+    "invitedInProject": "U bent door {sender} uitgenodigd om deel te nemen aan het project {project} in de ruimte {cloud}",
+    "invitedInSpace": "U bent door {sender} uitgenodigd om deel te nemen aan de ruimte {cloud}",
+    "invitAccepted": "Uitnodiging geaccepteerd",
+    "invitDenied": "Uitnodiging geweigerd",
+    "invitPending": "Uitnodiging in behandeling",
+    "goToProject": "Project openen",
+    "goToSpace": "Ruimte openen"
   },
   "DocumentViewer": {
-    "viewerButton": "",
-    "docPlaceholder": ""
+    "viewerButton": "Openen in de viewer",
+    "docPlaceholder": "Geen voorbeeld voor dit document"
+  },
+  "MainModelSelector": {
+    "title": "Projectvoorbeeld kiezen"
+  },
+  "UserFavoritesManager": {
+    "title": "Favoriete ruimtes / projecten"
+  },
+  "VisasDeleteModal": {
+    "title": "{visasCount} visums verwijderen",
+    "message": "U staat op het punt de visums van de volgende bestanden te verwijderen:"
   },
   "GroupImport": {
-    "title": "",
-    "selectAll": "",
-    "notAdmin": "",
-    "noGroup": ""
+    "title": "Een groep importeren",
+    "selectAll": "Alles selecteren",
+    "notAdmin": "U moet projectbeheerder zijn",
+    "noGroup": "Er is geen groep voor dit project",
+    "noProject": "Er zijn geen andere projecten",
+    "noResult": "Geen project met deze naam"
   },
   "UploadCard": {
     "cancelMessage": "Geannuleerd",
     "errorMessage": "Upload mislukt",
-    "upload": ""
+    "upload": "{uploaded} van {total} ({percentage}% geüpload)"
   },
   "t": {
     "add": "Toevoegen",
     "amount": "Bedrag",
+    "apply": "Toepassen",
     "archive": "Archiveren",
     "back": "Terug",
     "cancel": "Annuleren",
@@ -812,45 +1008,67 @@
     "createdBy": "Gemaakt door",
     "close": "Sluiten",
     "date": "Datum",
+    "days_ago": "{count} dag geleden | {count} dagen geleden",
     "delete": "Verwijderen",
     "description": "Beschrijving",
     "download": "Downloaden",
+    "dueDate": "Vervaldatum",
     "edit": "Bewerken",
+    "emptyFile": "Geen bestand",
     "emptyFolder": "Lege map",
+    "emptyVisa": "Geen visum",
     "error": "Fout",
-    "export": "",
-    "file": "",
-    "folder": "",
-    "import": "",
-    "invalidName": "",
-    "leave": "",
-    "modifiedOn": "",
-    "modify": "",
-    "name": "",
-    "ok": "",
-    "open": "",
-    "or": "",
-    "rename": "",
-    "search": "",
-    "size": "",
-    "space": "",
-    "status": "",
-    "success": "",
-    "type": "",
-    "unarchive": "",
-    "validate": "",
-    "verify": ""
+    "export": "Exporteren",
+    "exportXlsx": "Exporteren als xlsx",
+    "file": "Bestand",
+    "filters": "Filters",
+    "folder": "Map",
+    "hours_ago": "{count} uur geleden | {count} uur geleden",
+    "import": "Importeren",
+    "invalidName": "Ongeldige naam",
+    "just_now": "Zojuist",
+    "leave": "Verlaten",
+    "location": "Locatie",
+    "minutes_ago": "{count} minuut geleden | {count} minuten geleden",
+    "modifiedOn": "Laatst gewijzigd",
+    "modify": "Bewerken",
+    "name": "Naam",
+    "notSpecified": "Niet opgegeven",
+    "ok": "OK",
+    "open": "Openen",
+    "or": "of",
+    "project": "Project",
+    "projects": "Projecten",
+    "rename": "Hernoemen",
+    "reset": "Resetten",
+    "rootFolder": "Hoofdmap",
+    "save": "Opslaan",
+    "search": "Zoeken",
+    "size": "Grootte",
+    "space": "Ruimte",
+    "spaces": "Ruimtes",
+    "status": "Status",
+    "success": "Gelukt",
+    "today": "Vandaag",
+    "type": "Type",
+    "unarchive": "Dearchiveren",
+    "validate": "Valideren",
+    "validation": "Validaties",
+    "validator": "Validators",
+    "verify": "Controleren",
+    "yesterday": "Gisteren"
   },
   "FolderCreationButton": {
-    "text": ""
+    "text": "Nieuwe map"
   },
   "FolderCreationForm": {
-    "title": ""
+    "title": "Map aanmaken"
   },
   "SpaceCardImageButton": {
-    "text": ""
+    "text": "Afbeelding wijzigen"
   },
   "FileTreePreviewModal": {
-    "title": ""
+    "title": "DMS-structuur importeren uit",
+    "emptySource": "Dit project heeft geen mappen"
   }
 }
