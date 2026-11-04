@@ -122,7 +122,17 @@ When a new stable version of the Viewer is released, the `release` branch is aut
 
 ### Internationalization
 
-When adding code in `develop` branch it will trigger an update on POEditor.
+Translations live in `src/i18n/lang/<lang>.json`. The supported languages are the ones available in this directory,
+and each of them must be registered in `src/i18n/index.js` and `src/i18n/datetime.js`.
+
+The CI fails on pull requests if a translation is missing: every key must exist, with a non-empty value,
+in all supported languages.
+
+Run the check locally with:
+
+```bash
+npm run i18n:check
+```
 
 ## License
 

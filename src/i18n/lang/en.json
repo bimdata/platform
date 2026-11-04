@@ -2,6 +2,7 @@
   "NamingConstraint": {
     "managerTitle": "Naming convention management",
     "constraintsTab": "Naming rules",
+    "listsTab": "Lists management",
     "rulesSectionTitle": "Rules list",
     "addRuleButton": "add a rule",
     "searchConstraintPlaceholder": "Search for a rule",
@@ -31,6 +32,7 @@
     "strictHelp": "If you check this box, you will have to rename every file that does not match this new rule.",
     "previewLabel": "Preview",
     "ruleSectionTitle": "Rule",
+    "emptyStateHelp": "Add your first element to start building your rule.",
     "addPartButton": "Add an element",
     "emptyParts": "Add at least one element to define the rule.",
     "partTypeLabel": "Type",
@@ -70,10 +72,11 @@
     "recursiveHelp": "If you check this box, this rule will also apply to files contained in the subfolders of your main folder.",
     "applyRuleSuccessTitle": "Naming rule applied",
     "applyRuleSuccessMessage": "The naming convention has been applied to the folder \"{folder}\".",
+    "applyRuleWithConflictsSuccessTitle": "Rule applied with conflicts",
+    "applyRuleWithConflictsSuccessMessage": "The naming rule has been applied to the folder \"{folder}\". Some files may still be in conflict.",
     "applyRuleError": "The naming convention could not be applied.",
     "applyRuleWarningTitle": "Name does not match the rule",
     "conflictTooltip": "This file does not match the folder naming convention.",
-    "conflictModalIntro": "Rename here the files that do not match the strict rule you set.",
     "conflictModalWarning": "Rename or delete the conflicting documents to continue",
     "conflictCurrentNameLabel": "Current name",
     "conflictNewNameLabel": "New name",
@@ -88,7 +91,6 @@
     "renameButton": "Confirm new name",
     "applyRenameButton": "Apply new names",
     "confirmRenameButton": "Accept names",
-    "renameFilePlaceholder": "Rename the file",
     "renameConflictsMenuItem": "Rename conflicting files",
     "noConflictsTitle": "No conflicting files",
     "noConflictsMessage": "All files match their folder naming convention.",
@@ -117,6 +119,9 @@
       "rulesDescription": "This list is used by the following naming rules:",
       "resolution": "To delete this list, first update the affected rules so that they no longer use it."
     }
+  },
+  "FolderNamingConstraint": {
+    "ruleSectionTitle": "Rules applied to the folder: "
   },
   "OidcCallbackError": {
     "message": "An error occured during authentication...",
@@ -317,6 +322,10 @@
     "previewModelButtonText": "Preview",
     "createPhotosphereButtonText": "Define as photosphere"
   },
+  "FileNameCell": {
+    "modelFile": "Model",
+    "photosphereFile": "Photosphere"
+  },
   "FilesActionBar": {
     "moveButtonText": "Move to"
   },
@@ -328,13 +337,16 @@
   "FilesManager": {
     "title": "Project Files",
     "createModelNotification": "Model successfully created",
+    "createModelsNotification": "Models created successfully",
     "structureImport": "Import a GED structure",
+    "removeModelsNotification": "Models removed successfully",
     "gedDownload": "Download the GED",
     "folderImport": "Import a folder",
     "foldersTab": "Folders",
     "filesTab": "Documents",
     "visasTab": "Visas",
-    "createPhotosphereNotification": "Photosphere created successfully"
+    "createPhotosphereNotification": "Photosphere created successfully",
+    "createPhotospheresNotification": "Photospheres created successfully"
   },
   "FilesManagerOnboarding": {
     "text": "Upload your first file",
@@ -419,7 +431,8 @@
     "addLocationButtonText": "Fill in"
   },
   "ModelLocationForm": {
-    "addressInputPlaceholder": "Enter address"
+    "addressInputPlaceholder": "Enter address",
+    "applyToAllModels": "Apply to all models"
   },
   "ModelsActionBar": {
     "mergeButtonText": "Merge"
@@ -549,6 +562,7 @@
     "title": "Manage group members"
   },
   "Errors": {
+    "logsFetchError": "Unable to retrieve project logs",
     "spacesFetchError": "Fail to fetch spaces",
     "spaceCreateError": "Fail to create space",
     "spaceUpdateError": "Fail to update space",
@@ -877,12 +891,22 @@
       "deletedUser": "User removed",
       "validatorList": {
         "accept": "Validated",
+        "delayed": "Overdue",
         "deny": "Refused",
         "commented": "Commented",
         "pending": "Awaiting",
         "getRidOfValidator": "Remove validator",
         "refresh": "Reset validation"
       }
+    },
+    "VisaValidatorCell": {
+      "title": "Validator details",
+      "noGroup": "No group",
+      "accept": "Validated",
+      "delayed": "Overdue",
+      "deny": "Refused",
+      "pending": "Pending",
+      "multipleGroups": "{count} groups"
     },
     "comments": {
       "commentary": "Commentry",
@@ -1105,6 +1129,7 @@
     "createdBy": "Created by",
     "close": "Close",
     "date": "Date",
+    "days_ago": "{count} day ago | {count} days ago",
     "delete": "Delete",
     "description": "Description",
     "download": "Download",
@@ -1115,8 +1140,10 @@
     "file": "File",
     "filters": "Filters",
     "folder": "Folder",
+    "hours_ago": "{count} hour ago | {count} hours ago",
     "import": "Import",
     "invalidName": "Invalid name",
+    "just_now": "Just now",
     "invalidNameFormat": "Name does not match the naming rule (e.g. {example}).",
     "leave": "Leave",
     "modifiedOn": "Last modified",
@@ -1132,16 +1159,19 @@
     "space": "Space",
     "status": "Status",
     "success": "Success",
+    "today": "Today",
     "type": "Type",
     "unarchive": "Unarchive",
     "validate": "Validate",
     "verify": "Check",
+    "yesterday": "Yesterday",
     "exportXlsx": "Export as xlsx",
     "project": "Project",
     "projects": "Projects",
     "spaces": "Spaces",
     "notSpecified": "Not specified",
     "location": "Location",
+    "minutes_ago": "{count} minute ago | {count} minutes ago",
     "rootFolder": "Root folder",
     "dueDate": "Due date",
     "emptyFile": "No file",
