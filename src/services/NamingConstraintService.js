@@ -264,7 +264,6 @@ class NamingConstraintService {
         folder.id,
         project.id,
       );
-      this.clearFolderRuleCache();
       return documents ?? [];
     } catch (error) {
       if (isResponse(error) && error.status === 404) {
@@ -274,6 +273,8 @@ class NamingConstraintService {
         return [];
       }
       throw new RuntimeError(ERRORS.FOLDER_NAMING_CONSTRAINT_DELETE_ERROR, error);
+    } finally {
+      this.clearFolderRuleCache();
     }
   }
 
