@@ -58,6 +58,7 @@
 
 <script>
 import { ref } from "vue";
+import { useNamingConstraintUpload } from "../../../../composables/naming-constraint-upload.js";
 import { fileExtension, generateFileKey } from "../../../../utils/files.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -96,9 +97,11 @@ export default {
   },
   emits: ["close", "file-uploaded", "forbidden-upload-attempt"],
   setup(props, { emit }) {
+    const { checkFilesNaming } = useNamingConstraintUpload();
+
     const fileUploads = ref([]);
 
-    const uploadFiles = (event) => {
+    const uploadFiles = async (event) => {
       let files = null;
       if (event.dataTransfer) {
         // Files from drag & drop
@@ -133,6 +136,10 @@ export default {
       });
       if (forbiddenUploads.length > 0) {
         emit("forbidden-upload-attempt", forbiddenUploads);
+      }
+      if (props.folder && files.length > 0) {
+        files = await checkFilesNaming(props.project, props.folder, files);
+        if (!files?.length) return;
       }
       files = files.map((file) => Object.assign(file, { key: generateFileKey(file) }));
       fileUploads.value = fileUploads.value.concat(files);

@@ -1,5 +1,5 @@
 <template>
-  <div class="generic-models-manager">
+  <div class="generic-models-manager" :class="showFolderSelector ? 'show-folder-selector' : ''">
     <div class="flex items-center justify-between">
       <BIMDataTabs
         width="100%"
@@ -121,6 +121,7 @@
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
 import { useListFilter } from "../../../../../composables/list-filter.js";
+import { useNamingConstraintUpload } from "../../../../../composables/naming-constraint-upload.js";
 import { useRouter } from "vue-router";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
@@ -182,6 +183,8 @@ export default {
       loadProjectFileStructure,
       projectFileStructure,
     } = useFiles();
+
+    const { checkFilesNaming } = useNamingConstraintUpload();
 
     const showFolderSelector = ref(false);
     const selectedFolder = ref(null);
@@ -261,9 +264,7 @@ export default {
       showFolderSelector.value = true;
     };
 
-    const uploadModels = () => {
-      showFolderSelector.value = true;
-    };
+    const uploadModels = () => openFolderSelector();
 
     const onFolderSelected = (folder) => {
       selectedFolder.value = folder;
@@ -271,8 +272,15 @@ export default {
 
       fileUploadInput(
         "file",
-        (event) => {
-          const files = Array.from(event.target.files).map((file, i) => {
+        async (event) => {
+          const checkedFiles = await checkFilesNaming(
+            props.project,
+            folder,
+            Array.from(event.target.files),
+          );
+          if (!checkedFiles?.length) return;
+
+          const files = checkedFiles.map((file, i) => {
             file.key = `${Date.now()}-${i}-${Math.random()}`;
             file.params = props.fileUploadParams;
             return file;
