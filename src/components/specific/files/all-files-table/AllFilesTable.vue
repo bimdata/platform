@@ -172,8 +172,8 @@
               :file="file"
               @file-clicked="$emit('file-clicked', $event)"
               @open-versioning-manager="$emit('open-versioning-manager', $event)"
-              :editMode="nameEditMode[file.id]"
-              @close="nameEditMode[file.id] = false"
+              :editMode="editedNameId === file.id"
+              @close="closeNameEditor(file.id)"
             />
           </div>
           <div
@@ -218,11 +218,12 @@
               @download="$emit('download', file)"
               @file-clicked="$emit('file-clicked', file)"
               @manage-access="$emit('manage-access', file)"
+              @manage-naming-rule="$emit('manage-naming-rule', file)"
               @open-tag-manager="$emit('open-tag-manager', file)"
               @open-versioning-manager="$emit('open-versioning-manager', file)"
               @open-visa-manager="$emit('open-visa-manager', file)"
               @remove-model="$emit('remove-model', file)"
-              @update="nameEditMode[file.id] = true"
+              @update="editedNameId = file.id"
             />
           </div>
         </div>
@@ -231,10 +232,11 @@
   </div>
 </template>
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef, { columnsMD, columnsLG, columnsXL, columnsXXL } from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useNameEditing } from "../../../../composables/name-editing.js";
 import { formatBytes, fileExtension } from "../../../../utils/files.js";
 import useSortAndFilter from "./sortAndFilter.js";
 
@@ -288,6 +290,7 @@ export default {
     "file-clicked",
     "go-folders-view",
     "manage-access",
+    "manage-naming-rule",
     "open-tag-manager",
     "open-versioning-manager",
     "open-visa-manager",
@@ -336,15 +339,7 @@ export default {
         .sort((a, b) => a.localeCompare(b));
     });
 
-    let nameEditMode;
-    watch(
-      () => props.files,
-      (files) => {
-        nameEditMode = reactive({});
-        files.forEach((row) => (nameEditMode[row.id] = false));
-      },
-      { immediate: true },
-    );
+    const { editedNameId, closeNameEditor } = useNameEditing(() => props.files);
 
     const {
       sortObject,
@@ -393,11 +388,12 @@ export default {
       // References
       columns,
       mainSelectionCheckboxValue,
-      nameEditMode,
+      editedNameId,
       formattedAllFiles,
       sortedTypeColumnData,
       visibleColumnIds,
       // Methods
+      closeNameEditor,
       formatBytes,
       updateFilters,
       onFileSelectionChange,

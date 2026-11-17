@@ -1,7 +1,38 @@
 {
+  "NamingConstraint": {
+    "managerTitle": "Administrasjon av navnekonvensjoner",
+    "constraintsTab": "Navneregler",
+    "strictBadge": "Streng",
+    "createConstraintTitle": "Opprette en regel",
+    "updateConstraintTitle": "Redigere en regel",
+    "createListTitle": "Opprette listen min",
+    "updateListTitle": "Redigere listen min",
+    "nameLabel": "Navn",
+    "strictLabel": "Streng regel",
+    "strictHelp": "Hvis du krysser av i denne boksen, må du gi nytt navn til alle filer som ikke samsvarer med denne nye regelen.",
+    "previewLabel": "Forhåndsvisning",
+    "ruleSectionTitle": "Regel",
+    "addPartButton": "Legg til et element",
+    "emptyParts": "Legg til minst ett element for å definere regelen.",
+    "partTypeLabel": "Type",
+    "partTypeValuesIn": "Liste",
+    "partTypeBounded": "Avgrensede verdier",
+    "partTypeNChars": "N tegn",
+    "elementsHelp": "Kommaseparert liste over tillatte verdier.",
+    "minLabel": "Min",
+    "maxLabel": "Maks",
+    "maxLengthLabel": "Maks lengde",
+    "emptyElementsError": "Oppgi minst én verdi.",
+    "invalidBoundsError": "Maks må være større enn eller lik min.",
+    "missingBoundsError": "Min og maks er påkrevd for avgrensede verdier.",
+    "invalidMaxLengthError": "Maks lengde må være minst 1.",
+    "missingListError": "Velg en liste for hvert listeelement.",
+    "listInUseErrorTitle": "Liste i bruk",
+    "listInUseErrorMessage": "Denne listen brukes av følgende regler: {constraints}. Rediger dem før du sletter listen."
+  },
   "OidcCallbackError": {
     "message": "En feil oppsto under autentiseringen...",
-    "retryButtonText": ""
+    "retryButtonText": "Prøv igjen"
   },
   "ProjectBoard": {
     "tabs": {
@@ -19,7 +50,7 @@
   },
   "ProjectOverview": {
     "openFileUploadButtonText": "Legg til en modell",
-    "forbiddenUploadNotification": ""
+    "forbiddenUploadNotification": "Velg en modellfil: {extensions}"
   },
   "LanguageSelector": {
     "title": "Velg et språk"
@@ -54,8 +85,8 @@
     "manageAccessButtonText": "Administrer tilgang",
     "createModelButtonText": "Definer som modell",
     "removeModelButtonText": "Fjern modeller",
-    "versioningButtonText": "",
-    "visaButtonText": ""
+    "versioningButtonText": "Legg til en versjon",
+    "visaButtonText": "Valideringsforespørsel"
   },
   "FilesActionBar": {
     "moveButtonText": "Flytt til"
@@ -68,16 +99,16 @@
   "FilesManager": {
     "title": "Prosjektfiler",
     "createModelNotification": "Modell opprettet",
-    "structureImport": "",
-    "gedDownload": "",
-    "folderImport": ""
+    "structureImport": "Importer en DMS-struktur",
+    "gedDownload": "Last ned DMS",
+    "folderImport": "Importer en mappe"
   },
   "FilesManagerOnboarding": {
     "text": "Last opp din første fil",
     "uploadFileButtonText": "Last opp en fil",
     "createFolderButtonText": "Opprett en mappe",
-    "GEDStructureImport": "",
-    "folderImport": ""
+    "GEDStructureImport": "Importer en DMS-struktur",
+    "folderImport": "Importer en fil"
   },
   "FilesTable": {
     "headers": {
@@ -96,11 +127,11 @@
     "rightsHeader": "Rettigheter",
     "membersHeader": "Medlemmer",
     "groupHeader": "Gruppe",
-    "propagate": ""
+    "propagate": "For å overføre rettighetene til undermapper (rekursivt), kryss av i boksen før du validerer skjemaet."
   },
   "FolderSelector": {
     "selectedFolder": "Valgt mappe",
-    "moveHere": ""
+    "moveHere": "Flytt hit"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Endre farge"
@@ -187,8 +218,8 @@
       "version": "Versjon"
     },
     "emptyTablePlaceholder": {
-      "text": "",
-      "textPdf": ""
+      "text": "Ingen modell",
+      "textPdf": "Fra «fil»-menyen i filbehandleren klikker du på «Definer som modell» for å gjøre pdf-tegningene dine tilgjengelige i modellbehandleren."
     }
   },
   "ProjectCardDeleteGuard": {
@@ -343,23 +374,36 @@
     "fileVersionsMakeHeadError": "Bytte av dokument til nåværende versjon feilet.",
     "fileVersionDelete": "Sletting av dokumentet feilet",
     "userAlreadyExistsError": "Brukeren er allerede medlem av dette området/prosjektet.",
-    "tagsFetchError": "",
-    "tagsCreateError": "",
-    "tagsUpdateError": "",
-    "tagsDeleteError": "",
-    "tagsAddDocumentError": "",
-    "tagsDeleteDocumentError": "",
-    "spaceSizeFullError": "",
-    "spaceFetchError": "",
-    "projectFolderTreeFetchError": "",
-    "fileStructureCreateError": "",
-    "documentCreateError": "",
+    "tagsFetchError": "Kunne ikke hente tagger",
+    "tagsCreateError": "Feil under opprettelse av taggen",
+    "tagsUpdateError": "Feil under endring av taggen",
+    "tagsDeleteError": "Feil under sletting av taggen",
+    "tagsAddDocumentError": "Feil under tilknytning av taggen til dokumentet",
+    "tagsDeleteDocumentError": "Feil under fjerning av taggen fra dokumentet",
+    "spaceSizeFullError": "Lagringsplassen din er full",
+    "spaceFetchError": "Kunne ikke hente informasjon om området",
+    "projectFolderTreeFetchError": "Kunne ikke hente prosjektlisten",
+    "fileStructureCreateError": "Kunne ikke opprette filstrukturen",
+    "documentCreateError": "Kunne ikke laste opp dette dokumentet",
     "invitationViewFetchError": "Kunne ikke hente frem invitasjoner",
-    "invitationViewAcceptError": "",
-    "invitationViewDeclineError": "",
-    "folderFetchFolder": "",
-    "bcfDeleteError": "",
-    "groupImportError": ""
+    "invitationViewAcceptError": "Kunne ikke godta invitasjonen",
+    "invitationViewDeclineError": "Kunne ikke avslå invitasjonen",
+    "folderFetchFolder": "Kunne ikke hente mappedata",
+    "bcfDeleteError": "Sletting mislyktes",
+    "namingConstraintsFetchError": "Kunne ikke hente navneregler",
+    "namingConstraintFetchError": "Kunne ikke hente denne navneregelen",
+    "namingConstraintCreateError": "Kunne ikke opprette denne navneregelen",
+    "namingConstraintUpdateError": "Kunne ikke oppdatere denne navneregelen",
+    "namingConstraintDeleteError": "Kunne ikke slette denne navneregelen",
+    "namingPartListsFetchError": "Kunne ikke hente navnelister",
+    "namingPartListCreateError": "Kunne ikke opprette denne navnelisten",
+    "namingPartListUpdateError": "Kunne ikke oppdatere denne navnelisten",
+    "namingPartListDeleteError": "Kunne ikke slette denne navnelisten",
+    "folderNamingConstraintFetchError": "Kunne ikke hente navneregelen for mappen",
+    "folderNamingConstraintSetError": "Kunne ikke bruke navneregelen på denne mappen",
+    "folderNamingConstraintDeleteError": "Kunne ikke fjerne navneregelen fra denne mappen",
+    "conflictingDocumentsFetchError": "Kunne ikke hente dokumenter i konflikt",
+    "groupImportError": "Import av gruppe mislyktes"
   },
   "ProjectStatusBadge": {
     "new": "NY",
@@ -424,7 +468,7 @@
       "deleted": "Slettet",
       "paused": "Satt på pause",
       "custom": "Administrert av BIMData.io",
-      "past_due": ""
+      "past_due": "Suspendert"
     }
   },
   "DatapackForm": {
@@ -649,17 +693,17 @@
     "metricsEmptyText": "Legg til problemer for å se assosiert statistikk her.",
     "noSearchResultsTitle": "Ingen resultater",
     "noSearchResultsText": "Søket ditt ga ingen resultater, vennligst sjekk filter eller nøkkelord",
-    "importBcfNotificationSuccess": "",
-    "importBcfNotificationError": "",
-    "exportBcfNotificationSuccess": "",
-    "exportBcfNotificationError": "",
-    "selectedTopicCount": "",
-    "deleteBcfText": "",
-    "deleteInProgress": "",
+    "importBcfNotificationSuccess": "BCF-filen ble importert",
+    "importBcfNotificationError": "Feil under import av BCF-filen",
+    "exportBcfNotificationSuccess": "BCF ble eksportert",
+    "exportBcfNotificationError": "Feil under eksport av BCF til Xlsx",
+    "selectedTopicCount": "Antall valgte emner",
+    "deleteBcfText": "Du er i ferd med å slette alle valgte emner",
+    "deleteInProgress": "Sletting pågår",
     "deleteInProgressSub": "Denne prosessen kan ta en liten stund.",
-    "deleteBcfNotificationSuccess": "",
-    "deleteBcfNotificationError": "",
-    "onlyAdminParameters": ""
+    "deleteBcfNotificationSuccess": "Emner slettet",
+    "deleteBcfNotificationError": "Feil under sletting av emner",
+    "onlyAdminParameters": "Du må være prosjektadministrator"
   },
   "GuidedTour": {
     "platform": {
@@ -723,8 +767,8 @@
     "AddVersion": "Legg til ny versjon",
     "loading": {
       "subMessage": "Denne prosessen kan ta en liten stund.",
-      "downloadMessage": "",
-      "deleteMessage": ""
+      "downloadMessage": "Lasting pågår.",
+      "deleteMessage": "Sletting pågår."
     },
     "getToHead": "Bytt til nåværende versjon",
     "show": "Se",
@@ -737,67 +781,67 @@
     "emptyArea": "Du har for øyeblikket ingen versjonshistorikk for denne filen."
   },
   "Tag": {
-    "title": "",
-    "list": "",
-    "addTag": "",
-    "addNewTag": "",
-    "deleteTag": ""
+    "title": "Administrasjon av tagger",
+    "list": "Liste over tagger",
+    "addTag": "legg til en tagg",
+    "addNewTag": "Legg til en ny tagg",
+    "deleteTag": "Slett denne taggen"
   },
   "SubscriptionModal": {
-    "title": "",
-    "subtitle": "",
+    "title": "Få mer plass",
+    "subtitle": "Du har for øyeblikket {size} lagringskapasitet",
     "soon": "SOON",
     "upgrade": {
-      "title": "",
-      "subtitle": ""
+      "title": "Oppgrader til pro-plattformen",
+      "subtitle": "Abonner på BIMData Pro for å få mer plass."
     },
     "referal": {
-      "title": "",
-      "subtitle": ""
+      "title": "Bli med i vervingsprogrammet vårt!",
+      "subtitle": "Del vervekoden din for å tjene plass."
     },
     "linkedin": {
-      "title": "",
-      "subtitle": ""
+      "title": "Koble til LinkedIn-kontoen din",
+      "subtitle": "Følg BIMData-siden for å tjene plass."
     }
   },
   "GroupMemberCard": {
-    "pending": ""
+    "pending": "Invitasjon venter"
   },
   "UserProfile": {
-    "title": "",
+    "title": "Profilinnstillinger",
     "loading": {
-      "message": "",
-      "subMessage": ""
+      "message": "Sletting pågår.",
+      "subMessage": "Denne prosessen kan ta litt tid, ikke forlat siden."
     }
   },
   "Invitations": {
-    "title": "",
-    "invitCounter": "",
-    "acceptAll": "",
-    "invitedInProject": "",
-    "invitedInSpace": "",
-    "invitAccepted": "",
-    "invitDenied": "",
-    "invitPending": "",
+    "title": "Mine invitasjoner",
+    "invitCounter": "Ventende invitasjoner -",
+    "acceptAll": "Godta alle",
+    "invitedInProject": "Du er invitert av {sender} til å bli med i prosjektet {project} i området {cloud}",
+    "invitedInSpace": "Du er invitert av {sender} til å bli med i området {cloud}",
+    "invitAccepted": "Invitasjon godtatt",
+    "invitDenied": "Invitasjon avslått",
+    "invitPending": "Invitasjon venter",
     "goToProjectLong": "Prosjekt",
     "goToProjectShort": "Prosjekt",
     "goToSpaceLong": "Område",
     "goToSpaceShort": "Område"
   },
   "DocumentViewer": {
-    "viewerButton": "",
-    "docPlaceholder": ""
+    "viewerButton": "Åpne i visningsprogrammet",
+    "docPlaceholder": "Ingen forhåndsvisning for dette dokumentet"
   },
   "GroupImport": {
-    "title": "",
+    "title": "Importer en gruppe",
     "selectAll": "Velg alle",
-    "notAdmin": "",
-    "noGroup": ""
+    "notAdmin": "Du må være prosjektadministrator",
+    "noGroup": "Det finnes ingen gruppe for dette prosjektet"
   },
   "UploadCard": {
     "cancelMessage": "Avbrutt",
     "errorMessage": "Opplasting feilet",
-    "upload": ""
+    "upload": "{uploaded} av {total} ({percentage}% lastet opp)"
   },
   "t": {
     "add": "Legg til",
@@ -818,39 +862,39 @@
     "edit": "Rediger",
     "emptyFolder": "Tom mappe",
     "error": "Feil",
-    "export": "",
-    "file": "",
-    "folder": "",
-    "import": "",
-    "invalidName": "",
-    "leave": "",
-    "modifiedOn": "",
-    "modify": "",
-    "name": "",
-    "ok": "",
-    "open": "",
-    "or": "",
-    "rename": "",
-    "search": "",
-    "size": "",
-    "space": "",
-    "status": "",
-    "success": "",
-    "type": "",
-    "unarchive": "",
-    "validate": "",
-    "verify": ""
+    "export": "Eksporter",
+    "file": "Fil",
+    "folder": "Mappe",
+    "import": "Importer",
+    "invalidName": "Ugyldig navn",
+    "leave": "Forlat",
+    "modifiedOn": "Sist endret",
+    "modify": "Rediger",
+    "name": "Navn",
+    "ok": "OK",
+    "open": "Åpne",
+    "or": "eller",
+    "rename": "Gi nytt navn",
+    "search": "Søk",
+    "size": "Størrelse",
+    "space": "Område",
+    "status": "Status",
+    "success": "Vellykket",
+    "type": "Type",
+    "unarchive": "Gjenopprett fra arkiv",
+    "validate": "Valider",
+    "verify": "Kontroller"
   },
   "FolderCreationButton": {
-    "text": ""
+    "text": "Ny mappe"
   },
   "FolderCreationForm": {
-    "title": ""
+    "title": "Opprett mappe"
   },
   "SpaceCardImageButton": {
     "text": "Last opp bilde"
   },
   "FileTreePreviewModal": {
-    "title": ""
+    "title": "Importer DMS-struktur fra"
   }
 }

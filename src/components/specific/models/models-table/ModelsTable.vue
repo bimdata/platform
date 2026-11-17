@@ -38,8 +38,8 @@
       <ModelNameCell
         :project="project"
         :model="model"
-        :editMode="nameEditMode[model.id]"
-        @close="nameEditMode[model.id] = false"
+        :editMode="editedNameId === model.id"
+        @close="closeNameEditor(model.id)"
       />
     </template>
     <template #cell-tags="{ row: model }">
@@ -72,7 +72,7 @@
         @delete="$emit('delete', $event)"
         @download="$emit('download', $event)"
         @unarchive="$emit('unarchive', $event)"
-        @update="nameEditMode[model.id] = true"
+        @update="editedNameId = model.id"
         @view-metaBuilding="$emit('view-metaBuilding', $event)"
         @edit-metaBuilding="$emit('edit-metaBuilding', $event)"
         @view-photosphereBuilding="$emit('view-photosphereBuilding', $event)"
@@ -89,10 +89,11 @@
 </template>
 
 <script>
-import { ref, computed, reactive, watch } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import columnsDef from "./columns.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useNameEditing } from "../../../../composables/name-editing.js";
 import { useFiles } from "../../../../state/files.js";
 import { collectDescendants } from "../../../../utils/file-tree.js";
 import { isFolder } from "../../../../utils/file-structure.js";
@@ -175,15 +176,7 @@ export default {
       }));
     });
 
-    let nameEditMode;
-    watch(
-      () => props.models,
-      () => {
-        nameEditMode = reactive({});
-        props.models.forEach((model) => (nameEditMode[model.id] = false));
-      },
-      { immediate: true },
-    );
+    const { editedNameId, closeNameEditor } = useNameEditing(() => props.models);
 
     const getFoldersInFolder = (folder) => collectDescendants(folder, isFolder);
     const getFilesInFolder = (folder) => collectDescendants(folder, (child) => !isFolder(child));
@@ -239,8 +232,10 @@ export default {
       columns,
       modelsTable,
       modelsWithTags,
-      nameEditMode,
+      editedNameId,
       fileStructure: projectFileStructure,
+      // Methods
+      closeNameEditor,
     };
   },
 };

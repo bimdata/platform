@@ -1,0 +1,282 @@
+<template>
+  <div class="naming-constraint-manager">
+    <div class="naming-constraint-manager__header">
+      <div class="flex items-center">
+        <div class="naming-constraint-manager__header__icon">
+          <BIMDataButton
+            v-if="showBack"
+            class="naming-constraint-manager__header__back m-r-6"
+            ghost
+            rounded
+            icon
+            :disabled="localState.loading"
+            @click="back"
+          >
+            <BIMDataIconChevron :rotate="180" size="xxs" fill color="granite" />
+          </BIMDataButton>
+          <BIMDataIconNamingConvention v-else size="s" fill color="primary" />
+        </div>
+        <span class="naming-constraint-manager__header__title">
+          {{ $t("NamingConstraint.managerTitle") }}
+        </span>
+      </div>
+
+      <BIMDataButton ghost rounded icon @click="closeSidePanel()">
+        <BIMDataIconClose size="xxs" fill color="granite-light" />
+      </BIMDataButton>
+    </div>
+
+    <BIMDataTabs
+      class="m-t-12"
+      v-if="localState.currentView === 'list'"
+      :tabs="tabs"
+      width="100%"
+      tabSize="50%"
+      height="40px"
+      :selected="localState.currentTab"
+      @tab-selected="localState.currentTab = $event.id"
+    >
+      <template #tab="{ tab }">
+        <BIMDataIcon :name="tab.icon" size="xs" margin="0 6px 0 0" />
+        <span>{{ tab.label }}</span>
+      </template>
+    </BIMDataTabs>
+
+    <div class="naming-constraint-manager__content">
+      <transition name="fade">
+        <div v-show="localState.loading" class="naming-constraint-manager__loader">
+          <BIMDataSpinner />
+        </div>
+      </transition>
+
+      <transition name="fade" mode="out-in">
+        <component :is="currentComponent" @close="back" />
+      </transition>
+    </div>
+    <BIMDataSafeZoneModal v-show="localState.showLeaveModal">
+      <template #title>
+        {{ $t("NamingConstraint.safeZoneModal.title") }}
+      </template>
+
+      <template #text>
+        {{ $t("NamingConstraint.safeZoneModal.text") }}
+      </template>
+
+      <template #actions>
+        <BIMDataButton width="120px" ghost radius @click="localState.showLeaveModal = false">
+          {{ $t("t.cancel") }}
+        </BIMDataButton>
+
+        <BIMDataButton width="120px" color="high" fill radius @click="confirmBack">
+          {{ $t("t.ok") }}
+        </BIMDataButton>
+      </template>
+    </BIMDataSafeZoneModal>
+  </div>
+</template>
+
+<script>
+import { useI18n } from "vue-i18n";
+import { computed, onMounted, provide, reactive, ref, watch } from "vue";
+import { useNamingConstraints } from "../../../../state/naming-constraints.js";
+import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
+// Components
+import NamingConstraintForm from "./naming-constraint-form/NamingConstraintForm.vue";
+import NamingConstraintsList from "./naming-constraints-list/NamingConstraintsList.vue";
+import NamingPartListForm from "./naming-part-list-form/NamingPartListForm.vue";
+import NamingPartListsList from "./naming-part-lists-list/NamingPartListsList.vue";
+
+const components = {
+  "constraints-list": "NamingConstraintsList",
+  "constraint-form": "NamingConstraintForm",
+  "part-lists-list": "NamingPartListsList",
+  "part-list-form": "NamingPartListForm",
+};
+
+export default {
+  components: {
+    NamingConstraintForm,
+    NamingConstraintsList,
+    NamingPartListForm,
+    NamingPartListsList,
+  },
+  props: {
+    project: {
+      type: Object,
+      required: true,
+    },
+    refreshFiles: {
+      type: Function,
+      default: null,
+    },
+  },
+  setup(props) {
+    const { t } = useI18n();
+    const { closeSidePanel } = useAppSidePanel();
+    const { loadNamingConstraints, loadNamingPartLists } = useNamingConstraints();
+
+    const localState = reactive({
+      project: props.project,
+      constraints: [],
+      partLists: [],
+
+      constraint: null,
+      partList: null,
+
+      currentTab: "constraints",
+      currentView: "list",
+      returnTo: null,
+
+      loading: false,
+
+      showLeaveModal: false,
+
+      pendingPartListPartIndex: null,
+      newlyCreatedPartList: null,
+
+      ruleDraft: null,
+    });
+
+    const clone = (value) => JSON.parse(JSON.stringify(value));
+    const initialRuleDraft = ref(null);
+    const resetInitialRuleDraft = (constraint) => {
+      if (constraint) {
+        initialRuleDraft.value = {
+          name: constraint.name ?? "",
+          strict: !!constraint.strict,
+          separator: constraint.separator ?? "_",
+          parts: clone(constraint.parts ?? []),
+        };
+      } else {
+        initialRuleDraft.value = {
+          name: "",
+          strict: false,
+          separator: "_",
+          parts: [],
+        };
+      }
+    };
+    const markRuleDraftAsSaved = () => {
+      initialRuleDraft.value = clone(localState.ruleDraft);
+    };
+    const hasUnsavedChanges = computed(() => {
+      if (!localState.ruleDraft || !initialRuleDraft.value) {
+        return false;
+      }
+
+      const normalize = (draft) => ({
+        name: draft.name ?? "",
+        strict: !!draft.strict,
+        separator: draft.separator ?? "_",
+        parts: (draft.parts ?? []).map((part) => ({
+          type: part.type,
+          name: part.name ?? "",
+          max_length: part.max_length ?? null,
+          min_value: part.min_value ?? null,
+          max_value: part.max_value ?? null,
+          value_list_id: part.value_list_id ?? null,
+        })),
+      });
+
+      return (
+        JSON.stringify(normalize(localState.ruleDraft)) !==
+        JSON.stringify(normalize(initialRuleDraft.value))
+      );
+    });
+
+    localState.resetInitialRuleDraft = resetInitialRuleDraft;
+    localState.markRuleDraftAsSaved = markRuleDraftAsSaved;
+
+    provide("localState", localState);
+    provide("refreshFiles", props.refreshFiles);
+
+    const currentComponent = computed(() => {
+      if (localState.currentView === "form") {
+        return localState.currentTab === "constraints"
+          ? "NamingConstraintForm"
+          : "NamingPartListForm";
+      }
+
+      return localState.currentTab === "constraints"
+        ? "NamingConstraintsList"
+        : "NamingPartListsList";
+    });
+
+    const showBack = computed(() => localState.currentView !== "list");
+
+    const doBack = () => {
+      if (localState.returnTo) {
+        localState.currentTab = localState.returnTo.tab;
+        localState.currentView = localState.returnTo.view;
+        localState.returnTo = null;
+        return;
+      }
+
+      localState.ruleDraft = null;
+      localState.constraint = null;
+      localState.partList = null;
+      localState.pendingPartListPartIndex = null;
+      localState.newlyCreatedPartList = null;
+      localState.currentView = "list";
+    };
+
+    const back = () => {
+      const isRuleForm =
+        localState.currentTab === "constraints" && localState.currentView === "form";
+
+      if (isRuleForm && hasUnsavedChanges.value) {
+        localState.showLeaveModal = true;
+        return;
+      }
+
+      doBack();
+    };
+
+    const confirmBack = () => {
+      localState.showLeaveModal = false;
+      doBack();
+    };
+
+    const tabs = computed(() => [
+      {
+        id: "constraints",
+        label: t("NamingConstraint.constraintsTab"),
+        icon: "Gavel",
+      },
+      {
+        id: "part-lists",
+        label: t("NamingConstraint.listsTab"),
+        icon: "List",
+      },
+    ]);
+
+    onMounted(async () => {
+      try {
+        localState.loading = true;
+        const [constraints, partLists] = await Promise.all([
+          loadNamingConstraints(props.project),
+          loadNamingPartLists(props.project),
+        ]);
+        localState.constraints = constraints;
+        localState.partLists = partLists;
+      } finally {
+        localState.loading = false;
+      }
+    });
+
+    return {
+      // References
+      localState,
+      currentComponent,
+      showBack,
+      tabs,
+      // Methods
+      back,
+      closeSidePanel,
+      confirmBack,
+    };
+  },
+};
+</script>
+
+<style scoped src="./NamingConstraintManagerCommon.css"></style>
