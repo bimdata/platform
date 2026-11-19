@@ -231,8 +231,14 @@ function buildDefaultValues(basename, rule) {
       case PART_TYPES.BOUNDED:
         return part.min_value ?? "";
 
-      case PART_TYPES.N_CHARS:
-        return basename.slice(0, part.max_length);
+      case PART_TYPES.N_CHARS: {
+        // The separator is not allowed in free-text parts: drop it so the
+        // pre-filled value is valid right away.
+        const separator = rule.separator ?? "";
+        const text = separator ? basename.split(separator).join("") : basename;
+
+        return text.slice(0, part.max_length);
+      }
 
       default:
         return "";

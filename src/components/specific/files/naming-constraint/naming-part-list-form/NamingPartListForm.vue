@@ -147,25 +147,15 @@
 
 <script>
 import { computed, inject, ref, watch, nextTick } from "vue";
-import { useFiles } from "../../../../../state/files.js";
+import { useNamingConflictModal } from "../../../../../composables/naming-conflict-modal.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { debounce } from "../../../../../utils/async.js";
-import { isFolder } from "../../../../../utils/file-structure.js";
-import { collectDescendants } from "../../../../../utils/file-tree.js";
-
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
-import NamingConflictModal from "../NamingConflictModal.vue";
 
 export default {
   setup() {
-    const {
-      createNamingPartList,
-      updateNamingPartList,
-      loadNamingConstraints,
-      getEffectiveFolderRule,
-    } = useNamingConstraints();
-    const { projectFileStructure } = useFiles();
-    const { openModal, closeModal } = useAppModal();
+    const { createNamingPartList, updateNamingPartList, loadNamingConstraints } =
+      useNamingConstraints();
+    const { openNamingConflictModalByFolder } = useNamingConflictModal();
 
     const localState = inject("localState");
     const refreshFiles = inject("refreshFiles", null);
@@ -271,28 +261,11 @@ export default {
     };
 
     const showConflicts = async (documents) => {
-      const allFolders = projectFileStructure.value
-        ? collectDescendants(projectFileStructure.value, isFolder)
-        : [];
-      const documentsWithRule = await Promise.all(
-        documents.map(async (doc) => ({
-          ...doc,
-          namingRule: await getEffectiveFolderRule(localState.project, { id: doc.parent_id }),
-        })),
-      );
-
-      openModal({
-        component: NamingConflictModal,
-        props: {
-          project: localState.project,
-          documents: documentsWithRule,
-          allFolders,
-          rule: null,
-          showRulesByGroup: true,
-          onClose: closeModal,
-          onConfirm: async () => {
-            await refreshFiles?.();
-          },
+      await openNamingConflictModalByFolder({
+        project: localState.project,
+        documents,
+        onConfirm: async () => {
+          await refreshFiles?.();
         },
       });
     };

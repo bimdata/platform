@@ -4,6 +4,8 @@ import {
   buildExample,
   buildPartExample,
   stripExtension,
+  splitName,
+  buildName,
   PART_TYPES
 } from "../../../src/utils/naming-constraint.js";
 
@@ -117,6 +119,19 @@ describe("Naming constraint - matchName", () => {
     };
     expect(matchName("A-B-plan", dashRule)).toBe(true);
     expect(matchName("A-B-pl-an", dashRule)).toBe(false);
+  });
+});
+
+describe("Naming constraint - splitName", () => {
+  it("Should drop the separator from pre-filled n_chars values", () => {
+    const { values, extension } = splitName("plan_rdc_v2.pdf", rule);
+    expect(values).toEqual(["ARC", 1, "planrdcv2"]);
+    expect(extension).toBe(".pdf");
+    expect(matchName(buildName(values, rule, extension), rule)).toBe(true);
+  });
+
+  it("Should keep parsed values when the name already matches", () => {
+    expect(splitName("STR_05_plan.ifc", rule).values).toEqual(["STR", "05", "plan"]);
   });
 });
 

@@ -85,6 +85,8 @@
     "conflictRestoreFileButton": "Restore",
     "maxCharsHint": "Maximum {count} characters",
     "errorMessage": "The number of characters exceeds the allowed limit.",
+    "separatorErrorMessage": "This field cannot contain the rule separator \"{separator}\".",
+    "requiredFieldError": "This field is required.",
     "renameButton": "Confirm new name",
     "applyRenameButton": "Apply new names",
     "confirmRenameButton": "Accept names",
