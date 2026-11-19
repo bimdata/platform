@@ -46,12 +46,15 @@ function getExtension(name) {
 
 /**
  * Check whether a single segment matches a rule part.
+ * Free-text (n_chars) segments cannot contain the rule separator, otherwise
+ * they would swallow the following segments (e.g. "plan_extra").
  *
  * @param {Object} part
  * @param {String} segment
+ * @param {String} [separator] rule separator
  * @returns {Boolean}
  */
-function matchPart(part, segment) {
+function matchPart(part, segment, separator = "") {
   switch (part?.type) {
     case PART_TYPES.VALUES_IN:
       return Array.isArray(part.elements) && part.elements.includes(segment);
@@ -67,7 +70,11 @@ function matchPart(part, segment) {
     }
 
     case PART_TYPES.N_CHARS:
-      return segment.length > 0 && segment.length <= part.max_length;
+      return (
+        segment.length > 0 &&
+        segment.length <= part.max_length &&
+        !(separator && segment.includes(separator))
+      );
 
     default:
       return false;
@@ -98,7 +105,7 @@ function parseNameParts(name, rule) {
   const separator = rule.separator ?? "";
 
   if (!separator) {
-    return rule.parts.length === 1 ? [baseName] : null;
+    return rule.parts.length === 1 && matchPart(rule.parts[0], baseName) ? [baseName] : null;
   }
 
   const parsePart = (value, partIndex) => {
@@ -108,7 +115,7 @@ function parseNameParts(name, rule) {
     for (let end = 1; end <= value.length; end++) {
       const candidate = value.slice(0, end);
 
-      if (!matchPart(part, candidate)) {
+      if (!matchPart(part, candidate, separator)) {
         continue;
       }
 
@@ -159,13 +166,33 @@ function matchName(name, rule) {
 /**
  * Build a human-friendly example segment for a single rule part.
  *
- * Uses the part name when available.
+ * Uses the part name when available, otherwise a placeholder based on its type:
+ *
+ * - values_in -> first element if defined, otherwise "..."
+ * - bounded   -> "[MIN-MAX]"
+ * - n_chars   -> "XXX"
  *
  * @param {Object} part
  * @returns {String}
  */
 function buildPartExample(part) {
-  return part?.name ?? "";
+  if (part?.name) {
+    return part.name;
+  }
+
+  switch (part?.type) {
+    case PART_TYPES.VALUES_IN:
+      return part.elements?.[0] ?? "...";
+
+    case PART_TYPES.BOUNDED:
+      return `[${part.min_value}-${part.max_value}]`;
+
+    case PART_TYPES.N_CHARS:
+      return "XXX";
+
+    default:
+      return "";
+  }
 }
 
 /**
