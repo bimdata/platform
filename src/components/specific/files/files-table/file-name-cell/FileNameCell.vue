@@ -95,15 +95,13 @@ import { useI18n } from "vue-i18n";
 import { useFiles } from "../../../../../state/files.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
+import { useNamingConflictModal } from "../../../../../composables/naming-conflict-modal.js";
 import { debounce } from "../../../../../utils/async.js";
-import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { matchName, buildExample } from "../../../../../utils/naming-constraint.js";
 import { isConvertible, isConvertibleToPhotosphere } from "../../../../../utils/models.js";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
 
 import NamingConstraintPreview from "../../naming-constraint/naming-constraint-preview/NamingConstraintPreview.vue";
-import NamingConflictModal from "../../naming-constraint/NamingConflictModal.vue";
 
 export default {
   components: {
@@ -130,10 +128,10 @@ export default {
   emits: ["close", "file-clicked", "open-versioning-manager", "success"],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const { updateFiles, projectFileStructure } = useFiles();
+    const { updateFiles } = useFiles();
     const { getEffectiveFolderRule } = useNamingConstraints();
     const { pushNotification } = useAppNotification();
-    const { openModal, closeModal } = useAppModal();
+    const { openNamingConflictModal: showNamingConflicts } = useNamingConflictModal();
 
     const loading = ref(false);
 
@@ -143,10 +141,6 @@ export default {
     const errorMessage = ref("");
 
     const hasHistory = computed(() => props.file?.history_count > 0);
-
-    const allFolders = computed(() =>
-      projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
-    );
 
     const renameFile = debounce(async () => {
       if (fileName.value) {
@@ -243,16 +237,10 @@ export default {
         id: props.file.parent_id,
       });
 
-      openModal({
-        component: NamingConflictModal,
-        props: {
-          project: props.project,
-          documents: [props.file],
-          allFolders: allFolders.value,
-          rule,
-          onClose: closeModal,
-          onConfirm: closeModal,
-        },
+      showNamingConflicts({
+        project: props.project,
+        documents: [props.file],
+        rule,
       });
     };
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="generic-models-manager">
+  <div class="generic-models-manager" :class="showFolderSelector ? 'show-folder-selector' : ''">
     <div class="flex items-center justify-between">
       <BIMDataTabs
         width="100%"
@@ -51,6 +51,19 @@
       </BIMDataButton>
     </div>
 
+    <transition name="fade">
+      <FolderSelector
+        v-if="showFolderSelector"
+        context="upload"
+        :project="project"
+        :file-structure="projectFileStructure"
+        :files="[]"
+        :initial-folder="projectFileStructure"
+        @close="showFolderSelector = false"
+        @folder-selected="onFolderSelected"
+      />
+    </transition>
+
     <div class="generic-models-manager__separator"></div>
 
     <transition name="fade">
@@ -72,6 +85,7 @@
       :project="project"
       :models="displayedModelsFiltered"
       :fileUploads="fileUploads"
+      :upload-folder="selectedFolder"
       @file-uploaded="onFileUploaded"
       @upload-canceled="onUploadCanceled"
       @upload-failed="onUploadCanceled"
@@ -107,6 +121,7 @@
 <script>
 import { computed, ref, watch, watchEffect } from "vue";
 import { useListFilter } from "../../../../../composables/list-filter.js";
+import { useNamingConstraintUpload } from "../../../../../composables/naming-constraint-upload.js";
 import { useRouter } from "vue-router";
 import { MODEL_CONFIG } from "../../../../../config/models.js";
 import { WINDOWS } from "../../../../../config/viewer.js";
@@ -118,6 +133,7 @@ import { isModel, openInViewer } from "../../../../../utils/models.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
+import FolderSelector from "../../../../../components/specific/files/folder-selector/FolderSelector.vue";
 import ModelsActionBar from "../models-action-bar/ModelsActionBar.vue";
 import ModelsDeleteModal from "../models-delete-modal/ModelsDeleteModal.vue";
 import ModelsTable from "../../models-table/ModelsTable.vue";
@@ -125,6 +141,7 @@ import { FILE_TYPE } from "../../../../../config/files.js";
 
 export default {
   components: {
+    FolderSelector,
     ModelsActionBar,
     ModelsDeleteModal,
     ModelsTable,
@@ -160,7 +177,17 @@ export default {
     const router = useRouter();
     const { isProjectGuest } = useUser();
     const { createModel, updateModels } = useModels();
-    const { fileStructureHandler: handler, downloadFiles: download } = useFiles();
+    const {
+      fileStructureHandler: handler,
+      downloadFiles: download,
+      loadProjectFileStructure,
+      projectFileStructure,
+    } = useFiles();
+
+    const { checkFilesNaming } = useNamingConstraintUpload();
+
+    const showFolderSelector = ref(false);
+    const selectedFolder = ref(null);
 
     const fileUploads = ref([]);
     const fileExtensions = computed(() =>
@@ -221,7 +248,7 @@ export default {
     const downloadModels = async (models) => {
       await download(
         props.project,
-        models.map(m => handler.get({ nature: FILE_TYPE.DOCUMENT, id: m.document_id })),
+        models.map((m) => handler.get({ nature: FILE_TYPE.DOCUMENT, id: m.document_id })),
       );
     };
 
@@ -229,17 +256,37 @@ export default {
       openInViewer(router, props.project, models, WINDOWS.IFC3D);
     };
 
-    const uploadModels = () => {
+    const openFolderSelector = async () => {
+      if (!projectFileStructure.value?.id) {
+        await loadProjectFileStructure(props.project);
+      }
+
+      showFolderSelector.value = true;
+    };
+
+    const uploadModels = () => openFolderSelector();
+
+    const onFolderSelected = (folder) => {
+      selectedFolder.value = folder;
+      showFolderSelector.value = false;
+
       fileUploadInput(
         "file",
-        (event) => {
-          fileUploads.value = fileUploads.value.concat(
-            Array.from(event.target.files).map((file, i) => {
-              ((file.key = Math.random() * i), file);
-              file.params = props.fileUploadParams;
-              return file;
-            }),
+        async (event) => {
+          const checkedFiles = await checkFilesNaming(
+            props.project,
+            folder,
+            Array.from(event.target.files),
           );
+          if (!checkedFiles?.length) return;
+
+          const files = checkedFiles.map((file, i) => {
+            file.key = `${Date.now()}-${i}-${Math.random()}`;
+            file.params = props.fileUploadParams;
+            return file;
+          });
+
+          fileUploads.value = fileUploads.value.concat(files);
         },
         {
           accept: fileExtensions.value,
@@ -271,7 +318,10 @@ export default {
       fileUploads,
       modelsToDelete,
       selection,
+      selectedFolder,
       showDeleteModal,
+      showFolderSelector,
+      projectFileStructure,
       // Methods
       archiveModels,
       closeDeleteModal,
@@ -281,6 +331,8 @@ export default {
       onUploadCanceled,
       openDeleteModal,
       openModels,
+      openFolderSelector,
+      onFolderSelected,
       selectTab,
       unarchiveModels,
       uploadModels,

@@ -4,6 +4,8 @@ import {
   buildExample,
   buildPartExample,
   stripExtension,
+  splitName,
+  buildName,
   PART_TYPES
 } from "../../../src/utils/naming-constraint.js";
 
@@ -55,6 +57,13 @@ describe("Naming constraint - matchPart", () => {
     expect(matchPart(part, "")).toBe(false);
   });
 
+  it("n_chars rejects segments containing the separator", () => {
+    const part = { type: PART_TYPES.N_CHARS, max_length: 12 };
+    expect(matchPart(part, "plan_extra", "_")).toBe(false);
+    expect(matchPart(part, "plan-extra", "_")).toBe(true);
+    expect(matchPart(part, "plan_extra")).toBe(true);
+  });
+
   it("Unknown part type does not match", () => {
     expect(matchPart({ type: "unknown" }, "x")).toBe(false);
     expect(matchPart(undefined, "x")).toBe(false);
@@ -97,17 +106,55 @@ describe("Naming constraint - matchName", () => {
     expect(matchName("ARC", singleRule)).toBe(true);
     expect(matchName("ARC.ifc", singleRule)).toBe(true);
     expect(matchName("STR", singleRule)).toBe(false);
+    expect(matchName("STR.ifc", singleRule)).toBe(false);
+  });
+
+  it("Should still allow the separator inside values_in elements", () => {
+    const dashRule = {
+      separator: "-",
+      parts: [
+        { type: "values_in", elements: ["A-B"] },
+        { type: "n_chars", max_length: 5 }
+      ]
+    };
+    expect(matchName("A-B-plan", dashRule)).toBe(true);
+    expect(matchName("A-B-pl-an", dashRule)).toBe(false);
+  });
+});
+
+describe("Naming constraint - splitName", () => {
+  it("Should drop the separator from pre-filled n_chars values", () => {
+    const { values, extension } = splitName("plan_rdc_v2.pdf", rule);
+    expect(values).toEqual(["ARC", 1, "planrdcv2"]);
+    expect(extension).toBe(".pdf");
+    expect(matchName(buildName(values, rule, extension), rule)).toBe(true);
+  });
+
+  it("Should keep parsed values when the name already matches", () => {
+    expect(splitName("STR_05_plan.ifc", rule).values).toEqual(["STR", "05", "plan"]);
   });
 });
 
 describe("Naming constraint - buildExample", () => {
   it("Should build a human-friendly example", () => {
-    expect(buildExample(rule)).toBe("ARC_[1-99]_XXX");
+    expect(buildExample(rule)).toBe("ARC_[1-99]_XXX.ext");
+  });
+
+  it("Should prefer part names when available", () => {
+    const named = {
+      separator: "_",
+      parts: [
+        { type: "values_in", elements: ["ARC"], name: "Lot" },
+        { type: "bounded", min_value: 1, max_value: 99 },
+        { type: "n_chars", max_length: 12, name: "Description" }
+      ]
+    };
+    expect(buildExample(named)).toBe("Lot_[1-99]_Description.ext");
   });
 
   it("Should use placeholder when values_in has no elements", () => {
     const r = { separator: "-", parts: [{ type: "values_in", elements: [] }] };
-    expect(buildExample(r)).toBe("...");
+    expect(buildExample(r)).toBe("....ext");
   });
 
   it("Should return an empty string for empty rules", () => {

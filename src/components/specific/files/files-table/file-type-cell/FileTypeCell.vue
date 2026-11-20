@@ -32,20 +32,15 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useFiles } from "../../../../../state/files.js";
+import { useNamingConflictModal } from "../../../../../composables/naming-conflict-modal.js";
 import { useUser } from "../../../../../state/user.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
-import { useAppModal } from "../../../app/app-modal/app-modal.js";
-import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { matchName } from "../../../../../utils/naming-constraint.js";
 
-import NamingConflictModal from "../../naming-constraint/NamingConflictModal.vue";
-
 const { hasAdminPerm } = useUser();
 const { getEffectiveFolderRule } = useNamingConstraints();
-const { openModal, closeModal } = useAppModal();
+const { openNamingConflictModal: showNamingConflicts } = useNamingConflictModal();
 
 const props = defineProps({
   file: {
@@ -57,12 +52,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const { projectFileStructure } = useFiles();
-
-const allFolders = computed(() =>
-  projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
-);
 
 const openNamingConflictModal = async () => {
   if (!props.file.hasNamingConflict) {
@@ -81,16 +70,10 @@ const openNamingConflictModal = async () => {
     return !matchName(document.name, rule);
   });
 
-  openModal({
-    component: NamingConflictModal,
-    props: {
-      project: props.project,
-      documents: conflictingDocuments,
-      allFolders: allFolders.value,
-      rule,
-      onClose: closeModal,
-      onConfirm: closeModal,
-    },
+  showNamingConflicts({
+    project: props.project,
+    documents: conflictingDocuments,
+    rule,
   });
 };
 </script>

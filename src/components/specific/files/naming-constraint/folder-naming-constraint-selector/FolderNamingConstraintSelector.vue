@@ -161,12 +161,12 @@ import { useFiles } from "../../../../../state/files.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { isFolder } from "../../../../../utils/file-structure.js";
 import { collectDescendants } from "../../../../../utils/file-tree.js";
+import { useNamingConflictModal } from "../../../../../composables/naming-conflict-modal.js";
 
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import { useAppNotification } from "../../../app/app-notification/app-notification.js";
 import { useAppSidePanel } from "../../../app/app-side-panel/app-side-panel.js";
 
-import NamingConflictModal from "../NamingConflictModal.vue";
 import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 
 export default {
@@ -181,7 +181,8 @@ export default {
       useNamingConstraints();
 
     const { projectFileStructure } = useFiles();
-    const { openModal, closeModal } = useAppModal();
+    const { closeModal } = useAppModal();
+    const { openNamingConflictModal } = useNamingConflictModal();
     const { pushNotification } = useAppNotification();
     const { closeSidePanel } = useAppSidePanel();
 
@@ -300,16 +301,11 @@ export default {
     };
 
     const openConflictModal = ({ documents, rule, onConfirm }) => {
-      openModal({
-        component: NamingConflictModal,
-        props: {
-          project: localState.project,
-          documents,
-          allFolders: allFolders.value,
-          rule,
-          onClose: closeModal,
-          onConfirm,
-        },
+      openNamingConflictModal({
+        project: localState.project,
+        documents,
+        rule,
+        onConfirm,
       });
     };
 

@@ -203,6 +203,8 @@ import { useAppSidePanel } from "../../app/app-side-panel/app-side-panel.js";
 import { useSession } from "../../../../composables/session.js";
 import { useListFilter } from "../../../../composables/list-filter.js";
 import { useStandardBreakpoints } from "../../../../composables/responsive.js";
+import { useNamingConstraintUpload } from "../../../../composables/naming-constraint-upload.js";
+import { useNamingConflictModal } from "../../../../composables/naming-conflict-modal.js";
 import { FILE_TYPE } from "../../../../config/files.js";
 import { MODEL_TYPE } from "../../../../config/models.js";
 import { VISA_STATUS } from "../../../../config/visa.js";
@@ -217,7 +219,6 @@ import { useVisa } from "../../../../state/visa.js";
 import { collectDescendants } from "../../../../utils/file-tree.js";
 import { isFolder } from "../../../../utils/file-structure.js";
 import { getFilesFromEvent } from "../../../../utils/files.js";
-import { matchName } from "../../../../utils/naming-constraint.js";
 import { isFullTotal } from "../../../../utils/spaces.js";
 import { fileUploadInput } from "../../../../utils/upload.js";
 
@@ -233,7 +234,6 @@ import FileTree from "../file-tree/FileTree.vue";
 import FileTreePreviewModal from "../file-tree-preview-modal/FileTreePreviewModal.vue";
 import FolderAccessManager from "../folder-access-manager/FolderAccessManager.vue";
 import FolderNamingConstraintManager from "../naming-constraint/FolderNamingConstraintManager.vue";
-import NamingConflictModal from "../naming-constraint/NamingConflictModal.vue";
 import FoldersTable from "../folder-table/FoldersTable.vue";
 import SubscriptionModal from "../../subscriptions/subscription-modal/SubscriptionModal.vue";
 import TagsMain from "../../tags/tags-main/TagsMain.vue";
@@ -294,6 +294,8 @@ export default {
 
     const { fetchToValidateVisas, fetchCreatedVisas } = useVisa();
     const { getEffectiveFolderRule } = useNamingConstraints();
+    const { checkFilesNaming } = useNamingConstraintUpload();
+    const { openNamingConflictModalByFolder } = useNamingConflictModal();
     const currentFolder = ref(null);
     const currentFolderNamingRule = ref(null);
     const folderWithNamingPreview = computed(() =>
@@ -371,38 +373,10 @@ export default {
     const uploadFiles = async (event, folder = currentFolder.value) => {
       const { files, folders } = await getFilesFromEvent(event);
 
-      const rule = await getEffectiveFolderRule(props.project, folder);
-      const invalidFiles = rule ? files.filter((file) => !matchName(file.name, rule)) : [];
+      const checkedFiles = await checkFilesNaming(props.project, folder, files);
+      if (!checkedFiles) return;
 
-      if (invalidFiles.length > 0) {
-        openModal({
-          component: NamingConflictModal,
-          props: {
-            project: props.project,
-            documents: invalidFiles.map((file, i) => ({ id: `upload-${i}`, name: file.name })),
-            rule,
-            allFolders: allFolders.value,
-            persistChanges: false,
-            onClose: closeModal,
-            onConfirm: ({ renamed, deleted }) => {
-              const deletedIds = new Set(deleted.map((d) => d.id));
-              const renamedById = new Map(renamed.map((r) => [r.id, r.name]));
-              const finalFiles = invalidFiles
-                .map((file, i) => ({ file, id: `upload-${i}` }))
-                .filter(({ id }) => !deletedIds.has(id))
-                .map(({ file, id }) => {
-                  const name = renamedById.get(id);
-                  return name ? new File([file], name, { type: file.type }) : file;
-                });
-              const validFiles = files.filter((file) => matchName(file.name, rule));
-              proceedUpload({ files: [...validFiles, ...finalFiles], folders }, folder);
-            },
-          },
-        });
-        return;
-      }
-
-      proceedUpload({ files, folders }, folder);
+      proceedUpload({ files: checkedFiles, folders }, folder);
     };
 
     const loadingFileIds = ref([]);
@@ -618,25 +592,11 @@ export default {
         });
         return;
       }
-      const documents = await Promise.all(
-        conflicting.map(async (file) => {
-          const folder = allFolders.value.find((f) => f.id === file.parent_id);
-          const effective = folder ? await getEffectiveFolderRule(props.project, folder) : null;
-          return { ...file, namingRule: effective };
-        }),
-      );
-      openModal({
-        component: NamingConflictModal,
-        props: {
-          project: props.project,
-          documents,
-          allFolders: allFolders.value,
-          rule: null,
-          showRulesByGroup: true,
-          onClose: closeModal,
-          onConfirm: async () => {
-            await props.refreshFiles();
-          },
+      await openNamingConflictModalByFolder({
+        project: props.project,
+        documents: conflicting,
+        onConfirm: async () => {
+          await props.refreshFiles();
         },
       });
     };
