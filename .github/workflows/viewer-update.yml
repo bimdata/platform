@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [semantic-release]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   app: platform
 
@@ -13,18 +17,19 @@ jobs:
   viewer-update:
     permissions:
       contents: write # Required for committing changes
-    runs-on: [self-hosted, common]
-    if: contains('refs/heads/develop', github.event.client_payload.ref)
+      actions: write # Required to start the deploy workflow
+    runs-on: self-hosted-common
+    if: contains(fromJSON('["refs/heads/develop"]'), github.event.client_payload.ref)
     steps:
       - uses: actions/checkout@v7
         with:
-          token: ${{ secrets.REPOS_TOKEN }}
           # Needed for EndBug/add-and-commit
           persist-credentials: true
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
           check-latest: true
+          cache: npm
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 10
@@ -42,14 +47,24 @@ jobs:
         with:
           add: "package-lock.json package.json"
           message: "chore: bump @bimdata/viewer@${{ github.event.client_payload.viewer-version }} from Github Actions [skip e2e]"
+      # A push made with GITHUB_TOKEN doesn't trigger workflows: start the build & deploy on staging explicitly
+      - name: Deploy on staging
+        if: steps.viewer-install.outputs.gitdiff
+        uses: actions/github-script@v9
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "main.yml",
+              ref: "develop",
+            })
+
   viewer-stable-update:
     permissions:
       contents: write # Required for committing changes
-    runs-on: [self-hosted, common]
-    if: contains('
-      refs/heads/master
-      refs/heads/main'
-      , github.event.client_payload.ref)
+    runs-on: self-hosted-common
+    if: contains(fromJSON('["refs/heads/master", "refs/heads/main"]'), github.event.client_payload.ref)
     steps:
       - uses: actions/checkout@v7
         with:
@@ -59,6 +74,7 @@ jobs:
         with:
           node-version: "24"
           check-latest: true
+          cache: npm
       - name: Wait for npm package
         id: viewer-install
         timeout-minutes: 10

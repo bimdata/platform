@@ -17,7 +17,7 @@ jobs:
   i18n:
     permissions:
       contents: read
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-common
     steps:
       - uses: actions/checkout@v7
         with:
@@ -32,7 +32,7 @@ jobs:
   build-and-push:
     permissions:
       contents: read
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-common
     steps:
       - uses: actions/checkout@v7
         with:
@@ -58,11 +58,13 @@ jobs:
           tags: |
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ steps.branch.outputs.name }}
+          # Read only: reuse the staging layer cache
+          cache-from: type=registry,ref=docker-registry.bimdata.io/bimdata/${{ env.app }}:buildcache-staging
 
   unit-tests:
     permissions:
       contents: read
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-common
     steps:
       - uses: actions/checkout@v7
         with:
@@ -71,41 +73,15 @@ jobs:
         with:
           node-version: "24"
           check-latest: true
+          cache: npm
       - name: Run unit tests
         run: npm ci && npm run test:unit
-
-  # e2e-tests:
-  #   permissions:
-  #     contents: read
-  #   runs-on: [self-hosted, testendtoend]
-  #   if: ${{ !contains(github.event.pull_request.body , '[ ] I want to run the tests for the commits of this PR') }}
-  #   needs: build-and-push
-  #   steps:
-  #     - uses: actions/checkout@v7
-  #       with:
-  #         repository: bimdata/bimdata-test
-  #         ref: master
-  #         token: ${{ secrets.REPOS_TOKEN }}
-  #         persist-credentials: false
-  #     - name: Define branch_name var
-  #       id: branch
-  #       run: |
-  #         echo "name=$(echo dev_${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-  #     - name: Run e2e tests
-  #       uses: ./end-to-end/
-  #       with:
-  #         docker_tag: staging
-  #         docker_platform_tag: ${{ steps.branch.outputs.name }}
-  #         ref: ${{ github.ref }}
-  #         github_token: ${{ secrets.REPOS_TOKEN }}
-  #         vault_passwd: ${{ secrets.VAULT_PASSWD }}
-  #         cypress_version: 13.1.0
 
   deploy:
     permissions:
       contents: read
       pull-requests: write  # Needed for PR title updates
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-deploy
     needs: build-and-push
     steps:
       - uses: actions/checkout@v7
@@ -124,18 +100,18 @@ jobs:
           echo "name=$(echo dev_${GITHUB_HEAD_REF##*/} | tr ' .-' _ | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
       - name: Deploy on staging
         env:
+          ANSIBLE_VAULT_PASSWD: ${{ secrets.ANSIBLE_VAULT_PASSWD }}
           BRANCH_NAME: ${{ steps.branch.outputs.name }}
         run: |
           docker run \
             --pull always \
             --rm \
-            -e ANSIBLE_VAULT_PASSWD="${{ secrets.ANSIBLE_VAULT_PASSWD }}" \
+            -e ANSIBLE_VAULT_PASSWD \
             docker-registry.bimdata.io/bimdata/deployment:latest \
             ansible-playbook \
-              -u deploy \
               -i inventories/staging \
               --tags platform_dev \
-              --extra-vars "branch_name=${BRANCH_NAME} ansible_ssh_private_key_file=./files/deploy_rsa" \
+              --extra-vars "branch_name=${BRANCH_NAME}" \
               deploy.yml
       - name: Define platform url
         id: platform
