@@ -88,6 +88,8 @@
     "conflictRestoreFileButton": "Ripristina",
     "maxCharsHint": "Massimo {count} caratteri",
     "errorMessage": "Il numero di caratteri supera il limite consentito.",
+    "separatorErrorMessage": "Questo campo non può contenere il separatore della regola \"{separator}\".",
+    "requiredFieldError": "Questo campo è obbligatorio.",
     "renameButton": "Conferma il nuovo nome",
     "applyRenameButton": "Applica i nuovi nomi",
     "confirmRenameButton": "Accetta i nomi",
@@ -380,7 +382,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Cartella selezionata",
-    "moveHere": "Sposta qui"
+    "moveHere": "Sposta qui",
+    "uploadHere": "Carica qui"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Cambia colore"

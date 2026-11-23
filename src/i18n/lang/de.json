@@ -88,6 +88,8 @@
     "conflictRestoreFileButton": "Wiederherstellen",
     "maxCharsHint": "Maximal {count} Zeichen",
     "errorMessage": "Die Anzahl der Zeichen überschreitet die zulässige Grenze.",
+    "separatorErrorMessage": "Dieses Feld darf das Trennzeichen der Regel \"{separator}\" nicht enthalten.",
+    "requiredFieldError": "Dieses Feld ist erforderlich.",
     "renameButton": "Neuen Namen bestätigen",
     "applyRenameButton": "Neue Namen anwenden",
     "confirmRenameButton": "Namen übernehmen",
@@ -380,7 +382,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Ausgewählter Ordner",
-    "moveHere": "Hierher verschieben"
+    "moveHere": "Hierher verschieben",
+    "uploadHere": "Hierher hochladen"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Farbe ändern"

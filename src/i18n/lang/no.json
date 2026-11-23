@@ -88,6 +88,8 @@
     "conflictRestoreFileButton": "Gjenopprett",
     "maxCharsHint": "Maksimalt {count} tegn",
     "errorMessage": "Antall tegn overskrider den tillatte grensen.",
+    "separatorErrorMessage": "Dette feltet kan ikke inneholde regelens skilletegn \"{separator}\".",
+    "requiredFieldError": "Dette feltet er påkrevd.",
     "renameButton": "Bekreft nytt navn",
     "applyRenameButton": "Bruk nye navn",
     "confirmRenameButton": "Godta navnene",
@@ -376,7 +378,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Valgt mappe",
-    "moveHere": "Flytt hit"
+    "moveHere": "Flytt hit",
+    "uploadHere": "Last opp her"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Endre farge"

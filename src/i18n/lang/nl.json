@@ -88,6 +88,8 @@
     "conflictRestoreFileButton": "Herstellen",
     "maxCharsHint": "Maximaal {count} tekens",
     "errorMessage": "Het aantal tekens overschrijdt de toegestane limiet.",
+    "separatorErrorMessage": "Dit veld mag het scheidingsteken van de regel \"{separator}\" niet bevatten.",
+    "requiredFieldError": "Dit veld is verplicht.",
     "renameButton": "Nieuwe naam bevestigen",
     "applyRenameButton": "Nieuwe namen toepassen",
     "confirmRenameButton": "Namen accepteren",
@@ -376,7 +378,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Geselecteerde map",
-    "moveHere": "Hierheen verplaatsen"
+    "moveHere": "Hierheen verplaatsen",
+    "uploadHere": "Hier uploaden"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Kleur veranderen"
