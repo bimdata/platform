@@ -41,7 +41,7 @@
     "eslint-plugin-vue": "^10.12.1",
     "prettier": "^3.10.1",
     "sass-embedded": "^1.108.2",
-    "semantic-release": "^25.0.9",
+    "semantic-release": "^26.0.1",
     "vite": "8.3.8",
     "vite-plugin-environment": "^1.1.4",
     "vitest": "^5.1.0"
