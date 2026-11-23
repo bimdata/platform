@@ -64,6 +64,7 @@
           :rule="rule"
           :filename="doc.name"
           @change="updateGeneratedName"
+          @error-change="hasEditorError = $event"
         />
         <div v-else>
           {{ doc.name }}
@@ -80,7 +81,13 @@
           <BIMDataIconClose size="xxs" margin="0 6px 0 0" />
           {{ $t("NamingConstraint.conflictRestoreFileButton") }}
         </BIMDataButton>
-        <BIMDataButton color="primary" fill radius @click="confirmRename">
+        <BIMDataButton
+          color="primary"
+          fill
+          radius
+          :disabled="hasEditorError"
+          @click="confirmRename"
+        >
           {{ $t("NamingConstraint.renameButton") }}
         </BIMDataButton>
       </div>
@@ -126,8 +133,10 @@ export default {
       return getAscendants(props.doc, props.allFolders).reverse();
     });
 
+    const hasEditorError = ref(false);
+
     const confirmRename = () => {
-      if (!generatedName.value) return;
+      if (!generatedName.value || hasEditorError.value) return;
 
       emit("rename", generatedName.value);
     };
@@ -135,6 +144,7 @@ export default {
     return {
       folderPath,
       generatedName,
+      hasEditorError,
       confirmRename,
       buildExample,
       updateGeneratedName,

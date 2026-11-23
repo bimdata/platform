@@ -110,23 +110,19 @@
 import { computed, inject, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { useFiles } from "../../../../../state/files.js";
+import { useNamingConflictModal } from "../../../../../composables/naming-conflict-modal.js";
 import { useNamingConstraints } from "../../../../../state/naming-constraints.js";
 import { debounce } from "../../../../../utils/async.js";
-import { isFolder } from "../../../../../utils/file-structure.js";
-import { collectDescendants } from "../../../../../utils/file-tree.js";
 import { PART_TYPES } from "../../../../../utils/naming-constraint.js";
 
 import { useAppModal } from "../../../app/app-modal/app-modal.js";
 import RuleBuilder from "./RuleBuilder.vue";
-import NamingConflictModal from "../NamingConflictModal.vue";
 import NamingConstraintPreview from "../naming-constraint-preview/NamingConstraintPreview.vue";
 
 export default {
   components: {
     RuleBuilder,
     NamingConstraintPreview,
-    NamingConflictModal,
   },
 
   emits: ["close"],
@@ -135,8 +131,8 @@ export default {
     const { t } = useI18n();
 
     const { createNamingConstraint, updateNamingConstraint } = useNamingConstraints();
-    const { projectFileStructure } = useFiles();
-    const { openModal, closeModal } = useAppModal();
+    const { closeModal } = useAppModal();
+    const { openNamingConflictModal } = useNamingConflictModal();
 
     const localState = inject("localState");
     const refreshFiles = inject("refreshFiles", null);
@@ -152,9 +148,6 @@ export default {
     /** Computed */
     const isUpdate = computed(() => !!localState.constraint);
     const partLists = computed(() => localState.partLists ?? []);
-    const allFolders = computed(() =>
-      projectFileStructure.value ? collectDescendants(projectFileStructure.value, isFolder) : [],
-    );
 
     const separatorOptions = computed(() => [
       {
@@ -352,16 +345,11 @@ export default {
     };
 
     const showConflicts = (rule, documents, onConfirm) => {
-      openModal({
-        component: NamingConflictModal,
-        props: {
-          project: localState.project,
-          documents,
-          allFolders: allFolders.value,
-          rule,
-          onClose: closeModal,
-          onConfirm,
-        },
+      openNamingConflictModal({
+        project: localState.project,
+        documents,
+        rule,
+        onConfirm,
       });
     };
 

@@ -32,7 +32,7 @@ export default {
         return [];
       }
 
-      return props.rule.parts.map((part) => part.name || buildPartExample(part)).filter(Boolean);
+      return props.rule.parts.map(buildPartExample).filter(Boolean);
     });
 
     const separator = computed(() => {
