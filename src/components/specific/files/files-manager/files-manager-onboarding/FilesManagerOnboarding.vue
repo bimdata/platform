@@ -106,6 +106,7 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useToggle } from "../../../../../composables/toggle.js";
+import { useNamingConstraintUpload } from "../../../../../composables/naming-constraint-upload.js";
 import FileService from "../../../../../services/FileService.js";
 import { useUser } from "../../../../../state/user.js";
 import { getFilesFromEvent } from "../../../../../utils/files.js";
@@ -145,6 +146,7 @@ export default {
     const { t } = useI18n();
     const { isProjectAdmin, isProjectGuest } = useUser();
     const { openModal } = useAppModal();
+    const { checkFilesNaming } = useNamingConstraintUpload();
 
     const {
       isOpen: isGedMenuOpen,
@@ -160,7 +162,10 @@ export default {
 
       const { files, folders } = await getFilesFromEvent(event);
 
-      filesToUpload.value = files;
+      const checkedFiles = await checkFilesNaming(props.project, props.rootFolder, files);
+      if (!checkedFiles) return;
+
+      filesToUpload.value = checkedFiles;
       foldersToUpload.value = await Promise.all(
         folders.map(f =>
           FileService.createFolderStructure(props.project, props.rootFolder, f)

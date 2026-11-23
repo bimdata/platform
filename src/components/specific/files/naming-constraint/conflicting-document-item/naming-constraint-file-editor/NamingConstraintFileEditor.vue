@@ -21,6 +21,8 @@
           type="number"
           :modelValue="segments[index]"
           @update:modelValue="updateBounded(index, $event, part)"
+          :error="!!getFieldError(segments[index], part)"
+          :errorMessage="getFieldError(segments[index], part)"
         />
         <span class="naming-constraint-file-editor__field__placeholder">
           {{ $t("NamingConstraint.maxCharsHint", { count: part.max_value }) }}
@@ -32,8 +34,8 @@
           :maxlength="part.max_length"
           :modelValue="segments[index]"
           @update:modelValue="updateSegment(index, $event.slice(0, part.max_length))"
-          :error="segments[index].length > part.max_length"
-          :errorMessage="$t('NamingConstraint.errorMessage')"
+          :error="!!getFieldError(segments[index], part)"
+          :errorMessage="getFieldError(segments[index], part)"
         />
         <span class="naming-constraint-file-editor__field__placeholder">
           {{ $t("NamingConstraint.maxCharsHint", { count: part.max_length }) }}
@@ -45,10 +47,11 @@
 
 <script>
 import { computed, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { PART_TYPES, splitName, buildName } from "../../../../../../utils/naming-constraint.js";
 
 export default {
-  emits: ["update", "change"],
+  emits: ["update", "change", "error-change"],
   props: {
     rule: {
       type: Object,
@@ -60,6 +63,8 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const { t } = useI18n();
+
     const segments = ref([]);
     const extension = ref("");
 
@@ -151,9 +156,57 @@ export default {
       segments.value[index] = number;
     };
 
+    /**
+     * Error message of an editable field, or "" when the field is valid.
+     *
+     * - bounded and n_chars fields are required
+     * - a free-text (n_chars) segment cannot contain the rule separator,
+     *   otherwise the generated name would never match the rule
+     */
+    const getFieldError = (value, part) => {
+      const segment = String(value ?? "");
+
+      if (part.type !== PART_TYPES.BOUNDED && part.type !== PART_TYPES.N_CHARS) {
+        return "";
+      }
+
+      if (segment.trim() === "") {
+        return t("NamingConstraint.requiredFieldError");
+      }
+
+      if (part.type === PART_TYPES.BOUNDED) {
+        return "";
+      }
+
+      const separator = props.rule.separator;
+
+      if (separator && segment.includes(separator)) {
+        return t("NamingConstraint.separatorErrorMessage", { separator });
+      }
+
+      if (segment.length > part.max_length) {
+        return t("NamingConstraint.errorMessage");
+      }
+
+      return "";
+    };
+
+    const hasError = computed(() =>
+      props.rule.parts.some((part, index) => !!getFieldError(segments.value[index], part)),
+    );
+
+    watch(
+      hasError,
+      (value) => {
+        emit("error-change", value);
+      },
+      { immediate: true },
+    );
+
     return {
       segments,
       PART_TYPES,
+      getFieldError,
       updateSegment,
       updateBounded,
     };

@@ -33,7 +33,7 @@
           radius
           :icon="isLG"
           :disabled="!isUserOrga(space) && isFullTotal(spaceSubInfo)"
-          @click="() => (shouldSubscribe ? openSubscriptionModal() : toggleFileUploader())"
+          @click="() => (shouldSubscribe ? openSubscriptionModal() : openFolderSelector())"
         >
           <BIMDataIcon
             :name="showFileUploader ? 'close' : isLG ? 'addFile' : 'plus'"
@@ -109,12 +109,26 @@
     </AppSidePanelContent>
 
     <transition name="fade">
+      <FolderSelector
+        v-if="showFolderSelector"
+        context="upload"
+        :project="project"
+        :file-structure="projectFileStructure"
+        :files="[]"
+        :initial-folder="projectFileStructure"
+        @close="closeFolderSelector"
+        @folder-selected="onUploadFolderSelected"
+      />
+    </transition>
+
+    <transition name="fade">
       <FileUploader
         class="project-overview__block--upload"
         v-show="showFileUploader"
         isModelUploader
         autoclose
         :project="project"
+        :folder="uploadTargetFolder"
         :allowedFileTypes="allowedExtensions"
         @file-uploaded="reloadData"
         @forbidden-upload-attempt="notifyForbiddenUpload"
@@ -194,6 +208,7 @@ import ProjectNotificationsRecipients from "../../../components/specific/project
 import ProjectNotificationTimezoneChoice from "../../../components/specific/projects/project-notification-timezone-choice/ProjectNotificationTimezoneChoice.vue";
 import ProjectUsersManager from "../../../components/specific/users/project-users-manager/ProjectUsersManager.vue";
 import SubscriptionModal from "../../../components/specific/subscriptions/subscription-modal/SubscriptionModal.vue";
+import FolderSelector from "../../../components/specific/files/folder-selector/FolderSelector.vue";
 
 export default {
   components: {
@@ -201,6 +216,7 @@ export default {
     AppSidePanelContent,
     AppSlotContent,
     FileUploader,
+    FolderSelector,
     ModelsManager,
     ModelsOverview,
     ProjectUsersManager,
@@ -223,7 +239,7 @@ export default {
     const { currentProject, projectUsers, projectInvitations, fetchProjectNotification } =
       useProjects();
     const { projectModels, loadProjectModels } = useModels();
-    const { loadProjectFileStructure } = useFiles();
+    const { loadProjectFileStructure, projectFileStructure, fileStructureHandler } = useFiles();
 
     const notificationModeActivity = ref("disabled");
     const checkedDaysActivity = ref(getDefaultCheckedDays(t));
@@ -233,6 +249,26 @@ export default {
     const sidePanelView = ref("settings");
 
     const currentTab = ref("history");
+
+    const showFolderSelector = ref(false);
+    const uploadTargetFolder = ref(null);
+
+    const openFolderSelector = async () => {
+      if (!projectFileStructure.value?.id) {
+        await loadProjectFileStructure(currentProject.value);
+      }
+      showFolderSelector.value = true;
+    };
+
+    const closeFolderSelector = () => {
+      showFolderSelector.value = false;
+    };
+
+    const onUploadFolderSelected = (folder) => {
+      uploadTargetFolder.value = folder;
+      showFolderSelector.value = false;
+      openFileUploader();
+    };
 
     const selectTab = (tab) => {
       currentTab.value = tab.id;
@@ -336,6 +372,9 @@ export default {
       selectedRecipientsIds,
       shouldSubscribe,
       showFileUploader,
+      showFolderSelector,
+      uploadTargetFolder,
+      projectFileStructure,
       sidePanelView,
       space: currentSpace,
       spaceSubInfo,
@@ -355,6 +394,9 @@ export default {
       isProjectGuest,
       isProjectAdmin,
       isUserOrga,
+      openFolderSelector,
+      closeFolderSelector,
+      onUploadFolderSelected,
       notifyForbiddenUpload,
       openFileUploader,
       openSubscriptionModal,

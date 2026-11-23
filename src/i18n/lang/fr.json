@@ -322,6 +322,8 @@
     "conflictRestoreFileButton": "Restaurer",
     "maxCharsHint": "Maximum {count} caractères",
     "errorMessage": "Le nombre de caractères dépasse la limite autorisée.",
+    "separatorErrorMessage": "Ce champ ne peut pas contenir le séparateur « {separator} » de la règle.",
+    "requiredFieldError": "Ce champ est obligatoire.",
     "renameButton": "Valider ce nouveau nom",
     "applyRenameButton": "Confirmer ces nouveaux noms",
     "confirmRenameButton": "Accepter ces noms",
@@ -464,7 +466,8 @@
   },
   "FolderSelector": {
     "selectedFolder": "Dossier sélectionné",
-    "moveHere": "Déplacer ici"
+    "moveHere": "Déplacer ici",
+    "uploadHere": "Télécharger ici"
   },
   "GroupCardActionMenu": {
     "changeColorButtonText": "Modifier la couleur"
