@@ -191,6 +191,7 @@ import { useUser } from "../../../state/user.js";
 
 import { debounce } from "../../../utils/async.js";
 import { isFullTotal } from "../../../utils/spaces.js";
+import { isFolder } from "../../../utils/file-structure.js";
 import { getDefaultCheckedActivity, getDefaultCheckedDays } from "../../../utils/notifications.js";
 
 import { MODEL_TYPE, UPLOADABLE_EXTENSIONS } from "../../../config/models.js";
@@ -231,7 +232,7 @@ export default {
     const { openModal } = useAppModal();
     const { pushNotification } = useAppNotification();
     const { openSidePanel, closeSidePanel } = useAppSidePanel();
-    const { isUserOrga, isProjectGuest, isProjectAdmin } = useUser();
+    const { isUserOrga, isProjectGuest, isProjectAdmin, hasAdminPerm } = useUser();
     const { projectGroups } = useGroups();
     const { gedTargetFolder } = useSession();
 
@@ -253,11 +254,20 @@ export default {
     const showFolderSelector = ref(false);
     const uploadTargetFolder = ref(null);
 
+    const hasFolders = () =>
+      fileStructureHandler
+        .children(projectFileStructure.value)
+        .some((child) => isFolder(child) && hasAdminPerm(currentProject.value, child));
+
     const openFolderSelector = async () => {
       if (!projectFileStructure.value?.id) {
         await loadProjectFileStructure(currentProject.value);
       }
-      showFolderSelector.value = true;
+      if (hasFolders()) {
+        showFolderSelector.value = true;
+      } else {
+        onUploadFolderSelected(projectFileStructure.value);
+      }
     };
 
     const closeFolderSelector = () => {
