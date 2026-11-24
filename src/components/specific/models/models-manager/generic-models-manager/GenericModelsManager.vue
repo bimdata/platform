@@ -130,6 +130,7 @@ import { useModels } from "../../../../../state/models.js";
 import { useUser } from "../../../../../state/user.js";
 import { wait } from "../../../../../utils/async.js";
 import { isModel, openInViewer } from "../../../../../utils/models.js";
+import { isFolder } from "../../../../../utils/file-structure.js";
 import { fileUploadInput } from "../../../../../utils/upload.js";
 
 // Components
@@ -175,7 +176,7 @@ export default {
   ],
   setup(props, { emit }) {
     const router = useRouter();
-    const { isProjectGuest } = useUser();
+    const { isProjectGuest, hasAdminPerm } = useUser();
     const { createModel, updateModels } = useModels();
     const {
       fileStructureHandler: handler,
@@ -256,12 +257,21 @@ export default {
       openInViewer(router, props.project, models, WINDOWS.IFC3D);
     };
 
+    const hasFolders = () =>
+      handler
+        .children(projectFileStructure.value)
+        .some((child) => isFolder(child) && hasAdminPerm(props.project, child));
+
     const openFolderSelector = async () => {
       if (!projectFileStructure.value?.id) {
         await loadProjectFileStructure(props.project);
       }
 
-      showFolderSelector.value = true;
+      if (hasFolders()) {
+        showFolderSelector.value = true;
+      } else {
+        onFolderSelected(projectFileStructure.value);
+      }
     };
 
     const uploadModels = () => openFolderSelector();
