@@ -7,10 +7,16 @@ on:
       - master
       - release
       - develop
+  # Started by viewer-update.yml: a push made with GITHUB_TOKEN doesn't trigger workflows
+  workflow_dispatch:
+
+# A new push cancels the previous run, except on release branches: it could stop a publish midway
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !contains(fromJSON('["refs/heads/develop", "refs/heads/release", "refs/heads/master", "refs/heads/main"]'), github.ref) }}
 
 env:
   app: platform
-  GITHUB_TOKEN: ${{ secrets.REPOS_TOKEN }}
 
 permissions: {}
 
@@ -18,7 +24,7 @@ jobs:
   build-and-push:
     permissions:
       contents: read
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-common
     steps:
       - uses: actions/checkout@v7
         with:
@@ -47,11 +53,16 @@ jobs:
           tags: |
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ github.sha }}
             docker-registry.bimdata.io/bimdata/${{ env.app }}:${{ env.tag }}
+          # Runners are ephemeral: layer cache per environment in our registry, falling back on staging
+          cache-from: |
+            type=registry,ref=docker-registry.bimdata.io/bimdata/${{ env.app }}:buildcache-${{ env.tag }}
+            type=registry,ref=docker-registry.bimdata.io/bimdata/${{ env.app }}:buildcache-staging
+          cache-to: type=registry,ref=docker-registry.bimdata.io/bimdata/${{ env.app }}:buildcache-${{ env.tag }},mode=max,image-manifest=true
 
   unit-tests:
     permissions:
       contents: read
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-common
     needs: build-and-push
     if: ${{ !contains(github.event.head_commit.message, '[skip unit]') &&
       github.ref != 'refs/heads/main' &&
@@ -66,39 +77,12 @@ jobs:
         with:
           node-version: "24"
           check-latest: true
+          cache: npm
       - name: Run unit tests
         run: npm install && npm run test:unit
 
-  # e2e-tests:
-  #   runs-on: [self-hosted, testendtoend]
-  #   needs: build-and-push
-  #   if: ${{ !contains(github.event.head_commit.message, '[skip e2e]') &&
-  #     github.ref != 'refs/heads/main' &&
-  #     github.ref != 'refs/heads/master' &&
-  #     github.ref != 'refs/heads/release' }}
-  #   steps:
-  #     - uses: actions/checkout@v7
-  #       with:
-  #         repository: bimdata/bimdata-test
-  #         ref: master
-  #         token: ${{ secrets.REPOS_TOKEN }}
-  #         persist-credentials: false
-  #     - id: tag
-  #       name: Get docker tag
-  #       uses: bimdata/actions/get-docker-tag@v6
-  #       with:
-  #         branch: ${{ github.ref }}
-  #     - name: Run e2e tests
-  #       uses: ./end-to-end/
-  #       with:
-  #         ref: ${{ github.ref }}
-  #         docker_tag: ${{ env.tag }}
-  #         github_token: ${{ secrets.REPOS_TOKEN }}
-  #         vault_passwd: ${{ secrets.VAULT_PASSWD }}
-  #         cypress_version: 13.16.0
-
   deploy:
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-deploy
     needs: build-and-push
     steps:
       - name: Login to BIMData Docker Registry
@@ -124,7 +108,7 @@ jobs:
       contents: write # Required for creating tag / release
       pull-requests: write # Required to add the comment on the PR to tell it's in the releases
       issues: write # Required to add a comment to an issue fixed in a release
-    runs-on: [self-hosted, common]
+    runs-on: self-hosted-common
     needs: build-and-push
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
     steps:
@@ -135,7 +119,10 @@ jobs:
         with:
           node-version: "24"
           check-latest: true
+          cache: npm
       - run: npm install -g npm@latest
       - run: npm ci
       - name: Release
         run: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
